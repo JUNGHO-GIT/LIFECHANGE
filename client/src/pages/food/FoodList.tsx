@@ -129,20 +129,17 @@ export const FoodList = () => {
         OBJECT?.map((item: any, index: number) => (
           <Card className={"border radius"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
-              <AccordionSummary
-                className={"pb-10"}
-                expandIcon={
-                  <Icons
-                    name={"TbChevronDown"}
-                    className={"w-18 h-18 black"}
-                    onClick={(e: any) => {
-                      setIsExpanded(isExpanded.includes(index)
-                      ? isExpanded.filter((el) => el !== index)
-                      : [...isExpanded, index]
-                    )}}
-                  />
-                }
-              >
+              <AccordionSummary expandIcon={
+                <Icons
+                  name={"TbChevronDown"}
+                  className={"w-18 h-18 black"}
+                  onClick={(e: any) => {
+                    setIsExpanded(isExpanded.includes(index)
+                    ? isExpanded.filter((el) => el !== index)
+                    : [...isExpanded, index]
+                  )}}
+                />
+              }>
                 <Grid container spacing={2}
                   onClick={(e: any) => {
                     e.stopPropagation();

@@ -262,22 +262,18 @@ export const TodayList = () => {
       const cardFragment = (i: number) => (
         OBJECT_EXERCISE?.map((item: any, index: number) => (
           <Card className={"border radius p-10"} key={`${index}-${i}`}>
-            <Accordion className={"shadow-none"} expanded={isExpandedExercise.includes(index)}
-    >
-              <AccordionSummary
-                className={"pb-10"}
-                expandIcon={
-                  <Icons
-                    name={"TbChevronDown"}
-                    className={"w-18 h-18 black"}
-                    onClick={(e: any) => {
-                      setIsExpandedExercise(isExpandedExercise.includes(index)
-                      ? isExpandedExercise.filter((el) => el !== index)
-                      : [...isExpandedExercise, index]
-                    )}}
-                  />
-                }
-              >
+            <Accordion className={"shadow-none"} expanded={isExpandedExercise.includes(index)}>
+              <AccordionSummary expandIcon={
+                <Icons
+                  name={"TbChevronDown"}
+                  className={"w-18 h-18 black"}
+                  onClick={(e: any) => {
+                    setIsExpandedMoney(isExpandedMoney.includes(index)
+                    ? isExpandedMoney.filter((el) => el !== index)
+                    : [...isExpandedMoney, index]
+                  )}}
+                />
+              }>
                 <Grid container spacing={2}
                   onClick={(e: any) => {
                     e.stopPropagation();
@@ -421,11 +417,8 @@ export const TodayList = () => {
       const cardFragment = (i: number) => (
         OBJECT_FOOD?.map((item: any, index: number) => (
           <Card className={"border radius"} key={`${index}-${i}`}>
-            <Accordion className={"shadow-none"} expanded={isExpandedFood.includes(index)}
-    >
-              <AccordionSummary
-                className={"pb-10"}
-                expandIcon={
+            <Accordion className={"shadow-none"} expanded={isExpandedFood.includes(index)}>
+              <AccordionSummary expandIcon={
                   <Icons
                     name={"TbChevronDown"}
                     className={"w-18 h-18 black"}
@@ -602,11 +595,8 @@ export const TodayList = () => {
       const cardFragment = (i: number) => (
         OBJECT_MONEY?.map((item: any, index: number) => (
           <Card className={"border radius"} key={`${index}-${i}`}>
-            <Accordion className={"shadow-none"} expanded={isExpandedMoney.includes(index)}
-    >
-              <AccordionSummary
-                className={"pb-10"}
-                expandIcon={
+            <Accordion className={"shadow-none"} expanded={isExpandedMoney.includes(index)}>
+              <AccordionSummary expandIcon={
                   <Icons
                     name={"TbChevronDown"}
                     className={"w-18 h-18 black"}
@@ -739,11 +729,8 @@ export const TodayList = () => {
       const cardFragment = (i: number) => (
         OBJECT_SLEEP?.map((item: any, index: number) => (
           <Card className={"border radius"} key={`${index}-${i}`}>
-            <Accordion className={"shadow-none"} expanded={isExpandedSleep.includes(index)}
-    >
-              <AccordionSummary
-                className={"pb-10"}
-                expandIcon={
+            <Accordion className={"shadow-none"} expanded={isExpandedSleep.includes(index)}>
+              <AccordionSummary expandIcon={
                   <Icons
                     name={"TbChevronDown"}
                     className={"w-18 h-18 black"}

@@ -8,7 +8,7 @@ const os = require('os');
 const fs = require('fs');
 
 const winOrLinux = os.platform() === 'win32' ? "win" : "linux";
-console.log(`Activated OS is : "${winOrLinux}"`);
+console.log(`Activated OS is : ${winOrLinux}`);
 
 // env 파일 수정 -----------------------------------------------------------------------------------
 const modifyEnv = () => {
