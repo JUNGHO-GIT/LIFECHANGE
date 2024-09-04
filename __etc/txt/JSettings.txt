@@ -1,4 +1,26 @@
 ----------------------------------------------------------------------------------------------------
+@@@=== SSH ===@@@
+1. 키 생성
+	= !!!!!!!!!!!!!!!! username 에는 인스턴스에 등록된 아이디만 (junghomun00) !!!!!!!!!!!!!!!!!!!!!!
+	= ssh-keygen -t rsa -f C:\Users\jungh\.ssh\JKEY -C junghomun00
+
+2. gcloud 키 추가
+	= gcloud compute project-info add-metadata --metadata-from-file ssh-keys=C:\Users\jungh\.ssh\JKEY.pub
+
+3. ssh 로 접속
+	= ssh -i C:\Users\jungh\.ssh\JKEY junghomun00@34.23.233.23
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+@@@=== GIT ===@@@
+1. 특정단어 포함된 커밋 찾기
+git log -G "FOO" -- client/src/assets/layouts/TopNav.jsx
+
+2. 변경된 내용도 함께 보기
+git log -p -G "FOO" -- client/src/assets/layouts/TopNav.jsx
+
+
+----------------------------------------------------------------------------------------------------
 @@@=== CURL ===@@@
 1. curl 테스트
 	= curl -d "user_id=123&user_pw=123" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://34.23.233.23:4000/api/user/login
@@ -69,19 +91,6 @@
 
 4. Disabled
 	= SELinux가 비활성화되어 있습니다.
-----------------------------------------------------------------------------------------------------
-
-----------------------------------------------------------------------------------------------------
-@@@=== SSH ===@@@
-1. 키 생성
-	= !!!!!!!!!!!!!!!! username 에는 인스턴스에 등록된 아이디만 (junghomun00) !!!!!!!!!!!!!!!!!!!!!!
-	= ssh-keygen -t rsa -f C:\Users\jungh\.ssh\JKEY -C junghomun00
-
-2. gcloud 키 추가
-	= gcloud compute project-info add-metadata --metadata-from-file ssh-keys=C:\Users\jungh\.ssh\JKEY.pub
-
-3. ssh 로 접속
-	= ssh -i C:\Users\jungh\.ssh\JKEY junghomun00@34.23.233.23
 ----------------------------------------------------------------------------------------------------
 
 ----------------------------------------------------------------------------------------------------
