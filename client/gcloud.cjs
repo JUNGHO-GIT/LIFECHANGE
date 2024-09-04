@@ -4,7 +4,7 @@ const { execSync } = require('child_process');
 const os = require('os');
 
 const winOrLinux = os.platform() === 'win32' ? "win" : "linux";
-console.log(`Client gcloud.cjs is activate. Activated os is : "${winOrLinux}"`);
+console.log(`Activated os is : "${winOrLinux}"`);
 
 // 프로젝트 빌드 -----------------------------------------------------------------------------------
 const buildProject = () => {

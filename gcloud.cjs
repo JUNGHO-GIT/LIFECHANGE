@@ -8,7 +8,7 @@ const os = require('os');
 const fs = require('fs');
 
 const winOrLinux = os.platform() === 'win32' ? "win" : "linux";
-console.log(`Server gcloud.cjs is activate. Activated os is : "${winOrLinux}"`);
+console.log(`Activated os is : "${winOrLinux}"`);
 
 // env 파일 수정 -----------------------------------------------------------------------------------
 const modifyEnv = () => {
@@ -80,7 +80,7 @@ const runRemoteScript = () => {
   const cmdSave = 'sudo pm2 save';
 
   const sshCommand = `
-    ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}\'
+    ssh -i ${keyPath} ${serviceId}@${ipAddr} '${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}'
   `;
 
   const activateCommand
