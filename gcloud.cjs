@@ -80,8 +80,12 @@ const runRemoteScript = () => {
   const cmdSave = 'sudo pm2 save';
 
   const sshCommand = `
-    ssh -i ${keyPath} ${serviceId}@${ipAddr} '${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}'
+    ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}\'
   `;
+
+  /**
+  `powershell -Command "ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}\'"
+  **/
 
   const activateCommand
     = winOrLinux === "win" ? `powershell -Command "${sshCommand}"` : `${sshCommand}`;
