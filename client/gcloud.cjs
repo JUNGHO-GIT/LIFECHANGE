@@ -1,6 +1,12 @@
 // gcloud.cjs
 
 const { execSync } = require('child_process');
+const os = require('os');
+
+const winOrLinux
+  = os.platform() === 'win32' ? "win" : "linux";
+  
+console.log(`activated os is : "${winOrLinux}"`);
 
 // 프로젝트 빌드 -----------------------------------------------------------------------------------
 const buildProject = () => {
@@ -22,25 +28,33 @@ const uploadToGCS = () => {
 
 // 기존 build.tar.gz 삭제 --------------------------------------------------------------------------
 const deleteBuildTar = () => {
-  const command = 'del build.tar.gz';
+  const del
+    = winOrLinux === "win" ? "del" : "rm -rf";
+  const command = `${del} build.tar.gz`
   execSync(command, { stdio: 'inherit' });
 };
 
 // 원격 서버에서 스크립트 실행 ---------------------------------------------------------------------
 const runRemoteScript = () => {
-  const privateKeyPath = 'C:\\Users\\jungh\\.ssh\\JKEY';
-  const serverAddr = 'junghomun00@34.23.233.23';
+  const keyPath
+    = winOrLinux === "win" ? "C:\\Users\\jungh\\.ssh\\JKEY" : "~/ssh/JKEY";
+  const serviceId
+    = winOrLinux === "win" ? 'junghomun00' : 'junghomun1234';
+  const ipAddr = "34.23.233.23";
   const cmdCd = 'cd /var/www/junghomun.com/JPAGE/client';
   const cmdGs = 'sudo gcloud storage cp gs://jungho-bucket/JPAGE/SERVER/build.tar.gz .';
   const cmdTar = 'sudo tar -zvxf build.tar.gz --strip-components=1';
   const cmdRm = 'sudo rm build.tar.gz';
   const cmdRestart = 'sudo systemctl restart nginx';
 
-  const sshCommand =
-    `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} \'${cmdCd} && ${cmdGs} && ${cmdTar} && ${cmdRm} && ${cmdRestart}\'"
+  const sshCommand =`
+    ssh -i ${keyPath} ${serviceId}@${ipAddr} \'{cmdCd} && ${cmdGs} && ${cmdTar} && ${cmdRm} && ${cmdRestart}\'
   `;
+  
+  const activateCommand
+    = winOrLinux === "win" ? `powershell -Command "${sshCommand}"` : `${sshCommand}`;
 
-  execSync(sshCommand, { stdio: 'inherit' });
+  execSync(activateCommand, { stdio: 'inherit' });
 };
 
 // -------------------------------------------------------------------------------------------------
