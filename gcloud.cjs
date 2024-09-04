@@ -86,6 +86,8 @@ const runRemoteScript = () => {
   const activateCommand
     = winOrLinux === "win" ? `powershell -Command "${sshCommand}"` : `${sshCommand}`;
 
+  console.log(activateCommand);
+
   execSync(activateCommand, { stdio: 'inherit' });
 };
 
