@@ -5,7 +5,7 @@ import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommon } from "@imports/ImportHooks";
 import { axios } from "@imports/ImportLibs"
 import { Loading } from "@imports/ImportLayouts";
-import { Img, Hr } from "@imports/ImportComponents";
+import { Img } from "@imports/ImportComponents";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
 import { TableContainer, Table, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
 import { logo1 } from "@imports/ImportImages";
@@ -35,7 +35,10 @@ export const UserAppInfo = () => {
     setLOADING(true);
     axios.get(`${URL_OBJECT}/app/info`)
     .then((res: any) => {
-      setOBJECT(res.data.result || OBJECT_DEF);
+      setOBJECT((prev: any) => ({
+        ...prev,
+        ...res.data.result
+      }));
     })
     .catch((err: any) => {
       console.error(err);
@@ -43,7 +46,7 @@ export const UserAppInfo = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId]);
+  }, [URL_OBJECT, sessionId]);
 
   // 6. userAppInfo --------------------------------------------------------------------------------
   const userAppInfoNode = () => {
@@ -105,7 +108,7 @@ export const UserAppInfo = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper d-center radius border h-min98vh"}>
+      <Paper className={"content-wrapper d-center radius border h-84vh"}>
         <Grid container spacing={4}>
           <Grid size={12} className={"d-center mb-30"}>
             {imageSection()}

@@ -18,7 +18,7 @@ export const UserAppSetting = () => {
     navigate, translate, isAdmin, sessionLang, TITLE,
   } = useCommon();
 
-  // 2-1. useState ---------------------------------------------------------------------------------
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [lang, setLang] = useState<string>(sessionLang);
 
@@ -218,7 +218,7 @@ export const UserAppSetting = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper d-center radius border h-min98vh"}>
+      <Paper className={"content-wrapper d-center radius border h-min80vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {cardSection()}

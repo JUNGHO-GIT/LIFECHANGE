@@ -60,7 +60,7 @@ const modifyChangelog = () => {
 const gitPush = () => {
   execSync('git add .', { stdio: 'inherit' });
   execSync('git commit -m "update"', { stdio: 'inherit' });
-  execSync('git push origin master --force', { stdio: 'inherit' });
+  execSync('git push origin master', { stdio: 'inherit' });
 };
 
 // 원격 서버에서 스크립트 실행 ---------------------------------------------------------------------
