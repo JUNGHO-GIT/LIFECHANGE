@@ -8,7 +8,7 @@ const os = require('os');
 const fs = require('fs');
 
 const winOrLinux = os.platform() === 'win32' ? "win" : "linux";
-console.log(`Server gcloud.cjs is activate. Activated os is : "${winOrLinux}"`);
+console.log(`Activated OS is : "${winOrLinux}"`);
 
 // env 파일 수정 -----------------------------------------------------------------------------------
 const modifyEnv = () => {
@@ -79,8 +79,11 @@ const runRemoteScript = () => {
   const cmdRestart = 'sudo pm2 restart all';
   const cmdSave = 'sudo pm2 save';
 
-  const sshCommand = `powershell -Command "ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}\'"
+  const winCommand = `powershell -Command "ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}\'"
   `;
+  const linuxCommand = `ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}\'`;
+
+  const sshCommand = winOrLinux === "win" ? winCommand : linuxCommand;
 
   execSync(sshCommand, { stdio: 'inherit' });
 };

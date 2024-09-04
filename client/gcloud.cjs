@@ -4,7 +4,7 @@ const { execSync } = require('child_process');
 const os = require('os');
 
 const winOrLinux = os.platform() === 'win32' ? "win" : "linux";
-console.log(`Activated os is : "${winOrLinux}"`);
+console.log(`Activated OS is : "${winOrLinux}"`);
 
 // 프로젝트 빌드 -----------------------------------------------------------------------------------
 const buildProject = () => {
@@ -42,14 +42,14 @@ const runRemoteScript = () => {
   const cmdRm = 'sudo rm build.tar.gz';
   const cmdRestart = 'sudo systemctl restart nginx';
 
-  const sshCommand = `
-    ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGs} && ${cmdTar} && ${cmdRm} && ${cmdRestart}\'
+  const winCommand = `powershell -Command "ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGs} && ${cmdTar} && ${cmdRm} && ${cmdRestart}\'"
   `;
 
-  const activateCommand
-    = winOrLinux === "win" ? `powershell -Command "${sshCommand}"` : `${sshCommand}`;
+  const linuxCommand = `ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGs} && ${cmdTar} && ${cmdRm} && ${cmdRestart}\'`;
 
-  execSync(activateCommand, { stdio: 'inherit' });
+  const sshCommand = winOrLinux === "win" ? winCommand : linuxCommand;
+
+  execSync(sshCommand, { stdio: 'inherit' });
 };
 
 // -------------------------------------------------------------------------------------------------
