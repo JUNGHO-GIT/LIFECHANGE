@@ -218,7 +218,7 @@ export const UserAppSetting = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper d-center radius border h-min80vh"}>
+      <Paper className={"content-wrapper d-center radius border h-min90vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {cardSection()}

@@ -155,7 +155,7 @@ const App = () => {
         <Route path="/auth/*" element={<Auth />} />
       </Routes>
       {!noneBottom && <BottomNav />}
-      {!noneBanner && <Banner />}
+      {/* {!noneBanner && <Banner />} */}
     </div>
   );
 };
