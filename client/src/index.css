@@ -5,8 +5,8 @@ html, body {
   height: 100%;
   margin: 0px 0px 0px 0px;
   padding: 0px 0px 0px 0px;
+  font-family: Pretendard, 'Noto Sans KR', sans-serif !important;
   background-color: #e8e8e8 !important;
-  font-family: "Noto Sans KR", sans-serif !important;
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important;
   -webkit-text-size-adjust: 100% !important;

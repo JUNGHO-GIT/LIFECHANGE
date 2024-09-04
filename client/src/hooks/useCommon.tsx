@@ -47,8 +47,9 @@ export const useCommon = () => {
   // object 타입
   const sessionPercent: any = sessionStorage.getItem(`${TITLE}_percent`) || "{}";
   const sessionProperty: any = sessionStorage.getItem(`${TITLE}_property`) || "{}";
-  const sessionScale: string = sessionStorage.getItem(`${TITLE}_scale`) || "{}";
   const sessionCategory: any = sessionStorage.getItem(`${TITLE}_category`)|| "{}";
+
+  const sessionScale: string = sessionStorage.getItem(`${TITLE}_scale`) || "";
 
   const calendarArray: any[] = JSON.parse(sessionCategory)?.calendar || [];
   const exerciseArray: any[] = JSON.parse(sessionCategory)?.exercise || [];

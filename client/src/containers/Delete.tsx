@@ -1,6 +1,6 @@
 // Delete.tsx
 
-import { Icons } from "@imports/ImportComponents";
+import { Icons, Div } from "@imports/ImportComponents";
 
 // -------------------------------------------------------------------------------------------------
 interface DeleteProps {
@@ -15,11 +15,13 @@ export const Delete = (
 
   // 1. deleteNode --------------------------------------------------------------------------------
   const deleteNode = () => (
-    <Icons
-      name={"TbX"}
-      onClick={() => handlerDelete(index)}
-      className={"w-20 h-20 mt-n10 me-n20 black"}
-    />
+    <Div className={"mt-n10 me-n10"}>
+      <Icons
+        name={"TbX"}
+        onClick={() => handlerDelete(index)}
+        className={"w-20 h-20 black"}
+      />
+    </Div>
   );
 
   // 15. return ------------------------------------------------------------------------------------

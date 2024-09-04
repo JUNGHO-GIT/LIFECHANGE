@@ -14,12 +14,13 @@ export const Select = (props: any) => {
       fullWidth={props?.fullWidth || true}
       className={props?.className || ""}
       slotProps={{
+        ...props?.slotProps,
         input: {
           className: (
             props?.inputclass?.includes("fs-") ? (
-              `text-left ${props?.inputclass || ""}`
+              `text-left ${props?.inputclass}`
             ) : (
-              `fs-1-0rem text-left ${props?.inputclass || ""}`
+              `fs-1-0rem text-left ${props?.inputclass}`
             )
           ),
           readOnly: (
@@ -32,9 +33,7 @@ export const Select = (props: any) => {
               ) : (
                 <div className={"me-2vw"}>{props?.startadornment}</div>
               )
-            ) : (
-              null
-            )
+            ) : null
           ),
           endAdornment: (
             props?.endadornment ? (
@@ -43,9 +42,7 @@ export const Select = (props: any) => {
               ) : (
                 <div className={"ms-2vw"}>{props?.endadornment}</div>
               )
-            ) : (
-              null
-            )
+            ) : null
           ),
         },
       }}

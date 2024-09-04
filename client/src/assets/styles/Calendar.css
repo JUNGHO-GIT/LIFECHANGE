@@ -133,7 +133,7 @@
   text-align: center;
   justify-content: center;
   display: flex;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: 500;
 }
 .react-calendar button {
@@ -192,13 +192,13 @@ abbr[title] {
   color: red;
 }
 .calendar-outside abbr {
-  text-decoration: none;
+  text-decoration: none !important;
   color: #9c9c9c9c;
   font-weight: 500;
   font-size: 0.6rem;
 }
 .calendar-today abbr {
-  text-decoration: none;
+  text-decoration: underline !important;
   color: #006ab3;
   font-weight: 800;
   font-size: 1.0rem;

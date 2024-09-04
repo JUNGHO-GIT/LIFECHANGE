@@ -23,7 +23,7 @@ import {
 } from "@imports/ImportHooks";
 
 import {
-  Header, TopNav, BottomNav, Banner
+  Header, TopNav, BottomNav,
 } from "@imports/ImportLayouts";
 
 import {
@@ -132,12 +132,6 @@ const App = () => {
     location.pathname.indexOf("/user") > -1 ||
     location.pathname.indexOf("/auth") > -1
   );
-  const noneBanner = (
-    location.pathname.includes("/user/login") ||
-    location.pathname.includes("/user/signup") ||
-    location.pathname.includes("/user/resetPw") ||
-    location.pathname.indexOf("/auth") > -1
-  );
 
   return (
     <div className={"App"}>
@@ -155,7 +149,6 @@ const App = () => {
         <Route path="/auth/*" element={<Auth />} />
       </Routes>
       {!noneBottom && <BottomNav />}
-      {/* {!noneBanner && <Banner />} */}
     </div>
   );
 };
@@ -163,7 +156,7 @@ const App = () => {
 // -------------------------------------------------------------------------------------------------
 const theme = createTheme({
   typography: {
-    fontFamily: '"Noto Sans KR", sans-serif',
+    fontFamily: "Pretendard, 'Noto Sans KR', sans-serif",
   },
 });
 

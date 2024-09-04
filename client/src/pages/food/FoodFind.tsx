@@ -93,18 +93,13 @@ export const FoodFind = () => {
     if (section) {
       sectionArray = JSON.parse(section);
     }
-    else {
-      sectionArray = [];
-    }
+
     const queryKey = `${PAGING.query}_${PAGING.page}`;
     const newChecked = OBJECT.map((item: any) => (
       sectionArray.some((sectionItem: any) => (
         sectionItem.food_name === item.food_name &&
-        sectionItem.food_gram === item.food_gram &&
-        sectionItem.food_kcal === item.food_kcal &&
-        sectionItem.food_carb === item.food_carb &&
-        sectionItem.food_protein === item.food_protein &&
-        sectionItem.food_fat === item.food_fat
+        sectionItem.food_brand === item.food_brand &&
+        sectionItem.food_gram === item.food_gram
       ))
     ));
     setCheckedQueries({
@@ -123,9 +118,6 @@ export const FoodFind = () => {
     if (section) {
       sectionArray = JSON.parse(section);
     }
-    else {
-      sectionArray = [];
-    }
 
     // 현재 쿼리와 페이지의 체크된 상태
     const queryKey = `${PAGING.query}_${PAGING.page}`;
@@ -136,11 +128,8 @@ export const FoodFind = () => {
       if (pageChecked[index]) {
         if (!sectionArray.some((i) => (
           i.food_name === item.food_name &&
-          i.food_gram === item.food_gram &&
-          i.food_kcal === item.food_kcal &&
-          i.food_carb === item.food_carb &&
-          i.food_protein === item.food_protein &&
-          i.food_fat === item.food_fat
+          i.food_brand === item.food_brand &&
+          i.food_gram === item.food_gram
         ))) {
           sectionArray.push(item);
         }
@@ -148,11 +137,8 @@ export const FoodFind = () => {
       else {
         sectionArray = sectionArray.filter((i) => !(
           i.food_name === item.food_name &&
-          i.food_gram === item.food_gram &&
-          i.food_kcal === item.food_kcal &&
-          i.food_carb === item.food_carb &&
-          i.food_protein === item.food_protein &&
-          i.food_fat === item.food_fat
+          i.food_brand === item.food_brand &&
+          i.food_gram === item.food_gram
         ));
       }
     });
