@@ -68,6 +68,7 @@ function startServer(httpPort: number, httpsPort: number) {
 }
 startServer(httpPort, httpsPort);
 
+
 // 미들웨어 설정 -----------------------------------------------------------------------------------
 app.use(cors({
   origin: "*",
