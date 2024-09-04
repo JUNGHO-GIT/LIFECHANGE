@@ -79,16 +79,14 @@ const runRemoteScript = () => {
   const cmdRestart = 'sudo pm2 restart all';
   const cmdSave = 'sudo pm2 save';
 
-  const sshCommand = `
+  const winCommand = `
+    powershell -Command "ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}\'"
+  `;
+  const linuxCommand = `
     ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}\'
   `;
 
-  /**
-  `powershell -Command "ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}\'"
-  **/
-
-  const activateCommand
-    = winOrLinux === "win" ? `powershell -Command "${sshCommand}"` : `${sshCommand}`;
+  const activateCommand = winOrLinux === "win" ? winCommand : linuxCommand;
 
   console.log(activateCommand);
 
