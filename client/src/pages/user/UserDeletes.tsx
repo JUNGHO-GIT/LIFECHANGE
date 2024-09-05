@@ -80,7 +80,7 @@ export const UserDeletes = () => {
       }
       else {
         alert(translate(res.data.msg));
-        navigate(0);
+        navigate("/user/deletes");
       }
     })
     .catch((err: any) => {

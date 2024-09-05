@@ -154,8 +154,8 @@ export const userSignup = async (
     const saltRounds = 10;
     const token = crypto.randomBytes(20).toString('hex');
     const combinedPw = `${OBJECT_param.user_pw}_${token}`;
-
     const hashedPassword = await bcrypt.hash(combinedPw, saltRounds);
+
     OBJECT_param.user_token = token;
     OBJECT_param.user_pw = hashedPassword;
 

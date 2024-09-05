@@ -233,7 +233,7 @@ export const UserDummy = () => {
           ...prev,
           page: 1
         }));
-        navigate(0);
+        navigate("/user/dummy");
         // 저장 이후 PART 값을 복원
         setPART(previousPART);
       }
@@ -266,7 +266,7 @@ export const UserDummy = () => {
           ...prev,
           page: 1
         }));
-        navigate(0);
+        navigate("/user/dummy");
         // 저장 이후 PART 값을 복원
         setPART(previousPART);
       }

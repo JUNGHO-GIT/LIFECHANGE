@@ -91,7 +91,7 @@ export const UserDetail = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         alert(translate(res.data.msg));
-        navigate(0);
+        navigate("/user/detail");
       }
       else {
         alert(translate(res.data.msg));

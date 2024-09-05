@@ -94,7 +94,7 @@ export const UserAppSetting = () => {
                         onClick={() => {
                           setLang("ko")
                           sessionStorage.setItem(`${TITLE}_lang`, "ko")
-                          navigate(0)
+                          navigate("/user/app/setting")
                         }}
                       >
                         <Img
@@ -115,7 +115,7 @@ export const UserAppSetting = () => {
                         onClick={() => {
                           setLang("en")
                           sessionStorage.setItem(`${TITLE}_lang`, "en")
-                          navigate(0)
+                          navigate("/user/app/setting")
                         }}
                       >
                         <Img
