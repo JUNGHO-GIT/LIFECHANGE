@@ -24,23 +24,7 @@ export const FindSaveFilter = (
 
   // 7. find ---------------------------------------------------------------------------------------
   const findFilterNode = () => {
-    // 1. save
-    const saveSection = () => (
-      <Btn
-        color={"primary"}
-        onClick={() => {
-          flow.flowSave();
-          Object.keys(sessionStorage).forEach((key) => {
-            if (key.includes("foodSection") || key.includes("paging")) {
-              sessionStorage.removeItem(key);
-            }
-          });
-        }}
-      >
-        {translate("save")}
-      </Btn>
-    );
-    // 2. more
+    // 1. more
     const moreSection = () => (
       <Btn
         color={"success"}
@@ -58,13 +42,45 @@ export const FindSaveFilter = (
         {translate("find")}
       </Btn>
     );
+    // 2. save
+    const saveSection = () => (
+      <Btn
+        color={"primary"}
+        onClick={() => {
+          flow.flowSave();
+          Object.keys(sessionStorage).forEach((key) => {
+            if (key.includes("foodSection") || key.includes("paging")) {
+              sessionStorage.removeItem(key);
+            }
+          });
+        }}
+      >
+        {translate("save")}
+      </Btn>
+    );
+
+    // 3. deletes
+    const deletesSection = () => (
+      <Btn
+        color={"error"}
+        onClick={() => {
+          flow.flowDeletes();
+        }}
+      >
+        {translate("deletes")}
+      </Btn>
+    );
+
     return (
-      <Grid container spacing={2}>
-        <Grid size={6} className={"d-right"}>
+      <Grid container spacing={0} columns={12}>
+        <Grid size={5} className={"d-right"}>
           {moreSection()}
         </Grid>
-        <Grid size={6} className={"d-left"}>
+        <Grid size={2} className={"d-center"}>
           {saveSection()}
+        </Grid>
+        <Grid size={5} className={"d-left"}>
+          {deletesSection()}
         </Grid>
       </Grid>
     );

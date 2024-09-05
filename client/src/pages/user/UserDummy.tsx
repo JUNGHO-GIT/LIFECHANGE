@@ -743,7 +743,7 @@ export const UserDummy = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min75vh"}>
+      <Paper className={"content-wrapper radius border h-min84vh"}>
         <Grid container spacing={2}>
           <Grid size={12} >
             {PART === "exerciseGoal" && exerciseGoalSection()}

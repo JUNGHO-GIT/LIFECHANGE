@@ -251,7 +251,7 @@ export const CalendarList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min80vh"}>
+      <Paper className={"content-wrapper radius border h-min84vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {cardSection()}

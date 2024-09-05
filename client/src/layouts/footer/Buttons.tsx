@@ -80,18 +80,6 @@ export const Buttons = (
             {saveSection()}
           </Grid>
         </Grid>
-      ) : PATH.includes("/food/save") ? (
-        <Grid container spacing={2}>
-          <Grid size={4} className={"d-right"}>
-            {gotoFindSection()}
-          </Grid>
-          <Grid size={4} className={"d-center"}>
-            {saveSection()}
-          </Grid>
-          <Grid size={4} className={"d-left"}>
-            {deletesSection()}
-          </Grid>
-        </Grid>
       ) : (
         <Grid container spacing={2}>
           <Grid size={6} className={"d-right"}>

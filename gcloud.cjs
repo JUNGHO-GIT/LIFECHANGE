@@ -1,6 +1,5 @@
 // gcloud.ts (server)
 
-const dotenv = require('dotenv');
 const { execSync } = require('child_process');
 const { readFileSync, writeFileSync } = require('fs');
 const moment = require('moment-timezone');
@@ -12,17 +11,24 @@ console.log(`Activated OS is : ${winOrLinux}`);
 
 // env 파일 수정 -----------------------------------------------------------------------------------
 const modifyEnv = () => {
+
+  // 파일을 줄 단위로 나눔
   const envFile = readFileSync('.env', 'utf8');
-  const envConfig = dotenv.parse(envFile);
+  const lines = envFile.split(/\r?\n/);
 
-  // envConfig 수정
-  envConfig.CLIENT_URL = "https://www.junghomun.com/JPAGE";
-  envConfig.GOOGLE_CALLBACK_URL = "https://www.junghomun.com/JPAGE/api/auth/google/callback";
+  const updatedLines = lines.map(line => {
+    if (line.startsWith('CLIENT_URL=')) {
+      return 'CLIENT_URL=https://www.junghomun.com/JPAGE';
+    }
+    if (line.startsWith('GOOGLE_CALLBACK_URL=')) {
+      return 'GOOGLE_CALLBACK_URL=https://www.junghomun.com/JPAGE/api/auth/google/callback';
+    }
+    // 다른 줄은 그대로 유지
+    return line;
+  });
 
-  // env 파일 쓰기
-  const newEnvFile = Object.keys(envConfig).reduce((acc, key) => {
-    return `${acc}${key}=${envConfig[key]}${os.EOL}`;
-  }, '');
+  // 줄을 다시 합쳐서 저장
+  const newEnvFile = updatedLines.join(os.EOL);
 
   writeFileSync('.env', newEnvFile);
 };
@@ -90,17 +96,24 @@ const runRemoteScript = () => {
 
 // env 파일 복원 -----------------------------------------------------------------------------------
 const restoreEnv = () => {
+
+  // 파일을 줄 단위로 나눔
   const envFile = readFileSync('.env', 'utf8');
-  const envConfig = dotenv.parse(envFile);
+  const lines = envFile.split(/\r?\n/);
 
-  // envConfig 수정
-  envConfig.CLIENT_URL = "http://localhost:3000/JPAGE";
-  envConfig.GOOGLE_CALLBACK_URL = "http://localhost:4000/JPAGE/api/auth/google/callback";
+  const updatedLines = lines.map(line => {
+    if (line.startsWith('CLIENT_URL=')) {
+      return 'CLIENT_URL=http://localhost:3000/JPAGE';
+    }
+    if (line.startsWith('GOOGLE_CALLBACK_URL=')) {
+      return 'GOOGLE_CALLBACK_URL=http://localhost:4000/JPAGE/api/auth/google/callback';
+    }
+    // 다른 줄은 그대로 유지
+    return line;
+  });
 
-  // env 파일 쓰기
-  const newEnvFile = Object.keys(envConfig).reduce((acc, key) => {
-    return `${acc}${key}=${envConfig[key]}${os.EOL}`;
-  }, '');
+  // 줄을 다시 합쳐서 저장
+  const newEnvFile = updatedLines.join(os.EOL);
 
   writeFileSync('.env', newEnvFile);
 };

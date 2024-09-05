@@ -134,7 +134,7 @@ export const AuthError = () => {
       </Grid>
     );
     return (
-      <Paper className={"content-wrapper d-center radius border h-min80vh"}>
+      <Paper className={"content-wrapper d-center radius border h-min84vh"}>
         <Grid container spacing={2}>
           <Grid size={6}>
             {imageSection()}
