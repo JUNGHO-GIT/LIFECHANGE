@@ -8,19 +8,26 @@ export const router = express.Router();
 // 0-1. appInfo -----------------------------------------------------------------------------------
 router.get("/app/info", async (req: Request, res: Response) => {
   try {
-    let result = await service.appInfo();
-    if (result) {
+    let finalResult = await service.appInfo();
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "searchSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "searchFailed",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "searchFailed",
-        result: null,
+        msg: "searchError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -28,7 +35,8 @@ router.get("/app/info", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -36,43 +44,50 @@ router.get("/app/info", async (req: Request, res: Response) => {
 // 1-1. sendEmail ----------------------------------------------------------------------------------
 router.post("/email/send", async (req: Request, res: Response) => {
   try {
-    let result = await service.sendEmail (
+    let finalResult = await service.sendEmail (
       req.body.user_id as string,
       req.body.type as string,
     );
-    if (result.result === "duplicate") {
+    if (finalResult.status === "success") {
       res.json({
-        status: "duplicate",
-        msg: "duplicatedEmail",
-        result: null,
+        msg: "emailSendSuccessful",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
-    else if (result.result === "isGoogle") {
+    else if (finalResult.status === "fail") {
       res.json({
-        status: "isGoogle",
-        msg: "isGoogleUserResetPw",
-        result: null,
-      });
-    }
-    else if (result.result === "notExist") {
-      res.json({
-        status: "notExist",
-        msg: "emailNotExist",
-        result: null,
-      });
-    }
-    else if (result.result === "fail") {
-      res.json({
-        status: "fail",
         msg: "emailSendFailed",
-        result: null,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "duplicate") {
+      res.json({
+        msg: "duplicatedEmail",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "isGoogle") {
+      res.json({
+        msg: "isGoogleUserResetPw",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "notExist") {
+      res.json({
+        msg: "emailNotExist",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "success",
-        msg: "emailSendSuccessful",
-        result: result.result,
+        msg: "emailSendError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -80,7 +95,8 @@ router.post("/email/send", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -88,29 +104,29 @@ router.post("/email/send", async (req: Request, res: Response) => {
 // 1-2. verifyEmail --------------------------------------------------------------------------------
 router.post("/email/verify", async (req: Request, res: Response) => {
   try {
-    let result = await service.verifyEmail (
+    let finalResult = await service.verifyEmail (
       req.body.user_id as string,
       req.body.verify_code as string,
     );
-    if (result === "success") {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "authenticationSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
-    else if (result === "fail") {
+    else if (finalResult.status === "fail") {
       res.json({
-        status: "fail",
         msg: "authenticationFailed",
-        result: null,
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "authenticationFailed",
-        result: null,
+        msg: "authenticationError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -118,7 +134,8 @@ router.post("/email/verify", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -126,29 +143,36 @@ router.post("/email/verify", async (req: Request, res: Response) => {
 // 2-1. userSignup ---------------------------------------------------------------------------------
 router.post("/signup", async (req: Request, res: Response) => {
   try {
-    let result = await service.userSignup (
+    let finalResult = await service.userSignup (
       req.body.user_id as string,
       req.body.OBJECT as Record<string, any>,
     );
-    if (result && result !== "duplicated") {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "signupSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
-    else if (result === "duplicated") {
+    else if (finalResult.status === "fail") {
       res.json({
-        status: "duplicated",
+        msg: "signupFailed",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "duplicated") {
+      res.json({
         msg: "duplicatedId",
-        result: null,
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "signupFailed",
-        result: null,
+        msg: "signupError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -156,7 +180,8 @@ router.post("/signup", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -164,29 +189,43 @@ router.post("/signup", async (req: Request, res: Response) => {
 // 2-2. userResetPw --------------------------------------------------------------------------------
 router.post("/resetPw", async (req: Request, res: Response) => {
   try {
-    let result = await service.userResetPw (
+    let finalResult = await service.userResetPw (
       req.body.user_id as string,
       req.body.OBJECT as Record<string, any>,
     );
-    if (result.result === "isGoogle") {
+    if (finalResult.status === "success") {
       res.json({
-        status: "isGoogle",
-        msg: "isGoogleUserLogin",
-        result: result.result,
+        msg: "resetPwSuccessful",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
-    else if (result.result === "notExist") {
+    else if (finalResult.status === "fail") {
       res.json({
-        status: "notExist",
+        msg: "resetPwFailed",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "isGoogle") {
+      res.json({
+        msg: "isGoogleUserResetPw",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "notExist") {
+      res.json({
         msg: "emailNotExist",
-        result: null,
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "success",
-        msg: "resetPwSuccessful",
-        result: result.result,
+        msg: "resetPwError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -194,7 +233,8 @@ router.post("/resetPw", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -202,33 +242,37 @@ router.post("/resetPw", async (req: Request, res: Response) => {
 // 2-3. userLogin ----------------------------------------------------------------------------------
 router.post("/login", async (req: Request, res: Response) => {
   try {
-    let result = await service.userLogin (
+    let finalResult = await service.userLogin (
       req.body.user_id as string,
       req.body.user_pw as string,
       req.body.isAutoLogin as boolean,
     );
-    if (result.result === "isGoogle") {
+    if (finalResult.status === "success") {
       res.json({
-        status: "isGoogle",
-        msg: "isGoogleUserLogin",
-        result: result.result,
-        admin: result.admin,
+        msg: "loginSuccessful",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
-    else if (result.result === "fail") {
+    else if (finalResult.status === "fail") {
       res.json({
-        status: "fail",
-        msg: "theIdOrPwIsIncorrect",
-        result: null,
-        admin: null,
+        msg: "loginFailed",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "isGoogle") {
+      res.json({
+        msg: "isGoogleUserLogin",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "success",
-        msg: "loginSuccessful",
-        result: result.result,
-        admin: result.admin,
+        msg: "loginError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -245,21 +289,28 @@ router.post("/login", async (req: Request, res: Response) => {
 // 2-4. userDetail ---------------------------------------------------------------------------------
 router.get("/detail", async (req: Request, res: Response) => {
   try {
-    let result = await service.userDetail (
+    let finalResult = await service.userDetail (
       req.query.user_id as string,
     );
-    if (result) {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "searchSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "searchFailed",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "searchFailed",
-        result: null,
+        msg: "searchError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -267,7 +318,8 @@ router.get("/detail", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -275,22 +327,29 @@ router.get("/detail", async (req: Request, res: Response) => {
 // 2-5. userUpdate ---------------------------------------------------------------------------------
 router.post("/update", async (req: Request, res: Response) => {
   try {
-    let result = await service.userUpdate (
+    let finalResult = await service.userUpdate (
       req.body.user_id as string,
       req.body.OBJECT as Record<string, any>,
     );
-    if (result) {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "updateSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "updateFailed",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "updateFailed",
-        result: null,
+        msg: "updateError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -298,7 +357,8 @@ router.post("/update", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -306,21 +366,28 @@ router.post("/update", async (req: Request, res: Response) => {
 // 2-6. userDeletes --------------------------------------------------------------------------------
 router.delete("/deletes", async (req: Request, res: Response) => {
   try {
-    let result = await service.userDeletes (
+    let finalResult = await service.userDeletes (
       req.body.user_id as string,
     );
-    if (result) {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "deleteSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "deleteFailed",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "deleteFailed",
-        result: null,
+        msg: "deleteError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -328,7 +395,8 @@ router.delete("/deletes", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -336,21 +404,28 @@ router.delete("/deletes", async (req: Request, res: Response) => {
 // 3-1. categoryList -------------------------------------------------------------------------------
 router.get("/category/list", async (req: Request, res: Response) => {
   try {
-    let result = await service.categoryList (
+    let finalResult = await service.categoryList (
       req.query.user_id as string,
     );
-    if (result) {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "searchSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "searchFailed",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "searchFailed",
-        result: null,
+        msg: "searchError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -358,7 +433,8 @@ router.get("/category/list", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -366,23 +442,30 @@ router.get("/category/list", async (req: Request, res: Response) => {
 // 3-2. categorySave -------------------------------------------------------------------------------
 router.post("/category/save", async (req: Request, res: Response) => {
   try {
-    let result = await service.categorySave (
+    let finalResult = await service.categorySave (
       req.body.user_id as string,
       req.body.OBJECT as Record<string, any>,
       req.body.DATE as Record<string, any>,
     );
-    if (result) {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "saveSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "saveFailed",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "saveFailed",
-        result: null,
+        msg: "saveError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -390,7 +473,8 @@ router.post("/category/save", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -398,25 +482,33 @@ router.post("/category/save", async (req: Request, res: Response) => {
 // 4-1. dummyList ----------------------------------------------------------------------------------
 router.get("/dummyList", async (req: Request, res: Response) => {
   try {
-    let result = await service.dummyList (
+    let finalResult = await service.dummyList (
       req.query.user_id as string,
       req.query.PAGING as Record<string, any>,
       req.query.PART as string,
     );
-    if (result && result.result) {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "searchSuccessful",
-        totalCnt: result.totalCnt,
-        result: result.result
+        status: finalResult.status,
+        totalCnt: finalResult.totalCnt,
+        result: finalResult.result
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "searchFailed",
+        status: finalResult.status,
+        totalCnt: finalResult.totalCnt,
+        result: finalResult.result
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "searchFailed",
-        totalCnt: 0,
-        result: null,
+        msg: "searchError",
+        status: finalResult.status,
+        totalCnt: finalResult.totalCnt,
+        result: finalResult.result
       });
     }
   }
@@ -424,7 +516,8 @@ router.get("/dummyList", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -432,23 +525,30 @@ router.get("/dummyList", async (req: Request, res: Response) => {
 // 4-2. dummySave ----------------------------------------------------------------------------------
 router.post("/dummySave", async (req: Request, res: Response) => {
   try {
-    let result = await service.dummySave (
+    let finalResult = await service.dummySave (
       req.body.user_id as string,
       req.body.PART as string,
       req.body.count as number,
     );
-    if (result) {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "saveSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "saveFailed",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "saveFailed",
-        result: null,
+        msg: "saveError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -456,7 +556,8 @@ router.post("/dummySave", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -464,22 +565,29 @@ router.post("/dummySave", async (req: Request, res: Response) => {
 // 4-3. dummyDeletes -------------------------------------------------------------------------------
 router.delete("/dummyDeletes", async (req: Request, res: Response) => {
   try {
-    let result = await service.dummyDeletes (
+    let finalResult = await service.dummyDeletes (
       req.body.user_id as string,
       req.body.PART as string,
     );
-    if (result) {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "deleteSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "deleteFailed",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "deleteFailed",
-        result: null,
+        msg: "deleteError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -487,7 +595,8 @@ router.delete("/dummyDeletes", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });

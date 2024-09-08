@@ -1,12 +1,12 @@
 // FindSaveFilter.tsx
 // Node -> Section -> Fragment
 
-import { useCommon } from "@imports/ImportHooks";
+import { useTranslate } from "@imports/ImportHooks";
 import { Btn } from "@imports/ImportComponents";
 import { Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-interface FindSaveFilterProps {
+declare interface FindSaveFilterProps {
   state: any;
   setState: any;
   flow: any;
@@ -20,7 +20,7 @@ export const FindSaveFilter = (
   // 1. common -------------------------------------------------------------------------------------
   const {
     translate
-  } = useCommon();
+  } = useTranslate();
 
   // 7. find ---------------------------------------------------------------------------------------
   const findFilterNode = () => {

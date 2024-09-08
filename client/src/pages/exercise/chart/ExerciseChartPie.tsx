@@ -1,8 +1,7 @@
 // ExerciseChartPie.tsx
-// Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
 import { axios } from "@imports/ImportLibs";
 import { Loading } from "@imports/ImportLayouts";
 import { Div, Img, Select } from "@imports/ImportComponents";
@@ -13,7 +12,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recha
 import { common3_1 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
-interface PieProps {
+declare interface PieProps {
   cx: number;
   cy: number;
   midAngle: number;
@@ -28,18 +27,33 @@ export const ExerciseChartPie = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    URL_OBJECT, sessionId, COLORS, translate, koreanDate
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    dayFmt,
+    weekStartFmt, weekEndFmt,
+    monthStartFmt, monthEndFmt,
+    yearStartFmt, yearEndFmt,
+  } = useCommonDate();
+  const {
+    URL_OBJECT, sessionId, COLORS,
+  } = useCommonValue();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState(true);
-  const [radius, setRadius] = useState(120);
-  const [SECTION, setSECTION] = useState("week");
-  const [LINE, setLINE] = useState("part");
-  const [DATE, setDATE] = useState({
+  const [LOADING, setLOADING] = useState<boolean>(true);
+  const [radius, setRadius] = useState<number>(120);
+  const [SECTION, setSECTION] = useState<string>("week");
+  const [LINE, setLINE] = useState<string>("part");
+  const [DATE, setDATE] = useState<any>({
     dateType: "",
-    dateStart: koreanDate,
-    dateEnd: koreanDate,
+    dateStart: dayFmt,
+    dateEnd: dayFmt,
+    weekStartFmt: weekStartFmt,
+    weekEndFmt: weekEndFmt,
+    monthStartFmt: monthStartFmt,
+    monthEndFmt: monthEndFmt,
+    yearStartFmt: yearStartFmt,
+    yearEndFmt: yearEndFmt,
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -59,10 +73,10 @@ export const ExerciseChartPie = () => {
     name:"Empty",
     value: 100
   }];
-  const [OBJECT_PART_WEEK, setOBJECT_PART_WEEK] = useState(OBJECT_PART_WEEK_DEF);
-  const [OBJECT_TITLE_WEEK, setOBJECT_TITLE_WEEK] = useState(OBJECT_TITLE_WEEK_DEF);
-  const [OBJECT_PART_MONTH, setOBJECT_PART_MONTH] = useState(OBJECT_PART_MONTH_DEF);
-  const [OBJECT_TITLE_MONTH, setOBJECT_TITLE_MONTH] = useState(OBJECT_TITLE_MONTH_DEF);
+  const [OBJECT_PART_WEEK, setOBJECT_PART_WEEK] = useState<any>(OBJECT_PART_WEEK_DEF);
+  const [OBJECT_TITLE_WEEK, setOBJECT_TITLE_WEEK] = useState<any>(OBJECT_TITLE_WEEK_DEF);
+  const [OBJECT_PART_MONTH, setOBJECT_PART_MONTH] = useState<any>(OBJECT_PART_MONTH_DEF);
+  const [OBJECT_TITLE_MONTH, setOBJECT_TITLE_MONTH] = useState<any>(OBJECT_TITLE_MONTH_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -206,7 +220,7 @@ export const ExerciseChartPie = () => {
           dataKey={"value"}
           minAngle={15}
         >
-          {OBJECT_PART_WEEK?.map((entry, index) => (
+          {OBJECT_PART_WEEK?.map((entry: any, index: number) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
@@ -253,7 +267,7 @@ export const ExerciseChartPie = () => {
           dataKey={"value"}
           minAngle={15}
         >
-          {OBJECT_TITLE_WEEK?.map((entry, index) => (
+          {OBJECT_TITLE_WEEK?.map((entry: any, index: number) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
@@ -300,7 +314,7 @@ export const ExerciseChartPie = () => {
           dataKey={"value"}
           minAngle={15}
         >
-          {OBJECT_PART_MONTH?.map((entry, index) => (
+          {OBJECT_PART_MONTH?.map((entry: any, index: number) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
@@ -347,7 +361,7 @@ export const ExerciseChartPie = () => {
           dataKey={"value"}
           minAngle={15}
         >
-          {OBJECT_TITLE_MONTH?.map((entry, index) => (
+          {OBJECT_TITLE_MONTH?.map((entry: any, index: number) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>

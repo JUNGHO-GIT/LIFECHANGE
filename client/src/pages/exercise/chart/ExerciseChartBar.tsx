@@ -1,8 +1,7 @@
 // ExerciseChartBar.tsx
-// Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
 import { axios } from "@imports/ImportLibs";
 import { handlerY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
@@ -17,16 +16,31 @@ export const ExerciseChartBar = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    URL_OBJECT, sessionId, barChartArray, COLORS, translate, koreanDate
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    dayFmt,
+    weekStartFmt, weekEndFmt,
+    monthStartFmt, monthEndFmt,
+    yearStartFmt, yearEndFmt,
+  } = useCommonDate();
+  const {
+    sessionId, URL_OBJECT, COLORS, barChartArray,
+  } = useCommonValue();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState(true);
-  const [SECTION, setSECTION] = useState("today");
-  const [DATE, setDATE] = useState({
+  const [LOADING, setLOADING] = useState<boolean>(true);
+  const [SECTION, setSECTION] = useState<string>("today");
+  const [DATE, setDATE] = useState<any>({
     dateType: "",
-    dateStart: koreanDate,
-    dateEnd: koreanDate,
+    dateStart: dayFmt,
+    dateEnd: dayFmt,
+    weekStartFmt: weekStartFmt,
+    weekEndFmt: weekEndFmt,
+    monthStartFmt: monthStartFmt,
+    monthEndFmt: monthEndFmt,
+    yearStartFmt: yearStartFmt,
+    yearEndFmt: yearEndFmt,
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -48,9 +62,9 @@ export const ExerciseChartBar = () => {
     goal: "0",
     real: "0"
   }];
-  const [OBJECT_TODAY, setOBJECT_TODAY] = useState(OBJECT_TODAY_DEF);
-  const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEF);
-  const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);
+  const [OBJECT_TODAY, setOBJECT_TODAY] = useState<any>(OBJECT_TODAY_DEF);
+  const [OBJECT_WEEK, setOBJECT_WEEK] = useState<any>(OBJECT_WEEK_DEF);
+  const [OBJECT_MONTH, setOBJECT_MONTH] = useState<any>(OBJECT_MONTH_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {

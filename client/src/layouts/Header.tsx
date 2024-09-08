@@ -1,7 +1,7 @@
 // Header.tsx
 // Node -> Section -> Fragment
 
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { Div, Img, Icons } from "@imports/ImportComponents";
 import { Paper, Grid } from "@imports/ImportMuis";
 import { logo2, logo3 } from "@imports/ImportImages";
@@ -11,8 +11,11 @@ export const Header = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, firstStr, koreanDate
-  } = useCommon();
+    navigate, firstStr,
+  } = useCommonValue();
+  const {
+    dayFmt,
+  } = useCommonDate();
 
   // 7. header -------------------------------------------------------------------------------------
   const headerNode = () => {
@@ -23,8 +26,8 @@ export const Header = () => {
           navigate("/today/list", {
             state: {
               dateType: "day",
-              dateStart: koreanDate,
-              dateEnd: koreanDate,
+              dateStart: dayFmt,
+              dateEnd: dayFmt,
             }
           });
         }}
@@ -42,13 +45,23 @@ export const Header = () => {
     const btnSection = () => (
       <Div className={"d-center"}>
         {firstStr !== "user" ? (
-          <Icons name={"TbSettings"} className={"w-24 h-24 black m-0"} onClick={() => {
-            navigate("/user/app/setting");
-          }}/>
+          <Icons
+            key={"TbSettings"}
+            name={"Settings"}
+            className={"w-24 h-24"}
+            onClick={() => {
+              navigate("/user/app/setting");
+            }}
+          />
         ) : (
-          <Icons name={"TbArrowRight"} className={"w-24 h-24 black m-0"} onClick={() => {
-            navigate(-1);
-          }}/>
+          <Icons
+            key={"TbArrowRight"}
+            name={"ArrowRight"}
+            className={"w-24 h-24"}
+            onClick={() => {
+              navigate(-1);
+            }}
+          />
         )}
       </Div>
     );

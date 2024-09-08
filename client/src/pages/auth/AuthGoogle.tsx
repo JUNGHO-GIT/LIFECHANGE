@@ -2,7 +2,7 @@
 // Node -> Section -> Fragment
 
 import { useEffect } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue } from "@imports/ImportHooks";
 import { axios } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Paper } from "@imports/ImportMuis";
@@ -13,7 +13,7 @@ export const AuthGoogle = () => {
   // 1. common -------------------------------------------------------------------------------------
   const {
     URL_GOOGLE, navigate, TITLE,
-  } = useCommon();
+  } = useCommonValue();
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {

@@ -1,7 +1,7 @@
 // useScrollTop.tsx
 
 import { useEffect } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue } from "@imports/ImportHooks";
 
 // -------------------------------------------------------------------------------------------------
 export const useScrollTop = () => {
@@ -9,7 +9,7 @@ export const useScrollTop = () => {
   // 1. common -------------------------------------------------------------------------------------
   const {
     navigate, location
-  } = useCommon();
+  } = useCommonValue();
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {

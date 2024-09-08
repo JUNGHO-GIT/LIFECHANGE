@@ -1,7 +1,7 @@
 // Time.tsx
 
 import { useEffect, createRef } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
 import { moment } from "@imports/ImportLibs";
 import { Img, Input } from "@imports/ImportComponents";
 import { PopUp } from "@imports/ImportContainers";
@@ -10,7 +10,7 @@ import { DigitalClock, AdapterMoment, LocalizationProvider } from "@imports/Impo
 import { sleep2, sleep3, sleep4, exercise4 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
-interface TimeProps {
+declare interface TimeProps {
   OBJECT: any;
   setOBJECT: any;
   REFS: any;
@@ -27,8 +27,11 @@ export const Time = (
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    firstStr, secondStr, translate
-  } = useCommon();
+    translate
+  } = useTranslate();
+  const {
+    firstStr, secondStr, sessionLocale, sessionTimeZone,
+  } = useCommonValue();
 
   // displayed image, label
   let image = null;
@@ -120,13 +123,16 @@ export const Time = (
         direction={"center"}
         contents={({closePopup}: any) => (
           <Card className={"w-max40vw h-max40vh"}>
-            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+            <LocalizationProvider dateAdapter={AdapterMoment}>
               <DigitalClock
                 timeStep={10}
                 ampm={false}
-                timezone={"Asia/Seoul"}
+                timezone={sessionTimeZone}
                 value={moment(OBJECT?.[`${extra}`], "HH:mm")}
-                sx={{width: "40vw", height: "40vh"}}
+                sx={{
+                  width: "40vw",
+                  height: "40vh"
+                }}
                 onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
                     ...prev,
@@ -167,13 +173,16 @@ export const Time = (
         direction={"center"}
         contents={({closePopup}: any) => (
           <Card className={"w-max40vw h-max40vh"}>
-            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={sessionLocale}>
               <DigitalClock
                 timeStep={10}
                 ampm={false}
-                timezone={"Asia/Seoul"}
+                timezone={sessionTimeZone}
                 value={moment(OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`], "HH:mm")}
-                sx={{width: "40vw", height: "40vh"}}
+                sx={{
+                  width: "40vw",
+                  height: "40vh"
+                }}
                 onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
                     ...prev,

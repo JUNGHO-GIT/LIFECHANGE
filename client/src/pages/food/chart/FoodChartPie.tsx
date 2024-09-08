@@ -1,19 +1,18 @@
 // FoodChartPie.tsx
-// Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
 import { axios } from "@imports/ImportLibs";
 import { Loading } from "@imports/ImportLayouts";
 import { Div, Img, Select } from "@imports/ImportComponents";
 import { PopUp } from "@imports/ImportContainers";
 import { Paper, Card, MenuItem, Grid } from "@imports/ImportMuis";
 import { FormGroup, FormControlLabel, Switch } from "@imports/ImportMuis";
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend, Text } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recharts";
 import { common3_1 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
-interface PieProps {
+declare interface PieProps {
   cx: number;
   cy: number;
   midAngle: number;
@@ -28,18 +27,33 @@ export const FoodChartPie = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    URL_OBJECT, sessionId, COLORS, translate, koreanDate
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    dayFmt,
+    weekStartFmt, weekEndFmt,
+    monthStartFmt, monthEndFmt,
+    yearStartFmt, yearEndFmt,
+  } = useCommonDate();
+  const {
+    URL_OBJECT, sessionId, COLORS,
+  } = useCommonValue();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState(true);
-  const [radius, setRadius] = useState(120);
-  const [SECTION, setSECTION] = useState("today");
-  const [LINE, setLINE] = useState("kcal");
-  const [DATE, setDATE] = useState({
+  const [LOADING, setLOADING] = useState<boolean>(true);
+  const [radius, setRadius] = useState<number>(120);
+  const [SECTION, setSECTION] = useState<string>("today");
+  const [LINE, setLINE] = useState<string>("kcal");
+  const [DATE, setDATE] = useState<any>({
     dateType: "",
-    dateStart: koreanDate,
-    dateEnd: koreanDate,
+    dateStart: dayFmt,
+    dateEnd: dayFmt,
+    weekStartFmt: weekStartFmt,
+    weekEndFmt: weekEndFmt,
+    monthStartFmt: monthStartFmt,
+    monthEndFmt: monthEndFmt,
+    yearStartFmt: yearStartFmt,
+    yearEndFmt: yearEndFmt,
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -67,12 +81,12 @@ export const FoodChartPie = () => {
     name:"Empty",
     value: 100
   }];
-  const [OBJECT_KCAL_TODAY, setOBJECT_KCAL_TODAY] = useState(OBJECT_KCAL_TODAY_DEF);
-  const [OBJECT_NUT_TODAY, setOBJECT_NUT_TODAY] = useState(OBJECT_NUT_TODAY_DEF);
-  const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState(OBJECT_KCAL_WEEK_DEF);
-  const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState(OBJECT_NUT_WEEK_DEF);
-  const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState(OBJECT_KCAL_MONTH_DEF);
-  const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState(OBJECT_NUT_MONTH_DEF);
+  const [OBJECT_KCAL_TODAY, setOBJECT_KCAL_TODAY] = useState<any>(OBJECT_KCAL_TODAY_DEF);
+  const [OBJECT_NUT_TODAY, setOBJECT_NUT_TODAY] = useState<any>(OBJECT_NUT_TODAY_DEF);
+  const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState<any>(OBJECT_KCAL_WEEK_DEF);
+  const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState<any>(OBJECT_NUT_WEEK_DEF);
+  const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState<any>(OBJECT_KCAL_MONTH_DEF);
+  const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState<any>(OBJECT_NUT_MONTH_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -277,7 +291,7 @@ export const FoodChartPie = () => {
           dataKey={"value"}
           minAngle={15}
         >
-          {OBJECT_KCAL_TODAY?.map((entry, index) => (
+          {OBJECT_KCAL_TODAY?.map((entry: any, index: number) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
@@ -324,7 +338,7 @@ export const FoodChartPie = () => {
           dataKey={"value"}
           minAngle={15}
         >
-          {OBJECT_NUT_TODAY?.map((entry, index) => (
+          {OBJECT_NUT_TODAY?.map((entry: any, index: number) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
@@ -371,7 +385,7 @@ export const FoodChartPie = () => {
           dataKey={"value"}
           minAngle={15}
         >
-          {OBJECT_KCAL_WEEK?.map((entry, index) => (
+          {OBJECT_KCAL_WEEK?.map((entry: any, index: number) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
@@ -418,7 +432,7 @@ export const FoodChartPie = () => {
           dataKey={"value"}
           minAngle={15}
         >
-          {OBJECT_NUT_WEEK?.map((entry, index) => (
+          {OBJECT_NUT_WEEK?.map((entry: any, index: number) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
@@ -465,7 +479,7 @@ export const FoodChartPie = () => {
           dataKey={"value"}
           minAngle={15}
         >
-          {OBJECT_KCAL_MONTH?.map((entry, index) => (
+          {OBJECT_KCAL_MONTH?.map((entry: any, index: number) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
@@ -512,7 +526,7 @@ export const FoodChartPie = () => {
           dataKey={"value"}
           minAngle={15}
         >
-          {OBJECT_NUT_MONTH?.map((entry, index) => (
+          {OBJECT_NUT_MONTH?.map((entry: any, index: number) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>

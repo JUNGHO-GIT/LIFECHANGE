@@ -1,13 +1,13 @@
 // Dummy.tsx
 // Node -> Section -> Fragment
 
-import { useCommon } from "@imports/ImportHooks";
+import { useTranslate } from "@imports/ImportHooks";
 import { numeral } from "@imports/ImportLibs";
 import { Input, Select, Btn } from "@imports/ImportComponents";
 import { MenuItem, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-interface DummyProps {
+declare interface DummyProps {
   state: any;
   setState: any;
   flow: any;
@@ -21,7 +21,7 @@ export const Dummy = (
   // 1. common -------------------------------------------------------------------------------------
   const {
     translate
-  } = useCommon();
+  } = useTranslate();
 
   // 7. dummy --------------------------------------------------------------------------------------
   const dummyNode = () => {

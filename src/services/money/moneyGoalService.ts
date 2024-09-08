@@ -8,25 +8,28 @@ export const exist = async (
   DATE_param: Record<string, any>,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
+  let statusResult: string = "";
 
   // date 변수 선언
   const dateType = DATE_param.dateType;
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
-  findResult = await repository.exist.exist(
+  findResult = await repository.exist(
     user_id_param, dateType, dateStart, dateEnd
   );
 
-  // sort by date 날짜 순으로 정렬
   finalResult = findResult[0]?.existDate?.sort((a: string, b: string) => {
     return a > b ? 1 : a < b ? -1 : 0;
   });
 
-  return finalResult;
+  return {
+    status: statusResult,
+    result: finalResult
+  };
 };
 
 // 1-1. list ---------------------------------------------------------------------------------------
@@ -36,7 +39,7 @@ export const list = async (
   PAGING_param: Record<string, any>,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
   let totalCnt: number = 0;
@@ -47,10 +50,11 @@ export const list = async (
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
+  // sort, page 변수 선언
   const sort = PAGING_param.sort === "asc" ? 1 : -1;
-  const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
+  const page = PAGING_param.page || 0;
 
-  totalCnt = await repository.list.cnt(
+  totalCnt = await repository.cnt(
     user_id_param, dateType, dateStart, dateEnd
   );
   findResult = await repository.list.listGoal(
@@ -77,7 +81,7 @@ export const list = async (
     const dateStart = goal?.money_goal_dateStart;
     const dateEnd = goal?.money_goal_dateEnd;
 
-    const listReal = await repository.list.listReal(
+    const listReal = await repository.list(
       user_id_param, dateType, dateStart, dateEnd
     );
 
@@ -108,7 +112,7 @@ export const detail = async (
   DATE_param: Record<string, any>,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
   let sectionCnt: number = 0;
@@ -118,7 +122,7 @@ export const detail = async (
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
-  findResult = await repository.detail.detail(
+  findResult = await repository.detail(
     user_id_param, _id_param, dateType, dateStart, dateEnd
   );
 
@@ -140,9 +144,10 @@ export const save = async (
   DATE_param: Record<string, any>,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
+  let statusResult: string = "";
 
   // date 변수 선언
   const dateType = DATE_param.dateType;
@@ -167,16 +172,17 @@ export const save = async (
   return finalResult
 };
 
-// 4. deletes --------------------------------------------------------------------------------------
+// 5. deletes --------------------------------------------------------------------------------------
 export const deletes = async (
   user_id_param: string,
   _id_param: string,
   DATE_param: Record<string, any>,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
+  let statusResult: string = "";
 
   // date 변수 선언
   const dateType = DATE_param.dateType;
@@ -197,5 +203,8 @@ export const deletes = async (
     finalResult = null;
   }
 
-  return finalResult;
+  return {
+    status: statusResult,
+    result: finalResult
+  };
 };

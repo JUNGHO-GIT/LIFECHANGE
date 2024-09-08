@@ -1,13 +1,13 @@
 // ListFilter.tsx
 // Node -> Section -> Fragment
 
-import { useCommon } from "@imports/ImportHooks";
+import { useTranslate } from "@imports/ImportHooks";
 import { Select, Div } from "@imports/ImportComponents";
 import { Picker } from "@imports/ImportContainers";
 import { MenuItem, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-interface ListFilterProps {
+declare interface ListFilterProps {
   state: any;
   setState: any;
   flow: any;
@@ -21,7 +21,7 @@ export const ListFilter = (
   // 1. common -------------------------------------------------------------------------------------
   const {
     translate
-  } = useCommon();
+  } = useTranslate();
 
   // 7. filter -------------------------------------------------------------------------------------
   const listFilterNode = () => {

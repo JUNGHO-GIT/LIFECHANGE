@@ -2,7 +2,7 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon, useValidateUser } from "@imports/ImportHooks";
+import { useCommonValue, useTranslate, useValidateUser } from "@imports/ImportHooks";
 import { axios } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
@@ -15,8 +15,11 @@ export const UserLogin = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, URL_OBJECT, URL_GOOGLE, ADMIN_ID, ADMIN_PW, translate, TITLE,
-  } = useCommon();
+    translate
+  } = useTranslate();
+  const {
+    navigate, URL_OBJECT, URL_GOOGLE, ADMIN_ID, ADMIN_PW, TITLE,
+  } = useCommonValue();
   const {
     ERRORS, REFS, validate
   } = useValidateUser();
@@ -33,7 +36,7 @@ export const UserLogin = () => {
     user_id: "",
     user_pw: "",
   };
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 트리거가 활성화된 경우

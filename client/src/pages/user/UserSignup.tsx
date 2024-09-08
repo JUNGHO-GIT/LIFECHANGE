@@ -2,7 +2,7 @@
 // Node -> Section -> Fragment
 
 import { useState } from "@imports/ImportReacts";
-import { useCommon, useValidateUser } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useTranslate, useValidateUser } from "@imports/ImportHooks";
 import { axios } from "@imports/ImportLibs";
 import { Loading } from "@imports/ImportLayouts";
 import { Input, Div, Img, Hr, Select, Btn } from "@imports/ImportComponents";
@@ -14,8 +14,11 @@ export const UserSignup = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, URL_OBJECT, URL_GOOGLE, translate
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    navigate, URL_OBJECT, URL_GOOGLE, sessionCurrencyCode
+  } = useCommonValue();
   const {
     ERRORS, REFS, validate
   } = useValidateUser();
@@ -41,7 +44,7 @@ export const UserSignup = () => {
     user_curProperty: "",
     user_image: "",
   };
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSendEmail = async () => {
@@ -408,7 +411,7 @@ export const UserSignup = () => {
                   }
                 }}
                 endadornment={
-                  translate("currency")
+                  sessionCurrencyCode
                 }
               />
             </Grid>

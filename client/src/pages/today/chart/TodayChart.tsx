@@ -1,5 +1,4 @@
 // TodayChart.tsx
-// Node -> Section -> Fragment
 
 import { TodayChartExercise } from "./TodayChartExercise";
 import { TodayChartFood } from "./TodayChartFood";

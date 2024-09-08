@@ -1,8 +1,7 @@
 // SleepChartLine.tsx
-// Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
 import { axios } from "@imports/ImportLibs";
 import { handlerY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
@@ -19,17 +18,32 @@ export const SleepChartLine = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    URL_OBJECT, sessionId, sleepChartArray, COLORS, translate, koreanDate
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    dayFmt,
+    weekStartFmt, weekEndFmt,
+    monthStartFmt, monthEndFmt,
+    yearStartFmt, yearEndFmt,
+  } = useCommonDate();
+  const {
+    URL_OBJECT, sessionId, sleepChartArray, COLORS,
+  } = useCommonValue();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState(true);
-  const [SECTION, setSECTION] = useState("week");
-  const [PART, setPART] = useState(sleepChartArray);
-  const [DATE, setDATE] = useState({
+  const [LOADING, setLOADING] = useState<boolean>(true);
+  const [SECTION, setSECTION] = useState<string>("week");
+  const [PART, setPART] = useState<any>(sleepChartArray);
+  const [DATE, setDATE] = useState<any>({
     dateType: "",
-    dateStart: koreanDate,
-    dateEnd: koreanDate,
+    dateStart: dayFmt,
+    dateEnd: dayFmt,
+    weekStartFmt: weekStartFmt,
+    weekEndFmt: weekEndFmt,
+    monthStartFmt: monthStartFmt,
+    monthEndFmt: monthEndFmt,
+    yearStartFmt: yearStartFmt,
+    yearEndFmt: yearEndFmt,
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -47,8 +61,8 @@ export const SleepChartLine = () => {
     wakeTime: "0",
     sleepTime: "0"
   }];
-  const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEF);
-  const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);
+  const [OBJECT_WEEK, setOBJECT_WEEK] = useState<any>(OBJECT_WEEK_DEF);
+  const [OBJECT_MONTH, setOBJECT_MONTH] = useState<any>(OBJECT_MONTH_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -317,7 +331,7 @@ export const SleepChartLine = () => {
                       onChange={() => {
                         if (PART.includes(key)) {
                           if(PART.length > 1) {
-                            setPART(PART?.filter((item) => (item !== key)));
+                            setPART(PART?.filter((item: any) => item !== key));
                           }
                           else {
                             return;

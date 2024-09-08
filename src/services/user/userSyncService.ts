@@ -9,7 +9,7 @@ export const percent = async (
   DATE_param: Record<string, any>,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findExerciseGoal: any = null;
   let findExercise: any = null;
   let findFoodGoal: any = null;
@@ -19,6 +19,7 @@ export const percent = async (
   let findSleepGoal: any = null;
   let findSleep: any = null;
   let finalResult: any = null;
+  let statusResult: string = "";
 
   // date 변수 선언
   const dateStart = DATE_param.dateStart;
@@ -84,7 +85,10 @@ export const percent = async (
     sleep: findSleep,
   };
 
-  return finalResult;
+  return {
+    status: statusResult,
+    result: finalResult
+  };
 };
 
 // 2. property -------------------------------------------------------------------------------------
@@ -94,12 +98,13 @@ export const property = async (
   DATE_param: Record<string, any>,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findRegDt: any = null;
   let findInitProperty: any = null;
   let findMoney: any = null;
   let finalResult: any = null;
   let curProperty: string = "0";
+  let statusResult: string = "";
 
   // 가입날짜 ~ 현재날짜
   findRegDt = await repository.property.findRegDt(
@@ -141,7 +146,10 @@ export const property = async (
     dateEnd: todayDt,
   };
 
-  return finalResult;
+  return {
+    status: statusResult,
+    result: finalResult
+  };
 };
 
 // 3. scale ----------------------------------------------------------------------------------------
@@ -151,12 +159,13 @@ export const scale = async (
   DATE_param: Record<string, any>,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findRegDt: any = null;
   let findInitScale: any = null;
   let findScaleMinMax: any = null;
   let findScaleCur: any = null;
   let finalResult: any = null;
+  let statusResult: string = "";
 
   // 가입날짜 ~ 현재날짜
   findRegDt = await repository.property.findRegDt(
@@ -198,5 +207,8 @@ export const scale = async (
     dateEnd: todayDt,
   };
 
-  return finalResult;
+  return {
+    status: statusResult,
+    result: finalResult
+  };
 };

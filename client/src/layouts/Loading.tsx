@@ -1,6 +1,6 @@
 // Loading.tsx
 
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue } from "@imports/ImportHooks";
 import { Div } from "@imports/ImportComponents";
 
 // 14. loading -------------------------------------------------------------------------------------
@@ -9,7 +9,7 @@ export const Loading = () => {
   // 1. common -------------------------------------------------------------------------------------
   const {
     PATH
-  } = useCommon();
+  } = useCommonValue();
 
   // 7.loading -------------------------------------------------------------------------------------
   const loadingNode = () => {

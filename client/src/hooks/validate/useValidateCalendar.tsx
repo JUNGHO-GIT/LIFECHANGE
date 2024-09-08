@@ -1,15 +1,18 @@
 // useValidateCalendar.tsx
 
 import { useState, useEffect, createRef, useRef } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue, useTranslate } from "@imports/ImportHooks";
 
 // -------------------------------------------------------------------------------------------------
 export const useValidateCalendar= () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    PATH, translate
-  } = useCommon();
+    PATH,
+  } = useCommonValue();
+  const {
+    translate,
+  } = useTranslate();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [ERRORS, setERRORS] = useState<any>({});
@@ -31,8 +34,8 @@ export const useValidateCalendar= () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    // 1. save
-    if (PATH.includes("calendar/save")) {
+    // 1. save, update
+    if (PATH.includes("calendar/save") || PATH.includes("calendar/update")) {
       const target = [
         "calendar_part_idx",
         "calendar_color",

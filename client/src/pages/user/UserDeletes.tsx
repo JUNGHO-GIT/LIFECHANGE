@@ -2,7 +2,7 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon, useValidateUser } from "@imports/ImportHooks";
+import { useCommonValue, useTranslate, useValidateUser } from "@imports/ImportHooks";
 import { moment, axios } from "@imports/ImportLibs";
 import { Loading } from "@imports/ImportLayouts";
 import { Div, Hr, Input, Btn } from "@imports/ImportComponents";
@@ -13,8 +13,11 @@ export const UserDeletes = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, translate, sessionId, URL_OBJECT
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    navigate, sessionId, URL_OBJECT
+  } = useCommonValue();
   const {
     ERRORS, REFS, validate
   } = useValidateUser();
@@ -40,7 +43,7 @@ export const UserDeletes = () => {
     user_image: "",
     user_regDt: "",
   };
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -122,7 +125,7 @@ export const UserDeletes = () => {
             <Grid size={12}>
               <TextArea
                 className={"border radius resize-none cursor-none w-100p p-10"}
-                value={`탈퇴 후에는 복구가 불가능합니다.\n정말로 탈퇴하시겠습니까?`}
+                value={translate("deletesUser")}
               />
             </Grid>
           </Grid>

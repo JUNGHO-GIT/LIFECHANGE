@@ -2,7 +2,7 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon, useStorage } from "@imports/ImportHooks";
+import { useCommonValue, useTranslate, useStorage } from "@imports/ImportHooks";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { axios, numeral } from "@imports/ImportLibs";
 import { Div } from "@imports/ImportComponents";
@@ -14,19 +14,22 @@ export const UserDummy = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, PATH, URL_OBJECT, sessionId, translate, TITLE,
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    navigate, PATH, URL_OBJECT, sessionId, TITLE,
+  } = useCommonValue();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [PART, setPART] = useState("exerciseGoal");
+  const [PART, setPART] = useState<string>("exerciseGoal");
   const [PAGING, setPAGING] = useStorage(
     `${TITLE}_paging_(${PATH})`, {
       sort: "asc",
       page: 1,
     }
   );
-  const [COUNT, setCOUNT] = useState({
+  const [COUNT, setCOUNT] = useState<any>({
     inputCnt: 0,
     totalCnt: 0,
     sectionCnt: 0
@@ -155,14 +158,14 @@ export const UserDummy = () => {
       sleep_sleepTime: "00:00",
     }],
   }];
-  const [OBJECT_EXERCISE_GOAL, setOBJECT_EXERCISE_GOAL] = useState(OBJECT_EXERCISE_GOAL_DEF);
-  const [OBJECT_FOOD_GOAL, setOBJECT_FOOD_GOAL] = useState(OBJECT_FOOD_GOAL_DEF);
-  const [OBJECT_MONEY_GOAL, setOBJECT_MONEY_GOAL] = useState(OBJECT_MONEY_GOAL_DEF);
-  const [OBJECT_SLEEP_GOAL, setOBJECT_SLEEP_GOAL] = useState(OBJECT_SLEEP_GOAL_DEF);
-  const [OBJECT_EXERCISE, setOBJECT_EXERCISE] = useState(OBJECT_EXERCISE_DEF);
-  const [OBJECT_FOOD, setOBJECT_FOOD] = useState(OBJECT_FOOD_DEF);
-  const [OBJECT_MONEY, setOBJECT_MONEY] = useState(OBJECT_MONEY_DEF);
-  const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState(OBJECT_SLEEP_DEF);
+  const [OBJECT_EXERCISE_GOAL, setOBJECT_EXERCISE_GOAL] = useState<any>(OBJECT_EXERCISE_GOAL_DEF);
+  const [OBJECT_FOOD_GOAL, setOBJECT_FOOD_GOAL] = useState<any>(OBJECT_FOOD_GOAL_DEF);
+  const [OBJECT_MONEY_GOAL, setOBJECT_MONEY_GOAL] = useState<any>(OBJECT_MONEY_GOAL_DEF);
+  const [OBJECT_SLEEP_GOAL, setOBJECT_SLEEP_GOAL] = useState<any>(OBJECT_SLEEP_GOAL_DEF);
+  const [OBJECT_EXERCISE, setOBJECT_EXERCISE] = useState<any>(OBJECT_EXERCISE_DEF);
+  const [OBJECT_FOOD, setOBJECT_FOOD] = useState<any>(OBJECT_FOOD_DEF);
+  const [OBJECT_MONEY, setOBJECT_MONEY] = useState<any>(OBJECT_MONEY_DEF);
+  const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState<any>(OBJECT_SLEEP_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {

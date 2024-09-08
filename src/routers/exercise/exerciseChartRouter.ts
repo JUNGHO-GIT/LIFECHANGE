@@ -8,22 +8,29 @@ export const router = express.Router();
 // 1-1. chart (bar - today) ------------------------------------------------------------------------
 router.get("/bar/today", async (req: Request, res: Response) => {
   try {
-    let result = await service.barToday (
+    let finalResult = await service.barToday (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
-    if (result) {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "searchSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "searchFailed",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "searchFailed",
-        result: null,
+        msg: "searchError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -31,7 +38,8 @@ router.get("/bar/today", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -39,22 +47,29 @@ router.get("/bar/today", async (req: Request, res: Response) => {
 // 1-2. chart (bar - week) -------------------------------------------------------------------------
 router.get("/bar/week", async (req: Request, res: Response) => {
   try {
-    let result = await service.barWeek (
+    let finalResult = await service.barWeek (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
-    if (result) {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "searchSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "searchFailed",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "searchFailed",
-        result: null,
+        msg: "searchError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -62,7 +77,8 @@ router.get("/bar/week", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -70,22 +86,29 @@ router.get("/bar/week", async (req: Request, res: Response) => {
 // 1-3. chart (bar - month) ------------------------------------------------------------------------
 router.get("/bar/month", async (req: Request, res: Response) => {
   try {
-    let result = await service.barMonth (
+    let finalResult = await service.barMonth (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
-    if (result) {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "searchSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "searchFailed",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "searchFailed",
-        result: null,
+        msg: "searchError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -93,7 +116,8 @@ router.get("/bar/month", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -101,22 +125,29 @@ router.get("/bar/month", async (req: Request, res: Response) => {
 // 2-1. chart (pie - week) -------------------------------------------------------------------------
 router.get("/pie/week", async (req: Request, res: Response) => {
   try {
-    let result = await service.pieWeek (
+    let finalResult = await service.pieWeek (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
-    if (result) {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "searchSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "searchFailed",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "searchFailed",
-        result: null,
+        msg: "searchError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -124,7 +155,8 @@ router.get("/pie/week", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -132,22 +164,29 @@ router.get("/pie/week", async (req: Request, res: Response) => {
 // 2-2. chart (pie - month) ------------------------------------------------------------------------
 router.get("/pie/month", async (req: Request, res: Response) => {
   try {
-    let result = await service.pieMonth (
+    let finalResult = await service.pieMonth (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
-    if (result) {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "searchSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "searchFailed",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "searchFailed",
-        result: null,
+        msg: "searchError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -155,7 +194,8 @@ router.get("/pie/month", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -163,22 +203,29 @@ router.get("/pie/month", async (req: Request, res: Response) => {
 // 3-1. chart (line - week) ------------------------------------------------------------------------
 router.get("/line/week", async (req: Request, res: Response) => {
   try {
-    let result = await service.lineWeek (
+    let finalResult = await service.lineWeek (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
-    if (result) {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "searchSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "searchFailed",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "searchFailed",
-        result: null,
+        msg: "searchError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -186,7 +233,8 @@ router.get("/line/week", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -194,22 +242,29 @@ router.get("/line/week", async (req: Request, res: Response) => {
 // 3-2. chart (line - month) -----------------------------------------------------------------------
 router.get("/line/month", async (req: Request, res: Response) => {
   try {
-    let result = await service.lineMonth (
+    let finalResult = await service.lineMonth (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
-    if (result) {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "searchSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "searchFailed",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "searchFailed",
-        result: null,
+        msg: "searchError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -217,7 +272,8 @@ router.get("/line/month", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -225,22 +281,29 @@ router.get("/line/month", async (req: Request, res: Response) => {
 // 0-3. chart (avg - week) -------------------------------------------------------------------------
 router.get("/avg/week", async (req: Request, res: Response) => {
   try {
-    let result = await service.avgWeek (
+    let finalResult = await service.avgWeek (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
-    if (result) {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "searchSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "searchFailed",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "searchFailed",
-        result: null,
+        msg: "searchError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -248,7 +311,8 @@ router.get("/avg/week", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -256,22 +320,29 @@ router.get("/avg/week", async (req: Request, res: Response) => {
 // 4-2. chart (avg - month) ------------------------------------------------------------------------
 router.get("/avg/month", async (req: Request, res: Response) => {
   try {
-    let result = await service.avgMonth (
+    let finalResult = await service.avgMonth (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
-    if (result) {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "searchSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "searchFailed",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "searchFailed",
-        result: null,
+        msg: "searchError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -279,7 +350,8 @@ router.get("/avg/month", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });

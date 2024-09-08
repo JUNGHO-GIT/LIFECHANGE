@@ -1,11 +1,11 @@
 // Empty.tsx
 
-import { useCommon } from "@imports/ImportHooks";
+import { useTranslate } from "@imports/ImportHooks";
 import { Div, Icons } from "@imports/ImportComponents";
 import { Card, Accordion, AccordionSummary, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-interface EmptyProps {
+declare interface EmptyProps {
   SEND: any;
   DATE: any;
   navigate: any;
@@ -21,7 +21,7 @@ export const Empty = (
   // 1. common -------------------------------------------------------------------------------------
   const {
     translate
-  } = useCommon();
+  } = useTranslate();
 
   // 3. navigateStr --------------------------------------------------------------------------------
   const navigateStr = (
@@ -73,7 +73,7 @@ export const Empty = (
             >
               <Grid size={2} className={"d-center"}>
                 <Icons
-                  name={"TbSearch"}
+                  name={"Search"}
                   className={"w-18 h-18 black"}
                 />
               </Grid>

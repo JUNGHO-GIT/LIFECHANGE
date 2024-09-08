@@ -1,15 +1,18 @@
 // useValidateSleep.tsx
 
 import { useState, useEffect, createRef, useRef } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue, useTranslate } from "@imports/ImportHooks";
 
 // -------------------------------------------------------------------------------------------------
 export const useValidateSleep= () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    PATH, translate
-  } = useCommon();
+    PATH,
+  } = useCommonValue();
+  const {
+    translate,
+  } = useTranslate();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [ERRORS, setERRORS] = useState<any>({});
@@ -31,8 +34,8 @@ export const useValidateSleep= () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    // 1. goal/save
-    if (PATH.includes("sleep/goal/save")) {
+    // 1. goal/save, update
+    if (PATH.includes("sleep/goal/save") || PATH.includes("sleep/goal/update")) {
       const target = [
         "sleep_goal_bedTime",
         "sleep_goal_wakeTime",
@@ -72,8 +75,8 @@ export const useValidateSleep= () => {
       };
     }
 
-    // 2. save
-    else if (PATH.includes("sleep/save")) {
+    // 2. save, update
+    else if (PATH.includes("sleep/save") || PATH.includes("sleep/update")) {
       const target = [
         "sleep_bedTime",
         "sleep_wakeTime",

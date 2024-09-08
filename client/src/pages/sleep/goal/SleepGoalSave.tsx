@@ -2,8 +2,9 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon, useTime, useValidateSleep } from "@imports/ImportHooks";
-import { moment, axios } from "@imports/ImportLibs";
+import { useCommonValue, useCommonDate, useTranslate, useTime } from "@imports/ImportHooks";
+import { useValidateSleep } from "@imports/ImportHooks";
+import { axios } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Bg } from "@imports/ImportComponents";
@@ -15,31 +16,37 @@ export const SleepGoalSave = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, koreanDate, URL_OBJECT, sessionId, translate
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    dayFmt, getMonthStartFmt, getMonthEndFmt
+  } = useCommonDate();
+  const {
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId,
+  } = useCommonValue();
   const {
     ERRORS, REFS, validate
   } = useValidateSleep();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [EXIST, setEXIST] = useState([""]);
-  const [SEND, setSEND] = useState({
+  const [EXIST, setEXIST] = useState<any[]>([""]);
+  const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     toList:"/sleep/goal/list"
   });
-  const [COUNT, setCOUNT] = useState({
+  const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
   });
-  const [DATE, setDATE] = useState({
-    dateType: location_dateType,
-    dateStart: location_dateStart || koreanDate,
-    dateEnd: location_dateEnd || koreanDate,
+  const [DATE, setDATE] = useState<any>({
+    dateType: location_dateType || "",
+    dateStart: location_dateStart || dayFmt,
+    dateEnd: location_dateEnd || dayFmt,
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -54,33 +61,28 @@ export const SleepGoalSave = () => {
     sleep_goal_wakeTime: "00:00",
     sleep_goal_sleepTime: "00:00",
   };
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "goal");
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    setLOADING(true);
     axios.get(`${URL_OBJECT}/exist`, {
       params: {
         user_id: sessionId,
         DATE: {
           dateType: "",
-          dateStart: moment(DATE.dateStart).startOf("month").format("YYYY-MM-DD"),
-          dateEnd: moment(DATE.dateEnd).endOf("month").format("YYYY-MM-DD")
+          dateStart: getMonthStartFmt(DATE.dateStart),
+          dateEnd: getMonthEndFmt(DATE.dateEnd),
         },
       },
     })
     .then((res: any) => {
       setEXIST(res.data.result || []);
-      setLOADING(false);
     })
     .catch((err: any) => {
       console.error(err);
-    })
-    .finally(() => {
-      setLOADING(false);
     });
   }, [sessionId, DATE.dateStart, DATE.dateEnd]);
 

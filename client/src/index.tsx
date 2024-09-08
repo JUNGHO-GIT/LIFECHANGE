@@ -19,7 +19,7 @@ import {
 } from "@imports/ImportMuis";
 
 import {
-  useRoot, useScrollTop, useSessionStorage, LanguageProvider
+  useRoot, useScrollTop, useSessionStorage, LanguageProvider, useTimezone
 } from "@imports/ImportHooks";
 
 import {
@@ -27,7 +27,8 @@ import {
 } from "@imports/ImportLayouts";
 
 import {
-  CalendarList, CalendarSave, TodayChart, TodayGoalList, TodayList, ExerciseChart, ExerciseGoalList, ExerciseGoalSave, ExerciseList, ExerciseSave, FoodChart, FoodGoalList, FoodGoalSave, FoodFind, FoodList, FoodSave, MoneyChart, MoneyGoalList, MoneyGoalSave, MoneyList, MoneySave, SleepChart, SleepGoalList, SleepGoalSave, SleepList, SleepSave, UserCategory, UserDetail, UserDummy, UserAppSetting, UserDeletes, UserAppInfo, UserSignup, UserLogin, UserResetPw, AuthPrivacy, AuthGoogle, AuthError
+  CalendarList, CalendarSave, CalendarUpdate,
+  TodayChart, TodayGoalList, TodayList, ExerciseChart, ExerciseGoalList, ExerciseGoalSave, ExerciseList, ExerciseSave, FoodChart, FoodGoalList, FoodGoalSave, FoodFind, FoodList, FoodSave, MoneyChart, MoneyGoalList, MoneyGoalSave, MoneyList, MoneySave, SleepChart, SleepGoalList, SleepGoalSave, SleepList, SleepSave, UserCategory, UserDetail, UserDummy, UserAppSetting, UserDeletes, UserAppInfo, UserSignup, UserLogin, UserResetPw, AuthPrivacy, AuthGoogle, AuthError
 } from "@imports/ImportPages";
 
 // -------------------------------------------------------------------------------------------------
@@ -35,6 +36,7 @@ const Calendar = () => (
   <Routes>
     <Route path="/list" element={<CalendarList />} />
     <Route path="/save" element={<CalendarSave />} />
+    <Route path="/update" element={<CalendarUpdate />} />
   </Routes>
 );
 // -------------------------------------------------------------------------------------------------
@@ -114,6 +116,7 @@ const Auth = () => (
 const App = () => {
 
   useRoot();
+  useTimezone();
   useScrollTop();
   useSessionStorage();
 

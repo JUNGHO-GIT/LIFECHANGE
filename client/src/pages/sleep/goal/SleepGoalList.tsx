@@ -2,8 +2,8 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon, useStorage } from "@imports/ImportHooks";
-import { axios, moment } from "@imports/ImportLibs";
+import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
+import { axios } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div, Img, Hr, Icons } from "@imports/ImportComponents";
 import { Empty } from "@imports/ImportContainers";
@@ -16,16 +16,22 @@ export const SleepGoalList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, translate, koreanDate, TITLE,
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    dayFmt, getDayNotFmt,
+  } = useCommonDate();
+  const {
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE,
+  } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
   const [DATE, setDATE] = useStorage(
     `${TITLE}_date_(${PATH})`, {
-      dateType: "",
-      dateStart: location_dateStart || koreanDate,
-      dateEnd: location_dateEnd || koreanDate,
+      dateType: location_dateType || "",
+      dateStart: location_dateStart || dayFmt,
+      dateEnd: location_dateEnd || dayFmt,
     }
   );
   const [PAGING, setPAGING] = useStorage(
@@ -38,14 +44,14 @@ export const SleepGoalList = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [isExpanded, setIsExpanded] = useState<number[]>([0]);
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [SEND, setSEND] = useState({
+  const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     toSave: "/sleep/goal/save",
   });
-  const [COUNT, setCOUNT] = useState({
+  const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
@@ -81,7 +87,7 @@ export const SleepGoalList = () => {
     sleep_diff_sleepTime: "00:00",
     sleep_diff_sleepTime_color: ""
   }];
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -132,7 +138,7 @@ export const SleepGoalList = () => {
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
               <AccordionSummary expandIcon={
                 <Icons
-                  name={"TbChevronDown"}
+                  name={"ChevronDown"}
                   className={"w-18 h-18 black"}
                   onClick={(e: any) => {
                     setIsExpanded(isExpanded.includes(index)
@@ -157,7 +163,7 @@ export const SleepGoalList = () => {
                 >
                   <Grid size={2} className={"d-center"}>
                     <Icons
-                      name={"TbSearch"}
+                      name={"Search"}
                       className={"w-18 h-18 black"}
                     />
                   </Grid>
@@ -168,7 +174,7 @@ export const SleepGoalList = () => {
                           {item.sleep_goal_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(moment(item.sleep_goal_dateStart).format("ddd"))}
+                          {translate(getDayNotFmt(item.sleep_goal_dateStart).format("ddd"))}
                         </Div>
                       </>
                     ) : (
@@ -177,7 +183,7 @@ export const SleepGoalList = () => {
                           {item.sleep_goal_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(moment(item.sleep_goal_dateStart).format("ddd"))}
+                          {translate(getDayNotFmt(item.sleep_goal_dateStart).format("ddd"))}
                         </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
@@ -186,7 +192,7 @@ export const SleepGoalList = () => {
                           {item.sleep_goal_dateEnd?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(moment(item.sleep_goal_dateEnd).format("ddd"))}
+                          {translate(getDayNotFmt(item.sleep_goal_dateEnd).format("ddd"))}
                         </Div>
                       </>
                     )}

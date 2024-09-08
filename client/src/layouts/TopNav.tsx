@@ -2,7 +2,7 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
 import { moment, numeral } from "@imports/ImportLibs";
 import { Tabs, Tab, Paper, Grid, Card } from "@imports/ImportMuis";
 import { Div, Img, Hr, Input } from "@imports/ImportComponents";
@@ -16,9 +16,14 @@ export const TopNav = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, location, translate, firstStr, secondStr, koreanDate, TITLE,
-    sessionPercent, sessionProperty, sessionScale, PATH,
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    navigate, firstStr, secondStr, TITLE, sessionPercent, sessionProperty, sessionScale, PATH, sessionTimeZone, sessionCurrencyCode,
+  } = useCommonValue();
+  const {
+    dayFmt,
+  } = useCommonDate();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [percent, setPercent] = useState<any>({
@@ -229,8 +234,8 @@ export const TopNav = () => {
     navigate(url, {
       state: {
         dateType: "",
-        dateStart: koreanDate,
-        dateEnd: koreanDate
+        dateStart: dayFmt,
+        dateEnd: dayFmt,
       }
     });
   };
@@ -248,7 +253,7 @@ export const TopNav = () => {
             <Grid container spacing={2}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
-                  {moment().tz("Asia/Seoul").format("YYYY-MM-DD (ddd)")}
+                  {moment().tz(sessionTimeZone).format("YYYY-MM-DD (ddd)")}
                 </Div>
               </Grid>
               <Hr px={20} />
@@ -364,7 +369,7 @@ export const TopNav = () => {
                     <Img src={money2} className={"w-16 h-16"} />
                   }
                   endadornment={
-                    translate("currency")
+                    sessionCurrencyCode
                   }
                 />
               </Grid>
@@ -377,7 +382,7 @@ export const TopNav = () => {
                     <Img src={money2} className={"w-16 h-16"} />
                   }
                   endadornment={
-                    translate("currency")
+                    sessionCurrencyCode
                   }
                 />
               </Grid>
@@ -390,7 +395,7 @@ export const TopNav = () => {
                     <Img src={money2} className={"w-16 h-16"} />
                   }
                   endadornment={
-                    translate("currency")
+                    sessionCurrencyCode
                   }
                 />
               </Grid>

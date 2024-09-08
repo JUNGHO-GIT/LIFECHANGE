@@ -3,7 +3,7 @@
 import { Icons, Div } from "@imports/ImportComponents";
 
 // -------------------------------------------------------------------------------------------------
-interface DeleteProps {
+declare interface DeleteProps {
   index: number;
   handlerDelete: any;
 }
@@ -17,7 +17,7 @@ export const Delete = (
   const deleteNode = () => (
     <Div className={"mt-n10 me-n10"}>
       <Icons
-        name={"TbX"}
+        name={"X"}
         onClick={() => handlerDelete(index)}
         className={"w-20 h-20 black"}
       />

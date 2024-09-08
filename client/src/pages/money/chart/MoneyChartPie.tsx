@@ -1,8 +1,7 @@
 // MoneyChartPie.tsx
-// Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
 import { axios } from "@imports/ImportLibs";
 import { Loading } from "@imports/ImportLayouts";
 import { Div, Img, Select} from "@imports/ImportComponents";
@@ -13,7 +12,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recha
 import { common3_1 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
-interface PieProps {
+declare interface PieProps {
   cx: number;
   cy: number;
   midAngle: number;
@@ -28,18 +27,33 @@ export const MoneyChartPie = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    URL_OBJECT, sessionId, COLORS, translate, koreanDate
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    dayFmt,
+    weekStartFmt, weekEndFmt,
+    monthStartFmt, monthEndFmt,
+    yearStartFmt, yearEndFmt,
+  } = useCommonDate();
+  const {
+    URL_OBJECT, sessionId, COLORS,
+  } = useCommonValue();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState(true);
-  const [radius, setRadius] = useState(120);
-  const [SECTION, setSECTION] = useState("today");
-  const [LINE, setLINE] = useState("income");
-  const [DATE, setDATE] = useState({
+  const [LOADING, setLOADING] = useState<boolean>(true);
+  const [radius, setRadius] = useState<number>(120);
+  const [SECTION, setSECTION] = useState<string>("today");
+  const [LINE, setLINE] = useState<string>("income");
+  const [DATE, setDATE] = useState<any>({
     dateType: "",
-    dateStart: koreanDate,
-    dateEnd: koreanDate,
+    dateStart: dayFmt,
+    dateEnd: dayFmt,
+    weekStartFmt: weekStartFmt,
+    weekEndFmt: weekEndFmt,
+    monthStartFmt: monthStartFmt,
+    monthEndFmt: monthEndFmt,
+    yearStartFmt: yearStartFmt,
+    yearEndFmt: yearEndFmt,
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -67,12 +81,12 @@ export const MoneyChartPie = () => {
     name:"Empty",
     value: 100,
   }];
-  const [OBJECT_IN_TODAY, setOBJECT_IN_TODAY] = useState(OBJECT_IN_TODAY_DEF);
-  const [OBJECT_OUT_TODAY, setOBJECT_OUT_TODAY] = useState(OBJECT_OUT_TODAY_DEF);
-  const [OBJECT_IN_WEEK, setOBJECT_IN_WEEK] = useState(OBJECT_IN_WEEK_DEF);
-  const [OBJECT_OUT_WEEK, setOBJECT_OUT_WEEK] = useState(OBJECT_OUT_WEEK_DEF);
-  const [OBJECT_IN_MONTH, setOBJECT_IN_MONTH] = useState(OBJECT_IN_MONTH_DEF);
-  const [OBJECT_OUT_MONTH, setOBJECT_OUT_MONTH] = useState(OBJECT_OUT_MONTH_DEF);
+  const [OBJECT_IN_TODAY, setOBJECT_IN_TODAY] = useState<any>(OBJECT_IN_TODAY_DEF);
+  const [OBJECT_OUT_TODAY, setOBJECT_OUT_TODAY] = useState<any>(OBJECT_OUT_TODAY_DEF);
+  const [OBJECT_IN_WEEK, setOBJECT_IN_WEEK] = useState<any>(OBJECT_IN_WEEK_DEF);
+  const [OBJECT_OUT_WEEK, setOBJECT_OUT_WEEK] = useState<any>(OBJECT_OUT_WEEK_DEF);
+  const [OBJECT_IN_MONTH, setOBJECT_IN_MONTH] = useState<any>(OBJECT_IN_MONTH_DEF);
+  const [OBJECT_OUT_MONTH, setOBJECT_OUT_MONTH] = useState<any>(OBJECT_OUT_MONTH_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -259,7 +273,7 @@ export const MoneyChartPie = () => {
           dataKey={"value"}
           minAngle={15}
         >
-          {OBJECT_IN_TODAY?.map((entry, index) => (
+          {OBJECT_IN_TODAY?.map((entry: any, index: number) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
@@ -306,7 +320,7 @@ export const MoneyChartPie = () => {
           dataKey={"value"}
           minAngle={15}
         >
-          {OBJECT_OUT_TODAY?.map((entry, index) => (
+          {OBJECT_OUT_TODAY?.map((entry: any, index: number) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
@@ -353,7 +367,7 @@ export const MoneyChartPie = () => {
           dataKey={"value"}
           minAngle={15}
         >
-          {OBJECT_IN_WEEK?.map((entry, index) => (
+          {OBJECT_IN_WEEK?.map((entry: any, index: number) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
@@ -400,7 +414,7 @@ export const MoneyChartPie = () => {
           dataKey={"value"}
           minAngle={15}
         >
-          {OBJECT_OUT_WEEK?.map((entry, index) => (
+          {OBJECT_OUT_WEEK?.map((entry: any, index: number) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
@@ -447,7 +461,7 @@ export const MoneyChartPie = () => {
           dataKey={"value"}
           minAngle={15}
         >
-          {OBJECT_IN_MONTH?.map((entry, index) => (
+          {OBJECT_IN_MONTH?.map((entry: any, index: number) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
@@ -494,7 +508,7 @@ export const MoneyChartPie = () => {
           dataKey={"value"}
           minAngle={15}
         >
-          {OBJECT_OUT_MONTH?.map((entry, index) => (
+          {OBJECT_OUT_MONTH?.map((entry: any, index: number) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>

@@ -2,9 +2,9 @@
 
 import * as repository from "@repositories/food/foodChartRepository";
 import moment from "moment-timezone";
-import { curWeekStart, curWeekEnd } from "@assets/scripts/date";
+import { curWeekStart, curWeekEnd } from "@scripts/date";
 import { curMonthStart, curMonthEnd } from "@assets/scripts/date";
-import { curYearStart, curYearEnd } from "@assets/scripts/date";
+import { curYearStart, curYearEnd } from "@scripts/date";
 
 // 1-1. chart (bar - today) ------------------------------------------------------------------------
 export const barToday = async (
@@ -12,13 +12,13 @@ export const barToday = async (
   DATE_param: Record<string, any>,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResultGoal: any[] = [];
   let findResultReal: any[] = [];
   let finalResultKcal: any[] = [];
   let finalResultNut: any[] = [];
 
-  // dateStart, dateEnd 정의
+  // date 변수 정의
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
@@ -73,13 +73,13 @@ export const pieToday = async (
   DATE_param: Record<string, any>,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResultKcal: any[] = [];
   let findResultNut: any[] = [];
   let finalResultKcal: any[] = [];
   let finalResultNut: any[] = [];
 
-  // dateStart, dateEnd 정의
+  // date 변수 정의
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
@@ -129,17 +129,15 @@ export const pieWeek = async (
   DATE_param: Record<string, any>,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResultKcal: any[] = [];
   let findResultNut: any[] = [];
   let finalResultKcal: any[] = [];
   let finalResultNut: any[] = [];
 
-  // dateStart, dateEnd 정의
-  const dateStart
-    = moment(DATE_param.dateStart).tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD");
-  const dateEnd
-    = moment(DATE_param.dateEnd).tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD");
+  // date 변수 정의
+  const dateStart = DATE_param.weekStartFmt;
+  const dateEnd = DATE_param.weekEndFmt;
 
   // promise 사용하여 병렬 처리
   [findResultKcal, findResultNut] = await Promise.all([
@@ -187,17 +185,15 @@ export const pieMonth = async (
   DATE_param: Record<string, any>,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResultKcal: any[] = [];
   let findResultNut: any[] = [];
   let finalResultKcal: any[] = [];
   let finalResultNut: any[] = [];
 
-  // dateStart, dateEnd 정의
-  const dateStart
-    = moment(DATE_param.dateStart).tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD");
-  const dateEnd
-    = moment(DATE_param.dateEnd).tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD");
+  // date 변수 정의
+  const dateStart = DATE_param.monthStartFmt;
+  const dateEnd = DATE_param.monthEndFmt;
 
   // promise 사용하여 병렬 처리
   [findResultKcal, findResultNut] = await Promise.all([
@@ -244,7 +240,7 @@ export const lineWeek = async (
   DATE_param: Record<string, any>,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResultKcal: any[] = [];
   let findResultNut: any[] = [];
   let finalResultKcal: any[] = [];
@@ -260,11 +256,9 @@ export const lineWeek = async (
     return curWeekStart.clone().add(i, 'days').format("MM-DD");
   });
 
-  // dateStart, dateEnd 정의
-  const dateStart
-    = moment(DATE_param.dateStart).tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD");
-  const dateEnd
-    = moment(DATE_param.dateEnd).tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD");
+  // date 변수 정의
+  const dateStart = DATE_param.weekStartFmt;
+  const dateEnd = DATE_param.weekEndFmt;
 
   // promise 사용하여 병렬 처리
   [findResultKcal, findResultNut] = await Promise.all([
@@ -278,13 +272,13 @@ export const lineWeek = async (
 
   // name 배열 순회하며 결과 저장
   name.forEach((data, index) => {
-    const targetDate = curWeekStart.clone().add(index, 'days').format("YYYY-MM-DD");
+    const targetDay = curWeekStart.clone().add(index, 'days').format("YYYY-MM-DD");
 
     const findIndexKcal = findResultKcal.findIndex((item) => (
-      item.food_dateStart === targetDate
+      item.food_dateStart === targetDay
     ));
     const findIndexNut = findResultNut.findIndex((item) => (
-      item.food_dateStart === targetDate
+      item.food_dateStart === targetDay
     ));
 
     finalResultKcal.push({
@@ -325,25 +319,23 @@ export const lineMonth = async (
   DATE_param: Record<string, any>,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResultKcal: any[] = [];
   let findResultNut: any[] = [];
   let finalResultKcal: any[] = [];
   let finalResultNut: any[] = [];
 
   // ex. 00일
-  const name = Array.from({ length: curMonthEnd.date() }, (_, i) => `${i + 1}`);
+  const name = Array.from({ length: monthEndFmt.date() }, (_, i) => `${i + 1}`);
 
   // ex. 00-00
-  const date = Array.from({ length: curMonthEnd.date() }, (_, i) => {
-    return curMonthStart.clone().add(i, 'days').format("MM-DD");
+  const date = Array.from({ length: monthEndFmt.date() }, (_, i) => {
+    return monthStartFmt.clone().add(i, 'days').format("MM-DD");
   });
 
-  // dateStart, dateEnd 정의
-  const dateStart
-    = moment(DATE_param.dateStart).tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD");
-  const dateEnd
-    = moment(DATE_param.dateEnd).tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD");
+  // date 변수 정의
+  const dateStart = DATE_param.monthStartFmt;
+  const dateEnd = DATE_param.monthEndFmt;
 
   // promise 사용하여 병렬 처리
   [findResultKcal, findResultNut] = await Promise.all([
@@ -357,13 +349,13 @@ export const lineMonth = async (
 
   // name 배열을 순회하며 결과 저장
   name.forEach((data, index) => {
-    const targetDate = curMonthStart.clone().add(index, 'days').format("YYYY-MM-DD");
+    const targetDay = monthStartFmt.clone().add(index, 'days').format("YYYY-MM-DD");
 
     const findIndexKcal = findResultKcal.findIndex((item) => (
-      item.food_dateStart === targetDate
+      item.food_dateStart === targetDay
     ));
     const findIndexNut = findResultNut.findIndex((item) => (
-      item.food_dateStart === targetDate
+      item.food_dateStart === targetDay
     ));
 
     finalResultKcal.push({
@@ -404,7 +396,7 @@ export const avgWeek = async (
   DATE_param: Record<string, any>,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResultKcal: any[] = [];
   let findResultNut: any[] = [];
   let finalResultKcal: any[] = [];
@@ -420,7 +412,7 @@ export const avgWeek = async (
 
   // weekStartDate 정의
   const weekStartDate = Array.from({ length: 5 }, (_, i) =>
-    moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").add(i, 'weeks')
+    moment(monthStartFmt).tz("Asia/Seoul").startOf("isoWeek").add(i, 'weeks')
   );
 
   // ex. 00주차
@@ -510,7 +502,7 @@ export const avgMonth = async (
   DATE_param: Record<string, any>,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResultKcal: any[] = [];
   let findResultNut: any[] = [];
   let finalResultKcal: any[] = [];
@@ -530,9 +522,9 @@ export const avgMonth = async (
   );
 
   // ex. 00 월
-  const name = Array.from({ length: 12 }, (_, i) => {
-    return `month${i + 1}`;
-  });
+  const name = Array.from({ length: 12 }, (_, i) => (
+    `month${i + 1}`
+  ));
 
   // ex. 00-00 ~ 00-00
   const date = Array.from({ length: 12 }, (_, i) => {

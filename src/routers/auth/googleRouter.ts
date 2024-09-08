@@ -10,20 +10,28 @@ dotenv.config();
 // 1. login ----------------------------------------------------------------------------------------
 router.get("/login", async (req: Request, res: Response) => {
   try {
-    let result = await service.login();
-    if (result) {
-      // Google 로그인 페이지로 리디렉트 url 리턴
+    let finalResult = await service.login();
+
+    // Google 로그인 페이지로 리디렉트 url 리턴
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "authenticationUrlGeneratedSuccessfully",
-        url: result.url,
+        status: finalResult.status,
+        url: finalResult.url,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "authenticationUrlGenerationFailed",
+        status: finalResult.status,
+        url: finalResult.url,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "authenticationUrlGenerationFailed",
-        result: null,
+        msg: "authenticationUrlGenerationError",
+        status: finalResult.status,
+        url: finalResult.url,
       });
     }
   }
@@ -31,7 +39,8 @@ router.get("/login", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -39,16 +48,22 @@ router.get("/login", async (req: Request, res: Response) => {
 // 2. callback -------------------------------------------------------------------------------------
 router.get("/callback", async (req: Request, res: Response) => {
   try {
-    let result = await service.callback(
+    let finalResult = await service.callback(
       req.query.code as string,
     );
-    if (result.status === "success") {
-      res.redirect(result.url);
+    if (finalResult.status === "success") {
+      res.redirect(finalResult.url);
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "callbackFailed",
+        status: finalResult.status,
+      });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "callbackFailed"
+        msg: "callbackError",
+        status: finalResult.status,
       });
     }
   }
@@ -56,7 +71,8 @@ router.get("/callback", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -64,22 +80,35 @@ router.get("/callback", async (req: Request, res: Response) => {
 // 3. afterCallback --------------------------------------------------------------------------------
 router.get("/afterCallback", async (req: Request, res: Response) => {
   try {
-    let result = await service.afterCallback();
-    if (result) {
+    let finalResult = await service.afterCallback();
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "googleLoginSuccessful",
-        result: result.result,
-        admin: result.admin,
-        googleId: result.googleId,
-        googlePw: result.googlePw,
+        status: finalResult.status,
+        admin: finalResult.admin,
+        googleId: finalResult.googleId,
+        googlePw: finalResult.googlePw,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "googleLoginFailed",
+        status: finalResult.status,
+        admin: finalResult.admin,
+        googleId: finalResult.googleId,
+        googlePw: finalResult.googlePw,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "googleLoginFailed",
-        result: null,
+        msg: "googleLoginError",
+        status: finalResult.status,
+        admin: finalResult.admin,
+        googleId: finalResult.googleId,
+        googlePw: finalResult.googlePw,
+        result: finalResult.result,
       });
     }
   }
@@ -87,7 +116,8 @@ router.get("/afterCallback", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });

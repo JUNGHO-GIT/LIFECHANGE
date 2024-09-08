@@ -15,5 +15,5 @@ export {
   numeral,
   moment,
   Moment,
-  Calendar
+  Calendar,
 };

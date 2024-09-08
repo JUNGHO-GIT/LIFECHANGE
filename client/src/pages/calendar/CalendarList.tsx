@@ -2,7 +2,7 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon, useStorage } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
 import { moment, axios, Calendar } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Icons, Div } from "@imports/ImportComponents";
@@ -13,22 +13,35 @@ export const CalendarList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, PATH, curMonthStart, curMonthEnd, URL_OBJECT, sessionId, translate, TITLE,
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    navigate, PATH, URL_OBJECT, sessionId, TITLE,
+  } = useCommonValue();
+  const {
+    getDayNotFmt, getDayFmt, getDayStartFmt, getDayEndFmt, monthStartFmt, monthEndFmt,
+    getMonthStartFmt, getMonthEndFmt,
+  } = useCommonDate();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
   const [DATE, setDATE] = useStorage(
     `${TITLE}_date_(${PATH})`, {
       dateType: "",
-      dateStart: curMonthStart,
-      dateEnd: curMonthEnd,
+      dateStart: monthStartFmt,
+      dateEnd: monthEndFmt,
+    }
+  );
+  const [PAGING, setPAGING] = useStorage(
+    `${TITLE}_paging_(${PATH})`, {
+      sort: "asc",
+      page: 1,
     }
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [SEND, setSEND] = useState({
+  const [SEND, setSEND] = useState<any>({
     id: "",
     section_id: "",
     category: "",
@@ -36,7 +49,7 @@ export const CalendarList = () => {
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toSave: "/calendar/save"
+    toUpdate: "/calendar/update",
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -56,7 +69,7 @@ export const CalendarList = () => {
       calendar_content: ""
     }]
   }];
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -64,6 +77,7 @@ export const CalendarList = () => {
     axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: sessionId,
+        PAGING: PAGING,
         DATE: DATE,
       },
     })
@@ -82,11 +96,11 @@ export const CalendarList = () => {
   const calendarNode = () => {
 
     const dateInRange = (date: any, dateStart: any, dateEnd: any) => {
-      const currDate = moment(date).tz("Asia/Seoul").startOf('day');
-      const startDate = moment(dateStart).tz("Asia/Seoul").startOf('day');
-      const endDate = moment(dateEnd).tz("Asia/Seoul").endOf('day');
+      const dayFmt = getDayFmt(date);
+      const dayStart = getDayStartFmt(dateStart);
+      const dayEnd = getDayEndFmt(dateEnd);
 
-      return currDate.isSameOrAfter(startDate) && currDate.isSameOrBefore(endDate);
+      return dayFmt >= dayStart && dayFmt <= dayEnd;
     };
 
     const activeLine = (calendarForDates: any) => (
@@ -107,7 +121,7 @@ export const CalendarList = () => {
                 dateStart: calendar.calendar_dateStart,
                 dateEnd: calendar.calendar_dateEnd,
               });
-              navigate(SEND.toSave, {
+              navigate(SEND.toUpdate, {
                 state: SEND
               });
             }}
@@ -148,16 +162,16 @@ export const CalendarList = () => {
               showDoubleView={false}
               prev2Label={null}
               next2Label={null}
-              prevLabel={<Icons name={"TbArrowLeft"} className={"w-24 h-24"} />}
-              nextLabel={<Icons name={"TbArrowRight"} className={"w-24 h-24"} />}
-              formatDay={(locale, date) => moment(date).tz("Asia/Seoul").format("D")}
-              formatWeekday={(locale, date) => moment(date).tz("Asia/Seoul").format("d")}
-              formatMonth={(locale, date) => moment(date).tz("Asia/Seoul").format("MM")}
-              formatYear={(locale, date) => moment(date).tz("Asia/Seoul").format("YYYY")}
-              formatLongDate={(locale, date) => moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")}
-              formatMonthYear={(locale, date) => moment(date).tz("Asia/Seoul").format("YYYY-MM")}
+              prevLabel={<Icons name={"ArrowLeft"} className={"w-24 h-24"} />}
+              nextLabel={<Icons name={"ArrowRight"} className={"w-24 h-24"} />}
+              formatDay={(locale, date) => getDayNotFmt(date).format("D")}
+              formatWeekday={(locale, date) => getDayNotFmt(date).format("d")}
+              formatMonth={(locale, date) => getDayNotFmt(date).format("MM")}
+              formatYear={(locale, date) => getDayNotFmt(date).format("YYYY")}
+              formatLongDate={(locale, date) => getDayNotFmt(date).format("YYYY-MM-DD")}
+              formatMonthYear={(locale, date) => getDayNotFmt(date).format("YYYY-MM")}
               formatShortWeekday={(locale, date) => {
-                const day: any = moment(date).tz("Asia/Seoul").format("d");
+                const day: any = getDayNotFmt(date).format("d");
                 const week = [
                   translate("sun"), translate("mon"), translate("tue"), translate("wed"),
                   translate("thu"), translate("fri"), translate("sat")
@@ -165,27 +179,26 @@ export const CalendarList = () => {
                 return week[day];
               }}
               onActiveStartDateChange={({ activeStartDate, view }) => {
-                const newDate = moment(activeStartDate).tz("Asia/Seoul").format("YYYY-MM-DD");
                 setDATE((prev: any) => ({
                   ...prev,
-                  dateStart: moment(activeStartDate).tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
-                  dateEnd: moment(activeStartDate).tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD")
+                  dateStart: getMonthStartFmt(activeStartDate),
+                  dateEnd: getMonthEndFmt(activeStartDate),
                 }));
               }}
               onClickDay={(value: Date) => {
-                const calendarForDate = OBJECT.filter((calendar) =>
+                const calendarForDate = OBJECT.filter((calendar: any) => (
                   dateInRange(value, calendar.calendar_dateStart, calendar.calendar_dateEnd)
-                );
+                ));
                 // 항목이 없는 경우에만 클릭 가능
                 if (calendarForDate.length === 0) {
                   Object.assign(SEND, {
                     id: "",
                     section_id: "",
                     dateType: "day",
-                    dateStart: moment(value).tz("Asia/Seoul").format("YYYY-MM-DD"),
-                    dateEnd: moment(value).tz("Asia/Seoul").format("YYYY-MM-DD"),
+                    dateStart: getDayFmt(value),
+                    dateEnd: getDayFmt(value),
                   });
-                  navigate(SEND.toSave, {
+                  navigate(SEND.toUpdate, {
                     state: SEND
                   });
                 }
@@ -201,12 +214,12 @@ export const CalendarList = () => {
                 // 이번달
                 let isCurrentMonth = moment(date).isSame(moment(DATE.dateStart), 'month');
 
-                const calendarForDates = OBJECT.filter((calendar) => (
+                const calendarForDates = OBJECT.filter((calendar: any) => (
                   dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
                 ));
 
                 if (calendarForDates.length > 0) {
-                  const hasManySections = calendarForDates.some((calendar) => (
+                  const hasManySections = calendarForDates.some((calendar: any) => (
                     calendar.calendar_section.length > 2
                   ));
                   if (hasManySections) {
@@ -232,7 +245,7 @@ export const CalendarList = () => {
                 return className;
               }}
               tileContent={({ date, view }) => {
-                const calendarForDates = OBJECT.filter((calendar) => (
+                const calendarForDates = OBJECT.filter((calendar: any) => (
                   dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
                 ));
                 const content

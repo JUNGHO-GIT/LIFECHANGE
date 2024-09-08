@@ -3,9 +3,7 @@
 import { Popover, bindPopover, usePopupState } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-export const PopUp = ({
-  ...props
-}) => {
+export const PopUp = (props: any) => {
 
   const popupState = usePopupState({
     variant: 'popover',
@@ -67,6 +65,7 @@ export const PopUp = ({
       className={props.className}
       open={popupState.isOpen}
       anchorEl={popupState.anchorEl}
+      // @ts-ignore
       onClose={popupState.close}
       anchorOrigin={{
         vertical: props.position === "center" ? "center" : (
@@ -118,6 +117,7 @@ export const PopUp = ({
       className={props.className}
       open={popupState.isOpen}
       anchorEl={null}
+      // @ts-ignore
       onClose={popupState.close}
       anchorReference={"anchorPosition"}
       anchorPosition={{

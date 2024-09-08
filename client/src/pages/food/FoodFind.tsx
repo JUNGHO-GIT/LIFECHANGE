@@ -2,7 +2,7 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon, useStorage } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
 import { axios, numeral } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
@@ -16,9 +16,14 @@ export const FoodFind = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, location_dateStart, location_dateEnd, PATH, URL_OBJECT, translate, koreanDate,
-    TITLE,
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    dayFmt,
+  } = useCommonDate();
+  const {
+    navigate, location_dateStart, location_dateEnd, PATH, URL_OBJECT, TITLE,
+  } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용 (find 사용금지)
@@ -34,19 +39,19 @@ export const FoodFind = () => {
   const [checkedQueries, setCheckedQueries] = useState<any>({});
   const [isExpanded, setIsExpanded] = useState<number[]>([0]);
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [DATE, setDATE] = useState({
+  const [DATE, setDATE] = useState<any>({
     dateType: "day",
-    dateStart: location_dateStart || koreanDate,
-    dateEnd: location_dateEnd || koreanDate,
+      dateStart: location_dateStart || dayFmt,
+      dateEnd: location_dateEnd || dayFmt,
   });
-  const [SEND, setSEND] = useState({
+  const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     toSave:"/food/save",
   });
-  const [COUNT, setCOUNT] = useState({
+  const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
@@ -72,7 +77,7 @@ export const FoodFind = () => {
     food_fat: "0",
     food_fat_color: "",
   }];
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 페이지 번호 변경 시 flowFind 호출
@@ -204,7 +209,7 @@ export const FoodFind = () => {
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
               <AccordionSummary expandIcon={
                 <Icons
-                  name={"TbChevronDown"}
+                  name={"ChevronDown"}
                   className={"w-18 h-18 black"}
                   onClick={(e: any) => {
                     setIsExpanded(isExpanded.includes(index)

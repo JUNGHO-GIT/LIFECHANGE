@@ -2,7 +2,7 @@
 // Node -> Section -> Fragment
 
 import { useState } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue, useTranslate } from "@imports/ImportHooks";
 import { Loading } from "@imports/ImportLayouts";
 import { Icons, Img, Div } from "@imports/ImportComponents";
 import { PopUp } from "@imports/ImportContainers";
@@ -15,8 +15,11 @@ export const UserAppSetting = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, translate, isAdmin, sessionLang, TITLE,
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    navigate, isAdmin, sessionLang, TITLE,
+  } = useCommonValue();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -43,7 +46,7 @@ export const UserAppSetting = () => {
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
                     <Icons
-                      name={"TbChevronRight"}
+                      name={"ChevronRight"}
                       className={"w-16 h-16 black"}
                     />
                   </TableCell>
@@ -60,7 +63,7 @@ export const UserAppSetting = () => {
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
                     <Icons
-                      name={"TbChevronRight"}
+                      name={"ChevronRight"}
                       className={"w-16 h-16 black"}
                     />
                   </TableCell>
@@ -77,7 +80,7 @@ export const UserAppSetting = () => {
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
                     <Icons
-                      name={"TbChevronRight"}
+                      name={"ChevronRight"}
                       className={"w-16 h-16 black"}
                     />
                   </TableCell>
@@ -94,7 +97,7 @@ export const UserAppSetting = () => {
                         onClick={() => {
                           setLang("ko")
                           sessionStorage.setItem(`${TITLE}_lang`, "ko")
-                          navigate("/user/app/setting")
+                          navigate(0)
                         }}
                       >
                         <Img
@@ -106,7 +109,7 @@ export const UserAppSetting = () => {
                           한국어
                         </Div>
                         <Icons
-                          name={"TbCheck"}
+                          name={"Check"}
                           className={`w-16 h-16 black ${lang === "ko" ? "" : "d-none"}`}
                         />
                       </Div>
@@ -115,7 +118,7 @@ export const UserAppSetting = () => {
                         onClick={() => {
                           setLang("en")
                           sessionStorage.setItem(`${TITLE}_lang`, "en")
-                          navigate("/user/app/setting")
+                          navigate(0)
                         }}
                       >
                         <Img
@@ -127,7 +130,7 @@ export const UserAppSetting = () => {
                           English
                         </Div>
                         <Icons
-                          name={"TbCheck"}
+                          name={"Check"}
                           className={`w-16 h-16 black ${lang === "en" ? "" : "d-none"}`}
                         />
                       </Div>
@@ -145,7 +148,7 @@ export const UserAppSetting = () => {
                       </TableCell>
                       <TableCell className={"w-10vw p-15"}>
                         <Icons
-                          name={"TbChevronRight"}
+                          name={"ChevronRight"}
                           className={"w-16 h-16 black"}
                         />
                       </TableCell>
@@ -164,7 +167,7 @@ export const UserAppSetting = () => {
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
                     <Icons
-                      name={"TbChevronRight"}
+                      name={"ChevronRight"}
                       className={"w-16 h-16 black"}
                     />
                   </TableCell>
@@ -185,7 +188,7 @@ export const UserAppSetting = () => {
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
                     <Icons
-                      name={"TbChevronRight"}
+                      name={"ChevronRight"}
                       className={"w-16 h-16 black"}
                     />
                   </TableCell>
@@ -202,7 +205,7 @@ export const UserAppSetting = () => {
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
                     <Icons
-                      name={"TbChevronRight"}
+                      name={"ChevronRight"}
                       className={"w-16 h-16 black"}
                     />
                   </TableCell>

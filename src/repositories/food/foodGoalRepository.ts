@@ -3,7 +3,7 @@
 import mongoose from "mongoose";
 import { FoodGoal } from "@schemas/food/FoodGoal";
 import { Food } from "@schemas/food/Food";
-import { newDate } from "@assets/scripts/date";
+import { newDate } from "@scripts/date";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = {
@@ -241,7 +241,7 @@ export const save = {
     return finalResult;
   }
 };
-// 4. deletes --------------------------------------------------------------------------------------
+// 5. deletes --------------------------------------------------------------------------------------
 export const deletes = {
   detail: async (
     user_id_param: string,

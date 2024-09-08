@@ -2,7 +2,8 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon, useStorage, useValidateUser } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { useStorage, useValidateUser } from "@imports/ImportHooks";
 import { axios } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div, Icons, Input } from "@imports/ImportComponents";
@@ -16,9 +17,15 @@ export const UserCategory = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
+    translate,
+  } = useTranslate();
+  const {
+    dayFmt
+  } = useCommonDate();
+  const {
     navigate, location_dateStart, location_dateEnd, PATH, dataCategoryArray,
-    URL_OBJECT, sessionId, translate, koreanDate, TITLE,
-  } = useCommon();
+    URL_OBJECT, sessionId, TITLE, location_dateType
+  } = useCommonValue();
   const {
     ERRORS, REFS, validate
   } = useValidateUser();
@@ -27,35 +34,35 @@ export const UserCategory = () => {
   // 리스트에서만 사용
   const [DATE, setDATE] = useStorage(
     `${TITLE}_date_(${PATH})`, {
-      dateType: "day",
-      dateStart: location_dateStart || koreanDate,
-      dateEnd: location_dateEnd || koreanDate,
+      dateType: location_dateType || "day",
+      dateStart: location_dateStart || dayFmt,
+      dateEnd: location_dateEnd || dayFmt,
     }
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [dataType, setDataType] = useState("exercise");
+  const [dataType, setDataType] = useState<string>("exercise");
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [SEND, setSEND] = useState({
+  const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     toDataCategory: "/user/category"
   });
-  const [idx, setIdx] = useState({
+  const [idx, setIdx] = useState<any>({
     category1Idx: 0,
     category2Idx: 1,
     category3Idx: 1,
   });
-  const [selectedIdx, setSelectedIdx] = useState({
+  const [selectedIdx, setSelectedIdx] = useState<any>({
     category1Idx: 0,
     category2Idx: 1,
     category3Idx: 1,
   });
-  const [isEditable, setIsEditable] = useState("");
+  const [isEditable, setIsEditable] = useState<string>("");
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF: any = {
@@ -81,7 +88,7 @@ export const UserCategory = () => {
       }]
     } as Record<string, any>
   };
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -323,14 +330,21 @@ export const UserCategory = () => {
                       </Div>
                       <Div className={"fs-0-9rem ms-auto d-row"}>
                         <Icons
-                          name={"TbPencil"}
+                          key={"TbPencil"}
+                          name={"Pencil"}
                           className={"w-14 h-14 navy"}
                           onClick={() => {
-                          handlerRename("part", index);
-                        }} />
-                        <Icons name={"TbTrash"} className={"w-14 h-14 red"} onClick={() => {
-                          handlerRemove("part", index);
-                        }} />
+                            handlerRename("part", index);
+                          }}
+                        />
+                        <Icons
+                          key={"TbTrash"}
+                          name={"Trash"}
+                          className={"w-14 h-14 red"}
+                          onClick={() => {
+                            handlerRemove("part", index);
+                          }}
+                        />
                       </Div>
                     </Div>
                   </TableCell>
@@ -344,7 +358,7 @@ export const UserCategory = () => {
                     handlerAdd("part");
                   }}>
                     <Icons
-                      name={"TbPlus"}
+                      name={"Plus"}
                       className={"w-14 h-14"}
                     />
                   </Div>
@@ -425,14 +439,14 @@ export const UserCategory = () => {
                         </Div>
                         <Div className={"fs-0-9rem ms-auto d-row"}>
                           <Icons
-                            name={"TbPencil"}
+                            name={"Pencil"}
                             className={"w-14 h-14 navy"}
                             onClick={() => {
                               handlerRename("title", index);
                             }}
                           />
                           <Icons
-                            name={"TbTrash"}
+                            name={"Trash"}
                             className={"w-14 h-14 red"}
                             onClick={() => {
                               handlerRemove("title", index);
@@ -451,7 +465,8 @@ export const UserCategory = () => {
                       handlerAdd("title");
                     }}>
                       <Icons
-                        name={"TbPlus"}
+                        key={"TbPlus"}
+                        name={"Plus"}
                         className={"w-14 h-14"}
                       />
                     </Div>
@@ -494,7 +509,10 @@ export const UserCategory = () => {
                             popupSection(i, closePopup)
                           )}>
                           {(popTrigger: any) => (
-                            <Icons name={"TbPencil"} className={"w-18 h-18 navy ms-auto"}
+                            <Icons
+                              key={"TbPencil"}
+                              name={"Pencil"}
+                              className={"w-18 h-18 navy ms-auto"}
                               onClick={(e: any) => {
                                 setDataType(item);
                                 setSelectedIdx((prev: any) => ({

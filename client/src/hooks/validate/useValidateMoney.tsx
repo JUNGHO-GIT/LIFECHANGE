@@ -1,15 +1,18 @@
 // useValidateMoney.tsx
 
 import { useState, useEffect, createRef, useRef } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue, useTranslate } from "@imports/ImportHooks";
 
 // -------------------------------------------------------------------------------------------------
 export const useValidateMoney= () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    PATH, translate
-  } = useCommon();
+    PATH,
+  } = useCommonValue();
+  const {
+    translate,
+  } = useTranslate();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [ERRORS, setERRORS] = useState<any>({});
@@ -31,8 +34,8 @@ export const useValidateMoney= () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    // 1. goal/save
-    if (PATH.includes("money/goal/save")) {
+    // 1. goal/save, update
+    if (PATH.includes("money/goal/save") || PATH.includes("money/goal/update")) {
       const target = [
         "money_goal_income",
         "money_goal_expense",
@@ -68,8 +71,8 @@ export const useValidateMoney= () => {
       }
     }
 
-    // 2. save
-    else if (PATH.includes("money/save")) {
+    // 2. save, update
+    else if (PATH.includes("money/save") || PATH.includes("money/update")) {
       const target = [
         "money_part_idx",
         "money_title_idx",

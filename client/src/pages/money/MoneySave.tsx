@@ -2,11 +2,12 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon, useValidateMoney } from "@imports/ImportHooks";
-import { moment, axios, numeral } from "@imports/ImportLibs";
+import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { useValidateMoney } from "@imports/ImportValidates";
+import { axios, numeral } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
-import { Div, Select, Input, Img, Bg } from "@imports/ImportComponents";
+import { Select, Input, Img, Bg } from "@imports/ImportComponents";
 import { Picker, Memo, Count, Delete } from "@imports/ImportContainers";
 import { Card, Paper, MenuItem, Grid } from "@imports/ImportMuis";
 import { money2 } from "@imports/ImportImages";
@@ -16,32 +17,37 @@ export const MoneySave = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, moneyArray, koreanDate,
-    URL_OBJECT, sessionId, translate
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    dayFmt, getMonthStartFmt, getMonthEndFmt
+  } = useCommonDate();
+  const {
+    navigate, location_dateType, location_dateStart, location_dateEnd, moneyArray, URL_OBJECT, sessionId, sessionCurrencyCode,
+  } = useCommonValue();
   const {
     ERRORS, REFS, validate
   } = useValidateMoney();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [EXIST, setEXIST] = useState([""]);
-  const [SEND, setSEND] = useState({
+  const [EXIST, setEXIST] = useState<any[]>([""]);
+  const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     toList: "/money/list"
   });
-  const [COUNT, setCOUNT] = useState({
+  const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
   });
-  const [DATE, setDATE] = useState({
-    dateType: location_dateType,
-    dateStart: location_dateStart || koreanDate,
-    dateEnd: location_dateEnd || koreanDate,
+  const [DATE, setDATE] = useState<any>({
+    dateType: location_dateType || "",
+      dateStart: location_dateStart || dayFmt,
+      dateEnd: location_dateEnd || dayFmt,
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -63,30 +69,25 @@ export const MoneySave = () => {
       money_content: "",
     }],
   };
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    setLOADING(true);
     axios.get(`${URL_OBJECT}/exist`, {
       params: {
         user_id: sessionId,
         DATE: {
           dateType: "",
-          dateStart: moment(DATE.dateStart).startOf("month").format("YYYY-MM-DD"),
-          dateEnd: moment(DATE.dateEnd).endOf("month").format("YYYY-MM-DD")
+          dateStart: getMonthStartFmt(DATE.dateStart),
+          dateEnd: getMonthEndFmt(DATE.dateEnd),
         },
       },
     })
     .then((res: any) => {
       setEXIST(res.data.result || []);
-      setLOADING(false);
     })
     .catch((err: any) => {
       console.error(err);
-    })
-    .finally(() => {
-      setLOADING(false);
     });
   }, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
@@ -300,7 +301,7 @@ export const MoneySave = () => {
                 <Img src={money2} className={"w-16 h-16"} />
               }
               endadornment={
-                translate("currency")
+                sessionCurrencyCode
               }
             />
           </Grid>
@@ -313,7 +314,7 @@ export const MoneySave = () => {
                 <Img src={money2} className={"w-16 h-16"} />
               }
               endadornment={
-                translate("currency")
+                sessionCurrencyCode
               }
             />
           </Grid>
@@ -418,7 +419,7 @@ export const MoneySave = () => {
                   <Img src={money2} className={"w-16 h-16"} />
                 }
                 endadornment={
-                  translate("currency")
+                  sessionCurrencyCode
                 }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');

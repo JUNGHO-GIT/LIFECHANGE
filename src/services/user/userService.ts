@@ -13,7 +13,7 @@ import { exerciseArray} from '@arrays/exerciseArray.js';
 import { foodArray} from '@arrays/foodArray.js';
 import { moneyArray} from '@arrays/moneyArray.js';
 import { fileURLToPath } from "url";
-import { emailSending } from "@assets/scripts/email";
+import { emailSending } from "@scripts/email";
 dotenv.config();
 
 // 0-1. appInfo ------------------------------------------------------------------------------------
@@ -47,7 +47,10 @@ export const appInfo = async () => {
     license: lastLicense,
   };
 
-  return finalResult;
+  return {
+    status: statusResult,
+    result: finalResult
+  };
 };
 
 // 1-1. sendEmail ----------------------------------------------------------------------------------
@@ -56,7 +59,7 @@ export const sendEmail = async (
   type_param: string,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
   let sendResult: any = null;
@@ -104,7 +107,10 @@ export const sendEmail = async (
     result: sendResult
   };
 
-  return finalResult;
+  return {
+    status: statusResult,
+    result: finalResult
+  };
 };
 
 // 1-2. verifyEmail --------------------------------------------------------------------------------
@@ -113,7 +119,7 @@ export const verifyEmail = async (
   code_param: string,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
 
@@ -130,7 +136,10 @@ export const verifyEmail = async (
     }
   }
 
-  return finalResult;
+  return {
+    status: statusResult,
+    result: finalResult
+  };
 };
 
 // 2-1. userSignup ---------------------------------------------------------------------------------
@@ -139,7 +148,7 @@ export const userSignup = async (
   OBJECT_param: Record<string, any>,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
 
@@ -164,7 +173,10 @@ export const userSignup = async (
     );
   }
 
-  return finalResult;
+  return {
+    status: statusResult,
+    result: finalResult
+  };
 };
 
 // 2-2. userResetPw --------------------------------------------------------------------------------
@@ -173,7 +185,7 @@ export const userResetPw = async (
   OBJECT_param: Record<string, any>,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
   let saltRounds: number = 10;
@@ -207,7 +219,10 @@ export const userResetPw = async (
     );
   }
 
-  return finalResult;
+  return {
+    status: statusResult,
+    result: finalResult
+  };
 };
 
 // 2-3. userLogin ----------------------------------------------------------------------------------
@@ -217,7 +232,7 @@ export const userLogin = async (
   isAutoLogin_param: boolean,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResult: any = null;
   let finalResult: any = "fail";
   let adminResult: any = "user";
@@ -278,7 +293,7 @@ export const userDetail = async (
   user_id_param: string
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
 
@@ -299,7 +314,7 @@ export const userUpdate = async (
   OBJECT_param: Record<string, any>,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
 
@@ -313,7 +328,10 @@ export const userUpdate = async (
     );
   }
 
-  return finalResult;
+  return {
+    status: statusResult,
+    result: finalResult
+  };
 };
 
 // 2-6. userDeletes --------------------------------------------------------------------------------
@@ -321,7 +339,7 @@ export const userDeletes = async (
   user_id_param: string
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
 
@@ -335,7 +353,10 @@ export const userDeletes = async (
     );
   }
 
-  return finalResult;
+  return {
+    status: statusResult,
+    result: finalResult
+  };
 };
 
 // 3-1. categoryList -------------------------------------------------------------------------------
@@ -343,7 +364,7 @@ export const categoryList = async (
   user_id_param: string
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
 
@@ -357,7 +378,10 @@ export const categoryList = async (
     );
   }
 
-  return finalResult;
+  return {
+    status: statusResult,
+    result: finalResult
+  };
 };
 
 // 3-2. categorySave -------------------------------------------------------------------------------
@@ -367,7 +391,7 @@ export const categorySave = async (
   DATE_param: Record<string, any>,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
 
@@ -386,7 +410,10 @@ export const categorySave = async (
     );
   }
 
-  return finalResult;
+  return {
+    status: statusResult,
+    result: finalResult
+  };
 };
 
 // 4-1. dummyList ----------------------------------------------------------------------------------
@@ -396,7 +423,7 @@ export const dummyList = async (
   PART_param: string,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
   let totalCnt: number = 0;
@@ -519,7 +546,7 @@ export const dummySave = async (
   count_param: number,
 ) => {
 
-  // findResult, finalResult 변수 선언
+  // result 변수 선언
   let finalResult: any = null;
   let insertCount: number = Number(count_param);
   let secondStr: string = String(PART_param);
@@ -839,7 +866,10 @@ export const dummySave = async (
     finalResult = "fail";
   }
 
-  return finalResult;
+  return {
+    status: statusResult,
+    result: finalResult
+  };
 };
 
 // 5-3. dummyDeletes -------------------------------------------------------------------------------

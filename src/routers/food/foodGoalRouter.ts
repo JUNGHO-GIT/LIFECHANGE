@@ -9,21 +9,28 @@ export const router = express.Router();
 // 0. exist ----------------------------------------------------------------------------------------
 router.get("/exist", async (req: Request, res: Response) => {
   try {
-    let result = await service.exist (
+    let finalResult = await service.exist (
       req.query.user_id as string,
       req.query.DATE as Record<string, any>,
     );
-    if (result) {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "searchSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "searchSuccessful",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
+        msg: "searchError",
         status: "fail",
-        msg: "searchFailed",
         result: null,
       });
     }
@@ -32,7 +39,8 @@ router.get("/exist", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -40,26 +48,34 @@ router.get("/exist", async (req: Request, res: Response) => {
 // 1-1. list ---------------------------------------------------------------------------------------
 router.get("/list", async (req: Request, res: Response) => {
   try {
-    let result = await service.list(
+    let finalResult = await service.list (
       req.query.user_id as string,
       req.query.DATE as Record<string, any>,
       req.query.PAGING as Record<string, any>,
     );
-    result = await middleware.list(result);
-    if (result && result.result) {
+    finalResult = await middleware.list(finalResult);
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "searchSuccessful",
-        totalCnt: result.totalCnt,
-        result: result.result
+        status: finalResult.status,
+        totalCnt: finalResult.totalCnt,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "searchSuccessful",
+        status: finalResult.status,
+        totalCnt: finalResult.totalCnt,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "searchFailed",
-        totalCnt: 0,
-        result: null,
+        msg: "searchError",
+        status: finalResult.status,
+        totalCnt: finalResult.totalCnt,
+        result: finalResult.result,
       });
     }
   }
@@ -67,7 +83,8 @@ router.get("/list", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -75,25 +92,33 @@ router.get("/list", async (req: Request, res: Response) => {
 // 2. detail (상세는 eq) ---------------------------------------------------------------------------
 router.get("/detail", async (req: Request, res: Response) => {
   try {
-    let result = await service.detail (
+    let finalResult = await service.detail (
       req.query.user_id as string,
       req.query._id as string,
       req.query.DATE as Record<string, any>,
     );
-    if (result) {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "searchSuccessful",
-        sectionCnt: result.sectionCnt,
-        result: result.result
+        status: finalResult.status,
+        sectionCnt: finalResult.sectionCnt,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "searchSuccessful",
+        status: finalResult.status,
+        sectionCnt: finalResult.sectionCnt,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "searchFailed",
-        sectionCnt: 0,
-        result: null,
+        msg: "searchError",
+        status: finalResult.status,
+        sectionCnt: finalResult.sectionCnt,
+        result: finalResult.result,
       });
     }
   }
@@ -101,7 +126,8 @@ router.get("/detail", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -109,23 +135,31 @@ router.get("/detail", async (req: Request, res: Response) => {
 // 3. save -----------------------------------------------------------------------------------------
 router.post("/save", async (req: Request, res: Response) => {
   try {
-    let result = await service.save(
+    let finalResult = await service.save(
       req.body.user_id as string,
       req.body.OBJECT as Record<string, any>,
       req.body.DATE as Record<string, any>,
     );
-    if (result) {
+    finalResult = await middleware.save(finalResult);
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "saveSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "saveFailed",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "saveFailed",
-        result: null,
+        msg: "saveError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -133,31 +167,40 @@ router.post("/save", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
 
-// 4. deletes --------------------------------------------------------------------------------------
+// 5. deletes --------------------------------------------------------------------------------------
 router.post("/deletes", async (req: Request, res: Response) => {
   try {
-    let result = await service.deletes(
+    let finalResult = await service.deletes(
       req.body.user_id as string,
       req.body._id as string,
       req.body.DATE as Record<string, any>,
     );
-    if (result) {
+    finalResult = await middleware.deletes(finalResult);
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "deleteSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "deleteFailed",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "deleteFailed",
-        result: null,
+        msg: "deleteError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -165,7 +208,8 @@ router.post("/deletes", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });

@@ -1,8 +1,7 @@
 // SleepChartPie.tsx
-// Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
 import { axios } from "@imports/ImportLibs";
 import { Loading } from "@imports/ImportLayouts";
 import { Div, Img, Select } from "@imports/ImportComponents";
@@ -11,7 +10,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from 'rechar
 import { common3_2 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
-interface PieProps {
+declare interface PieProps {
   cx: number;
   cy: number;
   midAngle: number;
@@ -26,17 +25,32 @@ export const SleepChartPie = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    URL_OBJECT, sessionId, COLORS, translate, koreanDate
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    dayFmt,
+    weekStartFmt, weekEndFmt,
+    monthStartFmt, monthEndFmt,
+    yearStartFmt, yearEndFmt,
+  } = useCommonDate();
+  const {
+    URL_OBJECT, sessionId, COLORS,
+  } = useCommonValue();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState(true);
-  const [radius, setRadius] = useState(120);
-  const [SECTION, setSECTION] = useState("today");
-  const [DATE, setDATE] = useState({
+  const [LOADING, setLOADING] = useState<boolean>(true);
+  const [radius, setRadius] = useState<number>(120);
+  const [SECTION, setSECTION] = useState<string>("today");
+  const [DATE, setDATE] = useState<any>({
     dateType: "",
-    dateStart: koreanDate,
-    dateEnd: koreanDate,
+    dateStart: dayFmt,
+    dateEnd: dayFmt,
+    weekStartFmt: weekStartFmt,
+    weekEndFmt: weekEndFmt,
+    monthStartFmt: monthStartFmt,
+    monthEndFmt: monthEndFmt,
+    yearStartFmt: yearStartFmt,
+    yearEndFmt: yearEndFmt,
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -52,9 +66,9 @@ export const SleepChartPie = () => {
     name:"Empty",
     value: 100
   }];
-  const [OBJECT_TODAY, setOBJECT_TODAY] = useState(OBJECT_TODAY_DEF);
-  const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEF);
-  const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);
+  const [OBJECT_TODAY, setOBJECT_TODAY] = useState<any>(OBJECT_TODAY_DEF);
+  const [OBJECT_WEEK, setOBJECT_WEEK] = useState<any>(OBJECT_WEEK_DEF);
+  const [OBJECT_MONTH, setOBJECT_MONTH] = useState<any>(OBJECT_MONTH_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -75,26 +89,26 @@ export const SleepChartPie = () => {
       }),
     ]);
     setOBJECT_TODAY(
-      (resToday.data.result.length > 0)
-      && (resToday.data.result[0].value !== 0)
-      && (resToday.data.result[1].value !== 0)
-      && (resToday.data.result[2].value !== 0)
+      (resToday.data.result.length > 0) &&
+      (resToday.data.result[0].value !== 0) &&
+      (resToday.data.result[1].value !== 0) &&
+      (resToday.data.result[2].value !== 0)
       ? resToday.data.result
       : OBJECT_TODAY_DEF
     );
     setOBJECT_WEEK(
-      (resWeek.data.result.length > 0)
-      && (resWeek.data.result[0].value !== 0)
-      && (resWeek.data.result[1].value !== 0)
-      && (resWeek.data.result[2].value !== 0)
+      (resWeek.data.result.length > 0) &&
+      (resWeek.data.result[0].value !== 0) &&
+      (resWeek.data.result[1].value !== 0) &&
+      (resWeek.data.result[2].value !== 0)
       ? resWeek.data.result
       : OBJECT_WEEK_DEF
     );
     setOBJECT_MONTH(
-      (resMonth.data.result.length > 0)
-      && (resMonth.data.result[0].value !== 0)
-      && (resMonth.data.result[1].value !== 0)
-      && (resMonth.data.result[2].value !== 0)
+      (resMonth.data.result.length > 0) &&
+      (resMonth.data.result[0].value !== 0) &&
+      (resMonth.data.result[1].value !== 0) &&
+      (resMonth.data.result[2].value !== 0)
       ? resMonth.data.result
       : OBJECT_MONTH_DEF
     );
@@ -199,7 +213,7 @@ export const SleepChartPie = () => {
           dataKey={"value"}
           minAngle={15}
         >
-          {OBJECT_TODAY?.map((entry, index) => (
+          {OBJECT_TODAY?.map((entry: any, index: number) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
@@ -246,7 +260,7 @@ export const SleepChartPie = () => {
           dataKey={"value"}
           minAngle={15}
         >
-          {OBJECT_WEEK?.map((entry, index) => (
+          {OBJECT_WEEK?.map((entry: any, index: number) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
@@ -293,7 +307,7 @@ export const SleepChartPie = () => {
           dataKey={"value"}
           minAngle={15}
         >
-          {OBJECT_MONTH?.map((entry, index) => (
+          {OBJECT_MONTH?.map((entry: any, index: number) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>

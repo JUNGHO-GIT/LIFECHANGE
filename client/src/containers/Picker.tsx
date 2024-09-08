@@ -1,16 +1,15 @@
 // Picker.tsx
 
 import { useEffect, useState } from "@imports/ImportReacts";
-import { useCommon, useStorage } from "@imports/ImportHooks";
-import { moment } from "@imports/ImportLibs";
-import { Btn, Input, Img, Div, Select } from "@imports/ImportComponents";
+import { useCommonValue, useCommonDate, useStorage, useTranslate } from "@imports/ImportHooks";
+import { Btn, Input, Img, Div, Select, Icons } from "@imports/ImportComponents";
 import { PopUp } from "@imports/ImportContainers";
 import { MenuItem, PickersDay, Grid, Card, Badge } from "@imports/ImportMuis";
 import { DateCalendar, AdapterMoment, LocalizationProvider } from "@imports/ImportMuis";
 import { common1 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
-interface PickerProps {
+declare interface PickerProps {
   DATE: any;
   setDATE: any;
   EXIST: any;
@@ -24,21 +23,43 @@ export const Picker = (
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate, PATH, firstStr, secondStr, thirdStr, koreanDate, curWeekStart, curWeekEnd,
-    curMonthStart, curMonthEnd, curYearStart, curYearEnd, TITLE,
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    dayFmt, dayNotFmt,
+    weekStartFmt, weekEndFmt, monthStartFmt, monthEndFmt, yearStartFmt, yearEndFmt,
+    getDayFmt, getDayNotFmt,
+    getDayStartFmt, getDayEndFmt,
+    getWeekStartFmt, getWeekEndFmt,
+    getPrevWeekStartFmt, getPrevWeekEndFmt,
+    getNextWeekStartFmt, getNextWeekEndFmt,
+    getMonthStartFmt, getMonthEndFmt,
+    getPrevMonthStartFmt, getPrevMonthEndFmt,
+    getNextMonthStartFmt, getNextMonthEndFmt,
+    getYearStartFmt, getYearEndFmt,
+    getPrevYearStartFmt, getPrevYearEndFmt,
+    getNextYearStartFmt, getNextYearEndFmt,
+  } = useCommonDate();
+  const {
+    sessionLocale, sessionTimeZone,
+    TITLE, PATH, firstStr, secondStr, thirdStr,
+  } = useCommonValue();
 
   const isToday = firstStr === "today";
   const isGoalList = secondStr === "goal" && thirdStr === "list";
-  const isGoalSave = secondStr === "goal" && thirdStr === "save";
+  const isGoalSave = secondStr === "goal" && (thirdStr === "save" || thirdStr === "update");
   const isList = secondStr === "list" && thirdStr === "";
-  const isSave = secondStr === "save" && thirdStr === "";
+  const isSave = (secondStr === "save" || secondStr === "update") && thirdStr === "";
   const isFind  = secondStr === "find";
 
   let sessionDate = sessionStorage?.getItem(`DATE(${PATH})`) || "{}";
   let parseDate = JSON?.parse(sessionDate);
   let dateStart = parseDate?.dateStart;
   let dateEnd = parseDate?.dateEnd;
+
+  // 2-1. useState ---------------------------------------------------------------------------------
+  const [typeStr, setTypeStr] = useState<string>("");
+  const [innerStr, setInnerStr] = useState<string>("");
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   const [clickedType, setClickedType] = useStorage(
@@ -47,23 +68,23 @@ export const Picker = (
   const clickedDate = {
     todayDate: {
       dateType: isToday ? "day" : "",
-      dateStart: koreanDate,
-      dateEnd: koreanDate,
+      dateStart: dayFmt,
+      dateEnd: dayFmt,
     },
     weekDate: {
       dateType: isToday ? "day" : "",
-      dateStart: curWeekStart,
-      dateEnd: curWeekEnd,
+      dateStart: weekStartFmt,
+      dateEnd: weekEndFmt,
     },
     monthDate: {
       dateType: isToday ? "day" : "",
-      dateStart: curMonthStart,
-      dateEnd: curMonthEnd,
+      dateStart: monthStartFmt,
+      dateEnd: monthEndFmt,
     },
     yearDate: {
       dateType: isToday ? "day" : "",
-      dateStart: curYearStart,
-      dateEnd: curYearEnd,
+      dateStart: yearStartFmt,
+      dateEnd: yearEndFmt,
     },
     selectDate: {
       dateType: isToday ? "day" : "",
@@ -71,8 +92,11 @@ export const Picker = (
       dateEnd: dateEnd,
     }
   };
-  const [typeStr, setTypeStr] = useState("");
-  const [innerStr, setInnerStr] = useState("");
+
+  useEffect(() => {
+    console.log("===================================");
+    console.log("DATE", DATE);
+  }, [DATE]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -89,11 +113,11 @@ export const Picker = (
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (!isSave && !isGoalSave) {
-      if (dateStart === "") {
-        dateStart = koreanDate;
+      if (!dateStart) {
+        dateStart = dayFmt;
       }
-      if (dateEnd === "") {
-        dateEnd = koreanDate;
+      if (!dateEnd) {
+        dateEnd = dayFmt;
       }
     }
   }, [dateStart, dateEnd]);
@@ -112,9 +136,6 @@ export const Picker = (
       }
       else if (clickedType === "thisYear") {
         setDATE(clickedDate?.yearDate);
-      }
-      else {
-        setDATE(clickedDate?.selectDate);
       }
     }
   }, [clickedType]);
@@ -152,7 +173,9 @@ export const Picker = (
     }
   }, [DATE]);
 
+  // 7. pickerNode ---------------------------------------------------------------------------------
   const pickerNode = () => {
+
     // 1. day --------------------------------------------------------------------------------------
     const daySection = () => (
       <PopUp
@@ -162,34 +185,93 @@ export const Picker = (
         contents={({closePopup}: any) => (
           <Card className={"w-max70vw p-0"}>
             <Grid container spacing={3}>
-              <Grid size={12} className={"d-center"}>
+              <Grid size={8} className={"d-left ms-20"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewDay")}
                 </Div>
               </Grid>
+              <Grid size={2} className={"d-center"}>
+                <Icons
+                  key={"Refresh"}
+                  name={"Refresh"}
+                  className={"w-24 h-24"}
+                  onClick={() => {
+                    setDATE((prev: any) => ({
+                      ...prev,
+                      dateType: prev.initDateType,
+                      dateStart: prev.initDateStart,
+                      dateEnd: prev.initDateEnd,
+                    }));
+                  }}
+                />
+              </Grid>
               <Grid size={12} className={"d-center"}>
-                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={sessionLocale}>
                   <DateCalendar
-                    timezone={"Asia/Seoul"}
+                    timezone={sessionTimeZone}
                     views={["day"]}
                     readOnly={false}
-                    value={moment(DATE.dateStart)}
+                    value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
                     className={"radius border"}
                     showDaysOutsideCurrentMonth={true}
                     slots={{
                       day: (props) => {
+
+                        let color = "";
+                        let borderRadius = "";
+                        let backgroundColor = "";
+                        let boxShadow = "";
+                        let zIndex = 0;
+
                         const {outsideCurrentMonth, day, ...other} = props;
-                        const isBadged = EXIST.includes(moment(day).tz("Asia/Seoul").format("YYYY-MM-DD"));
-                        const isSelected = DATE.dateStart === moment(day).tz("Asia/Seoul").format("YYYY-MM-DD");
+
+                        const isInitStart = DATE.initDateStart === getDayStartFmt(day);
+                        const isInitEnd = DATE.initDateEnd === getDayEndFmt(day);
+                        const isInit = DATE.initDateStart <= getDayFmt(day) && DATE.initDateEnd >= getDayFmt(day);
+
+                        const isBadged = EXIST.includes(getDayFmt(day));
+                        const isSelected = DATE.dateStart === getDayFmt(day);
+
+                        if (isInit) {
+                          if (isInitStart && isInitEnd) {
+                            boxShadow = "0 0 0 0 #D1D5DB";
+                            borderRadius = "50%";
+                          }
+                          else if (isInitStart) {
+                            boxShadow = "5px 0 0 0 #D1D5DB";
+                            borderRadius = "50% 0 0 50%";
+                          }
+                          else if (isInitEnd) {
+                            boxShadow = "-5px 0 0 0 #D1D5DB";
+                            borderRadius = "0 50% 50% 0";
+                          }
+                          else {
+                            boxShadow = "5px 0 0 0 #D1D5DB";
+                            borderRadius = "0";
+                          }
+                          color = "#ffffff";
+                          backgroundColor = "#D1D5DB";
+                          zIndex = 5;
+                        }
+                        if (isSelected) {
+                          color = "#ffffff";
+                          backgroundColor = "#1976d2";
+                          boxShadow = "0 0 0 0 #1976d2";
+                          borderRadius = "50%";
+                          zIndex = 10;
+                        }
+
                         return (
                           <Badge
                             key={props.day.toString()}
                             badgeContent={""}
                             slotProps={{
-                              badge: {style: {
-                                width: 3, height: 3, padding: 0, top: 8, left: 30,
-                                backgroundColor: isBadged ? "#1976d2" : undefined,
-                              }}
+                              badge: {
+                                style: {
+                                  width: 3, height: 3, padding: 0, top: 8, left: 30,
+                                  backgroundColor: isBadged ? "#1976d2" : undefined,
+                                }
+                              }
                             }}
                           >
                             <PickersDay
@@ -197,11 +279,18 @@ export const Picker = (
                               day={day}
                               selected={isSelected}
                               outsideCurrentMonth={outsideCurrentMonth}
+                              style={{
+                                color: color,
+                                borderRadius: borderRadius,
+                                backgroundColor: backgroundColor,
+                                boxShadow: boxShadow,
+                                zIndex: zIndex,
+                              }}
                               onDaySelect={(day) => {
                                 setDATE((prev: any) => ({
                                   ...prev,
-                                  dateStart: moment(day).tz("Asia/Seoul").format("YYYY-MM-DD"),
-                                  dateEnd: moment(day).tz("Asia/Seoul").format("YYYY-MM-DD")
+                                  dateStart: getDayFmt(day),
+                                  dateEnd: getDayFmt(day),
                                 }));
                                 Object.keys(sessionStorage).forEach((key) => {
                                   if (key.includes(`foodSection`)) {
@@ -218,15 +307,11 @@ export const Picker = (
                           {...props}
                           className={"fs-1-4rem"}
                           onClick={() => {
-                            setDATE((prev: any) => {
-                              const newDateStart = moment(prev.dateStart).subtract(1, "month");
-                              const newDateEnd = newDateStart.clone().endOf('month');
-                              return {
-                                ...prev,
-                                dateStart: newDateStart.format("YYYY-MM-DD"),
-                                dateEnd: newDateEnd.format("YYYY-MM-DD")
-                              };
-                            });
+                            setDATE((prev: any) => ({
+                              ...prev,
+                              dateStart: getPrevMonthStartFmt(prev.dateStart),
+                              dateEnd: getPrevMonthEndFmt(prev.dateStart),
+                            }));
                           }}
                         >
                           {props.children}
@@ -237,15 +322,11 @@ export const Picker = (
                           {...props}
                           className={"fs-1-4rem"}
                           onClick={() => {
-                            setDATE((prev: any) => {
-                              const newDateStart = moment(prev.dateStart).add(1, "month");
-                              const newDateEnd = newDateStart.clone().endOf('month');
-                              return {
-                                ...prev,
-                                dateStart: newDateStart.format("YYYY-MM-DD"),
-                                dateEnd: newDateEnd.format("YYYY-MM-DD")
-                              };
-                            });
+                            setDATE((prev: any) => ({
+                              ...prev,
+                              dateStart: getNextMonthStartFmt(prev.dateStart),
+                              dateEnd: getNextMonthEndFmt(prev.dateStart),
+                            }));
                           }}
                         >
                           {props.children}
@@ -287,40 +368,96 @@ export const Picker = (
         contents={({closePopup}: any) => (
           <Card className={"w-max70vw p-0"}>
             <Grid container spacing={3}>
-              <Grid size={12} className={"d-center"}>
+              <Grid size={8} className={"d-left ms-20"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewWeek")}
                 </Div>
               </Grid>
+              <Grid size={2} className={"d-center"}>
+                <Icons
+                  key={"Refresh"}
+                  name={"Refresh"}
+                  className={"w-24 h-24"}
+                  onClick={() => {
+                    setDATE((prev: any) => ({
+                      ...prev,
+                      dateType: prev.initDateType,
+                      dateStart: prev.initDateStart,
+                      dateEnd: prev.initDateEnd,
+                    }));
+                  }}
+                />
+              </Grid>
               <Grid size={12} className={"d-center"}>
-                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={sessionLocale}>
                   <DateCalendar
-                    timezone={"Asia/Seoul"}
+                    timezone={sessionTimeZone}
                     views={["day"]}
                     readOnly={false}
-                    value={moment(DATE.dateEnd) || moment(DATE.dateStart)}
+                    value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
                     className={"radius border"}
                     showDaysOutsideCurrentMonth={true}
                     slots={{
                       // 일주일에 해당하는 날짜를 선택
                       day: (props) => {
-                        const {outsideCurrentMonth, day, ...other} = props;
-                        const isFirst = moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") === DATE.dateStart;
-                        const isLast = moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") === DATE.dateEnd;
-                        const isSelected =
-                        DATE.dateStart <= moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") &&
-                        DATE.dateEnd >= moment(day).tz("Asia/Seoul").format("YYYY-MM-DD")
+
+                        let color = "";
                         let borderRadius = "";
-                        if (isSelected) {
-                          if (isFirst) {
+                        let backgroundColor = "";
+                        let boxShadow = "";
+                        let zIndex = 0;
+
+                        const { outsideCurrentMonth, day, ...other } = props;
+
+                        const isInitStart = DATE.initDateStart === getDayStartFmt(day);
+                        const isInitEnd = DATE.initDateEnd === getDayEndFmt(day);
+                        const isInit = DATE.initDateStart <= getDayFmt(day) && DATE.initDateEnd >= getDayFmt(day);
+
+                        const isFirst = DATE.dateStart === getDayStartFmt(day);
+                        const isLast = DATE.dateEnd === getDayEndFmt(day);
+                        const isSelected = DATE.dateStart <= getDayFmt(day) && DATE.dateEnd >= getDayFmt(day);
+
+                        if (isInit) {
+                          if (isInitStart && isInitEnd) {
+                            boxShadow = "0 0 0 0 #D1D5DB";
+                            borderRadius = "50%";
+                          }
+                          else if (isInitStart) {
+                            boxShadow = "5px 0 0 0 #D1D5DB";
                             borderRadius = "50% 0 0 50%";
                           }
-                          else if (isLast) {
+                          else if (isInitEnd) {
+                            boxShadow = "-5px 0 0 0 #D1D5DB";
                             borderRadius = "0 50% 50% 0";
                           }
                           else {
+                            boxShadow = "5px 0 0 0 #D1D5DB";
                             borderRadius = "0";
                           }
+                          color = "#ffffff";
+                          backgroundColor = "#D1D5DB";
+                          zIndex = 5;
+                        }
+                        if (isSelected) {
+                          if (isFirst && isLast) {
+                            boxShadow = "0 0 0 0 #1976d2";
+                            borderRadius = "50%";
+                          }
+                          else if (isFirst) {
+                            boxShadow = "5px 0 0 0 #1976d2";
+                            borderRadius = "50% 0 0 50%";
+                          }
+                          else if (isLast) {
+                            boxShadow = "-5px 0 0 0 #1976d2";
+                            borderRadius = "0 50% 50% 0";
+                          }
+                          else {
+                            boxShadow = "5px 0 0 0 #1976d2";
+                            borderRadius = "0%";
+                          }
+                          color = "#ffffff";
+                          backgroundColor = "#1976d2";
+                          zIndex = 10;
                         }
                         return (
                           <PickersDay
@@ -329,14 +466,17 @@ export const Picker = (
                             selected={isSelected}
                             outsideCurrentMonth={outsideCurrentMonth}
                             style={{
+                              color: color,
                               borderRadius: borderRadius,
-                              boxShadow: isSelected ? "0 0 0 3px #1976d2" : "none",
+                              backgroundColor: backgroundColor,
+                              boxShadow: boxShadow,
+                              zIndex: zIndex,
                             }}
                             onDaySelect={(day) => {
                               setDATE((prev: any) => ({
                                 ...prev,
-                                dateStart: moment(day).tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD"),
-                                dateEnd: moment(day).tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD")
+                                dateStart: getWeekStartFmt(day),
+                                dateEnd: getWeekEndFmt(day),
                               }));
                             }}
                           />
@@ -347,16 +487,13 @@ export const Picker = (
                           {...props}
                           className={"fs-1-4rem"}
                           onClick={() => {
-                          setDATE((prev: any) => {
-                            const newDateStart = moment(prev.dateStart).subtract(1, "week").startOf("isoWeek");
-                            const newDateEnd = newDateStart.clone().endOf("isoWeek");
-                            return {
+                            setDATE((prev: any) => ({
                               ...prev,
-                              dateStart: newDateStart.format("YYYY-MM-DD"),
-                              dateEnd: newDateEnd.format("YYYY-MM-DD"),
-                            };
-                          });
-                        }}>
+                              dateStart: getPrevWeekStartFmt(prev.dateStart),
+                              dateEnd: getPrevWeekEndFmt(prev.dateStart),
+                            }));
+                          }}
+                        >
                           {props.children}
                         </Btn>
                       ),
@@ -365,16 +502,13 @@ export const Picker = (
                           {...props}
                           className={"fs-1-4rem"}
                           onClick={() => {
-                          setDATE((prev: any) => {
-                            const newDateStart = moment(prev.dateStart).add(1, "week").startOf("isoWeek");
-                            const newDateEnd = newDateStart.clone().endOf("isoWeek");
-                            return {
+                            setDATE((prev: any) => ({
                               ...prev,
-                              dateStart: newDateStart.format("YYYY-MM-DD"),
-                              dateEnd: newDateEnd.format("YYYY-MM-DD"),
-                            };
-                          });
-                        }}>
+                              dateStart: getNextWeekStartFmt(prev.dateStart),
+                              dateEnd: getNextWeekEndFmt(prev.dateStart),
+                            }));
+                          }}
+                        >
                           {props.children}
                         </Btn>
                       ),
@@ -414,31 +548,102 @@ export const Picker = (
         contents={({closePopup}: any) => (
           <Card className={"w-max70vw p-0"}>
             <Grid container spacing={3}>
-              <Grid size={12} className={"d-center"}>
+              <Grid size={8} className={"d-left ms-20"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewMonth")}
                 </Div>
               </Grid>
+              <Grid size={2} className={"d-center"}>
+                <Icons
+                  key={"Refresh"}
+                  name={"Refresh"}
+                  className={"w-24 h-24"}
+                  onClick={() => {
+                    setDATE((prev: any) => ({
+                      ...prev,
+                      dateType: prev.initDateType,
+                      dateStart: prev.initDateStart,
+                      dateEnd: prev.initDateEnd,
+                    }));
+                  }}
+                />
+              </Grid>
               <Grid size={12} className={"d-center"}>
-                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={sessionLocale}>
                   <DateCalendar
-                    timezone={"Asia/Seoul"}
+                    timezone={sessionTimeZone}
                     views={["day"]}
                     readOnly={false}
-                    value={moment(DATE.dateEnd) || moment(DATE.dateStart)}
+                    value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
                     className={"radius border"}
                     showDaysOutsideCurrentMonth={true}
                     slots={{
                       // 월의 첫번째 날을 선택
                       day: (props) => {
-                        const {outsideCurrentMonth, day, ...other} = props;
-                        const isSelected = moment(day).tz("Asia/Seoul").date() === 1;
+
+                        let color = "";
+                        let borderRadius = "";
+                        let backgroundColor = "";
+                        let boxShadow = "";
+                        let zIndex = 0;
+
+                        const { outsideCurrentMonth, day, ...other } = props;
+
+                        const isInitStart = DATE.initDateStart === getDayStartFmt(day);
+                        const isInitEnd = DATE.initDateEnd === getDayEndFmt(day);
+                        const isInit = DATE.initDateStart <= getDayFmt(day) && DATE.initDateEnd >= getDayFmt(day);
+
+                        const isSelected = DATE.dateStart === getDayFmt(day) && getDayNotFmt(day).date() === 1;
+
+                        if (isInit) {
+                          if (isInitStart && isInitEnd) {
+                            boxShadow = "0 0 0 0 #D1D5DB";
+                            borderRadius = "50%";
+                          }
+                          else if (isInitStart) {
+                            boxShadow = "5px 0 0 0 #D1D5DB";
+                            borderRadius = "50% 0 0 50%";
+                          }
+                          else if (isInitEnd) {
+                            boxShadow = "-5px 0 0 0 #D1D5DB";
+                            borderRadius = "0 50% 50% 0";
+                          }
+                          else {
+                            boxShadow = "5px 0 0 0 #D1D5DB";
+                            borderRadius = "0";
+                          }
+                          color = "#ffffff";
+                          backgroundColor = "#D1D5DB";
+                          zIndex = 5;
+                        }
+                        if (isSelected) {
+                          color = "#ffffff";
+                          backgroundColor = "#1976d2";
+                          boxShadow = "0 0 0 0 #1976d2";
+                          borderRadius = "50%";
+                          zIndex = 10;
+                        }
+
                         return (
                           <PickersDay
                             {...other}
                             day={day}
                             selected={isSelected}
                             outsideCurrentMonth={outsideCurrentMonth}
+                            style={{
+                              color: color,
+                              borderRadius: borderRadius,
+                              backgroundColor: backgroundColor,
+                              boxShadow: boxShadow,
+                              zIndex: zIndex,
+                            }}
+                            onDaySelect={(day) => {
+                              setDATE((prev: any) => ({
+                                ...prev,
+                                dateStart: getMonthStartFmt(day),
+                                dateEnd: getMonthEndFmt(day),
+                              }));
+                            }}
                           />
                         )
                       },
@@ -447,16 +652,13 @@ export const Picker = (
                           {...props}
                           className={"fs-1-4rem"}
                           onClick={() => {
-                          setDATE((prev: any) => {
-                            const newDateStart = moment(prev.dateStart).subtract(1, "month");
-                            const newDateEnd = newDateStart.clone().endOf('month');
-                            return {
+                            setDATE((prev: any) => ({
                               ...prev,
-                              dateStart: newDateStart.format("YYYY-MM-DD"),
-                              dateEnd: newDateEnd.format("YYYY-MM-DD")
-                            };
-                          });
-                        }}>
+                              dateStart: getPrevMonthStartFmt(prev.dateStart),
+                              dateEnd: getPrevMonthEndFmt(prev.dateStart),
+                            }));
+                          }}
+                        >
                           {props.children}
                         </Btn>
                       ),
@@ -465,16 +667,13 @@ export const Picker = (
                           {...props}
                           className={"fs-1-4rem"}
                           onClick={() => {
-                          setDATE((prev: any) => {
-                            const newDateStart = moment(prev.dateStart).add(1, "month");
-                            const newDateEnd = newDateStart.clone().endOf('month');
-                            return {
+                            setDATE((prev: any) => ({
                               ...prev,
-                              dateStart: newDateStart.format("YYYY-MM-DD"),
-                              dateEnd: newDateEnd.format("YYYY-MM-DD")
-                            };
-                          });
-                        }}>
+                              dateStart: getNextMonthStartFmt(prev.dateStart),
+                              dateEnd: getNextMonthEndFmt(prev.dateStart),
+                            }));
+                          }}
+                        >
                           {props.children}
                         </Btn>
                       )
@@ -514,31 +713,102 @@ export const Picker = (
         contents={({closePopup}: any) => (
           <Card className={"w-max70vw p-0"}>
             <Grid container spacing={3}>
-              <Grid size={12} className={"d-center"}>
+              <Grid size={8} className={"d-left ms-20"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewYear")}
                 </Div>
               </Grid>
+              <Grid size={2} className={"d-center"}>
+                <Icons
+                  key={"Refresh"}
+                  name={"Refresh"}
+                  className={"w-24 h-24"}
+                  onClick={() => {
+                    setDATE((prev: any) => ({
+                      ...prev,
+                      dateType: prev.initDateType,
+                      dateStart: prev.initDateStart,
+                      dateEnd: prev.initDateEnd,
+                    }));
+                  }}
+                />
+              </Grid>
               <Grid size={12} className={"d-center"}>
-                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={sessionLocale}>
                   <DateCalendar
-                    timezone={"Asia/Seoul"}
+                    timezone={sessionTimeZone}
                     views={["day"]}
                     readOnly={false}
-                    value={moment(DATE.dateEnd) || moment(DATE.dateStart)}
+                    value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
                     className={"radius border"}
                     showDaysOutsideCurrentMonth={true}
                     slots={{
                       // 매년 1월 1일 선택
                       day: (props) => {
+
+                        let color = "";
+                        let borderRadius = "";
+                        let backgroundColor = "";
+                        let boxShadow = "";
+                        let zIndex = 0;
+
                         const {outsideCurrentMonth, day, ...other} = props;
-                        const isSelected = moment(day).tz("Asia/Seoul").month() === 0 && moment(day).tz("Asia/Seoul").date() === 1;
+
+                        const isInitStart = DATE.initDateStart === getDayStartFmt(day);
+                        const isInitEnd = DATE.initDateEnd === getDayEndFmt(day);
+                        const isInit = DATE.initDateStart <= getDayFmt(day) && DATE.initDateEnd >= getDayFmt(day);
+
+                        const isSelected = getDayNotFmt(day).month() === 0 && getDayNotFmt(day).date() === 1;
+
+                        if (isInit) {
+                          if (isInitStart && isInitEnd) {
+                            boxShadow = "0 0 0 0 #D1D5DB";
+                            borderRadius = "50%";
+                          }
+                          else if (isInitStart) {
+                            boxShadow = "5px 0 0 0 #D1D5DB";
+                            borderRadius = "50% 0 0 50%";
+                          }
+                          else if (isInitEnd) {
+                            boxShadow = "-5px 0 0 0 #D1D5DB";
+                            borderRadius = "0 50% 50% 0";
+                          }
+                          else {
+                            boxShadow = "5px 0 0 0 #D1D5DB";
+                            borderRadius = "0";
+                          }
+                          color = "#ffffff";
+                          backgroundColor = "#D1D5DB";
+                          zIndex = 5;
+                        }
+                        if (isSelected) {
+                          color = "#ffffff";
+                          backgroundColor = "#1976d2";
+                          boxShadow = "0 0 0 0 #1976d2";
+                          borderRadius = "50%";
+                          zIndex = 10;
+                        }
+
                         return (
                           <PickersDay
                             {...other}
                             day={day}
                             selected={isSelected}
                             outsideCurrentMonth={outsideCurrentMonth}
+                            style={{
+                              color: color,
+                              borderRadius: borderRadius,
+                              backgroundColor: backgroundColor,
+                              boxShadow: boxShadow,
+                              zIndex: zIndex,
+                            }}
+                            onDaySelect={(day) => {
+                              setDATE((prev: any) => ({
+                                ...prev,
+                                dateStart: getYearStartFmt(day),
+                                dateEnd: getYearEndFmt(day),
+                              }));
+                            }}
                           />
                         )
                       },
@@ -547,16 +817,13 @@ export const Picker = (
                           {...props}
                           className={"fs-1-4rem"}
                           onClick={() => {
-                          setDATE((prev: any) => {
-                            const newDateStart = moment(prev.dateStart).subtract(1, "year");
-                            const newDateEnd = newDateStart.clone().endOf('year');
-                            return {
+                            setDATE((prev: any) => ({
                               ...prev,
-                              dateStart: newDateStart.format("YYYY-MM-DD"),
-                              dateEnd: newDateEnd.format("YYYY-MM-DD")
-                            };
-                          });
-                        }}>
+                              dateStart: getPrevYearStartFmt(prev.dateStart),
+                              dateEnd: getPrevYearEndFmt(prev.dateStart),
+                            }));
+                          }}
+                        >
                           {props.children}
                         </Btn>
                       ),
@@ -565,16 +832,13 @@ export const Picker = (
                           {...props}
                           className={"fs-1-4rem"}
                           onClick={() => {
-                          setDATE((prev: any) => {
-                            const newDateStart = moment(prev.dateStart).add(1, "year");
-                            const newDateEnd = newDateStart.clone().endOf('year');
-                            return {
+                            setDATE((prev: any) => ({
                               ...prev,
-                              dateStart: newDateStart.format("YYYY-MM-DD"),
-                              dateEnd: newDateEnd.format("YYYY-MM-DD")
-                            };
-                          });
-                        }}>
+                              dateStart: getNextYearStartFmt(prev.dateStart),
+                              dateEnd: getNextYearEndFmt(prev.dateStart),
+                            }));
+                          }}
+                        >
                           {props.children}
                         </Btn>
                       )
@@ -614,45 +878,95 @@ export const Picker = (
         contents={({ closePopup }: any) => (
           <Card className={"w-max70vw p-0"}>
             <Grid container spacing={3}>
-              <Grid size={12} className={"d-center"}>
+              <Grid size={8} className={"d-left ms-20"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewSelect")}
                 </Div>
               </Grid>
+              <Grid size={2} className={"d-center"}>
+                <Icons
+                  key={"Refresh"}
+                  name={"Refresh"}
+                  className={"w-24 h-24"}
+                  onClick={() => {
+                    setDATE((prev: any) => ({
+                      ...prev,
+                      dateType: prev.initDateType,
+                      dateStart: prev.initDateStart,
+                      dateEnd: prev.initDateEnd,
+                    }));
+                  }}
+                />
+              </Grid>
               <Grid size={12} className={"d-center"}>
-                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={sessionLocale}>
                   <DateCalendar
-                    timezone={"Asia/Seoul"}
+                    timezone={sessionTimeZone}
                     views={["day"]}
                     readOnly={false}
-                    value={moment(DATE.dateEnd) || moment(DATE.dateStart)}
+                    value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
                     className={"radius border"}
                     showDaysOutsideCurrentMonth={true}
                     slots={{
                       day: (props) => {
-                        const {outsideCurrentMonth, day, ...other} = props;
-                        const isFirst = moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") === DATE.dateStart;
-                        const isLast = moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") === DATE.dateEnd;
-                        const isSelected = DATE.dateStart <= moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") &&
-                        DATE.dateEnd >= moment(day).tz("Asia/Seoul").format("YYYY-MM-DD")
+
+                        let color = "";
                         let borderRadius = "";
                         let backgroundColor = "";
-                        if (isSelected) {
-                          if (isFirst && isLast) {
+                        let boxShadow = "";
+                        let zIndex = 0;
+
+                        const { outsideCurrentMonth, day, ...other } = props;
+
+                        const isInitStart = DATE.initDateStart === getDayStartFmt(day);
+                        const isInitEnd = DATE.initDateEnd === getDayEndFmt(day);
+                        const isInit = DATE.initDateStart <= getDayFmt(day) && DATE.initDateEnd >= getDayFmt(day);
+
+                        const isFirst = DATE.dateStart === getDayStartFmt(day);
+                        const isLast = DATE.dateEnd === getDayEndFmt(day);
+                        const isSelected = DATE.dateStart <= getDayFmt(day) && DATE.dateEnd >= getDayFmt(day);
+
+                        if (isInit) {
+                          if (isInitStart && isInitEnd) {
+                            boxShadow = "0 0 0 0 #D1D5DB";
                             borderRadius = "50%";
-                            backgroundColor = "#1976d2";
                           }
-                          else if (isFirst) {
+                          else if (isInitStart) {
+                            boxShadow = "5px 0 0 0 #D1D5DB";
                             borderRadius = "50% 0 0 50%";
-                            backgroundColor = "#1976d2";
                           }
-                          else if (isLast) {
+                          else if (isInitEnd) {
+                            boxShadow = "-5px 0 0 0 #D1D5DB";
                             borderRadius = "0 50% 50% 0";
-                            backgroundColor = "#1976d2";
                           }
                           else {
+                            boxShadow = "5px 0 0 0 #D1D5DB";
                             borderRadius = "0";
                           }
+                          color = "#ffffff";
+                          backgroundColor = "#D1D5DB";
+                          zIndex = 5;
+                        }
+                        if (isSelected) {
+                          if (isFirst && isLast) {
+                            boxShadow = "0 0 0 0 #1976d2";
+                            borderRadius = "50%";
+                          }
+                          else if (isFirst) {
+                            boxShadow = "5px 0 0 0 #1976d2";
+                            borderRadius = "50% 0 0 50%";
+                          }
+                          else if (isLast) {
+                            boxShadow = "-5px 0 0 0 #1976d2";
+                            borderRadius = "0 50% 50% 0";
+                          }
+                          else {
+                            boxShadow = "5px 0 0 0 #1976d2";
+                            borderRadius = "0%";
+                          }
+                          color = "#ffffff";
+                          backgroundColor = "#1976d2";
+                          zIndex = 10;
                         }
                         return (
                           <PickersDay
@@ -661,27 +975,29 @@ export const Picker = (
                             selected={isSelected}
                             outsideCurrentMonth={outsideCurrentMonth}
                             style={{
+                              color: color,
                               borderRadius: borderRadius,
                               backgroundColor: backgroundColor,
-                              boxShadow: isSelected ? "0 0 0 3px #1976d2" : "none",
+                              boxShadow: boxShadow,
+                              zIndex: zIndex,
                             }}
                             onDaySelect={(day) => {
                               if (
                                 !DATE.dateStart ||
                                 DATE.dateEnd ||
-                                moment(day).tz("Asia/Seoul").isBefore(DATE.dateStart)
+                                getDayNotFmt(day).isBefore(DATE.dateStart)
                               ) {
                                 setDATE((prev: any) => ({
                                   ...prev,
-                                  dateStart: moment(day).tz("Asia/Seoul").format("YYYY-MM-DD"),
-                                  dateEnd: ""
+                                  dateStart: getDayFmt(day),
+                                  dateEnd: "",
                                 }));
                               }
                               else {
                                 setDATE((prev: any) => ({
                                   ...prev,
-                                  dateStart: prev.dateStart,
-                                  dateEnd: moment(day).tz("Asia/Seoul").format("YYYY-MM-DD")
+                                  dateStart: getDayFmt(prev.dateStart),
+                                  dateEnd: getDayFmt(day),
                                 }));
                               }
                             }}
@@ -715,8 +1031,8 @@ export const Picker = (
       </PopUp>
     );
 
-    // 6. listClickNode ----------------------------------------------------------------------------
-    const listClickNode = () => (
+    // 6. listType ---------------------------------------------------------------------------------
+    const listTypeSection = () => (
       <PopUp
         type={"modal"}
         position={"top"}
@@ -797,6 +1113,7 @@ export const Picker = (
                     backgroundColor: clickedType === "selectDate" ? "#1976d2" :"#F9FAFB",
                     color: clickedType === "selectDate" ? "#ffffff" : "#1976d2",
                   }}
+                  onClick={() => {}}
                 >
                   {translate("selectDate")}
                 </Btn>
@@ -821,51 +1138,51 @@ export const Picker = (
       </PopUp>
     );
 
-    // 7. type -------------------------------------------------------------------------------------
+    // 7. saveType ---------------------------------------------------------------------------------
     const saveTypeSection = () => (
       <Select
         label={translate("dateType")}
         value={DATE.dateType || ""}
-        nputclass={typeStr}
+        inputclass={typeStr}
         onChange={(e: any) => {
           if (e.target.value === "day") {
             setDATE((prev: any) => ({
               ...prev,
               dateType: "day",
-              dateStart: koreanDate,
-              dateEnd: koreanDate
+              dateStart: dayFmt,
+              dateEnd: dayFmt
             }));
           }
           else if (e.target.value === "week") {
             setDATE((prev: any) => ({
               ...prev,
               dateType: "week",
-              dateStart: curWeekStart,
-              dateEnd: curWeekEnd
+              dateStart: weekStartFmt,
+              dateEnd: weekEndFmt
             }));
           }
           else if (e.target.value === "month") {
             setDATE((prev: any) => ({
               ...prev,
               dateType: "month",
-              dateStart: curMonthStart,
-              dateEnd: curMonthEnd
+              dateStart: monthStartFmt,
+              dateEnd: monthEndFmt
             }));
           }
           else if (e.target.value === "year") {
             setDATE((prev: any) => ({
               ...prev,
               dateType: "year",
-              dateStart: curYearStart,
-              dateEnd: curYearEnd
+              dateStart: yearStartFmt,
+              dateEnd: yearEndFmt
             }));
           }
           else if (e.target.value === "select") {
             setDATE((prev: any) => ({
               ...prev,
               dateType: "select",
-              dateStart: koreanDate,
-              dateEnd: koreanDate,
+              dateStart: dayFmt,
+              dateEnd: dayFmt
             }));
           }
         }}
@@ -878,7 +1195,7 @@ export const Picker = (
       </Select>
     );
 
-    // 7. return
+    // 10. return
     return (
       isGoalList || isList ? (
         <Grid container spacing={2}>
@@ -886,7 +1203,7 @@ export const Picker = (
             {selectSection()}
           </Grid>
           <Grid size={3} className={"d-center"}>
-            {listClickNode()}
+            {listTypeSection()}
           </Grid>
         </Grid>
       ) : isGoalSave || isSave || isFind ? (
@@ -902,12 +1219,11 @@ export const Picker = (
             {DATE.dateType === "select" && selectSection()}
           </Grid>
         </Grid>
-      ) : (
-        null
-      )
+      ) : null
     )
   };
 
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {pickerNode()}

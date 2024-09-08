@@ -2,8 +2,8 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon, useStorage } from "@imports/ImportHooks";
-import { axios, numeral, moment } from "@imports/ImportLibs";
+import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
+import { axios, numeral } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
 import { Empty } from "@imports/ImportContainers";
@@ -19,16 +19,22 @@ export const TodayList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, location_dateStart, location_dateEnd, PATH, URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP, translate, sessionId, koreanDate, TITLE,
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    dayFmt, getDayNotFmt,
+  } = useCommonDate();
+  const {
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP, sessionId, TITLE, sessionCurrencyCode,
+  } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
   const [DATE, setDATE] = useStorage(
     `${TITLE}_date_(${PATH})`, {
-      dateType: "day",
-      dateStart:location_dateStart || koreanDate,
-      dateEnd: location_dateEnd || koreanDate,
+      dateType: location_dateType || "day",
+      dateStart: location_dateStart || dayFmt,
+      dateEnd: location_dateEnd || dayFmt,
     }
   );
   const [PAGING, setPAGING] = useStorage(
@@ -44,7 +50,7 @@ export const TodayList = () => {
   const [isExpandedMoney, setIsExpandedMoney] = useState<number[]>([0]);
   const [isExpandedSleep, setIsExpandedSleep] = useState<number[]>([0]);
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [SEND, setSEND] = useState({
+  const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "day",
     dateStart: "0000-00-00",
@@ -58,22 +64,22 @@ export const TodayList = () => {
     toSleepGoal: "/sleep/goal/save",
     toSleep: "/sleep/save",
   });
-  const [COUNT_EXERCISE, setCOUNT_EXERCISE] = useState({
+  const [COUNT_EXERCISE, setCOUNT_EXERCISE] = useState<any>({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
   });
-  const [COUNT_FOOD, setCOUNT_FOOD] = useState({
+  const [COUNT_FOOD, setCOUNT_FOOD] = useState<any>({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
   });
-  const [COUNT_MONEY, setCOUNT_MONEY] = useState({
+  const [COUNT_MONEY, setCOUNT_MONEY] = useState<any>({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
   });
-  const [COUNT_SLEEP, setCOUNT_SLEEP] = useState({
+  const [COUNT_SLEEP, setCOUNT_SLEEP] = useState<any>({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
@@ -170,10 +176,10 @@ export const TodayList = () => {
       sleep_sleepTime_color: "",
     }],
   }];
-  const [OBJECT_EXERCISE, setOBJECT_EXERCISE] = useState(OBJECT_EXERCISE_DEF);
-  const [OBJECT_FOOD, setOBJECT_FOOD] = useState(OBJECT_FOOD_DEF);
-  const [OBJECT_MONEY, setOBJECT_MONEY] = useState(OBJECT_MONEY_DEF);
-  const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState(OBJECT_SLEEP_DEF);
+  const [OBJECT_EXERCISE, setOBJECT_EXERCISE] = useState<any>(OBJECT_EXERCISE_DEF);
+  const [OBJECT_FOOD, setOBJECT_FOOD] = useState<any>(OBJECT_FOOD_DEF);
+  const [OBJECT_MONEY, setOBJECT_MONEY] = useState<any>(OBJECT_MONEY_DEF);
+  const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState<any>(OBJECT_SLEEP_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -265,7 +271,7 @@ export const TodayList = () => {
             <Accordion className={"shadow-none"} expanded={isExpandedExercise.includes(index)}>
               <AccordionSummary expandIcon={
                 <Icons
-                  name={"TbChevronDown"}
+                  name={"ChevronDown"}
                   className={"w-18 h-18 black"}
                   onClick={(e: any) => {
                     setIsExpandedMoney(isExpandedMoney.includes(index)
@@ -290,7 +296,7 @@ export const TodayList = () => {
                 >
                   <Grid size={2} className={"d-center"}>
                     <Icons
-                      name={"TbSearch"}
+                      name={"Search"}
                       className={"w-18 h-18 black"}
                     />
                   </Grid>
@@ -301,7 +307,7 @@ export const TodayList = () => {
                           {item.exercise_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(moment(item.exercise_dateStart).format("ddd"))}
+                          {translate(getDayNotFmt(item.exercise_dateStart).format("ddd"))}
                         </Div>
                       </>
                     ) : (
@@ -310,7 +316,7 @@ export const TodayList = () => {
                           {item.exercise_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(moment(item.exercise_dateStart).format("ddd"))}
+                          {translate(getDayNotFmt(item.exercise_dateStart).format("ddd"))}
                         </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
@@ -319,7 +325,7 @@ export const TodayList = () => {
                           {item.exercise_dateEnd?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(moment(item.exercise_dateEnd).format("ddd"))}
+                          {translate(getDayNotFmt(item.exercise_dateEnd).format("ddd"))}
                         </Div>
                       </>
                     )}
@@ -420,7 +426,7 @@ export const TodayList = () => {
             <Accordion className={"shadow-none"} expanded={isExpandedFood.includes(index)}>
               <AccordionSummary expandIcon={
                   <Icons
-                    name={"TbChevronDown"}
+                    name={"ChevronDown"}
                     className={"w-18 h-18 black"}
                     onClick={(e: any) => {
                       setIsExpandedFood(isExpandedFood.includes(index)
@@ -446,7 +452,7 @@ export const TodayList = () => {
                 >
                   <Grid size={2} className={"d-center"}>
                     <Icons
-                      name={"TbSearch"}
+                      name={"Search"}
                       className={"w-18 h-18 black"}
                     />
                   </Grid>
@@ -457,7 +463,7 @@ export const TodayList = () => {
                           {item.food_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(moment(item.food_dateStart).format("ddd"))}
+                          {translate(getDayNotFmt(item.food_dateStart).format("ddd"))}
                         </Div>
                       </>
                     ) : (
@@ -466,7 +472,7 @@ export const TodayList = () => {
                           {item.food_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(moment(item.food_dateStart).format("ddd"))}
+                          {translate(getDayNotFmt(item.food_dateStart).format("ddd"))}
                         </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
@@ -475,7 +481,7 @@ export const TodayList = () => {
                           {item.food_dateEnd?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(moment(item.food_dateEnd).format("ddd"))}
+                          {translate(getDayNotFmt(item.food_dateEnd).format("ddd"))}
                         </Div>
                       </>
                     )}
@@ -598,7 +604,7 @@ export const TodayList = () => {
             <Accordion className={"shadow-none"} expanded={isExpandedMoney.includes(index)}>
               <AccordionSummary expandIcon={
                   <Icons
-                    name={"TbChevronDown"}
+                    name={"ChevronDown"}
                     className={"w-18 h-18 black"}
                     onClick={(e: any) => {
                       setIsExpandedMoney(isExpandedMoney.includes(index)
@@ -624,7 +630,7 @@ export const TodayList = () => {
                 >
                   <Grid size={2} className={"d-center"}>
                     <Icons
-                      name={"TbSearch"}
+                      name={"Search"}
                       className={"w-18 h-18 black"}
                     />
                   </Grid>
@@ -635,7 +641,7 @@ export const TodayList = () => {
                           {item.money_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(moment(item.money_dateStart).format("ddd"))}
+                          {translate(getDayNotFmt(item.money_dateStart).format("ddd"))}
                         </Div>
                       </>
                     ) : (
@@ -644,7 +650,7 @@ export const TodayList = () => {
                           {item.money_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(moment(item.money_dateStart).format("ddd"))}
+                          {translate(getDayNotFmt(item.money_dateStart).format("ddd"))}
                         </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
@@ -653,7 +659,7 @@ export const TodayList = () => {
                           {item.money_dateEnd?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(moment(item.money_dateEnd).format("ddd"))}
+                          {translate(getDayNotFmt(item.money_dateEnd).format("ddd"))}
                         </Div>
                       </>
                     )}
@@ -678,7 +684,7 @@ export const TodayList = () => {
                   </Grid>
                   <Grid size={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
-                      {translate("currency")}
+                      {sessionCurrencyCode}
                     </Div>
                   </Grid>
                 </Grid>
@@ -700,7 +706,7 @@ export const TodayList = () => {
                   </Grid>
                   <Grid size={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
-                      {translate("currency")}
+                      {sessionCurrencyCode}
                     </Div>
                   </Grid>
                 </Grid>
@@ -732,7 +738,7 @@ export const TodayList = () => {
             <Accordion className={"shadow-none"} expanded={isExpandedSleep.includes(index)}>
               <AccordionSummary expandIcon={
                   <Icons
-                    name={"TbChevronDown"}
+                    name={"ChevronDown"}
                     className={"w-18 h-18 black"}
                     onClick={(e: any) => {
                       setIsExpandedSleep(isExpandedSleep.includes(index)
@@ -758,7 +764,7 @@ export const TodayList = () => {
                 >
                   <Grid size={2} className={"d-center"}>
                     <Icons
-                      name={"TbSearch"}
+                      name={"Search"}
                       className={"w-18 h-18 black"}
                     />
                   </Grid>
@@ -769,7 +775,7 @@ export const TodayList = () => {
                           {item.sleep_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(moment(item.sleep_dateStart).format("ddd"))}
+                          {translate(getDayNotFmt(item.sleep_dateStart).format("ddd"))}
                         </Div>
                       </>
                     ) : (
@@ -778,7 +784,7 @@ export const TodayList = () => {
                           {item.sleep_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(moment(item.sleep_dateStart).format("ddd"))}
+                          {translate(getDayNotFmt(item.sleep_dateStart).format("ddd"))}
                         </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
@@ -787,7 +793,7 @@ export const TodayList = () => {
                           {item.sleep_dateEnd?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(moment(item.sleep_dateEnd).format("ddd"))}
+                          {translate(getDayNotFmt(item.sleep_dateEnd).format("ddd"))}
                         </Div>
                       </>
                     )}

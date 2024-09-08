@@ -2,7 +2,7 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue } from "@imports/ImportHooks";
 import { Paper, Grid } from "@imports/ImportMuis";
 import { Buttons } from "./footer/Buttons";
 import { Dummy } from "./footer/Dummy";
@@ -11,7 +11,7 @@ import { FindListFilter } from "./footer/FindListFilter";
 import { FindSaveFilter } from "./footer/FindSaveFilter";
 
 // -------------------------------------------------------------------------------------------------
-interface FooterProps {
+declare interface FooterProps {
   state: any;
   setState: any;
   flow: any;
@@ -25,11 +25,11 @@ export const Footer = (
   // 1. common -------------------------------------------------------------------------------------
   const {
     PATH
-  } = useCommon();
+  } = useCommonValue();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [typeName, setTypeName] = useState("");
-  const [styleClass, setStyleClass] = useState("");
+  const [typeName, setTypeName] = useState<string>("");
+  const [styleClass, setStyleClass] = useState<string>("");
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -59,14 +59,14 @@ export const Footer = (
       setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh radius border");
     }
     else if (
-      PATH.includes("/food/save")
+      PATH.includes("/food/save") || PATH.includes("/food/update")
     ) {
       setTypeName("findSave");
       setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh radius border");
     }
     else if (
-      PATH.includes("/goal/save") ||
-      PATH.includes("/save")
+      PATH.includes("/goal/save") || PATH.includes("/save") ||
+      PATH.includes("/goal/update") || PATH.includes("/update")
     ) {
       setTypeName("btn");
       setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh radius border");

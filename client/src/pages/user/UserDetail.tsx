@@ -2,7 +2,7 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon, useValidateUser } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useTranslate, useValidateUser } from "@imports/ImportHooks";
 import { axios, numeral } from "@imports/ImportLibs";
 import { Footer, Loading } from "@imports/ImportLayouts";
 import { Input, Select, Hr, Img } from "@imports/ImportComponents";
@@ -14,15 +14,18 @@ export const UserDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, curProperty, URL_OBJECT, sessionId, translate
-  } = useCommon();
+    translate
+  } = useTranslate();
+  const {
+    navigate, curProperty, URL_OBJECT, sessionId, sessionCurrencyCode
+  } = useCommonValue();
   const {
     ERRORS, REFS, validate
   } = useValidateUser();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [SEND, setSEND] = useState({
+  const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
     dateStart: "0000-00-00",
@@ -45,7 +48,7 @@ export const UserDetail = () => {
     user_image: "",
     user_regDt: "",
   };
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -229,7 +232,7 @@ export const UserDetail = () => {
                 startadornment={
                   <Img src={money2} className={"w-16 h-16"} />
                 }
-                endadornment={translate("currency")}
+                endadornment={sessionCurrencyCode}
                 onChange={(e: any) => (
                   setOBJECT((prev: any) => ({
                     ...prev,
@@ -246,7 +249,7 @@ export const UserDetail = () => {
                 startadornment={
                   <Img src={money2} className={"w-16 h-16"} />
                 }
-                endadornment={translate("currency")}
+                endadornment={sessionCurrencyCode}
                 readOnly={true}
               />
             </Grid>

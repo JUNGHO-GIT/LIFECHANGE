@@ -1,7 +1,7 @@
 // userRepository.ts
 
 import mongoose from "mongoose";
-import { newDate } from "@assets/scripts/date";
+import { newDate } from "@scripts/date";
 import { ExerciseGoal } from "@schemas/exercise/ExerciseGoal";
 import { Exercise } from "@schemas/exercise/Exercise";
 import { FoodGoal } from "@schemas/food/FoodGoal";

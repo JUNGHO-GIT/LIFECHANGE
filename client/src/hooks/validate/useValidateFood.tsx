@@ -1,15 +1,18 @@
 // useValidateFood.tsx
 
 import { useState, useEffect, createRef, useRef } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue, useTranslate } from "@imports/ImportHooks";
 
 // -------------------------------------------------------------------------------------------------
 export const useValidateFood= () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    PATH, translate
-  } = useCommon();
+    PATH,
+  } = useCommonValue();
+  const {
+    translate,
+  } = useTranslate();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [ERRORS, setERRORS] = useState<any>({});
@@ -31,8 +34,8 @@ export const useValidateFood= () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    // 1. goal/save
-    if (PATH.includes("food/goal/save")) {
+    // 1. goal/save, update
+    if (PATH.includes("food/goal/save") || PATH.includes("food/goal/update")) {
       const target = [
         "food_goal_kcal",
         "food_goal_carb",
@@ -76,8 +79,8 @@ export const useValidateFood= () => {
       };
     }
 
-    // 2. save
-    else if (PATH.includes("food/save")) {
+    // 2. save, update
+    else if (PATH.includes("food/save") || PATH.includes("food/update")) {
       const target = [
         "food_part_idx",
         "food_name",

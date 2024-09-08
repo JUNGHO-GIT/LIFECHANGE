@@ -36,7 +36,7 @@ export const useStorage = (key: string, initialVal: any) => {
     }
   };
 
-  const [storedVal, setStoredVal] = useState(getInitialValue);
+  const [storedVal, setStoredVal] = useState<any>(getInitialValue);
 
   // -----------------------------------------------------------------------------------------------
   useEffect(() => {

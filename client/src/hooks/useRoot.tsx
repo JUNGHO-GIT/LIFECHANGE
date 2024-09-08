@@ -1,7 +1,7 @@
 // useRoot.tsx
 
 import { useEffect } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue } from "@imports/ImportHooks";
 
 // -------------------------------------------------------------------------------------------------
 export const useRoot = () => {
@@ -9,12 +9,12 @@ export const useRoot = () => {
   // 1. common -------------------------------------------------------------------------------------
   const {
     navigate, location, sessionId
-  } = useCommon();
+  } = useCommonValue();
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
 
-    // 1. 리다리렉트 처리
+    // 1. 리디렉트 처리
     if (
       location.pathname.indexOf("/user/login") === -1 &&
       location.pathname.indexOf("/user/signup") === -1 &&

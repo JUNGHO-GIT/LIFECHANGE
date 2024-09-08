@@ -7,20 +7,21 @@ export const Input = (props: any) => {
   return (
     <TextField
       {...props}
-      select={props?.select || false}
-      variant={props?.variant || "outlined"}
+      select={false}
       type={props?.type || "text"}
+      variant={props?.variant || "outlined"}
       size={props?.size || "small"}
       fullWidth={props?.fullWidth || true}
       className={props?.className || ""}
+      inputRef={props?.inputRef || null}
+      error={props?.error || false}
       slotProps={{
-        ...props?.slotProps,
         input: {
           className: (
             props?.inputclass?.includes("fs-") ? (
-              `text-left ${props?.inputclass}`
+              `text-left ${props?.inputclass || ""}`
             ) : (
-              `fs-1-0rem text-left ${props?.inputclass}`
+              `fs-1-0rem text-left ${props?.inputclass || ""}`
             )
           ),
           readOnly: (
@@ -45,6 +46,9 @@ export const Input = (props: any) => {
             ) : null
           ),
         },
+        inputLabel: {
+          shrink: (props?.shrink === "shrink" ? true : undefined),
+        }
       }}
     />
   );

@@ -1,12 +1,12 @@
 // FindListFilter.tsx
 // Node -> Section -> Fragment
 
-import { useCommon } from "@imports/ImportHooks";
+import { useTranslate } from "@imports/ImportHooks";
 import { Icons, Input } from "@imports/ImportComponents";
 import { TablePagination, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-interface FindListFilterProps {
+declare interface FindListFilterProps {
   state: any;
   setState: any;
   flow: any;
@@ -20,7 +20,7 @@ export const FindListFilter = (
   // 1. common -------------------------------------------------------------------------------------
   const {
     translate
-  } = useCommon();
+  } = useTranslate();
 
   // 7. find ---------------------------------------------------------------------------------------
   const findFilterNode = () => {
@@ -56,7 +56,7 @@ export const FindListFilter = (
     // 2. find
     const findSection = () => (
       <Icons
-        name={"TbSearch"}
+        name={"Search"}
         className={"w-20 h-20 black"}
         onClick={() => {
           flow.flowFind();
@@ -71,7 +71,7 @@ export const FindListFilter = (
     // 3. done
     const doneSection = () => (
       <Icons
-        name={"TbCheckBox"}
+        name={"CheckBox"}
         className={"w-20 h-20 black"}
         onClick={() => {
           Object.assign(state?.SEND, {

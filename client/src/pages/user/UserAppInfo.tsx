@@ -2,7 +2,7 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
 import { axios } from "@imports/ImportLibs"
 import { Loading } from "@imports/ImportLayouts";
 import { Img } from "@imports/ImportComponents";
@@ -16,7 +16,7 @@ export const UserAppInfo = () => {
   // 1. common -------------------------------------------------------------------------------------
   const {
     URL_OBJECT, sessionId
-  } = useCommon();
+  } = useCommonValue();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -28,7 +28,7 @@ export const UserAppInfo = () => {
     git: "",
     license: "",
   };
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {

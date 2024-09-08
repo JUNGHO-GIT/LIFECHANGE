@@ -9,24 +9,30 @@ export const router = express.Router();
 // 1. percent --------------------------------------------------------------------------------------
 router.get("/percent", async (req: Request, res: Response) => {
   try {
-    let result = await service.percent(
+    let finalResult = await service.percent(
       req.query.user_id as string,
       req.query.DATE as Record<string, any>,
     );
-    // @ts-ignore
-    result = await middleware.percent(result);
-    if (result) {
+    finalResult = await middleware.percent(finalResult);
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "searchSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "searchFailed",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "searchFailed",
-        result: null,
+        msg: "searchError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -34,7 +40,8 @@ router.get("/percent", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -42,22 +49,29 @@ router.get("/percent", async (req: Request, res: Response) => {
 // 2. property -------------------------------------------------------------------------------------
 router.get("/property", async (req: Request, res: Response) => {
   try {
-    let result = await service.property (
+    let finalResult = await service.property (
       req.query.user_id as string,
       req.query.DATE as Record<string, any>,
     );
-    if (result) {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "searchSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "searchFailed",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "searchFailed",
-        result: null,
+        msg: "searchError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -65,7 +79,8 @@ router.get("/property", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -73,22 +88,29 @@ router.get("/property", async (req: Request, res: Response) => {
 // 3. scale ----------------------------------------------------------------------------------------
 router.get("/scale", async (req: Request, res: Response) => {
   try {
-    let result = await service.scale (
+    let finalResult = await service.scale (
       req.query.user_id as string,
       req.query.DATE as Record<string, any>,
     );
-    if (result) {
+    if (finalResult.status === "success") {
       res.json({
-        status: "success",
         msg: "searchSuccessful",
-        result: result,
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "searchFailed",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "searchFailed",
-        result: null,
+        msg: "searchError",
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -96,7 +118,8 @@ router.get("/scale", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });

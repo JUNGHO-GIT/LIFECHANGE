@@ -2,8 +2,8 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon, useStorage } from "@imports/ImportHooks";
-import { axios, numeral, moment } from "@imports/ImportLibs";
+import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
+import { axios, numeral } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
 import { Empty } from "@imports/ImportContainers";
@@ -16,16 +16,22 @@ export const MoneyList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, translate, koreanDate, TITLE,
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    dayFmt, getDayNotFmt,
+  } = useCommonDate();
+  const {
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, sessionCurrencyCode
+  } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
   const [DATE, setDATE] = useStorage(
     `${TITLE}_date_(${PATH})`, {
-      dateType: "",
-      dateStart: location_dateStart || koreanDate,
-      dateEnd: location_dateEnd || koreanDate,
+      dateType: location_dateType || "",
+      dateStart: location_dateStart || dayFmt,
+      dateEnd: location_dateEnd || dayFmt,
     }
   );
   const [PAGING, setPAGING] = useStorage(
@@ -38,14 +44,14 @@ export const MoneyList = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [isExpanded, setIsExpanded] = useState<number[]>([0]);
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [SEND, setSEND] = useState({
+  const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     toSave: "/money/save",
   });
-  const [COUNT, setCOUNT] = useState({
+  const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
@@ -72,7 +78,7 @@ export const MoneyList = () => {
       money_content: "",
     }],
   }];
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -122,7 +128,7 @@ export const MoneyList = () => {
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
               <AccordionSummary expandIcon={
                 <Icons
-                  name={"TbChevronDown"}
+                  name={"ChevronDown"}
                   className={"w-18 h-18 black"}
                   onClick={(e: any) => {
                     setIsExpanded(isExpanded.includes(index)
@@ -147,7 +153,7 @@ export const MoneyList = () => {
                 >
                   <Grid size={2} className={"d-center"}>
                     <Icons
-                      name={"TbSearch"}
+                      name={"Search"}
                       className={"w-18 h-18 black"}
                     />
                   </Grid>
@@ -158,7 +164,7 @@ export const MoneyList = () => {
                           {item.money_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(moment(item.money_dateStart).format("ddd"))}
+                          {translate(getDayNotFmt(item.money_dateStart).format("ddd"))}
                         </Div>
                       </>
                     ) : (
@@ -167,7 +173,7 @@ export const MoneyList = () => {
                           {item.money_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(moment(item.money_dateStart).format("ddd"))}
+                          {translate(getDayNotFmt(item.money_dateStart).format("ddd"))}
                         </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
@@ -176,7 +182,7 @@ export const MoneyList = () => {
                           {item.money_dateEnd?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(moment(item.money_dateEnd).format("ddd"))}
+                          {translate(getDayNotFmt(item.money_dateEnd).format("ddd"))}
                         </Div>
                       </>
                     )}
@@ -201,7 +207,7 @@ export const MoneyList = () => {
                   </Grid>
                   <Grid size={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
-                      {translate("currency")}
+                      {sessionCurrencyCode}
                     </Div>
                   </Grid>
                 </Grid>
@@ -223,7 +229,7 @@ export const MoneyList = () => {
                   </Grid>
                   <Grid size={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
-                      {translate("currency")}
+                      {sessionCurrencyCode}
                     </Div>
                   </Grid>
                 </Grid>

@@ -1,15 +1,18 @@
 // useValidateExercise.tsx
 
 import { useState, useEffect, createRef, useRef } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue, useTranslate } from "@imports/ImportHooks";
 
 // -------------------------------------------------------------------------------------------------
 export const useValidateExercise= () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    PATH, translate
-  } = useCommon();
+    PATH,
+  } = useCommonValue();
+  const {
+    translate,
+  } = useTranslate();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [ERRORS, setERRORS] = useState<any>({});
@@ -31,8 +34,8 @@ export const useValidateExercise= () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    // 1. goal/save
-    if (PATH.includes("exercise/goal/save")) {
+    // 1. goal/save, update
+    if (PATH.includes("exercise/goal/save") || PATH.includes("exercise/goal/update")) {
       const target = [
         "exercise_goal_count",
         "exercise_goal_volume",
@@ -76,8 +79,8 @@ export const useValidateExercise= () => {
       };
     }
 
-    // 2. save
-    else if (PATH.includes("exercise/save")) {
+    // 2. save, update
+    else if (PATH.includes("exercise/save") || PATH.includes("exercise/update")) {
       const target = [
         "exercise_part_idx",
         "exercise_title_idx",

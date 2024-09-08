@@ -13,7 +13,7 @@ const LanguageContext = createContext();
 // -------------------------------------------------------------------------------------------------
 export const LanguageProvider = ({ children }: any) => {
 
-  const [lang, setLang] = useState(sessionStorage.getItem(`${TITLE}_lang`) || "ko");
+  const [lang, setLang] = useState<any>(sessionStorage.getItem(`${TITLE}_lang`) || "ko");
 
   if (lang === "ko") {
     // @ts-ignore
@@ -200,6 +200,10 @@ export const useTranslate = () => {
     deletesAll: {
       ko: "전체삭제",
       en: "Delete All"
+    },
+    deletesUser: {
+      ko: "탈퇴 후에는 복구가 불가능합니다.\n정말로 탈퇴하시겠습니까?",
+      en: "Withdrawal is irreversible.\nDo you really want to withdraw?"
     },
     dataCategory: {
       ko: "카테고리 편집",
@@ -423,7 +427,7 @@ export const useTranslate = () => {
       ko: "달력",
       en: "Calendar"
     },
-    getToday: {
+    getDay: {
       ko: "오늘",
       en: "Today"
     },
@@ -1451,6 +1455,10 @@ export const useTranslate = () => {
       ko: "조회 실패",
       en: "Search Failed"
     },
+    searchError: {
+      ko: "조회 오류",
+      en: "Search Error"
+    },
     saveSuccessful: {
       ko: "저장 성공",
       en: "Save Successful"
@@ -1458,6 +1466,10 @@ export const useTranslate = () => {
     saveFailed: {
       ko: "저장 실패",
       en: "Save Failed"
+    },
+    saveError: {
+      ko: "저장 오류",
+      en: "Save Error"
     },
     updateSuccessful: {
       ko: "수정 성공",
@@ -1467,6 +1479,10 @@ export const useTranslate = () => {
       ko: "수정 실패",
       en: "Update Failed"
     },
+    updateError: {
+      ko: "수정 오류",
+      en: "Update Error"
+    },
     deleteSuccessful: {
       ko: "삭제 성공",
       en: "Delete Successful"
@@ -1475,6 +1491,10 @@ export const useTranslate = () => {
       ko: "삭제 실패",
       en: "Delete Failed"
     },
+    deleteError: {
+      ko: "삭제 오류",
+      en: "Delete Error"
+    },
     signupSuccessful: {
       ko: "회원가입 성공",
       en: "Signup Successful"
@@ -1482,6 +1502,10 @@ export const useTranslate = () => {
     signupFailed: {
       ko: "회원가입 실패",
       en: "Signup Failed"
+    },
+    signupError: {
+      ko: "회원가입 오류",
+      en: "Signup Error"
     },
     duplicatedId: {
       ko: "중복된 아이디입니다",
@@ -1499,6 +1523,10 @@ export const useTranslate = () => {
       ko: "로그인 실패",
       en: "Login Failed"
     },
+    loginError: {
+      ko: "로그인 오류",
+      en: "Login Error"
+    },
     theIdOrPwIsIncorrect: {
       ko: "아이디 또는 비밀번호가 일치하지 않습니다",
       en: "The ID or Password is incorrect"
@@ -1511,6 +1539,10 @@ export const useTranslate = () => {
       ko: "비밀번호 변경 실패",
       en: "Password Reset Failed"
     },
+    resetPwError: {
+      ko: "비밀번호 변경 오류",
+      en: "Password Reset Error"
+    },
     authenticationSuccessful: {
       ko: "인증 성공",
       en: "Authentication Successful"
@@ -1519,6 +1551,10 @@ export const useTranslate = () => {
       ko: "인증 실패",
       en: "Authentication Failed"
     },
+    authenticationError: {
+      ko: "인증 오류",
+      en: "Authentication Error"
+    },
     emailSendSuccessful: {
       ko: "이메일 전송 성공",
       en: "Email Send Successful"
@@ -1526,6 +1562,10 @@ export const useTranslate = () => {
     emailSendFailed: {
       ko: "이메일 전송 실패",
       en: "Email Send Failed"
+    },
+    emailSendError: {
+      ko: "이메일 전송 오류",
+      en: "Email Send Error"
     },
     emailNotExist: {
       ko: "존재하지 않는 이메일입니다",
@@ -1538,6 +1578,10 @@ export const useTranslate = () => {
     authenticationUrlGenerationFailed: {
       ko: "인증 URL 생성 실패",
       en: "Authentication URL Generation Failed"
+    },
+    authenticationUrlGenerationError: {
+      ko: "인증 URL 생성 오류",
+      en: "Authentication URL Generation Error"
     },
     callbackSuccessful: {
       ko: "콜백 성공",
@@ -1554,6 +1598,10 @@ export const useTranslate = () => {
     googleLoginFailed: {
       ko: "구글 로그인 실패",
       en: "Google Login Failed"
+    },
+    googleLoginError: {
+      ko: "구글 로그인 오류",
+      en: "Google Login Error"
     },
     cantBeDeletedLastItem: {
       ko: "마지막 항목은 삭제할 수 없습니다",

@@ -2,7 +2,7 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
 import { Img } from "@imports/ImportComponents";
 import { BottomNavigation, BottomNavigationAction } from "@imports/ImportMuis";
 import { Paper, Grid } from "@imports/ImportMuis";
@@ -13,11 +13,17 @@ export const BottomNav = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, translate, firstStr, koreanDate, TITLE,
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    navigate, firstStr, TITLE,
+  } = useCommonValue();
+  const {
+    dayFmt
+  } = useCommonDate();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [selectedTab, setSelectedTab] = useState("today");
+  const [selectedTab, setSelectedTab] = useState<string>("today");
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -87,8 +93,8 @@ export const BottomNav = () => {
     navigate(url, {
       state: {
         dateType: "",
-        dateStart: koreanDate,
-        dateEnd: koreanDate
+        dateStart: dayFmt,
+        dateEnd: dayFmt,
       }
     });
   };

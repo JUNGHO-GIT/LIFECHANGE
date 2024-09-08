@@ -1,11 +1,9 @@
-// useCommon.tsx
+// useCommonValue.tsx
 
 import { useLocation, useNavigate } from "@imports/ImportReacts";
-import { useTranslate } from "@imports/ImportHooks";
-import { moment, Moment } from "@imports/ImportLibs";
 
 // -------------------------------------------------------------------------------------------------
-export const useCommon = () => {
+export const useCommonValue = () => {
 
   const navigate: any = useNavigate();
   const location: any = useLocation();
@@ -21,7 +19,7 @@ export const useCommon = () => {
   const secondStr: string = PATH?.split("/")[2] || "";
   const thirdStr: string = PATH?.split("/")[3] || "";
 
-  const TITLE = process.env.REACT_APP_TITLE || "";
+  const TITLE: any = process.env.REACT_APP_TITLE || "";
   const URL: string = process.env.REACT_APP_SERVER_URL || "";
   const SUBFIX : string= process.env[`REACT_APP_${firstStr.toUpperCase()}`] || "";
   const SUBFIX_GOOGLE: string = process.env[`REACT_APP_GOOGLE`] || "";
@@ -41,14 +39,18 @@ export const useCommon = () => {
 
   // string 타입
   const isAdmin: string = sessionStorage.getItem(`${TITLE}_admin`) || "";
-  const sessionLang: string = sessionStorage.getItem(`${TITLE}_lang`) || "ko";
   const sessionId: string = sessionStorage.getItem(`${TITLE}_sessionId`) || "";
+  const sessionLang: string = sessionStorage.getItem(`${TITLE}_lang`) || "ko";
+  const sessionTimeZone: string = sessionStorage.getItem(`${TITLE}_timeZone`) || "Asia/Seoul";
+  const sessionZoneName: string = sessionStorage.getItem(`${TITLE}_zoneName`) || "KST";
+  const sessionLocale: string = sessionStorage.getItem(`${TITLE}_locale`) || "ko-KR";
+  const sessionIsoCode: string = sessionStorage.getItem(`${TITLE}_isoCode`) || "KR";
+  const sessionCurrencyCode: string = sessionStorage.getItem(`${TITLE}_currencyCode`) || "KRW";
 
   // object 타입
   const sessionPercent: any = sessionStorage.getItem(`${TITLE}_percent`) || "{}";
   const sessionProperty: any = sessionStorage.getItem(`${TITLE}_property`) || "{}";
   const sessionCategory: any = sessionStorage.getItem(`${TITLE}_category`)|| "{}";
-
   const sessionScale: string = sessionStorage.getItem(`${TITLE}_scale`) || "";
 
   const calendarArray: any[] = JSON.parse(sessionCategory)?.calendar || [];
@@ -56,7 +58,7 @@ export const useCommon = () => {
   const foodArray: any[] = JSON.parse(sessionCategory)?.food || [];
   const moneyArray: any[] = JSON.parse(sessionCategory)?.money || [];
   const sleepArray: any[] = JSON.parse(sessionCategory)?.sleep || [];
-  const curProperty = sessionProperty?.curProperty || "0";
+  const curProperty: string = sessionProperty?.curProperty || "0";
 
   const dataCategoryArray: any[] = [
     "exercise", "food", "calendar", "money", "sleep"
@@ -84,29 +86,59 @@ export const useCommon = () => {
     "red", "orange", "yellow", "green", "blue", "navy", "purple", "black", "gray"
   ];
 
-  const newDate: Moment = moment().tz("Asia/Seoul");
-  const koreanDate: string = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
-  const curWeekStart: string = moment().tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD");
-  const curWeekEnd: string = moment().tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD");
-  const curMonthStart: string = moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD");
-  const curMonthEnd: string = moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD");
-  const curYearStart: string = moment().tz("Asia/Seoul").startOf("year").format("YYYY-MM-DD");
-  const curYearEnd: string = moment().tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD");
-
-  const { translate }: any = useTranslate();
-
   return {
-    navigate, location,
-    location_id, location_category, location_dateType, location_dateStart, location_dateEnd,
-    PATH, firstStr, secondStr, thirdStr, TITLE,
-    URL_OBJECT, URL_GOOGLE, URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP,
-    ADMIN_ID, ADMIN_PW, isAdmin,
-    sessionLang, sessionPercent, sessionProperty, sessionScale, sessionId, sessionCategory,
-    calendarArray, exerciseArray, foodArray, moneyArray, sleepArray, curProperty,
+    navigate,
+    location,
+    location_id,
+    location_dateType,
+    location_dateStart,
+    location_dateEnd,
+    location_category,
+    PATH,
+    firstStr,
+    secondStr,
+    thirdStr,
+    TITLE,
+    URL,
+    SUBFIX,
+    SUBFIX_GOOGLE,
+    SUBFIX_EXERCISE,
+    SUBFIX_FOOD,
+    SUBFIX_MONEY,
+    SUBFIX_SLEEP,
+    URL_OBJECT,
+    URL_GOOGLE,
+    URL_EXERCISE,
+    URL_FOOD,
+    URL_MONEY,
+    URL_SLEEP,
+    ADMIN_ID,
+    ADMIN_PW,
+    isAdmin,
+    sessionId,
+    sessionLang,
+    sessionTimeZone,
+    sessionZoneName,
+    sessionLocale,
+    sessionIsoCode,
+    sessionCurrencyCode,
+    sessionPercent,
+    sessionProperty,
+    sessionCategory,
+    sessionScale,
+    calendarArray,
+    exerciseArray,
+    foodArray,
+    moneyArray,
+    sleepArray,
+    curProperty,
     dataCategoryArray,
-    exerciseChartArray, foodChartArray, moneyChartArray, sleepChartArray, barChartArray,
-    COLORS, colors,
-    newDate, koreanDate, curWeekStart, curWeekEnd, curMonthStart, curMonthEnd, curYearStart, curYearEnd,
-    translate,
+    exerciseChartArray,
+    foodChartArray,
+    moneyChartArray,
+    sleepChartArray,
+    barChartArray,
+    COLORS,
+    colors,
   };
-};
+}

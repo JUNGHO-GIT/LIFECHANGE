@@ -1,13 +1,13 @@
 // Count.tsx
 
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue, useTranslate } from "@imports/ImportHooks";
 import { Img, Div, Icons, Input } from "@imports/ImportComponents";
 import { PopUp } from "@imports/ImportContainers";
 import { Card } from "@imports/ImportMuis";
 import { common2 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
-interface CountProps {
+declare interface CountProps {
   COUNT: any;
   setCOUNT: any;
   limit: number;
@@ -20,8 +20,11 @@ export const Count = (
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate, secondStr
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    secondStr,
+  } = useCommonValue();
   const isFind = secondStr === "find";
 
   // 2. countNode ----------------------------------------------------------------------------------
@@ -48,7 +51,7 @@ export const Count = (
           endadornment={
             <Div className={"d-center me-n10"}>
               <Icons
-                name={"TbMinus"}
+                name={"Minus"}
                 className={"w-20 h-20 black"}
                 onClick={(e: any) => {
                   if (isFind) {
@@ -65,7 +68,7 @@ export const Count = (
                 }}
               />
               <Icons
-                name={"TbPlus"}
+                name={"Plus"}
                 className={"w-20 h-20 black"}
                 onClick={(e: any) => {
                   if (isFind) {

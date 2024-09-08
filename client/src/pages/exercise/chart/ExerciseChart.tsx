@@ -1,5 +1,4 @@
 // ExerciseChart.tsx
-// Node -> Section -> Fragment
 
 import { ExerciseChartBar } from "./ExerciseChartBar";
 import { ExerciseChartPie } from "./ExerciseChartPie";
@@ -12,7 +11,7 @@ export const ExerciseChart = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {/* {ExerciseChartBar()} */}
+      {ExerciseChartBar()}
       {ExerciseChartPie()}
       {ExerciseChartLine()}
       {ExerciseChartAvg()}

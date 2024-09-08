@@ -6,6 +6,7 @@ import { AuthPrivacy } from "@pages/auth/AuthPrivacy";
 
 import { CalendarList } from "@pages/calendar/CalendarList";
 import { CalendarSave } from "@pages/calendar/CalendarSave";
+import { CalendarUpdate } from "@pages/calendar/CalendarUpdate";
 
 import { ExerciseChart } from "@pages/exercise/chart/ExerciseChart";
 import { ExerciseGoalList } from "@pages/exercise/goal/ExerciseGoalList";
@@ -53,6 +54,7 @@ export {
   AuthPrivacy,
   CalendarList,
   CalendarSave,
+  CalendarUpdate,
   ExerciseChart,
   ExerciseGoalList,
   ExerciseGoalSave,

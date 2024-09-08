@@ -1,6 +1,6 @@
 // exerciseMiddleware.ts
 
-import { strToDecimal, decimalToStr } from "@assets/scripts/utils";
+import { strToDecimal, decimalToStr } from "@scripts/utils";
 
 // 1. list -----------------------------------------------------------------------------------------
 export const list = async (object: any) => {
@@ -38,7 +38,7 @@ export const list = async (object: any) => {
 // 3. save -----------------------------------------------------------------------------------------
 export const save = async (object: any) => {
 
-  if (object === "deleted") {
+  if (!object) {
     return {};
   }
 
@@ -56,10 +56,10 @@ export const save = async (object: any) => {
   return object;
 };
 
-// 4. deletes --------------------------------------------------------------------------------------
+// 5. deletes --------------------------------------------------------------------------------------
 export const deletes = async (object: any) => {
 
-  if (object === "deleted") {
+  if (!object) {
     return {};
   }
 

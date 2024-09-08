@@ -2,21 +2,19 @@
 
 import mongoose from "mongoose";
 import { ExerciseGoal } from "@schemas/exercise/ExerciseGoal";
-import { Exercise } from "@schemas/exercise/Exercise";
-import { newDate } from "@assets/scripts/date";
+import { newDate } from "@scripts/date";
 
 // 0. exist ----------------------------------------------------------------------------------------
-export const exist = {
+export const exist = async (
+  user_id_param: string,
+  dateType_param: string,
+  dateStart_param: string,
+  dateEnd_param: string,
+) => {
 
-  // exercise_dateType 이 존재하는 경우
-  exist: async (
-    user_id_param: string,
-    dateType_param: string,
-    dateStart_param: string,
-    dateEnd_param: string,
-  ) => {
-    const finalResult = await ExerciseGoal.aggregate([
-      {$match: {
+  const finalResult = await ExerciseGoal.aggregate([
+    {
+      $match: {
         user_id: user_id_param,
         exercise_goal_dateStart: {
           $gte: dateStart_param,
@@ -29,29 +27,36 @@ export const exist = {
         ...((!dateType_param || dateType_param === "") ? {} : {
           exercise_goal_dateType: dateType_param
         }),
-      }},
-      {$match: {
-        exercise_goal_dateType: {$exists: true}
-      }},
-      {$group: {
+      }
+    },
+    {
+      $match: {
+        exercise_goal_dateType: { $exists: true }
+      }
+    },
+    {
+      $group: {
         _id: null,
-        existDate: {$addToSet: "$exercise_goal_dateStart"}
-      }}
-    ]);
-    return finalResult;
-  }
-};
+        existDate: {
+          $addToSet: "$exercise_goal_dateStart"
+        }
+      }
+    }
+  ]);
 
-// 1. list (리스트는 gte lte) ----------------------------------------------------------------------
-export const list = {
+  return finalResult;
+}
 
-  cnt: async (
-    user_id_param: string,
-    dateType_param: string,
-    dateStart_param: string,
-    dateEnd_param: string,
-  ) => {
-    const finalResult = await ExerciseGoal.countDocuments({
+// 0. cnt ------------------------------------------------------------------------------------------
+export const cnt = async (
+  user_id_param: string,
+  dateType_param: string,
+  dateStart_param: string,
+  dateEnd_param: string,
+) => {
+
+  const finalResult = await ExerciseGoal.countDocuments(
+    {
       user_id: user_id_param,
       exercise_goal_dateStart: {
         $lte: dateEnd_param,
@@ -62,20 +67,25 @@ export const list = {
       ...((!dateType_param || dateType_param === "") ? {} : {
         exercise_goal_dateType: dateType_param
       }),
-    });
-    return finalResult;
-  },
+    }
+  );
 
-  listGoal: async (
-    user_id_param: string,
-    dateType_param: string,
-    dateStart_param: string,
-    dateEnd_param: string,
-    sort_param: 1 | -1,
-    page_param: number,
-  ) => {
-    const finalResult = await ExerciseGoal.aggregate([
-      {$match: {
+  return finalResult;
+};
+
+// 1. list -----------------------------------------------------------------------------------------
+export const list = async (
+  user_id_param: string,
+  dateType_param: string,
+  dateStart_param: string,
+  dateEnd_param: string,
+  sort_param: 1 | -1,
+  page_param: number,
+) => {
+
+  const finalResult = await ExerciseGoal.aggregate([
+    {
+      $match: {
         user_id: user_id_param,
         exercise_goal_dateStart: {
           $lte: dateEnd_param,
@@ -86,8 +96,10 @@ export const list = {
         ...((!dateType_param || dateType_param === "") ? {} : {
           exercise_goal_dateType: dateType_param
         }),
-      }},
-      {$project: {
+      }
+    },
+    {
+      $project: {
         _id: 1,
         exercise_goal_dateType: 1,
         exercise_goal_dateStart: 1,
@@ -96,61 +108,34 @@ export const list = {
         exercise_goal_volume: 1,
         exercise_goal_cardio: 1,
         exercise_goal_weight: 1,
-      }},
-      {$sort: {exercise_goal_dateStart: sort_param}},
-      {$skip: Number(page_param - 1)},
-    ]);
-    return finalResult;
-  },
+      }
+    },
+    {
+      $sort: {
+        exercise_goal_dateStart: sort_param
+      }
+    },
+    {
+      $skip: Number(page_param - 1)
+    }
+  ]);
 
-  listReal: async (
-    user_id_param: string,
-    dateType_param: string,
-    dateStart_param: string,
-    dateEnd_param: string,
-  ) => {
-    const finalResult = await Exercise.aggregate([
-      {$match: {
-        user_id: user_id_param,
-        exercise_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        exercise_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        ...((!dateType_param || dateType_param === "") ? {} : {
-          exercise_dateType: dateType_param
-        }),
-      }},
-      {$project: {
-        _id: 1,
-        exercise_dateType: "$exercise_dateType",
-        exercise_dateStart: "$exercise_dateStart",
-        exercise_dateEnd: "$exercise_dateEnd",
-        exercise_total_volume: "$exercise_total_volume",
-        exercise_total_cardio: "$exercise_total_cardio",
-        exercise_total_weight: "$exercise_total_weight"
-      }},
-      {$sort: {exercise_dateStart: 1 }},
-    ]);
-    return finalResult;
-  },
+  return finalResult;
 };
 
-// 2. detail (상세는 eq) ---------------------------------------------------------------------------
-export const detail = {
-  detail: async (
-    user_id_param: string,
-    _id_param: string,
-    dateType_param: string,
-    dateStart_param: string,
-    dateEnd_param: string,
-  ) => {
-    const finalResult = await ExerciseGoal.findOne({
+// 2. detail ---------------------------------------------------------------------------------------
+export const detail = async (
+  user_id_param: string,
+  _id_param: string,
+  dateType_param: string,
+  dateStart_param: string,
+  dateEnd_param: string,
+) => {
+
+  const finalResult = await ExerciseGoal.findOne(
+    {
       user_id: user_id_param,
-      _id: !_id_param ? {$exists:true} : _id_param,
+      _id: !_id_param ? { $exists: true } : _id_param,
       exercise_goal_dateStart: {
         $eq: dateStart_param,
       },
@@ -160,44 +145,25 @@ export const detail = {
       ...((!dateType_param || dateType_param === "") ? {} : {
         exercise_goal_dateType: dateType_param
       }),
-    });
-    return finalResult;
-  }
+    }
+  )
+  .lean();
+
+  return finalResult;
 };
 
 // 3. save -----------------------------------------------------------------------------------------
-export const save = {
-  detail: async (
-    user_id_param: string,
-    _id_param: string,
-    dateType_param: string,
-    dateStart_param: string,
-    dateEnd_param: string,
-  ) => {
-    const finalResult = await ExerciseGoal.findOne({
-      user_id: user_id_param,
-      _id: !_id_param ? {$exists:true} : _id_param,
-      exercise_goal_dateStart: {
-        $eq: dateStart_param,
-      },
-      exercise_goal_dateEnd: {
-        $eq: dateEnd_param,
-      },
-      ...((!dateType_param || dateType_param === "") ? {} : {
-        exercise_goal_dateType: dateType_param
-      }),
-    });
-    return finalResult;
-  },
+export const save = async (
+  user_id_param: string,
+  _id_param: string,
+  OBJECT_param: Record<string, any>,
+  dateType_param: string,
+  dateStart_param: string,
+  dateEnd_param: string,
+) => {
 
-  create: async (
-    user_id_param: string,
-    OBJECT_param: Record<string, any>,
-    dateType_param: string,
-    dateStart_param: string,
-    dateEnd_param: string,
-  ) => {
-    const finalResult = await ExerciseGoal.create({
+  const finalResult = await ExerciseGoal.create(
+    {
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
       exercise_goal_dummy: "N",
@@ -210,23 +176,29 @@ export const save = {
       exercise_goal_weight: OBJECT_param.exercise_goal_weight,
       exercise_goal_regDt: newDate,
       exercise_goal_updateDt: "",
-    });
-    return finalResult;
-  },
+    }
+  );
 
-  update: async (
-    user_id_param: string,
-    _id_param: string,
-    OBJECT_param: Record<string, any>,
-    dateType_param: string,
-    dateStart_param: string,
-    dateEnd_param: string,
-  ) => {
-    const finalResult = await ExerciseGoal.findOneAndUpdate(
-      {user_id: user_id_param,
-        _id: !_id_param ? {$exists:true} : _id_param
-      },
-      {$set: {
+  return finalResult;
+};
+
+// 4. update ---------------------------------------------------------------------------------------
+export const update = async (
+  user_id_param: string,
+  _id_param: string,
+  OBJECT_param: any,
+  dateType_param: string,
+  dateStart_param: string,
+  dateEnd_param: string,
+) => {
+
+  const finalResult = await ExerciseGoal.findOneAndUpdate(
+    {
+      user_id: user_id_param,
+      _id: !_id_param ? { $exists: true } : _id_param
+    },
+    {
+      $set: {
         exercise_goal_dateType: dateType_param,
         exercise_goal_dateStart: dateStart_param,
         exercise_goal_dateEnd: dateEnd_param,
@@ -234,51 +206,44 @@ export const save = {
         exercise_goal_volume: OBJECT_param.exercise_goal_volume,
         exercise_goal_cardio: OBJECT_param.exercise_goal_cardio,
         exercise_goal_weight: OBJECT_param.exercise_goal_weight,
-        exercise_goal_updateDt: newDate,
-      }},
-      {upsert: true, new: true}
-    )
-    .lean();
-    return finalResult;
-  }
+        exercise_goal_updateDt: newDate
+      }
+    },
+    {
+      upsert: true,
+      new: true,
+    }
+  )
+  .lean();
+
+  return finalResult;
 };
 
-// 4. deletes --------------------------------------------------------------------------------------
-export const deletes = {
+// 5. deletes --------------------------------------------------------------------------------------
+export const deletes = async (
+  user_id_param: string,
+  _id_param: string,
+  dateType_param: string,
+  dateStart_param: string,
+  dateEnd_param: string,
+) => {
 
-  detail: async (
-    user_id_param: string,
-    _id_param: string,
-    dateType_param: string,
-    dateStart_param: string,
-    dateEnd_param: string,
-  ) => {
-    const finalResult = await ExerciseGoal.findOne({
+  const finalResult = await ExerciseGoal.findOneAndDelete(
+    {
       user_id: user_id_param,
-      _id: !_id_param ? {$exists:true} : _id_param,
+      _id: !_id_param ? { $exists: true } : _id_param,
       exercise_goal_dateStart: {
-        $eq: dateStart_param,
+        $eq: dateStart_param
       },
       exercise_goal_dateEnd: {
-        $eq: dateEnd_param,
+        $eq: dateEnd_param
       },
       ...((!dateType_param || dateType_param === "") ? {} : {
-        exercise_goal_dateType: dateType_param
+        exercise_dateType: dateType_param
       }),
-    })
-    .lean();
-    return finalResult;
-  },
+    }
+  )
+  .lean();
 
-  deletes: async (
-    user_id_param: string,
-    _id_param: string,
-  ) => {
-    const deleteResult = await ExerciseGoal.deleteOne({
-      user_id: user_id_param,
-      _id: !_id_param ? {$exists:true} : _id_param
-    })
-    .lean();
-    return deleteResult;
-  }
+  return finalResult;
 };

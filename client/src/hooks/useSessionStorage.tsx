@@ -1,7 +1,7 @@
 // useSessionStorage.tsx
 
 import { useEffect } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue } from "@imports/ImportHooks";
 
 // -------------------------------------------------------------------------------------------------
 export const useSessionStorage = () => {
@@ -9,7 +9,7 @@ export const useSessionStorage = () => {
   // 1. common -------------------------------------------------------------------------------------
   const {
     sessionId, navigate, location, TITLE,
-  } = useCommon();
+  } = useCommonValue();
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {

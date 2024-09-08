@@ -1,12 +1,12 @@
 // Buttons.tsx
 // Node -> Section -> Fragment
 
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue, useTranslate } from "@imports/ImportHooks";
 import { Btn } from "@imports/ImportComponents";
 import { Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-interface ButtonsProps {
+declare interface ButtonsProps {
   state: any;
   setState: any;
   flow: any;
@@ -19,29 +19,14 @@ export const Buttons = (
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate, PATH,
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    PATH,
+  } = useCommonValue();
 
   // 7. btn ----------------------------------------------------------------------------------------
   const btnNode = () => {
-    // 1. goToFind
-    const gotoFindSection = () => (
-      <Btn
-        color={"success"}
-        onClick={() => {
-          Object.assign(state?.SEND, {
-            dateType: state?.DATE.dateType,
-            dateStart: state?.DATE.dateStart,
-            dateEnd: state?.DATE.dateEnd
-          });
-          flow.navigate(state?.SEND.toFind, {
-            state: state?.SEND,
-          });
-        }}
-      >
-        {translate("find")}
-      </Btn>
-    );
 
     // 2. save
     const saveSection = () => (

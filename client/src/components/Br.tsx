@@ -1,13 +1,16 @@
 // Br.tsx
 
 // -------------------------------------------------------------------------------------------------
-export const Br = ({ px = 1 }) => {
-  const style = {
-    "width": "100%",
-    "background": "none",
-    "height": "0.1px",
-    "margin": `${px/2}px 0px`,
-  };
-
-  return <div style={style} />;
-}
+export const Br = (props: any) => {
+  return (
+    <div
+      style={{
+        "width": "100%",
+        "background": "none",
+        "height": "0.1px",
+        "margin": `${props?.px/2}px 0px`,
+      }}
+      className={props?.className || ""}
+    />
+  );
+};

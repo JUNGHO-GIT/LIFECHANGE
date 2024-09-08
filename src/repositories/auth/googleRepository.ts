@@ -1,7 +1,7 @@
 // googleRepository.ts
 
 import mongoose from "mongoose";
-import { newDate } from "@assets/scripts/date";
+import { newDate } from "@scripts/date";
 import { User } from "@schemas/user/User";
 
 // 1. find -----------------------------------------------------------------------------------------

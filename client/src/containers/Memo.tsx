@@ -1,14 +1,14 @@
 // Memo.tsx
 
 import { useState } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommonValue, useTranslate } from "@imports/ImportHooks";
 import { Img, Input, Btn } from "@imports/ImportComponents";
 import { PopUp } from "@imports/ImportContainers";
 import { TextArea, Grid, Card } from "@imports/ImportMuis";
 import { calendar3 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
-interface MemoProps {
+declare interface MemoProps {
   OBJECT: any;
   setOBJECT: any;
   extra: string;
@@ -22,11 +22,14 @@ export const Memo = (
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    firstStr, translate
-  } = useCommon();
+    translate,
+  } = useTranslate();
+  const {
+    firstStr,
+  } = useCommonValue();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [prevContent, setPrevContent] = useState("");
+  const [prevContent, setPrevContent] = useState<string>("");
 
   // 3. memoNode -----------------------------------------------------------------------------------
   const memoNode = () => (

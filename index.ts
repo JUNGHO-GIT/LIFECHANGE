@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
+import { Request, Response, NextFunction } from "express";
 
 import { router as calendarRouter } from "@routers/calendar/calendarRouter";
 import { router as exerciseChartRouter } from "@routers/exercise/exerciseChartRouter";
@@ -32,16 +33,16 @@ const preFix = process.env.HTTP_PREFIX || "";
 const id = process.env.DB_USER;
 const pw = process.env.DB_PASS;
 const host = process.env.DB_HOST;
-const port = process.env.DB_PORT || '27017';
+const port = process.env.DB_PORT;
 const db = process.env.DB_NAME;
 
 mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`)
-.then(() => {
-  console.log('MongoDB 연결 성공');
-})
-.catch((error) => {
-  console.error(`MongoDB 연결 실패: ${error}`);
-});
+  .then(() => {
+    console.log(`${db} MongoDB 연결 성공`);
+  })
+  .catch((error) => {
+    console.error(`${db} MongoDB 연결 실패: ${error}`);
+  });
 
 // 서버 포트 설정 ----------------------------------------------------------------------------------
 const httpPort = Number(process.env.HTTP_PORT) || 4000;
@@ -54,7 +55,7 @@ function startServer(httpPort: number, httpsPort: number) {
     });
     httpServer.on('error', (error: any) => {
       if (error?.code === 'EADDRINUSE') {
-        console.log(`${httpPort} 포트가 이미 사용 중입니다. ${httpPort + 1}번 포트로 변경합니다.`);
+        console.log(`${httpPort} 포트가 이미 사용 중입니다. 다른 포트로 변경합니다.`);
         startServer(httpPort + 1, httpsPort);
       }
       else {
@@ -62,12 +63,11 @@ function startServer(httpPort: number, httpsPort: number) {
       }
     });
   }
-  catch (error: any) {
+  catch (error) {
     console.error(`서버 실행 중 오류 발생: ${error}`);
   }
 }
 startServer(httpPort, httpsPort);
-
 
 // 미들웨어 설정 -----------------------------------------------------------------------------------
 app.use(cors({
@@ -82,6 +82,13 @@ app.use(bodyParser.urlencoded({
 app.use((req, res, next) => {
   res.set("Content-Type", "application/json; charset=utf-8");
   next();
+});
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  console.error(err.stack);
+  res.status(500).send({
+    status: "error",
+    message: "서버 오류가 발생했습니다.",
+  });
 });
 
 // 라우터 설정 -------------------------------------------------------------------------------------
