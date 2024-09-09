@@ -10874,6 +10874,15 @@
   transform: scale(1.1);
 }
 
+.navy {
+  color: #0f2f74 !important;
+}
+.pointer-navy:hover {
+  cursor: pointer !important;
+  color: #0f2f74 !important;
+  transform: scale(1.1);
+}
+
 .white {
   color: #FFFFFF !important;
 }

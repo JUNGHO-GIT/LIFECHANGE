@@ -17,7 +17,7 @@ export const UserDetail = () => {
     translate
   } = useTranslate();
   const {
-    navigate, curProperty, URL_OBJECT, sessionId, sessionCurrencyCode, firstStr
+    navigate, curProperty, URL_OBJECT, sessionId, sessionCurrencyCode, firstStr, TITLE,
   } = useCommonValue();
   const {
     ERRORS, REFS, validate

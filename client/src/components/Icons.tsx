@@ -17,6 +17,7 @@ export const Icons = (props: any) => {
     strokeWidth: "2",
     strokeLinecap: "round",
     strokeLinejoin: "round",
+    color: props?.color || "black",
     fill: props?.fill || "#f5f5f5",
   };
 
@@ -26,7 +27,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-outline icon-tabler-x"
         }
       >
@@ -40,7 +40,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-outline icon-tabler-minus"
         }
       >
@@ -53,7 +52,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-outline icon-tabler-plus"
         }
       >
@@ -67,7 +65,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-outline icon-tabler-chevron-down"
         }
       >
@@ -80,7 +77,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-outline icon-tabler-chevron-up"
         }
       >
@@ -93,7 +89,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"
         }
       >
@@ -106,7 +101,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-outline icon-tabler-arrow-left"
         }
       >
@@ -121,7 +115,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-outline icon-tabler-arrow-right"
         }
       >
@@ -136,7 +129,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-outline icon-tabler-settings"
         }
       >
@@ -150,7 +142,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-outline icon-tabler-search"
         }
       >
@@ -164,7 +155,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-outline icon-tabler-check"
         }
       >
@@ -177,7 +167,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-outline icon-tabler-pencil"
         }
       >
@@ -189,9 +178,9 @@ export const Icons = (props: any) => {
     Trash: (
       <svg
         {...commonValues}
+        fill="none"
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-outline icon-tabler-trash"
         }
       >
@@ -208,7 +197,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-outline icon-tabler-circle-check"
         }
       >
@@ -222,7 +210,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-outline icon-tabler-menu-2"
         }
       >
@@ -237,7 +224,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-filled icon-tabler-phone"
         }
       >
@@ -250,7 +236,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-outline icon-tabler-mail"
         }
       >
@@ -264,7 +249,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-filled icon-tabler-copyright"
         }
       >
@@ -277,7 +261,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-filled icon-tabler-location"
         }
       >
@@ -290,7 +273,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-filled icon-tabler-info-circle"
         }
       >
@@ -303,7 +285,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-outline icon-tabler-list-check"
         }
       >
@@ -321,7 +302,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-outline icon-tabler-calendar"
         }
       >
@@ -338,7 +318,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-filled icon-tabler-eye"
         }
       >
@@ -351,7 +330,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-filled icon-tabler-user"
         }
       >
@@ -365,7 +343,6 @@ export const Icons = (props: any) => {
         {...commonValues}
         className={
           props.className +
-          " black" +
           " icon icon-tabler icons-tabler-outline icon-tabler-reload"
         }
       >

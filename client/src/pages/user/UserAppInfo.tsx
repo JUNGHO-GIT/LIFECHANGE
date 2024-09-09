@@ -2,7 +2,7 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { useCommonValue } from "@imports/ImportHooks";
 import { axios } from "@imports/ImportLibs"
 import { Loading } from "@imports/ImportLayouts";
 import { Img } from "@imports/ImportComponents";
@@ -15,11 +15,18 @@ export const UserAppInfo = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    URL_OBJECT, sessionId
+    URL_OBJECT, sessionId, TITLE,
   } = useCommonValue();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
+  const [clientLang, setClientLang] = useState<any>({
+    timeZone: sessionStorage.getItem(`${TITLE}_timeZone`),
+    zoneName: sessionStorage.getItem(`${TITLE}_zoneName`),
+    locale: sessionStorage.getItem(`${TITLE}_locale`),
+    isoCode: sessionStorage.getItem(`${TITLE}_isoCode`),
+    currencyCode: sessionStorage.getItem(`${TITLE}_currencyCode`),
+  });
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF: any = {
@@ -62,7 +69,7 @@ export const UserAppInfo = () => {
     const cardSection = () => {
       const cardFragment = (i: number) => (
         <Card className={"border radius shadow-none p-0"} key={i}>
-          <TableContainer>
+          <TableContainer className={"over-hidden"}>
             <Table>
               <TableBody className={"table-tbody"}>
                 <TableRow>
@@ -95,6 +102,18 @@ export const UserAppInfo = () => {
                   </TableCell>
                   <TableCell className={"w-55vw fs-0-8rem p-15"}>
                     {OBJECT.license}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className={"w-40vw fs-1-0rem p-15"}>
+                    timezone
+                  </TableCell>
+                  <TableCell className={"w-55vw fs-0-7rem p-15"}>
+                    {clientLang.timeZone} | &nbsp;
+                    {clientLang.locale} | &nbsp;
+                    {clientLang.isoCode} | &nbsp;
+                    {clientLang.currencyCode} | &nbsp;
+                    {clientLang.zoneName}
                   </TableCell>
                 </TableRow>
               </TableBody>

@@ -19,8 +19,6 @@ let currencyCode: string = "";
 export const LanguageProvider = ({ children }: any) => {
 
   const [lang, setLang] = useState<any>("");
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     try {
       // ex. Asia/Seoul
@@ -46,6 +44,8 @@ export const LanguageProvider = ({ children }: any) => {
       }
       if (locale) {
         sessionStorage.setItem(`${TITLE}_locale`, locale);
+        locale.includes("-") ? setLang(locale.split("-")[0]) : setLang(locale)
+        sessionStorage.setItem(`${TITLE}_lang`, lang);
       }
       if (isoCode) {
         sessionStorage.setItem(`${TITLE}_isoCode`, isoCode);
@@ -53,15 +53,12 @@ export const LanguageProvider = ({ children }: any) => {
       if (currencyCode) {
         sessionStorage.setItem(`${TITLE}_currencyCode`, currencyCode);
       }
-
-      setLang(locale);
-      sessionStorage.setItem(`${TITLE}_lang`, locale);
       console.log("LanguageProvider", lang);
     }
     catch (err: any) {
-      console.error("useTimezone error:", err);
+      console.error("LanguageProvider", err);
     }
-  }, []);
+  }, [lang]);
 
   if (lang === "ko") {
     require("moment/locale/ko");

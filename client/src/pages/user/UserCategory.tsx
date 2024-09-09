@@ -330,7 +330,6 @@ export const UserCategory = () => {
                       </Div>
                       <Div className={"fs-0-9rem ms-auto d-row"}>
                         <Icons
-                          key={"TbPencil"}
                           name={"Pencil"}
                           className={"w-14 h-14 navy"}
                           onClick={() => {
@@ -338,9 +337,8 @@ export const UserCategory = () => {
                           }}
                         />
                         <Icons
-                          key={"TbTrash"}
                           name={"Trash"}
-                          className={"w-14 h-14 red"}
+                          className={"w-14 h-14 burgundy"}
                           onClick={() => {
                             handlerRemove("part", index);
                           }}
@@ -447,7 +445,7 @@ export const UserCategory = () => {
                           />
                           <Icons
                             name={"Trash"}
-                            className={"w-14 h-14 red"}
+                            className={"w-14 h-14 burgundy"}
                             onClick={() => {
                               handlerRemove("title", index);
                             }}
