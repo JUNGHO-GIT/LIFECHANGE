@@ -163,7 +163,7 @@ export const detail = async (
 export const save = async (
   user_id_param: string,
   _id_param: string,
-  OBJECT_param: Record<string, any>,
+  OBJECT_param: any,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
@@ -193,7 +193,7 @@ export const save = async (
 export const update = async (
   user_id_param: string,
   _id_param: string,
-  OBJECT_param: Record<string, any>,
+  OBJECT_param: any,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
@@ -215,6 +215,10 @@ export const update = async (
         exercise_section: OBJECT_param.exercise_section,
         exercise_updateDt: newDate,
       }
+    },
+    {
+      upsert: true,
+      new: true
     }
   )
   .lean();

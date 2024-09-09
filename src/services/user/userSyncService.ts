@@ -6,7 +6,7 @@ import * as repository from "@repositories/user/userSyncRepository";
 // 퍼센트 조회
 export const percent = async (
   user_id_param: string,
-  DATE_param: Record<string, any>,
+  DATE_param: any,
 ) => {
 
   // result 변수 선언
@@ -95,7 +95,7 @@ export const percent = async (
 // 현재 재산 상태
 export const property = async (
   user_id_param: string,
-  DATE_param: Record<string, any>,
+  DATE_param: any,
 ) => {
 
   // result 변수 선언
@@ -156,7 +156,7 @@ export const property = async (
 // 체중 조회
 export const scale = async (
   user_id_param: string,
-  DATE_param: Record<string, any>,
+  DATE_param: any,
 ) => {
 
   // result 변수 선언

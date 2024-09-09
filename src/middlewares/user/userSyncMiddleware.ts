@@ -529,7 +529,7 @@ export const percent = async (object: any) => {
     };
   };
 
-  const newObject: Record<string, any> = {
+  const newObject: any = {
     exercise: {
       ...exercise,
       average: calcAverage(exercise),

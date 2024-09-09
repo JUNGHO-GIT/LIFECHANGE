@@ -5,7 +5,7 @@ import * as repository from "@repositories/food/foodGoalRepository";
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
   user_id_param: string,
-  DATE_param: Record<string, any>,
+  DATE_param: any,
 ) => {
 
   // result 변수 선언
@@ -18,13 +18,16 @@ export const exist = async (
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
-  findResult = await repository.exist(
-    user_id_param, dateType, dateStart, dateEnd
-  );
-
-  finalResult = findResult[0]?.existDate?.sort((a: string, b: string) => {
-    return a > b ? 1 : a < b ? -1 : 0;
-  });
+  if (!findResult || findResult.length <= 0) {
+    statusResult = "fail";
+    finalResult = null;
+  }
+  else {
+    statusResult = "success";
+    finalResult = findResult[0]?.existDate?.sort((a: string, b: string) => {
+      return a > b ? 1 : a < b ? -1 : 0;
+    });
+  }
 
   return {
     status: statusResult,
@@ -35,8 +38,8 @@ export const exist = async (
 // 1-1. list ---------------------------------------------------------------------------------------
 export const list = async (
   user_id_param: string,
-  DATE_param: Record<string, any>,
-  PAGING_param: Record<string, any>,
+  DATE_param: any,
+  PAGING_param: any,
 ) => {
 
   // result 변수 선언
@@ -117,7 +120,7 @@ export const list = async (
 export const detail = async (
   user_id_param: string,
   _id_param: string,
-  DATE_param: Record<string, any>,
+  DATE_param: any,
 ) => {
 
   // result 변수 선언
@@ -148,8 +151,8 @@ export const detail = async (
 // 3. save -----------------------------------------------------------------------------------------
 export const save = async (
   user_id_param: string,
-  OBJECT_param: Record<string, any>,
-  DATE_param: Record<string, any>,
+  OBJECT_param: any,
+  DATE_param: any,
 ) => {
 
   // result 변수 선언
@@ -184,7 +187,7 @@ export const save = async (
 export const deletes = async (
   user_id_param: string,
   _id_param: string,
-  DATE_param: Record<string, any>,
+  DATE_param: any,
 ) => {
 
   // result 변수 선언

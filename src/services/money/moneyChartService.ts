@@ -9,7 +9,7 @@ import { curYearStart, curYearEnd } from "@scripts/date";
 // 1-1. chart (bar - today) ------------------------------------------------------------------------
 export const barToday = async (
   user_id_param: string,
-  DATE_param: Record<string, any>,
+  DATE_param: any,
 ) => {
 
   // result 변수 선언
@@ -57,7 +57,7 @@ export const barToday = async (
 // pie 차트는 무조건 int 리턴
 export const pieToday = async (
   user_id_param: string,
-  DATE_param: Record<string, any>,
+  DATE_param: any,
 ) => {
 
   // result 변수 선언
@@ -100,7 +100,7 @@ export const pieToday = async (
 // pie 차트는 무조건 int 리턴
 export const pieWeek = async (
   user_id_param: string,
-  DATE_param: Record<string, any>,
+  DATE_param: any,
 ) => {
 
   // result 변수 선언
@@ -143,7 +143,7 @@ export const pieWeek = async (
 // pie 차트는 무조건 int 리턴
 export const pieMonth = async (
   user_id_param: string,
-  DATE_param: Record<string, any>,
+  DATE_param: any,
 ) => {
 
   // result 변수 선언
@@ -185,7 +185,7 @@ export const pieMonth = async (
 // 3-1. chart (line - week) ------------------------------------------------------------------------
 export const lineWeek = async (
   user_id_param: string,
-  DATE_param: Record<string, any>,
+  DATE_param: any,
 ) => {
 
   // result 변수 선언
@@ -242,7 +242,7 @@ export const lineWeek = async (
 // 3-2. chart (line - month) -----------------------------------------------------------------------
 export const lineMonth = async (
   user_id_param: string,
-  DATE_param: Record<string, any>,
+  DATE_param: any,
 ) => {
 
   // result 변수 선언
@@ -297,7 +297,7 @@ export const lineMonth = async (
 // 4-1. chart (avg - week) ------------------------------------------------------------------------
 export const avgWeek = async (
   user_id_param: string,
-  DATE_param: Record<string, any>,
+  DATE_param: any,
 ) => {
 
   // result 변수 선언
@@ -375,7 +375,7 @@ export const avgWeek = async (
 // 4-2. chart (avg - month) ------------------------------------------------------------------------
 export const avgMonth = async (
   user_id_param: string,
-  DATE_param: Record<string, any>,
+  DATE_param: any,
 ) => {
 
   // result 변수 선언

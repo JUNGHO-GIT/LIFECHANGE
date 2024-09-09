@@ -191,7 +191,7 @@ export const save = {
 
   create: async (
     user_id_param: string,
-    OBJECT_param: Record<string, any>,
+    OBJECT_param: any,
     dateType_param: string,
     dateStart_param: string,
     dateEnd_param: string,
@@ -216,7 +216,7 @@ export const save = {
   update: async (
     user_id_param: string,
     _id_param: string,
-    OBJECT_param: Record<string, any>,
+    OBJECT_param: any,
     dateType_param: string,
     dateStart_param: string,
     dateEnd_param: string,

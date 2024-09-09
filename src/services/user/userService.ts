@@ -18,6 +18,9 @@ dotenv.config();
 
 // 0-1. appInfo ------------------------------------------------------------------------------------
 export const appInfo = async () => {
+  
+  let fianlResult:any = null;
+  let statusResult:string = "";
 
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
@@ -40,12 +43,19 @@ export const appInfo = async () => {
   const lastGit = gitMatch ? gitMatch[1] : "";
   const lastLicense = licenseMatch ? licenseMatch[1] : "";
 
-  const finalResult = {
+  finalResult = {
     version: lastVersion,
     date: lastDateTime,
     git: lastGit,
     license: lastLicense,
   };
+  
+  if (!finalResult) {
+    statusResult = "fail"
+  }
+  else {
+    statusResult = "success";
+  }
 
   return {
     status: statusResult,
@@ -145,7 +155,7 @@ export const verifyEmail = async (
 // 2-1. userSignup ---------------------------------------------------------------------------------
 export const userSignup = async (
   user_id_param: string,
-  OBJECT_param: Record<string, any>,
+  OBJECT_param: any,
 ) => {
 
   // result 변수 선언
@@ -182,7 +192,7 @@ export const userSignup = async (
 // 2-2. userResetPw --------------------------------------------------------------------------------
 export const userResetPw = async (
   user_id_param: string,
-  OBJECT_param: Record<string, any>,
+  OBJECT_param: any,
 ) => {
 
   // result 변수 선언
@@ -237,16 +247,15 @@ export const userLogin = async (
   let finalResult: any = "fail";
   let adminResult: any = "user";
   let combinedPw: string = "";
+  let statusResult: string = "";
 
   // ID 체크
   findResult = await repository.user.checkId(user_id_param);
 
   // 1. id가 존재하지 않는 경우
   if (!findResult) {
-    return {
-      result: "fail",
-      admin: "user",
-    };
+    statusResult = "fail";
+    finalResult = null;
   }
   // 2. id가 존재하는 경우
   else {
@@ -254,10 +263,8 @@ export const userLogin = async (
     if (findResult.user_google === "Y") {
       // auto login이 아닌 경우
       if (!isAutoLogin_param) {
-        return {
-          result: "isGoogle",
-          admin: "user",
-        };
+        statusResult = "isGoogle";
+        finalResult = null;
       }
       combinedPw = `${user_id_param}_${findResult.user_token}`;
     }
@@ -269,22 +276,28 @@ export const userLogin = async (
     // 비밀번호 비교
     const isPasswordMatch = await bcrypt.compare(combinedPw, findResult.user_pw);
 
-    if (isPasswordMatch) {
-      finalResult = findResult;
+    if (!isPasswordMatch) {
+      statusResult = "fail";
+      finalResult = null;
     }
     else {
-      finalResult = "fail";
+      statusResult = "success";
+      finalResult = findResult;
     }
 
     // 관리자 확인
     if (user_id_param === process.env.ADMIN_ID) {
       adminResult = "admin";
     }
+    else {
+      adminResult = "user";
+    }
   }
 
   return {
-    result: finalResult,
+    status: statusResult,
     admin: adminResult,
+    result: finalResult,
   };
 };
 
@@ -311,7 +324,7 @@ export const userDetail = async (
 // 2-5. userUpdate ---------------------------------------------------------------------------------
 export const userUpdate = async (
   user_id_param: string,
-  OBJECT_param: Record<string, any>,
+  OBJECT_param: any,
 ) => {
 
   // result 변수 선언
@@ -387,8 +400,8 @@ export const categoryList = async (
 // 3-2. categorySave -------------------------------------------------------------------------------
 export const categorySave = async (
   user_id_param: string,
-  OBJECT_param: Record<string, any>,
-  DATE_param: Record<string, any>,
+  OBJECT_param: any,
+  DATE_param: any,
 ) => {
 
   // result 변수 선언
@@ -419,7 +432,7 @@ export const categorySave = async (
 // 4-1. dummyList ----------------------------------------------------------------------------------
 export const dummyList = async (
   user_id_param: string,
-  PAGING_param: Record<string, any>,
+  PAGING_param: any,
   PART_param: string,
 ) => {
 

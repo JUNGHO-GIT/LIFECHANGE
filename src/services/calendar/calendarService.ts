@@ -6,7 +6,7 @@ import moment from "moment-timezone";
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
   user_id_param: string,
-  DATE_param: Record<string, any>,
+  DATE_param: any,
 ) => {
 
   // result 변수 선언
@@ -44,8 +44,8 @@ export const exist = async (
 // page는 무조건 0부터 시작
 export const list = async (
   user_id_param: string,
-  DATE_param: Record<string, any>,
-  PAGING_param: Record<string, any>,
+  DATE_param: any,
+  PAGING_param: any,
 ) => {
 
   // result 변수 선언
@@ -91,7 +91,7 @@ export const list = async (
 export const detail = async (
   user_id_param: string,
   _id_param: string,
-  DATE_param: Record<string, any>,
+  DATE_param: any,
 ) => {
 
   // result 변수 선언
@@ -130,8 +130,8 @@ export const detail = async (
 // 3. save -----------------------------------------------------------------------------------------
 export const save = async (
   user_id_param: string,
-  OBJECT_param: Record<string, any>,
-  DATE_param: Record<string, any>,
+  OBJECT_param: any,
+  DATE_param: any,
 ) => {
 
   // result 변수 선언
@@ -167,8 +167,8 @@ export const save = async (
 export const update = async (
   user_id_param: string,
   _id_param: string,
-  OBJECT_param: Record<string, any>,
-  DATE_param: Record<string, any>,
+  OBJECT_param: any,
+  DATE_param: any,
 ) => {
 
   // result 변수 선언
@@ -204,7 +204,7 @@ export const update = async (
 export const deletes = async (
   user_id_param: string,
   _id_param: string,
-  DATE_param: Record<string, any>,
+  DATE_param: any,
 ) => {
 
   // result 변수 선언

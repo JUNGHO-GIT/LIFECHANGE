@@ -81,7 +81,7 @@ export const user = {
 
   signup: async (
     user_id_param: string,
-    OBJECT_param: Record<string, any>,
+    OBJECT_param: any,
   ) => {
     const finalResult = await User.create({
       _id: new mongoose.Types.ObjectId(),
@@ -104,7 +104,7 @@ export const user = {
 
   resetPw: async (
     user_id_param: string,
-    OBJECT_param: Record<string, any>,
+    OBJECT_param: any,
   ) => {
     const finalResult = await User.findOneAndUpdate({
       user_id: user_id_param,
@@ -148,7 +148,7 @@ export const user = {
 
   update: async (
     user_id_param: string,
-    OBJECT_param: Record<string, any>,
+    OBJECT_param: any,
   ) => {
     const finalResult = await User.findOneAndUpdate({
       user_id: user_id_param,
@@ -243,7 +243,7 @@ export const category = {
 
   create: async (
     user_id_param: string,
-    OBJECT_param: Record<string, any>,
+    OBJECT_param: any,
   ) => {
     const finalResult = await User.create({
       _id: new mongoose.Types.ObjectId(),
@@ -261,7 +261,7 @@ export const category = {
   update: async (
     user_id_param: string,
     _id_param: string,
-    OBJECT_param: Record<string, any>,
+    OBJECT_param: any,
   ) => {
     const finalResult = await User.findOneAndUpdate(
       {user_id: user_id_param,
@@ -345,7 +345,7 @@ export const dummy = {
     return finalResult;
   },
   saveExerciseGoal: async (
-    OBJECT_param: Record<string, any>,
+    OBJECT_param: any,
   ) => {
     const insertResult = await ExerciseGoal.insertMany(OBJECT_param);
 
@@ -387,7 +387,7 @@ export const dummy = {
     return finalResult;
   },
   saveExercise: async (
-    OBJECT_param: Record<string, any>,
+    OBJECT_param: any,
   ) => {
     const insertResult = await Exercise.insertMany(OBJECT_param);
 
@@ -429,7 +429,7 @@ export const dummy = {
     return finalResult;
   },
   saveFoodGoal: async (
-    OBJECT_param: Record<string, any>,
+    OBJECT_param: any,
   ) => {
     const insertResult = await FoodGoal.insertMany(OBJECT_param);
 
@@ -471,7 +471,7 @@ export const dummy = {
     return finalResult;
   },
   saveFood: async (
-    OBJECT_param: Record<string, any>,
+    OBJECT_param: any,
   ) => {
     const insertResult = await Food.insertMany(OBJECT_param);
 
@@ -513,7 +513,7 @@ export const dummy = {
     return finalResult;
   },
   saveMoneyGoal: async (
-    OBJECT_param: Record<string, any>,
+    OBJECT_param: any,
   ) => {
     const insertResult = await MoneyGoal.insertMany(OBJECT_param);
 
@@ -555,7 +555,7 @@ export const dummy = {
     return finalResult;
   },
   saveMoney: async (
-    OBJECT_param: Record<string, any>,
+    OBJECT_param: any,
   ) => {
     const insertResult = await Money.insertMany(OBJECT_param);
 
@@ -597,7 +597,7 @@ export const dummy = {
     return finalResult;
   },
   saveSleepGoal: async (
-    OBJECT_param: Record<string, any>,
+    OBJECT_param: any,
   ) => {
     const insertResult = await SleepGoal.insertMany(OBJECT_param);
 
@@ -639,7 +639,7 @@ export const dummy = {
     return finalResult;
   },
   saveSleep: async (
-    OBJECT_param: Record<string, any>,
+    OBJECT_param: any,
   ) => {
     const insertResult = await Sleep.insertMany(OBJECT_param);
 
