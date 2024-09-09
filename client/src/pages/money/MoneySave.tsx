@@ -23,7 +23,7 @@ export const MoneySave = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, moneyArray, URL_OBJECT, sessionId, sessionCurrencyCode,
+    navigate, location_dateType, location_dateStart, location_dateEnd, moneyArray, URL_OBJECT, sessionId, sessionCurrencyCode, location_id, firstStr
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -37,7 +37,9 @@ export const MoneySave = () => {
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList: "/money/list"
+    toList: `/${firstStr}/list`,
+    toSave: `/${firstStr}/save`,
+    toUpdate: `/${firstStr}/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
@@ -89,7 +91,7 @@ export const MoneySave = () => {
     .catch((err: any) => {
       console.error(err);
     });
-  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -97,7 +99,7 @@ export const MoneySave = () => {
     axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId,
-        _id: "",
+        _id: location_id,
         DATE: DATE,
       },
     })
@@ -225,10 +227,12 @@ export const MoneySave = () => {
       alert(translate("noData"));
       return;
     }
-    axios.post(`${URL_OBJECT}/deletes`, {
-      user_id: sessionId,
-      _id: OBJECT?._id,
-      DATE: DATE,
+    axios.delete(`${URL_OBJECT}/deletes`, {
+      data: {
+        user_id: sessionId,
+        _id: OBJECT?._id,
+        DATE: DATE,
+      }
     })
     .then((res: any) => {
       if (res.data.status === "success") {
@@ -298,7 +302,10 @@ export const MoneySave = () => {
               value={numeral(OBJECT?.money_total_income).format("0,0")}
               readOnly={true}
               startadornment={
-                <Img src={money2} className={"w-16 h-16"} />
+                <Img
+                	src={money2}
+                	className={"w-16 h-16"}
+                />
               }
               endadornment={
                 sessionCurrencyCode
@@ -311,7 +318,10 @@ export const MoneySave = () => {
               value={numeral(OBJECT?.money_total_expense).format("0,0")}
               readOnly={true}
               startadornment={
-                <Img src={money2} className={"w-16 h-16"} />
+                <Img
+                	src={money2}
+                	className={"w-16 h-16"}
+                />
               }
               endadornment={
                 sessionCurrencyCode
@@ -416,7 +426,10 @@ export const MoneySave = () => {
                 inputRef={REFS?.current[i]?.money_amount}
                 error={ERRORS[i]?.money_amount}
                 startadornment={
-                  <Img src={money2} className={"w-16 h-16"} />
+                  <Img
+                  	src={money2}
+                  	className={"w-16 h-16"}
+                  />
                 }
                 endadornment={
                   sessionCurrencyCode

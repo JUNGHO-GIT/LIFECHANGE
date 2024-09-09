@@ -24,8 +24,8 @@ export const exist = async (
   );
 
   if (!findResult || findResult.length <= 0) {
-    statusResult = "fail";
     finalResult = null;
+    statusResult = "fail";
   }
   else {
     statusResult = "success";
@@ -72,12 +72,12 @@ export const list = async (
   );
 
   if (!findResult || findResult.length <= 0) {
+    finalResult = [];
     statusResult = "fail";
-    finalResult = null;
   }
   else {
-    statusResult = "success";
     finalResult = findResult;
+    statusResult = "success";
   }
 
   return {
@@ -110,13 +110,13 @@ export const detail = async (
   );
 
   if (!findResult) {
-    statusResult = "fail";
     finalResult = null;
+    statusResult = "fail";
     sectionCntResult = 0;
   }
   else {
-    statusResult = "success";
     finalResult = findResult;
+    statusResult = "success";
     sectionCntResult = findResult?.calendar_section.length || 0;
   }
 
@@ -149,12 +149,12 @@ export const save = async (
   );
 
   if (!findResult) {
-    statusResult = "fail";
     finalResult = null;
+    statusResult = "fail";
   }
   else {
-    statusResult = "success";
     finalResult = findResult;
+    statusResult = "success";
   }
 
   return {
@@ -186,12 +186,12 @@ export const update = async (
   );
 
   if (!findResult) {
-    statusResult = "fail";
     finalResult = null;
+    statusResult = "fail";
   }
   else {
-    statusResult = "success";
     finalResult = findResult;
+    statusResult = "success";
   }
 
   return {
@@ -204,7 +204,6 @@ export const update = async (
 export const deletes = async (
   user_id_param: string,
   _id_param: string,
-  DATE_param: any,
 ) => {
 
   // result 변수 선언
@@ -212,22 +211,17 @@ export const deletes = async (
   let finalResult: any = null;
   let statusResult: string = "";
 
-  // date 변수 선언
-  const dateType = DATE_param.dateType;
-  const dateStart = DATE_param.dateStart;
-  const dateEnd = DATE_param.dateEnd;
-
   findResult = await repository.deletes(
-    user_id_param, _id_param, dateType, dateStart, dateEnd
+    user_id_param, _id_param,
   );
 
   if (!findResult) {
-    statusResult = "fail";
     finalResult = null;
+    statusResult = "fail";
   }
   else {
-    statusResult = "success";
     finalResult = findResult;
+    statusResult = "success";
   }
 
   return {

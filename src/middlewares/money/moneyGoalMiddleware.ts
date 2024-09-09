@@ -3,10 +3,6 @@
 // 1. list (리스트는 gte lte) ----------------------------------------------------------------------
 export const list = async (object: any) => {
 
-  if (!object) {
-    return [];
-  }
-
   // 1. compareValue -------------------------------------------------------------------------------
   const compareValue = (goalParam: string, realParam: string, extra: string) => {
     const goal = parseFloat(goalParam);
@@ -142,8 +138,8 @@ export const list = async (object: any) => {
   }
 
   // 4. result -------------------------------------------------------------------------------------
-  object?.result?.map((item: any) => {
-    Object.assign((item), {
+  object?.result?.forEach((item: any) => {
+    Object.assign(item, {
       money_total_income_color: makeNonValueColor(
         item?.money_total_income
       ),

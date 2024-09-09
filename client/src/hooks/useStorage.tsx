@@ -30,8 +30,8 @@ export const useStorage = (key: string, initialVal: any) => {
       const parsed = JSON.parse(item);
       return parsed !== undefined ? parsed : initialVal;
     }
-    catch (error) {
-      console.error("Failed to parse sessionStorage item:", error);
+    catch (err: any) {
+      console.error("Failed to parse sessionStorage item:", err);
       return initialVal;
     }
   };
@@ -52,8 +52,8 @@ export const useStorage = (key: string, initialVal: any) => {
           : JSON.stringify(storedVal);
         sessionStorage.setItem(key, valueToStore);
       }
-      catch (error) {
-        console.error("Failed to save to sessionStorage:", error);
+      catch (err: any) {
+        console.error("Failed to save to sessionStorage:", err);
       }
     };
 

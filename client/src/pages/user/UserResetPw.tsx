@@ -1,7 +1,7 @@
 // UserResetPw.tsx
 // Node -> Section -> Fragment
 
-import { useState, useEffect } from "@imports/ImportReacts";
+import { useState } from "@imports/ImportReacts";
 import { useCommonValue, useTranslate, useValidateUser } from "@imports/ImportHooks";
 import { axios } from "@imports/ImportLibs";
 import { Loading } from "@imports/ImportLayouts";

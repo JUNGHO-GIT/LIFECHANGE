@@ -16,17 +16,16 @@ export const Select = (props: any) => {
       inputRef={props?.inputRef || null}
       error={props?.error || false}
       slotProps={{
-        ...props?.slotProps,
         input: {
+          readOnly: (
+            props?.readOnly || false
+          ),
           className: (
             props?.inputclass?.includes("fs-") ? (
               `text-left ${props?.inputclass || ""}`
             ) : (
               `fs-1-0rem text-left ${props?.inputclass || ""}`
             )
-          ),
-          readOnly: (
-            props?.readOnly || false
           ),
           startAdornment: (
             props?.startadornment ? (

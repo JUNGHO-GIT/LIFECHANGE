@@ -52,7 +52,7 @@ export const sync = async () => {
     sessionStorage.setItem(`${TITLE}_property`, JSON.stringify(resProperty.data.result));
     sessionStorage.setItem(`${TITLE}_scale`, JSON.stringify(resScale.data.result));
   }
-  catch (error) {
-    console.error(`sync error: ${error}`);
+  catch (err: any) {
+    console.error(`sync error: ${err}`);
   }
 }

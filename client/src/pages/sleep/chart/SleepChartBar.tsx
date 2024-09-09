@@ -181,7 +181,10 @@ export const SleepChartBar = () => {
         />
       );
       const selectFragment2 = () => (
-        <Img src={common3_2} className={"w-24 h-24"} />
+        <Img
+        	src={common3_2}
+        	className={"w-24 h-24"}
+        />
       );
       return (
         <Card className={"p-0"}>

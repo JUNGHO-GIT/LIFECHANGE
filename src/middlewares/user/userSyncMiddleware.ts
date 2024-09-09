@@ -3,10 +3,6 @@
 // 1. percent --------------------------------------------------------------------------------------
 export const percent = async (object: any) => {
 
-  if (!object) {
-    return [];
-  }
-
   // 1. exercise
   const diffExercise = (goalParam: string, realParam: string, extra: string) => {
 
@@ -530,22 +526,25 @@ export const percent = async (object: any) => {
   };
 
   const newObject: any = {
-    exercise: {
-      ...exercise,
-      average: calcAverage(exercise),
-    },
-    food: {
-      ...food,
-      average: calcAverage(food),
-    },
-    money: {
-      ...money,
-      average: calcAverage(money),
-    },
-    sleep: {
-      ...sleep,
-      average: calcAverage(sleep),
-    },
+    status: object?.status,
+    result: {
+      exercise: {
+        ...exercise,
+        average: calcAverage(exercise),
+      },
+      food: {
+        ...food,
+        average: calcAverage(food),
+      },
+      money: {
+        ...money,
+        average: calcAverage(money),
+      },
+      sleep: {
+        ...sleep,
+        average: calcAverage(sleep),
+      }
+    }
   };
 
   // 5. total
@@ -556,13 +555,13 @@ export const percent = async (object: any) => {
   };
 
   ["exercise", "food", "money", "sleep"]?.forEach(category => {
-    total.score += parseFloat(newObject[category]?.average.score);
-    total.percent += parseFloat(newObject[category]?.average.percent);
+    total.score += parseFloat(newObject?.result?.[category]?.average.score);
+    total.percent += parseFloat(newObject?.result?.[category]?.average.percent);
     total.count++;
   });
 
   if (total.count > 0) {
-    newObject.total = {
+    newObject.result.total = {
       average: {
         score: (total.score / total.count).toFixed(2),
         percent: (total.percent / total.count).toFixed(2),

@@ -168,19 +168,16 @@ export const TopNav = () => {
   useEffect(() => {
     // 1. calendar
     if (firstStr === "calendar") {
-      if (secondStr === "list" || secondStr === "save") {
+      if (secondStr === "list" || secondStr === "save" || secondStr === "update") {
         setSelectedTab("schedule");
       }
     }
     // 2. today
     else if (firstStr === "today") {
-      if (secondStr === "chart") {
-        setSelectedTab("chart");
-      }
-      else if (secondStr === "goal") {
+      if (secondStr === "goal") {
         setSelectedTab("goal");
       }
-      else if (secondStr === "list" || secondStr === "save") {
+      else if (secondStr === "list" || secondStr === "save" || secondStr === "update") {
         setSelectedTab("real");
       }
     }
@@ -192,7 +189,7 @@ export const TopNav = () => {
       else if (secondStr === "goal") {
         setSelectedTab("goal");
       }
-      else if (secondStr === "list" || secondStr === "save") {
+      else if (secondStr === "list" || secondStr === "save" || secondStr === "update") {
         setSelectedTab("real");
       }
       else if (secondStr === "find") {
@@ -207,7 +204,7 @@ export const TopNav = () => {
       else if (secondStr === "goal") {
         setSelectedTab("goal");
       }
-      else if (secondStr === "list" || secondStr === "save") {
+      else if (secondStr === "list" || secondStr === "save" || secondStr === "update") {
         setSelectedTab("real");
       }
     }
@@ -222,13 +219,13 @@ export const TopNav = () => {
 
     let url = "";
     if (value === "real" || value === "schedule") {
-      url = `${firstStr}/list`;
+      url = `/${firstStr}/list`;
     }
     else if (value === "find") {
-      url = `${firstStr}/find`;
+      url = `/${firstStr}/find`;
     }
     else {
-      url = `${firstStr}/${value}/list`;
+      url = `/${firstStr}/${value}/list`;
     }
 
     navigate(url, {
@@ -259,7 +256,10 @@ export const TopNav = () => {
               <Hr px={20} />
               <Grid size={12} className={"d-center"}>
                 <Div className={"d-center me-2vw"}>
-                  <Img src={smileImage.total} className={"w-max25 h-max25"} />
+                  <Img
+                  	src={smileImage.total}
+                  	className={"w-max25 h-max25"}
+                  />
                 </Div>
                 <Div className={"fs-1-1rem me-2vw"}>
                   {translate("total")}
@@ -270,7 +270,10 @@ export const TopNav = () => {
               </Grid>
               <Grid size={12} className={"d-center"}>
                 <Div className={"d-center me-2vw"}>
-                  <Img src={smileImage.exercise} className={"w-max25 h-max25"} />
+                  <Img
+                  	src={smileImage.exercise}
+                  	className={"w-max25 h-max25"}
+                  />
                 </Div>
                 <Div className={"fs-1-1rem me-2vw"}>
                   {translate("exercise")}
@@ -281,7 +284,10 @@ export const TopNav = () => {
               </Grid>
               <Grid size={12} className={"d-center"}>
                 <Div className={"d-center me-2vw"}>
-                  <Img src={smileImage.food} className={"w-max25 h-max25"} />
+                  <Img
+                  	src={smileImage.food}
+                  	className={"w-max25 h-max25"}
+                  />
                 </Div>
                 <Div className={"fs-1-1rem me-2vw"}>
                   {translate("food")}
@@ -292,7 +298,10 @@ export const TopNav = () => {
               </Grid>
               <Grid size={12} className={"d-center"}>
                 <Div className={"d-center me-2vw"}>
-                  <Img src={smileImage.money} className={"w-max25 h-max25"} />
+                  <Img
+                  	src={smileImage.money}
+                  	className={"w-max25 h-max25"}
+                  />
                 </Div>
                 <Div className={"fs-1-1rem me-2vw"}>
                   {translate("money")}
@@ -303,7 +312,10 @@ export const TopNav = () => {
               </Grid>
               <Grid size={12} className={"d-center"}>
                 <Div className={"d-center me-2vw"}>
-                  <Img src={smileImage.sleep} className={"w-max25 h-max25"} />
+                  <Img
+                  	src={smileImage.sleep}
+                  	className={"w-max25 h-max25"}
+                  />
                 </Div>
                 <Div className={"fs-1-1rem me-2vw"}>
                   {translate("sleep")}
@@ -328,7 +340,10 @@ export const TopNav = () => {
             const event = new Event('storage');
             window.dispatchEvent(event);
           }}>
-            <Img src={mainSmileImage} className={"w-max25 h-max25"} />
+            <Img
+            	src={mainSmileImage}
+            	className={"w-max25 h-max25"}
+            />
           </Div>
         )}
       </PopUp>
@@ -354,7 +369,10 @@ export const TopNav = () => {
               </Grid>
               <Hr px={20} />
               <Grid size={12} className={"d-center"}>
-                <Img src={money2} className={"w-16 h-16"} />
+                <Img
+                	src={money2}
+                	className={"w-16 h-16"}
+                />
                 <Div className={"fs-1-4rem fw-600 ms-2vw"}>
                   {numeral(property.curProperty).format("0,0")}
                 </Div>
@@ -366,7 +384,10 @@ export const TopNav = () => {
                   value={numeral(property.initProperty).format("0,0")}
                   readOnly={true}
                   startadornment={
-                    <Img src={money2} className={"w-16 h-16"} />
+                    <Img
+                    	src={money2}
+                    	className={"w-16 h-16"}
+                    />
                   }
                   endadornment={
                     sessionCurrencyCode
@@ -379,7 +400,10 @@ export const TopNav = () => {
                   value={numeral(property.totalIncome).format("0,0")}
                   readOnly={true}
                   startadornment={
-                    <Img src={money2} className={"w-16 h-16"} />
+                    <Img
+                    	src={money2}
+                    	className={"w-16 h-16"}
+                    />
                   }
                   endadornment={
                     sessionCurrencyCode
@@ -392,7 +416,10 @@ export const TopNav = () => {
                   value={numeral(property.totalExpense).format("0,0")}
                   readOnly={true}
                   startadornment={
-                    <Img src={money2} className={"w-16 h-16"} />
+                    <Img
+                    	src={money2}
+                    	className={"w-16 h-16"}
+                    />
                   }
                   endadornment={
                     sessionCurrencyCode
@@ -409,7 +436,10 @@ export const TopNav = () => {
             const event = new Event('storage');
             window.dispatchEvent(event);
           }}>
-            <Img src={money4} className={"w-max25 h-max25"} />
+            <Img
+            	src={money4}
+            	className={"w-max25 h-max25"}
+            />
           </Div>
         )}
       </PopUp>
@@ -435,7 +465,10 @@ export const TopNav = () => {
               </Grid>
               <Hr px={20} />
               <Grid size={12} className={"d-center"}>
-                <Img src={exercise5} className={"w-16 h-16"} />
+                <Img
+                	src={exercise5}
+                	className={"w-16 h-16"}
+                />
                 <Div className={"fs-1-4rem fw-600 ms-2vw"}>
                   {scale.curScale}
                 </Div>
@@ -447,7 +480,10 @@ export const TopNav = () => {
                   value={scale.initScale}
                   readOnly={true}
                   startadornment={
-                    <Img src={exercise5} className={"w-16 h-16"} />
+                    <Img
+                    	src={exercise5}
+                    	className={"w-16 h-16"}
+                    />
                   }
                   endadornment={
                     translate("k")
@@ -460,7 +496,10 @@ export const TopNav = () => {
                   value={scale.minScale}
                   readOnly={true}
                   startadornment={
-                    <Img src={exercise5} className={"w-16 h-16"} />
+                    <Img
+                    	src={exercise5}
+                    	className={"w-16 h-16"}
+                    />
                   }
                   endadornment={
                     translate("k")
@@ -473,7 +512,10 @@ export const TopNav = () => {
                   value={scale.maxScale}
                   readOnly={true}
                   startadornment={
-                    <Img src={exercise5} className={"w-16 h-16"} />
+                    <Img
+                    	src={exercise5}
+                    	className={"w-16 h-16"}
+                    />
                   }
                   endadornment={
                     translate("k")
@@ -490,7 +532,10 @@ export const TopNav = () => {
             const event = new Event('storage');
             window.dispatchEvent(event);
           }}>
-            <Img src={exercise6} className={"w-max25 h-max25"} />
+            <Img
+            	src={exercise6}
+            	className={"w-max25 h-max25"}
+            />
           </Div>
         )}
       </PopUp>
@@ -511,19 +556,19 @@ export const TopNav = () => {
         <Tab
           label={translate("chart")}
           value={"chart"}
-          className={firstStr !== "calendar" ? "" : "d-none"}
+          className={(firstStr === "calendar" || firstStr === "today") ? "d-none" : ""}
           onClick={() => handleClickTobNav("chart")}
         />
         <Tab
           label={translate("goal")}
           value={"goal"}
-          className={firstStr !== "calendar" ? "" : "d-none"}
+          className={firstStr === "calendar" ? "d-none" : ""}
           onClick={() => handleClickTobNav("goal")}
         />
         <Tab
           label={translate("real")}
           value={"real"}
-          className={firstStr !== "calendar" ? "" : "d-none"}
+          className={firstStr === "calendar" ? "d-none" : ""}
           onClick={() => handleClickTobNav("real")}
         />
         <Tab

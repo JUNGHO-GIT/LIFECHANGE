@@ -105,6 +105,9 @@ export const useValidateExercise= () => {
         }, [])
       );
       validate.current = (OBJECT: any, COUNT: any) => {
+        if (OBJECT.exercise_total_weight && OBJECT.exercise_total_weight !== "0") {
+          return true;
+        }
         if (COUNT.newSectionCnt === 0) {
           alert(translate("errorCount"));
           return returnValid;

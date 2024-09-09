@@ -3,15 +3,57 @@
 import express from "express";
 import { Request, Response } from "express";
 import * as service from "@services/food/foodService";
+import * as findService from "@services/food/foodFindService";
 import * as middleware from "@middlewares/food/foodMiddleware";
 export const router = express.Router();
+
+// 0. find -----------------------------------------------------------------------------------------
+router.get("/find", async (req: Request, res: Response) => {
+  try {
+    let finalResult = await findService.find (
+      req.query.PAGING as any,
+    );
+    if (finalResult.status === "success") {
+      res.json({
+        msg: "searchSuccessful",
+        status: finalResult.status,
+        totalCnt: finalResult.totalCnt,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "searchSuccessful",
+        status: finalResult.status,
+        totalCnt: finalResult.totalCnt,
+        result: finalResult.result,
+      });
+    }
+    else {
+      res.json({
+        msg: "searchError",
+        status: finalResult.status,
+        totalCnt: finalResult.totalCnt,
+        result: finalResult.result,
+      });
+    }
+  }
+  catch (err: any) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      msg: err.toString(),
+      error: err.toString(),
+    });
+  }
+});
 
 // 0. exist ----------------------------------------------------------------------------------------
 router.get("/exist", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.exist (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
     if (finalResult.status === "success") {
       res.json({
@@ -50,51 +92,10 @@ router.get("/list", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.list (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
-      req.query.PAGING as Record<string, any>,
+      req.query.DATE as any,
+      req.query.PAGING as any,
     );
     finalResult = await middleware.list(finalResult);
-    if (finalResult.status === "success") {
-      res.json({
-        msg: "searchSuccessful",
-        status: finalResult.status,
-        totalCnt: finalResult.totalCnt,
-        result: finalResult.result,
-      });
-    }
-    else if (finalResult.status === "fail") {
-      res.json({
-        msg: "searchSuccessful",
-        status: finalResult.status,
-        totalCnt: finalResult.totalCnt,
-        result: finalResult.result,
-      });
-    }
-    else {
-      res.json({
-        msg: "searchError",
-        status: finalResult.status,
-        totalCnt: finalResult.totalCnt,
-        result: finalResult.result,
-      });
-    }
-  }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
-});
-
-// 1-2. find ---------------------------------------------------------------------------------------
-router.get("/find", async (req: Request, res: Response) => {
-  try {
-    let finalResult = await service.find (
-      req.query.PAGING as Record<string, any>,
-    );
     if (finalResult.status === "success") {
       res.json({
         msg: "searchSuccessful",
@@ -136,7 +137,7 @@ router.get("/detail", async (req: Request, res: Response) => {
     let finalResult = await service.detail (
       req.query.user_id as string,
       req.query._id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
     if (finalResult.status === "success") {
       res.json({
@@ -178,8 +179,8 @@ router.post("/save", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.save(
       req.body.user_id as string,
-      req.body.OBJECT as Record<string, any>,
-      req.body.DATE as Record<string, any>,
+      req.body.OBJECT as any,
+      req.body.DATE as any,
     );
     finalResult = await middleware.save(finalResult);
     if (finalResult.status === "success") {
@@ -220,8 +221,8 @@ router.put("/update", async (req: Request, res: Response) => {
     let finalResult = await service.update(
       req.body.user_id as string,
       req.body._id as string,
-      req.body.OBJECT as Record<string, any>,
-      req.body.DATE as Record<string, any>,
+      req.body.OBJECT as any,
+      req.body.DATE as any,
     );
     finalResult = await middleware.update(finalResult);
     if (finalResult.status === "success") {
@@ -257,12 +258,11 @@ router.put("/update", async (req: Request, res: Response) => {
 });
 
 // 5. deletes --------------------------------------------------------------------------------------
-router.post("/deletes", async (req: Request, res: Response) => {
+router.delete("/deletes", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.deletes(
       req.body.user_id as string,
       req.body._id as string,
-      req.body.DATE as Record<string, any>,
     );
     finalResult = await middleware.deletes(finalResult);
     if (finalResult.status === "success") {

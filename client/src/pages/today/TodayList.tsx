@@ -210,7 +210,7 @@ export const TodayList = () => {
         //setIsExpanded([]);
         setIsExpanded(res.data.result.map((item: any, index: number) => (index)));
       }
-      catch (err) {
+      catch (err: any) {
         console.error(err);
       }
     };
@@ -336,7 +336,10 @@ export const TodayList = () => {
                 {/** row 1 **/}
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
-                    <Img src={exercise3_1} className={"w-15 h-15"} />
+                    <Img
+                    	src={exercise3_1}
+                    	className={"w-15 h-15"}
+                    />
                   </Grid>
                   <Grid size={2} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
@@ -358,7 +361,10 @@ export const TodayList = () => {
                 {/** row 2 **/}
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
-                    <Img src={exercise4} className={"w-15 h-15"} />
+                    <Img
+                    	src={exercise4}
+                    	className={"w-15 h-15"}
+                    />
                   </Grid>
                   <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
@@ -380,7 +386,10 @@ export const TodayList = () => {
                 {/** row 3 **/}
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
-                    <Img src={exercise5} className={"w-15 h-15"} />
+                    <Img
+                    	src={exercise5}
+                    	className={"w-15 h-15"}
+                    />
                   </Grid>
                   <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
@@ -492,7 +501,10 @@ export const TodayList = () => {
                 {/** row 1 **/}
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
-                    <Img src={food2} className={"w-15 h-15"} />
+                    <Img
+                    	src={food2}
+                    	className={"w-15 h-15"}
+                    />
                   </Grid>
                   <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
@@ -514,7 +526,10 @@ export const TodayList = () => {
                 {/** row 2 **/}
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
-                    <Img src={food3} className={"w-15 h-15"} />
+                    <Img
+                    	src={food3}
+                    	className={"w-15 h-15"}
+                    />
                   </Grid>
                   <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
@@ -536,7 +551,10 @@ export const TodayList = () => {
                 {/** row 3 **/}
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
-                    <Img src={food4} className={"w-15 h-15"} />
+                    <Img
+                    	src={food4}
+                    	className={"w-15 h-15"}
+                    />
                   </Grid>
                   <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
@@ -558,7 +576,10 @@ export const TodayList = () => {
                 {/** row 4 **/}
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
-                    <Img src={food5} className={"w-15 h-15"} />
+                    <Img
+                    	src={food5}
+                    	className={"w-15 h-15"}
+                    />
                   </Grid>
                   <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
@@ -670,7 +691,10 @@ export const TodayList = () => {
                 {/** row 1 **/}
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
-                    <Img src={money2} className={"w-15 h-15"} />
+                    <Img
+                    	src={money2}
+                    	className={"w-15 h-15"}
+                    />
                   </Grid>
                   <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
@@ -692,7 +716,10 @@ export const TodayList = () => {
                 {/** row 2 **/}
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
-                    <Img src={money2} className={"w-15 h-15"} />
+                    <Img
+                    	src={money2}
+                    	className={"w-15 h-15"}
+                    />
                   </Grid>
                   <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
@@ -804,7 +831,10 @@ export const TodayList = () => {
                 {/** row 1 **/}
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
-                    <Img src={sleep2} className={"w-15 h-15"} />
+                    <Img
+                    	src={sleep2}
+                    	className={"w-15 h-15"}
+                    />
                   </Grid>
                   <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
@@ -826,7 +856,10 @@ export const TodayList = () => {
                 {/** row 2 **/}
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
-                    <Img src={sleep3} className={"w-15 h-15"} />
+                    <Img
+                    	src={sleep3}
+                    	className={"w-15 h-15"}
+                    />
                   </Grid>
                   <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
@@ -848,7 +881,10 @@ export const TodayList = () => {
                 {/** row 3 **/}
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
-                    <Img src={sleep4} className={"w-15 h-15"} />
+                    <Img
+                    	src={sleep4}
+                    	className={"w-15 h-15"}
+                    />
                   </Grid>
                   <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>

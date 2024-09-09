@@ -23,7 +23,7 @@ export const FoodSave = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, URL_OBJECT, sessionId, TITLE, foodArray
+    navigate, location_dateType, location_dateStart, location_dateEnd, URL_OBJECT, sessionId, TITLE, foodArray, location_id, firstStr
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -37,9 +37,10 @@ export const FoodSave = () => {
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList:"/food/list",
-    toSave:"/food/save",
-    toFind:"/food/find",
+    toFind : `/${firstStr}/find`,
+    toList: `/${firstStr}/list`,
+    toSave: `/${firstStr}/save`,
+    toUpdate: `/${firstStr}/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
@@ -47,6 +48,9 @@ export const FoodSave = () => {
     newSectionCnt: 0
   });
   const [DATE, setDATE] = useState<any>({
+    initDateType: location_dateType || "",
+    initDateStart: location_dateStart || dayFmt,
+    initDateEnd: location_dateEnd || dayFmt,
     dateType: location_dateType || "",
     dateStart: location_dateStart || dayFmt,
     dateEnd: location_dateEnd || dayFmt,
@@ -98,7 +102,7 @@ export const FoodSave = () => {
     .catch((err: any) => {
       console.error(err);
     });
-  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -106,7 +110,7 @@ export const FoodSave = () => {
     axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId,
-        _id: "",
+        _id: location_id,
         DATE: DATE,
       },
     })
@@ -263,10 +267,12 @@ export const FoodSave = () => {
       alert(translate("noData"));
       return;
     }
-    axios.post(`${URL_OBJECT}/deletes`, {
-      user_id: sessionId,
-      _id: OBJECT?._id,
-      DATE: DATE,
+    axios.delete(`${URL_OBJECT}/deletes`, {
+      data: {
+        user_id: sessionId,
+        _id: OBJECT?._id,
+        DATE: DATE,
+      }
     })
     .then((res: any) => {
       if (res.data.status === "success") {
@@ -357,7 +363,10 @@ export const FoodSave = () => {
               value={numeral(OBJECT?.food_total_kcal).format('0,0')}
               readOnly={true}
               startadornment={
-                <Img src={food2} className={"w-16 h-16"} />
+                <Img
+                	src={food2}
+                	className={"w-16 h-16"}
+                />
               }
               endadornment={
                 translate("kc")
@@ -370,7 +379,10 @@ export const FoodSave = () => {
               value={numeral(OBJECT?.food_total_carb).format('0,0.0')}
               readOnly={true}
               startadornment={
-                <Img src={food3} className={"w-16 h-16"} />
+                <Img
+                	src={food3}
+                	className={"w-16 h-16"}
+                />
               }
               endadornment={
                 translate("g")
@@ -383,7 +395,10 @@ export const FoodSave = () => {
               value={numeral(OBJECT?.food_total_protein).format('0,0.0')}
               readOnly={true}
               startadornment={
-                <Img src={food4} className={"w-16 h-16"} />
+                <Img
+                	src={food4}
+                	className={"w-16 h-16"}
+                />
               }
               endadornment={
                 translate("g")
@@ -396,7 +411,10 @@ export const FoodSave = () => {
               value={numeral(OBJECT?.food_total_fat).format('0,0.0')}
               readOnly={true}
               startadornment={
-                <Img src={food5} className={"w-16 h-16"} />
+                <Img
+                	src={food5}
+                	className={"w-16 h-16"}
+                />
               }
               endadornment={
                 translate("g")
@@ -581,7 +599,10 @@ export const FoodSave = () => {
                 inputRef={REFS?.current[i]?.food_kcal}
                 error={ERRORS[i]?.food_kcal}
                 startadornment={
-                  <Img src={food2} className={"w-16 h-16"} />
+                  <Img
+                  	src={food2}
+                  	className={"w-16 h-16"}
+                  />
                 }
                 endadornment={
                   translate("kc")
@@ -623,7 +644,10 @@ export const FoodSave = () => {
                 inputRef={REFS?.current[i]?.food_carb}
                 error={ERRORS[i]?.food_carb}
                 startadornment={
-                  <Img src={food3} className={"w-16 h-16"} />
+                  <Img
+                  	src={food3}
+                  	className={"w-16 h-16"}
+                  />
                 }
                 endadornment={
                   translate("g")
@@ -665,7 +689,10 @@ export const FoodSave = () => {
                 inputRef={REFS?.current[i]?.food_protein}
                 error={ERRORS[i]?.food_protein}
                 startadornment={
-                  <Img src={food4} className={"w-16 h-16"} />
+                  <Img
+                  	src={food4}
+                  	className={"w-16 h-16"}
+                  />
                 }
                 endadornment={
                   translate("g")
@@ -707,7 +734,10 @@ export const FoodSave = () => {
                 inputRef={REFS?.current[i]?.food_fat}
                 error={ERRORS[i]?.food_fat}
                 startadornment={
-                  <Img src={food5} className={"w-16 h-16"} />
+                  <Img
+                  	src={food5}
+                  	className={"w-16 h-16"}
+                  />
                 }
                 endadornment={
                   translate("g")

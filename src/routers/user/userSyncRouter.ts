@@ -11,7 +11,7 @@ router.get("/percent", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.percent(
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
     finalResult = await middleware.percent(finalResult);
     if (finalResult.status === "success") {
@@ -51,7 +51,7 @@ router.get("/property", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.property (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
     if (finalResult.status === "success") {
       res.json({
@@ -90,7 +90,7 @@ router.get("/scale", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.scale (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
     if (finalResult.status === "success") {
       res.json({

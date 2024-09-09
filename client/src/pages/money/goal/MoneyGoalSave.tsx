@@ -23,7 +23,7 @@ export const MoneyGoalSave = () => {
     dayFmt,  getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, URL_OBJECT, sessionId,sessionCurrencyCode,
+    navigate, location_dateType, location_dateStart, location_dateEnd, URL_OBJECT, sessionId,sessionCurrencyCode, location_id, firstStr
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -37,7 +37,9 @@ export const MoneyGoalSave = () => {
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList:"/money/goal/list"
+    toList: `/${firstStr}/goal/list`,
+    toSave: `/${firstStr}/goal/save`,
+    toUpdate: `/${firstStr}/goal/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
@@ -81,7 +83,7 @@ export const MoneyGoalSave = () => {
     .catch((err: any) => {
       console.error(err);
     });
-  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -89,7 +91,7 @@ export const MoneyGoalSave = () => {
     axios.get(`${URL_OBJECT}/goal/detail`, {
       params: {
         user_id: sessionId,
-        _id: "",
+        _id: location_id,
         DATE: DATE,
       },
     })
@@ -149,10 +151,12 @@ export const MoneyGoalSave = () => {
       alert(translate("noData"));
       return;
     }
-    axios.post(`${URL_OBJECT}/goal/deletes`, {
-      user_id: sessionId,
-      _id: OBJECT?._id,
-      DATE: DATE,
+    axios.delete(`${URL_OBJECT}/goal/deletes`, {
+      data: {
+        user_id: sessionId,
+        _id: OBJECT?._id,
+        DATE: DATE,
+      }
     })
     .then((res: any) => {
       if (res.data.status === "success") {
@@ -242,7 +246,10 @@ export const MoneyGoalSave = () => {
                   )
                 }
                 startadornment={
-                  <Img src={money2} className={"w-16 h-16"} />
+                  <Img
+                  	src={money2}
+                  	className={"w-16 h-16"}
+                  />
                 }
                 endadornment={
                   sessionCurrencyCode
@@ -280,7 +287,10 @@ export const MoneyGoalSave = () => {
                   )
                 }
                 startadornment={
-                  <Img src={money2} className={"w-16 h-16"} />
+                  <Img
+                  	src={money2}
+                  	className={"w-16 h-16"}
+                  />
                 }
                 endadornment={
                   sessionCurrencyCode

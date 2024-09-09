@@ -26,7 +26,7 @@ export const Picker = (
     translate,
   } = useTranslate();
   const {
-    dayFmt, dayNotFmt,
+    dayFmt,
     weekStartFmt, weekEndFmt, monthStartFmt, monthEndFmt, yearStartFmt, yearEndFmt,
     getDayFmt, getDayNotFmt,
     getDayStartFmt, getDayEndFmt,
@@ -46,11 +46,13 @@ export const Picker = (
   } = useCommonValue();
 
   const isToday = firstStr === "today";
-  const isGoalList = secondStr === "goal" && thirdStr === "list";
-  const isGoalSave = secondStr === "goal" && (thirdStr === "save" || thirdStr === "update");
-  const isList = secondStr === "list" && thirdStr === "";
-  const isSave = (secondStr === "save" || secondStr === "update") && thirdStr === "";
   const isFind  = secondStr === "find";
+  const isGoalList = secondStr === "goal" && thirdStr === "list";
+  const isGoalSave = secondStr === "goal" && thirdStr === "save";
+  const isGoalUpdate = secondStr === "goal" && thirdStr === "update";
+  const isList = secondStr === "list" && thirdStr === "";
+  const isSave = secondStr === "save" && thirdStr === "";
+  const isUpdate = secondStr === "update" && thirdStr === "";
 
   let sessionDate = sessionStorage?.getItem(`DATE(${PATH})`) || "{}";
   let parseDate = JSON?.parse(sessionDate);
@@ -93,18 +95,13 @@ export const Picker = (
     }
   };
 
-  useEffect(() => {
-    console.log("===================================");
-    console.log("DATE", DATE);
-  }, [DATE]);
-
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (isGoalList || isList) {
       setTypeStr("h-min0 h-4vh fs-0-7rem pointer");
       setInnerStr("h-min0 h-4vh fs-0-7rem pointer");
     }
-    else if (isGoalSave || isSave || isFind) {
+    else if (isGoalSave || isSave || isGoalUpdate || isUpdate || isFind) {
       setTypeStr("h-min40 fs-0-8rem pointer");
       setInnerStr("h-min40 fs-0-8rem pointer");
     }
@@ -112,7 +109,7 @@ export const Picker = (
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (!isSave && !isGoalSave) {
+    if (!isSave && !isGoalSave && !isGoalUpdate && !isUpdate) {
       if (!dateStart) {
         dateStart = dayFmt;
       }
@@ -124,7 +121,7 @@ export const Picker = (
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (!isSave && !isGoalSave) {
+    if (!isSave && !isGoalSave && !isGoalUpdate && !isUpdate) {
       if (clickedType === "thisToday") {
         setDATE(clickedDate?.todayDate);
       }
@@ -142,7 +139,7 @@ export const Picker = (
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (!isSave && !isGoalSave) {
+    if (!isSave && !isGoalSave && !isGoalUpdate && !isUpdate) {
       if (
         (DATE?.dateStart === clickedDate?.todayDate?.dateStart) &&
         (DATE?.dateEnd === clickedDate?.todayDate?.dateEnd)
@@ -347,7 +344,10 @@ export const Picker = (
             readOnly={true}
             inputclass={innerStr}
             startadornment={
-              <Img src={common1} className={"w-16 h-16"} />
+              <Img
+              	src={common1}
+              	className={"w-16 h-16"}
+              />
             }
             onClick={(e: any) => {
               if (!isToday) {
@@ -527,7 +527,10 @@ export const Picker = (
             inputclass={innerStr}
             readOnly={true}
             startadornment={
-              <Img src={common1} className={"w-16 h-16"} />
+              <Img
+              	src={common1}
+              	className={"w-16 h-16"}
+              />
             }
             onClick={(e: any) => {
               if (!isToday) {
@@ -692,7 +695,10 @@ export const Picker = (
             inputclass={innerStr}
             readOnly={true}
             startadornment={
-              <Img src={common1} className={"w-16 h-16"} />
+              <Img
+              	src={common1}
+              	className={"w-16 h-16"}
+              />
             }
             onClick={(e: any) => {
               if (!isToday) {
@@ -857,7 +863,10 @@ export const Picker = (
             inputclass={innerStr}
             readOnly={true}
             startadornment={
-              <Img src={common1} className={"w-16 h-16"} />
+              <Img
+              	src={common1}
+              	className={"w-16 h-16"}
+              />
             }
             onClick={(e: any) => {
               if (!isToday) {
@@ -1019,7 +1028,10 @@ export const Picker = (
             readOnly={true}
             inputclass={`${innerStr}`}
             startadornment={
-              <Img src={common1} className={"w-16 h-16"} />
+              <Img
+              	src={common1}
+              	className={"w-16 h-16"}
+              />
             }
             onClick={(e: any) => {
               if (!isToday) {
@@ -1206,7 +1218,8 @@ export const Picker = (
             {listTypeSection()}
           </Grid>
         </Grid>
-      ) : isGoalSave || isSave || isFind ? (
+      )
+      : isGoalSave || isSave || isGoalUpdate || isUpdate ? (
         <Grid container spacing={2}>
           <Grid size={3} className={"d-center"}>
             {saveTypeSection()}

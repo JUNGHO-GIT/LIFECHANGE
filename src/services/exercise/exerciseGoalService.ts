@@ -1,8 +1,7 @@
 // exerciseGoalService.ts
 
 import { strToDecimal, decimalToStr } from "@scripts/utils";
-import * as repositoryGoal from "@repositories/exercise/exerciseGoalRepository";
-import * as repositoryReal from "@repositories/exercise/exerciseRepository";
+import * as repository from "@repositories/exercise/exerciseGoalRepository";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
@@ -20,13 +19,13 @@ export const exist = async (
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
-  findResult = await repositoryGoal.exist(
+  findResult = await repository.exist(
     user_id_param, dateType, dateStart, dateEnd
   );
 
   if (!findResult || findResult.length <= 0) {
-    statusResult = "fail";
     finalResult = null;
+    statusResult = "fail";
   }
   else {
     statusResult = "success";
@@ -51,7 +50,8 @@ export const list = async (
   // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
-  let totalCnt: number = 0;
+  let totalCntResult: any = null;
+  let statusResult: string = "";
 
   // date 변수 선언
   const dateTypeOrder = ["day", "week", "month", "year"];
@@ -63,13 +63,12 @@ export const list = async (
   const sort = PAGING_param.sort === "asc" ? 1 : -1;
   const page = PAGING_param.page || 0;
 
-  totalCnt = await repositoryGoal.cnt(
+  totalCntResult = await repository.cnt(
     user_id_param, dateType, dateStart, dateEnd
   );
-  findResult = await repositoryGoal.list(
+  findResult = await repository.listGoal(
     user_id_param, dateType, dateStart, dateEnd, sort, page
   );
-
   findResult.sort((a: any, b: any) => {
     const dateTypeA = a.exercise_goal_dateType;
     const dateTypeB = b.exercise_goal_dateType;
@@ -86,45 +85,53 @@ export const list = async (
     return sortOrder === 1 ? dateDiff : -dateDiff;
   });
 
-  finalResult = await Promise.all(findResult.map(async (goal: any) => {
-    const dateStart = goal?.exercise_goal_dateStart;
-    const dateEnd = goal?.exercise_goal_dateEnd;
+  if (!findResult || findResult.length <= 0) {
+    finalResult = [];
+    statusResult = "fail";
+  }
+  else {
+    finalResult = await Promise.all(findResult.map(async (goal: any) => {
+      const dateStart = goal?.exercise_goal_dateStart;
+      const dateEnd = goal?.exercise_goal_dateEnd;
 
-    const listReal = await repositoryReal.list(
-      user_id_param, dateType, dateStart, dateEnd, sort, page
-    );
+      const listReal = await repository.listReal(
+        user_id_param, dateType, dateStart, dateEnd,
+      );
 
-    // totalVolume 이 0이 아닌 경우의 수를 계산해서 total count를 구함
-    const exerciseTotalCount = listReal.reduce((acc, curr) => (
-      acc + (curr?.exercise_total_volume !== "0" ? 1 : 0)
-    ), 0);
-    const exerciseTotalVolume = listReal.reduce((acc, curr) => (
-      acc + (parseFloat(curr?.exercise_total_volume) ?? 0)
-    ), 0);
-    const exerciseTotalCardio = listReal.reduce((acc, curr) => (
-      acc + strToDecimal(curr?.exercise_total_cardio ?? "00:00")
-    ), 0);
+      // totalVolume 이 0이 아닌 경우의 수를 계산해서 total count를 구함
+      const exerciseTotalCount = listReal.reduce((acc, curr) => (
+        acc + (curr?.exercise_total_volume !== "0" ? 1 : 0)
+      ), 0);
+      const exerciseTotalVolume = listReal.reduce((acc, curr) => (
+        acc + (parseFloat(curr?.exercise_total_volume) ?? 0)
+      ), 0);
+      const exerciseTotalCardio = listReal.reduce((acc, curr) => (
+        acc + strToDecimal(curr?.exercise_total_cardio ?? "00:00")
+      ), 0);
 
-    // 기간중 가장 최신의 몸무게를 가져옴
-    const exerciseCurBodyWeight = listReal.reduce((latest, curr) => {
-      if (curr?.exercise_total_weight) {
-        return curr.exercise_total_weight;
-      }
-      return latest;
-    }, null);
+      // 기간중 가장 최신의 몸무게를 가져옴
+      const exerciseCurBodyWeight = listReal.reduce((latest, curr) => {
+        if (curr?.exercise_total_weight) {
+          return curr.exercise_total_weight;
+        }
+        return latest;
+      }, "0");
 
-    return {
-      ...goal,
-      exercise_total_count: String(exerciseTotalCount),
-      exercise_total_volume: String(exerciseTotalVolume),
-      exercise_total_cardio: decimalToStr(exerciseTotalCardio),
-      exercise_total_weight: String(exerciseCurBodyWeight),
-    };
-  }));
+      return {
+        ...goal,
+        exercise_total_count: String(exerciseTotalCount),
+        exercise_total_volume: String(exerciseTotalVolume),
+        exercise_total_cardio: decimalToStr(exerciseTotalCardio),
+        exercise_total_weight: String(exerciseCurBodyWeight),
+      };
+    }));
+    statusResult = "success";
+  }
 
   return {
-    totalCnt : totalCnt,
-    result : finalResult
+    status: statusResult,
+    totalCnt: totalCntResult,
+    result: finalResult,
   }
 };
 
@@ -138,24 +145,33 @@ export const detail = async (
   // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
-  let sectionCnt: number = 0;
+  let statusResult: string = "";
+  let sectionCntResult: any = null;
 
   // date 변수 선언
   const dateType = DATE_param.dateType;
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
-  findResult = await repositoryGoal.detail(
+  findResult = await repository.detail(
     user_id_param, _id_param, dateType, dateStart, dateEnd
   );
 
-  if (findResult) {
+  if (!findResult) {
+    finalResult = null;
+    statusResult = "fail";
+    sectionCntResult = 0;
+  }
+  // real은 section.length, goal은 0 or 1
+  else {
     finalResult = findResult;
-    sectionCnt = findResult ? 1 : 0;
+    statusResult = "success";
+    sectionCntResult = 1;
   }
 
   return {
-    sectionCnt: sectionCnt,
+    status: statusResult,
+    sectionCnt: sectionCntResult,
     result: finalResult,
   };
 };
@@ -177,17 +193,17 @@ export const save = async (
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
-  findResult = await repositoryGoal.save(
+  findResult = await repository.save(
     user_id_param, "", OBJECT_param, dateType, dateStart, dateEnd
   );
 
   if (!findResult) {
-    statusResult = "fail";
     finalResult = null;
+    statusResult = "fail";
   }
   else {
-    statusResult = "success";
     finalResult = findResult;
+    statusResult = "success";
   }
 
   return {
@@ -214,17 +230,17 @@ export const update = async (
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
-  findResult = await repositoryGoal.update(
+  findResult = await repository.update(
     user_id_param, _id_param, OBJECT_param, dateType, dateStart, dateEnd
   );
 
   if (!findResult) {
-    statusResult = "fail";
     finalResult = null;
+    statusResult = "fail";
   }
   else {
-    statusResult = "success";
     finalResult = findResult;
+    statusResult = "success";
   }
 
   return {
@@ -237,7 +253,6 @@ export const update = async (
 export const deletes = async (
   user_id_param: string,
   _id_param: string,
-  DATE_param: any,
 ) => {
 
   // result 변수 선언
@@ -245,22 +260,17 @@ export const deletes = async (
   let finalResult: any = null;
   let statusResult: string = "";
 
-  // date 변수 선언
-  const dateType = DATE_param.dateType;
-  const dateStart = DATE_param.dateStart;
-  const dateEnd = DATE_param.dateEnd;
-
-  findResult = await repositoryGoal.deletes(
-    user_id_param, _id_param, dateType, dateStart, dateEnd
+  findResult = await repository.deletes(
+    user_id_param, _id_param,
   );
 
   if (!findResult) {
-    statusResult = "fail";
     finalResult = null;
+    statusResult = "fail";
   }
   else {
-    statusResult = "success";
     finalResult = findResult;
+    statusResult = "success";
   }
 
   return {

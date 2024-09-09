@@ -28,12 +28,26 @@ export const Buttons = (
   // 7. btn ----------------------------------------------------------------------------------------
   const btnNode = () => {
 
+    // 1. new
+    const newNode = () => (
+      <Btn
+        color={"success"}
+        className={"ms-2vw me-2vw"}
+        onClick={() => {
+          flow?.flowNew();
+        }}
+      >
+        {translate("new")}
+      </Btn>
+    );
+
     // 2. save
     const saveSection = () => (
       <Btn
         color={"primary"}
+        className={"ms-2vw me-2vw"}
         onClick={() => {
-          flow.flowSave();
+          flow?.flowSave();
           Object.keys(sessionStorage).forEach((key) => {
             if (key.includes("foodSection") || key.includes("paging")) {
               sessionStorage.removeItem(key);
@@ -49,8 +63,9 @@ export const Buttons = (
     const deletesSection = () => (
       <Btn
         color={"error"}
+        className={"ms-2vw me-2vw"}
         onClick={() => {
-          flow.flowDeletes();
+          flow?.flowDeletes();
         }}
       >
         {translate("deletes")}
@@ -65,12 +80,20 @@ export const Buttons = (
             {saveSection()}
           </Grid>
         </Grid>
-      ) : (
+      )
+      : PATH.includes("/update") ? (
         <Grid container spacing={2}>
-          <Grid size={6} className={"d-right"}>
+          <Grid size={10} className={"d-center"}>
+            {newNode()}
             {saveSection()}
+            {deletesSection()}
           </Grid>
-          <Grid size={6} className={"d-left"}>
+        </Grid>
+      )
+      : (
+        <Grid container spacing={2}>
+          <Grid size={12} className={"d-center"}>
+            {saveSection()}
             {deletesSection()}
           </Grid>
         </Grid>

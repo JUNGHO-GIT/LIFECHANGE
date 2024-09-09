@@ -11,7 +11,7 @@ router.get("/exist", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.exist (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
     if (finalResult.status === "success") {
       res.json({
@@ -50,8 +50,8 @@ router.get("/list", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.list (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
-      req.query.PAGING as Record<string, any>,
+      req.query.DATE as any,
+      req.query.PAGING as any,
     );
     finalResult = await middleware.list(finalResult);
     if (finalResult.status === "success") {
@@ -95,7 +95,7 @@ router.get("/detail", async (req: Request, res: Response) => {
     let finalResult = await service.detail (
       req.query.user_id as string,
       req.query._id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
     if (finalResult.status === "success") {
       res.json({
@@ -137,8 +137,8 @@ router.post("/save", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.save(
       req.body.user_id as string,
-      req.body.OBJECT as Record<string, any>,
-      req.body.DATE as Record<string, any>,
+      req.body.OBJECT as any,
+      req.body.DATE as any,
     );
     finalResult = await middleware.save(finalResult);
     if (finalResult.status === "success") {
@@ -173,13 +173,54 @@ router.post("/save", async (req: Request, res: Response) => {
   }
 });
 
+// 4. update ---------------------------------------------------------------------------------------
+router.put("/update", async (req: Request, res: Response) => {
+  try {
+    let finalResult = await service.update(
+      req.body.user_id as string,
+      req.body._id as string,
+      req.body.OBJECT as any,
+      req.body.DATE as any,
+    );
+    finalResult = await middleware.update(finalResult);
+    if (finalResult.status === "success") {
+      res.json({
+        msg: "updateSuccessful",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "updateFailed",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else {
+      res.json({
+        msg: "updateError",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+  }
+  catch (err: any) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      msg: err.toString(),
+      error: err.toString(),
+    });
+  }
+});
+
 // 5. deletes --------------------------------------------------------------------------------------
-router.post("/deletes", async (req: Request, res: Response) => {
+router.delete("/deletes", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.deletes(
       req.body.user_id as string,
       req.body._id as string,
-      req.body.DATE as Record<string, any>,
     );
     finalResult = await middleware.deletes(finalResult);
     if (finalResult.status === "success") {

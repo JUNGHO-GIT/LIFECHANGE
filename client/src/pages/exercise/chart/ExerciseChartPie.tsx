@@ -422,7 +422,7 @@ export const ExerciseChartPie = () => {
             ["part", "title"].map((key, index) => (
               <FormGroup key={index}>
                 <FormControlLabel
-                  label={translate(key)}
+                  label={translate(`exercise${key.charAt(0).toUpperCase() + key.slice(1)}`)}
                   labelPlacement={"start"}
                   control={
                     <Switch

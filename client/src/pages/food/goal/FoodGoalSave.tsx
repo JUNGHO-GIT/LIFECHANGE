@@ -23,8 +23,8 @@ export const FoodGoalSave = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd,
-    URL_OBJECT, sessionId,
+    navigate, location_dateType, location_dateStart, location_dateEnd, location_id,
+    URL_OBJECT, sessionId, firstStr
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -38,7 +38,9 @@ export const FoodGoalSave = () => {
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList:"/food/goal/list"
+    toList: `/${firstStr}/goal/list`,
+    toSave: `/${firstStr}/goal/save`,
+    toUpdate: `/${firstStr}/goal/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
@@ -46,6 +48,9 @@ export const FoodGoalSave = () => {
     newSectionCnt: 0
   });
   const [DATE, setDATE] = useState<any>({
+    initDateType: location_dateType || "",
+    initDateStart: location_dateStart || dayFmt,
+    initDateEnd: location_dateEnd || dayFmt,
     dateType: location_dateType || "",
     dateStart: location_dateStart || dayFmt,
     dateEnd: location_dateEnd || dayFmt,
@@ -84,7 +89,7 @@ export const FoodGoalSave = () => {
     .catch((err: any) => {
       console.error(err);
     });
-  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -92,7 +97,7 @@ export const FoodGoalSave = () => {
     axios.get(`${URL_OBJECT}/goal/detail`, {
       params: {
         user_id: sessionId,
-        _id: "",
+        _id: location_id,
         DATE: DATE,
       },
     })
@@ -152,10 +157,12 @@ export const FoodGoalSave = () => {
       alert(translate("noData"));
       return;
     }
-    axios.post(`${URL_OBJECT}/goal/deletes`, {
-      user_id: sessionId,
-      _id: OBJECT?._id,
-      DATE: DATE,
+    axios.delete(`${URL_OBJECT}/goal/deletes`, {
+      data: {
+        user_id: sessionId,
+        _id: OBJECT?._id,
+        DATE: DATE,
+      }
     })
     .then((res: any) => {
       if (res.data.status === "success") {
@@ -247,7 +254,10 @@ export const FoodGoalSave = () => {
                   )
                 }
                 startadornment={
-                  <Img src={food2} className={"w-16 h-16"} />
+                  <Img
+                  	src={food2}
+                  	className={"w-16 h-16"}
+                  />
                 }
                 endadornment={
                   translate("kc")
@@ -285,7 +295,10 @@ export const FoodGoalSave = () => {
                   )
                 }
                 startadornment={
-                  <Img src={food3} className={"w-16 h-16"} />
+                  <Img
+                  	src={food3}
+                  	className={"w-16 h-16"}
+                  />
                 }
                 endadornment={
                   translate("g")
@@ -323,7 +336,10 @@ export const FoodGoalSave = () => {
                   )
                 }
                 startadornment={
-                  <Img src={food4} className={"w-16 h-16"} />
+                  <Img
+                  	src={food4}
+                  	className={"w-16 h-16"}
+                  />
                 }
                 endadornment={
                   translate("g")
@@ -361,7 +377,10 @@ export const FoodGoalSave = () => {
                   )
                 }
                 startadornment={
-                  <Img src={food5} className={"w-16 h-16"} />
+                  <Img
+                  	src={food5}
+                  	className={"w-16 h-16"}
+                  />
                 }
                 endadornment={
                   translate("g")

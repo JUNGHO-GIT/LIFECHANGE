@@ -2,28 +2,70 @@
 
 import { useState, useEffect, useCallback } from "@imports/ImportReacts";
 import { createContext, useContext } from "@imports/ImportReacts";
+import { moment, getCountryForTimezone, getAllInfoByISO } from "@imports/ImportLibs";
 
 // -------------------------------------------------------------------------------------------------
 const TITLE = process.env.REACT_APP_TITLE || "";
+const LanguageContext = createContext<any>({});
 
-// -------------------------------------------------------------------------------------------------
-// @ts-ignore
-const LanguageContext = createContext();
+// 2. declare ------------------------------------------------------------------------------------
+let timeZone: string = "";
+let zoneName: string = "";
+let locale: string = "";
+let isoCode: any = "";
+let currencyCode: string = "";
 
 // -------------------------------------------------------------------------------------------------
 export const LanguageProvider = ({ children }: any) => {
 
-  const [lang, setLang] = useState<any>(sessionStorage.getItem(`${TITLE}_lang`) || "ko");
+  const [lang, setLang] = useState<any>("");
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    try {
+      // ex. Asia/Seoul
+      timeZone = moment.tz.guess();
+
+      // ex. KST
+      zoneName = moment.tz(timeZone).zoneName();
+
+      // ex. ko-KR
+      locale = navigator.language;
+
+      // ex. KR
+      isoCode = getCountryForTimezone(timeZone)?.id;
+
+      // ex. KRW
+      currencyCode = getAllInfoByISO(isoCode).currency;
+
+      if (timeZone) {
+        sessionStorage.setItem(`${TITLE}_timeZone`, timeZone);
+      }
+      if (zoneName) {
+        sessionStorage.setItem(`${TITLE}_zoneName`, zoneName);
+      }
+      if (locale) {
+        sessionStorage.setItem(`${TITLE}_locale`, locale);
+      }
+      if (isoCode) {
+        sessionStorage.setItem(`${TITLE}_isoCode`, isoCode);
+      }
+      if (currencyCode) {
+        sessionStorage.setItem(`${TITLE}_currencyCode`, currencyCode);
+      }
+
+      setLang(locale);
+      sessionStorage.setItem(`${TITLE}_lang`, locale);
+      console.log("LanguageProvider", lang);
+    }
+    catch (err: any) {
+      console.error("useTimezone error:", err);
+    }
+  }, []);
 
   if (lang === "ko") {
-    // @ts-ignore
     require("moment/locale/ko");
   }
-
-  useEffect(() => {
-    sessionStorage.setItem(`${TITLE}_lang`, lang);
-    console.log("LanguageProvider", lang);
-  }, [lang]);
 
   return (
     <LanguageContext.Provider value={{lang, setLang}}>
@@ -314,6 +356,14 @@ export const useTranslate = () => {
     exerciseCount: {
       ko: "횟수",
       en: "Count"
+    },
+    exercisePart: {
+      ko: "부위",
+      en: "Part"
+    },
+    exerciseTitle: {
+      ko: "운동명",
+      en: "Exercise"
     },
     // ---------------------------------------------------------------------------------------------
     // f
@@ -749,6 +799,10 @@ export const useTranslate = () => {
     },
     // ---------------------------------------------------------------------------------------------
     // n
+    new: {
+      ko: "신규",
+      en: "New"
+    },
     noData: {
       ko: "삭제할 데이터가 없습니다",
       en: "No data to delete"

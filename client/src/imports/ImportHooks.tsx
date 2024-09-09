@@ -9,7 +9,6 @@ import { useScrollTop } from "@hooks/useScrollTop";
 import { useSessionStorage } from "@hooks/useSessionStorage";
 import { useStorage } from "@hooks/useStorage";
 import { useTime } from "@hooks/useTime";
-import { useTimezone } from "@hooks/useTimezone";
 import { useValidateUser } from "@hooks/validate/useValidateUser";
 import { useValidateExercise } from "@hooks/validate/useValidateExercise";
 import { useValidateFood } from "@hooks/validate/useValidateFood";
@@ -28,7 +27,6 @@ export {
   useSessionStorage,
   useStorage,
   useTime,
-  useTimezone,
   useValidateUser,
   useValidateExercise,
   useValidateFood,

@@ -17,15 +17,15 @@ export const Input = (props: any) => {
       error={props?.error || false}
       slotProps={{
         input: {
+          readOnly: (
+            props?.readOnly || false
+          ),
           className: (
             props?.inputclass?.includes("fs-") ? (
               `text-left ${props?.inputclass || ""}`
             ) : (
               `fs-1-0rem text-left ${props?.inputclass || ""}`
             )
-          ),
-          readOnly: (
-            props?.readOnly || false
           ),
           startAdornment: (
             props?.startadornment ? (

@@ -8,18 +8,18 @@ import moment from 'moment';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import * as repository from "@repositories/user/userRepository";
-import { randomNumber, randomTime, calcDate} from '@scripts/utils.js';
-import { exerciseArray} from '@arrays/exerciseArray.js';
-import { foodArray} from '@arrays/foodArray.js';
-import { moneyArray} from '@arrays/moneyArray.js';
+import { randomNumber, randomTime, calcDate } from '@scripts/utils.js';
+import { exerciseArray } from '@arrays/exerciseArray.js';
+import { foodArray } from '@arrays/foodArray.js';
+import { moneyArray } from '@arrays/moneyArray.js';
 import { fileURLToPath } from "url";
 import { emailSending } from "@scripts/email";
 dotenv.config();
 
 // 0-1. appInfo ------------------------------------------------------------------------------------
 export const appInfo = async () => {
-  
-  let fianlResult:any = null;
+
+  let finalResult:any = null;
   let statusResult:string = "";
 
   const __filename = fileURLToPath(import.meta.url);
@@ -49,7 +49,7 @@ export const appInfo = async () => {
     git: lastGit,
     license: lastLicense,
   };
-  
+
   if (!finalResult) {
     statusResult = "fail"
   }
@@ -73,49 +73,53 @@ export const sendEmail = async (
   let findResult: any = null;
   let finalResult: any = null;
   let sendResult: any = null;
+  let statusResult: string = "";
 
   // 임의의 코드 생성
   const code = Math.floor(100000 + Math.random() * 900000).toString();
 
   // 중복 체크
-  findResult = await repository.email.findId (
+  findResult = await repository.emailFindId (
     user_id_param
   );
 
-
   if (type_param === "signup") {
     if (findResult) {
-      return {
-        result: "duplicate",
-      };
+      finalResult = null;
+      statusResult = "duplicate";
     }
   }
   else if (type_param === "resetPw") {
     if (findResult) {
       if (findResult.user_google === "Y") {
-        return {
-          result: "isGoogle",
-        };
+        finalResult = null;
+        statusResult = "isGoogle";
       }
     }
     else {
-      return {
-        result: "notExist",
-      };
+      finalResult = null;
+      statusResult = "notExist";
     }
   }
 
   sendResult = await emailSending(
     user_id_param, code
   );
-  await repository.email.sendEmail(
+  await repository.emailSendEmail(
     user_id_param, code
   );
 
-  finalResult = {
-    code: code,
-    result: sendResult
-  };
+  if (!sendResult) {
+    finalResult = null;
+    statusResult = "fail";
+  }
+  else {
+    finalResult = {
+      code: code,
+      result: sendResult
+    };
+    statusResult = "success";
+  }
 
   return {
     status: statusResult,
@@ -132,17 +136,24 @@ export const verifyEmail = async (
   // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
+  let statusResult: string = "";
 
-  findResult = await repository.email.verifyEmail(
+  findResult = await repository.emailVerifyEmail(
     user_id_param
   );
 
-  if (findResult !== null) {
+  if (!findResult) {
+    finalResult = null;
+    statusResult = "fail";
+  }
+  else {
     if (findResult.verify_code === code_param) {
-      finalResult = "success";
+      finalResult = findResult;
+      statusResult = "success";
     }
     else {
-      finalResult = "fail";
+      finalResult = null;
+      statusResult = "fail";
     }
   }
 
@@ -160,14 +171,17 @@ export const userSignup = async (
 
   // result 변수 선언
   let findResult: any = null;
+  let signupResult: any = null;
   let finalResult: any = null;
+  let statusResult: string = "";
 
-  findResult = await repository.user.checkId(
+  findResult = await repository.userCheckId(
     user_id_param
   );
 
   if (findResult) {
-    finalResult = "alreadyExist";
+    finalResult = null;
+    statusResult = "alreadyExist";
   }
   else {
     const saltRounds = 10;
@@ -178,9 +192,18 @@ export const userSignup = async (
     OBJECT_param.user_token = token;
     OBJECT_param.user_pw = hashedPassword;
 
-    finalResult = await repository.user.signup(
+    signupResult = await repository.userSignup(
       user_id_param, OBJECT_param
     );
+  }
+
+  if (!signupResult) {
+    finalResult = null;
+    statusResult = "fail";
+  }
+  else {
+    finalResult = signupResult;
+    statusResult = "success";
   }
 
   return {
@@ -197,36 +220,49 @@ export const userResetPw = async (
 
   // result 변수 선언
   let findResult: any = null;
+  let resetResult: any = null;
   let finalResult: any = null;
+  let statusResult: string = "";
   let saltRounds: number = 10;
   let token: string = crypto.randomBytes(20).toString('hex');
   let combinedPw: string = "";
 
-  findResult = await repository.user.checkId(
+  findResult = await repository.userCheckId(
     user_id_param
   );
 
   // ID가 존재하지 않으면 바로 종료
   if (!findResult) {
-    return "notExist";
+    finalResult = null;
+    statusResult = "notExist";
   }
-
-  // google 사용자인 경우
-  if (findResult.user_google === "Y") {
-    return "isGoogle";
-  }
-
   else {
-    combinedPw = `${OBJECT_param.user_pw}_${token}`;
+    // google 사용자인 경우
+    if (findResult.user_google === "Y") {
+      finalResult = null;
+      statusResult = "isGoogle";
+    }
+    else {
+      combinedPw = `${OBJECT_param.user_pw}_${token}`;
 
-    // 해쉬 비밀번호
-    const hashedPassword = await bcrypt.hash(combinedPw, saltRounds);
-    OBJECT_param.user_token = token
-    OBJECT_param.user_pw = hashedPassword;
+      // 해쉬 비밀번호
+      const hashedPassword = await bcrypt.hash(combinedPw, saltRounds);
+      OBJECT_param.user_token = token
+      OBJECT_param.user_pw = hashedPassword;
 
-    finalResult = await repository.user.resetPw(
-      user_id_param, OBJECT_param
-    );
+      resetResult = await repository.userResetPw(
+        user_id_param, OBJECT_param
+      );
+    }
+  }
+
+  if (!resetResult) {
+    finalResult = null;
+    statusResult = "fail";
+  }
+  else {
+    finalResult = resetResult;
+    statusResult = "success";
   }
 
   return {
@@ -250,12 +286,14 @@ export const userLogin = async (
   let statusResult: string = "";
 
   // ID 체크
-  findResult = await repository.user.checkId(user_id_param);
+  findResult = await repository.userCheckId(
+    user_id_param
+  );
 
   // 1. id가 존재하지 않는 경우
   if (!findResult) {
-    statusResult = "fail";
     finalResult = null;
+    statusResult = "fail";
   }
   // 2. id가 존재하는 경우
   else {
@@ -263,8 +301,8 @@ export const userLogin = async (
     if (findResult.user_google === "Y") {
       // auto login이 아닌 경우
       if (!isAutoLogin_param) {
-        statusResult = "isGoogle";
         finalResult = null;
+        statusResult = "isGoogle";
       }
       combinedPw = `${user_id_param}_${findResult.user_token}`;
     }
@@ -277,12 +315,12 @@ export const userLogin = async (
     const isPasswordMatch = await bcrypt.compare(combinedPw, findResult.user_pw);
 
     if (!isPasswordMatch) {
-      statusResult = "fail";
       finalResult = null;
+      statusResult = "fail";
     }
     else {
-      statusResult = "success";
       finalResult = findResult;
+      statusResult = "success";
     }
 
     // 관리자 확인
@@ -309,16 +347,25 @@ export const userDetail = async (
   // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
+  let statusResult: string = "";
 
-  findResult = await repository.user.detail(
+  findResult = await repository.userDetail(
     user_id_param
   );
 
-  if (findResult) {
+  if (!findResult) {
+    finalResult = null;
+    statusResult = "fail";
+  }
+  else {
     finalResult = findResult;
+    statusResult = "success";
   }
 
-  return finalResult
+  return {
+    status: statusResult,
+    result: finalResult,
+  };
 };
 
 // 2-5. userUpdate ---------------------------------------------------------------------------------
@@ -330,15 +377,19 @@ export const userUpdate = async (
   // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
+  let statusResult: string = "";
 
-  findResult = await repository.user.detail(
-    user_id_param
+  findResult = await repository.userUpdate(
+    user_id_param, OBJECT_param
   );
 
-  if (findResult) {
-    finalResult = await repository.user.update(
-      user_id_param, OBJECT_param
-    );
+  if (!findResult) {
+    finalResult = null;
+    statusResult = "fail";
+  }
+  else {
+    finalResult = findResult;
+    statusResult = "success";
   }
 
   return {
@@ -355,15 +406,19 @@ export const userDeletes = async (
   // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
+  let statusResult: string = "";
 
-  findResult = await repository.user.detail(
+  findResult = await repository.userDeletes(
     user_id_param
   );
 
-  if (findResult) {
-    finalResult = await repository.user.deletes(
-      user_id_param
-    );
+  if (!findResult) {
+    finalResult = null;
+    statusResult = "fail";
+  }
+  else {
+    finalResult = findResult;
+    statusResult = "success";
   }
 
   return {
@@ -380,15 +435,19 @@ export const categoryList = async (
   // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
+  let statusResult: string = "";
 
-  findResult = await repository.user.detail(
+  findResult = await repository.categoryList(
     user_id_param
   );
 
-  if (findResult) {
-    finalResult = await repository.category.listReal(
-      user_id_param
-    );
+  if (!findResult) {
+    finalResult = null;
+    statusResult = "fail";
+  }
+  else {
+    finalResult = findResult;
+    statusResult = "success";
   }
 
   return {
@@ -407,25 +466,24 @@ export const categorySave = async (
   // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
+  let statusResult: string = "";
 
-  findResult = await repository.category.detail(
-    user_id_param, "",
+  findResult = await repository.categorySave(
+    user_id_param, OBJECT_param,
   );
 
   if (!findResult) {
-    finalResult = await repository.category.create(
-      user_id_param, OBJECT_param
-    );
+    finalResult = null;
+    statusResult = "fail";
   }
   else {
-    finalResult = await repository.category.update(
-      user_id_param, findResult._id, OBJECT_param
-    );
+    finalResult = findResult;
+    statusResult = "success";
   }
 
   return {
     status: statusResult,
-    result: finalResult
+    result: finalResult,
   };
 };
 
@@ -439,115 +497,157 @@ export const dummyList = async (
   // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
-  let totalCnt: number = 0;
-  let page:number = PAGING_param.page === 0 ? 1 : PAGING_param.page;
+  let totalCntResult: any = null;
+  let statusResult: string = "";
+  let page: number = PAGING_param.page || 0;
 
   // 1. exerciseGoal
   if (PART_param === "exerciseGoal") {
-    totalCnt = await repository.dummy.countExerciseGoal(
-      user_id_param
+    totalCntResult = await repository.dummyCount (
+      user_id_param, "exerciseGoal"
     );
-    findResult = await repository.dummy.listExerciseGoal(
-      user_id_param, page
+    findResult = await repository.dummyList(
+      user_id_param, page, "exerciseGoal"
     );
-    if (findResult) {
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
       finalResult = findResult;
+      statusResult = "success";
     }
   }
 
   // 2. exercise
   else if (PART_param === "exercise") {
-    totalCnt = await repository.dummy.countExercise(
-      user_id_param
+    totalCntResult = await repository.dummyCount (
+      user_id_param, "exercise"
     );
-    findResult = await repository.dummy.listExercise(
-      user_id_param, page,
+    findResult = await repository.dummyList(
+      user_id_param, page, "exercise"
     );
-    if (findResult) {
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
       finalResult = findResult;
+      statusResult = "success";
     }
   }
 
   // 3. foodGoal
   else if (PART_param === "foodGoal") {
-    totalCnt = await repository.dummy.countFoodGoal(
-      user_id_param
+    totalCntResult = await repository.dummyCount (
+      user_id_param, "foodGoal"
     );
-    findResult = await repository.dummy.listFoodGoal(
-      user_id_param, page,
+    findResult = await repository.dummyList(
+      user_id_param, page, "foodGoal"
     );
-    if (findResult) {
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
       finalResult = findResult;
+      statusResult = "success";
     }
   }
 
   // 4. food
   else if (PART_param === "food") {
-    totalCnt = await repository.dummy.countFood(
-      user_id_param
+    totalCntResult = await repository.dummyCount (
+      user_id_param, "food"
     );
-    findResult = await repository.dummy.listFood(
-      user_id_param, page,
+    findResult = await repository.dummyList(
+      user_id_param, page, "food"
     );
-    if (findResult) {
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
       finalResult = findResult;
+      statusResult = "success";
     }
   }
 
   // 5. moneyGoal
   else if (PART_param === "moneyGoal") {
-    totalCnt = await repository.dummy.countMoneyGoal(
-      user_id_param
+    totalCntResult = await repository.dummyCount (
+      user_id_param, "moneyGoal"
     );
-    findResult = await repository.dummy.listMoneyGoal(
-      user_id_param, page,
+    findResult = await repository.dummyList(
+      user_id_param, page, "moneyGoal"
     );
-    if (findResult) {
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
       finalResult = findResult;
+      statusResult = "success";
     }
   }
 
   // 6. money
   else if (PART_param === "money") {
-    totalCnt = await repository.dummy.countMoney(
-      user_id_param
+    totalCntResult = await repository.dummyCount (
+      user_id_param, "money"
     );
-    findResult = await repository.dummy.listMoney(
-      user_id_param, page,
+    findResult = await repository.dummyList(
+      user_id_param, page, "money"
     );
-    if (findResult) {
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
       finalResult = findResult;
+      statusResult = "success";
     }
   }
 
   // 7. sleepGoal
   else if (PART_param === "sleepGoal") {
-    totalCnt = await repository.dummy.countSleepGoal(
-      user_id_param
+    totalCntResult = await repository.dummyCount (
+      user_id_param, "sleepGoal"
     );
-    findResult = await repository.dummy.listSleepGoal(
-      user_id_param, page,
+    findResult = await repository.dummyList(
+      user_id_param, page, "sleepGoal"
     );
-    if (findResult) {
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
       finalResult = findResult;
+      statusResult = "success";
     }
   }
 
   // 8. sleep
   else if (PART_param === "sleep") {
-    totalCnt = await repository.dummy.countSleep(
-      user_id_param
+    totalCntResult = await repository.dummyCount (
+      user_id_param, "sleep"
     );
-    findResult = await repository.dummy.listSleep(
-      user_id_param, page,
+    findResult = await repository.dummyList(
+      user_id_param, page, "sleep"
     );
-    if (findResult) {
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
       finalResult = findResult;
+      statusResult = "success";
     }
   }
 
   return {
-    totalCnt: totalCnt,
+    status: statusResult,
+    totalCnt: totalCntResult,
     result: finalResult,
   };
 };
@@ -560,7 +660,9 @@ export const dummySave = async (
 ) => {
 
   // result 변수 선언
+  let findResult: any = null;
   let finalResult: any = null;
+  let statusResult: string = "";
   let insertCount: number = Number(count_param);
   let secondStr: string = String(PART_param);
 
@@ -583,13 +685,23 @@ export const dummySave = async (
         exercise_goal_updateDt: Date.now(),
       };
     });
-    await repository.dummy.deletesExerciseGoal(
-      user_id_param,
+    findResult = (
+      await repository.dummyDeletes(
+        user_id_param, "exerciseGoal"
+      ),
+      await repository.dummySave(
+        user_id_param, OBJECT, "exerciseGoal"
+      )
     );
-    await repository.dummy.saveExerciseGoal(
-      OBJECT
-    );
-    finalResult = "success";
+
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
+      finalResult = findResult;
+      statusResult = "success";
+    }
   }
 
   // 2. exercise
@@ -637,13 +749,23 @@ export const dummySave = async (
         exercise_updateDt: Date.now(),
       };
     });
-    await repository.dummy.deletesExercise(
-      user_id_param,
+    findResult = (
+      await repository.dummyDeletes(
+        user_id_param, "exercise"
+      ),
+      await repository.dummySave(
+        user_id_param, OBJECT, "exercise"
+      )
     );
-    await repository.dummy.saveExercise(
-      OBJECT
-    );
-    finalResult = "success";
+
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
+      finalResult = findResult;
+      statusResult = "success";
+    }
   }
 
   // 3. foodGoal
@@ -665,13 +787,23 @@ export const dummySave = async (
         food_goal_updateDt: Date.now(),
       };
     });
-    await repository.dummy.deletesFoodGoal(
-      user_id_param,
+    findResult = (
+      await repository.dummyDeletes(
+        user_id_param, "foodGoal"
+      ),
+      await repository.dummySave(
+        user_id_param, OBJECT, "foodGoal"
+      )
     );
-    await repository.dummy.saveFoodGoal(
-      OBJECT
-    );
-    finalResult = "success";
+
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
+      finalResult = findResult;
+      statusResult = "success";
+    }
   }
 
   // 4. food
@@ -728,15 +860,24 @@ export const dummySave = async (
         food_regDt: Date.now(),
         food_updateDt: Date.now(),
       };
+    });
+    findResult = (
+      await repository.dummyDeletes(
+        user_id_param, "food"
+      ),
+      await repository.dummySave(
+        user_id_param, OBJECT, "food"
+      )
+    );
+
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
     }
-    );
-    await repository.dummy.deletesFood(
-      user_id_param,
-    );
-    await repository.dummy.saveFood(
-      OBJECT
-    );
-    finalResult = "success";
+    else {
+      finalResult = findResult;
+      statusResult = "success";
+    }
   }
 
   // 5. moneyGoal
@@ -756,13 +897,23 @@ export const dummySave = async (
         money_goal_updateDt: Date.now(),
       };
     });
-    await repository.dummy.deletesMoneyGoal(
-      user_id_param,
+    findResult = (
+      await repository.dummyDeletes(
+        user_id_param, "moneyGoal"
+      ),
+      await repository.dummySave(
+        user_id_param, OBJECT, "moneyGoal"
+      )
     );
-    await repository.dummy.saveMoneyGoal(
-      OBJECT
-    );
-    finalResult = "success";
+
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
+      finalResult = findResult;
+      statusResult = "success";
+    }
   }
 
   // 6. money
@@ -806,13 +957,23 @@ export const dummySave = async (
         money_updateDt: Date.now(),
       };
     });
-    await repository.dummy.deletesMoney(
-      user_id_param,
+    findResult = (
+      await repository.dummyDeletes(
+        user_id_param, "money"
+      ),
+      await repository.dummySave(
+        user_id_param, OBJECT, "money"
+      )
     );
-    await repository.dummy.saveMoney(
-      OBJECT
-    );
-    finalResult = "success";
+
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
+      finalResult = findResult;
+      statusResult = "success";
+    }
   }
 
   // 7. sleepGoal
@@ -833,13 +994,23 @@ export const dummySave = async (
         sleep_goal_updateDt: Date.now(),
       };
     });
-    await repository.dummy.deletesSleepGoal(
-      user_id_param,
+    findResult = (
+      await repository.dummyDeletes(
+        user_id_param, "sleepGoal"
+      ),
+      await repository.dummySave(
+        user_id_param, OBJECT, "sleepGoal"
+      )
     );
-    await repository.dummy.saveSleepGoal(
-      OBJECT
-    );
-    finalResult = "success";
+
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
+      finalResult = findResult;
+      statusResult = "success";
+    }
   }
 
   // 8. sleep
@@ -866,17 +1037,23 @@ export const dummySave = async (
         sleep_updateDt: Date.now(),
       };
     });
-    await repository.dummy.deletesSleep(
-      user_id_param,
+    findResult = (
+      await repository.dummyDeletes(
+        user_id_param, "sleep"
+      ),
+      await repository.dummySave(
+        user_id_param, OBJECT, "sleep"
+      )
     );
-    await repository.dummy.saveSleep(
-      OBJECT
-    );
-    finalResult = "success";
-  }
 
-  else {
-    finalResult = "fail";
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
+      finalResult = findResult;
+      statusResult = "success";
+    }
   }
 
   return {
@@ -891,84 +1068,145 @@ export const dummyDeletes = async (
   PART_param: string,
 ) => {
 
-  // finalResult 변수 선언
+  // result 변수 선언
+  let findResult: any = null;
   let finalResult: any = null;
+  let statusResult: string = "";
   let secondStr: string = String(PART_param);
 
   // 0. all
   if (secondStr === "all") {
-    await repository.dummy.deletesAll(
+    findResult = await repository.dummyDeletesAll(
       user_id_param
     );
-    finalResult = "success";
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
+      finalResult = findResult;
+      statusResult = "success";
+    }
   }
 
   // 1. exerciseGoal
   else if (secondStr === "exerciseGoal") {
-    await repository.dummy.deletesExerciseGoal(
-      user_id_param
+    findResult = await repository.dummyDeletes(
+      user_id_param, "exerciseGoal"
     );
-    finalResult = "success";
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
+      finalResult = findResult;
+      statusResult = "success";
+    }
   }
 
   // 2. exercise
   else if (secondStr === "exercise") {
-    await repository.dummy.deletesExercise(
-      user_id_param
+    findResult = await repository.dummyDeletes(
+      user_id_param, "exercise"
     );
-    finalResult = "success";
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
+      finalResult = findResult;
+      statusResult = "success";
+    }
   }
 
   // 3. foodGoal
   else if (secondStr === "foodGoal") {
-    await repository.dummy.deletesFoodGoal(
-      user_id_param
+    findResult = await repository.dummyDeletes(
+      user_id_param, "foodGoal"
     );
-    finalResult = "success";
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
+      finalResult = findResult;
+      statusResult = "success";
+    }
   }
 
   // 4. food
   else if (secondStr === "food") {
-    await repository.dummy.deletesFood(
-      user_id_param
+    findResult = await repository.dummyDeletes(
+      user_id_param, "food"
     );
-    finalResult = "success";
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
+      finalResult = findResult;
+      statusResult = "success";
+    }
   }
 
   // 5. moneyGoal
   else if (secondStr === "moneyGoal") {
-    await repository.dummy.deletesMoneyGoal(
-      user_id_param
+    findResult = await repository.dummyDeletes(
+      user_id_param, "moneyGoal"
     );
-    finalResult = "success";
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
+      finalResult = findResult;
+      statusResult = "success";
+    }
   }
 
   // 6. money
   else if (secondStr === "money") {
-    await repository.dummy.deletesMoney(
-      user_id_param
+    findResult = await repository.dummyDeletes(
+      user_id_param, "money"
     );
-    finalResult = "success";
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
+      finalResult = findResult;
+      statusResult = "success";
+    }
   }
 
   // 7. sleepGoal
   else if (secondStr === "sleepGoal") {
-    await repository.dummy.deletesSleepGoal(
-      user_id_param
+    findResult = await repository.dummyDeletes(
+      user_id_param, "sleepGoal"
     );
-    finalResult = "success";
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
+      finalResult = findResult;
+      statusResult = "success";
+    }
   }
 
   // 8. sleep
   else if (secondStr === "sleep") {
-    await repository.dummy.deletesSleep(
-      user_id_param
+    findResult = await repository.dummyDeletes(
+      user_id_param, "sleep"
     );
-    finalResult = "success";
-  }
-
-  else {
-    finalResult = "fail";
+    if (!findResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
+      finalResult = findResult;
+      statusResult = "success";
+    }
   }
 
   return finalResult;

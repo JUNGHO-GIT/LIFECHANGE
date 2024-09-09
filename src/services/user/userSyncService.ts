@@ -18,6 +18,8 @@ export const percent = async (
   let findMoney: any = null;
   let findSleepGoal: any = null;
   let findSleep: any = null;
+
+  let findResult: any = null;
   let finalResult: any = null;
   let statusResult: string = "";
 
@@ -26,55 +28,38 @@ export const percent = async (
   const dateEnd = DATE_param.dateEnd;
 
   // 1. exercise
-  findExerciseGoal = await repository.percent.listExerciseGoal(
+  findExerciseGoal = await repository.listExerciseGoal(
     user_id_param, dateStart, dateEnd
   );
-  findExercise = await repository.percent.listExercise(
+  findExercise = await repository.listExercise(
     user_id_param, dateStart, dateEnd
-  )
-  .then((result) => {
-    if (
-      parseFloat(result?.exercise_total_volume) <= 1 &&
-      result?.exercise_total_cardio === "00:00"
-    ) {
-      return {
-        ...result,
-        exercise_total_count: ""
-      };
-    }
-    else {
-      return {
-        ...result,
-        exercise_total_count: "1"
-      };
-    }
-  });
+  );
 
   // 2. food
-  findFoodGoal = await repository.percent.listFoodGoal(
+  findFoodGoal = await repository.listFoodGoal(
     user_id_param, dateStart, dateEnd
   );
-  findFood = await repository.percent.listFood(
+  findFood = await repository.listFood(
     user_id_param, dateStart, dateEnd
   );
 
   // 3. money
-  findMoneyGoal = await repository.percent.listMoneyGoal(
+  findMoneyGoal = await repository.listMoneyGoal(
     user_id_param, dateStart, dateEnd
   );
-  findMoney = await repository.percent.listMoney(
+  findMoney = await repository.listMoney(
     user_id_param, dateStart, dateEnd
   );
 
   // 4. sleep
-  findSleepGoal = await repository.percent.listSleepGoal(
+  findSleepGoal = await repository.listSleepGoal(
     user_id_param, dateStart, dateEnd
   );
-  findSleep = await repository.percent.listSleep(
+  findSleep = await repository.listSleep(
     user_id_param, dateStart, dateEnd
   );
 
-  finalResult = {
+  findResult = {
     exerciseGoal: findExerciseGoal,
     exercise: findExercise,
     foodGoal: findFoodGoal,
@@ -84,6 +69,15 @@ export const percent = async (
     sleepGoal: findSleepGoal,
     sleep: findSleep,
   };
+
+  if (!findResult) {
+    finalResult = null;
+    statusResult = "fail";
+  }
+  else {
+    finalResult = findResult;
+    statusResult = "success";
+  }
 
   return {
     status: statusResult,
@@ -107,7 +101,7 @@ export const property = async (
   let statusResult: string = "";
 
   // 가입날짜 ~ 현재날짜
-  findRegDt = await repository.property.findRegDt(
+  findRegDt = await repository.findPropertyRegDt(
     user_id_param
   );
 
@@ -115,10 +109,10 @@ export const property = async (
   const regDt = (findRegDt?.user_regDt).toISOString().slice(0, 10);
   const todayDt = DATE_param.dateEnd;
 
-  findInitProperty = await repository.property.initProperty(
+  findInitProperty = await repository.findPropertyInit(
     user_id_param
   );
-  findMoney = await repository.property.findMoney(
+  findMoney = await repository.findPropertyMoney(
     user_id_param, regDt, todayDt
   );
   curProperty = String (
@@ -126,25 +120,31 @@ export const property = async (
     (parseFloat(findMoney?.money_total_income) || 0) -
     (parseFloat(findMoney?.money_total_expense) || 0)
   );
-
-  await repository.property.updateCurProperty(
+  await repository.updateProperty(
     user_id_param, curProperty
   );
 
-  finalResult = {
-    totalIncome: String (
-      findMoney?.money_total_income ? parseFloat(findMoney?.money_total_income) : 0
-    ),
-    totalExpense: String (
-      findMoney?.money_total_expense ? parseFloat(findMoney?.money_total_expense) : 0
-    ),
-    initProperty: String (
-      findInitProperty?.user_initProperty ? parseFloat(findInitProperty?.user_initProperty) : 0
-    ),
-    curProperty: curProperty,
-    dateStart: regDt,
-    dateEnd: todayDt,
-  };
+  if (!findInitProperty && !findMoney) {
+    finalResult = null;
+    statusResult = "fail";
+  }
+  else {
+    statusResult = "success";
+    finalResult = {
+      totalIncome: String (
+        findMoney?.money_total_income ? parseFloat(findMoney?.money_total_income) : 0
+      ),
+      totalExpense: String (
+        findMoney?.money_total_expense ? parseFloat(findMoney?.money_total_expense) : 0
+      ),
+      initProperty: String (
+        findInitProperty?.user_initProperty ? parseFloat(findInitProperty?.user_initProperty) : 0
+      ),
+      curProperty: curProperty,
+      dateStart: regDt,
+      dateEnd: todayDt,
+    };
+  }
 
   return {
     status: statusResult,
@@ -168,7 +168,7 @@ export const scale = async (
   let statusResult: string = "";
 
   // 가입날짜 ~ 현재날짜
-  findRegDt = await repository.property.findRegDt(
+  findRegDt = await repository.findScaleRegDt(
     user_id_param
   );
 
@@ -176,36 +176,42 @@ export const scale = async (
   const regDt = (findRegDt?.user_regDt).toISOString().slice(0, 10);
   const todayDt = DATE_param.dateEnd;
 
-  findInitScale = await repository.scale.initScale(
+  findInitScale = await repository.findScaleInit(
     user_id_param
   );
-  findScaleMinMax = await repository.scale.findScaleMinMax(
+  findScaleMinMax = await repository.findScaleMinMax(
     user_id_param, regDt, todayDt
   );
-  findScaleCur = await repository.scale.findScaleCur(
+  findScaleCur = await repository.findScaleCur(
     user_id_param, regDt, todayDt
   );
-
-  await repository.scale.updateCurScale(
+  await repository.updateScale(
     user_id_param, findScaleCur?.exercise_total_weight
   );
 
-  finalResult = {
-    initScale: String (
-      findInitScale?.user_initScale ? parseFloat(findInitScale?.user_initScale) : 0
-    ),
-    minScale: String (
-      findScaleMinMax?.scale_min ? parseFloat(findScaleMinMax?.scale_min) : 0
-    ),
-    maxScale: String (
-      findScaleMinMax?.scale_max ? parseFloat(findScaleMinMax?.scale_max) : 0
-    ),
-    curScale: String (
-      findScaleCur?.exercise_total_weight ? parseFloat(findScaleCur?.exercise_total_weight) : 0
-    ),
-    dateStart: regDt,
-    dateEnd: todayDt,
-  };
+  if (!findInitScale && !findScaleMinMax && !findScaleCur) {
+    finalResult = null;
+    statusResult = "fail";
+  }
+  else {
+    statusResult = "success";
+    finalResult = {
+      initScale: String (
+        findInitScale?.user_initScale ? parseFloat(findInitScale?.user_initScale) : 0
+      ),
+      minScale: String (
+        findScaleMinMax?.scale_min ? parseFloat(findScaleMinMax?.scale_min) : 0
+      ),
+      maxScale: String (
+        findScaleMinMax?.scale_max ? parseFloat(findScaleMinMax?.scale_max) : 0
+      ),
+      curScale: String (
+        findScaleCur?.exercise_total_weight ? parseFloat(findScaleCur?.exercise_total_weight) : 0
+      ),
+      dateStart: regDt,
+      dateEnd: todayDt,
+    };
+  }
 
   return {
     status: statusResult,

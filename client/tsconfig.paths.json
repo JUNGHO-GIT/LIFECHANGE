@@ -7,7 +7,6 @@
       "@scripts/*": ["src/assets/scripts/*"],
       "@styles/*": ["src/assets/styles/*"],
       "@types/*": ["src/assets/types/*"],
-
       "@bases/*": ["src/bases/*"],
       "@components/*": ["src/components/*"],
       "@containers/*": ["src/containers/*"],
@@ -25,5 +24,17 @@
       "alias",
       "extension"
     ]
-  }
+  },
+  "include": [
+    "src/**/*",
+    "src/index.tsx",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
 }

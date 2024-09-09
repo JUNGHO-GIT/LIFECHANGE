@@ -5,10 +5,6 @@ import { differenceInMinutes } from "date-fns";
 // 1. list (리스트는 gte lte) ----------------------------------------------------------------------
 export const list = async (object: any) => {
 
-  if (!object) {
-    return [];
-  }
-
   // 1. compareTime --------------------------------------------------------------------------------
   const compareTime = (goalParam: string, realParam: string, extra: string) => {
     const goal = goalParam;
@@ -140,8 +136,8 @@ export const list = async (object: any) => {
   };
 
   // 4. result -------------------------------------------------------------------------------------
-  object?.result?.map((item: any) => {
-    Object.assign((item), {
+  object?.result?.forEach((item: any) => {
+    Object.assign(item, {
       sleep_bedTime_color: makeNonValueColor(
         item?.sleep_bedTime
       ),

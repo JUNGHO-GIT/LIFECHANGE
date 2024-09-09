@@ -100,7 +100,10 @@ export const Memo = (
           value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
           readOnly={true}
           startadornment={
-            <Img src={calendar3} className={"w-16 h-16"} />
+            <Img
+            	src={calendar3}
+            	className={"w-16 h-16"}
+            />
           }
           onClick={(e: any) => {
             // 팝업 열릴 때 현재 상태를 저장

@@ -112,38 +112,80 @@ export const BottomNav = () => {
         <BottomNavigationAction
           label={translate("exercise")}
           value={"exercise"}
-          icon={<Img src={exercise1} className={"w-16 h-16 m-0"} />}
-          onClick={() => handleClickBottomNav("exercise")}
+          icon={
+            <Img
+              src={exercise1}
+              className={"w-16 h-16 m-0"}
+            />
+          }
+          onClick={() => {
+            handleClickBottomNav("exercise");
+          }}
         />
         <BottomNavigationAction
           label={translate("food")}
           value={"food"}
-          icon={<Img src={food1} className={"w-16 h-16 m-0"} />}
-          onClick={() => handleClickBottomNav("food")}
+          icon={
+            <Img
+              src={food1}
+              className={"w-16 h-16 m-0"}
+            />
+          }
+          onClick={() => {
+            handleClickBottomNav("food");
+          }}
         />
         <BottomNavigationAction
           label={translate("today")}
           value={"today"}
-          icon={<Img src={today1} className={"w-16 h-16 m-0"} />}
-          onClick={() => handleClickBottomNav("today")}
+          icon={
+            <Img
+              src={today1}
+              className={"w-16 h-16 m-0"}
+            />
+          }
+          onClick={() => {
+            handleClickBottomNav("today");
+          }}
         />
         <BottomNavigationAction
           label={translate("calendar")}
           value={"calendar"}
-          icon={<Img src={calendar1} className={"w-16 h-16 m-0"} />}
-          onClick={() => handleClickBottomNav("calendar")}
+          icon={
+            <Img
+              src={calendar1}
+              className={"w-16 h-16 m-0"}
+            />
+          }
+          onClick={() => {
+            handleClickBottomNav("calendar");
+          }}
         />
         <BottomNavigationAction
           label={translate("money")}
           value={"money"}
-          icon={<Img src={money1} className={"w-16 h-16 m-0"} />}
-          onClick={() => handleClickBottomNav("money")}
+          icon={
+            <Img
+              src={money1}
+              className={"w-16 h-16 m-0"}
+            />
+          }
+          onClick={() => {
+            handleClickBottomNav("money");
+          }}
         />
         <BottomNavigationAction
           label={translate("sleep")}
           value={"sleep"}
-          icon={<Img src={sleep1} className={"w-16 h-16 m-0"} />}
-          onClick={() => handleClickBottomNav("sleep")}
+          icon={
+            <Img
+              src={sleep1}
+              className={"w-16 h-16 m-0"}
+            />
+          }
+          onClick={() => {
+            handleClickBottomNav("sleep");
+          }}
         />
       </BottomNavigation>
     );

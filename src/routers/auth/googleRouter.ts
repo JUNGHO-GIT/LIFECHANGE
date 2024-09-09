@@ -17,21 +17,21 @@ router.get("/login", async (req: Request, res: Response) => {
       res.json({
         msg: "authenticationUrlGeneratedSuccessfully",
         status: finalResult.status,
-        url: finalResult.url,
+        url: finalResult.result,
       });
     }
     else if (finalResult.status === "fail") {
       res.json({
         msg: "authenticationUrlGenerationFailed",
         status: finalResult.status,
-        url: finalResult.url,
+        url: finalResult.result,
       });
     }
     else {
       res.json({
         msg: "authenticationUrlGenerationError",
         status: finalResult.status,
-        url: finalResult.url,
+        url: finalResult.result,
       });
     }
   }
@@ -52,18 +52,20 @@ router.get("/callback", async (req: Request, res: Response) => {
       req.query.code as string,
     );
     if (finalResult.status === "success") {
-      res.redirect(finalResult.url);
+      res.redirect(finalResult.result);
     }
     else if (finalResult.status === "fail") {
       res.json({
         msg: "callbackFailed",
         status: finalResult.status,
+        result: finalResult.result,
       });
     }
     else {
       res.json({
         msg: "callbackError",
         status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }

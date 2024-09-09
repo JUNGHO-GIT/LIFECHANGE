@@ -22,7 +22,7 @@ export const CalendarUpdate = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_id, location_category, location_dateType, location_dateStart, location_dateEnd, calendarArray, colors, URL_OBJECT, sessionId
+    navigate, location_id, location_dateType, location_dateStart, location_dateEnd, calendarArray, colors, URL_OBJECT, sessionId, firstStr
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -36,7 +36,9 @@ export const CalendarUpdate = () => {
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList: "/calendar/list"
+    toList: `/${firstStr}/list`,
+    toSave: `/${firstStr}/save`,
+    toUpdate: `/${firstStr}/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
@@ -88,7 +90,7 @@ export const CalendarUpdate = () => {
     .catch((err: any) => {
       console.error(err);
     });
-  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -126,7 +128,7 @@ export const CalendarUpdate = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, location_id, location_category]);
+  }, [sessionId, location_id]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -145,7 +147,37 @@ export const CalendarUpdate = () => {
       calendar_section: updatedSection
     }));
 
-  },[COUNT?.newSectionCnt]);
+  }, [COUNT?.newSectionCnt]);
+
+  // 3. flow ---------------------------------------------------------------------------------------
+  const flowNew = () => {
+    // 객체 초기화
+    setOBJECT(OBJECT_DEF);
+
+    // 카운트 초기화
+    setCOUNT((prev: any) => ({
+      ...prev,
+      newSectionCnt: 1
+    }));
+
+    // 날짜 초기화
+    setDATE((prev: any) => ({
+      ...prev,
+      dateType: "",
+      dateStart: dayFmt,
+      dateEnd: dayFmt
+    }));
+
+    // 페이지 이동
+    Object.assign(SEND, {
+      dateType: "day",
+      dateStart: dayFmt,
+      dateEnd: dayFmt
+    });
+    navigate(SEND.toSave, {
+      state: SEND
+    });
+  };
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
@@ -153,8 +185,9 @@ export const CalendarUpdate = () => {
       setLOADING(false);
       return;
     }
-    axios.post(`${URL_OBJECT}/update`, {
+    axios.put(`${URL_OBJECT}/update`, {
       user_id: sessionId,
+      _id: OBJECT?._id,
       OBJECT: OBJECT,
       DATE: DATE,
     })
@@ -185,10 +218,12 @@ export const CalendarUpdate = () => {
       alert(translate("noData"));
       return;
     }
-    axios.post(`${URL_OBJECT}/deletes`, {
-      user_id: sessionId,
-      _id: OBJECT?._id,
-      DATE: DATE,
+    axios.delete(`${URL_OBJECT}/deletes`, {
+      data: {
+        user_id: sessionId,
+        _id: OBJECT?._id,
+        DATE: DATE,
+      }
     })
     .then((res: any) => {
       if (res.data.status === "success") {
@@ -338,7 +373,10 @@ export const CalendarUpdate = () => {
                 inputRef={REFS?.current[i]?.calendar_title}
                 error={ERRORS[i]?.calendar_title}
                 startadornment={
-                  <Img src={calendar2} className={"w-16 h-16"} />
+                  <Img
+                  	src={calendar2}
+                  	className={"w-16 h-16"}
+                  />
                 }
                 onChange={(e: any) => {
                   const newTitle = e.target.value;
@@ -396,7 +434,7 @@ export const CalendarUpdate = () => {
         setDATE, setSEND, setCOUNT, setEXIST
       }}
       flow={{
-        navigate, flowSave, flowDeletes
+        navigate, flowNew, flowSave, flowDeletes
       }}
     />
   );

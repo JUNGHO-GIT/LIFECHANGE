@@ -63,7 +63,7 @@ function startServer(httpPort: number, httpsPort: number) {
       }
     });
   }
-  catch (error) {
+  catch (err: any) {
     console.error(`서버 실행 중 오류 발생: ${error}`);
   }
 }

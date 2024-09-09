@@ -19,7 +19,12 @@ const customSession: any = session;
 // 1. login ----------------------------------------------------------------------------------------
 export const login = async () => {
 
-  const authUrl = oAuth2Client.generateAuthUrl({
+  // result 변수 선언
+  let findResult: any = null;
+  let finalResult: any = null;
+  let statusResult: string = "";
+
+  findResult = oAuth2Client.generateAuthUrl({
     access_type: 'offline',
     scope: [
       'https://www.googleapis.com/auth/userinfo.profile',
@@ -28,9 +33,18 @@ export const login = async () => {
     prompt: 'consent'
   });
 
+  if (!findResult) {
+    finalResult = null;
+    statusResult = "fail";
+  }
+  else {
+    statusResult = "success";
+    finalResult = findResult;
+  }
+
   return {
-    status: "success",
-    url: authUrl
+    status: statusResult,
+    result: finalResult
   };
 };
 
@@ -38,16 +52,21 @@ export const login = async () => {
 export const callback = async (
   code_param: string,
 ) => {
+
+  // result 변수 선언
+  let findResult: any = null;
+  let finalResult: any = null;
+  let statusResult: string = "";
   try {
     const { tokens } = await oAuth2Client.getToken(code_param);
     oAuth2Client.setCredentials(tokens);
 
-    const userInfo = await oAuth2Client.verifyIdToken({
+    findResult = await oAuth2Client.verifyIdToken({
       idToken: tokens.id_token as string,
       audience: CLIENT_ID as string,
     });
 
-    const payload = userInfo.getPayload();
+    const payload = findResult.getPayload();
     console.log("googleInfo: " + JSON.stringify(payload, null, 2));
 
     // 세션에 정보 저장
@@ -56,28 +75,34 @@ export const callback = async (
       customSession.googleId = payload.email;
     }
 
-    return {
-      status: "success",
-      url: `${URL}/auth/google`,
-    };
-
+    finalResult = `${URL}/auth/google`;
+    statusResult = "success";
   }
-  catch (err) {
+  catch (err: any) {
     console.error("OAuth 토큰 교환 중 에러 발생: ", err);
+    findResult = null;
+    statusResult = "fail";
     throw err;
   }
+  return {
+    status: statusResult,
+    result: finalResult
+  };
 };
 
 // 3. afterCallback --------------------------------------------------------------------------------
 export const afterCallback = async () => {
 
-  if (customSession.status !== "authenticated") {
-    return null;
-  }
-
+  // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
   let adminResult: any = null;
+  let statusResult: string = "";
+
+  if (customSession.status !== "authenticated") {
+    finalResult = null;
+    statusResult = "fail";
+  }
 
   const googleId = customSession.googleId;
   const saltRounds = 10;
@@ -85,27 +110,29 @@ export const afterCallback = async () => {
   const combinedPw = `${googleId}_${token}`;
   const hashedPassword = await bcrypt.hash(combinedPw, saltRounds);
 
-  findResult = await repository.findUser(googleId);
+  findResult = await repository.findUser(
+    googleId
+  );
+
+  // 아이디 없는 경우
+  if (!findResult) {
+    finalResult = await repository.createUser(googleId, hashedPassword, token);
+    statusResult = "success";
+  }
 
   // 아이디 있는경우
-  if (findResult && findResult.user_pw && findResult.user_token) {
+  else if (findResult && findResult.user_pw && findResult.user_token) {
     const ownToken = findResult.user_token;
     const isPasswordMatch = await bcrypt.compare(`${googleId}_${ownToken}`, findResult.user_pw);
 
     if (isPasswordMatch) {
       finalResult = findResult;
+      statusResult = "success";
     }
     else {
-      return {
-        status: "fail",
-        message: "Google login password mismatch"
-      };
+      finalResult = null;
+      statusResult = "fail";
     }
-  }
-
-  // 아이디 없는경우
-  else if (!findResult) {
-    finalResult = await repository.createUser(googleId, hashedPassword, token);
   }
 
   // 관리자인 경우
@@ -119,10 +146,10 @@ export const afterCallback = async () => {
   }
 
   return {
-    status: "success",
-    result: finalResult,
+    status: statusResult,
     admin: adminResult,
     googleId: googleId,
-    googlePw: hashedPassword,
+    googlePw: combinedPw,
+    result: finalResult
   };
-}
+};

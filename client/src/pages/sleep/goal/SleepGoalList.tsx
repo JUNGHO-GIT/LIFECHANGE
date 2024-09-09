@@ -22,7 +22,7 @@ export const SleepGoalList = () => {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE,
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, firstStr
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -49,7 +49,9 @@ export const SleepGoalList = () => {
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toSave: "/sleep/goal/save",
+    toList: `/${firstStr}/goal/list`,
+    toSave: `/${firstStr}/goal/save`,
+    toUpdate: `/${firstStr}/goal/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
@@ -156,7 +158,7 @@ export const SleepGoalList = () => {
                       dateStart: item.sleep_goal_dateStart,
                       dateEnd: item.sleep_goal_dateEnd,
                     });
-                    navigate(SEND.toSave, {
+                    navigate(SEND.toUpdate, {
                       state: SEND
                     });
                   }}
@@ -203,7 +205,10 @@ export const SleepGoalList = () => {
                 {/** row 1 **/}
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
-                    <Img src={sleep2} className={"w-15 h-15"} />
+                    <Img
+                    	src={sleep2}
+                    	className={"w-15 h-15"}
+                    />
                   </Grid>
                   <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
@@ -267,7 +272,10 @@ export const SleepGoalList = () => {
                 {/** row 2 **/}
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
-                    <Img src={sleep3} className={"w-15 h-15"} />
+                    <Img
+                    	src={sleep3}
+                    	className={"w-15 h-15"}
+                    />
                   </Grid>
                   <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
@@ -331,7 +339,10 @@ export const SleepGoalList = () => {
                 {/** row 3 **/}
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
-                    <Img src={sleep4} className={"w-15 h-15"} />
+                    <Img
+                    	src={sleep4}
+                    	className={"w-15 h-15"}
+                    />
                   </Grid>
                   <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>

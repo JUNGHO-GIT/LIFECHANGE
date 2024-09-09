@@ -113,7 +113,7 @@ export const FileInput = (props: any) => {
     if (fileList.length === 0) {
       return;
     }
-    setFileList((prevFiles) => {
+    setFileList(() => {
       props?.onChange([]);
       return [];
     });

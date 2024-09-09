@@ -1,6 +1,6 @@
 // exerciseService.ts
 
-import * as repositoryReal from "@repositories/exercise/exerciseRepository";
+import * as repository from "@repositories/exercise/exerciseRepository";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
@@ -18,9 +18,13 @@ export const exist = async (
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
+  findResult = await repository.exist(
+    user_id_param, dateType, dateStart, dateEnd
+  );
+
   if (!findResult || findResult.length <= 0) {
-    statusResult = "fail";
     finalResult = null;
+    statusResult = "fail";
   }
   else {
     statusResult = "success";
@@ -45,7 +49,8 @@ export const list = async (
   // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
-  let totalCnt: number = 0;
+  let totalCntResult: any = null;
+  let statusResult: string = "";
 
   // date 변수 선언
   const dateTypeOrder = ["day", "week", "month", "year"];
@@ -57,37 +62,42 @@ export const list = async (
   const sort = PAGING_param.sort === "asc" ? 1 : -1;
   const page = PAGING_param.page || 0;
 
-  totalCnt = await repositoryReal.cnt(
+  totalCntResult = await repository.cnt(
     user_id_param, dateType, dateStart, dateEnd
   );
 
-  findResult = await repositoryReal.list(
+  findResult = await repository.list(
     user_id_param, dateType, dateStart, dateEnd, sort, page
   );
 
-  if (findResult) {
+  if (!findResult || findResult.length <= 0) {
+    finalResult = [];
+    statusResult = "fail";
+  }
+  else {
+    findResult.sort((a: any, b: any) => {
+      const dateTypeA = a.exercise_dateType;
+      const dateTypeB = b.exercise_dateType;
+      const dateStartA = new Date(a.exercise_dateStart);
+      const dateStartB = new Date(b.exercise_dateStart);
+      const sortOrder = sort;
+
+      const dateTypeDiff = dateTypeOrder.indexOf(dateTypeA) - dateTypeOrder.indexOf(dateTypeB);
+      const dateDiff = dateStartA.getTime() - dateStartB.getTime();
+
+      if (dateTypeDiff !== 0) {
+        return dateTypeDiff;
+      }
+      return sortOrder === 1 ? dateDiff : -dateDiff;
+    });
     finalResult = findResult;
+    statusResult = "success";
   }
 
-  finalResult.sort((a: any, b: any) => {
-    const dateTypeA = a.exercise_dateType;
-    const dateTypeB = b.exercise_dateType;
-    const dateStartA = new Date(a.exercise_dateStart);
-    const dateStartB = new Date(b.exercise_dateStart);
-    const sortOrder = sort;
-
-    const dateTypeDiff = dateTypeOrder.indexOf(dateTypeA) - dateTypeOrder.indexOf(dateTypeB);
-    const dateDiff = dateStartA.getTime() - dateStartB.getTime();
-
-    if (dateTypeDiff !== 0) {
-      return dateTypeDiff;
-    }
-    return sortOrder === 1 ? dateDiff : -dateDiff;
-  });
-
   return {
-    totalCnt: totalCnt,
-    result: finalResult
+    status: statusResult,
+    totalCnt: totalCntResult,
+    result: finalResult,
   };
 };
 
@@ -101,24 +111,33 @@ export const detail = async (
   // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
-  let sectionCnt: number = 0;
+  let statusResult: string = "";
+  let sectionCntResult: number = 0;
 
   // date 변수 선언
   const dateType = DATE_param.dateType;
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
-  findResult = await repositoryReal.detail(
+  findResult = await repository.detail(
     user_id_param, _id_param, dateType, dateStart, dateEnd
   );
 
-  if (findResult) {
+  if (!findResult) {
+    finalResult = null;
+    statusResult = "fail";
+    sectionCntResult = 0;
+  }
+  // real은 section.length, goal은 0 or 1
+  else {
     finalResult = findResult;
-    sectionCnt = findResult?.exercise_section.length || 0;
+    statusResult = "success";
+    sectionCntResult = findResult?.exercise_section.length || 0;
   }
 
   return {
-    sectionCnt: sectionCnt,
+    status: statusResult,
+    sectionCnt: sectionCntResult,
     result: finalResult,
   };
 };
@@ -140,17 +159,17 @@ export const save = async (
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
-  findResult = await repositoryReal.save(
+  findResult = await repository.save(
     user_id_param, "", OBJECT_param, dateType, dateStart, dateEnd
   );
 
   if (!findResult) {
-    statusResult = "fail";
     finalResult = null;
+    statusResult = "fail";
   }
   else {
-    statusResult = "success";
     finalResult = findResult;
+    statusResult = "success";
   }
 
   return {
@@ -177,17 +196,17 @@ export const update = async (
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
-  findResult = await repositoryReal.update(
+  findResult = await repository.update(
     user_id_param, _id_param, OBJECT_param, dateType, dateStart, dateEnd
   );
 
   if (!findResult) {
-    statusResult = "fail";
     finalResult = null;
+    statusResult = "fail";
   }
   else {
-    statusResult = "success";
     finalResult = findResult;
+    statusResult = "success";
   }
 
   return {
@@ -200,7 +219,6 @@ export const update = async (
 export const deletes = async (
   user_id_param: string,
   _id_param: string,
-  DATE_param: any,
 ) => {
 
   // result 변수 선언
@@ -208,22 +226,17 @@ export const deletes = async (
   let finalResult: any = null;
   let statusResult: string = "";
 
-  // date 변수 선언
-  const dateType = DATE_param.dateType;
-  const dateStart = DATE_param.dateStart;
-  const dateEnd = DATE_param.dateEnd;
-
-  findResult = await repositoryReal.deletes(
-    user_id_param, _id_param, dateType, dateStart, dateEnd
+  findResult = await repository.deletes(
+    user_id_param, _id_param,
   );
 
   if (!findResult) {
-    statusResult = "fail";
     finalResult = null;
+    statusResult = "fail";
   }
   else {
-    statusResult = "success";
     finalResult = findResult;
+    statusResult = "success";
   }
 
   return {

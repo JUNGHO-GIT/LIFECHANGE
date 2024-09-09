@@ -22,7 +22,7 @@ export const ExerciseGoalList = () => {
     dayFmt, getDayNotFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, firstStr
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -49,7 +49,9 @@ export const ExerciseGoalList = () => {
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toSave: "/exercise/goal/save",
+    toList: `/${firstStr}/goal/list`,
+    toSave: `/${firstStr}/goal/save`,
+    toUpdate: `/${firstStr}/goal/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
@@ -161,7 +163,7 @@ export const ExerciseGoalList = () => {
                       dateStart: item.exercise_goal_dateStart,
                       dateEnd: item.exercise_goal_dateEnd,
                     });
-                    navigate(SEND.toSave, {
+                    navigate(SEND.toUpdate, {
                       state: SEND
                     });
                   }}
@@ -208,7 +210,10 @@ export const ExerciseGoalList = () => {
                 {/** row 1 **/}
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
-                    <Img src={exercise2} className={"w-15 h-15"} />
+                    <Img
+                    	src={exercise2}
+                    	className={"w-15 h-15"}
+                    />
                   </Grid>
                   <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
@@ -272,7 +277,10 @@ export const ExerciseGoalList = () => {
                 {/** row 2 **/}
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
-                    <Img src={exercise3_1} className={"w-15 h-15"} />
+                    <Img
+                    	src={exercise3_1}
+                    	className={"w-15 h-15"}
+                    />
                   </Grid>
                   <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
@@ -336,7 +344,10 @@ export const ExerciseGoalList = () => {
                 {/** row 3 **/}
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
-                    <Img src={exercise5} className={"w-15 h-15"} />
+                    <Img
+                    	src={exercise4}
+                    	className={"w-15 h-15"}
+                    />
                   </Grid>
                   <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
@@ -400,7 +411,10 @@ export const ExerciseGoalList = () => {
                 {/** row 4 **/}
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
-                    <Img src={exercise4} className={"w-15 h-15"} />
+                    <Img
+                    	src={exercise5}
+                    	className={"w-15 h-15"}
+                    />
                   </Grid>
                   <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
@@ -417,7 +431,7 @@ export const ExerciseGoalList = () => {
                       </Grid>
                       <Grid size={5} className={"d-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.exercise_goal_weight_color}`}>
-                          {numeral(item.exercise_goal_weight).format("0,0")}
+                          {item.exercise_goal_weight}
                         </Div>
                       </Grid>
                       <Grid size={2} className={"d-right"}>
@@ -433,7 +447,7 @@ export const ExerciseGoalList = () => {
                       </Grid>
                       <Grid size={5} className={"d-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.exercise_total_weight_color}`}>
-                          {numeral(item.exercise_total_weight).format("0,0")}
+                          {item.exercise_total_weight}
                         </Div>
                       </Grid>
                       <Grid size={2} className={"d-right"}>
@@ -449,7 +463,7 @@ export const ExerciseGoalList = () => {
                       </Grid>
                       <Grid size={5} className={"d-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_weight_color}`}>
-                          {numeral(item.exercise_diff_weight).format("0,0")}
+                          {item.exercise_diff_weight}
                         </Div>
                       </Grid>
                       <Grid size={2} className={"d-right"}>

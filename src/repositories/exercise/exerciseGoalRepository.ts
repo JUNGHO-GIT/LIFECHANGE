@@ -2,6 +2,7 @@
 
 import mongoose from "mongoose";
 import { ExerciseGoal } from "@schemas/exercise/ExerciseGoal";
+import { Exercise } from "@schemas/exercise/Exercise";
 import { newDate } from "@scripts/date";
 
 // 0. exist ----------------------------------------------------------------------------------------
@@ -24,9 +25,9 @@ export const exist = async (
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...((!dateType_param || dateType_param === "") ? {} : {
+        ...dateType_param ? {
           exercise_goal_dateType: dateType_param
-        }),
+        } : {},
       }
     },
     {
@@ -64,17 +65,17 @@ export const cnt = async (
       exercise_goal_dateEnd: {
         $gte: dateStart_param,
       },
-      ...((!dateType_param || dateType_param === "") ? {} : {
+      ...dateType_param ? {
         exercise_goal_dateType: dateType_param
-      }),
+      } : {},
     }
   );
 
   return finalResult;
 };
 
-// 1. list -----------------------------------------------------------------------------------------
-export const list = async (
+// 1-1. list (goal) --------------------------------------------------------------------------------
+export const listGoal = async (
   user_id_param: string,
   dateType_param: string,
   dateStart_param: string,
@@ -93,9 +94,9 @@ export const list = async (
         exercise_goal_dateEnd: {
           $gte: dateStart_param,
         },
-        ...((!dateType_param || dateType_param === "") ? {} : {
+        ...dateType_param ? {
           exercise_goal_dateType: dateType_param
-        }),
+        } : {},
       }
     },
     {
@@ -123,6 +124,52 @@ export const list = async (
   return finalResult;
 };
 
+// 1-2. list (real) --------------------------------------------------------------------------------
+export const listReal = async (
+  user_id_param: string,
+  dateType_param: string,
+  dateStart_param: string,
+  dateEnd_param: string,
+) => {
+
+  const finalResult = await Exercise.aggregate([
+    {
+      $match: {
+        user_id: user_id_param,
+        exercise_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param
+        },
+        exercise_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param
+        },
+        ...dateType_param ? {
+          exercise_dateType: dateType_param
+        } : {},
+      }
+    },
+    {
+      $project: {
+        _id: 1,
+        exercise_dateType: 1,
+        exercise_dateStart: 1,
+        exercise_dateEnd: 1,
+        exercise_total_volume: 1,
+        exercise_total_cardio: 1,
+        exercise_total_weight: 1,
+      }
+    },
+    {
+      $sort: {
+        exercise_dateStart: 1
+      }
+    }
+  ]);
+
+  return finalResult;
+};
+
 // 2. detail ---------------------------------------------------------------------------------------
 export const detail = async (
   user_id_param: string,
@@ -142,9 +189,9 @@ export const detail = async (
       exercise_goal_dateEnd: {
         $eq: dateEnd_param,
       },
-      ...((!dateType_param || dateType_param === "") ? {} : {
+      ...dateType_param ? {
         exercise_goal_dateType: dateType_param
-      }),
+      } : {},
     }
   )
   .lean();
@@ -164,8 +211,8 @@ export const save = async (
 
   const finalResult = await ExerciseGoal.create(
     {
-      user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
+      user_id: user_id_param,
       exercise_goal_dummy: "N",
       exercise_goal_dateType: dateType_param,
       exercise_goal_dateStart: dateStart_param,
@@ -211,7 +258,7 @@ export const update = async (
     },
     {
       upsert: true,
-      new: true,
+      new: false
     }
   )
   .lean();
@@ -223,24 +270,12 @@ export const update = async (
 export const deletes = async (
   user_id_param: string,
   _id_param: string,
-  dateType_param: string,
-  dateStart_param: string,
-  dateEnd_param: string,
 ) => {
 
   const finalResult = await ExerciseGoal.findOneAndDelete(
     {
       user_id: user_id_param,
-      _id: !_id_param ? { $exists: true } : _id_param,
-      exercise_goal_dateStart: {
-        $eq: dateStart_param
-      },
-      exercise_goal_dateEnd: {
-        $eq: dateEnd_param
-      },
-      ...((!dateType_param || dateType_param === "") ? {} : {
-        exercise_dateType: dateType_param
-      }),
+      _id: !_id_param ? {$exists:true} : _id_param,
     }
   )
   .lean();

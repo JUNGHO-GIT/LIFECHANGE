@@ -16,7 +16,7 @@ export const CalendarList = () => {
     translate,
   } = useTranslate();
   const {
-    navigate, PATH, URL_OBJECT, sessionId, TITLE,
+    navigate, PATH, URL_OBJECT, sessionId, TITLE, firstStr,
   } = useCommonValue();
   const {
     getDayNotFmt, getDayFmt, getDayStartFmt, getDayEndFmt, monthStartFmt, monthEndFmt,
@@ -49,7 +49,9 @@ export const CalendarList = () => {
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toUpdate: "/calendar/update",
+    toList: `/${firstStr}/list`,
+    toSave: `/${firstStr}/save`,
+    toUpdate: `/${firstStr}/update`,
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------

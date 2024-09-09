@@ -126,7 +126,6 @@ export const UserLogin = () => {
         }
         sessionStorage.setItem(`${TITLE}_sessionId`, res.data.result.user_id);
         sessionStorage.setItem(`${TITLE}_category`, JSON.stringify(res.data.result.dataCategory));
-        sessionStorage.setItem(`${TITLE}_lang`, "ko");
         sync();
         navigate("/today/list");
       }
@@ -278,7 +277,10 @@ export const UserLogin = () => {
           flowGoogle();
         }}
       >
-        <Img src={user1} className={"w-15 h-15 me-10"} />
+        <Img
+        	src={user1}
+        	className={"w-15 h-15 me-10"}
+        />
         {translate("googleLogin")}
       </Btn>
     );

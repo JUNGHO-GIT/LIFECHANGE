@@ -22,7 +22,7 @@ export const SleepGoalSave = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId,
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, location_id, firstStr
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -36,7 +36,9 @@ export const SleepGoalSave = () => {
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList:"/sleep/goal/list"
+    toList: `/${firstStr}/goal/list`,
+    toSave: `/${firstStr}/goal/save`,
+    toUpdate: `/${firstStr}/goal/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
@@ -44,6 +46,9 @@ export const SleepGoalSave = () => {
     newSectionCnt: 0
   });
   const [DATE, setDATE] = useState<any>({
+    initDateType: location_dateType || "",
+    initDateStart: location_dateStart || dayFmt,
+    initDateEnd: location_dateEnd || dayFmt,
     dateType: location_dateType || "",
     dateStart: location_dateStart || dayFmt,
     dateEnd: location_dateEnd || dayFmt,
@@ -84,7 +89,7 @@ export const SleepGoalSave = () => {
     .catch((err: any) => {
       console.error(err);
     });
-  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -92,7 +97,7 @@ export const SleepGoalSave = () => {
     axios.get(`${URL_OBJECT}/goal/detail`, {
       params: {
         user_id: sessionId,
-        _id: "",
+        _id: location_id,
         DATE: DATE,
       },
     })
@@ -152,10 +157,12 @@ export const SleepGoalSave = () => {
       alert(translate("noData"));
       return;
     }
-    axios.post(`${URL_OBJECT}/goal/deletes`, {
-      user_id: sessionId,
-      _id: OBJECT?._id,
-      DATE: DATE,
+    axios.delete(`${URL_OBJECT}/goal/deletes`, {
+      data: {
+        user_id: sessionId,
+        _id: OBJECT?._id,
+        DATE: DATE,
+      }
     })
     .then((res: any) => {
       if (res.data.status === "success") {

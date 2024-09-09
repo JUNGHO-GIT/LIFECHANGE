@@ -33,7 +33,9 @@ export const barGoal = async (
       }
     },
     {
-      $sort: {exercise_goal_dateStart: -1}
+      $sort: {
+        exercise_goal_dateStart: -1
+      }
     }
   ]);
 
@@ -70,7 +72,9 @@ export const barReal = async (
       }
     },
     {
-      $sort: {exercise_dateStart: -1}
+      $sort: {
+        exercise_dateStart:-1
+      }
     }
   ]);
 
@@ -211,7 +215,9 @@ export const lineVolume = async (
       }
     },
     {
-      $sort: {exercise_dateStart: -1}
+      $sort: {
+        exercise_dateStart:-1
+      }
     }
   ]);
 
@@ -246,7 +252,9 @@ export const lineCardio = async (
       }
     },
     {
-      $sort: {exercise_dateStart: -1}
+      $sort: {
+        exercise_dateStart: -1
+      }
     }
   ]);
 
@@ -281,7 +289,9 @@ export const avgVolume = async (
       }
     },
     {
-      $sort: {exercise_dateStart: -1}
+      $sort: {
+        exercise_dateStart:-1
+      }
     }
   ]);
 
@@ -316,7 +326,9 @@ export const avgCardio = async (
       }
     },
     {
-      $sort: {exercise_dateStart: -1}
+      $sort: {
+        exercise_dateStart:-1
+      }
     }
   ]);
 

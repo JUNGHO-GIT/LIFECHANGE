@@ -2,7 +2,7 @@
 // Node -> Section -> Fragment
 
 import { useState } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTranslate, useValidateUser } from "@imports/ImportHooks";
+import { useCommonValue,  useTranslate, useValidateUser } from "@imports/ImportHooks";
 import { axios } from "@imports/ImportLibs";
 import { Loading } from "@imports/ImportLayouts";
 import { Input, Div, Img, Hr, Select, Btn } from "@imports/ImportComponents";
@@ -443,7 +443,10 @@ export const UserSignup = () => {
           flowGoogle();
         }}
       >
-        <Img src={user1} className={"w-15 h-15 me-10"} />
+        <Img
+        	src={user1}
+        	className={"w-15 h-15 me-10"}
+        />
         {translate("googleLogin")}
       </Btn>
     );

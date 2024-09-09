@@ -46,7 +46,10 @@ export const Count = (
           readOnly={true}
           error={COUNT.newSectionCnt <= 0}
           startadornment={
-            <Img src={common2} className={"w-16 h-16"} />
+            <Img
+            	src={common2}
+            	className={"w-16 h-16"}
+            />
           }
           endadornment={
             <Div className={"d-center me-n10"}>

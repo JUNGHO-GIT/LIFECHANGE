@@ -23,7 +23,7 @@ export const ExerciseSave = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, exerciseArray, URL_OBJECT, sessionId,
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, exerciseArray, URL_OBJECT, sessionId, location_id, firstStr
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -37,7 +37,9 @@ export const ExerciseSave = () => {
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList:"/exercise/list"
+    toList: `/${firstStr}/list`,
+    toSave: `/${firstStr}/save`,
+    toUpdate: `/${firstStr}/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
@@ -78,7 +80,6 @@ export const ExerciseSave = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
 
-
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     axios.get(`${URL_OBJECT}/exist`, {
@@ -97,7 +98,7 @@ export const ExerciseSave = () => {
     .catch((err: any) => {
       console.error(err);
     });
-  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -105,7 +106,7 @@ export const ExerciseSave = () => {
     axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId,
-        _id: "",
+        _id: location_id,
         DATE: DATE,
       },
     })
@@ -249,10 +250,12 @@ export const ExerciseSave = () => {
       alert(translate("noData"));
       return;
     }
-    axios.post(`${URL_OBJECT}/deletes`, {
-      user_id: sessionId,
-      _id: OBJECT?._id,
-      DATE: DATE,
+    axios.delete(`${URL_OBJECT}/deletes`, {
+      data: {
+        user_id: sessionId,
+        _id: OBJECT?._id,
+        DATE: DATE,
+      }
     })
     .then((res: any) => {
       if (res.data.status === "success") {
@@ -322,7 +325,10 @@ export const ExerciseSave = () => {
               value={numeral(OBJECT?.exercise_total_volume).format("0,0")}
               readOnly={true}
               startadornment={
-                <Img src={exercise3_1} className={"w-16 h-16"} />
+                <Img
+                	src={exercise3_1}
+                	className={"w-16 h-16"}
+                />
               }
               endadornment={
                 translate("vol")
@@ -335,7 +341,10 @@ export const ExerciseSave = () => {
               value={OBJECT?.exercise_total_cardio}
               readOnly={true}
               startadornment={
-                <Img src={exercise4} className={"w-16 h-16"} />
+                <Img
+                	src={exercise4}
+                	className={"w-16 h-16"}
+                />
               }
               endadornment={
                 translate("hm")
@@ -347,7 +356,10 @@ export const ExerciseSave = () => {
               label={translate("weight")}
               value={OBJECT?.exercise_total_weight}
               startadornment={
-                <Img src={exercise5} className={"w-16 h-16"} />
+                <Img
+                	src={exercise5}
+                	className={"w-16 h-16"}
+                />
               }
               endadornment={
                 translate("k")
@@ -469,7 +481,10 @@ export const ExerciseSave = () => {
                 inputRef={REFS.current[i]?.exercise_set}
                 error={ERRORS[i]?.exercise_set}
                 startadornment={
-                  <Img src={exercise3_1} className={"w-16 h-16"} />
+                  <Img
+                  	src={exercise3_1}
+                  	className={"w-16 h-16"}
+                  />
                 }
                 endadornment={
                   translate("s")
@@ -511,7 +526,10 @@ export const ExerciseSave = () => {
                 inputRef={REFS.current[i]?.exercise_rep}
                 error={ERRORS[i]?.exercise_rep}
                 startadornment={
-                  <Img src={exercise3_2} className={"w-16 h-16"} />
+                  <Img
+                  	src={exercise3_2}
+                  	className={"w-16 h-16"}
+                  />
                 }
                 endadornment={
                   translate("r")
@@ -553,7 +571,10 @@ export const ExerciseSave = () => {
                 inputRef={REFS.current[i]?.exercise_kg}
                 error={ERRORS[i]?.exercise_kg}
                 startadornment={
-                  <Img src={exercise3_3} className={"w-16 h-16"} />
+                  <Img
+                  	src={exercise3_3}
+                  	className={"w-16 h-16"}
+                  />
                 }
                 endadornment={
                   translate("k")

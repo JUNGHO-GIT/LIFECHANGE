@@ -167,7 +167,7 @@ export const emailSending = async (email: string, code: string) => {
 
     return "success";
   }
-  catch (error) {
+  catch (err: any) {
     const consoleStr = `
       ========================================
       이메일 전송 중 오류가 발생했습니다.

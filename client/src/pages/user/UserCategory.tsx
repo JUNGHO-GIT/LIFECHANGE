@@ -24,7 +24,7 @@ export const UserCategory = () => {
   } = useCommonDate();
   const {
     navigate, location_dateStart, location_dateEnd, PATH, dataCategoryArray,
-    URL_OBJECT, sessionId, TITLE, location_dateType
+    URL_OBJECT, sessionId, TITLE, location_dateType, firstStr
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -50,7 +50,7 @@ export const UserCategory = () => {
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toDataCategory: "/user/category"
+    toDataCategory: `/${firstStr}/category`,
   });
   const [idx, setIdx] = useState<any>({
     category1Idx: 0,
@@ -86,7 +86,7 @@ export const UserCategory = () => {
       sleep: [{
         sleep_part: ""
       }]
-    } as Record<string, any>
+    } as any
   };
   const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
@@ -547,7 +547,7 @@ export const UserCategory = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min75vh"}>
+      <Paper className={"content-wrapper radius border h-min95vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {cardSection()}

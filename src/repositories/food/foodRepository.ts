@@ -24,9 +24,9 @@ export const exist = async (
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...((!dateType_param || dateType_param === "") ? {} : {
+        ...dateType_param ? {
           food_dateType: dateType_param
-        }),
+        } : {},
       }
     },
     {
@@ -70,9 +70,9 @@ export const cnt = async (
         $gte: dateStart_param,
         $lte: dateEnd_param
       },
-      ...((!dateType_param || dateType_param === "") ? {} : {
+      ...dateType_param ? {
         food_dateType: dateType_param
-      }),
+      } : {},
     }
   );
 
@@ -101,9 +101,9 @@ export const list = async (
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...((!dateType_param || dateType_param === "") ? {} : {
+        ...dateType_param ? {
           food_dateType: dateType_param
-        }),
+        } : {},
       }
     },
     {
@@ -150,9 +150,9 @@ export const detail = async (
       food_dateEnd: {
         $eq: dateEnd_param
       },
-      ...((!dateType_param || dateType_param === "") ? {} : {
+      ...dateType_param ? {
         food_dateType: dateType_param
-      }),
+      } : {},
     }
   )
   .lean();
@@ -233,24 +233,12 @@ export const update = async (
 export const deletes = async (
   user_id_param: string,
   _id_param: string,
-  dateType_param: string,
-  dateStart_param: string,
-  dateEnd_param: string,
 ) => {
 
   const finalResult = await Food.findOneAndDelete(
     {
       user_id: user_id_param,
-      _id: !_id_param ? { $exists: true } : _id_param,
-      food_dateStart: {
-        $eq: dateStart_param
-      },
-      food_dateEnd: {
-        $eq: dateEnd_param
-      },
-      ...((!dateType_param || dateType_param === "") ? {} : {
-        food_dateType: dateType_param
-      }),
+      _id: !_id_param ? {$exists:true} : _id_param,
     }
   )
   .lean();

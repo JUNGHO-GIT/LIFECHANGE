@@ -22,7 +22,7 @@ export const MoneyList = () => {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, sessionCurrencyCode
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, sessionCurrencyCode, firstStr
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -49,7 +49,9 @@ export const MoneyList = () => {
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toSave: "/money/save",
+    toList: `/${firstStr}/list`,
+    toSave: `/${firstStr}/save`,
+    toUpdate: `/${firstStr}/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
@@ -146,7 +148,7 @@ export const MoneyList = () => {
                       dateStart: item.money_dateStart,
                       dateEnd: item.money_dateEnd,
                     });
-                    navigate(SEND.toSave, {
+                    navigate(SEND.toUpdate, {
                       state: SEND
                     });
                   }}
@@ -193,7 +195,10 @@ export const MoneyList = () => {
                 {/** row 1 **/}
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
-                    <Img src={money2} className={"w-15 h-15"} />
+                    <Img
+                    	src={money2}
+                    	className={"w-15 h-15"}
+                    />
                   </Grid>
                   <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
@@ -215,7 +220,10 @@ export const MoneyList = () => {
                 {/** row 2 **/}
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
-                    <Img src={money2} className={"w-15 h-15"} />
+                    <Img
+                    	src={money2}
+                    	className={"w-15 h-15"}
+                    />
                   </Grid>
                   <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>

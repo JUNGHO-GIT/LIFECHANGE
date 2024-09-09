@@ -3,10 +3,6 @@
 // 1. list -----------------------------------------------------------------------------------------
 export const list = async (object: any) => {
 
-  if (!object) {
-    return [];
-  }
-
   const makeNonValueColor = (param: string) => {
     if (param === "0" || param === "00:00") {
       return "grey";
@@ -16,8 +12,8 @@ export const list = async (object: any) => {
     }
   };
 
-  object?.result?.map((item: any) => {
-    item?.sleep_section?.map((item2: any) => {
+  object?.result?.forEach((item: any) => {
+    item?.existDate?.forEach((item2: any) => {
       Object.assign((item2), {
         sleep_bedTime_color: makeNonValueColor(
           item2?.sleep_bedTime
@@ -32,23 +28,5 @@ export const list = async (object: any) => {
     });
   });
 
-  return object;
-};
-
-// 3. save -----------------------------------------------------------------------------------------
-export const save = async (object: any) => {
-
-  if (!object) {
-    return {};
-  }
-  return object;
-};
-
-// 5. deletes --------------------------------------------------------------------------------------
-export const deletes = async (object: any) => {
-
-  if (!object) {
-    return {};
-  }
   return object;
 };

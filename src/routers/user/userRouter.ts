@@ -145,7 +145,7 @@ router.post("/signup", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.userSignup (
       req.body.user_id as string,
-      req.body.OBJECT as Record<string, any>,
+      req.body.OBJECT as any,
     );
     if (finalResult.status === "success") {
       res.json({
@@ -191,7 +191,7 @@ router.post("/resetPw", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.userResetPw (
       req.body.user_id as string,
-      req.body.OBJECT as Record<string, any>,
+      req.body.OBJECT as any,
     );
     if (finalResult.status === "success") {
       res.json({
@@ -251,6 +251,7 @@ router.post("/login", async (req: Request, res: Response) => {
       res.json({
         msg: "loginSuccessful",
         status: finalResult.status,
+        admin: finalResult.admin,
         result: finalResult.result,
       });
     }
@@ -258,6 +259,7 @@ router.post("/login", async (req: Request, res: Response) => {
       res.json({
         msg: "loginFailed",
         status: finalResult.status,
+        admin: finalResult.admin,
         result: finalResult.result,
       });
     }
@@ -265,6 +267,7 @@ router.post("/login", async (req: Request, res: Response) => {
       res.json({
         msg: "isGoogleUserLogin",
         status: finalResult.status,
+        admin: finalResult.admin,
         result: finalResult.result,
       });
     }
@@ -272,16 +275,17 @@ router.post("/login", async (req: Request, res: Response) => {
       res.json({
         msg: "loginError",
         status: finalResult.status,
+        admin: finalResult.admin,
         result: finalResult.result,
       });
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      msg: "loginFailed",
-      result: null,
-      error: err
+      msg: err.toString(),
+      error: err.toString(),
     });
   }
 });
@@ -329,7 +333,7 @@ router.post("/update", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.userUpdate (
       req.body.user_id as string,
-      req.body.OBJECT as Record<string, any>,
+      req.body.OBJECT as any,
     );
     if (finalResult.status === "success") {
       res.json({
@@ -444,8 +448,8 @@ router.post("/category/save", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.categorySave (
       req.body.user_id as string,
-      req.body.OBJECT as Record<string, any>,
-      req.body.DATE as Record<string, any>,
+      req.body.OBJECT as any,
+      req.body.DATE as any,
     );
     if (finalResult.status === "success") {
       res.json({
@@ -484,7 +488,7 @@ router.get("/dummyList", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.dummyList (
       req.query.user_id as string,
-      req.query.PAGING as Record<string, any>,
+      req.query.PAGING as any,
       req.query.PART as string,
     );
     if (finalResult.status === "success") {

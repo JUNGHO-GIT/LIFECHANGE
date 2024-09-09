@@ -10,7 +10,7 @@ router.get("/bar/today", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.barToday (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
     if (finalResult.status === "success") {
       res.json({
@@ -49,7 +49,7 @@ router.get("/pie/today", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.pieToday (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
     if (finalResult.status === "success") {
       res.json({
@@ -88,7 +88,7 @@ router.get("/pie/week", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.pieWeek (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
     if (finalResult.status === "success") {
       res.json({
@@ -127,7 +127,7 @@ router.get("/pie/month", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.pieMonth (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
     if (finalResult.status === "success") {
       res.json({
@@ -166,7 +166,7 @@ router.get("/line/week", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.lineWeek (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
     if (finalResult.status === "success") {
       res.json({
@@ -205,7 +205,7 @@ router.get("/line/month", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.lineMonth (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
     if (finalResult.status === "success") {
       res.json({
@@ -244,7 +244,7 @@ router.get("/avg/week", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.avgWeek (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
     if (finalResult.status === "success") {
       res.json({
@@ -283,7 +283,7 @@ router.get("/avg/month", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.avgMonth (
       req.query.user_id as string,
-      req.query.DATE as Record<string, any>,
+      req.query.DATE as any,
     );
     if (finalResult.status === "success") {
       res.json({

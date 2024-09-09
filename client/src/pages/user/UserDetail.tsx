@@ -2,7 +2,7 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTranslate, useValidateUser } from "@imports/ImportHooks";
+import { useCommonValue, useTranslate, useValidateUser } from "@imports/ImportHooks";
 import { axios, numeral } from "@imports/ImportLibs";
 import { Footer, Loading } from "@imports/ImportLayouts";
 import { Input, Select, Hr, Img } from "@imports/ImportComponents";
@@ -17,7 +17,7 @@ export const UserDetail = () => {
     translate
   } = useTranslate();
   const {
-    navigate, curProperty, URL_OBJECT, sessionId, sessionCurrencyCode
+    navigate, curProperty, URL_OBJECT, sessionId, sessionCurrencyCode, firstStr
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -30,7 +30,9 @@ export const UserDetail = () => {
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toUpdate: "/user/update",
+    toList: `/${firstStr}/list`,
+    toSave: `/${firstStr}/save`,
+    toUpdate: `/${firstStr}/update`,
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -198,7 +200,10 @@ export const UserDetail = () => {
                 inputRef={REFS.current[i]?.user_initScale}
                 error={ERRORS[i]?.user_initScale}
                 startadornment={
-                  <Img src={exercise5} className={"w-16 h-16"} />
+                  <Img
+                  	src={exercise5}
+                  	className={"w-16 h-16"}
+                  />
                 }
                 endadornment={translate("k")}
                 onChange={(e: any) => (
@@ -215,7 +220,10 @@ export const UserDetail = () => {
                 label={translate("curScale")}
                 value={OBJECT.user_curScale}
                 startadornment={
-                  <Img src={exercise5} className={"w-16 h-16"} />
+                  <Img
+                  	src={exercise5}
+                  	className={"w-16 h-16"}
+                  />
                 }
                 endadornment={translate("k")}
                 readOnly={true}
@@ -230,7 +238,10 @@ export const UserDetail = () => {
                 inputRef={REFS.current[i]?.user_initProperty}
                 error={ERRORS[i]?.user_initProperty}
                 startadornment={
-                  <Img src={money2} className={"w-16 h-16"} />
+                  <Img
+                  	src={money2}
+                  	className={"w-16 h-16"}
+                  />
                 }
                 endadornment={sessionCurrencyCode}
                 onChange={(e: any) => (
@@ -247,7 +258,10 @@ export const UserDetail = () => {
                 label={translate("curProperty")}
                 value={numeral(curProperty).format("0,0")}
                 startadornment={
-                  <Img src={money2} className={"w-16 h-16"} />
+                  <Img
+                  	src={money2}
+                  	className={"w-16 h-16"}
+                  />
                 }
                 endadornment={sessionCurrencyCode}
                 readOnly={true}

@@ -27,7 +27,6 @@ export const AuthGoogle = () => {
 
         sessionStorage.setItem(`${TITLE}_sessionId`, res.data.googleId);
         sessionStorage.setItem(`${TITLE}_category`, JSON.stringify(res.data.result.dataCategory));
-        sessionStorage.setItem(`${TITLE}_lang`, "ko");
 
         if (res.data.admin === "admin") {
           sessionStorage.setItem(`${TITLE}_admin`, "true");
