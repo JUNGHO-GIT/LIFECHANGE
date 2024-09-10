@@ -887,12 +887,30 @@ export const Picker = (
         contents={({ closePopup }: any) => (
           <Card className={"w-max70vw p-0"}>
             <Grid container spacing={3}>
-              <Grid size={8} className={"d-left ms-20"}>
+              <Grid
+                size={
+                  isGoalList || isList ? 12 : 8
+                }
+                className={
+                  isGoalList || isList ? (
+                    "d-center"
+                  ) : (
+                    "d-left ms-20"
+                  )
+                }
+              >
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewSelect")}
                 </Div>
               </Grid>
-              <Grid size={2} className={"d-center"}>
+              <Grid
+                size={
+                  isGoalList || isList ? 0 : 2
+                }
+                className={
+                  isGoalList || isList ? "d-none" : "d-center"
+                }
+              >
                 <Icons
                   key={"Refresh"}
                   name={"Refresh"}

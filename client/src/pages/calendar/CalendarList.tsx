@@ -200,7 +200,7 @@ export const CalendarList = () => {
                     dateStart: getDayFmt(value),
                     dateEnd: getDayFmt(value),
                   });
-                  navigate(SEND.toUpdate, {
+                  navigate(SEND.toSave, {
                     state: SEND
                   });
                 }
@@ -266,7 +266,7 @@ export const CalendarList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min84vh"}>
+      <Paper className={"content-wrapper radius border h-min75vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {cardSection()}

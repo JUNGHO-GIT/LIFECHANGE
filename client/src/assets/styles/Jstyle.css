@@ -10998,6 +10998,15 @@
 .upper {
   text-transform: uppercase !important;
 }
+.horizon-text {
+  writing-mode: horizontal-tb !important;
+  text-orientation: mixed !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/** 100. animation ***************************************************************************************/
 .animation-none {
   animation: none !important;
 }
@@ -11011,18 +11020,8 @@
   background-size: 800px 104px !important;
   position: relative !important;
 }
-.fadeIn {
-  animation: fadeIn 0.4s ease-in-out;
-}
 .dynamic {
   transition: font-size 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.3s ease;
-}
-.horizon-text {
-  writing-mode: horizontal-tb !important;
-  text-orientation: mixed !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
 }
 
 /** 101. transition ******************************************************************************/
@@ -11037,10 +11036,17 @@
 @keyframes fadeIn {
   0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px); /* 더 큰 거리에서 시작 */
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(-3px); /* 부드러운 반동 효과 */
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0); /* 최종 위치에 안착 */
   }
+}
+.fadeIn {
+  animation: fadeIn 1s cubic-bezier(0.25, 0.8, 0.25, 1); /* 애니메이션 지속 시간을 0.8초에서 1초로 늘림 */
 }

@@ -44,8 +44,8 @@ export const LanguageProvider = ({ children }: any) => {
       }
       if (locale) {
         sessionStorage.setItem(`${TITLE}_locale`, locale);
-        locale.includes("-") ? setLang(locale.split("-")[0]) : setLang(locale)
-        sessionStorage.setItem(`${TITLE}_lang`, lang);
+        locale.includes("-") && locale.split("-")[0] ?
+        setLang(locale.split("-")[0]) : setLang(locale)
       }
       if (isoCode) {
         sessionStorage.setItem(`${TITLE}_isoCode`, isoCode);
@@ -62,6 +62,10 @@ export const LanguageProvider = ({ children }: any) => {
 
   if (lang === "ko") {
     require("moment/locale/ko");
+    sessionStorage.setItem(`${TITLE}_lang`, "ko");
+  }
+  else {
+    sessionStorage.setItem(`${TITLE}_lang`, "en");
   }
 
   return (
