@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { FoodLineKcal, FoodLineNut } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { handlerY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
@@ -47,34 +48,10 @@ export const FoodChartLine = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_KCAL_WEEK_DEF = [{
-    name:"",
-    date:"",
-    kcal: "",
-  }];
-  const OBJECT_NUT_WEEK_DEF = [{
-    name:"",
-    date:"",
-    carb: "",
-    protein: "",
-    fat: "",
-  }];
-  const OBJECT_KCAL_MONTH_DEF = [{
-    name:"",
-    date:"",
-    kcal: "",
-  }];
-  const OBJECT_NUT_MONTH_DEF = [{
-    name:"",
-    date:"",
-    carb: "",
-    protein: "",
-    fat: "",
-  }];
-  const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState<any>(OBJECT_KCAL_WEEK_DEF);
-  const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState<any>(OBJECT_NUT_WEEK_DEF);
-  const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState<any>(OBJECT_KCAL_MONTH_DEF);
-  const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState<any>(OBJECT_NUT_MONTH_DEF);
+  const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState<any>([FoodLineKcal]);
+  const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState<any>([FoodLineNut]);
+  const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState<any>([FoodLineKcal]);
+  const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState<any>([FoodLineNut]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -92,16 +69,16 @@ export const FoodChartLine = () => {
       }),
     ]);
     setOBJECT_KCAL_WEEK(
-      resWeek.data.result.kcal.length > 0 ? resWeek.data.result.kcal : OBJECT_KCAL_WEEK_DEF
+      resWeek.data.result.kcal.length > 0 ? resWeek.data.result.kcal : [FoodLineKcal]
     );
     setOBJECT_NUT_WEEK(
-      resWeek.data.result.nut.length > 0 ? resWeek.data.result.nut : OBJECT_NUT_WEEK_DEF
+      resWeek.data.result.nut.length > 0 ? resWeek.data.result.nut : [FoodLineNut]
     );
     setOBJECT_KCAL_MONTH(
-      resMonth.data.result.kcal.length > 0 ? resMonth.data.result.kcal : OBJECT_KCAL_MONTH_DEF
+      resMonth.data.result.kcal.length > 0 ? resMonth.data.result.kcal : [FoodLineKcal]
     );
     setOBJECT_NUT_MONTH(
-      resMonth.data.result.nut.length > 0 ? resMonth.data.result.nut : OBJECT_NUT_MONTH_DEF
+      resMonth.data.result.nut.length > 0 ? resMonth.data.result.nut : [FoodLineNut]
     );
     setLOADING(false);
   })()}, [sessionId]);

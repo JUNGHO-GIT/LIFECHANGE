@@ -2,8 +2,9 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
-import { useStorage, useValidateUser } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
+import { useValidateUser } from "@imports/ImportValidates";
+import { Category } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div, Icons, Input } from "@imports/ImportComponents";
@@ -45,6 +46,7 @@ export const UserCategory = () => {
   const [dataType, setDataType] = useState<string>("exercise");
 
   // 2-2. useState ---------------------------------------------------------------------------------
+  const [OBJECT, setOBJECT] = useState<any>(Category);
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
@@ -63,32 +65,6 @@ export const UserCategory = () => {
     category3Idx: 1,
   });
   const [isEditable, setIsEditable] = useState<string>("");
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_DEF: any = {
-    user_id: sessionId,
-    user_number: 0,
-    dataCategory: {
-      calendar: [{
-        calendar_part: ""
-      }],
-      exercise: [{
-        exercise_part: "",
-        exercise_title: [""]
-      }],
-      food: [{
-        food_part: ""
-      }],
-      money: [{
-        money_part: "",
-        money_title: [""]
-      }],
-      sleep: [{
-        sleep_part: ""
-      }]
-    } as any
-  };
-  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -565,7 +541,7 @@ export const UserCategory = () => {
         setDATE, setSEND
       }}
       flow={{
-        navigate, flowSave
+        flowSave
       }}
     />
   );

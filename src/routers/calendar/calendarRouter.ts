@@ -21,7 +21,7 @@ router.get("/exist", async (req: Request, res: Response) => {
     }
     else if (finalResult.status === "fail") {
       res.json({
-        msg: "searchSuccessful",
+        msg: "searchFailed",
         status: finalResult.status,
         result: finalResult.result,
       });
@@ -62,7 +62,7 @@ router.get("/list", async (req: Request, res: Response) => {
     }
     else if (finalResult.status === "fail") {
       res.json({
-        msg: "searchSuccessful",
+        msg: "searchFailed",
         status: finalResult.status,
         totalCnt: finalResult.totalCnt,
         result: finalResult.result,
@@ -105,7 +105,7 @@ router.get("/detail", async (req: Request, res: Response) => {
     }
     else if (finalResult.status === "fail") {
       res.json({
-        msg: "searchSuccessful",
+        msg: "searchFailed",
         status: finalResult.status,
         sectionCnt: finalResult.sectionCnt,
         result: finalResult.result,
@@ -211,8 +211,8 @@ router.put("/update", async (req: Request, res: Response) => {
   }
 });
 
-// 5. deletes --------------------------------------------------------------------------------------
-router.delete("/deletes", async (req: Request, res: Response) => {
+// 5. delete --------------------------------------------------------------------------------------
+router.delete("/delete", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.deletes(
       req.body.user_id as string,

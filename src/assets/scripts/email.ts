@@ -33,7 +33,7 @@ export const emailSending = async (email: string, code: string) => {
       subject: "LIFECHANGE 인증 코드",
 
       // html
-      html: `
+      html: /* html*/`
         <!DOCTYPE html>
         <html>
           <head>
@@ -171,7 +171,7 @@ export const emailSending = async (email: string, code: string) => {
     const consoleStr = `
       ========================================
       이메일 전송 중 오류가 발생했습니다.
-      ${error}
+      ${err}
     `;
     console.log(consoleStr);
 

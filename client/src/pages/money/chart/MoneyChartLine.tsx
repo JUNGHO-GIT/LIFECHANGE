@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { MoneyLine } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { handlerY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
@@ -47,20 +48,8 @@ export const MoneyChartLine = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_WEEK_DEF = [{
-    name:"",
-    date: "",
-    income: "0",
-    expense: "0",
-  }];
-  const OBJECT_MONTH_DEF = [{
-    name:"",
-    date: "",
-    income: "0",
-    expense: "0",
-  }];
-  const [OBJECT_WEEK, setOBJECT_WEEK] = useState<any>(OBJECT_WEEK_DEF);
-  const [OBJECT_MONTH, setOBJECT_MONTH] = useState<any>(OBJECT_MONTH_DEF);
+  const [OBJECT_WEEK, setOBJECT_WEEK] = useState<any>([MoneyLine]);
+  const [OBJECT_MONTH, setOBJECT_MONTH] = useState<any>([MoneyLine]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -78,10 +67,10 @@ export const MoneyChartLine = () => {
       }),
     ]);
     setOBJECT_WEEK (
-      resWeek.data.result.length > 0 ? resWeek.data.result : OBJECT_WEEK_DEF
+      resWeek.data.result.length > 0 ? resWeek.data.result : [MoneyLine]
     );
     setOBJECT_MONTH (
-      resMonth.data.result.length > 0 ? resMonth.data.result : OBJECT_MONTH_DEF
+      resMonth.data.result.length > 0 ? resMonth.data.result : [MoneyLine]
     );
     setLOADING(false);
   })()}, [sessionId]);

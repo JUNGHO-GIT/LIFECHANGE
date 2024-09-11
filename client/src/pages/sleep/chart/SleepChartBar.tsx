@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { SleepBar } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { handlerY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
@@ -44,13 +45,7 @@ export const SleepChartBar = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_TODAY_DEF = [{
-    name: "",
-    date: "",
-    goal: "0",
-    real: "0"
-  }];
-  const [OBJECT_TODAY, setOBJECT_TODAY] = useState<any>(OBJECT_TODAY_DEF);
+  const [OBJECT_TODAY, setOBJECT_TODAY] = useState<any>([SleepBar]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -65,7 +60,7 @@ export const SleepChartBar = () => {
       }),
     ]);
     setOBJECT_TODAY(
-      resToday.data.result.length > 0 ? resToday.data.result : OBJECT_TODAY_DEF
+      resToday.data.result.length > 0 ? resToday.data.result : [SleepBar]
     );
     setLOADING(false);
   })()}, [sessionId]);

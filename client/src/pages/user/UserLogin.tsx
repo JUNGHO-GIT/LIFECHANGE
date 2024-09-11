@@ -2,7 +2,9 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useTranslate, useValidateUser } from "@imports/ImportHooks";
+import { useCommonValue, useTranslate } from "@imports/ImportHooks";
+import { useValidateUser } from "@imports/ImportValidates";
+import { User } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
@@ -30,13 +32,7 @@ export const UserLogin = () => {
   const [clickCount, setClickCount] = useState<number>(0);
   const [checkedSaveId, setCheckedSaveId] = useState<boolean>(false);
   const [checkedAutoLogin, setCheckedAutoLogin] = useState<boolean>(false);
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_DEF: any = {
-    user_id: "",
-    user_pw: "",
-  };
-  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
+  const [OBJECT, setOBJECT] = useState<any>(User);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 트리거가 활성화된 경우
@@ -75,6 +71,7 @@ export const UserLogin = () => {
     const isLocalSaved = localStorage.getItem(`${TITLE}_isLocalSaved`);
     const localId = localStorage.getItem(`${TITLE}_localId`);
 
+    // 자동로그인인 경우
     if (autoLogin === "true") {
       setCheckedAutoLogin(true);
       if (autoLoginId && autoLoginPw) {
@@ -86,6 +83,8 @@ export const UserLogin = () => {
       }
       setLoginTrigger(true);
     }
+
+    // 아이디 저장한 경우
     if (isLocalSaved === "true") {
       setCheckedSaveId(true);
       if (localId) {

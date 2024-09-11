@@ -11023,6 +11023,9 @@
 .dynamic {
   transition: font-size 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.3s ease;
 }
+.fadeIn {
+  animation: fadeIn 1s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
 
 /** 101. transition ******************************************************************************/
 @keyframes shimmer {
@@ -11036,17 +11039,14 @@
 @keyframes fadeIn {
   0% {
     opacity: 0;
-    transform: translateY(30px); /* 더 큰 거리에서 시작 */
+    transform: translateY(30px);
   }
   50% {
     opacity: 0.5;
-    transform: translateY(-3px); /* 부드러운 반동 효과 */
+    transform: translateY(-3px);
   }
   100% {
     opacity: 1;
-    transform: translateY(0); /* 최종 위치에 안착 */
+    transform: translateY(0);
   }
-}
-.fadeIn {
-  animation: fadeIn 1s cubic-bezier(0.25, 0.8, 0.25, 1); /* 애니메이션 지속 시간을 0.8초에서 1초로 늘림 */
 }

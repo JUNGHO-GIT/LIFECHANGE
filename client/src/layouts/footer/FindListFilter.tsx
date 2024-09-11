@@ -1,7 +1,7 @@
 // FindListFilter.tsx
 // Node -> Section -> Fragment
 
-import { useTranslate } from "@imports/ImportHooks";
+import { useCommonValue, useTranslate } from "@imports/ImportHooks";
 import { Icons, Input } from "@imports/ImportComponents";
 import { TablePagination, Grid } from "@imports/ImportMuis";
 
@@ -18,6 +18,9 @@ export const FindListFilter = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
+  const {
+    location, toUpdate, toSave, navigate
+  } = useCommonValue();
   const {
     translate
   } = useTranslate();
@@ -75,9 +78,18 @@ export const FindListFilter = (
             dateStart: state?.DATE.dateStart,
             dateEnd: state?.DATE.dateEnd
           });
-          flow.navigate(state?.SEND.toSave, {
-            state: state?.SEND,
-          });
+          // 이전 페이지가 update인경우
+          if (location?.state?.url?.includes("update")) {
+            navigate(toUpdate, {
+              state: state?.SEND,
+            });
+          }
+          // 이전 페이지가 save인경우
+          else {
+            navigate(toSave, {
+              state: state?.SEND,
+            });
+          }
         }}
       />
     );

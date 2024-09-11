@@ -21,10 +21,6 @@ declare module "@types/*" {
   export default value;
 }
 
-declare module "@bases/*" {
-  const value: any;
-  export default value;
-}
 declare module "@components/*" {
   const value: any;
   export default value;
@@ -46,6 +42,10 @@ declare module "@layouts/*" {
   export default value;
 }
 declare module "@pages/*" {
+  const value: any;
+  export default value;
+}
+declare module "@schemas/*" {
   const value: any;
   export default value;
 }

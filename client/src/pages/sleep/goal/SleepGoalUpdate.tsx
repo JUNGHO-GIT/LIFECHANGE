@@ -3,7 +3,8 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useTime } from "@imports/ImportHooks";
-import { useValidateSleep } from "@imports/ImportHooks";
+import { useValidateSleep } from "@imports/ImportValidates";
+import { SleepGoal } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
@@ -22,7 +23,7 @@ export const SleepGoalUpdate = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, location_id, firstStr
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, location_id, toList, toSave
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -31,14 +32,12 @@ export const SleepGoalUpdate = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [EXIST, setEXIST] = useState<any[]>([""]);
+  const [OBJECT, setOBJECT] = useState<any>(SleepGoal);
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList: `/${firstStr}/goal/list`,
-    toSave: `/${firstStr}/goal/save`,
-    toUpdate: `/${firstStr}/goal/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
@@ -53,20 +52,6 @@ export const SleepGoalUpdate = () => {
     dateStart: location_dateStart || dayFmt,
     dateEnd: location_dateEnd || dayFmt,
   });
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_DEF: any = {
-    _id: "",
-    sleep_goal_number: 0,
-    sleep_goal_dummy: "N",
-    sleep_goal_dateType: "",
-    sleep_goal_dateStart: "0000-00-00",
-    sleep_goal_dateEnd: "0000-00-00",
-    sleep_goal_bedTime: "00:00",
-    sleep_goal_wakeTime: "00:00",
-    sleep_goal_sleepTime: "00:00",
-  };
-  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "goal");
@@ -84,7 +69,7 @@ export const SleepGoalUpdate = () => {
       },
     })
     .then((res: any) => {
-      setEXIST(res.data.result || []);
+      setEXIST(res.data.result.length > 0 ? res.data.result : [""]);
     })
     .catch((err: any) => {
       console.error(err);
@@ -102,7 +87,7 @@ export const SleepGoalUpdate = () => {
       },
     })
     .then((res: any) => {
-      setOBJECT(res.data.result || OBJECT_DEF);
+      setOBJECT(res.data.result || SleepGoal);
       setCOUNT((prev: any) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
@@ -121,7 +106,7 @@ export const SleepGoalUpdate = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowNew = () => {
     // 객체 초기화
-    setOBJECT(OBJECT_DEF);
+    setOBJECT(SleepGoal);
 
     // 카운트 초기화
     setCOUNT((prev: any) => ({
@@ -143,7 +128,7 @@ export const SleepGoalUpdate = () => {
       dateStart: dayFmt,
       dateEnd: dayFmt
     });
-    navigate(SEND.toSave, {
+    navigate(toSave, {
       state: SEND
     });
   };
@@ -169,7 +154,7 @@ export const SleepGoalUpdate = () => {
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
-        navigate(SEND.toList, {
+        navigate(toList, {
           state: SEND
         });
       }
@@ -183,12 +168,12 @@ export const SleepGoalUpdate = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowDeletes = async () => {
+  const flowDelete = async () => {
     if (OBJECT?._id === "") {
       alert(translate("noData"));
       return;
     }
-    axios.delete(`${URL_OBJECT}/goal/deletes`, {
+    axios.delete(`${URL_OBJECT}/goal/delete`, {
       data: {
         user_id: sessionId,
         _id: OBJECT?._id,
@@ -204,7 +189,7 @@ export const SleepGoalUpdate = () => {
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
-        navigate(SEND.toList, {
+        navigate(toList, {
           state: SEND
         });
       }
@@ -336,7 +321,7 @@ export const SleepGoalUpdate = () => {
         setDATE, setSEND, setCOUNT, setEXIST
       }}
       flow={{
-        navigate, flowNew, flowSave, flowDeletes
+        flowNew, flowSave, flowDelete
       }}
     />
   );

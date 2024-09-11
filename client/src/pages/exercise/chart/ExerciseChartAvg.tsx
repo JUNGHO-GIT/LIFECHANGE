@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { ExerciseAvgVolume, ExerciseAvgCardio } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { handlerY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
@@ -47,30 +48,10 @@ export const ExerciseChartAvg = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_VOLUME_WEEK_DEF = [{
-    name:"",
-    date:"",
-    volume: ""
-  }];
-  const OBJECT_CARDIO_WEEK_DEF = [{
-    name:"",
-    date:"",
-    cardio: ""
-  }];
-  const OBJECT_VOLUME_MONTH_DEF = [{
-    name:"",
-    date:"",
-    volume: ""
-  }];
-  const OBJECT_CARDIO_MONTH_DEF = [{
-    name:"",
-    date:"",
-    cardio: ""
-  }];
-  const [OBJECT_VOLUME_WEEK, setOBJECT_VOLUME_WEEK] = useState<any>(OBJECT_VOLUME_WEEK_DEF);
-  const [OBJECT_CARDIO_WEEK, setOBJECT_CARDIO_WEEK] = useState<any>(OBJECT_CARDIO_WEEK_DEF);
-  const [OBJECT_VOLUME_MONTH, setOBJECT_VOLUME_MONTH] = useState<any>(OBJECT_VOLUME_MONTH_DEF);
-  const [OBJECT_CARDIO_MONTH, setOBJECT_CARDIO_MONTH] = useState<any>(OBJECT_CARDIO_MONTH_DEF);
+  const [OBJECT_VOLUME_WEEK, setOBJECT_VOLUME_WEEK] = useState<any>([ExerciseAvgVolume]);
+  const [OBJECT_CARDIO_WEEK, setOBJECT_CARDIO_WEEK] = useState<any>([ExerciseAvgCardio]);
+  const [OBJECT_VOLUME_MONTH, setOBJECT_VOLUME_MONTH] = useState<any>([ExerciseAvgVolume]);
+  const [OBJECT_CARDIO_MONTH, setOBJECT_CARDIO_MONTH] = useState<any>([ExerciseAvgCardio]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -88,16 +69,16 @@ export const ExerciseChartAvg = () => {
       }),
     ]);
     setOBJECT_VOLUME_WEEK(
-      resWeek.data.result.volume.length > 0 ? resWeek.data.result.volume : OBJECT_VOLUME_WEEK_DEF
+      resWeek.data.result.volume.length > 0 ? resWeek.data.result.volume : [ExerciseAvgVolume]
     );
     setOBJECT_CARDIO_WEEK(
-      resWeek.data.result.cardio.length > 0 ? resWeek.data.result.cardio : OBJECT_CARDIO_WEEK_DEF
+      resWeek.data.result.cardio.length > 0 ? resWeek.data.result.cardio : [ExerciseAvgCardio]
     );
     setOBJECT_VOLUME_MONTH(
-      resMonth.data.result.volume.length > 0 ? resMonth.data.result.volume : OBJECT_VOLUME_MONTH_DEF
+      resMonth.data.result.volume.length > 0 ? resMonth.data.result.volume : [ExerciseAvgVolume]
     );
     setOBJECT_CARDIO_MONTH(
-      resMonth.data.result.cardio.length > 0 ? resMonth.data.result.cardio : OBJECT_CARDIO_MONTH_DEF
+      resMonth.data.result.cardio.length > 0 ? resMonth.data.result.cardio : [ExerciseAvgCardio]
     );
     setLOADING(false);
   })()}, [sessionId]);

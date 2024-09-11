@@ -2,7 +2,9 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useTranslate, useValidateUser } from "@imports/ImportHooks";
+import { useCommonValue, useTranslate } from "@imports/ImportHooks";
+import { useValidateUser } from "@imports/ImportValidates";
+import { User } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
 import { Footer, Loading } from "@imports/ImportLayouts";
 import { Input, Select, Hr, Img } from "@imports/ImportComponents";
@@ -17,7 +19,7 @@ export const UserDetail = () => {
     translate
   } = useTranslate();
   const {
-    navigate, curProperty, URL_OBJECT, sessionId, sessionCurrencyCode, firstStr, TITLE,
+    navigate, curProperty, URL_OBJECT, sessionId, sessionCurrency,
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -25,32 +27,13 @@ export const UserDetail = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
+  const [OBJECT, setOBJECT] = useState<any>(User);
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList: `/${firstStr}/list`,
-    toSave: `/${firstStr}/save`,
-    toUpdate: `/${firstStr}/update`,
   });
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_DEF: any = {
-    _id: "",
-    user_id: "",
-    user_google: false,
-    user_number: 0,
-    user_gender: "",
-    user_age: "",
-    user_initScale: "",
-    user_curScale: "",
-    user_initProperty: "",
-    user_curProperty: "",
-    user_image: "",
-    user_regDt: "",
-  };
-  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -61,18 +44,7 @@ export const UserDetail = () => {
       },
     })
     .then((res: any) => {
-      // 첫번째 객체를 제외하고 데이터 추가
-      setOBJECT((prev: any) => {
-        if (prev.length === 1 && prev[0]?._id === "") {
-          return res.data.result;
-        }
-        else {
-          return {
-            ...prev,
-            ...res.data.result
-          };
-        }
-      });
+      setOBJECT(res.data.result || User);
     })
     .catch((err: any) => {
       console.error(err);
@@ -243,7 +215,7 @@ export const UserDetail = () => {
                   	className={"w-16 h-16"}
                   />
                 }
-                endadornment={sessionCurrencyCode}
+                endadornment={sessionCurrency}
                 onChange={(e: any) => (
                   setOBJECT((prev: any) => ({
                     ...prev,
@@ -263,7 +235,7 @@ export const UserDetail = () => {
                   	className={"w-16 h-16"}
                   />
                 }
-                endadornment={sessionCurrencyCode}
+                endadornment={sessionCurrency}
                 readOnly={true}
               />
             </Grid>
@@ -300,7 +272,7 @@ export const UserDetail = () => {
         setSEND
       }}
       flow={{
-        navigate, flowSave
+        flowSave
       }}
     />
   );

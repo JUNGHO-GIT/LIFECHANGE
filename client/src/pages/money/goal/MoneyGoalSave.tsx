@@ -4,6 +4,7 @@
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
 import { useValidateMoney } from "@imports/ImportValidates";
+import { MoneyGoal } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
@@ -23,7 +24,7 @@ export const MoneyGoalSave = () => {
     dayFmt,  getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, URL_OBJECT, sessionId,sessionCurrencyCode, location_id, firstStr
+    navigate, location_dateType, location_dateStart, location_dateEnd, URL_OBJECT, sessionId,sessionCurrency, location_id, toList
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -32,14 +33,12 @@ export const MoneyGoalSave = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [EXIST, setEXIST] = useState<any[]>([""]);
+  const [OBJECT, setOBJECT] = useState<any>(MoneyGoal);
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList: `/${firstStr}/goal/list`,
-    toSave: `/${firstStr}/goal/save`,
-    toUpdate: `/${firstStr}/goal/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
@@ -48,22 +47,9 @@ export const MoneyGoalSave = () => {
   });
   const [DATE, setDATE] = useState<any>({
     dateType: location_dateType || "",
-      dateStart: location_dateStart || dayFmt,
-      dateEnd: location_dateEnd || dayFmt,
+    dateStart: location_dateStart || dayFmt,
+    dateEnd: location_dateEnd || dayFmt,
   });
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_DEF: any = {
-    _id: "",
-    money_goal_number: 0,
-    money_goal_dummy: "N",
-    money_goal_dateType: "",
-    money_goal_dateStart: "0000-00-00",
-    money_goal_dateEnd: "0000-00-00",
-    money_goal_income: "0",
-    money_goal_expense: "0"
-  };
-  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -78,7 +64,7 @@ export const MoneyGoalSave = () => {
       },
     })
     .then((res: any) => {
-      setEXIST(res.data.result || []);
+      setEXIST(res.data.result.length > 0 ? res.data.result : [""]);
     })
     .catch((err: any) => {
       console.error(err);
@@ -96,7 +82,7 @@ export const MoneyGoalSave = () => {
       },
     })
     .then((res: any) => {
-      setOBJECT(res.data.result || OBJECT_DEF);
+      setOBJECT(res.data.result || MoneyGoal);
       setCOUNT((prev: any) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
@@ -110,7 +96,7 @@ export const MoneyGoalSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, DATE.dateEnd]);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
@@ -132,7 +118,7 @@ export const MoneyGoalSave = () => {
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
-        navigate(SEND.toList, {
+        navigate(toList, {
           state: SEND
         });
       }
@@ -146,12 +132,12 @@ export const MoneyGoalSave = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowDeletes = async () => {
+  const flowDelete = async () => {
     if (OBJECT?._id === "") {
       alert(translate("noData"));
       return;
     }
-    axios.delete(`${URL_OBJECT}/goal/deletes`, {
+    axios.delete(`${URL_OBJECT}/goal/delete`, {
       data: {
         user_id: sessionId,
         _id: OBJECT?._id,
@@ -167,7 +153,7 @@ export const MoneyGoalSave = () => {
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
-        navigate(SEND.toList, {
+        navigate(toList, {
           state: SEND
         });
       }
@@ -252,7 +238,7 @@ export const MoneyGoalSave = () => {
                   />
                 }
                 endadornment={
-                  sessionCurrencyCode
+                  sessionCurrency
                 }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
@@ -293,7 +279,7 @@ export const MoneyGoalSave = () => {
                   />
                 }
                 endadornment={
-                  sessionCurrencyCode
+                  sessionCurrency
                 }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
@@ -347,7 +333,7 @@ export const MoneyGoalSave = () => {
         setDATE, setSEND, setCOUNT, setEXIST
       }}
       flow={{
-        navigate, flowSave, flowDeletes
+        flowSave, flowDelete
       }}
     />
   );

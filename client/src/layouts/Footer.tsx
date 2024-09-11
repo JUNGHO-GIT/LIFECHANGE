@@ -8,7 +8,6 @@ import { Buttons } from "./footer/Buttons";
 import { Dummy } from "./footer/Dummy";
 import { ListFilter } from "./footer/ListFilter";
 import { FindListFilter } from "./footer/FindListFilter";
-import { FindSaveFilter } from "./footer/FindSaveFilter";
 
 // -------------------------------------------------------------------------------------------------
 declare interface FooterProps {
@@ -40,26 +39,21 @@ export const Footer = (
       setStyleClass("");
     }
     else if (
+      PATH.includes("/food/find/list")
+    ) {
+      setTypeName("findList");
+      setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh radius border");
+    }
+    else if (
       PATH.includes("/goal/list") || PATH.includes("/list")
     ) {
       setTypeName("listFilter");
       setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh radius border");
     }
     else if (
-      PATH.includes("/food/find")
-    ) {
-      setTypeName("findList");
-      setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh radius border");
-    }
-    else if (
-      PATH.includes("/food/save") || PATH.includes("/food/update")
-    ) {
-      setTypeName("findSave");
-      setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh radius border");
-    }
-    else if (
       PATH.includes("/goal/save") || PATH.includes("/save") ||
-      PATH.includes("/goal/update") || PATH.includes("/update")
+      PATH.includes("/goal/update") || PATH.includes("/update") ||
+      PATH.includes("/goal/detail") || PATH.includes("/detail")
     ) {
       setTypeName("btn");
       setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh radius border");
@@ -116,14 +110,6 @@ export const Footer = (
         flow={flow}
       />
     );
-    // 5. findSave
-    const findSaveSection = () => (
-      <FindSaveFilter
-        state={state}
-        setState={setState}
-        flow={flow}
-      />
-    );
     // 5. return
     return (
       <Paper className={styleClass}>
@@ -133,7 +119,6 @@ export const Footer = (
             {typeName === "dummy" && dummySection()}
             {typeName === "listFilter" && listFilterSection()}
             {typeName === "findList" && findListSection()}
-            {typeName === "findSave" && findSaveSection()}
           </Grid>
         </Grid>
       </Paper>

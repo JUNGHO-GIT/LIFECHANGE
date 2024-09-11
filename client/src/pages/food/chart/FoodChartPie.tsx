@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { FoodPie } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { Loading } from "@imports/ImportLayouts";
 import { Div, Img, Select } from "@imports/ImportComponents";
@@ -57,36 +58,12 @@ export const FoodChartPie = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_KCAL_TODAY_DEF = [{
-    name:"Empty",
-    value: 100,
-  }];
-  const OBJECT_NUT_TODAY_DEF = [{
-    name:"Empty",
-    value: 100,
-  }];
-  const OBJECT_KCAL_WEEK_DEF = [{
-    name:"Empty",
-    value: 100,
-  }];
-  const OBJECT_NUT_WEEK_DEF = [{
-    name:"Empty",
-    value: 100,
-  }];
-  const OBJECT_KCAL_MONTH_DEF = [{
-    name:"Empty",
-    value: 100,
-  }];
-  const OBJECT_NUT_MONTH_DEF = [{
-    name:"Empty",
-    value: 100
-  }];
-  const [OBJECT_KCAL_TODAY, setOBJECT_KCAL_TODAY] = useState<any>(OBJECT_KCAL_TODAY_DEF);
-  const [OBJECT_NUT_TODAY, setOBJECT_NUT_TODAY] = useState<any>(OBJECT_NUT_TODAY_DEF);
-  const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState<any>(OBJECT_KCAL_WEEK_DEF);
-  const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState<any>(OBJECT_NUT_WEEK_DEF);
-  const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState<any>(OBJECT_KCAL_MONTH_DEF);
-  const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState<any>(OBJECT_NUT_MONTH_DEF);
+  const [OBJECT_KCAL_TODAY, setOBJECT_KCAL_TODAY] = useState<any>([FoodPie]);
+  const [OBJECT_NUT_TODAY, setOBJECT_NUT_TODAY] = useState<any>([FoodPie]);
+  const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState<any>([FoodPie]);
+  const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState<any>([FoodPie]);
+  const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState<any>([FoodPie]);
+  const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState<any>([FoodPie]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -107,22 +84,22 @@ export const FoodChartPie = () => {
       }),
     ]);
     setOBJECT_KCAL_TODAY(
-      resToday.data.result.kcal.length > 0 ? resToday.data.result.kcal : OBJECT_KCAL_TODAY_DEF
+      resToday.data.result.kcal.length > 0 ? resToday.data.result.kcal : [FoodPie]
     );
     setOBJECT_NUT_TODAY(
-      resToday.data.result.nut.length > 0 ? resToday.data.result.nut : OBJECT_NUT_TODAY_DEF
+      resToday.data.result.nut.length > 0 ? resToday.data.result.nut : [FoodPie]
     );
     setOBJECT_KCAL_WEEK(
-      resWeek.data.result.kcal.length > 0 ? resWeek.data.result.kcal : OBJECT_KCAL_WEEK_DEF
+      resWeek.data.result.kcal.length > 0 ? resWeek.data.result.kcal : [FoodPie]
     );
     setOBJECT_NUT_WEEK(
-      resWeek.data.result.nut.length > 0 ? resWeek.data.result.nut : OBJECT_NUT_WEEK_DEF
+      resWeek.data.result.nut.length > 0 ? resWeek.data.result.nut : [FoodPie]
     );
     setOBJECT_KCAL_MONTH(
-      resMonth.data.result.kcal.length > 0 ? resMonth.data.result.kcal : OBJECT_KCAL_MONTH_DEF
+      resMonth.data.result.kcal.length > 0 ? resMonth.data.result.kcal : [FoodPie]
     );
     setOBJECT_NUT_MONTH(
-      resMonth.data.result.nut.length > 0 ? resMonth.data.result.nut : OBJECT_NUT_MONTH_DEF
+      resMonth.data.result.nut.length > 0 ? resMonth.data.result.nut : [FoodPie]
     );
     setLOADING(false);
   })()}, [sessionId]);

@@ -205,8 +205,8 @@ export const userUpdate = async (
   return finalResult;
 };
 
-// 2-7. user - deletes -----------------------------------------------------------------------------
-export const userDeletes = async (
+// 2-7. user - delete -----------------------------------------------------------------------------
+export const userDelete = async (
   user_id_param: string
 ) => {
 
@@ -347,7 +347,7 @@ export const categoryUpdate = async (
     },
     {
       upsert: true,
-      new: true
+      new: false
     }
   )
   .lean();
@@ -355,8 +355,8 @@ export const categoryUpdate = async (
   return finalResult;
 };
 
-// 4-1. dummy - deletesAll -------------------------------------------------------------------------
-export const dummyDeletesAll = async (
+// 4-1. dummy - deleteAll -------------------------------------------------------------------------
+export const dummyDeleteAll = async (
   user_id_param: string
 ) => {
 
@@ -679,8 +679,8 @@ export const dummySave = async (
   }
 }
 
-// 4-5. dummy - deletes ----------------------------------------------------------------------------
-export const dummyDeletes = async (
+// 4-5. dummy - delete ----------------------------------------------------------------------------
+export const dummyDelete = async (
   user_id_param: string,
   type_param: string
 ) => {

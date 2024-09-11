@@ -4,6 +4,7 @@
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
 import { useValidateCalendar } from "@imports/ImportValidates";
+import { Calendar } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Input, Select, Img, Bg } from "@imports/ImportComponents";
@@ -22,7 +23,7 @@ export const CalendarUpdate = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_id, location_dateType, location_dateStart, location_dateEnd, calendarArray, colors, URL_OBJECT, sessionId, firstStr
+    navigate, location_id, location_dateType, location_dateStart, location_dateEnd, calendarArray, colors, URL_OBJECT, sessionId, toList, toSave
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -31,14 +32,12 @@ export const CalendarUpdate = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [EXIST, setEXIST] = useState<any[]>([""]);
+  const [OBJECT, setOBJECT] = useState<any>(Calendar);
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList: `/${firstStr}/list`,
-    toSave: `/${firstStr}/save`,
-    toUpdate: `/${firstStr}/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
@@ -54,24 +53,6 @@ export const CalendarUpdate = () => {
     dateEnd: location_dateEnd || dayFmt,
   });
 
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_DEF: any = {
-    _id: "",
-    calendar_number: 0,
-    calendar_dummy: "N",
-    calendar_dateType: "",
-    calendar_dateStart: "0000-00-00",
-    calendar_dateEnd: "0000-00-00",
-    calendar_section: [{
-      calendar_part_idx: 0,
-      calendar_part_val: "all",
-      calendar_color: "black",
-      calendar_title : "",
-      calendar_content: ""
-    }]
-  };
-  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
-
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     axios.get(`${URL_OBJECT}/exist`, {
@@ -85,7 +66,7 @@ export const CalendarUpdate = () => {
       },
     })
     .then((res: any) => {
-      setEXIST(res.data.result || []);
+      setEXIST(res.data.result.length > 0 ? res.data.result : [""]);
     })
     .catch((err: any) => {
       console.error(err);
@@ -152,7 +133,7 @@ export const CalendarUpdate = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowNew = () => {
     // 객체 초기화
-    setOBJECT(OBJECT_DEF);
+    setOBJECT(Calendar);
 
     // 카운트 초기화
     setCOUNT((prev: any) => ({
@@ -174,7 +155,7 @@ export const CalendarUpdate = () => {
       dateStart: dayFmt,
       dateEnd: dayFmt
     });
-    navigate(SEND.toSave, {
+    navigate(toSave, {
       state: SEND
     });
   };
@@ -199,7 +180,7 @@ export const CalendarUpdate = () => {
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
-        navigate(SEND.toList, {
+        navigate(toList, {
           state: SEND
         });
       }
@@ -213,12 +194,12 @@ export const CalendarUpdate = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowDeletes = async () => {
+  const flowDelete = async () => {
     if (OBJECT?._id === "") {
       alert(translate("noData"));
       return;
     }
-    axios.delete(`${URL_OBJECT}/deletes`, {
+    axios.delete(`${URL_OBJECT}/delete`, {
       data: {
         user_id: sessionId,
         _id: OBJECT?._id,
@@ -233,7 +214,7 @@ export const CalendarUpdate = () => {
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
-        navigate(SEND.toList, {
+        navigate(toList, {
           state: SEND
         });
       }
@@ -434,7 +415,7 @@ export const CalendarUpdate = () => {
         setDATE, setSEND, setCOUNT, setEXIST
       }}
       flow={{
-        navigate, flowNew, flowSave, flowDeletes
+        flowNew, flowSave, flowDelete
       }}
     />
   );

@@ -15,6 +15,14 @@ export const Select = (props: any) => {
       className={props?.className || ""}
       inputRef={props?.inputRef || null}
       error={props?.error || false}
+      sx={{
+        "& .MuiSelect-icon": {
+          display: props?.readOnly && "none"
+        },
+        "& .MuiOutlinedInput-input": {
+          padding: props?.readOnly && "8.5px 20px"
+        },
+      }}
       slotProps={{
         input: {
           readOnly: (

@@ -1,4 +1,6 @@
 // Picker.tsx
+// 계획은 day, week, month, year, select
+// 실제는 day
 
 import { useEffect, useState } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useStorage, useTranslate } from "@imports/ImportHooks";
@@ -46,11 +48,12 @@ export const Picker = (
   } = useCommonValue();
 
   const isToday = firstStr === "today";
-  const isFind  = secondStr === "find";
   const isGoalList = secondStr === "goal" && thirdStr === "list";
+  const isGoalDetail = secondStr === "goal" && thirdStr === "detail";
   const isGoalSave = secondStr === "goal" && thirdStr === "save";
   const isGoalUpdate = secondStr === "goal" && thirdStr === "update";
   const isList = secondStr === "list" && thirdStr === "";
+  const isDetail = secondStr === "detail" && thirdStr === "";
   const isSave = secondStr === "save" && thirdStr === "";
   const isUpdate = secondStr === "update" && thirdStr === "";
 
@@ -101,7 +104,7 @@ export const Picker = (
       setTypeStr("h-min0 h-4vh fs-0-7rem pointer");
       setInnerStr("h-min0 h-4vh fs-0-7rem pointer");
     }
-    else if (isGoalSave || isSave || isGoalUpdate || isUpdate || isFind) {
+    else {
       setTypeStr("h-min40 fs-0-8rem pointer");
       setInnerStr("h-min40 fs-0-8rem pointer");
     }
@@ -109,7 +112,7 @@ export const Picker = (
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (!isSave && !isGoalSave && !isGoalUpdate && !isUpdate) {
+    if (isGoalList || isList) {
       if (!dateStart) {
         dateStart = dayFmt;
       }
@@ -121,7 +124,7 @@ export const Picker = (
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (!isSave && !isGoalSave && !isGoalUpdate && !isUpdate) {
+    if (isGoalList || isList) {
       if (clickedType === "thisToday") {
         setDATE(clickedDate?.todayDate);
       }
@@ -139,7 +142,7 @@ export const Picker = (
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (!isSave && !isGoalSave && !isGoalUpdate && !isUpdate) {
+    if (isGoalList || isList) {
       if (
         (DATE?.dateStart === clickedDate?.todayDate?.dateStart) &&
         (DATE?.dateEnd === clickedDate?.todayDate?.dateEnd)
@@ -257,7 +260,6 @@ export const Picker = (
                           borderRadius = "50%";
                           zIndex = 10;
                         }
-
                         return (
                           <Badge
                             key={props.day.toString()}
@@ -1174,6 +1176,7 @@ export const Picker = (
         label={translate("dateType")}
         value={DATE.dateType || ""}
         inputclass={typeStr}
+        readOnly={isDetail || isUpdate || isSave}
         onChange={(e: any) => {
           if (e.target.value === "day") {
             setDATE((prev: any) => ({
@@ -1217,16 +1220,34 @@ export const Picker = (
           }
         }}
       >
-        {["day", "week", "month", "year", "select"]?.map((item: any) => (
-          <MenuItem key={item} value={item} selected={item === DATE.dateType}>
-            {translate(item)}
-          </MenuItem>
-        ))}
+        {isGoalDetail || isGoalSave || isGoalUpdate ? (
+          ["day", "week", "month", "year", "select"]?.map((item: any) => (
+            <MenuItem
+              key={item}
+              value={item}
+              selected={item === DATE.dateType}
+            >
+              {translate(item)}
+            </MenuItem>
+          ))
+        ) : (
+          ["day"]?.map((item: any) => (
+            <MenuItem
+              key={item}
+              value={item}
+              selected={item === DATE.dateType}
+            >
+              {translate(item)}
+            </MenuItem>
+          ))
+        )}
       </Select>
     );
 
     // 10. return
     return (
+
+      // 1. 리스트인 경우
       isGoalList || isList ? (
         <Grid container spacing={2}>
           <Grid size={9} className={"d-center"}>
@@ -1237,7 +1258,9 @@ export const Picker = (
           </Grid>
         </Grid>
       )
-      : isGoalSave || isSave || isGoalUpdate || isUpdate ? (
+
+      // 2. 목표인 경우
+      : isGoalDetail || isGoalSave || isGoalUpdate ? (
         <Grid container spacing={2}>
           <Grid size={3} className={"d-center"}>
             {saveTypeSection()}
@@ -1250,8 +1273,21 @@ export const Picker = (
             {DATE.dateType === "select" && selectSection()}
           </Grid>
         </Grid>
-      ) : null
-    )
+      )
+
+      // 3. 실제인 경우
+      : isDetail || isSave || isUpdate ? (
+        <Grid container spacing={2}>
+          <Grid size={3} className={"d-center"}>
+            {saveTypeSection()}
+          </Grid>
+          <Grid size={9} className={"d-center"}>
+            {DATE.dateType === "day" && daySection()}
+          </Grid>
+        </Grid>
+      )
+      : null
+    );
   };
 
   // 10. return ------------------------------------------------------------------------------------

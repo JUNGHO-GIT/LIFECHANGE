@@ -4,6 +4,7 @@
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
 import { useValidateMoney } from "@imports/ImportValidates";
+import { Money } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
@@ -23,7 +24,7 @@ export const MoneySave = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, moneyArray, URL_OBJECT, sessionId, sessionCurrencyCode, location_id, firstStr
+    navigate, location_dateType, location_dateStart, location_dateEnd, moneyArray, URL_OBJECT, sessionId, sessionCurrency, location_id, toList
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -32,14 +33,12 @@ export const MoneySave = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [EXIST, setEXIST] = useState<any[]>([""]);
+  const [OBJECT, setOBJECT] = useState<any>(Money);
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList: `/${firstStr}/list`,
-    toSave: `/${firstStr}/save`,
-    toUpdate: `/${firstStr}/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
@@ -48,30 +47,9 @@ export const MoneySave = () => {
   });
   const [DATE, setDATE] = useState<any>({
     dateType: location_dateType || "",
-      dateStart: location_dateStart || dayFmt,
-      dateEnd: location_dateEnd || dayFmt,
+    dateStart: location_dateStart || dayFmt,
+    dateEnd: location_dateEnd || dayFmt,
   });
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_DEF: any = {
-    _id: "",
-    money_number: 0,
-    money_dummy: "N",
-    money_dateType: "",
-    money_dateStart: "0000-00-00",
-    money_dateEnd: "0000-00-00",
-    money_total_income: "0",
-    money_total_expense: "0",
-    money_section: [{
-      money_part_idx: 0,
-      money_part_val: "all",
-      money_title_idx: 0,
-      money_title_val: "all",
-      money_amount: "0",
-      money_content: "",
-    }],
-  };
-  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -86,7 +64,7 @@ export const MoneySave = () => {
       },
     })
     .then((res: any) => {
-      setEXIST(res.data.result || []);
+      setEXIST(res.data.result.length > 0 ? res.data.result : [""]);
     })
     .catch((err: any) => {
       console.error(err);
@@ -141,7 +119,7 @@ export const MoneySave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -208,7 +186,7 @@ export const MoneySave = () => {
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
-        navigate(SEND.toList, {
+        navigate(toList, {
           state: SEND
         });
       }
@@ -222,12 +200,12 @@ export const MoneySave = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowDeletes = async () => {
+  const flowDelete = async () => {
     if (OBJECT?._id === "") {
       alert(translate("noData"));
       return;
     }
-    axios.delete(`${URL_OBJECT}/deletes`, {
+    axios.delete(`${URL_OBJECT}/delete`, {
       data: {
         user_id: sessionId,
         _id: OBJECT?._id,
@@ -243,7 +221,7 @@ export const MoneySave = () => {
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
-        navigate(SEND.toList, {
+        navigate(toList, {
           state: SEND
         });
       }
@@ -308,7 +286,7 @@ export const MoneySave = () => {
                 />
               }
               endadornment={
-                sessionCurrencyCode
+                sessionCurrency
               }
             />
           </Grid>
@@ -324,7 +302,7 @@ export const MoneySave = () => {
                 />
               }
               endadornment={
-                sessionCurrencyCode
+                sessionCurrency
               }
             />
           </Grid>
@@ -432,7 +410,7 @@ export const MoneySave = () => {
                   />
                 }
                 endadornment={
-                  sessionCurrencyCode
+                  sessionCurrency
                 }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
@@ -507,7 +485,7 @@ export const MoneySave = () => {
         setDATE, setSEND, setCOUNT, setEXIST
       }}
       flow={{
-        navigate, flowSave, flowDeletes
+        flowSave, flowDelete
       }}
     />
   );

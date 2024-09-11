@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue } from "@imports/ImportHooks";
+import { AppInfo } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs"
 import { Loading } from "@imports/ImportLayouts";
 import { Img } from "@imports/ImportComponents";
@@ -20,22 +21,14 @@ export const UserAppInfo = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
+  const [OBJECT, setOBJECT] = useState<any>(AppInfo);
   const [clientLang, setClientLang] = useState<any>({
     timeZone: sessionStorage.getItem(`${TITLE}_timeZone`),
     zoneName: sessionStorage.getItem(`${TITLE}_zoneName`),
     locale: sessionStorage.getItem(`${TITLE}_locale`),
     isoCode: sessionStorage.getItem(`${TITLE}_isoCode`),
-    currencyCode: sessionStorage.getItem(`${TITLE}_currencyCode`),
+    currency: sessionStorage.getItem(`${TITLE}_currency`),
   });
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_DEF: any = {
-    version: "",
-    date: "",
-    git: "",
-    license: "",
-  };
-  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -112,7 +105,7 @@ export const UserAppInfo = () => {
                     {clientLang.timeZone} | &nbsp;
                     {clientLang.locale} | &nbsp;
                     {clientLang.isoCode} | &nbsp;
-                    {clientLang.currencyCode} | &nbsp;
+                    {clientLang.currency} | &nbsp;
                     {clientLang.zoneName}
                   </TableCell>
                 </TableRow>

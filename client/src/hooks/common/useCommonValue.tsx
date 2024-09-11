@@ -18,6 +18,13 @@ export const useCommonValue = () => {
   const firstStr: string = PATH?.split("/")[1] || "";
   const secondStr: string = PATH?.split("/")[2] || "";
   const thirdStr: string = PATH?.split("/")[3] || "";
+  const isGoal: boolean = secondStr === "goal";
+  const toFind: string = isGoal ? `/${firstStr}/goal/find/list` : `/${firstStr}/find/list`;
+  const toList: string = isGoal ? `/${firstStr}/goal/list` : `/${firstStr}/list`;
+  const toDetail: string = isGoal ? `/${firstStr}/goal/detail` : `/${firstStr}/detail`;
+  const toSave: string = isGoal ? `/${firstStr}/goal/save` : `/${firstStr}/save`;
+  const toUpdate: string = isGoal ? `/${firstStr}/goal/update` : `/${firstStr}/update`;
+  const toDelete: string = isGoal ? `/${firstStr}/goal/delete` : `/${firstStr}/delete`;
 
   const TITLE: any = process.env.REACT_APP_TITLE || "";
   const URL: string = process.env.REACT_APP_SERVER_URL || "";
@@ -45,7 +52,7 @@ export const useCommonValue = () => {
   const sessionZoneName: string = sessionStorage.getItem(`${TITLE}_zoneName`) || "KST";
   const sessionLocale: string = sessionStorage.getItem(`${TITLE}_locale`) || "ko-KR";
   const sessionIsoCode: string = sessionStorage.getItem(`${TITLE}_isoCode`) || "KR";
-  const sessionCurrencyCode: string = sessionStorage.getItem(`${TITLE}_currencyCode`) || "KRW";
+  const sessionCurrency: string = sessionStorage.getItem(`${TITLE}_currency`) || "KRW";
 
   // object 타입
   const sessionPercent: any = sessionStorage.getItem(`${TITLE}_percent`) || "{}";
@@ -98,6 +105,12 @@ export const useCommonValue = () => {
     firstStr,
     secondStr,
     thirdStr,
+    toFind,
+    toList,
+    toDetail,
+    toSave,
+    toUpdate,
+    toDelete,
     TITLE,
     URL,
     SUBFIX,
@@ -121,7 +134,7 @@ export const useCommonValue = () => {
     sessionZoneName,
     sessionLocale,
     sessionIsoCode,
-    sessionCurrencyCode,
+    sessionCurrency,
     sessionPercent,
     sessionProperty,
     sessionCategory,

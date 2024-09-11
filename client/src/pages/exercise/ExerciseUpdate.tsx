@@ -4,7 +4,8 @@
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useTime } from "@imports/ImportHooks";
 import { useValidateExercise } from "@imports/ImportValidates";
-import {  axios, numeral } from "@imports/ImportLibs";
+import { Exercise } from "@imports/ImportSchemas";
+import { axios, numeral } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Bg, Img, Input, Select } from "@imports/ImportComponents";
@@ -23,7 +24,7 @@ export const ExerciseUpdate = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, exerciseArray, URL_OBJECT, sessionId, location_id, firstStr
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, exerciseArray, URL_OBJECT, sessionId, location_id, toList, toSave
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -32,14 +33,12 @@ export const ExerciseUpdate = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [EXIST, setEXIST] = useState<any[]>([""]);
+  const [OBJECT, setOBJECT] = useState<any>(Exercise);
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList: `/${firstStr}/list`,
-    toSave: `/${firstStr}/save`,
-    toUpdate: `/${firstStr}/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
@@ -48,34 +47,9 @@ export const ExerciseUpdate = () => {
   });
   const [DATE, setDATE] = useState<any>({
     dateType: location_dateType || "",
-      dateStart: location_dateStart || dayFmt,
-      dateEnd: location_dateEnd || dayFmt,
+    dateStart: location_dateStart || dayFmt,
+    dateEnd: location_dateEnd || dayFmt,
   });
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_DEF: any = {
-    _id: "",
-    exercise_number: 0,
-    exercise_dummy: "N",
-    exercise_dateType: "",
-    exercise_dateStart: "0000-00-00",
-    exercise_dateEnd: "0000-00-00",
-    exercise_total_volume: "0",
-    exercise_total_cardio: "00:00",
-    exercise_total_weight: "0",
-    exercise_section: [{
-      exercise_part_idx: 0,
-      exercise_part_val: "all",
-      exercise_title_idx: 0,
-      exercise_title_val: "all",
-      exercise_set: "0",
-      exercise_rep: "0",
-      exercise_kg: "0",
-      exercise_volume: "0",
-      exercise_cardio: "00:00",
-    }],
-  };
-  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
@@ -93,7 +67,7 @@ export const ExerciseUpdate = () => {
       },
     })
     .then((res: any) => {
-      setEXIST(res.data.result || []);
+      setEXIST(res.data.result.length > 0 ? res.data.result : [""]);
     })
     .catch((err: any) => {
       console.error(err);
@@ -214,7 +188,7 @@ export const ExerciseUpdate = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowNew = () => {
     // 객체 초기화
-    setOBJECT(OBJECT_DEF);
+    setOBJECT(Exercise);
 
     // 카운트 초기화
     setCOUNT((prev: any) => ({
@@ -236,7 +210,7 @@ export const ExerciseUpdate = () => {
       dateStart: dayFmt,
       dateEnd: dayFmt
     });
-    navigate(SEND.toSave, {
+    navigate(toSave, {
       state: SEND
     });
   };
@@ -262,7 +236,7 @@ export const ExerciseUpdate = () => {
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
-        navigate(SEND.toList, {
+        navigate(toList, {
           state: SEND
         });
       }
@@ -276,12 +250,12 @@ export const ExerciseUpdate = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowDeletes = async () => {
+  const flowDelete = async () => {
     if (OBJECT?._id === "") {
       alert(translate("noData"));
       return;
     }
-    axios.delete(`${URL_OBJECT}/deletes`, {
+    axios.delete(`${URL_OBJECT}/delete`, {
       data: {
         user_id: sessionId,
         _id: OBJECT?._id,
@@ -297,7 +271,7 @@ export const ExerciseUpdate = () => {
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
-        navigate(SEND.toList, {
+        navigate(toList, {
           state: SEND
         });
       }
@@ -686,7 +660,7 @@ export const ExerciseUpdate = () => {
         setDATE, setSEND, setCOUNT, setEXIST
       }}
       flow={{
-        navigate, flowNew, flowSave, flowDeletes
+        flowNew, flowSave, flowDelete
       }}
     />
   );

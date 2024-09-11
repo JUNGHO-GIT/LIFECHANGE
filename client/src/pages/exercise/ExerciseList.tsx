@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
+import { Exercise } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div, Hr, Icons, Img } from "@imports/ImportComponents";
@@ -22,7 +23,7 @@ export const ExerciseList = () => {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, firstStr
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, toUpdate
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -44,48 +45,18 @@ export const ExerciseList = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [isExpanded, setIsExpanded] = useState<number[]>([0]);
   const [LOADING, setLOADING] = useState<boolean>(false);
+  const [OBJECT, setOBJECT] = useState<any>([Exercise]);
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList: `/${firstStr}/list`,
-    toSave: `/${firstStr}/save`,
-    toUpdate: `/${firstStr}/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
   });
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_DEF = [{
-    _id: "",
-    exercise_number: 0,
-    exercise_dummy: "N",
-    exercise_dateType: "",
-    exercise_dateStart: "0000-00-00",
-    exercise_dateEnd: "0000-00-00",
-    exercise_total_volume: "0",
-    exercise_total_volume_color: "",
-    exercise_total_cardio: "00:00",
-    exercise_total_cardio_color: "",
-    exercise_total_weight: "0",
-    exercise_total_weight_color: "",
-    exercise_section: [{
-      exercise_part_idx: 0,
-      exercise_part_val: "all",
-      exercise_title_idx: 0,
-      exercise_title_val: "all",
-      exercise_set: "0",
-      exercise_rep: "0",
-      exercise_kg: "0",
-      exercise_volume: "0",
-      exercise_cardio: "00:00",
-    }],
-  }];
-  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -98,7 +69,7 @@ export const ExerciseList = () => {
       },
     })
     .then((res: any) => {
-      setOBJECT(res.data.result && res.data.result.length > 0 ? res.data.result : OBJECT_DEF);
+      setOBJECT(res.data.result.length > 0 ? res.data.result : [Exercise]);
       setCOUNT((prev: any) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
@@ -115,7 +86,7 @@ export const ExerciseList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
 
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
@@ -153,13 +124,14 @@ export const ExerciseList = () => {
                       dateStart: item.exercise_dateStart,
                       dateEnd: item.exercise_dateEnd,
                     });
-                    navigate(SEND.toUpdate, {
+                    navigate(toUpdate, {
                       state: SEND
                     });
                   }}
                 >
                   <Grid size={2} className={"d-center"}>
                     <Icons
+                      key={"Search"}
                       name={"Search"}
                       className={"w-18 h-18 black"}
                     />
@@ -304,7 +276,6 @@ export const ExerciseList = () => {
         setDATE, setSEND, setPAGING, setCOUNT
       }}
       flow={{
-        navigate
       }}
     />
   );

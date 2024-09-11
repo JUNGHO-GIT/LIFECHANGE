@@ -1,8 +1,9 @@
-// FoodFind.tsx
+// FoodFindList.tsx
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
+import { FoodFind } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
@@ -12,7 +13,7 @@ import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMu
 import { food2, food3, food4, food5 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
-export const FoodFind = () => {
+export const FoodFindList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
@@ -22,7 +23,7 @@ export const FoodFind = () => {
     dayFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateStart, location_dateEnd, PATH, URL_OBJECT, TITLE, firstStr
+    navigate, location_dateStart, location_dateEnd, PATH, URL_OBJECT, TITLE, toFind,
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -39,47 +40,23 @@ export const FoodFind = () => {
   const [checkedQueries, setCheckedQueries] = useState<any>({});
   const [isExpanded, setIsExpanded] = useState<number[]>([0]);
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [DATE, setDATE] = useState<any>({
-    dateType: "day",
-      dateStart: location_dateStart || dayFmt,
-      dateEnd: location_dateEnd || dayFmt,
-  });
+  const [OBJECT, setOBJECT] = useState<any>([FoodFind]);
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList: `/${firstStr}/list`,
-    toSave: `/${firstStr}/save`,
-    toUpdate: `/${firstStr}/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
   });
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_DEF = [{
-    food_query: "",
-    food_perNumber: 1,
-    food_part_idx: 1,
-    food_part_val: "breakfast",
-    food_name: "",
-    food_brand: "",
-    food_count: "0",
-    food_serv: "",
-    food_gram: "0",
-    food_kcal: "0",
-    food_kcal_color: "",
-    food_carb: "0",
-    food_carb_color: "",
-    food_protein: "0",
-    food_protein_color: "",
-    food_fat: "0",
-    food_fat_color: "",
-  }];
-  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
+  const [DATE, setDATE] = useState<any>({
+    dateType: "day",
+    dateStart: location_dateStart || dayFmt,
+    dateEnd: location_dateEnd || dayFmt,
+  });
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 페이지 번호 변경 시 flowFind 호출
@@ -164,7 +141,7 @@ export const FoodFind = () => {
       },
     })
     .then((res: any) => {
-      setOBJECT(res.data.result || []);
+      setOBJECT(res.data.result.length > 0 ? res.data.result : []);
       setCOUNT((prev: any) => ({
         ...prev,
         totalCnt: res.data.totalCnt ? res.data.totalCnt : 0,
@@ -400,7 +377,7 @@ export const FoodFind = () => {
         setDATE, setPAGING, setSEND, setCOUNT
       }}
       flow={{
-        navigate, flowFind
+        flowFind
       }}
     />
   );

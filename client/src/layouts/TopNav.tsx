@@ -19,7 +19,7 @@ export const TopNav = () => {
     translate,
   } = useTranslate();
   const {
-    navigate, firstStr, secondStr, TITLE, sessionPercent, sessionProperty, sessionScale, PATH, sessionTimeZone, sessionCurrencyCode,
+    navigate, firstStr, secondStr, TITLE, sessionPercent, sessionProperty, sessionScale, PATH, sessionTimeZone, sessionCurrency,
   } = useCommonValue();
   const {
     dayFmt,
@@ -222,7 +222,7 @@ export const TopNav = () => {
       url = `/${firstStr}/list`;
     }
     else if (value === "find") {
-      url = `/${firstStr}/find`;
+      url = `/${firstStr}/find/list`;
     }
     else {
       url = `/${firstStr}/${value}/list`;
@@ -390,7 +390,7 @@ export const TopNav = () => {
                     />
                   }
                   endadornment={
-                    sessionCurrencyCode
+                    sessionCurrency
                   }
                 />
               </Grid>
@@ -406,7 +406,7 @@ export const TopNav = () => {
                     />
                   }
                   endadornment={
-                    sessionCurrencyCode
+                    sessionCurrency
                   }
                 />
               </Grid>
@@ -422,7 +422,7 @@ export const TopNav = () => {
                     />
                   }
                   endadornment={
-                    sessionCurrencyCode
+                    sessionCurrency
                   }
                 />
               </Grid>

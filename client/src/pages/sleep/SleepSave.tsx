@@ -3,7 +3,8 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useTime } from "@imports/ImportHooks";
-import { useValidateSleep } from "@imports/ImportHooks";
+import { useValidateSleep } from "@imports/ImportValidates";
+import { Sleep } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
@@ -22,7 +23,7 @@ export const SleepSave = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, location_id, firstStr
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, location_id, toList
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -31,14 +32,13 @@ export const SleepSave = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [EXIST, setEXIST] = useState<any[]>([""]);
+  const [dialOpen, setDialOpen] = useState<boolean>(false);
+  const [OBJECT, setOBJECT] = useState<any>(Sleep);
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList: `/${firstStr}/list`,
-    toSave: `/${firstStr}/save`,
-    toUpdate: `/${firstStr}/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
@@ -47,25 +47,9 @@ export const SleepSave = () => {
   });
   const [DATE, setDATE] = useState<any>({
     dateType: location_dateType || "",
-      dateStart: location_dateStart || dayFmt,
-      dateEnd: location_dateEnd || dayFmt,
+    dateStart: location_dateStart || dayFmt,
+    dateEnd: location_dateEnd || dayFmt,
   });
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_DEF: any = {
-    _id: "",
-    sleep_number: 0,
-    sleep_dummy: "N",
-    sleep_dateType: "",
-    sleep_dateStart: "0000-00-00",
-    sleep_dateEnd: "0000-00-00",
-    sleep_section: [{
-      sleep_bedTime: "00:00",
-      sleep_wakeTime: "00:00",
-      sleep_sleepTime: "00:00",
-    }],
-  };
-  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
@@ -83,7 +67,7 @@ export const SleepSave = () => {
       },
     })
     .then((res: any) => {
-      setEXIST(res.data.result || []);
+      setEXIST(res.data.result.length > 0 ? res.data.result : [""]);
     })
     .catch((err: any) => {
       console.error(err);
@@ -96,7 +80,7 @@ export const SleepSave = () => {
     axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId,
-        _id: location_id,
+        _id: "",
         DATE: DATE,
       },
     })
@@ -136,7 +120,7 @@ export const SleepSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -175,7 +159,7 @@ export const SleepSave = () => {
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
-        navigate(SEND.toList, {
+        navigate(toList, {
           state: SEND
         });
       }
@@ -189,12 +173,12 @@ export const SleepSave = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowDeletes = async () => {
+  const flowDelete = async () => {
     if (OBJECT?._id === "") {
       alert(translate("noData"));
       return;
     }
-    axios.delete(`${URL_OBJECT}/deletes`, {
+    axios.delete(`${URL_OBJECT}/delete`, {
       data: {
         user_id: sessionId,
         _id: OBJECT?._id,
@@ -210,7 +194,7 @@ export const SleepSave = () => {
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
-        navigate(SEND.toList, {
+        navigate(toList, {
           state: SEND
         });
       }
@@ -343,7 +327,7 @@ export const SleepSave = () => {
         setDATE, setSEND, setCOUNT, setEXIST
       }}
       flow={{
-        navigate, flowSave, flowDeletes
+        flowSave, flowDelete
       }}
     />
   );

@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
+import { ExerciseGoal } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div, Img, Hr, Icons } from "@imports/ImportComponents";
@@ -22,7 +23,7 @@ export const ExerciseGoalList = () => {
     dayFmt, getDayNotFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, firstStr
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, toUpdate
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -44,58 +45,18 @@ export const ExerciseGoalList = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [isExpanded, setIsExpanded] = useState<number[]>([0]);
   const [LOADING, setLOADING] = useState<boolean>(false);
+  const [OBJECT, setOBJECT] = useState<any>([ExerciseGoal]);
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList: `/${firstStr}/goal/list`,
-    toSave: `/${firstStr}/goal/save`,
-    toUpdate: `/${firstStr}/goal/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
   });
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_DEF = [{
-    _id: "",
-    exercise_goal_number: 0,
-    exercise_goal_dummy: "N",
-    exercise_goal_dateType: "",
-    exercise_goal_dateStart: "0000-00-00",
-    exercise_goal_dateEnd: "0000-00-00",
-    exercise_goal_count: "0",
-    exercise_goal_count_color: "",
-    exercise_goal_volume: "0",
-    exercise_goal_volume_color: "",
-    exercise_goal_weight: "0",
-    exercise_goal_weight_color: "",
-    exercise_goal_cardio: "00:00",
-    exercise_goal_cardio_color: "",
-    exercise_dateType: "",
-    exercise_dateStart: "0000-00-00",
-    exercise_dateEnd: "0000-00-00",
-    exercise_total_count: "0",
-    exercise_total_count_color: "",
-    exercise_total_volume: "0",
-    exercise_total_volume_color: "",
-    exercise_total_weight: "0",
-    exercise_total_weight_color: "",
-    exercise_total_cardio: "00:00",
-    exercise_total_cardio_color: "",
-    exercise_diff_count: "0",
-    exercise_diff_count_color: "",
-    exercise_diff_cardio: "00:00",
-    exercise_diff_cardio_color: "",
-    exercise_diff_volume: "0",
-    exercise_diff_volume_color: "",
-    exercise_diff_weight: "0",
-    exercise_diff_weight_color: "",
-  }];
-  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -108,7 +69,7 @@ export const ExerciseGoalList = () => {
       },
     })
     .then((res: any) => {
-      setOBJECT(res.data.result && res.data.result.length > 0 ? res.data.result : OBJECT_DEF);
+      setOBJECT(res.data.result.length > 0 ? res.data.result : [ExerciseGoal]);
       setCOUNT((prev: any) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
@@ -125,7 +86,7 @@ export const ExerciseGoalList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
 
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
@@ -163,13 +124,14 @@ export const ExerciseGoalList = () => {
                       dateStart: item.exercise_goal_dateStart,
                       dateEnd: item.exercise_goal_dateEnd,
                     });
-                    navigate(SEND.toUpdate, {
+                    navigate(toUpdate, {
                       state: SEND
                     });
                   }}
                 >
                   <Grid size={2} className={"d-center"}>
                     <Icons
+                      key={"Search"}
                       name={"Search"}
                       className={"w-18 h-18 black"}
                     />
@@ -507,7 +469,6 @@ export const ExerciseGoalList = () => {
         setDATE, setSEND, setPAGING, setCOUNT
       }}
       flow={{
-        navigate
       }}
     />
   );

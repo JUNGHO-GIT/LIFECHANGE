@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { SleepAvg } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { handlerY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
@@ -47,22 +48,8 @@ export const SleepChartAvg = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_MONTH_DEF = [{
-    name:"",
-    date: "",
-    bedTime: "0",
-    wakeTime: "0",
-    sleepTime: "0",
-  }];
-  const OBJECT_YEAR_DEF = [{
-    name:"",
-    date: "",
-    bedTime: "0",
-    wakeTime: "0",
-    sleepTime: "0"
-  }];
-  const [OBJECT_MONTH, setOBJECT_MONTH] = useState<any>(OBJECT_MONTH_DEF);
-  const [OBJECT_YEAR, setOBJECT_YEAR] = useState<any>(OBJECT_YEAR_DEF);
+  const [OBJECT_MONTH, setOBJECT_MONTH] = useState<any>([SleepAvg]);
+  const [OBJECT_YEAR, setOBJECT_YEAR] = useState<any>([SleepAvg]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -80,10 +67,10 @@ export const SleepChartAvg = () => {
       }),
     ]);
     setOBJECT_MONTH(
-      resWeek.data.result.length > 0 ? resWeek.data.result : OBJECT_MONTH_DEF
+      resWeek.data.result.length > 0 ? resWeek.data.result : [SleepAvg]
     );
     setOBJECT_YEAR(
-      resMonth.data.result.length > 0 ? resMonth.data.result : OBJECT_YEAR_DEF
+      resMonth.data.result.length > 0 ? resMonth.data.result : [SleepAvg]
     );
     setLOADING(false);
   })()}, [sessionId]);

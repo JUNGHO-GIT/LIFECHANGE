@@ -15,6 +15,8 @@ export const Bg = (props: any) => {
         '& .MuiBadge-badge': {
           color: props?.sx?.color || "white",
           backgroundColor: props?.bgcolor || "#1976d2",
+          width: 18,
+          height: 19,
         },
       }}
     />

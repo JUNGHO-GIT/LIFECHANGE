@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { MoneyPie } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { Loading } from "@imports/ImportLayouts";
 import { Div, Img, Select} from "@imports/ImportComponents";
@@ -57,36 +58,12 @@ export const MoneyChartPie = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_IN_TODAY_DEF = [{
-    name:"Empty",
-    value: 100,
-  }];
-  const OBJECT_OUT_TODAY_DEF = [{
-    name:"Empty",
-    value: 100,
-  }];
-  const OBJECT_IN_WEEK_DEF = [{
-    name:"Empty",
-    value: 100,
-  }];
-  const OBJECT_OUT_WEEK_DEF = [{
-    name:"Empty",
-    value: 100,
-  }];
-  const OBJECT_IN_MONTH_DEF = [{
-    name:"Empty",
-    value: 100,
-  }];
-  const OBJECT_OUT_MONTH_DEF = [{
-    name:"Empty",
-    value: 100,
-  }];
-  const [OBJECT_IN_TODAY, setOBJECT_IN_TODAY] = useState<any>(OBJECT_IN_TODAY_DEF);
-  const [OBJECT_OUT_TODAY, setOBJECT_OUT_TODAY] = useState<any>(OBJECT_OUT_TODAY_DEF);
-  const [OBJECT_IN_WEEK, setOBJECT_IN_WEEK] = useState<any>(OBJECT_IN_WEEK_DEF);
-  const [OBJECT_OUT_WEEK, setOBJECT_OUT_WEEK] = useState<any>(OBJECT_OUT_WEEK_DEF);
-  const [OBJECT_IN_MONTH, setOBJECT_IN_MONTH] = useState<any>(OBJECT_IN_MONTH_DEF);
-  const [OBJECT_OUT_MONTH, setOBJECT_OUT_MONTH] = useState<any>(OBJECT_OUT_MONTH_DEF);
+  const [OBJECT_IN_TODAY, setOBJECT_IN_TODAY] = useState<any>([MoneyPie]);
+  const [OBJECT_OUT_TODAY, setOBJECT_OUT_TODAY] = useState<any>([MoneyPie]);
+  const [OBJECT_IN_WEEK, setOBJECT_IN_WEEK] = useState<any>([MoneyPie]);
+  const [OBJECT_OUT_WEEK, setOBJECT_OUT_WEEK] = useState<any>([MoneyPie]);
+  const [OBJECT_IN_MONTH, setOBJECT_IN_MONTH] = useState<any>([MoneyPie]);
+  const [OBJECT_OUT_MONTH, setOBJECT_OUT_MONTH] = useState<any>([MoneyPie]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -107,22 +84,22 @@ export const MoneyChartPie = () => {
       }),
     ]);
     setOBJECT_IN_TODAY(
-      resToday.data.result.income.length > 0 ? resToday.data.result.income : OBJECT_IN_TODAY_DEF
+      resToday.data.result.income.length > 0 ? resToday.data.result.income : [MoneyPie]
     );
     setOBJECT_OUT_TODAY(
-      resToday.data.result.expense.length > 0 ? resToday.data.result.expense : OBJECT_OUT_TODAY_DEF
+      resToday.data.result.expense.length > 0 ? resToday.data.result.expense : [MoneyPie]
     );
     setOBJECT_IN_WEEK(
-      resWeek.data.result.income.length > 0 ? resWeek.data.result.income : OBJECT_IN_WEEK_DEF
+      resWeek.data.result.income.length > 0 ? resWeek.data.result.income : [MoneyPie]
     );
     setOBJECT_OUT_WEEK(
-      resWeek.data.result.expense.length > 0 ? resWeek.data.result.expense : OBJECT_OUT_WEEK_DEF
+      resWeek.data.result.expense.length > 0 ? resWeek.data.result.expense : [MoneyPie]
     );
     setOBJECT_IN_MONTH(
-      resMonth.data.result.income.length > 0 ? resMonth.data.result.income : OBJECT_IN_MONTH_DEF
+      resMonth.data.result.income.length > 0 ? resMonth.data.result.income : [MoneyPie]
     );
     setOBJECT_OUT_MONTH(
-      resMonth.data.result.expense.length > 0 ? resMonth.data.result.expense : OBJECT_OUT_MONTH_DEF
+      resMonth.data.result.expense.length > 0 ? resMonth.data.result.expense : [MoneyPie]
     );
     setLOADING(false);
   })()}, [sessionId]);

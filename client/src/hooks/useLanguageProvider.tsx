@@ -2,71 +2,21 @@
 
 import { useState, useEffect, useCallback } from "@imports/ImportReacts";
 import { createContext, useContext } from "@imports/ImportReacts";
-import { moment, getCountryForTimezone, getAllInfoByISO } from "@imports/ImportLibs";
 
 // -------------------------------------------------------------------------------------------------
 const TITLE = process.env.REACT_APP_TITLE || "";
 const LanguageContext = createContext<any>({});
-
-// 2. declare ------------------------------------------------------------------------------------
-let timeZone: string = "";
-let zoneName: string = "";
-let locale: string = "";
-let isoCode: any = "";
-let currencyCode: string = "";
 
 // -------------------------------------------------------------------------------------------------
 export const LanguageProvider = ({ children }: any) => {
 
   const [lang, setLang] = useState<any>("");
   useEffect(() => {
-    try {
-      // ex. Asia/Seoul
-      timeZone = moment.tz.guess();
-
-      // ex. KST
-      zoneName = moment.tz(timeZone).zoneName();
-
-      // ex. ko-KR
-      locale = navigator.language;
-
-      // ex. KR
-      isoCode = getCountryForTimezone(timeZone)?.id;
-
-      // ex. KRW
-      currencyCode = getAllInfoByISO(isoCode).currency;
-
-      if (timeZone) {
-        sessionStorage.setItem(`${TITLE}_timeZone`, timeZone);
-      }
-      if (zoneName) {
-        sessionStorage.setItem(`${TITLE}_zoneName`, zoneName);
-      }
-      if (locale) {
-        sessionStorage.setItem(`${TITLE}_locale`, locale);
-        locale.includes("-") && locale.split("-")[0] ?
-        setLang(locale.split("-")[0]) : setLang(locale)
-      }
-      if (isoCode) {
-        sessionStorage.setItem(`${TITLE}_isoCode`, isoCode);
-      }
-      if (currencyCode) {
-        sessionStorage.setItem(`${TITLE}_currencyCode`, currencyCode);
-      }
-      console.log("LanguageProvider", lang);
-    }
-    catch (err: any) {
-      console.error("LanguageProvider", err);
+    const sessionLang: string = sessionStorage.getItem(`${TITLE}_lang`) || "ko";
+    if (sessionLang) {
+      setLang(sessionLang);
     }
   }, [lang]);
-
-  if (lang === "ko") {
-    require("moment/locale/ko");
-    sessionStorage.setItem(`${TITLE}_lang`, "ko");
-  }
-  else {
-    sessionStorage.setItem(`${TITLE}_lang`, "en");
-  }
 
   return (
     <LanguageContext.Provider value={{lang, setLang}}>
@@ -236,15 +186,11 @@ export const useTranslate = () => {
       ko: "삭제",
       en: "Delete"
     },
-    deletes: {
-      ko: "삭제",
-      en: "Delete"
-    },
-    deletesAll: {
+    deleteAll: {
       ko: "전체삭제",
       en: "Delete All"
     },
-    deletesUser: {
+    deleteUser: {
       ko: "탈퇴 후에는 복구가 불가능합니다.\n정말로 탈퇴하시겠습니까?",
       en: "Withdrawal is irreversible.\nDo you really want to withdraw?"
     },
@@ -400,15 +346,15 @@ export const useTranslate = () => {
       ko: "추가",
       en: "Insert"
     },
-    flowDummyDeletes: {
+    flowDummyDelete: {
       ko: "삭제",
       en: "Delete"
     },
-    flowDummyDeletesAll: {
+    flowDummyDeleteAll: {
       ko: "전체삭제",
       en: "Delete All"
     },
-    flowDeletes: {
+    flowDelete: {
       ko: "삭제",
       en: "Delete"
     },
@@ -1012,6 +958,26 @@ export const useTranslate = () => {
     },
     // ---------------------------------------------------------------------------------------------
     // t
+    toSave: {
+      ko: "저장하기",
+      en: "To Save"
+    },
+    toUpdate: {
+      ko: "수정하기",
+      en: "To Update"
+    },
+    toDelete: {
+      ko: "삭제하기",
+      en: "To Delete"
+    },
+    toFind: {
+      ko: "찾기",
+      en: "To Find"
+    },
+    toList: {
+      ko: "리스트",
+      en: "To List"
+    },
     trend: {
       ko: "추이",
       en: "Trend"
@@ -1094,7 +1060,7 @@ export const useTranslate = () => {
       ko: "선택하지 않음",
       en: "Unknown"
     },
-    userDeletes: {
+    userDelete: {
       ko: "회원탈퇴",
       en: "Withdrawal"
     },

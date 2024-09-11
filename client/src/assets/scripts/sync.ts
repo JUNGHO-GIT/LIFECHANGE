@@ -42,11 +42,9 @@ export const sync = async () => {
       }),
     ]);
 
-    Object.assign(OBJECT, {
-      percent: resPercent.data.result,
-      property: resProperty.data.result,
-      scale: resScale.data.result,
-    });
+    OBJECT.percent = resPercent.data.result;
+    OBJECT.property = resProperty.data.result;
+    OBJECT.scale = resScale.data.result;
 
     sessionStorage.setItem(`${TITLE}_percent`, JSON.stringify(resPercent.data.result));
     sessionStorage.setItem(`${TITLE}_property`, JSON.stringify(resProperty.data.result));

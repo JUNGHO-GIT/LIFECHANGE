@@ -7,12 +7,12 @@ import mongodb from 'mongodb';
 import moment from 'moment';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
+import { fileURLToPath } from "url";
 import * as repository from "@repositories/user/userRepository";
 import { randomNumber, randomTime, calcDate } from '@scripts/utils.js';
 import { exerciseArray } from '@arrays/exerciseArray.js';
 import { foodArray } from '@arrays/foodArray.js';
 import { moneyArray } from '@arrays/moneyArray.js';
-import { fileURLToPath } from "url";
 import { emailSending } from "@scripts/email";
 dotenv.config();
 
@@ -398,8 +398,8 @@ export const userUpdate = async (
   };
 };
 
-// 2-6. userDeletes --------------------------------------------------------------------------------
-export const userDeletes = async (
+// 2-6. userDelete --------------------------------------------------------------------------------
+export const userDelete = async (
   user_id_param: string
 ) => {
 
@@ -408,7 +408,7 @@ export const userDeletes = async (
   let finalResult: any = null;
   let statusResult: string = "";
 
-  findResult = await repository.userDeletes(
+  findResult = await repository.userDelete(
     user_id_param
   );
 
@@ -686,7 +686,7 @@ export const dummySave = async (
       };
     });
     findResult = (
-      await repository.dummyDeletes(
+      await repository.dummyDelete(
         user_id_param, "exerciseGoal"
       ),
       await repository.dummySave(
@@ -750,7 +750,7 @@ export const dummySave = async (
       };
     });
     findResult = (
-      await repository.dummyDeletes(
+      await repository.dummyDelete(
         user_id_param, "exercise"
       ),
       await repository.dummySave(
@@ -788,7 +788,7 @@ export const dummySave = async (
       };
     });
     findResult = (
-      await repository.dummyDeletes(
+      await repository.dummyDelete(
         user_id_param, "foodGoal"
       ),
       await repository.dummySave(
@@ -862,7 +862,7 @@ export const dummySave = async (
       };
     });
     findResult = (
-      await repository.dummyDeletes(
+      await repository.dummyDelete(
         user_id_param, "food"
       ),
       await repository.dummySave(
@@ -898,7 +898,7 @@ export const dummySave = async (
       };
     });
     findResult = (
-      await repository.dummyDeletes(
+      await repository.dummyDelete(
         user_id_param, "moneyGoal"
       ),
       await repository.dummySave(
@@ -958,7 +958,7 @@ export const dummySave = async (
       };
     });
     findResult = (
-      await repository.dummyDeletes(
+      await repository.dummyDelete(
         user_id_param, "money"
       ),
       await repository.dummySave(
@@ -995,7 +995,7 @@ export const dummySave = async (
       };
     });
     findResult = (
-      await repository.dummyDeletes(
+      await repository.dummyDelete(
         user_id_param, "sleepGoal"
       ),
       await repository.dummySave(
@@ -1038,7 +1038,7 @@ export const dummySave = async (
       };
     });
     findResult = (
-      await repository.dummyDeletes(
+      await repository.dummyDelete(
         user_id_param, "sleep"
       ),
       await repository.dummySave(
@@ -1062,8 +1062,8 @@ export const dummySave = async (
   };
 };
 
-// 5-3. dummyDeletes -------------------------------------------------------------------------------
-export const dummyDeletes = async (
+// 5-3. dummyDelete -------------------------------------------------------------------------------
+export const dummyDelete = async (
   user_id_param: string,
   PART_param: string,
 ) => {
@@ -1076,7 +1076,7 @@ export const dummyDeletes = async (
 
   // 0. all
   if (secondStr === "all") {
-    findResult = await repository.dummyDeletesAll(
+    findResult = await repository.dummyDeleteAll(
       user_id_param
     );
     if (!findResult) {
@@ -1091,7 +1091,7 @@ export const dummyDeletes = async (
 
   // 1. exerciseGoal
   else if (secondStr === "exerciseGoal") {
-    findResult = await repository.dummyDeletes(
+    findResult = await repository.dummyDelete(
       user_id_param, "exerciseGoal"
     );
     if (!findResult) {
@@ -1106,7 +1106,7 @@ export const dummyDeletes = async (
 
   // 2. exercise
   else if (secondStr === "exercise") {
-    findResult = await repository.dummyDeletes(
+    findResult = await repository.dummyDelete(
       user_id_param, "exercise"
     );
     if (!findResult) {
@@ -1121,7 +1121,7 @@ export const dummyDeletes = async (
 
   // 3. foodGoal
   else if (secondStr === "foodGoal") {
-    findResult = await repository.dummyDeletes(
+    findResult = await repository.dummyDelete(
       user_id_param, "foodGoal"
     );
     if (!findResult) {
@@ -1136,7 +1136,7 @@ export const dummyDeletes = async (
 
   // 4. food
   else if (secondStr === "food") {
-    findResult = await repository.dummyDeletes(
+    findResult = await repository.dummyDelete(
       user_id_param, "food"
     );
     if (!findResult) {
@@ -1151,7 +1151,7 @@ export const dummyDeletes = async (
 
   // 5. moneyGoal
   else if (secondStr === "moneyGoal") {
-    findResult = await repository.dummyDeletes(
+    findResult = await repository.dummyDelete(
       user_id_param, "moneyGoal"
     );
     if (!findResult) {
@@ -1166,7 +1166,7 @@ export const dummyDeletes = async (
 
   // 6. money
   else if (secondStr === "money") {
-    findResult = await repository.dummyDeletes(
+    findResult = await repository.dummyDelete(
       user_id_param, "money"
     );
     if (!findResult) {
@@ -1181,7 +1181,7 @@ export const dummyDeletes = async (
 
   // 7. sleepGoal
   else if (secondStr === "sleepGoal") {
-    findResult = await repository.dummyDeletes(
+    findResult = await repository.dummyDelete(
       user_id_param, "sleepGoal"
     );
     if (!findResult) {
@@ -1196,7 +1196,7 @@ export const dummyDeletes = async (
 
   // 8. sleep
   else if (secondStr === "sleep") {
-    findResult = await repository.dummyDeletes(
+    findResult = await repository.dummyDelete(
       user_id_param, "sleep"
     );
     if (!findResult) {

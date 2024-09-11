@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { ExercisePie } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { Loading } from "@imports/ImportLayouts";
 import { Div, Img, Select } from "@imports/ImportComponents";
@@ -57,26 +58,10 @@ export const ExerciseChartPie = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_PART_WEEK_DEF = [{
-    name:"Empty",
-    value: 100
-  }];
-  const OBJECT_TITLE_WEEK_DEF = [{
-    name:"Empty",
-    value: 100
-  }];
-  const OBJECT_PART_MONTH_DEF = [{
-    name:"Empty",
-    value: 100
-  }];
-  const OBJECT_TITLE_MONTH_DEF = [{
-    name:"Empty",
-    value: 100
-  }];
-  const [OBJECT_PART_WEEK, setOBJECT_PART_WEEK] = useState<any>(OBJECT_PART_WEEK_DEF);
-  const [OBJECT_TITLE_WEEK, setOBJECT_TITLE_WEEK] = useState<any>(OBJECT_TITLE_WEEK_DEF);
-  const [OBJECT_PART_MONTH, setOBJECT_PART_MONTH] = useState<any>(OBJECT_PART_MONTH_DEF);
-  const [OBJECT_TITLE_MONTH, setOBJECT_TITLE_MONTH] = useState<any>(OBJECT_TITLE_MONTH_DEF);
+  const [OBJECT_PART_WEEK, setOBJECT_PART_WEEK] = useState<any>([ExercisePie]);
+  const [OBJECT_TITLE_WEEK, setOBJECT_TITLE_WEEK] = useState<any>([ExercisePie]);
+  const [OBJECT_PART_MONTH, setOBJECT_PART_MONTH] = useState<any>([ExercisePie]);
+  const [OBJECT_TITLE_MONTH, setOBJECT_TITLE_MONTH] = useState<any>([ExercisePie]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -94,16 +79,16 @@ export const ExerciseChartPie = () => {
       }),
     ]);
     setOBJECT_PART_WEEK(
-      resWeek.data.result.part.length > 0 ? resWeek.data.result.part : OBJECT_PART_WEEK_DEF
+      resWeek.data.result.part.length > 0 ? resWeek.data.result.part : [ExercisePie]
     );
     setOBJECT_TITLE_WEEK(
-      resWeek.data.result.title.length > 0 ? resWeek.data.result.title : OBJECT_TITLE_WEEK_DEF
+      resWeek.data.result.title.length > 0 ? resWeek.data.result.title : [ExercisePie]
     );
     setOBJECT_PART_MONTH(
-      resMonth.data.result.part.length > 0 ? resMonth.data.result.part : OBJECT_PART_MONTH_DEF
+      resMonth.data.result.part.length > 0 ? resMonth.data.result.part : [ExercisePie]
     );
     setOBJECT_TITLE_MONTH(
-      resMonth.data.result.title.length > 0 ? resMonth.data.result.title : OBJECT_TITLE_MONTH_DEF
+      resMonth.data.result.title.length > 0 ? resMonth.data.result.title : [ExercisePie]
     );
     setLOADING(false);
   })()}, [sessionId]);

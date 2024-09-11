@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
+import { FoodGoal } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div, Img, Hr, Icons } from "@imports/ImportComponents";
@@ -22,7 +23,7 @@ export const FoodGoalList = () => {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, firstStr
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, toUpdate,
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -44,58 +45,18 @@ export const FoodGoalList = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [isExpanded, setIsExpanded] = useState<number[]>([0]);
   const [LOADING, setLOADING] = useState<boolean>(false);
+  const [OBJECT, setOBJECT] = useState<any>([FoodGoal]);
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList: `/${firstStr}/goal/list`,
-    toSave: `/${firstStr}/goal/save`,
-    toUpdate: `/${firstStr}/goal/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
   });
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_DEF = [{
-    _id: "",
-    food_goal_number: 0,
-    food_goal_dummy: "N",
-    food_goal_dateType: "",
-    food_goal_dateStart: "0000-00-00",
-    food_goal_dateEnd: "0000-00-00",
-    food_goal_kcal: "0",
-    food_goal_kcal_color: "",
-    food_goal_carb: "0",
-    food_goal_carb_color: "",
-    food_goal_protein: "0",
-    food_goal_protein_color: "",
-    food_goal_fat: "0",
-    food_goal_fat_color: "",
-    food_dateType: "",
-    food_dateStart: "0000-00-00",
-    food_dateEnd: "0000-00-00",
-    food_total_kcal: "0",
-    food_total_kcal_color: "",
-    food_total_carb: "0",
-    food_total_carb_color: "",
-    food_total_protein: "0",
-    food_total_protein_color: "",
-    food_total_fat: "0",
-    food_total_fat_color: "",
-    food_diff_kcal: "0",
-    food_diff_kcal_color: "",
-    food_diff_carb: "0",
-    food_diff_carb_color: "",
-    food_diff_protein: "0",
-    food_diff_protein_color: "",
-    food_diff_fat: "0",
-    food_diff_fat_color: "",
-  }];
-  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -108,7 +69,7 @@ export const FoodGoalList = () => {
       },
     })
     .then((res: any) => {
-      setOBJECT(res.data.result && res.data.result.length > 0 ? res.data.result : OBJECT_DEF);
+      setOBJECT(res.data.result.length > 0 ? res.data.result : [FoodGoal]);
       setCOUNT((prev: any) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
@@ -125,7 +86,7 @@ export const FoodGoalList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
 
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
@@ -163,13 +124,14 @@ export const FoodGoalList = () => {
                       dateStart: item.food_goal_dateStart,
                       dateEnd: item.food_goal_dateEnd,
                     });
-                    navigate(SEND.toUpdate, {
+                    navigate(toUpdate, {
                       state: SEND
                     });
                   }}
                 >
                   <Grid size={2} className={"d-center"}>
                     <Icons
+                      key={"Search"}
                       name={"Search"}
                       className={"w-18 h-18 black"}
                     />
@@ -507,7 +469,6 @@ export const FoodGoalList = () => {
         setDATE, setSEND, setPAGING, setCOUNT
       }}
       flow={{
-        navigate
       }}
     />
   );

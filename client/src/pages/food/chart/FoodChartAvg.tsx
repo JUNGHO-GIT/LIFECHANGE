@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { FoodAvgKcal, FoodAvgNut } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { handlerY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
@@ -47,34 +48,10 @@ export const FoodChartAvg = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_KCAL_WEEK_DEF = [{
-    name:"",
-    date:"",
-    kcal: ""
-  }];
-  const OBJECT_NUT_WEEK_DEF = [{
-    name:"",
-    date:"",
-    carb: "",
-    protein: "",
-    fat: ""
-  }];
-  const OBJECT_KCAL_MONTH_DEF = [{
-    name:"",
-    date:"",
-    kcal: ""
-  }];
-  const OBJECT_NUT_MONTH_DEF = [{
-    name:"",
-    date:"",
-    carb: "",
-    protein: "",
-    fat: ""
-  }];
-  const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState<any>(OBJECT_KCAL_WEEK_DEF);
-  const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState<any>(OBJECT_NUT_WEEK_DEF);
-  const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState<any>(OBJECT_KCAL_MONTH_DEF);
-  const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState<any>(OBJECT_NUT_MONTH_DEF);
+  const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState<any>([FoodAvgKcal]);
+  const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState<any>([FoodAvgNut]);
+  const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState<any>([FoodAvgKcal]);
+  const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState<any>([FoodAvgNut]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -92,16 +69,16 @@ export const FoodChartAvg = () => {
       }),
     ]);
     setOBJECT_KCAL_WEEK(
-      resWeek.data.result.kcal.length > 0 ? resWeek.data.result.kcal : OBJECT_KCAL_WEEK_DEF
+      resWeek.data.result.kcal.length > 0 ? resWeek.data.result.kcal : [FoodAvgKcal]
     );
     setOBJECT_NUT_WEEK(
-      resWeek.data.result.nut.length > 0 ? resWeek.data.result.nut : OBJECT_NUT_WEEK_DEF
+      resWeek.data.result.nut.length > 0 ? resWeek.data.result.nut : [FoodAvgNut]
     );
     setOBJECT_KCAL_MONTH(
-      resMonth.data.result.kcal.length > 0 ? resMonth.data.result.kcal : OBJECT_KCAL_MONTH_DEF
+      resMonth.data.result.kcal.length > 0 ? resMonth.data.result.kcal : [FoodAvgKcal]
     );
     setOBJECT_NUT_MONTH(
-      resMonth.data.result.nut.length > 0 ? resMonth.data.result.nut : OBJECT_NUT_MONTH_DEF
+      resMonth.data.result.nut.length > 0 ? resMonth.data.result.nut : [FoodAvgNut]
     );
     setLOADING(false);
   })()}, [sessionId]);

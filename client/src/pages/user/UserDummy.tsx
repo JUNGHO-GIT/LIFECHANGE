@@ -3,8 +3,12 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useTranslate, useStorage } from "@imports/ImportHooks";
-import { Loading, Footer } from "@imports/ImportLayouts";
+import { ExerciseGoal, Exercise } from "@imports/ImportSchemas";
+import { FoodGoal, Food } from "@imports/ImportSchemas";
+import { MoneyGoal, Money } from "@imports/ImportSchemas";
+import { SleepGoal, Sleep } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
+import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div } from "@imports/ImportComponents";
 import { Paper, TableContainer, Table, Card, Grid } from "@imports/ImportMuis";
 import { TableHead, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
@@ -23,6 +27,14 @@ export const UserDummy = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [PART, setPART] = useState<string>("exerciseGoal");
+  const [OBJECT_EXERCISE_GOAL, setOBJECT_EXERCISE_GOAL] = useState<any>([ExerciseGoal]);
+  const [OBJECT_EXERCISE, setOBJECT_EXERCISE] = useState<any>([Exercise]);
+  const [OBJECT_FOOD_GOAL, setOBJECT_FOOD_GOAL] = useState<any>([FoodGoal]);
+  const [OBJECT_FOOD, setOBJECT_FOOD] = useState<any>([Food]);
+  const [OBJECT_MONEY_GOAL, setOBJECT_MONEY_GOAL] = useState<any>([MoneyGoal]);
+  const [OBJECT_MONEY, setOBJECT_MONEY] = useState<any>([Money]);
+  const [OBJECT_SLEEP_GOAL, setOBJECT_SLEEP_GOAL] = useState<any>([SleepGoal]);
+  const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState<any>([Sleep]);
   const [PAGING, setPAGING] = useStorage(
     `${TITLE}_paging_(${PATH})`, {
       sort: "asc",
@@ -34,138 +46,6 @@ export const UserDummy = () => {
     totalCnt: 0,
     sectionCnt: 0
   });
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_EXERCISE_GOAL_DEF = [{
-    _id: "",
-    exercise_goal_number: 0,
-    exercise_goal_dummy: "N",
-    exercise_goal_dateStart: "0000-00-00",
-    exercise_goal_dateEnd: "0000-00-00",
-    exercise_goal_count: "",
-    exercise_goal_cardio: "00:00",
-    exercise_goal_volume: "",
-    exercise_goal_weight: "",
-  }];
-  const OBJECT_EXERCISE_DEF = [{
-    _id: "",
-    exercise_number: 0,
-    exercise_dummy: "N",
-    exercise_dateType: "day",
-    exercise_dateStart: "0000-00-00",
-    exercise_dateEnd: "0000-00-00",
-    exercise_total_volume: "",
-    exercise_total_cardio: "00:00",
-    exercise_total_weight: "",
-    exercise_section: [{
-      exercise_part_idx: 0,
-      exercise_part_val: "all",
-      exercise_title_idx: 0,
-      exercise_title_val: "all",
-      exercise_set: "",
-      exercise_rep: "",
-      exercise_kg: "",
-      exercise_volume: "",
-      exercise_cardio: "00:00",
-    }],
-  }];
-  const OBJECT_FOOD_GOAL_DEF = [{
-    _id: "",
-    food_goal_number: 0,
-    food_goal_dummy: "N",
-    food_goal_dateType: "day",
-    food_goal_dateStart: "0000-00-00",
-    food_goal_dateEnd: "0000-00-00",
-    food_goal_kcal: "",
-    food_goal_carb: "",
-    food_goal_protein: "",
-    food_goal_fat: "",
-  }];
-  const OBJECT_FOOD_DEF = [{
-    _id: "",
-    food_number: 0,
-    food_dummy: "N",
-    food_dateType: "day",
-    food_dateStart: "0000-00-00",
-    food_dateEnd: "0000-00-00",
-    food_total_kcal: "",
-    food_total_fat: "",
-    food_total_carb: "",
-    food_total_protein: "",
-    food_section: [{
-      food_part_idx: 1,
-      food_part_val: "breakfast",
-      food_name: "",
-      food_brand: "",
-      food_count: "",
-      food_serv: "회",
-      food_gram: "",
-      food_kcal: "",
-      food_fat: "",
-      food_carb: "",
-      food_protein: "",
-    }],
-  }];
-  const OBJECT_MONEY_GOAL_DEF = [{
-    _id: "",
-    money_goal_number: 0,
-    money_goal_dummy: "N",
-    money_goal_dateType: "day",
-    money_goal_dateStart: "0000-00-00",
-    money_goal_dateEnd: "0000-00-00",
-    money_goal_income: "",
-    money_goal_expense: "",
-  }];
-  const OBJECT_MONEY_DEF = [{
-    _id: "",
-    money_number: 0,
-    money_dummy: "N",
-    money_dateType: "day",
-    money_dateStart: "0000-00-00",
-    money_dateEnd: "0000-00-00",
-    money_total_income: "",
-    money_total_expense: "",
-    money_section: [{
-      money_part_idx: 0,
-      money_part_val: "all",
-      money_title_idx: 0,
-      money_title_val: "all",
-      money_amount: "",
-      money_content: "",
-    }],
-  }];
-  const OBJECT_SLEEP_GOAL_DEF = [{
-    _id: "",
-    sleep_goal_number: 0,
-    sleep_goal_dummy: "N",
-    sleep_goal_dateType: "day",
-    sleep_goal_dateStart: "0000-00-00",
-    sleep_goal_dateEnd: "0000-00-00",
-    sleep_goal_bedTime: "00:00",
-    sleep_goal_wakeTime: "00:00",
-    sleep_goal_sleepTime: "00:00",
-  }];
-  const OBJECT_SLEEP_DEF = [{
-    _id: "",
-    sleep_number: 0,
-    sleep_dummy: "N",
-    sleep_dateType: "day",
-    sleep_dateStart: "0000-00-00",
-    sleep_dateEnd: "0000-00-00",
-    sleep_section: [{
-      sleep_bedTime: "00:00",
-      sleep_wakeTime: "00:00",
-      sleep_sleepTime: "00:00",
-    }],
-  }];
-  const [OBJECT_EXERCISE_GOAL, setOBJECT_EXERCISE_GOAL] = useState<any>(OBJECT_EXERCISE_GOAL_DEF);
-  const [OBJECT_FOOD_GOAL, setOBJECT_FOOD_GOAL] = useState<any>(OBJECT_FOOD_GOAL_DEF);
-  const [OBJECT_MONEY_GOAL, setOBJECT_MONEY_GOAL] = useState<any>(OBJECT_MONEY_GOAL_DEF);
-  const [OBJECT_SLEEP_GOAL, setOBJECT_SLEEP_GOAL] = useState<any>(OBJECT_SLEEP_GOAL_DEF);
-  const [OBJECT_EXERCISE, setOBJECT_EXERCISE] = useState<any>(OBJECT_EXERCISE_DEF);
-  const [OBJECT_FOOD, setOBJECT_FOOD] = useState<any>(OBJECT_FOOD_DEF);
-  const [OBJECT_MONEY, setOBJECT_MONEY] = useState<any>(OBJECT_MONEY_DEF);
-  const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState<any>(OBJECT_SLEEP_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -179,28 +59,28 @@ export const UserDummy = () => {
     })
     .then((res: any) => {
       if (PART === "exerciseGoal") {
-        setOBJECT_EXERCISE_GOAL(res.data.result || OBJECT_EXERCISE_GOAL_DEF);
+        setOBJECT_EXERCISE_GOAL(res.data.result.length > 0 ? res.data.result : [ExerciseGoal]);
       }
       else if (PART === "exercise") {
-        setOBJECT_EXERCISE(res.data.result || OBJECT_EXERCISE_DEF);
+        setOBJECT_EXERCISE(res.data.result.length > 0 ? res.data.result : [Exercise]);
       }
       else if (PART === "foodGoal") {
-        setOBJECT_FOOD_GOAL(res.data.result || OBJECT_FOOD_GOAL_DEF);
+        setOBJECT_FOOD_GOAL(res.data.result.length > 0 ? res.data.result : [FoodGoal]);
       }
       else if (PART === "food") {
-        setOBJECT_FOOD(res.data.result || OBJECT_FOOD_DEF);
+        setOBJECT_FOOD(res.data.result.length > 0 ? res.data.result : [Food]);
       }
       else if (PART === "moneyGoal") {
-        setOBJECT_MONEY_GOAL(res.data.result || OBJECT_MONEY_GOAL_DEF);
+        setOBJECT_MONEY_GOAL(res.data.result.length > 0 ? res.data.result : [MoneyGoal]);
       }
       else if (PART === "money") {
-        setOBJECT_MONEY(res.data.result || OBJECT_MONEY_DEF);
+        setOBJECT_MONEY(res.data.result.length > 0 ? res.data.result : [Money]);
       }
       else if (PART === "sleepGoal") {
-        setOBJECT_SLEEP_GOAL(res.data.result || OBJECT_SLEEP_GOAL_DEF);
+        setOBJECT_SLEEP_GOAL(res.data.result.length > 0 ? res.data.result : [SleepGoal]);
       }
       else if (PART === "sleep") {
-        setOBJECT_SLEEP(res.data.result || OBJECT_SLEEP_DEF);
+        setOBJECT_SLEEP(res.data.result.length > 0 ? res.data.result : [Sleep]);
       }
       setCOUNT((prev: any) => ({
         ...prev,
@@ -250,9 +130,9 @@ export const UserDummy = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowDummyDeletes = async () => {
+  const flowDummyDelete = async () => {
     const previousPART = PART;
-    axios.delete(`${URL_OBJECT}/dummyDeletes`, {
+    axios.delete(`${URL_OBJECT}/dummyDelete`, {
       data: {
         user_id: sessionId,
         PART: PART,
@@ -773,7 +653,7 @@ export const UserDummy = () => {
         setPAGING, setCOUNT, setPART
       }}
       flow={{
-        navigate, flowDummySave, flowDummyDeletes
+        flowDummySave, flowDummyDelete
       }}
     />
   );

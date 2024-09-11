@@ -68,7 +68,7 @@ export const update = async (object: any) => {
   return object;
 };
 
-// 5. deletes --------------------------------------------------------------------------------------
+// 5. delete --------------------------------------------------------------------------------------
 export const deletes = async (object: any) => {
 
   let totalIncome = 0;

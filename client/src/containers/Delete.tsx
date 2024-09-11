@@ -5,12 +5,13 @@ import { Icons, Div } from "@imports/ImportComponents";
 // -------------------------------------------------------------------------------------------------
 declare interface DeleteProps {
   index: number;
-  handlerDelete: any;
+  handlerDelete?: any;
+  readonly?: boolean;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const Delete = (
-  { index, handlerDelete }: DeleteProps
+  { index, handlerDelete, readonly }: DeleteProps
 ) => {
 
   // 1. deleteNode --------------------------------------------------------------------------------
@@ -18,7 +19,11 @@ export const Delete = (
     <Div className={"mt-n10 me-n10"}>
       <Icons
         name={"X"}
-        onClick={() => handlerDelete(index)}
+        onClick={() => {
+          if (!readonly || readonly === undefined) {
+            handlerDelete(index);
+          }
+        }}
         className={"w-20 h-20 black"}
       />
     </Div>

@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
+import { ExerciseGoal, FoodGoal, MoneyGoal, SleepGoal } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
@@ -25,7 +26,7 @@ export const TodayGoalList = () => {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP, sessionId, TITLE, sessionCurrencyCode,
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP, sessionId, TITLE, sessionCurrency,
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -86,131 +87,10 @@ export const TodayGoalList = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_EXERCISE_DEF = [{
-    _id: "",
-    exercise_goal_number: 0,
-    exercise_goal_dummy: "N",
-    exercise_goal_dateType: "day",
-    exercise_goal_dateStart: "0000-00-00",
-    exercise_goal_dateEnd: "0000-00-00",
-    exercise_goal_count: "0",
-    exercise_goal_count_color: "",
-    exercise_goal_volume: "0",
-    exercise_goal_volume_color: "",
-    exercise_goal_weight: "0",
-    exercise_goal_weight_color: "",
-    exercise_goal_cardio: "00:00",
-    exercise_goal_cardio_color: "",
-    exercise_dateType: "day",
-    exercise_dateStart: "0000-00-00",
-    exercise_dateEnd: "0000-00-00",
-    exercise_total_count: "0",
-    exercise_total_count_color: "",
-    exercise_total_volume: "0",
-    exercise_total_volume_color: "",
-    exercise_total_weight: "0",
-    exercise_total_weight_color: "",
-    exercise_total_cardio: "00:00",
-    exercise_total_cardio_color: "",
-    exercise_diff_count: "0",
-    exercise_diff_count_color: "",
-    exercise_diff_cardio: "00:00",
-    exercise_diff_cardio_color: "",
-    exercise_diff_volume: "0",
-    exercise_diff_volume_color: "",
-    exercise_diff_weight: "0",
-    exercise_diff_weight_color: "",
-  }];
-  const OBJECT_FOOD_DEF = [{
-    _id: "",
-    food_goal_number: 0,
-    food_goal_dummy: "N",
-    food_goal_dateType: "day",
-    food_goal_dateStart: "0000-00-00",
-    food_goal_dateEnd: "0000-00-00",
-    food_goal_kcal: "0",
-    food_goal_kcal_color: "",
-    food_goal_carb: "0",
-    food_goal_carb_color: "",
-    food_goal_protein: "0",
-    food_goal_protein_color: "",
-    food_goal_fat: "0",
-    food_goal_fat_color: "",
-    food_dateType: "day",
-    food_dateStart: "0000-00-00",
-    food_dateEnd: "0000-00-00",
-    food_total_kcal: "0",
-    food_total_kcal_color: "",
-    food_total_carb: "0",
-    food_total_carb_color: "",
-    food_total_protein: "0",
-    food_total_protein_color: "",
-    food_total_fat: "0",
-    food_diff_kcal: "0",
-    food_diff_kcal_color: "",
-    food_diff_carb: "0",
-    food_diff_carb_color: "",
-    food_diff_protein: "0",
-    food_diff_protein_color: "",
-    food_diff_fat: "0",
-    food_diff_fat_color: "",
-  }];
-  const OBJECT_MONEY_DEF = [{
-    _id: "",
-    money_goal_number: 0,
-    money_goal_dummy: "N",
-    money_goal_dateType: "",
-    money_goal_dateStart: "0000-00-00",
-    money_goal_dateEnd: "0000-00-00",
-    money_goal_income: "0",
-    money_goal_income_color: "",
-    money_goal_expense: "0",
-    money_goal_expense_color: "",
-    money_dateType: "",
-    money_dateStart: "0000-00-00",
-    money_dateEnd: "0000-00-00",
-    money_total_income: "0",
-    money_total_income_color: "",
-    money_total_expense: "0",
-    money_total_expense_color: "",
-    money_diff_income: "0",
-    money_diff_income_color: "",
-    money_diff_expense: "0",
-    money_diff_expense_color: "",
-  }];
-  const OBJECT_SLEEP_DEF = [{
-    _id: "",
-    sleep_goal_number: 0,
-    sleep_goal_dummy: "N",
-    sleep_goal_dateType: "",
-    sleep_goal_dateStart: "0000-00-00",
-    sleep_goal_dateEnd: "0000-00-00",
-    sleep_goal_bedTime: "00:00",
-    sleep_goal_bedTime_color: "",
-    sleep_goal_wakeTime: "00:00",
-    sleep_goal_wakeTime_color: "",
-    sleep_goal_sleepTime: "00:00",
-    sleep_goal_sleepTime_color: "",
-    sleep_dateType: "",
-    sleep_dateStart: "0000-00-00",
-    sleep_dateEnd: "0000-00-00",
-    sleep_bedTime: "00:00",
-    sleep_bedTime_color: "",
-    sleep_wakeTime: "00:00",
-    sleep_wakeTime_color: "",
-    sleep_sleepTime: "00:00",
-    sleep_sleepTime_color: "",
-    sleep_diff_bedTime: "00:00",
-    sleep_diff_bedTime_color: "",
-    sleep_diff_wakeTime: "00:00",
-    sleep_diff_wakeTime_color: "",
-    sleep_diff_sleepTime: "00:00",
-    sleep_diff_sleepTime_color: ""
-  }];
-  const [OBJECT_EXERCISE, setOBJECT_EXERCISE] = useState<any>(OBJECT_EXERCISE_DEF);
-  const [OBJECT_FOOD, setOBJECT_FOOD] = useState<any>(OBJECT_FOOD_DEF);
-  const [OBJECT_MONEY, setOBJECT_MONEY] = useState<any>(OBJECT_MONEY_DEF);
-  const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState<any>(OBJECT_SLEEP_DEF);
+  const [OBJECT_EXERCISE, setOBJECT_EXERCISE] = useState<any>([ExerciseGoal]);
+  const [OBJECT_FOOD, setOBJECT_FOOD] = useState<any>([FoodGoal]);
+  const [OBJECT_MONEY, setOBJECT_MONEY] = useState<any>([MoneyGoal]);
+  const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState<any>([SleepGoal]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -230,7 +110,7 @@ export const TodayGoalList = () => {
             DATE: DATE,
           },
         });
-        setObject(res.data.result && res.data.result.length > 0 ? res.data.result : objectDef);
+        setObject(res.data.result.length > 0 ? res.data.result : [objectDef]);
         setCount((prev: any) => ({
           ...prev,
           totalCnt: res.data.totalCnt || 0,
@@ -239,7 +119,7 @@ export const TodayGoalList = () => {
         }));
         // Accordion 초기값 설정
         //setIsExpanded([]);
-        setIsExpanded(res.data.result.map((item: any, index: number) => (index)));
+        setIsExpanded(res.data.result.map((_item: any, index: number) => (index)));
       }
       catch (err: any) {
         console.error(err);
@@ -251,35 +131,35 @@ export const TodayGoalList = () => {
           `${URL_EXERCISE}/goal/list`,
           setOBJECT_EXERCISE,
           setCOUNT_EXERCISE,
-          OBJECT_EXERCISE_DEF,
+          ExerciseGoal,
           setIsExpandedExercise
         ),
         fetchData(
           `${URL_FOOD}/goal/list`,
           setOBJECT_FOOD,
           setCOUNT_FOOD,
-          OBJECT_FOOD_DEF,
+          FoodGoal,
           setIsExpandedFood
         ),
         fetchData(
           `${URL_MONEY}/goal/list`,
           setOBJECT_MONEY,
           setCOUNT_MONEY,
-          OBJECT_MONEY_DEF,
+          MoneyGoal,
           setIsExpandedMoney
         ),
         fetchData(
           `${URL_SLEEP}/goal/list`,
           setOBJECT_SLEEP,
           setCOUNT_SLEEP,
-          OBJECT_SLEEP_DEF,
+          SleepGoal,
           setIsExpandedSleep
         ),
       ]);
       setLOADING(false);
     };
     fetchAllData();
-  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
 
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
@@ -325,6 +205,7 @@ export const TodayGoalList = () => {
                 >
                   <Grid size={2} className={"d-center"}>
                     <Icons
+                      key={"Search"}
                       name={"Search"}
                       className={"w-18 h-18 black"}
                     />
@@ -683,6 +564,7 @@ export const TodayGoalList = () => {
                 >
                   <Grid size={2} className={"d-center"}>
                     <Icons
+                      key={"Search"}
                       name={"Search"}
                       className={"w-18 h-18 black"}
                     />
@@ -1040,6 +922,7 @@ export const TodayGoalList = () => {
                 >
                   <Grid size={2} className={"d-center"}>
                     <Icons
+                      key={"Search"}
                       name={"Search"}
                       className={"w-18 h-18 black"}
                     />
@@ -1105,7 +988,7 @@ export const TodayGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrencyCode}
+                          {sessionCurrency}
                         </Div>
                       </Grid>
                       {/** real **/}
@@ -1121,7 +1004,7 @@ export const TodayGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrencyCode}
+                          {sessionCurrency}
                         </Div>
                       </Grid>
                       {/** diff **/}
@@ -1137,7 +1020,7 @@ export const TodayGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrencyCode}
+                          {sessionCurrency}
                         </Div>
                       </Grid>
                     </Grid>
@@ -1172,7 +1055,7 @@ export const TodayGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrencyCode}
+                          {sessionCurrency}
                         </Div>
                       </Grid>
                       {/** real **/}
@@ -1188,7 +1071,7 @@ export const TodayGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrencyCode}
+                          {sessionCurrency}
                         </Div>
                       </Grid>
                       {/** diff **/}
@@ -1204,7 +1087,7 @@ export const TodayGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrencyCode}
+                          {sessionCurrency}
                         </Div>
                       </Grid>
                     </Grid>
@@ -1264,6 +1147,7 @@ export const TodayGoalList = () => {
                 >
                   <Grid size={2} className={"d-center"}>
                     <Icons
+                      key={"Search"}
                       name={"Search"}
                       className={"w-18 h-18 black"}
                     />
@@ -1543,7 +1427,6 @@ export const TodayGoalList = () => {
         setDATE, setSEND
       }}
       flow={{
-        navigate
       }}
     />
   );

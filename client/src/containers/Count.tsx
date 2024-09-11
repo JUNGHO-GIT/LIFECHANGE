@@ -23,9 +23,8 @@ export const Count = (
     translate,
   } = useTranslate();
   const {
-    secondStr,
+    PATH
   } = useCommonValue();
-  const isFind = secondStr === "find";
 
   // 2. countNode ----------------------------------------------------------------------------------
   const countNode = () => (
@@ -57,8 +56,8 @@ export const Count = (
                 name={"Minus"}
                 className={"w-20 h-20 black"}
                 onClick={(e: any) => {
-                  if (isFind) {
-                    return
+                  if (PATH.includes("/food/find/list") || PATH.includes("/detail")) {
+                    return;
                   }
                   COUNT.newSectionCnt > COUNT.sectionCnt ? (
                     setCOUNT((prev: any) => ({
@@ -74,8 +73,8 @@ export const Count = (
                 name={"Plus"}
                 className={"w-20 h-20 black"}
                 onClick={(e: any) => {
-                  if (isFind) {
-                    return
+                  if (PATH.includes("/food/find/list") || PATH.includes("/detail")) {
+                    return;
                   }
                   COUNT.newSectionCnt < limit ? (
                     setCOUNT((prev: any) => ({

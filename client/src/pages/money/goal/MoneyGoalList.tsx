@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
+import { MoneyGoal } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div, Img, Hr, Icons } from "@imports/ImportComponents";
@@ -22,7 +23,7 @@ export const MoneyGoalList = () => {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, sessionCurrencyCode, firstStr
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, sessionCurrency, toUpdate,
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -44,46 +45,18 @@ export const MoneyGoalList = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [isExpanded, setIsExpanded] = useState<number[]>([0]);
   const [LOADING, setLOADING] = useState<boolean>(false);
+  const [OBJECT, setOBJECT] = useState<any>([MoneyGoal]);
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList: `/${firstStr}/goal/list`,
-    toSave: `/${firstStr}/goal/save`,
-    toUpdate: `/${firstStr}/goal/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
   });
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_DEF = [{
-    _id: "",
-    money_goal_number: 0,
-    money_goal_dummy: "N",
-    money_goal_dateType: "",
-    money_goal_dateStart: "0000-00-00",
-    money_goal_dateEnd: "0000-00-00",
-    money_goal_income: "0",
-    money_goal_income_color: "",
-    money_goal_expense: "0",
-    money_goal_expense_color: "",
-    money_dateType: "",
-    money_dateStart: "0000-00-00",
-    money_dateEnd: "0000-00-00",
-    money_total_income: "0",
-    money_total_income_color: "",
-    money_total_expense: "0",
-    money_total_expense_color: "",
-    money_diff_income: "0",
-    money_diff_income_color: "",
-    money_diff_expense: "0",
-    money_diff_expense_color: "",
-  }];
-  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -96,7 +69,7 @@ export const MoneyGoalList = () => {
       },
     })
     .then((res: any) => {
-      setOBJECT(res.data.result && res.data.result.length > 0 ? res.data.result : OBJECT_DEF);
+      setOBJECT(res.data.result.length > 0 ? res.data.result : [MoneyGoal]);
       setCOUNT((prev: any) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
@@ -113,7 +86,7 @@ export const MoneyGoalList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
 
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
@@ -151,13 +124,14 @@ export const MoneyGoalList = () => {
                       dateStart: item.money_goal_dateStart,
                       dateEnd: item.money_goal_dateEnd,
                     });
-                    navigate(SEND.toUpdate, {
+                    navigate(toUpdate, {
                       state: SEND
                     });
                   }}
                 >
                   <Grid size={2} className={"d-center"}>
                     <Icons
+                      key={"Search"}
                       name={"Search"}
                       className={"w-18 h-18 black"}
                     />
@@ -223,7 +197,7 @@ export const MoneyGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrencyCode}
+                          {sessionCurrency}
                         </Div>
                       </Grid>
                       {/** real **/}
@@ -239,7 +213,7 @@ export const MoneyGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrencyCode}
+                          {sessionCurrency}
                         </Div>
                       </Grid>
                       {/** diff **/}
@@ -255,7 +229,7 @@ export const MoneyGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrencyCode}
+                          {sessionCurrency}
                         </Div>
                       </Grid>
                     </Grid>
@@ -290,7 +264,7 @@ export const MoneyGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrencyCode}
+                          {sessionCurrency}
                         </Div>
                       </Grid>
                       {/** real **/}
@@ -306,7 +280,7 @@ export const MoneyGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrencyCode}
+                          {sessionCurrency}
                         </Div>
                       </Grid>
                       {/** diff **/}
@@ -322,7 +296,7 @@ export const MoneyGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrencyCode}
+                          {sessionCurrency}
                         </Div>
                       </Grid>
                     </Grid>
@@ -361,7 +335,6 @@ export const MoneyGoalList = () => {
         setDATE, setSEND, setPAGING, setCOUNT
       }}
       flow={{
-        navigate
       }}
     />
   );

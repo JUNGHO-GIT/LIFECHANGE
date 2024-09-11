@@ -6,15 +6,10 @@ import { LanguageProvider } from "@hooks/useLanguageProvider";
 import { useTranslate } from "@hooks/useLanguageProvider";
 import { useRoot } from "@hooks/useRoot";
 import { useScrollTop } from "@hooks/useScrollTop";
-import { useSessionStorage } from "@hooks/useSessionStorage";
+import { useFoodSection } from "@hooks/useFoodSection";
 import { useStorage } from "@hooks/useStorage";
 import { useTime } from "@hooks/useTime";
-import { useValidateUser } from "@hooks/validate/useValidateUser";
-import { useValidateExercise } from "@hooks/validate/useValidateExercise";
-import { useValidateFood } from "@hooks/validate/useValidateFood";
-import { useValidateMoney } from "@hooks/validate/useValidateMoney";
-import { useValidateSleep } from "@hooks/validate/useValidateSleep";
-import { useValidateCalendar } from "@hooks/validate/useValidateCalendar";
+import { useTimeZone } from "@hooks/useTimeZone";
 
 // -------------------------------------------------------------------------------------------------
 export {
@@ -24,13 +19,8 @@ export {
   useTranslate,
   useRoot,
   useScrollTop,
-  useSessionStorage,
+  useFoodSection,
   useStorage,
   useTime,
-  useValidateUser,
-  useValidateExercise,
-  useValidateFood,
-  useValidateMoney,
-  useValidateSleep,
-  useValidateCalendar,
+  useTimeZone,
 };

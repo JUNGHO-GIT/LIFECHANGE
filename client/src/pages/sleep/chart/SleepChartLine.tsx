@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { SleepLine } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { handlerY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
@@ -47,22 +48,8 @@ export const SleepChartLine = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_WEEK_DEF = [{
-    name:"",
-    date: "",
-    bedTime: "0",
-    wakeTime: "0",
-    sleepTime: "0",
-  }];
-  const OBJECT_MONTH_DEF = [{
-    name:"",
-    date: "",
-    bedTime: "0",
-    wakeTime: "0",
-    sleepTime: "0"
-  }];
-  const [OBJECT_WEEK, setOBJECT_WEEK] = useState<any>(OBJECT_WEEK_DEF);
-  const [OBJECT_MONTH, setOBJECT_MONTH] = useState<any>(OBJECT_MONTH_DEF);
+  const [OBJECT_WEEK, setOBJECT_WEEK] = useState<any>([SleepLine]);
+  const [OBJECT_MONTH, setOBJECT_MONTH] = useState<any>([SleepLine]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -80,10 +67,10 @@ export const SleepChartLine = () => {
       }),
     ]);
     setOBJECT_WEEK(
-      resWeek.data.result.length > 0 ? resWeek.data.result : OBJECT_WEEK_DEF
+      resWeek.data.result.length > 0 ? resWeek.data.result : [SleepLine]
     );
     setOBJECT_MONTH(
-      resMonth.data.result.length > 0 ? resMonth.data.result : OBJECT_MONTH_DEF
+      resMonth.data.result.length > 0 ? resMonth.data.result : [SleepLine]
     );
     setLOADING(false);
   })()}, [sessionId]);

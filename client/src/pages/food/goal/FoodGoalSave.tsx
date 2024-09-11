@@ -4,6 +4,7 @@
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
 import { useValidateFood } from "@imports/ImportValidates";
+import { FoodGoal } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
@@ -24,7 +25,7 @@ export const FoodGoalSave = () => {
   } = useCommonDate();
   const {
     navigate, location_dateType, location_dateStart, location_dateEnd, location_id,
-    URL_OBJECT, sessionId, firstStr
+    URL_OBJECT, sessionId, toList
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -33,14 +34,12 @@ export const FoodGoalSave = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [EXIST, setEXIST] = useState<any[]>([""]);
+  const [OBJECT, setOBJECT] = useState<any>(FoodGoal);
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList: `/${firstStr}/goal/list`,
-    toSave: `/${firstStr}/goal/save`,
-    toUpdate: `/${firstStr}/goal/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
@@ -56,21 +55,6 @@ export const FoodGoalSave = () => {
     dateEnd: location_dateEnd || dayFmt,
   });
 
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_DEF: any = {
-    _id: "",
-    food_goal_number: 0,
-    food_goal_dummy: "N",
-    food_goal_dateType: "",
-    food_goal_dateStart: "0000-00-00",
-    food_goal_dateEnd: "0000-00-00",
-    food_goal_kcal: "0",
-    food_goal_carb: "0",
-    food_goal_protein: "0",
-    food_goal_fat: "0",
-  };
-  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
-
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     axios.get(`${URL_OBJECT}/exist`, {
@@ -84,7 +68,7 @@ export const FoodGoalSave = () => {
       },
     })
     .then((res: any) => {
-      setEXIST(res.data.result || []);
+      setEXIST(res.data.result.length > 0 ? res.data.result : [""]);
     })
     .catch((err: any) => {
       console.error(err);
@@ -102,7 +86,7 @@ export const FoodGoalSave = () => {
       },
     })
     .then((res: any) => {
-      setOBJECT(res.data.result || OBJECT_DEF);
+      setOBJECT(res.data.result || FoodGoal);
       setCOUNT((prev: any) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
@@ -116,7 +100,7 @@ export const FoodGoalSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, DATE.dateEnd]);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
@@ -138,7 +122,7 @@ export const FoodGoalSave = () => {
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
-        navigate(SEND.toList, {
+        navigate(toList, {
           state: SEND
         });
       }
@@ -152,12 +136,12 @@ export const FoodGoalSave = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowDeletes = async () => {
+  const flowDelete = async () => {
     if (OBJECT?._id === "") {
       alert(translate("noData"));
       return;
     }
-    axios.delete(`${URL_OBJECT}/goal/deletes`, {
+    axios.delete(`${URL_OBJECT}/goal/delete`, {
       data: {
         user_id: sessionId,
         _id: OBJECT?._id,
@@ -173,7 +157,7 @@ export const FoodGoalSave = () => {
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
-        navigate(SEND.toList, {
+        navigate(toList, {
           state: SEND
         });
       }
@@ -437,7 +421,7 @@ export const FoodGoalSave = () => {
         setDATE, setSEND, setCOUNT, setEXIST
       }}
       flow={{
-        navigate, flowSave, flowDeletes
+        flowSave, flowDelete
       }}
     />
   );

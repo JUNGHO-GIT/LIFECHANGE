@@ -80,7 +80,7 @@ export const BottomNav = () => {
         url = `${value}/list`;
       }
       else if (sessionStorageData === "find") {
-        url = `${value}/find`;
+        url = `${value}/find/list`;
       }
       else {
         url = `${value}/${sessionStorageData}/list`;

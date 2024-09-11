@@ -103,28 +103,28 @@ export const Dummy = (
         {translate("save")}
       </Btn>
     );
-    // 4. deletes
-    const deletesSection = () => (
+    // 4. delete
+    const deleteSection = () => (
       <Btn
         color={"error"}
         className={"pt-3 pb-3 ps-9 pe-9 fs-0-7rem"}
         onClick={() => {
-          flow.flowDummyDeletes();
+          flow.flowDummyDelete();
         }}
       >
-        {translate("deletes")}
+        {translate("delete")}
       </Btn>
     );
-    // 5. deletesAll
-    const deletesAllSection = () => (
+    // 5. deleteAll
+    const deleteAllSection = () => (
       <Btn
         color={"warning"}
         className={"pt-3 pb-3 ps-9 pe-9 fs-0-7rem"}
         onClick={() => {
-          flow.flowDummyDeletes("all");
+          flow.flowDummyDelete("all");
         }}
       >
-        {translate("deletesAll")}
+        {translate("deleteAll")}
       </Btn>
     );
     // 6. return
@@ -140,10 +140,10 @@ export const Dummy = (
           {saveSection()}
         </Grid>
         <Grid size={2} className={"d-center"}>
-          {deletesSection()}
+          {deleteSection()}
         </Grid>
         <Grid size={2} className={"d-left"}>
-          {deletesAllSection()}
+          {deleteAllSection()}
         </Grid>
       </Grid>
     );

@@ -1,15 +1,17 @@
-// UserDeletes.tsx
+// UserDelete.tsx
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useTranslate, useValidateUser } from "@imports/ImportHooks";
+import { useCommonValue, useTranslate } from "@imports/ImportHooks";
+import { useValidateUser } from "@imports/ImportValidates";
+import { User } from "@imports/ImportSchemas";
 import { moment, axios } from "@imports/ImportLibs";
 import { Loading } from "@imports/ImportLayouts";
 import { Div, Hr, Input, Btn } from "@imports/ImportComponents";
 import { Paper, TextArea, Grid, Card } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-export const UserDeletes = () => {
+export const UserDelete = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
@@ -24,26 +26,7 @@ export const UserDeletes = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_DEF: any = {
-    _id: "",
-    user_number: 0,
-    user_id: "",
-    user_google: "N",
-    user_id_verified: false,
-    user_pw: "",
-    user_pw_verified: "",
-    user_gender: "",
-    user_age: "",
-    user_initScale: "",
-    user_curScale: "",
-    user_initProperty: "",
-    user_curProperty: "",
-    user_image: "",
-    user_regDt: "",
-  };
-  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
+  const [OBJECT, setOBJECT] = useState<any>(User);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -54,7 +37,7 @@ export const UserDeletes = () => {
       },
     })
     .then((res: any) => {
-      setOBJECT(res.data.result || OBJECT_DEF);
+      setOBJECT(res.data.result || User);
     })
     .catch((err: any) => {
       console.error(err);
@@ -71,7 +54,7 @@ export const UserDeletes = () => {
       setLOADING(false);
       return;
     }
-    axios.delete(`${URL_OBJECT}/deletes`,{
+    axios.delete(`${URL_OBJECT}/delete`,{
       data: {
         user_id: sessionId,
       },
@@ -83,7 +66,7 @@ export const UserDeletes = () => {
       }
       else {
         alert(translate(res.data.msg));
-        navigate("/user/deletes");
+        navigate("/user/delete");
       }
     })
     .catch((err: any) => {
@@ -94,12 +77,12 @@ export const UserDeletes = () => {
     });
   };
 
-  // 7. userDeletes --------------------------------------------------------------------------------
-  const userDeletesNode = () => {
+  // 7. userDelete --------------------------------------------------------------------------------
+  const userDeleteNode = () => {
     // 7-1. title
     const titleSection = () => (
       <Div className={"d-center fs-2-0rem"}>
-        {translate("userDeletes")}
+        {translate("userDelete")}
       </Div>
     );
     // 7-2. card
@@ -125,7 +108,7 @@ export const UserDeletes = () => {
             <Grid size={12}>
               <TextArea
                 className={"border radius resize-none cursor-none w-100p p-10"}
-                value={translate("deletesUser")}
+                value={translate("deleteUser")}
               />
             </Grid>
           </Grid>
@@ -144,7 +127,7 @@ export const UserDeletes = () => {
           flowSave();
         }}
       >
-        {translate("userDeletes")}
+        {translate("userDelete")}
       </Btn>
     );
     // 7-10. return
@@ -169,7 +152,7 @@ export const UserDeletes = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {userDeletesNode()}
+      {userDeleteNode()}
     </>
   );
 };

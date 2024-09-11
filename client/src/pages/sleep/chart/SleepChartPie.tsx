@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { SleepPie } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { Loading } from "@imports/ImportLayouts";
 import { Div, Img, Select } from "@imports/ImportComponents";
@@ -54,21 +55,9 @@ export const SleepChartPie = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_TODAY_DEF = [{
-    name:"Empty",
-    value: 100
-  }];
-  const OBJECT_WEEK_DEF = [{
-    name:"Empty",
-    value: 100
-  }];
-  const OBJECT_MONTH_DEF = [{
-    name:"Empty",
-    value: 100
-  }];
-  const [OBJECT_TODAY, setOBJECT_TODAY] = useState<any>(OBJECT_TODAY_DEF);
-  const [OBJECT_WEEK, setOBJECT_WEEK] = useState<any>(OBJECT_WEEK_DEF);
-  const [OBJECT_MONTH, setOBJECT_MONTH] = useState<any>(OBJECT_MONTH_DEF);
+  const [OBJECT_TODAY, setOBJECT_TODAY] = useState<any>([SleepPie]);
+  const [OBJECT_WEEK, setOBJECT_WEEK] = useState<any>([SleepPie]);
+  const [OBJECT_MONTH, setOBJECT_MONTH] = useState<any>([SleepPie]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -94,7 +83,7 @@ export const SleepChartPie = () => {
       (resToday.data.result[1].value !== 0) &&
       (resToday.data.result[2].value !== 0)
       ? resToday.data.result
-      : OBJECT_TODAY_DEF
+      : [SleepPie]
     );
     setOBJECT_WEEK(
       (resWeek.data.result.length > 0) &&
@@ -102,7 +91,7 @@ export const SleepChartPie = () => {
       (resWeek.data.result[1].value !== 0) &&
       (resWeek.data.result[2].value !== 0)
       ? resWeek.data.result
-      : OBJECT_WEEK_DEF
+      : [SleepPie]
     );
     setOBJECT_MONTH(
       (resMonth.data.result.length > 0) &&
@@ -110,7 +99,7 @@ export const SleepChartPie = () => {
       (resMonth.data.result[1].value !== 0) &&
       (resMonth.data.result[2].value !== 0)
       ? resMonth.data.result
-      : OBJECT_MONTH_DEF
+      : [SleepPie]
     );
     setLOADING(false);
   })()}, [sessionId]);

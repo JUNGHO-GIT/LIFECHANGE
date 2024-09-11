@@ -19,7 +19,7 @@ import {
 } from "@imports/ImportMuis";
 
 import {
-  useRoot, useScrollTop, useSessionStorage, LanguageProvider,
+  useRoot, useScrollTop, useFoodSection, LanguageProvider,
 } from "@imports/ImportHooks";
 
 import {
@@ -28,12 +28,34 @@ import {
 
 import {
   CalendarList, CalendarSave, CalendarUpdate,
+} from "@imports/ImportPages";
+
+import {
   TodayGoalList, TodayList,
+} from "@imports/ImportPages";
+
+import {
   ExerciseChart, ExerciseGoalList, ExerciseGoalSave, ExerciseGoalUpdate, ExerciseList, ExerciseSave, ExerciseUpdate,
-  FoodChart, FoodFind, FoodGoalList, FoodGoalSave, FoodGoalUpdate, FoodList, FoodSave, FoodUpdate,
+} from "@imports/ImportPages";
+
+import {
+  FoodChart, FoodFindList, FoodGoalList, FoodGoalSave, FoodGoalUpdate,
+  FoodList, FoodDetail, FoodSave, FoodUpdate,
+} from "@imports/ImportPages";
+
+import {
   MoneyChart, MoneyGoalList, MoneyGoalSave, MoneyGoalUpdate, MoneyList, MoneySave, MoneyUpdate,
+} from "@imports/ImportPages";
+
+import {
   SleepChart, SleepGoalList, SleepGoalSave, SleepGoalUpdate, SleepList, SleepSave, SleepUpdate,
-  UserAppInfo, UserAppSetting, UserCategory, UserDeletes, UserDetail, UserDummy, UserLogin, UserResetPw, UserSignup,
+} from "@imports/ImportPages";
+
+import {
+  UserAppInfo, UserAppSetting, UserCategory, UserDelete, UserDetail, UserDummy, UserLogin, UserResetPw, UserSignup,
+} from "@imports/ImportPages";
+
+import {
   AuthError, AuthGoogle, AuthPrivacy
 } from "@imports/ImportPages";
 
@@ -71,8 +93,9 @@ const Food = () => (
     <Route path="/goal/list" element={<FoodGoalList />} />
     <Route path="/goal/save" element={<FoodGoalSave />} />
     <Route path="/goal/update" element={<FoodGoalUpdate />} />
-    <Route path="/find" element={<FoodFind />} />
+    <Route path="/find/list" element={<FoodFindList />} />
     <Route path="/list" element={<FoodList />} />
+    <Route path="/detail" element={<FoodDetail />} />
     <Route path="/save" element={<FoodSave />} />
     <Route path="/update" element={<FoodUpdate />} />
   </Routes>
@@ -110,7 +133,7 @@ const User = () => (
     <Route path="/login" element={<UserLogin />} />
     <Route path="/resetPw" element={<UserResetPw />} />
     <Route path="/detail" element={<UserDetail />} />
-    <Route path="/deletes" element={<UserDeletes />} />
+    <Route path="/delete" element={<UserDelete />} />
     <Route path="/category" element={<UserCategory />} />
     <Route path="/dummy" element={<UserDummy />} />
   </Routes>
@@ -130,7 +153,7 @@ const App = () => {
 
   useRoot();
   useScrollTop();
-  useSessionStorage();
+  useFoodSection();
 
   const location = useLocation();
   const noneHeader = (

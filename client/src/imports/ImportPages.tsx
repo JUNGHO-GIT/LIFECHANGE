@@ -17,11 +17,12 @@ import { ExerciseSave } from "@pages/exercise/ExerciseSave";
 import { ExerciseUpdate } from "@pages/exercise/ExerciseUpdate";
 
 import { FoodChart } from "@pages/food/chart/FoodChart";
-import { FoodFind } from "@pages/food/FoodFind";
+import { FoodFindList } from "@pages/food/FoodFindList";
 import { FoodGoalList } from "@pages/food/goal/FoodGoalList";
 import { FoodGoalSave } from "@pages/food/goal/FoodGoalSave";
 import { FoodGoalUpdate } from "@pages/food/goal/FoodGoalUpdate";
 import { FoodList } from "@pages/food/FoodList";
+import { FoodDetail } from "../pages/food/FoodDetail";
 import { FoodSave } from "@pages/food/FoodSave";
 import { FoodUpdate } from "@pages/food/FoodUpdate";
 
@@ -47,7 +48,7 @@ import { TodayList } from "@pages/today/TodayList";
 import { UserAppInfo } from "@pages/user/UserAppInfo";
 import { UserAppSetting } from "@pages/user/UserAppSetting";
 import { UserCategory } from "@pages/user/UserCategory";
-import { UserDeletes } from "@pages/user/UserDeletes";
+import { UserDelete } from "@pages/user/UserDelete";
 import { UserDetail } from "@pages/user/UserDetail";
 import { UserDummy } from "@pages/user/UserDummy";
 import { UserLogin } from "@pages/user/UserLogin";
@@ -70,11 +71,12 @@ export {
   ExerciseSave,
   ExerciseUpdate,
   FoodChart,
-  FoodFind,
+  FoodFindList,
   FoodGoalList,
   FoodGoalSave,
   FoodGoalUpdate,
   FoodList,
+  FoodDetail,
   FoodSave,
   FoodUpdate,
   MoneyChart,
@@ -96,7 +98,7 @@ export {
   UserAppInfo,
   UserAppSetting,
   UserCategory,
-  UserDeletes,
+  UserDelete,
   UserDetail,
   UserDummy,
   UserLogin,

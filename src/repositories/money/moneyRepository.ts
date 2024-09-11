@@ -215,7 +215,7 @@ export const update = async (
     },
     {
       upsert: true,
-      new: true
+      new: false
     }
   )
   .lean();
@@ -223,7 +223,7 @@ export const update = async (
   return finalResult;
 };
 
-// 5. deletes --------------------------------------------------------------------------------------
+// 5. delete --------------------------------------------------------------------------------------
 export const deletes = async (
   user_id_param: string,
   _id_param: string,

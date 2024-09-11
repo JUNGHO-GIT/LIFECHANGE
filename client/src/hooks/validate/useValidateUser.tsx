@@ -277,8 +277,8 @@ export const useValidateUser= () => {
         return !returnValid;
       };
     }
-    // 4. deletes
-    else if (PATH.includes("user/deletes")) {
+    // 4. delete
+    else if (PATH.includes("user/delete")) {
       const target = [
         "user_pw",
       ];

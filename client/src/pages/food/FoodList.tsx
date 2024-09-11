@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
+import { Food } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
@@ -22,7 +23,7 @@ export const FoodList = () => {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, firstStr
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, toDetail,
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -44,52 +45,18 @@ export const FoodList = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [isExpanded, setIsExpanded] = useState<number[]>([0]);
   const [LOADING, setLOADING] = useState<boolean>(false);
+  const [OBJECT, setOBJECT] = useState<any>([Food]);
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList: `/${firstStr}/list`,
-    toSave: `/${firstStr}/save`,
-    toUpdate: `/${firstStr}/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
   });
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_DEF = [{
-    _id: "",
-    food_number: 0,
-    food_dummy: "N",
-    food_dateType: "",
-    food_dateStart: "0000-00-00",
-    food_dateEnd: "0000-00-00",
-    food_total_kcal: "0",
-    food_total_kcal_color: "",
-    food_total_carb: "0",
-    food_total_carb_color: "",
-    food_total_protein: "0",
-    food_total_protein_color: "",
-    food_total_fat: "0",
-    food_total_fat_color: "",
-    food_section: [{
-      food_part_idx: 1,
-      food_part_val: "breakfast",
-      food_name: "",
-      food_brand: "",
-      food_count: "0",
-      food_serv: "회",
-      food_gram: "0",
-      food_kcal: "0",
-      food_carb: "0",
-      food_protein: "0",
-      food_fat: "0",
-    }],
-  }];
-  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -102,7 +69,7 @@ export const FoodList = () => {
       },
     })
     .then((res: any) => {
-      setOBJECT(res.data.result || OBJECT_DEF);
+      setOBJECT(res.data.result.length > 0 ? res.data.result : [Food]);
       setCOUNT((prev: any) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
@@ -119,7 +86,7 @@ export const FoodList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
 
   // 7. list --------------------------------------------------------------------------------------
   const listNode = () => {
@@ -157,13 +124,14 @@ export const FoodList = () => {
                       dateStart: item.food_dateStart,
                       dateEnd: item.food_dateEnd,
                     });
-                    navigate(SEND.toUpdate, {
+                    navigate(toDetail, {
                       state: SEND
                     });
                   }}
                 >
                   <Grid size={2} className={"d-center"}>
                     <Icons
+                      key={"Search"}
                       name={"Search"}
                       className={"w-18 h-18 black"}
                     />
@@ -333,7 +301,6 @@ export const FoodList = () => {
         setDATE, setSEND, setPAGING, setCOUNT
       }}
       flow={{
-        navigate
       }}
     />
   );

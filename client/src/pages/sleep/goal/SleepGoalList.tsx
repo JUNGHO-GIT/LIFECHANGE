@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
+import { SleepGoal } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div, Img, Hr, Icons } from "@imports/ImportComponents";
@@ -22,7 +23,7 @@ export const SleepGoalList = () => {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, firstStr
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, toUpdate,
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -44,52 +45,18 @@ export const SleepGoalList = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [isExpanded, setIsExpanded] = useState<number[]>([0]);
   const [LOADING, setLOADING] = useState<boolean>(false);
+  const [OBJECT, setOBJECT] = useState<any>([SleepGoal]);
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList: `/${firstStr}/goal/list`,
-    toSave: `/${firstStr}/goal/save`,
-    toUpdate: `/${firstStr}/goal/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
   });
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_DEF = [{
-    _id: "",
-    sleep_goal_number: 0,
-    sleep_goal_dummy: "N",
-    sleep_goal_dateType: "",
-    sleep_goal_dateStart: "0000-00-00",
-    sleep_goal_dateEnd: "0000-00-00",
-    sleep_goal_bedTime: "00:00",
-    sleep_goal_bedTime_color: "",
-    sleep_goal_wakeTime: "00:00",
-    sleep_goal_wakeTime_color: "",
-    sleep_goal_sleepTime: "00:00",
-    sleep_goal_sleepTime_color: "",
-    sleep_dateType: "",
-    sleep_dateStart: "0000-00-00",
-    sleep_dateEnd: "0000-00-00",
-    sleep_bedTime: "00:00",
-    sleep_bedTime_color: "",
-    sleep_wakeTime: "00:00",
-    sleep_wakeTime_color: "",
-    sleep_sleepTime: "00:00",
-    sleep_sleepTime_color: "",
-    sleep_diff_bedTime: "00:00",
-    sleep_diff_bedTime_color: "",
-    sleep_diff_wakeTime: "00:00",
-    sleep_diff_wakeTime_color: "",
-    sleep_diff_sleepTime: "00:00",
-    sleep_diff_sleepTime_color: ""
-  }];
-  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -102,7 +69,7 @@ export const SleepGoalList = () => {
       },
     })
     .then((res: any) => {
-      setOBJECT(res.data.result && res.data.result.length > 0 ? res.data.result : OBJECT_DEF);
+      setOBJECT(res.data.result.length > 0 ? res.data.result : [SleepGoal]);
       setCOUNT((prev: any) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
@@ -119,7 +86,7 @@ export const SleepGoalList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
 
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
@@ -158,13 +125,14 @@ export const SleepGoalList = () => {
                       dateStart: item.sleep_goal_dateStart,
                       dateEnd: item.sleep_goal_dateEnd,
                     });
-                    navigate(SEND.toUpdate, {
+                    navigate(toUpdate, {
                       state: SEND
                     });
                   }}
                 >
                   <Grid size={2} className={"d-center"}>
                     <Icons
+                      key={"Search"}
                       name={"Search"}
                       className={"w-18 h-18 black"}
                     />
@@ -435,7 +403,6 @@ export const SleepGoalList = () => {
         setDATE, setSEND, setPAGING, setCOUNT
       }}
       flow={{
-        navigate
       }}
     />
   );

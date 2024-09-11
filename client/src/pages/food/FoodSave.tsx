@@ -4,6 +4,7 @@
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
 import { useValidateFood } from "@imports/ImportValidates";
+import { Food } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
@@ -23,7 +24,7 @@ export const FoodSave = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, URL_OBJECT, sessionId, TITLE, foodArray, location_id, firstStr
+    navigate, location_dateType, location_dateStart, location_dateEnd, URL_OBJECT, sessionId, TITLE, foodArray, location_id, toList
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -32,15 +33,12 @@ export const FoodSave = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [EXIST, setEXIST] = useState<any[]>([""]);
+  const [OBJECT, setOBJECT] = useState<any>(Food);
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toFind : `/${firstStr}/find`,
-    toList: `/${firstStr}/list`,
-    toSave: `/${firstStr}/save`,
-    toUpdate: `/${firstStr}/update`,
   });
   const [COUNT, setCOUNT] = useState<any>({
     totalCnt: 0,
@@ -56,34 +54,6 @@ export const FoodSave = () => {
     dateEnd: location_dateEnd || dayFmt,
   });
 
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_DEF: any = {
-    _id: "",
-    food_number: 0,
-    food_dummy: "N",
-    food_dateType: "",
-    food_dateStart: "0000-00-00",
-    food_dateEnd: "0000-00-00",
-    food_total_kcal: "0",
-    food_total_carb: "0",
-    food_total_protein: "0",
-    food_total_fat: "0",
-    food_section: [{
-      food_part_idx: 1,
-      food_part_val: "breakfast",
-      food_name: "",
-      food_brand: "",
-      food_count: "0",
-      food_serv: "회",
-      food_gram: "0",
-      food_kcal: "0",
-      food_carb: "0",
-      food_protein: "0",
-      food_fat: "0",
-    }],
-  };
-  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
-
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     axios.get(`${URL_OBJECT}/exist`, {
@@ -97,7 +67,7 @@ export const FoodSave = () => {
       },
     })
     .then((res: any) => {
-      setEXIST(res.data.result || []);
+      setEXIST(res.data.result.length > 0 ? res.data.result : [""]);
     })
     .catch((err: any) => {
       console.error(err);
@@ -176,7 +146,7 @@ export const FoodSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -208,8 +178,8 @@ export const FoodSave = () => {
     const defaultSection = {
       food_part_idx: 1,
       food_part_val: "breakfast",
-      food_name: " ",
-      food_brand: " ",
+      food_name: "",
+      food_brand: "",
       food_count: "1",
       food_serv: "회",
       food_gram: "0",
@@ -248,7 +218,7 @@ export const FoodSave = () => {
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
-        navigate(SEND.toList, {
+        navigate(toList, {
           state: SEND
         });
       }
@@ -262,12 +232,12 @@ export const FoodSave = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowDeletes = async () => {
+  const flowDelete = async () => {
     if (OBJECT?._id === "") {
       alert(translate("noData"));
       return;
     }
-    axios.delete(`${URL_OBJECT}/deletes`, {
+    axios.delete(`${URL_OBJECT}/delete`, {
       data: {
         user_id: sessionId,
         _id: OBJECT?._id,
@@ -283,7 +253,7 @@ export const FoodSave = () => {
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
-        navigate(SEND.toList, {
+        navigate(toList, {
           state: SEND
         });
       }
@@ -560,6 +530,7 @@ export const FoodSave = () => {
                 value={OBJECT?.food_section[i]?.food_name}
                 inputRef={REFS?.current[i]?.food_name}
                 error={ERRORS[i]?.food_name}
+                shrink={"shrink"}
                 onChange={(e: any) => {
                   const newVal = e.target.value;
                   setOBJECT((prev: any) => ({
@@ -578,6 +549,7 @@ export const FoodSave = () => {
               <Input
                 label={translate("brand")}
                 value={OBJECT?.food_section[i]?.food_brand}
+                shrink={"shrink"}
                 onChange={(e: any) => {
                   const newVal = e.target.value;
                   setOBJECT((prev: any) => ({
@@ -807,7 +779,7 @@ export const FoodSave = () => {
         setDATE, setSEND, setCOUNT, setEXIST
       }}
       flow={{
-        navigate, flowSave, flowDeletes
+        flowSave, flowDelete
       }}
     />
   );

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { FoodBar } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { handlerY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
@@ -47,20 +48,8 @@ export const FoodChartBar = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_KCAL_TODAY_DEF = [{
-    name: "",
-    date: "",
-    goal: "0",
-    real: "0"
-  }];
-  const OBJECT_NUT_TODAY_DEF = [{
-    name: "",
-    date: "",
-    goal: "0",
-    real: "0"
-  }];
-  const [OBJECT_KCAL_TODAY, setOBJECT_KCAL_TODAY] = useState<any>(OBJECT_KCAL_TODAY_DEF);
-  const [OBJECT_NUT_TODAY, setOBJECT_NUT_TODAY] = useState<any>(OBJECT_NUT_TODAY_DEF);
+  const [OBJECT_KCAL_TODAY, setOBJECT_KCAL_TODAY] = useState<any>([FoodBar]);
+  const [OBJECT_NUT_TODAY, setOBJECT_NUT_TODAY] = useState<any>([FoodBar]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -75,10 +64,10 @@ export const FoodChartBar = () => {
       }),
     ]);
     setOBJECT_KCAL_TODAY(
-      resToday.data.result.kcal.length > 0 ? resToday.data.result.kcal : OBJECT_KCAL_TODAY_DEF
+      resToday.data.result.kcal.length > 0 ? resToday.data.result.kcal : [FoodBar]
     );
     setOBJECT_NUT_TODAY(
-      resToday.data.result.nut.length > 0 ? resToday.data.result.nut : OBJECT_NUT_TODAY_DEF
+      resToday.data.result.nut.length > 0 ? resToday.data.result.nut : [FoodBar]
     );
     setLOADING(false);
   })()}, [sessionId]);

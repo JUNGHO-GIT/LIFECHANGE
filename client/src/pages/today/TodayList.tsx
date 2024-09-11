@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
+import { Exercise, Food, Money, Sleep } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
@@ -25,7 +26,7 @@ export const TodayList = () => {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP, sessionId, TITLE, sessionCurrencyCode,
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP, sessionId, TITLE, sessionCurrency,
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -86,100 +87,10 @@ export const TodayList = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_EXERCISE_DEF = [{
-    _id: "",
-    exercise_number: 0,
-    exercise_dummy: "N",
-    exercise_dateType: "day",
-    exercise_dateStart: "0000-00-00",
-    exercise_dateEnd: "0000-00-00",
-    exercise_total_volume: "0",
-    exercise_total_volume_color: "",
-    exercise_total_cardio: "00:00",
-    exercise_total_cardio_color: "",
-    exercise_total_weight: "0",
-    exercise_total_weight_color: "",
-    exercise_section: [{
-      exercise_part_idx: 0,
-      exercise_part_val: "all",
-      exercise_title_idx: 0,
-      exercise_title_val: "all",
-      exercise_set: "0",
-      exercise_rep: "0",
-      exercise_kg: "0",
-      exercise_volume: "0",
-      exercise_cardio: "00:00",
-    }],
-  }];
-  const OBJECT_FOOD_DEF = [{
-    _id: "",
-    food_number: 0,
-    food_dummy: "N",
-    food_dateType: "day",
-    food_dateStart: "0000-00-00",
-    food_dateEnd: "0000-00-00",
-    food_total_kcal: "0",
-    food_total_kcal_color: "",
-    food_total_fat: "0",
-    food_total_fat_color: "",
-    food_total_carb: "0",
-    food_total_carb_color: "",
-    food_total_protein: "0",
-    food_total_protein_color: "",
-    food_section: [{
-      food_part_idx: 1,
-      food_part_val: "breakfast",
-      food_name: "",
-      food_brand: "",
-      food_count: "0",
-      food_serv: "회",
-      food_gram: "0",
-      food_kcal: "0",
-      food_fat: "0",
-      food_carb: "0",
-      food_protein: "0",
-    }],
-  }];
-  const OBJECT_MONEY_DEF = [{
-    _id: "",
-    money_number: 0,
-    money_dummy: "N",
-    money_dateType: "day",
-    money_dateStart: "0000-00-00",
-    money_dateEnd: "0000-00-00",
-    money_total_income: "0",
-    money_total_income_color: "",
-    money_total_expense: "0",
-    money_total_expense_color: "",
-    money_section: [{
-      money_part_idx: 0,
-      money_part_val: "all",
-      money_title_idx: 0,
-      money_title_val: "all",
-      money_amount: "0",
-      money_content: "",
-    }],
-  }];
-  const OBJECT_SLEEP_DEF = [{
-    _id: "",
-    sleep_number: 0,
-    sleep_dummy: "N",
-    sleep_dateType: "day",
-    sleep_dateStart: "0000-00-00",
-    sleep_dateEnd: "0000-00-00",
-    sleep_section: [{
-      sleep_bedTime: "00:00",
-      sleep_bedTime_color: "",
-      sleep_wakeTime: "00:00",
-      sleep_wakeTime_color: "",
-      sleep_sleepTime: "00:00",
-      sleep_sleepTime_color: "",
-    }],
-  }];
-  const [OBJECT_EXERCISE, setOBJECT_EXERCISE] = useState<any>(OBJECT_EXERCISE_DEF);
-  const [OBJECT_FOOD, setOBJECT_FOOD] = useState<any>(OBJECT_FOOD_DEF);
-  const [OBJECT_MONEY, setOBJECT_MONEY] = useState<any>(OBJECT_MONEY_DEF);
-  const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState<any>(OBJECT_SLEEP_DEF);
+  const [OBJECT_EXERCISE, setOBJECT_EXERCISE] = useState<any>([Exercise]);
+  const [OBJECT_FOOD, setOBJECT_FOOD] = useState<any>([Food]);
+  const [OBJECT_MONEY, setOBJECT_MONEY] = useState<any>([Money]);
+  const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState<any>([Sleep]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -199,7 +110,7 @@ export const TodayList = () => {
             DATE: DATE,
           },
         });
-        setObject(res.data.result || objectDef);
+        setObject(res.data.result.length > 0 ? res.data.result : [objectDef]);
         setCount((prev: any) => ({
           ...prev,
           totalCnt: res.data.totalCnt || 0,
@@ -220,28 +131,28 @@ export const TodayList = () => {
           `${URL_EXERCISE}/list`,
           setOBJECT_EXERCISE,
           setCOUNT_EXERCISE,
-          OBJECT_EXERCISE_DEF,
+          Exercise,
           setIsExpandedExercise
         ),
         fetchData(
           `${URL_FOOD}/list`,
           setOBJECT_FOOD,
           setCOUNT_FOOD,
-          OBJECT_FOOD_DEF,
+          Food,
           setIsExpandedFood
         ),
         fetchData(
           `${URL_MONEY}/list`,
           setOBJECT_MONEY,
           setCOUNT_MONEY,
-          OBJECT_MONEY_DEF,
+          Money,
           setIsExpandedMoney
         ),
         fetchData(
           `${URL_SLEEP}/list`,
           setOBJECT_SLEEP,
           setCOUNT_SLEEP,
-          OBJECT_SLEEP_DEF,
+          Sleep,
           setIsExpandedSleep
         ),
       ]);
@@ -250,7 +161,7 @@ export const TodayList = () => {
     };
 
     fetchAllData();
-  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
 
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
@@ -296,6 +207,7 @@ export const TodayList = () => {
                 >
                   <Grid size={2} className={"d-center"}>
                     <Icons
+                      key={"Search"}
                       name={"Search"}
                       className={"w-18 h-18 black"}
                     />
@@ -461,6 +373,7 @@ export const TodayList = () => {
                 >
                   <Grid size={2} className={"d-center"}>
                     <Icons
+                      key={"Search"}
                       name={"Search"}
                       className={"w-18 h-18 black"}
                     />
@@ -651,6 +564,7 @@ export const TodayList = () => {
                 >
                   <Grid size={2} className={"d-center"}>
                     <Icons
+                      key={"Search"}
                       name={"Search"}
                       className={"w-18 h-18 black"}
                     />
@@ -708,7 +622,7 @@ export const TodayList = () => {
                   </Grid>
                   <Grid size={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
-                      {sessionCurrencyCode}
+                      {sessionCurrency}
                     </Div>
                   </Grid>
                 </Grid>
@@ -733,7 +647,7 @@ export const TodayList = () => {
                   </Grid>
                   <Grid size={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
-                      {sessionCurrencyCode}
+                      {sessionCurrency}
                     </Div>
                   </Grid>
                 </Grid>
@@ -791,6 +705,7 @@ export const TodayList = () => {
                 >
                   <Grid size={2} className={"d-center"}>
                     <Icons
+                      key={"Search"}
                       name={"Search"}
                       className={"w-18 h-18 black"}
                     />
@@ -944,7 +859,6 @@ export const TodayList = () => {
         setDATE, setSEND
       }}
       flow={{
-        navigate
       }}
     />
   );

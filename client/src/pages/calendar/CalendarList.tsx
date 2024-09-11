@@ -3,7 +3,8 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
-import { moment, axios, Calendar } from "@imports/ImportLibs";
+import { Calendar } from "@imports/ImportSchemas";
+import { moment, axios, CalendarReact } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Icons, Div } from "@imports/ImportComponents";
 import { Paper, Grid, Card } from "@imports/ImportMuis";
@@ -16,7 +17,7 @@ export const CalendarList = () => {
     translate,
   } = useTranslate();
   const {
-    navigate, PATH, URL_OBJECT, sessionId, TITLE, firstStr,
+    navigate, PATH, URL_OBJECT, sessionId, TITLE, toSave, toUpdate,
   } = useCommonValue();
   const {
     getDayNotFmt, getDayFmt, getDayStartFmt, getDayEndFmt, monthStartFmt, monthEndFmt,
@@ -41,6 +42,7 @@ export const CalendarList = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
+  const [OBJECT, setOBJECT] = useState<any>([Calendar]);
   const [SEND, setSEND] = useState<any>({
     id: "",
     section_id: "",
@@ -49,29 +51,7 @@ export const CalendarList = () => {
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toList: `/${firstStr}/list`,
-    toSave: `/${firstStr}/save`,
-    toUpdate: `/${firstStr}/update`,
   });
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_DEF = [{
-    _id: "",
-    calendar_number: 0,
-    calendar_dummy: "N",
-    calendar_dateType: "",
-    calendar_dateStart: "0000-00-00",
-    calendar_dateEnd: "0000-00-00",
-    calendar_section: [{
-      _id: "",
-      calendar_part_idx: 0,
-      calendar_part_val: "all",
-      calendar_color: "#000000",
-      calendar_title : "",
-      calendar_content: ""
-    }]
-  }];
-  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -84,7 +64,7 @@ export const CalendarList = () => {
       },
     })
     .then((res: any) => {
-      setOBJECT(res.data.result && res.data.result.length > 0 ? res.data.result : OBJECT_DEF);
+      setOBJECT(res.data.result.length > 0 ? res.data.result : [Calendar]);
     })
     .catch((err: any) => {
       console.error(err);
@@ -92,7 +72,7 @@ export const CalendarList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, DATE.dateEnd]);
 
   // 7. calendar -----------------------------------------------------------------------------------
   const calendarNode = () => {
@@ -123,7 +103,7 @@ export const CalendarList = () => {
                 dateStart: calendar.calendar_dateStart,
                 dateEnd: calendar.calendar_dateEnd,
               });
-              navigate(SEND.toUpdate, {
+              navigate(toUpdate, {
                 state: SEND
               });
             }}
@@ -153,7 +133,7 @@ export const CalendarList = () => {
       const cardFragment = (i: number) => (
         <Card className={"pt-20 pb-20"} key={`${i}-card`}>
           <Grid container spacing={2}>
-            <Calendar
+            <CalendarReact
               key={`${i}-calendar`}
               locale={"ko"}
               view={"month"}
@@ -200,7 +180,7 @@ export const CalendarList = () => {
                     dateStart: getDayFmt(value),
                     dateEnd: getDayFmt(value),
                   });
-                  navigate(SEND.toSave, {
+                  navigate(toSave, {
                     state: SEND
                   });
                 }
@@ -285,8 +265,8 @@ export const CalendarList = () => {
       setState={{
         setDATE, setSEND
       }}
+
       flow={{
-        navigate
       }}
     />
   );

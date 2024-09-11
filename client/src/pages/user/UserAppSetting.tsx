@@ -193,15 +193,15 @@ export const UserAppSetting = () => {
                     />
                   </TableCell>
                 </TableRow>
-                {/** deletes **/}
+                {/** delete **/}
                 <TableRow
                   className={"pointer"}
                   onClick={() => {
-                    navigate("/user/deletes")
+                    navigate("/user/delete")
                   }}
                 >
                   <TableCell className={"w-90vw p-15 red"}>
-                    {translate("userDeletes")}
+                    {translate("userDelete")}
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
                     <Icons

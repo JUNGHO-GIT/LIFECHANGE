@@ -367,10 +367,10 @@ router.post("/update", async (req: Request, res: Response) => {
   }
 });
 
-// 2-6. userDeletes --------------------------------------------------------------------------------
-router.delete("/deletes", async (req: Request, res: Response) => {
+// 2-6. userDelete --------------------------------------------------------------------------------
+router.delete("/delete", async (req: Request, res: Response) => {
   try {
-    let finalResult = await service.userDeletes (
+    let finalResult = await service.userDelete (
       req.body.user_id as string,
     );
     if (finalResult.status === "success") {
@@ -566,10 +566,10 @@ router.post("/dummySave", async (req: Request, res: Response) => {
   }
 });
 
-// 4-3. dummyDeletes -------------------------------------------------------------------------------
-router.delete("/dummyDeletes", async (req: Request, res: Response) => {
+// 4-3. dummyDelete -------------------------------------------------------------------------------
+router.delete("/dummyDelete", async (req: Request, res: Response) => {
   try {
-    let finalResult = await service.dummyDeletes (
+    let finalResult = await service.dummyDelete (
       req.body.user_id as string,
       req.body.PART as string,
     );

@@ -39,7 +39,11 @@ export const ListFilter = (
         )}
       >
         {["asc", "desc"]?.map((item: string) => (
-          <MenuItem key={item} value={item} selected={state?.PAGING?.sort === item}>
+          <MenuItem
+            key={item}
+            value={item}
+            selected={state?.PAGING?.sort === item}
+          >
             <Div className={"fs-0-6rem"}>
               {translate(item)}
             </Div>

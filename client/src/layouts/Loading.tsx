@@ -26,7 +26,7 @@ export const Loading = () => {
     return (
       PATH.includes("/user/signup") ||
       PATH.includes("/user/login") ||
-      PATH.includes("/user/deletes") ||
+      PATH.includes("/user/delete") ||
       PATH.includes("/user/resetPw") ? (
         wrapperSection()
       ) : (

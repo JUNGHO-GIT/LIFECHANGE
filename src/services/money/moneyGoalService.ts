@@ -172,6 +172,7 @@ export const save = async (
 
   // result 변수 선언
   let findResult: any = null;
+  let saveResult: any = null;
   let finalResult: any = null;
   let statusResult: string = "";
 
@@ -180,16 +181,27 @@ export const save = async (
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
-  findResult = await repository.save(
-    user_id_param, "", OBJECT_param, dateType, dateStart, dateEnd
+  findResult = await repository.detail(
+    user_id_param, "", dateType, dateStart, dateEnd
   );
 
   if (!findResult) {
+    saveResult = await repository.save(
+      user_id_param, "", OBJECT_param, dateType, dateStart, dateEnd
+    );
+  }
+  else {
+    saveResult = await repository.update(
+      user_id_param, findResult._id, OBJECT_param, dateType, dateStart, dateEnd
+    );
+  }
+
+  if (!saveResult) {
     finalResult = null;
     statusResult = "fail";
   }
   else {
-    finalResult = findResult;
+    finalResult = saveResult;
     statusResult = "success";
   }
 
@@ -208,7 +220,7 @@ export const update = async (
 ) => {
 
   // result 변수 선언
-  let findResult: any = null;
+  let updateResult: any = null;
   let finalResult: any = null;
   let statusResult: string = "";
 
@@ -217,16 +229,16 @@ export const update = async (
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
-  findResult = await repository.update(
+  updateResult = await repository.update(
     user_id_param, _id_param, OBJECT_param, dateType, dateStart, dateEnd
   );
 
-  if (!findResult) {
+  if (!updateResult) {
     finalResult = null;
     statusResult = "fail";
   }
   else {
-    finalResult = findResult;
+    finalResult = updateResult;
     statusResult = "success";
   }
 
@@ -236,27 +248,27 @@ export const update = async (
   };
 };
 
-// 5. deletes --------------------------------------------------------------------------------------
+// 5. delete --------------------------------------------------------------------------------------
 export const deletes = async (
   user_id_param: string,
   _id_param: string,
 ) => {
 
   // result 변수 선언
-  let findResult: any = null;
+  let deleteResult: any = null;
   let finalResult: any = null;
   let statusResult: string = "";
 
-  findResult = await repository.deletes(
+  deleteResult = await repository.deletes(
     user_id_param, _id_param,
   );
 
-  if (!findResult) {
+  if (!deleteResult) {
     finalResult = null;
     statusResult = "fail";
   }
   else {
-    finalResult = findResult;
+    finalResult = deleteResult;
     statusResult = "success";
   }
 

@@ -2,7 +2,9 @@
 // Node -> Section -> Fragment
 
 import { useState } from "@imports/ImportReacts";
-import { useCommonValue,  useTranslate, useValidateUser } from "@imports/ImportHooks";
+import { useCommonValue,  useTranslate } from "@imports/ImportHooks";
+import { useValidateUser } from "@imports/ImportValidates";
+import { User } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { Loading } from "@imports/ImportLayouts";
 import { Input, Div, Img, Hr, Select, Btn } from "@imports/ImportComponents";
@@ -17,7 +19,7 @@ export const UserSignup = () => {
     translate,
   } = useTranslate();
   const {
-    navigate, URL_OBJECT, URL_GOOGLE, sessionCurrencyCode
+    navigate, URL_OBJECT, URL_GOOGLE, sessionCurrency
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -25,26 +27,7 @@ export const UserSignup = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_DEF: any = {
-    _id: "",
-    user_number: 0,
-    user_id: "",
-    user_id_sended: false,
-    user_verify_code: "",
-    user_id_verified: false,
-    user_pw: "",
-    user_pw_verified: "",
-    user_age: "",
-    user_gender: "",
-    user_initScale: "",
-    user_curScale: "",
-    user_initProperty: "",
-    user_curProperty: "",
-    user_image: "",
-  };
-  const [OBJECT, setOBJECT] = useState<any>(OBJECT_DEF);
+  const [OBJECT, setOBJECT] = useState<any>(User);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSendEmail = async () => {
@@ -411,7 +394,7 @@ export const UserSignup = () => {
                   }
                 }}
                 endadornment={
-                  sessionCurrencyCode
+                  sessionCurrency
                 }
               />
             </Grid>

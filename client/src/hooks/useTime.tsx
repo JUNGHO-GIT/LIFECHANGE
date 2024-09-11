@@ -94,7 +94,6 @@ export const useTime = (
         }));
       }
     }
-
   }, [
     strLow,
     type === "goal" && strLow === "exercise" ? OBJECT?.exercise_goal_dateStart : "",

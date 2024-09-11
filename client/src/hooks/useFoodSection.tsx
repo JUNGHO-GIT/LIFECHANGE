@@ -1,10 +1,10 @@
-// useSessionStorage.tsx
+// useFoodSection.tsx
 
 import { useEffect } from "@imports/ImportReacts";
 import { useCommonValue } from "@imports/ImportHooks";
 
 // -------------------------------------------------------------------------------------------------
-export const useSessionStorage = () => {
+export const useFoodSection = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
@@ -14,10 +14,10 @@ export const useSessionStorage = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
 
-    // 1. foodSection 처리 (food/find, food/save)
+    // 1. foodSection 처리
     if (
-      location.pathname.indexOf("/food/find") === -1 &&
-      location.pathname.indexOf("/food/save") === -1
+      location.pathname.includes("/food/find/list") === false &&
+      location.pathname.includes("/food/save") === false
     ) {
       const section = sessionStorage.getItem(`${TITLE}_foodSection`);
       if (section !== null || section !== undefined || section !== "") {

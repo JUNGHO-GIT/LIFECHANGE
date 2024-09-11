@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { ExerciseBar } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { handlerY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Div, Img, Select} from "@imports/ImportComponents";
 import { Paper, Card, MenuItem, Grid } from "@imports/ImportMuis";
-import { Bar, Scatter, ComposedChart, ReferenceLine, Line } from "recharts";
+import { Scatter, ComposedChart } from "recharts";
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { common3_2 } from "@imports/ImportImages";
 
@@ -44,20 +45,8 @@ export const ExerciseChartBar = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_WEEK_DEF = [{
-    name: "",
-    date: "",
-    goal: "0",
-    real: "0"
-  }];
-  const OBJECT_MONTH_DEF = [{
-    name: "",
-    date: "",
-    goal: "0",
-    real: "0"
-  }];
-  const [OBJECT_WEEK, setOBJECT_WEEK] = useState<any>(OBJECT_WEEK_DEF);
-  const [OBJECT_MONTH, setOBJECT_MONTH] = useState<any>(OBJECT_MONTH_DEF);
+  const [OBJECT_WEEK, setOBJECT_WEEK] = useState<any>([ExerciseBar]);
+  const [OBJECT_MONTH, setOBJECT_MONTH] = useState<any>([ExerciseBar]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -75,10 +64,10 @@ export const ExerciseChartBar = () => {
       }),
     ]);
     setOBJECT_WEEK(
-      resWeek.data.result.length > 0 ? resWeek.data.result : OBJECT_WEEK_DEF
+      resWeek.data.result.length > 0 ? resWeek.data.result : [ExerciseBar]
     );
     setOBJECT_MONTH(
-      resMonth.data.result.length > 0 ? resMonth.data.result : OBJECT_MONTH_DEF
+      resMonth.data.result.length > 0 ? resMonth.data.result : [ExerciseBar]
     );
     setLOADING(false);
   })()}, [sessionId]);
