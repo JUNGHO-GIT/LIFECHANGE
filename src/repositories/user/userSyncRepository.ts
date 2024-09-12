@@ -405,7 +405,7 @@ export const updateProperty = async (
     },
     {
       upsert: true,
-      new: false
+      new: true
     }
   );
 
@@ -558,7 +558,7 @@ export const updateScale = async (
     },
     {
       upsert: true,
-      new: false
+      new: true
     }
   );
 

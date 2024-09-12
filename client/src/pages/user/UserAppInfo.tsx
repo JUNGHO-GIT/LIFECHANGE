@@ -9,7 +9,6 @@ import { Loading } from "@imports/ImportLayouts";
 import { Img } from "@imports/ImportComponents";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
 import { TableContainer, Table, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
-import { logo1 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const UserAppInfo = () => {
@@ -53,7 +52,8 @@ export const UserAppInfo = () => {
     // 7-1. image
     const imageSection = () => (
       <Img
-        src={logo1}
+        key={"logo1"}
+        src={"logo1"}
         alt={"logo1"}
         className={"w-240 h-200"}
       />

@@ -9,7 +9,6 @@ import { axios } from "@imports/ImportLibs";
 import { Loading } from "@imports/ImportLayouts";
 import { Input, Div, Img, Hr, Select, Btn } from "@imports/ImportComponents";
 import { Paper, MenuItem, Grid, Card } from "@imports/ImportMuis";
-import { user1 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const UserSignup = () => {
@@ -427,7 +426,8 @@ export const UserSignup = () => {
         }}
       >
         <Img
-        	src={user1}
+        	key={"user1"}
+        	src={"user1"}
         	className={"w-15 h-15 me-10"}
         />
         {translate("googleLogin")}

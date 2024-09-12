@@ -30,8 +30,8 @@ router.get("/exist", async (req: Request, res: Response) => {
     else {
       res.json({
         msg: "searchError",
-        status: "fail",
-        result: null,
+        status: finalResult.status,
+        result: finalResult.result,
       });
     }
   }
@@ -219,6 +219,7 @@ router.delete("/delete", async (req: Request, res: Response) => {
     let finalResult = await service.deletes(
       req.body.user_id as string,
       req.body._id as string,
+      req.body.DATE as any,
     );
     if (finalResult.status === "success") {
       res.json({

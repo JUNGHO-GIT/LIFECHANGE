@@ -23,17 +23,23 @@ export const SleepSave = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, location_id, toList
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, toList
   } = useCommonValue();
   const {
-    ERRORS, REFS, validate
+    ERRORS, REFS, validate,
   } = useValidateSleep();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [EXIST, setEXIST] = useState<any[]>([""]);
-  const [dialOpen, setDialOpen] = useState<boolean>(false);
+  const [LOCKED, setLOCKED] = useState<string>("unlocked");
   const [OBJECT, setOBJECT] = useState<any>(Sleep);
+  const [EXIST, setEXIST] = useState<any>({
+    day: [""],
+    week: [""],
+    month: [""],
+    year: [""],
+    select: [""],
+  });
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
@@ -67,7 +73,9 @@ export const SleepSave = () => {
       },
     })
     .then((res: any) => {
-      setEXIST(res.data.result.length > 0 ? res.data.result : [""]);
+      setEXIST(
+        !res.data.result || res.data.result.length === 0 ? [""] : res.data.result
+      );
     })
     .catch((err: any) => {
       console.error(err);
@@ -76,6 +84,9 @@ export const SleepSave = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
+    if (LOCKED === "locked") {
+      return;
+    }
     setLOADING(true);
     axios.get(`${URL_OBJECT}/detail`, {
       params: {
@@ -85,18 +96,7 @@ export const SleepSave = () => {
       },
     })
     .then((res: any) => {
-      // 첫번째 객체를 제외하고 데이터 추가
-      setOBJECT((prev: any) => {
-        if (prev.length === 1 && prev[0]?._id === "") {
-          return res.data.result;
-        }
-        else {
-          return {
-            ...prev,
-            ...res.data.result
-          };
-        }
-      });
+      setOBJECT(res.data.result || Sleep);
       // section 내부 part_idx 값에 따라 재정렬
       setOBJECT((prev: any) => {
         const mergedFoodSection = prev?.sleep_section
@@ -129,7 +129,7 @@ export const SleepSave = () => {
       sleep_wakeTime: "00:00",
       sleep_sleepTime: "00:00",
     };
-    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((item: any, idx: number) =>
+    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) =>
       idx < OBJECT?.sleep_section.length ? OBJECT?.sleep_section[idx] : defaultSection
     );
     setOBJECT((prev: any) => ({
@@ -141,7 +141,7 @@ export const SleepSave = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    if (!validate(OBJECT, COUNT)) {
+    if (!validate(OBJECT, COUNT, DATE, EXIST)) {
       setLOADING(false);
       return;
     }
@@ -211,7 +211,7 @@ export const SleepSave = () => {
   const handlerDelete = (index: number) => {
     setOBJECT((prev: any) => ({
       ...prev,
-      sleep_section: prev.sleep_section.filter((item: any, idx: number) => (idx !== index))
+      sleep_section: prev.sleep_section.filter((_item: any, idx: number) => (idx !== index))
     }));
     setCOUNT((prev: any) => ({
       ...prev,
@@ -237,6 +237,8 @@ export const SleepSave = () => {
             <Count
               COUNT={COUNT}
               setCOUNT={setCOUNT}
+              LOCKED={LOCKED}
+              setLOCKED={setLOCKED}
               limit={1}
             />
           </Grid>
@@ -258,6 +260,7 @@ export const SleepSave = () => {
               <Delete
                 index={i}
                 handlerDelete={handlerDelete}
+                LOCKED={LOCKED}
               />
             </Grid>
             <Grid size={12}>
@@ -267,6 +270,7 @@ export const SleepSave = () => {
                 REFS={REFS}
                 ERRORS={ERRORS}
                 DATE={DATE}
+                LOCKED={LOCKED}
                 extra={"sleep_bedTime"}
                 i={i}
               />
@@ -278,6 +282,7 @@ export const SleepSave = () => {
                 REFS={REFS}
                 ERRORS={ERRORS}
                 DATE={DATE}
+                LOCKED={LOCKED}
                 extra={"sleep_wakeTime"}
                 i={i}
               />
@@ -289,9 +294,10 @@ export const SleepSave = () => {
                 REFS={REFS}
                 ERRORS={ERRORS}
                 DATE={DATE}
+                LOCKED={LOCKED}
                 extra={"sleep_sleepTime"}
                 i={i}
-              />
+            />
             </Grid>
           </Grid>
         </Card>

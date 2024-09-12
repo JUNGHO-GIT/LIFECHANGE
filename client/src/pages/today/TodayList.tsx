@@ -10,10 +10,6 @@ import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
 import { Empty } from "@imports/ImportContainers";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
-import { exercise3_1, exercise4, exercise5 } from "@imports/ImportImages";
-import { food2, food3, food4, food5 } from "@imports/ImportImages";
-import { money2 } from "@imports/ImportImages";
-import { sleep2, sleep3, sleep4 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const TodayList = () => {
@@ -56,14 +52,14 @@ export const TodayList = () => {
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toExerciseGoal: "/exercise/goal/update",
-    toExercise: "/exercise/update",
-    toFoodGoal: "/food/goal/update",
-    toFood: "/food/update",
-    toMoneyGoal: "/money/goal/update",
-    toMoney: "/money/update",
-    toSleepGoal: "/sleep/goal/update",
-    toSleep: "/sleep/update",
+    toExerciseGoal: "/exercise/goal/save",
+    toExercise: "/exercise/save",
+    toFoodGoal: "/food/goal/save",
+    toFood: "/food/save",
+    toMoneyGoal: "/money/goal/save",
+    toMoney: "/money/save",
+    toSleepGoal: "/sleep/goal/save",
+    toSleep: "/sleep/save",
   });
   const [COUNT_EXERCISE, setCOUNT_EXERCISE] = useState<any>({
     totalCnt: 0,
@@ -249,7 +245,8 @@ export const TodayList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={exercise3_1}
+                    	key={"exercise3_1"}
+                    	src={"exercise3_1"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -274,7 +271,8 @@ export const TodayList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={exercise4}
+                    	key={"exercise4"}
+                    	src={"exercise4"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -299,7 +297,8 @@ export const TodayList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={exercise5}
+                    	key={"exercise5"}
+                    	src={"exercise5"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -415,7 +414,8 @@ export const TodayList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={food2}
+                    	key={"food2"}
+                    	src={"food2"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -440,7 +440,8 @@ export const TodayList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={food3}
+                    	key={"food3"}
+                    	src={"food3"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -465,7 +466,8 @@ export const TodayList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={food4}
+                    	key={"food4"}
+                    	src={"food4"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -490,7 +492,8 @@ export const TodayList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={food5}
+                    	key={"food5"}
+                    	src={"food5"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -606,7 +609,8 @@ export const TodayList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={money2}
+                    	key={"money2"}
+                    	src={"money2"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -631,7 +635,8 @@ export const TodayList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={money2}
+                    	key={"money2"}
+                    	src={"money2"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -747,7 +752,8 @@ export const TodayList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={sleep2}
+                    	key={"sleep2"}
+                    	src={"sleep2"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -772,7 +778,8 @@ export const TodayList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={sleep3}
+                    	key={"sleep3"}
+                    	src={"sleep3"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -797,7 +804,8 @@ export const TodayList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={sleep4}
+                    	key={"sleep4"}
+                    	src={"sleep4"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>

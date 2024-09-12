@@ -17,12 +17,10 @@ export const exist = async (
       $match: {
         user_id: user_id_param,
         exercise_dateStart: {
-          $gte: dateStart_param,
           $lte: dateEnd_param
         },
         exercise_dateEnd: {
           $gte: dateStart_param,
-          $lte: dateEnd_param
         },
         ...dateType_param ? {
           exercise_dateType: dateType_param
@@ -30,20 +28,16 @@ export const exist = async (
       }
     },
     {
-      $match: {
-        $expr: {
-          $gt: [
-            { $size: "$exercise_section" }, 0
-          ]
-        }
+      $project: {
+        _id: 0,
+        exercise_dateType: 1,
+        exercise_dateStart: 1,
+        exercise_dateEnd: 1,
       }
     },
     {
-      $group: {
-        _id: null,
-        existDate: {
-          $addToSet: "$exercise_dateStart"
-        }
+      $sort: {
+        exercise_dateStart: 1
       }
     }
   ]);
@@ -202,7 +196,16 @@ export const update = async (
   const finalResult = await Exercise.findOneAndUpdate(
     {
       user_id: user_id_param,
-      _id: !_id_param ? { $exists: true } : _id_param
+      _id: !_id_param ? { $exists: true } : _id_param,
+      exercise_dateStart: {
+        $eq: dateStart_param
+      },
+      exercise_dateEnd: {
+        $eq: dateEnd_param
+      },
+      ...dateType_param ? {
+        exercise_dateType: dateType_param
+      } : {},
     },
     {
       $set: {
@@ -212,13 +215,15 @@ export const update = async (
         exercise_total_volume: OBJECT_param.exercise_total_volume,
         exercise_total_cardio: OBJECT_param.exercise_total_cardio,
         exercise_total_weight: OBJECT_param.exercise_total_weight,
-        exercise_section: OBJECT_param.exercise_section,
         exercise_updateDt: newDate,
+      },
+      $push: {
+        exercise_section: OBJECT_param.exercise_section
       }
     },
     {
       upsert: true,
-      new: false
+      new: true
     }
   )
   .lean();
@@ -230,12 +235,24 @@ export const update = async (
 export const deletes = async (
   user_id_param: string,
   _id_param: string,
+  dateType_param: string,
+  dateStart_param: string,
+  dateEnd_param: string,
 ) => {
 
   const finalResult = await Exercise.findOneAndDelete(
     {
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
+      exercise_dateStart: {
+        $eq: dateStart_param
+      },
+      exercise_dateEnd: {
+        $eq: dateEnd_param
+      },
+      ...dateType_param ? {
+        exercise_dateType: dateType_param
+      } : {},
     }
   )
   .lean();

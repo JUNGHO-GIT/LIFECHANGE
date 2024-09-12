@@ -10,7 +10,6 @@ import { Div, Img, Hr, Icons } from "@imports/ImportComponents";
 import { Empty } from "@imports/ImportContainers";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
-import { sleep2, sleep3, sleep4 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const SleepGoalList = () => {
@@ -23,7 +22,7 @@ export const SleepGoalList = () => {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, toUpdate,
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, toSave
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -125,7 +124,7 @@ export const SleepGoalList = () => {
                       dateStart: item.sleep_goal_dateStart,
                       dateEnd: item.sleep_goal_dateEnd,
                     });
-                    navigate(toUpdate, {
+                    navigate(toSave, {
                       state: SEND
                     });
                   }}
@@ -174,7 +173,8 @@ export const SleepGoalList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={sleep2}
+                    	key={"sleep2"}
+                    	src={"sleep2"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -241,7 +241,8 @@ export const SleepGoalList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={sleep3}
+                    	key={"sleep3"}
+                    	src={"sleep3"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -308,7 +309,8 @@ export const SleepGoalList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={sleep4}
+                    	key={"sleep4"}
+                    	src={"sleep4"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>

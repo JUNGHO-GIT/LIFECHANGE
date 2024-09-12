@@ -34,8 +34,8 @@ export const useValidateMoney= () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    // 1. goal/save, update
-    if (PATH.includes("money/goal/save") || PATH.includes("money/goal/update")) {
+    // 1. goal/save
+    if (PATH.includes("money/goal/save")) {
       const target = [
         "money_goal_income",
         "money_goal_expense",
@@ -56,10 +56,25 @@ export const useValidateMoney= () => {
           return acc;
         }, [])
       );
-      validate.current = (OBJECT: any, COUNT: any) => {
+      validate.current = (OBJECT: any, COUNT: any, DATE: any, EXIST: any) => {
+
+        // 카운트가 0인 경우
         if (COUNT.newSectionCnt === 0) {
           alert(translate("errorCount"));
           return returnValid;
+        }
+
+        // EXIST 배열에서 바로 필터링 조건 적용
+        for (let i = 0; i < EXIST.length; i++) {
+          if (EXIST[i] === DATE.dateStart && EXIST[i] === DATE.dateEnd) {
+            const confirm = window.confirm(translate("dataAlreadyExist"));
+            if (confirm) {
+              return !returnValid;
+            }
+            else {
+              return returnValid;
+            }
+          }
         }
         if (!OBJECT.money_goal_income || OBJECT.money_goal_income === "0") {
           return showAlertAndFocus('money_goal_income', "errorMoneyGoalIncome", 0);
@@ -71,8 +86,8 @@ export const useValidateMoney= () => {
       }
     }
 
-    // 2. save, update
-    else if (PATH.includes("money/save") || PATH.includes("money/update")) {
+    // 2. save
+    else if (PATH.includes("money/save")) {
       const target = [
         "money_part_idx",
         "money_title_idx",
@@ -94,10 +109,25 @@ export const useValidateMoney= () => {
           return acc;
         }, [])
       );
-      validate.current = (OBJECT: any, COUNT: any) => {
+      validate.current = (OBJECT: any, COUNT: any, DATE: any, EXIST: any) => {
+
+        // 카운트가 0인 경우
         if (COUNT.newSectionCnt === 0) {
           alert(translate("errorCount"));
           return returnValid;
+        }
+
+        // EXIST 배열에서 바로 필터링 조건 적용
+        for (let i = 0; i < EXIST.length; i++) {
+          if (EXIST[i] === DATE.dateStart && EXIST[i] === DATE.dateEnd) {
+            const confirm = window.confirm(translate("dataAlreadyExist"));
+            if (confirm) {
+              return !returnValid;
+            }
+            else {
+              return returnValid;
+            }
+          }
         }
         const section = OBJECT.money_section;
         for (let i = 0; i < section.length; i++) {

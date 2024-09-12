@@ -17,12 +17,10 @@ export const exist = async (
       $match: {
         user_id: user_id_param,
         sleep_dateStart: {
-          $gte: dateStart_param,
           $lte: dateEnd_param
         },
         sleep_dateEnd: {
           $gte: dateStart_param,
-          $lte: dateEnd_param
         },
         ...dateType_param ? {
           sleep_dateType: dateType_param
@@ -30,20 +28,16 @@ export const exist = async (
       }
     },
     {
-      $match: {
-        $expr: {
-          $gt: [
-            { $size: "$sleep_section" }, 0
-          ]
-        }
+      $project: {
+        _id: 0,
+        sleep_dateType: 1,
+        sleep_dateStart: 1,
+        sleep_dateEnd: 1,
       }
     },
     {
-      $group: {
-        _id: null,
-        existDate: {
-          $addToSet: "$sleep_dateStart"
-        }
+      $sort: {
+        sleep_dateStart: 1
       }
     }
   ]);
@@ -205,20 +199,31 @@ export const update = async (
   const finalResult = await Sleep.findOneAndUpdate(
     {
       user_id: user_id_param,
-      _id: !_id_param ? { $exists: true } : _id_param
+      _id: !_id_param ? { $exists: true } : _id_param,
+      sleep_dateStart: {
+        $eq: dateStart_param
+      },
+      sleep_dateEnd: {
+        $eq: dateEnd_param
+      },
+      ...dateType_param ? {
+        sleep_dateType: dateType_param
+      } : {},
     },
     {
       $set: {
         sleep_dateType: dateType_param,
         sleep_dateStart: dateStart_param,
         sleep_dateEnd: dateEnd_param,
-        sleep_section: OBJECT_param.sleep_section,
         sleep_updateDt: newDate,
+      },
+      $push: {
+        sleep_section: OBJECT_param.sleep_section
       }
     },
     {
       upsert: true,
-      new: false
+      new: true
     }
   )
   .lean();
@@ -230,12 +235,24 @@ export const update = async (
 export const deletes = async (
   user_id_param: string,
   _id_param: string,
+  dateType_param: string,
+  dateStart_param: string,
+  dateEnd_param: string,
 ) => {
 
   const finalResult = await Sleep.findOneAndDelete(
     {
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
+      sleep_dateStart: {
+        $eq: dateStart_param
+      },
+      sleep_dateEnd: {
+        $eq: dateEnd_param
+      },
+      ...dateType_param ? {
+        sleep_dateType: dateType_param
+      } : {},
     }
   )
   .lean();

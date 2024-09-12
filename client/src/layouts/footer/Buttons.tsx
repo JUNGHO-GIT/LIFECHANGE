@@ -3,9 +3,8 @@
 
 import { useState } from "@imports/ImportReacts";
 import { useCommonValue, useTranslate } from "@imports/ImportHooks";
-import { Btn, Div, Icons } from "@imports/ImportComponents";
+import { Btn } from "@imports/ImportComponents";
 import { Grid } from "@imports/ImportMuis";
-import { SpeedDial, SpeedDialAction, SpeedDialIcon, Backdrop } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 declare interface ButtonsProps {
@@ -24,11 +23,8 @@ export const Buttons = (
     translate,
   } = useTranslate();
   const {
-    PATH, toFind, toUpdate, navigate
+    PATH, toFind, toSave, navigate
   } = useCommonValue();
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const [open, setOpen] = useState<boolean>(false);
 
   // 7. btn ----------------------------------------------------------------------------------------
   const btnNode = () => {
@@ -78,7 +74,7 @@ export const Buttons = (
             dateStart: state?.DATE.dateStart,
             dateEnd: state?.DATE.dateEnd
           });
-          navigate(toUpdate, {
+          navigate(toSave, {
             state: state?.SEND,
           });
         }}
@@ -118,48 +114,6 @@ export const Buttons = (
       </Btn>
     );
 
-    // 9. dial
-    const dialSection = () => (
-      <SpeedDial
-        ariaLabel={"SpeedDial"}
-        direction={"up"}
-        icon={<SpeedDialIcon />}
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
-        open={open}
-        FabProps={{
-          color: "default",
-          size: "small",
-          style: {
-            backgroundColor: "#ffffff",
-            color: "black",
-            border: "1px solid #000000",
-          }
-        }}
-        style={{
-          position: "absolute",
-          bottom: 3,
-          right: 0,
-          zIndex: 1000000,
-        }}
-      >
-        <SpeedDialAction
-          key={"today"}
-          icon={<SpeedDialIcon />}
-          sx={{
-           zIndex: 1000000,
-          }}
-          tooltipTitle={translate("today")}
-        />
-        <SpeedDialAction
-          key={"calendar"}
-          icon={<SpeedDialIcon />}
-          tooltipTitle={translate("calendar")}
-
-        />
-      </SpeedDial>
-    );
-
     // 10. return
     return (
       PATH.includes("/user/category") || PATH.includes("/user/detail") ? (
@@ -169,32 +123,12 @@ export const Buttons = (
           </Grid>
         </Grid>
       )
-      : PATH.includes("/detail") ? (
-        <Grid container spacing={2}>
-          <Grid size={10} className={"d-center"}>
-            {newNode()}
-            {toUpdateSection()}
-            {deleteSection()}
-          </Grid>
-        </Grid>
-      )
-      : PATH.includes("/update") ? (
-        <Grid container spacing={2}>
-          <Grid size={10} className={"d-center"}>
-            {PATH.includes("/food") ? toFindSection() : null}
-            {newNode()}
-            {saveSection()}
-            {deleteSection()}
-          </Grid>
-        </Grid>
-      )
       : PATH.includes("/save") ? (
         <Grid container spacing={2}>
           <Grid size={10} className={"d-center"}>
             {PATH.includes("/food") ? toFindSection() : null}
             {saveSection()}
             {deleteSection()}
-            {dialSection()}
           </Grid>
         </Grid>
       )

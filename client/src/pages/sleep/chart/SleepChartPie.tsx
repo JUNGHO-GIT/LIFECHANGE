@@ -8,7 +8,6 @@ import { Loading } from "@imports/ImportLayouts";
 import { Div, Img, Select } from "@imports/ImportComponents";
 import { Paper, Card, MenuItem, Grid } from "@imports/ImportMuis";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from 'recharts';
-import { common3_2 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 declare interface PieProps {
@@ -351,7 +350,8 @@ export const SleepChartPie = () => {
       );
       const selectFragment2 = () => (
         <Img
-        	src={common3_2}
+        	key={"common3_2"}
+        	src={"common3_2"}
         	className={"w-24 h-24"}
         />
       );

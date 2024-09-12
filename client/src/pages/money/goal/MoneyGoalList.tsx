@@ -10,7 +10,6 @@ import { Div, Img, Hr, Icons } from "@imports/ImportComponents";
 import { Empty } from "@imports/ImportContainers";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
-import { money2 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const MoneyGoalList = () => {
@@ -23,7 +22,7 @@ export const MoneyGoalList = () => {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, sessionCurrency, toUpdate,
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, sessionCurrency, toSave
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -124,7 +123,7 @@ export const MoneyGoalList = () => {
                       dateStart: item.money_goal_dateStart,
                       dateEnd: item.money_goal_dateEnd,
                     });
-                    navigate(toUpdate, {
+                    navigate(toSave, {
                       state: SEND
                     });
                   }}
@@ -173,7 +172,8 @@ export const MoneyGoalList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={money2}
+                    	key={"money2"}
+                    	src={"money2"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -240,7 +240,8 @@ export const MoneyGoalList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={money2}
+                    	key={"money2"}
+                    	src={"money2"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>

@@ -1,7 +1,13 @@
 // Img.tsx
 
+import { useCommonValue } from "@imports/ImportHooks";
+
 // -------------------------------------------------------------------------------------------------
 export const Img = (props: any) => {
+
+  const {
+    GCLOUD_URL
+  } = useCommonValue();
 
   // src속성 찾기
   const srcProps = props.src;
@@ -17,8 +23,9 @@ export const Img = (props: any) => {
       >
         <img
           {...props}
+          src={`${GCLOUD_URL}/${srcProps}.webp`}
           alt={fileName}
-          loading={"eager"}
+          loading={"lazy"}
         />
       </div>
     );

@@ -7,9 +7,6 @@ import { moment, numeral } from "@imports/ImportLibs";
 import { Tabs, Tab, Paper, Grid, Card } from "@imports/ImportMuis";
 import { Div, Img, Hr, Input } from "@imports/ImportComponents";
 import { PopUp } from "@imports/ImportContainers";
-import { smile1, smile2, smile3, smile4, smile5 } from "@imports/ImportImages";
-import { money2, money4 } from "@imports/ImportImages";
-import { exercise5, exercise6 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const TopNav = () => {
@@ -41,11 +38,11 @@ export const TopNav = () => {
     sleep: "0",
   });
   const [smileImage, setSmileImage] = useState<any>({
-    total: smile3,
-    exercise: smile3,
-    food: smile3,
-    money: smile3,
-    sleep: smile3,
+    total: "smile3",
+    exercise: "smile3",
+    food: "smile3",
+    money: "smile3",
+    sleep: "smile3",
   });
   const [property, setProperty] = useState<any>({
     dateStart: "",
@@ -63,7 +60,7 @@ export const TopNav = () => {
     minScale: "0",
     maxScale: "0",
   });
-  const [mainSmileImage, setMainSmileImage] = useState<any>(smile3);
+  const [mainSmileImage, setMainSmileImage] = useState<any>("smile3");
   const [selectedTab, setSelectedTab] = useState<string>("chart");
 
   // 2-3. useEffect --------------------------------------------------------------------------------
@@ -84,22 +81,22 @@ export const TopNav = () => {
     const getImage = (score: string) => {
       const parsScore = parseFloat(score);
       if (parsScore > 0 && parsScore <= 1) {
-        return smile1;
+        return "smile1";
       }
       else if (parsScore > 1 && parsScore <= 2) {
-        return smile2;
+        return "smile2";
       }
       else if (parsScore > 2 && parsScore <= 3) {
-        return smile3;
+        return "smile3";
       }
       else if (parsScore > 3 && parsScore <= 4) {
-        return smile4;
+        return "smile4";
       }
       else if (parsScore > 4 && parsScore <= 5) {
-        return smile5;
+        return "smile5";
       }
       else {
-        return smile3;
+        return "smile3";
       }
     };
 
@@ -257,6 +254,7 @@ export const TopNav = () => {
               <Grid size={12} className={"d-center"}>
                 <Div className={"d-center me-2vw"}>
                   <Img
+                    key={smileImage.total}
                   	src={smileImage.total}
                   	className={"w-max25 h-max25"}
                   />
@@ -271,6 +269,7 @@ export const TopNav = () => {
               <Grid size={12} className={"d-center"}>
                 <Div className={"d-center me-2vw"}>
                   <Img
+                    key={smileImage.exercise}
                   	src={smileImage.exercise}
                   	className={"w-max25 h-max25"}
                   />
@@ -285,6 +284,7 @@ export const TopNav = () => {
               <Grid size={12} className={"d-center"}>
                 <Div className={"d-center me-2vw"}>
                   <Img
+                    key={smileImage.food}
                   	src={smileImage.food}
                   	className={"w-max25 h-max25"}
                   />
@@ -299,6 +299,7 @@ export const TopNav = () => {
               <Grid size={12} className={"d-center"}>
                 <Div className={"d-center me-2vw"}>
                   <Img
+                    key={smileImage.money}
                   	src={smileImage.money}
                   	className={"w-max25 h-max25"}
                   />
@@ -313,6 +314,7 @@ export const TopNav = () => {
               <Grid size={12} className={"d-center"}>
                 <Div className={"d-center me-2vw"}>
                   <Img
+                    key={smileImage.sleep}
                   	src={smileImage.sleep}
                   	className={"w-max25 h-max25"}
                   />
@@ -341,6 +343,7 @@ export const TopNav = () => {
             window.dispatchEvent(event);
           }}>
             <Img
+              key={mainSmileImage}
             	src={mainSmileImage}
             	className={"w-max25 h-max25"}
             />
@@ -370,7 +373,8 @@ export const TopNav = () => {
               <Hr px={20} />
               <Grid size={12} className={"d-center"}>
                 <Img
-                	src={money2}
+                  key={"money2"}
+                  src={"money2"}
                 	className={"w-16 h-16"}
                 />
                 <Div className={"fs-1-4rem fw-600 ms-2vw"}>
@@ -385,7 +389,8 @@ export const TopNav = () => {
                   readOnly={true}
                   startadornment={
                     <Img
-                    	src={money2}
+                      key={"money2"}
+                      src={"money2"}
                     	className={"w-16 h-16"}
                     />
                   }
@@ -401,7 +406,8 @@ export const TopNav = () => {
                   readOnly={true}
                   startadornment={
                     <Img
-                    	src={money2}
+                      key={"money2"}
+                      src={"money2"}
                     	className={"w-16 h-16"}
                     />
                   }
@@ -417,7 +423,8 @@ export const TopNav = () => {
                   readOnly={true}
                   startadornment={
                     <Img
-                    	src={money2}
+                      key={"money2"}
+                      src={"money2"}
                     	className={"w-16 h-16"}
                     />
                   }
@@ -437,7 +444,8 @@ export const TopNav = () => {
             window.dispatchEvent(event);
           }}>
             <Img
-            	src={money4}
+              key={"money4"}
+            	src={"money4"}
             	className={"w-max25 h-max25"}
             />
           </Div>
@@ -466,7 +474,8 @@ export const TopNav = () => {
               <Hr px={20} />
               <Grid size={12} className={"d-center"}>
                 <Img
-                	src={exercise5}
+                  key={"exercise5"}
+                  src={"exercise5"}
                 	className={"w-16 h-16"}
                 />
                 <Div className={"fs-1-4rem fw-600 ms-2vw"}>
@@ -481,7 +490,8 @@ export const TopNav = () => {
                   readOnly={true}
                   startadornment={
                     <Img
-                    	src={exercise5}
+                      key={"exercise5"}
+                      src={"exercise5"}
                     	className={"w-16 h-16"}
                     />
                   }
@@ -497,7 +507,8 @@ export const TopNav = () => {
                   readOnly={true}
                   startadornment={
                     <Img
-                    	src={exercise5}
+                      key={"exercise5"}
+                      src={"exercise5"}
                     	className={"w-16 h-16"}
                     />
                   }
@@ -513,7 +524,8 @@ export const TopNav = () => {
                   readOnly={true}
                   startadornment={
                     <Img
-                    	src={exercise5}
+                      key={"exercise5"}
+                      src={"exercise5"}
                     	className={"w-16 h-16"}
                     />
                   }
@@ -533,7 +545,8 @@ export const TopNav = () => {
             window.dispatchEvent(event);
           }}>
             <Img
-            	src={exercise6}
+              key={"exercise6"}
+            	src={"exercise6"}
             	className={"w-max25 h-max25"}
             />
           </Div>

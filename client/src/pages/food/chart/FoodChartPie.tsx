@@ -10,7 +10,6 @@ import { PopUp } from "@imports/ImportContainers";
 import { Paper, Card, MenuItem, Grid } from "@imports/ImportMuis";
 import { FormGroup, FormControlLabel, Switch } from "@imports/ImportMuis";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recharts";
-import { common3_1 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 declare interface PieProps {
@@ -587,7 +586,8 @@ export const FoodChartPie = () => {
         >
           {(popTrigger: any) => (
             <Img
-              src={common3_1}
+              key={"common3_1"}
+              src={"common3_1"}
               className={"w-24 h-24 pointer"}
               onClick={(e: any) => {
                 popTrigger.openPopup(e.currentTarget)

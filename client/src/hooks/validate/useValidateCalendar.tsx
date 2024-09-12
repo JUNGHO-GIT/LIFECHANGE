@@ -34,8 +34,8 @@ export const useValidateCalendar= () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    // 1. save, update
-    if (PATH.includes("calendar/save") || PATH.includes("calendar/update")) {
+    // 1. save
+    if (PATH.includes("calendar/save")) {
       const target = [
         "calendar_part_idx",
         "calendar_color",
@@ -57,11 +57,28 @@ export const useValidateCalendar= () => {
           return acc;
         }, [])
       );
-      validate.current = (OBJECT: any, COUNT: any) => {
+      validate.current = (OBJECT: any, COUNT: any, DATE: any, EXIST: any) => {
+
+        // 카운트가 0인 경우
         if (COUNT.newSectionCnt === 0) {
           alert(translate("errorCount"));
           return returnValid;
         }
+
+        // EXIST 배열에서 바로 필터링 조건 적용
+        const type = EXIST[DATE.dateType];
+        for (let i = 0; i < type.length; i++) {
+          if (type[i] === `${DATE.dateStart} ~ ${DATE.dateEnd}`) {
+            const confirm = window.confirm(translate("dataAlreadyExist"));
+            if (confirm) {
+              return !returnValid;
+            }
+            else {
+              return returnValid;
+            }
+          }
+        }
+
         const section = OBJECT.calendar_section;
         for (let i = 0; i < section.length; i++) {
           if (!section[i].calendar_part_idx || section[i].calendar_part_idx === 0) {

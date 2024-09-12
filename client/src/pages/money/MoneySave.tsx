@@ -11,7 +11,6 @@ import { Loading, Footer } from "@imports/ImportLayouts";
 import { Select, Input, Img, Bg } from "@imports/ImportComponents";
 import { Picker, Memo, Count, Delete } from "@imports/ImportContainers";
 import { Card, Paper, MenuItem, Grid } from "@imports/ImportMuis";
-import { money2 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const MoneySave = () => {
@@ -32,8 +31,15 @@ export const MoneySave = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [EXIST, setEXIST] = useState<any[]>([""]);
+  const [LOCKED, setLOCKED] = useState<string>("unlocked");
   const [OBJECT, setOBJECT] = useState<any>(Money);
+  const [EXIST, setEXIST] = useState<any>({
+    day: [""],
+    week: [""],
+    month: [""],
+    year: [""],
+    select: [""],
+  });
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
@@ -64,7 +70,9 @@ export const MoneySave = () => {
       },
     })
     .then((res: any) => {
-      setEXIST(res.data.result.length > 0 ? res.data.result : [""]);
+      setEXIST(
+        !res.data.result || res.data.result.length === 0 ? [""] : res.data.result
+      );
     })
     .catch((err: any) => {
       console.error(err);
@@ -73,27 +81,19 @@ export const MoneySave = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
+    if (LOCKED === "locked") {
+      return;
+    }
     setLOADING(true);
     axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId,
-        _id: location_id,
+        _id: "",
         DATE: DATE,
       },
     })
     .then((res: any) => {
-      // 첫번째 객체를 제외하고 데이터 추가
-      setOBJECT((prev: any) => {
-        if (prev.length === 1 && prev[0]?._id === "") {
-          return res.data.result;
-        }
-        else {
-          return {
-            ...prev,
-            ...res.data.result
-          };
-        }
-      });
+      setOBJECT(res.data.result || Money);
       // section 내부 part_idx 값에 따라 재정렬
       setOBJECT((prev: any) => {
         const mergedFoodSection = prev?.money_section
@@ -156,7 +156,7 @@ export const MoneySave = () => {
       money_amount: "0",
       money_content: ""
     };
-    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((item: any, idx: number) =>
+    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) =>
       idx < OBJECT?.money_section.length ? OBJECT?.money_section[idx] : defaultSection
     );
     setOBJECT((prev: any) => ({
@@ -168,7 +168,7 @@ export const MoneySave = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    if (!validate(OBJECT, COUNT)) {
+    if (!validate(OBJECT, COUNT, DATE, EXIST)) {
       setLOADING(false);
       return;
     }
@@ -238,7 +238,7 @@ export const MoneySave = () => {
   const handlerDelete = (index: number) => {
     setOBJECT((prev: any) => ({
       ...prev,
-      money_section: prev.money_section.filter((item: any, idx: number) => (idx !== index))
+      money_section: prev.money_section.filter((_item: any, idx: number) => (idx !== index))
     }));
     setCOUNT((prev: any) => ({
       ...prev,
@@ -264,6 +264,8 @@ export const MoneySave = () => {
             <Count
               COUNT={COUNT}
               setCOUNT={setCOUNT}
+              LOCKED={LOCKED}
+              setLOCKED={setLOCKED}
               limit={10}
             />
           </Grid>
@@ -281,7 +283,8 @@ export const MoneySave = () => {
               readOnly={true}
               startadornment={
                 <Img
-                	src={money2}
+                	key={"money2"}
+                	src={"money2"}
                 	className={"w-16 h-16"}
                 />
               }
@@ -297,7 +300,8 @@ export const MoneySave = () => {
               readOnly={true}
               startadornment={
                 <Img
-                	src={money2}
+                	key={"money2"}
+                	src={"money2"}
                 	className={"w-16 h-16"}
                 />
               }
@@ -336,6 +340,7 @@ export const MoneySave = () => {
               <Delete
                 index={i}
                 handlerDelete={handlerDelete}
+                LOCKED={LOCKED}
               />
             </Grid>
             <Grid size={6}>
@@ -405,7 +410,8 @@ export const MoneySave = () => {
                 error={ERRORS[i]?.money_amount}
                 startadornment={
                   <Img
-                  	src={money2}
+                  	key={"money2"}
+                  	src={"money2"}
                   	className={"w-16 h-16"}
                   />
                 }
@@ -446,6 +452,7 @@ export const MoneySave = () => {
               <Memo
                 OBJECT={OBJECT}
                 setOBJECT={setOBJECT}
+                LOCKED={LOCKED}
                 extra={"money_content"}
                 i={i}
               />

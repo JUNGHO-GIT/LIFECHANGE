@@ -9,7 +9,6 @@ import { axios, numeral } from "@imports/ImportLibs";
 import { Footer, Loading } from "@imports/ImportLayouts";
 import { Input, Select, Hr, Img } from "@imports/ImportComponents";
 import { Paper, Avatar, MenuItem, Card, Grid } from "@imports/ImportMuis";
-import { money2, exercise5 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const UserDetail = () => {
@@ -173,7 +172,8 @@ export const UserDetail = () => {
                 error={ERRORS[i]?.user_initScale}
                 startadornment={
                   <Img
-                  	src={exercise5}
+                  	key={"exercise5"}
+                  	src={"exercise5"}
                   	className={"w-16 h-16"}
                   />
                 }
@@ -193,7 +193,8 @@ export const UserDetail = () => {
                 value={OBJECT.user_curScale}
                 startadornment={
                   <Img
-                  	src={exercise5}
+                  	key={"exercise5"}
+                  	src={"exercise5"}
                   	className={"w-16 h-16"}
                   />
                 }
@@ -211,7 +212,8 @@ export const UserDetail = () => {
                 error={ERRORS[i]?.user_initProperty}
                 startadornment={
                   <Img
-                  	src={money2}
+                  	key={"money2"}
+                  	src={"money2"}
                   	className={"w-16 h-16"}
                   />
                 }
@@ -231,7 +233,8 @@ export const UserDetail = () => {
                 value={numeral(curProperty).format("0,0")}
                 startadornment={
                   <Img
-                  	src={money2}
+                  	key={"money2"}
+                  	src={"money2"}
                   	className={"w-16 h-16"}
                   />
                 }

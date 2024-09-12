@@ -10,7 +10,6 @@ import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
 import { Empty } from "@imports/ImportContainers";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
-import { sleep2, sleep3, sleep4 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const SleepList = () => {
@@ -23,7 +22,7 @@ export const SleepList = () => {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, toUpdate, toSave
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, toSave
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -173,7 +172,8 @@ export const SleepList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={sleep2}
+                    	key={"sleep2"}
+                    	src={"sleep2"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -198,7 +198,8 @@ export const SleepList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={sleep3}
+                    	key={"sleep3"}
+                    	src={"sleep3"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -223,7 +224,8 @@ export const SleepList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={sleep4}
+                    	key={"sleep4"}
+                    	src={"sleep4"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>

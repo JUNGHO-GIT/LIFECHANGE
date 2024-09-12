@@ -5,26 +5,26 @@ import { Icons, Div } from "@imports/ImportComponents";
 // -------------------------------------------------------------------------------------------------
 declare interface DeleteProps {
   index: number;
-  handlerDelete?: any;
-  readonly?: boolean;
+  handlerDelete: any;
+  LOCKED: string;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const Delete = (
-  { index, handlerDelete, readonly }: DeleteProps
+  { index, handlerDelete, LOCKED }: DeleteProps
 ) => {
 
   // 1. deleteNode --------------------------------------------------------------------------------
   const deleteNode = () => (
     <Div className={"mt-n10 me-n10"}>
       <Icons
+        key={"X"}
         name={"X"}
-        onClick={() => {
-          if (!readonly || readonly === undefined) {
-            handlerDelete(index);
-          }
-        }}
+        locked={LOCKED}
         className={"w-20 h-20 black"}
+        onClick={() => {
+          handlerDelete(index);
+        }}
       />
     </Div>
   );

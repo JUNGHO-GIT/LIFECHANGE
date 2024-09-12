@@ -1,17 +1,21 @@
 // useTimeZone.tsx
 
 import { useEffect } from "@imports/ImportReacts";
+import { useCommonValue } from "@imports/ImportHooks";
 import { moment, getCountryForTimezone, getAllInfoByISO } from "@imports/ImportLibs";
 
 // -------------------------------------------------------------------------------------------------
 export const useTimeZone = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  let TITLE = process.env.REACT_APP_TITLE || "";
+  const {
+    TITLE, PATH
+  } = useCommonValue();
+
+  // 2. declare ------------------------------------------------------------------------------------
   let timeZone: string = "";
   let zoneName: string = "";
   let locale: string = "";
-  let lang: string = "";
   let isoCode: any = "";
   let currency: string = "";
 
@@ -26,9 +30,6 @@ export const useTimeZone = () => {
 
       // ex. ko-KR
       locale = navigator.language;
-
-      // ex. ko
-      lang = locale.includes("-") && locale.split("-")[0] ? locale.split("-")[0] : locale;
 
       // ex. KR
       isoCode = getCountryForTimezone(timeZone)?.id;
@@ -45,26 +46,40 @@ export const useTimeZone = () => {
       if (locale) {
         sessionStorage.setItem(`${TITLE}_locale`, locale);
       }
-      if (lang) {
-        sessionStorage.setItem(`${TITLE}_lang`, lang);
-      }
       if (isoCode) {
         sessionStorage.setItem(`${TITLE}_isoCode`, isoCode);
       }
       if (currency) {
         sessionStorage.setItem(`${TITLE}_currency`, currency);
       }
+
+      console.log("timeZone:", timeZone);
+      console.log("zoneName:", zoneName);
+      console.log("locale:", locale);
+      console.log("isoCode:", isoCode);
+      console.log("currency:", currency);
     }
     catch (err: any) {
       console.error(err);
     }
   }, []);
 
-  if (lang === "ko") {
-    require("moment/locale/ko");
-    sessionStorage.setItem(`${TITLE}_lang`, "ko");
-  }
-  else {
-    sessionStorage.setItem(`${TITLE}_lang`, "en");
-  }
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    // 언어설정 구하기
+    const langSetting = sessionStorage.getItem(`${TITLE}_lang`);
+
+    if (langSetting) {
+      return;
+    }
+    else {
+      if (locale.includes("ko")) {
+        require("moment/locale/ko");
+        sessionStorage.setItem(`${TITLE}_lang`, "ko");
+      }
+      else {
+        sessionStorage.setItem(`${TITLE}_lang`, "en");
+      }
+    }
+  }, []);
 };

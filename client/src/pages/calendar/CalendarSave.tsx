@@ -10,7 +10,6 @@ import { Loading, Footer } from "@imports/ImportLayouts";
 import { Input, Select, Img, Bg } from "@imports/ImportComponents";
 import { Picker, Memo, Count, Delete } from "@imports/ImportContainers";
 import { Card, Paper, MenuItem, Grid } from "@imports/ImportMuis";
-import { calendar2 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const CalendarSave = () => {
@@ -23,7 +22,7 @@ export const CalendarSave = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_id, location_category, location_dateType, location_dateStart, location_dateEnd, calendarArray, colors, URL_OBJECT, sessionId, toList,
+    navigate, location_dateType, location_dateStart, location_dateEnd, calendarArray, colors, URL_OBJECT, sessionId, toList,
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -31,8 +30,15 @@ export const CalendarSave = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [EXIST, setEXIST] = useState<any[]>([""]);
+  const [LOCKED, setLOCKED] = useState<string>("unlocked");
   const [OBJECT, setOBJECT] = useState<any>(Calendar);
+  const [EXIST, setEXIST] = useState<any>({
+    day: [""],
+    week: [""],
+    month: [""],
+    year: [""],
+    select: [""],
+  });
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
@@ -45,9 +51,6 @@ export const CalendarSave = () => {
     newSectionCnt: 0
   });
   const [DATE, setDATE] = useState<any>({
-    initDateType: location_dateType || "",
-    initDateStart: location_dateStart || dayFmt,
-    initDateEnd: location_dateEnd || dayFmt,
     dateType: location_dateType || "",
     dateStart: location_dateStart || dayFmt,
     dateEnd: location_dateEnd || dayFmt,
@@ -66,7 +69,9 @@ export const CalendarSave = () => {
       },
     })
     .then((res: any) => {
-      setEXIST(res.data.result.length > 0 ? res.data.result : [""]);
+      setEXIST(
+        !res.data.result || res.data.result.length === 0 ? [""] : res.data.result
+      );
     })
     .catch((err: any) => {
       console.error(err);
@@ -75,27 +80,19 @@ export const CalendarSave = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
+    if (LOCKED === "locked") {
+      return;
+    }
     setLOADING(true);
     axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId,
-        _id: location_id,
+        _id: "",
         DATE: DATE,
       },
     })
     .then((res: any) => {
-      // 첫번째 객체를 제외하고 데이터 추가
-      setOBJECT((prev: any) => {
-        if (prev.length === 1 && prev[0]?._id === "") {
-          return res.data.result;
-        }
-        else {
-          return {
-            ...prev,
-            ...res.data.result
-          };
-        }
-      });
+      setOBJECT(res.data.result || Calendar);
       setCOUNT((prev: any) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
@@ -109,7 +106,7 @@ export const CalendarSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, location_id, location_category, DATE.dateEnd]);
+  }, [sessionId, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -120,7 +117,7 @@ export const CalendarSave = () => {
       calendar_color: "black",
       calendar_content: ""
     };
-    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((item: any, idx: number) =>
+    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) =>
       idx < OBJECT?.calendar_section.length ? OBJECT?.calendar_section[idx] : defaultSection
     );
     setOBJECT((prev: any) => ({
@@ -132,7 +129,7 @@ export const CalendarSave = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    if (!validate(OBJECT, COUNT)) {
+    if (!validate(OBJECT, COUNT, DATE, EXIST)) {
       setLOADING(false);
       return;
     }
@@ -200,7 +197,7 @@ export const CalendarSave = () => {
   const handlerDelete = (index: number) => {
     setOBJECT((prev: any) => ({
       ...prev,
-      calendar_section: prev.calendar_section.filter((item: any, idx: number) => (idx !== index))
+      calendar_section: prev.calendar_section.filter((_item: any, idx: number) => (idx !== index))
     }));
     setCOUNT((prev: any) => ({
       ...prev,
@@ -226,6 +223,8 @@ export const CalendarSave = () => {
             <Count
               COUNT={COUNT}
               setCOUNT={setCOUNT}
+              LOCKED={LOCKED}
+              setLOCKED={setLOCKED}
               limit={10}
             />
           </Grid>
@@ -258,6 +257,7 @@ export const CalendarSave = () => {
               <Delete
                 index={i}
                 handlerDelete={handlerDelete}
+                LOCKED={LOCKED}
               />
             </Grid>
             <Grid size={6}>
@@ -267,6 +267,7 @@ export const CalendarSave = () => {
                 inputRef={REFS?.current[i]?.calendar_part_idx}
                 error={ERRORS[i]?.calendar_part_idx}
                 inputclass={"fs-0-8rem"}
+                locked={LOCKED}
                 onChange={(e: any) => {
                   const newIndex = Number(e.target.value);
                   setOBJECT((prev: any) => ({
@@ -295,6 +296,7 @@ export const CalendarSave = () => {
                 inputRef={REFS?.current[i]?.calendar_color}
                 error={ERRORS[i]?.calendar_color}
                 inputclass={"fs-0-8rem"}
+                locked={LOCKED}
                 onChange={(e: any) => {
                   const newColor = e.target.value;
                   setOBJECT((prev: any) => ({
@@ -310,7 +312,7 @@ export const CalendarSave = () => {
               >
                 {colors.map((item: any, idx: number) => (
                   <MenuItem key={idx} value={item} className={"fs-0-8rem"}>
-                    <span className={`${item}`}>●</span>
+                    <span className={item}>●</span>
                     <span className={"ms-10"}>{item}</span>
                   </MenuItem>
                 ))}
@@ -322,9 +324,11 @@ export const CalendarSave = () => {
                 value={OBJECT?.calendar_section[i]?.calendar_title}
                 inputRef={REFS?.current[i]?.calendar_title}
                 error={ERRORS[i]?.calendar_title}
+                locked={LOCKED}
                 startadornment={
                   <Img
-                  	src={calendar2}
+                  	key={"calendar2"}
+                  	src={"calendar2"}
                   	className={"w-16 h-16"}
                   />
                 }
@@ -346,6 +350,7 @@ export const CalendarSave = () => {
               <Memo
                 OBJECT={OBJECT}
                 setOBJECT={setOBJECT}
+                LOCKED={LOCKED}
                 extra={"calendar_content"}
                 i={i}
               />

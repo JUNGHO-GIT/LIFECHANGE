@@ -17,12 +17,10 @@ export const exist = async (
       $match: {
         user_id: user_id_param,
         money_dateStart: {
-          $gte: dateStart_param,
           $lte: dateEnd_param
         },
         money_dateEnd: {
           $gte: dateStart_param,
-          $lte: dateEnd_param
         },
         ...dateType_param ? {
           money_dateType: dateType_param
@@ -30,20 +28,16 @@ export const exist = async (
       }
     },
     {
-      $match: {
-        $expr: {
-          $gt: [
-            { $size: "$money_section" }, 0
-          ]
-        }
+      $project: {
+        _id: 0,
+        money_dateType: 1,
+        money_dateStart: 1,
+        money_dateEnd: 1,
       }
     },
     {
-      $group: {
-        _id: null,
-        existDate: {
-          $addToSet: "$money_dateStart"
-        }
+      $sort: {
+        money_dateStart: 1
       }
     }
   ]);
@@ -200,7 +194,16 @@ export const update = async (
   const finalResult = await Money.findOneAndUpdate(
     {
       user_id: user_id_param,
-      _id: !_id_param ? { $exists: true } : _id_param
+      _id: !_id_param ? { $exists: true } : _id_param,
+      money_dateStart: {
+        $eq: dateStart_param
+      },
+      money_dateEnd: {
+        $eq: dateEnd_param
+      },
+      ...dateType_param ? {
+        money_dateType: dateType_param
+      } : {},
     },
     {
       $set: {
@@ -209,13 +212,15 @@ export const update = async (
         money_dateEnd: dateEnd_param,
         money_total_income: OBJECT_param.money_total_income,
         money_total_expense: OBJECT_param.money_total_expense,
-        money_section: OBJECT_param.money_section,
         money_updateDt: newDate,
+      },
+      $push: {
+        money_section: OBJECT_param.money_section
       }
     },
     {
       upsert: true,
-      new: false
+      new: true
     }
   )
   .lean();
@@ -227,12 +232,24 @@ export const update = async (
 export const deletes = async (
   user_id_param: string,
   _id_param: string,
+  dateType_param: string,
+  dateStart_param: string,
+  dateEnd_param: string,
 ) => {
 
   const finalResult = await Money.findOneAndDelete(
     {
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
+      money_dateStart: {
+        $eq: dateStart_param
+      },
+      money_dateEnd: {
+        $eq: dateEnd_param
+      },
+      ...dateType_param ? {
+        money_dateType: dateType_param
+      } : {},
     }
   )
   .lean();

@@ -7,7 +7,6 @@ import { Img, Input } from "@imports/ImportComponents";
 import { PopUp } from "@imports/ImportContainers";
 import { Card } from "@imports/ImportMuis";
 import { DigitalClock, AdapterMoment, LocalizationProvider } from "@imports/ImportMuis";
-import { sleep2, sleep3, sleep4, exercise4 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 declare interface TimeProps {
@@ -16,13 +15,14 @@ declare interface TimeProps {
   REFS: any;
   ERRORS: any;
   DATE: any;
+  LOCKED: string;
   extra: string;
   i: number;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const Time = (
-  { OBJECT, setOBJECT, REFS, ERRORS, DATE, extra, i }: TimeProps
+  { OBJECT, setOBJECT, REFS, ERRORS, DATE, LOCKED, extra, i }: TimeProps
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
@@ -39,7 +39,7 @@ export const Time = (
 
   if (firstStr === "sleep" && secondStr === "goal") {
     if (extra.split("_")[2] === "bedTime") {
-      image = sleep2;
+      image = "sleep2";
       translateStr = (
         DATE?.dateType === "day" ? (
           `${translate("goalBedTime")}`
@@ -49,7 +49,7 @@ export const Time = (
       )
     }
     else if (extra.split("_")[2] === "wakeTime") {
-      image = sleep3;
+      image = "sleep3";
       translateStr = (
         DATE?.dateType === "day" ? (
           `${translate("goalWakeTime")}`
@@ -59,7 +59,7 @@ export const Time = (
       )
     }
     else if (extra.split("_")[2] === "sleepTime") {
-      image = sleep4;
+      image = "sleep4";
       translateStr = (
         DATE?.dateType === "day" ? (
           `${translate("goalSleepTime")}`
@@ -71,21 +71,21 @@ export const Time = (
   }
   else if (firstStr === "sleep" && secondStr !== "goal") {
     if (extra.split("_")[1] === "bedTime") {
-      image = sleep2;
+      image = "sleep2";
       translateStr = `${translate("bedTime")}`;
     }
     else if (extra.split("_")[1] === "wakeTime") {
-      image = sleep3;
+      image = "sleep3";
       translateStr = `${translate("wakeTime")}`;
     }
     else if (extra.split("_")[1] === "sleepTime") {
-      image = sleep4;
+      image = "sleep4";
       translateStr = `${translate("sleepTime")}`;
     }
   }
   else if (firstStr === "exercise" && secondStr === "goal") {
     if (extra.split("_")[2] === "cardio") {
-      image = exercise4;
+      image = "exercise4";
       translateStr = (
         DATE?.dateType === "day" ? (
           `${translate("goalCardio")}`
@@ -97,7 +97,7 @@ export const Time = (
   }
   else if (firstStr === "exercise" && secondStr !== "goal") {
     if (extra.split("_")[1] === "cardio") {
-      image = exercise4;
+      image = "exercise4";
       translateStr = `${translate("cardio")}`;
     }
   }
@@ -152,9 +152,11 @@ export const Time = (
             inputRef={REFS?.current?.[i]?.[`${extra}`]}
             error={ERRORS?.[i]?.[`${extra}`]}
             readOnly={true}
+            locked={LOCKED}
             startadornment={
               <Img
-              	src={image}
+                key={image}
+                src={image}
               	className={"w-16 h-16"}
               />
             }
@@ -162,7 +164,7 @@ export const Time = (
               translate("hm")
             }
             onClick={(e: any) => {
-              popTrigger.openPopup(e.currentTarget)
+              LOCKED === "unlocked" && popTrigger.openPopup(e.currentTarget)
             }}
           />
         )}
@@ -202,7 +204,7 @@ export const Time = (
             </LocalizationProvider>
           </Card>
         )}
-    >
+      >
         {(popTrigger: any) => (
           <Input
             label={translate(translateStr)}
@@ -210,9 +212,11 @@ export const Time = (
             inputRef={REFS?.current?.[i]?.[`${extra}`]}
             error={ERRORS?.[i]?.[`${extra}`]}
             readOnly={true}
+            locked={LOCKED}
             startadornment={
               <Img
-              	src={image}
+                key={image}
+                src={image}
               	className={"w-16 h-16"}
               />
             }
@@ -221,7 +225,7 @@ export const Time = (
             }
             onClick={(e: any) => {
               extra !== "sleep_sleepTime" && (
-                popTrigger.openPopup(e.currentTarget)
+                LOCKED === "unlocked" && popTrigger.openPopup(e.currentTarget)
               )
             }}
           />

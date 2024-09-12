@@ -6,7 +6,6 @@ import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHook
 import { Img } from "@imports/ImportComponents";
 import { BottomNavigation, BottomNavigationAction } from "@imports/ImportMuis";
 import { Paper, Grid } from "@imports/ImportMuis";
-import { calendar1, today1, exercise1, food1, money1, sleep1 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const BottomNav = () => {
@@ -114,7 +113,8 @@ export const BottomNav = () => {
           value={"exercise"}
           icon={
             <Img
-              src={exercise1}
+              key={"exercise1"}
+              src={"exercise1"}
               className={"w-16 h-16 m-0"}
             />
           }
@@ -127,7 +127,8 @@ export const BottomNav = () => {
           value={"food"}
           icon={
             <Img
-              src={food1}
+              key={"food1"}
+              src={"food1"}
               className={"w-16 h-16 m-0"}
             />
           }
@@ -140,7 +141,8 @@ export const BottomNav = () => {
           value={"today"}
           icon={
             <Img
-              src={today1}
+              key={"today1"}
+              src={"today1"}
               className={"w-16 h-16 m-0"}
             />
           }
@@ -153,7 +155,8 @@ export const BottomNav = () => {
           value={"calendar"}
           icon={
             <Img
-              src={calendar1}
+              key={"calendar1"}
+              src={"calendar1"}
               className={"w-16 h-16 m-0"}
             />
           }
@@ -166,7 +169,8 @@ export const BottomNav = () => {
           value={"money"}
           icon={
             <Img
-              src={money1}
+              key={"money1"}
+              src={"money1"}
               className={"w-16 h-16 m-0"}
             />
           }
@@ -179,7 +183,8 @@ export const BottomNav = () => {
           value={"sleep"}
           icon={
             <Img
-              src={sleep1}
+              key={"sleep1"}
+              src={"sleep1"}
               className={"w-16 h-16 m-0"}
             />
           }

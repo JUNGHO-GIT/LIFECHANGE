@@ -274,6 +274,10 @@ export const useTranslate = () => {
       ko: "대시보드",
       en: "Dashboard"
     },
+    dataAlreadyExist: {
+      ko: "해당 날짜의 데이터가 이미 존재합니다.\n수정하시겠습니까?",
+      en: "Data for the date already exists.\nDo you want to update?"
+    },
     // ---------------------------------------------------------------------------------------------
     // e
     Empty: {
@@ -669,6 +673,18 @@ export const useTranslate = () => {
     labor: {
       ko: "근로",
       en: "Labor"
+    },
+    itemLock: {
+      ko: "항목 잠금",
+      en: "Item Lock"
+    },
+    locked: {
+      ko: "잠김",
+      en: "Locked"
+    },
+    unlocked: {
+      ko: "열림",
+      en: "Unlocked"
     },
     // ---------------------------------------------------------------------------------------------
     // m

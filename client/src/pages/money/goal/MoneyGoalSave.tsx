@@ -11,7 +11,6 @@ import { Loading, Footer } from "@imports/ImportLayouts";
 import { Input, Img, Bg } from "@imports/ImportComponents";
 import { Picker, Count, Delete } from "@imports/ImportContainers";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
-import { money2 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const MoneyGoalSave = () => {
@@ -32,8 +31,15 @@ export const MoneyGoalSave = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [EXIST, setEXIST] = useState<any[]>([""]);
+  const [LOCKED, setLOCKED] = useState<string>("unlocked");
   const [OBJECT, setOBJECT] = useState<any>(MoneyGoal);
+  const [EXIST, setEXIST] = useState<any>({
+    day: [""],
+    week: [""],
+    month: [""],
+    year: [""],
+    select: [""],
+  });
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "day",
@@ -53,7 +59,7 @@ export const MoneyGoalSave = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    axios.get(`${URL_OBJECT}/exist`, {
+    axios.get(`${URL_OBJECT}/goal/exist`, {
       params: {
         user_id: sessionId,
         DATE: {
@@ -64,7 +70,9 @@ export const MoneyGoalSave = () => {
       },
     })
     .then((res: any) => {
-      setEXIST(res.data.result.length > 0 ? res.data.result : [""]);
+      setEXIST(
+        !res.data.result || res.data.result.length === 0 ? [""] : res.data.result
+      );
     })
     .catch((err: any) => {
       console.error(err);
@@ -77,7 +85,7 @@ export const MoneyGoalSave = () => {
     axios.get(`${URL_OBJECT}/goal/detail`, {
       params: {
         user_id: sessionId,
-        _id: location_id,
+        _id: "",
         DATE: DATE,
       },
     })
@@ -100,7 +108,7 @@ export const MoneyGoalSave = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    if (!validate(OBJECT, COUNT)) {
+    if (!validate(OBJECT, COUNT, DATE, EXIST)) {
       setLOADING(false);
       return;
     }
@@ -197,6 +205,8 @@ export const MoneyGoalSave = () => {
             <Count
               COUNT={COUNT}
               setCOUNT={setCOUNT}
+              LOCKED={LOCKED}
+              setLOCKED={setLOCKED}
               limit={1}
             />
           </Grid>
@@ -217,6 +227,7 @@ export const MoneyGoalSave = () => {
               <Delete
                 index={i}
                 handlerDelete={handlerDelete}
+                LOCKED={LOCKED}
               />
             </Grid>
             <Grid size={12}>
@@ -233,7 +244,8 @@ export const MoneyGoalSave = () => {
                 }
                 startadornment={
                   <Img
-                  	src={money2}
+                  	key={"money2"}
+                  	src={"money2"}
                   	className={"w-16 h-16"}
                   />
                 }
@@ -274,7 +286,8 @@ export const MoneyGoalSave = () => {
                 }
                 startadornment={
                   <Img
-                  	src={money2}
+                  	key={"money2"}
+                  	src={"money2"}
                   	className={"w-16 h-16"}
                   />
                 }

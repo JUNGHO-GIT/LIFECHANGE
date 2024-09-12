@@ -4,7 +4,6 @@
 import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { Div, Img, Icons } from "@imports/ImportComponents";
 import { Paper, Grid } from "@imports/ImportMuis";
-import { logo2, logo3 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const Header = () => {
@@ -33,11 +32,13 @@ export const Header = () => {
         }}
       >
         <Img
-          src={logo2}
+          key={"logo2"}
+          src={"logo2"}
           className={"h-max30 me-2vw"}
         />
         <Img
-          src={logo3}
+          key={"logo3"}
+          src={"logo3"}
           className={"h-max30"}
         />
       </Div>

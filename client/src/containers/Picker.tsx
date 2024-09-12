@@ -8,7 +8,6 @@ import { Btn, Input, Img, Div, Select, Icons } from "@imports/ImportComponents";
 import { PopUp } from "@imports/ImportContainers";
 import { MenuItem, PickersDay, Grid, Card, Badge } from "@imports/ImportMuis";
 import { DateCalendar, AdapterMoment, LocalizationProvider } from "@imports/ImportMuis";
-import { common1 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 declare interface PickerProps {
@@ -43,28 +42,24 @@ export const Picker = (
     getNextYearStartFmt, getNextYearEndFmt,
   } = useCommonDate();
   const {
-    sessionLocale, sessionTimeZone,
-    TITLE, PATH, firstStr, secondStr, thirdStr,
+    sessionLocale, sessionTimeZone, TITLE, PATH
   } = useCommonValue();
 
-  const isToday = firstStr === "today";
-  const isGoalList = secondStr === "goal" && thirdStr === "list";
-  const isGoalDetail = secondStr === "goal" && thirdStr === "detail";
-  const isGoalSave = secondStr === "goal" && thirdStr === "save";
-  const isGoalUpdate = secondStr === "goal" && thirdStr === "update";
-  const isList = secondStr === "list" && thirdStr === "";
-  const isDetail = secondStr === "detail" && thirdStr === "";
-  const isSave = secondStr === "save" && thirdStr === "";
-  const isUpdate = secondStr === "update" && thirdStr === "";
+  const isToday = PATH.includes("/today");
+  const isCalendar = PATH.includes("/calendar");
+  const isGoalList = PATH.includes("/goal/list");
+  const isGoalSave = PATH.includes("/goal/save");
+  const isRealList = !PATH.includes("/goal") && PATH.includes("/list");
+  const isRealSave = !PATH.includes("/goal") && PATH.includes("/save");
 
-  let sessionDate = sessionStorage?.getItem(`DATE(${PATH})`) || "{}";
-  let parseDate = JSON?.parse(sessionDate);
+  let sessionDate = sessionStorage?.getItem(`${TITLE}_date_(${PATH})`);
+  let parseDate = JSON?.parse(sessionDate || "{}");
   let dateStart = parseDate?.dateStart;
   let dateEnd = parseDate?.dateEnd;
 
   // 2-1. useState ---------------------------------------------------------------------------------
-  const [typeStr, setTypeStr] = useState<string>("");
-  const [innerStr, setInnerStr] = useState<string>("");
+  const [saveTypeStr, setSaveTypeStr] = useState<string>("");
+  const [listTypeStr, setListTypeStr] = useState<string>("");
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   const [clickedType, setClickedType] = useStorage(
@@ -100,19 +95,19 @@ export const Picker = (
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (isGoalList || isList) {
-      setTypeStr("h-min0 h-4vh fs-0-7rem pointer");
-      setInnerStr("h-min0 h-4vh fs-0-7rem pointer");
+    if (isGoalList || isRealList) {
+      setSaveTypeStr("h-min0 h-4vh fs-0-7rem pointer");
+      setListTypeStr("h-min0 h-4vh fs-0-7rem pointer");
     }
     else {
-      setTypeStr("h-min40 fs-0-8rem pointer");
-      setInnerStr("h-min40 fs-0-8rem pointer");
+      setSaveTypeStr("h-min40 fs-0-8rem pointer");
+      setListTypeStr("h-min40 fs-0-8rem pointer");
     }
   }, [PATH]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (isGoalList || isList) {
+    if (isGoalList || isRealList) {
       if (!dateStart) {
         dateStart = dayFmt;
       }
@@ -124,7 +119,7 @@ export const Picker = (
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (isGoalList || isList) {
+    if (isGoalList || isRealList) {
       if (clickedType === "thisToday") {
         setDATE(clickedDate?.todayDate);
       }
@@ -142,7 +137,7 @@ export const Picker = (
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (isGoalList || isList) {
+    if (isGoalList || isRealList) {
       if (
         (DATE?.dateStart === clickedDate?.todayDate?.dateStart) &&
         (DATE?.dateEnd === clickedDate?.todayDate?.dateEnd)
@@ -183,27 +178,12 @@ export const Picker = (
         position={"center"}
         direction={"center"}
         contents={({closePopup}: any) => (
-          <Card className={"w-max70vw p-0"}>
+          <Card className={"w-min70vw p-0"}>
             <Grid container spacing={3}>
-              <Grid size={8} className={"d-left ms-20"}>
+              <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewDay")}
                 </Div>
-              </Grid>
-              <Grid size={2} className={"d-center"}>
-                <Icons
-                  key={"Refresh"}
-                  name={"Refresh"}
-                  className={"w-24 h-24"}
-                  onClick={() => {
-                    setDATE((prev: any) => ({
-                      ...prev,
-                      dateType: prev.initDateType,
-                      dateStart: prev.initDateStart,
-                      dateEnd: prev.initDateEnd,
-                    }));
-                  }}
-                />
               </Grid>
               <Grid size={12} className={"d-center"}>
                 <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={sessionLocale}>
@@ -216,6 +196,10 @@ export const Picker = (
                     showDaysOutsideCurrentMonth={true}
                     slots={{
                       day: (props) => {
+                        const { outsideCurrentMonth, day, ...other } = props;
+
+                        let isSelected = false;
+                        let isBadged = false;
 
                         let color = "";
                         let borderRadius = "";
@@ -223,36 +207,22 @@ export const Picker = (
                         let boxShadow = "";
                         let zIndex = 0;
 
-                        const {outsideCurrentMonth, day, ...other} = props;
-
-                        const isInitStart = DATE.initDateStart === getDayStartFmt(day);
-                        const isInitEnd = DATE.initDateEnd === getDayEndFmt(day);
-                        const isInit = DATE.initDateStart <= getDayFmt(day) && DATE.initDateEnd >= getDayFmt(day);
-
-                        const isBadged = EXIST.includes(getDayFmt(day));
-                        const isSelected = DATE.dateStart === getDayFmt(day);
-
-                        if (isInit) {
-                          if (isInitStart && isInitEnd) {
-                            boxShadow = "0 0 0 0 #D1D5DB";
-                            borderRadius = "50%";
-                          }
-                          else if (isInitStart) {
-                            boxShadow = "5px 0 0 0 #D1D5DB";
-                            borderRadius = "50% 0 0 50%";
-                          }
-                          else if (isInitEnd) {
-                            boxShadow = "-5px 0 0 0 #D1D5DB";
-                            borderRadius = "0 50% 50% 0";
-                          }
-                          else {
-                            boxShadow = "5px 0 0 0 #D1D5DB";
-                            borderRadius = "0";
-                          }
-                          color = "#ffffff";
-                          backgroundColor = "#D1D5DB";
-                          zIndex = 5;
+                        if (DATE.dateStart && DATE.dateEnd) {
+                          isSelected = DATE.dateStart <= getDayFmt(day) && DATE.dateEnd >= getDayFmt(day);
                         }
+                        if (EXIST?.day) {
+                          EXIST?.day.forEach((item: any) => {
+                            if (
+                              item.split(" ~ ") &&
+                              item.split(" ~ ").length === 2 &&
+                              getDayFmt(day) >= item.split(" ~ ")[0] &&
+                              getDayFmt(day) <= item.split(" ~ ")[1]
+                            ) {
+                              isBadged = true;
+                            }
+                          });
+                        }
+
                         if (isSelected) {
                           color = "#ffffff";
                           backgroundColor = "#1976d2";
@@ -344,10 +314,11 @@ export const Picker = (
             label={translate("date")}
             value={`${DATE.dateStart}`}
             readOnly={true}
-            inputclass={innerStr}
+            inputclass={listTypeStr}
             startadornment={
               <Img
-              	src={common1}
+              	key={"common1"}
+              	src={"common1"}
               	className={"w-16 h-16"}
               />
             }
@@ -368,27 +339,12 @@ export const Picker = (
         position={"center"}
         direction={"center"}
         contents={({closePopup}: any) => (
-          <Card className={"w-max70vw p-0"}>
+          <Card className={"w-min70vw p-0"}>
             <Grid container spacing={3}>
-              <Grid size={8} className={"d-left ms-20"}>
+              <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewWeek")}
                 </Div>
-              </Grid>
-              <Grid size={2} className={"d-center"}>
-                <Icons
-                  key={"Refresh"}
-                  name={"Refresh"}
-                  className={"w-24 h-24"}
-                  onClick={() => {
-                    setDATE((prev: any) => ({
-                      ...prev,
-                      dateType: prev.initDateType,
-                      dateStart: prev.initDateStart,
-                      dateEnd: prev.initDateEnd,
-                    }));
-                  }}
-                />
               </Grid>
               <Grid size={12} className={"d-center"}>
                 <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={sessionLocale}>
@@ -400,8 +356,13 @@ export const Picker = (
                     className={"radius border"}
                     showDaysOutsideCurrentMonth={true}
                     slots={{
-                      // 일주일에 해당하는 날짜를 선택
                       day: (props) => {
+                        const { outsideCurrentMonth, day, ...other } = props;
+
+                        let isSelected = false;
+                        let isBadged = false;
+                        let isFirst = false;
+                        let isLast = false;
 
                         let color = "";
                         let borderRadius = "";
@@ -409,37 +370,25 @@ export const Picker = (
                         let boxShadow = "";
                         let zIndex = 0;
 
-                        const { outsideCurrentMonth, day, ...other } = props;
-
-                        const isInitStart = DATE.initDateStart === getDayStartFmt(day);
-                        const isInitEnd = DATE.initDateEnd === getDayEndFmt(day);
-                        const isInit = DATE.initDateStart <= getDayFmt(day) && DATE.initDateEnd >= getDayFmt(day);
-
-                        const isFirst = DATE.dateStart === getDayStartFmt(day);
-                        const isLast = DATE.dateEnd === getDayEndFmt(day);
-                        const isSelected = DATE.dateStart <= getDayFmt(day) && DATE.dateEnd >= getDayFmt(day);
-
-                        if (isInit) {
-                          if (isInitStart && isInitEnd) {
-                            boxShadow = "0 0 0 0 #D1D5DB";
-                            borderRadius = "50%";
-                          }
-                          else if (isInitStart) {
-                            boxShadow = "5px 0 0 0 #D1D5DB";
-                            borderRadius = "50% 0 0 50%";
-                          }
-                          else if (isInitEnd) {
-                            boxShadow = "-5px 0 0 0 #D1D5DB";
-                            borderRadius = "0 50% 50% 0";
-                          }
-                          else {
-                            boxShadow = "5px 0 0 0 #D1D5DB";
-                            borderRadius = "0";
-                          }
-                          color = "#ffffff";
-                          backgroundColor = "#D1D5DB";
-                          zIndex = 5;
+                        if (DATE.dateStart && DATE.dateEnd) {
+                          isSelected = DATE.dateStart <= getDayFmt(day) && DATE.dateEnd >= getDayFmt(day);
+                          isFirst = DATE.dateStart === getDayStartFmt(day);
+                          isLast = DATE.dateEnd === getDayEndFmt(day);
                         }
+
+                        if (EXIST?.week) {
+                          EXIST?.week.forEach((item: any) => {
+                            if (
+                              item.split(" ~ ") &&
+                              item.split(" ~ ").length === 2 &&
+                              getDayFmt(day) >= item.split(" ~ ")[0] &&
+                              getDayFmt(day) <= item.split(" ~ ")[1]
+                            ) {
+                              isBadged = true;
+                            }
+                          });
+                        }
+
                         if (isSelected) {
                           if (isFirst && isLast) {
                             boxShadow = "0 0 0 0 #1976d2";
@@ -462,26 +411,39 @@ export const Picker = (
                           zIndex = 10;
                         }
                         return (
-                          <PickersDay
-                            {...other}
-                            day={day}
-                            selected={isSelected}
-                            outsideCurrentMonth={outsideCurrentMonth}
-                            style={{
-                              color: color,
-                              borderRadius: borderRadius,
-                              backgroundColor: backgroundColor,
-                              boxShadow: boxShadow,
-                              zIndex: zIndex,
+                          <Badge
+                            key={props.day.toString()}
+                            badgeContent={""}
+                            slotProps={{
+                              badge: {
+                                style: {
+                                  width: 3, height: 3, padding: 0, top: 8, left: 30,
+                                  backgroundColor: isBadged ? "#1976d2" : undefined,
+                                }
+                              }
                             }}
-                            onDaySelect={(day) => {
-                              setDATE((prev: any) => ({
-                                ...prev,
-                                dateStart: getWeekStartFmt(day),
-                                dateEnd: getWeekEndFmt(day),
-                              }));
-                            }}
-                          />
+                          >
+                            <PickersDay
+                              {...other}
+                              day={day}
+                              selected={isSelected}
+                              outsideCurrentMonth={outsideCurrentMonth}
+                              style={{
+                                color: color,
+                                borderRadius: borderRadius,
+                                backgroundColor: backgroundColor,
+                                boxShadow: boxShadow,
+                                zIndex: zIndex,
+                              }}
+                              onDaySelect={(day) => {
+                                setDATE((prev: any) => ({
+                                  ...prev,
+                                  dateStart: getWeekStartFmt(day),
+                                  dateEnd: getWeekEndFmt(day),
+                                }));
+                              }}
+                            />
+                          </Badge>
                         )
                       },
                       previousIconButton: (props) => (
@@ -526,11 +488,12 @@ export const Picker = (
           <Input
             label={translate("duration")}
             value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
-            inputclass={innerStr}
+            inputclass={listTypeStr}
             readOnly={true}
             startadornment={
               <Img
-              	src={common1}
+              	key={"common1"}
+              	src={"common1"}
               	className={"w-16 h-16"}
               />
             }
@@ -551,27 +514,12 @@ export const Picker = (
         position={"center"}
         direction={"center"}
         contents={({closePopup}: any) => (
-          <Card className={"w-max70vw p-0"}>
+          <Card className={"w-min70vw p-0"}>
             <Grid container spacing={3}>
-              <Grid size={8} className={"d-left ms-20"}>
+              <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewMonth")}
                 </Div>
-              </Grid>
-              <Grid size={2} className={"d-center"}>
-                <Icons
-                  key={"Refresh"}
-                  name={"Refresh"}
-                  className={"w-24 h-24"}
-                  onClick={() => {
-                    setDATE((prev: any) => ({
-                      ...prev,
-                      dateType: prev.initDateType,
-                      dateStart: prev.initDateStart,
-                      dateEnd: prev.initDateEnd,
-                    }));
-                  }}
-                />
               </Grid>
               <Grid size={12} className={"d-center"}>
                 <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={sessionLocale}>
@@ -583,8 +531,11 @@ export const Picker = (
                     className={"radius border"}
                     showDaysOutsideCurrentMonth={true}
                     slots={{
-                      // 월의 첫번째 날을 선택
                       day: (props) => {
+                        const { outsideCurrentMonth, day, ...other } = props;
+
+                        let isSelected = false;
+                        let isBadged = false;
 
                         let color = "";
                         let borderRadius = "";
@@ -592,35 +543,23 @@ export const Picker = (
                         let boxShadow = "";
                         let zIndex = 0;
 
-                        const { outsideCurrentMonth, day, ...other } = props;
-
-                        const isInitStart = DATE.initDateStart === getDayStartFmt(day);
-                        const isInitEnd = DATE.initDateEnd === getDayEndFmt(day);
-                        const isInit = DATE.initDateStart <= getDayFmt(day) && DATE.initDateEnd >= getDayFmt(day);
-
-                        const isSelected = DATE.dateStart === getDayFmt(day) && getDayNotFmt(day).date() === 1;
-
-                        if (isInit) {
-                          if (isInitStart && isInitEnd) {
-                            boxShadow = "0 0 0 0 #D1D5DB";
-                            borderRadius = "50%";
-                          }
-                          else if (isInitStart) {
-                            boxShadow = "5px 0 0 0 #D1D5DB";
-                            borderRadius = "50% 0 0 50%";
-                          }
-                          else if (isInitEnd) {
-                            boxShadow = "-5px 0 0 0 #D1D5DB";
-                            borderRadius = "0 50% 50% 0";
-                          }
-                          else {
-                            boxShadow = "5px 0 0 0 #D1D5DB";
-                            borderRadius = "0";
-                          }
-                          color = "#ffffff";
-                          backgroundColor = "#D1D5DB";
-                          zIndex = 5;
+                        if (DATE.dateStart && DATE.dateEnd) {
+                          isSelected = DATE.dateStart === getDayFmt(day) && getDayNotFmt(day).date() === 1
                         }
+
+                        if (EXIST?.month) {
+                          EXIST?.month.forEach((item: any) => {
+                            if (
+                              item.split(" ~ ") &&
+                              item.split(" ~ ").length === 2 &&
+                              getDayFmt(day) >= item.split(" ~ ")[0] &&
+                              getDayFmt(day) <= item.split(" ~ ")[1]
+                            ) {
+                              isBadged = true;
+                            }
+                          });
+                        }
+
                         if (isSelected) {
                           color = "#ffffff";
                           backgroundColor = "#1976d2";
@@ -630,26 +569,39 @@ export const Picker = (
                         }
 
                         return (
-                          <PickersDay
-                            {...other}
-                            day={day}
-                            selected={isSelected}
-                            outsideCurrentMonth={outsideCurrentMonth}
-                            style={{
-                              color: color,
-                              borderRadius: borderRadius,
-                              backgroundColor: backgroundColor,
-                              boxShadow: boxShadow,
-                              zIndex: zIndex,
+                          <Badge
+                            key={props.day.toString()}
+                            badgeContent={""}
+                            slotProps={{
+                              badge: {
+                                style: {
+                                  width: 3, height: 3, padding: 0, top: 8, left: 30,
+                                  backgroundColor: isBadged ? "#1976d2" : undefined,
+                                }
+                              }
                             }}
-                            onDaySelect={(day) => {
-                              setDATE((prev: any) => ({
-                                ...prev,
-                                dateStart: getMonthStartFmt(day),
-                                dateEnd: getMonthEndFmt(day),
-                              }));
-                            }}
-                          />
+                          >
+                            <PickersDay
+                              {...other}
+                              day={day}
+                              selected={isSelected}
+                              outsideCurrentMonth={outsideCurrentMonth}
+                              style={{
+                                color: color,
+                                borderRadius: borderRadius,
+                                backgroundColor: backgroundColor,
+                                boxShadow: boxShadow,
+                                zIndex: zIndex,
+                              }}
+                              onDaySelect={(day) => {
+                                setDATE((prev: any) => ({
+                                  ...prev,
+                                  dateStart: getMonthStartFmt(day),
+                                  dateEnd: getMonthEndFmt(day),
+                                }));
+                              }}
+                            />
+                          </Badge>
                         )
                       },
                       previousIconButton: (props) => (
@@ -694,11 +646,12 @@ export const Picker = (
           <Input
             label={translate("duration")}
             value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
-            inputclass={innerStr}
+            inputclass={listTypeStr}
             readOnly={true}
             startadornment={
               <Img
-              	src={common1}
+              	key={"common1"}
+              	src={"common1"}
               	className={"w-16 h-16"}
               />
             }
@@ -719,27 +672,12 @@ export const Picker = (
         position={"center"}
         direction={"center"}
         contents={({closePopup}: any) => (
-          <Card className={"w-max70vw p-0"}>
+          <Card className={"w-min70vw p-0"}>
             <Grid container spacing={3}>
-              <Grid size={8} className={"d-left ms-20"}>
+              <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewYear")}
                 </Div>
-              </Grid>
-              <Grid size={2} className={"d-center"}>
-                <Icons
-                  key={"Refresh"}
-                  name={"Refresh"}
-                  className={"w-24 h-24"}
-                  onClick={() => {
-                    setDATE((prev: any) => ({
-                      ...prev,
-                      dateType: prev.initDateType,
-                      dateStart: prev.initDateStart,
-                      dateEnd: prev.initDateEnd,
-                    }));
-                  }}
-                />
               </Grid>
               <Grid size={12} className={"d-center"}>
                 <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={sessionLocale}>
@@ -751,8 +689,12 @@ export const Picker = (
                     className={"radius border"}
                     showDaysOutsideCurrentMonth={true}
                     slots={{
-                      // 매년 1월 1일 선택
                       day: (props) => {
+
+                        const { outsideCurrentMonth, day, ...other } = props;
+
+                        let isSelected = false;
+                        let isBadged = false;
 
                         let color = "";
                         let borderRadius = "";
@@ -760,35 +702,23 @@ export const Picker = (
                         let boxShadow = "";
                         let zIndex = 0;
 
-                        const {outsideCurrentMonth, day, ...other} = props;
-
-                        const isInitStart = DATE.initDateStart === getDayStartFmt(day);
-                        const isInitEnd = DATE.initDateEnd === getDayEndFmt(day);
-                        const isInit = DATE.initDateStart <= getDayFmt(day) && DATE.initDateEnd >= getDayFmt(day);
-
-                        const isSelected = getDayNotFmt(day).month() === 0 && getDayNotFmt(day).date() === 1;
-
-                        if (isInit) {
-                          if (isInitStart && isInitEnd) {
-                            boxShadow = "0 0 0 0 #D1D5DB";
-                            borderRadius = "50%";
-                          }
-                          else if (isInitStart) {
-                            boxShadow = "5px 0 0 0 #D1D5DB";
-                            borderRadius = "50% 0 0 50%";
-                          }
-                          else if (isInitEnd) {
-                            boxShadow = "-5px 0 0 0 #D1D5DB";
-                            borderRadius = "0 50% 50% 0";
-                          }
-                          else {
-                            boxShadow = "5px 0 0 0 #D1D5DB";
-                            borderRadius = "0";
-                          }
-                          color = "#ffffff";
-                          backgroundColor = "#D1D5DB";
-                          zIndex = 5;
+                        if (DATE.dateStart && DATE.dateEnd) {
+                          isSelected = getDayNotFmt(day).month() === 0 && getDayNotFmt(day).date() === 1
                         }
+
+                        // year 는 해당 년도 1월 달만 배지 표시
+                        if (EXIST?.year) {
+                          EXIST?.year.forEach((item: any) => {
+                            const startYear = item.split(" ~ ")[0].split("-")[0];
+                            const currentYear = getDayFmt(day).split("-")[0];
+                            const isJanuary = day.month() === 0;
+
+                            if (startYear === currentYear && isJanuary) {
+                              isBadged = true;
+                            }
+                          });
+                        }
+
                         if (isSelected) {
                           color = "#ffffff";
                           backgroundColor = "#1976d2";
@@ -798,26 +728,39 @@ export const Picker = (
                         }
 
                         return (
-                          <PickersDay
-                            {...other}
-                            day={day}
-                            selected={isSelected}
-                            outsideCurrentMonth={outsideCurrentMonth}
-                            style={{
-                              color: color,
-                              borderRadius: borderRadius,
-                              backgroundColor: backgroundColor,
-                              boxShadow: boxShadow,
-                              zIndex: zIndex,
+                          <Badge
+                            key={props.day.toString()}
+                            badgeContent={""}
+                            slotProps={{
+                              badge: {
+                                style: {
+                                  width: 3, height: 3, padding: 0, top: 8, left: 30,
+                                  backgroundColor: isBadged ? "#1976d2" : undefined,
+                                }
+                              }
                             }}
-                            onDaySelect={(day) => {
-                              setDATE((prev: any) => ({
-                                ...prev,
-                                dateStart: getYearStartFmt(day),
-                                dateEnd: getYearEndFmt(day),
-                              }));
-                            }}
-                          />
+                          >
+                            <PickersDay
+                              {...other}
+                              day={day}
+                              selected={isSelected}
+                              outsideCurrentMonth={outsideCurrentMonth}
+                              style={{
+                                color: color,
+                                borderRadius: borderRadius,
+                                backgroundColor: backgroundColor,
+                                boxShadow: boxShadow,
+                                zIndex: zIndex,
+                              }}
+                              onDaySelect={(day) => {
+                                setDATE((prev: any) => ({
+                                  ...prev,
+                                  dateStart: getYearStartFmt(day),
+                                  dateEnd: getYearEndFmt(day),
+                                }));
+                              }}
+                            />
+                          </Badge>
                         )
                       },
                       previousIconButton: (props) => (
@@ -862,11 +805,12 @@ export const Picker = (
           <Input
             label={translate("duration")}
             value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
-            inputclass={innerStr}
+            inputclass={listTypeStr}
             readOnly={true}
             startadornment={
               <Img
-              	src={common1}
+              	key={"common1"}
+              	src={"common1"}
               	className={"w-16 h-16"}
               />
             }
@@ -887,45 +831,12 @@ export const Picker = (
         position={"center"}
         direction={"center"}
         contents={({ closePopup }: any) => (
-          <Card className={"w-max70vw p-0"}>
+          <Card className={"p-0"}>
             <Grid container spacing={3}>
-              <Grid
-                size={
-                  isGoalList || isList ? 12 : 8
-                }
-                className={
-                  isGoalList || isList ? (
-                    "d-center"
-                  ) : (
-                    "d-left ms-20"
-                  )
-                }
-              >
+              <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewSelect")}
                 </Div>
-              </Grid>
-              <Grid
-                size={
-                  isGoalList || isList ? 0 : 2
-                }
-                className={
-                  isGoalList || isList ? "d-none" : "d-center"
-                }
-              >
-                <Icons
-                  key={"Refresh"}
-                  name={"Refresh"}
-                  className={"w-24 h-24"}
-                  onClick={() => {
-                    setDATE((prev: any) => ({
-                      ...prev,
-                      dateType: prev.initDateType,
-                      dateStart: prev.initDateStart,
-                      dateEnd: prev.initDateEnd,
-                    }));
-                  }}
-                />
               </Grid>
               <Grid size={12} className={"d-center"}>
                 <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={sessionLocale}>
@@ -938,6 +849,12 @@ export const Picker = (
                     showDaysOutsideCurrentMonth={true}
                     slots={{
                       day: (props) => {
+                        const { outsideCurrentMonth, day, ...other } = props;
+
+                        let isSelected = false;
+                        let isBadged = false;
+                        let isFirst = false;
+                        let isLast = false;
 
                         let color = "";
                         let borderRadius = "";
@@ -945,37 +862,25 @@ export const Picker = (
                         let boxShadow = "";
                         let zIndex = 0;
 
-                        const { outsideCurrentMonth, day, ...other } = props;
-
-                        const isInitStart = DATE.initDateStart === getDayStartFmt(day);
-                        const isInitEnd = DATE.initDateEnd === getDayEndFmt(day);
-                        const isInit = DATE.initDateStart <= getDayFmt(day) && DATE.initDateEnd >= getDayFmt(day);
-
-                        const isFirst = DATE.dateStart === getDayStartFmt(day);
-                        const isLast = DATE.dateEnd === getDayEndFmt(day);
-                        const isSelected = DATE.dateStart <= getDayFmt(day) && DATE.dateEnd >= getDayFmt(day);
-
-                        if (isInit) {
-                          if (isInitStart && isInitEnd) {
-                            boxShadow = "0 0 0 0 #D1D5DB";
-                            borderRadius = "50%";
-                          }
-                          else if (isInitStart) {
-                            boxShadow = "5px 0 0 0 #D1D5DB";
-                            borderRadius = "50% 0 0 50%";
-                          }
-                          else if (isInitEnd) {
-                            boxShadow = "-5px 0 0 0 #D1D5DB";
-                            borderRadius = "0 50% 50% 0";
-                          }
-                          else {
-                            boxShadow = "5px 0 0 0 #D1D5DB";
-                            borderRadius = "0";
-                          }
-                          color = "#ffffff";
-                          backgroundColor = "#D1D5DB";
-                          zIndex = 5;
+                        if (DATE.dateStart && DATE.dateEnd) {
+                          isSelected = DATE.dateStart <= getDayFmt(day) && DATE.dateEnd >= getDayFmt(day);
+                          isFirst = DATE.dateStart === getDayStartFmt(day);
+                          isLast = DATE.dateEnd === getDayEndFmt(day);
                         }
+
+                        if (EXIST?.select) {
+                          EXIST?.select.forEach((item: any) => {
+                            if (
+                              item.split(" ~ ") &&
+                              item.split(" ~ ").length === 2 &&
+                              getDayFmt(day) >= item.split(" ~ ")[0] &&
+                              getDayFmt(day) <= item.split(" ~ ")[1]
+                            ) {
+                              isBadged = true;
+                            }
+                          });
+                        }
+
                         if (isSelected) {
                           if (isFirst && isLast) {
                             boxShadow = "0 0 0 0 #1976d2";
@@ -998,39 +903,52 @@ export const Picker = (
                           zIndex = 10;
                         }
                         return (
-                          <PickersDay
-                            {...other}
-                            day={day}
-                            selected={isSelected}
-                            outsideCurrentMonth={outsideCurrentMonth}
-                            style={{
-                              color: color,
-                              borderRadius: borderRadius,
-                              backgroundColor: backgroundColor,
-                              boxShadow: boxShadow,
-                              zIndex: zIndex,
-                            }}
-                            onDaySelect={(day) => {
-                              if (
-                                !DATE.dateStart ||
-                                DATE.dateEnd ||
-                                getDayNotFmt(day).isBefore(DATE.dateStart)
-                              ) {
-                                setDATE((prev: any) => ({
-                                  ...prev,
-                                  dateStart: getDayFmt(day),
-                                  dateEnd: "",
-                                }));
-                              }
-                              else {
-                                setDATE((prev: any) => ({
-                                  ...prev,
-                                  dateStart: getDayFmt(prev.dateStart),
-                                  dateEnd: getDayFmt(day),
-                                }));
+                          <Badge
+                            key={props.day.toString()}
+                            badgeContent={""}
+                            slotProps={{
+                              badge: {
+                                style: {
+                                  width: 3, height: 3, padding: 0, top: 8, left: 30,
+                                  backgroundColor: isBadged ? "#1976d2" : undefined,
+                                }
                               }
                             }}
-                          />
+                          >
+                            <PickersDay
+                              {...other}
+                              day={day}
+                              selected={isSelected}
+                              outsideCurrentMonth={outsideCurrentMonth}
+                              style={{
+                                color: color,
+                                borderRadius: borderRadius,
+                                backgroundColor: backgroundColor,
+                                boxShadow: boxShadow,
+                                zIndex: zIndex,
+                              }}
+                              onDaySelect={(day) => {
+                                if (
+                                  !DATE.dateStart ||
+                                  DATE.dateEnd ||
+                                  getDayNotFmt(day).isBefore(DATE.dateStart)
+                                ) {
+                                  setDATE((prev: any) => ({
+                                    ...prev,
+                                    dateStart: getDayFmt(day),
+                                    dateEnd: "",
+                                  }));
+                                }
+                                else {
+                                  setDATE((prev: any) => ({
+                                    ...prev,
+                                    dateStart: getDayFmt(prev.dateStart),
+                                    dateEnd: getDayFmt(day),
+                                  }));
+                                }
+                              }}
+                            />
+                          </Badge>
                         )
                       }
                     }}
@@ -1046,10 +964,11 @@ export const Picker = (
             label={translate("duration")}
             value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
             readOnly={true}
-            inputclass={`${innerStr}`}
+            inputclass={`${listTypeStr}`}
             startadornment={
               <Img
-              	src={common1}
+              	key={"common1"}
+              	src={"common1"}
               	className={"w-16 h-16"}
               />
             }
@@ -1175,8 +1094,8 @@ export const Picker = (
       <Select
         label={translate("dateType")}
         value={DATE.dateType || ""}
-        inputclass={typeStr}
-        readOnly={isDetail || isUpdate || isSave}
+        inputclass={saveTypeStr}
+        readOnly={isRealSave && !isCalendar}
         onChange={(e: any) => {
           if (e.target.value === "day") {
             setDATE((prev: any) => ({
@@ -1220,7 +1139,7 @@ export const Picker = (
           }
         }}
       >
-        {isGoalDetail || isGoalSave || isGoalUpdate ? (
+        {isGoalSave || isCalendar ? (
           ["day", "week", "month", "year", "select"]?.map((item: any) => (
             <MenuItem
               key={item}
@@ -1247,8 +1166,8 @@ export const Picker = (
     // 10. return
     return (
 
-      // 1. 리스트인 경우
-      isGoalList || isList ? (
+      // 1-1. 목표인 경우 (리스트)
+      isGoalList ? (
         <Grid container spacing={2}>
           <Grid size={9} className={"d-center"}>
             {selectSection()}
@@ -1259,13 +1178,13 @@ export const Picker = (
         </Grid>
       )
 
-      // 2. 목표인 경우
-      : isGoalDetail || isGoalSave || isGoalUpdate ? (
+      // 1-2. 목표인 경우 (세이브)
+      : isGoalSave || isCalendar ? (
         <Grid container spacing={2}>
-          <Grid size={3} className={"d-center"}>
+          <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
             {saveTypeSection()}
           </Grid>
-          <Grid size={9} className={"d-center"}>
+          <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
             {DATE.dateType === "day" && daySection()}
             {DATE.dateType === "week" && weekSection()}
             {DATE.dateType === "month" && monthSection()}
@@ -1275,13 +1194,25 @@ export const Picker = (
         </Grid>
       )
 
-      // 3. 실제인 경우
-      : isDetail || isSave || isUpdate ? (
+      // 2-1. 실제인 경우 (리스트)
+      : isRealList ? (
         <Grid container spacing={2}>
+          <Grid size={9} className={"d-center"}>
+            {selectSection()}
+          </Grid>
           <Grid size={3} className={"d-center"}>
+            {listTypeSection()}
+          </Grid>
+        </Grid>
+      )
+
+      // 2-2. 실제인 경우 (세이브)
+      : isRealSave ? (
+        <Grid container spacing={2}>
+          <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
             {saveTypeSection()}
           </Grid>
-          <Grid size={9} className={"d-center"}>
+          <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
             {DATE.dateType === "day" && daySection()}
           </Grid>
         </Grid>

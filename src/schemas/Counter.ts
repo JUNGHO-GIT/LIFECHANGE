@@ -28,13 +28,13 @@ export const incrementSeq = async (sequenceName: string, modelName: string) => {
   const updateDt = await Counter.findOneAndUpdate(
     { _id: sequenceName },
     { $inc: { seq: 1 } },
-    { new: false, upsert: true }
+    { new: true, upsert: true }
   )
   .exec();
 
   // 시퀀스 번호가 최신 상태인지 검증하고 필요한 경우 재설정
   if (updateDt.seq <= latestSeq) {
-    await Counter.findOneAndUpdate({ _id: sequenceName }, { seq: latestSeq + 1 }, { new: false }).exec();
+    await Counter.findOneAndUpdate({ _id: sequenceName }, { seq: latestSeq + 1 }, { new: true }).exec();
     return latestSeq + 1;
   }
 

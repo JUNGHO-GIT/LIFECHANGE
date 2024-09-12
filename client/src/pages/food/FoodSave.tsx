@@ -11,7 +11,6 @@ import { Loading, Footer } from "@imports/ImportLayouts";
 import { Input, Select, Img, Bg } from "@imports/ImportComponents";
 import { Picker, Count, Delete } from "@imports/ImportContainers";
 import { Card, Paper, MenuItem,  Grid } from "@imports/ImportMuis";
-import { food2, food3, food4, food5 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodSave = () => {
@@ -32,8 +31,15 @@ export const FoodSave = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [EXIST, setEXIST] = useState<any[]>([""]);
+  const [LOCKED, setLOCKED] = useState<string>("unlocked");
   const [OBJECT, setOBJECT] = useState<any>(Food);
+  const [EXIST, setEXIST] = useState<any>({
+    day: [""],
+    week: [""],
+    month: [""],
+    year: [""],
+    select: [""],
+  });
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
@@ -46,9 +52,6 @@ export const FoodSave = () => {
     newSectionCnt: 0
   });
   const [DATE, setDATE] = useState<any>({
-    initDateType: location_dateType || "",
-    initDateStart: location_dateStart || dayFmt,
-    initDateEnd: location_dateEnd || dayFmt,
     dateType: location_dateType || "",
     dateStart: location_dateStart || dayFmt,
     dateEnd: location_dateEnd || dayFmt,
@@ -67,7 +70,9 @@ export const FoodSave = () => {
       },
     })
     .then((res: any) => {
-      setEXIST(res.data.result.length > 0 ? res.data.result : [""]);
+      setEXIST(
+        !res.data.result || res.data.result.length === 0 ? [""] : res.data.result
+      );
     })
     .catch((err: any) => {
       console.error(err);
@@ -76,11 +81,14 @@ export const FoodSave = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
+    if (LOCKED === "locked") {
+      return;
+    }
     setLOADING(true);
     axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId,
-        _id: location_id,
+        _id: "",
         DATE: DATE,
       },
     })
@@ -188,7 +196,7 @@ export const FoodSave = () => {
       food_carb: "0",
       food_protein: "0",
     };
-    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((item: any, idx: number) =>
+    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) =>
       idx < OBJECT?.food_section.length ? OBJECT?.food_section[idx] : defaultSection
     );
     setOBJECT((prev: any) => ({
@@ -200,7 +208,7 @@ export const FoodSave = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    if (!validate(OBJECT, COUNT)) {
+    if (!validate(OBJECT, COUNT, DATE, EXIST)) {
       setLOADING(false);
       return;
     }
@@ -289,7 +297,7 @@ export const FoodSave = () => {
     // OBJECT 설정
     setOBJECT((prev: any) => ({
       ...prev,
-      food_section: prev?.food_section.filter((item: any, idx: number) => (idx !== index))
+      food_section: prev?.food_section.filter((_item: any, idx: number) => (idx !== index))
     }));
 
     // COUNT 설정
@@ -317,6 +325,8 @@ export const FoodSave = () => {
             <Count
               COUNT={COUNT}
               setCOUNT={setCOUNT}
+              LOCKED={LOCKED}
+              setLOCKED={setLOCKED}
               limit={10}
             />
           </Grid>
@@ -334,7 +344,8 @@ export const FoodSave = () => {
               readOnly={true}
               startadornment={
                 <Img
-                	src={food2}
+                	key={"food2"}
+                	src={"food2"}
                 	className={"w-16 h-16"}
                 />
               }
@@ -350,7 +361,8 @@ export const FoodSave = () => {
               readOnly={true}
               startadornment={
                 <Img
-                	src={food3}
+                	key={"food3"}
+                	src={"food3"}
                 	className={"w-16 h-16"}
                 />
               }
@@ -366,7 +378,8 @@ export const FoodSave = () => {
               readOnly={true}
               startadornment={
                 <Img
-                	src={food4}
+                	key={"food4"}
+                	src={"food4"}
                 	className={"w-16 h-16"}
                 />
               }
@@ -382,7 +395,8 @@ export const FoodSave = () => {
               readOnly={true}
               startadornment={
                 <Img
-                	src={food5}
+                	key={"food5"}
+                	src={"food5"}
                 	className={"w-16 h-16"}
                 />
               }
@@ -421,6 +435,7 @@ export const FoodSave = () => {
               <Delete
                 index={i}
                 handlerDelete={handlerDelete}
+                LOCKED={LOCKED}
               />
             </Grid>
             <Grid size={6}>
@@ -572,7 +587,8 @@ export const FoodSave = () => {
                 error={ERRORS[i]?.food_kcal}
                 startadornment={
                   <Img
-                  	src={food2}
+                  	key={"food2"}
+                  	src={"food2"}
                   	className={"w-16 h-16"}
                   />
                 }
@@ -617,7 +633,8 @@ export const FoodSave = () => {
                 error={ERRORS[i]?.food_carb}
                 startadornment={
                   <Img
-                  	src={food3}
+                  	key={"food3"}
+                  	src={"food3"}
                   	className={"w-16 h-16"}
                   />
                 }
@@ -662,7 +679,8 @@ export const FoodSave = () => {
                 error={ERRORS[i]?.food_protein}
                 startadornment={
                   <Img
-                  	src={food4}
+                  	key={"food4"}
+                  	src={"food4"}
                   	className={"w-16 h-16"}
                   />
                 }
@@ -707,7 +725,8 @@ export const FoodSave = () => {
                 error={ERRORS[i]?.food_fat}
                 startadornment={
                   <Img
-                  	src={food5}
+                  	key={"food5"}
+                  	src={"food5"}
                   	className={"w-16 h-16"}
                   />
                 }

@@ -10,7 +10,6 @@ import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
 import { Empty } from "@imports/ImportContainers";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
-import { food2, food3, food4, food5 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodList = () => {
@@ -23,7 +22,7 @@ export const FoodList = () => {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, toDetail,
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, toSave
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -124,7 +123,7 @@ export const FoodList = () => {
                       dateStart: item.food_dateStart,
                       dateEnd: item.food_dateEnd,
                     });
-                    navigate(toDetail, {
+                    navigate(toSave, {
                       state: SEND
                     });
                   }}
@@ -173,7 +172,8 @@ export const FoodList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={food2}
+                    	key={"food2"}
+                    	src={"food2"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -198,7 +198,8 @@ export const FoodList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={food3}
+                    	key={"food3"}
+                    	src={"food3"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -223,7 +224,8 @@ export const FoodList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={food4}
+                    	key={"food4"}
+                    	src={"food4"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -248,7 +250,8 @@ export const FoodList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={food5}
+                    	key={"food5"}
+                    	src={"food5"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>

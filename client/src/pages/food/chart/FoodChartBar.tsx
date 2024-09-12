@@ -12,7 +12,6 @@ import { Paper, Card, Grid } from "@imports/ImportMuis";
 import { FormGroup, FormControlLabel, Switch } from "@imports/ImportMuis";
 import { Bar, Line, ComposedChart, ReferenceLine } from "recharts";
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { common3_1 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodChartBar = () => {
@@ -307,7 +306,8 @@ export const FoodChartBar = () => {
         >
           {(popTrigger: any) => (
             <Img
-              src={common3_1}
+              key={"common3_1"}
+              src={"common3_1"}
               className={"w-24 h-24 pointer"}
               onClick={(e: any) => {
                 popTrigger.openPopup(e.currentTarget)

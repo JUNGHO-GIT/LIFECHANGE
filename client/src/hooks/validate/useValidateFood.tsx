@@ -34,8 +34,8 @@ export const useValidateFood= () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    // 1. goal/save, update
-    if (PATH.includes("food/goal/save") || PATH.includes("food/goal/update")) {
+    // 1. goal/save
+    if (PATH.includes("food/goal/save")) {
       const target = [
         "food_goal_kcal",
         "food_goal_carb",
@@ -58,10 +58,25 @@ export const useValidateFood= () => {
           return acc;
         }, [])
       );
-      validate.current = (OBJECT: any, COUNT: any) => {
+      validate.current = (OBJECT: any, COUNT: any, DATE: any, EXIST: any) => {
+
+        // 카운트가 0인 경우
         if (COUNT.newSectionCnt === 0) {
           alert(translate("errorCount"));
           return returnValid;
+        }
+
+        // EXIST 배열에서 바로 필터링 조건 적용
+        for (let i = 0; i < EXIST.length; i++) {
+          if (EXIST[i] === DATE.dateStart && EXIST[i] === DATE.dateEnd) {
+            const confirm = window.confirm(translate("dataAlreadyExist"));
+            if (confirm) {
+              return !returnValid;
+            }
+            else {
+              return returnValid;
+            }
+          }
         }
         if (!OBJECT.food_goal_kcal || OBJECT.food_goal_kcal === "0") {
           return showAlertAndFocus('food_goal_kcal', "errorFoodGoalKcal", 0);
@@ -79,8 +94,8 @@ export const useValidateFood= () => {
       };
     }
 
-    // 2. save, update
-    else if (PATH.includes("food/save") || PATH.includes("food/update")) {
+    // 2. save
+    else if (PATH.includes("food/save")) {
       const target = [
         "food_part_idx",
         "food_name",
@@ -105,10 +120,25 @@ export const useValidateFood= () => {
           return acc;
         }, [])
       );
-      validate.current = (OBJECT: any, COUNT: any) => {
+      validate.current = (OBJECT: any, COUNT: any, DATE: any, EXIST: any) => {
+
+        // 카운트가 0인 경우
         if (COUNT.newSectionCnt === 0) {
           alert(translate("errorCount"));
           return returnValid;
+        }
+
+        // EXIST 배열에서 바로 필터링 조건 적용
+        for (let i = 0; i < EXIST.length; i++) {
+          if (EXIST[i] === DATE.dateStart && EXIST[i] === DATE.dateEnd) {
+            const confirm = window.confirm(translate("dataAlreadyExist"));
+            if (confirm) {
+              return !returnValid;
+            }
+            else {
+              return returnValid;
+            }
+          }
         }
         const section = OBJECT.food_section;
         for (let i = 0; i < section.length; i++) {

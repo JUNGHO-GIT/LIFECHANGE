@@ -17,7 +17,7 @@ export const CalendarList = () => {
     translate,
   } = useTranslate();
   const {
-    navigate, PATH, URL_OBJECT, sessionId, TITLE, toSave, toUpdate,
+    navigate, PATH, URL_OBJECT, sessionId, TITLE, toSave,
   } = useCommonValue();
   const {
     getDayNotFmt, getDayFmt, getDayStartFmt, getDayEndFmt, monthStartFmt, monthEndFmt,
@@ -103,7 +103,7 @@ export const CalendarList = () => {
                 dateStart: calendar.calendar_dateStart,
                 dateEnd: calendar.calendar_dateEnd,
               });
-              navigate(toUpdate, {
+              navigate(toSave, {
                 state: SEND
               });
             }}
@@ -265,7 +265,6 @@ export const CalendarList = () => {
       setState={{
         setDATE, setSEND
       }}
-
       flow={{
       }}
     />

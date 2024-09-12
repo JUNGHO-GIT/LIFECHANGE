@@ -2,7 +2,7 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useTranslate } from "@imports/ImportHooks";
+import { useCommonValue, useTranslate, useTimeZone } from "@imports/ImportHooks";
 import { useValidateUser } from "@imports/ImportValidates";
 import { User } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
@@ -10,7 +10,6 @@ import { sync } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Input, Div, Btn, Img, Hr } from "@imports/ImportComponents";
 import { Paper, Checkbox, Card, Grid } from "@imports/ImportMuis";
-import { user1 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const UserLogin = () => {
@@ -277,7 +276,8 @@ export const UserLogin = () => {
         }}
       >
         <Img
-        	src={user1}
+        	key={"user1"}
+        	src={"user1"}
         	className={"w-15 h-15 me-10"}
         />
         {translate("googleLogin")}

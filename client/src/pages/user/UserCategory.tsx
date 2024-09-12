@@ -85,18 +85,7 @@ export const UserCategory = () => {
       }
     })
     .then((res: any) => {
-      // 첫번째 객체를 제외하고 데이터 추가
-      setOBJECT((prev: any) => {
-        if (prev.length === 1 && prev[0]?._id === "") {
-          return res.data.result;
-        }
-        else {
-          return {
-            ...prev,
-            ...res.data.result
-          };
-        }
-      });
+      setOBJECT(res.data.result || Category);
     })
     .catch((err: any) => {
       console.error(err);

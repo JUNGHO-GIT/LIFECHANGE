@@ -11,7 +11,6 @@ import { Loading, Footer } from "@imports/ImportLayouts";
 import { Bg, Img, Input, Select } from "@imports/ImportComponents";
 import { Picker, Time, Count, Delete } from "@imports/ImportContainers";
 import { Card, Paper, MenuItem, Grid } from "@imports/ImportMuis";
-import { exercise3_1, exercise3_2, exercise3_3, exercise4, exercise5 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseSave = () => {
@@ -32,8 +31,15 @@ export const ExerciseSave = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [EXIST, setEXIST] = useState<any[]>([""]);
+  const [LOCKED, setLOCKED] = useState<string>("unlocked");
   const [OBJECT, setOBJECT] = useState<any>(Exercise);
+  const [EXIST, setEXIST] = useState<any>({
+    day: [""],
+    week: [""],
+    month: [""],
+    year: [""],
+    select: [""],
+  });
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
@@ -67,7 +73,9 @@ export const ExerciseSave = () => {
       },
     })
     .then((res: any) => {
-      setEXIST(res.data.result.length > 0 ? res.data.result : [""]);
+      setEXIST(
+        !res.data.result || res.data.result.length === 0 ? [""] : res.data.result
+      );
     })
     .catch((err: any) => {
       console.error(err);
@@ -76,27 +84,19 @@ export const ExerciseSave = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
+    if (LOCKED === "locked") {
+      return;
+    }
     setLOADING(true);
     axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId,
-        _id: location_id,
+        _id: "",
         DATE: DATE,
       },
     })
     .then((res: any) => {
-      // 첫번째 객체를 제외하고 데이터 추가
-      setOBJECT((prev: any) => {
-        if (prev.length === 1 && prev[0]?._id === "") {
-          return res.data.result;
-        }
-        else {
-          return {
-            ...prev,
-            ...res.data.result
-          };
-        }
-      });
+      setOBJECT(res.data.result || Exercise);
       // section 내부 part_idx 값에 따라 재정렬
       setOBJECT((prev: any) => {
         const mergedFoodSection = prev?.exercise_section
@@ -174,7 +174,7 @@ export const ExerciseSave = () => {
       exercise_volume: "0",
       exercise_cardio: "00:00",
     };
-    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((item: any, idx: number) =>
+    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) =>
       idx < OBJECT?.exercise_section.length ? OBJECT?.exercise_section[idx] : defaultSection
     );
     setOBJECT((prev: any) => ({
@@ -186,7 +186,7 @@ export const ExerciseSave = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    if (!validate(OBJECT, COUNT)) {
+    if (!validate(OBJECT, COUNT, DATE, EXIST)) {
       setLOADING(false);
       return;
     }
@@ -256,7 +256,7 @@ export const ExerciseSave = () => {
   const handlerDelete = (index: number) => {
     setOBJECT((prev: any) => ({
       ...prev,
-      exercise_section: prev.exercise_section.filter((item: any, idx: number) => (idx !== index))
+      exercise_section: prev.exercise_section.filter((_item: any, idx: number) => (idx !== index))
     }));
     setCOUNT((prev: any) => ({
       ...prev,
@@ -282,6 +282,8 @@ export const ExerciseSave = () => {
             <Count
               COUNT={COUNT}
               setCOUNT={setCOUNT}
+              LOCKED={LOCKED}
+              setLOCKED={setLOCKED}
               limit={10}
             />
           </Grid>
@@ -299,7 +301,8 @@ export const ExerciseSave = () => {
               readOnly={true}
               startadornment={
                 <Img
-                	src={exercise3_1}
+                	key={"exercise3_1"}
+                	src={"exercise3_1"}
                 	className={"w-16 h-16"}
                 />
               }
@@ -315,7 +318,8 @@ export const ExerciseSave = () => {
               readOnly={true}
               startadornment={
                 <Img
-                	src={exercise4}
+                	key={"exercise4"}
+                	src={"exercise4"}
                 	className={"w-16 h-16"}
                 />
               }
@@ -330,7 +334,8 @@ export const ExerciseSave = () => {
               value={OBJECT?.exercise_total_weight}
               startadornment={
                 <Img
-                	src={exercise5}
+                	key={"exercise5"}
+                	src={"exercise5"}
                 	className={"w-16 h-16"}
                 />
               }
@@ -386,6 +391,7 @@ export const ExerciseSave = () => {
               <Delete
                 index={i}
                 handlerDelete={handlerDelete}
+                LOCKED={LOCKED}
               />
             </Grid>
             <Grid size={6}>
@@ -455,7 +461,8 @@ export const ExerciseSave = () => {
                 error={ERRORS[i]?.exercise_set}
                 startadornment={
                   <Img
-                  	src={exercise3_1}
+                  	key={"exercise3_1"}
+                  	src={"exercise3_1"}
                   	className={"w-16 h-16"}
                   />
                 }
@@ -500,7 +507,8 @@ export const ExerciseSave = () => {
                 error={ERRORS[i]?.exercise_rep}
                 startadornment={
                   <Img
-                  	src={exercise3_2}
+                  	key={"exercise3_2"}
+                  	src={"exercise3_2"}
                   	className={"w-16 h-16"}
                   />
                 }
@@ -545,7 +553,8 @@ export const ExerciseSave = () => {
                 error={ERRORS[i]?.exercise_kg}
                 startadornment={
                   <Img
-                  	src={exercise3_3}
+                  	key={"exercise3_3"}
+                  	src={"exercise3_3"}
                   	className={"w-16 h-16"}
                   />
                 }
@@ -589,6 +598,7 @@ export const ExerciseSave = () => {
                 REFS={REFS}
                 ERRORS={ERRORS}
                 DATE={DATE}
+                LOCKED={LOCKED}
                 extra={"exercise_cardio"}
                 i={i}
               />

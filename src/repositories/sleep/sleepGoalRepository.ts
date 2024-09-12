@@ -18,12 +18,10 @@ export const exist = async (
       $match: {
         user_id: user_id_param,
         sleep_goal_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param
+          $lte: dateEnd_param,
         },
         sleep_goal_dateEnd: {
           $gte: dateStart_param,
-          $lte: dateEnd_param
         },
         ...dateType_param ? {
           sleep_goal_dateType: dateType_param
@@ -31,16 +29,16 @@ export const exist = async (
       }
     },
     {
-      $match: {
-        sleep_goal_dateType: { $exists: true }
+      $project: {
+        _id: 0,
+        sleep_goal_dateType: 1,
+        sleep_goal_dateStart: 1,
+        sleep_goal_dateEnd: 1,
       }
     },
     {
-      $group: {
-        _id: null,
-        existDate: {
-          $addToSet: "$sleep_goal_dateStart"
-        }
+      $sort: {
+        sleep_goal_dateStart: 1
       }
     }
   ]);
@@ -243,7 +241,16 @@ export const update = async (
   const finalResult = await SleepGoal.findOneAndUpdate(
     {
       user_id: user_id_param,
-      _id: !_id_param ? { $exists: true } : _id_param
+      _id: !_id_param ? { $exists: true } : _id_param,
+      sleep_goal_dateStart: {
+        $eq: dateStart_param,
+      },
+      sleep_goal_dateEnd: {
+        $eq: dateEnd_param,
+      },
+      ...dateType_param ? {
+        sleep_goal_dateType: dateType_param
+      } : {},
     },
     {
       $set: {
@@ -258,7 +265,7 @@ export const update = async (
     },
     {
       upsert: true,
-      new: false
+      new: true
     }
   )
   .lean();
@@ -270,12 +277,24 @@ export const update = async (
 export const deletes = async (
   user_id_param: string,
   _id_param: string,
+  dateType_param: string,
+  dateStart_param: string,
+  dateEnd_param: string,
 ) => {
 
   const finalResult = await SleepGoal.findOneAndDelete(
     {
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
+      sleep_goal_dateType: {
+        $eq: dateType_param
+      },
+      sleep_goal_dateStart: {
+        $eq: dateStart_param
+      },
+      ...dateEnd_param ? {
+        sleep_goal_dateEnd: dateEnd_param
+      } : {},
     }
   )
   .lean();

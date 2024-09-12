@@ -11,7 +11,6 @@ import { Loading, Footer } from "@imports/ImportLayouts";
 import { Input, Img, Bg } from "@imports/ImportComponents";
 import { Picker, Time, Count, Delete } from "@imports/ImportContainers";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
-import { exercise2, exercise3_1, exercise5 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseGoalSave = () => {
@@ -33,8 +32,15 @@ export const ExerciseGoalSave = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [EXIST, setEXIST] = useState<any[]>([""]);
+  const [LOCKED, setLOCKED] = useState<string>("unlocked");
   const [OBJECT, setOBJECT] = useState<any>(ExerciseGoal);
+  const [EXIST, setEXIST] = useState<any>({
+    day: [""],
+    week: [""],
+    month: [""],
+    year: [""],
+    select: [""],
+  });
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
@@ -47,9 +53,6 @@ export const ExerciseGoalSave = () => {
     newSectionCnt: 0
   });
   const [DATE, setDATE] = useState<any>({
-    initDateType: location_dateType || "",
-    initDateStart: location_dateStart || dayFmt,
-    initDateEnd: location_dateEnd || dayFmt,
     dateType: location_dateType || "",
     dateStart: location_dateStart || dayFmt,
     dateEnd: location_dateEnd || dayFmt,
@@ -60,7 +63,7 @@ export const ExerciseGoalSave = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    axios.get(`${URL_OBJECT}/exist`, {
+    axios.get(`${URL_OBJECT}/goal/exist`, {
       params: {
         user_id: sessionId,
         DATE: {
@@ -71,7 +74,9 @@ export const ExerciseGoalSave = () => {
       },
     })
     .then((res: any) => {
-      setEXIST(res.data.result.length > 0 ? res.data.result : [""]);
+      setEXIST(
+        !res.data.result || res.data.result.length === 0 ? [""] : res.data.result
+      );
     })
     .catch((err: any) => {
       console.error(err);
@@ -84,7 +89,7 @@ export const ExerciseGoalSave = () => {
     axios.get(`${URL_OBJECT}/goal/detail`, {
       params: {
         user_id: sessionId,
-        _id: location_id,
+        _id: "",
         DATE: DATE,
       },
     })
@@ -107,7 +112,7 @@ export const ExerciseGoalSave = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    if (!validate(OBJECT, COUNT)) {
+    if (!validate(OBJECT, COUNT, DATE, EXIST)) {
       setLOADING(false);
       return;
     }
@@ -206,6 +211,8 @@ export const ExerciseGoalSave = () => {
             <Count
               COUNT={COUNT}
               setCOUNT={setCOUNT}
+              LOCKED={LOCKED}
+              setLOCKED={setLOCKED}
               limit={1}
             />
           </Grid>
@@ -226,6 +233,7 @@ export const ExerciseGoalSave = () => {
               <Delete
                 index={i}
                 handlerDelete={handlerDelete}
+                LOCKED={LOCKED}
               />
             </Grid>
             <Grid size={12}>
@@ -242,7 +250,8 @@ export const ExerciseGoalSave = () => {
                 }
                 startadornment={
                   <Img
-                  	src={exercise2}
+                  	key={"exercise2"}
+                  	src={"exercise2"}
                   	className={"w-16 h-16"}
                   />
                 }
@@ -283,7 +292,8 @@ export const ExerciseGoalSave = () => {
                 }
                 startadornment={
                   <Img
-                  	src={exercise3_1}
+                  	key={"exercise3_1"}
+                  	src={"exercise3_1"}
                   	className={"w-16 h-16"}
                   />
                 }
@@ -317,6 +327,7 @@ export const ExerciseGoalSave = () => {
                 REFS={REFS}
                 ERRORS={ERRORS}
                 DATE={DATE}
+                LOCKED={LOCKED}
                 extra={"exercise_goal_cardio"}
                 i={i}
               />
@@ -328,7 +339,8 @@ export const ExerciseGoalSave = () => {
               error={ERRORS[i]?.exercise_goal_weight}
               startadornment={
                 <Img
-                	src={exercise5}
+                	key={"exercise5"}
+                	src={"exercise5"}
                 	className={"w-16 h-16"}
                 />
               }

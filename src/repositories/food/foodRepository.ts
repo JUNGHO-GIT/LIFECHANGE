@@ -17,12 +17,10 @@ export const exist = async (
       $match: {
         user_id: user_id_param,
         food_dateStart: {
-          $gte: dateStart_param,
           $lte: dateEnd_param
         },
         food_dateEnd: {
           $gte: dateStart_param,
-          $lte: dateEnd_param
         },
         ...dateType_param ? {
           food_dateType: dateType_param
@@ -30,20 +28,16 @@ export const exist = async (
       }
     },
     {
-      $match: {
-        $expr: {
-          $gt: [
-            { $size: "$food_section" }, 0
-          ]
-        }
+      $project: {
+        _id: 0,
+        food_dateType: 1,
+        food_dateStart: 1,
+        food_dateEnd: 1,
       }
     },
     {
-      $group: {
-        _id: null,
-        existDate: {
-          $addToSet: "$food_dateStart"
-        }
+      $sort: {
+        food_dateStart: 1
       }
     }
   ]);
@@ -204,7 +198,16 @@ export const update = async (
   const finalResult = await Food.findOneAndUpdate(
     {
       user_id: user_id_param,
-      _id: !_id_param ? { $exists: true } : _id_param
+      _id: !_id_param ? { $exists: true } : _id_param,
+      food_dateStart: {
+        $eq: dateStart_param
+      },
+      food_dateEnd: {
+        $eq: dateEnd_param
+      },
+      ...dateType_param ? {
+        food_dateType: dateType_param
+      } : {},
     },
     {
       $set: {
@@ -215,13 +218,15 @@ export const update = async (
         food_total_carb: OBJECT_param.food_total_carb,
         food_total_protein: OBJECT_param.food_total_protein,
         food_total_fat: OBJECT_param.food_total_fat,
-        food_section: OBJECT_param.food_section,
         food_updateDt: newDate,
+      },
+      $push: {
+        food_section: OBJECT_param.food_section
       }
     },
     {
       upsert: true,
-      new: false
+      new: true
     }
   )
   .lean();
@@ -233,12 +238,24 @@ export const update = async (
 export const deletes = async (
   user_id_param: string,
   _id_param: string,
+  dateType_param: string,
+  dateStart_param: string,
+  dateEnd_param: string,
 ) => {
 
   const finalResult = await Food.findOneAndDelete(
     {
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
+      food_dateStart: {
+        $eq: dateStart_param
+      },
+      food_dateEnd: {
+        $eq: dateEnd_param
+      },
+      ...dateType_param ? {
+        food_dateType: dateType_param
+      } : {},
     }
   )
   .lean();

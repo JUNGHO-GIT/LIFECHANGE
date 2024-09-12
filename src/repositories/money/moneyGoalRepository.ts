@@ -18,12 +18,10 @@ export const exist = async (
       $match: {
         user_id: user_id_param,
         money_goal_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param
+          $lte: dateEnd_param,
         },
         money_goal_dateEnd: {
           $gte: dateStart_param,
-          $lte: dateEnd_param
         },
         ...dateType_param ? {
           money_goal_dateType: dateType_param
@@ -31,16 +29,16 @@ export const exist = async (
       }
     },
     {
-      $match: {
-        money_goal_dateType: { $exists: true }
+      $project: {
+        _id: 0,
+        money_goal_dateType: 1,
+        money_goal_dateStart: 1,
+        money_goal_dateEnd: 1,
       }
     },
     {
-      $group: {
-        _id: null,
-        existDate: {
-          $addToSet: "$money_goal_dateStart"
-        }
+      $sort: {
+        money_goal_dateStart: 1
       }
     }
   ]);
@@ -237,7 +235,16 @@ export const update = async (
   const finalResult = await MoneyGoal.findOneAndUpdate(
     {
       user_id: user_id_param,
-      _id: !_id_param ? { $exists: true } : _id_param
+      _id: !_id_param ? { $exists: true } : _id_param,
+      money_goal_dateStart: {
+        $eq: dateStart_param
+      },
+      money_goal_dateEnd: {
+        $eq: dateEnd_param
+      },
+      ...dateType_param ? {
+        money_goal_dateType: dateType_param
+      } : {},
     },
     {
       $set: {
@@ -251,7 +258,7 @@ export const update = async (
     },
     {
       upsert: true,
-      new: false
+      new: true
     }
   )
   .lean();
@@ -263,12 +270,24 @@ export const update = async (
 export const deletes = async (
   user_id_param: string,
   _id_param: string,
+  dateType_param: string,
+  dateStart_param: string,
+  dateEnd_param: string,
 ) => {
 
   const finalResult = await MoneyGoal.findOneAndDelete(
     {
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
+      money_goal_dateStart: {
+        $eq: dateStart_param
+      },
+      money_goal_dateEnd: {
+        $eq: dateEnd_param
+      },
+      ...dateType_param ? {
+        money_goal_dateType: dateType_param
+      } : {},
     }
   )
   .lean();

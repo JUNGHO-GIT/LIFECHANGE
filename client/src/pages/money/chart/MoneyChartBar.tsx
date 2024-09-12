@@ -10,7 +10,6 @@ import { Div, Img, Input } from "@imports/ImportComponents";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
 import { Bar, Line, ComposedChart, ReferenceLine } from "recharts";
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { common3_2 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const MoneyChartBar = () => {
@@ -177,7 +176,8 @@ export const MoneyChartBar = () => {
       );
       const selectFragment2 = () => (
         <Img
-        	src={common3_2}
+        	key={"common3_2"}
+        	src={"common3_2"}
         	className={"w-24 h-24"}
         />
       );

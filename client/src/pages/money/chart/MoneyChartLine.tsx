@@ -12,7 +12,6 @@ import { Paper, Card, MenuItem, Grid } from "@imports/ImportMuis";
 import { FormGroup, FormControlLabel, Switch } from "@imports/ImportMuis";
 import { Line, LineChart } from "recharts";
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { common3_1 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const MoneyChartLine = () => {
@@ -319,7 +318,8 @@ export const MoneyChartLine = () => {
         >
           {(popTrigger: any) => (
             <Img
-              src={common3_1}
+              key={"common3_1"}
+              src={"common3_1"}
               className={"w-24 h-24 pointer"}
               onClick={(e: any) => {
                 popTrigger.openPopup(e.currentTarget)

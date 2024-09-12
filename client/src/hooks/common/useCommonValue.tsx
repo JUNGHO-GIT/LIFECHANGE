@@ -21,13 +21,12 @@ export const useCommonValue = () => {
   const isGoal: boolean = secondStr === "goal";
   const toFind: string = isGoal ? `/${firstStr}/goal/find/list` : `/${firstStr}/find/list`;
   const toList: string = isGoal ? `/${firstStr}/goal/list` : `/${firstStr}/list`;
-  const toDetail: string = isGoal ? `/${firstStr}/goal/detail` : `/${firstStr}/detail`;
   const toSave: string = isGoal ? `/${firstStr}/goal/save` : `/${firstStr}/save`;
-  const toUpdate: string = isGoal ? `/${firstStr}/goal/update` : `/${firstStr}/update`;
   const toDelete: string = isGoal ? `/${firstStr}/goal/delete` : `/${firstStr}/delete`;
 
   const TITLE: any = process.env.REACT_APP_TITLE || "";
   const URL: string = process.env.REACT_APP_SERVER_URL || "";
+  const GCLOUD_URL: string = process.env.REACT_APP_GCLOUD_URL || "";
   const SUBFIX : string= process.env[`REACT_APP_${firstStr.toUpperCase()}`] || "";
   const SUBFIX_GOOGLE: string = process.env[`REACT_APP_GOOGLE`] || "";
   const SUBFIX_EXERCISE: string = process.env[`REACT_APP_EXERCISE`] || "";
@@ -107,12 +106,11 @@ export const useCommonValue = () => {
     thirdStr,
     toFind,
     toList,
-    toDetail,
     toSave,
-    toUpdate,
     toDelete,
     TITLE,
     URL,
+    GCLOUD_URL,
     SUBFIX,
     SUBFIX_GOOGLE,
     SUBFIX_EXERCISE,

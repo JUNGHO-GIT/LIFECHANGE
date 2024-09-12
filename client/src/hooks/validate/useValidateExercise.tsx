@@ -34,8 +34,8 @@ export const useValidateExercise= () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    // 1. goal/save, update
-    if (PATH.includes("exercise/goal/save") || PATH.includes("exercise/goal/update")) {
+    // 1. goal/save
+    if (PATH.includes("exercise/goal/save")) {
       const target = [
         "exercise_goal_count",
         "exercise_goal_volume",
@@ -58,10 +58,25 @@ export const useValidateExercise= () => {
           return acc;
         }, [])
       );
-      validate.current = (OBJECT: any, COUNT: any) => {
+      validate.current = (OBJECT: any, COUNT: any, DATE: any, EXIST: any) => {
+
+        // 카운트가 0인 경우
         if (COUNT.newSectionCnt === 0) {
           alert(translate("errorCount"));
           return returnValid;
+        }
+
+        // EXIST 배열에서 바로 필터링 조건 적용
+        for (let i = 0; i < EXIST.length; i++) {
+          if (EXIST[i] === DATE.dateStart && EXIST[i] === DATE.dateEnd) {
+            const confirm = window.confirm(translate("dataAlreadyExist"));
+            if (confirm) {
+              return !returnValid;
+            }
+            else {
+              return returnValid;
+            }
+          }
         }
         if (!OBJECT.exercise_goal_count || OBJECT.exercise_goal_count === "0") {
           return showAlertAndFocus('exercise_goal_count', "errorExerciseGoalCount", 0);
@@ -79,8 +94,8 @@ export const useValidateExercise= () => {
       };
     }
 
-    // 2. save, update
-    else if (PATH.includes("exercise/save") || PATH.includes("exercise/update")) {
+    // 2. save
+    else if (PATH.includes("exercise/save")) {
       const target = [
         "exercise_part_idx",
         "exercise_title_idx",
@@ -104,13 +119,28 @@ export const useValidateExercise= () => {
           return acc;
         }, [])
       );
-      validate.current = (OBJECT: any, COUNT: any) => {
+      validate.current = (OBJECT: any, COUNT: any, DATE: any, EXIST: any) => {
         if (OBJECT.exercise_total_weight && OBJECT.exercise_total_weight !== "0") {
           return true;
         }
+
+        // 카운트가 0인 경우
         if (COUNT.newSectionCnt === 0) {
           alert(translate("errorCount"));
           return returnValid;
+        }
+
+        // EXIST 배열에서 바로 필터링 조건 적용
+        for (let i = 0; i < EXIST.length; i++) {
+          if (EXIST[i] === DATE.dateStart && EXIST[i] === DATE.dateEnd) {
+            const confirm = window.confirm(translate("dataAlreadyExist"));
+            if (confirm) {
+              return !returnValid;
+            }
+            else {
+              return returnValid;
+            }
+          }
         }
         const section = OBJECT.exercise_section;
         for (let i = 0; i < section.length; i++) {

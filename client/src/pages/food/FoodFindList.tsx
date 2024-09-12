@@ -10,7 +10,6 @@ import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
 import { Empty } from "@imports/ImportContainers";
 import { Paper, Card, Checkbox, Grid } from "@imports/ImportMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
-import { food2, food3, food4, food5 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodFindList = () => {
@@ -249,7 +248,8 @@ export const FoodFindList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={food2}
+                    	key={"food2"}
+                    	src={"food2"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -274,7 +274,8 @@ export const FoodFindList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={food3}
+                    	key={"food3"}
+                    	src={"food3"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -299,7 +300,8 @@ export const FoodFindList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={food4}
+                    	key={"food4"}
+                    	src={"food4"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -324,7 +326,8 @@ export const FoodFindList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={food5}
+                    	key={"food5"}
+                    	src={"food5"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>

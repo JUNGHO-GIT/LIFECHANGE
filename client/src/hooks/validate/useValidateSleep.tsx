@@ -4,7 +4,7 @@ import { useState, useEffect, createRef, useRef } from "@imports/ImportReacts";
 import { useCommonValue, useTranslate } from "@imports/ImportHooks";
 
 // -------------------------------------------------------------------------------------------------
-export const useValidateSleep= () => {
+export const useValidateSleep = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
@@ -34,8 +34,8 @@ export const useValidateSleep= () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    // 1. goal/save, update
-    if (PATH.includes("sleep/goal/save") || PATH.includes("sleep/goal/update")) {
+    // 1. goal/save
+    if (PATH.includes("sleep/goal/save")) {
       const target = [
         "sleep_goal_bedTime",
         "sleep_goal_wakeTime",
@@ -57,11 +57,28 @@ export const useValidateSleep= () => {
           return acc;
         }, [])
       );
-      validate.current = (OBJECT: any, COUNT: any) => {
+      validate.current = (OBJECT: any, COUNT: any, DATE: any, EXIST: any) => {
+
+        // 카운트가 0인 경우
         if (COUNT.newSectionCnt === 0) {
           alert(translate("errorCount"));
           return returnValid;
         }
+
+        // EXIST 배열에서 바로 필터링 조건 적용
+        const type = EXIST[DATE.dateType];
+        for (let i = 0; i < type.length; i++) {
+          if (type[i] === `${DATE.dateStart} ~ ${DATE.dateEnd}`) {
+            const confirm = window.confirm(translate("dataAlreadyExist"));
+            if (confirm) {
+              return !returnValid;
+            }
+            else {
+              return returnValid;
+            }
+          }
+        }
+
         if (!OBJECT.sleep_goal_bedTime || OBJECT.sleep_goal_bedTime === "00:00") {
           return showAlertAndFocus('sleep_goal_bedTime', "errorSleepGoalBedTime", 0);
         }
@@ -75,8 +92,8 @@ export const useValidateSleep= () => {
       };
     }
 
-    // 2. save, update
-    else if (PATH.includes("sleep/save") || PATH.includes("sleep/update")) {
+    // 2. save
+    else if (PATH.includes("sleep/save")) {
       const target = [
         "sleep_bedTime",
         "sleep_wakeTime",
@@ -98,11 +115,27 @@ export const useValidateSleep= () => {
           return acc;
         }, [])
       );
-      validate.current = (OBJECT: any, COUNT: any) => {
+      validate.current = (OBJECT: any, COUNT: any, DATE: any, EXIST: any) => {
+
+        // 카운트가 0인 경우
         if (COUNT.newSectionCnt === 0) {
           alert(translate("errorCount"));
           return returnValid;
         }
+
+        // EXIST 배열에서 바로 필터링 조건 적용
+        for (let i = 0; i < EXIST.length; i++) {
+          if (EXIST[i] === DATE.dateStart && EXIST[i] === DATE.dateEnd) {
+            const confirm = window.confirm(translate("dataAlreadyExist"));
+            if (confirm) {
+              return !returnValid;
+            }
+            else {
+              return returnValid;
+            }
+          }
+        }
+
         const section = OBJECT.sleep_section;
         for (let i = 0; i < section.length; i++) {
           if (!section[i].sleep_bedTime || section[i].sleep_bedTime === "00:00") {

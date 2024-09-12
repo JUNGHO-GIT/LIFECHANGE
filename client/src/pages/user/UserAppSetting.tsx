@@ -8,7 +8,6 @@ import { Icons, Img, Div } from "@imports/ImportComponents";
 import { PopUp } from "@imports/ImportContainers";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
 import { TableContainer, Table, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
-import { flag1, flag2 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const UserAppSetting = () => {
@@ -101,9 +100,9 @@ export const UserAppSetting = () => {
                         }}
                       >
                         <Img
+                          key={"flag1"}
+                          src={"flag1"}
                           className={"w-24 h-24 me-15"}
-                          src={flag1}
-                          alt={"flag1"}
                         />
                         <Div className={`me-15 ${lang === "ko" ? "fw-700" : ""}`}>
                           한국어
@@ -122,9 +121,9 @@ export const UserAppSetting = () => {
                         }}
                       >
                         <Img
+                          key={"flag2"}
+                          src={"flag2"}
                           className={"w-24 h-24 me-15"}
-                          src={flag2}
-                          alt={"flag2"}
                         />
                         <Div className={`me-15 ${lang === "en" ? "fw-700" : ""}`}>
                           English

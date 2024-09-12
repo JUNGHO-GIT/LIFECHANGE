@@ -31,8 +31,15 @@ export const SleepGoalSave = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [EXIST, setEXIST] = useState<any[]>([""]);
+  const [LOCKED, setLOCKED] = useState<string>("unlocked");
   const [OBJECT, setOBJECT] = useState<any>(SleepGoal);
+  const [EXIST, setEXIST] = useState<any>({
+    day: [""],
+    week: [""],
+    month: [""],
+    year: [""],
+    select: [""],
+  });
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
@@ -45,9 +52,6 @@ export const SleepGoalSave = () => {
     newSectionCnt: 0
   });
   const [DATE, setDATE] = useState<any>({
-    initDateType: location_dateType || "",
-    initDateStart: location_dateStart || dayFmt,
-    initDateEnd: location_dateEnd || dayFmt,
     dateType: location_dateType || "",
     dateStart: location_dateStart || dayFmt,
     dateEnd: location_dateEnd || dayFmt,
@@ -58,7 +62,7 @@ export const SleepGoalSave = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    axios.get(`${URL_OBJECT}/exist`, {
+    axios.get(`${URL_OBJECT}/goal/exist`, {
       params: {
         user_id: sessionId,
         DATE: {
@@ -69,7 +73,9 @@ export const SleepGoalSave = () => {
       },
     })
     .then((res: any) => {
-      setEXIST(res.data.result.length > 0 ? res.data.result : [""]);
+      setEXIST(
+        !res.data.result || res.data.result.length === 0 ? [""] : res.data.result
+      );
     })
     .catch((err: any) => {
       console.error(err);
@@ -78,11 +84,14 @@ export const SleepGoalSave = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
+    if (LOCKED === "locked") {
+      return;
+    }
     setLOADING(true);
     axios.get(`${URL_OBJECT}/goal/detail`, {
       params: {
         user_id: sessionId,
-        _id: location_id,
+        _id: "",
         DATE: DATE,
       },
     })
@@ -105,7 +114,7 @@ export const SleepGoalSave = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    if (!validate(OBJECT, COUNT)) {
+    if (!validate(OBJECT, COUNT, DATE, EXIST)) {
       setLOADING(false);
       return;
     }
@@ -203,6 +212,8 @@ export const SleepGoalSave = () => {
             <Count
               COUNT={COUNT}
               setCOUNT={setCOUNT}
+              LOCKED={LOCKED}
+              setLOCKED={setLOCKED}
               limit={1}
             />
           </Grid>
@@ -223,6 +234,7 @@ export const SleepGoalSave = () => {
               <Delete
                 index={i}
                 handlerDelete={handlerDelete}
+                LOCKED={LOCKED}
               />
             </Grid>
             <Grid size={12}>
@@ -232,6 +244,7 @@ export const SleepGoalSave = () => {
                 REFS={REFS}
                 ERRORS={ERRORS}
                 DATE={DATE}
+                LOCKED={LOCKED}
                 extra={"sleep_goal_bedTime"}
                 i={i}
               />
@@ -243,6 +256,7 @@ export const SleepGoalSave = () => {
                 REFS={REFS}
                 ERRORS={ERRORS}
                 DATE={DATE}
+                LOCKED={LOCKED}
                 extra={"sleep_goal_wakeTime"}
                 i={i}
               />
@@ -254,6 +268,7 @@ export const SleepGoalSave = () => {
                 REFS={REFS}
                 ERRORS={ERRORS}
                 DATE={DATE}
+                LOCKED={LOCKED}
                 extra={"sleep_goal_sleepTime"}
                 i={i}
               />

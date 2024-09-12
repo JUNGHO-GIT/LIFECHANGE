@@ -19,7 +19,7 @@ import {
 } from "@imports/ImportMuis";
 
 import {
-  useRoot, useScrollTop, useFoodSection, LanguageProvider,
+  useRoot, useScrollTop, useFoodSection, LanguageProvider, useTimeZone
 } from "@imports/ImportHooks";
 
 import {
@@ -27,7 +27,7 @@ import {
 } from "@imports/ImportLayouts";
 
 import {
-  CalendarList, CalendarSave, CalendarUpdate,
+  CalendarList, CalendarSave,
 } from "@imports/ImportPages";
 
 import {
@@ -35,20 +35,19 @@ import {
 } from "@imports/ImportPages";
 
 import {
-  ExerciseChart, ExerciseGoalList, ExerciseGoalSave, ExerciseGoalUpdate, ExerciseList, ExerciseSave, ExerciseUpdate,
+  ExerciseChart, ExerciseGoalList, ExerciseGoalSave, ExerciseList, ExerciseSave,
 } from "@imports/ImportPages";
 
 import {
-  FoodChart, FoodFindList, FoodGoalList, FoodGoalSave, FoodGoalUpdate,
-  FoodList, FoodDetail, FoodSave, FoodUpdate,
+  FoodChart, FoodFindList, FoodGoalList, FoodGoalSave, FoodList, FoodSave,
 } from "@imports/ImportPages";
 
 import {
-  MoneyChart, MoneyGoalList, MoneyGoalSave, MoneyGoalUpdate, MoneyList, MoneySave, MoneyUpdate,
+  MoneyChart, MoneyGoalList, MoneyGoalSave, MoneyList, MoneySave,
 } from "@imports/ImportPages";
 
 import {
-  SleepChart, SleepGoalList, SleepGoalSave, SleepGoalUpdate, SleepList, SleepSave, SleepUpdate,
+  SleepChart, SleepGoalList, SleepGoalSave, SleepList, SleepSave,
 } from "@imports/ImportPages";
 
 import {
@@ -64,7 +63,6 @@ const Calendar = () => (
   <Routes>
     <Route path="/list" element={<CalendarList />} />
     <Route path="/save" element={<CalendarSave />} />
-    <Route path="/update" element={<CalendarUpdate />} />
   </Routes>
 );
 // -------------------------------------------------------------------------------------------------
@@ -80,10 +78,8 @@ const Exercise = () =>  (
     <Route path="/chart/list" element={<ExerciseChart />} />
     <Route path="/goal/list" element={<ExerciseGoalList />} />
     <Route path="/goal/save" element={<ExerciseGoalSave />} />
-    <Route path="/goal/update" element={<ExerciseGoalUpdate />} />
     <Route path="/list" element={<ExerciseList />} />
     <Route path="/save" element={<ExerciseSave />} />
-    <Route path="/update" element={<ExerciseUpdate />} />
   </Routes>
 );
 // -------------------------------------------------------------------------------------------------
@@ -92,12 +88,9 @@ const Food = () => (
     <Route path="/chart/list" element={<FoodChart />} />
     <Route path="/goal/list" element={<FoodGoalList />} />
     <Route path="/goal/save" element={<FoodGoalSave />} />
-    <Route path="/goal/update" element={<FoodGoalUpdate />} />
     <Route path="/find/list" element={<FoodFindList />} />
     <Route path="/list" element={<FoodList />} />
-    <Route path="/detail" element={<FoodDetail />} />
     <Route path="/save" element={<FoodSave />} />
-    <Route path="/update" element={<FoodUpdate />} />
   </Routes>
 );
 // -------------------------------------------------------------------------------------------------
@@ -106,10 +99,8 @@ const Money = () =>  (
     <Route path="/chart/list" element={<MoneyChart />} />
     <Route path="/goal/list" element={<MoneyGoalList />} />
     <Route path="/goal/save" element={<MoneyGoalSave />} />
-    <Route path="/goal/update" element={<MoneyGoalUpdate />} />
     <Route path="/list" element={<MoneyList />} />
     <Route path="/save" element={<MoneySave />} />
-    <Route path="/update" element={<MoneyUpdate />} />
   </Routes>
 );
 // -------------------------------------------------------------------------------------------------
@@ -118,10 +109,8 @@ const Sleep = () => (
     <Route path="/chart/list" element={<SleepChart />} />
     <Route path="/goal/list" element={<SleepGoalList />} />
     <Route path="/goal/save" element={<SleepGoalSave />} />
-    <Route path="/goal/update" element={<SleepGoalUpdate />} />
     <Route path="/list" element={<SleepList />} />
     <Route path="/save" element={<SleepSave />} />
-    <Route path="/update" element={<SleepUpdate />} />
   </Routes>
 );
 // -------------------------------------------------------------------------------------------------
@@ -152,6 +141,7 @@ const Auth = () => (
 const App = () => {
 
   useRoot();
+  useTimeZone();
   useScrollTop();
   useFoodSection();
 

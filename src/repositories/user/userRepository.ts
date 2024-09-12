@@ -136,7 +136,7 @@ export const userResetPw = async (
     },
     {
       upsert: true,
-      new: false
+      new: true
     }
   );
 
@@ -198,7 +198,7 @@ export const userUpdate = async (
     },
     {
       upsert: true,
-      new: false
+      new: true
     }
   );
 
@@ -347,7 +347,7 @@ export const categoryUpdate = async (
     },
     {
       upsert: true,
-      new: false
+      new: true
     }
   )
   .lean();

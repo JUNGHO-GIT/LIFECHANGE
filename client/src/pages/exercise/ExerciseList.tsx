@@ -10,7 +10,6 @@ import { Div, Hr, Icons, Img } from "@imports/ImportComponents";
 import { Empty } from "@imports/ImportContainers";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
-import { exercise3_1, exercise4, exercise5 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseList = () => {
@@ -23,7 +22,7 @@ export const ExerciseList = () => {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, toUpdate
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, toSave
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -124,7 +123,7 @@ export const ExerciseList = () => {
                       dateStart: item.exercise_dateStart,
                       dateEnd: item.exercise_dateEnd,
                     });
-                    navigate(toUpdate, {
+                    navigate(toSave, {
                       state: SEND
                     });
                   }}
@@ -173,7 +172,8 @@ export const ExerciseList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={exercise3_1}
+                    	key={"exercise3_1"}
+                    	src={"exercise3_1"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -198,7 +198,8 @@ export const ExerciseList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={exercise4}
+                    	key={"exercise4"}
+                    	src={"exercise4"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
@@ -223,7 +224,8 @@ export const ExerciseList = () => {
                 <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img
-                    	src={exercise5}
+                    	key={"exercise5"}
+                    	src={"exercise5"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>

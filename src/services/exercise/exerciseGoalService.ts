@@ -29,8 +29,20 @@ export const exist = async (
   }
   else {
     statusResult = "success";
-    finalResult = findResult[0]?.existDate?.sort((a: string, b: string) => {
-      return a > b ? 1 : a < b ? -1 : 0;
+    finalResult = findResult.reduce((acc: any, curr: any) => {
+      const curDateType = curr.exercise_goal_dateType;
+      const curDateStart = curr.exercise_goal_dateStart;
+      const curDateEnd = curr.exercise_goal_dateEnd;
+
+      acc[curDateType].push(`${curDateStart} ~ ${curDateEnd}`);
+
+      return acc;
+    }, {
+      day: [],
+      week: [],
+      month: [],
+      year: [],
+      select: [],
     });
   }
 
@@ -265,6 +277,7 @@ export const update = async (
 export const deletes = async (
   user_id_param: string,
   _id_param: string,
+  DATE_param: any,
 ) => {
 
   // result 변수 선언
@@ -272,8 +285,13 @@ export const deletes = async (
   let finalResult: any = null;
   let statusResult: string = "";
 
+  // date 변수 선언
+  const dateType = DATE_param.dateType;
+  const dateStart = DATE_param.dateStart;
+  const dateEnd = DATE_param.dateEnd;
+
   deleteResult = await repository.deletes(
-    user_id_param, _id_param,
+    user_id_param, _id_param, dateType, dateStart, dateEnd
   );
 
   if (!deleteResult) {
