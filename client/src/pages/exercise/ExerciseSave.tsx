@@ -23,7 +23,7 @@ export const ExerciseSave = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, exerciseArray, URL_OBJECT, sessionId, location_id, toList
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, exerciseArray, URL_OBJECT, sessionId, toList,
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -186,7 +186,8 @@ export const ExerciseSave = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    if (!validate(OBJECT, COUNT, DATE, EXIST)) {
+    if (validate(OBJECT, COUNT, DATE) || !validate(OBJECT, COUNT, DATE)) {
+      console.log("validate", validate(OBJECT, COUNT, DATE));
       setLOADING(false);
       return;
     }
@@ -367,7 +368,7 @@ export const ExerciseSave = () => {
     );
     const cardSection = () => {
       const cardFragment = (i: number) => (
-        <Card className={"border radius p-20"} key={i}>
+        <Card className={`${LOCKED === "locked" ? "locked" : ""} border radius p-20`} key={i}>
           <Grid container spacing={2}>
             <Grid size={6} className={"d-left"}>
               <Bg
@@ -398,8 +399,8 @@ export const ExerciseSave = () => {
               <Select
                 label={translate("part")}
                 value={OBJECT?.exercise_section[i]?.exercise_part_idx}
-                inputRef={REFS.current[i]?.exercise_part_idx}
-                error={ERRORS[i]?.exercise_part_idx}
+                inputRef={REFS?.[i]?.exercise_part_idx}
+                error={ERRORS?.[i]?.exercise_part_idx}
                 onChange={(e: any) => {
                   const newIndex = Number(e.target.value);
                   setOBJECT((prev: any) => ({
@@ -427,8 +428,8 @@ export const ExerciseSave = () => {
               <Select
                 label={translate("title")}
                 value={OBJECT?.exercise_section[i]?.exercise_title_idx}
-                inputRef={REFS.current[i]?.exercise_title_idx}
-                error={ERRORS[i]?.exercise_title_idx}
+                inputRef={REFS?.[i]?.exercise_title_idx}
+                error={ERRORS?.[i]?.exercise_title_idx}
                 onChange={(e: any) => {
                   const newTitleIdx = Number(e.target.value);
                   const newTitleVal = exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title[newTitleIdx];
@@ -457,8 +458,8 @@ export const ExerciseSave = () => {
               <Input
                 label={translate("set")}
                 value={numeral(OBJECT?.exercise_section[i]?.exercise_set).format("0,0")}
-                inputRef={REFS.current[i]?.exercise_set}
-                error={ERRORS[i]?.exercise_set}
+                inputRef={REFS?.[i]?.exercise_set}
+                error={ERRORS?.[i]?.exercise_set}
                 startadornment={
                   <Img
                   	key={"exercise3_1"}
@@ -503,8 +504,8 @@ export const ExerciseSave = () => {
               <Input
                 label={translate("rep")}
                 value={numeral(OBJECT?.exercise_section[i]?.exercise_rep).format("0,0")}
-                inputRef={REFS.current[i]?.exercise_rep}
-                error={ERRORS[i]?.exercise_rep}
+                inputRef={REFS?.[i]?.exercise_rep}
+                error={ERRORS?.[i]?.exercise_rep}
                 startadornment={
                   <Img
                   	key={"exercise3_2"}
@@ -549,8 +550,8 @@ export const ExerciseSave = () => {
               <Input
                 label={translate("kg")}
                 value={numeral(OBJECT?.exercise_section[i]?.exercise_kg).format("0,0")}
-                inputRef={REFS.current[i]?.exercise_kg}
-                error={ERRORS[i]?.exercise_kg}
+                inputRef={REFS?.[i]?.exercise_kg}
+                error={ERRORS?.[i]?.exercise_kg}
                 startadornment={
                   <Img
                   	key={"exercise3_3"}

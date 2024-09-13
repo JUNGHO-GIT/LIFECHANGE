@@ -148,9 +148,8 @@ export const save = async (
 
   // result 변수 선언
   let findResult: any = null;
-  let saveResult: any = null;
-  let updateResult: any = null;
   let deleteResult: any = null;
+  let saveResult: any = null;
   let finalResult: any = null;
   let statusResult: string = "";
 
@@ -165,13 +164,22 @@ export const save = async (
 
   if (!findResult) {
     saveResult = await repository.save(
-      user_id_param, "", OBJECT_param, dateType, dateStart, dateEnd
+      user_id_param, OBJECT_param, dateType, dateStart, dateEnd
     );
   }
   else {
-    saveResult = await repository.update(
-      user_id_param, findResult._id, OBJECT_param, dateType, dateStart, dateEnd
+    deleteResult = await repository.deletes(
+      user_id_param, findResult._id, dateType, dateStart, dateEnd
     );
+    if (!deleteResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
+      saveResult = await repository.save(
+        user_id_param, OBJECT_param, dateType, dateStart, dateEnd
+      );
+    }
   }
 
   if (!saveResult) {

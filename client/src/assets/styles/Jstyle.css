@@ -11005,6 +11005,9 @@
   overflow: hidden !important;
   text-overflow: ellipsis !important;
 }
+.locked {
+  border: 2px solid #bdbdbd !important;
+}
 
 /** 100. animation ********************************************************************************/
 .animation-none {

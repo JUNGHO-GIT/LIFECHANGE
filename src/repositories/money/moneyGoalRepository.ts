@@ -197,7 +197,6 @@ export const detail = async (
 // 3. save -----------------------------------------------------------------------------------------
 export const save = async (
   user_id_param: string,
-  _id_param: string,
   OBJECT_param: any,
   dateType_param: string,
   dateStart_param: string,

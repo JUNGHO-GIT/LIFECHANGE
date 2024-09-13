@@ -1666,13 +1666,13 @@ export const useTranslate = () => {
       ko: "체중 목표를 입력해주세요",
       en: "Please enter Goal Weight"
     },
-    errorExercisePart: {
-      ko: "대분류를 선택해주세요",
+    errorExercisePartIdx: {
+      ko: "운동 부위를 선택해주세요",
       en: "Please select Part"
     },
-    errorExerciseTitle: {
-      ko: "소분류를 선택해주세요",
-      en: "Please select Title"
+    errorExerciseTitleIdx: {
+      ko: "운동 종목을 선택해주세요",
+      en: "Please enter Exercise"
     },
     errorExerciseCount: {
       ko: "횟수를 입력해주세요",
@@ -1706,7 +1706,7 @@ export const useTranslate = () => {
       ko: "지방 목표를 입력해주세요",
       en: "Please enter Goal Fat"
     },
-    errorFoodPart: {
+    errorFoodPartIdx: {
       ko: "대분류를 선택해주세요",
       en: "Please select Part"
     },
@@ -1742,7 +1742,7 @@ export const useTranslate = () => {
       ko: "지방을 입력해주세요",
       en: "Please enter Fat"
     },
-    errorCalendarPart: {
+    errorCalendarPartIdx: {
       ko: "대분류를 선택해주세요",
       en: "Please select Part"
     },
@@ -1766,11 +1766,11 @@ export const useTranslate = () => {
       ko: "지출 목표를 입력해주세요",
       en: "Please enter Goal Expense"
     },
-    errorMoneyPart: {
+    errorMoneyPartIdx: {
       ko: "대분류를 선택해주세요",
       en: "Please select Part"
     },
-    errorMoneyTitle: {
+    errorMoneyTitleIdx: {
       ko: "소분류를 선택해주세요",
       en: "Please select Title"
     },
