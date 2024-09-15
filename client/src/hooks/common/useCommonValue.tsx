@@ -21,7 +21,7 @@ export const useCommonValue = () => {
   const isGoal: boolean = secondStr === "goal";
   const toFind: string = isGoal ? `/${firstStr}/goal/find/list` : `/${firstStr}/find/list`;
   const toList: string = isGoal ? `/${firstStr}/goal/list` : `/${firstStr}/list`;
-  const toSave: string = isGoal ? `/${firstStr}/goal/save` : `/${firstStr}/save`;
+  const toDetail: string = isGoal ? `/${firstStr}/goal/detail` : `/${firstStr}/detail`;
   const toDelete: string = isGoal ? `/${firstStr}/goal/delete` : `/${firstStr}/delete`;
 
   const TITLE: any = process.env.REACT_APP_TITLE || "";
@@ -106,7 +106,7 @@ export const useCommonValue = () => {
     thirdStr,
     toFind,
     toList,
-    toSave,
+    toDetail,
     toDelete,
     TITLE,
     URL,

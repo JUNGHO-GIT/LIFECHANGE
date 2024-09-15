@@ -444,7 +444,7 @@ router.get("/category/list", async (req: Request, res: Response) => {
 });
 
 // 3-2. categorySave -------------------------------------------------------------------------------
-router.post("/category/save", async (req: Request, res: Response) => {
+router.post("/category/create", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.categorySave (
       req.body.user_id as string,

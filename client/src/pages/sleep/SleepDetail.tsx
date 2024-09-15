@@ -1,37 +1,38 @@
-// CalendarSave.tsx
+// SleepDetail.tsx
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
-import { useValidateCalendar } from "@imports/ImportValidates";
-import { Calendar } from "@imports/ImportSchemas";
+import { useCommonValue, useCommonDate, useTranslate, useTime } from "@imports/ImportHooks";
+import { useValidateSleep } from "@imports/ImportValidates";
+import { Sleep } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
+import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
-import { Input, Select, Img, Bg } from "@imports/ImportComponents";
-import { Picker, Memo, Count, Delete } from "@imports/ImportContainers";
-import { Card, Paper, MenuItem, Grid } from "@imports/ImportMuis";
+import { Bg } from "@imports/ImportComponents";
+import { Picker, Time, Count, Delete } from "@imports/ImportContainers";
+import { Card, Paper, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-export const CalendarSave = () => {
+export const SleepDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate
+    translate,
   } = useTranslate();
   const {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, calendarArray, colors, URL_OBJECT, sessionId, toList,
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, toList
   } = useCommonValue();
   const {
-    ERRORS, REFS, validate
-  } = useValidateCalendar();
+    ERRORS, REFS, validate,
+  } = useValidateSleep();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [LOCKED, setLOCKED] = useState<string>("unlocked");
-  const [OBJECT, setOBJECT] = useState<any>(Calendar);
+  const [OBJECT, setOBJECT] = useState<any>(Sleep);
   const [EXIST, setEXIST] = useState<any>({
     day: [""],
     week: [""],
@@ -55,6 +56,9 @@ export const CalendarSave = () => {
     dateStart: location_dateStart || dayFmt,
     dateEnd: location_dateEnd || dayFmt,
   });
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useTime(OBJECT, setOBJECT, PATH, "real");
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -92,7 +96,17 @@ export const CalendarSave = () => {
       },
     })
     .then((res: any) => {
-      setOBJECT(res.data.result || Calendar);
+      setOBJECT(res.data.result || Sleep);
+      // section 내부 part_idx 값에 따라 재정렬
+      setOBJECT((prev: any) => {
+        const mergedFoodSection = prev?.sleep_section
+          ? prev.sleep_section.sort((a: any, b: any) => a.sleep_part_idx - b.sleep_part_idx)
+          : [];
+        return {
+          ...prev,
+          sleep_section: mergedFoodSection,
+        };
+      });
       setCOUNT((prev: any) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
@@ -111,18 +125,16 @@ export const CalendarSave = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     const defaultSection = {
-      calendar_part_idx: 0,
-      calendar_part_val: "all",
-      calendar_title: "",
-      calendar_color: "black",
-      calendar_content: ""
+      sleep_bedTime: "00:00",
+      sleep_wakeTime: "00:00",
+      sleep_sleepTime: "00:00",
     };
     let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) =>
-      idx < OBJECT?.calendar_section.length ? OBJECT?.calendar_section[idx] : defaultSection
+      idx < OBJECT?.sleep_section.length ? OBJECT?.sleep_section[idx] : defaultSection
     );
     setOBJECT((prev: any) => ({
       ...prev,
-      calendar_section: updatedSection
+      sleep_section: updatedSection
     }));
 
   },[COUNT?.newSectionCnt]);
@@ -133,7 +145,7 @@ export const CalendarSave = () => {
       setLOADING(false);
       return;
     }
-    axios.post(`${URL_OBJECT}/save`, {
+    axios.post(`${URL_OBJECT}/detail`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
@@ -141,6 +153,7 @@ export const CalendarSave = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         alert(translate(res.data.msg));
+        sync();
         Object.assign(SEND, {
           dateType: "",
           dateStart: DATE.dateStart,
@@ -175,6 +188,7 @@ export const CalendarSave = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         alert(translate(res.data.msg));
+        sync();
         Object.assign(SEND, {
           dateType: "",
           dateStart: DATE.dateStart,
@@ -197,16 +211,16 @@ export const CalendarSave = () => {
   const handlerDelete = (index: number) => {
     setOBJECT((prev: any) => ({
       ...prev,
-      calendar_section: prev.calendar_section.filter((_item: any, idx: number) => (idx !== index))
+      sleep_section: prev.sleep_section.filter((_item: any, idx: number) => (idx !== index))
     }));
     setCOUNT((prev: any) => ({
       ...prev,
-      newSectionCnt: prev.newSectionCnt - 1,
+      newSectionCnt: prev.newSectionCnt - 1
     }));
   };
 
-  // 7. save ---------------------------------------------------------------------------------------
-  const saveNode = () => {
+  // 7. save --------------------------------------------------------------------------------------
+  const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
       <Card className={"border radius p-20"}>
@@ -225,32 +239,21 @@ export const CalendarSave = () => {
               setCOUNT={setCOUNT}
               LOCKED={LOCKED}
               setLOCKED={setLOCKED}
-              limit={10}
+              limit={1}
             />
           </Grid>
         </Grid>
       </Card>
     );
-    const cardSection = () => {
-      const cardFragment = (i: number) => (
+    // 7-3. card
+    const detailSection = () => {
+      const detailFragment = (i: number) => (
         <Card className={"border radius p-20"} key={i}>
           <Grid container spacing={2}>
             <Grid size={6} className={"d-left"}>
               <Bg
                 badgeContent={i + 1}
-                bgcolor={
-                  OBJECT?.calendar_section[i]?.calendar_part_idx === 0 ? '#1976d2' :
-                  OBJECT?.calendar_section[i]?.calendar_part_idx === 1 ? '#4CAF50' :
-                  OBJECT?.calendar_section[i]?.calendar_part_idx === 2 ? '#FFC107' :
-                  OBJECT?.calendar_section[i]?.calendar_part_idx === 3 ? '#FF5722' :
-                  OBJECT?.calendar_section[i]?.calendar_part_idx === 4 ? '#673AB7' :
-                  OBJECT?.calendar_section[i]?.calendar_part_idx === 5 ? '#3F51B5' :
-                  OBJECT?.calendar_section[i]?.calendar_part_idx === 6 ? '#2196F3' :
-                  OBJECT?.calendar_section[i]?.calendar_part_idx === 7 ? '#009688' :
-                  OBJECT?.calendar_section[i]?.calendar_part_idx === 8 ? '#CDDC39' :
-                  OBJECT?.calendar_section[i]?.calendar_part_idx === 9 ? '#FFEB3B' :
-                  '#9E9E9E'
-                }
+                bgcolor={"#1976d2"}
               />
             </Grid>
             <Grid size={6} className={"d-right"}>
@@ -260,108 +263,49 @@ export const CalendarSave = () => {
                 LOCKED={LOCKED}
               />
             </Grid>
-            <Grid size={6}>
-              <Select
-                label={translate("part")}
-                value={OBJECT?.calendar_section[i]?.calendar_part_idx}
-                inputRef={REFS?.current[i]?.calendar_part_idx}
-                error={ERRORS[i]?.calendar_part_idx}
-                inputclass={"fs-0-8rem"}
-                locked={LOCKED}
-                onChange={(e: any) => {
-                  const newIndex = Number(e.target.value);
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    calendar_section: prev.calendar_section?.map((item: any, idx: number) => (
-                      idx === i ? {
-                        ...item,
-                        calendar_part_idx: newIndex,
-                        calendar_part_val: calendarArray[newIndex]?.calendar_part
-                      } : item
-                    ))
-                  }));
-                }}
-              >
-                {calendarArray?.map((item: any, idx: number) => (
-                  <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
-                    {translate(item.calendar_part)}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Grid>
-            <Grid size={6}>
-              <Select
-                label={translate("color")}
-                value={OBJECT?.calendar_section[i]?.calendar_color}
-                inputRef={REFS?.current[i]?.calendar_color}
-                error={ERRORS[i]?.calendar_color}
-                inputclass={"fs-0-8rem"}
-                locked={LOCKED}
-                onChange={(e: any) => {
-                  const newColor = e.target.value;
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    calendar_section: prev.calendar_section?.map((item: any, idx: number) => (
-                      idx === i ? {
-                        ...item,
-                        calendar_color: newColor
-                      } : item
-                    ))
-                  }));
-                }}
-              >
-                {colors.map((item: any, idx: number) => (
-                  <MenuItem key={idx} value={item} className={"fs-0-8rem"}>
-                    <span className={item}>●</span>
-                    <span className={"ms-10"}>{item}</span>
-                  </MenuItem>
-                ))}
-              </Select>
-            </Grid>
             <Grid size={12}>
-              <Input
-                label={translate("calendarTitle")}
-                value={OBJECT?.calendar_section[i]?.calendar_title}
-                inputRef={REFS?.current[i]?.calendar_title}
-                error={ERRORS[i]?.calendar_title}
-                locked={LOCKED}
-                startadornment={
-                  <Img
-                  	key={"calendar2"}
-                  	src={"calendar2"}
-                  	className={"w-16 h-16"}
-                  />
-                }
-                onChange={(e: any) => {
-                  const newTitle = e.target.value;
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    calendar_section: prev.calendar_section?.map((item: any, idx: number) => (
-                      idx === i ? {
-                        ...item,
-                        calendar_title: newTitle
-                      } : item
-                    ))
-                  }));
-                }}
-              />
-            </Grid>
-            <Grid size={12}>
-              <Memo
+              <Time
                 OBJECT={OBJECT}
                 setOBJECT={setOBJECT}
+                REFS={REFS}
+                ERRORS={ERRORS}
+                DATE={DATE}
                 LOCKED={LOCKED}
-                extra={"calendar_content"}
+                extra={"sleep_bedTime"}
                 i={i}
               />
+            </Grid>
+            <Grid size={12}>
+              <Time
+                OBJECT={OBJECT}
+                setOBJECT={setOBJECT}
+                REFS={REFS}
+                ERRORS={ERRORS}
+                DATE={DATE}
+                LOCKED={LOCKED}
+                extra={"sleep_wakeTime"}
+                i={i}
+              />
+            </Grid>
+            <Grid size={12}>
+              <Time
+                OBJECT={OBJECT}
+                setOBJECT={setOBJECT}
+                REFS={REFS}
+                ERRORS={ERRORS}
+                DATE={DATE}
+                LOCKED={LOCKED}
+                extra={"sleep_sleepTime"}
+                i={i}
+            />
             </Grid>
           </Grid>
         </Card>
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? <Loading /> : OBJECT?.calendar_section?.map((item: any, i: number) => (
-            cardFragment(i)
+          LOADING ? <Loading /> : OBJECT?.sleep_section?.map((item: any, i: number) => (
+            detailFragment(i)
           ))
         )
       );
@@ -372,7 +316,7 @@ export const CalendarSave = () => {
         <Grid container spacing={2}>
           <Grid size={12}>
             {dateCountSection()}
-            {cardSection()}
+            {detailSection()}
           </Grid>
         </Grid>
       </Paper>
@@ -397,7 +341,7 @@ export const CalendarSave = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {saveNode()}
+      {detailNode()}
       {footerNode()}
     </>
   );

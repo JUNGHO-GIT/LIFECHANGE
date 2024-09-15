@@ -27,8 +27,8 @@ export const UserAppSetting = () => {
   // 7. userAppSetting ----------------------------------------------------------------------------
   const userAppSettingNode = () => {
     // 7-1. card
-    const cardSection = () => {
-      const cardFragment = (i: number) => (
+    const detailSection = () => {
+      const detailFragment = (i: number) => (
         <Card className={"border radius shadow-none p-0"} key={i}>
           <TableContainer>
             <Table>
@@ -215,7 +215,7 @@ export const UserAppSetting = () => {
         </Card>
       );
       return (
-        LOADING ? <Loading /> : cardFragment(0)
+        LOADING ? <Loading /> : detailFragment(0)
       );
     };
     // 7-10. return
@@ -223,7 +223,7 @@ export const UserAppSetting = () => {
       <Paper className={"content-wrapper d-center radius border h-min90vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
-            {cardSection()}
+            {detailSection()}
           </Grid>
         </Grid>
       </Paper>

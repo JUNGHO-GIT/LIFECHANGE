@@ -25,8 +25,8 @@ export const Empty = (
 
   // 3. navigateStr --------------------------------------------------------------------------------
   const navigateStr = (
-    type === "goal" ? `/${extra}/goal/save` :
-    type === "real" ? `/${extra}/save` :
+    type === "goal" ? `/${extra}/goal/detail` :
+    type === "real" ? `/${extra}/detail` :
     null
   );
 

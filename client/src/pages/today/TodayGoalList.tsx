@@ -52,14 +52,14 @@ export const TodayGoalList = () => {
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toExerciseGoal: "/exercise/goal/save",
-    toExercise: "/exercise/save",
-    toFoodGoal: "/food/goal/save",
-    toFood: "/food/save",
-    toMoneyGoal: "/money/goal/save",
-    toMoney: "/money/save",
-    toSleepGoal: "/sleep/goal/save",
-    toSleep: "/sleep/save",
+    toExerciseGoal: "/exercise/goal/detail",
+    toExercise: "/exercise/detail",
+    toFoodGoal: "/food/goal/detail",
+    toFood: "/food/detail",
+    toMoneyGoal: "/money/goal/detail",
+    toMoney: "/money/detail",
+    toSleepGoal: "/sleep/goal/detail",
+    toSleep: "/sleep/detail",
   });
   const [COUNT_EXERCISE, setCOUNT_EXERCISE] = useState<any>({
     totalCnt: 0,
@@ -170,7 +170,7 @@ export const TodayGoalList = () => {
           extra={"exercise"}
         />
       );
-      const cardFragment = (i: number) => (
+      const listFragment = (i: number) => (
         OBJECT_EXERCISE?.map((item: any, index: number) => (
           <Card className={"border radius"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpandedExercise.includes(index)}>
@@ -517,7 +517,7 @@ export const TodayGoalList = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT_EXERCISE.totalCnt === 0 ? emptyFragment() : cardFragment(0)
+          COUNT_EXERCISE.totalCnt === 0 ? emptyFragment() : listFragment(0)
         )
       );
     };
@@ -532,7 +532,7 @@ export const TodayGoalList = () => {
           extra={"food"}
         />
       );
-      const cardFragment = (i: number) => (
+      const listFragment = (i: number) => (
         OBJECT_FOOD?.map((item: any, index: number) => (
           <Card className={"border radius"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpandedFood.includes(index)}>
@@ -880,7 +880,7 @@ export const TodayGoalList = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT_FOOD.totalCnt === 0 ? emptyFragment() : cardFragment(0)
+          COUNT_FOOD.totalCnt === 0 ? emptyFragment() : listFragment(0)
         )
       );
     };
@@ -895,7 +895,7 @@ export const TodayGoalList = () => {
           extra={"money"}
         />
       );
-      const cardFragment = (i: number) => (
+      const listFragment = (i: number) => (
         OBJECT_MONEY?.map((item: any, index: number) => (
           <Card className={"border radius"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpandedMoney.includes(index)}>
@@ -1106,7 +1106,7 @@ export const TodayGoalList = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT_MONEY.totalCnt === 0 ? emptyFragment() : cardFragment(0)
+          COUNT_MONEY.totalCnt === 0 ? emptyFragment() : listFragment(0)
         )
       );
     };
@@ -1121,7 +1121,7 @@ export const TodayGoalList = () => {
           extra={"sleep"}
         />
       );
-      const cardFragment = (i: number) => (
+      const listFragment = (i: number) => (
         OBJECT_SLEEP?.map((item: any, index: number) => (
           <Card className={"border radius"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpandedSleep.includes(index)}>
@@ -1401,7 +1401,7 @@ export const TodayGoalList = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT_SLEEP.totalCnt === 0 ? emptyFragment() : cardFragment(0)
+          COUNT_SLEEP.totalCnt === 0 ? emptyFragment() : listFragment(0)
         )
       );
     };

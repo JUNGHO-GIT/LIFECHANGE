@@ -48,9 +48,9 @@ export const Picker = (
   const isToday = PATH.includes("/today");
   const isCalendar = PATH.includes("/calendar");
   const isGoalList = PATH.includes("/goal/list");
-  const isGoalSave = PATH.includes("/goal/save");
+  const isGoalDetail = PATH.includes("/goal/detail");
   const isRealList = !PATH.includes("/goal") && PATH.includes("/list");
-  const isRealSave = !PATH.includes("/goal") && PATH.includes("/save");
+  const isRealDetail = !PATH.includes("/goal") && PATH.includes("/detail");
 
   let sessionDate = sessionStorage?.getItem(`${TITLE}_date_(${PATH})`);
   let parseDate = JSON?.parse(sessionDate || "{}");
@@ -58,7 +58,7 @@ export const Picker = (
   let dateEnd = parseDate?.dateEnd;
 
   // 2-1. useState ---------------------------------------------------------------------------------
-  const [saveTypeStr, setSaveTypeStr] = useState<string>("");
+  const [saveTypeStr, setDetailTypeStr] = useState<string>("");
   const [listTypeStr, setListTypeStr] = useState<string>("");
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -96,11 +96,11 @@ export const Picker = (
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (isGoalList || isRealList) {
-      setSaveTypeStr("h-min0 h-4vh fs-0-7rem pointer");
+      setDetailTypeStr("h-min0 h-4vh fs-0-7rem pointer");
       setListTypeStr("h-min0 h-4vh fs-0-7rem pointer");
     }
     else {
-      setSaveTypeStr("h-min40 fs-0-8rem pointer");
+      setDetailTypeStr("h-min40 fs-0-8rem pointer");
       setListTypeStr("h-min40 fs-0-8rem pointer");
     }
   }, [PATH]);
@@ -1095,7 +1095,7 @@ export const Picker = (
         label={translate("dateType")}
         value={DATE.dateType || ""}
         inputclass={saveTypeStr}
-        readOnly={isRealSave && !isCalendar}
+        readOnly={isRealDetail && !isCalendar}
         onChange={(e: any) => {
           if (e.target.value === "day") {
             setDATE((prev: any) => ({
@@ -1139,7 +1139,7 @@ export const Picker = (
           }
         }}
       >
-        {isGoalSave || isCalendar ? (
+        {isGoalDetail || isCalendar ? (
           ["day", "week", "month", "year", "select"]?.map((item: any) => (
             <MenuItem
               key={item}
@@ -1179,7 +1179,7 @@ export const Picker = (
       )
 
       // 1-2. 목표인 경우 (세이브)
-      : isGoalSave || isCalendar ? (
+      : isGoalDetail || isCalendar ? (
         <Grid container spacing={2}>
           <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
             {saveTypeSection()}
@@ -1207,7 +1207,7 @@ export const Picker = (
       )
 
       // 2-2. 실제인 경우 (세이브)
-      : isRealSave ? (
+      : isRealDetail ? (
         <Grid container spacing={2}>
           <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
             {saveTypeSection()}

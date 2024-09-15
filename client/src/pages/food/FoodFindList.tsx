@@ -171,7 +171,7 @@ export const FoodFindList = () => {
 
   // 7. find ---------------------------------------------------------------------------------------
   const findNode = () => {
-    const cardSection = () => {
+    const listSection = () => {
       const emptyFragment = () => (
         <Empty
           DATE={DATE}
@@ -181,7 +181,7 @@ export const FoodFindList = () => {
           extra={"food"}
         />
       );
-      const cardFragment = (i: number) => (
+      const listFragment = (i: number) => (
         OBJECT?.map((item: any, index: number) => (
           <Card className={"border radius"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
@@ -354,7 +354,7 @@ export const FoodFindList = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : cardFragment(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : listFragment(0)
         )
       );
     };
@@ -363,7 +363,7 @@ export const FoodFindList = () => {
       <Paper className={"content-wrapper radius border h-min75vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
-            {cardSection()}
+            {listSection()}
           </Grid>
         </Grid>
       </Paper>

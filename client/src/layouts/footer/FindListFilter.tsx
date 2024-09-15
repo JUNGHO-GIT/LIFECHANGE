@@ -19,7 +19,7 @@ export const FindListFilter = (
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    location, toSave, navigate
+    location, toDetail, navigate
   } = useCommonValue();
   const {
     translate
@@ -80,13 +80,13 @@ export const FindListFilter = (
           });
           // 이전 페이지가 update인경우
           if (location?.state?.url?.includes("update")) {
-            navigate(toSave, {
+            navigate(toDetail, {
               state: state?.SEND,
             });
           }
           // 이전 페이지가 save인경우
           else {
-            navigate(toSave, {
+            navigate(toDetail, {
               state: state?.SEND,
             });
           }

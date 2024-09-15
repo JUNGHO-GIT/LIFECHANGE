@@ -34,8 +34,8 @@ export const useValidateMoney= () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    // 1. goal/save
-    if (PATH.includes("money/goal/save")) {
+    // 1. goal/detail
+    if (PATH.includes("money/goal/detail")) {
       const target = [
         "money_goal_income",
         "money_goal_expense",
@@ -87,7 +87,7 @@ export const useValidateMoney= () => {
     }
 
     // 2. save
-    else if (PATH.includes("money/save")) {
+    else if (PATH.includes("money/detail")) {
       const target = [
         "money_part_idx",
         "money_title_idx",

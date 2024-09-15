@@ -139,8 +139,8 @@ export const detail = async (
   };
 };
 
-// 3. save -----------------------------------------------------------------------------------------
-export const save = async (
+// 3. create ---------------------------------------------------------------------------------------
+export const create = async (
   user_id_param: string,
   OBJECT_param: any,
   DATE_param: any,
@@ -149,7 +149,7 @@ export const save = async (
   // result 변수 선언
   let findResult: any = null;
   let deleteResult: any = null;
-  let saveResult: any = null;
+  let createResult: any = null;
   let finalResult: any = null;
   let statusResult: string = "";
 
@@ -163,7 +163,7 @@ export const save = async (
   );
 
   if (!findResult) {
-    saveResult = await repository.save(
+    createResult = await repository.create(
       user_id_param, OBJECT_param, dateType, dateStart, dateEnd
     );
   }
@@ -176,18 +176,18 @@ export const save = async (
       statusResult = "fail";
     }
     else {
-      saveResult = await repository.save(
+      createResult = await repository.create(
         user_id_param, OBJECT_param, dateType, dateStart, dateEnd
       );
     }
   }
 
-  if (!saveResult) {
+  if (!createResult) {
     finalResult = null;
     statusResult = "fail";
   }
   else {
-    finalResult = saveResult;
+    finalResult = createResult;
     statusResult = "success";
   }
 
@@ -197,7 +197,7 @@ export const save = async (
   };
 };
 
-// 4. update ---------------------------------------------------------------------------------------
+// 5. update ---------------------------------------------------------------------------------------
 export const update = async (
   user_id_param: string,
   _id_param: string,
@@ -234,7 +234,7 @@ export const update = async (
   };
 };
 
-// 5. delete --------------------------------------------------------------------------------------
+// 6. delete --------------------------------------------------------------------------------------
 export const deletes = async (
   user_id_param: string,
   _id_param: string,

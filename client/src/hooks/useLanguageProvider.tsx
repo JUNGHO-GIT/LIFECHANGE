@@ -608,6 +608,10 @@ export const useTranslate = () => {
       ko: "초기 체중",
       en: "Initial Weight"
     },
+    insert: {
+      ko: "추가",
+      en: "Insert"
+    },
     // ---------------------------------------------------------------------------------------------
     // j
     join: {
@@ -877,6 +881,14 @@ export const useTranslate = () => {
     regDt: {
       ko: "가입일",
       en: "Signup Date"
+    },
+    replace: {
+      ko: "교체",
+      en: "Replace"
+    },
+    replaceOrInsert: {
+      ko: "해당 날짜의 데이터가 이미 존재합니다.\n교체 또는 추가를 선택해주세요",
+      en: "Data for the date already exists.\nPlease select replace or insert"
     },
     // ---------------------------------------------------------------------------------------------
     // s
@@ -1868,5 +1880,7 @@ export const useTranslate = () => {
     return result[lang];
   }, [lang]);
 
-  return { translate };
+  return {
+    translate
+  };
 };

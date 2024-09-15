@@ -1,4 +1,4 @@
-// FoodGoalSave.tsx
+// FoodGoalDetail.tsx
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
@@ -13,7 +13,7 @@ import { Picker, Count, Delete } from "@imports/ImportContainers";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-export const FoodGoalSave = () => {
+export const FoodGoalDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
@@ -113,7 +113,7 @@ export const FoodGoalSave = () => {
       setLOADING(false);
       return;
     }
-    axios.post(`${URL_OBJECT}/goal/save`, {
+    axios.post(`${URL_OBJECT}/goal/detail`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
@@ -190,8 +190,8 @@ export const FoodGoalSave = () => {
     }));
   };
 
-  // 7. save ---------------------------------------------------------------------------------------
-  const saveNode = () => {
+  // 7. detail -------------------------------------------------------------------------------------
+  const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
       <Card className={"border radius p-20"}>
@@ -216,8 +216,9 @@ export const FoodGoalSave = () => {
         </Grid>
       </Card>
     );
-    const cardSection = () => {
-      const cardFragment = (i: number) => (
+    // 7-3. detail
+    const detailSection = () => {
+      const detailFragment = (i: number) => (
         <Card className={"border radius p-20"} key={i}>
           <Grid container spacing={2}>
             <Grid size={6} className={"d-left"}>
@@ -236,7 +237,7 @@ export const FoodGoalSave = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.food_goal_kcal).format("0,0")}
-                inputRef={REFS.current[i]?.efood_goal_kcal}
+                inputRef={REFS.current[i]?.food_goal_kcal}
                 error={ERRORS[i]?.food_goal_kcal}
                 label={
                   DATE.dateType === "day" ? (
@@ -278,7 +279,7 @@ export const FoodGoalSave = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.food_goal_carb).format("0,0")}
-                inputRef={REFS.current[i]?.efood_goal_carb}
+                inputRef={REFS.current[i]?.food_goal_carb}
                 error={ERRORS[i]?.food_goal_carb}
                 label={
                   DATE.dateType === "day" ? (
@@ -320,7 +321,7 @@ export const FoodGoalSave = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.food_goal_protein).format("0,0")}
-                inputRef={REFS.current[i]?.efood_goal_protein}
+                inputRef={REFS.current[i]?.food_goal_protein}
                 error={ERRORS[i]?.food_goal_protein}
                 label={
                   DATE.dateType === "day" ? (
@@ -362,7 +363,7 @@ export const FoodGoalSave = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.food_goal_fat).format("0,0")}
-                inputRef={REFS.current[i]?.efood_goal_fat}
+                inputRef={REFS.current[i]?.food_goal_fat}
                 error={ERRORS[i]?.food_goal_fat}
                 label={
                   DATE.dateType === "day" ? (
@@ -406,7 +407,7 @@ export const FoodGoalSave = () => {
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? <Loading /> : cardFragment(0)
+          LOADING ? <Loading /> : detailFragment(0)
         )
       );
     };
@@ -416,7 +417,7 @@ export const FoodGoalSave = () => {
         <Grid container spacing={2}>
           <Grid size={12}>
             {dateCountSection()}
-            {cardSection()}
+            {detailSection()}
           </Grid>
         </Grid>
       </Paper>
@@ -441,7 +442,7 @@ export const FoodGoalSave = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {saveNode()}
+      {detailNode()}
       {footerNode()}
     </>
   );

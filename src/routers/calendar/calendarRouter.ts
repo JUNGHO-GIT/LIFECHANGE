@@ -130,10 +130,10 @@ router.get("/detail", async (req: Request, res: Response) => {
   }
 });
 
-// 3. save -----------------------------------------------------------------------------------------
-router.post("/save", async (req: Request, res: Response) => {
+// 3. create ---------------------------------------------------------------------------------------
+router.post("/create", async (req: Request, res: Response) => {
   try {
-    let finalResult = await service.save(
+    let finalResult = await service.create(
       req.body.user_id as string,
       req.body.OBJECT as any,
       req.body.DATE as any,
@@ -170,8 +170,8 @@ router.post("/save", async (req: Request, res: Response) => {
   }
 });
 
-// 4. update ---------------------------------------------------------------------------------------
-router.put("/update", async (req: Request, res: Response) => {
+// 5. update ---------------------------------------------------------------------------------------
+router.post("/update", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.update(
       req.body.user_id as string,
@@ -211,7 +211,7 @@ router.put("/update", async (req: Request, res: Response) => {
   }
 });
 
-// 5. delete --------------------------------------------------------------------------------------
+// 6. delete --------------------------------------------------------------------------------------
 router.delete("/delete", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.deletes(

@@ -6,8 +6,8 @@ import { Popover, bindPopover, usePopupState } from "@imports/ImportMuis";
 export const PopUp = (props: any) => {
 
   const popupState = usePopupState({
-    variant: props?.variant || 'popover',
-    popupId: props?.id || 'popover',
+    variant: 'popover',
+    popupId: 'popover',
   });
 
   let popupStyle = {};
@@ -19,7 +19,7 @@ export const PopUp = (props: any) => {
       alignItems: "center",
       border: '0.2px solid rgba(0, 0, 0, 0.2)',
       boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
-      padding: "20px 10px",
+      padding: "20px 20px 20px 20px",
     };
   }
   else if (props?.type === "alert") {
@@ -44,17 +44,6 @@ export const PopUp = (props: any) => {
       padding: "6px 0px 6px 12px",
     };
   }
-  else {
-    popupStyle = {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      border: '0.2px solid rgba(0, 0, 0, 0.2)',
-      boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
-      padding: "12px 12px 12px 12px",
-    };
-  }
 
   // 1. 팝업 고정 ----------------------------------------------------------------------------------
   const chainedPopUp = () => (
@@ -64,12 +53,9 @@ export const PopUp = (props: any) => {
       id={"popover"}
       className={props?.className}
       open={popupState.isOpen}
-      onClose={(event: {}, reason: "backdropClick" | "escapeKeyDown") => {
-        if (reason ==="backdropClick" || reason === "escapeKeyDown") {
-          popupState.close();
-        }
-      }}
       anchorEl={popupState.anchorEl}
+      // @ts-ignore
+      onClose={popupState.close}
       anchorOrigin={{
         vertical: props?.position === "center" ? "center" : (
           props?.position === "top" ? "top" : "bottom"
@@ -94,7 +80,8 @@ export const PopUp = (props: any) => {
         }
       }}
     >
-      {typeof props?.contents === "function"
+      {
+        typeof props?.contents === "function"
         ? props?.contents({ closePopup: popupState.close })
         : props?.contents
       }
@@ -119,12 +106,9 @@ export const PopUp = (props: any) => {
       id={"popover"}
       className={props?.className}
       open={popupState.isOpen}
-      onClose={(event: {}, reason: "backdropClick" | "escapeKeyDown") => {
-        if (reason ==="backdropClick" || reason === "escapeKeyDown") {
-          popupState.close();
-        }
-      }}
       anchorEl={null}
+      // @ts-ignore
+      onClose={popupState.close}
       anchorReference={"anchorPosition"}
       anchorPosition={{
         top: window.innerHeight / 2,

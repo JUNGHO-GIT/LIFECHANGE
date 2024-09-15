@@ -34,8 +34,8 @@ export const useValidateSleep = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    // 1. goal/save
-    if (PATH.includes("sleep/goal/save")) {
+    // 1. goal/detail
+    if (PATH.includes("sleep/goal/detail")) {
       const target = [
         "sleep_goal_bedTime",
         "sleep_goal_wakeTime",
@@ -93,7 +93,7 @@ export const useValidateSleep = () => {
     }
 
     // 2. save
-    else if (PATH.includes("sleep/save")) {
+    else if (PATH.includes("sleep/detail")) {
       const target = [
         "sleep_bedTime",
         "sleep_wakeTime",

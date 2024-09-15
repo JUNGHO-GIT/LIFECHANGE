@@ -1,4 +1,4 @@
-// ExerciseSave.tsx
+// ExerciseDetail.tsx
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
@@ -13,7 +13,7 @@ import { Picker, Time, Count, Delete } from "@imports/ImportContainers";
 import { Card, Paper, MenuItem, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-export const ExerciseSave = () => {
+export const ExerciseDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
@@ -186,12 +186,12 @@ export const ExerciseSave = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    if (validate(OBJECT, COUNT, DATE) || !validate(OBJECT, COUNT, DATE)) {
-      console.log("validate", validate(OBJECT, COUNT, DATE));
+    const validateResult = validate(OBJECT, COUNT, DATE, EXIST);
+    if (validateResult.valid) {
       setLOADING(false);
       return;
     }
-    axios.post(`${URL_OBJECT}/save`, {
+    axios.post(`${URL_OBJECT}/${validateResult.type}`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
@@ -265,8 +265,8 @@ export const ExerciseSave = () => {
     }));
   };
 
-  // 7. save ---------------------------------------------------------------------------------------
-  const saveNode = () => {
+  // 7. detail -------------------------------------------------------------------------------------
+  const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
       <Card className={"border radius p-20"}>
@@ -366,8 +366,9 @@ export const ExerciseSave = () => {
         </Grid>
       </Card>
     );
-    const cardSection = () => {
-      const cardFragment = (i: number) => (
+    // 7-3. detail
+    const detailSection = () => {
+      const detailFragment = (i: number) => (
         <Card className={`${LOCKED === "locked" ? "locked" : ""} border radius p-20`} key={i}>
           <Grid container spacing={2}>
             <Grid size={6} className={"d-left"}>
@@ -610,7 +611,7 @@ export const ExerciseSave = () => {
       return (
         COUNT?.newSectionCnt > 0 && (
           LOADING ? <Loading /> : OBJECT?.exercise_section?.map((item: any, i: number) => (
-            cardFragment(i)
+            detailFragment(i)
           ))
         )
       );
@@ -622,7 +623,7 @@ export const ExerciseSave = () => {
           <Grid size={12}>
             {dateCountSection()}
             {totalSection()}
-            {cardSection()}
+            {detailSection()}
           </Grid>
         </Grid>
       </Paper>
@@ -647,7 +648,7 @@ export const ExerciseSave = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {saveNode()}
+      {detailNode()}
       {footerNode()}
     </>
   );

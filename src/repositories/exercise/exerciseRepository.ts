@@ -153,8 +153,8 @@ export const detail = async (
   return finalResult;
 };
 
-// 3. save -----------------------------------------------------------------------------------------
-export const save = async (
+// 3. create ---------------------------------------------------------------------------------------
+export const create = async (
   user_id_param: string,
   OBJECT_param: any,
   dateType_param: string,
@@ -182,8 +182,8 @@ export const save = async (
   return finalResult;
 };
 
-// 4. update ---------------------------------------------------------------------------------------
-export const update = async (
+// 4. insert ---------------------------------------------------------------------------------------
+export const insert = async (
   user_id_param: string,
   _id_param: string,
   OBJECT_param: any,
@@ -208,15 +208,12 @@ export const update = async (
     },
     {
       $set: {
-        exercise_dateType: dateType_param,
-        exercise_dateStart: dateStart_param,
-        exercise_dateEnd: dateEnd_param,
         exercise_total_volume: OBJECT_param.exercise_total_volume,
         exercise_total_cardio: OBJECT_param.exercise_total_cardio,
         exercise_total_weight: OBJECT_param.exercise_total_weight,
         exercise_updateDt: newDate,
       },
-      $push: {
+      $addToSet: {
         exercise_section: OBJECT_param.exercise_section
       }
     },
@@ -230,7 +227,48 @@ export const update = async (
   return finalResult;
 };
 
-// 5. delete --------------------------------------------------------------------------------------
+// 5. update ---------------------------------------------------------------------------------------
+export const update = async (
+  user_id_param: string,
+  _id_param: string,
+  OBJECT_param: any,
+  dateType_param: string,
+  dateStart_param: string,
+  dateEnd_param: string,
+) => {
+
+  const finalResult = await Exercise.findOneAndUpdate(
+    {
+      user_id: user_id_param,
+      _id: !_id_param ? { $exists: true } : _id_param,
+      exercise_dateStart: {
+        $eq: dateStart_param
+      },
+      exercise_dateEnd: {
+        $eq: dateEnd_param
+      },
+      ...dateType_param ? {
+        exercise_dateType: dateType_param
+      } : {},
+    },
+    {
+      exercise_total_volume: OBJECT_param.exercise_total_volume,
+      exercise_total_cardio: OBJECT_param.exercise_total_cardio,
+      exercise_total_weight: OBJECT_param.exercise_total_weight,
+      exercise_section: OBJECT_param.exercise_section,
+      exercise_updateDt: newDate,
+    },
+    {
+      upsert: true,
+      new: true
+    }
+  )
+  .lean();
+
+  return finalResult;
+};
+
+// 6. delete --------------------------------------------------------------------------------------
 export const deletes = async (
   user_id_param: string,
   _id_param: string,

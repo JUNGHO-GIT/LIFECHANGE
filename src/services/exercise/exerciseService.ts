@@ -154,8 +154,8 @@ export const detail = async (
   };
 };
 
-// 3. save -----------------------------------------------------------------------------------------
-export const save = async (
+// 3. create ---------------------------------------------------------------------------------------
+export const create = async (
   user_id_param: string,
   OBJECT_param: any,
   DATE_param: any,
@@ -163,7 +163,8 @@ export const save = async (
 
   // result 변수 선언
   let findResult: any = null;
-  let saveResult: any = null;
+  let createResult: any = null;
+  let deleteResult: any = null;
   let finalResult: any = null;
   let statusResult: string = "";
 
@@ -177,22 +178,31 @@ export const save = async (
   );
 
   if (!findResult) {
-    saveResult = await repository.save(
-      user_id_param, "", OBJECT_param, dateType, dateStart, dateEnd
+    createResult = await repository.create(
+      user_id_param, OBJECT_param, dateType, dateStart, dateEnd
     );
   }
   else {
-    saveResult = await repository.update(
-      user_id_param, findResult._id, OBJECT_param, dateType, dateStart, dateEnd
+    deleteResult = await repository.deletes(
+      user_id_param, findResult._id, dateType, dateStart, dateEnd
     );
+    if (!deleteResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
+      createResult = await repository.update(
+        user_id_param, findResult._id, OBJECT_param, dateType, dateStart, dateEnd
+      );
+    }
   }
 
-  if (!saveResult) {
+  if (!createResult) {
     finalResult = null;
     statusResult = "fail";
   }
   else {
-    finalResult = saveResult;
+    finalResult = createResult;
     statusResult = "success";
   }
 
@@ -202,7 +212,44 @@ export const save = async (
   };
 };
 
-// 4. update ---------------------------------------------------------------------------------------
+// 4. insert ---------------------------------------------------------------------------------------
+export const insert = async (
+  user_id_param: string,
+  _id_param: string,
+  OBJECT_param: any,
+  DATE_param: any,
+) => {
+
+  // result 변수 선언
+  let insertResult: any = null;
+  let finalResult: any = null;
+  let statusResult: string = "";
+
+  // date 변수 선언
+  const dateType = DATE_param.dateType;
+  const dateStart = DATE_param.dateStart;
+  const dateEnd = DATE_param.dateEnd;
+
+  insertResult = await repository.insert(
+    user_id_param, _id_param, OBJECT_param, dateType, dateStart, dateEnd
+  );
+
+  if (!insertResult) {
+    finalResult = null;
+    statusResult = "fail";
+  }
+  else {
+    finalResult = insertResult;
+    statusResult = "success";
+  }
+
+  return {
+    status: statusResult,
+    result: finalResult,
+  };
+};
+
+// 5. update ---------------------------------------------------------------------------------------
 export const update = async (
   user_id_param: string,
   _id_param: string,
@@ -239,7 +286,7 @@ export const update = async (
   };
 };
 
-// 5. delete --------------------------------------------------------------------------------------
+// 6. delete --------------------------------------------------------------------------------------
 export const deletes = async (
   user_id_param: string,
   _id_param: string,

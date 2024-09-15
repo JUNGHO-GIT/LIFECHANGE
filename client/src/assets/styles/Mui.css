@@ -23,6 +23,13 @@
   box-shadow: none !important;
 }
 
+/** popover ***************************************************************************************/
+.MuiPopover-paper {
+  z-index: 100000 !important;
+  max-width: calc(100% - 50px) !important;
+  max-height: calc(100% - 50px) !important;
+}
+
 /** table *****************************************************************************************/
 .MuiTableCell-root {
   padding: 5px 5px 5px 5px !important;
@@ -104,9 +111,6 @@
 }
 .MuiButtonBase-root {
   min-width: 30px !important;
-}
-.MuiPopover-paper {
-  z-index: 100000 !important;
 }
 .MuiFormControlLabel-root {
   margin-left: 0px !important;

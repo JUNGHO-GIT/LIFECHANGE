@@ -22,7 +22,7 @@ export const SleepGoalList = () => {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, toSave
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, toDetail
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -89,8 +89,8 @@ export const SleepGoalList = () => {
 
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
-    // 1. cardSection
-    const cardSection = () => {
+    // 1. listSection
+    const listSection = () => {
       const emptyFragment = () => (
         <Empty
           DATE={DATE}
@@ -100,7 +100,7 @@ export const SleepGoalList = () => {
           extra={"sleep"}
         />
       );
-      const cardFragment = (i: number) => (
+      const listFragment = (i: number) => (
         OBJECT?.map((item: any, index: number) => (
           <Card className={"border radius"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
@@ -124,7 +124,7 @@ export const SleepGoalList = () => {
                       dateStart: item.sleep_goal_dateStart,
                       dateEnd: item.sleep_goal_dateEnd,
                     });
-                    navigate(toSave, {
+                    navigate(toDetail, {
                       state: SEND
                     });
                   }}
@@ -379,7 +379,7 @@ export const SleepGoalList = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : cardFragment(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : listFragment(0)
         )
       );
     };
@@ -388,7 +388,7 @@ export const SleepGoalList = () => {
       <Paper className={"content-wrapper radius border h-min75vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
-            {cardSection()}
+            {listSection()}
           </Grid>
         </Grid>
       </Paper>

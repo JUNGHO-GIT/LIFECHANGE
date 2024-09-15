@@ -32,8 +32,8 @@ export const list = async (object: any) => {
   return object;
 };
 
-// 3. save -----------------------------------------------------------------------------------------
-export const save = async (object: any) => {
+// 3. create ---------------------------------------------------------------------------------------
+export const create = async (object: any) => {
 
   let totalKcal = 0;
   let totalCarb = 0;
@@ -55,7 +55,7 @@ export const save = async (object: any) => {
   return object;
 };
 
-// 4. update ---------------------------------------------------------------------------------------
+// 5. update ---------------------------------------------------------------------------------------
 export const update = async (object: any) => {
 
   let totalKcal = 0;
@@ -78,7 +78,7 @@ export const update = async (object: any) => {
   return object;
 };
 
-// 5. delete --------------------------------------------------------------------------------------
+// 6. delete --------------------------------------------------------------------------------------
 export const deletes = async (object: any) => {
 
   let totalKcal = 0;

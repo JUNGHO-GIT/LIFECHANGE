@@ -188,8 +188,8 @@ export const UserLogin = () => {
       </Div>
     );
     // 7-2. card
-    const cardSection = () => {
-      const cardFragment = (i: number) => (
+    const detailSection = () => {
+      const detailFragment = (i: number) => (
         <Card className={"p-10 mb-n20"} key={i}>
           <Grid container spacing={2}>
             <Grid size={12}>
@@ -251,7 +251,7 @@ export const UserLogin = () => {
         </Card>
       );
       return (
-        cardFragment(0)
+        detailFragment(0)
       );
     };
     // 7-3. button
@@ -316,7 +316,7 @@ export const UserLogin = () => {
           </Grid>
           <Hr px={10} />
           <Grid size={12}>
-            {cardSection()}
+            {detailSection()}
           </Grid>
           <Hr px={10} />
           <Grid size={12}>

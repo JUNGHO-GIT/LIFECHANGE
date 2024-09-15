@@ -59,8 +59,8 @@ export const UserAppInfo = () => {
       />
     );
     // 7-2. card
-    const cardSection = () => {
-      const cardFragment = (i: number) => (
+    const detailSection = () => {
+      const detailFragment = (i: number) => (
         <Card className={"border radius shadow-none p-0"} key={i}>
           <TableContainer className={"over-hidden"}>
             <Table>
@@ -115,7 +115,7 @@ export const UserAppInfo = () => {
         </Card>
       );
       return (
-        LOADING ? <Loading /> : cardFragment(0)
+        LOADING ? <Loading /> : detailFragment(0)
       );
     };
     // 7-10. return
@@ -126,7 +126,7 @@ export const UserAppInfo = () => {
             {imageSection()}
           </Grid>
           <Grid size={12}>
-            {cardSection()}
+            {detailSection()}
           </Grid>
         </Grid>
       </Paper>

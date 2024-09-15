@@ -1,4 +1,4 @@
-// MoneyGoalSave.tsx
+// MoneyGoalDetail.tsx
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
@@ -13,7 +13,7 @@ import { Picker, Count, Delete } from "@imports/ImportContainers";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-export const MoneyGoalSave = () => {
+export const MoneyGoalDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
@@ -112,7 +112,7 @@ export const MoneyGoalSave = () => {
       setLOADING(false);
       return;
     }
-    axios.post(`${URL_OBJECT}/goal/save`, {
+    axios.post(`${URL_OBJECT}/goal/detail`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
@@ -187,8 +187,8 @@ export const MoneyGoalSave = () => {
     }));
   };
 
-  // 7. save ---------------------------------------------------------------------------------------
-  const saveNode = () => {
+  // 7. detail -------------------------------------------------------------------------------------
+  const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
       <Card className={"border radius p-20"}>
@@ -213,8 +213,9 @@ export const MoneyGoalSave = () => {
         </Grid>
       </Card>
     );
-    const cardSection = () => {
-      const cardFragment = (i: number) => (
+    // 7-3. detail
+    const detailSection = () => {
+      const detailFragment = (i: number) => (
         <Card className={"border radius p-20"} key={i}>
           <Grid container spacing={2}>
             <Grid size={6} className={"d-left"}>
@@ -233,7 +234,7 @@ export const MoneyGoalSave = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.money_goal_income).format("0,0")}
-                inputRef={REFS.current[i]?.emoney_goal_income}
+                inputRef={REFS.current[i]?.money_goal_income}
                 error={ERRORS[i]?.money_goal_income}
                 label={
                   DATE.dateType === "day" ? (
@@ -275,7 +276,7 @@ export const MoneyGoalSave = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.money_goal_expense).format("0,0")}
-                inputRef={REFS.current[i]?.emoney_goal_expense}
+                inputRef={REFS.current[i]?.money_goal_expense}
                 error={ERRORS[i]?.money_goal_expense}
                 label={
                   DATE.dateType === "day" ? (
@@ -319,7 +320,7 @@ export const MoneyGoalSave = () => {
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? <Loading /> : cardFragment(0)
+          LOADING ? <Loading /> : detailFragment(0)
         )
       );
     };
@@ -329,7 +330,7 @@ export const MoneyGoalSave = () => {
         <Grid container spacing={2}>
           <Grid size={12}>
             {dateCountSection()}
-            {cardSection()}
+            {detailSection()}
           </Grid>
         </Grid>
       </Paper>
@@ -354,7 +355,7 @@ export const MoneyGoalSave = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {saveNode()}
+      {detailNode()}
       {footerNode()}
     </>
   );

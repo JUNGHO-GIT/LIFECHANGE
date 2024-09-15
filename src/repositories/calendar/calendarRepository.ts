@@ -147,8 +147,8 @@ export const detail = async (
   return finalResult;
 };
 
-// 3. save -----------------------------------------------------------------------------------------
-export const save = async (
+// 3. create ---------------------------------------------------------------------------------------
+export const create = async (
   user_id_param: string,
   OBJECT_param: any,
   dateType_param: string,
@@ -173,7 +173,7 @@ export const save = async (
   return finalResult;
 };
 
-// 4. update ---------------------------------------------------------------------------------------
+// 5. update ---------------------------------------------------------------------------------------
 export const update = async (
   user_id_param: string,
   _id_param: string,
@@ -209,7 +209,7 @@ export const update = async (
   return finalResult;
 };
 
-// 5. delete --------------------------------------------------------------------------------------
+// 6. delete --------------------------------------------------------------------------------------
 export const deletes = async (
   user_id_param: string,
   _id_param: string,

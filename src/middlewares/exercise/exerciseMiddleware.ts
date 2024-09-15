@@ -31,8 +31,8 @@ export const list = async (object: any) => {
   return object;
 };
 
-// 3. save -----------------------------------------------------------------------------------------
-export const save = async (object: any) => {
+// 3. create ---------------------------------------------------------------------------------------
+export const create = async (object: any) => {
 
   let totalVolume = 0;
   let totalTime = 0.0;
@@ -48,7 +48,24 @@ export const save = async (object: any) => {
   return object;
 };
 
-// 4. update ---------------------------------------------------------------------------------------
+// 4. insert ---------------------------------------------------------------------------------------
+export const insert = async (object: any) => {
+
+  let totalVolume = 0;
+  let totalTime = 0.0;
+
+  object?.exercise_section?.map((item: any) => {
+    totalVolume += parseFloat(item?.exercise_set) * parseFloat(item?.exercise_rep) * parseFloat(item?.exercise_kg);
+    totalTime += strToDecimal(item?.exercise_cardio);
+  });
+
+  object.exercise_total_volume = String(totalVolume);
+  object.exercise_total_cardio = decimalToStr(totalTime);
+
+  return object;
+};
+
+// 5. update ---------------------------------------------------------------------------------------
 export const update = async (object: any) => {
 
   let totalVolume = 0;
@@ -65,7 +82,7 @@ export const update = async (object: any) => {
   return object;
 };
 
-// 5. delete --------------------------------------------------------------------------------------
+// 6. delete --------------------------------------------------------------------------------------
 export const deletes = async (object: any) => {
 
   let totalVolume = 0;

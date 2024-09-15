@@ -1,4 +1,4 @@
-// FoodSave.tsx
+// FoodDetail.tsx
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
@@ -13,7 +13,7 @@ import { Picker, Count, Delete } from "@imports/ImportContainers";
 import { Card, Paper, MenuItem,  Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-export const FoodSave = () => {
+export const FoodDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
@@ -212,7 +212,7 @@ export const FoodSave = () => {
       setLOADING(false);
       return;
     }
-    axios.post(`${URL_OBJECT}/save`, {
+    axios.post(`${URL_OBJECT}/detail`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
@@ -307,8 +307,8 @@ export const FoodSave = () => {
     }));
   };
 
-  // 7. save ---------------------------------------------------------------------------------------
-  const saveNode = () => {
+  // 7. detail -------------------------------------------------------------------------------------
+  const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
       <Card className={"border radius p-20"}>
@@ -409,8 +409,8 @@ export const FoodSave = () => {
       </Card>
     );
     // 7-3. card
-    const cardSection = () => {
-      const cardFragment = (i: number) => (
+    const detailSection = () => {
+      const detailFragment = (i: number) => (
         <Card className={"border radius p-20"} key={i}>
           <Grid container spacing={2}>
             <Grid size={6} className={"d-left"}>
@@ -769,7 +769,7 @@ export const FoodSave = () => {
       return (
         COUNT?.newSectionCnt > 0 && (
           LOADING ? <Loading /> : OBJECT?.food_section?.map((item: any, i: number) => (
-            cardFragment(i)
+            detailFragment(i)
           ))
         )
       );
@@ -781,7 +781,7 @@ export const FoodSave = () => {
           <Grid size={12}>
             {dateCountSection()}
             {totalSection()}
-            {cardSection()}
+            {detailSection()}
           </Grid>
         </Grid>
       </Paper>
@@ -806,7 +806,7 @@ export const FoodSave = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {saveNode()}
+      {detailNode()}
       {footerNode()}
     </>
   );

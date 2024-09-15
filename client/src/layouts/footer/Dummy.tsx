@@ -91,13 +91,13 @@ export const Dummy = (
         }}
       />
     );
-    // 3. save
+    // 3. create
     const saveSection = () => (
       <Btn
         color={"primary"}
         className={"pt-3 pb-3 ps-9 pe-9 fs-0-7rem"}
         onClick={() => {
-          flow.flowDummySave();
+          flow.flowDummyDetail();
         }}
       >
         {translate("save")}
@@ -115,7 +115,7 @@ export const Dummy = (
         {translate("delete")}
       </Btn>
     );
-    // 5. deleteAll
+    // 6. deleteAll
     const deleteAllSection = () => (
       <Btn
         color={"warning"}

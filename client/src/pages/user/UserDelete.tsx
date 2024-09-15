@@ -86,8 +86,8 @@ export const UserDelete = () => {
       </Div>
     );
     // 7-2. card
-    const cardSection = () => {
-      const cardFragment = (i: number) => (
+    const detailSection = () => {
+      const detailFragment = (i: number) => (
         <Card className={"p-10"} key={i}>
           <Grid container spacing={2}>
             <Grid size={12}>
@@ -115,7 +115,7 @@ export const UserDelete = () => {
         </Card>
       );
       return (
-        cardFragment(0)
+        detailFragment(0)
       );
     };
     // 7-3. button
@@ -139,7 +139,7 @@ export const UserDelete = () => {
           <Grid size={12}>
             {titleSection()}
             <Hr px={40} />
-            {cardSection()}
+            {detailSection()}
             <Hr px={40} />
             {buttonSection()}
           </Grid>

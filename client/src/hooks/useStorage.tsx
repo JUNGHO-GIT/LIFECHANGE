@@ -48,8 +48,9 @@ export const useStorage = (key: string, initialVal: any) => {
 
       try {
         const valueToStore = storedVal instanceof Date && !isNaN(storedVal.getTime())
-          ? formatISO(storedVal)
-          : JSON.stringify(storedVal);
+        ? formatISO(storedVal)
+        : JSON.stringify(storedVal);
+
         sessionStorage.setItem(key, valueToStore);
       }
       catch (err: any) {

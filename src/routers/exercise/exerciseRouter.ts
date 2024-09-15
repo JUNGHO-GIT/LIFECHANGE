@@ -132,15 +132,15 @@ router.get("/detail", async (req: Request, res: Response) => {
   }
 });
 
-// 3. save -----------------------------------------------------------------------------------------
-router.post("/save", async (req: Request, res: Response) => {
+// 3. create ---------------------------------------------------------------------------------------
+router.post("/create", async (req: Request, res: Response) => {
   try {
-    let finalResult = await service.save(
+    let finalResult = await service.create(
       req.body.user_id as string,
       req.body.OBJECT as any,
       req.body.DATE as any,
     );
-    finalResult = await middleware.save(finalResult);
+    finalResult = await middleware.create(finalResult);
     if (finalResult.status === "success") {
       res.json({
         msg: "saveSuccessful",
@@ -173,8 +173,50 @@ router.post("/save", async (req: Request, res: Response) => {
   }
 });
 
-// 4. update ---------------------------------------------------------------------------------------
-router.put("/update", async (req: Request, res: Response) => {
+// 4. insert ---------------------------------------------------------------------------------------
+router.post("/insert", async (req: Request, res: Response) => {
+  try {
+    let finalResult = await service.insert(
+      req.body.user_id as string,
+      req.body._id as string,
+      req.body.OBJECT as any,
+      req.body.DATE as any,
+    );
+    finalResult = await middleware.insert(finalResult);
+    if (finalResult.status === "success") {
+      res.json({
+        msg: "insertSuccessful",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "insertFailed",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else {
+      res.json({
+        msg: "insertError",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+  }
+  catch (err: any) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      msg: err.toString(),
+      error: err.toString(),
+    });
+  }
+});
+
+// 5. update ---------------------------------------------------------------------------------------
+router.post("/update", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.update(
       req.body.user_id as string,
@@ -215,7 +257,7 @@ router.put("/update", async (req: Request, res: Response) => {
   }
 });
 
-// 5. delete --------------------------------------------------------------------------------------
+// 6. delete --------------------------------------------------------------------------------------
 router.delete("/delete", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.deletes(

@@ -22,7 +22,7 @@ export const MoneyGoalList = () => {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, sessionCurrency, toSave
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, sessionCurrency, toDetail
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -89,7 +89,7 @@ export const MoneyGoalList = () => {
 
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
-    const cardSection = () => {
+    const listSection = () => {
       const emptyFragment = () => (
         <Empty
           DATE={DATE}
@@ -99,7 +99,7 @@ export const MoneyGoalList = () => {
           extra={"money"}
         />
       );
-      const cardFragment = (i: number) => (
+      const listFragment = (i: number) => (
         OBJECT?.map((item: any, index: number) => (
           <Card className={"border radius"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
@@ -123,7 +123,7 @@ export const MoneyGoalList = () => {
                       dateStart: item.money_goal_dateStart,
                       dateEnd: item.money_goal_dateEnd,
                     });
-                    navigate(toSave, {
+                    navigate(toDetail, {
                       state: SEND
                     });
                   }}
@@ -310,7 +310,7 @@ export const MoneyGoalList = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : cardFragment(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : listFragment(0)
         )
       );
     };
@@ -319,7 +319,7 @@ export const MoneyGoalList = () => {
       <Paper className={"content-wrapper radius border h-min75vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
-            {cardSection()}
+            {listSection()}
           </Grid>
         </Grid>
       </Paper>

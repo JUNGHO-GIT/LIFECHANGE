@@ -27,7 +27,7 @@ import {
 } from "@imports/ImportLayouts";
 
 import {
-  CalendarList, CalendarSave,
+  CalendarList, CalendarDetail,
 } from "@imports/ImportPages";
 
 import {
@@ -35,19 +35,19 @@ import {
 } from "@imports/ImportPages";
 
 import {
-  ExerciseChart, ExerciseGoalList, ExerciseGoalSave, ExerciseList, ExerciseSave,
+  ExerciseChart, ExerciseGoalList, ExerciseGoalDetail, ExerciseList, ExerciseDetail,
 } from "@imports/ImportPages";
 
 import {
-  FoodChart, FoodFindList, FoodGoalList, FoodGoalSave, FoodList, FoodSave,
+  FoodChart, FoodFindList, FoodGoalList, FoodGoalDetail, FoodList, FoodDetail,
 } from "@imports/ImportPages";
 
 import {
-  MoneyChart, MoneyGoalList, MoneyGoalSave, MoneyList, MoneySave,
+  MoneyChart, MoneyGoalList, MoneyGoalDetail, MoneyList, MoneyDetail,
 } from "@imports/ImportPages";
 
 import {
-  SleepChart, SleepGoalList, SleepGoalSave, SleepList, SleepSave,
+  SleepChart, SleepGoalList, SleepGoalDetail, SleepList, SleepDetail,
 } from "@imports/ImportPages";
 
 import {
@@ -62,7 +62,7 @@ import {
 const Calendar = () => (
   <Routes>
     <Route path="/list" element={<CalendarList />} />
-    <Route path="/save" element={<CalendarSave />} />
+    <Route path="/detail" element={<CalendarDetail />} />
   </Routes>
 );
 // -------------------------------------------------------------------------------------------------
@@ -77,9 +77,9 @@ const Exercise = () =>  (
   <Routes>
     <Route path="/chart/list" element={<ExerciseChart />} />
     <Route path="/goal/list" element={<ExerciseGoalList />} />
-    <Route path="/goal/save" element={<ExerciseGoalSave />} />
+    <Route path="/goal/detail" element={<ExerciseGoalDetail />} />
     <Route path="/list" element={<ExerciseList />} />
-    <Route path="/save" element={<ExerciseSave />} />
+    <Route path="/detail" element={<ExerciseDetail />} />
   </Routes>
 );
 // -------------------------------------------------------------------------------------------------
@@ -87,10 +87,10 @@ const Food = () => (
   <Routes>
     <Route path="/chart/list" element={<FoodChart />} />
     <Route path="/goal/list" element={<FoodGoalList />} />
-    <Route path="/goal/save" element={<FoodGoalSave />} />
+    <Route path="/goal/detail" element={<FoodGoalDetail />} />
     <Route path="/find/list" element={<FoodFindList />} />
     <Route path="/list" element={<FoodList />} />
-    <Route path="/save" element={<FoodSave />} />
+    <Route path="/detail" element={<FoodDetail />} />
   </Routes>
 );
 // -------------------------------------------------------------------------------------------------
@@ -98,9 +98,9 @@ const Money = () =>  (
   <Routes>
     <Route path="/chart/list" element={<MoneyChart />} />
     <Route path="/goal/list" element={<MoneyGoalList />} />
-    <Route path="/goal/save" element={<MoneyGoalSave />} />
+    <Route path="/goal/detail" element={<MoneyGoalDetail />} />
     <Route path="/list" element={<MoneyList />} />
-    <Route path="/save" element={<MoneySave />} />
+    <Route path="/detail" element={<MoneyDetail />} />
   </Routes>
 );
 // -------------------------------------------------------------------------------------------------
@@ -108,9 +108,9 @@ const Sleep = () => (
   <Routes>
     <Route path="/chart/list" element={<SleepChart />} />
     <Route path="/goal/list" element={<SleepGoalList />} />
-    <Route path="/goal/save" element={<SleepGoalSave />} />
+    <Route path="/goal/detail" element={<SleepGoalDetail />} />
     <Route path="/list" element={<SleepList />} />
-    <Route path="/save" element={<SleepSave />} />
+    <Route path="/detail" element={<SleepDetail />} />
   </Routes>
 );
 // -------------------------------------------------------------------------------------------------
@@ -127,7 +127,6 @@ const User = () => (
     <Route path="/dummy" element={<UserDummy />} />
   </Routes>
 );
-
 // -------------------------------------------------------------------------------------------------
 const Auth = () => (
   <Routes>

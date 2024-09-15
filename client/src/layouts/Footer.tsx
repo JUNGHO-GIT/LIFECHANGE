@@ -51,7 +51,7 @@ export const Footer = (
       setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh radius border");
     }
     else if (
-      PATH.includes("/goal/save") || PATH.includes("/save")
+      PATH.includes("/goal/detail") || PATH.includes("/detail")
     ) {
       setTypeName("btn");
       setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh radius border");

@@ -97,7 +97,7 @@ export const UserCategory = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    axios.post(`${URL_OBJECT}/category/save`, {
+    axios.post(`${URL_OBJECT}/category/detail`, {
       user_id: sessionId,
       OBJECT: OBJECT
     })
@@ -442,8 +442,8 @@ export const UserCategory = () => {
       </Card>
     );
     // 7-2. card
-    const cardSection = () => {
-      const cardFragment = (i: number) => (
+    const detailSection = () => {
+      const detailFragment = (i: number) => (
         <Card className={"border radius p-0"} key={i}>
           <TableContainer>
             <Table>
@@ -505,7 +505,7 @@ export const UserCategory = () => {
         </Card>
       );
       return (
-        LOADING ? <Loading /> : cardFragment(0)
+        LOADING ? <Loading /> : detailFragment(0)
       );
     };
     // 7-10. return
@@ -513,7 +513,7 @@ export const UserCategory = () => {
       <Paper className={"content-wrapper radius border h-min95vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
-            {cardSection()}
+            {detailSection()}
           </Grid>
         </Grid>
       </Paper>

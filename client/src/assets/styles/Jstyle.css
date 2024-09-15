@@ -10901,6 +10901,15 @@
   transform: scale(1.1);
 }
 
+.dark-grey {
+  color: #6B7280 !important;
+}
+.pointer-dark-grey:hover {
+  cursor: pointer !important;
+  color: #6B7280 !important;
+  transform: scale(1.1);
+}
+
 .dark {
   color: #5e5e5e !important;
 }
@@ -11004,6 +11013,9 @@
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
+}
+.pre-line {
+  white-space: pre-line !important;
 }
 .locked {
   border: 2px solid #bdbdbd !important;

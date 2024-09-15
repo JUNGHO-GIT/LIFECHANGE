@@ -5,32 +5,32 @@ import { AuthGoogle } from "@pages/auth/AuthGoogle";
 import { AuthPrivacy } from "@pages/auth/AuthPrivacy";
 
 import { CalendarList } from "@pages/calendar/CalendarList";
-import { CalendarSave } from "@pages/calendar/CalendarSave";
+import { CalendarDetail } from "@pages/calendar/CalendarDetail";
 
 import { ExerciseChart } from "@pages/exercise/chart/ExerciseChart";
 import { ExerciseGoalList } from "@pages/exercise/goal/ExerciseGoalList";
-import { ExerciseGoalSave } from "@pages/exercise/goal/ExerciseGoalSave";
+import { ExerciseGoalDetail } from "@pages/exercise/goal/ExerciseGoalDetail";
 import { ExerciseList } from "@pages/exercise/ExerciseList";
-import { ExerciseSave } from "@pages/exercise/ExerciseSave";
+import { ExerciseDetail } from "@pages/exercise/ExerciseDetail";
 
 import { FoodChart } from "@pages/food/chart/FoodChart";
 import { FoodFindList } from "@pages/food/FoodFindList";
 import { FoodGoalList } from "@pages/food/goal/FoodGoalList";
-import { FoodGoalSave } from "@pages/food/goal/FoodGoalSave";
+import { FoodGoalDetail } from "@pages/food/goal/FoodGoalDetail";
 import { FoodList } from "@pages/food/FoodList";
-import { FoodSave } from "@pages/food/FoodSave";
+import { FoodDetail } from "@pages/food/FoodDetail";
 
 import { MoneyChart } from "@pages/money/chart/MoneyChart";
 import { MoneyGoalList } from "@pages/money/goal/MoneyGoalList";
-import { MoneyGoalSave } from "@pages/money/goal/MoneyGoalSave";
+import { MoneyGoalDetail } from "@pages/money/goal/MoneyGoalDetail";
 import { MoneyList } from "@pages/money/MoneyList";
-import { MoneySave } from "@pages/money/MoneySave";
+import { MoneyDetail } from "@pages/money/MoneyDetail";
 
 import { SleepChart } from "@pages/sleep/chart/SleepChart";
 import { SleepGoalList } from "@pages/sleep/goal/SleepGoalList";
-import { SleepGoalSave } from "@pages/sleep/goal/SleepGoalSave";
+import { SleepGoalDetail } from "@pages/sleep/goal/SleepGoalDetail";
 import { SleepList } from "@pages/sleep/SleepList";
-import { SleepSave } from "@pages/sleep/SleepSave";
+import { SleepDetail } from "@pages/sleep/SleepDetail";
 
 import { TodayGoalList } from "@pages/today/TodayGoalList";
 import { TodayList } from "@pages/today/TodayList";
@@ -51,28 +51,28 @@ export {
   AuthGoogle,
   AuthPrivacy,
   CalendarList,
-  CalendarSave,
+  CalendarDetail,
   ExerciseChart,
   ExerciseGoalList,
-  ExerciseGoalSave,
+  ExerciseGoalDetail,
   ExerciseList,
-  ExerciseSave,
+  ExerciseDetail,
   FoodChart,
   FoodFindList,
   FoodGoalList,
-  FoodGoalSave,
+  FoodGoalDetail,
   FoodList,
-  FoodSave,
+  FoodDetail,
   MoneyChart,
   MoneyGoalList,
-  MoneyGoalSave,
+  MoneyGoalDetail,
   MoneyList,
-  MoneySave,
+  MoneyDetail,
   SleepChart,
   SleepGoalList,
-  SleepGoalSave,
+  SleepGoalDetail,
   SleepList,
-  SleepSave,
+  SleepDetail,
   TodayGoalList,
   TodayList,
   UserAppInfo,

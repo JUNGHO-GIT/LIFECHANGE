@@ -98,9 +98,9 @@ export const UserDummy = () => {
   }, [sessionId, PAGING.sort, PAGING.page, PART]);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowDummySave = async () => {
+  const flowDummyDetail = async () => {
     const previousPART = PART;
-    axios.post(`${URL_OBJECT}/dummySave`, {
+    axios.post(`${URL_OBJECT}/dummyDetail`, {
       user_id: sessionId,
       PART: PART,
       count: COUNT?.inputCnt
@@ -171,7 +171,7 @@ export const UserDummy = () => {
           {translate("empty")}
         </Card>
       );
-      const cardFragment = (i: number) => (
+      const detailFragment = (i: number) => (
         <Card className={"border radius p-0"} key={i}>
           <TableContainer>
             <Table>
@@ -221,7 +221,7 @@ export const UserDummy = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : cardFragment(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : detailFragment(0)
         )
       );
     };
@@ -232,7 +232,7 @@ export const UserDummy = () => {
           {translate("empty")}
         </Card>
       );
-      const cardFragment = (i: number) => (
+      const detailFragment = (i: number) => (
         <Card className={"border radius p-0"} key={i}>
           <TableContainer>
             <Table>
@@ -278,7 +278,7 @@ export const UserDummy = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : cardFragment(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : detailFragment(0)
         )
       );
     };
@@ -289,7 +289,7 @@ export const UserDummy = () => {
           {translate("empty")}
         </Card>
       );
-      const cardFragment = (i: number) => (
+      const detailFragment = (i: number) => (
         <Card className={"border radius p-0"} key={i}>
           <TableContainer>
             <Table>
@@ -339,7 +339,7 @@ export const UserDummy = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : cardFragment(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : detailFragment(0)
         )
       );
     };
@@ -350,7 +350,7 @@ export const UserDummy = () => {
           {translate("empty")}
         </Card>
       );
-      const cardFragment = (i: number) => (
+      const detailFragment = (i: number) => (
         <Card className={"border radius p-0"} key={i}>
           <TableContainer>
             <Table>
@@ -400,7 +400,7 @@ export const UserDummy = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : cardFragment(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : detailFragment(0)
         )
       );
     };
@@ -411,7 +411,7 @@ export const UserDummy = () => {
           {translate("empty")}
         </Card>
       );
-      const cardFragment = (i: number) => (
+      const detailFragment = (i: number) => (
         <Card className={"border radius p-0"} key={i}>
           <TableContainer>
             <Table>
@@ -453,7 +453,7 @@ export const UserDummy = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : cardFragment(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : detailFragment(0)
         )
       );
     };
@@ -464,7 +464,7 @@ export const UserDummy = () => {
           {translate("empty")}
         </Card>
       );
-      const cardFragment = (i: number) => (
+      const detailFragment = (i: number) => (
         <Card className={"border radius p-0"} key={i}>
           <TableContainer>
             <Table>
@@ -506,7 +506,7 @@ export const UserDummy = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : cardFragment(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : detailFragment(0)
         )
       );
     };
@@ -517,7 +517,7 @@ export const UserDummy = () => {
           {translate("empty")}
         </Card>
       );
-      const cardFragment = (i: number) => (
+      const detailFragment = (i: number) => (
         <Card className={"border radius p-0"} key={i}>
           <TableContainer>
             <Table>
@@ -563,7 +563,7 @@ export const UserDummy = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : cardFragment(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : detailFragment(0)
         )
       );
     };
@@ -574,7 +574,7 @@ export const UserDummy = () => {
           {translate("empty")}
         </Card>
       );
-      const cardFragment = (i: number) => (
+      const detailFragment = (i: number) => (
         <Card className={"border radius p-0"} key={i}>
           <TableContainer>
             <Table>
@@ -620,7 +620,7 @@ export const UserDummy = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : cardFragment(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : detailFragment(0)
         )
       );
     };
@@ -653,7 +653,7 @@ export const UserDummy = () => {
         setPAGING, setCOUNT, setPART
       }}
       flow={{
-        flowDummySave, flowDummyDelete
+        flowDummyDetail, flowDummyDelete
       }}
     />
   );

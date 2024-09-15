@@ -17,7 +17,7 @@ export const CalendarList = () => {
     translate,
   } = useTranslate();
   const {
-    navigate, PATH, URL_OBJECT, sessionId, TITLE, toSave,
+    navigate, PATH, URL_OBJECT, sessionId, TITLE, toDetail,
   } = useCommonValue();
   const {
     getDayNotFmt, getDayFmt, getDayStartFmt, getDayEndFmt, monthStartFmt, monthEndFmt,
@@ -74,8 +74,8 @@ export const CalendarList = () => {
     });
   }, [sessionId, DATE.dateEnd]);
 
-  // 7. calendar -----------------------------------------------------------------------------------
-  const calendarNode = () => {
+  // 7. list ---------------------------------------------------------------------------------------
+  const listNode = () => {
 
     const dateInRange = (date: any, dateStart: any, dateEnd: any) => {
       const dayFmt = getDayFmt(date);
@@ -103,7 +103,7 @@ export const CalendarList = () => {
                 dateStart: calendar.calendar_dateStart,
                 dateEnd: calendar.calendar_dateEnd,
               });
-              navigate(toSave, {
+              navigate(toDetail, {
                 state: SEND
               });
             }}
@@ -129,8 +129,9 @@ export const CalendarList = () => {
         ))
       )
     );
-    const cardSection = () => {
-      const cardFragment = (i: number) => (
+    // 7-3. list
+    const listSection = () => {
+      const listFragment = (i: number) => (
         <Card className={"pt-20 pb-20"} key={`${i}-card`}>
           <Grid container spacing={2}>
             <CalendarReact
@@ -180,7 +181,7 @@ export const CalendarList = () => {
                     dateStart: getDayFmt(value),
                     dateEnd: getDayFmt(value),
                   });
-                  navigate(toSave, {
+                  navigate(toDetail, {
                     state: SEND
                   });
                 }
@@ -241,7 +242,7 @@ export const CalendarList = () => {
         </Card>
       );
       return (
-        LOADING ? <Loading /> : cardFragment(0)
+        LOADING ? <Loading /> : listFragment(0)
       );
     };
     // 7-10. return
@@ -249,7 +250,7 @@ export const CalendarList = () => {
       <Paper className={"content-wrapper radius border h-min75vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
-            {cardSection()}
+            {listSection()}
           </Grid>
         </Grid>
       </Paper>
@@ -273,7 +274,7 @@ export const CalendarList = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {calendarNode()}
+      {listNode()}
       {footerNode()}
     </>
   );

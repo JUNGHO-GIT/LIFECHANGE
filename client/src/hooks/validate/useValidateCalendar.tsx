@@ -35,7 +35,7 @@ export const useValidateCalendar= () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     // 1. save
-    if (PATH.includes("calendar/save")) {
+    if (PATH.includes("calendar/detail")) {
       const target = [
         "calendar_part_idx",
         "calendar_color",

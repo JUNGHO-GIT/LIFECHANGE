@@ -92,8 +92,8 @@ export const UserDetail = () => {
       />
     );
     // 7-2. card
-    const cardSection = () => {
-      const cardFragment = (i: number) => (
+    const detailSection = () => {
+      const detailFragment = (i: number) => (
         <Card className={"p-10"} key={i}>
           <Grid container spacing={2}>
             {/** 아이디 **/}
@@ -246,7 +246,7 @@ export const UserDetail = () => {
         </Card>
       );
       return (
-        LOADING ? <Loading /> : cardFragment(0)
+        LOADING ? <Loading /> : detailFragment(0)
       );
     };
     // 7-10. return
@@ -258,7 +258,7 @@ export const UserDetail = () => {
           </Grid>
           <Hr px={20} />
           <Grid size={12}>
-            {cardSection()}
+            {detailSection()}
           </Grid>
         </Grid>
       </Paper>

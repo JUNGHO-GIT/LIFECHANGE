@@ -34,8 +34,8 @@ export const useValidateFood= () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    // 1. goal/save
-    if (PATH.includes("food/goal/save")) {
+    // 1. goal/detail
+    if (PATH.includes("food/goal/detail")) {
       const target = [
         "food_goal_kcal",
         "food_goal_carb",
@@ -95,7 +95,7 @@ export const useValidateFood= () => {
     }
 
     // 2. save
-    else if (PATH.includes("food/save")) {
+    else if (PATH.includes("food/detail")) {
       const target = [
         "food_part_idx",
         "food_name",
