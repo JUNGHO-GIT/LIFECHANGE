@@ -172,10 +172,10 @@ router.post("/create", async (req: Request, res: Response) => {
   }
 });
 
-// 5. update ---------------------------------------------------------------------------------------
-router.post("/update", async (req: Request, res: Response) => {
+// 5. replace --------------------------------------------------------------------------------------
+router.post("/replace", async (req: Request, res: Response) => {
   try {
-    let finalResult = await service.update(
+    let finalResult = await service.replace(
       req.body.user_id as string,
       req.body._id as string,
       req.body.OBJECT as any,

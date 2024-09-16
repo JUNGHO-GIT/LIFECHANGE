@@ -47,8 +47,8 @@ export const create = async (object: any) => {
   return object;
 };
 
-// 5. update ---------------------------------------------------------------------------------------
-export const update = async (object: any) => {
+// 5. replace --------------------------------------------------------------------------------------
+export const replace = async (object: any) => {
 
   let totalIncome = 0;
   let totalExpense = 0;

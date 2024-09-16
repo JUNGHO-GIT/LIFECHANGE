@@ -1520,17 +1520,41 @@ export const useTranslate = () => {
       ko: "저장 오류",
       en: "Save Error"
     },
-    updateSuccessful: {
-      ko: "수정 성공",
-      en: "Update Successful"
+    replaceSuccessful: {
+      ko: "교체 성공",
+      en: "Replace Successful"
     },
-    updateFailed: {
-      ko: "수정 실패",
-      en: "Update Failed"
+    replaceFailed: {
+      ko: "교체 실패",
+      en: "Replace Failed"
     },
-    updateError: {
-      ko: "수정 오류",
-      en: "Update Error"
+    replaceError: {
+      ko: "교체 오류",
+      en: "Replace Error"
+    },
+    insertSuccessful: {
+      ko: "추가 성공",
+      en: "Insert Successful"
+    },
+    insertFailed: {
+      ko: "추가 실패",
+      en: "Insert Failed"
+    },
+    insertError: {
+      ko: "추가 오류",
+      en: "Insert Error"
+    },
+    createSuccessful: {
+      ko: "저장 성공",
+      en: "Create Successful"
+    },
+    createFailed: {
+      ko: "저장 실패",
+      en: "Create Failed"
+    },
+    createError: {
+      ko: "저장 오류",
+      en: "Create Error"
     },
     deleteSuccessful: {
       ko: "삭제 성공",

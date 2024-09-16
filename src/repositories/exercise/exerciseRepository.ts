@@ -207,13 +207,14 @@ export const insert = async (
       } : {},
     },
     {
+      // 토탈볼륨 기존값에 추가 todo list
       $set: {
         exercise_total_volume: OBJECT_param.exercise_total_volume,
         exercise_total_cardio: OBJECT_param.exercise_total_cardio,
         exercise_total_weight: OBJECT_param.exercise_total_weight,
         exercise_updateDt: newDate,
       },
-      $addToSet: {
+      $push: {
         exercise_section: OBJECT_param.exercise_section
       }
     },
@@ -227,8 +228,8 @@ export const insert = async (
   return finalResult;
 };
 
-// 5. update ---------------------------------------------------------------------------------------
-export const update = async (
+// 5. replace --------------------------------------------------------------------------------------
+export const replace = async (
   user_id_param: string,
   _id_param: string,
   OBJECT_param: any,
@@ -252,11 +253,13 @@ export const update = async (
       } : {},
     },
     {
-      exercise_total_volume: OBJECT_param.exercise_total_volume,
-      exercise_total_cardio: OBJECT_param.exercise_total_cardio,
-      exercise_total_weight: OBJECT_param.exercise_total_weight,
-      exercise_section: OBJECT_param.exercise_section,
-      exercise_updateDt: newDate,
+      $set: {
+        exercise_total_volume: OBJECT_param.exercise_total_volume,
+        exercise_total_cardio: OBJECT_param.exercise_total_cardio,
+        exercise_total_weight: OBJECT_param.exercise_total_weight,
+        exercise_section: OBJECT_param.exercise_section,
+        exercise_updateDt: newDate,
+      }
     },
     {
       upsert: true,

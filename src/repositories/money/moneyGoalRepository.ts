@@ -221,8 +221,8 @@ export const create = async (
   return finalResult;
 };
 
-// 5. update ---------------------------------------------------------------------------------------
-export const update = async (
+// 5. replace --------------------------------------------------------------------------------------
+export const replace = async (
   user_id_param: string,
   _id_param: string,
   OBJECT_param: any,

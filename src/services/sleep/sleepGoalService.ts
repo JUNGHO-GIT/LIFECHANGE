@@ -207,7 +207,7 @@ export const create = async (
     );
   }
   else {
-    createResult = await repository.update(
+    createResult = await repository.replace(
       user_id_param, findResult._id, OBJECT_param, dateType, dateStart, dateEnd
     );
   }
@@ -227,8 +227,8 @@ export const create = async (
   };
 };
 
-// 5. update ---------------------------------------------------------------------------------------
-export const update = async (
+// 5. replace --------------------------------------------------------------------------------------
+export const replace = async (
   user_id_param: string,
   _id_param: string,
   OBJECT_param: any,
@@ -245,7 +245,7 @@ export const update = async (
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
-  updateResult = await repository.update(
+  updateResult = await repository.replace(
     user_id_param, _id_param, OBJECT_param, dateType, dateStart, dateEnd
   );
 

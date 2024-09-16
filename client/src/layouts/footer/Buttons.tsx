@@ -22,18 +22,8 @@ export const Buttons = ( { state, setState, flow }: ButtonsProps ) => {
     translate,
   } = useTranslate();
   const {
-    PATH, toFind, toDetail, navigate, TITLE
+    PATH, toFind, navigate,
   } = useCommonValue();
-
-  // 2-1. useState ---------------------------------------------------------------------------------
-  const [type, setType] = useState<string>("");
-
-  // 4. handle -------------------------------------------------------------------------------------
-  const handleStorageChange = () => {
-    const returnType = sessionStorage.getItem(`${TITLE}_returnType`);
-    setType(returnType || "");
-    console.log("returnType", returnType);
-  };
 
   // 7. btn ----------------------------------------------------------------------------------------
   const btnNode = () => {
@@ -82,12 +72,7 @@ export const Buttons = ( { state, setState, flow }: ButtonsProps ) => {
                   variant={"text"}
                   className={"fs-1-2rem fw-600 ms-1vw me-1vw"}
                   onClick={() => {
-                    flow?.flowSave();
-                    Object.keys(sessionStorage).forEach((key) => {
-                      if (key.includes("foodSection") || key.includes("paging")) {
-                        sessionStorage.removeItem(key);
-                      }
-                    });
+                    flow?.flowSave("replace");
                   }}
                 >
                   {translate("replace")}
@@ -100,12 +85,7 @@ export const Buttons = ( { state, setState, flow }: ButtonsProps ) => {
                   variant={"text"}
                   className={"fs-1-2rem fw-600 ms-1vw me-1vw"}
                   onClick={() => {
-                    flow?.flowSave();
-                    Object.keys(sessionStorage).forEach((key) => {
-                      if (key.includes("foodSection") || key.includes("paging")) {
-                        sessionStorage.removeItem(key);
-                      }
-                    });
+                    flow?.flowSave("insert");
                   }}
                 >
                   {translate("insert")}
@@ -120,8 +100,17 @@ export const Buttons = ( { state, setState, flow }: ButtonsProps ) => {
             color={"primary"}
             className={"ms-1vw me-1vw"}
             onClick={(e: any) => {
-              handleStorageChange();
-              flow?.flowSave()
+              if (state.FLOW?.exist === "true") {
+                if (state.FLOW?.itsMe === "true") {
+                  flow?.flowSave("replace");
+                }
+                else {
+                  popTrigger.openPopup(e.currentTarget);
+                }
+              }
+              else {
+                flow?.flowSave("create");
+              }
             }}
           >
             {translate("save")}

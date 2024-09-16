@@ -23,7 +23,7 @@ export const ExerciseDetail = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, exerciseArray, URL_OBJECT, sessionId, toList,
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, exerciseArray, URL_OBJECT, sessionId, toList, TITLE
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -39,6 +39,10 @@ export const ExerciseDetail = () => {
     month: [""],
     year: [""],
     select: [""],
+  });
+  const [FLOW, setFLOW] = useState<any>({
+    exist: "",
+    itsMe: "",
   });
   const [SEND, setSEND] = useState<any>({
     id: "",
@@ -59,6 +63,26 @@ export const ExerciseDetail = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
+
+  useEffect(() => {
+    console.log("===================================");
+    console.log("FLOW", FLOW);
+  }, [FLOW]);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    if (EXIST?.[DATE.dateType]?.length > 0) {
+      const dateRange = `${DATE.dateStart} ~ ${DATE.dateEnd}`;
+      const objectRange = `${OBJECT.exercise_dateStart} ~ ${OBJECT.exercise_dateEnd}`;
+      const isExist = EXIST[DATE.dateType].some((item: any) => item === dateRange);
+      const itsMe = dateRange === objectRange || OBJECT.exercise_dateStart === "0000-00-00" && OBJECT.exercise_dateEnd === "0000-00-00";
+      setFLOW((prev: any) => ({
+        ...prev,
+        exist: isExist ? "true" : "false",
+        itsMe: itsMe ? "true" : "false",
+      }));
+    }
+  }, [OBJECT.exercise_dateEnd, DATE.dateEnd, DATE.dateType, EXIST]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -100,10 +124,10 @@ export const ExerciseDetail = () => {
       // section 내부 part_idx 값에 따라 재정렬
       setOBJECT((prev: any) => {
         const mergedFoodSection = prev?.exercise_section
-          ? prev.exercise_section.sort((a: any, b: any) => (
-              a.exercise_part_idx - b.exercise_part_idx
-            ))
-          : [];
+        ? prev.exercise_section.sort((a: any, b: any) => (
+          a.exercise_part_idx - b.exercise_part_idx
+        ))
+        : [];
         return {
           ...prev,
           exercise_section: mergedFoodSection,
@@ -185,13 +209,12 @@ export const ExerciseDetail = () => {
   },[COUNT?.newSectionCnt]);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = async () => {
-    const validateResult = validate(OBJECT, COUNT, DATE, EXIST);
-    if (validateResult.valid) {
+  const flowSave = async (type: string) => {
+    if (!validate(OBJECT, COUNT)) {
       setLOADING(false);
       return;
     }
-    axios.post(`${URL_OBJECT}/${validateResult.type}`, {
+    axios.post(`${URL_OBJECT}/${type}`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
@@ -634,10 +657,10 @@ export const ExerciseDetail = () => {
   const footerNode = () => (
     <Footer
       state={{
-        DATE, SEND, COUNT, EXIST
+        DATE, SEND, COUNT, EXIST, FLOW,
       }}
       setState={{
-        setDATE, setSEND, setCOUNT, setEXIST
+        setDATE, setSEND, setCOUNT, setEXIST, setFLOW,
       }}
       flow={{
         flowSave, flowDelete

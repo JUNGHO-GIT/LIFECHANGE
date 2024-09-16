@@ -143,21 +143,21 @@ router.post("/create", async (req: Request, res: Response) => {
     finalResult = await middleware.create(finalResult);
     if (finalResult.status === "success") {
       res.json({
-        msg: "saveSuccessful",
+        msg: "createSuccessful",
         status: finalResult.status,
         result: finalResult.result,
       });
     }
     else if (finalResult.status === "fail") {
       res.json({
-        msg: "saveFailed",
+        msg: "createFailed",
         status: finalResult.status,
         result: finalResult.result,
       });
     }
     else {
       res.json({
-        msg: "saveError",
+        msg: "createError",
         status: finalResult.status,
         result: finalResult.result,
       });
@@ -215,33 +215,33 @@ router.post("/insert", async (req: Request, res: Response) => {
   }
 });
 
-// 5. update ---------------------------------------------------------------------------------------
-router.post("/update", async (req: Request, res: Response) => {
+// 5. replace --------------------------------------------------------------------------------------
+router.post("/replace", async (req: Request, res: Response) => {
   try {
-    let finalResult = await service.update(
+    let finalResult = await service.replace(
       req.body.user_id as string,
       req.body._id as string,
       req.body.OBJECT as any,
       req.body.DATE as any,
     );
-    finalResult = await middleware.update(finalResult);
+    finalResult = await middleware.replace(finalResult);
     if (finalResult.status === "success") {
       res.json({
-        msg: "updateSuccessful",
+        msg: "replaceSuccessful",
         status: finalResult.status,
         result: finalResult.result,
       });
     }
     else if (finalResult.status === "fail") {
       res.json({
-        msg: "updateFailed",
+        msg: "replaceFailed",
         status: finalResult.status,
         result: finalResult.result,
       });
     }
     else {
       res.json({
-        msg: "updateError",
+        msg: "replaceError",
         status: finalResult.status,
         result: finalResult.result,
       });

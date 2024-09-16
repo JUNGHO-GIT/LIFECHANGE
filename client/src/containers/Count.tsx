@@ -95,7 +95,7 @@ export const Count = (
                     if (LOCKED === "locked") {
                       return;
                     }
-                    if (PATH.includes("/food/find/list") || PATH.includes("/detail")) {
+                    if (PATH.includes("/food/find/list")) {
                       return;
                     }
                     COUNT.newSectionCnt > COUNT.sectionCnt ? (
@@ -115,7 +115,7 @@ export const Count = (
                     if (LOCKED === "locked") {
                       return;
                     }
-                    if (PATH.includes("/food/find/list") || PATH.includes("/detail")) {
+                    if (PATH.includes("/food/find/list")) {
                       return;
                     }
                     COUNT.newSectionCnt < limit ? (

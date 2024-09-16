@@ -10,38 +10,42 @@ export const PopUp = (props: any) => {
     popupId: 'popover',
   });
 
-  let popupStyle = {};
+  let popupStyle: any = {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  };
   if (props?.type === "innerCenter") {
     popupStyle = {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
+      ...popupStyle,
       border: '0.2px solid rgba(0, 0, 0, 0.2)',
       boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
-      padding: "20px 20px 20px 20px",
+      padding: "20px",
     };
   }
   else if (props?.type === "alert") {
     popupStyle = {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
+      ...popupStyle,
       border: '1px solid red',
       boxShadow: '0px 0px 10px rgba(255, 0, 0, 0.5)',
-      padding: "6px 6px 6px 6px",
+      padding: "6px",
     };
   }
   else if (props?.type === "chart") {
     popupStyle = {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
+      ...popupStyle,
       border: '0.2px solid rgba(0, 0, 0, 0.2)',
       boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
       padding: "6px 0px 6px 12px",
+    };
+  }
+  else if (props?.type === "modal") {
+    popupStyle = {
+      ...popupStyle,
+      border: '0.2px solid rgba(0, 0, 0, 0.2)',
+      boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
+      padding: "10px",
     };
   }
 

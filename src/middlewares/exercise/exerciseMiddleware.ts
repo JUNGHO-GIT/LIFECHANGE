@@ -65,8 +65,8 @@ export const insert = async (object: any) => {
   return object;
 };
 
-// 5. update ---------------------------------------------------------------------------------------
-export const update = async (object: any) => {
+// 5. replace --------------------------------------------------------------------------------------
+export const replace = async (object: any) => {
 
   let totalVolume = 0;
   let totalTime = 0.0;
