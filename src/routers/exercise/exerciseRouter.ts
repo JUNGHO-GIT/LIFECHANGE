@@ -53,7 +53,6 @@ router.get("/list", async (req: Request, res: Response) => {
       req.query.DATE as any,
       req.query.PAGING as any,
     );
-    finalResult = await middleware.list(finalResult);
     if (finalResult.status === "success") {
       res.json({
         msg: "searchSuccessful",
@@ -140,7 +139,6 @@ router.post("/create", async (req: Request, res: Response) => {
       req.body.OBJECT as any,
       req.body.DATE as any,
     );
-    finalResult = await middleware.create(finalResult);
     if (finalResult.status === "success") {
       res.json({
         msg: "createSuccessful",
@@ -173,6 +171,48 @@ router.post("/create", async (req: Request, res: Response) => {
   }
 });
 
+
+// 4. update ---------------------------------------------------------------------------------------
+router.post("/update", async (req: Request, res: Response) => {
+  try {
+    let finalResult = await service.update(
+      req.body.user_id as string,
+      req.body._id as string,
+      req.body.OBJECT as any,
+      req.body.DATE as any,
+    );
+    if (finalResult.status === "success") {
+      res.json({
+        msg: "updateSuccessful",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "updateFailed",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else {
+      res.json({
+        msg: "updateError",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+  }
+  catch (err: any) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      msg: err.toString(),
+      error: err.toString(),
+    });
+  }
+});
+
 // 4. insert ---------------------------------------------------------------------------------------
 router.post("/insert", async (req: Request, res: Response) => {
   try {
@@ -182,7 +222,6 @@ router.post("/insert", async (req: Request, res: Response) => {
       req.body.OBJECT as any,
       req.body.DATE as any,
     );
-    finalResult = await middleware.insert(finalResult);
     if (finalResult.status === "success") {
       res.json({
         msg: "insertSuccessful",
@@ -224,7 +263,6 @@ router.post("/replace", async (req: Request, res: Response) => {
       req.body.OBJECT as any,
       req.body.DATE as any,
     );
-    finalResult = await middleware.replace(finalResult);
     if (finalResult.status === "success") {
       res.json({
         msg: "replaceSuccessful",
@@ -265,7 +303,6 @@ router.delete("/delete", async (req: Request, res: Response) => {
       req.body._id as string,
       req.body.DATE as any,
     );
-    finalResult = await middleware.deletes(finalResult);
     if (finalResult.status === "success") {
       res.json({
         msg: "deleteSuccessful",

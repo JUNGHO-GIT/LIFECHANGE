@@ -53,7 +53,7 @@ router.get("/list", async (req: Request, res: Response) => {
       req.query.DATE as any,
       req.query.PAGING as any,
     );
-    finalResult = await middleware.list(finalResult);
+     
     if (finalResult.status === "success") {
       res.json({
         msg: "searchSuccessful",

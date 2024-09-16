@@ -43,6 +43,7 @@ export const ExerciseDetail = () => {
   const [FLOW, setFLOW] = useState<any>({
     exist: "",
     itsMe: "",
+    itsNew: "",
   });
   const [SEND, setSEND] = useState<any>({
     id: "",
@@ -64,25 +65,22 @@ export const ExerciseDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
 
-  useEffect(() => {
-    console.log("===================================");
-    console.log("FLOW", FLOW);
-  }, [FLOW]);
-
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (EXIST?.[DATE.dateType]?.length > 0) {
       const dateRange = `${DATE.dateStart} ~ ${DATE.dateEnd}`;
       const objectRange = `${OBJECT.exercise_dateStart} ~ ${OBJECT.exercise_dateEnd}`;
       const isExist = EXIST[DATE.dateType].some((item: any) => item === dateRange);
-      const itsMe = dateRange === objectRange || OBJECT.exercise_dateStart === "0000-00-00" && OBJECT.exercise_dateEnd === "0000-00-00";
+      const itsMe = dateRange === objectRange;
+      const itsNew = OBJECT.exercise_dateStart === "0000-00-00" && OBJECT.exercise_dateEnd === "0000-00-00";
       setFLOW((prev: any) => ({
         ...prev,
         exist: isExist ? "true" : "false",
         itsMe: itsMe ? "true" : "false",
+        itsNew: itsNew ? "true" : "false",
       }));
     }
-  }, [OBJECT.exercise_dateEnd, DATE.dateEnd, DATE.dateType, EXIST]);
+  }, [OBJECT.exercise_dateEnd, EXIST]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {

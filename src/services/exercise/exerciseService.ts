@@ -212,6 +212,43 @@ export const create = async (
   };
 };
 
+// 4. update ---------------------------------------------------------------------------------------
+export const update = async (
+  user_id_param: string,
+  _id_param: string,
+  OBJECT_param: any,
+  DATE_param: any,
+) => {
+
+  // result 변수 선언
+  let updateResult: any = null;
+  let finalResult: any = null;
+  let statusResult: string = "";
+
+  // date 변수 선언
+  const dateType = DATE_param.dateType;
+  const dateStart = DATE_param.dateStart;
+  const dateEnd = DATE_param.dateEnd;
+
+  updateResult = await repository.update(
+    user_id_param, _id_param, OBJECT_param, dateType, dateStart, dateEnd
+  );
+
+  if (!updateResult) {
+    finalResult = null;
+    statusResult = "fail";
+  }
+  else {
+    finalResult = updateResult;
+    statusResult = "success";
+  }
+
+  return {
+    status: statusResult,
+    result: finalResult,
+  };
+};
+
 // 4. insert ---------------------------------------------------------------------------------------
 export const insert = async (
   user_id_param: string,

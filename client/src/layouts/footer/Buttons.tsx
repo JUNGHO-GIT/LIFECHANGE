@@ -109,7 +109,12 @@ export const Buttons = ( { state, setState, flow }: ButtonsProps ) => {
                 }
               }
               else {
-                flow?.flowSave("create");
+                if (state.FLOW?.itsNew === "true") {
+                  flow?.flowSave("create");
+                }
+                else {
+                  flow?.floeSave("update");
+                }
               }
             }}
           >
