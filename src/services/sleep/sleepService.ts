@@ -169,9 +169,9 @@ export const create = async (
   let statusResult: string = "";
 
   // date 변수 선언
-  const existingDateType = OBJECT_param.exercise_dateType;
-  const existingDateStart = OBJECT_param.exercise_dateStart;
-  const existingDateEnd = OBJECT_param.exercise_dateEnd;
+  const existingDateType = OBJECT_param.sleep_dateType;
+  const existingDateStart = OBJECT_param.sleep_dateStart;
+  const existingDateEnd = OBJECT_param.sleep_dateEnd;
   const dateType = DATE_param.dateType;
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;

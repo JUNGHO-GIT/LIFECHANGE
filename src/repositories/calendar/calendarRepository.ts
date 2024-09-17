@@ -168,7 +168,7 @@ export const insert = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await Calendar.updateOne(
+  const finalResult:any = await Calendar.findOneAndUpdate(
     {
       user_id: user_id_param,
       calendar_dateStart: dateStart_param,
@@ -207,6 +207,7 @@ export const replace = async (
       user_id: user_id_param,
       calendar_dateStart: dateStart_param,
       calendar_dateEnd: dateEnd_param,
+      ...dateType_param ? { calendar_dateType: dateType_param } : {},
     },
     {
       $set: {
