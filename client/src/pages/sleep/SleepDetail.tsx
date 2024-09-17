@@ -40,6 +40,11 @@ export const SleepDetail = () => {
     year: [""],
     select: [""],
   });
+  const [FLOW, setFLOW] = useState<any>({
+    exist: "",
+    itsMe: "",
+    itsNew: "",
+  });
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
@@ -59,6 +64,37 @@ export const SleepDetail = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
+
+  useEffect(() => {
+    console.log("===================================");
+    console.log("FLOW", FLOW);
+  }, [FLOW]);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    if (EXIST?.[DATE.dateType]?.length > 0) {
+
+      const dateRange = `${DATE.dateStart} ~ ${DATE.dateEnd}`;
+      const objectRange = `${OBJECT.sleep_dateStart} ~ ${OBJECT.sleep_dateEnd}`;
+
+      const isExist = (
+        EXIST[DATE.dateType].some((item: any) => item === dateRange)
+      );
+      const itsMe = (
+        dateRange === objectRange
+      );
+      const itsNew = (
+        OBJECT.sleep_dateStart === "0000-00-00" &&
+        OBJECT.sleep_dateEnd === "0000-00-00"
+      );
+
+      setFLOW({
+        exist: isExist ? "true" : "false",
+        itsMe: itsMe ? "true" : "false",
+        itsNew: itsNew ? "true" : "false",
+      });
+    }
+  }, [EXIST]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -91,7 +127,6 @@ export const SleepDetail = () => {
     axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId,
-        _id: "",
         DATE: DATE,
       },
     })
@@ -99,12 +134,12 @@ export const SleepDetail = () => {
       setOBJECT(res.data.result || Sleep);
       // section 내부 part_idx 값에 따라 재정렬
       setOBJECT((prev: any) => {
-        const mergedFoodSection = prev?.sleep_section
+        const mergedSection = prev?.sleep_section
           ? prev.sleep_section.sort((a: any, b: any) => a.sleep_part_idx - b.sleep_part_idx)
           : [];
         return {
           ...prev,
-          sleep_section: mergedFoodSection,
+          sleep_section: mergedSection,
         };
       });
       setCOUNT((prev: any) => ({
@@ -140,12 +175,12 @@ export const SleepDetail = () => {
   },[COUNT?.newSectionCnt]);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = async () => {
-    if (!validate(OBJECT, COUNT, DATE, EXIST)) {
+  const flowSave = async (type: string) => {
+    if (!validate(OBJECT, COUNT)) {
       setLOADING(false);
       return;
     }
-    axios.post(`${URL_OBJECT}/detail`, {
+    axios.post(`${URL_OBJECT}/${type}`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
@@ -181,7 +216,6 @@ export const SleepDetail = () => {
     axios.delete(`${URL_OBJECT}/delete`, {
       data: {
         user_id: sessionId,
-        _id: OBJECT?._id,
         DATE: DATE,
       }
     })
@@ -327,10 +361,10 @@ export const SleepDetail = () => {
   const footerNode = () => (
     <Footer
       state={{
-        DATE, SEND, COUNT, EXIST
+        DATE, SEND, COUNT, EXIST, FLOW,
       }}
       setState={{
-        setDATE, setSEND, setCOUNT, setEXIST
+        setDATE, setSEND, setCOUNT, setEXIST, setFLOW,
       }}
       flow={{
         flowSave, flowDelete

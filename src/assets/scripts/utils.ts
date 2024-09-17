@@ -24,21 +24,27 @@ export const timeToDecimal = (data: string) => {
     return "0";
   }
   const time = data.split(":");
-  if (time.length === 2) {
+  if (time.length !== 2) {
+    return "0";
+  }
+  else {
     const hours = parseFloat(time[0]);
-    const minutes = parseFloat(time[1]) / 60;
+    // 10분 단위로 반올림
+    const minutes = Math.round(parseFloat(time[1]) / 10) * 10 / 60;
+
     return (hours + minutes).toFixed(1).toString();
   }
-  return "0";
 };
 
-export const decimalToTime = (data: string) => {
+export const decimalToTime = (data: number) => {
   if (!data) {
     return "00:00";
   }
-  const floatHours = parseFloat(data);
+  const floatHours = parseFloat(data.toString());
   const hours = Math.floor(floatHours);
-  const minutes = Math.round((floatHours - hours) * 60);
+  // 10분 단위로 반올림
+  const minutes = Math.round((floatHours - hours) * 60 / 10) * 10;
+
   return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 };
 

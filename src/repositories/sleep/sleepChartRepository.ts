@@ -9,7 +9,7 @@ export const barGoal = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await SleepGoal.aggregate([
+  const finalResult:any = await SleepGoal.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -48,7 +48,7 @@ export const barReal = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Sleep.aggregate([
+  const finalResult:any = await Sleep.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -85,7 +85,7 @@ export const pieAll = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Sleep.aggregate([
+  const finalResult:any = await Sleep.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -122,7 +122,7 @@ export const lineAll = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Sleep.aggregate([
+  const finalResult:any = await Sleep.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -159,7 +159,7 @@ export const avgAll = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Sleep.aggregate([
+  const finalResult:any = await Sleep.aggregate([
     {
       $match: {
         user_id: user_id_param,

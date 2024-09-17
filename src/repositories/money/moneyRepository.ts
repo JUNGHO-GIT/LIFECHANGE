@@ -12,7 +12,7 @@ export const exist = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await Money.aggregate([
+  const finalResult:any = await Money.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -22,9 +22,7 @@ export const exist = async (
         money_dateEnd: {
           $gte: dateStart_param,
         },
-        ...dateType_param ? {
-          money_dateType: dateType_param
-        } : {},
+        ...dateType_param ? { money_dateType: dateType_param } : {},
       }
     },
     {
@@ -53,7 +51,7 @@ export const cnt = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await Money.countDocuments(
+  const finalResult:any = await Money.countDocuments(
     {
       user_id: user_id_param,
       money_dateStart: {
@@ -64,9 +62,7 @@ export const cnt = async (
         $gte: dateStart_param,
         $lte: dateEnd_param
       },
-      ...dateType_param ? {
-        money_dateType: dateType_param
-      } : {},
+      ...dateType_param ? { money_dateType: dateType_param } : {},
     }
   );
 
@@ -83,7 +79,7 @@ export const list = async (
   page_param: number,
 ) => {
 
-  const finalResult = await Money.aggregate([
+  const finalResult:any = await Money.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -95,9 +91,7 @@ export const list = async (
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...dateType_param ? {
-          money_dateType: dateType_param
-        } : {},
+        ...dateType_param ? { money_dateType: dateType_param } : {},
       }
     },
     {
@@ -126,25 +120,17 @@ export const list = async (
 // 2. detail ---------------------------------------------------------------------------------------
 export const detail = async (
   user_id_param: string,
-  _id_param: string,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await Money.findOne(
+  const finalResult:any = await Money.findOne(
     {
       user_id: user_id_param,
-      _id: !_id_param ? { $exists: true } : _id_param,
-      money_dateStart: {
-        $eq: dateStart_param
-      },
-      money_dateEnd: {
-        $eq: dateEnd_param
-      },
-      ...dateType_param ? {
-        money_dateType: dateType_param
-      } : {},
+      money_dateStart: dateStart_param,
+      money_dateEnd: dateEnd_param,
+      ...dateType_param ? { money_dateType: dateType_param } : {},
     }
   )
   .lean();
@@ -152,7 +138,7 @@ export const detail = async (
   return finalResult;
 };
 
-// 3. create ---------------------------------------------------------------------------------------
+// 3. create (기존항목 제거 + 타겟항목에 생성) -----------------------------------------------------
 export const create = async (
   user_id_param: string,
   OBJECT_param: any,
@@ -161,10 +147,10 @@ export const create = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await Money.create(
+  const finalResult:any = await Money.create(
     {
-      user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
+      user_id: user_id_param,
       money_dummy: "N",
       money_dateType: dateType_param,
       money_dateStart: dateStart_param,
@@ -180,37 +166,45 @@ export const create = async (
   return finalResult;
 };
 
-// 5. replace --------------------------------------------------------------------------------------
-export const replace = async (
+// 4. insert (기존항목 유지 + 타겟항목에 끼워넣기) -------------------------------------------------
+export const insert = async (
   user_id_param: string,
-  _id_param: string,
   OBJECT_param: any,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await Money.findOneAndUpdate(
+  const findResult: any = await Money.findOne(
     {
       user_id: user_id_param,
-      _id: !_id_param ? { $exists: true } : _id_param,
-      money_dateStart: {
-        $eq: dateStart_param
-      },
-      money_dateEnd: {
-        $eq: dateEnd_param
-      },
-      ...dateType_param ? {
-        money_dateType: dateType_param
-      } : {},
+      money_dateStart: dateStart_param,
+      money_dateEnd: dateEnd_param,
+      ...dateType_param ? { money_dateType: dateType_param } : {},
+    },
+  )
+  .lean();
+
+  const newIncome = String (
+    parseFloat(findResult.money_total_income) +
+    parseFloat(OBJECT_param.money_total_income)
+  );
+  const newExpense = String (
+    parseFloat(findResult.money_total_expense) +
+    parseFloat(OBJECT_param.money_total_expense)
+  );
+
+  const finalResult:any = await Money.updateOne(
+    {
+      user_id: user_id_param,
+      money_dateStart: dateStart_param,
+      money_dateEnd: dateEnd_param,
+      ...dateType_param ? { money_dateType: dateType_param } : {},
     },
     {
       $set: {
-        money_dateType: dateType_param,
-        money_dateStart: dateStart_param,
-        money_dateEnd: dateEnd_param,
-        money_total_income: OBJECT_param.money_total_income,
-        money_total_expense: OBJECT_param.money_total_expense,
+        money_total_income: newIncome,
+        money_total_expense: newExpense,
         money_updateDt: newDate,
       },
       $push: {
@@ -227,28 +221,54 @@ export const replace = async (
   return finalResult;
 };
 
-// 6. delete --------------------------------------------------------------------------------------
-export const deletes = async (
+// 5. replace (기존항목 유지 + 타겟항목을 대체) ----------------------------------------------------
+export const replace = async (
   user_id_param: string,
-  _id_param: string,
+  OBJECT_param: any,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await Money.findOneAndDelete(
+  const finalResult:any = await Money.findOneAndUpdate(
     {
       user_id: user_id_param,
-      _id: !_id_param ? {$exists:true} : _id_param,
-      money_dateStart: {
-        $eq: dateStart_param
+      money_dateStart: dateStart_param,
+      money_dateEnd: dateEnd_param,
+      ...dateType_param ? { money_dateType: dateType_param } : {},
+    },
+    {
+      $set: {
+        money_total_income: OBJECT_param.money_total_income,
+        money_total_expense: OBJECT_param.money_total_expense,
+        money_section: OBJECT_param.money_section,
+        money_updateDt: newDate,
       },
-      money_dateEnd: {
-        $eq: dateEnd_param
-      },
-      ...dateType_param ? {
-        money_dateType: dateType_param
-      } : {},
+    },
+    {
+      upsert: true,
+      new: true
+    }
+  )
+  .lean();
+
+  return finalResult;
+};
+
+// 6. delete (타겟항목 제거) -----------------------------------------------------------------------
+export const deletes = async (
+  user_id_param: string,
+  dateType_param: string,
+  dateStart_param: string,
+  dateEnd_param: string,
+) => {
+
+  const finalResult:any = await Money.findOneAndDelete(
+    {
+      user_id: user_id_param,
+      money_dateStart: dateStart_param,
+      money_dateEnd: dateEnd_param,
+      ...dateType_param ? { money_dateType: dateType_param } : {},
     }
   )
   .lean();

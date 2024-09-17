@@ -118,7 +118,7 @@ export const UserDetail = () => {
               <Select
                 label={translate("gender")}
                 value={OBJECT.user_gender}
-                inputRef={REFS.current[i]?.user_gender}
+                inputRef={REFS[i]?.user_gender}
                 error={ERRORS[i]?.user_gender}
                 onChange={(e: any) => (
                   setOBJECT((prev: any) => ({
@@ -139,7 +139,7 @@ export const UserDetail = () => {
               <Input
                 label={translate("age")}
                 value={OBJECT.user_age}
-                inputRef={REFS.current[i]?.user_age}
+                inputRef={REFS[i]?.user_age}
                 error={ERRORS[i]?.user_age}
                 disabled={OBJECT.user_id_verified === false}
                 onChange={(e: any) => {
@@ -168,7 +168,7 @@ export const UserDetail = () => {
               <Input
                 label={translate("initScale")}
                 value={OBJECT.user_initScale}
-                inputRef={REFS.current[i]?.user_initScale}
+                inputRef={REFS[i]?.user_initScale}
                 error={ERRORS[i]?.user_initScale}
                 startadornment={
                   <Img
@@ -208,7 +208,7 @@ export const UserDetail = () => {
               <Input
                 label={translate("initProperty")}
                 value={numeral(OBJECT.user_initProperty).format("0,0")}
-                inputRef={REFS.current[i]?.user_initProperty}
+                inputRef={REFS[i]?.user_initProperty}
                 error={ERRORS[i]?.user_initProperty}
                 startadornment={
                   <Img

@@ -23,7 +23,7 @@ export const MoneyDetail = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, moneyArray, URL_OBJECT, sessionId, sessionCurrency, location_id, toList
+    navigate, location_dateType, location_dateStart, location_dateEnd, moneyArray, URL_OBJECT, sessionId, sessionCurrency, toList
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -39,6 +39,11 @@ export const MoneyDetail = () => {
     month: [""],
     year: [""],
     select: [""],
+  });
+  const [FLOW, setFLOW] = useState<any>({
+    exist: "",
+    itsMe: "",
+    itsNew: "",
   });
   const [SEND, setSEND] = useState<any>({
     id: "",
@@ -56,6 +61,32 @@ export const MoneyDetail = () => {
     dateStart: location_dateStart || dayFmt,
     dateEnd: location_dateEnd || dayFmt,
   });
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    if (EXIST?.[DATE.dateType]?.length > 0) {
+
+      const dateRange = `${DATE.dateStart} ~ ${DATE.dateEnd}`;
+      const objectRange = `${OBJECT.money_dateStart} ~ ${OBJECT.money_dateEnd}`;
+
+      const isExist = (
+        EXIST[DATE.dateType].some((item: any) => item === dateRange)
+      );
+      const itsMe = (
+        dateRange === objectRange
+      );
+      const itsNew = (
+        OBJECT.money_dateStart === "0000-00-00" &&
+        OBJECT.money_dateEnd === "0000-00-00"
+      );
+
+      setFLOW({
+        exist: isExist ? "true" : "false",
+        itsMe: itsMe ? "true" : "false",
+        itsNew: itsNew ? "true" : "false",
+      });
+    }
+  }, [EXIST]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -88,7 +119,6 @@ export const MoneyDetail = () => {
     axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId,
-        _id: "",
         DATE: DATE,
       },
     })
@@ -96,14 +126,14 @@ export const MoneyDetail = () => {
       setOBJECT(res.data.result || Money);
       // section 내부 part_idx 값에 따라 재정렬
       setOBJECT((prev: any) => {
-        const mergedFoodSection = prev?.money_section
+        const mergedSection = prev?.money_section
           ? prev.money_section.sort((a: any, b: any) => (
             a.money_part_idx - b.money_part_idx
           ))
           : [];
         return {
           ...prev,
-          money_section: mergedFoodSection,
+          money_section: mergedSection,
         };
       });
       setCOUNT((prev: any) => ({
@@ -167,12 +197,12 @@ export const MoneyDetail = () => {
   },[COUNT?.newSectionCnt]);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = async () => {
-    if (!validate(OBJECT, COUNT, DATE, EXIST)) {
+  const flowSave = async (type: string) => {
+    if (!validate(OBJECT, COUNT)) {
       setLOADING(false);
       return;
     }
-    axios.post(`${URL_OBJECT}/detail`, {
+    axios.post(`${URL_OBJECT}/${type}`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
@@ -208,7 +238,6 @@ export const MoneyDetail = () => {
     axios.delete(`${URL_OBJECT}/delete`, {
       data: {
         user_id: sessionId,
-        _id: OBJECT?._id,
         DATE: DATE,
       }
     })
@@ -246,7 +275,7 @@ export const MoneyDetail = () => {
     }));
   };
 
-  // 7. detailNode -----------------------------------------------------------------------------------
+  // 7. detailNode ---------------------------------------------------------------------------------
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
@@ -347,7 +376,7 @@ export const MoneyDetail = () => {
               <Select
                 label={translate("part")}
                 value={OBJECT?.money_section[i]?.money_part_idx}
-                inputRef={REFS?.current[i]?.money_part_idx}
+                inputRef={REFS[i]?.money_part_idx}
                 error={ERRORS[i]?.money_part_idx}
                 onChange={(e: any) => {
                   const newIndex = Number(e.target.value);
@@ -376,7 +405,7 @@ export const MoneyDetail = () => {
               <Select
                 label={translate("title")}
                 value={OBJECT?.money_section[i]?.money_title_idx}
-                inputRef={REFS?.current[i]?.money_title_idx}
+                inputRef={REFS[i]?.money_title_idx}
                 error={ERRORS[i]?.money_title_idx}
                 onChange={(e: any) => {
                   const newTitleIdx = Number(e.target.value);
@@ -406,7 +435,7 @@ export const MoneyDetail = () => {
               <Input
                 label={translate("amount")}
                 value={numeral(OBJECT?.money_section[i]?.money_amount).format("0,0")}
-                inputRef={REFS?.current[i]?.money_amount}
+                inputRef={REFS[i]?.money_amount}
                 error={ERRORS[i]?.money_amount}
                 startadornment={
                   <Img
@@ -486,10 +515,10 @@ export const MoneyDetail = () => {
   const footerNode = () => (
     <Footer
       state={{
-        DATE, SEND, COUNT, EXIST
+        DATE, SEND, COUNT, EXIST, FLOW,
       }}
       setState={{
-        setDATE, setSEND, setCOUNT, setEXIST
+        setDATE, setSEND, setCOUNT, setEXIST, setFLOW,
       }}
       flow={{
         flowSave, flowDelete

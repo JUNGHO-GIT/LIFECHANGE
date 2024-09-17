@@ -443,13 +443,12 @@ router.get("/category/list", async (req: Request, res: Response) => {
   }
 });
 
-// 3-2. categorySave -------------------------------------------------------------------------------
-router.post("/category/create", async (req: Request, res: Response) => {
+// 3-2. categoryUpdate -----------------------------------------------------------------------------
+router.post("/category/update", async (req: Request, res: Response) => {
   try {
-    let finalResult = await service.categorySave (
+    let finalResult = await service.categoryUpdate (
       req.body.user_id as string,
       req.body.OBJECT as any,
-      req.body.DATE as any,
     );
     if (finalResult.status === "success") {
       res.json({

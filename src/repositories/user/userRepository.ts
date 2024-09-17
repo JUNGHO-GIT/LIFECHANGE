@@ -18,7 +18,7 @@ export const emailFindId = async (
   user_id_param: string
 ) => {
 
-  const finalResult = await User.findOne(
+  const finalResult:any = await User.findOne(
     {
       user_id: user_id_param
     }
@@ -34,7 +34,7 @@ export const emailSendEmail = async (
   code_param: string
 ) => {
 
-  const findResult = await Verify.findOne(
+  const findResult:any = await Verify.findOne(
     {
       verify_id: user_id_param
     }
@@ -49,7 +49,7 @@ export const emailSendEmail = async (
     );
   }
 
-  const finalResult = await Verify.create(
+  const finalResult:any = await Verify.create(
     {
       verify_id: user_id_param,
       verify_code: code_param,
@@ -65,7 +65,7 @@ export const emailVerifyEmail = async (
   user_id_param: string
 ) => {
 
-  const finalResult = await Verify.findOne(
+  const finalResult:any = await Verify.findOne(
     {
       verify_id: user_id_param
     }
@@ -80,7 +80,7 @@ export const userCheckId = async (
   user_id_param: string
 ) => {
 
-  const finalResult = await User.findOne(
+  const finalResult:any = await User.findOne(
     {
       user_id: user_id_param
     }
@@ -96,7 +96,7 @@ export const userSignup = async (
   OBJECT_param: any
 ) => {
 
-  const finalResult = await User.create(
+  const finalResult:any = await User.create(
     {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
@@ -124,7 +124,7 @@ export const userResetPw = async (
   OBJECT_param: any
 ) => {
 
-  const finalResult = await User.findOneAndUpdate(
+  const finalResult:any = await User.findOneAndUpdate(
     {
       user_id: user_id_param
     },
@@ -149,7 +149,7 @@ export const userLogin = async (
   user_pw_param: string
 ) => {
 
-  const finalResult = await User.findOne(
+  const finalResult:any = await User.findOne(
     {
       user_id: user_id_param,
       user_pw: user_pw_param
@@ -165,7 +165,7 @@ export const userDetail = async (
   user_id_param: string
 ) => {
 
-  const finalResult = await User.findOne(
+  const finalResult:any = await User.findOne(
     {
       user_id: user_id_param
     }
@@ -181,7 +181,7 @@ export const userUpdate = async (
   OBJECT_param: any
 ) => {
 
-  const finalResult = await User.findOneAndUpdate(
+  const finalResult:any = await User.findOneAndUpdate(
     {
       user_id: user_id_param
     },
@@ -265,7 +265,7 @@ export const categoryList = async (
   user_id_param: string
 ) => {
 
-  const finalResult = await User.aggregate([
+  const finalResult:any = await User.aggregate([
     {
       $match: {
         user_id: user_id_param
@@ -288,56 +288,15 @@ export const categoryList = async (
   return finalResult[0];
 };
 
-// 3-2. category - detail --------------------------------------------------------------------------
-export const categoryDetail = async (
-  user_id_param: string,
-  _id_param: string
-) => {
-
-  const finalResult = await User.findOne(
-    {
-      user_id: user_id_param,
-      _id: !_id_param ? {$exists: true} : _id_param
-    }
-  )
-  .lean();
-
-  return finalResult;
-};
-
-// 3-3. category - save ----------------------------------------------------------------------------
-export const categorySave = async (
-  user_id_param: string,
-  OBJECT_param: any
-) => {
-
-  const finalResult = await User.create(
-    {
-      _id: new mongoose.Types.ObjectId(),
-      user_id: user_id_param,
-      user_google: OBJECT_param.user_google,
-      user_pw: OBJECT_param.user_pw,
-      user_image: OBJECT_param.user_image,
-      dataCategory: OBJECT_param.dataCategory,
-      user_regDt: newDate,
-      user_updateDt: ""
-    }
-  );
-
-  return finalResult;
-};
-
 // 3-4. category - update --------------------------------------------------------------------------
 export const categoryUpdate = async (
   user_id_param: string,
-  _id_param: string,
   OBJECT_param: any
 ) => {
 
-  const finalResult = await User.findOneAndUpdate(
+  const finalResult:any = await User.findOneAndUpdate(
     {
       user_id: user_id_param,
-      _id: !_id_param ? {$exists: true} : _id_param
     },
     {
       $set: {
@@ -420,7 +379,7 @@ export const dummyCount = async (
 ) => {
 
   if (type_param === "exerciseGoal") {
-    const finalResult = await ExerciseGoal.countDocuments(
+    const finalResult:any = await ExerciseGoal.countDocuments(
       {
         user_id: user_id_param
       }
@@ -428,7 +387,7 @@ export const dummyCount = async (
     return finalResult;
   }
   else if (type_param === "exercise") {
-    const finalResult = await Exercise.countDocuments(
+    const finalResult:any = await Exercise.countDocuments(
       {
         user_id: user_id_param
       }
@@ -436,7 +395,7 @@ export const dummyCount = async (
     return finalResult;
   }
   else if (type_param === "foodGoal") {
-    const finalResult = await FoodGoal.countDocuments(
+    const finalResult:any = await FoodGoal.countDocuments(
       {
         user_id: user_id_param
       }
@@ -444,7 +403,7 @@ export const dummyCount = async (
     return finalResult;
   }
   else if (type_param === "food") {
-    const finalResult = await Food.countDocuments(
+    const finalResult:any = await Food.countDocuments(
       {
         user_id: user_id_param
       }
@@ -452,7 +411,7 @@ export const dummyCount = async (
     return finalResult;
   }
   else if (type_param === "moneyGoal") {
-    const finalResult = await MoneyGoal.countDocuments(
+    const finalResult:any = await MoneyGoal.countDocuments(
       {
         user_id: user_id_param
       }
@@ -460,7 +419,7 @@ export const dummyCount = async (
     return finalResult;
   }
   else if (type_param === "money") {
-    const finalResult = await Money.countDocuments(
+    const finalResult:any = await Money.countDocuments(
       {
         user_id: user_id_param
       }
@@ -468,7 +427,7 @@ export const dummyCount = async (
     return finalResult;
   }
   else if (type_param === "sleepGoal") {
-    const finalResult = await SleepGoal.countDocuments(
+    const finalResult:any = await SleepGoal.countDocuments(
       {
         user_id: user_id_param
       }
@@ -476,7 +435,7 @@ export const dummyCount = async (
     return finalResult;
   }
   else if (type_param === "sleep") {
-    const finalResult = await Sleep.countDocuments(
+    const finalResult:any = await Sleep.countDocuments(
       {
         user_id: user_id_param
       }
@@ -493,7 +452,7 @@ export const dummyList = async (
 ) => {
 
   if (type_param === "exerciseGoal") {
-    const finalResult = await ExerciseGoal.aggregate([
+    const finalResult:any = await ExerciseGoal.aggregate([
       {
         $match: {
           user_id: user_id_param
@@ -511,7 +470,7 @@ export const dummyList = async (
     return finalResult;
   }
   else if (type_param === "exercise") {
-    const finalResult = await Exercise.aggregate([
+    const finalResult:any = await Exercise.aggregate([
       {
         $match: {
           user_id: user_id_param
@@ -529,7 +488,7 @@ export const dummyList = async (
     return finalResult;
   }
   else if (type_param === "foodGoal") {
-    const finalResult = await FoodGoal.aggregate([
+    const finalResult:any = await FoodGoal.aggregate([
       {
         $match: {
           user_id: user_id_param
@@ -547,7 +506,7 @@ export const dummyList = async (
     return finalResult;
   }
   else if (type_param === "food") {
-    const finalResult = await Food.aggregate([
+    const finalResult:any = await Food.aggregate([
       {
         $match: {
           user_id: user_id_param
@@ -565,7 +524,7 @@ export const dummyList = async (
     return finalResult;
   }
   else if (type_param === "moneyGoal") {
-    const finalResult = await MoneyGoal.aggregate([
+    const finalResult:any = await MoneyGoal.aggregate([
       {
         $match: {
           user_id: user_id_param
@@ -583,7 +542,7 @@ export const dummyList = async (
     return finalResult;
   }
   else if (type_param === "money") {
-    const finalResult = await Money.aggregate([
+    const finalResult:any = await Money.aggregate([
       {
         $match: {
           user_id: user_id_param
@@ -601,7 +560,7 @@ export const dummyList = async (
     return finalResult;
   }
   else if (type_param === "sleepGoal") {
-    const finalResult = await SleepGoal.aggregate([
+    const finalResult:any = await SleepGoal.aggregate([
       {
         $match: {
           user_id: user_id_param
@@ -619,7 +578,7 @@ export const dummyList = async (
     return finalResult;
   }
   else if (type_param === "sleep") {
-    const finalResult = await Sleep.aggregate([
+    const finalResult:any = await Sleep.aggregate([
       {
         $match: {
           user_id: user_id_param
@@ -646,35 +605,35 @@ export const dummySave = async (
 ) => {
 
   if (type_param === "exerciseGoal") {
-    const finalResult = await ExerciseGoal.insertMany(OBJECT_param);
+    const finalResult:any = await ExerciseGoal.insertMany(OBJECT_param);
     return finalResult;
   }
   else if (type_param === "exercise") {
-    const finalResult = await Exercise.insertMany(OBJECT_param);
+    const finalResult:any = await Exercise.insertMany(OBJECT_param);
     return finalResult;
   }
   else if (type_param === "foodGoal") {
-    const finalResult = await FoodGoal.insertMany(OBJECT_param);
+    const finalResult:any = await FoodGoal.insertMany(OBJECT_param);
     return finalResult;
   }
   else if (type_param === "food") {
-    const finalResult = await Food.insertMany(OBJECT_param);
+    const finalResult:any = await Food.insertMany(OBJECT_param);
     return finalResult;
   }
   else if (type_param === "moneyGoal") {
-    const finalResult = await MoneyGoal.insertMany(OBJECT_param);
+    const finalResult:any = await MoneyGoal.insertMany(OBJECT_param);
     return finalResult;
   }
   else if (type_param === "money") {
-    const finalResult = await Money.insertMany(OBJECT_param);
+    const finalResult:any = await Money.insertMany(OBJECT_param);
     return finalResult;
   }
   else if (type_param === "sleepGoal") {
-    const finalResult = await SleepGoal.insertMany(OBJECT_param);
+    const finalResult:any = await SleepGoal.insertMany(OBJECT_param);
     return finalResult;
   }
   else if (type_param === "sleep") {
-    const finalResult = await Sleep.insertMany(OBJECT_param);
+    const finalResult:any = await Sleep.insertMany(OBJECT_param);
     return finalResult;
   }
 }
@@ -686,7 +645,7 @@ export const dummyDelete = async (
 ) => {
 
   if (type_param === "exerciseGoal") {
-    const finalResult = await ExerciseGoal.deleteMany(
+    const finalResult:any = await ExerciseGoal.deleteMany(
       {
         user_id: user_id_param,
         exercise_goal_dummy: "Y"
@@ -695,7 +654,7 @@ export const dummyDelete = async (
     return finalResult;
   }
   else if (type_param === "exercise") {
-    const finalResult = await Exercise.deleteMany(
+    const finalResult:any = await Exercise.deleteMany(
       {
         user_id: user_id_param,
         exercise_dummy: "Y"
@@ -704,7 +663,7 @@ export const dummyDelete = async (
     return finalResult;
   }
   else if (type_param === "foodGoal") {
-    const finalResult = await FoodGoal.deleteMany(
+    const finalResult:any = await FoodGoal.deleteMany(
       {
         user_id: user_id_param,
         food_goal_dummy: "Y"
@@ -713,7 +672,7 @@ export const dummyDelete = async (
     return finalResult;
   }
   else if (type_param === "food") {
-    const finalResult = await Food.deleteMany(
+    const finalResult:any = await Food.deleteMany(
       {
         user_id: user_id_param,
         food_dummy: "Y"
@@ -722,7 +681,7 @@ export const dummyDelete = async (
     return finalResult;
   }
   else if (type_param === "moneyGoal") {
-    const finalResult = await MoneyGoal.deleteMany(
+    const finalResult:any = await MoneyGoal.deleteMany(
       {
         user_id: user_id_param,
         money_goal_dummy: "Y"
@@ -731,7 +690,7 @@ export const dummyDelete = async (
     return finalResult;
   }
   else if (type_param === "money") {
-    const finalResult = await Money.deleteMany(
+    const finalResult:any = await Money.deleteMany(
       {
         user_id: user_id_param,
         money_dummy: "Y"
@@ -740,7 +699,7 @@ export const dummyDelete = async (
     return finalResult;
   }
   else if (type_param === "sleepGoal") {
-    const finalResult = await SleepGoal.deleteMany(
+    const finalResult:any = await SleepGoal.deleteMany(
       {
         user_id: user_id_param,
         sleep_goal_dummy: "Y"
@@ -749,7 +708,7 @@ export const dummyDelete = async (
     return finalResult;
   }
   else if (type_param === "sleep") {
-    const finalResult = await Sleep.deleteMany(
+    const finalResult:any = await Sleep.deleteMany(
       {
         user_id: user_id_param,
         sleep_dummy: "Y"

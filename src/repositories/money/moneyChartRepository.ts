@@ -9,7 +9,7 @@ export const barGoal = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await MoneyGoal.aggregate([
+  const finalResult:any = await MoneyGoal.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -47,7 +47,7 @@ export const barReal = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Money.aggregate([
+  const finalResult:any = await Money.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -85,7 +85,7 @@ export const pieIncome = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Money.aggregate([
+  const finalResult:any = await Money.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -134,7 +134,7 @@ export const pieExpense = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Money.aggregate([
+  const finalResult:any = await Money.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -183,7 +183,7 @@ export const lineAll = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Money.aggregate([
+  const finalResult:any = await Money.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -221,7 +221,7 @@ export const avgAll = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Money.aggregate([
+  const finalResult:any = await Money.aggregate([
     {
       $match: {
         user_id: user_id_param,

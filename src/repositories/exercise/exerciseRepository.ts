@@ -13,7 +13,7 @@ export const exist = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await Exercise.aggregate([
+  const finalResult:any = await Exercise.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -23,9 +23,7 @@ export const exist = async (
         exercise_dateEnd: {
           $gte: dateStart_param,
         },
-        ...dateType_param ? {
-          exercise_dateType: dateType_param
-        } : {},
+        ...dateType_param ? { exercise_dateType: dateType_param } : {},
       }
     },
     {
@@ -54,7 +52,7 @@ export const cnt = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await Exercise.countDocuments(
+  const finalResult:any = await Exercise.countDocuments(
     {
       user_id: user_id_param,
       exercise_dateStart: {
@@ -65,9 +63,7 @@ export const cnt = async (
         $gte: dateStart_param,
         $lte: dateEnd_param
       },
-      ...dateType_param ? {
-        exercise_dateType: dateType_param
-      } : {},
+      ...dateType_param ? { exercise_dateType: dateType_param } : {},
     }
   );
 
@@ -84,7 +80,7 @@ export const list = async (
   page_param: number,
 ) => {
 
-  const finalResult = await Exercise.aggregate([
+  const finalResult:any = await Exercise.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -96,9 +92,7 @@ export const list = async (
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...dateType_param ? {
-          exercise_dateType: dateType_param
-        } : {},
+        ...dateType_param ? { exercise_dateType: dateType_param } : {},
       }
     },
     {
@@ -128,25 +122,17 @@ export const list = async (
 // 2. detail ---------------------------------------------------------------------------------------
 export const detail = async (
   user_id_param: string,
-  _id_param: string,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await Exercise.findOne(
+  const finalResult:any = await Exercise.findOne(
     {
       user_id: user_id_param,
-      _id: !_id_param ? { $exists: true } : _id_param,
-      exercise_dateStart: {
-        $eq: dateStart_param
-      },
-      exercise_dateEnd: {
-        $eq: dateEnd_param
-      },
-      ...dateType_param ? {
-        exercise_dateType: dateType_param
-      } : {},
+      exercise_dateStart: dateStart_param,
+      exercise_dateEnd: dateEnd_param,
+      ...dateType_param ? { exercise_dateType: dateType_param } : {},
     }
   )
   .lean();
@@ -154,7 +140,7 @@ export const detail = async (
   return finalResult;
 };
 
-// 3. create ---------------------------------------------------------------------------------------
+// 3. create (기존항목 제거 + 타겟항목에 생성) -----------------------------------------------------
 export const create = async (
   user_id_param: string,
   OBJECT_param: any,
@@ -162,11 +148,11 @@ export const create = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  
-  const finalResult = await Exercise.create(
+
+  const finalResult:any = await Exercise.create(
     {
-      user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
+      user_id: user_id_param,
       exercise_dummy: "N",
       exercise_dateType: dateType_param,
       exercise_dateStart: dateStart_param,
@@ -183,102 +169,46 @@ export const create = async (
   return finalResult;
 };
 
-// 4. update --------------------------------------------------------------------------------------
-export const update = async (
-  user_id_param: string,
-  _id_param: string,
-  OBJECT_param: any,
-  dateType_param: string,
-  dateStart_param: string,
-  dateEnd_param: string,
-) => {
-
-  const finalResult = await Exercise.findOneAndUpdate(
-    {
-      user_id: user_id_param,
-      _id: !_id_param ? { $exists: true } : _id_param,
-      exercise_dateStart: {
-        $eq: dateStart_param
-      },
-      exercise_dateEnd: {
-        $eq: dateEnd_param
-      },
-      ...dateType_param ? {
-        exercise_dateType: dateType_param
-      } : {},
-    },
-    {
-      $set: {
-        exercise_total_volume: OBJECT_param.exercise_total_volume,
-        exercise_total_cardio: OBJECT_param.exercise_total_cardio,
-        exercise_total_weight: OBJECT_param.exercise_total_weight,
-        exercise_section: OBJECT_param.exercise_section,
-        exercise_updateDt: newDate,
-      }
-    },
-    {
-      upsert: true,
-      new: true
-    }
-  )
-  .lean();
-
-  return finalResult;
-};
-
-// 4. insert ---------------------------------------------------------------------------------------
+// 4. insert (기존항목 유지 + 타겟항목에 끼워넣기) -------------------------------------------------
 export const insert = async (
   user_id_param: string,
-  _id_param: string,
   OBJECT_param: any,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  
-  const findResult = await Exercise.findOne(
+
+  const findResult: any = await Exercise.findOne(
     {
       user_id: user_id_param,
-      _id: !_id_param ? { $exists: true } : _id_param,
-      exercise_dateStart: {
-        $eq: dateStart_param
-      },
-      exercise_dateEnd: {
-        $eq: dateEnd_param
-      },
-      ...dateType_param ? {
-        exercise_dateType: dateType_param
-      } : {},
+      exercise_dateStart: dateStart_param,
+      exercise_dateEnd: dateEnd_param,
+      ...dateType_param ? { exercise_dateType: dateType_param } : {},
     },
   )
   .lean();
-  
+
   const newVolume = String (
     parseFloat(findResult.exercise_total_volume) +
     parseFloat(OBJECT_param.exercise_total_volume)
   );
-  const newCardio = String (decimalToTime(
-    parseFloat(timeToDecimal(findResult.exercise_total_cardio)) +
-    parseFloat(timeToDecimal(OBJECT_param.exercise_total_cardio))
-  ));
+  const newCardio = String (
+    decimalToTime(
+      parseFloat(timeToDecimal(findResult.exercise_total_cardio)) +
+      parseFloat(timeToDecimal(OBJECT_param.exercise_total_cardio))
+    )
+  );
   const newWeight = String (
     parseFloat(findResult.exercise_total_weight) +
     parseFloat(OBJECT_param.exercise_total_weight)
   );
 
-  const finalResult = await Exercise.updateOne(
+  const finalResult:any = await Exercise.updateOne(
     {
       user_id: user_id_param,
-      _id: !_id_param ? { $exists: true } : _id_param,
-      exercise_dateStart: {
-        $eq: dateStart_param
-      },
-      exercise_dateEnd: {
-        $eq: dateEnd_param
-      },
-      ...dateType_param ? {
-        exercise_dateType: dateType_param
-      } : {},
+      exercise_dateStart: dateStart_param,
+      exercise_dateEnd: dateEnd_param,
+      ...dateType_param ? { exercise_dateType: dateType_param } : {},
     },
     {
       $set: {
@@ -301,29 +231,21 @@ export const insert = async (
   return finalResult;
 };
 
-// 5. replace --------------------------------------------------------------------------------------
+// 5. replace (기존항목 유지 + 타겟항목을 대체) ----------------------------------------------------
 export const replace = async (
   user_id_param: string,
-  _id_param: string,
   OBJECT_param: any,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await Exercise.findOneAndUpdate(
+  const finalResult:any = await Exercise.findOneAndUpdate(
     {
       user_id: user_id_param,
-      _id: !_id_param ? { $exists: true } : _id_param,
-      exercise_dateStart: {
-        $eq: dateStart_param
-      },
-      exercise_dateEnd: {
-        $eq: dateEnd_param
-      },
-      ...dateType_param ? {
-        exercise_dateType: dateType_param
-      } : {},
+      exercise_dateStart: dateStart_param,
+      exercise_dateEnd: dateEnd_param,
+      ...dateType_param ? { exercise_dateType: dateType_param } : {},
     },
     {
       $set: {
@@ -344,28 +266,20 @@ export const replace = async (
   return finalResult;
 };
 
-// 6. delete --------------------------------------------------------------------------------------
+// 6. delete (타겟항목 제거) -----------------------------------------------------------------------
 export const deletes = async (
   user_id_param: string,
-  _id_param: string,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await Exercise.findOneAndDelete(
+  const finalResult:any = await Exercise.findOneAndDelete(
     {
       user_id: user_id_param,
-      _id: !_id_param ? {$exists:true} : _id_param,
-      exercise_dateStart: {
-        $eq: dateStart_param
-      },
-      exercise_dateEnd: {
-        $eq: dateEnd_param
-      },
-      ...dateType_param ? {
-        exercise_dateType: dateType_param
-      } : {},
+      exercise_dateStart: dateStart_param,
+      exercise_dateEnd: dateEnd_param,
+      ...dateType_param ? { exercise_dateType: dateType_param } : {},
     }
   )
   .lean();

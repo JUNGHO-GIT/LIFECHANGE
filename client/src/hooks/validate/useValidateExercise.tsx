@@ -8,7 +8,7 @@ export const useValidateExercise= () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    PATH, TITLE
+    PATH,
   } = useCommonValue();
   const {
     translate
@@ -19,7 +19,7 @@ export const useValidateExercise= () => {
   const [ERRORS, setERRORS] = useState<any>({});
   const validate = useRef<any>(() => {});
 
-  // -----------------------------------------------------------------------------------------------
+  // alert 표시 및 focus ---------------------------------------------------------------------------
   const showAlertAndFocus = (field: string, msg: string, idx: number) => {
     alert(translate(msg));
     REFS.current?.[idx]?.[field]?.current?.focus();
@@ -33,7 +33,7 @@ export const useValidateExercise= () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    // 1. goal/detail
+    // 1. goal
     if (PATH.includes("exercise/goal/detail")) {
       const target = [
         "exercise_goal_count",
@@ -76,7 +76,7 @@ export const useValidateExercise= () => {
       };
     }
 
-    // 2. save
+    // 2. real
     else if (PATH.includes("exercise/detail")) {
       const target = [
         "exercise_part_idx",

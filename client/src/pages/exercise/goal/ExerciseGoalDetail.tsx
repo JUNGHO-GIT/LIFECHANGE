@@ -23,8 +23,7 @@ export const ExerciseGoalDetail = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId,
-    location_id, toList
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, toList
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -40,6 +39,11 @@ export const ExerciseGoalDetail = () => {
     month: [""],
     year: [""],
     select: [""],
+  });
+  const [FLOW, setFLOW] = useState<any>({
+    exist: "",
+    itsMe: "",
+    itsNew: "",
   });
   const [SEND, setSEND] = useState<any>({
     id: "",
@@ -60,6 +64,32 @@ export const ExerciseGoalDetail = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    if (EXIST?.[DATE.dateType]?.length > 0) {
+
+      const dateRange = `${DATE.dateStart} ~ ${DATE.dateEnd}`;
+      const objectRange = `${OBJECT.exercise_goal_dateStart} ~ ${OBJECT.exercise_goal_dateEnd}`;
+
+      const isExist = (
+        EXIST[DATE.dateType].some((item: any) => item === dateRange)
+      );
+      const itsMe = (
+        dateRange === objectRange
+      );
+      const itsNew = (
+        OBJECT.exercise_goal_dateStart === "0000-00-00" &&
+        OBJECT.exercise_goal_dateEnd === "0000-00-00"
+      );
+
+      setFLOW({
+        exist: isExist ? "true" : "false",
+        itsMe: itsMe ? "true" : "false",
+        itsNew: itsNew ? "true" : "false",
+      });
+    }
+  }, [EXIST]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -89,7 +119,6 @@ export const ExerciseGoalDetail = () => {
     axios.get(`${URL_OBJECT}/goal/detail`, {
       params: {
         user_id: sessionId,
-        _id: "",
         DATE: DATE,
       },
     })
@@ -111,12 +140,12 @@ export const ExerciseGoalDetail = () => {
   }, [sessionId, DATE.dateEnd]);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = async () => {
-    if (!validate(OBJECT, COUNT, DATE)) {
+  const flowSave = async (type: string) => {
+    if (!validate(OBJECT, COUNT)) {
       setLOADING(false);
       return;
     }
-    axios.post(`${URL_OBJECT}/goal/detail`, {
+    axios.post(`${URL_OBJECT}/goal/${type}`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
@@ -152,7 +181,6 @@ export const ExerciseGoalDetail = () => {
     axios.delete(`${URL_OBJECT}/goal/delete`, {
       data: {
         user_id: sessionId,
-        _id: OBJECT?._id,
         DATE: DATE,
       }
     })
@@ -240,7 +268,7 @@ export const ExerciseGoalDetail = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.exercise_goal_count).format("0,0")}
-                inputRef={REFS.current[i]?.exercise_goal_count}
+                inputRef={REFS[i]?.exercise_goal_count}
                 error={ERRORS[i]?.exercise_goal_count}
                 label={
                   DATE.dateType === "day" ? (
@@ -282,7 +310,7 @@ export const ExerciseGoalDetail = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.exercise_goal_volume).format("0,0")}
-                inputRef={REFS.current[i]?.exercise_goal_volume}
+                inputRef={REFS[i]?.exercise_goal_volume}
                 error={ERRORS[i]?.exercise_goal_volume}
                 label={
                   DATE.dateType === "day" ? (
@@ -336,7 +364,7 @@ export const ExerciseGoalDetail = () => {
             <Input
               label={translate("goalWeight")}
               value={OBJECT?.exercise_goal_weight}
-              inputRef={REFS.current[i]?.exercise_goal_weight}
+              inputRef={REFS[i]?.exercise_goal_weight}
               error={ERRORS[i]?.exercise_goal_weight}
               startadornment={
                 <Img
@@ -393,10 +421,10 @@ export const ExerciseGoalDetail = () => {
   const footerNode = () => (
     <Footer
       state={{
-        DATE, SEND, COUNT, EXIST
+        DATE, SEND, COUNT, EXIST, FLOW,
       }}
       setState={{
-        setDATE, setSEND, setCOUNT, setEXIST
+        setDATE, setSEND, setCOUNT, setEXIST, setFLOW,
       }}
       flow={{
         flowSave, flowDelete

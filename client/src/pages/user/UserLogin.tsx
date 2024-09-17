@@ -196,7 +196,7 @@ export const UserLogin = () => {
               <Input
                 label={translate("id")}
                 value={OBJECT.user_id}
-                inputRef={REFS.current[i]?.user_id}
+                inputRef={REFS[i]?.user_id}
                 error={ERRORS[i]?.user_id}
                 onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
@@ -211,7 +211,7 @@ export const UserLogin = () => {
                 type={"password"}
                 label={translate("pw")}
                 value={OBJECT.user_pw}
-                inputRef={REFS.current[i]?.user_pw}
+                inputRef={REFS[i]?.user_pw}
                 error={ERRORS[i]?.user_pw}
                 onChange={(e: any) => {
                   setOBJECT((prev: any) => ({

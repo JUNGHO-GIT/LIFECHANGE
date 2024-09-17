@@ -11,16 +11,15 @@ export const useValidateMoney= () => {
     PATH,
   } = useCommonValue();
   const {
-    translate,
+    translate
   } = useTranslate();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [ERRORS, setERRORS] = useState<any>({});
   const REFS: any = useRef<any>({});
+  const [ERRORS, setERRORS] = useState<any>({});
   const validate = useRef<any>(() => {});
-  let returnValid = false;
 
-  // 에러 메시지 출력 및 포커스
+  // alert 표시 및 focus ---------------------------------------------------------------------------
   const showAlertAndFocus = (field: string, msg: string, idx: number) => {
     alert(translate(msg));
     REFS.current?.[idx]?.[field]?.current?.focus();
@@ -29,109 +28,73 @@ export const useValidateMoney= () => {
         [field]: true,
       },
     });
-    return returnValid;
+    return false;
   };
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    // 1. goal/detail
+    // 1. goal
     if (PATH.includes("money/goal/detail")) {
       const target = [
         "money_goal_income",
         "money_goal_expense",
       ];
-      setERRORS(
-        target.reduce((acc: any[], cur: string) => {
-          acc.push({
-            [cur]: false
-          });
-          return acc;
-        }, [])
-      );
-      REFS.current = (
-        target.reduce((acc: any[], cur: string) => {
-          acc.push({
-            [cur]: createRef()
-          });
-          return acc;
-        }, [])
-      );
-      validate.current = (OBJECT: any, COUNT: any, DATE: any, EXIST: any) => {
-
-        // 카운트가 0인 경우
+      setERRORS(target.reduce((acc: any[], cur: string) => {
+        acc.push({
+          [cur]: false
+        });
+        return acc;
+      }, []));
+      REFS.current = (target.reduce((acc: any[], cur: string) => {
+        acc.push({
+          [cur]: createRef()
+        });
+        return acc;
+      }, []));
+      validate.current = (OBJECT: any, COUNT: any) => {
         if (COUNT.newSectionCnt === 0) {
           alert(translate("errorCount"));
-          return returnValid;
+          return false;
         }
-
-        // EXIST 배열에서 바로 필터링 조건 적용
-        for (let i = 0; i < EXIST.length; i++) {
-          if (EXIST[i] === DATE.dateStart && EXIST[i] === DATE.dateEnd) {
-            const confirm = window.confirm(translate("dataAlreadyExist"));
-            if (confirm) {
-              return !returnValid;
-            }
-            else {
-              return returnValid;
-            }
-          }
-        }
-        if (!OBJECT.money_goal_income || OBJECT.money_goal_income === "0") {
+        else if (!OBJECT.money_goal_income || OBJECT.money_goal_income === "0") {
           return showAlertAndFocus('money_goal_income', "errorMoneyGoalIncome", 0);
         }
         else if (!OBJECT.money_goal_expense || OBJECT.money_goal_expense === "0") {
           return showAlertAndFocus('money_goal_expense', "errorMoneyGoalExpense", 0);
         }
-        return !returnValid;
+        else {
+          return true;
+        }
       }
     }
 
-    // 2. save
+    // 2. real
     else if (PATH.includes("money/detail")) {
       const target = [
         "money_part_idx",
         "money_title_idx",
         "money_amount",
       ];
-      setERRORS(
-        target.reduce((acc: any[], cur: string) => {
-          acc.push({
-            [cur]: false
-          });
-          return acc;
-        }, [])
-      );
-      REFS.current = (
-        target.reduce((acc: any[], cur: string) => {
-          acc.push({
-            [cur]: createRef()
-          });
-          return acc;
-        }, [])
-      );
-      validate.current = (OBJECT: any, COUNT: any, DATE: any, EXIST: any) => {
-
-        // 카운트가 0인 경우
-        if (COUNT.newSectionCnt === 0) {
-          alert(translate("errorCount"));
-          return returnValid;
-        }
-
-        // EXIST 배열에서 바로 필터링 조건 적용
-        for (let i = 0; i < EXIST.length; i++) {
-          if (EXIST[i] === DATE.dateStart && EXIST[i] === DATE.dateEnd) {
-            const confirm = window.confirm(translate("dataAlreadyExist"));
-            if (confirm) {
-              return !returnValid;
-            }
-            else {
-              return returnValid;
-            }
-          }
-        }
+      setERRORS(target.reduce((acc: any[], cur: string) => {
+        acc.push({
+          [cur]: false
+        });
+        return acc;
+      }, []));
+      REFS.current = (target.reduce((acc: any[], cur: string) => {
+        acc.push({
+          [cur]: createRef()
+        });
+        return acc;
+      }, []));
+      validate.current = (OBJECT: any, COUNT: any) => {
         const section = OBJECT.money_section;
         for (let i = 0; i < section.length; i++) {
-          if (!section[i].money_part_idx || section[i].money_part_idx === 0) {
+          if (COUNT.newSectionCnt === 0) {
+            alert(translate("errorCount"));
+            return false;
+          }
+          else if (!section[i].money_part_idx || section[i].money_part_idx === 0) {
             return showAlertAndFocus('money_part_idx', "errorMoneyPart", i);
           }
           else if (!section[i].money_title_idx || section[i].money_title_idx === 0) {
@@ -140,16 +103,18 @@ export const useValidateMoney= () => {
           else if (!section[i].money_amount || section[i].money_amount === "0") {
             return showAlertAndFocus('money_amount', "errorMoneyAmount", i);
           }
+          else {
+            return true;
+          }
         }
-        return !returnValid;
       };
     }
   }, [PATH]);
 
   // 10. return ------------------------------------------------------------------------------------
   return {
-    ERRORS,
-    REFS,
+    ERRORS: ERRORS,
+    REFS: REFS.current,
     validate: validate.current,
   };
 };

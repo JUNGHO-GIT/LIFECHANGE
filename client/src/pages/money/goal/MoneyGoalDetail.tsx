@@ -40,6 +40,11 @@ export const MoneyGoalDetail = () => {
     year: [""],
     select: [""],
   });
+  const [FLOW, setFLOW] = useState<any>({
+    exist: "",
+    itsMe: "",
+    itsNew: "",
+  });
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "day",
@@ -56,6 +61,32 @@ export const MoneyGoalDetail = () => {
     dateStart: location_dateStart || dayFmt,
     dateEnd: location_dateEnd || dayFmt,
   });
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    if (EXIST?.[DATE.dateType]?.length > 0) {
+
+      const dateRange = `${DATE.dateStart} ~ ${DATE.dateEnd}`;
+      const objectRange = `${OBJECT.money_goal_dateStart} ~ ${OBJECT.money_goal_dateEnd}`;
+
+      const isExist = (
+        EXIST[DATE.dateType].some((item: any) => item === dateRange)
+      );
+      const itsMe = (
+        dateRange === objectRange
+      );
+      const itsNew = (
+        OBJECT.money_goal_dateStart === "0000-00-00" &&
+        OBJECT.money_goal_dateEnd === "0000-00-00"
+      );
+
+      setFLOW({
+        exist: isExist ? "true" : "false",
+        itsMe: itsMe ? "true" : "false",
+        itsNew: itsNew ? "true" : "false",
+      });
+    }
+  }, [EXIST]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -85,7 +116,6 @@ export const MoneyGoalDetail = () => {
     axios.get(`${URL_OBJECT}/goal/detail`, {
       params: {
         user_id: sessionId,
-        _id: "",
         DATE: DATE,
       },
     })
@@ -107,12 +137,12 @@ export const MoneyGoalDetail = () => {
   }, [sessionId, DATE.dateEnd]);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = async () => {
-    if (!validate(OBJECT, COUNT, DATE, EXIST)) {
+  const flowSave = async (type: string) => {
+    if (!validate(OBJECT, COUNT)) {
       setLOADING(false);
       return;
     }
-    axios.post(`${URL_OBJECT}/goal/detail`, {
+    axios.post(`${URL_OBJECT}/goal/${type}`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
@@ -148,7 +178,6 @@ export const MoneyGoalDetail = () => {
     axios.delete(`${URL_OBJECT}/goal/delete`, {
       data: {
         user_id: sessionId,
-        _id: OBJECT?._id,
         DATE: DATE,
       }
     })
@@ -234,7 +263,7 @@ export const MoneyGoalDetail = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.money_goal_income).format("0,0")}
-                inputRef={REFS.current[i]?.money_goal_income}
+                inputRef={REFS[i]?.money_goal_income}
                 error={ERRORS[i]?.money_goal_income}
                 label={
                   DATE.dateType === "day" ? (
@@ -276,7 +305,7 @@ export const MoneyGoalDetail = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.money_goal_expense).format("0,0")}
-                inputRef={REFS.current[i]?.money_goal_expense}
+                inputRef={REFS[i]?.money_goal_expense}
                 error={ERRORS[i]?.money_goal_expense}
                 label={
                   DATE.dateType === "day" ? (
@@ -341,10 +370,10 @@ export const MoneyGoalDetail = () => {
   const footerNode = () => (
     <Footer
       state={{
-        DATE, SEND, COUNT, EXIST
+        DATE, SEND, COUNT, EXIST, FLOW,
       }}
       setState={{
-        setDATE, setSEND, setCOUNT, setEXIST
+        setDATE, setSEND, setCOUNT, setEXIST, setFLOW,
       }}
       flow={{
         flowSave, flowDelete

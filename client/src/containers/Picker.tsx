@@ -208,7 +208,7 @@ export const Picker = (
                         let zIndex = 0;
 
                         if (DATE.dateStart && DATE.dateEnd) {
-                          isSelected = DATE.dateStart <= getDayFmt(day) && DATE.dateEnd >= getDayFmt(day);
+                          isSelected = DATE.dateStart === getDayFmt(day);
                         }
                         if (EXIST?.day) {
                           EXIST?.day.forEach((item: any) => {

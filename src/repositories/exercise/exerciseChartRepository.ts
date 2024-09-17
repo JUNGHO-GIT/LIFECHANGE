@@ -9,7 +9,7 @@ export const barGoal = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await ExerciseGoal.aggregate([
+  const finalResult:any = await ExerciseGoal.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -48,7 +48,7 @@ export const barReal = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Exercise.aggregate([
+  const finalResult:any = await Exercise.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -87,7 +87,7 @@ export const piePart = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Exercise.aggregate([
+  const finalResult:any = await Exercise.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -140,7 +140,7 @@ export const pieTitle = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Exercise.aggregate([
+  const finalResult:any = await Exercise.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -193,7 +193,7 @@ export const lineVolume = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Exercise.aggregate([
+  const finalResult:any = await Exercise.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -230,7 +230,7 @@ export const lineCardio = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Exercise.aggregate([
+  const finalResult:any = await Exercise.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -267,7 +267,7 @@ export const avgVolume = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Exercise.aggregate([
+  const finalResult:any = await Exercise.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -304,7 +304,7 @@ export const avgCardio = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Exercise.aggregate([
+  const finalResult:any = await Exercise.aggregate([
     {
       $match: {
         user_id: user_id_param,

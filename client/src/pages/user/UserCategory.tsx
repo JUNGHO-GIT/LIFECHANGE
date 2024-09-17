@@ -24,7 +24,7 @@ export const UserCategory = () => {
     dayFmt
   } = useCommonDate();
   const {
-    navigate, location_dateStart, location_dateEnd, PATH, dataCategoryArray,
+    location_dateStart, location_dateEnd, PATH, dataCategoryArray,
     URL_OBJECT, sessionId, TITLE, location_dateType, firstStr
   } = useCommonValue();
   const {
@@ -69,10 +69,10 @@ export const UserCategory = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (isEditable.startsWith(`${dataType}_part_`)) {
-      REFS.current.category2?.focus();
+      REFS.category2?.focus();
     }
     else if (isEditable.startsWith(`${dataType}_title_`)) {
-      REFS.current.category3?.focus();
+      REFS.category3?.focus();
     }
   }, [isEditable]);
 
@@ -97,7 +97,7 @@ export const UserCategory = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    axios.post(`${URL_OBJECT}/category/detail`, {
+    axios.post(`${URL_OBJECT}/category/update`, {
       user_id: sessionId,
       OBJECT: OBJECT
     })
@@ -270,7 +270,7 @@ export const UserCategory = () => {
                           inputclass={"fs-0-9rem"}
                           inputRef={(el: any) => {
                             if (isEditable === `${dataType}_part_${index}`) {
-                              REFS.current.category2 = el;
+                              REFS.category2 = el;
                             }
                           }}
                           onChange={(e: any) => {
@@ -373,7 +373,7 @@ export const UserCategory = () => {
                             inputclass={"fs-0-9rem"}
                             inputRef={(el: any) => {
                               if (isEditable === `${dataType}_title_${index}`) {
-                                REFS.current.category3 = el;
+                                REFS.category3 = el;
                               }
                             }}
                             onChange={(e: any) => {

@@ -8,7 +8,7 @@ import { User } from "@schemas/user/User";
 export const findUser = async (
   user_id_param: string,
 ) => {
-  const findResult = await User.findOne({
+  const findResult:any = await User.findOne({
     user_id: user_id_param,
     user_google: "Y",
   })
@@ -23,7 +23,7 @@ export const createUser = async (
   user_pw_param: string,
   token_param: string,
 ) => {
-  const finalResult = await User.create({
+  const finalResult:any = await User.create({
     _id: new mongoose.Types.ObjectId(),
     user_id: user_id_param,
     user_google: "Y",

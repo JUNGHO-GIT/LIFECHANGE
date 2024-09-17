@@ -17,7 +17,7 @@ export const listExerciseGoal = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await ExerciseGoal.aggregate([
+  const finalResult:any = await ExerciseGoal.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -51,7 +51,7 @@ export const listExercise = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Exercise.aggregate([
+  const finalResult:any = await Exercise.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -100,7 +100,7 @@ export const listFoodGoal = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await FoodGoal.aggregate([
+  const finalResult:any = await FoodGoal.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -134,7 +134,7 @@ export const listFood = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Food.aggregate([
+  const finalResult:any = await Food.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -168,7 +168,7 @@ export const listMoneyGoal = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await MoneyGoal.aggregate([
+  const finalResult:any = await MoneyGoal.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -200,7 +200,7 @@ export const listMoney = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Money.aggregate([
+  const finalResult:any = await Money.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -232,7 +232,7 @@ export const listSleepGoal = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await SleepGoal.aggregate([
+  const finalResult:any = await SleepGoal.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -265,7 +265,7 @@ export const listSleep = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Sleep.aggregate([
+  const finalResult:any = await Sleep.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -296,7 +296,7 @@ export const listSleep = async (
 export const findPropertyRegDt = async (
   user_id_param: string,
 ) => {
-  const finalResult = await User.aggregate([
+  const finalResult:any = await User.aggregate([
     {
       $match: {
         user_id: user_id_param
@@ -317,7 +317,7 @@ export const findPropertyRegDt = async (
 export const findPropertyInit = async (
   user_id_param: string,
 ) => {
-  const finalResult = await User.aggregate([
+  const finalResult:any = await User.aggregate([
     {
       $match: {
         user_id: user_id_param
@@ -341,7 +341,7 @@ export const findPropertyMoney = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Money.aggregate([
+  const finalResult:any = await Money.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -393,7 +393,7 @@ export const updateProperty = async (
   user_id_param: string,
   curProperty_param: string,
 ) => {
-  const finalResult = await User.findOneAndUpdate(
+  const finalResult:any = await User.findOneAndUpdate(
     {
       user_id: user_id_param,
     },
@@ -416,7 +416,7 @@ export const updateProperty = async (
 export const findScaleRegDt = async (
   user_id_param: string,
 ) => {
-  const finalResult = await User.aggregate([
+  const finalResult:any = await User.aggregate([
     {
       $match: {
         user_id: user_id_param
@@ -437,7 +437,7 @@ export const findScaleRegDt = async (
 export const findScaleInit = async (
   user_id_param: string,
 ) => {
-  const finalResult = await User.aggregate([
+  const finalResult:any = await User.aggregate([
     {
       $match: {
         user_id: user_id_param
@@ -461,7 +461,7 @@ export const findScaleMinMax = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Exercise.aggregate([
+  const finalResult:any = await Exercise.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -511,7 +511,7 @@ export const findScaleCur = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult = await Exercise.aggregate([
+  const finalResult:any = await Exercise.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -546,7 +546,7 @@ export const updateScale = async (
   user_id_param: string,
   curScale_param: string,
 ) => {
-  const finalResult = await User.findOneAndUpdate(
+  const finalResult:any = await User.findOneAndUpdate(
     {
       user_id: user_id_param,
     },

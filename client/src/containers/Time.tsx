@@ -102,17 +102,6 @@ export const Time = (
     }
   }
 
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
-    // 1. sleep
-    if (firstStr === "sleep" && secondStr !== "goal") {
-      REFS.current = OBJECT?.sleep_section?.map((item: any, idx: number) => ({
-        sleep_bedTime: REFS?.current[idx]?.sleep_bedTime || createRef(),
-        sleep_wakeTime: REFS?.current[idx]?.sleep_wakeTime || createRef(),
-      }));
-    }
-  }, [OBJECT]);
-
   // 7. time ---------------------------------------------------------------------------------------
   const timeNode = () => {
     const goalSection = () => (
@@ -149,7 +138,7 @@ export const Time = (
           <Input
             label={translateStr}
             value={OBJECT?.[`${extra}`]}
-            inputRef={REFS?.current?.[i]?.[`${extra}`]}
+            inputRef={REFS?.[i]?.[`${extra}`]}
             error={ERRORS?.[i]?.[`${extra}`]}
             readOnly={true}
             locked={LOCKED}
@@ -209,7 +198,7 @@ export const Time = (
           <Input
             label={translate(translateStr)}
             value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
-            inputRef={REFS?.current?.[i]?.[`${extra}`]}
+            inputRef={REFS?.[i]?.[`${extra}`]}
             error={ERRORS?.[i]?.[`${extra}`]}
             readOnly={true}
             locked={LOCKED}

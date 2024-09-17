@@ -44,7 +44,7 @@ router.get("/exist", async (req: Request, res: Response) => {
   }
 });
 
-// 1-1. list ---------------------------------------------------------------------------------------
+// 1. list -----------------------------------------------------------------------------------------
 router.get("/list", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.list (
@@ -87,12 +87,11 @@ router.get("/list", async (req: Request, res: Response) => {
   }
 });
 
-// 2. detail (상세는 eq) ---------------------------------------------------------------------------
+// 2. detail ---------------------------------------------------------------------------------------
 router.get("/detail", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.detail (
       req.query.user_id as string,
-      req.query._id as string,
       req.query.DATE as any,
     );
     if (finalResult.status === "success") {
@@ -140,21 +139,61 @@ router.post("/create", async (req: Request, res: Response) => {
     );
     if (finalResult.status === "success") {
       res.json({
-        msg: "saveSuccessful",
+        msg: "createSuccessful",
         status: finalResult.status,
         result: finalResult.result,
       });
     }
     else if (finalResult.status === "fail") {
       res.json({
-        msg: "saveFailed",
+        msg: "createFailed",
         status: finalResult.status,
         result: finalResult.result,
       });
     }
     else {
       res.json({
-        msg: "saveError",
+        msg: "createError",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+  }
+  catch (err: any) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      msg: err.toString(),
+      error: err.toString(),
+    });
+  }
+});
+
+// 4. insert ---------------------------------------------------------------------------------------
+router.post("/insert", async (req: Request, res: Response) => {
+  try {
+    let finalResult = await service.insert(
+      req.body.user_id as string,
+      req.body.OBJECT as any,
+      req.body.DATE as any,
+    );
+    if (finalResult.status === "success") {
+      res.json({
+        msg: "insertSuccessful",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "insertFailed",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else {
+      res.json({
+        msg: "insertError",
         status: finalResult.status,
         result: finalResult.result,
       });
@@ -175,27 +214,26 @@ router.post("/replace", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.replace(
       req.body.user_id as string,
-      req.body._id as string,
       req.body.OBJECT as any,
       req.body.DATE as any,
     );
     if (finalResult.status === "success") {
       res.json({
-        msg: "updateSuccessful",
+        msg: "replaceSuccessful",
         status: finalResult.status,
         result: finalResult.result,
       });
     }
     else if (finalResult.status === "fail") {
       res.json({
-        msg: "updateFailed",
+        msg: "replaceFailed",
         status: finalResult.status,
         result: finalResult.result,
       });
     }
     else {
       res.json({
-        msg: "updateError",
+        msg: "replaceError",
         status: finalResult.status,
         result: finalResult.result,
       });
@@ -216,7 +254,6 @@ router.delete("/delete", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.deletes(
       req.body.user_id as string,
-      req.body._id as string,
       req.body.DATE as any,
     );
     if (finalResult.status === "success") {

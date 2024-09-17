@@ -15,12 +15,11 @@ export const useValidateFood= () => {
   } = useTranslate();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [ERRORS, setERRORS] = useState<any>({});
   const REFS: any = useRef<any>({});
+  const [ERRORS, setERRORS] = useState<any>({});
   const validate = useRef<any>(() => {});
-  let returnValid = false;
 
-  // 에러 메시지 출력 및 포커스
+  // alert 표시 및 focus ---------------------------------------------------------------------------
   const showAlertAndFocus = (field: string, msg: string, idx: number) => {
     alert(translate(msg));
     REFS.current?.[idx]?.[field]?.current?.focus();
@@ -29,12 +28,12 @@ export const useValidateFood= () => {
         [field]: true,
       },
     });
-    return returnValid;
+    return false;
   };
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    // 1. goal/detail
+    // 1. goal
     if (PATH.includes("food/goal/detail")) {
       const target = [
         "food_goal_kcal",
@@ -42,43 +41,24 @@ export const useValidateFood= () => {
         "food_goal_protein",
         "food_goal_fat",
       ];
-      setERRORS(
-        target.reduce((acc: any[], cur: string) => {
-          acc.push({
-            [cur]: false
-          });
-          return acc;
-        }, [])
-      );
-      REFS.current = (
-        target.reduce((acc: any[], cur: string) => {
-          acc.push({
-            [cur]: createRef()
-          });
-          return acc;
-        }, [])
-      );
-      validate.current = (OBJECT: any, COUNT: any, DATE: any, EXIST: any) => {
-
-        // 카운트가 0인 경우
+      setERRORS(target.reduce((acc: any[], cur: string) => {
+        acc.push({
+          [cur]: false
+        });
+        return acc;
+      }, []));
+      REFS.current = (target.reduce((acc: any[], cur: string) => {
+        acc.push({
+          [cur]: createRef()
+        });
+        return acc;
+      }, []));
+      validate.current = (OBJECT: any, COUNT: any) => {
         if (COUNT.newSectionCnt === 0) {
           alert(translate("errorCount"));
-          return returnValid;
+          return false;
         }
-
-        // EXIST 배열에서 바로 필터링 조건 적용
-        for (let i = 0; i < EXIST.length; i++) {
-          if (EXIST[i] === DATE.dateStart && EXIST[i] === DATE.dateEnd) {
-            const confirm = window.confirm(translate("dataAlreadyExist"));
-            if (confirm) {
-              return !returnValid;
-            }
-            else {
-              return returnValid;
-            }
-          }
-        }
-        if (!OBJECT.food_goal_kcal || OBJECT.food_goal_kcal === "0") {
+        else if (!OBJECT.food_goal_kcal || OBJECT.food_goal_kcal === "0") {
           return showAlertAndFocus('food_goal_kcal', "errorFoodGoalKcal", 0);
         }
         else if (!OBJECT.food_goal_carb || OBJECT.food_goal_carb === "0") {
@@ -90,11 +70,13 @@ export const useValidateFood= () => {
         else if (!OBJECT.food_goal_fat || OBJECT.food_goal_fat === "0") {
           return showAlertAndFocus('food_goal_fat', "errorFoodGoalFat", 0);
         }
-        return !returnValid;
+        else {
+          return true;
+        }
       };
     }
 
-    // 2. save
+    // 2. real
     else if (PATH.includes("food/detail")) {
       const target = [
         "food_part_idx",
@@ -104,48 +86,29 @@ export const useValidateFood= () => {
         "food_protein",
         "food_fat",
       ];
-      setERRORS(
-        target.reduce((acc: any[], cur: string) => {
-          acc.push({
-            [cur]: false
-          });
-          return acc;
-        }, [])
-      );
-      REFS.current = (
-        target.reduce((acc: any[], cur: string) => {
-          acc.push({
-            [cur]: createRef()
-          });
-          return acc;
-        }, [])
-      );
-      validate.current = (OBJECT: any, COUNT: any, DATE: any, EXIST: any) => {
-
-        // 카운트가 0인 경우
-        if (COUNT.newSectionCnt === 0) {
-          alert(translate("errorCount"));
-          return returnValid;
-        }
-
-        // EXIST 배열에서 바로 필터링 조건 적용
-        for (let i = 0; i < EXIST.length; i++) {
-          if (EXIST[i] === DATE.dateStart && EXIST[i] === DATE.dateEnd) {
-            const confirm = window.confirm(translate("dataAlreadyExist"));
-            if (confirm) {
-              return !returnValid;
-            }
-            else {
-              return returnValid;
-            }
-          }
-        }
+      setERRORS(target.reduce((acc: any[], cur: string) => {
+        acc.push({
+          [cur]: false
+        });
+        return acc;
+      }, []));
+      REFS.current = (target.reduce((acc: any[], cur: string) => {
+        acc.push({
+          [cur]: createRef()
+        });
+        return acc;
+      }, []));
+      validate.current = (OBJECT: any, COUNT: any) => {
         const section = OBJECT.food_section;
         for (let i = 0; i < section.length; i++) {
-          if (!section[i].food_part_idx || section[i].food_part_idx === 0) {
+          if (COUNT.newSectionCnt === 0) {
+            alert(translate("errorCount"));
+            return false;
+          }
+          else if (!section[i].food_part_idx || section[i].food_part_idx === 0) {
             return showAlertAndFocus('food_part_idx', "errorFoodPart", i);
           }
-          else if (!section[i].food_name) {
+          else if (!section[i].food_name || section[i].food_name === "") {
             return showAlertAndFocus('food_name', "errorFoodName", i);
           }
           else if (!section[i].food_kcal || section[i].food_kcal === "0") {
@@ -160,16 +123,18 @@ export const useValidateFood= () => {
           else if (!section[i].food_fat || section[i].food_fat === "0") {
             return showAlertAndFocus('food_fat', "errorFoodFat", i);
           }
+          else {
+            return true;
+          }
         }
-        return !returnValid;
       };
     }
   }, [PATH]);
 
   // 10. return ------------------------------------------------------------------------------------
   return {
-    ERRORS,
-    REFS,
+    ERRORS: ERRORS,
+    REFS: REFS.current,
     validate: validate.current,
   };
 };

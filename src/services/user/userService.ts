@@ -456,11 +456,10 @@ export const categoryList = async (
   };
 };
 
-// 3-2. categorySave -------------------------------------------------------------------------------
-export const categorySave = async (
+// 3-2. categoryUpdate -----------------------------------------------------------------------------
+export const categoryUpdate = async (
   user_id_param: string,
   OBJECT_param: any,
-  DATE_param: any,
 ) => {
 
   // result 변수 선언
@@ -468,7 +467,7 @@ export const categorySave = async (
   let finalResult: any = null;
   let statusResult: string = "";
 
-  findResult = await repository.categorySave(
+  findResult = await repository.categoryUpdate(
     user_id_param, OBJECT_param,
   );
 

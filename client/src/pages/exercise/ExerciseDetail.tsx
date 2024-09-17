@@ -23,7 +23,7 @@ export const ExerciseDetail = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, exerciseArray, URL_OBJECT, sessionId, toList, TITLE
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, exerciseArray, URL_OBJECT, sessionId, toList,
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -68,19 +68,28 @@ export const ExerciseDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (EXIST?.[DATE.dateType]?.length > 0) {
+
       const dateRange = `${DATE.dateStart} ~ ${DATE.dateEnd}`;
       const objectRange = `${OBJECT.exercise_dateStart} ~ ${OBJECT.exercise_dateEnd}`;
-      const isExist = EXIST[DATE.dateType].some((item: any) => item === dateRange);
-      const itsMe = dateRange === objectRange;
-      const itsNew = OBJECT.exercise_dateStart === "0000-00-00" && OBJECT.exercise_dateEnd === "0000-00-00";
-      setFLOW((prev: any) => ({
-        ...prev,
+
+      const isExist = (
+        EXIST[DATE.dateType].some((item: any) => item === dateRange)
+      );
+      const itsMe = (
+        dateRange === objectRange
+      );
+      const itsNew = (
+        OBJECT.exercise_dateStart === "0000-00-00" &&
+        OBJECT.exercise_dateEnd === "0000-00-00"
+      );
+
+      setFLOW({
         exist: isExist ? "true" : "false",
         itsMe: itsMe ? "true" : "false",
         itsNew: itsNew ? "true" : "false",
-      }));
+      });
     }
-  }, [OBJECT.exercise_dateEnd, EXIST]);
+  }, [EXIST]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -113,7 +122,6 @@ export const ExerciseDetail = () => {
     axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId,
-        _id: "",
         DATE: DATE,
       },
     })
@@ -121,14 +129,14 @@ export const ExerciseDetail = () => {
       setOBJECT(res.data.result || Exercise);
       // section 내부 part_idx 값에 따라 재정렬
       setOBJECT((prev: any) => {
-        const mergedFoodSection = prev?.exercise_section
+        const mergedSection = prev?.exercise_section
         ? prev.exercise_section.sort((a: any, b: any) => (
           a.exercise_part_idx - b.exercise_part_idx
         ))
         : [];
         return {
           ...prev,
-          exercise_section: mergedFoodSection,
+          exercise_section: mergedSection,
         };
       });
       setCOUNT((prev: any) => ({
@@ -248,7 +256,6 @@ export const ExerciseDetail = () => {
     axios.delete(`${URL_OBJECT}/delete`, {
       data: {
         user_id: sessionId,
-        _id: OBJECT?._id,
         DATE: DATE,
       }
     })

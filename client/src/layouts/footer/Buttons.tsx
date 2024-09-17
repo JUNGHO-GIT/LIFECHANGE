@@ -1,7 +1,6 @@
 // Buttons.tsx
 // Node -> Section -> Fragment
 
-import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useTranslate } from "@imports/ImportHooks";
 import { Btn, Div, Hr } from "@imports/ImportComponents";
 import { PopUp } from "@imports/ImportContainers";
@@ -57,7 +56,7 @@ export const Buttons = ( { state, setState, flow }: ButtonsProps ) => {
         position={"center"}
         direction={"center"}
         padding={"6px"}
-        contents={({closePopup}: any) => (
+        contents={
           <Card className={"h-max30vh d-center"}>
             <Grid container spacing={2}>
               <Grid size={12}>
@@ -65,7 +64,10 @@ export const Buttons = ( { state, setState, flow }: ButtonsProps ) => {
                   {translate("replaceOrInsert")}
                 </Div>
               </Grid>
-              <Grid size={6} className={"d-right"}>
+              <Grid
+                size={PATH.includes("/sleep") ? 12 : 6}
+                className={PATH.includes("/sleep") ? "d-center" : "d-right"}
+              >
                 <Btn
                   size={"large"}
                   color={"primary"}
@@ -78,7 +80,10 @@ export const Buttons = ( { state, setState, flow }: ButtonsProps ) => {
                   {translate("replace")}
                 </Btn>
               </Grid>
-              <Grid size={6} className={"d-left"}>
+              <Grid
+                size={PATH.includes("/sleep") ? 0 : 6}
+                className={PATH.includes("/sleep") ? "d-none" : "d-left"}
+              >
                 <Btn
                   size={"large"}
                   color={"primary"}
@@ -93,7 +98,7 @@ export const Buttons = ( { state, setState, flow }: ButtonsProps ) => {
               </Grid>
             </Grid>
           </Card>
-        )}
+        }
       >
         {(popTrigger: any) => (
           <Btn
@@ -109,12 +114,7 @@ export const Buttons = ( { state, setState, flow }: ButtonsProps ) => {
                 }
               }
               else {
-                if (state.FLOW?.itsNew === "true") {
-                  flow?.flowSave("create");
-                }
-                else {
-                  flow?.floeSave("update");
-                }
+                flow?.flowSave("create");
               }
             }}
           >

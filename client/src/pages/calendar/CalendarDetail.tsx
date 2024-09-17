@@ -39,6 +39,11 @@ export const CalendarDetail = () => {
     year: [""],
     select: [""],
   });
+  const [FLOW, setFLOW] = useState<any>({
+    exist: "",
+    itsMe: "",
+    itsNew: "",
+  });
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
@@ -55,6 +60,32 @@ export const CalendarDetail = () => {
     dateStart: location_dateStart || dayFmt,
     dateEnd: location_dateEnd || dayFmt,
   });
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    if (EXIST?.[DATE.dateType]?.length > 0) {
+
+      const dateRange = `${DATE.dateStart} ~ ${DATE.dateEnd}`;
+      const objectRange = `${OBJECT.calendar_dateStart} ~ ${OBJECT.calendar_dateEnd}`;
+
+      const isExist = (
+        EXIST[DATE.dateType].some((item: any) => item === dateRange)
+      );
+      const itsMe = (
+        dateRange === objectRange
+      );
+      const itsNew = (
+        OBJECT.calendar_dateStart === "0000-00-00" &&
+        OBJECT.calendar_dateEnd === "0000-00-00"
+      );
+
+      setFLOW({
+        exist: isExist ? "true" : "false",
+        itsMe: itsMe ? "true" : "false",
+        itsNew: itsNew ? "true" : "false",
+      });
+    }
+  }, [EXIST]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -87,7 +118,6 @@ export const CalendarDetail = () => {
     axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId,
-        _id: "",
         DATE: DATE,
       },
     })
@@ -128,12 +158,12 @@ export const CalendarDetail = () => {
   },[COUNT?.newSectionCnt]);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = async () => {
-    if (!validate(OBJECT, COUNT, DATE, EXIST)) {
+  const flowSave = async (type: string) => {
+    if (!validate(OBJECT, COUNT)) {
       setLOADING(false);
       return;
     }
-    axios.post(`${URL_OBJECT}/detail`, {
+    axios.post(`${URL_OBJECT}/${type}`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
@@ -168,7 +198,6 @@ export const CalendarDetail = () => {
     axios.delete(`${URL_OBJECT}/delete`, {
       data: {
         user_id: sessionId,
-        _id: OBJECT?._id,
         DATE: DATE,
       }
     })
@@ -265,7 +294,7 @@ export const CalendarDetail = () => {
               <Select
                 label={translate("part")}
                 value={OBJECT?.calendar_section[i]?.calendar_part_idx}
-                inputRef={REFS?.current[i]?.calendar_part_idx}
+                inputRef={REFS[i]?.calendar_part_idx}
                 error={ERRORS[i]?.calendar_part_idx}
                 inputclass={"fs-0-8rem"}
                 locked={LOCKED}
@@ -294,7 +323,7 @@ export const CalendarDetail = () => {
               <Select
                 label={translate("color")}
                 value={OBJECT?.calendar_section[i]?.calendar_color}
-                inputRef={REFS?.current[i]?.calendar_color}
+                inputRef={REFS[i]?.calendar_color}
                 error={ERRORS[i]?.calendar_color}
                 inputclass={"fs-0-8rem"}
                 locked={LOCKED}
@@ -323,7 +352,7 @@ export const CalendarDetail = () => {
               <Input
                 label={translate("calendarTitle")}
                 value={OBJECT?.calendar_section[i]?.calendar_title}
-                inputRef={REFS?.current[i]?.calendar_title}
+                inputRef={REFS[i]?.calendar_title}
                 error={ERRORS[i]?.calendar_title}
                 locked={LOCKED}
                 startadornment={
@@ -384,10 +413,10 @@ export const CalendarDetail = () => {
   const footerNode = () => (
     <Footer
       state={{
-        DATE, SEND, COUNT, EXIST
+        DATE, SEND, COUNT, EXIST, FLOW,
       }}
       setState={{
-        setDATE, setSEND, setCOUNT, setEXIST
+        setDATE, setSEND, setCOUNT, setEXIST, setFLOW,
       }}
       flow={{
         flowSave, flowDelete

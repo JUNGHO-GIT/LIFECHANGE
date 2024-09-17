@@ -41,6 +41,11 @@ export const FoodGoalDetail = () => {
     year: [""],
     select: [""],
   });
+  const [FLOW, setFLOW] = useState<any>({
+    exist: "",
+    itsMe: "",
+    itsNew: "",
+  });
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
@@ -57,6 +62,32 @@ export const FoodGoalDetail = () => {
     dateStart: location_dateStart || dayFmt,
     dateEnd: location_dateEnd || dayFmt,
   });
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    if (EXIST?.[DATE.dateType]?.length > 0) {
+
+      const dateRange = `${DATE.dateStart} ~ ${DATE.dateEnd}`;
+      const objectRange = `${OBJECT.food_goal_dateStart} ~ ${OBJECT.food_goal_dateEnd}`;
+
+      const isExist = (
+        EXIST[DATE.dateType].some((item: any) => item === dateRange)
+      );
+      const itsMe = (
+        dateRange === objectRange
+      );
+      const itsNew = (
+        OBJECT.food_goal_dateStart === "0000-00-00" &&
+        OBJECT.food_goal_dateEnd === "0000-00-00"
+      );
+
+      setFLOW({
+        exist: isExist ? "true" : "false",
+        itsMe: itsMe ? "true" : "false",
+        itsNew: itsNew ? "true" : "false",
+      });
+    }
+  }, [EXIST]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -86,7 +117,6 @@ export const FoodGoalDetail = () => {
     axios.get(`${URL_OBJECT}/goal/detail`, {
       params: {
         user_id: sessionId,
-        _id: "",
         DATE: DATE,
       },
     })
@@ -108,12 +138,12 @@ export const FoodGoalDetail = () => {
   }, [sessionId, DATE.dateEnd]);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = async () => {
-    if (!validate(OBJECT, COUNT, DATE, EXIST)) {
+  const flowSave = async (type: string) => {
+    if (!validate(OBJECT, COUNT)) {
       setLOADING(false);
       return;
     }
-    axios.post(`${URL_OBJECT}/goal/detail`, {
+    axios.post(`${URL_OBJECT}/goal/${type}`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
@@ -149,7 +179,6 @@ export const FoodGoalDetail = () => {
     axios.delete(`${URL_OBJECT}/goal/delete`, {
       data: {
         user_id: sessionId,
-        _id: OBJECT?._id,
         DATE: DATE,
       }
     })
@@ -237,7 +266,7 @@ export const FoodGoalDetail = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.food_goal_kcal).format("0,0")}
-                inputRef={REFS.current[i]?.food_goal_kcal}
+                inputRef={REFS[i]?.food_goal_kcal}
                 error={ERRORS[i]?.food_goal_kcal}
                 label={
                   DATE.dateType === "day" ? (
@@ -279,7 +308,7 @@ export const FoodGoalDetail = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.food_goal_carb).format("0,0")}
-                inputRef={REFS.current[i]?.food_goal_carb}
+                inputRef={REFS[i]?.food_goal_carb}
                 error={ERRORS[i]?.food_goal_carb}
                 label={
                   DATE.dateType === "day" ? (
@@ -321,7 +350,7 @@ export const FoodGoalDetail = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.food_goal_protein).format("0,0")}
-                inputRef={REFS.current[i]?.food_goal_protein}
+                inputRef={REFS[i]?.food_goal_protein}
                 error={ERRORS[i]?.food_goal_protein}
                 label={
                   DATE.dateType === "day" ? (
@@ -363,7 +392,7 @@ export const FoodGoalDetail = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.food_goal_fat).format("0,0")}
-                inputRef={REFS.current[i]?.food_goal_fat}
+                inputRef={REFS[i]?.food_goal_fat}
                 error={ERRORS[i]?.food_goal_fat}
                 label={
                   DATE.dateType === "day" ? (
@@ -428,10 +457,10 @@ export const FoodGoalDetail = () => {
   const footerNode = () => (
     <Footer
       state={{
-        DATE, SEND, COUNT, EXIST
+        DATE, SEND, COUNT, EXIST, FLOW,
       }}
       setState={{
-        setDATE, setSEND, setCOUNT, setEXIST
+        setDATE, setSEND, setCOUNT, setEXIST, setFLOW,
       }}
       flow={{
         flowSave, flowDelete

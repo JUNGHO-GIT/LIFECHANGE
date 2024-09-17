@@ -23,7 +23,7 @@ export const FoodDetail = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, URL_OBJECT, sessionId, TITLE, foodArray, location_id, toList
+    navigate, location_dateType, location_dateStart, location_dateEnd, URL_OBJECT, sessionId, TITLE, foodArray, toList
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -39,6 +39,11 @@ export const FoodDetail = () => {
     month: [""],
     year: [""],
     select: [""],
+  });
+  const [FLOW, setFLOW] = useState<any>({
+    exist: "",
+    itsMe: "",
+    itsNew: "",
   });
   const [SEND, setSEND] = useState<any>({
     id: "",
@@ -56,6 +61,37 @@ export const FoodDetail = () => {
     dateStart: location_dateStart || dayFmt,
     dateEnd: location_dateEnd || dayFmt,
   });
+
+  useEffect(() => {
+    console.log("===================================");
+    console.log("COUNT", COUNT);
+  }, [COUNT]);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    if (EXIST?.[DATE.dateType]?.length > 0) {
+
+      const dateRange = `${DATE.dateStart} ~ ${DATE.dateEnd}`;
+      const objectRange = `${OBJECT.food_dateStart} ~ ${OBJECT.food_dateEnd}`;
+
+      const isExist = (
+        EXIST[DATE.dateType].some((item: any) => item === dateRange)
+      );
+      const itsMe = (
+        dateRange === objectRange
+      );
+      const itsNew = (
+        OBJECT.food_dateStart === "0000-00-00" &&
+        OBJECT.food_dateEnd === "0000-00-00"
+      );
+
+      setFLOW({
+        exist: isExist ? "true" : "false",
+        itsMe: itsMe ? "true" : "false",
+        itsNew: itsNew ? "true" : "false",
+      });
+    }
+  }, [EXIST]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -88,7 +124,6 @@ export const FoodDetail = () => {
     axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId,
-        _id: "",
         DATE: DATE,
       },
     })
@@ -134,11 +169,11 @@ export const FoodDetail = () => {
           : [];
 
         // sectionArray를 마지막에 추가
-        let mergedFoodSection = [...sortedFoodSection, ...sectionArray];
+        let mergedSection = [...sortedFoodSection, ...sectionArray];
 
         return {
           ...prev,
-          food_section: mergedFoodSection
+          food_section: mergedSection
         };
       });
 
@@ -207,12 +242,12 @@ export const FoodDetail = () => {
   },[COUNT?.newSectionCnt]);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = async () => {
-    if (!validate(OBJECT, COUNT, DATE, EXIST)) {
+  const flowSave = async (type: string) => {
+    if (!validate(OBJECT, COUNT)) {
       setLOADING(false);
       return;
     }
-    axios.post(`${URL_OBJECT}/detail`, {
+    axios.post(`${URL_OBJECT}/${type}`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
@@ -248,7 +283,6 @@ export const FoodDetail = () => {
     axios.delete(`${URL_OBJECT}/delete`, {
       data: {
         user_id: sessionId,
-        _id: OBJECT?._id,
         DATE: DATE,
       }
     })
@@ -442,7 +476,7 @@ export const FoodDetail = () => {
               <Select
                 label={translate("part")}
                 value={OBJECT?.food_section[i]?.food_part_idx}
-                inputRef={REFS?.current[i]?.food_part_idx}
+                inputRef={REFS[i]?.food_part_idx}
                 error={ERRORS[i]?.food_part_idx}
                 onChange={(e: any) => {
                   const newPart = Number(e.target.value);
@@ -543,7 +577,7 @@ export const FoodDetail = () => {
               <Input
                 label={translate("foodName")}
                 value={OBJECT?.food_section[i]?.food_name}
-                inputRef={REFS?.current[i]?.food_name}
+                inputRef={REFS[i]?.food_name}
                 error={ERRORS[i]?.food_name}
                 shrink={"shrink"}
                 onChange={(e: any) => {
@@ -583,7 +617,7 @@ export const FoodDetail = () => {
               <Input
                 label={translate("kcal")}
                 value={numeral(OBJECT?.food_section[i]?.food_kcal).format("0,0")}
-                inputRef={REFS?.current[i]?.food_kcal}
+                inputRef={REFS[i]?.food_kcal}
                 error={ERRORS[i]?.food_kcal}
                 startadornment={
                   <Img
@@ -629,7 +663,7 @@ export const FoodDetail = () => {
               <Input
                 label={translate("carb")}
                 value={numeral(OBJECT?.food_section[i]?.food_carb).format("0,0")}
-                inputRef={REFS?.current[i]?.food_carb}
+                inputRef={REFS[i]?.food_carb}
                 error={ERRORS[i]?.food_carb}
                 startadornment={
                   <Img
@@ -675,7 +709,7 @@ export const FoodDetail = () => {
               <Input
                 label={translate("protein")}
                 value={numeral(OBJECT?.food_section[i]?.food_protein).format("0,0")}
-                inputRef={REFS?.current[i]?.food_protein}
+                inputRef={REFS[i]?.food_protein}
                 error={ERRORS[i]?.food_protein}
                 startadornment={
                   <Img
@@ -721,7 +755,7 @@ export const FoodDetail = () => {
               <Input
                 label={translate("fat")}
                 value={numeral(OBJECT?.food_section[i]?.food_fat).format("0,0")}
-                inputRef={REFS?.current[i]?.food_fat}
+                inputRef={REFS[i]?.food_fat}
                 error={ERRORS[i]?.food_fat}
                 startadornment={
                   <Img
@@ -792,10 +826,10 @@ export const FoodDetail = () => {
   const footerNode = () => (
     <Footer
       state={{
-        DATE, SEND, COUNT, EXIST
+        DATE, SEND, COUNT, EXIST, FLOW,
       }}
       setState={{
-        setDATE, setSEND, setCOUNT, setEXIST
+        setDATE, setSEND, setCOUNT, setEXIST, setFLOW,
       }}
       flow={{
         flowSave, flowDelete

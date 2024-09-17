@@ -12,7 +12,7 @@ export const exist = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await Food.aggregate([
+  const finalResult:any = await Food.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -22,9 +22,7 @@ export const exist = async (
         food_dateEnd: {
           $gte: dateStart_param,
         },
-        ...dateType_param ? {
-          food_dateType: dateType_param
-        } : {},
+        ...dateType_param ? { food_dateType: dateType_param } : {},
       }
     },
     {
@@ -53,7 +51,7 @@ export const cnt = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await Food.countDocuments(
+  const finalResult:any = await Food.countDocuments(
     {
       user_id: user_id_param,
       food_dateStart: {
@@ -64,9 +62,7 @@ export const cnt = async (
         $gte: dateStart_param,
         $lte: dateEnd_param
       },
-      ...dateType_param ? {
-        food_dateType: dateType_param
-      } : {},
+      ...dateType_param ? { food_dateType: dateType_param } : {},
     }
   );
 
@@ -83,7 +79,7 @@ export const list = async (
   page_param: number,
 ) => {
 
-  const finalResult = await Food.aggregate([
+  const finalResult:any = await Food.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -95,9 +91,7 @@ export const list = async (
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...dateType_param ? {
-          food_dateType: dateType_param
-        } : {},
+        ...dateType_param ? { food_dateType: dateType_param } : {},
       }
     },
     {
@@ -128,25 +122,17 @@ export const list = async (
 // 2. detail ---------------------------------------------------------------------------------------
 export const detail = async (
   user_id_param: string,
-  _id_param: string,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await Food.findOne(
+  const finalResult:any = await Food.findOne(
     {
       user_id: user_id_param,
-      _id: !_id_param ? { $exists: true } : _id_param,
-      food_dateStart: {
-        $eq: dateStart_param
-      },
-      food_dateEnd: {
-        $eq: dateEnd_param
-      },
-      ...dateType_param ? {
-        food_dateType: dateType_param
-      } : {},
+      food_dateStart: dateStart_param,
+      food_dateEnd: dateEnd_param,
+      ...dateType_param ? { food_dateType: dateType_param } : {},
     }
   )
   .lean();
@@ -154,7 +140,7 @@ export const detail = async (
   return finalResult;
 };
 
-// 3. create ---------------------------------------------------------------------------------------
+// 3. create (기존항목 제거 + 타겟항목에 생성) -----------------------------------------------------
 export const create = async (
   user_id_param: string,
   OBJECT_param: any,
@@ -163,10 +149,10 @@ export const create = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await Food.create(
+  const finalResult:any = await Food.create(
     {
-      user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
+      user_id: user_id_param,
       food_dummy: "N",
       food_dateType: dateType_param,
       food_dateStart: dateStart_param,
@@ -184,39 +170,55 @@ export const create = async (
   return finalResult;
 };
 
-// 5. replace --------------------------------------------------------------------------------------
-export const replace = async (
+// 4. insert (기존항목 유지 + 타겟항목에 끼워넣기) -------------------------------------------------
+export const insert = async (
   user_id_param: string,
-  _id_param: string,
   OBJECT_param: any,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await Food.findOneAndUpdate(
+  const findResult: any = await Food.findOne(
     {
       user_id: user_id_param,
-      _id: !_id_param ? { $exists: true } : _id_param,
-      food_dateStart: {
-        $eq: dateStart_param
-      },
-      food_dateEnd: {
-        $eq: dateEnd_param
-      },
-      ...dateType_param ? {
-        food_dateType: dateType_param
-      } : {},
+      food_dateStart: dateStart_param,
+      food_dateEnd: dateEnd_param,
+      ...dateType_param ? { food_dateType: dateType_param } : {},
+    },
+  )
+  .lean();
+
+  const newKcal = String (
+    parseFloat(findResult.food_total_kcal) +
+    parseFloat(OBJECT_param.food_total_kcal)
+  );
+  const newCarb = String (
+    parseFloat(findResult.food_total_carb) +
+    parseFloat(OBJECT_param.food_total_carb)
+  );
+  const newProtein = String (
+    parseFloat(findResult.food_total_protein) +
+    parseFloat(OBJECT_param.food_total_protein)
+  );
+  const newFat = String (
+    parseFloat(findResult.food_total_fat) +
+    parseFloat(OBJECT_param.food_total_fat)
+  );
+
+  const finalResult:any = await Food.updateOne(
+    {
+      user_id: user_id_param,
+      food_dateStart: dateStart_param,
+      food_dateEnd: dateEnd_param,
+      ...dateType_param ? { food_dateType: dateType_param } : {},
     },
     {
       $set: {
-        food_dateType: dateType_param,
-        food_dateStart: dateStart_param,
-        food_dateEnd: dateEnd_param,
-        food_total_kcal: OBJECT_param.food_total_kcal,
-        food_total_carb: OBJECT_param.food_total_carb,
-        food_total_protein: OBJECT_param.food_total_protein,
-        food_total_fat: OBJECT_param.food_total_fat,
+        food_total_kcal: newKcal,
+        food_total_carb: newCarb,
+        food_total_protein: newProtein,
+        food_total_fat: newFat,
         food_updateDt: newDate,
       },
       $push: {
@@ -233,28 +235,56 @@ export const replace = async (
   return finalResult;
 };
 
-// 6. delete --------------------------------------------------------------------------------------
-export const deletes = async (
+// 5. replace (기존항목 유지 + 타겟항목을 대체) ----------------------------------------------------
+export const replace = async (
   user_id_param: string,
-  _id_param: string,
+  OBJECT_param: any,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await Food.findOneAndDelete(
+  const finalResult:any = await Food.findOneAndUpdate(
     {
       user_id: user_id_param,
-      _id: !_id_param ? {$exists:true} : _id_param,
-      food_dateStart: {
-        $eq: dateStart_param
-      },
-      food_dateEnd: {
-        $eq: dateEnd_param
-      },
-      ...dateType_param ? {
-        food_dateType: dateType_param
-      } : {},
+      food_dateStart: dateStart_param,
+      food_dateEnd: dateEnd_param,
+      ...dateType_param ? { food_dateType: dateType_param } : {},
+    },
+    {
+      $set: {
+        food_total_kcal: OBJECT_param.food_total_kcal,
+        food_total_carb: OBJECT_param.food_total_carb,
+        food_total_protein: OBJECT_param.food_total_protein,
+        food_total_fat: OBJECT_param.food_total_fat,
+        food_section: OBJECT_param.food_section,
+        food_updateDt: newDate,
+      }
+    },
+    {
+      upsert: true,
+      new: true
+    }
+  )
+  .lean();
+
+  return finalResult;
+};
+
+// 6. delete (타겟항목 제거) -----------------------------------------------------------------------
+export const deletes = async (
+  user_id_param: string,
+  dateType_param: string,
+  dateStart_param: string,
+  dateEnd_param: string,
+) => {
+
+  const finalResult:any = await Food.findOneAndDelete(
+    {
+      user_id: user_id_param,
+      food_dateStart: dateStart_param,
+      food_dateEnd: dateEnd_param,
+      ...dateType_param ? { food_dateType: dateType_param } : {},
     }
   )
   .lean();

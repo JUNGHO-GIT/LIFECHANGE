@@ -13,7 +13,7 @@ export const exist = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await ExerciseGoal.aggregate([
+  const finalResult:any = await ExerciseGoal.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -23,9 +23,7 @@ export const exist = async (
         exercise_goal_dateEnd: {
           $gte: dateStart_param,
         },
-        ...dateType_param ? {
-          exercise_goal_dateType: dateType_param
-        } : {},
+        ...dateType_param ? { exercise_goal_dateType: dateType_param } : {},
       }
     },
     {
@@ -54,7 +52,7 @@ export const cnt = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await ExerciseGoal.countDocuments(
+  const finalResult:any = await ExerciseGoal.countDocuments(
     {
       user_id: user_id_param,
       exercise_goal_dateStart: {
@@ -63,9 +61,7 @@ export const cnt = async (
       exercise_goal_dateEnd: {
         $gte: dateStart_param,
       },
-      ...dateType_param ? {
-        exercise_goal_dateType: dateType_param
-      } : {},
+      ...dateType_param ? { exercise_goal_dateType: dateType_param } : {},
     }
   );
 
@@ -82,7 +78,7 @@ export const listGoal = async (
   page_param: number,
 ) => {
 
-  const finalResult = await ExerciseGoal.aggregate([
+  const finalResult:any = await ExerciseGoal.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -92,9 +88,7 @@ export const listGoal = async (
         exercise_goal_dateEnd: {
           $gte: dateStart_param,
         },
-        ...dateType_param ? {
-          exercise_goal_dateType: dateType_param
-        } : {},
+        ...dateType_param ? { exercise_goal_dateType: dateType_param } : {},
       }
     },
     {
@@ -130,7 +124,7 @@ export const listReal = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await Exercise.aggregate([
+  const finalResult:any = await Exercise.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -142,9 +136,7 @@ export const listReal = async (
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...dateType_param ? {
-          exercise_dateType: dateType_param
-        } : {},
+        ...dateType_param ? { exercise_dateType: dateType_param } : {},
       }
     },
     {
@@ -171,25 +163,17 @@ export const listReal = async (
 // 2. detail ---------------------------------------------------------------------------------------
 export const detail = async (
   user_id_param: string,
-  _id_param: string,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await ExerciseGoal.findOne(
+  const finalResult:any = await ExerciseGoal.findOne(
     {
       user_id: user_id_param,
-      _id: !_id_param ? { $exists: true } : _id_param,
-      exercise_goal_dateStart: {
-        $eq: dateStart_param,
-      },
-      exercise_goal_dateEnd: {
-        $eq: dateEnd_param,
-      },
-      ...dateType_param ? {
-        exercise_goal_dateType: dateType_param
-      } : {},
+      exercise_goal_dateStart: dateStart_param,
+      exercise_goal_dateEnd: dateEnd_param,
+      ...dateType_param ? { exercise_goal_dateType: dateType_param } : {},
     }
   )
   .lean();
@@ -197,7 +181,7 @@ export const detail = async (
   return finalResult;
 };
 
-// 3. create ---------------------------------------------------------------------------------------
+// 3. create (기존항목 제거 + 타겟항목에 생성) -----------------------------------------------------
 export const create = async (
   user_id_param: string,
   OBJECT_param: any,
@@ -206,7 +190,7 @@ export const create = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await ExerciseGoal.create(
+  const finalResult:any = await ExerciseGoal.create(
     {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
@@ -226,35 +210,26 @@ export const create = async (
   return finalResult;
 };
 
-// 5. replace --------------------------------------------------------------------------------------
+// 4. insert (기존항목 유지 + 타겟항목에 끼워넣기) -------------------------------------------------
+
+// 5. replace (기존항목 유지 + 타겟항목을 대체) ----------------------------------------------------
 export const replace = async (
   user_id_param: string,
-  _id_param: string,
   OBJECT_param: any,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await ExerciseGoal.findOneAndUpdate(
+  const finalResult:any = await ExerciseGoal.findOneAndUpdate(
     {
       user_id: user_id_param,
-      _id: !_id_param ? { $exists: true } : _id_param,
-      exercise_goal_dateStart: {
-        $eq: dateStart_param,
-      },
-      exercise_goal_dateEnd: {
-        $eq: dateEnd_param,
-      },
-      ...dateType_param ? {
-        exercise_goal_dateType: dateType_param
-      } : {},
+      exercise_goal_dateStart: dateStart_param,
+      exercise_goal_dateEnd: dateEnd_param,
+      ...dateType_param ? { exercise_goal_dateType: dateType_param } : {},
     },
     {
       $set: {
-        exercise_goal_dateType: dateType_param,
-        exercise_goal_dateStart: dateStart_param,
-        exercise_goal_dateEnd: dateEnd_param,
         exercise_goal_count: OBJECT_param.exercise_goal_count,
         exercise_goal_volume: OBJECT_param.exercise_goal_volume,
         exercise_goal_cardio: OBJECT_param.exercise_goal_cardio,
@@ -272,28 +247,20 @@ export const replace = async (
   return finalResult;
 };
 
-// 6. delete --------------------------------------------------------------------------------------
+// 6. delete (타겟항목 제거) -----------------------------------------------------------------------
 export const deletes = async (
   user_id_param: string,
-  _id_param: string,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await ExerciseGoal.findOneAndDelete(
+  const finalResult:any = await ExerciseGoal.findOneAndDelete(
     {
       user_id: user_id_param,
-      _id: !_id_param ? {$exists:true} : _id_param,
-      exercise_goal_dateStart: {
-        $eq: dateStart_param
-      },
-      exercise_goal_dateEnd: {
-        $eq: dateEnd_param
-      },
-      ...dateType_param ? {
-        exercise_goal_dateType: dateType_param
-      } : {},
+      exercise_goal_dateStart: dateStart_param,
+      exercise_goal_dateEnd: dateEnd_param,
+      ...dateType_param ? { exercise_goal_dateType: dateType_param } : {},
     }
   )
   .lean();

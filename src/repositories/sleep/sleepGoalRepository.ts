@@ -13,7 +13,7 @@ export const exist = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await SleepGoal.aggregate([
+  const finalResult:any = await SleepGoal.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -23,9 +23,7 @@ export const exist = async (
         sleep_goal_dateEnd: {
           $gte: dateStart_param,
         },
-        ...dateType_param ? {
-          sleep_goal_dateType: dateType_param
-        } : {},
+        ...dateType_param ? { sleep_goal_dateType: dateType_param } : {},
       }
     },
     {
@@ -54,7 +52,7 @@ export const cnt = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await SleepGoal.countDocuments(
+  const finalResult:any = await SleepGoal.countDocuments(
     {
       user_id: user_id_param,
       sleep_goal_dateStart: {
@@ -63,9 +61,7 @@ export const cnt = async (
       sleep_goal_dateEnd: {
         $gte: dateStart_param,
       },
-      ...dateType_param ? {
-        sleep_goal_dateType: dateType_param
-      } : {},
+      ...dateType_param ? { sleep_goal_dateType: dateType_param } : {},
     }
   );
 
@@ -82,7 +78,7 @@ export const listGoal = async (
   page_param: number,
 ) => {
 
-  const finalResult = await SleepGoal.aggregate([
+  const finalResult:any = await SleepGoal.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -92,9 +88,7 @@ export const listGoal = async (
         sleep_goal_dateEnd: {
           $gte: dateStart_param,
         },
-        ...dateType_param ? {
-          sleep_goal_dateType: dateType_param
-        } : {},
+        ...dateType_param ? { sleep_goal_dateType: dateType_param } : {},
       }
     },
     {
@@ -129,7 +123,7 @@ export const listReal = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await Sleep.aggregate([
+  const finalResult:any = await Sleep.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -141,9 +135,7 @@ export const listReal = async (
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...dateType_param ? {
-          sleep_dateType: dateType_param
-        } : {},
+        ...dateType_param ? { sleep_dateType: dateType_param } : {},
       }
     },
     {
@@ -173,25 +165,17 @@ export const listReal = async (
 // 2. detail ---------------------------------------------------------------------------------------
 export const detail = async (
   user_id_param: string,
-  _id_param: string,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await SleepGoal.findOne(
+  const finalResult:any = await SleepGoal.findOne(
     {
       user_id: user_id_param,
-      _id: !_id_param ? { $exists: true } : _id_param,
-      sleep_goal_dateStart: {
-        $eq: dateStart_param,
-      },
-      sleep_goal_dateEnd: {
-        $eq: dateEnd_param,
-      },
-      ...dateType_param ? {
-        sleep_goal_dateType: dateType_param
-      } : {},
+      sleep_goal_dateStart: dateStart_param,
+      sleep_goal_dateEnd: dateEnd_param,
+      ...dateType_param ? { sleep_goal_dateType: dateType_param } : {},
     }
   )
   .lean();
@@ -199,7 +183,7 @@ export const detail = async (
   return finalResult;
 };
 
-// 3. create ---------------------------------------------------------------------------------------
+// 3. create (기존항목 제거 + 타겟항목에 생성) -----------------------------------------------------
 export const create = async (
   user_id_param: string,
   OBJECT_param: any,
@@ -208,10 +192,10 @@ export const create = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await SleepGoal.create(
+  const finalResult:any = await SleepGoal.create(
     {
-      user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
+      user_id: user_id_param,
       sleep_goal_dummy: "N",
       sleep_goal_dateType: dateType_param,
       sleep_goal_dateStart: dateStart_param,
@@ -227,35 +211,26 @@ export const create = async (
   return finalResult;
 };
 
-// 5. replace --------------------------------------------------------------------------------------
+// 4. insert (기존항목 유지 + 타겟항목에 끼워넣기) -------------------------------------------------
+
+// 5. replace (기존항목 유지 + 타겟항목을 대체) ----------------------------------------------------
 export const replace = async (
   user_id_param: string,
-  _id_param: string,
   OBJECT_param: any,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await SleepGoal.findOneAndUpdate(
+  const finalResult:any = await SleepGoal.findOneAndUpdate(
     {
       user_id: user_id_param,
-      _id: !_id_param ? { $exists: true } : _id_param,
-      sleep_goal_dateStart: {
-        $eq: dateStart_param,
-      },
-      sleep_goal_dateEnd: {
-        $eq: dateEnd_param,
-      },
-      ...dateType_param ? {
-        sleep_goal_dateType: dateType_param
-      } : {},
+      sleep_goal_dateStart: dateStart_param,
+      sleep_goal_dateEnd: dateEnd_param,
+      ...dateType_param ? { sleep_goal_dateType: dateType_param } : {},
     },
     {
       $set: {
-        sleep_goal_dateType: dateType_param,
-        sleep_goal_dateStart: dateStart_param,
-        sleep_goal_dateEnd: dateEnd_param,
         sleep_goal_bedTime: OBJECT_param.sleep_goal_bedTime,
         sleep_goal_wakeTime: OBJECT_param.sleep_goal_wakeTime,
         sleep_goal_sleepTime: OBJECT_param.sleep_goal_sleepTime,
@@ -272,28 +247,20 @@ export const replace = async (
   return finalResult;
 };
 
-// 6. delete --------------------------------------------------------------------------------------
+// 6. delete (타겟항목 제거) -----------------------------------------------------------------------
 export const deletes = async (
   user_id_param: string,
-  _id_param: string,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await SleepGoal.findOneAndDelete(
+  const finalResult:any = await SleepGoal.findOneAndDelete(
     {
       user_id: user_id_param,
-      _id: !_id_param ? {$exists:true} : _id_param,
-      sleep_goal_dateType: {
-        $eq: dateType_param
-      },
-      sleep_goal_dateStart: {
-        $eq: dateStart_param
-      },
-      ...dateEnd_param ? {
-        sleep_goal_dateEnd: dateEnd_param
-      } : {},
+      sleep_goal_dateType: dateType_param,
+      sleep_goal_dateStart: dateStart_param,
+      ...dateEnd_param ? { sleep_goal_dateEnd: dateEnd_param } : {},
     }
   )
   .lean();

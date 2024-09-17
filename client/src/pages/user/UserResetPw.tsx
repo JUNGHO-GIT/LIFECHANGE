@@ -173,7 +173,7 @@ export const UserResetPw = () => {
                 label={`${translate("id")}`}
                 helperText={`* ${translate("helperId")}`}
                 value={OBJECT.user_id}
-                inputRef={REFS.current[i]?.user_id}
+                inputRef={REFS[i]?.user_id}
                 error={ERRORS[i]?.user_id}
                 disabled={OBJECT.user_id_verified === true}
                 onChange={(e: any) => (
@@ -202,7 +202,7 @@ export const UserResetPw = () => {
                 label={translate("verify")}
                 helperText={`* ${translate("helperIdVerified")}`}
                 value={OBJECT.user_verify_code}
-                inputRef={REFS.current[i]?.user_id_verified}
+                inputRef={REFS[i]?.user_id_verified}
                 error={ERRORS[i]?.user_id_verified}
                 disabled={OBJECT.user_id_verified === true}
                 onChange={(e: any) => (
@@ -233,7 +233,7 @@ export const UserResetPw = () => {
                 label={translate("pw")}
                 helperText={`* ${translate("helperPw")}`}
                 value={OBJECT.user_pw}
-                inputRef={REFS.current[i]?.user_pw}
+                inputRef={REFS[i]?.user_pw}
                 error={ERRORS[i]?.user_pw}
                 disabled={OBJECT.user_id_verified === false}
                 onChange={(e: any) => (
@@ -251,7 +251,7 @@ export const UserResetPw = () => {
                 label={translate("pwVerified")}
                 helperText={`* ${translate("helperPwVerified")}`}
                 value={OBJECT.user_pw_verified}
-                inputRef={REFS.current[i]?.user_pw_verified}
+                inputRef={REFS[i]?.user_pw_verified}
                 error={ERRORS[i]?.user_pw_verified}
                 disabled={OBJECT.user_id_verified === false}
                 onChange={(e: any) => (
