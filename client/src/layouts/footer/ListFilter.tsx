@@ -31,12 +31,12 @@ export const ListFilter = (
         label={translate("sort")}
         value={state?.PAGING?.sort || "asc"}
         inputclass={"h-min0 h-4vh"}
-        onChange={(e: any) => (
+        onChange={(e: any) => {
           setState?.setPAGING((prev: any) => ({
             ...prev,
             sort: e.target.value
           }))
-        )}
+        }}
       >
         {["asc", "desc"]?.map((item: string) => (
           <MenuItem

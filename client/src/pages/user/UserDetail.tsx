@@ -120,12 +120,12 @@ export const UserDetail = () => {
                 value={OBJECT.user_gender}
                 inputRef={REFS[i]?.user_gender}
                 error={ERRORS[i]?.user_gender}
-                onChange={(e: any) => (
+                onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
                     ...prev,
                     user_gender: e.target.value
                   }))
-                )}
+                }}
               >
                 {[translate("N"), translate("M"), translate("F")]?.map((item, i) => (
                   <MenuItem key={i} value={i === 0 ? "N" : i === 1 ? "M" : "F"}>
@@ -178,12 +178,12 @@ export const UserDetail = () => {
                   />
                 }
                 endadornment={translate("k")}
-                onChange={(e: any) => (
+                onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
                     ...prev,
                     user_initScale: e.target.value
                   }))
-                )}
+                }}
               />
             </Grid>
             {/** 현재 몸무게 **/}
@@ -218,12 +218,12 @@ export const UserDetail = () => {
                   />
                 }
                 endadornment={sessionCurrency}
-                onChange={(e: any) => (
+                onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
                     ...prev,
                     user_initProperty: e.target.value
                   }))
-                )}
+                }}
               />
             </Grid>
             {/** 현재 자산 **/}

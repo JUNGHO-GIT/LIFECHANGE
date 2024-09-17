@@ -20,7 +20,7 @@ declare interface PieProps {
   outerRadius: number;
   value: number;
   index: number;
-}
+};
 
 // -------------------------------------------------------------------------------------------------
 export const MoneyChartPie = () => {
@@ -42,7 +42,7 @@ export const MoneyChartPie = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(true);
   const [radius, setRadius] = useState<number>(120);
-  const [SECTION, setSECTION] = useState<string>("today");
+  const [SECTION, setSECTION] = useState<string>("week");
   const [LINE, setLINE] = useState<string>("income");
   const [DATE, setDATE] = useState<any>({
     dateType: "",
@@ -57,8 +57,6 @@ export const MoneyChartPie = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [OBJECT_IN_TODAY, setOBJECT_IN_TODAY] = useState<any>([MoneyPie]);
-  const [OBJECT_OUT_TODAY, setOBJECT_OUT_TODAY] = useState<any>([MoneyPie]);
   const [OBJECT_IN_WEEK, setOBJECT_IN_WEEK] = useState<any>([MoneyPie]);
   const [OBJECT_OUT_WEEK, setOBJECT_OUT_WEEK] = useState<any>([MoneyPie]);
   const [OBJECT_IN_MONTH, setOBJECT_IN_MONTH] = useState<any>([MoneyPie]);
@@ -71,10 +69,7 @@ export const MoneyChartPie = () => {
       user_id: sessionId,
       DATE: DATE,
     };
-    const [resToday, resWeek, resMonth] = await Promise.all([
-      axios.get(`${URL_OBJECT}/chart/pie/today`, {
-        params: params,
-      }),
+    const [resWeek, resMonth] = await Promise.all([
       axios.get(`${URL_OBJECT}/chart/pie/week`, {
         params: params,
       }),
@@ -82,12 +77,6 @@ export const MoneyChartPie = () => {
         params: params,
       }),
     ]);
-    setOBJECT_IN_TODAY(
-      resToday.data.result.income.length > 0 ? resToday.data.result.income : [MoneyPie]
-    );
-    setOBJECT_OUT_TODAY(
-      resToday.data.result.expense.length > 0 ? resToday.data.result.expense : [MoneyPie]
-    );
     setOBJECT_IN_WEEK(
       resWeek.data.result.income.length > 0 ? resWeek.data.result.income : [MoneyPie]
     );
@@ -131,40 +120,6 @@ export const MoneyChartPie = () => {
       window.removeEventListener('resize', updateRadius);
     }
   }, []);
-
-  // 4-1. render -----------------------------------------------------------------------------------
-  const renderInToday = (
-    { cx, cy, midAngle, innerRadius, outerRadius, value, index }: PieProps
-  ) => {
-    const RADIAN = Math.PI / 180;
-    const radius = innerRadius + (outerRadius - innerRadius) / 2;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-    return (
-      <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
-      className={"fs-0-6rem"}>
-        {`${translate(OBJECT_IN_TODAY[index]?.name).substring(0, 5)} ${Number(value).toLocaleString()}`}
-      </text>
-    );
-  };
-
-  // 4-2. render -----------------------------------------------------------------------------------
-  const renderExpenseToday = (
-    { cx, cy, midAngle, innerRadius, outerRadius, value, index }: PieProps
-  ) => {
-    const RADIAN = Math.PI / 180;
-    const radius = innerRadius + (outerRadius - innerRadius) / 2;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-    return (
-      <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
-      className={"fs-0-6rem"}>
-        {`${translate(OBJECT_OUT_TODAY[index]?.name).substring(0, 5)} ${Number(value).toLocaleString()}`}
-      </text>
-    );
-  }
 
   // 4-3. render -----------------------------------------------------------------------------------
   const renderInWeek = (
@@ -233,100 +188,6 @@ export const MoneyChartPie = () => {
       </text>
     );
   }
-
-  // 5-1. chart ------------------------------------------------------------------------------------
-  const chartIncomeToday = () => (
-    <ResponsiveContainer width={"100%"} height={350}>
-      <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-        <Pie
-          data={OBJECT_IN_TODAY}
-          cx={"50%"}
-          cy={"50%"}
-          label={renderInToday}
-          labelLine={false}
-          outerRadius={radius}
-          fill={"#8884d8"}
-          dataKey={"value"}
-          minAngle={15}
-        >
-          {OBJECT_IN_TODAY?.map((entry: any, index: number) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip
-          formatter={(value: any, name: any, props: any) => {
-            const customName = translate(name);
-            return [`${Number(value).toLocaleString()}`, customName];
-          }}
-          contentStyle={{
-            backgroundColor:"rgba(255, 255, 255, 0.8)",
-            border:"none",
-            borderRadius:"10px"
-          }}
-        />
-        <Legend
-          iconType={"circle"}
-          verticalAlign={"bottom"}
-          align={"center"}
-          formatter={(value) => {
-            return translate(value);
-          }}
-          wrapperStyle={{
-            lineHeight:"40px",
-            paddingTop:"10px",
-            fontSize:"12px"
-          }}
-        />
-      </PieChart>
-    </ResponsiveContainer>
-  );
-
-  // 5-2. chart ------------------------------------------------------------------------------------
-  const chartExpenseToday = () => (
-    <ResponsiveContainer width={"100%"} height={350}>
-      <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-        <Pie
-          data={OBJECT_OUT_TODAY}
-          cx={"50%"}
-          cy={"50%"}
-          label={renderExpenseToday}
-          labelLine={false}
-          outerRadius={radius}
-          fill={"#82ca9d"}
-          dataKey={"value"}
-          minAngle={15}
-        >
-          {OBJECT_OUT_TODAY?.map((entry: any, index: number) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip
-          formatter={(value: any, name: any, props: any) => {
-            const customName = translate(name);
-            return [`${Number(value).toLocaleString()}`, customName];
-          }}
-          contentStyle={{
-            backgroundColor:"rgba(255, 255, 255, 0.8)",
-            border:"none",
-            borderRadius:"10px"
-          }}
-        />
-        <Legend
-          iconType={"circle"}
-          verticalAlign={"bottom"}
-          align={"center"}
-          formatter={(value) => {
-            return translate(value);
-          }}
-          wrapperStyle={{
-            lineHeight:"40px",
-            paddingTop:"10px",
-            fontSize:"12px"
-          }}
-        />
-      </PieChart>
-    </ResponsiveContainer>
-  );
 
   // 5-3. chart ------------------------------------------------------------------------------------
   const chartIncomeWeek = () => (
@@ -528,11 +389,10 @@ export const MoneyChartPie = () => {
       const selectFragment1 = () => (
         <Select
           value={SECTION}
-          onChange={(e: any) => (
+          onChange={(e: any) => {
             setSECTION(e.target.value)
-          )}
+          }}
         >
-          <MenuItem value={"today"}>{translate("today")}</MenuItem>
           <MenuItem value={"week"}>{translate("week")}</MenuItem>
           <MenuItem value={"month"}>{translate("month")}</MenuItem>
         </Select>
@@ -542,7 +402,7 @@ export const MoneyChartPie = () => {
           type={"chart"}
           position={"bottom"}
           direction={"center"}
-          contents={({closePopup}: any) => (
+          contents={
             ["income", "expense"]?.map((key, index) => (
               <FormGroup key={index}>
                 <FormControlLabel
@@ -564,7 +424,7 @@ export const MoneyChartPie = () => {
                 />
               </FormGroup>
             ))
-          )}
+          }
         >
           {(popTrigger: any) => (
             <Img
@@ -598,51 +458,35 @@ export const MoneyChartPie = () => {
     const chartSection = () => {
       const chartFragment1 = (i: number) => (
         <Card className={"border radius p-20"} key={i}>
-          {chartIncomeToday()}
+          {chartIncomeWeek()}
         </Card>
       );
       const chartFragment2 = (i: number) => (
         <Card className={"border radius p-20"} key={i}>
-          {chartExpenseToday()}
+          {chartExpenseWeek()}
         </Card>
       );
       const chartFragment3 = (i: number) => (
         <Card className={"border radius p-20"} key={i}>
-          {chartIncomeWeek()}
+          {chartIncomeMonth()}
         </Card>
       );
       const chartFragment4 = (i: number) => (
         <Card className={"border radius p-20"} key={i}>
-          {chartExpenseWeek()}
-        </Card>
-      );
-      const chartFragment5 = (i: number) => (
-        <Card className={"border radius p-20"} key={i}>
-          {chartIncomeMonth()}
-        </Card>
-      );
-      const chartFragment6 = (i: number) => (
-        <Card className={"border radius p-20"} key={i}>
           {chartExpenseMonth()}
         </Card>
       );
-      if (SECTION === "today" && LINE === "income") {
+      if (SECTION === "week" && LINE === "income") {
         return LOADING ? <Loading /> : chartFragment1(0);
       }
-      else if (SECTION === "today" && LINE === "expense") {
+      else if (SECTION === "week" && LINE === "expense") {
         return LOADING ? <Loading /> : chartFragment2(0);
       }
-      else if (SECTION === "week" && LINE === "income") {
+      else if (SECTION === "month" && LINE === "income") {
         return LOADING ? <Loading /> : chartFragment3(0);
       }
-      else if (SECTION === "week" && LINE === "expense") {
-        return LOADING ? <Loading /> : chartFragment4(0);
-      }
-      else if (SECTION === "month" && LINE === "income") {
-        return LOADING ? <Loading /> : chartFragment5(0);
-      }
       else if (SECTION === "month" && LINE === "expense") {
-        return LOADING ? <Loading /> : chartFragment6(0);
+        return LOADING ? <Loading /> : chartFragment4(0);
       }
     }
     // 7-10. return

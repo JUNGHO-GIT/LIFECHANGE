@@ -11,7 +11,7 @@ const schema = new mongoose.Schema({
     required: true
   },
   calendar_number: {
-    type : Number,
+    type: Number,
     default: 0,
     unique : true
   },
@@ -34,29 +34,29 @@ const schema = new mongoose.Schema({
 
   calendar_section: [{
     calendar_part_idx : {
-      type : Number,
-      default : 0,
-      required : false
+      type: Number,
+      default: 0,
+      required: false
     },
     calendar_part_val : {
-      type : String,
-      default : "",
-      required : false
+      type: String,
+      default: "",
+      required: false
     },
     calendar_title : {
-      type : String,
-      default : "",
-      required : false
+      type: String,
+      default: "",
+      required: false
     },
     calendar_color: {
-      type : String,
+      type: String,
       default: "",
-      required : false
+      required: false
     },
     calendar_content: {
-      type : String,
+      type: String,
       default: "",
-      required : false
+      required: false
     }
   }],
 

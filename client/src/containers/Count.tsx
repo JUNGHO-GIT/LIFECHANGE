@@ -66,11 +66,11 @@ export const Count = (
         type={"alert"}
         position={"bottom"}
         direction={"center"}
-        contents={({closePopup}: any) => (
+        contents={
           <Card className={"d-center"}>
             {`${COUNT.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`}
           </Card>
-        )}
+        }
       >
         {(popTrigger: any) => (
           <Input

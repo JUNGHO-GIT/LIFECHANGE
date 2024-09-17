@@ -11,8 +11,8 @@ const schema = new mongoose.Schema({
     required: true
   },
   money_goal_number: {
-    type : Number,
-    default : 0,
+    type: Number,
+    default: 0,
     unique : true
   },
   money_goal_dummy: {

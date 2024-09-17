@@ -255,9 +255,9 @@ export const ExerciseChartBar = () => {
       const selectFragment1 = () => (
         <Select
           value={SECTION}
-          onChange={(e: any) => (
+          onChange={(e: any) => {
             setSECTION(e.target.value)
-          )}
+          }}
         >
           <MenuItem value={"week"}>{translate("week")}</MenuItem>
           <MenuItem value={"month"}>{translate("month")}</MenuItem>

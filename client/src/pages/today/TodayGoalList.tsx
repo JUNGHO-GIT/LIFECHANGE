@@ -22,16 +22,16 @@ export const TodayGoalList = () => {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP, sessionId, TITLE, sessionCurrency,
+    navigate, PATH, URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP, sessionId, TITLE, sessionCurrency,
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
   const [DATE, setDATE] = useStorage(
     `${TITLE}_date_(${PATH})`, {
-      dateType: location_dateType || "day",
-      dateStart: location_dateStart || dayFmt,
-      dateEnd: location_dateEnd || dayFmt,
+      dateType: "",
+      dateStart: dayFmt,
+      dateEnd: dayFmt,
     }
   );
   const [PAGING, setPAGING] = useStorage(
@@ -49,7 +49,7 @@ export const TodayGoalList = () => {
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [SEND, setSEND] = useState<any>({
     id: "",
-    dateType: "day",
+    dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     toExerciseGoal: "/exercise/goal/detail",

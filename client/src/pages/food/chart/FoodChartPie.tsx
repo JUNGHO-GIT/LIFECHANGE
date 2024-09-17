@@ -42,7 +42,7 @@ export const FoodChartPie = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(true);
   const [radius, setRadius] = useState<number>(120);
-  const [SECTION, setSECTION] = useState<string>("today");
+  const [SECTION, setSECTION] = useState<string>("week");
   const [LINE, setLINE] = useState<string>("kcal");
   const [DATE, setDATE] = useState<any>({
     dateType: "",
@@ -57,8 +57,6 @@ export const FoodChartPie = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [OBJECT_KCAL_TODAY, setOBJECT_KCAL_TODAY] = useState<any>([FoodPie]);
-  const [OBJECT_NUT_TODAY, setOBJECT_NUT_TODAY] = useState<any>([FoodPie]);
   const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState<any>([FoodPie]);
   const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState<any>([FoodPie]);
   const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState<any>([FoodPie]);
@@ -71,10 +69,7 @@ export const FoodChartPie = () => {
       user_id: sessionId,
       DATE: DATE,
     };
-    const [resToday, resWeek, resMonth] = await Promise.all([
-      axios.get(`${URL_OBJECT}/chart/pie/today`, {
-        params: params,
-      }),
+    const [resWeek, resMonth] = await Promise.all([
       axios.get(`${URL_OBJECT}/chart/pie/week`, {
         params: params,
       }),
@@ -82,12 +77,6 @@ export const FoodChartPie = () => {
         params: params,
       }),
     ]);
-    setOBJECT_KCAL_TODAY(
-      resToday.data.result.kcal.length > 0 ? resToday.data.result.kcal : [FoodPie]
-    );
-    setOBJECT_NUT_TODAY(
-      resToday.data.result.nut.length > 0 ? resToday.data.result.nut : [FoodPie]
-    );
     setOBJECT_KCAL_WEEK(
       resWeek.data.result.kcal.length > 0 ? resWeek.data.result.kcal : [FoodPie]
     );
@@ -131,46 +120,6 @@ export const FoodChartPie = () => {
       window.removeEventListener('resize', updateRadius);
     }
   }, []);
-
-  // 4-1. render -----------------------------------------------------------------------------------
-  const renderKcalToday = (
-    { cx, cy, midAngle, innerRadius, outerRadius, value, index }: PieProps
-  ) => {
-    const RADIAN = Math.PI / 180;
-    const radius = innerRadius + (outerRadius - innerRadius) / 2;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-    return (
-      <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
-      className={"fs-0-6rem"}>
-        {translate(OBJECT_KCAL_TODAY[index]?.name).length > 10
-          ? translate(OBJECT_KCAL_TODAY[index]?.name).substring(0, 10) + "..."
-          : translate(OBJECT_KCAL_TODAY[index]?.name)
-        }
-      </text>
-    );
-  };
-
-  // 4-2. render -----------------------------------------------------------------------------------
-  const renderNutToday = (
-    { cx, cy, midAngle, innerRadius, outerRadius, value, index }: PieProps
-  ) => {
-    const RADIAN = Math.PI / 180;
-    const radius = innerRadius + (outerRadius - innerRadius) / 2;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-    return (
-      <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
-      className={"fs-0-6rem"}>
-        {translate(OBJECT_NUT_TODAY[index]?.name).length > 10
-          ? translate(OBJECT_NUT_TODAY[index]?.name).substring(0, 10) + "..."
-          : translate(OBJECT_NUT_TODAY[index]?.name)
-        }
-      </text>
-    );
-  }
 
   // 4-3. render -----------------------------------------------------------------------------------
   const renderKcalWeek = (
@@ -251,100 +200,6 @@ export const FoodChartPie = () => {
       </text>
     );
   }
-
-  // 5-1. chart ------------------------------------------------------------------------------------
-  const chartKcalToday = () => (
-    <ResponsiveContainer width={"100%"} height={350}>
-      <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-        <Pie
-          data={OBJECT_KCAL_TODAY}
-          cx={"50%"}
-          cy={"50%"}
-          label={renderKcalToday}
-          labelLine={false}
-          outerRadius={radius}
-          fill={"#8884d8"}
-          dataKey={"value"}
-          minAngle={15}
-        >
-          {OBJECT_KCAL_TODAY?.map((entry: any, index: number) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip
-          formatter={(value: any, name: any, props: any) => {
-            const customName = translate(name);
-            return [`${Number(value).toLocaleString()}kcal`, customName];
-          }}
-          contentStyle={{
-            backgroundColor:"rgba(255, 255, 255, 0.8)",
-            border:"none",
-            borderRadius:"10px"
-          }}
-        />
-        <Legend
-          iconType={"circle"}
-          verticalAlign={"bottom"}
-          align={"center"}
-          formatter={(value) => {
-            return translate(value);
-          }}
-          wrapperStyle={{
-            lineHeight:"40px",
-            paddingTop:"10px",
-            fontSize:"12px"
-          }}
-        />
-      </PieChart>
-    </ResponsiveContainer>
-  );
-
-  // 5-2. chart ------------------------------------------------------------------------------------
-  const chartNutToday = () => (
-    <ResponsiveContainer width={"100%"} height={350}>
-      <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-        <Pie
-          data={OBJECT_NUT_TODAY}
-          cx={"50%"}
-          cy={"50%"}
-          label={renderNutToday}
-          labelLine={false}
-          outerRadius={radius}
-          fill={"#8884d8"}
-          dataKey={"value"}
-          minAngle={15}
-        >
-          {OBJECT_NUT_TODAY?.map((entry: any, index: number) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip
-          formatter={(value: any, name: any, props: any) => {
-            const customName = translate(name);
-            return [`${Number(value).toLocaleString()}g`, customName];
-          }}
-          contentStyle={{
-            backgroundColor:"rgba(255, 255, 255, 0.8)",
-            border:"none",
-            borderRadius:"10px"
-          }}
-        />
-        <Legend
-          iconType={"circle"}
-          verticalAlign={"bottom"}
-          align={"center"}
-          formatter={(value) => {
-            return translate(value);
-          }}
-          wrapperStyle={{
-            lineHeight:"40px",
-            paddingTop:"10px",
-            fontSize:"12px"
-          }}
-        />
-      </PieChart>
-    </ResponsiveContainer>
-  );
 
   // 5-3. chart ------------------------------------------------------------------------------------
   const chartKcalWeek = () => (
@@ -546,11 +401,10 @@ export const FoodChartPie = () => {
       const selectFragment1 = () => (
         <Select
           value={SECTION}
-          onChange={(e: any) => (
+          onChange={(e: any) => {
             setSECTION(e.target.value)
-          )}
+          }}
         >
-          <MenuItem value={"today"}>{translate("today")}</MenuItem>
           <MenuItem value={"week"}>{translate("week")}</MenuItem>
           <MenuItem value={"month"}>{translate("month")}</MenuItem>
         </Select>
@@ -560,7 +414,7 @@ export const FoodChartPie = () => {
           type={"chart"}
           position={"bottom"}
           direction={"center"}
-          contents={({closePopup}: any) => (
+          contents={
             ["kcal", "nut"]?.map((key, index) => (
               <FormGroup key={index}>
                 <FormControlLabel
@@ -582,7 +436,7 @@ export const FoodChartPie = () => {
                 />
               </FormGroup>
             ))
-          )}
+          }
         >
           {(popTrigger: any) => (
             <Img
@@ -616,12 +470,12 @@ export const FoodChartPie = () => {
     const chartSection = () => {
       const chartFragment1 = (i: number) => (
         <Card className={"border radius p-20"} key={i}>
-          {chartKcalToday()}
+          {chartKcalWeek()}
         </Card>
       );
       const chartFragment2 = (i: number) => (
         <Card className={"border radius p-20"} key={i}>
-          {chartKcalWeek()}
+          {chartNutWeek()}
         </Card>
       );
       const chartFragment3 = (i: number) => (
@@ -631,36 +485,20 @@ export const FoodChartPie = () => {
       );
       const chartFragment4 = (i: number) => (
         <Card className={"border radius p-20"} key={i}>
-          {chartNutToday()}
-        </Card>
-      );
-      const chartFragment5 = (i: number) => (
-        <Card className={"border radius p-20"} key={i}>
-          {chartNutWeek()}
-        </Card>
-      );
-      const chartFragment6 = (i: number) => (
-        <Card className={"border radius p-20"} key={i}>
           {chartNutMonth()}
         </Card>
       );
-      if (SECTION === "today" && LINE === "kcal") {
+      if (SECTION === "week" && LINE === "kcal") {
         return LOADING ? <Loading /> : chartFragment1(0);
       }
-      else if (SECTION === "week" && LINE === "kcal") {
+      else if (SECTION === "week" && LINE === "nut") {
         return LOADING ? <Loading /> : chartFragment2(0);
       }
       else if (SECTION === "month" && LINE === "kcal") {
         return LOADING ? <Loading /> : chartFragment3(0);
       }
-      else if (SECTION === "today" && LINE === "nut") {
-        return LOADING ? <Loading /> : chartFragment4(0);
-      }
-      else if (SECTION === "week" && LINE === "nut") {
-        return LOADING ? <Loading /> : chartFragment5(0);
-      }
       else if (SECTION === "month" && LINE === "nut") {
-        return LOADING ? <Loading /> : chartFragment6(0);
+        return LOADING ? <Loading /> : chartFragment4(0);
       }
     }
     // 7-10. return

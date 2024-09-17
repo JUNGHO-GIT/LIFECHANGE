@@ -453,9 +453,9 @@ export const FoodChartLine = () => {
       const selectFragment1 = () => (
         <Select
           value={SECTION}
-          onChange={(e: any) => (
+          onChange={(e: any) => {
             setSECTION(e.target.value)
-          )}
+          }}
         >
           <MenuItem value={"week"}>{translate("week")}</MenuItem>
           <MenuItem value={"month"}>{translate("month")}</MenuItem>
@@ -466,7 +466,7 @@ export const FoodChartLine = () => {
           type={"chart"}
           position={"bottom"}
           direction={"center"}
-          contents={({closePopup}: any) => (
+          contents={
             ["kcal", "nut"]?.map((key, index) => (
               <FormGroup key={index}>
                 <FormControlLabel
@@ -488,7 +488,7 @@ export const FoodChartLine = () => {
                 />
               </FormGroup>
             ))
-          )}
+          }
         >
           {(popTrigger: any) => (
             <Img

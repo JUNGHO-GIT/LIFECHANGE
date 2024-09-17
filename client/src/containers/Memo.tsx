@@ -34,7 +34,7 @@ export const Memo = (
       type={"innerCenter"}
       position={"center"}
       direction={"center"}
-      contents={({closePopup}: any) => (
+      contents={
         <Card className={"w-max70vw p-0"}>
           <Grid container spacing={3}>
             <Grid size={12} className={"d-center"}>
@@ -62,7 +62,7 @@ export const Memo = (
             </Grid>
           </Grid>
         </Card>
-      )}
+      }
     >
       {(popTrigger: any) => (
         <Input

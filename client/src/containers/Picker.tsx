@@ -1,10 +1,10 @@
 // Picker.tsx
-// 계획은 day, week, month, year, select
+// 계획은 week, month, year, select
 // 실제는 day
 
 import { useEffect, useState } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useStorage, useTranslate } from "@imports/ImportHooks";
-import { Btn, Input, Img, Div, Select, Icons } from "@imports/ImportComponents";
+import { Btn, Input, Img, Div, Select } from "@imports/ImportComponents";
 import { PopUp } from "@imports/ImportContainers";
 import { MenuItem, PickersDay, Grid, Card, Badge } from "@imports/ImportMuis";
 import { DateCalendar, AdapterMoment, LocalizationProvider } from "@imports/ImportMuis";
@@ -45,7 +45,8 @@ export const Picker = (
     sessionLocale, sessionTimeZone, TITLE, PATH
   } = useCommonValue();
 
-  const isToday = PATH.includes("/today");
+  const isGoalToday = PATH.includes("/today/goal");
+  const isToday = !isGoalToday && PATH.includes("/today/list");
   const isCalendar = PATH.includes("/calendar");
   const isGoalList = PATH.includes("/goal/list");
   const isGoalDetail = PATH.includes("/goal/detail");
@@ -56,6 +57,10 @@ export const Picker = (
   let parseDate = JSON?.parse(sessionDate || "{}");
   let dateStart = parseDate?.dateStart;
   let dateEnd = parseDate?.dateEnd;
+
+  // ex. 2024-11-12 ~ 12-15
+  const durStr =
+    `${DATE.dateStart} ~ ${DATE.dateEnd.split("-")[1] || "" }-${DATE.dateEnd.split("-")[2] || "" }`;
 
   // 2-1. useState ---------------------------------------------------------------------------------
   const [saveTypeStr, setDetailTypeStr] = useState<string>("");
@@ -177,7 +182,7 @@ export const Picker = (
         type={"innerCenter"}
         position={"center"}
         direction={"center"}
-        contents={({closePopup}: any) => (
+        contents={
           <Card className={"w-min70vw p-0"}>
             <Grid container spacing={3}>
               <Grid size={12} className={"d-center"}>
@@ -307,7 +312,7 @@ export const Picker = (
               </Grid>
             </Grid>
           </Card>
-        )}
+        }
       >
         {(popTrigger: any) => (
           <Input
@@ -323,7 +328,7 @@ export const Picker = (
               />
             }
             onClick={(e: any) => {
-              if (!isToday) {
+              if (!isToday && !isGoalToday) {
                 popTrigger.openPopup(e.currentTarget);
               }
             }}
@@ -338,7 +343,7 @@ export const Picker = (
         type={"innerCenter"}
         position={"center"}
         direction={"center"}
-        contents={({closePopup}: any) => (
+        contents={
           <Card className={"w-min70vw p-0"}>
             <Grid container spacing={3}>
               <Grid size={12} className={"d-center"}>
@@ -482,12 +487,12 @@ export const Picker = (
               </Grid>
             </Grid>
           </Card>
-        )}
+        }
       >
         {(popTrigger: any) => (
           <Input
             label={translate("duration")}
-            value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
+            value={durStr}
             inputclass={listTypeStr}
             readOnly={true}
             startadornment={
@@ -498,7 +503,7 @@ export const Picker = (
               />
             }
             onClick={(e: any) => {
-              if (!isToday) {
+              if (!isToday && !isGoalToday) {
                 popTrigger.openPopup(e.currentTarget);
               }
             }}
@@ -513,7 +518,7 @@ export const Picker = (
         type={"innerCenter"}
         position={"center"}
         direction={"center"}
-        contents={({closePopup}: any) => (
+        contents={
           <Card className={"w-min70vw p-0"}>
             <Grid container spacing={3}>
               <Grid size={12} className={"d-center"}>
@@ -640,12 +645,12 @@ export const Picker = (
               </Grid>
             </Grid>
           </Card>
-        )}
+        }
       >
         {(popTrigger: any) => (
           <Input
             label={translate("duration")}
-            value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
+            value={durStr}
             inputclass={listTypeStr}
             readOnly={true}
             startadornment={
@@ -656,7 +661,7 @@ export const Picker = (
               />
             }
             onClick={(e: any) => {
-              if (!isToday) {
+              if (!isToday && !isGoalToday) {
                 popTrigger.openPopup(e.currentTarget);
               }
             }}
@@ -671,7 +676,7 @@ export const Picker = (
         type={"innerCenter"}
         position={"center"}
         direction={"center"}
-        contents={({closePopup}: any) => (
+        contents={
           <Card className={"w-min70vw p-0"}>
             <Grid container spacing={3}>
               <Grid size={12} className={"d-center"}>
@@ -799,12 +804,12 @@ export const Picker = (
               </Grid>
             </Grid>
           </Card>
-        )}
+        }
       >
         {(popTrigger: any) => (
           <Input
             label={translate("duration")}
-            value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
+            value={durStr}
             inputclass={listTypeStr}
             readOnly={true}
             startadornment={
@@ -815,7 +820,7 @@ export const Picker = (
               />
             }
             onClick={(e: any) => {
-              if (!isToday) {
+              if (!isToday && !isGoalToday) {
                 popTrigger.openPopup(e.currentTarget);
               }
             }}
@@ -830,7 +835,7 @@ export const Picker = (
         type={"innerCenter"}
         position={"center"}
         direction={"center"}
-        contents={({ closePopup }: any) => (
+        contents={
           <Card className={"p-0"}>
             <Grid container spacing={3}>
               <Grid size={12} className={"d-center"}>
@@ -957,12 +962,12 @@ export const Picker = (
               </Grid>
             </Grid>
           </Card>
-        )}
+        }
       >
         {(popTrigger: any) => (
           <Input
             label={translate("duration")}
-            value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
+            value={durStr}
             readOnly={true}
             inputclass={`${listTypeStr}`}
             startadornment={
@@ -973,7 +978,7 @@ export const Picker = (
               />
             }
             onClick={(e: any) => {
-              if (!isToday) {
+              if (!isToday && !isGoalToday) {
                 popTrigger.openPopup(e.currentTarget);
               }
             }}
@@ -988,7 +993,7 @@ export const Picker = (
         type={"modal"}
         position={"top"}
         direction={"center"}
-        contents={({closePopup}: any) => (
+        contents={
           <Card className={"w-max18vw h-max30vh p-0 d-fit"}>
             <Grid container spacing={1}>
               <Grid size={12} className={"d-center"}>
@@ -1071,14 +1076,14 @@ export const Picker = (
               </Grid>
             </Grid>
           </Card>
-        )}
+        }
       >
         {(popTrigger: any) => (
           <Btn
             color={"primary"}
             className={"pt-1 pb-1 ps-9 pe-9 fs-0-7rem ms-n2vw"}
             onClick={(e: any) => {
-              if (!isToday) {
+              if (!isToday && !isGoalToday) {
                 popTrigger.openPopup(e.currentTarget);
               }
             }}
@@ -1140,7 +1145,7 @@ export const Picker = (
         }}
       >
         {isGoalDetail || isCalendar ? (
-          ["day", "week", "month", "year", "select"]?.map((item: any) => (
+          ["week", "month", "year", "select"]?.map((item: any) => (
             <MenuItem
               key={item}
               value={item}

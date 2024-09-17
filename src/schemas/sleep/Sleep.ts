@@ -12,8 +12,8 @@ const schema = new mongoose.Schema({
   },
 
   sleep_number: {
-    type : Number,
-    default : 0,
+    type: Number,
+    default: 0,
     unique : true
   },
   sleep_dummy: {

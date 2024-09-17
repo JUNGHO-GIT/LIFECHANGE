@@ -16,7 +16,7 @@ const schema = new mongoose.Schema({
     required: true
   },
   user_number : {
-    type : Number,
+    type: Number,
     default: 0,
     unique : true
   },
@@ -31,45 +31,45 @@ const schema = new mongoose.Schema({
     required: false
   },
   user_pw : {
-    type : String,
+    type: String,
     default: "",
-    required : false
+    required: false
   },
 
   user_image: {
-    type : String,
+    type: String,
     default: "",
-    required : false
+    required: false
   },
   user_age: {
-    type : String,
+    type: String,
     default: "",
-    required : false
+    required: false
   },
   user_gender: {
-    type : String,
+    type: String,
     default: "N",
-    required : false
+    required: false
   },
   user_initScale: {
-    type : String,
+    type: String,
     default: "",
-    required : false
+    required: false
   },
   user_curScale: {
-    type : String,
+    type: String,
     default: "",
-    required : false
+    required: false
   },
   user_initProperty: {
-    type : String,
+    type: String,
     default: "",
-    required : false
+    required: false
   },
   user_curProperty: {
-    type : String,
+    type: String,
     default: "",
-    required : false
+    required: false
   },
 
   dataCategory: {

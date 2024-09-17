@@ -24,6 +24,16 @@ export const Buttons = ( { state, setState, flow }: ButtonsProps ) => {
     PATH, toFind, navigate,
   } = useCommonValue();
 
+  // 3. flow ---------------------------------------------------------------------------------------
+  const flowSave = (type: string) => {
+    flow?.flowSave(type);
+    Object.keys(sessionStorage).forEach((key) => {
+      if (key.includes("foodSection") || key.includes("paging")) {
+        sessionStorage.removeItem(key);
+      }
+    });
+  };
+
   // 7. btn ----------------------------------------------------------------------------------------
   const btnNode = () => {
 
@@ -74,7 +84,7 @@ export const Buttons = ( { state, setState, flow }: ButtonsProps ) => {
                   variant={"text"}
                   className={"fs-1-2rem fw-600 ms-1vw me-1vw"}
                   onClick={() => {
-                    flow?.flowSave("replace");
+                    flowSave("replace");
                   }}
                 >
                   {translate("replace")}
@@ -90,7 +100,7 @@ export const Buttons = ( { state, setState, flow }: ButtonsProps ) => {
                   variant={"text"}
                   className={"fs-1-2rem fw-600 ms-1vw me-1vw"}
                   onClick={() => {
-                    flow?.flowSave("insert");
+                    flowSave("insert");
                   }}
                 >
                   {translate("insert")}
@@ -107,14 +117,14 @@ export const Buttons = ( { state, setState, flow }: ButtonsProps ) => {
             onClick={(e: any) => {
               if (state.FLOW?.exist === "true") {
                 if (state.FLOW?.itsMe === "true") {
-                  flow?.flowSave("replace");
+                  flowSave("replace");
                 }
                 else {
                   popTrigger.openPopup(e.currentTarget);
                 }
               }
               else {
-                flow?.flowSave("create");
+                flowSave("create");
               }
             }}
           >

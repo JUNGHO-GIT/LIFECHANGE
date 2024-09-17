@@ -8,9 +8,9 @@ import { Money } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
-import { Select, Input, Img, Bg } from "@imports/ImportComponents";
+import { Select, Input, Img, Bg, Icons } from "@imports/ImportComponents";
 import { Picker, Memo, Count, Delete } from "@imports/ImportContainers";
-import { Card, Paper, MenuItem, Grid } from "@imports/ImportMuis";
+import { Paper, Card, MenuItem, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const MoneyDetail = () => {
@@ -184,7 +184,8 @@ export const MoneyDetail = () => {
       money_title_idx: 0,
       money_title_val: "all",
       money_amount: "0",
-      money_content: ""
+      money_content: "",
+      money_include: "Y",
     };
     let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) =>
       idx < OBJECT?.money_section.length ? OBJECT?.money_section[idx] : defaultSection
@@ -477,7 +478,7 @@ export const MoneyDetail = () => {
                 }}
               />
             </Grid>
-            <Grid size={12}>
+            <Grid size={8}>
               <Memo
                 OBJECT={OBJECT}
                 setOBJECT={setOBJECT}
@@ -486,13 +487,49 @@ export const MoneyDetail = () => {
                 i={i}
               />
             </Grid>
+            <Grid size={4}>
+              <Input
+                label={translate("moneyInclude")}
+                readOnly={true}
+                inputRef={REFS[i]?.money_include}
+                error={ERRORS[i]?.money_include}
+                onClick={() => {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    money_section: prev.money_section?.map((item: any, idx: number) => (
+                      idx === i ? {
+                        ...item,
+                        money_include: item.money_include === "Y" ? "N" : "Y",
+                      } : item
+                    ))
+                  }));
+                }}
+                startadornment={
+                  OBJECT?.money_section[i]?.money_include === "Y" ? (
+                    <Icons
+                      key={"CheckSquare"}
+                      name={"CheckSquare"}
+                      fill={"#a3e7f0"}
+                      className={"w-20 h-20"}
+                    />
+                  ) : (
+                    <Icons
+                      key={"UnCheckSquare"}
+                      name={"UnCheckSquare"}
+                      fill={"#f0ffff"}
+                      className={"w-20 h-20"}
+                    />
+                  )
+                }
+              />
+            </Grid>
           </Grid>
         </Card>
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? <Loading /> : OBJECT?.money_section?.map((item: any, i: number) => (
-            detailFragment(i)
+          LOADING ? <Loading /> : OBJECT?.money_section?.map((_item: any, idx: number) => (
+            detailFragment(idx)
           ))
         )
       );

@@ -11,7 +11,7 @@ const schema = new mongoose.Schema({
     required: true
   },
   money_number: {
-    type : Number,
+    type: Number,
     default: 0,
     unique : true
   },
@@ -50,34 +50,39 @@ const schema = new mongoose.Schema({
 
   money_section: [{
     money_part_idx : {
-      type : Number,
-      default : 0,
-      required : false
+      type: Number,
+      default: 0,
+      required: false
     },
     money_part_val : {
-      type : String,
-      default : "",
-      required : false
+      type: String,
+      default: "",
+      required: false
     },
     money_title_idx : {
-      type : Number,
-      default : 0,
-      required : false
+      type: Number,
+      default: 0,
+      required: false
     },
     money_title_val : {
-      type : String,
-      default : "",
-      required : false
+      type: String,
+      default: "",
+      required: false
+    },
+    money_include : {
+      type: String,
+      default: "Y",
+      required: false
     },
     money_amount : {
-      type : Number,
-      default : 0,
-      required : false
+      type: String,
+      default: 0,
+      required: false
     },
     money_content :{
-      type : String,
-      default : "",
-      required : false
+      type: String,
+      default: "",
+      required: false
     },
   }],
 

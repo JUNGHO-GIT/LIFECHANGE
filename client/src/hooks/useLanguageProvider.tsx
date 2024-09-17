@@ -712,6 +712,10 @@ export const useTranslate = () => {
       ko: "자산",
       en: "money"
     },
+    moneyInclude: {
+      ko: "자산에 포함",
+      en: "Include in Property"
+    },
     month: {
       ko: "월별",
       en: "Month"
@@ -1521,15 +1525,15 @@ export const useTranslate = () => {
       en: "Save Error"
     },
     replaceSuccessful: {
-      ko: "교체 성공",
+      ko: "수정 성공",
       en: "Replace Successful"
     },
     replaceFailed: {
-      ko: "교체 실패",
+      ko: "수정 실패",
       en: "Replace Failed"
     },
     replaceError: {
-      ko: "교체 오류",
+      ko: "수정 오류",
       en: "Replace Error"
     },
     insertSuccessful: {
@@ -1555,6 +1559,18 @@ export const useTranslate = () => {
     createError: {
       ko: "저장 오류",
       en: "Create Error"
+    },
+    updateSuccessful: {
+      ko: "수정 성공",
+      en: "Update Successful"
+    },
+    updateFailed: {
+      ko: "수정 실패",
+      en: "Update Failed"
+    },
+    updateError: {
+      ko: "수정 오류",
+      en: "Update Error"
     },
     deleteSuccessful: {
       ko: "삭제 성공",

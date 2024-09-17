@@ -242,7 +242,7 @@ export const TopNav = () => {
         type={"innerCenter"}
         position={"center"}
         direction={"center"}
-        contents={({closePopup}: any) => (
+        contents={
           <Card className={"w-max60vw h-max65vh border radius p-20"} key={`smile`}>
             <Grid container spacing={2}>
               <Grid size={12} className={"d-center"}>
@@ -334,7 +334,7 @@ export const TopNav = () => {
               </Grid>
             </Grid>
           </Card>
-        )}
+        }
       >
         {(popTrigger: any) => (
           <Div className={"d-center pointer"} onClick={(e: any) => {
@@ -357,7 +357,7 @@ export const TopNav = () => {
         type={"innerCenter"}
         position={"center"}
         direction={"center"}
-        contents={({closePopup}: any) => (
+        contents={
           <Card className={"w-max60vw h-max65vh border radius p-20"} key={`property`}>
             <Grid container spacing={2}>
               <Grid size={12} className={"d-center"}>
@@ -435,7 +435,7 @@ export const TopNav = () => {
               </Grid>
             </Grid>
           </Card>
-        )}
+        }
       >
         {(popTrigger: any) => (
           <Div className={"d-center pointer"} onClick={(e: any) => {
@@ -458,7 +458,7 @@ export const TopNav = () => {
         type={"innerCenter"}
         position={"center"}
         direction={"center"}
-        contents={({closePopup}: any) => (
+        contents={
           <Card className={"w-max60vw h-max65vh border radius p-20"} key={`scale`}>
             <Grid container spacing={2}>
               <Grid size={12} className={"d-center"}>
@@ -536,7 +536,7 @@ export const TopNav = () => {
               </Grid>
             </Grid>
           </Card>
-        )}
+        }
       >
         {(popTrigger: any) => (
           <Div className={"d-center pointer"} onClick={(e: any) => {

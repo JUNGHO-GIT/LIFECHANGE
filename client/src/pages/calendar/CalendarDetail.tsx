@@ -61,11 +61,6 @@ export const CalendarDetail = () => {
     dateEnd: location_dateEnd || dayFmt,
   });
 
-  useEffect(() => {
-    console.log("===================================");
-    console.log("FLOW", FLOW);
-  }, [FLOW]);
-
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (EXIST?.[DATE.dateType]?.length > 0) {

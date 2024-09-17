@@ -65,11 +65,6 @@ export const SleepDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
 
-  useEffect(() => {
-    console.log("===================================");
-    console.log("FLOW", FLOW);
-  }, [FLOW]);
-
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (EXIST?.[DATE.dateType]?.length > 0) {

@@ -70,7 +70,7 @@ export const FindListFilter = (
     // 3. done
     const doneSection = () => (
       <Icons
-        name={"CheckBox"}
+        name={"CheckCircle"}
         className={"w-20 h-20 black"}
         onClick={() => {
           Object.assign(state?.SEND, {

@@ -226,7 +226,7 @@ export const UserCategory = () => {
   // 7. userCategory -------------------------------------------------------------------------------
   const userCategoryNode = () => {
     // 7-1. popup
-    const popupSection = (i: number, closePopup: any) => (
+    const popupSection = (i: number) => (
       <Card key={i} className={"w-85vw h-60vh d-row border radius p-0"}>
         <TableContainer className={"border-right over-x-hidden"}>
           <Table>
@@ -468,9 +468,10 @@ export const UserCategory = () => {
                           type={"innerCenter"}
                           position={"bottom"}
                           direction={"center"}
-                          contents={({closePopup}: any) => (
-                            popupSection(i, closePopup)
-                          )}>
+                          contents={
+                            popupSection(i)
+                          }
+                        >
                           {(popTrigger: any) => (
                             <Icons
                               key={"TbPencil"}

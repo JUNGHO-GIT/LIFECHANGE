@@ -928,6 +928,7 @@ export const dummySave = async (
           money_part_val: part.money_part,
           money_title_idx: titleIndex,
           money_title_val: part.money_title[titleIndex],
+          money_include: "N",
           money_amount: randomNumber(100000),
           money_content: "bbbbbbbb"
         };

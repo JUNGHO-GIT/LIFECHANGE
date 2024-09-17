@@ -21,6 +21,7 @@ export const Money: any = {
     money_title_val: "all",
     money_amount: "0",
     money_content: "",
+    money_include: "Y",
   }],
   money_regDt: "",
   money_updateDt: "",

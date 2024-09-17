@@ -422,9 +422,9 @@ export const ExerciseChartAvg = () => {
       const selectFragment1 = () => (
         <Select
           value={SECTION}
-          onChange={(e: any) => (
+          onChange={(e: any) => {
             setSECTION(e.target.value)
-          )}
+          }}
         >
           <MenuItem value={"week"}>{translate("week")}</MenuItem>
           <MenuItem value={"month"}>{translate("month")}</MenuItem>
@@ -435,7 +435,7 @@ export const ExerciseChartAvg = () => {
           type={"chart"}
           position={"bottom"}
           direction={"center"}
-          contents={({closePopup}: any) => (
+          contents={
             ["volume", "cardio"]?.map((key, index) => (
               <FormGroup key={index}>
                 <FormControlLabel
@@ -457,7 +457,7 @@ export const ExerciseChartAvg = () => {
                 />
               </FormGroup>
             ))
-          )}
+          }
         >
           {(popTrigger: any) => (
             <Img

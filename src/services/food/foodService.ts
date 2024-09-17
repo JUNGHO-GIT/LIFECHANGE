@@ -215,7 +215,7 @@ export const create = async (
   };
 };
 
-// 4. insert ---------------------------------------------------------------------------------------
+// 4. insert (기존항목 제거 + 타겟항목에 추가) -----------------------------------------------------
 export const insert = async (
   user_id_param: string,
   OBJECT_param: any,
@@ -223,18 +223,43 @@ export const insert = async (
 ) => {
 
   // result 변수 선언
+  let findResult: any = null;
+  let deleteResult: any = null;
   let insertResult: any = null;
   let finalResult: any = null;
   let statusResult: string = "";
 
   // date 변수 선언
+  const existingDateType = OBJECT_param.food_dateType;
+  const existingDateStart = OBJECT_param.food_dateStart;
+  const existingDateEnd = OBJECT_param.food_dateEnd;
   const dateType = DATE_param.dateType;
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
-  insertResult = await repository.insert(
-    user_id_param, OBJECT_param, dateType, dateStart, dateEnd
+  findResult = await repository.detail(
+    user_id_param, existingDateType, existingDateStart, existingDateEnd
   );
+
+  if (!findResult) {
+    insertResult = await repository.insert(
+      user_id_param, OBJECT_param, dateType, dateStart, dateEnd
+    );
+  }
+  else {
+    deleteResult = await repository.deletes(
+      user_id_param, existingDateType, existingDateStart, existingDateEnd
+    );
+    if (!deleteResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
+      insertResult = await repository.insert(
+        user_id_param, OBJECT_param, dateType, dateStart, dateEnd
+      );
+    }
+  }
 
   if (!insertResult) {
     finalResult = null;
@@ -251,7 +276,7 @@ export const insert = async (
   };
 };
 
-// 5. replace --------------------------------------------------------------------------------------
+// 5. replace (기존항목 제거 + 타겟항목을 교체) ----------------------------------------------------
 export const replace = async (
   user_id_param: string,
   OBJECT_param: any,
@@ -259,25 +284,50 @@ export const replace = async (
 ) => {
 
   // result 변수 선언
-  let updateResult: any = null;
+  let findResult: any = null;
+  let deleteResult: any = null;
+  let replaceResult: any = null;
   let finalResult: any = null;
   let statusResult: string = "";
 
   // date 변수 선언
+  const existingDateType = OBJECT_param.food_dateType;
+  const existingDateStart = OBJECT_param.food_dateStart;
+  const existingDateEnd = OBJECT_param.food_dateEnd;
   const dateType = DATE_param.dateType;
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
-  updateResult = await repository.replace(
-    user_id_param, OBJECT_param, dateType, dateStart, dateEnd
+  findResult = await repository.detail(
+    user_id_param, existingDateType, existingDateStart, existingDateEnd
   );
 
-  if (!updateResult) {
+  if (!findResult) {
+    replaceResult = await repository.replace(
+      user_id_param, OBJECT_param, dateType, dateStart, dateEnd
+    );
+  }
+  else {
+    deleteResult = await repository.deletes(
+      user_id_param, existingDateType, existingDateStart, existingDateEnd
+    );
+    if (!deleteResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
+      replaceResult = await repository.replace(
+        user_id_param, OBJECT_param, dateType, dateStart, dateEnd
+      );
+    }
+  }
+
+  if (!replaceResult) {
     finalResult = null;
     statusResult = "fail";
   }
   else {
-    finalResult = updateResult;
+    finalResult = replaceResult;
     statusResult = "success";
   }
 

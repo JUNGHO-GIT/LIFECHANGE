@@ -89,7 +89,7 @@ export const UserAppSetting = () => {
                   type={"innerCenter"}
                   position={"bottom"}
                   direction={"center"}
-                  contents={({closePopup}: any) => (
+                  contents={
                     <Div className={"d-column"}>
                       <Div
                         className={"d-center mb-20"}
@@ -134,7 +134,8 @@ export const UserAppSetting = () => {
                         />
                       </Div>
                     </Div>
-                  )}>
+                  }
+                >
                   {(popTrigger: any) => (
                     <TableRow
                       className={"pointer"}

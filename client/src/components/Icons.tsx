@@ -150,18 +150,6 @@ export const Icons = (props: any) => {
         <path d="M21 21l-6 -6" />
       </svg>
     ),
-    Check: (
-      <svg
-        {...commonValues}
-        className={
-          props.className +
-          " icon icon-tabler icons-tabler-outline icon-tabler-check"
-        }
-      >
-        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-        <path d="M5 12l5 5l10 -10" />
-      </svg>
-    ),
     Pencil: (
       <svg
         {...commonValues}
@@ -192,7 +180,19 @@ export const Icons = (props: any) => {
         <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
       </svg>
     ),
-    CheckBox: (
+    Check: (
+      <svg
+        {...commonValues}
+        className={
+          props.className +
+          " icon icon-tabler icons-tabler-outline icon-tabler-check"
+        }
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M5 12l5 5l10 -10" />
+      </svg>
+    ),
+    CheckCircle: (
       <svg
         {...commonValues}
         className={
@@ -203,6 +203,31 @@ export const Icons = (props: any) => {
         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
         <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
         <path d="M9 12l2 2l4 -4" />
+      </svg>
+    ),
+    CheckSquare: (
+      <svg
+        {...commonValues}
+        className={
+          props.className +
+          " icon icon-tabler icons-tabler-outline icon-tabler-square-check"
+        }
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+        <path d="M7 12l3 3l6 -6" />
+      </svg>
+    ),
+    UnCheckSquare: (
+      <svg
+        {...commonValues}
+        className={
+          props.className +
+          " icon icon-tabler icons-tabler-outline icon-tabler-square"
+        }
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
       </svg>
     ),
     Hamburger: (

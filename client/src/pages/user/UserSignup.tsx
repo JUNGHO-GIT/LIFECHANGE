@@ -200,12 +200,12 @@ export const UserSignup = () => {
                 inputRef={REFS[i]?.user_id}
                 error={ERRORS[i]?.user_id}
                 disabled={OBJECT.user_id_verified === true}
-                onChange={(e: any) => (
+                onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
                     ...prev,
                     user_id: e.target.value
                   }))
-                )}
+                }}
               />
             </Grid>
             <Grid size={2}>
@@ -229,12 +229,12 @@ export const UserSignup = () => {
                 inputRef={REFS[i]?.user_id_verified}
                 error={ERRORS[i]?.user_id_verified}
                 disabled={OBJECT.user_id_verified === true}
-                onChange={(e: any) => (
+                onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
                     ...prev,
                     user_verify_code: e.target.value
                   }))
-                )}
+                }}
               />
             </Grid>
             <Grid size={2}>
@@ -260,12 +260,12 @@ export const UserSignup = () => {
                 inputRef={REFS[i]?.user_pw}
                 error={ERRORS[i]?.user_pw}
                 disabled={OBJECT.user_id_verified === false}
-                onChange={(e: any) => (
+                onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
                     ...prev,
                     user_pw: e.target.value
                   }))
-                )}
+                }}
               />
             </Grid>
             {/** 비밀번호 확인 **/}
@@ -278,12 +278,12 @@ export const UserSignup = () => {
                 inputRef={REFS[i]?.user_pw_verified}
                 error={ERRORS[i]?.user_pw_verified}
                 disabled={OBJECT.user_id_verified === false}
-                onChange={(e: any) => (
+                onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
                     ...prev,
                     user_pw_verified: e.target.value
                   }))
-                )}
+                }}
               />
             </Grid>
             <Hr px={20} />
@@ -293,12 +293,12 @@ export const UserSignup = () => {
                 label={translate("gender")}
                 value={OBJECT.user_gender || "N"}
                 disabled={OBJECT.user_id_verified === false}
-                onChange={(e: any) => (
+                onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
                     ...prev,
                     user_gender: e.target.value || "N"
                   }))
-                )}
+                }}
               >
                 {[translate("N"), translate("M"), translate("F")]?.map((item, i) => (
                   <MenuItem key={i} value={i === 0 ? "N" : i === 1 ? "M" : "F"}>

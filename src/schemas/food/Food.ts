@@ -75,9 +75,9 @@ const schema = new mongoose.Schema({
       required: false,
     },
     food_brand : {
-      type : String,
-      default : "",
-      required : false
+      type: String,
+      default: "",
+      required: false
     },
     food_count : {
       type: String,
@@ -85,9 +85,9 @@ const schema = new mongoose.Schema({
       required: false
     },
     food_serv : {
-      type : String,
-      default : "",
-      required : false
+      type: String,
+      default: "",
+      required: false
     },
     food_gram : {
       type: String,

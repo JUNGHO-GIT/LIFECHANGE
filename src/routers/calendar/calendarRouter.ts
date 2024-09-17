@@ -169,7 +169,7 @@ router.post("/create", async (req: Request, res: Response) => {
   }
 });
 
-// 4. insert ---------------------------------------------------------------------------------------
+// 4. insert (기존항목 제거 + 타겟항목에 추가) -----------------------------------------------------
 router.post("/insert", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.insert(
@@ -209,7 +209,7 @@ router.post("/insert", async (req: Request, res: Response) => {
   }
 });
 
-// 5. replace --------------------------------------------------------------------------------------
+// 5. replace (기존항목 제거 + 타겟항목을 교체) ----------------------------------------------------
 router.post("/replace", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.replace(

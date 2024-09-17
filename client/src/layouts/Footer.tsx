@@ -39,6 +39,18 @@ export const Footer = (
       setStyleClass("");
     }
     else if (
+      PATH.includes("/user/category") || PATH.includes("/user/detail")
+    ) {
+      setTypeName("btn");
+      setStyleClass("layout-wrapper p-sticky bottom-0 h-8vh radius border");
+    }
+    else if (
+      PATH.includes("/user/dummy")
+    ) {
+      setTypeName("dummy");
+      setStyleClass("layout-wrapper p-sticky bottom-0 h-8vh radius border");
+    }
+    else if (
       PATH.includes("/food/find/list")
     ) {
       setTypeName("findList");
@@ -55,18 +67,6 @@ export const Footer = (
     ) {
       setTypeName("btn");
       setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh radius border");
-    }
-    else if (
-      PATH.includes("/user/dummy")
-    ) {
-      setTypeName("dummy");
-      setStyleClass("layout-wrapper p-sticky bottom-0 h-8vh radius border");
-    }
-    else if (
-      PATH.includes("/user/category") || PATH.includes("/user/detail")
-    ) {
-      setTypeName("btn");
-      setStyleClass("layout-wrapper p-sticky bottom-0 h-8vh radius border");
     }
     else {
       setTypeName("");

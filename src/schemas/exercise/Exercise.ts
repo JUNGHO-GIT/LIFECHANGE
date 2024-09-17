@@ -11,7 +11,7 @@ const schema = new mongoose.Schema({
     required: true
   },
   exercise_number: {
-    type : Number,
+    type: Number,
     default: 0,
     unique : true
   },

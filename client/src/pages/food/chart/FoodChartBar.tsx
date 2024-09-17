@@ -280,7 +280,7 @@ export const FoodChartBar = () => {
           type={"chart"}
           position={"bottom"}
           direction={"center"}
-          contents={({closePopup}: any) => (
+          contents={
             ["kcal", "nut"]?.map((key, index) => (
               <FormGroup key={index}>
                 <FormControlLabel
@@ -302,7 +302,7 @@ export const FoodChartBar = () => {
                 />
               </FormGroup>
             ))
-          )}
+          }
         >
           {(popTrigger: any) => (
             <Img

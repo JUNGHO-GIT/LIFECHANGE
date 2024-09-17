@@ -268,9 +268,9 @@ export const SleepChartAvg = () => {
       const selectFragment1 = () => (
         <Select
           value={SECTION}
-          onChange={(e: any) => (
+          onChange={(e: any) => {
             setSECTION(e.target.value)
-          )}
+          }}
         >
           <MenuItem value={"week"}>{translate("week")}</MenuItem>
           <MenuItem value={"month"}>{translate("month")}</MenuItem>
@@ -281,7 +281,7 @@ export const SleepChartAvg = () => {
           type={"chart"}
           position={"bottom"}
           direction={"center"}
-          contents={({closePopup}: any) => (
+          contents={
             ["bedTime", "wakeTime", "sleepTime"]?.map((key, index) => (
               <FormGroup key={index}>
                 <FormControlLabel
@@ -308,7 +308,7 @@ export const SleepChartAvg = () => {
                 />
               </FormGroup>
             ))
-          )}
+          }
         >
           {(popTrigger: any) => (
             <Img
