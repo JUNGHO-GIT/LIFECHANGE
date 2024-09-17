@@ -62,7 +62,7 @@ export const ListFilter = (
     );
     // 3. return
     return (
-      <Grid container spacing={2}>
+      <Grid container spacing={1}>
         <Grid size={3}>
           {sortSection()}
         </Grid>

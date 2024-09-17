@@ -7,7 +7,7 @@ import { ExerciseGoal, FoodGoal, MoneyGoal, SleepGoal } from "@imports/ImportSch
 import { axios, numeral } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
-import { Empty } from "@imports/ImportContainers";
+import { Empty, Dial } from "@imports/ImportContainers";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 
@@ -42,10 +42,6 @@ export const TodayGoalList = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [isExpandedExercise, setIsExpandedExercise] = useState<number[]>([0]);
-  const [isExpandedFood, setIsExpandedFood] = useState<number[]>([0]);
-  const [isExpandedMoney, setIsExpandedMoney] = useState<number[]>([0]);
-  const [isExpandedSleep, setIsExpandedSleep] = useState<number[]>([0]);
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [SEND, setSEND] = useState<any>({
     id: "",
@@ -61,25 +57,18 @@ export const TodayGoalList = () => {
     toSleepGoal: "/sleep/goal/detail",
     toSleep: "/sleep/detail",
   });
-  const [COUNT_EXERCISE, setCOUNT_EXERCISE] = useState<any>({
-    totalCnt: 0,
-    sectionCnt: 0,
-    newSectionCnt: 0
+  const [isExpanded, setIsExpanded] = useState<any>({
+    exercise: [],
+    food: [],
+    money: [],
+    sleep: [],
   });
-  const [COUNT_FOOD, setCOUNT_FOOD] = useState<any>({
-    totalCnt: 0,
-    sectionCnt: 0,
-    newSectionCnt: 0
-  });
-  const [COUNT_MONEY, setCOUNT_MONEY] = useState<any>({
-    totalCnt: 0,
-    sectionCnt: 0,
-    newSectionCnt: 0
-  });
-  const [COUNT_SLEEP, setCOUNT_SLEEP] = useState<any>({
-    totalCnt: 0,
-    sectionCnt: 0,
-    newSectionCnt: 0
+  const [COUNT, setCOUNT] = useState<any>({
+    exercise: 0,
+    food: 0,
+    money: 0,
+    sleep: 0,
+    all: 0,
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -89,73 +78,58 @@ export const TodayGoalList = () => {
   const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState<any>([SleepGoal]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
-    setLOADING(true);
-    const fetchData = async (
-      url: string,
-      setObject: any,
-      setCount: any,
-      objectDef: any,
-      setIsExpanded: any
-    ) => {
-      try {
-        const res = await axios.get(url, {
-          params: {
-            user_id: sessionId,
-            PAGING: PAGING,
-            DATE: DATE,
-          },
-        });
-        setObject(res.data.result.length > 0 ? res.data.result : [objectDef]);
-        setCount((prev: any) => ({
-          ...prev,
-          totalCnt: res.data.totalCnt || 0,
-          sectionCnt: res.data.sectionCnt || 0,
-          newSectionCnt: res.data.sectionCnt || 0,
-        }));
-        // Accordion 초기값 설정
-        //setIsExpanded([]);
-        setIsExpanded(res.data.result.map((_item: any, index: number) => (index)));
-      }
-      catch (err: any) {
-        console.error(err);
-      }
-    };
-    const fetchAllData = async () => {
-      await Promise.all([
-        fetchData(
-          `${URL_EXERCISE}/goal/list`,
-          setOBJECT_EXERCISE,
-          setCOUNT_EXERCISE,
-          ExerciseGoal,
-          setIsExpandedExercise
-        ),
-        fetchData(
-          `${URL_FOOD}/goal/list`,
-          setOBJECT_FOOD,
-          setCOUNT_FOOD,
-          FoodGoal,
-          setIsExpandedFood
-        ),
-        fetchData(
-          `${URL_MONEY}/goal/list`,
-          setOBJECT_MONEY,
-          setCOUNT_MONEY,
-          MoneyGoal,
-          setIsExpandedMoney
-        ),
-        fetchData(
-          `${URL_SLEEP}/goal/list`,
-          setOBJECT_SLEEP,
-          setCOUNT_SLEEP,
-          SleepGoal,
-          setIsExpandedSleep
-        ),
+  useEffect(() => {(async () => {
+    try {
+      setLOADING(true);
+      const params = {
+        user_id: sessionId,
+        PAGING: PAGING,
+        DATE: DATE,
+      };
+      const [resExercise, resFood, resMoney, resSleep] = await Promise.all([
+        axios.get(`${URL_EXERCISE}/goal/list`, { params }),
+        axios.get(`${URL_FOOD}/goal/list`, { params }),
+        axios.get(`${URL_MONEY}/goal/list`, { params }),
+        axios.get(`${URL_SLEEP}/goal/list`, { params })
       ]);
+      setOBJECT_EXERCISE(
+        resExercise.data.result.length > 0 ? resExercise.data.result : [ExerciseGoal]
+      );
+      setOBJECT_FOOD(
+        resFood.data.result.length > 0 ? resFood.data.result : [FoodGoal]
+      );
+      setOBJECT_MONEY(
+        resMoney.data.result.length > 0 ? resMoney.data.result : [MoneyGoal]
+      );
+      setOBJECT_SLEEP(
+        resSleep.data.result.length > 0 ? resSleep.data.result : [SleepGoal]
+      );
+      setCOUNT({
+        exercise: resExercise.data.totalCnt,
+        food: resFood.data.totalCnt,
+        money: resMoney.data.totalCnt,
+        sleep: resSleep.data.totalCnt,
+        totalCnt: (
+          resExercise.data.totalCnt +
+          resFood.data.totalCnt +
+          resMoney.data.totalCnt +
+          resSleep.data.totalCnt
+        ),
+      });
+      setIsExpanded({
+        exercise: resExercise.data.result.map((_item: any, index: number) => index),
+        food: resFood.data.result.map((_item: any, index: number) => index),
+        money: resMoney.data.result.map((_item: any, index: number) => index),
+        sleep: resSleep.data.result.map((_item: any, index: number) => index),
+      });
+    }
+    catch (err) {
+      console.error(err);
+    }
+    finally {
       setLOADING(false);
-    };
-    fetchAllData();
-  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
+    }
+  })()}, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
 
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
@@ -165,24 +139,28 @@ export const TodayGoalList = () => {
         <Empty
           DATE={DATE}
           SEND={SEND}
-          navigate={navigate}
-          type={"goal"}
           extra={"exercise"}
         />
       );
       const listFragment = (i: number) => (
         OBJECT_EXERCISE?.map((item: any, index: number) => (
           <Card className={"border radius"} key={`${index}-${i}`}>
-            <Accordion className={"shadow-none"} expanded={isExpandedExercise.includes(index)}>
+            <Accordion
+              className={"shadow-none"}
+              expanded={isExpanded.exercise.includes(index)}
+            >
               <AccordionSummary expandIcon={
                 <Icons
                   name={"ChevronDown"}
                   className={"w-18 h-18 black"}
                   onClick={(e: any) => {
-                    setIsExpandedMoney(isExpandedMoney.includes(index)
-                    ? isExpandedMoney.filter((el) => el !== index)
-                    : [...isExpandedMoney, index]
-                  )}}
+                    setIsExpanded((prev: any) => ({
+                      ...prev,
+                      exercise: prev.exercise.includes(index)
+                        ? prev.exercise.filter((el: number) => el !== index)
+                        : [...prev.exercise, index]
+                    }))
+                  }}
                 />
               }>
                 <Grid container spacing={2}
@@ -517,7 +495,7 @@ export const TodayGoalList = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT_EXERCISE.totalCnt === 0 ? emptyFragment() : listFragment(0)
+          COUNT.exercise === 0 ? emptyFragment() : listFragment(0)
         )
       );
     };
@@ -527,27 +505,30 @@ export const TodayGoalList = () => {
         <Empty
           DATE={DATE}
           SEND={SEND}
-          navigate={navigate}
-          type={"goal"}
           extra={"food"}
         />
       );
       const listFragment = (i: number) => (
         OBJECT_FOOD?.map((item: any, index: number) => (
           <Card className={"border radius"} key={`${index}-${i}`}>
-            <Accordion className={"shadow-none"} expanded={isExpandedFood.includes(index)}>
+            <Accordion
+              className={"shadow-none"}
+              expanded={isExpanded.food.includes(index)}
+            >
               <AccordionSummary expandIcon={
-                  <Icons
-                    name={"ChevronDown"}
-                    className={"w-18 h-18 black"}
-                    onClick={(e: any) => {
-                      setIsExpandedFood(isExpandedFood.includes(index)
-                      ? isExpandedFood.filter((el) => el !== index)
-                      : [...isExpandedFood, index]
-                    )}}
-                  />
-                }
-              >
+                <Icons
+                  name={"ChevronDown"}
+                  className={"w-18 h-18 black"}
+                  onClick={(e: any) => {
+                    setIsExpanded((prev: any) => ({
+                      ...prev,
+                      food: prev.food.includes(index)
+                        ? prev.food.filter((el: number) => el !== index)
+                        : [...prev.food, index]
+                    }))
+                  }}
+                />
+              }>
                 <Grid container spacing={2}
                   onClick={(e: any) => {
                     e.stopPropagation();
@@ -880,7 +861,7 @@ export const TodayGoalList = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT_FOOD.totalCnt === 0 ? emptyFragment() : listFragment(0)
+          COUNT.food === 0 ? emptyFragment() : listFragment(0)
         )
       );
     };
@@ -890,24 +871,28 @@ export const TodayGoalList = () => {
         <Empty
           DATE={DATE}
           SEND={SEND}
-          navigate={navigate}
-          type={"goal"}
           extra={"money"}
         />
       );
       const listFragment = (i: number) => (
         OBJECT_MONEY?.map((item: any, index: number) => (
           <Card className={"border radius"} key={`${index}-${i}`}>
-            <Accordion className={"shadow-none"} expanded={isExpandedMoney.includes(index)}>
+            <Accordion
+              className={"shadow-none"}
+              expanded={isExpanded.money.includes(index)}
+            >
               <AccordionSummary expandIcon={
                 <Icons
                   name={"ChevronDown"}
                   className={"w-18 h-18 black"}
                   onClick={(e: any) => {
-                    setIsExpandedMoney(isExpandedMoney.includes(index)
-                    ? isExpandedMoney.filter((el) => el !== index)
-                    : [...isExpandedMoney, index]
-                  )}}
+                    setIsExpanded((prev: any) => ({
+                      ...prev,
+                      money: prev.money.includes(index)
+                        ? prev.money.filter((el: number) => el !== index)
+                        : [...prev.money, index]
+                    }))
+                  }}
                 />
               }>
                 <Grid container spacing={2}
@@ -1106,7 +1091,7 @@ export const TodayGoalList = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT_MONEY.totalCnt === 0 ? emptyFragment() : listFragment(0)
+          COUNT.money === 0 ? emptyFragment() : listFragment(0)
         )
       );
     };
@@ -1116,27 +1101,30 @@ export const TodayGoalList = () => {
         <Empty
           DATE={DATE}
           SEND={SEND}
-          navigate={navigate}
-          type={"goal"}
           extra={"sleep"}
         />
       );
       const listFragment = (i: number) => (
         OBJECT_SLEEP?.map((item: any, index: number) => (
           <Card className={"border radius"} key={`${index}-${i}`}>
-            <Accordion className={"shadow-none"} expanded={isExpandedSleep.includes(index)}>
+            <Accordion
+              className={"shadow-none"}
+              expanded={isExpanded.sleep.includes(index)}
+            >
               <AccordionSummary expandIcon={
-                  <Icons
-                    name={"ChevronDown"}
-                    className={"w-18 h-18 black"}
-                    onClick={(e: any) => {
-                      setIsExpandedSleep(isExpandedSleep.includes(index)
-                      ? isExpandedSleep.filter((el) => el !== index)
-                      : [...isExpandedSleep, index]
-                    )}}
-                  />
-                }
-              >
+                <Icons
+                  name={"ChevronDown"}
+                  className={"w-18 h-18 black"}
+                  onClick={(e: any) => {
+                    setIsExpanded((prev: any) => ({
+                      ...prev,
+                      sleep: prev.sleep.includes(index)
+                        ? prev.sleep.filter((el: number) => el !== index)
+                        : [...prev.sleep, index]
+                    }))
+                  }}
+                />
+              }>
                 <Grid container spacing={2}
                   onClick={(e: any) => {
                     e.stopPropagation();
@@ -1401,7 +1389,7 @@ export const TodayGoalList = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT_SLEEP.totalCnt === 0 ? emptyFragment() : listFragment(0)
+          COUNT.sleep === 0 ? emptyFragment() : listFragment(0)
         )
       );
     };
@@ -1426,6 +1414,15 @@ export const TodayGoalList = () => {
     );
   };
 
+  // 8. dial ---------------------------------------------------------------------------------------
+  const dialNode = () => (
+    <Dial
+      isExpanded={isExpanded}
+      setIsExpanded={setIsExpanded}
+      totalCnt={COUNT.totalCnt}
+    />
+  );
+
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
@@ -1444,6 +1441,7 @@ export const TodayGoalList = () => {
   return (
     <>
       {listNode()}
+      {dialNode()}
       {footerNode()}
     </>
   );

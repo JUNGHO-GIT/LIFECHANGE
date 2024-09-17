@@ -7,7 +7,7 @@ import { Money } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
-import { Empty } from "@imports/ImportContainers";
+import { Empty, Dial } from "@imports/ImportContainers";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 
@@ -76,7 +76,7 @@ export const MoneyList = () => {
         newSectionCnt: res.data.sectionCnt || 0
       }));
       // Accordion 초기값 설정
-      setIsExpanded(res.data.result.map((item: any, index: number) => (index)));
+      setIsExpanded(res.data.result.map((_item: any, index: number) => index));
       // setIsExpanded([]);
     })
     .catch((err: any) => {
@@ -94,8 +94,6 @@ export const MoneyList = () => {
         <Empty
           DATE={DATE}
           SEND={SEND}
-          navigate={navigate}
-          type={"real"}
           extra={"money"}
         />
       );
@@ -242,6 +240,15 @@ export const MoneyList = () => {
     );
   };
 
+  // 8. dial ---------------------------------------------------------------------------------------
+  const dialNode = () => (
+    <Dial
+      isExpanded={isExpanded}
+      setIsExpanded={setIsExpanded}
+      totalCnt={COUNT.totalCnt}
+    />
+  );
+
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
@@ -260,6 +267,7 @@ export const MoneyList = () => {
   return (
     <>
       {listNode()}
+      {dialNode()}
       {footerNode()}
     </>
   );

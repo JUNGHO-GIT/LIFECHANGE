@@ -18,5 +18,5 @@ export {
   Moment,
   Calendar as CalendarReact,
   getCountryForTimezone,
-  getAllInfoByISO
+  getAllInfoByISO,
 };

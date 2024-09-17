@@ -1,6 +1,6 @@
 // Empty.tsx
 
-import { useTranslate } from "@imports/ImportHooks";
+import { useTranslate, useCommonValue } from "@imports/ImportHooks";
 import { Div, Icons } from "@imports/ImportComponents";
 import { Card, Accordion, AccordionSummary, Grid } from "@imports/ImportMuis";
 
@@ -8,27 +8,26 @@ import { Card, Accordion, AccordionSummary, Grid } from "@imports/ImportMuis";
 declare interface EmptyProps {
   SEND: any;
   DATE: any;
-  navigate: any;
-  type: string;
   extra: string;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const Empty = (
-  { SEND, DATE, navigate, type, extra }: EmptyProps
+  { SEND, DATE, extra }: EmptyProps
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
     translate
   } = useTranslate();
+  const {
+    PATH, navigate
+  } = useCommonValue();
 
-  // 3. navigateStr --------------------------------------------------------------------------------
-  const navigateStr = (
-    type === "goal" ? `/${extra}/goal/detail` :
-    type === "real" ? `/${extra}/detail` :
-    null
-  );
+  const isFindList = PATH.includes("food/find/list");
+  const isGoalList = !isFindList && PATH.includes("goal/list");
+  const isList = !isFindList && !isGoalList && PATH.includes("list");
+  const toDetail = isGoalList ? `/${extra}/goal/detail` : `/${extra}/detail`;
 
   // 7. emptyNode ----------------------------------------------------------------------------------
   const emptyNode = () => {
@@ -55,18 +54,18 @@ export const Empty = (
     );
     // 2. nonFindSection
     const nonFindSection = () => (
-      <Card className={"border radius"} key={`empty-${extra}`}>
+      <Card className={"border radius"} key={`empty`}>
         <Accordion className={"shadow-none"} expanded={false}>
           <AccordionSummary>
             <Grid container spacing={1}
               onClick={(e: any) => {
                 e.stopPropagation();
                 Object.assign(SEND, {
-                  dateType: DATE.dateType || "day",
+                  dateType: DATE.dateType,
                   dateStart: DATE.dateStart,
                   dateEnd: DATE.dateEnd,
                 });
-                navigate(navigateStr, {
+                navigate(toDetail, {
                   state: SEND
                 });
               }}
@@ -94,9 +93,11 @@ export const Empty = (
     );
     // 3. return
     return (
-      <>
-        {type === "find" ? isFindSection() : nonFindSection()}
-      </>
+      isFindList ? (
+        isFindSection()
+      ) : (
+        nonFindSection()
+      )
     );
   };
 

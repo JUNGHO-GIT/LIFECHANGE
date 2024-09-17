@@ -808,6 +808,18 @@ export const useTranslate = () => {
       ko: "기타",
       en: "Others"
     },
+    open: {
+      ko: "열기",
+      en: "Open"
+    },
+    openAll: {
+      ko: "전체 열기",
+      en: "Open All"
+    },
+    closeAll: {
+      ko: "전체 닫기",
+      en: "Close All"
+    },
     // ---------------------------------------------------------------------------------------------
     // p
     p: {

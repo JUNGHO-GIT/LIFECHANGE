@@ -7,7 +7,7 @@ import { FoodFind } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
-import { Empty } from "@imports/ImportContainers";
+import { Empty, Dial } from "@imports/ImportContainers";
 import { Paper, Card, Checkbox, Grid } from "@imports/ImportMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 
@@ -22,7 +22,7 @@ export const FoodFindList = () => {
     dayFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateStart, location_dateEnd, PATH, URL_OBJECT, TITLE, toFind,
+    navigate, location_dateStart, location_dateEnd, PATH, URL_OBJECT, TITLE,
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -146,7 +146,7 @@ export const FoodFindList = () => {
         totalCnt: res.data.totalCnt ? res.data.totalCnt : 0,
       }));
       // Accordion 초기값 설정
-      setIsExpanded(res.data.result.map((item: any, index: number) => (index)));
+      setIsExpanded(res.data.result.map((_item: any, index: number) => index));
       // setIsExpanded([]);
     })
     .catch((err: any) => {
@@ -176,8 +176,6 @@ export const FoodFindList = () => {
         <Empty
           DATE={DATE}
           SEND={SEND}
-          navigate={navigate}
-          type={"find"}
           extra={"food"}
         />
       );
@@ -370,6 +368,15 @@ export const FoodFindList = () => {
     );
   };
 
+  // 8. dial ---------------------------------------------------------------------------------------
+  const dialNode = () => (
+    <Dial
+      isExpanded={isExpanded}
+      setIsExpanded={setIsExpanded}
+      totalCnt={COUNT.totalCnt}
+    />
+  );
+
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
@@ -389,6 +396,7 @@ export const FoodFindList = () => {
   return (
     <>
       {findNode()}
+      {dialNode()}
       {footerNode()}
     </>
   );

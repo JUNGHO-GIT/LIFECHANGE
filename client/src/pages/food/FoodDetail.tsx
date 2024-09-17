@@ -23,7 +23,7 @@ export const FoodDetail = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, URL_OBJECT, sessionId, TITLE, foodArray, toList
+    navigate, location_dateType, location_dateStart, location_dateEnd, URL_OBJECT, sessionId, TITLE, foodArray, toList, location
   } = useCommonValue();
   const {
     ERRORS, REFS, validate

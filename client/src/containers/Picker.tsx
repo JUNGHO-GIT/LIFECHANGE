@@ -100,6 +100,24 @@ export const Picker = (
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
+    if (!DATE.dateType) {
+      if (isGoalList || isGoalDetail) {
+        setDATE((prev: any) => ({
+          ...prev,
+          dateType: "select",
+        }));
+      }
+      else if (isRealList || isRealDetail) {
+        setDATE((prev: any) => ({
+          ...prev,
+          dateType: "day",
+        }));
+      }
+    }
+  }, []);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
     if (isGoalList || isRealList) {
       setDetailTypeStr("h-min0 h-4vh fs-0-7rem pointer");
       setListTypeStr("h-min0 h-4vh fs-0-7rem pointer");
@@ -989,116 +1007,50 @@ export const Picker = (
 
     // 6. listType ---------------------------------------------------------------------------------
     const listTypeSection = () => (
-      <PopUp
-        type={"modal"}
-        position={"top"}
-        direction={"center"}
-        contents={
-          <Card className={"w-max18vw h-max30vh p-0 d-fit"}>
-            <Grid container spacing={1}>
-              <Grid size={12} className={"d-center"}>
-                <Btn
-                  style={{
-                    padding: "1px 9px",
-                    fontSize: "0.7rem",
-                    width: "50px",
-                    backgroundColor: clickedType === "thisToday" ? "#1976d2" : "#F9FAFB",
-                    color: clickedType === "thisToday" ? "#ffffff" : "#1976d2",
-                  }}
-                  onClick={() => {
-                    setClickedType("thisToday");
-                  }}
-                >
-                  {translate("thisToday")}
-                </Btn>
-              </Grid>
-              <Grid size={12} className={"d-center"}>
-                <Btn
-                  style={{
-                    padding: "1px 9px",
-                    fontSize: "0.7rem",
-                    width: "50px",
-                    backgroundColor: clickedType === "thisWeek" ? "#1976d2" :"#F9FAFB",
-                    color: clickedType === "thisWeek" ? "#ffffff" : "#1976d2",
-                  }}
-                  onClick={() => {
-                    setClickedType("thisWeek");
-                  }}
-                >
-                  {translate("thisWeek")}
-                </Btn>
-              </Grid>
-              <Grid size={12} className={"d-center"}>
-                <Btn
-                  style={{
-                    padding: "1px 9px",
-                    fontSize: "0.7rem",
-                    width: "50px",
-                    backgroundColor: clickedType === "thisMonth" ? "#1976d2" :"#F9FAFB",
-                    color: clickedType === "thisMonth" ? "#ffffff" : "#1976d2",
-                  }}
-                  onClick={() => {
-                    setClickedType("thisMonth");
-                  }}
-                >
-                  {translate("thisMonth")}
-                </Btn>
-              </Grid>
-              <Grid size={12} className={"d-center"}>
-                <Btn
-                  style={{
-                    padding: "1px 9px",
-                    fontSize: "0.7rem",
-                    width: "50px",
-                    backgroundColor: clickedType === "thisYear" ? "#1976d2" :"#F9FAFB",
-                    color: clickedType === "thisYear" ? "#ffffff" : "#1976d2",
-                  }}
-                  onClick={() => {
-                    setClickedType("thisYear");
-                  }}
-                >
-                  {translate("thisYear")}
-                </Btn>
-              </Grid>
-              <Grid size={12} className={"d-center"}>
-                <Btn
-                  style={{
-                    padding: "1px 9px",
-                    fontSize: "0.7rem",
-                    width: "50px",
-                    backgroundColor: clickedType === "selectDate" ? "#1976d2" :"#F9FAFB",
-                    color: clickedType === "selectDate" ? "#ffffff" : "#1976d2",
-                  }}
-                  onClick={() => {}}
-                >
-                  {translate("selectDate")}
-                </Btn>
-              </Grid>
-            </Grid>
-          </Card>
-        }
+      <Select
+        label={translate("dateType")}
+        value={clickedType || ""}
+        inputclass={listTypeStr}
+        onChange={(e: any) => {
+          if (e.target.value === "thisToday") {
+            setClickedType("thisToday");
+          }
+          else if (e.target.value === "thisWeek") {
+            setClickedType("thisWeek");
+          }
+          else if (e.target.value === "thisMonth") {
+            setClickedType("thisMonth");
+          }
+          else if (e.target.value === "thisYear") {
+            setClickedType("thisYear");
+          }
+        }}
       >
-        {(popTrigger: any) => (
-          <Btn
-            color={"primary"}
-            className={"pt-1 pb-1 ps-9 pe-9 fs-0-7rem ms-n2vw"}
-            onClick={(e: any) => {
-              if (!isToday && !isGoalToday) {
-                popTrigger.openPopup(e.currentTarget);
-              }
-            }}
+        {["thisToday", "thisWeek", "thisMonth", "thisYear", "selectDate"]?.map((item: any) => (
+          <MenuItem
+            key={item}
+            value={item}
+            selected={item === clickedType}
           >
-            {translate(clickedType)}
-          </Btn>
-        )}
-      </PopUp>
+            <Div className={"fs-0-6rem"}>
+              {translate(item)}
+            </Div>
+          </MenuItem>
+        ))}
+      </Select>
     );
 
     // 7. saveType ---------------------------------------------------------------------------------
     const saveTypeSection = () => (
       <Select
         label={translate("dateType")}
-        value={DATE.dateType || ""}
+        value={
+          isRealDetail ? (
+            DATE.dateType || "day"
+          ) : (
+            DATE.dateType || ""
+          )
+        }
         inputclass={saveTypeStr}
         readOnly={isRealDetail && !isCalendar}
         onChange={(e: any) => {
@@ -1173,12 +1125,12 @@ export const Picker = (
 
       // 1-1. 목표인 경우 (리스트)
       isGoalList ? (
-        <Grid container spacing={2}>
-          <Grid size={9} className={"d-center"}>
-            {selectSection()}
-          </Grid>
-          <Grid size={3} className={"d-center"}>
+        <Grid container spacing={1}>
+          <Grid size={4} className={"d-center"}>
             {listTypeSection()}
+          </Grid>
+          <Grid size={8} className={"d-center"}>
+            {selectSection()}
           </Grid>
         </Grid>
       )
@@ -1190,7 +1142,6 @@ export const Picker = (
             {saveTypeSection()}
           </Grid>
           <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
-            {DATE.dateType === "day" && daySection()}
             {DATE.dateType === "week" && weekSection()}
             {DATE.dateType === "month" && monthSection()}
             {DATE.dateType === "year" && yearSection()}
@@ -1201,12 +1152,12 @@ export const Picker = (
 
       // 2-1. 실제인 경우 (리스트)
       : isRealList ? (
-        <Grid container spacing={2}>
-          <Grid size={9} className={"d-center"}>
-            {selectSection()}
-          </Grid>
-          <Grid size={3} className={"d-center"}>
+        <Grid container spacing={1}>
+          <Grid size={4} className={"d-center"}>
             {listTypeSection()}
+          </Grid>
+          <Grid size={8} className={"d-center"}>
+            {selectSection()}
           </Grid>
         </Grid>
       )

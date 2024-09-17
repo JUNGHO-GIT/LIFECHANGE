@@ -7,8 +7,16 @@ import { Count } from "@containers/Count";
 import { Delete } from "@containers/Delete";
 import { Memo } from "@containers/Memo";
 import { Empty } from "@containers/Empty";
+import { Dial } from "@containers/Dial";
 
 // -------------------------------------------------------------------------------------------------
 export {
-  PopUp, Picker, Time, Count, Delete, Memo, Empty,
+  PopUp,
+  Picker,
+  Time,
+  Count,
+  Delete,
+  Memo,
+  Empty,
+  Dial
 };

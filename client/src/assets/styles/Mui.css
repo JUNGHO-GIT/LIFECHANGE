@@ -116,3 +116,6 @@
   margin-left: 0px !important;
   margin-right: 0px !important;
 }
+.MuiBackdrop-root {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+}

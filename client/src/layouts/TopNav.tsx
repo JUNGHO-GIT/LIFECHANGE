@@ -16,10 +16,10 @@ export const TopNav = () => {
     translate,
   } = useTranslate();
   const {
-    navigate, firstStr, secondStr, TITLE, sessionPercent, sessionProperty, sessionScale, PATH, sessionTimeZone, sessionCurrency,
+    navigate, firstStr, secondStr, TITLE, sessionPercent, sessionProperty, sessionScale, PATH, sessionCurrency,
   } = useCommonValue();
   const {
-    dayFmt,
+    dayFmt, dayNotFmt,
   } = useCommonDate();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -247,7 +247,7 @@ export const TopNav = () => {
             <Grid container spacing={2}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
-                  {moment().tz(sessionTimeZone).format("YYYY-MM-DD (ddd)")}
+                  {`${dayFmt} (${dayNotFmt.format("ddd")})`}
                 </Div>
               </Grid>
               <Hr px={20} />

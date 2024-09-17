@@ -7,7 +7,7 @@ import { Food } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
-import { Empty } from "@imports/ImportContainers";
+import { Empty, Dial } from "@imports/ImportContainers";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 
@@ -76,7 +76,7 @@ export const FoodList = () => {
         newSectionCnt: res.data.sectionCnt || 0
       }));
       // Accordion 초기값 설정
-      setIsExpanded(res.data.result.map((item: any, index: number) => (index)));
+      setIsExpanded(res.data.result.map((_item: any, index: number) => index));
       // setIsExpanded([]);
     })
     .catch((err: any) => {
@@ -89,13 +89,12 @@ export const FoodList = () => {
 
   // 7. list --------------------------------------------------------------------------------------
   const listNode = () => {
+    // 7-1. list
     const listSection = () => {
       const emptyFragment = () => (
         <Empty
           DATE={DATE}
           SEND={SEND}
-          navigate={navigate}
-          type={"real"}
           extra={"food"}
         />
       );
@@ -284,7 +283,7 @@ export const FoodList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min75vh"}>
+      <Paper className={"content-wrapper radius border h-min75vh z-300"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {listSection()}
@@ -293,6 +292,15 @@ export const FoodList = () => {
       </Paper>
     );
   };
+
+  // 8. dial ---------------------------------------------------------------------------------------
+  const dialNode = () => (
+    <Dial
+      isExpanded={isExpanded}
+      setIsExpanded={setIsExpanded}
+      totalCnt={COUNT.totalCnt}
+    />
+  );
 
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
@@ -312,6 +320,7 @@ export const FoodList = () => {
   return (
     <>
       {listNode()}
+      {dialNode()}
       {footerNode()}
     </>
   );

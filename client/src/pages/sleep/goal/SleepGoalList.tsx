@@ -7,7 +7,7 @@ import { SleepGoal } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div, Img, Hr, Icons } from "@imports/ImportComponents";
-import { Empty } from "@imports/ImportContainers";
+import { Empty, Dial } from "@imports/ImportContainers";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
 
@@ -76,7 +76,7 @@ export const SleepGoalList = () => {
         newSectionCnt: res.data.sectionCnt || 0
       }));
       // Accordion 초기값 설정
-      setIsExpanded(res.data.result.map((item: any, index: number) => (index)));
+      setIsExpanded(res.data.result.map((_item: any, index: number) => index));
       // setIsExpanded([]);
     })
     .catch((err: any) => {
@@ -95,8 +95,6 @@ export const SleepGoalList = () => {
         <Empty
           DATE={DATE}
           SEND={SEND}
-          navigate={navigate}
-          type={"goal"}
           extra={"sleep"}
         />
       );
@@ -395,6 +393,15 @@ export const SleepGoalList = () => {
     );
   };
 
+  // 8. dial ---------------------------------------------------------------------------------------
+  const dialNode = () => (
+    <Dial
+      isExpanded={isExpanded}
+      setIsExpanded={setIsExpanded}
+      totalCnt={COUNT.totalCnt}
+    />
+  );
+
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
@@ -413,6 +420,7 @@ export const SleepGoalList = () => {
   return (
     <>
       {listNode()}
+      {dialNode()}
       {footerNode()}
     </>
   );
