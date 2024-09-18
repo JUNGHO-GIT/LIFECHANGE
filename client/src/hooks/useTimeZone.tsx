@@ -30,8 +30,8 @@ export const useTimeZone = () => {
       // ex. KST
       localLangSet.zoneName = moment.tz(localLangSet.timeZone).zoneName();
 
-      // ex. ko-KR
-      localLangSet.locale = navigator.language;
+      // ex. ko
+      localLangSet.locale = navigator.language && navigator.language.split("-")[0];
 
       // ex. KR
       localLangSet.isoCode = getCountryForTimezone(localLangSet.timeZone)?.id;
