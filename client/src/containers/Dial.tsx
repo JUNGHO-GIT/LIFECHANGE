@@ -43,7 +43,7 @@ export const Dial = (
   const dialNode = () => {
     // 1. list (today o)
     const listTodaySection = () => (
-      <Div className={"p-fixed bottom-18vh right-3vw z-600"}>
+      <Div className={`p-fixed bottom-18vh z-600 ${open ? "right-2-5vw" : "right-3vw"}`}>
         <Backdrop
           open={open}
           onClick={() => {
@@ -58,7 +58,7 @@ export const Dial = (
             <SpeedDialIcon />
           }
           FabProps={{
-            size: "small"
+            size: "small",
           }}
           onClick={() => {
             setOpen(!open);
@@ -67,6 +67,7 @@ export const Dial = (
           <SpeedDialAction
             key={translate("openAll")}
             tooltipTitle={translate("openAll")}
+            className={open ? "" : "d-none"}
             icon={
               <Icons
                 key={"ChevronDown"}
@@ -87,6 +88,7 @@ export const Dial = (
           <SpeedDialAction
             key={translate("closeAll")}
             tooltipTitle={translate("closeAll")}
+            className={open ? "" : "d-none"}
             icon={
               <Icons
                 key={"ChevronUp"}
@@ -109,7 +111,7 @@ export const Dial = (
     );
     // 2. list (today x)
     const listNotTodaySection = () => (
-      <Div className={"p-fixed bottom-18vh right-3vw z-600"}>
+      <Div className={`p-fixed bottom-18vh z-600 ${open ? "right-2-5vw" : "right-3vw"}`}>
         <Backdrop
           open={open}
           onClick={() => {
@@ -124,7 +126,7 @@ export const Dial = (
             <SpeedDialIcon />
           }
           FabProps={{
-            size: "small"
+            size: "small",
           }}
           onClick={() => {
             setOpen(!open);
@@ -133,12 +135,13 @@ export const Dial = (
           <SpeedDialAction
             key={translate("save")}
             tooltipTitle={translate("save")}
+            className={open ? "" : "d-none"}
             icon={
               <Icons
                 key={"Pencil"}
                 name={"Pencil"}
                 className={"w-25 h-25"}
-            />
+              />
             }
             onClick={() => {
               navigate(toDetail, {
@@ -153,12 +156,13 @@ export const Dial = (
           <SpeedDialAction
             key={translate("openAll")}
             tooltipTitle={translate("openAll")}
+            className={open ? "" : "d-none"}
             icon={
               <Icons
                 key={"ChevronDown"}
                 name={"ChevronDown"}
                 className={"w-25 h-25"}
-            />
+              />
             }
             onClick={() => {
               Array.from({ length: COUNT?.totalCnt as number }).map((_, i) => {
@@ -172,12 +176,13 @@ export const Dial = (
           <SpeedDialAction
             key={translate("closeAll")}
             tooltipTitle={translate("closeAll")}
+            className={open ? "" : "d-none"}
             icon={
               <Icons
                 key={"ChevronUp"}
                 name={"ChevronUp"}
                 className={"w-25 h-25"}
-            />
+              />
             }
             onClick={() => {
               setIsExpanded([]);
@@ -189,7 +194,7 @@ export const Dial = (
     );
     // 3. find
     const findSection = () => (
-      <Div className={"p-fixed bottom-18vh right-3vw z-600"}>
+      <Div className={`p-fixed bottom-18vh z-600 ${open ? "right-2-5vw" : "right-3vw"}`}>
         <Backdrop
           open={open}
           onClick={() => {
@@ -204,7 +209,7 @@ export const Dial = (
             <SpeedDialIcon />
           }
           FabProps={{
-            size: "small"
+            size: "small",
           }}
           onClick={() => {
             setOpen(!open);
@@ -213,12 +218,13 @@ export const Dial = (
           <SpeedDialAction
             key={translate("save")}
             tooltipTitle={translate("save")}
+            className={open ? "" : "d-none"}
             icon={
               <Icons
                 key={"Pencil"}
                 name={"Pencil"}
                 className={"w-25 h-25"}
-            />
+              />
             }
             onClick={() => {
               navigate(toDetail, {
@@ -233,12 +239,13 @@ export const Dial = (
           <SpeedDialAction
             key={translate("openAll")}
             tooltipTitle={translate("openAll")}
+            className={open ? "" : "d-none"}
             icon={
               <Icons
                 key={"ChevronDown"}
                 name={"ChevronDown"}
                 className={"w-25 h-25"}
-            />
+              />
             }
             onClick={() => {
               Array.from({ length: COUNT?.totalCnt as number }).map((_, i) => {
@@ -252,12 +259,13 @@ export const Dial = (
           <SpeedDialAction
             key={translate("closeAll")}
             tooltipTitle={translate("closeAll")}
+            className={open ? "" : "d-none"}
             icon={
               <Icons
                 key={"ChevronUp"}
                 name={"ChevronUp"}
                 className={"w-25 h-25"}
-            />
+              />
             }
             onClick={() => {
               setIsExpanded([]);
@@ -267,6 +275,7 @@ export const Dial = (
           <SpeedDialAction
             key={translate("nation")}
             tooltipTitle={translate("nation")}
+            className={`${open ? "" : "d-none"}`}
             icon={
               <Div className={"fw-800 fs-0-8rem"}>
                 {localIsoCode}
@@ -278,7 +287,7 @@ export const Dial = (
     );
     // 4. detail
     const detailSection = () => (
-      <Div className={"p-fixed bottom-18vh right-3vw z-600"}>
+      <Div className={`p-fixed bottom-18vh z-600 ${open ? "right-2-5vw" : "right-3vw"}`}>
         <Backdrop
           open={open}
           onClick={() => {
@@ -293,7 +302,7 @@ export const Dial = (
             <SpeedDialIcon />
           }
           FabProps={{
-            size: "small"
+            size: "small",
           }}
           onClick={() => {
             setOpen(!open);
@@ -302,6 +311,7 @@ export const Dial = (
           <SpeedDialAction
             key={translate("itemLock")}
             tooltipTitle={translate("itemLock")}
+            className={open ? "" : "d-none"}
             icon={
               LOCKED === "locked" ? (
                 <Icons
@@ -329,6 +339,7 @@ export const Dial = (
           <SpeedDialAction
             key={translate("closeAll")}
             tooltipTitle={translate("closeAll")}
+            className={open ? "" : "d-none"}
             icon={
               <Icons
                 key={"X"}

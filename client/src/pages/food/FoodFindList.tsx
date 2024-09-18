@@ -184,17 +184,19 @@ export const FoodFindList = () => {
         OBJECT?.map((item: any, index: number) => (
           <Card className={"border radius"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
-              <AccordionSummary expandIcon={
-                <Icons
-                  name={"ChevronDown"}
-                  className={"w-18 h-18 black"}
-                  onClick={(e: any) => {
-                    setIsExpanded(isExpanded.includes(index)
-                    ? isExpanded.filter((el) => el !== index)
-                    : [...isExpanded, index]
-                  )}}
-                />
-              }>
+              <AccordionSummary
+                expandIcon={
+                  <Icons
+                    name={"ChevronDown"}
+                    className={"w-18 h-18 black z-1000"}
+                    onClick={(e: any) => {
+                      setIsExpanded(isExpanded.includes(index)
+                      ? isExpanded.filter((el) => el !== index)
+                      : [...isExpanded, index]
+                    )}}
+                  />
+                }
+              >
                 <Grid container spacing={2}
                   // 체크박스 체크
                   onClick={(e: any) => {
