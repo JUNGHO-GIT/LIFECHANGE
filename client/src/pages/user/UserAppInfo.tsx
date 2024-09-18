@@ -21,12 +21,12 @@ export const UserAppInfo = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>(AppInfo);
-  const [clientLang, setClientLang] = useState<any>({
-    timeZone: sessionStorage.getItem(`${TITLE}_timeZone`),
-    zoneName: sessionStorage.getItem(`${TITLE}_zoneName`),
-    locale: sessionStorage.getItem(`${TITLE}_locale`),
-    isoCode: sessionStorage.getItem(`${TITLE}_isoCode`),
-    currency: sessionStorage.getItem(`${TITLE}_currency`),
+  const clientLang: any = ({
+    timeZone: localStorage.getItem(`${TITLE}_timeZone`),
+    zoneName: localStorage.getItem(`${TITLE}_zoneName`),
+    locale: localStorage.getItem(`${TITLE}_locale`),
+    isoCode: localStorage.getItem(`${TITLE}_isoCode`),
+    currency: localStorage.getItem(`${TITLE}_currency`),
   });
 
   // 2-3. useEffect --------------------------------------------------------------------------------
