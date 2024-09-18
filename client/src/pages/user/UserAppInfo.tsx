@@ -102,10 +102,10 @@ export const UserAppInfo = () => {
                   </TableCell>
                   <TableCell className={"w-55vw fs-0-7rem p-15"}>
                     {timeZone} | &nbsp;
+                    {zoneName} | &nbsp;
                     {locale} | &nbsp;
                     {isoCode} | &nbsp;
                     {currency} | &nbsp;
-                    {zoneName}
                   </TableCell>
                 </TableRow>
               </TableBody>

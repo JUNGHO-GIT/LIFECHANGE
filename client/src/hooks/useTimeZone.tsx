@@ -47,4 +47,11 @@ export const useTimeZone = () => {
       console.error(err);
     }
   }, []);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    if (localLangSet.locale && localLangSet.locale !== "en") {
+      require(`moment/locale/${localLangSet.locale}`);
+    }
+  }, [localLangSet.locale]);
 };
