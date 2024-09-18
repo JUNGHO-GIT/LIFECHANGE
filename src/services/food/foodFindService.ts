@@ -3,21 +3,57 @@
 import { JSDOM } from "jsdom";
 import axios from "axios";
 
-// 1-2. find ---------------------------------------------------------------------------------------
-export const find = async (
+// 1. list -----------------------------------------------------------------------------------------
+export const list = async (
   PAGING_param: any,
+  isoCode_param: string,
 ) => {
 
-  const URL_SEARCH = encodeURI(`https://www.fatsecret.kr/칼로리-영양소/search`)
-  const query = PAGING_param.query;
-  const page = PAGING_param.page === 0 ? "" : PAGING_param.page;
+  const isoCode:string = isoCode_param.toLowerCase();
+  const query:string = PAGING_param.query;
+  const page:number = PAGING_param.page === 0 ? "" : PAGING_param.page;
 
   let serv: string = "";
   let gram: string = "";
+  let servUnit: string = "";
+  let servArray: string[] = [];
   let findResult: any = null;
   let finalResult: any = [];
   let totalCntResult: any = null;
   let statusResult: string = "";
+
+  let URL:string = `https://www.fatsecret`;
+  let URL_SEARCH:string = "";
+
+  if (isoCode === "us") {
+    URL_SEARCH = encodeURI(`${URL}.com/calories-nutrition/search`);
+    servUnit = "serving";
+    servArray = [
+      "serving", "scoop", "piece", "slice", "container", "packet", "strip", "stick", "bar", "box",
+      "package", "bottle", "can", "jar", "envelope", "tube", "link", "roll", "tray", "serving size",
+    ];
+  }
+  else if (isoCode === "kr") {
+    URL_SEARCH = encodeURI(`${URL}.kr/칼로리-영양소/search`);
+    servUnit = "회";
+    servArray = [
+      "개", "회", "알", "통", "봉", "컵", "팩", "줄", "장", "마리", "인분",
+      "봉지", "한컵", "대접", "접시", "소접시", "테이블스푼"
+    ];
+  }
+  else {
+    URL_SEARCH = encodeURI(`${URL}.com/calories-nutrition/search`);
+    servUnit = "serving";
+    servArray = [
+      "serving", "scoop", "piece", "slice", "container", "packet", "strip", "stick", "bar", "box",
+      "package", "bottle", "can", "jar", "envelope", "tube", "link", "roll", "tray", "serving size",
+    ];
+  }
+
+  console.log("isoCode:", isoCode);
+  console.log("query:", query);
+  console.log("page:", page);
+  console.log("URL_SEARCH:", URL_SEARCH);
 
   const getFindResult: any = async () => {
     return new Promise((resolve, reject) => {
@@ -41,8 +77,10 @@ export const find = async (
 
   // ex. 116중 11에서 20 .. -> 116
   const count = document.querySelector(".searchResultSummary")?.textContent;
-  const countMatch = count ? count.match(/(\d+)중\s+(\d+)에서\s+(\d+)/) : null;
-  const totalCnt = countMatch ? parseFloat(countMatch[1]) : 0;
+  const countMatch = count ? count.match(/(\d+).*\s+(\d+).*\s+(\d+)/) : null;
+
+  // 가장 큰값 찾기
+  const totalCnt = countMatch ? Math.max(...countMatch.slice(1).map((el) => parseInt(el))) : 0;
   const tables = document.querySelectorAll(`table.generic.searchResult`);
 
   // 브랜드 이름 처리
@@ -72,9 +110,6 @@ export const find = async (
     // 단위 찾기
     if (matches) {
       let found = false;
-      let servArray = [
-        "개", "회", "알", "통", "봉", "컵", "팩", "줄", "장", "마리", "인분", "봉지", "한컵", "대접", "접시", "소접시", "테이블스푼"
-      ];
       // 1. servArray에 포함된 단어가 있는 경우
       servArray.forEach((el) => {
         if (matches[2]?.includes(el)) {
@@ -90,12 +125,12 @@ export const find = async (
       if (!found) {
         const gramDirectMatch = matches[2]?.trim().match(/(\d+)\s*(g|ml|l|kg)/);
         if (gramDirectMatch) {
-          serv = "1회";
+          serv = `1${servUnit}`;
           gram = gramDirectMatch[1];
         }
         else {
           const gramMatch = matches[2]?.trim().match(/(\d+)\s*(g|ml|l|kg)/);
-          serv = matches ? matches[2]?.replace(/(\d+)\s+(.+)/, "$1$2").trim() : "1회";
+          serv = matches ? matches[2]?.replace(/(\d+)\s+(.+)/, "$1$2").trim() : `1${servUnit}`;
           gram = gramMatch ? gramMatch[1] : "0";
         }
       }
@@ -132,7 +167,7 @@ export const find = async (
           food_name: titleElement || "",
           food_brand: brandElement || "",
           food_count: nutritionElement.count || "0",
-          food_serv: nutritionElement.serv || "회",
+          food_serv: nutritionElement.serv || servUnit,
           food_gram: nutritionElement.gram || "0",
           food_kcal: nutritionElement.kcal || "0",
           food_fat: nutritionElement.fat || "0",

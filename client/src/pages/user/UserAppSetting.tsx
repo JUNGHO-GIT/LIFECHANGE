@@ -85,7 +85,7 @@ export const UserAppSetting = () => {
                   </TableCell>
                 </TableRow>
                 {/** language **/}
-                <PopUp
+                {/* <PopUp
                   type={"innerCenter"}
                   position={"bottom"}
                   direction={"center"}
@@ -154,7 +154,7 @@ export const UserAppSetting = () => {
                       </TableCell>
                     </TableRow>
                   )}
-                </PopUp>
+                </PopUp> */}
                 {/** app info **/}
                 <TableRow
                   className={"pointer"}

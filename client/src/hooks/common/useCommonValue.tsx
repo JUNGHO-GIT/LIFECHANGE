@@ -39,10 +39,8 @@ export const useCommonValue = () => {
   const URL_FOOD: string = URL + SUBFIX_FOOD;
   const URL_MONEY: string = URL + SUBFIX_MONEY;
   const URL_SLEEP: string = URL + SUBFIX_SLEEP;
-
   const ADMIN_ID: string = process.env.REACT_APP_ADMIN_ID || "";
   const ADMIN_PW: string = process.env.REACT_APP_ADMIN_PW || "";
-
 
   // object 타입
   const sessionPercent: any = sessionStorage.getItem(`${TITLE}_percent`) || "{}";
@@ -60,12 +58,13 @@ export const useCommonValue = () => {
   const sessionId: string = sessionStorage.getItem(`${TITLE}_sessionId`) || "";
   const curProperty: string = sessionProperty?.curProperty || "0";
 
-  const localLang: string = localStorage.getItem(`${TITLE}_lang`) || "ko";
-  const localTimeZone: string = localStorage.getItem(`${TITLE}_timeZone`) || "Asia/Seoul";
-  const localZoneName: string = localStorage.getItem(`${TITLE}_zoneName`) || "KST";
-  const localLocale: string = localStorage.getItem(`${TITLE}_locale`) || "ko-KR";
-  const localIsoCode: string = localStorage.getItem(`${TITLE}_isoCode`) || "KR";
-  const localCurrency: string = localStorage.getItem(`${TITLE}_currency`) || "KRW";
+  const localLangSet: any = localStorage.getItem(`${TITLE}_localLangSet`) || "{}";
+  const localLang: string = JSON.parse(localLangSet)?.lang || "ko";
+  const localTimeZone: string = JSON.parse(localLangSet)?.timeZone || "Asia/Seoul";
+  const localZoneName: string = JSON.parse(localLangSet)?.zoneName || "KST";
+  const localLocale: string = JSON.parse(localLangSet)?.locale || "ko-KR";
+  const localIsoCode: string = JSON.parse(localLangSet)?.isoCode || "KR";
+  const localCurrency: string = JSON.parse(localLangSet)?.currency || "KRW";
 
   const dataCategoryArray: any[] = [
     "exercise", "food", "calendar", "money", "sleep"

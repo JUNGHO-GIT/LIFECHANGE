@@ -13,74 +13,38 @@ export const useTimeZone = () => {
   } = useCommonValue();
 
   // 2. declare ------------------------------------------------------------------------------------
-  let timeZone: string = "";
-  let zoneName: string = "";
-  let locale: string = "";
-  let isoCode: any = "";
-  let currency: string = "";
+  let localLangSet:any = {
+    timeZone: "",
+    zoneName: "",
+    locale: "",
+    isoCode: "",
+    currency: ""
+  };
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     try {
       // ex. Asia/Seoul
-      timeZone = moment.tz.guess();
+      localLangSet.timeZone = moment.tz.guess();
 
       // ex. KST
-      zoneName = moment.tz(timeZone).zoneName();
+      localLangSet.zoneName = moment.tz(localLangSet.timeZone).zoneName();
 
       // ex. ko-KR
-      locale = navigator.language;
+      localLangSet.locale = moment.tz(localLangSet.timeZone).locale();
 
       // ex. KR
-      isoCode = getCountryForTimezone(timeZone)?.id;
+      localLangSet.isoCode = getCountryForTimezone(localLangSet.timeZone)?.id;
 
       // ex. KRW
-      currency = getAllInfoByISO(isoCode).currency;
+      localLangSet.currency = getAllInfoByISO(localLangSet.isoCode).currency;
 
-      if (timeZone) {
-        localStorage.setItem(`${TITLE}_timeZone`, timeZone);
+      if (localLangSet) {
+        localStorage.setItem(`${TITLE}_localLangSet`, JSON.stringify(localLangSet));
       }
-      if (zoneName) {
-        localStorage.setItem(`${TITLE}_zoneName`, zoneName);
-      }
-      if (locale) {
-        localStorage.setItem(`${TITLE}_locale`, locale);
-      }
-      if (isoCode) {
-        localStorage.setItem(`${TITLE}_isoCode`, isoCode);
-      }
-      if (currency) {
-        localStorage.setItem(`${TITLE}_currency`, currency);
-      }
-
-      console.log("timeZone:", timeZone);
-      console.log("zoneName:", zoneName);
-      console.log("locale:", locale);
-      console.log("isoCode:", isoCode);
-      console.log("currency:", currency);
     }
     catch (err: any) {
       console.error(err);
     }
-  }, []);
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
-    const getLangSetting = () => {
-      const lang = localStorage.getItem(`${TITLE}_lang`);
-      if (!lang) {
-        return;
-      }
-      else if (lang.includes("ko")) {
-        require("moment/locale/ko");
-      }
-    }
-
-    window.addEventListener('storage', getLangSetting);
-    getLangSetting();
-
-    return () => {
-      window.removeEventListener('storage', getLangSetting);
-    };
   }, []);
 };

@@ -12,6 +12,7 @@ import { router as exerciseChartRouter } from "@routers/exercise/exerciseChartRo
 import { router as exerciseRouter } from "@routers/exercise/exerciseRouter";
 import { router as exerciseGoalRouter } from "@routers/exercise/exerciseGoalRouter";
 import { router as foodChartRouter } from "@routers/food/foodChartRouter";
+import { router as foodFindRouter } from "@routers/food/foodFindRouter";
 import { router as foodRouter } from "@routers/food/foodRouter";
 import { router as foodGoalRouter } from "@routers/food/foodGoalRouter";
 import { router as moneyChartRouter } from "@routers/money/moneyChartRouter";
@@ -104,6 +105,7 @@ app.use(`${preFix}/exercise/goal`, exerciseGoalRouter);
 app.use(`${preFix}/exercise`, exerciseRouter);
 app.use(`${preFix}/food/chart`, foodChartRouter);
 app.use(`${preFix}/food/goal`, foodGoalRouter);
+app.use(`${preFix}/food/find`, foodFindRouter);
 app.use(`${preFix}/food`, foodRouter);
 app.use(`${preFix}/money/chart`, moneyChartRouter);
 app.use(`${preFix}/money/goal`, moneyGoalRouter);

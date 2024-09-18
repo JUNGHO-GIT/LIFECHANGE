@@ -22,7 +22,7 @@ export const FoodFindList = () => {
     dayFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateStart, location_dateEnd, PATH, URL_OBJECT, TITLE,
+    location_dateStart, location_dateEnd, PATH, URL_OBJECT, TITLE, localIsoCode
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -134,9 +134,10 @@ export const FoodFindList = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowFind = async () => {
     setLOADING(true);
-    axios.get(`${URL_OBJECT}/find`, {
+    axios.get(`${URL_OBJECT}/find/list`, {
       params: {
         PAGING: PAGING,
+        isoCode: localIsoCode,
       },
     })
     .then((res: any) => {
@@ -219,19 +220,19 @@ export const FoodFindList = () => {
                   <Grid size={6} className={"d-left"}>
                     {/** 1 ~ 5 글자 **/}
                     {item.food_name.length >= 1 && item.food_name.length < 6 && (
-                      <Div className={"fs-1-0rem fw-600 dark"}>
+                      <Div className={"fs-1-2rem fw-600 black"}>
                         {item.food_name}
                       </Div>
                     )}
                     {/** 6 ~ 10 글자 **/}
                     {item.food_name.length >= 6 && item.food_name.length < 11 && (
-                      <Div className={"fs-0-9rem fw-600 dark"}>
+                      <Div className={"fs-1-0rem fw-600 black"}>
                         {item.food_name}
                       </Div>
                     )}
                     {/** 10 글자 이상 **/}
                     {item.food_name.length >= 11 && (
-                      <Div className={"fs-0-8rem fw-600 dark"}>
+                      <Div className={"fs-0-8rem fw-600 black"}>
                         {item.food_name}
                       </Div>
                     )}
