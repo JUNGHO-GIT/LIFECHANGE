@@ -21,13 +21,12 @@ export const UserAppInfo = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>(AppInfo);
-  const clientLang: any = ({
-    timeZone: localStorage.getItem(`${TITLE}_timeZone`),
-    zoneName: localStorage.getItem(`${TITLE}_zoneName`),
-    locale: localStorage.getItem(`${TITLE}_locale`),
-    isoCode: localStorage.getItem(`${TITLE}_isoCode`),
-    currency: localStorage.getItem(`${TITLE}_currency`),
-  });
+  const localLangSet:any = localStorage.getItem(`${TITLE}_localLangSet`);
+  const timeZone: string = JSON.parse(localLangSet)?.timeZone || "";
+  const zoneName: string = JSON.parse(localLangSet)?.zoneName || "";
+  const locale: string = JSON.parse(localLangSet)?.locale || "";
+  const isoCode: string = JSON.parse(localLangSet)?.isoCode || "";
+  const currency: string = JSON.parse(localLangSet)?.currency || "";
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -102,11 +101,11 @@ export const UserAppInfo = () => {
                     timezone
                   </TableCell>
                   <TableCell className={"w-55vw fs-0-7rem p-15"}>
-                    {clientLang.timeZone} | &nbsp;
-                    {clientLang.locale} | &nbsp;
-                    {clientLang.isoCode} | &nbsp;
-                    {clientLang.currency} | &nbsp;
-                    {clientLang.zoneName}
+                    {timeZone} | &nbsp;
+                    {locale} | &nbsp;
+                    {isoCode} | &nbsp;
+                    {currency} | &nbsp;
+                    {zoneName}
                   </TableCell>
                 </TableRow>
               </TableBody>
