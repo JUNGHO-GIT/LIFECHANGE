@@ -22,7 +22,7 @@ export const TodayList = () => {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, PATH, URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP, sessionId, TITLE, sessionCurrency,
+    navigate, PATH, URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP, sessionId, TITLE, localCurrency,
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -608,7 +608,7 @@ export const TodayList = () => {
                   </Grid>
                   <Grid size={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
-                      {sessionCurrency}
+                      {localCurrency}
                     </Div>
                   </Grid>
                 </Grid>
@@ -634,7 +634,7 @@ export const TodayList = () => {
                   </Grid>
                   <Grid size={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
-                      {sessionCurrency}
+                      {localCurrency}
                     </Div>
                   </Grid>
                 </Grid>
@@ -845,9 +845,10 @@ export const TodayList = () => {
   // 8. dial ---------------------------------------------------------------------------------------
   const dialNode = () => (
     <Dial
+      COUNT={COUNT}
+      setCOUNT={setCOUNT}
       isExpanded={isExpanded}
       setIsExpanded={setIsExpanded}
-      totalCnt={COUNT.totalCnt}
     />
   );
 

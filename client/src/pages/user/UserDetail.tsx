@@ -18,7 +18,7 @@ export const UserDetail = () => {
     translate
   } = useTranslate();
   const {
-    navigate, curProperty, URL_OBJECT, sessionId, sessionCurrency,
+    navigate, curProperty, URL_OBJECT, sessionId, localCurrency,
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -217,7 +217,7 @@ export const UserDetail = () => {
                   	className={"w-16 h-16"}
                   />
                 }
-                endadornment={sessionCurrency}
+                endadornment={localCurrency}
                 onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
                     ...prev,
@@ -238,7 +238,7 @@ export const UserDetail = () => {
                   	className={"w-16 h-16"}
                   />
                 }
-                endadornment={sessionCurrency}
+                endadornment={localCurrency}
                 readOnly={true}
               />
             </Grid>

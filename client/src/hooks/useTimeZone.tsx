@@ -9,7 +9,7 @@ export const useTimeZone = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    TITLE, PATH
+    TITLE
   } = useCommonValue();
 
   // 2. declare ------------------------------------------------------------------------------------
@@ -38,19 +38,19 @@ export const useTimeZone = () => {
       currency = getAllInfoByISO(isoCode).currency;
 
       if (timeZone) {
-        sessionStorage.setItem(`${TITLE}_timeZone`, timeZone);
+        localStorage.setItem(`${TITLE}_timeZone`, timeZone);
       }
       if (zoneName) {
-        sessionStorage.setItem(`${TITLE}_zoneName`, zoneName);
+        localStorage.setItem(`${TITLE}_zoneName`, zoneName);
       }
       if (locale) {
-        sessionStorage.setItem(`${TITLE}_locale`, locale);
+        localStorage.setItem(`${TITLE}_locale`, locale);
       }
       if (isoCode) {
-        sessionStorage.setItem(`${TITLE}_isoCode`, isoCode);
+        localStorage.setItem(`${TITLE}_isoCode`, isoCode);
       }
       if (currency) {
-        sessionStorage.setItem(`${TITLE}_currency`, currency);
+        localStorage.setItem(`${TITLE}_currency`, currency);
       }
 
       console.log("timeZone:", timeZone);
@@ -66,20 +66,21 @@ export const useTimeZone = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    // 언어설정 구하기
-    const langSetting = sessionStorage.getItem(`${TITLE}_lang`);
-
-    if (langSetting) {
-      return;
-    }
-    else {
-      if (locale.includes("ko")) {
+    const getLangSetting = () => {
+      const lang = localStorage.getItem(`${TITLE}_lang`);
+      if (!lang) {
+        return;
+      }
+      else if (lang.includes("ko")) {
         require("moment/locale/ko");
-        sessionStorage.setItem(`${TITLE}_lang`, "ko");
-      }
-      else {
-        sessionStorage.setItem(`${TITLE}_lang`, "en");
       }
     }
+
+    window.addEventListener('storage', getLangSetting);
+    getLangSetting();
+
+    return () => {
+      window.removeEventListener('storage', getLangSetting);
+    };
   }, []);
 };

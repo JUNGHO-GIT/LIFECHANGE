@@ -42,7 +42,7 @@ export const Picker = (
     getNextYearStartFmt, getNextYearEndFmt,
   } = useCommonDate();
   const {
-    sessionLocale, sessionTimeZone, TITLE, PATH
+    localLocale, localTimeZone, TITLE, PATH
   } = useCommonValue();
 
   const isGoalToday = PATH.includes("/today/goal");
@@ -209,9 +209,9 @@ export const Picker = (
                 </Div>
               </Grid>
               <Grid size={12} className={"d-center"}>
-                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={sessionLocale}>
+                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLocale}>
                   <DateCalendar
-                    timezone={sessionTimeZone}
+                    timezone={localTimeZone}
                     views={["day"]}
                     readOnly={false}
                     value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
@@ -370,9 +370,9 @@ export const Picker = (
                 </Div>
               </Grid>
               <Grid size={12} className={"d-center"}>
-                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={sessionLocale}>
+                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLocale}>
                   <DateCalendar
-                    timezone={sessionTimeZone}
+                    timezone={localTimeZone}
                     views={["day"]}
                     readOnly={false}
                     value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
@@ -545,9 +545,9 @@ export const Picker = (
                 </Div>
               </Grid>
               <Grid size={12} className={"d-center"}>
-                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={sessionLocale}>
+                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLocale}>
                   <DateCalendar
-                    timezone={sessionTimeZone}
+                    timezone={localTimeZone}
                     views={["day"]}
                     readOnly={false}
                     value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
@@ -703,9 +703,9 @@ export const Picker = (
                 </Div>
               </Grid>
               <Grid size={12} className={"d-center"}>
-                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={sessionLocale}>
+                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLocale}>
                   <DateCalendar
-                    timezone={sessionTimeZone}
+                    timezone={localTimeZone}
                     views={["day"]}
                     readOnly={false}
                     value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
@@ -862,9 +862,9 @@ export const Picker = (
                 </Div>
               </Grid>
               <Grid size={12} className={"d-center"}>
-                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={sessionLocale}>
+                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLocale}>
                   <DateCalendar
-                    timezone={sessionTimeZone}
+                    timezone={localTimeZone}
                     views={["day"]}
                     readOnly={false}
                     value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}

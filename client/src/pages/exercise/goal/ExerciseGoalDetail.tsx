@@ -9,7 +9,7 @@ import { axios, numeral } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Input, Img, Bg } from "@imports/ImportComponents";
-import { Picker, Time, Count, Delete } from "@imports/ImportContainers";
+import { Picker, Time, Count, Delete, Dial } from "@imports/ImportContainers";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -250,7 +250,7 @@ export const ExerciseGoalDetail = () => {
     // 7-3. detail
     const detailSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={"border radius p-20"} key={i}>
+        <Card className={`${LOCKED === "locked" ? "locked" : ""} border radius p-20`} key={i}>
           <Grid container spacing={2}>
             <Grid size={6} className={"d-left"}>
               <Bg
@@ -270,6 +270,7 @@ export const ExerciseGoalDetail = () => {
                 value={numeral(OBJECT?.exercise_goal_count).format("0,0")}
                 inputRef={REFS[i]?.exercise_goal_count}
                 error={ERRORS[i]?.exercise_goal_count}
+                locked={LOCKED}
                 label={
                   DATE.dateType === "day" ? (
                     `${translate("goalCount")}`
@@ -312,6 +313,7 @@ export const ExerciseGoalDetail = () => {
                 value={numeral(OBJECT?.exercise_goal_volume).format("0,0")}
                 inputRef={REFS[i]?.exercise_goal_volume}
                 error={ERRORS[i]?.exercise_goal_volume}
+                locked={LOCKED}
                 label={
                   DATE.dateType === "day" ? (
                     `${translate("goalVolume")}`
@@ -366,6 +368,7 @@ export const ExerciseGoalDetail = () => {
               value={OBJECT?.exercise_goal_weight}
               inputRef={REFS[i]?.exercise_goal_weight}
               error={ERRORS[i]?.exercise_goal_weight}
+              locked={LOCKED}
               startadornment={
                 <Img
                 	key={"exercise5"}
@@ -406,7 +409,7 @@ export const ExerciseGoalDetail = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min60vh"}>
+      <Paper className={"content-wrapper radius border h-min75vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {dateCountSection()}
@@ -416,6 +419,16 @@ export const ExerciseGoalDetail = () => {
       </Paper>
     );
   };
+
+  // 8. dial ---------------------------------------------------------------------------------------
+  const dialNode = () => (
+    <Dial
+      COUNT={COUNT}
+      setCOUNT={setCOUNT}
+      LOCKED={LOCKED}
+      setLOCKED={setLOCKED}
+    />
+  );
 
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
@@ -436,6 +449,7 @@ export const ExerciseGoalDetail = () => {
   return (
     <>
       {detailNode()}
+      {dialNode()}
       {footerNode()}
     </>
   );

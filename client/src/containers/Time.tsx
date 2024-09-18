@@ -30,7 +30,7 @@ export const Time = (
     translate
   } = useTranslate();
   const {
-    firstStr, secondStr, sessionLocale, sessionTimeZone,
+    firstStr, secondStr, localLocale, localTimeZone,
   } = useCommonValue();
 
   // displayed image, label
@@ -116,7 +116,7 @@ export const Time = (
               <DigitalClock
                 timeStep={10}
                 ampm={false}
-                timezone={sessionTimeZone}
+                timezone={localTimeZone}
                 value={moment(OBJECT?.[`${extra}`], "HH:mm")}
                 sx={{
                   width: "40vw",
@@ -167,11 +167,11 @@ export const Time = (
         direction={"center"}
         contents={({closePopup}: any) => (
           <Card className={"w-max40vw h-max40vh"}>
-            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={sessionLocale}>
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLocale}>
               <DigitalClock
                 timeStep={10}
                 ampm={false}
-                timezone={sessionTimeZone}
+                timezone={localTimeZone}
                 value={moment(OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`], "HH:mm")}
                 sx={{
                   width: "40vw",

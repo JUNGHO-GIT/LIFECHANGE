@@ -43,28 +43,29 @@ export const useCommonValue = () => {
   const ADMIN_ID: string = process.env.REACT_APP_ADMIN_ID || "";
   const ADMIN_PW: string = process.env.REACT_APP_ADMIN_PW || "";
 
-  // string 타입
-  const isAdmin: string = sessionStorage.getItem(`${TITLE}_admin`) || "";
-  const sessionId: string = sessionStorage.getItem(`${TITLE}_sessionId`) || "";
-  const sessionLang: string = sessionStorage.getItem(`${TITLE}_lang`) || "ko";
-  const sessionTimeZone: string = sessionStorage.getItem(`${TITLE}_timeZone`) || "Asia/Seoul";
-  const sessionZoneName: string = sessionStorage.getItem(`${TITLE}_zoneName`) || "KST";
-  const sessionLocale: string = sessionStorage.getItem(`${TITLE}_locale`) || "ko-KR";
-  const sessionIsoCode: string = sessionStorage.getItem(`${TITLE}_isoCode`) || "KR";
-  const sessionCurrency: string = sessionStorage.getItem(`${TITLE}_currency`) || "KRW";
 
   // object 타입
   const sessionPercent: any = sessionStorage.getItem(`${TITLE}_percent`) || "{}";
   const sessionProperty: any = sessionStorage.getItem(`${TITLE}_property`) || "{}";
   const sessionCategory: any = sessionStorage.getItem(`${TITLE}_category`)|| "{}";
   const sessionScale: string = sessionStorage.getItem(`${TITLE}_scale`) || "";
-
   const calendarArray: any[] = JSON.parse(sessionCategory)?.calendar || [];
   const exerciseArray: any[] = JSON.parse(sessionCategory)?.exercise || [];
   const foodArray: any[] = JSON.parse(sessionCategory)?.food || [];
   const moneyArray: any[] = JSON.parse(sessionCategory)?.money || [];
   const sleepArray: any[] = JSON.parse(sessionCategory)?.sleep || [];
+
+  // string 타입
+  const isAdmin: string = sessionStorage.getItem(`${TITLE}_admin`) || "";
+  const sessionId: string = sessionStorage.getItem(`${TITLE}_sessionId`) || "";
   const curProperty: string = sessionProperty?.curProperty || "0";
+
+  const localLang: string = localStorage.getItem(`${TITLE}_lang`) || "ko";
+  const localTimeZone: string = localStorage.getItem(`${TITLE}_timeZone`) || "Asia/Seoul";
+  const localZoneName: string = localStorage.getItem(`${TITLE}_zoneName`) || "KST";
+  const localLocale: string = localStorage.getItem(`${TITLE}_locale`) || "ko-KR";
+  const localIsoCode: string = localStorage.getItem(`${TITLE}_isoCode`) || "KR";
+  const localCurrency: string = localStorage.getItem(`${TITLE}_currency`) || "KRW";
 
   const dataCategoryArray: any[] = [
     "exercise", "food", "calendar", "money", "sleep"
@@ -127,12 +128,12 @@ export const useCommonValue = () => {
     ADMIN_PW,
     isAdmin,
     sessionId,
-    sessionLang,
-    sessionTimeZone,
-    sessionZoneName,
-    sessionLocale,
-    sessionIsoCode,
-    sessionCurrency,
+    localLang,
+    localTimeZone,
+    localZoneName,
+    localLocale,
+    localIsoCode,
+    localCurrency,
     sessionPercent,
     sessionProperty,
     sessionCategory,

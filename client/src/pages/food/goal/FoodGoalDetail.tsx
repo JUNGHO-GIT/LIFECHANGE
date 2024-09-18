@@ -9,7 +9,7 @@ import { axios, numeral } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Img, Input, Bg  } from "@imports/ImportComponents";
-import { Picker, Count, Delete } from "@imports/ImportContainers";
+import { Picker, Count, Delete, Dial } from "@imports/ImportContainers";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -248,7 +248,7 @@ export const FoodGoalDetail = () => {
     // 7-3. detail
     const detailSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={"border radius p-20"} key={i}>
+        <Card className={`${LOCKED === "locked" ? "locked" : ""} border radius p-20`} key={i}>
           <Grid container spacing={2}>
             <Grid size={6} className={"d-left"}>
               <Bg
@@ -268,6 +268,7 @@ export const FoodGoalDetail = () => {
                 value={numeral(OBJECT?.food_goal_kcal).format("0,0")}
                 inputRef={REFS[i]?.food_goal_kcal}
                 error={ERRORS[i]?.food_goal_kcal}
+                locked={LOCKED}
                 label={
                   DATE.dateType === "day" ? (
                     `${translate("goalKcal")}`
@@ -310,6 +311,7 @@ export const FoodGoalDetail = () => {
                 value={numeral(OBJECT?.food_goal_carb).format("0,0")}
                 inputRef={REFS[i]?.food_goal_carb}
                 error={ERRORS[i]?.food_goal_carb}
+                locked={LOCKED}
                 label={
                   DATE.dateType === "day" ? (
                     `${translate("goalCarb")}`
@@ -352,6 +354,7 @@ export const FoodGoalDetail = () => {
                 value={numeral(OBJECT?.food_goal_protein).format("0,0")}
                 inputRef={REFS[i]?.food_goal_protein}
                 error={ERRORS[i]?.food_goal_protein}
+                locked={LOCKED}
                 label={
                   DATE.dateType === "day" ? (
                     `${translate("goalProtein")}`
@@ -394,6 +397,7 @@ export const FoodGoalDetail = () => {
                 value={numeral(OBJECT?.food_goal_fat).format("0,0")}
                 inputRef={REFS[i]?.food_goal_fat}
                 error={ERRORS[i]?.food_goal_fat}
+                locked={LOCKED}
                 label={
                   DATE.dateType === "day" ? (
                     `${translate("goalFat")}`
@@ -442,7 +446,7 @@ export const FoodGoalDetail = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min60vh"}>
+      <Paper className={"content-wrapper radius border h-min75vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {dateCountSection()}
@@ -452,6 +456,16 @@ export const FoodGoalDetail = () => {
       </Paper>
     );
   };
+
+  // 8. dial ---------------------------------------------------------------------------------------
+  const dialNode = () => (
+    <Dial
+      COUNT={COUNT}
+      setCOUNT={setCOUNT}
+      LOCKED={LOCKED}
+      setLOCKED={setLOCKED}
+    />
+  );
 
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
@@ -472,6 +486,7 @@ export const FoodGoalDetail = () => {
   return (
     <>
       {detailNode()}
+      {dialNode()}
       {footerNode()}
     </>
   );

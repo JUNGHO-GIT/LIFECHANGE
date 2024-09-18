@@ -22,7 +22,7 @@ export const MoneyList = () => {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, sessionCurrency, toDetail
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, localCurrency, toDetail
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -187,7 +187,7 @@ export const MoneyList = () => {
                   </Grid>
                   <Grid size={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
-                      {sessionCurrency}
+                      {localCurrency}
                     </Div>
                   </Grid>
                 </Grid>
@@ -213,7 +213,7 @@ export const MoneyList = () => {
                   </Grid>
                   <Grid size={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
-                      {sessionCurrency}
+                      {localCurrency}
                     </Div>
                   </Grid>
                 </Grid>
@@ -243,9 +243,10 @@ export const MoneyList = () => {
   // 8. dial ---------------------------------------------------------------------------------------
   const dialNode = () => (
     <Dial
+      COUNT={COUNT}
+      setCOUNT={setCOUNT}
       isExpanded={isExpanded}
       setIsExpanded={setIsExpanded}
-      totalCnt={COUNT.totalCnt}
     />
   );
 

@@ -10,7 +10,7 @@ declare interface CountProps {
   COUNT: any;
   setCOUNT: any;
   LOCKED: string;
-  setLOCKED: any;
+  setLOCKED: any
   limit: number;
 }
 
@@ -38,11 +38,12 @@ export const Count = (
         inputclass={"fs-0-8rem"}
         adornmentclass={"ms-n10 p-0"}
         onClick={() => {
-          LOCKED !== "locked" ? (
-            setLOCKED("locked")
-          ) : (
-            setLOCKED("unlocked")
-          )
+          if (LOCKED === "locked") {
+            setLOCKED("unlocked");
+          }
+          else {
+            setLOCKED("locked");
+          }
         }}
         startadornment={
           LOCKED === "locked" ? (

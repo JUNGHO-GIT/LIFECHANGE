@@ -9,7 +9,7 @@ import { axios, numeral } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Input, Img, Bg } from "@imports/ImportComponents";
-import { Picker, Count, Delete } from "@imports/ImportContainers";
+import { Picker, Count, Delete, Dial } from "@imports/ImportContainers";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ export const MoneyGoalDetail = () => {
     dayFmt,  getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, URL_OBJECT, sessionId,sessionCurrency, location_id, toList
+    navigate, location_dateType, location_dateStart, location_dateEnd, URL_OBJECT, sessionId,localCurrency, toList
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -245,7 +245,7 @@ export const MoneyGoalDetail = () => {
     // 7-3. detail
     const detailSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={"border radius p-20"} key={i}>
+        <Card className={`${LOCKED === "locked" ? "locked" : ""} border radius p-20`} key={i}>
           <Grid container spacing={2}>
             <Grid size={6} className={"d-left"}>
               <Bg
@@ -265,6 +265,7 @@ export const MoneyGoalDetail = () => {
                 value={numeral(OBJECT?.money_goal_income).format("0,0")}
                 inputRef={REFS[i]?.money_goal_income}
                 error={ERRORS[i]?.money_goal_income}
+                locked={LOCKED}
                 label={
                   DATE.dateType === "day" ? (
                     `${translate("goalIncome")}`
@@ -280,7 +281,7 @@ export const MoneyGoalDetail = () => {
                   />
                 }
                 endadornment={
-                  sessionCurrency
+                  localCurrency
                 }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
@@ -307,6 +308,7 @@ export const MoneyGoalDetail = () => {
                 value={numeral(OBJECT?.money_goal_expense).format("0,0")}
                 inputRef={REFS[i]?.money_goal_expense}
                 error={ERRORS[i]?.money_goal_expense}
+                locked={LOCKED}
                 label={
                   DATE.dateType === "day" ? (
                     `${translate("goalExpense")}`
@@ -322,7 +324,7 @@ export const MoneyGoalDetail = () => {
                   />
                 }
                 endadornment={
-                  sessionCurrency
+                  localCurrency
                 }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
@@ -355,7 +357,7 @@ export const MoneyGoalDetail = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min60vh"}>
+      <Paper className={"content-wrapper radius border h-min75vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {dateCountSection()}
@@ -365,6 +367,16 @@ export const MoneyGoalDetail = () => {
       </Paper>
     );
   };
+
+  // 8. dial ---------------------------------------------------------------------------------------
+  const dialNode = () => (
+    <Dial
+      COUNT={COUNT}
+      setCOUNT={setCOUNT}
+      LOCKED={LOCKED}
+      setLOCKED={setLOCKED}
+    />
+  );
 
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
@@ -385,6 +397,7 @@ export const MoneyGoalDetail = () => {
   return (
     <>
       {detailNode()}
+      {dialNode()}
       {footerNode()}
     </>
   );

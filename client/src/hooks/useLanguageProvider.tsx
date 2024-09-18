@@ -11,10 +11,18 @@ const LanguageContext = createContext<any>({});
 export const LanguageProvider = ({ children }: any) => {
 
   const [lang, setLang] = useState<any>("");
+
+  // 언어설정은 local storage
   useEffect(() => {
-    const sessionLang: string = sessionStorage.getItem(`${TITLE}_lang`) || "ko";
-    if (sessionLang) {
-      setLang(sessionLang);
+    const localLang: any = localStorage.getItem(`${TITLE}_lang`);
+    // 초기에 lang 값 없는 경우
+    if (!localLang) {
+      localStorage.setItem(`${TITLE}_lang`, "ko");
+      setLang("ko");
+    }
+    // lang 값 있는 경우
+    else {
+      setLang(localLang);
     }
   }, [lang]);
 

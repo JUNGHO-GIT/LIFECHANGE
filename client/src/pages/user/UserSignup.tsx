@@ -18,7 +18,7 @@ export const UserSignup = () => {
     translate,
   } = useTranslate();
   const {
-    navigate, URL_OBJECT, URL_GOOGLE, sessionCurrency
+    navigate, URL_OBJECT, URL_GOOGLE, localCurrency
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -393,7 +393,7 @@ export const UserSignup = () => {
                   }
                 }}
                 endadornment={
-                  sessionCurrency
+                  localCurrency
                 }
               />
             </Grid>

@@ -9,7 +9,7 @@ import { axios, numeral } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Bg, Img, Input, Select } from "@imports/ImportComponents";
-import { Picker, Time, Count, Delete } from "@imports/ImportContainers";
+import { Picker, Time, Count, Delete, Dial } from "@imports/ImportContainers";
 import { Card, Paper, MenuItem, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -361,6 +361,7 @@ export const ExerciseDetail = () => {
             <Input
               label={translate("weight")}
               value={OBJECT?.exercise_total_weight}
+              locked={LOCKED}
               startadornment={
                 <Img
                 	key={"exercise5"}
@@ -430,6 +431,7 @@ export const ExerciseDetail = () => {
                 value={OBJECT?.exercise_section[i]?.exercise_part_idx}
                 inputRef={REFS?.[i]?.exercise_part_idx}
                 error={ERRORS?.[i]?.exercise_part_idx}
+                locked={LOCKED}
                 onChange={(e: any) => {
                   const newIndex = Number(e.target.value);
                   setOBJECT((prev: any) => ({
@@ -459,6 +461,7 @@ export const ExerciseDetail = () => {
                 value={OBJECT?.exercise_section[i]?.exercise_title_idx}
                 inputRef={REFS?.[i]?.exercise_title_idx}
                 error={ERRORS?.[i]?.exercise_title_idx}
+                locked={LOCKED}
                 onChange={(e: any) => {
                   const newTitleIdx = Number(e.target.value);
                   const newTitleVal = exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title[newTitleIdx];
@@ -489,6 +492,7 @@ export const ExerciseDetail = () => {
                 value={numeral(OBJECT?.exercise_section[i]?.exercise_set).format("0,0")}
                 inputRef={REFS?.[i]?.exercise_set}
                 error={ERRORS?.[i]?.exercise_set}
+                locked={LOCKED}
                 startadornment={
                   <Img
                   	key={"exercise3_1"}
@@ -535,6 +539,7 @@ export const ExerciseDetail = () => {
                 value={numeral(OBJECT?.exercise_section[i]?.exercise_rep).format("0,0")}
                 inputRef={REFS?.[i]?.exercise_rep}
                 error={ERRORS?.[i]?.exercise_rep}
+                locked={LOCKED}
                 startadornment={
                   <Img
                   	key={"exercise3_2"}
@@ -581,6 +586,7 @@ export const ExerciseDetail = () => {
                 value={numeral(OBJECT?.exercise_section[i]?.exercise_kg).format("0,0")}
                 inputRef={REFS?.[i]?.exercise_kg}
                 error={ERRORS?.[i]?.exercise_kg}
+                locked={LOCKED}
                 startadornment={
                   <Img
                   	key={"exercise3_3"}
@@ -638,7 +644,7 @@ export const ExerciseDetail = () => {
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? <Loading /> : OBJECT?.exercise_section?.map((item: any, i: number) => (
+          LOADING ? <Loading /> : OBJECT?.exercise_section?.map((_item: any, i: number) => (
             detailFragment(i)
           ))
         )
@@ -657,6 +663,16 @@ export const ExerciseDetail = () => {
       </Paper>
     );
   };
+
+  // 8. dial ---------------------------------------------------------------------------------------
+  const dialNode = () => (
+    <Dial
+      COUNT={COUNT}
+      setCOUNT={setCOUNT}
+      LOCKED={LOCKED}
+      setLOCKED={setLOCKED}
+    />
+  );
 
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
@@ -677,6 +693,7 @@ export const ExerciseDetail = () => {
   return (
     <>
       {detailNode()}
+      {dialNode()}
       {footerNode()}
     </>
   );

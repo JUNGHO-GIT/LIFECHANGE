@@ -17,12 +17,12 @@ export const UserAppSetting = () => {
     translate,
   } = useTranslate();
   const {
-    navigate, isAdmin, sessionLang, TITLE,
+    navigate, isAdmin, TITLE, localLang
   } = useCommonValue();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [lang, setLang] = useState<string>(sessionLang);
+  const [lang, setLang] = useState<string>(localLang);
 
   // 7. userAppSetting ----------------------------------------------------------------------------
   const userAppSettingNode = () => {
@@ -95,7 +95,7 @@ export const UserAppSetting = () => {
                         className={"d-center mb-20"}
                         onClick={() => {
                           setLang("ko")
-                          sessionStorage.setItem(`${TITLE}_lang`, "ko")
+                          localStorage.setItem(`${TITLE}_lang`, "ko")
                           navigate(0)
                         }}
                       >
@@ -116,7 +116,7 @@ export const UserAppSetting = () => {
                         className={"d-center"}
                         onClick={() => {
                           setLang("en")
-                          sessionStorage.setItem(`${TITLE}_lang`, "en")
+                          localStorage.setItem(`${TITLE}_lang`, "en")
                           navigate(0)
                         }}
                       >

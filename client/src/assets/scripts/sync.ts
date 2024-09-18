@@ -11,7 +11,7 @@ export const sync = async () => {
   const URL_OBJECT = URL + SUBFIX;
   const TITLE = process.env.REACT_APP_TITLE || "";
   const sessionId = sessionStorage.getItem(`${TITLE}_sessionId`) || "";
-  const sessionTimeZone = sessionStorage.getItem(`${TITLE}_timeZone`) || "Asia/Seoul";
+  const localTimeZone = sessionStorage.getItem(`${TITLE}_timeZone`) || "Asia/Seoul";
 
   // 2-1. useState ---------------------------------------------------------------------------------
   const OBJECT = {
@@ -21,8 +21,8 @@ export const sync = async () => {
   };
   const DATE = {
     dateType: "day",
-    dateStart: moment().tz(sessionTimeZone).format("YYYY-MM-DD"),
-    dateEnd: moment().tz(sessionTimeZone).format("YYYY-MM-DD"),
+    dateStart: moment().tz(localTimeZone).format("YYYY-MM-DD"),
+    dateEnd: moment().tz(localTimeZone).format("YYYY-MM-DD"),
   };
   const params = {
     user_id: sessionId,

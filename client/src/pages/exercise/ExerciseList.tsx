@@ -269,9 +269,10 @@ export const ExerciseList = () => {
   // 8. dial ---------------------------------------------------------------------------------------
   const dialNode = () => (
     <Dial
+      COUNT={COUNT}
+      setCOUNT={setCOUNT}
       isExpanded={isExpanded}
       setIsExpanded={setIsExpanded}
-      totalCnt={COUNT.totalCnt}
     />
   );
 

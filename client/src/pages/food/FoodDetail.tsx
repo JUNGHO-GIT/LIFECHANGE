@@ -9,7 +9,7 @@ import { axios, numeral } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Input, Select, Img, Bg } from "@imports/ImportComponents";
-import { Picker, Count, Delete } from "@imports/ImportContainers";
+import { Picker, Count, Delete, Dial } from "@imports/ImportContainers";
 import { Card, Paper, MenuItem,  Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ export const FoodDetail = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, URL_OBJECT, sessionId, TITLE, foodArray, toList, location
+    navigate, location_dateType, location_dateStart, location_dateEnd, URL_OBJECT, sessionId, TITLE, foodArray, toList
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -440,7 +440,7 @@ export const FoodDetail = () => {
     // 7-3. card
     const detailSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={"border radius p-20"} key={i}>
+        <Card className={`${LOCKED === "locked" ? "locked" : ""} border radius p-20`} key={i}>
           <Grid container spacing={2}>
             <Grid size={6} className={"d-left"}>
               <Bg
@@ -473,6 +473,7 @@ export const FoodDetail = () => {
                 value={OBJECT?.food_section[i]?.food_part_idx}
                 inputRef={REFS[i]?.food_part_idx}
                 error={ERRORS[i]?.food_part_idx}
+                locked={LOCKED}
                 onChange={(e: any) => {
                   const newPart = Number(e.target.value);
                   setOBJECT((prev: any) => ({
@@ -498,6 +499,7 @@ export const FoodDetail = () => {
               <Select
                 label={translate("foodCount")}
                 value={Math.min(Number(OBJECT?.food_section[i]?.food_count), 100)}
+                locked={LOCKED}
                 onChange={(e: any) => {
                   const newCount = Number(e.target.value);
                   if (newCount > 100) {
@@ -538,6 +540,7 @@ export const FoodDetail = () => {
               <Input
                 label={translate("gram")}
                 value={numeral(OBJECT?.food_section[i]?.food_gram).format("0,0")}
+                locked={LOCKED}
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
                   if (/^\d*$/.test(value) || value === "") {
@@ -574,6 +577,7 @@ export const FoodDetail = () => {
                 value={OBJECT?.food_section[i]?.food_name}
                 inputRef={REFS[i]?.food_name}
                 error={ERRORS[i]?.food_name}
+                locked={LOCKED}
                 shrink={"shrink"}
                 onChange={(e: any) => {
                   const newVal = e.target.value;
@@ -593,6 +597,7 @@ export const FoodDetail = () => {
               <Input
                 label={translate("brand")}
                 value={OBJECT?.food_section[i]?.food_brand}
+                locked={LOCKED}
                 shrink={"shrink"}
                 onChange={(e: any) => {
                   const newVal = e.target.value;
@@ -614,6 +619,7 @@ export const FoodDetail = () => {
                 value={numeral(OBJECT?.food_section[i]?.food_kcal).format("0,0")}
                 inputRef={REFS[i]?.food_kcal}
                 error={ERRORS[i]?.food_kcal}
+                locked={LOCKED}
                 startadornment={
                   <Img
                   	key={"food2"}
@@ -660,6 +666,7 @@ export const FoodDetail = () => {
                 value={numeral(OBJECT?.food_section[i]?.food_carb).format("0,0")}
                 inputRef={REFS[i]?.food_carb}
                 error={ERRORS[i]?.food_carb}
+                locked={LOCKED}
                 startadornment={
                   <Img
                   	key={"food3"}
@@ -706,6 +713,7 @@ export const FoodDetail = () => {
                 value={numeral(OBJECT?.food_section[i]?.food_protein).format("0,0")}
                 inputRef={REFS[i]?.food_protein}
                 error={ERRORS[i]?.food_protein}
+                locked={LOCKED}
                 startadornment={
                   <Img
                   	key={"food4"}
@@ -752,6 +760,7 @@ export const FoodDetail = () => {
                 value={numeral(OBJECT?.food_section[i]?.food_fat).format("0,0")}
                 inputRef={REFS[i]?.food_fat}
                 error={ERRORS[i]?.food_fat}
+                locked={LOCKED}
                 startadornment={
                   <Img
                   	key={"food5"}
@@ -797,7 +806,7 @@ export const FoodDetail = () => {
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? <Loading /> : OBJECT?.food_section?.map((item: any, i: number) => (
+          LOADING ? <Loading /> : OBJECT?.food_section?.map((_item: any, i: number) => (
             detailFragment(i)
           ))
         )
@@ -816,6 +825,16 @@ export const FoodDetail = () => {
       </Paper>
     );
   };
+
+  // 8. dial ---------------------------------------------------------------------------------------
+  const dialNode = () => (
+    <Dial
+      COUNT={COUNT}
+      setCOUNT={setCOUNT}
+      LOCKED={LOCKED}
+      setLOCKED={setLOCKED}
+    />
+  );
 
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
@@ -836,6 +855,7 @@ export const FoodDetail = () => {
   return (
     <>
       {detailNode()}
+      {dialNode()}
       {footerNode()}
     </>
   );

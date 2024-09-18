@@ -9,7 +9,7 @@ import { axios, numeral } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Select, Input, Img, Bg, Icons } from "@imports/ImportComponents";
-import { Picker, Memo, Count, Delete } from "@imports/ImportContainers";
+import { Picker, Memo, Count, Delete, Dial } from "@imports/ImportContainers";
 import { Paper, Card, MenuItem, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ export const MoneyDetail = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, moneyArray, URL_OBJECT, sessionId, sessionCurrency, toList
+    navigate, location_dateType, location_dateStart, location_dateEnd, moneyArray, URL_OBJECT, sessionId, localCurrency, toList
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -319,7 +319,7 @@ export const MoneyDetail = () => {
                 />
               }
               endadornment={
-                sessionCurrency
+                localCurrency
               }
             />
           </Grid>
@@ -336,7 +336,7 @@ export const MoneyDetail = () => {
                 />
               }
               endadornment={
-                sessionCurrency
+                localCurrency
               }
             />
           </Grid>
@@ -346,7 +346,7 @@ export const MoneyDetail = () => {
     // 7-3. card
     const detailSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={"border radius p-20"} key={i}>
+        <Card className={`${LOCKED === "locked" ? "locked" : ""} border radius p-20`} key={i}>
           <Grid container spacing={2}>
             <Grid size={6} className={"d-left"}>
               <Bg
@@ -379,6 +379,7 @@ export const MoneyDetail = () => {
                 value={OBJECT?.money_section[i]?.money_part_idx}
                 inputRef={REFS[i]?.money_part_idx}
                 error={ERRORS[i]?.money_part_idx}
+                locked={LOCKED}
                 onChange={(e: any) => {
                   const newIndex = Number(e.target.value);
                   setOBJECT((prev: any) => ({
@@ -408,6 +409,7 @@ export const MoneyDetail = () => {
                 value={OBJECT?.money_section[i]?.money_title_idx}
                 inputRef={REFS[i]?.money_title_idx}
                 error={ERRORS[i]?.money_title_idx}
+                locked={LOCKED}
                 onChange={(e: any) => {
                   const newTitleIdx = Number(e.target.value);
                   const newTitleVal = moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];
@@ -438,6 +440,7 @@ export const MoneyDetail = () => {
                 value={numeral(OBJECT?.money_section[i]?.money_amount).format("0,0")}
                 inputRef={REFS[i]?.money_amount}
                 error={ERRORS[i]?.money_amount}
+                locked={LOCKED}
                 startadornment={
                   <Img
                   	key={"money2"}
@@ -446,7 +449,7 @@ export const MoneyDetail = () => {
                   />
                 }
                 endadornment={
-                  sessionCurrency
+                  localCurrency
                 }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
@@ -548,6 +551,16 @@ export const MoneyDetail = () => {
     );
   };
 
+  // 8. dial ---------------------------------------------------------------------------------------
+  const dialNode = () => (
+    <Dial
+      COUNT={COUNT}
+      setCOUNT={setCOUNT}
+      LOCKED={LOCKED}
+      setLOCKED={setLOCKED}
+    />
+  );
+
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
@@ -567,6 +580,7 @@ export const MoneyDetail = () => {
   return (
     <>
       {detailNode()}
+      {dialNode()}
       {footerNode()}
     </>
   );

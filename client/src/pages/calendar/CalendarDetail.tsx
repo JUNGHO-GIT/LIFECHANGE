@@ -8,7 +8,7 @@ import { Calendar } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Input, Select, Img, Bg } from "@imports/ImportComponents";
-import { Picker, Memo, Count, Delete } from "@imports/ImportContainers";
+import { Picker, Memo, Count, Delete, Dial } from "@imports/ImportContainers";
 import { Card, Paper, MenuItem, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -263,7 +263,7 @@ export const CalendarDetail = () => {
     // 7-3. detail
     const detailSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={"border radius p-20"} key={i}>
+        <Card className={`${LOCKED === "locked" ? "locked" : ""} border radius p-20`} key={i}>
           <Grid container spacing={2}>
             <Grid size={6} className={"d-left"}>
               <Bg
@@ -390,7 +390,7 @@ export const CalendarDetail = () => {
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? <Loading /> : OBJECT?.calendar_section?.map((item: any, i: number) => (
+          LOADING ? <Loading /> : OBJECT?.calendar_section?.map((_item: any, i: number) => (
             detailFragment(i)
           ))
         )
@@ -408,6 +408,16 @@ export const CalendarDetail = () => {
       </Paper>
     );
   };
+
+  // 8. dial ---------------------------------------------------------------------------------------
+  const dialNode = () => (
+    <Dial
+      COUNT={COUNT}
+      setCOUNT={setCOUNT}
+      LOCKED={LOCKED}
+      setLOCKED={setLOCKED}
+    />
+  );
 
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
@@ -428,6 +438,7 @@ export const CalendarDetail = () => {
   return (
     <>
       {detailNode()}
+      {dialNode()}
       {footerNode()}
     </>
   );

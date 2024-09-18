@@ -16,7 +16,7 @@ export const TopNav = () => {
     translate,
   } = useTranslate();
   const {
-    navigate, firstStr, secondStr, TITLE, sessionPercent, sessionProperty, sessionScale, PATH, sessionCurrency,
+    navigate, firstStr, secondStr, TITLE, sessionPercent, sessionProperty, sessionScale, PATH, localCurrency,
   } = useCommonValue();
   const {
     dayFmt, dayNotFmt,
@@ -395,7 +395,7 @@ export const TopNav = () => {
                     />
                   }
                   endadornment={
-                    sessionCurrency
+                    localCurrency
                   }
                 />
               </Grid>
@@ -412,7 +412,7 @@ export const TopNav = () => {
                     />
                   }
                   endadornment={
-                    sessionCurrency
+                    localCurrency
                   }
                 />
               </Grid>
@@ -429,7 +429,7 @@ export const TopNav = () => {
                     />
                   }
                   endadornment={
-                    sessionCurrency
+                    localCurrency
                   }
                 />
               </Grid>

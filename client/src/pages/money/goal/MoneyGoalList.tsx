@@ -22,7 +22,7 @@ export const MoneyGoalList = () => {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, sessionCurrency, toDetail
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, localCurrency, toDetail
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -195,7 +195,7 @@ export const MoneyGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrency}
+                          {localCurrency}
                         </Div>
                       </Grid>
                       {/** real **/}
@@ -211,7 +211,7 @@ export const MoneyGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrency}
+                          {localCurrency}
                         </Div>
                       </Grid>
                       {/** diff **/}
@@ -227,7 +227,7 @@ export const MoneyGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrency}
+                          {localCurrency}
                         </Div>
                       </Grid>
                     </Grid>
@@ -263,7 +263,7 @@ export const MoneyGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrency}
+                          {localCurrency}
                         </Div>
                       </Grid>
                       {/** real **/}
@@ -279,7 +279,7 @@ export const MoneyGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrency}
+                          {localCurrency}
                         </Div>
                       </Grid>
                       {/** diff **/}
@@ -295,7 +295,7 @@ export const MoneyGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrency}
+                          {localCurrency}
                         </Div>
                       </Grid>
                     </Grid>
@@ -327,9 +327,10 @@ export const MoneyGoalList = () => {
   // 8. dial ---------------------------------------------------------------------------------------
   const dialNode = () => (
     <Dial
+      COUNT={COUNT}
+      setCOUNT={setCOUNT}
       isExpanded={isExpanded}
       setIsExpanded={setIsExpanded}
-      totalCnt={COUNT.totalCnt}
     />
   );
 

@@ -9,7 +9,7 @@ import { axios } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Bg } from "@imports/ImportComponents";
-import { Picker, Time, Count, Delete } from "@imports/ImportContainers";
+import { Picker, Time, Count, Delete, Dial } from "@imports/ImportContainers";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ export const SleepGoalDetail = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, location_id, toList
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, toList
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -252,7 +252,7 @@ export const SleepGoalDetail = () => {
     // 7-3. detail
     const detailSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={"border radius p-20"} key={i}>
+        <Card className={`${LOCKED === "locked" ? "locked" : ""} border radius p-20`} key={i}>
           <Grid container spacing={2}>
             <Grid size={6} className={"d-left"}>
               <Bg
@@ -314,7 +314,7 @@ export const SleepGoalDetail = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min60vh"}>
+      <Paper className={"content-wrapper radius border h-min75vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {dateCountSection()}
@@ -324,6 +324,16 @@ export const SleepGoalDetail = () => {
       </Paper>
     );
   };
+
+  // 8. dial ---------------------------------------------------------------------------------------
+  const dialNode = () => (
+    <Dial
+      COUNT={COUNT}
+      setCOUNT={setCOUNT}
+      LOCKED={LOCKED}
+      setLOCKED={setLOCKED}
+    />
+  );
 
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
@@ -344,6 +354,7 @@ export const SleepGoalDetail = () => {
   return (
     <>
       {detailNode()}
+      {dialNode()}
       {footerNode()}
     </>
   );

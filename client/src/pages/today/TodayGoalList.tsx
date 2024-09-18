@@ -22,7 +22,7 @@ export const TodayGoalList = () => {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, PATH, URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP, sessionId, TITLE, sessionCurrency,
+    navigate, PATH, URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP, sessionId, TITLE, localCurrency,
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -978,7 +978,7 @@ export const TodayGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrency}
+                          {localCurrency}
                         </Div>
                       </Grid>
                       {/** real **/}
@@ -994,7 +994,7 @@ export const TodayGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrency}
+                          {localCurrency}
                         </Div>
                       </Grid>
                       {/** diff **/}
@@ -1010,7 +1010,7 @@ export const TodayGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrency}
+                          {localCurrency}
                         </Div>
                       </Grid>
                     </Grid>
@@ -1046,7 +1046,7 @@ export const TodayGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrency}
+                          {localCurrency}
                         </Div>
                       </Grid>
                       {/** real **/}
@@ -1062,7 +1062,7 @@ export const TodayGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrency}
+                          {localCurrency}
                         </Div>
                       </Grid>
                       {/** diff **/}
@@ -1078,7 +1078,7 @@ export const TodayGoalList = () => {
                       </Grid>
                       <Grid size={2} className={"d-right"}>
                         <Div className={"fs-0-6rem"}>
-                          {sessionCurrency}
+                          {localCurrency}
                         </Div>
                       </Grid>
                     </Grid>
@@ -1417,9 +1417,10 @@ export const TodayGoalList = () => {
   // 8. dial ---------------------------------------------------------------------------------------
   const dialNode = () => (
     <Dial
+      COUNT={COUNT}
+      setCOUNT={setCOUNT}
       isExpanded={isExpanded}
       setIsExpanded={setIsExpanded}
-      totalCnt={COUNT.totalCnt}
     />
   );
 
