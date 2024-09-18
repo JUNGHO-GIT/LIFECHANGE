@@ -285,7 +285,7 @@ export const FoodFindList = () => {
                   </Grid>
                   <Grid size={6} className={"d-right"}>
                     <Div className={`fs-1-0rem fw-600 ${item.food_carb_color}`}>
-                      {numeral(item.food_carb).format("0,0")}
+                      {item.food_carb}
                     </Div>
                   </Grid>
                   <Grid size={1} className={"d-right lh-2-4"}>
@@ -311,7 +311,7 @@ export const FoodFindList = () => {
                   </Grid>
                   <Grid size={6} className={"d-right"}>
                     <Div className={`fs-1-0rem fw-600 ${item.food_protein_color}`}>
-                      {numeral(item.food_protein).format("0,0")}
+                      {item.food_protein}
                     </Div>
                   </Grid>
                   <Grid size={1} className={"d-right lh-2-4"}>
@@ -337,7 +337,7 @@ export const FoodFindList = () => {
                   </Grid>
                   <Grid size={6} className={"d-right"}>
                     <Div className={`fs-1-0rem fw-600 ${item.food_fat_color}`}>
-                      {numeral(item.food_fat).format("0,0")}
+                      {item.food_fat}
                     </Div>
                   </Grid>
                   <Grid size={1} className={"d-right lh-2-4"}>

@@ -2,7 +2,7 @@
 
 import express from "express";
 import { Request, Response } from "express";
-import * as findService from "@services/food/foodFindService";
+import * as findService from "@services/food/foodFindService.ts";
 export const router = express.Router();
 
 // 0. list -----------------------------------------------------------------------------------------

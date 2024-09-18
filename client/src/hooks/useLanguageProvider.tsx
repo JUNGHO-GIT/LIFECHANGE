@@ -11,13 +11,16 @@ const LanguageContext = createContext<any>({});
 export const LanguageProvider = ({ children }: any) => {
 
   const localLangSet:any = JSON.parse(localStorage.getItem(`${TITLE}_localLangSet`) || "{}");
-  const localeSet = localLangSet?.locale || "ko";
+  const localeSet:any = localLangSet?.locale;
   const [lang, setLang] = useState<string>("");
 
   // 언어설정은 local storage
   useEffect(() => {
-    if (localeSet) {
-      setLang(localeSet);
+    if (localeSet && localeSet === "ko") {
+      setLang("ko");
+    }
+    else {
+      setLang("en");
     }
   }, [localeSet]);
 
@@ -773,6 +776,10 @@ export const useTranslate = () => {
     },
     // ---------------------------------------------------------------------------------------------
     // n
+    nation: {
+      ko: "국가",
+      en: "Nation"
+    },
     new: {
       ko: "신규",
       en: "New"

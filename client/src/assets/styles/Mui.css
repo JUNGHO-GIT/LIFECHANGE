@@ -119,3 +119,9 @@
 .MuiBackdrop-root {
   background-color: rgba(0, 0, 0, 0.1) !important;
 }
+.MuiSpeedDial-actions {
+  margin-bottom: -40px !important;
+}
+.MuiSpeedDialAction-fab {
+  border-radius: 50% !important;
+}

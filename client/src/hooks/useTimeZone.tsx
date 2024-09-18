@@ -16,9 +16,9 @@ export const useTimeZone = () => {
   let localLangSet:any = {
     timeZone: "",
     zoneName: "",
-    locale: "",
     isoCode: "",
-    currency: ""
+    currency: "",
+    locale: "",
   };
 
   // 2-3. useEffect --------------------------------------------------------------------------------
@@ -26,22 +26,6 @@ export const useTimeZone = () => {
     try {
       // ex. Asia/Seoul
       localLangSet.timeZone = moment.tz.guess();
-
-      // ex. KST
-      localLangSet.zoneName = moment.tz(localLangSet.timeZone).zoneName();
-
-      // ex. ko
-      localLangSet.locale = navigator.language && navigator.language.split("-")[0];
-
-      // ex. KR
-      localLangSet.isoCode = getCountryForTimezone(localLangSet.timeZone)?.id;
-
-      // ex. KRW
-      localLangSet.currency = getAllInfoByISO(localLangSet.isoCode).currency;
-
-      if (localLangSet) {
-        localStorage.setItem(`${TITLE}_localLangSet`, JSON.stringify(localLangSet));
-      }
     }
     catch (err: any) {
       console.error(err);
@@ -50,8 +34,61 @@ export const useTimeZone = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (localLangSet.locale && localLangSet.locale !== "en") {
-      require(`moment/locale/${localLangSet.locale}`);
+    try {
+      // ex. KST
+      localLangSet.zoneName = moment.tz(localLangSet.timeZone).zoneName();
+
+      // ex. KR
+      localLangSet.isoCode = getCountryForTimezone(localLangSet.timeZone)?.id;
+    }
+    catch (err: any) {
+      console.error(err);
+    }
+  }, [localLangSet.timeZone]);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    try {
+      // ex. KRW
+      localLangSet.currency = getAllInfoByISO(localLangSet.isoCode).currency;
+    }
+    catch (err: any) {
+      console.error(err);
+    }
+  }, [localLangSet.isoCode]);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    try {
+      // ex. ko
+      localLangSet.locale = navigator.language && navigator.language.split("-")[0];
+    }
+    catch (err: any) {
+      console.error(err);
+    }
+  }, []);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    try {
+      if (localLangSet) {
+        localStorage.setItem(`${TITLE}_localLangSet`, JSON.stringify(localLangSet));
+      }
+    }
+    catch (err: any) {
+      console.error(err);
+    }
+  }, [localLangSet.timeZone, localLangSet.zoneName, localLangSet.isoCode, localLangSet.currency, localLangSet.locale]);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    try {
+      if (localLangSet.locale && localLangSet.locale !== "en") {
+        require(`moment/locale/${localLangSet.locale}`);
+      }
+    }
+    catch (err: any) {
+      console.error(err);
     }
   }, [localLangSet.locale]);
 };
