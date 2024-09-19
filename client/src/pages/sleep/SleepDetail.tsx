@@ -176,11 +176,15 @@ export const SleepDetail = () => {
       setLOADING(false);
       return;
     }
-    axios.put(`${URL_OBJECT}/update`, {
-      user_id: sessionId,
-      OBJECT: OBJECT,
-      DATE: DATE,
-      type: type,
+    axios({
+      method: type === "create" ? "post" : "put",
+      url: type === "create" ? `${URL_OBJECT}/create` : `${URL_OBJECT}/update`,
+      data: {
+        user_id: sessionId,
+        OBJECT: OBJECT,
+        DATE: DATE,
+        type: type,
+      }
     })
     .then((res: any) => {
       if (res.data.status === "success") {
