@@ -47,7 +47,8 @@ export const Picker = (
 
   const isGoalToday = PATH.includes("/today/goal");
   const isToday = !isGoalToday && PATH.includes("/today/list");
-  const isCalendar = PATH.includes("/calendar");
+  const isCalendarList = PATH.includes("/calendar/list");
+  const isCalendarDetail = PATH.includes("/calendar/detail");
   const isGoalList = PATH.includes("/goal/list");
   const isGoalDetail = PATH.includes("/goal/detail");
   const isRealList = !PATH.includes("/goal") && PATH.includes("/list");
@@ -99,6 +100,7 @@ export const Picker = (
   };
 
   // 2-3. useEffect --------------------------------------------------------------------------------
+  // 페이지 진입시 location이 없는경우 처리
   useEffect(() => {
     if (!DATE.dateType) {
       if (isGoalList || isGoalDetail) {
@@ -1052,7 +1054,7 @@ export const Picker = (
           )
         }
         inputclass={saveTypeStr}
-        readOnly={isRealDetail && !isCalendar}
+        readOnly={isRealDetail && !isCalendarDetail}
         onChange={(e: any) => {
           if (e.target.value === "day") {
             setDATE((prev: any) => ({
@@ -1096,7 +1098,7 @@ export const Picker = (
           }
         }}
       >
-        {isGoalDetail || isCalendar ? (
+        {isGoalDetail ? (
           ["week", "month", "year", "select"]?.map((item: any) => (
             <MenuItem
               key={item}
@@ -1106,7 +1108,19 @@ export const Picker = (
               {translate(item)}
             </MenuItem>
           ))
-        ) : (
+        )
+        : isCalendarDetail ? (
+          ["day", "week", "month", "year", "select"]?.map((item: any) => (
+            <MenuItem
+              key={item}
+              value={item}
+              selected={item === DATE.dateType}
+            >
+              {translate(item)}
+            </MenuItem>
+          ))
+        )
+        : (
           ["day"]?.map((item: any) => (
             <MenuItem
               key={item}
@@ -1136,12 +1150,28 @@ export const Picker = (
       )
 
       // 1-2. 목표인 경우 (세이브)
-      : isGoalDetail || isCalendar ? (
+      : isGoalDetail ? (
         <Grid container spacing={2}>
           <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
             {saveTypeSection()}
           </Grid>
           <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
+            {DATE.dateType === "week" && weekSection()}
+            {DATE.dateType === "month" && monthSection()}
+            {DATE.dateType === "year" && yearSection()}
+            {DATE.dateType === "select" && selectSection()}
+          </Grid>
+        </Grid>
+      )
+      
+      // 1-3. 일정인 경우 (세이브)
+      : isCalendarDetail ? (
+        <Grid container spacing={2}>
+          <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
+            {saveTypeSection()}
+          </Grid>
+          <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
+            {DATE.dateType === "day" && weekSection()}
             {DATE.dateType === "week" && weekSection()}
             {DATE.dateType === "month" && monthSection()}
             {DATE.dateType === "year" && yearSection()}

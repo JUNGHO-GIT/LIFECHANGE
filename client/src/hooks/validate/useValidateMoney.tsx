@@ -52,7 +52,7 @@ export const useValidateMoney= () => {
         return acc;
       }, []));
       validate.current = (OBJECT: any, COUNT: any) => {
-        if (COUNT.newSectionCnt === 0) {
+        if (COUNT.newSectionCnt <= 0) {
           alert(translate("errorCount"));
           return false;
         }
@@ -90,7 +90,7 @@ export const useValidateMoney= () => {
       validate.current = (OBJECT: any, COUNT: any) => {
         const section = OBJECT.money_section;
         for (let i = 0; i < section.length; i++) {
-          if (COUNT.newSectionCnt === 0) {
+          if (COUNT.newSectionCnt <= 0) {
             alert(translate("errorCount"));
             return false;
           }

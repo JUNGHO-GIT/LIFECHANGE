@@ -140,17 +140,18 @@ export const list = async (object: any) => {
   // 4. result -------------------------------------------------------------------------------------
   object?.result?.forEach((item: any) => {
     Object.assign(item, {
-      money_total_income_color: makeNonValueColor(
-        item?.money_total_income
-      ),
-      money_total_expense_color: makeNonValueColor(
-        item?.money_total_expense
-      ),
+      ...item,
       money_goal_income_color: makeNonValueColor(
         item?.money_goal_income
       ),
       money_goal_expense_color: makeNonValueColor(
         item?.money_goal_expense
+      ),
+      money_total_income_color: makeNonValueColor(
+        item?.money_total_income
+      ),
+      money_total_expense_color: makeNonValueColor(
+        item?.money_total_expense
       ),
       money_diff_income: compareValue(
         item?.money_goal_income, item?.money_total_income, "income"

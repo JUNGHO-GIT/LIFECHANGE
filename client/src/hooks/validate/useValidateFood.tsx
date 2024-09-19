@@ -54,7 +54,7 @@ export const useValidateFood= () => {
         return acc;
       }, []));
       validate.current = (OBJECT: any, COUNT: any) => {
-        if (COUNT.newSectionCnt === 0) {
+        if (COUNT.newSectionCnt <= 0) {
           alert(translate("errorCount"));
           return false;
         }
@@ -101,7 +101,7 @@ export const useValidateFood= () => {
       validate.current = (OBJECT: any, COUNT: any) => {
         const section = OBJECT.food_section;
         for (let i = 0; i < section.length; i++) {
-          if (COUNT.newSectionCnt === 0) {
+          if (COUNT.newSectionCnt <= 0) {
             alert(translate("errorCount"));
             return false;
           }

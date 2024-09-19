@@ -22,7 +22,7 @@ export const CalendarDetail = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, calendarArray, colors, URL_OBJECT, sessionId, toList,
+    navigate, location_dateType, location_dateStart, location_dateEnd, calendarArray, colors, URL_OBJECT, sessionId, toList, location
   } = useCommonValue();
   const {
     ERRORS, REFS, validate

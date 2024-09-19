@@ -43,7 +43,7 @@ export const Dial = (
   const dialNode = () => {
     // 1. list (today o)
     const listTodaySection = () => (
-      <Div className={`p-fixed bottom-18vh z-600 ${open ? "right-2-5vw" : "right-3vw"}`}>
+      <Div className={`p-fixed bottom-18vh z-600 right-6vw`}>
         <Backdrop
           open={open}
           onClick={() => {
@@ -111,7 +111,7 @@ export const Dial = (
     );
     // 2. list (today x)
     const listNotTodaySection = () => (
-      <Div className={`p-fixed bottom-18vh z-600 ${open ? "right-2-5vw" : "right-3vw"}`}>
+      <Div className={`p-fixed bottom-18vh z-600 right-6vw`}>
         <Backdrop
           open={open}
           onClick={() => {
@@ -194,7 +194,7 @@ export const Dial = (
     );
     // 3. find
     const findSection = () => (
-      <Div className={`p-fixed bottom-18vh z-600 ${open ? "right-2-5vw" : "right-3vw"}`}>
+      <Div className={`p-fixed bottom-18vh z-600 right-6vw`}>
         <Backdrop
           open={open}
           onClick={() => {
@@ -287,7 +287,7 @@ export const Dial = (
     );
     // 4. detail
     const detailSection = () => (
-      <Div className={`p-fixed bottom-18vh z-600 ${open ? "right-2-5vw" : "right-3vw"}`}>
+      <Div className={`p-fixed bottom-18vh z-600 right-6vw`}>
         <Backdrop
           open={open}
           onClick={() => {
@@ -369,7 +369,7 @@ export const Dial = (
       isToday ? (
         listTodaySection()
       )
-      : isList ? (
+      : isGoalList || isList ? (
         listNotTodaySection()
       )
       : isFindList ? (

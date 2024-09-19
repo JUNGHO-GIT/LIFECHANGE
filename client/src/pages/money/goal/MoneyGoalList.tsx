@@ -190,7 +190,7 @@ export const MoneyGoalList = () => {
                       </Grid>
                       <Grid size={5} className={"d-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.money_goal_income_color}`}>
-                          {numeral(item.money_diff_income).format("0,0")}
+                          {numeral(item.money_goal_income).format("0,0")}
                         </Div>
                       </Grid>
                       <Grid size={2} className={"d-right"}>
@@ -258,7 +258,7 @@ export const MoneyGoalList = () => {
                       </Grid>
                       <Grid size={5} className={"d-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.money_goal_expense_color}`}>
-                          {numeral(item.money_diff_expense).format("0,0")}
+                          {numeral(item.money_goal_expense).format("0,0")}
                         </Div>
                       </Grid>
                       <Grid size={2} className={"d-right"}>
