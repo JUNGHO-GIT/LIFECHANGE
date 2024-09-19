@@ -297,38 +297,56 @@ export const replace = async (
   const dateType = DATE_param.dateType;
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
-
-  findResult = await repository.detail(
-    user_id_param, existingDateType, existingDateStart, existingDateEnd
-  );
-
-  if (!findResult) {
-    replaceResult = await repository.replace(
-      user_id_param, OBJECT_param, dateType, dateStart, dateEnd
-    );
-  }
-  else {
-    deleteResult = await repository.deletes(
+  
+  try {
+    findResult = await repository.detail(
       user_id_param, existingDateType, existingDateStart, existingDateEnd
     );
-    if (!deleteResult) {
-      finalResult = null;
-      statusResult = "fail";
-    }
-    else {
+  
+    if (!findResult) {
       replaceResult = await repository.replace(
         user_id_param, OBJECT_param, dateType, dateStart, dateEnd
       );
     }
+    // 1. 기존항목 == 타겟항목
+    else if (
+      existingDateType == dateType &&
+      existingDateStart == dateStart &&
+      existingDateEnd == dateEnd
+    ) {
+      replaceResult = await repository.replace(
+        user_id_param, OBJECT_param, dateType, dateStart, dateEnd
+      );
+    }
+    // 2. 기존항목 != 타겟항목
+    else {
+      deleteResult = await repository.deletes(
+        user_id_param, existingDateType, existingDateStart, existingDateEnd
+      );
+      if (!deleteResult) {
+        finalResult = null;
+        statusResult = "fail";
+      }
+      else {
+        replaceResult = await repository.replace(
+          user_id_param, OBJECT_param, dateType, dateStart, dateEnd
+        );
+      }
+    }
+    
+    if (!replaceResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
+      finalResult = replaceResult;
+      statusResult = "success";
+    }
   }
-
-  if (!replaceResult) {
+  catch (err: any) {
+    console.error('server error:', err);
     finalResult = null;
-    statusResult = "fail";
-  }
-  else {
-    finalResult = replaceResult;
-    statusResult = "success";
+    statusResult = "error";
   }
 
   return {
