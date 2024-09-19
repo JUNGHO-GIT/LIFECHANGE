@@ -1,8 +1,9 @@
 // Buttons.tsx
 // Node -> Section -> Fragment
 
+import { useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useTranslate } from "@imports/ImportHooks";
-import { Btn, Div, Hr } from "@imports/ImportComponents";
+import { Btn, Div } from "@imports/ImportComponents";
 import { PopUp } from "@imports/ImportContainers";
 import { Grid, Card } from "@imports/ImportMuis";
 
@@ -115,9 +116,9 @@ export const Buttons = ( { state, setState, flow }: ButtonsProps ) => {
             color={"primary"}
             className={"ms-1vw me-1vw"}
             onClick={(e: any) => {
-              if (state.FLOW?.exist === "true") {
-                if (state.FLOW?.itsMe === "true") {
-                  flowSave("replace");
+              if (state.FLOW?.exist) {
+                if (state.FLOW?.itsMe) {
+                  flowSave("update");
                 }
                 else {
                   popTrigger.openPopup(e.currentTarget);

@@ -41,9 +41,9 @@ export const FoodDetail = () => {
     select: [""],
   });
   const [FLOW, setFLOW] = useState<any>({
-    exist: "",
-    itsMe: "",
-    itsNew: "",
+    exist: false,
+    itsMe: false,
+    itsNew: false,
   });
   const [SEND, setSEND] = useState<any>({
     id: "",
@@ -66,11 +66,11 @@ export const FoodDetail = () => {
   useEffect(() => {
     if (EXIST?.[DATE.dateType]?.length > 0) {
 
-      const dateRange = `${DATE.dateStart} ~ ${DATE.dateEnd}`;
-      const objectRange = `${OBJECT.food_dateStart} ~ ${OBJECT.food_dateEnd}`;
+      const dateRange = `${DATE.dateStart.trim()} ~ ${DATE.dateEnd.trim()}`;
+      const objectRange = `${OBJECT.food_dateStart.trim()} ~ ${OBJECT.food_dateEnd.trim()}`;
 
       const isExist = (
-        EXIST[DATE.dateType].some((item: any) => item === dateRange)
+        EXIST[DATE.dateType].includes(dateRange)
       );
       const itsMe = (
         dateRange === objectRange
@@ -80,13 +80,14 @@ export const FoodDetail = () => {
         OBJECT.food_dateEnd === "0000-00-00"
       );
 
-      setFLOW({
-        exist: isExist ? "true" : "false",
-        itsMe: itsMe ? "true" : "false",
-        itsNew: itsNew ? "true" : "false",
-      });
+      setFLOW((prev: any) => ({
+        ...prev,
+        exist: isExist,
+        itsMe: itsMe,
+        itsNew: itsNew
+      }));
     }
-  }, [EXIST]);
+  }, [EXIST, DATE.dateEnd, OBJECT.food_dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -123,19 +124,19 @@ export const FoodDetail = () => {
       },
     })
     .then((res: any) => {
-      // 첫번째 객체를 제외하고 데이터 추가
+      setOBJECT(res.data.result || Food);
+      // section 내부 part_idx 값에 따라 재정렬
       setOBJECT((prev: any) => {
-        if (prev.length === 1 && prev[0]?._id === "") {
-          return res.data.result;
-        }
-        else {
-          return {
-            ...prev,
-            ...res.data.result
-          };
-        }
+        const mergedSection = prev?.food_section
+        ? prev.food_section.sort((a: any, b: any) => (
+          a.food_part_idx - b.food_part_idx
+        ))
+        : [];
+        return {
+          ...prev,
+          food_section: mergedSection,
+        };
       });
-
       // 카운트 설정
       setCOUNT((prev: any) => ({
         ...prev,
@@ -242,10 +243,15 @@ export const FoodDetail = () => {
       setLOADING(false);
       return;
     }
-    axios.post(`${URL_OBJECT}/${type}`, {
-      user_id: sessionId,
-      OBJECT: OBJECT,
-      DATE: DATE,
+    axios({
+      method: type === "create" ? "post" : "put",
+      url: type === "create" ? `${URL_OBJECT}/create` : `${URL_OBJECT}/update`,
+      data: {
+        user_id: sessionId,
+        OBJECT: OBJECT,
+        DATE: DATE,
+        type: type,
+      }
     })
     .then((res: any) => {
       if (res.data.status === "success") {
@@ -502,17 +508,17 @@ export const FoodDetail = () => {
                 locked={LOCKED}
                 onChange={(e: any) => {
                   const newCount = Number(e.target.value);
+                  const newValue = (value: any) => {
+                    return (
+                      Number(((newCount * value) /
+                      Number(OBJECT?.food_section[i]?.food_count)).toFixed(2)).toString()
+                    );
+                  }
                   if (newCount > 100) {
                     return;
                   }
                   else if (isNaN(newCount) || newCount <= 0) {
                     return;
-                  }
-                  const newVal = (value: any) => {
-                    return (
-                      Number(((newCount * value) /
-                      Number(OBJECT?.food_section[i]?.food_count)).toFixed(2)).toString()
-                    );
                   }
                   setOBJECT((prev: any) => ({
                     ...prev,
@@ -520,10 +526,10 @@ export const FoodDetail = () => {
                       idx === i ? {
                         ...item,
                         food_count: newCount.toString(),
-                        food_kcal: newVal(item.food_kcal),
-                        food_fat: newVal(item.food_fat),
-                        food_carb: newVal(item.food_carb),
-                        food_protein: newVal(item.food_protein),
+                        food_kcal: newValue(item.food_kcal),
+                        food_fat: newValue(item.food_fat),
+                        food_carb: newValue(item.food_carb),
+                        food_protein: newValue(item.food_protein),
                       } : item
                     ))
                   }));
@@ -543,30 +549,28 @@ export const FoodDetail = () => {
                 locked={LOCKED}
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
-                  if (/^\d*$/.test(value) || value === "") {
-                    const newValue = Number(value);
-                    if (value === "") {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        food_section: prev.food_section?.map((item: any, idx: number) => (
-                          idx === i ? {
-                            ...item,
-                            food_gram: "0"
-                          } : item
-                        ))
-                      }));
-                    }
-                    else if (!isNaN(newValue) && newValue <= 999) {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        food_section: prev.food_section?.map((item: any, idx: number) => (
-                          idx === i ? {
-                            ...item,
-                            food_gram: value,
-                          } : item
-                        ))
-                      }));
-                    }
+                  const newValue = value === "" ? 0 : Number(value);
+                  if (value === "") {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      food_section: prev.food_section?.map((item: any, idx: number) => (
+                        idx === i ? {
+                          ...item,
+                          food_gram: "0"
+                        } : item
+                      ))
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 999) {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      food_section: prev.food_section?.map((item: any, idx: number) => (
+                        idx === i ? {
+                          ...item,
+                          food_gram: String(newValue)
+                        } : item
+                      ))
+                    }));
                   }
                 }}
               />
@@ -580,13 +584,13 @@ export const FoodDetail = () => {
                 locked={LOCKED}
                 shrink={"shrink"}
                 onChange={(e: any) => {
-                  const newVal = e.target.value;
+                  const newValue = e.target.value;
                   setOBJECT((prev: any) => ({
                     ...prev,
                     food_section: prev?.food_section?.map((item: any, idx: number) => (
                       idx === i ? {
                         ...item,
-                        food_name: newVal,
+                        food_name: newValue,
                       } : item
                     ))
                   }));
@@ -600,13 +604,13 @@ export const FoodDetail = () => {
                 locked={LOCKED}
                 shrink={"shrink"}
                 onChange={(e: any) => {
-                  const newVal = e.target.value;
+                  const newValue = e.target.value;
                   setOBJECT((prev: any) => ({
                     ...prev,
                     food_section: prev?.food_section?.map((item: any, idx: number) => (
                       idx === i ? {
                         ...item,
-                        food_brand: newVal,
+                        food_brand: newValue,
                       } : item
                     ))
                   }));
@@ -632,30 +636,28 @@ export const FoodDetail = () => {
                 }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
-                  if (/^\d*$/.test(value) || value === "") {
-                    const newValue = Number(value);
-                    if (value === "") {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        food_section: prev.food_section?.map((item: any, idx: number) => (
-                          idx === i ? {
-                            ...item,
-                            food_kcal: "0"
-                          } : item
-                        ))
-                      }));
-                    }
-                    else if (!isNaN(newValue) && newValue <= 9999999) {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        food_section: prev.food_section?.map((item: any, idx: number) => (
-                          idx === i ? {
-                            ...item,
-                            food_kcal: value,
-                          } : item
-                        ))
-                      }));
-                    }
+                  const newValue = value === "" ? 0 : Number(value);
+                  if (value === "") {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      food_section: prev.food_section?.map((item: any, idx: number) => (
+                        idx === i ? {
+                          ...item,
+                          food_kcal: "0"
+                        } : item
+                      ))
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 99999) {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      food_section: prev.food_section?.map((item: any, idx: number) => (
+                        idx === i ? {
+                          ...item,
+                          food_kcal: String(newValue)
+                        } : item
+                      ))
+                    }));
                   }
                 }}
               />
@@ -679,30 +681,28 @@ export const FoodDetail = () => {
                 }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
-                  if (/^\d*$/.test(value) || value === "") {
-                    const newValue = Number(value);
-                    if (value === "") {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        food_section: prev.food_section?.map((item: any, idx: number) => (
-                          idx === i ? {
-                            ...item,
-                            food_carb: "0"
-                          } : item
-                        ))
-                      }));
-                    }
-                    else if (!isNaN(newValue) && newValue <= 99999) {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        food_section: prev.food_section?.map((item: any, idx: number) => (
-                          idx === i ? {
-                            ...item,
-                            food_carb: value,
-                          } : item
-                        ))
-                      }));
-                    }
+                  const newValue = value === "" ? 0 : Number(value);
+                  if (value === "") {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      food_section: prev.food_section?.map((item: any, idx: number) => (
+                        idx === i ? {
+                          ...item,
+                          food_carb: "0"
+                        } : item
+                      ))
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 99999) {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      food_section: prev.food_section?.map((item: any, idx: number) => (
+                        idx === i ? {
+                          ...item,
+                          food_carb: String(newValue)
+                        } : item
+                      ))
+                    }));
                   }
                 }}
               />
@@ -726,30 +726,28 @@ export const FoodDetail = () => {
                 }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
-                  if (/^\d*$/.test(value) || value === "") {
-                    const newValue = Number(value);
-                    if (value === "") {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        food_section: prev.food_section?.map((item: any, idx: number) => (
-                          idx === i ? {
-                            ...item,
-                            food_protein: "0"
-                          } : item
-                        ))
-                      }));
-                    }
-                    else if (!isNaN(newValue) && newValue <= 99999) {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        food_section: prev.food_section?.map((item: any, idx: number) => (
-                          idx === i ? {
-                            ...item,
-                            food_protein: value,
-                          } : item
-                        ))
-                      }));
-                    }
+                  const newValue = value === "" ? 0 : Number(value);
+                  if (value === "") {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      food_section: prev.food_section?.map((item: any, idx: number) => (
+                        idx === i ? {
+                          ...item,
+                          food_protein: "0"
+                        } : item
+                      ))
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 99999) {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      food_section: prev.food_section?.map((item: any, idx: number) => (
+                        idx === i ? {
+                          ...item,
+                          food_protein: String(newValue)
+                        } : item
+                      ))
+                    }));
                   }
                 }}
               />
@@ -773,30 +771,28 @@ export const FoodDetail = () => {
                 }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
-                  if (/^\d*$/.test(value) || value === "") {
-                    const newValue = Number(value);
-                    if (value === "") {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        food_section: prev.food_section?.map((item: any, idx: number) => (
-                          idx === i ? {
-                            ...item,
-                            food_fat: "0"
-                          } : item
-                        ))
-                      }));
-                    }
-                    else if (!isNaN(newValue) && newValue <= 99999) {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        food_section: prev.food_section?.map((item: any, idx: number) => (
-                          idx === i ? {
-                            ...item,
-                            food_fat: value,
-                          } : item
-                        ))
-                      }));
-                    }
+                  const newValue = value === "" ? 0 : Number(value);
+                  if (value === "") {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      food_section: prev.food_section?.map((item: any, idx: number) => (
+                        idx === i ? {
+                          ...item,
+                          food_fat: "0"
+                        } : item
+                      ))
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 99999) {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      food_section: prev.food_section?.map((item: any, idx: number) => (
+                        idx === i ? {
+                          ...item,
+                          food_fat: String(newValue)
+                        } : item
+                      ))
+                    }));
                   }
                 }}
               />

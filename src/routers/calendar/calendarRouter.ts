@@ -169,31 +169,32 @@ router.post("/create", async (req: Request, res: Response) => {
   }
 });
 
-// 4. insert (기존항목 제거 + 타겟항목에 추가) -----------------------------------------------------
-router.post("/insert", async (req: Request, res: Response) => {
+// 4. update ---------------------------------------------------------------------------------------
+router.put("/update", async (req: Request, res: Response) => {
   try {
-    let finalResult = await service.insert(
+    let finalResult = await service.update(
       req.body.user_id as string,
       req.body.OBJECT as any,
       req.body.DATE as any,
+      req.body.type as string,
     );
     if (finalResult.status === "success") {
       res.json({
-        msg: "insertSuccessful",
+        msg: "updateSuccessful",
         status: finalResult.status,
         result: finalResult.result,
       });
     }
     else if (finalResult.status === "fail") {
       res.json({
-        msg: "insertFailed",
+        msg: "updateFailed",
         status: finalResult.status,
         result: finalResult.result,
       });
     }
     else {
       res.json({
-        msg: "insertError",
+        msg: "updateError",
         status: finalResult.status,
         result: finalResult.result,
       });
@@ -209,47 +210,7 @@ router.post("/insert", async (req: Request, res: Response) => {
   }
 });
 
-// 5. replace (기존항목 제거 + 타겟항목을 교체) ----------------------------------------------------
-router.post("/replace", async (req: Request, res: Response) => {
-  try {
-    let finalResult = await service.replace(
-      req.body.user_id as string,
-      req.body.OBJECT as any,
-      req.body.DATE as any,
-    );
-    if (finalResult.status === "success") {
-      res.json({
-        msg: "replaceSuccessful",
-        status: finalResult.status,
-        result: finalResult.result,
-      });
-    }
-    else if (finalResult.status === "fail") {
-      res.json({
-        msg: "replaceFailed",
-        status: finalResult.status,
-        result: finalResult.result,
-      });
-    }
-    else {
-      res.json({
-        msg: "replaceError",
-        status: finalResult.status,
-        result: finalResult.result,
-      });
-    }
-  }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
-});
-
-// 6. delete --------------------------------------------------------------------------------------
+// 5. delete --------------------------------------------------------------------------------------
 router.delete("/delete", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.deletes(

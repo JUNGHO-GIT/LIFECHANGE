@@ -170,33 +170,32 @@ router.post("/create", async (req: Request, res: Response) => {
   }
 });
 
-// 4. insert (기존항목 제거 + 타겟항목에 추가) -----------------------------------------------------
-
-// 5. replace (기존항목 제거 + 타겟항목을 교체) ----------------------------------------------------
-router.post("/replace", async (req: Request, res: Response) => {
+// 4. update ---------------------------------------------------------------------------------------
+router.put("/update", async (req: Request, res: Response) => {
   try {
-    let finalResult = await service.replace(
+    let finalResult = await service.update(
       req.body.user_id as string,
       req.body.OBJECT as any,
       req.body.DATE as any,
+      req.body.type as string,
     );
     if (finalResult.status === "success") {
       res.json({
-        msg: "replaceSuccessful",
+        msg: "updateSuccessful",
         status: finalResult.status,
         result: finalResult.result,
       });
     }
     else if (finalResult.status === "fail") {
       res.json({
-        msg: "replaceFailed",
+        msg: "updateFailed",
         status: finalResult.status,
         result: finalResult.result,
       });
     }
     else {
       res.json({
-        msg: "replaceError",
+        msg: "updateError",
         status: finalResult.status,
         result: finalResult.result,
       });
@@ -212,7 +211,7 @@ router.post("/replace", async (req: Request, res: Response) => {
   }
 });
 
-// 6. delete --------------------------------------------------------------------------------------
+// 5. delete --------------------------------------------------------------------------------------
 router.delete("/delete", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.deletes(

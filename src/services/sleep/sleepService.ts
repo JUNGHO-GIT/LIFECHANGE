@@ -154,7 +154,7 @@ export const detail = async (
   };
 };
 
-// 3. create (기존항목 제거 + 타겟항목에 생성) -----------------------------------------------------
+// 3. create ---------------------------------------------------------------------------------------
 export const create = async (
   user_id_param: string,
   OBJECT_param: any,
@@ -215,19 +215,18 @@ export const create = async (
   };
 };
 
-// 4. insert (기존항목 제거 + 타겟항목에 추가) -----------------------------------------------------
-
-// 5. replace (기존항목 제거 + 타겟항목을 교체) ----------------------------------------------------
-export const replace = async (
+// 4. update ---------------------------------------------------------------------------------------
+export const update = async (
   user_id_param: string,
   OBJECT_param: any,
   DATE_param: any,
+  type_param: string,
 ) => {
 
   // result 변수 선언
   let findResult: any = null;
   let deleteResult: any = null;
-  let replaceResult: any = null;
+  let updateResult: any = null;
   let finalResult: any = null;
   let statusResult: string = "";
 
@@ -244,31 +243,78 @@ export const replace = async (
   );
 
   if (!findResult) {
-    replaceResult = await repository.replace(
-      user_id_param, OBJECT_param, dateType, dateStart, dateEnd
-    );
-  }
-  else {
-    deleteResult = await repository.deletes(
-      user_id_param, existingDateType, existingDateStart, existingDateEnd
-    );
-    if (!deleteResult) {
-      finalResult = null;
-      statusResult = "fail";
-    }
-    else {
-      replaceResult = await repository.replace(
-        user_id_param, OBJECT_param, dateType, dateStart, dateEnd
-      );
-    }
-  }
-
-  if (!replaceResult) {
     finalResult = null;
     statusResult = "fail";
   }
   else {
-    finalResult = replaceResult;
+    // update (기존항목 유지 + 타겟항목으로 수정)
+    if (type_param === "update") {
+      updateResult = await repository.update.update(
+        user_id_param, OBJECT_param, dateType, dateStart, dateEnd
+      );
+      if (!updateResult) {
+        finalResult = null;
+        statusResult = "fail";
+      }
+      else {
+        finalResult = updateResult;
+        statusResult = "success";
+      }
+    }
+    // insert (기존항목 제거 + 타겟항목에 추가)
+    else if (type_param === "insert") {
+      deleteResult = await repository.deletes(
+        user_id_param, existingDateType, existingDateStart, existingDateEnd
+      );
+      if (!deleteResult) {
+        finalResult = null;
+        statusResult = "fail";
+      }
+      else {
+        updateResult = await repository.update.insert(
+          user_id_param, OBJECT_param, dateType, dateStart, dateEnd
+        );
+      }
+      if (!updateResult) {
+        finalResult = null;
+        statusResult = "fail";
+      }
+      else {
+        finalResult = updateResult;
+        statusResult = "success";
+      }
+    }
+    // replace (기존항목 제거 + 타겟항목을 교체)
+    else if (type_param === "replace") {
+      deleteResult = await repository.deletes(
+        user_id_param, existingDateType, existingDateStart, existingDateEnd
+      );
+      if (!deleteResult) {
+        finalResult = null;
+        statusResult = "fail";
+      }
+      else {
+        updateResult = await repository.update.replace(
+          user_id_param, OBJECT_param, dateType, dateStart, dateEnd
+        );
+      }
+      if (!updateResult) {
+        finalResult = null;
+        statusResult = "fail";
+      }
+      else {
+        finalResult = updateResult;
+        statusResult = "success";
+      }
+    }
+  }
+
+  if (!updateResult) {
+    finalResult = null;
+    statusResult = "fail";
+  }
+  else {
+    finalResult = updateResult;
     statusResult = "success";
   }
 
@@ -278,7 +324,7 @@ export const replace = async (
   };
 };
 
-// 6. delete (타겟항목 제거) -----------------------------------------------------------------------
+// 5. delete ---------------------------------------------------------------------------------------
 export const deletes = async (
   user_id_param: string,
   DATE_param: any,

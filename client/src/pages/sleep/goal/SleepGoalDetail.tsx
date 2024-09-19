@@ -41,9 +41,9 @@ export const SleepGoalDetail = () => {
     select: [""],
   });
   const [FLOW, setFLOW] = useState<any>({
-    exist: "",
-    itsMe: "",
-    itsNew: "",
+    exist: false,
+    itsMe: false,
+    itsNew: false,
   });
   const [SEND, setSEND] = useState<any>({
     id: "",
@@ -69,11 +69,11 @@ export const SleepGoalDetail = () => {
   useEffect(() => {
     if (EXIST?.[DATE.dateType]?.length > 0) {
 
-      const dateRange = `${DATE.dateStart} ~ ${DATE.dateEnd}`;
-      const objectRange = `${OBJECT.sleep_goal_dateStart} ~ ${OBJECT.sleep_goal_dateEnd}`;
+      const dateRange = `${DATE.dateStart.trim()} ~ ${DATE.dateEnd.trim()}`;
+      const objectRange = `${OBJECT.sleep_goal_dateStart.trim()} ~ ${OBJECT.sleep_goal_dateEnd.trim()}`;
 
       const isExist = (
-        EXIST[DATE.dateType].some((item: any) => item === dateRange)
+        EXIST[DATE.dateType].includes(dateRange)
       );
       const itsMe = (
         dateRange === objectRange
@@ -83,13 +83,14 @@ export const SleepGoalDetail = () => {
         OBJECT.sleep_goal_dateEnd === "0000-00-00"
       );
 
-      setFLOW({
-        exist: isExist ? "true" : "false",
-        itsMe: itsMe ? "true" : "false",
-        itsNew: itsNew ? "true" : "false",
-      });
+      setFLOW((prev: any) => ({
+        ...prev,
+        exist: isExist,
+        itsMe: itsMe,
+        itsNew: itsNew
+      }));
     }
-  }, [EXIST]);
+  }, [EXIST, DATE.dateEnd, OBJECT.sleep_goal_dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -148,10 +149,11 @@ export const SleepGoalDetail = () => {
       setLOADING(false);
       return;
     }
-    axios.post(`${URL_OBJECT}/goal/${type}`, {
+    axios.post(`${URL_OBJECT}/goal/update`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
+      type: type,
     })
     .then((res: any) => {
       if (res.data.status === "success") {

@@ -374,8 +374,14 @@ export const findPropertyMoney = async (
         money_total_income: {
           $sum: {
             $cond: [
-              { $eq: ["$money_section.money_part_idx", 1] },
-              { $toDouble: "$money_section.money_amount" },
+              {
+                $eq: [
+                  "$money_section.money_part_idx", 1
+                ]
+              },
+              {
+                $toDouble: "$money_section.money_amount"
+              },
               0
             ]
           }
@@ -384,8 +390,14 @@ export const findPropertyMoney = async (
         money_total_expense: {
           $sum: {
             $cond: [
-              { $eq: ["$money_section.money_part_idx", 2] },
-              { $toDouble: "$money_section.money_amount" },
+              {
+                $eq: [
+                  "$money_section.money_part_idx", 2
+                ]
+              },
+              {
+                $toDouble: "$money_section.money_amount"
+              },
               0
             ]
           }
@@ -432,8 +444,14 @@ export const findPropertyMoney = async (
         money_total_income: {
           $sum: {
             $cond: [
-              { $eq: ["$money_section.money_part_idx", 1] },
-              { $toDouble: "$money_section.money_amount" },
+              {
+                $eq: [
+                  "$money_section.money_part_idx", 1
+                ]
+              },
+              {
+                $toDouble: "$money_section.money_amount"
+              },
               0
             ]
           }
@@ -442,8 +460,14 @@ export const findPropertyMoney = async (
         money_total_expense: {
           $sum: {
             $cond: [
-              { $eq: ["$money_section.money_part_idx", 2] },
-              { $toDouble: "$money_section.money_amount" },
+              {
+                $eq: [
+                  "$money_section.money_part_idx", 2
+                ]
+              },
+              {
+                $toDouble: "$money_section.money_amount"
+              },
               0
             ]
           }

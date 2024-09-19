@@ -41,9 +41,9 @@ export const MoneyDetail = () => {
     select: [""],
   });
   const [FLOW, setFLOW] = useState<any>({
-    exist: "",
-    itsMe: "",
-    itsNew: "",
+    exist: false,
+    itsMe: false,
+    itsNew: false,
   });
   const [SEND, setSEND] = useState<any>({
     id: "",
@@ -66,11 +66,11 @@ export const MoneyDetail = () => {
   useEffect(() => {
     if (EXIST?.[DATE.dateType]?.length > 0) {
 
-      const dateRange = `${DATE.dateStart} ~ ${DATE.dateEnd}`;
-      const objectRange = `${OBJECT.money_dateStart} ~ ${OBJECT.money_dateEnd}`;
+      const dateRange = `${DATE.dateStart.trim()} ~ ${DATE.dateEnd.trim()}`;
+      const objectRange = `${OBJECT.money_dateStart.trim()} ~ ${OBJECT.money_dateEnd.trim()}`;
 
       const isExist = (
-        EXIST[DATE.dateType].some((item: any) => item === dateRange)
+        EXIST[DATE.dateType].includes(dateRange)
       );
       const itsMe = (
         dateRange === objectRange
@@ -80,13 +80,14 @@ export const MoneyDetail = () => {
         OBJECT.money_dateEnd === "0000-00-00"
       );
 
-      setFLOW({
-        exist: isExist ? "true" : "false",
-        itsMe: itsMe ? "true" : "false",
-        itsNew: itsNew ? "true" : "false",
-      });
+      setFLOW((prev: any) => ({
+        ...prev,
+        exist: isExist,
+        itsMe: itsMe,
+        itsNew: itsNew
+      }));
     }
-  }, [EXIST]);
+  }, [EXIST, DATE.dateEnd, OBJECT.money_dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -203,10 +204,11 @@ export const MoneyDetail = () => {
       setLOADING(false);
       return;
     }
-    axios.post(`${URL_OBJECT}/${type}`, {
+    axios.put(`${URL_OBJECT}/update`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
+      type: type,
     })
     .then((res: any) => {
       if (res.data.status === "success") {
@@ -453,30 +455,28 @@ export const MoneyDetail = () => {
                 }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
-                  if (/^\d*$/.test(value) || value === "") {
-                    const newValue = Number(value);
-                    if (value === "") {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        money_section: prev.money_section?.map((item: any, idx: number) => (
-                          idx === i ? {
-                            ...item,
-                            money_amount: "0",
-                          } : item
-                        ))
-                      }));
-                    }
-                    else if (!isNaN(newValue) && newValue <= 9999999999) {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        money_section: prev.money_section?.map((item: any, idx: number) => (
-                          idx === i ? {
-                            ...item,
-                            money_amount: value,
-                          } : item
-                        ))
-                      }));
-                    }
+                  const newValue = value === "" ? 0 : Number(value);
+                  if (value === "") {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      money_section: prev.money_section?.map((item: any, idx: number) => (
+                        idx === i ? {
+                          ...item,
+                          money_amount: "0",
+                        } : item
+                      ))
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 9999999999) {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      money_section: prev.money_section?.map((item: any, idx: number) => (
+                        idx === i ? {
+                          ...item,
+                          money_amount: String(newValue),
+                        } : item
+                      ))
+                    }));
                   }
                 }}
               />

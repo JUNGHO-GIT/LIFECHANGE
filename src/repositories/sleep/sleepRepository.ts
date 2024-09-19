@@ -145,7 +145,7 @@ export const detail = async (
   return finalResult;
 };
 
-// 3. create (기존항목 제거 + 타겟항목에 생성) -----------------------------------------------------
+// 3. create ---------------------------------------------------------------------------------------
 export const create = async (
   user_id_param: string,
   OBJECT_param: any,
@@ -171,41 +171,77 @@ export const create = async (
   return finalResult;
 };
 
-// 4. insert (기존항목 유지 + 타겟항목에 끼워넣기) -------------------------------------------------
+// 4. update ---------------------------------------------------------------------------------------
+export const update = {
 
-// 5. replace (기존항목 유지 + 타겟항목을 대체) ----------------------------------------------------
-export const replace = async (
-  user_id_param: string,
-  OBJECT_param: any,
-  dateType_param: string,
-  dateStart_param: string,
-  dateEnd_param: string,
-) => {
+  // 1. update (기존항목 유지 + 타겟항목으로 수정)
+  update: async (
+    user_id_param: string,
+    OBJECT_param: any,
+    dateType_param: string,
+    dateStart_param: string,
+    dateEnd_param: string,
+  ) => {
 
-  const finalResult:any = await Sleep.findOneAndUpdate(
-    {
-      user_id: user_id_param,
-      sleep_dateStart: dateStart_param,
-      sleep_dateEnd: dateEnd_param,
-      ...dateType_param ? { sleep_dateType: dateType_param } : {},
-    },
-    {
-      $set: {
-        sleep_section: OBJECT_param.sleep_section,
-        sleep_updateDt: newDate,
+    const finalResult:any = await Sleep.findOneAndUpdate(
+      {
+        user_id: user_id_param,
+        sleep_dateStart: dateStart_param,
+        sleep_dateEnd: dateEnd_param,
+        ...dateType_param ? { sleep_dateType: dateType_param } : {},
       },
-    },
-    {
-      upsert: true,
-      new: true
-    }
-  )
-  .lean();
+      {
+        $set: {
+          sleep_section: OBJECT_param.sleep_section,
+          sleep_updateDt: newDate,
+        },
+      },
+      {
+        upsert: true,
+        new: true
+      }
+    )
+    .lean();
 
-  return finalResult;
+    return finalResult;
+  },
+
+  // 2. insert (기존항목 제거 + 타겟항목에 추가)
+
+  // 3. replace (기존항목 제거 + 타겟항목을 교체)
+  replace: async (
+    user_id_param: string,
+    OBJECT_param: any,
+    dateType_param: string,
+    dateStart_param: string,
+    dateEnd_param: string,
+  ) => {
+
+    const finalResult:any = await Sleep.findOneAndUpdate(
+      {
+        user_id: user_id_param,
+        sleep_dateStart: dateStart_param,
+        sleep_dateEnd: dateEnd_param,
+        ...dateType_param ? { sleep_dateType: dateType_param } : {},
+      },
+      {
+        $set: {
+          sleep_section: OBJECT_param.sleep_section,
+          sleep_updateDt: newDate,
+        },
+      },
+      {
+        upsert: true,
+        new: true
+      }
+    )
+    .lean();
+
+    return finalResult;
+  }
 };
 
-// 6. delete (타겟항목 제거) -----------------------------------------------------------------------
+// 5. delete ---------------------------------------------------------------------------------------
 export const deletes = async (
   user_id_param: string,
   dateType_param: string,

@@ -41,9 +41,9 @@ export const ExerciseGoalDetail = () => {
     select: [""],
   });
   const [FLOW, setFLOW] = useState<any>({
-    exist: "",
-    itsMe: "",
-    itsNew: "",
+    exist: false,
+    itsMe: false,
+    itsNew: false,
   });
   const [SEND, setSEND] = useState<any>({
     id: "",
@@ -69,11 +69,11 @@ export const ExerciseGoalDetail = () => {
   useEffect(() => {
     if (EXIST?.[DATE.dateType]?.length > 0) {
 
-      const dateRange = `${DATE.dateStart} ~ ${DATE.dateEnd}`;
-      const objectRange = `${OBJECT.exercise_goal_dateStart} ~ ${OBJECT.exercise_goal_dateEnd}`;
+      const dateRange = `${DATE.dateStart.trim()} ~ ${DATE.dateEnd.trim()}`;
+      const objectRange = `${OBJECT.exercise_goal_dateStart.trim()} ~ ${OBJECT.exercise_goal_dateEnd.trim()}`;
 
       const isExist = (
-        EXIST[DATE.dateType].some((item: any) => item === dateRange)
+        EXIST[DATE.dateType].includes(dateRange)
       );
       const itsMe = (
         dateRange === objectRange
@@ -83,13 +83,14 @@ export const ExerciseGoalDetail = () => {
         OBJECT.exercise_goal_dateEnd === "0000-00-00"
       );
 
-      setFLOW({
-        exist: isExist ? "true" : "false",
-        itsMe: itsMe ? "true" : "false",
-        itsNew: itsNew ? "true" : "false",
-      });
+      setFLOW((prev: any) => ({
+        ...prev,
+        exist: isExist,
+        itsMe: itsMe,
+        itsNew: itsNew
+      }));
     }
-  }, [EXIST]);
+  }, [EXIST, DATE.dateEnd, OBJECT.exercise_goal_dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -145,10 +146,11 @@ export const ExerciseGoalDetail = () => {
       setLOADING(false);
       return;
     }
-    axios.post(`${URL_OBJECT}/goal/${type}`, {
+    axios.post(`${URL_OBJECT}/goal/update`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
+      type: type,
     })
     .then((res: any) => {
       if (res.data.status === "success") {
@@ -290,20 +292,18 @@ export const ExerciseGoalDetail = () => {
                 }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
-                  if (/^\d*$/.test(value) || value === "") {
-                    const newValue = Number(value);
-                    if (value === "") {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        exercise_goal_count: "0"
-                      }));
-                    }
-                    else if (!isNaN(newValue) && newValue <= 999) {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        exercise_goal_count: value
-                      }));
-                    }
+                  const newValue = value === "" ? 0 : Number(value);
+                  if (value === "") {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      exercise_goal_count: "0"
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 999) {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      exercise_goal_count: String(newValue)
+                    }));
                   }
                 }}
               />
@@ -333,20 +333,18 @@ export const ExerciseGoalDetail = () => {
                 }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
-                  if (/^\d*$/.test(value) || value === "") {
-                    const newValue = Number(value);
-                    if (value === "") {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        exercise_goal_volume: "0"
-                      }));
-                    }
-                    else if (!isNaN(newValue) && newValue <= 9999999) {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        exercise_goal_volume: value
-                      }));
-                    }
+                  const newValue = value === "" ? 0 : Number(value);
+                  if (value === "") {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      exercise_goal_volume: "0"
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 9999999) {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      exercise_goal_volume: String(newValue)
+                    }));
                   }
                 }}
               />
@@ -380,21 +378,19 @@ export const ExerciseGoalDetail = () => {
                 translate("k")
               }
               onChange={(e: any) => {
-                const value = e.target.value.replace(/^0+/, '');
-                if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
-                  const newValue = parseFloat(value);
-                  if (value === "") {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      exercise_goal_weight: "0"
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 999) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      exercise_goal_weight: value
-                    }));
-                  }
+                const value = e.target.value;
+                const newValue = value.startsWith("0") ? value.slice(1) : value;
+                if (value === "") {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    exercise_goal_weight: "0"
+                  }));
+                }
+                else if (newValue.match(/^\d*\.?\d{0,2}$/) && Number(newValue) <= 999) {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    exercise_goal_weight: String(newValue)
+                  }));
                 }
               }}
             />

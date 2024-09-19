@@ -42,9 +42,9 @@ export const FoodGoalDetail = () => {
     select: [""],
   });
   const [FLOW, setFLOW] = useState<any>({
-    exist: "",
-    itsMe: "",
-    itsNew: "",
+    exist: false,
+    itsMe: false,
+    itsNew: false,
   });
   const [SEND, setSEND] = useState<any>({
     id: "",
@@ -67,11 +67,11 @@ export const FoodGoalDetail = () => {
   useEffect(() => {
     if (EXIST?.[DATE.dateType]?.length > 0) {
 
-      const dateRange = `${DATE.dateStart} ~ ${DATE.dateEnd}`;
-      const objectRange = `${OBJECT.food_goal_dateStart} ~ ${OBJECT.food_goal_dateEnd}`;
+      const dateRange = `${DATE.dateStart.trim()} ~ ${DATE.dateEnd.trim()}`;
+      const objectRange = `${OBJECT.food_goal_dateStart.trim()} ~ ${OBJECT.food_goal_dateEnd.trim()}`;
 
       const isExist = (
-        EXIST[DATE.dateType].some((item: any) => item === dateRange)
+        EXIST[DATE.dateType].includes(dateRange)
       );
       const itsMe = (
         dateRange === objectRange
@@ -81,13 +81,14 @@ export const FoodGoalDetail = () => {
         OBJECT.food_goal_dateEnd === "0000-00-00"
       );
 
-      setFLOW({
-        exist: isExist ? "true" : "false",
-        itsMe: itsMe ? "true" : "false",
-        itsNew: itsNew ? "true" : "false",
-      });
+      setFLOW((prev: any) => ({
+        ...prev,
+        exist: isExist,
+        itsMe: itsMe,
+        itsNew: itsNew
+      }));
     }
-  }, [EXIST]);
+  }, [EXIST, DATE.dateEnd, OBJECT.food_goal_dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -143,10 +144,11 @@ export const FoodGoalDetail = () => {
       setLOADING(false);
       return;
     }
-    axios.post(`${URL_OBJECT}/goal/${type}`, {
+    axios.post(`${URL_OBJECT}/goal/update`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
+      type: type,
     })
     .then((res: any) => {
       if (res.data.status === "success") {
@@ -288,20 +290,18 @@ export const FoodGoalDetail = () => {
                 }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
-                  if (/^\d*$/.test(value) || value === "") {
-                    const newValue = Number(value);
-                    if (value === "") {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        food_goal_kcal: "0"
-                      }));
-                    }
-                    else if (!isNaN(newValue) && newValue <= 9999999) {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        food_goal_kcal: value,
-                      }));
-                    }
+                  const newValue = value === "" ? 0 : Number(value);
+                  if (value === "") {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      food_goal_kcal: "0"
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 9999999) {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      food_goal_kcal: String(newValue),
+                    }));
                   }
                 }}
               />
@@ -331,20 +331,18 @@ export const FoodGoalDetail = () => {
                 }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
-                  if (/^\d*$/.test(value) || value === "") {
-                    const newValue = Number(value);
-                    if (value === "") {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        food_goal_carb: "0"
-                      }));
-                    }
-                    else if (!isNaN(newValue) && newValue <= 99999) {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        food_goal_carb: value,
-                      }));
-                    }
+                  const newValue = value === "" ? 0 : Number(value);
+                  if (value === "") {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      food_goal_carb: "0"
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 99999) {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      food_goal_carb: String(newValue),
+                    }));
                   }
                 }}
               />
@@ -374,20 +372,18 @@ export const FoodGoalDetail = () => {
                 }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
-                  if (/^\d*$/.test(value) || value === "") {
-                    const newValue = Number(value);
-                    if (value === "") {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        food_goal_protein: "0"
-                      }));
-                    }
-                    else if (!isNaN(newValue) && newValue <= 99999) {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        food_goal_protein: value,
-                      }));
-                    }
+                  const newValue = value === "" ? 0 : Number(value);
+                  if (value === "") {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      food_goal_protein: "0"
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 99999) {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      food_goal_protein: String(newValue),
+                    }));
                   }
                 }}
               />
@@ -417,20 +413,18 @@ export const FoodGoalDetail = () => {
                 }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
-                  if (/^\d*$/.test(value) || value === "") {
-                    const newValue = Number(value);
-                    if (value === "") {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        food_goal_fat: "0"
-                      }));
-                    }
-                    else if (!isNaN(newValue) && newValue <= 99999) {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        food_goal_fat: value,
-                      }));
-                    }
+                  const newValue = value === "" ? 0 : Number(value);
+                  if (value === "") {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      food_goal_fat: "0"
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 99999) {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      food_goal_fat: String(newValue),
+                    }));
                   }
                 }}
               />

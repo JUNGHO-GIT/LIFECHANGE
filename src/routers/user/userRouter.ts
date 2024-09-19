@@ -329,7 +329,7 @@ router.get("/detail", async (req: Request, res: Response) => {
 });
 
 // 2-5. userUpdate ---------------------------------------------------------------------------------
-router.post("/update", async (req: Request, res: Response) => {
+router.put("/update", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.userUpdate (
       req.body.user_id as string,

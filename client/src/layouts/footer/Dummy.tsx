@@ -73,20 +73,18 @@ export const Dummy = (
         inputclass={"h-min0 h-30 fs-0-8rem"}
         onChange={(e: any) => {
           const value = e.target.value.replace(/,/g, '');
-          if (/^\d*$/.test(value) || value === "") {
-            const newValue = Number(value);
-            if (value === "") {
-              setState?.setCOUNT((prev: any) => ({
-                ...prev,
-                inputCnt: "0",
-              }));
-            }
-            else if (!isNaN(newValue) && newValue <= 999) {
-              setState?.setCOUNT((prev: any) => ({
-                ...prev,
-                inputCnt: value,
-              }));
-            }
+          const newValue = value === "" ? 0 : Number(value);
+          if (value === "") {
+            setState?.setCOUNT((prev: any) => ({
+              ...prev,
+              inputCnt: "0",
+            }));
+          }
+          else if (!isNaN(newValue) && newValue <= 999) {
+            setState?.setCOUNT((prev: any) => ({
+              ...prev,
+              inputCnt: String(newValue),
+            }));
           }
         }}
       />
@@ -115,7 +113,7 @@ export const Dummy = (
         {translate("delete")}
       </Btn>
     );
-    // 6. deleteAll
+    // 5. deleteAll
     const deleteAllSection = () => (
       <Btn
         color={"warning"}

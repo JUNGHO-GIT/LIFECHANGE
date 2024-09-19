@@ -138,7 +138,7 @@ export const detail = async (
   return finalResult;
 };
 
-// 3. create (기존항목 제거 + 타겟항목에 생성) -----------------------------------------------------
+// 3. create ---------------------------------------------------------------------------------------
 export const create = async (
   user_id_param: string,
   OBJECT_param: any,
@@ -166,96 +166,134 @@ export const create = async (
   return finalResult;
 };
 
-// 4. insert (기존항목 유지 + 타겟항목에 끼워넣기) -------------------------------------------------
-export const insert = async (
-  user_id_param: string,
-  OBJECT_param: any,
-  dateType_param: string,
-  dateStart_param: string,
-  dateEnd_param: string,
-) => {
+// 4. update ---------------------------------------------------------------------------------------
+export const update = {
 
-  const findResult: any = await Money.findOne(
-    {
-      user_id: user_id_param,
-      money_dateStart: dateStart_param,
-      money_dateEnd: dateEnd_param,
-      ...dateType_param ? { money_dateType: dateType_param } : {},
-    },
-  )
-  .lean();
+  // 1. update (기존항목 유지 + 타겟항목으로 수정)
+  update: async (
+    user_id_param: string,
+    OBJECT_param: any,
+    dateType_param: string,
+    dateStart_param: string,
+    dateEnd_param: string,
+  ) => {
 
-  const newIncome = String (
-    parseFloat(findResult.money_total_income) +
-    parseFloat(OBJECT_param.money_total_income)
-  );
-  const newExpense = String (
-    parseFloat(findResult.money_total_expense) +
-    parseFloat(OBJECT_param.money_total_expense)
-  );
-
-  const finalResult:any = await Money.updateOne(
-    {
-      user_id: user_id_param,
-      money_dateStart: dateStart_param,
-      money_dateEnd: dateEnd_param,
-      ...dateType_param ? { money_dateType: dateType_param } : {},
-    },
-    {
-      $set: {
-        money_total_income: newIncome,
-        money_total_expense: newExpense,
-        money_updateDt: newDate,
+    const finalResult:any = await Money.findOneAndUpdate(
+      {
+        user_id: user_id_param,
+        money_dateStart: dateStart_param,
+        money_dateEnd: dateEnd_param,
+        ...dateType_param ? { money_dateType: dateType_param } : {},
       },
-      $push: {
-        money_section: OBJECT_param.money_section
+      {
+        $set: {
+          money_total_income: OBJECT_param.money_total_income,
+          money_total_expense: OBJECT_param.money_total_expense,
+          money_section: OBJECT_param.money_section,
+          money_updateDt: newDate,
+        },
+      },
+      {
+        upsert: true,
+        new: true
       }
-    },
-    {
-      upsert: true,
-      new: true
-    }
-  )
-  .lean();
+    )
+    .lean();
 
-  return finalResult;
-};
+    return finalResult;
+  },
 
-// 5. replace (기존항목 유지 + 타겟항목을 대체) ----------------------------------------------------
-export const replace = async (
-  user_id_param: string,
-  OBJECT_param: any,
-  dateType_param: string,
-  dateStart_param: string,
-  dateEnd_param: string,
-) => {
+  // 2. insert (기존항목 제거 + 타겟항목에 추가)
+  insert: async (
+    user_id_param: string,
+    OBJECT_param: any,
+    dateType_param: string,
+    dateStart_param: string,
+    dateEnd_param: string,
+  ) => {
 
-  const finalResult:any = await Money.findOneAndUpdate(
-    {
-      user_id: user_id_param,
-      money_dateStart: dateStart_param,
-      money_dateEnd: dateEnd_param,
-      ...dateType_param ? { money_dateType: dateType_param } : {},
-    },
-    {
-      $set: {
-        money_total_income: OBJECT_param.money_total_income,
-        money_total_expense: OBJECT_param.money_total_expense,
-        money_section: OBJECT_param.money_section,
-        money_updateDt: newDate,
+    const findResult: any = await Money.findOne(
+      {
+        user_id: user_id_param,
+        money_dateStart: dateStart_param,
+        money_dateEnd: dateEnd_param,
+        ...dateType_param ? { money_dateType: dateType_param } : {},
       },
-    },
-    {
-      upsert: true,
-      new: true
-    }
-  )
-  .lean();
+    )
+    .lean();
 
-  return finalResult;
+    const newIncome = String (
+      parseFloat(findResult.money_total_income) +
+      parseFloat(OBJECT_param.money_total_income)
+    );
+    const newExpense = String (
+      parseFloat(findResult.money_total_expense) +
+      parseFloat(OBJECT_param.money_total_expense)
+    );
+
+    const finalResult:any = await Money.updateOne(
+      {
+        user_id: user_id_param,
+        money_dateStart: dateStart_param,
+        money_dateEnd: dateEnd_param,
+        ...dateType_param ? { money_dateType: dateType_param } : {},
+      },
+      {
+        $set: {
+          money_total_income: newIncome,
+          money_total_expense: newExpense,
+          money_updateDt: newDate,
+        },
+        $push: {
+          money_section: OBJECT_param.money_section
+        }
+      },
+      {
+        upsert: true,
+        new: true
+      }
+    )
+    .lean();
+
+    return finalResult;
+  },
+
+  // 3. replace (기존항목 제거 + 타겟항목을 교체)
+  replace: async (
+    user_id_param: string,
+    OBJECT_param: any,
+    dateType_param: string,
+    dateStart_param: string,
+    dateEnd_param: string,
+  ) => {
+
+    const finalResult:any = await Money.findOneAndUpdate(
+      {
+        user_id: user_id_param,
+        money_dateStart: dateStart_param,
+        money_dateEnd: dateEnd_param,
+        ...dateType_param ? { money_dateType: dateType_param } : {},
+      },
+      {
+        $set: {
+          money_total_income: OBJECT_param.money_total_income,
+          money_total_expense: OBJECT_param.money_total_expense,
+          money_section: OBJECT_param.money_section,
+          money_updateDt: newDate,
+        },
+      },
+      {
+        upsert: true,
+        new: true
+      }
+    )
+    .lean();
+
+    return finalResult;
+  }
 };
 
-// 6. delete (타겟항목 제거) -----------------------------------------------------------------------
+// 5. delete ---------------------------------------------------------------------------------------
 export const deletes = async (
   user_id_param: string,
   dateType_param: string,

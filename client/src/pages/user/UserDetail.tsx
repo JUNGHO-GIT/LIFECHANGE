@@ -61,7 +61,7 @@ export const UserDetail = () => {
       setLOADING(false);
       return;
     }
-    axios.post(`${URL_OBJECT}/update`, {
+    axios.put(`${URL_OBJECT}/update`, {
       user_id: sessionId,
       OBJECT: OBJECT,
     })
@@ -144,21 +144,19 @@ export const UserDetail = () => {
                 error={ERRORS[i]?.user_age}
                 disabled={OBJECT.user_id_verified === false}
                 onChange={(e: any) => {
-                  const value = e.target.value.replace(/^0+/, '');
-                  if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
-                    const newValue = parseFloat(value);
-                    if (value === "") {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        user_age: "0",
-                      }));
-                    }
-                    else if (!isNaN(newValue) && newValue <= 200) {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        user_age: value,
-                      }));
-                    }
+                  const value = e.target.value.replace(/,/g, '');
+                  const newValue = value === "" ? 0 : Number(value);
+                  if (value === "") {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      user_age: "0",
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 200) {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      user_age: String(newValue),
+                    }));
                   }
                 }}
               />
@@ -180,21 +178,19 @@ export const UserDetail = () => {
                 }
                 endadornment={translate("k")}
                 onChange={(e: any) => {
-                  const value = e.target.value.replace(/^0+/, '');
-                  if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
-                    const newValue = parseFloat(value);
-                    if (value === "") {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        user_initScale: "0",
-                      }));
-                    }
-                    else if (!isNaN(newValue) && newValue <= 999) {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        user_initScale: value,
-                      }));
-                    }
+                  const value = e.target.value;
+                  const newValue = value.startsWith("0") ? value.slice(1) : value;
+                  if (value === "") {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      user_initScale: "0",
+                    }));
+                  }
+                  else if (newValue.match(/^\d*\.?\d{0,2}$/) && Number(newValue) <= 999) {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      user_initScale: String(newValue),
+                    }));
                   }
                 }}
               />
@@ -233,20 +229,18 @@ export const UserDetail = () => {
                 endadornment={localCurrency}
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
-                  if (/^\d*$/.test(value) || value === "") {
-                    const newValue = Number(value);
-                    if (value === "") {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        user_initProperty: "0",
-                      }));
-                    }
-                    else if (!isNaN(newValue) && newValue <= 9999999999) {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        user_initProperty: value,
-                      }));
-                    }
+                  const newValue = value === "" ? 0 : Number(value);
+                  if (value === "") {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      user_initProperty: "0",
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 9999999999) {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      user_initProperty: String(newValue),
+                    }));
                   }
                 }}
               />

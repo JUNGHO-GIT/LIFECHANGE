@@ -22,7 +22,7 @@ export const CalendarDetail = () => {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, calendarArray, colors, URL_OBJECT, sessionId, toList, location
+    navigate, location_dateType, location_dateStart, location_dateEnd, calendarArray, colors, URL_OBJECT, sessionId, toList
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -40,9 +40,9 @@ export const CalendarDetail = () => {
     select: [""],
   });
   const [FLOW, setFLOW] = useState<any>({
-    exist: "",
-    itsMe: "",
-    itsNew: "",
+    exist: false,
+    itsMe: false,
+    itsNew: false,
   });
   const [SEND, setSEND] = useState<any>({
     id: "",
@@ -65,11 +65,11 @@ export const CalendarDetail = () => {
   useEffect(() => {
     if (EXIST?.[DATE.dateType]?.length > 0) {
 
-      const dateRange = `${DATE.dateStart} ~ ${DATE.dateEnd}`;
-      const objectRange = `${OBJECT.calendar_dateStart} ~ ${OBJECT.calendar_dateEnd}`;
+      const dateRange = `${DATE.dateStart.trim()} ~ ${DATE.dateEnd.trim()}`;
+      const objectRange = `${OBJECT.calendar_dateStart.trim()} ~ ${OBJECT.calendar_dateEnd.trim()}`;
 
       const isExist = (
-        EXIST[DATE.dateType].some((item: any) => item === dateRange)
+        EXIST[DATE.dateType].includes(dateRange)
       );
       const itsMe = (
         dateRange === objectRange
@@ -79,13 +79,14 @@ export const CalendarDetail = () => {
         OBJECT.calendar_dateEnd === "0000-00-00"
       );
 
-      setFLOW({
-        exist: isExist ? "true" : "false",
-        itsMe: itsMe ? "true" : "false",
-        itsNew: itsNew ? "true" : "false",
-      });
+      setFLOW((prev: any) => ({
+        ...prev,
+        exist: isExist,
+        itsMe: itsMe,
+        itsNew: itsNew
+      }));
     }
-  }, [EXIST]);
+  }, [EXIST, DATE.dateEnd, OBJECT.calendar_dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -163,10 +164,11 @@ export const CalendarDetail = () => {
       setLOADING(false);
       return;
     }
-    axios.post(`${URL_OBJECT}/${type}`, {
+    axios.put(`${URL_OBJECT}/update`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
+      type: type,
     })
     .then((res: any) => {
       if (res.data.status === "success") {

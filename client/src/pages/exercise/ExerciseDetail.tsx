@@ -41,9 +41,9 @@ export const ExerciseDetail = () => {
     select: [""],
   });
   const [FLOW, setFLOW] = useState<any>({
-    exist: "",
-    itsMe: "",
-    itsNew: "",
+    exist: false,
+    itsMe: false,
+    itsNew: false,
   });
   const [SEND, setSEND] = useState<any>({
     id: "",
@@ -65,15 +65,20 @@ export const ExerciseDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
 
+  useEffect(() => {
+    console.log("===================================");
+    console.log("OBJECT", JSON.stringify(OBJECT, null, 2));
+  }, [OBJECT]);
+
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (EXIST?.[DATE.dateType]?.length > 0) {
 
-      const dateRange = `${DATE.dateStart} ~ ${DATE.dateEnd}`;
-      const objectRange = `${OBJECT.exercise_dateStart} ~ ${OBJECT.exercise_dateEnd}`;
+      const dateRange = `${DATE.dateStart.trim()} ~ ${DATE.dateEnd.trim()}`;
+      const objectRange = `${OBJECT.exercise_dateStart.trim()} ~ ${OBJECT.exercise_dateEnd.trim()}`;
 
       const isExist = (
-        EXIST[DATE.dateType].some((item: any) => item === dateRange)
+        EXIST[DATE.dateType].includes(dateRange)
       );
       const itsMe = (
         dateRange === objectRange
@@ -83,13 +88,14 @@ export const ExerciseDetail = () => {
         OBJECT.exercise_dateEnd === "0000-00-00"
       );
 
-      setFLOW({
-        exist: isExist ? "true" : "false",
-        itsMe: itsMe ? "true" : "false",
-        itsNew: itsNew ? "true" : "false",
-      });
+      setFLOW((prev: any) => ({
+        ...prev,
+        exist: isExist,
+        itsMe: itsMe,
+        itsNew: itsNew
+      }));
     }
-  }, [EXIST]);
+  }, [EXIST, DATE.dateEnd, OBJECT.exercise_dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -220,10 +226,11 @@ export const ExerciseDetail = () => {
       setLOADING(false);
       return;
     }
-    axios.post(`${URL_OBJECT}/${type}`, {
+    axios.put(`${URL_OBJECT}/update`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
+      type: type,
     })
     .then((res: any) => {
       if (res.data.status === "success") {
@@ -373,21 +380,19 @@ export const ExerciseDetail = () => {
                 translate("k")
               }
               onChange={(e: any) => {
-                const value = e.target.value.replace(/^0+/, '');
-                if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
-                  const newValue = parseFloat(value);
-                  if (value === "") {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      exercise_total_weight: "0"
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 999) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      exercise_total_weight: value
-                    }));
-                  }
+                const value = e.target.value;
+                const newValue = value.startsWith("0") ? value.slice(1) : value;
+                if (value === "") {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    exercise_total_weight: "0"
+                  }));
+                }
+                else if (newValue.match(/^\d*\.?\d{0,2}$/) && Number(newValue) <= 999) {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    exercise_total_weight: String(newValue)
+                  }));
                 }
               }}
             />
@@ -505,30 +510,28 @@ export const ExerciseDetail = () => {
                 }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
-                  if (/^\d*$/.test(value) || value === "") {
-                    const newValue = Number(value);
-                    if (value === "") {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        exercise_section: prev.exercise_section?.map((item: any, idx: number) => (
-                          idx === i ? {
-                            ...item,
-                            exercise_set: "0"
-                          } : item
-                        ))
-                      }));
-                    }
-                    else if (!isNaN(newValue) && newValue <= 999) {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        exercise_section: prev.exercise_section?.map((item: any, idx: number) => (
-                          idx === i ? {
-                            ...item,
-                            exercise_set: value
-                          } : item
-                        ))
-                      }));
-                    }
+                  const newValue = value === "" ? 0 : Number(value);
+                  if (value === "") {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      exercise_section: prev.exercise_section?.map((item: any, idx: number) => (
+                        idx === i ? {
+                          ...item,
+                          exercise_set: "0"
+                        } : item
+                      ))
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 999) {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      exercise_section: prev.exercise_section?.map((item: any, idx: number) => (
+                        idx === i ? {
+                          ...item,
+                          exercise_set: String(newValue)
+                        } : item
+                      ))
+                    }));
                   }
                 }}
               />
@@ -552,30 +555,28 @@ export const ExerciseDetail = () => {
                 }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
-                  if (/^\d*$/.test(value) || value === "") {
-                    const newValue = Number(value);
-                    if (value === "") {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        exercise_section: prev.exercise_section?.map((item: any, idx: number) => (
-                          idx === i ? {
-                            ...item,
-                            exercise_rep: "0"
-                          } : item
-                        ))
-                      }));
-                    }
-                    else if (!isNaN(newValue) && newValue <= 999) {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        exercise_section: prev.exercise_section?.map((item: any, idx: number) => (
-                          idx === i ? {
-                            ...item,
-                            exercise_rep: value
-                          } : item
-                        ))
-                      }));
-                    }
+                  const newValue = value === "" ? 0 : Number(value);
+                  if (value === "") {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      exercise_section: prev.exercise_section?.map((item: any, idx: number) => (
+                        idx === i ? {
+                          ...item,
+                          exercise_rep: "0"
+                        } : item
+                      ))
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 999) {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      exercise_section: prev.exercise_section?.map((item: any, idx: number) => (
+                        idx === i ? {
+                          ...item,
+                          exercise_rep: String(newValue)
+                        } : item
+                      ))
+                    }));
                   }
                 }}
               />
@@ -599,30 +600,28 @@ export const ExerciseDetail = () => {
                 }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
-                  if (/^\d*$/.test(value) || value === "") {
-                    const newValue = Number(value);
-                    if (value === "") {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        exercise_section: prev.exercise_section?.map((item: any, idx: number) => (
-                          idx === i ? {
-                            ...item,
-                            exercise_kg: "0"
-                          } : item
-                        ))
-                      }));
-                    }
-                    else if (!isNaN(newValue) && newValue <= 999) {
-                      setOBJECT((prev: any) => ({
-                        ...prev,
-                        exercise_section: prev.exercise_section?.map((item: any, idx: number) => (
-                          idx === i ? {
-                            ...item,
-                            exercise_kg: value
-                          } : item
-                        ))
-                      }));
-                    }
+                  const newValue = value === "" ? 0 : Number(value);
+                  if (value === "") {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      exercise_section: prev.exercise_section?.map((item: any, idx: number) => (
+                        idx === i ? {
+                          ...item,
+                          exercise_kg: "0"
+                        } : item
+                      ))
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 999) {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      exercise_section: prev.exercise_section?.map((item: any, idx: number) => (
+                        idx === i ? {
+                          ...item,
+                          exercise_kg: String(newValue)
+                        } : item
+                      ))
+                    }));
                   }
                 }}
               />
