@@ -283,7 +283,7 @@ export const update = {
     dateEnd_param: string,
   ) => {
 
-    const finalResult:any = await Food.findOneAndReplace(
+    const finalResult:any = await Food.findOneAndUpdate(
       {
         user_id: user_id_param,
         food_dateStart: dateStart_param,
