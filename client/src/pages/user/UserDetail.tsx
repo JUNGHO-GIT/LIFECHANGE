@@ -7,8 +7,8 @@ import { useValidateUser } from "@imports/ImportValidates";
 import { User } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
 import { Footer, Loading } from "@imports/ImportLayouts";
-import { Input, Select, Hr, Img } from "@imports/ImportComponents";
-import { Paper, Avatar, MenuItem, Card, Grid } from "@imports/ImportMuis";
+import { Input, Select, Hr, Img, Div } from "@imports/ImportComponents";
+import { Paper, Avatar, MenuItem, Card, Grid, Checkbox } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const UserDetail = () => {
@@ -18,7 +18,7 @@ export const UserDetail = () => {
     translate
   } = useTranslate();
   const {
-    navigate, curProperty, URL_OBJECT, sessionId, localCurrency,
+    navigate, URL_OBJECT, sessionId, localCurrency,
   } = useCommonValue();
   const {
     ERRORS, REFS, validate
@@ -27,6 +27,7 @@ export const UserDetail = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>(User);
+  const [includingExclusions, setIncludingExclusions] = useState<boolean>(false);
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
@@ -179,10 +180,22 @@ export const UserDetail = () => {
                 }
                 endadornment={translate("k")}
                 onChange={(e: any) => {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    user_initScale: e.target.value
-                  }))
+                  const value = e.target.value.replace(/^0+/, '');
+                  if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
+                    const newValue = parseFloat(value);
+                    if (value === "") {
+                      setOBJECT((prev: any) => ({
+                        ...prev,
+                        user_initScale: "0",
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 999) {
+                      setOBJECT((prev: any) => ({
+                        ...prev,
+                        user_initScale: value,
+                      }));
+                    }
+                  }
                 }}
               />
             </Grid>
@@ -219,10 +232,22 @@ export const UserDetail = () => {
                 }
                 endadornment={localCurrency}
                 onChange={(e: any) => {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    user_initProperty: e.target.value
-                  }))
+                  const value = e.target.value.replace(/,/g, '');
+                  if (/^\d*$/.test(value) || value === "") {
+                    const newValue = Number(value);
+                    if (value === "") {
+                      setOBJECT((prev: any) => ({
+                        ...prev,
+                        user_initProperty: "0",
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 9999999999) {
+                      setOBJECT((prev: any) => ({
+                        ...prev,
+                        user_initProperty: value,
+                      }));
+                    }
+                  }
                 }}
               />
             </Grid>
@@ -230,7 +255,14 @@ export const UserDetail = () => {
             <Grid size={12}>
               <Input
                 label={translate("curProperty")}
-                value={numeral(curProperty).format("0,0")}
+                readOnly={true}
+                value={
+                  includingExclusions ? (
+                    numeral(OBJECT.user_curPropertyAll).format("0,0")
+                  ) : (
+                    numeral(OBJECT.user_curProperty).format("0,0")
+                  )
+                }
                 startadornment={
                   <Img
                   	key={"money2"}
@@ -238,8 +270,23 @@ export const UserDetail = () => {
                   	className={"w-16 h-16"}
                   />
                 }
-                endadornment={localCurrency}
-                readOnly={true}
+                endadornment={
+                  localCurrency
+                }
+              />
+            </Grid>
+            {/** 포함 여부 **/}
+            <Grid size={12} className={"d-left"}>
+              <Div className={"fs-0-7rem fw-500 dark ms-10"}>
+                {translate("includingExclusions")}
+              </Div>
+              <Checkbox
+                size={"small"}
+                className={"p-0 ms-5"}
+                checked={includingExclusions}
+                onChange={(e: any) => {
+                  setIncludingExclusions(e.target.checked);
+                }}
               />
             </Grid>
           </Grid>

@@ -263,19 +263,21 @@ export const FoodChartBar = () => {
   const chartNode = () => {
     // 7-1. head
     const headSection = () => {
-      const titleSection = () => (
-        <Div className={"d-center fs-0-9rem"}>
-          {translate("chartBar")}
+      const titleFragment = () => (
+        <Div className={"d-center"}>
+          <Div className={"fs-1-0rem fw-600 black"}>
+            {translate("chartBar")}
+          </Div>
         </Div>
       );
-      const selectSection1 = () => (
+      const selectFragment1 = () => (
         <Input
           value={translate(SECTION)}
           readOnly={true}
           inputclass={"fs-0-9rem grey"}
         />
       );
-      const selectSection2 = () => (
+      const selectFragment2 = () => (
         <PopUp
           type={"chart"}
           position={"bottom"}
@@ -308,7 +310,7 @@ export const FoodChartBar = () => {
             <Img
               key={"common3_1"}
               src={"common3_1"}
-              className={"w-24 h-24 pointer"}
+              className={"w-24 h-24 pointer me-10"}
               onClick={(e: any) => {
                 popTrigger.openPopup(e.currentTarget)
               }}
@@ -320,13 +322,13 @@ export const FoodChartBar = () => {
         <Card className={"p-0"}>
           <Grid container spacing={2}>
             <Grid size={3} className={"d-left"}>
-              {selectSection1()}
+              {selectFragment1()}
             </Grid>
             <Grid size={6} className={"d-center"}>
-              {titleSection()}
+              {titleFragment()}
             </Grid>
             <Grid size={3} className={"d-right"}>
-              {selectSection2()}
+              {selectFragment2()}
             </Grid>
           </Grid>
         </Card>

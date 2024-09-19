@@ -394,8 +394,13 @@ export const FoodChartPie = () => {
     // 7-1. head
     const headSection = () => {
       const titleFragment = () => (
-        <Div className={"d-center fs-0-9rem"}>
-          {translate("chartPie")}
+        <Div className={"d-center"}>
+          <Div className={"fs-1-0rem fw-600 black"}>
+            {translate("chartPie")}
+          </Div>
+          <Div className={"fs-1-0rem fw-500 grey ms-10"}>
+            {`[${translate(LINE)}]`}
+          </Div>
         </Div>
       );
       const selectFragment1 = () => (
@@ -442,7 +447,7 @@ export const FoodChartPie = () => {
             <Img
               key={"common3_1"}
               src={"common3_1"}
-              className={"w-24 h-24 pointer"}
+              className={"w-24 h-24 pointer me-10"}
               onClick={(e: any) => {
                 popTrigger.openPopup(e.currentTarget)
               }}

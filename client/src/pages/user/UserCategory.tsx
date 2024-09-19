@@ -257,20 +257,31 @@ export const UserCategory = () => {
                         <Input
                           variant={"standard"}
                           value={translate(item[`${dataType}_part`])}
-                          sx={{
-                            ".MuiInput-root::after": {
-                              borderBottom: isEditable === `${dataType}_part_${index}`
-                              ? "2px solid #1976d2"
-                              : "2px solid #000000"
-                            }
-                          }}
-                          readOnly={
-                            isEditable !== `${dataType}_part_${index}`
-                          }
+                          readOnly={isEditable !== `${dataType}_part_${index}`}
                           inputclass={"fs-0-9rem"}
                           inputRef={(el: any) => {
                             if (isEditable === `${dataType}_part_${index}`) {
                               REFS.category2 = el;
+                            }
+                          }}
+                          sx={{
+                            "& .MuiInput-root::after": {
+                              borderBottom: isEditable === `${dataType}_part_${index}` ? (
+                                "2px solid #1976d2"
+                              ) : (
+                                "2px solid #000000"
+                              )
+                            }
+                          }}
+                          onClick={(e: any) => {
+                            if (isEditable !== `${dataType}_part_${index}`) {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              const target = e.currentTarget;
+                              target.classList.add('shake');
+                              setTimeout(() => {
+                                target.classList.remove('shake');
+                              }, 700);
                             }
                           }}
                           onChange={(e: any) => {
@@ -360,20 +371,31 @@ export const UserCategory = () => {
                           <Input
                             variant={"standard"}
                             value={translate(item)}
-                            sx={{
-                              ".MuiInput-root::after": {
-                                borderBottom: isEditable === `${dataType}_title_${index}`
-                                ? "2px solid #1976d2"
-                                : "2px solid #000000"
-                              }
-                            }}
-                            readOnly={
-                              isEditable !== `${dataType}_title_${index}`
-                            }
+                            readOnly={isEditable !== `${dataType}_title_${index}`}
                             inputclass={"fs-0-9rem"}
                             inputRef={(el: any) => {
                               if (isEditable === `${dataType}_title_${index}`) {
                                 REFS.category3 = el;
+                              }
+                            }}
+                            sx={{
+                              "& .MuiInput-root::after": {
+                                borderBottom: isEditable === `${dataType}_title_${index}` ? (
+                                  "2px solid #1976d2"
+                                ) : (
+                                  "2px solid #000000"
+                                )
+                              }
+                            }}
+                            onClick={(e: any) => {
+                              if (isEditable !== `${dataType}_title_${index}`) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                const target = e.currentTarget;
+                                target.classList.add('shake');
+                                setTimeout(() => {
+                                  target.classList.remove('shake');
+                                }, 700);
                               }
                             }}
                             onChange={(e: any) => {

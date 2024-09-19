@@ -18,7 +18,7 @@ export const Icons = (props: any) => {
     strokeLinecap: "round",
     strokeLinejoin: "round",
     color: props?.color || "black",
-    fill: props?.fill || "#f5f5f5",
+    fill: props?.fill || "#ffffff",
   };
 
   const icons: { [key: string]: JSX.Element } = {

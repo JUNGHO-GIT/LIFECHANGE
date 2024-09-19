@@ -618,6 +618,14 @@ export const useTranslate = () => {
       ko: "추가",
       en: "Insert"
     },
+    includingExclusions: {
+      ko: "제외 항목 포함",
+      en: "Including Exclusions"
+    },
+    includeProperty: {
+      ko: "자산에 포함",
+      en: "Include in Property"
+    },
     // ---------------------------------------------------------------------------------------------
     // j
     join: {

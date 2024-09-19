@@ -56,7 +56,6 @@ export const useCommonValue = () => {
   // string 타입
   const isAdmin: string = sessionStorage.getItem(`${TITLE}_admin`) || "";
   const sessionId: string = sessionStorage.getItem(`${TITLE}_sessionId`) || "";
-  const curProperty: string = sessionProperty?.curProperty || "0";
 
   const localLangSet: any = localStorage.getItem(`${TITLE}_localLangSet`) || "{}";
   const localLang: string = JSON.parse(localLangSet)?.lang || "ko";
@@ -142,7 +141,6 @@ export const useCommonValue = () => {
     foodArray,
     moneyArray,
     sleepArray,
-    curProperty,
     dataCategoryArray,
     exerciseChartArray,
     foodChartArray,

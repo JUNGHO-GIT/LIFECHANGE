@@ -341,7 +341,8 @@ export const findPropertyMoney = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await Money.aggregate([
+  // 전체 데이터를 위한 aggregation
+  const curPropertyAllResult:any = await Money.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -356,24 +357,39 @@ export const findPropertyMoney = async (
       }
     },
     {
-      $addFields: {
-        money_total_income: {
-          $toDouble: "$money_total_income"
-        },
-        money_total_expense: {
-          $toDouble: "$money_total_expense"
+      $unwind: "$money_section"
+    },
+    {
+      // money_include가 null이 아닌 경우만 필터링
+      $match: {
+        "money_section.money_include": {
+          $ne: null
         }
       }
     },
     {
       $group: {
         _id: null,
+        // money_part_idx가 1인 경우의 수입 합산
         money_total_income: {
-          $sum: "$money_total_income"
+          $sum: {
+            $cond: [
+              { $eq: ["$money_section.money_part_idx", 1] },
+              { $toDouble: "$money_section.money_amount" },
+              0
+            ]
+          }
         },
+        // money_part_idx가 2인 경우의 지출 합산
         money_total_expense: {
-          $sum: "$money_total_expense"
-        },
+          $sum: {
+            $cond: [
+              { $eq: ["$money_section.money_part_idx", 2] },
+              { $toDouble: "$money_section.money_amount" },
+              0
+            ]
+          }
+        }
       }
     },
     {
@@ -385,12 +401,74 @@ export const findPropertyMoney = async (
     }
   ]);
 
-  return finalResult[0];
+  // include가 "Y"인 경우만을 위한 aggregation
+  const curPropertyResult:any = await Money.aggregate([
+    {
+      $match: {
+        user_id: user_id_param,
+        money_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+        money_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        }
+      }
+    },
+    {
+      $unwind: "$money_section"
+    },
+    {
+      // money_include가 "Y"인 경우만 필터링
+      $match: {
+        "money_section.money_include": "Y"
+      }
+    },
+    {
+      $group: {
+        _id: null,
+        // money_part_idx가 1인 경우의 수입 합산
+        money_total_income: {
+          $sum: {
+            $cond: [
+              { $eq: ["$money_section.money_part_idx", 1] },
+              { $toDouble: "$money_section.money_amount" },
+              0
+            ]
+          }
+        },
+        // money_part_idx가 2인 경우의 지출 합산
+        money_total_expense: {
+          $sum: {
+            $cond: [
+              { $eq: ["$money_section.money_part_idx", 2] },
+              { $toDouble: "$money_section.money_amount" },
+              0
+            ]
+          }
+        }
+      }
+    },
+    {
+      $project: {
+        _id: 0,
+        money_total_income: 1,
+        money_total_expense: 1,
+      }
+    }
+  ]);
+
+  return {
+    curPropertyAllResult: curPropertyAllResult[0],
+    curPropertyResult: curPropertyResult[0],
+  };
 };
 
 // 5-4. property (update) --------------------------------------------------------------------------
 export const updateProperty = async (
   user_id_param: string,
+  curPropertyAll_param: string,
   curProperty_param: string,
 ) => {
   const finalResult:any = await User.findOneAndUpdate(
@@ -399,6 +477,7 @@ export const updateProperty = async (
     },
     {
       $set: {
+        user_curPropertyAll: curPropertyAll_param,
         user_curProperty: curProperty_param,
         user_updateDt: newDate,
       }

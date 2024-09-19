@@ -97,6 +97,7 @@ export const property = async (
   let findInitProperty: any = null;
   let findMoney: any = null;
   let finalResult: any = null;
+  let curPropertyAll: string = "0";
   let curProperty: string = "0";
   let statusResult: string = "";
 
@@ -115,13 +116,21 @@ export const property = async (
   findMoney = await repository.findPropertyMoney(
     user_id_param, regDt, todayDt
   );
-  curProperty = String (
-    (parseFloat(findInitProperty?.user_initProperty) || 0) +
-    (parseFloat(findMoney?.money_total_income) || 0) -
-    (parseFloat(findMoney?.money_total_expense) || 0)
+
+  curPropertyAll = String (
+    parseFloat(findInitProperty?.user_initProperty) +
+    parseFloat(findMoney?.curPropertyAllResult?.money_total_income) -
+    parseFloat(findMoney?.curPropertyAllResult?.money_total_expense)
   );
+
+  curProperty = String (
+    parseFloat(findInitProperty?.user_initProperty) +
+    parseFloat(findMoney?.curPropertyResult?.money_total_income) -
+    parseFloat(findMoney?.curPropertyResult?.money_total_expense)
+  );
+
   await repository.updateProperty(
-    user_id_param, curProperty
+    user_id_param, curPropertyAll, curProperty
   );
 
   if (!findInitProperty && !findMoney) {
@@ -131,15 +140,22 @@ export const property = async (
   else {
     statusResult = "success";
     finalResult = {
-      totalIncome: String (
-        findMoney?.money_total_income ? parseFloat(findMoney?.money_total_income) : 0
-      ),
-      totalExpense: String (
-        findMoney?.money_total_expense ? parseFloat(findMoney?.money_total_expense) : 0
-      ),
       initProperty: String (
         findInitProperty?.user_initProperty ? parseFloat(findInitProperty?.user_initProperty) : 0
       ),
+      totalIncomeAll: String (
+        findMoney?.curPropertyAllResult?.money_total_income ? parseFloat(findMoney?.curPropertyAllResult?.money_total_income) : 0
+      ),
+      totalExpenseAll: String (
+        findMoney?.curPropertyAllResult?.money_total_expense ? parseFloat(findMoney?.curPropertyAllResult?.money_total_expense) : 0
+      ),
+      totalIncome: String (
+        findMoney?.curPropertyResult?.money_total_income ? parseFloat(findMoney?.curPropertyResult?.money_total_income) : 0
+      ),
+      totalExpense: String (
+        findMoney?.curPropertyResult?.money_total_expense ? parseFloat(findMoney?.curPropertyResult?.money_total_expense) : 0
+      ),
+      curPropertyAll: curPropertyAll,
       curProperty: curProperty,
       dateStart: regDt,
       dateEnd: todayDt,

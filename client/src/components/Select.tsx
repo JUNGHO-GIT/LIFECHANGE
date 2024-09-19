@@ -32,6 +32,7 @@ export const Select = (props: any) => {
         }
       }}
       sx={{
+        ...props?.sx,
         "& .MuiSelect-icon": {
           display: props?.readOnly && "none"
         },

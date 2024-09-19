@@ -3,10 +3,10 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
-import { moment, numeral } from "@imports/ImportLibs";
-import { Tabs, Tab, Paper, Grid, Card } from "@imports/ImportMuis";
-import { Div, Img, Hr, Input } from "@imports/ImportComponents";
+import { numeral } from "@imports/ImportLibs";
 import { PopUp } from "@imports/ImportContainers";
+import { Div, Img, Hr, Br, Input } from "@imports/ImportComponents";
+import { Tabs, Tab, Paper, Grid, Card, Checkbox } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const TopNav = () => {
@@ -45,21 +45,25 @@ export const TopNav = () => {
     sleep: "smile3",
   });
   const [property, setProperty] = useState<any>({
-    dateStart: "",
-    dateEnd: "",
-    initProperty: "0",
-    curProperty: "0",
+    totalIncomeAll: "0",
+    totalExpenseAll: "0",
     totalIncome: "0",
     totalExpense: "0",
-  });
-  const [scale, setScale] = useState<any>({
+    initProperty: "0",
+    curPropertyAll: "0",
+    curProperty: "0",
     dateStart: "",
     dateEnd: "",
-    initScale: "0",
-    curScale: "0",
+  });
+  const [scale, setScale] = useState<any>({
     minScale: "0",
     maxScale: "0",
+    initScale: "0",
+    curScale: "0",
+    dateStart: "",
+    dateEnd: "",
   });
+  const [includingExclusions, setIncludingExclusions] = useState<boolean>(false);
   const [mainSmileImage, setMainSmileImage] = useState<any>("smile3");
   const [selectedTab, setSelectedTab] = useState<string>("chart");
 
@@ -243,14 +247,14 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max60vw h-max65vh border radius p-20"} key={`smile`}>
-            <Grid container spacing={2}>
+          <Card className={"w-max60vw h-max70vh border radius p-20"} key={`smile`}>
+            <Grid container spacing={0}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {`${dayFmt} (${dayNotFmt.format("ddd")})`}
                 </Div>
               </Grid>
-              <Hr px={20} />
+              <Hr px={40} />
               <Grid size={12} className={"d-center"}>
                 <Div className={"d-center me-2vw"}>
                   <Img
@@ -266,6 +270,7 @@ export const TopNav = () => {
                   {smileScore.total}
                 </Div>
               </Grid>
+              <Br px={15} />
               <Grid size={12} className={"d-center"}>
                 <Div className={"d-center me-2vw"}>
                   <Img
@@ -281,6 +286,7 @@ export const TopNav = () => {
                   {smileScore.exercise}
                 </Div>
               </Grid>
+              <Br px={15} />
               <Grid size={12} className={"d-center"}>
                 <Div className={"d-center me-2vw"}>
                   <Img
@@ -296,6 +302,7 @@ export const TopNav = () => {
                   {smileScore.food}
                 </Div>
               </Grid>
+              <Br px={15} />
               <Grid size={12} className={"d-center"}>
                 <Div className={"d-center me-2vw"}>
                   <Img
@@ -311,6 +318,7 @@ export const TopNav = () => {
                   {smileScore.money}
                 </Div>
               </Grid>
+              <Br px={15} />
               <Grid size={12} className={"d-center"}>
                 <Div className={"d-center me-2vw"}>
                   <Img
@@ -326,7 +334,7 @@ export const TopNav = () => {
                   {smileScore.sleep}
                 </Div>
               </Grid>
-              <Hr px={20} />
+              <Hr px={40} />
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-0-8rem"}>
                   {translate("score")}
@@ -358,19 +366,34 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max60vw h-max65vh border radius p-20"} key={`property`}>
-            <Grid container spacing={2}>
+          <Card className={"w-max60vw h-max70vh border radius p-20"} key={`property`}>
+            <Grid container spacing={0}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
                   {translate("property")}
                 </Div>
               </Grid>
+              <Br px={10} />
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-0-9rem fw-500 dark"}>
                   {`(${property?.dateStart} ~ ${property?.dateEnd})`}
                 </Div>
               </Grid>
-              <Hr px={20} />
+              <Br px={10} />
+              <Grid size={12} className={"d-center"}>
+                <Div className={"fs-0-7rem fw-500 dark ms-10"}>
+                  {translate("includingExclusions")}
+                </Div>
+                <Checkbox
+                  size={"small"}
+                  className={"p-0 ms-5"}
+                  checked={includingExclusions}
+                  onChange={(e: any) => {
+                    setIncludingExclusions(e.target.checked);
+                  }}
+                />
+              </Grid>
+              <Hr px={40} />
               <Grid size={12} className={"d-center"}>
                 <Img
                   key={"money2"}
@@ -378,10 +401,14 @@ export const TopNav = () => {
                 	className={"w-16 h-16"}
                 />
                 <Div className={"fs-1-4rem fw-600 ms-2vw"}>
-                  {numeral(property.curProperty).format("0,0")}
+                  {includingExclusions ? (
+                    numeral(property.curPropertyAll).format("0,0")
+                  ) : (
+                    numeral(property.curProperty).format("0,0")
+                  )}
                 </Div>
               </Grid>
-              <Hr px={20} />
+              <Hr px={40} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("initProperty")}
@@ -399,11 +426,18 @@ export const TopNav = () => {
                   }
                 />
               </Grid>
+              <Br px={15} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("sumIncome")}
-                  value={numeral(property.totalIncome).format("0,0")}
                   readOnly={true}
+                  value={
+                    includingExclusions ? (
+                      numeral(property.totalIncomeAll).format("0,0")
+                    ) : (
+                      numeral(property.totalIncome).format("0,0")
+                    )
+                  }
                   startadornment={
                     <Img
                       key={"money2"}
@@ -416,11 +450,18 @@ export const TopNav = () => {
                   }
                 />
               </Grid>
+              <Br px={15} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("sumExpense")}
-                  value={numeral(property.totalExpense).format("0,0")}
                   readOnly={true}
+                  value={
+                    includingExclusions ? (
+                      numeral(property.totalExpenseAll).format("0,0")
+                    ) : (
+                      numeral(property.totalExpense).format("0,0")
+                    )
+                  }
                   startadornment={
                     <Img
                       key={"money2"}
@@ -459,19 +500,20 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max60vw h-max65vh border radius p-20"} key={`scale`}>
-            <Grid container spacing={2}>
+          <Card className={"w-max60vw h-max70vh border radius p-20"} key={`scale`}>
+            <Grid container spacing={0}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
                   {translate("weight")}
                 </Div>
               </Grid>
+              <Br px={10} />
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-0-9rem fw-500 dark"}>
                   {`(${scale?.dateStart} ~ ${scale?.dateEnd})`}
                 </Div>
               </Grid>
-              <Hr px={20} />
+              <Hr px={40} />
               <Grid size={12} className={"d-center"}>
                 <Img
                   key={"exercise5"}
@@ -482,7 +524,7 @@ export const TopNav = () => {
                   {scale.curScale}
                 </Div>
               </Grid>
-              <Hr px={20} />
+              <Hr px={40} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("initScale")}
@@ -500,6 +542,7 @@ export const TopNav = () => {
                   }
                 />
               </Grid>
+              <Br px={15} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("minScale")}
@@ -517,6 +560,7 @@ export const TopNav = () => {
                   }
                 />
               </Grid>
+              <Br px={15} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("maxScale")}

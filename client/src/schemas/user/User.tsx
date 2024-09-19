@@ -15,6 +15,7 @@ export const User: any = {
   user_initScale: "",
   user_curScale: "",
   user_initProperty: "",
+  user_curPropertyAll: "",
   user_curProperty: "",
   user_image: "",
   user_regDt: "",

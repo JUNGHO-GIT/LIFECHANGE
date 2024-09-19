@@ -66,6 +66,11 @@ const schema = new mongoose.Schema({
     default: "",
     required: false
   },
+  user_curPropertyAll: {
+    type: String,
+    default: "",
+    required: false
+  },
   user_curProperty: {
     type: String,
     default: "",

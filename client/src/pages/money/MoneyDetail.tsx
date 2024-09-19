@@ -8,9 +8,9 @@ import { Money } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
-import { Select, Input, Img, Bg, Icons } from "@imports/ImportComponents";
 import { Picker, Memo, Count, Delete, Dial } from "@imports/ImportContainers";
-import { Paper, Card, MenuItem, Grid } from "@imports/ImportMuis";
+import { Select, Input, Img, Bg, Icons, Div } from "@imports/ImportComponents";
+import { Paper, Card, MenuItem, Grid, Checkbox } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const MoneyDetail = () => {
@@ -481,7 +481,7 @@ export const MoneyDetail = () => {
                 }}
               />
             </Grid>
-            <Grid size={8}>
+            <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
               <Memo
                 OBJECT={OBJECT}
                 setOBJECT={setOBJECT}
@@ -490,40 +490,25 @@ export const MoneyDetail = () => {
                 i={i}
               />
             </Grid>
-            <Grid size={4}>
-              <Input
-                label={translate("moneyInclude")}
-                readOnly={true}
-                inputRef={REFS[i]?.money_include}
-                error={ERRORS[i]?.money_include}
-                onClick={() => {
+            <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
+              <Div className={"fs-0-7rem fw-500 dark ms-10"}>
+                {translate("includeProperty")}
+              </Div>
+              <Checkbox
+                size={"small"}
+                className={"p-0 ms-5"}
+                checked={OBJECT?.money_section[i]?.money_include === "Y"}
+                onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
                     ...prev,
                     money_section: prev.money_section?.map((item: any, idx: number) => (
                       idx === i ? {
                         ...item,
-                        money_include: item.money_include === "Y" ? "N" : "Y",
+                        money_include: e.target.checked ? "Y" : "N",
                       } : item
                     ))
                   }));
                 }}
-                startadornment={
-                  OBJECT?.money_section[i]?.money_include === "Y" ? (
-                    <Icons
-                      key={"CheckSquare"}
-                      name={"CheckSquare"}
-                      fill={"#a3e7f0"}
-                      className={"w-20 h-20"}
-                    />
-                  ) : (
-                    <Icons
-                      key={"UnCheckSquare"}
-                      name={"UnCheckSquare"}
-                      fill={"#f0ffff"}
-                      className={"w-20 h-20"}
-                    />
-                  )
-                }
               />
             </Grid>
           </Grid>

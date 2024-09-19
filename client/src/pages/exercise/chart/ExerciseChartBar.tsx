@@ -248,8 +248,13 @@ export const ExerciseChartBar = () => {
     // 7-1. head
     const headSection = () => {
       const titleFragment = () => (
-        <Div className={"d-center fs-0-9rem"}>
-          {translate("chartBar") + " - " + translate("weight")}
+        <Div className={"d-center"}>
+          <Div className={"fs-1-0rem fw-600 black"}>
+            {translate("chartBar")}
+          </Div>
+          <Div className={"fs-1-0rem fw-500 grey ms-10"}>
+            {`[${translate("weight")}]`}
+          </Div>
         </Div>
       );
       const selectFragment1 = () => (
@@ -267,7 +272,7 @@ export const ExerciseChartBar = () => {
         <Img
         	key={"common3_2"}
         	src={"common3_2"}
-        	className={"w-24 h-24"}
+        	className={"w-24 h-24 me-10"}
         />
       );
       return (

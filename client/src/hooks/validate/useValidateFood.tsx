@@ -106,7 +106,7 @@ export const useValidateFood= () => {
             return false;
           }
           else if (!section[i].food_part_idx || section[i].food_part_idx === 0) {
-            return showAlertAndFocus('food_part_idx', "errorFoodPart", i);
+            return showAlertAndFocus('food_part_idx', "errorFoodPartIdx", i);
           }
           else if (!section[i].food_name || section[i].food_name === "") {
             return showAlertAndFocus('food_name', "errorFoodName", i);

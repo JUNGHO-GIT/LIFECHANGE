@@ -255,8 +255,10 @@ export const SleepChartPie = () => {
     // 7-1. head
     const headSection = () => {
       const titleFragment = () => (
-        <Div className={"d-center fs-0-9rem"}>
-          {translate("chartPie")}
+        <Div className={"d-center"}>
+          <Div className={"fs-1-0rem fw-600 black"}>
+            {translate("chartPie")}
+          </Div>
         </Div>
       );
       const selectFragment1 = () => (
@@ -274,7 +276,7 @@ export const SleepChartPie = () => {
         <Img
         	key={"common3_2"}
         	src={"common3_2"}
-        	className={"w-24 h-24"}
+        	className={"w-24 h-24 me-10"}
         />
       );
       return (

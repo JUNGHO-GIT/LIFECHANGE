@@ -95,10 +95,10 @@ export const useValidateMoney= () => {
             return false;
           }
           else if (!section[i].money_part_idx || section[i].money_part_idx === 0) {
-            return showAlertAndFocus('money_part_idx', "errorMoneyPart", i);
+            return showAlertAndFocus('money_part_idx', "errorMoneyPartIdx", i);
           }
           else if (!section[i].money_title_idx || section[i].money_title_idx === 0) {
-            return showAlertAndFocus('money_title_idx', "errorMoneyTitle", i);
+            return showAlertAndFocus('money_title_idx', "errorMoneyTitleIdx", i);
           }
           else if (!section[i].money_amount || section[i].money_amount === "0") {
             return showAlertAndFocus('money_amount', "errorMoneyAmount", i);
