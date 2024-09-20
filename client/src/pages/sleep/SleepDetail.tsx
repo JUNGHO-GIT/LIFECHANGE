@@ -127,17 +127,27 @@ export const SleepDetail = () => {
       },
     })
     .then((res: any) => {
+      // 기본값 설정
       setOBJECT(res.data.result || Sleep);
-      // section 내부 part_idx 값에 따라 재정렬
-      setOBJECT((prev: any) => {
-        const mergedSection = prev?.sleep_section
-          ? prev.sleep_section.sort((a: any, b: any) => a.sleep_part_idx - b.sleep_part_idx)
-          : [];
-        return {
+
+      // sectionCnt가 0이면 section 초기화
+      if (res.data.sectionCnt <= 0) {
+        setOBJECT((prev: any) => ({
           ...prev,
-          sleep_section: mergedSection,
-        };
-      });
+          sleep_section: []
+        }));
+      }
+      // sectionCnt가 0이 아니면 section 내부 part_idx 값에 따라 재정렬
+      else {
+        setOBJECT((prev: any) => ({
+          ...prev,
+          sleep_section: prev.sleep_section.sort((a: any, b: any) => (
+            a.sleep_part_idx - b.sleep_part_idx
+          ))
+        }));
+      }
+
+      // count 설정
       setCOUNT((prev: any) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,

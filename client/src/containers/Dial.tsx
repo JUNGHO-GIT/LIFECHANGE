@@ -59,6 +59,7 @@ export const Dial = (
           }
           FabProps={{
             size: "small",
+            component: "div",
           }}
           onClick={() => {
             setOpen(!open);
@@ -68,6 +69,10 @@ export const Dial = (
             key={translate("openAll")}
             tooltipTitle={translate("openAll")}
             className={open ? "" : "d-none"}
+            FabProps={{
+              size: "small",
+              component: "div",
+            }}
             icon={
               <Icons
                 key={"ChevronDown"}
@@ -89,6 +94,10 @@ export const Dial = (
             key={translate("closeAll")}
             tooltipTitle={translate("closeAll")}
             className={open ? "" : "d-none"}
+            FabProps={{
+              size: "small",
+              component: "div",
+            }}
             icon={
               <Icons
                 key={"ChevronUp"}
@@ -127,6 +136,7 @@ export const Dial = (
           }
           FabProps={{
             size: "small",
+            component: "div",
           }}
           onClick={() => {
             setOpen(!open);
@@ -136,6 +146,10 @@ export const Dial = (
             key={translate("save")}
             tooltipTitle={translate("save")}
             className={open ? "" : "d-none"}
+            FabProps={{
+              size: "small",
+              component: "div",
+            }}
             icon={
               <Icons
                 key={"Pencil"}
@@ -157,6 +171,10 @@ export const Dial = (
             key={translate("openAll")}
             tooltipTitle={translate("openAll")}
             className={open ? "" : "d-none"}
+            FabProps={{
+              size: "small",
+              component: "div",
+            }}
             icon={
               <Icons
                 key={"ChevronDown"}
@@ -177,6 +195,10 @@ export const Dial = (
             key={translate("closeAll")}
             tooltipTitle={translate("closeAll")}
             className={open ? "" : "d-none"}
+            FabProps={{
+              size: "small",
+              component: "div",
+            }}
             icon={
               <Icons
                 key={"ChevronUp"}
@@ -210,6 +232,7 @@ export const Dial = (
           }
           FabProps={{
             size: "small",
+            component: "div",
           }}
           onClick={() => {
             setOpen(!open);
@@ -219,6 +242,10 @@ export const Dial = (
             key={translate("save")}
             tooltipTitle={translate("save")}
             className={open ? "" : "d-none"}
+            FabProps={{
+              size: "small",
+              component: "div",
+            }}
             icon={
               <Icons
                 key={"Pencil"}
@@ -240,6 +267,10 @@ export const Dial = (
             key={translate("openAll")}
             tooltipTitle={translate("openAll")}
             className={open ? "" : "d-none"}
+            FabProps={{
+              size: "small",
+              component: "div",
+            }}
             icon={
               <Icons
                 key={"ChevronDown"}
@@ -260,6 +291,10 @@ export const Dial = (
             key={translate("closeAll")}
             tooltipTitle={translate("closeAll")}
             className={open ? "" : "d-none"}
+            FabProps={{
+              size: "small",
+              component: "div",
+            }}
             icon={
               <Icons
                 key={"ChevronUp"}
@@ -276,6 +311,10 @@ export const Dial = (
             key={translate("nation")}
             tooltipTitle={translate("nation")}
             className={`${open ? "" : "d-none"}`}
+            FabProps={{
+              size: "small",
+              component: "div",
+            }}
             icon={
               <Div className={"fw-800 fs-0-8rem"}>
                 {localIsoCode}
@@ -303,6 +342,7 @@ export const Dial = (
           }
           FabProps={{
             size: "small",
+            component: "div",
           }}
           onClick={() => {
             setOpen(!open);
@@ -312,6 +352,10 @@ export const Dial = (
             key={translate("itemLock")}
             tooltipTitle={translate("itemLock")}
             className={open ? "" : "d-none"}
+            FabProps={{
+              size: "small",
+              component: "div",
+            }}
             icon={
               LOCKED === "locked" ? (
                 <Icons
@@ -340,6 +384,10 @@ export const Dial = (
             key={translate("closeAll")}
             tooltipTitle={translate("closeAll")}
             className={open ? "" : "d-none"}
+            FabProps={{
+              size: "small",
+              component: "div",
+            }}
             icon={
               <Icons
                 key={"X"}

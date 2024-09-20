@@ -2,7 +2,7 @@
 // Node -> Section -> Fragment
 
 import { useCommonValue, useTranslate } from "@imports/ImportHooks";
-import { Icons, Input } from "@imports/ImportComponents";
+import { Icons, Input, Div } from "@imports/ImportComponents";
 import { TablePagination, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -54,44 +54,48 @@ export const FindListFilter = (
     );
     // 2. find
     const findSection = () => (
-      <Icons
-        name={"Search"}
-        className={"w-20 h-20 black"}
-        onClick={() => {
-          flow.flowFind();
-          setState?.setPAGING((prev: any) => ({
-            ...prev,
-            page: 0
-          }));
-          window.scrollTo(0, 0);
-        }}
-      />
+      <Div className={"d-center me-n3"}>
+        <Icons
+          name={"Search"}
+          className={"w-22 h-22 black"}
+          onClick={() => {
+            flow.flowFind();
+            setState?.setPAGING((prev: any) => ({
+              ...prev,
+              page: 0
+            }));
+            window.scrollTo(0, 0);
+          }}
+        />
+      </Div>
     );
     // 3. done
     const doneSection = () => (
-      <Icons
-        name={"CheckCircle"}
-        className={"w-20 h-20 black"}
-        onClick={() => {
-          Object.assign(state?.SEND, {
-            dateType: state?.DATE.dateType,
-            dateStart: state?.DATE.dateStart,
-            dateEnd: state?.DATE.dateEnd
-          });
-          // 이전 페이지가 update인경우
-          if (location?.state?.url?.includes("update")) {
-            navigate(toDetail, {
-              state: state?.SEND,
+      <Div className={"d-center ms-n3"}>
+        <Icons
+          name={"CheckCircle"}
+          className={"w-22 h-22 black"}
+          onClick={() => {
+            Object.assign(state?.SEND, {
+              dateType: state?.DATE.dateType,
+              dateStart: state?.DATE.dateStart,
+              dateEnd: state?.DATE.dateEnd
             });
-          }
-          // 이전 페이지가 save인경우
-          else {
-            navigate(toDetail, {
-              state: state?.SEND,
-            });
-          }
-        }}
-      />
+            // 이전 페이지가 update인경우
+            if (location?.state?.url?.includes("update")) {
+              navigate(toDetail, {
+                state: state?.SEND,
+              });
+            }
+            // 이전 페이지가 save인경우
+            else {
+              navigate(toDetail, {
+                state: state?.SEND,
+              });
+            }
+          }}
+        />
+      </Div>
     );
     // 4. pagination
     const paginationSection = () => (
