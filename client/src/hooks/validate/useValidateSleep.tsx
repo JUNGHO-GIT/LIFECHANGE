@@ -57,7 +57,8 @@ export const useValidateSleep = () => {
           alert(translate("errorCount"));
           return false;
         }
-        else if (!OBJECT.sleep_goal_bedTime || OBJECT.sleep_goal_bedTime === "00:00") {
+
+        if (!OBJECT.sleep_goal_bedTime || OBJECT.sleep_goal_bedTime === "00:00") {
           return showAlertAndFocus('sleep_goal_bedTime', "errorSleepGoalBedTime", 0);
         }
         else if (!OBJECT.sleep_goal_wakeTime || OBJECT.sleep_goal_wakeTime === "00:00") {
@@ -92,13 +93,13 @@ export const useValidateSleep = () => {
         return acc;
       }, []));
       validate.current = (OBJECT: any, COUNT: any) => {
+        if (COUNT.newSectionCnt <= 0) {
+          alert(translate("errorCount"));
+          return false;
+        }
         const section = OBJECT.sleep_section;
         for (let i = 0; i < section.length; i++) {
-          if (COUNT.newSectionCnt <= 0) {
-            alert(translate("errorCount"));
-            return false;
-          }
-          else if (!section[i].sleep_bedTime || section[i].sleep_bedTime === "00:00") {
+          if (!section[i].sleep_bedTime || section[i].sleep_bedTime === "00:00") {
             return showAlertAndFocus('sleep_bedTime', "errorSleepBedTime", i);
           }
           else if (!section[i].sleep_wakeTime || section[i].sleep_wakeTime === "00:00") {

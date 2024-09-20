@@ -53,13 +53,13 @@ export const useValidateCalendar= () => {
         return acc;
       }, []));
       validate.current = (OBJECT: any, COUNT: any) => {
+        if (COUNT.newSectionCnt <= 0) {
+          alert(translate("errorCount"));
+          return false;
+        }
         const section = OBJECT.calendar_section;
         for (let i = 0; i < section.length; i++) {
-          if (COUNT.newSectionCnt <= 0) {
-            alert(translate("errorCount"));
-            return false;
-          }
-          else if (!section[i].calendar_part_idx || section[i].calendar_part_idx === 0) {
+          if (!section[i].calendar_part_idx || section[i].calendar_part_idx === 0) {
             return showAlertAndFocus('calendar_part_idx', "errorCalendarPartIdx", i);
           }
           else if (!section[i].calendar_title) {

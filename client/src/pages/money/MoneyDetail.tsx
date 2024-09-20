@@ -165,12 +165,14 @@ export const MoneyDetail = () => {
     const totals = OBJECT?.money_section.reduce((acc: any, cur: any) => {
       return {
         // money_part_val 가 income인경우
-        totalIncome:
-          acc.totalIncome + (cur.money_part_val === "income" ? Number(cur.money_amount) : 0),
+        totalIncome: (
+          acc.totalIncome + (cur.money_part_val === "income" ? Number(cur.money_amount) : 0)
+        ),
 
         // money_part_val 가 expense인경우
-        totalExpense:
-          acc.totalExpense + (cur.money_part_val === "expense" ? Number(cur.money_amount) : 0),
+        totalExpense: (
+          acc.totalExpense + (cur.money_part_val === "expense" ? Number(cur.money_amount) : 0)
+        ),
       };
     }, {
       totalIncome: 0,
@@ -493,7 +495,7 @@ export const MoneyDetail = () => {
                 }}
               />
             </Grid>
-            <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
+            <Grid size={{ xs: 6, sm: 8 }} className={"d-center"}>
               <Memo
                 OBJECT={OBJECT}
                 setOBJECT={setOBJECT}
@@ -502,7 +504,7 @@ export const MoneyDetail = () => {
                 i={i}
               />
             </Grid>
-            <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
+            <Grid size={{ xs: 6, sm: 4 }} className={"d-center"}>
               <Div className={"fs-0-7rem fw-500 dark ms-10"}>
                 {translate("includeProperty")}
               </Div>

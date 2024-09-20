@@ -17,12 +17,12 @@ export const UserAppSetting = () => {
     translate,
   } = useTranslate();
   const {
-    navigate, isAdmin, TITLE, localLang
+    navigate, isAdmin, TITLE, localLocale
   } = useCommonValue();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [lang, setLang] = useState<string>(localLang);
+  const [lang, setLang] = useState<string>(localLocale);
 
   // 7. userAppSetting ----------------------------------------------------------------------------
   const userAppSettingNode = () => {

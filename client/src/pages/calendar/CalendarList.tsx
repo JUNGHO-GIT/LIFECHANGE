@@ -17,7 +17,7 @@ export const CalendarList = () => {
     translate,
   } = useTranslate();
   const {
-    navigate, PATH, URL_OBJECT, sessionId, TITLE, toDetail,
+    navigate, PATH, URL_OBJECT, sessionId, TITLE, toDetail, localLocale
   } = useCommonValue();
   const {
     getDayNotFmt, getDayFmt, getDayStartFmt, getDayEndFmt, monthStartFmt, monthEndFmt,
@@ -136,8 +136,8 @@ export const CalendarList = () => {
           <Grid container spacing={2}>
             <CalendarReact
               key={`${i}-calendar`}
-              locale={"ko"}
               view={"month"}
+              locale={localLocale}
               calendarType={"gregory"}
               value={new Date(DATE.dateStart)}
               showNavigation={true}
@@ -145,22 +145,26 @@ export const CalendarList = () => {
               showDoubleView={false}
               prev2Label={null}
               next2Label={null}
-              prevLabel={<Icons name={"ArrowLeft"} className={"w-24 h-24"} />}
-              nextLabel={<Icons name={"ArrowRight"} className={"w-24 h-24"} />}
               formatDay={(locale, date) => getDayNotFmt(date).format("D")}
               formatWeekday={(locale, date) => getDayNotFmt(date).format("d")}
               formatMonth={(locale, date) => getDayNotFmt(date).format("MM")}
               formatYear={(locale, date) => getDayNotFmt(date).format("YYYY")}
               formatLongDate={(locale, date) => getDayNotFmt(date).format("YYYY-MM-DD")}
               formatMonthYear={(locale, date) => getDayNotFmt(date).format("YYYY-MM")}
-              formatShortWeekday={(locale, date) => {
-                const day: any = getDayNotFmt(date).format("d");
-                const week = [
-                  translate("sun"), translate("mon"), translate("tue"), translate("wed"),
-                  translate("thu"), translate("fri"), translate("sat")
-                ];
-                return week[day];
-              }}
+              prevLabel={
+                <Icons
+                  key={"ArrowLeft"}
+                  name={"ArrowLeft"}
+                  className={"w-24 h-24"}
+                />
+              }
+              nextLabel={
+                <Icons
+                  key={"ArrowRight"}
+                  name={"ArrowRight"}
+                  className={"w-24 h-24"}
+                />
+              }
               onActiveStartDateChange={({ activeStartDate, view }) => {
                 setDATE((prev: any) => ({
                   ...prev,

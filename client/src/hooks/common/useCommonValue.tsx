@@ -58,10 +58,9 @@ export const useCommonValue = () => {
   const sessionId: string = sessionStorage.getItem(`${TITLE}_sessionId`) || "";
 
   const localLangSet: any = localStorage.getItem(`${TITLE}_localLangSet`) || "{}";
-  const localLang: string = JSON.parse(localLangSet)?.lang || "ko";
   const localTimeZone: string = JSON.parse(localLangSet)?.timeZone || "Asia/Seoul";
   const localZoneName: string = JSON.parse(localLangSet)?.zoneName || "KST";
-  const localLocale: string = JSON.parse(localLangSet)?.locale || "ko-KR";
+  const localLocale: string = JSON.parse(localLangSet)?.locale || "ko";
   const localIsoCode: string = JSON.parse(localLangSet)?.isoCode || "KR";
   const localCurrency: string = JSON.parse(localLangSet)?.currency || "KRW";
 
@@ -91,6 +90,7 @@ export const useCommonValue = () => {
     "red", "orange", "yellow", "green", "blue", "navy", "purple", "black", "gray"
   ];
 
+  // -----------------------------------------------------------------------------------------------
   return {
     navigate,
     location,
@@ -126,7 +126,6 @@ export const useCommonValue = () => {
     ADMIN_PW,
     isAdmin,
     sessionId,
-    localLang,
     localTimeZone,
     localZoneName,
     localLocale,

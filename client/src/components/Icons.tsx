@@ -1,6 +1,7 @@
 // Icons.tsx
 
-import { React } from "@imports/ImportReacts";
+import { React, useRef } from "@imports/ImportReacts";
+import { Div } from "@imports/ImportComponents";
 import { IconButton } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -412,12 +413,13 @@ export const Icons = (props: any) => {
     ),
   };
 
-  const IconComponent = icons[props.name] || React.Fragment;
+  const IconComponent: JSX.Element = icons[props.name];
 
-  // ---------------------------------------------------------------------------------------------->
+  // -----------------------------------------------------------------------------------------------
   return (
     <IconButton
       {...props}
+      component={"div"}
       className={""}
       onClick={(e: React.MouseEvent) => {
         // 1. locked 인 경우

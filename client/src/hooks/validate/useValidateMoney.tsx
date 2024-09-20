@@ -56,7 +56,8 @@ export const useValidateMoney= () => {
           alert(translate("errorCount"));
           return false;
         }
-        else if (!OBJECT.money_goal_income || OBJECT.money_goal_income === "0") {
+
+        if (!OBJECT.money_goal_income || OBJECT.money_goal_income === "0") {
           return showAlertAndFocus('money_goal_income', "errorMoneyGoalIncome", 0);
         }
         else if (!OBJECT.money_goal_expense || OBJECT.money_goal_expense === "0") {
@@ -88,13 +89,13 @@ export const useValidateMoney= () => {
         return acc;
       }, []));
       validate.current = (OBJECT: any, COUNT: any) => {
+        if (COUNT.newSectionCnt <= 0) {
+          alert(translate("errorCount"));
+          return false;
+        }
         const section = OBJECT.money_section;
         for (let i = 0; i < section.length; i++) {
-          if (COUNT.newSectionCnt <= 0) {
-            alert(translate("errorCount"));
-            return false;
-          }
-          else if (!section[i].money_part_idx || section[i].money_part_idx === 0) {
+          if (!section[i].money_part_idx || section[i].money_part_idx === 0) {
             return showAlertAndFocus('money_part_idx', "errorMoneyPartIdx", i);
           }
           else if (!section[i].money_title_idx || section[i].money_title_idx === 0) {

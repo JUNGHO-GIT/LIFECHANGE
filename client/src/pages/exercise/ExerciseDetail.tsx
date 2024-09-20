@@ -65,11 +65,6 @@ export const ExerciseDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
 
-  useEffect(() => {
-    console.log("===================================");
-    console.log("OBJECT", JSON.stringify(OBJECT, null, 2));
-  }, [OBJECT]);
-
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (EXIST?.[DATE.dateType]?.length > 0) {
@@ -232,7 +227,7 @@ export const ExerciseDetail = () => {
   const flowSave = async (type: string) => {
     if (!validate(OBJECT, COUNT)) {
       setLOADING(false);
-      return;
+      return false;
     }
     axios({
       method: type === "create" ? "post" : "put",

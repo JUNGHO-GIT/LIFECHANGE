@@ -242,9 +242,6 @@ export const update = async (
     user_id_param, existingDateType, existingDateStart, existingDateEnd
   );
 
-  console.log("type_param", type_param);
-  console.log("findResult", findResult);
-
   if (!findResult) {
     finalResult = null;
     statusResult = "fail";

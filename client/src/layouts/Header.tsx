@@ -44,27 +44,25 @@ export const Header = () => {
       </Div>
     );
     const btnSection = () => (
-      <Div className={"d-center"}>
-        {firstStr !== "user" ? (
-          <Icons
-            key={"TbSettings"}
-            name={"Settings"}
-            className={"w-24 h-24"}
-            onClick={() => {
-              navigate("/user/app/setting");
-            }}
-          />
-        ) : (
-          <Icons
-            key={"TbArrowRight"}
-            name={"ArrowRight"}
-            className={"w-24 h-24"}
-            onClick={() => {
-              navigate(-1);
-            }}
-          />
-        )}
-      </Div>
+      firstStr !== "user" ? (
+        <Icons
+          key={"TbSettings"}
+          name={"Settings"}
+          className={"w-24 h-24"}
+          onClick={() => {
+            navigate("/user/app/setting");
+          }}
+        />
+      ) : (
+        <Icons
+          key={"TbArrowRight"}
+          name={"ArrowRight"}
+          className={"w-24 h-24"}
+          onClick={() => {
+            navigate(-1);
+          }}
+        />
+      )
     );
     return (
       <Paper className={"layout-wrapper p-sticky top-0vh h-8vh radius border"}>

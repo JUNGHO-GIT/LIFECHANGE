@@ -58,7 +58,8 @@ export const useValidateExercise= () => {
           alert(translate("errorCount"));
           return false;
         }
-        else if (!OBJECT.exercise_goal_count || OBJECT.exercise_goal_count === "0") {
+
+        if (!OBJECT.exercise_goal_count || OBJECT.exercise_goal_count === "0") {
           return showAlertAndFocus('exercise_goal_count', "errorExerciseGoalCount", 0);
         }
         else if (!OBJECT.exercise_goal_volume || OBJECT.exercise_goal_volume === "0") {
@@ -98,13 +99,13 @@ export const useValidateExercise= () => {
         return acc;
       }, []));
       validate.current = (OBJECT: any, COUNT: any) => {
+        if (COUNT.newSectionCnt <= 0) {
+          alert(translate("errorCount"));
+          return false;
+        }
         const section = OBJECT.exercise_section;
         for (let i = 0; i < section.length; i++) {
-          if (COUNT.newSectionCnt <= 0) {
-            alert(translate("errorCount"));
-            return false;
-          }
-          else if (!section[i].exercise_part_idx || section[i].exercise_part_idx === 0) {
+          if (!section[i].exercise_part_idx || section[i].exercise_part_idx === 0) {
             return showAlertAndFocus('exercise_part_idx', "errorExercisePartIdx", i);
           }
           else if (!section[i].exercise_title_idx || section[i].exercise_title_idx === 0) {

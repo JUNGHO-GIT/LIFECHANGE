@@ -58,7 +58,8 @@ export const useValidateFood= () => {
           alert(translate("errorCount"));
           return false;
         }
-        else if (!OBJECT.food_goal_kcal || OBJECT.food_goal_kcal === "0") {
+
+        if (!OBJECT.food_goal_kcal || OBJECT.food_goal_kcal === "0") {
           return showAlertAndFocus('food_goal_kcal', "errorFoodGoalKcal", 0);
         }
         else if (!OBJECT.food_goal_carb || OBJECT.food_goal_carb === "0") {
@@ -99,13 +100,13 @@ export const useValidateFood= () => {
         return acc;
       }, []));
       validate.current = (OBJECT: any, COUNT: any) => {
+        if (COUNT.newSectionCnt <= 0) {
+          alert(translate("errorCount"));
+          return false;
+        }
         const section = OBJECT.food_section;
         for (let i = 0; i < section.length; i++) {
-          if (COUNT.newSectionCnt <= 0) {
-            alert(translate("errorCount"));
-            return false;
-          }
-          else if (!section[i].food_part_idx || section[i].food_part_idx === 0) {
+          if (!section[i].food_part_idx || section[i].food_part_idx === 0) {
             return showAlertAndFocus('food_part_idx', "errorFoodPartIdx", i);
           }
           else if (!section[i].food_name || section[i].food_name === "") {
