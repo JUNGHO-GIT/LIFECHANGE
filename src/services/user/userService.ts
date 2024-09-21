@@ -427,8 +427,8 @@ export const userDelete = async (
   };
 };
 
-// 3-1. categoryList -------------------------------------------------------------------------------
-export const categoryList = async (
+// 3-2. categoryDetail -----------------------------------------------------------------------------
+export const categoryDetail = async (
   user_id_param: string
 ) => {
 
@@ -437,7 +437,7 @@ export const categoryList = async (
   let finalResult: any = null;
   let statusResult: string = "";
 
-  findResult = await repository.categoryList(
+  findResult = await repository.categoryDetail(
     user_id_param
   );
 

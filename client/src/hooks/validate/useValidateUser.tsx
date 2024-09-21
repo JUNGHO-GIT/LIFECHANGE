@@ -4,42 +4,32 @@ import { useState, useEffect, createRef, useRef } from "@imports/ImportReacts";
 import { useCommonValue, useTranslate } from "@imports/ImportHooks";
 
 // -------------------------------------------------------------------------------------------------
-export const useValidateUser= () => {
+export const useValidateUser = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    PATH,
-  } = useCommonValue();
-  const {
-    translate
-  } = useTranslate();
+  const { PATH } = useCommonValue();
+  const { translate } = useTranslate();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const REFS: any = useRef<any>({});
-  const [ERRORS, setERRORS] = useState<any>({});
-  const validate = useRef<any>(() => {});
+  const REFS = useRef<any[]>([]);
+  const [ERRORS, setERRORS] = useState<any[]>([]);
+  const validate = useRef<Function>(() => {});
 
   // alert 표시 및 focus ---------------------------------------------------------------------------
   const showAlertAndFocus = (field: string, msg: string, idx: number) => {
     alert(translate(msg));
-    REFS.current?.[idx]?.[field]?.current?.focus();
-    setERRORS({
-      [idx]: {
+    setTimeout(() => {
+      REFS?.current?.[idx]?.[field]?.current?.focus();
+    }, 10);
+    setERRORS((prev) => {
+      const updatedErrors = [...prev];
+      updatedErrors[idx] = {
+        ...updatedErrors[idx],
         [field]: true,
-      },
+      };
+      return updatedErrors;
     });
     return false;
-  };
-
-  // 오류항목 초기화 -------------------------------------------------------------------------------
-  const clearError = (field: string, idx: number) => {
-    setERRORS((prev: any) => ({
-      ...prev,
-      [idx]: {
-        ...prev[idx],
-        [field]: false,
-      },
-    }));
   };
 
   // 이메일 형식 -----------------------------------------------------------------------------------
@@ -56,62 +46,68 @@ export const useValidateUser= () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    // 1. login
-    if (PATH.includes("user/login")) {
-      const target = [
-        "user_id",
-        "user_pw",
-      ];
-      setERRORS(target.reduce((acc: any[], cur: string) => {
-        acc.push({
-          [cur]: false
-        });
-        return acc;
-      }, []));
-      REFS.current = (target.reduce((acc: any[], cur: string) => {
-        acc.push({
-          [cur]: createRef()
-        });
-        return acc;
-      }, []));
-      validate.current = (OBJECT: any) => {
+    validate.current = (OBJECT: any, extra?: string) => {
+      // 1. login
+      if (PATH.includes("user/login")) {
+        const target = [
+          "user_id",
+          "user_pw",
+        ];
+        REFS.current = (
+          Array.from({ length: 1}, (_, _idx) => (
+            target.reduce((acc, cur) => ({
+              ...acc,
+              [cur]: createRef()
+            }), {})
+          ))
+        );
+        setERRORS (
+          Array.from({ length: 1}, (_, _idx) => (
+            target.reduce((acc, cur) => ({
+              ...acc,
+              [cur]: false
+            }), {})
+          ))
+        );
+
         if (!OBJECT.user_id) {
           return showAlertAndFocus("user_id", "errorUserId", 0);
         }
         else if (!OBJECT.user_pw) {
           return showAlertAndFocus("user_pw", "errorUserPw", 0);
         }
-        else {
-          return true;
-        }
-      };
-    }
+        return true;
+      }
 
-    // 2. signup
-    else if (PATH.includes("user/signup")) {
-      const target = [
-        "user_id",
-        "user_id_sended",
-        "user_id_verified",
-        "user_pw",
-        "user_pw_verified",
-        "user_age",
-        "user_initScale",
-        "user_initProperty",
-      ];
-      setERRORS(target.reduce((acc: any[], cur: string) => {
-        acc.push({
-          [cur]: false
-        });
-        return acc;
-      }, []));
-      REFS.current = (target.reduce((acc: any[], cur: string) => {
-        acc.push({
-          [cur]: createRef()
-        });
-        return acc;
-      }, []));
-      validate.current = (OBJECT: any, extra: string) => {
+      // 2. signup
+      else if (PATH.includes("user/signup")) {
+        const target = [
+          "user_id",
+          "user_id_sended",
+          "user_id_verified",
+          "user_pw",
+          "user_pw_verified",
+          "user_age",
+          "user_initScale",
+          "user_initProperty",
+        ];
+        REFS.current = (
+          Array.from({ length: 1}, (_, _idx) => (
+            target.reduce((acc, cur) => ({
+              ...acc,
+              [cur]: createRef()
+            }), {})
+          ))
+        );
+        setERRORS (
+          Array.from({ length: 1}, (_, _idx) => (
+            target.reduce((acc, cur) => ({
+              ...acc,
+              [cur]: false
+            }), {})
+          ))
+        );
+
         if (extra === "send") {
           if (!OBJECT.user_id) {
             return showAlertAndFocus("user_id", "errorUserId", 0);
@@ -119,16 +115,10 @@ export const useValidateUser= () => {
           else if (!validateEmail(OBJECT.user_id)) {
             return showAlertAndFocus("user_id", "errorUserIdAt", 0);
           }
-          else {
-            return true;
-          }
         }
         else if (extra === "verify") {
           if (!OBJECT.user_verify_code) {
             return showAlertAndFocus("user_id_verified", "errorUserVerifyCode", 0);
-          }
-          else {
-            return true;
           }
         }
         else if (extra === "save") {
@@ -162,35 +152,36 @@ export const useValidateUser= () => {
           else if (!OBJECT.user_initProperty) {
             return showAlertAndFocus("user_initProperty", "errorUserInitProperty", 0);
           }
-          else {
-            return true;
-          }
         }
-      };
-    }
+        return true;
+      }
 
-    // 3. resetPw
-    else if (PATH.includes("user/resetPw")) {
-      const target = [
-        "user_id",
-        "user_id_sended",
-        "user_id_verified",
-        "user_pw",
-        "user_pw_verified",
-      ];
-      setERRORS (
-        target.reduce((acc: any, cur: string) => ({
-          ...acc,
-          [cur]: false,
-        }), {})
-      );
-      REFS.current = (
-        target.reduce((acc: any, cur: string) => ({
-          ...acc,
-          [cur]: createRef(),
-        }), {})
-      );
-      validate.current = (OBJECT: any, extra: string) => {
+      // 3. resetPw
+      else if (PATH.includes("user/resetPw")) {
+        const target = [
+          "user_id",
+          "user_id_sended",
+          "user_id_verified",
+          "user_pw",
+          "user_pw_verified",
+        ];
+        REFS.current = (
+          Array.from({ length: 1}, (_, _idx) => (
+            target.reduce((acc, cur) => ({
+              ...acc,
+              [cur]: createRef()
+            }), {})
+          ))
+        );
+        setERRORS (
+          Array.from({ length: 1}, (_, _idx) => (
+            target.reduce((acc, cur) => ({
+              ...acc,
+              [cur]: false
+            }), {})
+          ))
+        );
+
         if (extra === "send") {
           if (!OBJECT.user_id) {
             return showAlertAndFocus("user_id", "errorUserId", 0);
@@ -198,16 +189,10 @@ export const useValidateUser= () => {
           else if (!validateEmail(OBJECT.user_id)) {
             return showAlertAndFocus("user_id", "errorUserIdAt", 0);
           }
-          else {
-            return true;
-          }
         }
         else if (extra === "verify") {
           if (!OBJECT.user_verify_code) {
             return showAlertAndFocus("user_id_verified", "errorUserVerifyCode", 0);
-          }
-          else {
-            return true;
           }
         }
         else if (extra === "save") {
@@ -232,59 +217,61 @@ export const useValidateUser= () => {
           else if (OBJECT.user_pw !== OBJECT.user_pw_verified) {
             return showAlertAndFocus("user_pw_verified", "errorUserPwMatch", 0);
           }
-          else {
-            return true;
-          }
         }
-      };
-    }
-    // 4. delete
-    else if (PATH.includes("user/delete")) {
-      const target = [
-        "user_pw",
-      ];
-      setERRORS (
-        target.reduce((acc: any, cur: string) => ({
-          ...acc,
-          [cur]: false,
-        }), {})
-      );
-      REFS.current = (
-        target.reduce((acc: any, cur: string) => ({
-          ...acc,
-          [cur]: createRef(),
-        }), {})
-      );
-      validate.current = (OBJECT: any) => {
+        return true;
+      }
+
+      // 4. delete
+      else if (PATH.includes("user/delete")) {
+        const target = [
+          "user_pw",
+        ];
+        REFS.current = (
+          Array.from({ length: 1}, (_, _idx) => (
+            target.reduce((acc, cur) => ({
+              ...acc,
+              [cur]: createRef()
+            }), {})
+          ))
+        );
+        setERRORS (
+          Array.from({ length: 1}, (_, _idx) => (
+            target.reduce((acc, cur) => ({
+              ...acc,
+              [cur]: false
+            }), {})
+          ))
+        );
         if (!OBJECT.user_pw) {
           return showAlertAndFocus("user_pw", "errorUserPw", 0);
         }
-        else {
-          return true;
-        }
-      };
-    }
+        return true;
+      }
 
-    // 5. detail
-    else if (PATH.includes("user/detail")) {
-      const target = [
-        "user_age",
-        "user_initScale",
-        "user_initProperty",
-      ];
-      setERRORS (
-        target.reduce((acc: any, cur: string) => ({
-          ...acc,
-          [cur]: false,
-        }), {})
-      );
-      REFS.current = (
-        target.reduce((acc: any, cur: string) => ({
-          ...acc,
-          [cur]: createRef(),
-        }), {})
-      );
-      validate.current = (OBJECT: any) => {
+      // 5. detail
+      else if (PATH.includes("user/detail")) {
+        const target = [
+          "user_age",
+          "user_initScale",
+          "user_initProperty",
+        ];
+        REFS.current = (
+          Array.from({ length: 1}, (_, _idx) => (
+            target.reduce((acc, cur) => ({
+              ...acc,
+              [cur]: createRef()
+            }), {})
+          ))
+        );
+        setERRORS (
+          Array.from({ length: 1}, (_, _idx) => (
+            target.reduce((acc, cur) => ({
+              ...acc,
+              [cur]: false
+            }), {})
+          ))
+        );
+
         if (!OBJECT.user_age) {
           return showAlertAndFocus("user_age", "errorUserAge", 0);
         }
@@ -294,38 +281,7 @@ export const useValidateUser= () => {
         else if (!OBJECT.user_initProperty) {
           return showAlertAndFocus("user_initProperty", "errorUserInitProperty", 0);
         }
-        else {
-          return true;
-        }
-      }
-    }
-
-    // 6. category
-    else if (PATH.includes("user/category")) {
-      const target = [
-        "category1",
-        "category2",
-        "category3",
-      ];
-      setERRORS (
-        target.reduce((acc: any, cur: string) => ({
-          ...acc,
-          [cur]: false,
-        }), {})
-      );
-      REFS.current = (
-        target.reduce((acc: any, cur: string) => ({
-          ...acc,
-          [cur]: createRef(),
-        }), {})
-      );
-      validate.current = (OBJECT: any) => {
-        if (!OBJECT.user_category) {
-          return showAlertAndFocus("user_category", "errorUserCategory", 0);
-        }
-        else {
-          return true;
-        }
+        return true;
       }
     }
   }, [PATH]);

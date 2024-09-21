@@ -262,8 +262,8 @@ export const userDelete = async (
   return finalResult;
 };
 
-// 3-1. category - list ----------------------------------------------------------------------------
-export const categoryList = async (
+// 3-2. category - detail --------------------------------------------------------------------------
+export const categoryDetail = async (
   user_id_param: string
 ) => {
 
@@ -276,13 +276,11 @@ export const categoryList = async (
     {
       $project: {
         _id: 0,
-        dataCategory: {
-          calendar: 1,
-          food: 1,
-          money: 1,
-          exercise: 1,
-          sleep: 1
-        }
+        calendar: "$dataCategory.calendar",
+        exercise: "$dataCategory.exercise",
+        food: "$dataCategory.food",
+        money: "$dataCategory.money",
+        sleep: "$dataCategory.sleep",
       }
     }
   ]);
@@ -302,7 +300,13 @@ export const categoryUpdate = async (
     },
     {
       $set: {
-        dataCategory: OBJECT_param.dataCategory,
+        dataCategory: {
+          calendar: OBJECT_param.calendar,
+          exercise: OBJECT_param.exercise,
+          food: OBJECT_param.food,
+          money: OBJECT_param.money,
+          sleep: OBJECT_param.sleep,
+        },
         user_updateDt: newDate
       }
     },

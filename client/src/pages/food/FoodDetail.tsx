@@ -510,12 +510,10 @@ export const FoodDetail = () => {
                 locked={LOCKED}
                 onChange={(e: any) => {
                   const newCount = Number(e.target.value);
-                  const newValue = (value: any) => {
-                    return (
-                      Number(((newCount * value) /
-                      Number(OBJECT?.food_section[i]?.food_count)).toFixed(2)).toString()
-                    );
-                  }
+                  const newValue = (value: any) => (
+                    Number(((newCount * value) /
+                    Number(OBJECT?.food_section[i]?.food_count)).toFixed(2)).toString()
+                  );
                   if (newCount > 100) {
                     return;
                   }

@@ -64,9 +64,6 @@ export const useCommonValue = () => {
   const localIsoCode: string = JSON.parse(localLangSet)?.isoCode || "KR";
   const localCurrency: string = JSON.parse(localLangSet)?.currency || "KRW";
 
-  const dataCategoryArray: any[] = [
-    "exercise", "food", "calendar", "money", "sleep"
-  ];
   const exerciseChartArray: any[] = [
     "volume", "cardio"
   ];
@@ -140,7 +137,6 @@ export const useCommonValue = () => {
     foodArray,
     moneyArray,
     sleepArray,
-    dataCategoryArray,
     exerciseChartArray,
     foodChartArray,
     moneyChartArray,

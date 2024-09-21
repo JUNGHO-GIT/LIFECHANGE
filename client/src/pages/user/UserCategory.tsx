@@ -1,11 +1,11 @@
 // UserCategory.tsx
 // Node -> Section -> Fragment
 
-import { useState, useEffect } from "@imports/ImportReacts";
+import { useState, useEffect, createRef, useRef } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
-import { useValidateUser } from "@imports/ImportValidates";
 import { Category } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
+import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div, Icons, Input } from "@imports/ImportComponents";
 import { PopUp } from "@imports/ImportContainers";
@@ -24,12 +24,8 @@ export const UserCategory = () => {
     dayFmt
   } = useCommonDate();
   const {
-    location_dateStart, location_dateEnd, PATH, dataCategoryArray,
-    URL_OBJECT, sessionId, TITLE, location_dateType, firstStr
+    location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, location_dateType
   } = useCommonValue();
-  const {
-    ERRORS, REFS, validate
-  } = useValidateUser();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
@@ -43,49 +39,45 @@ export const UserCategory = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [dataType, setDataType] = useState<string>("exercise");
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [OBJECT, setOBJECT] = useState<any>(Category);
+  const REFS = useRef<any>();
+  const [dataType, setDataType] = useState<string>("exercise");
+  const [isEditable, setIsEditable] = useState<string>("");
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toDataCategory: `/${firstStr}/category`,
-  });
-  const [idx, setIdx] = useState<any>({
-    category1Idx: 0,
-    category2Idx: 1,
-    category3Idx: 1,
   });
   const [selectedIdx, setSelectedIdx] = useState<any>({
     category1Idx: 0,
     category2Idx: 1,
     category3Idx: 1,
   });
-  const [isEditable, setIsEditable] = useState<string>("");
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
-    if (isEditable.startsWith(`${dataType}_part_`)) {
-      REFS.category2?.focus();
-    }
-    else if (isEditable.startsWith(`${dataType}_title_`)) {
-      REFS.category3?.focus();
-    }
-  }, [isEditable]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
-    axios.get(`${URL_OBJECT}/category/list`, {
+    axios.get(`${URL_OBJECT}/category/detail`, {
       params: {
         user_id: sessionId
       }
     })
     .then((res: any) => {
       setOBJECT(res.data.result || Category);
+      Object.keys(res.data.result).map((dataType: string) => (
+        REFS.current = {
+          ...REFS.current,
+          [dataType]: Array.from({ length: res.data.result[dataType].length }, (_, _idx) => (
+            Object.keys(res.data.result[dataType][_idx]).reduce((acc: any, cur: string) => ({
+              ...acc,
+              [cur]: createRef()
+            }), {})
+          ))
+        }
+      ));
     })
     .catch((err: any) => {
       console.error(err);
@@ -97,14 +89,15 @@ export const UserCategory = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    axios.post(`${URL_OBJECT}/category/update`, {
+    setLOADING(true);
+    await axios.post(`${URL_OBJECT}/category/update`, {
       user_id: sessionId,
       OBJECT: OBJECT
     })
     .then((res: any) => {
       if (res.data.status === "success") {
         alert(translate(res.data.msg));
-        sessionStorage.setItem(`${TITLE}_category`, JSON.stringify(res.data.result.dataCategory));
+        sync();
       }
       else {
         alert(translate(res.data.msg));
@@ -113,112 +106,126 @@ export const UserCategory = () => {
     .catch((err: any) => {
       console.error(err);
     })
+    .finally(() => {
+      setLOADING(false);
+    });
   };
 
   // 4-1. handler ----------------------------------------------------------------------------------
   const handlerAdd = (type: string) => {
-    if (type === "part") {
-      setOBJECT((prev: any) => {
-        const newPart = {
-          [`${dataType}_part`]: "",
-          [`${dataType}_title`]: [""]
-        };
-        return {
-          ...prev,
-          dataCategory: {
-            ...prev.dataCategory,
-            [dataType]: [
-              ...prev.dataCategory[dataType],
-              newPart
-            ]
+  if (type === "part") {
+    setOBJECT((prev: any) => {
+      const updatedObject = {
+        ...prev,
+        [dataType]: [
+          ...prev[dataType],
+          {
+            [`${dataType}_part`]: ""
           }
-        };
-      });
-    }
-    else if (type === "title") {
-      setOBJECT((prev: any) => {
-        const newTitle = "";
-        return {
-          ...prev,
-          dataCategory: {
-            ...prev.dataCategory,
-            [dataType]: [
-              ...prev.dataCategory[dataType]?.slice(0, idx.category2Idx),
-              {
-                ...prev.dataCategory[dataType]?.[idx.category2Idx],
-                [`${dataType}_title`]: [
-                  ...prev.dataCategory[dataType]?.[idx.category2Idx]?.[`${dataType}_title`],
-                  newTitle
-                ]
-              },
-              ...prev.dataCategory[dataType]?.slice(idx.category2Idx + 1)
-            ]
+        ]
+      };
+      REFS.current = {
+        ...REFS.current,
+        [dataType]: updatedObject[dataType].map((_: any, idx: number) =>
+          REFS.current[dataType]?.[idx] || {
+            [`${dataType}_part`]: createRef()
           }
-        };
-      });
-    }
-  };
+        )
+      };
+      return updatedObject;
+    });
+  }
+  else if (type === "title") {
+    setOBJECT((prev: any) => {
+      const updatedObject = {
+        ...prev,
+        [dataType]: [
+          ...prev[dataType]?.slice(0, selectedIdx.category2Idx),
+          {
+            ...prev[dataType]?.[selectedIdx.category2Idx],
+            [`${dataType}_title`]: [
+              ...prev[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`],
+              ""
+            ]
+          },
+          ...prev[dataType]?.slice(selectedIdx.category2Idx + 1)
+        ]
+      };
+      REFS.current = {
+        ...REFS.current,
+        [dataType]: updatedObject[dataType].map((part: any, idx: number) => ({
+          ...REFS.current[dataType]?.[idx],
+          [`${dataType}_title`]: part[`${dataType}_title`].map((_: any, titleIdx: number) =>
+            REFS.current[dataType]?.[idx]?.[`${dataType}_title`]?.[titleIdx] || createRef()
+          )
+        }))
+      };
+      return updatedObject;
+    });
+  }
+};
+
 
   // 4-2. handler ----------------------------------------------------------------------------------
   const handlerRename = (type: string, index: number) => {
-    if (type === "part") {
-      setIsEditable(`${dataType}_${type}_${index}`);
-    }
-    else if (type === "title") {
-      setIsEditable(`${dataType}_${type}_${index}`);
-    }
+    setIsEditable(`${dataType}_${type}_${index}`);
+    setTimeout(() => {
+      REFS.current[dataType][index][`${dataType}_${type}`].current.focus();
+    }, 10);
   };
 
   // 4-3. handler ----------------------------------------------------------------------------------
   const handlerRemove = (type: string, index: number) => {
     if (type === "part") {
+      if (OBJECT[dataType].length <= 1) {
+        alert(translate("cantBeDeletedLastItem"));
+        return;
+      }
       setOBJECT((prev: any) => {
-        const newCategory1 = [
-          ...prev.dataCategory[dataType]?.slice(0, index),
-          ...prev.dataCategory[dataType]?.slice(index + 1)
-        ];
-        // 하나만 남았을 때 삭제 시도 시 경고
-        if (newCategory1.length <= 1) {
-          alert("cantBeDeletedLastItem");
-          return prev;
-        }
-
-        return {
+        const updatedObject = {
           ...prev,
-          dataCategory: {
-            ...prev.dataCategory,
-            [dataType]: newCategory1
-          }
+          [dataType]: [
+            ...prev[dataType]?.slice(0, index),
+            ...prev[dataType]?.slice(index + 1)
+          ]
         };
+        REFS.current = {
+          ...REFS.current,
+          [dataType]: updatedObject[dataType].map((_: any, idx: number) => REFS.current[dataType]?.[idx] || {})
+        };
+        return updatedObject;
       });
     }
     else if (type === "title") {
+      if (OBJECT[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`]?.length <= 2) {
+        alert(translate("cantBeDeletedLastItem"));
+        return;
+      }
       setOBJECT((prev: any) => {
-        const currentTitles = prev.dataCategory?.[dataType]?.[idx.category2Idx]?.[`${dataType}_title`];
-        const newTitles = [
-          ...currentTitles.slice(0, index),
-          ...currentTitles.slice(index + 1)
-        ];
-        // 하나만 남았을 때 삭제 시도 시 경고
-        if (currentTitles.length <= 2) {
-          alert("cantBeDeletedLastItem");
-          return prev;
-        }
-
-        return {
+        const updatedObject = {
           ...prev,
-          dataCategory: {
-            ...prev.dataCategory,
-            [dataType]: [
-              ...prev.dataCategory[dataType]?.slice(0, idx.category2Idx),
-              {
-                ...prev.dataCategory[dataType]?.[idx.category2Idx],
-                [`${dataType}_title`]: newTitles
-              },
-              ...prev.dataCategory[dataType]?.slice(idx.category2Idx + 1)
-            ]
-          }
+          [dataType]: [
+            ...prev[dataType]?.slice(0, selectedIdx.category2Idx),
+            {
+              ...prev[dataType]?.[selectedIdx.category2Idx],
+              [`${dataType}_title`]: [
+                ...prev[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`]?.slice(0, index),
+                ...prev[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`]?.slice(index + 1)
+              ]
+            },
+            ...prev[dataType]?.slice(selectedIdx.category2Idx + 1)
+          ]
         };
+        REFS.current = {
+          ...REFS.current,
+          [dataType]: updatedObject[dataType].map((part: any, idx: number) => ({
+            ...REFS.current[dataType]?.[idx],
+            [`${dataType}_title`]: part[`${dataType}_title`].map((_: any, titleIdx: number) =>
+              REFS.current[dataType]?.[idx]?.[`${dataType}_title`]?.[titleIdx] || {}
+            )
+          }))
+        };
+        return updatedObject;
       });
     }
   };
@@ -227,8 +234,8 @@ export const UserCategory = () => {
   const userCategoryNode = () => {
     // 7-1. popup
     const popupSection = (i: number) => (
-      <Card key={i} className={"w-85vw h-60vh d-row border radius p-0"}>
-        <TableContainer className={"border-right over-x-hidden"}>
+      <Card className={"w-85vw h-60vh d-row border radius p-0"} key={`${i}`}>
+        <TableContainer className={"border-right over-x-hidden"} key={`category2-${i}`}>
           <Table>
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr p-sticky top-0 z-900"}>
@@ -238,32 +245,17 @@ export const UserCategory = () => {
               </TableRow>
             </TableHead>
             <TableBody className={"table-tbody"}>
-              {OBJECT?.dataCategory[dataType]?.map((item: any, index: number) => (index > 0) && (
-                <TableRow key={index} className={"table-tbody-tr border-bottom"}
-                  onClick={() => {
-                    setSelectedIdx((prev: any) => ({
-                      ...prev,
-                      category2Idx: index
-                    }));
-                  }}>
+              {OBJECT[dataType]?.map((item: any, index: number) => (index > 0) && (
+                <TableRow key={index} className={"table-tbody-tr border-bottom"}>
                   <TableCell className={selectedIdx.category2Idx === index ? "bg-light" : ""}>
-                    <Div className={"d-center"} onClick={() => {
-                      setIdx((prev: any) => ({
-                        ...prev,
-                        category2Idx: index
-                      }));
-                    }}>
+                    <Div className={"d-center"}>
                       <Div className={"fs-0-9rem ms-auto"}>
                         <Input
                           variant={"standard"}
-                          value={translate(item[`${dataType}_part`])}
+                          value={translate(item[`${dataType}_part`]) || ""}
                           readOnly={isEditable !== `${dataType}_part_${index}`}
                           inputclass={"fs-0-9rem"}
-                          inputRef={(el: any) => {
-                            if (isEditable === `${dataType}_part_${index}`) {
-                              REFS.category2 = el;
-                            }
-                          }}
+                          inputRef={REFS?.current?.[dataType]?.[index]?.[`${dataType}_part`]}
                           sx={{
                             "& .MuiInput-root::after": {
                               borderBottom: isEditable === `${dataType}_part_${index}` ? (
@@ -285,37 +277,50 @@ export const UserCategory = () => {
                             }
                           }}
                           onChange={(e: any) => {
-                            setOBJECT((prev: any) => {
-                              return {
-                                ...prev,
-                                dataCategory: {
-                                  ...prev.dataCategory,
-                                  [dataType]: [
-                                    ...prev.dataCategory[dataType]?.slice(0, index),
-                                    {
-                                      ...prev.dataCategory[dataType]?.[index],
-                                      [`${dataType}_part`]: e.target.value
-                                    },
-                                    ...prev.dataCategory[dataType]?.slice(index + 1)
-                                  ]
-                                }
-                              };
-                            });
+                            setOBJECT((prev: any) => ({
+                              ...prev,
+                              [dataType]: [
+                                ...prev[dataType]?.slice(0, index),
+                                {
+                                  ...prev[dataType]?.[index],
+                                  [`${dataType}_part`]: e.target.value
+                                },
+                                ...prev[dataType]?.slice(index + 1)
+                              ]
+                            }));
                           }}
                         />
                       </Div>
                       <Div className={"fs-0-9rem ms-auto d-row"}>
                         <Icons
-                          name={"Pencil"}
-                          className={"w-14 h-14 navy"}
+                          name={"Search"}
+                          className={"w-14 h-14 black me-2"}
                           onClick={() => {
+                            setSelectedIdx((prev: any) => ({
+                              ...prev,
+                              category2Idx: index
+                            }));
+                          }}
+                        />
+                        <Icons
+                          name={"Pencil"}
+                          className={"w-14 h-14 navy me-2"}
+                          onClick={() => {
+                            setSelectedIdx((prev: any) => ({
+                              ...prev,
+                              category2Idx: index
+                            }));
                             handlerRename("part", index);
                           }}
                         />
                         <Icons
                           name={"Trash"}
-                          className={"w-14 h-14 burgundy"}
+                          className={"w-14 h-14 burgundy me-2"}
                           onClick={() => {
+                            setSelectedIdx((prev: any) => ({
+                              ...prev,
+                              category2Idx: index
+                            }));
                             handlerRemove("part", index);
                           }}
                         />
@@ -328,12 +333,14 @@ export const UserCategory = () => {
             <TableFooter className={"table-tfoot"}>
               <TableRow className={"table-tfoot-tr"}>
                 <TableCell>
-                  <Div className={"d-center"} onClick={() => {
-                    handlerAdd("part");
-                  }}>
+                  <Div className={"d-center"}>
                     <Icons
+                      key={"Plus"}
                       name={"Plus"}
                       className={"w-14 h-14"}
+                      onClick={() => {
+                        handlerAdd("part");
+                      }}
                     />
                   </Div>
                 </TableCell>
@@ -342,7 +349,7 @@ export const UserCategory = () => {
           </Table>
         </TableContainer>
         {(dataType === "exercise" || dataType === "money") && (
-          <TableContainer className={"border-left over-x-hidden"}>
+          <TableContainer className={"border-left over-x-hidden"} key={`category3-${i}`}>
             <Table>
               <TableHead className={"table-thead"}>
                 <TableRow className={"table-thead-tr p-sticky top-0 z-900"}>
@@ -352,32 +359,17 @@ export const UserCategory = () => {
                 </TableRow>
               </TableHead>
               <TableBody className={"table-tbody"}>
-                {OBJECT?.dataCategory[dataType]?.[idx?.category2Idx]?.[`${dataType}_title`]?.map((item: any, index: number) => (index > 0) && (
-                  <TableRow key={index} className={"table-tbody-tr border-bottom"}
-                    onClick={() => {
-                      setSelectedIdx((prev: any) => ({
-                        ...prev,
-                        category3Idx: index
-                      }));
-                    }}>
+                {OBJECT[dataType]?.[selectedIdx?.category2Idx]?.[`${dataType}_title`]?.map((item: any, index: number) => (index > 0) && (
+                  <TableRow key={index} className={"table-tbody-tr border-bottom"}>
                     <TableCell>
-                      <Div className={"d-center"} onClick={() => {
-                        setIdx((prev: any) => ({
-                          ...prev,
-                          category3Idx: index
-                        }));
-                      }}>
+                      <Div className={"d-center"}>
                         <Div className={"fs-0-9rem ms-auto"}>
                           <Input
                             variant={"standard"}
-                            value={translate(item)}
+                            value={translate(item) || ""}
                             readOnly={isEditable !== `${dataType}_title_${index}`}
                             inputclass={"fs-0-9rem"}
-                            inputRef={(el: any) => {
-                              if (isEditable === `${dataType}_title_${index}`) {
-                                REFS.category3 = el;
-                              }
-                            }}
+                            inputRef={REFS?.current?.[dataType]?.[selectedIdx?.category2Idx]?.[`${dataType}_title`]?.[index]}
                             sx={{
                               "& .MuiInput-root::after": {
                                 borderBottom: isEditable === `${dataType}_title_${index}` ? (
@@ -399,26 +391,21 @@ export const UserCategory = () => {
                               }
                             }}
                             onChange={(e: any) => {
-                              setOBJECT((prev: any) => {
-                                return {
-                                  ...prev,
-                                  dataCategory: {
-                                    ...prev.dataCategory,
-                                    [dataType]: [
-                                      ...prev.dataCategory[dataType]?.slice(0, idx.category2Idx),
-                                      {
-                                        ...prev.dataCategory[dataType]?.[idx.category2Idx],
-                                        [`${dataType}_title`]: [
-                                          ...prev.dataCategory[dataType]?.[idx.category2Idx]?.[`${dataType}_title`]?.slice(0, index),
-                                          e.target.value,
-                                          ...prev.dataCategory[dataType]?.[idx.category2Idx]?.[`${dataType}_title`]?.slice(index + 1)
-                                        ]
-                                      },
-                                      ...prev.dataCategory[dataType]?.slice(idx.category2Idx + 1)
+                              setOBJECT((prev: any) => ({
+                                ...prev,
+                                [dataType]: [
+                                  ...prev[dataType]?.slice(0, selectedIdx.category2Idx),
+                                  {
+                                    ...prev[dataType]?.[selectedIdx.category2Idx],
+                                    [`${dataType}_title`]: [
+                                      ...prev[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`]?.slice(0, index),
+                                      e.target.value,
+                                      ...prev[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`]?.slice(index + 1)
                                     ]
-                                  }
-                                };
-                              });
+                                  },
+                                  ...prev[dataType]?.slice(selectedIdx.category2Idx + 1)
+                                ]
+                              }));
                             }}
                           />
                         </Div>
@@ -427,6 +414,10 @@ export const UserCategory = () => {
                             name={"Pencil"}
                             className={"w-14 h-14 navy"}
                             onClick={() => {
+                              setSelectedIdx((prev: any) => ({
+                                ...prev,
+                                category3Idx: index
+                              }));
                               handlerRename("title", index);
                             }}
                           />
@@ -434,6 +425,10 @@ export const UserCategory = () => {
                             name={"Trash"}
                             className={"w-14 h-14 burgundy"}
                             onClick={() => {
+                              setSelectedIdx((prev: any) => ({
+                                ...prev,
+                                category3Idx: index
+                              }));
                               handlerRemove("title", index);
                             }}
                           />
@@ -446,13 +441,14 @@ export const UserCategory = () => {
               <TableFooter className={"table-tfoot"}>
                 <TableRow className={"table-tfoot-tr"}>
                   <TableCell>
-                    <Div className={"d-center"} onClick={() => {
-                      handlerAdd("title");
-                    }}>
+                    <Div className={"d-center"}>
                       <Icons
-                        key={"TbPlus"}
+                        key={"Plus"}
                         name={"Plus"}
                         className={"w-14 h-14"}
+                        onClick={() => {
+                          handlerAdd("part");
+                        }}
                       />
                     </Div>
                   </TableCell>
@@ -463,10 +459,11 @@ export const UserCategory = () => {
         )}
       </Card>
     );
+
     // 7-2. card
     const detailSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={"border radius p-0"} key={i}>
+        <Card className={"border radius p-0"} key={`category1-${i}`}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -477,7 +474,7 @@ export const UserCategory = () => {
                 </TableRow>
               </TableHead>
               <TableBody className={"table-tbody"}>
-                {dataCategoryArray?.map((item: any, index: number) => (
+                {Object.keys(OBJECT).map((item: any, index: number) => (
                   <TableRow key={index} className={"table-tbody-tr border-top"}>
                     <TableCell className={`${dataType === item ? "bg-light" : ""}`}>
                       <Div className={"d-center"}>
@@ -496,19 +493,14 @@ export const UserCategory = () => {
                         >
                           {(popTrigger: any) => (
                             <Icons
-                              key={"TbPencil"}
-                              name={"Pencil"}
-                              className={"w-18 h-18 navy ms-auto"}
+                              key={"Search"}
+                              name={"Search"}
+                              className={"w-18 h-18 black ms-auto"}
                               onClick={(e: any) => {
                                 setDataType(item);
                                 setSelectedIdx((prev: any) => ({
                                   ...prev,
                                   category1Idx: index,
-                                  category2Idx: 1,
-                                  category3Idx: 1
-                                }));
-                                setIdx((prev: any) => ({
-                                  ...prev,
                                   category2Idx: 1,
                                   category3Idx: 1
                                 }));

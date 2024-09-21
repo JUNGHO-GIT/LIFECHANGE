@@ -2,6 +2,41 @@
 
 import * as repository from "@repositories/user/userSyncRepository";
 
+// 0. category -------------------------------------------------------------------------------------
+// 카테고리 조회
+export const category = async (
+  user_id_param: string,
+  DATE_param: any,
+) => {
+
+  // result 변수 선언
+  let findCategory: any = null;
+  let finalResult: any = null;
+  let statusResult: string = "";
+
+  // date 변수 선언
+  const dateStart = DATE_param.dateStart;
+  const dateEnd = DATE_param.dateEnd;
+
+  findCategory = await repository.listCategory(
+    user_id_param, dateStart, dateEnd
+  );
+
+  if (!findCategory) {
+    finalResult = null;
+    statusResult = "fail";
+  }
+  else {
+    finalResult = findCategory;
+    statusResult = "success";
+  }
+
+  return {
+    status: statusResult,
+    result: finalResult
+  };
+};
+
 // 1. percent --------------------------------------------------------------------------------------
 // 퍼센트 조회
 export const percent = async (

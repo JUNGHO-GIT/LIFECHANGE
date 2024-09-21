@@ -7,52 +7,58 @@ import { useCommonValue, useTranslate } from "@imports/ImportHooks";
 export const useValidateSleep = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    PATH,
-  } = useCommonValue();
-  const {
-    translate
-  } = useTranslate();
+  const { PATH } = useCommonValue();
+  const { translate } = useTranslate();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const REFS: any = useRef<any>({});
-  const [ERRORS, setERRORS] = useState<any>({});
-  const validate = useRef<any>(() => {});
+  const REFS = useRef<any[]>([]);
+  const [ERRORS, setERRORS] = useState<any[]>([]);
+  const validate = useRef<Function>(() => {});
 
   // alert 표시 및 focus ---------------------------------------------------------------------------
   const showAlertAndFocus = (field: string, msg: string, idx: number) => {
     alert(translate(msg));
-    REFS.current?.[idx]?.[field]?.current?.focus();
-    setERRORS({
-      [idx]: {
+    setTimeout(() => {
+      REFS?.current?.[idx]?.[field]?.current?.focus();
+    }, 10);
+    setERRORS((prev) => {
+      const updatedErrors = [...prev];
+      updatedErrors[idx] = {
+        ...updatedErrors[idx],
         [field]: true,
-      },
+      };
+      return updatedErrors;
     });
     return false;
   };
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    // 1. goal
-    if (PATH.includes("sleep/goal/detail")) {
-      const target = [
-        "sleep_goal_bedTime",
-        "sleep_goal_wakeTime",
-        "sleep_goal_sleepTime",
-      ];
-      setERRORS(target.reduce((acc: any[], cur: string) => {
-        acc.push({
-          [cur]: false
-        });
-        return acc;
-      }, []));
-      REFS.current = (target.reduce((acc: any[], cur: string) => {
-        acc.push({
-          [cur]: createRef()
-        });
-        return acc;
-      }, []));
-      validate.current = (OBJECT: any, COUNT: any) => {
+    validate.current = (OBJECT: any, COUNT: any) => {
+      // 1. goal
+      if (PATH.includes("sleep/goal/detail")) {
+        const target = [
+          "sleep_goal_bedTime",
+          "sleep_goal_wakeTime",
+          "sleep_goal_sleepTime",
+        ];
+        REFS.current = (
+          Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
+            target.reduce((acc, cur) => ({
+              ...acc,
+              [cur]: createRef()
+            }), {})
+          ))
+        );
+        setERRORS (
+          Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
+            target.reduce((acc, cur) => ({
+              ...acc,
+              [cur]: false
+            }), {})
+          ))
+        );
+
         if (COUNT.newSectionCnt <= 0) {
           alert(translate("errorCount"));
           return false;
@@ -67,37 +73,38 @@ export const useValidateSleep = () => {
         else if (!OBJECT.sleep_goal_sleepTime) {
           return showAlertAndFocus('sleep_goal_sleepTime', "errorSleepGoalSleepTime", 0);
         }
-        else {
-          return true;
-        }
-      };
-    }
+        return true;
+      }
 
-    // 2. save
-    else if (PATH.includes("sleep/detail")) {
-      const target = [
-        "sleep_bedTime",
-        "sleep_wakeTime",
-        "sleep_sleepTime",
-      ];
-      setERRORS(target.reduce((acc: any[], cur: string) => {
-        acc.push({
-          [cur]: false
-        });
-        return acc;
-      }, []));
-      REFS.current = (target.reduce((acc: any[], cur: string) => {
-        acc.push({
-          [cur]: createRef()
-        });
-        return acc;
-      }, []));
-      validate.current = (OBJECT: any, COUNT: any) => {
+      // 2. real
+      if (PATH.includes("sleep/detail")) {
+        const target = [
+          "sleep_bedTime",
+          "sleep_wakeTime",
+          "sleep_sleepTime",
+        ];
+        REFS.current = (
+          Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
+            target.reduce((acc, cur) => ({
+              ...acc,
+              [cur]: createRef()
+            }), {})
+          ))
+        );
+        setERRORS (
+          Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
+            target.reduce((acc, cur) => ({
+              ...acc,
+              [cur]: false
+            }), {})
+          ))
+        );
+
+        const section = OBJECT.sleep_section;
         if (COUNT.newSectionCnt <= 0) {
           alert(translate("errorCount"));
           return false;
         }
-        const section = OBJECT.sleep_section;
         for (let i = 0; i < section.length; i++) {
           if (!section[i].sleep_bedTime || section[i].sleep_bedTime === "00:00") {
             return showAlertAndFocus('sleep_bedTime', "errorSleepBedTime", i);
@@ -108,11 +115,9 @@ export const useValidateSleep = () => {
           else if (!section[i].sleep_sleepTime) {
             return showAlertAndFocus('sleep_sleepTime', "errorSleepSleepTime", i);
           }
-          else {
-            return true;
-          }
         }
-      };
+        return true;
+      }
     }
   }, [PATH]);
 

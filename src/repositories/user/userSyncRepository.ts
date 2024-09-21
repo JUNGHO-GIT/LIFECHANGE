@@ -11,6 +11,34 @@ import { SleepGoal } from "@schemas/sleep/SleepGoal";
 import { User } from "@schemas/user/User";
 import { newDate } from "@scripts/date";
 
+// 0. category -------------------------------------------------------------------------------------
+export const listCategory = async (
+  user_id_param: string,
+  dateStart_param: string,
+  dateEnd_param: string,
+) => {
+
+  const finalResult:any = await User.aggregate([
+    {
+      $match: {
+        user_id: user_id_param
+      }
+    },
+    {
+      $project: {
+        _id: 0,
+        calendar: "$dataCategory.calendar",
+        exercise: "$dataCategory.exercise",
+        food: "$dataCategory.food",
+        money: "$dataCategory.money",
+        sleep: "$dataCategory.sleep",
+      }
+    }
+  ]);
+
+  return finalResult[0];
+};
+
 // 1-1. exercise (goal) ----------------------------------------------------------------------------
 export const listExerciseGoal = async (
   user_id_param: string,

@@ -405,10 +405,10 @@ router.delete("/delete", async (req: Request, res: Response) => {
   }
 });
 
-// 3-1. categoryList -------------------------------------------------------------------------------
-router.get("/category/list", async (req: Request, res: Response) => {
+// 3-2. categoryDetail -----------------------------------------------------------------------------
+router.get("/category/detail", async (req: Request, res: Response) => {
   try {
-    let finalResult = await service.categoryList (
+    let finalResult = await service.categoryDetail (
       req.query.user_id as string,
     );
     if (finalResult.status === "success") {

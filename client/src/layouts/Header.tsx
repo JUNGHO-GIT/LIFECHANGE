@@ -46,7 +46,7 @@ export const Header = () => {
     const btnSection = () => (
       firstStr !== "user" ? (
         <Icons
-          key={"TbSettings"}
+          key={"Settings"}
           name={"Settings"}
           className={"w-24 h-24"}
           onClick={() => {
@@ -55,7 +55,7 @@ export const Header = () => {
         />
       ) : (
         <Icons
-          key={"TbArrowRight"}
+          key={"ArrowRight"}
           name={"ArrowRight"}
           className={"w-24 h-24"}
           onClick={() => {

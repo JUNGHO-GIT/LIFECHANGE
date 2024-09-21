@@ -23,27 +23,33 @@ export const User: any = {
 };
 
 export const Category: any = {
-  user_id: "",
-  user_number: 0,
-  dataCategory: {
-    calendar: [{
+  calendar: [
+    {
       calendar_part: ""
-    }],
-    exercise: [{
+    }
+  ],
+  exercise: [
+    {
       exercise_part: "",
       exercise_title: [""]
-    }],
-    food: [{
+    }
+  ],
+  food: [
+    {
       food_part: ""
-    }],
-    money: [{
+    }
+  ],
+  money: [
+    {
       money_part: "",
       money_title: [""]
-    }],
-    sleep: [{
+    }
+  ],
+  sleep: [
+    {
       sleep_part: ""
-    }]
-  }
+    }
+  ]
 };
 
 export const AppInfo: any = {

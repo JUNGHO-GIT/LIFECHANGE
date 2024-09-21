@@ -62,6 +62,8 @@ export const UserDelete = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         alert(translate(res.data.msg));
+        localStorage.clear();
+        sessionStorage.clear();
         navigate("/user/login");
       }
       else {

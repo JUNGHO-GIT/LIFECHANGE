@@ -4,56 +4,62 @@ import { useState, useEffect, createRef, useRef } from "@imports/ImportReacts";
 import { useCommonValue, useTranslate } from "@imports/ImportHooks";
 
 // -------------------------------------------------------------------------------------------------
-export const useValidateFood= () => {
+export const useValidateFood = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    PATH,
-  } = useCommonValue();
-  const {
-    translate,
-  } = useTranslate();
+  const { PATH } = useCommonValue();
+  const { translate } = useTranslate();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const REFS: any = useRef<any>({});
-  const [ERRORS, setERRORS] = useState<any>({});
-  const validate = useRef<any>(() => {});
+  const REFS = useRef<any[]>([]);
+  const [ERRORS, setERRORS] = useState<any[]>([]);
+  const validate = useRef<Function>(() => {});
 
   // alert 표시 및 focus ---------------------------------------------------------------------------
   const showAlertAndFocus = (field: string, msg: string, idx: number) => {
     alert(translate(msg));
-    REFS.current?.[idx]?.[field]?.current?.focus();
-    setERRORS({
-      [idx]: {
+    setTimeout(() => {
+      REFS?.current?.[idx]?.[field]?.current?.focus();
+    }, 10);
+    setERRORS((prev) => {
+      const updatedErrors = [...prev];
+      updatedErrors[idx] = {
+        ...updatedErrors[idx],
         [field]: true,
-      },
+      };
+      return updatedErrors;
     });
     return false;
   };
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    // 1. goal
-    if (PATH.includes("food/goal/detail")) {
-      const target = [
-        "food_goal_kcal",
-        "food_goal_carb",
-        "food_goal_protein",
-        "food_goal_fat",
-      ];
-      setERRORS(target.reduce((acc: any[], cur: string) => {
-        acc.push({
-          [cur]: false
-        });
-        return acc;
-      }, []));
-      REFS.current = (target.reduce((acc: any[], cur: string) => {
-        acc.push({
-          [cur]: createRef()
-        });
-        return acc;
-      }, []));
-      validate.current = (OBJECT: any, COUNT: any) => {
+    validate.current = (OBJECT: any, COUNT: any) => {
+      // 1. goal
+      if (PATH.includes("food/goal/detail")) {
+        const target = [
+          "food_goal_kcal",
+          "food_goal_carb",
+          "food_goal_protein",
+          "food_goal_fat",
+        ];
+        REFS.current = (
+          Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
+            target.reduce((acc, cur) => ({
+              ...acc,
+              [cur]: createRef()
+            }), {})
+          ))
+        );
+        setERRORS (
+          Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
+            target.reduce((acc, cur) => ({
+              ...acc,
+              [cur]: false
+            }), {})
+          ))
+        );
+
         if (COUNT.newSectionCnt <= 0) {
           alert(translate("errorCount"));
           return false;
@@ -71,40 +77,41 @@ export const useValidateFood= () => {
         else if (!OBJECT.food_goal_fat || OBJECT.food_goal_fat === "0") {
           return showAlertAndFocus('food_goal_fat', "errorFoodGoalFat", 0);
         }
-        else {
-          return true;
-        }
-      };
-    }
+        return true;
+      }
 
-    // 2. real
-    else if (PATH.includes("food/detail")) {
-      const target = [
-        "food_part_idx",
-        "food_name",
-        "food_kcal",
-        "food_carb",
-        "food_protein",
-        "food_fat",
-      ];
-      setERRORS(target.reduce((acc: any[], cur: string) => {
-        acc.push({
-          [cur]: false
-        });
-        return acc;
-      }, []));
-      REFS.current = (target.reduce((acc: any[], cur: string) => {
-        acc.push({
-          [cur]: createRef()
-        });
-        return acc;
-      }, []));
-      validate.current = (OBJECT: any, COUNT: any) => {
+      // 2. real
+      else if (PATH.includes("food/detail")) {
+        const target = [
+          "food_part_idx",
+          "food_name",
+          "food_kcal",
+          "food_carb",
+          "food_protein",
+          "food_fat",
+        ];
+        REFS.current = (
+          Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
+            target.reduce((acc, cur) => ({
+              ...acc,
+              [cur]: createRef()
+            }), {})
+          ))
+        );
+        setERRORS (
+          Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
+            target.reduce((acc, cur) => ({
+              ...acc,
+              [cur]: false
+            }), {})
+          ))
+        );
+
+        const section = OBJECT.food_section;
         if (COUNT.newSectionCnt <= 0) {
           alert(translate("errorCount"));
           return false;
         }
-        const section = OBJECT.food_section;
         for (let i = 0; i < section.length; i++) {
           if (!section[i].food_part_idx || section[i].food_part_idx === 0) {
             return showAlertAndFocus('food_part_idx', "errorFoodPartIdx", i);
@@ -124,11 +131,9 @@ export const useValidateFood= () => {
           else if (!section[i].food_fat || section[i].food_fat === "0") {
             return showAlertAndFocus('food_fat', "errorFoodFat", i);
           }
-          else {
-            return true;
-          }
         }
-      };
+        return true;
+      }
     }
   }, [PATH]);
 

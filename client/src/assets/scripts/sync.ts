@@ -15,6 +15,7 @@ export const sync = async () => {
 
   // 2-1. useState ---------------------------------------------------------------------------------
   const OBJECT = {
+    category: [] as any[],
     percent: [] as any[],
     property: [] as any[],
     scale: [] as any[],
@@ -30,7 +31,10 @@ export const sync = async () => {
   };
 
   try {
-    const [resPercent, resProperty, resScale] = await Promise.all([
+    const [resCategory, resPercent, resProperty, resScale] = await Promise.all([
+      axios.get(`${URL_OBJECT}/sync/category`, {
+        params: params,
+      }),
       axios.get(`${URL_OBJECT}/sync/percent`, {
         params: params,
       }),
@@ -42,10 +46,12 @@ export const sync = async () => {
       }),
     ]);
 
+    OBJECT.category = resCategory.data.result;
     OBJECT.percent = resPercent.data.result;
     OBJECT.property = resProperty.data.result;
     OBJECT.scale = resScale.data.result;
 
+    sessionStorage.setItem(`${TITLE}_category`, JSON.stringify(resCategory.data.result));
     sessionStorage.setItem(`${TITLE}_percent`, JSON.stringify(resPercent.data.result));
     sessionStorage.setItem(`${TITLE}_property`, JSON.stringify(resProperty.data.result));
     sessionStorage.setItem(`${TITLE}_scale`, JSON.stringify(resScale.data.result));
