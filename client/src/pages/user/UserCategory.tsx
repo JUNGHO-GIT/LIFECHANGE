@@ -88,9 +88,9 @@ export const UserCategory = () => {
   }, [sessionId]);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = async () => {
+  const flowSave = () => {
     setLOADING(true);
-    await axios.post(`${URL_OBJECT}/category/update`, {
+    axios.post(`${URL_OBJECT}/category/update`, {
       user_id: sessionId,
       OBJECT: OBJECT
     })

@@ -113,7 +113,7 @@ export const UserResetPw = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = async () => {
+  const flowSave = () => {
     setLOADING(true);
     if (!validate(OBJECT, "save")) {
       setLOADING(false);
