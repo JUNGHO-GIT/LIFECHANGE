@@ -11172,33 +11172,6 @@
 }
 
 /** 99. color *************************************************************************************/
-.primary {
-  color: #3B82F6 !important;
-}
-.pointer-primary:hover {
-  cursor: pointer !important;
-  color: #3B82F6 !important;
-  transform: scale(1.1);
-}
-
-.secondary {
-  color: #6c757d !important;
-}
-.pointer-secondary:hover {
-  cursor: pointer !important;
-  color: #6c757d !important;
-  transform: scale(1.1);
-}
-
-.success {
-  color: #10B981 !important;
-}
-.pointer-success:hover {
-  cursor: pointer !important;
-  color: #10B981 !important;
-  transform: scale(1.1);
-}
-
 .burgundy {
   color: #c30104 !important;
 }
@@ -11206,6 +11179,9 @@
   cursor: pointer !important;
   color: #c30104 !important;
   transform: scale(1.1);
+}
+.bg-burgundy {
+  background-color: #c30104 !important;
 }
 
 .danger {
@@ -11216,6 +11192,9 @@
   color: #EF4444 !important;
   transform: scale(1.1);
 }
+.bg-danger {
+  background-color: #EF4444 !important;
+}
 
 .warning {
   color: #F59E0B !important;
@@ -11225,32 +11204,8 @@
   color: #F59E0B !important;
   transform: scale(1.1);
 }
-
-.info {
-  color: #3B82F6 !important;
-}
-.pointer-info:hover {
-  cursor: pointer !important;
-  color: #3B82F6 !important;
-  transform: scale(1.1);
-}
-
-.light {
-  color: #e1e2e5 !important;
-}
-.pointer-light:hover {
-  cursor: pointer !important;
-  color: #e1e2e5 !important;
-  transform: scale(1.1);
-}
-
-.red {
-  color: #EF4444 !important;
-}
-.pointer-red:hover {
-  cursor: pointer !important;
-  color: #EF4444 !important;
-  transform: scale(1.1);
+.bg-warning {
+  background-color: #F59E0B !important;
 }
 
 .orange {
@@ -11261,6 +11216,9 @@
   color: #F59E0B !important;
   transform: scale(1.1);
 }
+.bg-orange {
+  background-color: #F59E0B !important;
+}
 
 .yellow {
   color: #FBBF24 !important;
@@ -11270,6 +11228,21 @@
   color: #FBBF24 !important;
   transform: scale(1.1);
 }
+.bg-yellow {
+  background-color: #FBBF24 !important;
+}
+
+.success {
+  color: #10B981 !important;
+}
+.pointer-success:hover {
+  cursor: pointer !important;
+  color: #10B981 !important;
+  transform: scale(1.1);
+}
+.bg-success {
+  background-color: #10B981 !important;
+}
 
 .green {
   color: #10B981 !important;
@@ -11278,6 +11251,33 @@
   cursor: pointer !important;
   color: #10B981 !important;
   transform: scale(1.1);
+}
+.bg-green {
+  background-color: #10B981 !important;
+}
+
+.info {
+  color: #89e2ff !important;
+}
+.pointer-info:hover {
+  cursor: pointer !important;
+  color: #89e2ff !important;
+  transform: scale(1.1);
+}
+.bg-info {
+  background-color: #89e2ff !important;
+}
+
+.primary {
+  color: #3B82F6 !important;
+}
+.pointer-primary:hover {
+  cursor: pointer !important;
+  color: #3B82F6 !important;
+  transform: scale(1.1);
+}
+.bg-primary {
+  background-color: #3B82F6 !important;
 }
 
 .blue {
@@ -11297,6 +11297,21 @@
   color: #0f2f74 !important;
   transform: scale(1.1);
 }
+.bg-navy {
+  background-color: #0f2f74 !important;
+}
+
+.secondary {
+  color: #6c757d !important;
+}
+.pointer-secondary:hover {
+  cursor: pointer !important;
+  color: #6c757d !important;
+  transform: scale(1.1);
+}
+.bg-secondary {
+  background-color: #6c757d !important;
+}
 
 .white {
   color: #FFFFFF !important;
@@ -11305,6 +11320,21 @@
   cursor: pointer !important;
   color: #FFFFFF !important;
   transform: scale(1.1);
+}
+.bg-white {
+  background-color: #FFFFFF !important;
+}
+
+.light {
+  color: #e1e2e5 !important;
+}
+.pointer-light:hover {
+  cursor: pointer !important;
+  color: #e1e2e5 !important;
+  transform: scale(1.1);
+}
+.bg-light {
+  background-color: #e1e2e5 !important;
 }
 
 .grey {
@@ -11315,14 +11345,8 @@
   color: #9CA3AF !important;
   transform: scale(1.1);
 }
-
-.dark-grey {
-  color: #6B7280 !important;
-}
-.pointer-dark-grey:hover {
-  cursor: pointer !important;
-  color: #6B7280 !important;
-  transform: scale(1.1);
+.bg-grey {
+  background-color: #9CA3AF !important;
 }
 
 .dark {
@@ -11333,6 +11357,9 @@
   color: #5e5e5e !important;
   transform: scale(1.1);
 }
+.bg-dark {
+  background-color: #5e5e5e !important;
+}
 
 .black {
   color: #111827 !important;
@@ -11341,6 +11368,9 @@
   cursor: pointer !important;
   color: #111827 !important;
   transform: scale(1.1);
+}
+.bg-black {
+  background-color: #111827 !important;
 }
 
 .firstScore {
@@ -11357,47 +11387,6 @@
 }
 .fifthScore {
   color: #EF4444 !important;
-}
-
-/** 99. color *************************************************************************************/
-.bg-beige {
-  background-color: #fff7ed !important
-}
-.bg-white {
-  background-color: #FFFFFF !important;
-}
-.bg-grey {
-  background-color: #f3f4f6 !important;
-}
-.bg-dark {
-  background-color: #1f2937 !important;
-}
-.bg-black {
-  background-color: #111827 !important;
-}
-.bg-primary {
-  background-color: #3B82F6 !important;
-}
-.bg-secondary {
-  background-color: #6c757d !important;
-}
-.bg-success {
-  background-color: #10B981 !important;
-}
-.bg-burgundy {
-  background-color: #c30104 !important;
-}
-.bg-danger {
-  background-color: #EF4444 !important;
-}
-.bg-warning {
-  background-color: #F59E0B !important;
-}
-.bg-info {
-  background-color: #3B82F6 !important;
-}
-.bg-light {
-  background-color: #e1e2e5 !important;
 }
 
 /** 100. etc **************************************************************************************/
