@@ -1,5 +1,4 @@
 // UserDetail.tsx
-// Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useTranslate } from "@imports/ImportHooks";
@@ -292,7 +291,7 @@ export const UserDetail = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius h-min75vh"}>
         <Grid container spacing={2}>
           <Grid size={12} className={"d-center"}>
             {imageSection()}

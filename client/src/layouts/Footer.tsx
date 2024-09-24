@@ -1,5 +1,4 @@
 // Footer.tsx
-// Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue } from "@imports/ImportHooks";
@@ -42,31 +41,31 @@ export const Footer = (
       PATH.includes("/user/category") || PATH.includes("/user/detail")
     ) {
       setTypeName("btn");
-      setStyleClass("layout-wrapper p-sticky bottom-0 h-8vh radius border");
+      setStyleClass("layout-wrapper p-sticky bottom-0 h-8vh border-1 radius");
     }
     else if (
       PATH.includes("/user/dummy")
     ) {
       setTypeName("dummy");
-      setStyleClass("layout-wrapper p-sticky bottom-0 h-8vh radius border");
+      setStyleClass("layout-wrapper p-sticky bottom-0 h-8vh border-1 radius");
     }
     else if (
       PATH.includes("/food/find/list")
     ) {
       setTypeName("findList");
-      setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh radius border");
+      setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh border-1 radius");
     }
     else if (
       PATH.includes("/goal/list") || PATH.includes("/list")
     ) {
       setTypeName("listFilter");
-      setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh radius border");
+      setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh border-1 radius");
     }
     else if (
       PATH.includes("/goal/detail") || PATH.includes("/detail")
     ) {
       setTypeName("btn");
-      setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh radius border");
+      setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh border-1 radius");
     }
     else {
       setTypeName("");

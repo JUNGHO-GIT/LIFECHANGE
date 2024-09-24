@@ -1,7 +1,5 @@
 // Buttons.tsx
-// Node -> Section -> Fragment
 
-import { useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useTranslate } from "@imports/ImportHooks";
 import { Btn, Div } from "@imports/ImportComponents";
 import { PopUp } from "@imports/ImportContainers";
@@ -19,11 +17,11 @@ export const Buttons = ( { state, setState, flow }: ButtonsProps ) => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate,
-  } = useTranslate();
-  const {
     PATH, toFind, navigate,
   } = useCommonValue();
+  const {
+    translate,
+  } = useTranslate();
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = (type: string) => {

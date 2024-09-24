@@ -1,5 +1,4 @@
 // MoneyList.tsx
-// Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
@@ -99,13 +98,13 @@ export const MoneyList = () => {
       );
       const listFragment = (i: number) => (
         OBJECT?.map((item: any, index: number) => (
-          <Card className={"border radius"} key={`${index}-${i}`}>
+          <Card className={"border-1 radius"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
               <AccordionSummary expandIcon={
                 <Icons
                   name={"ChevronDown"}
                   className={"w-18 h-18 black"}
-                  onClick={(e: any) => {
+                  onClick={() => {
                     setIsExpanded(isExpanded.includes(index)
                     ? isExpanded.filter((el) => el !== index)
                     : [...isExpanded, index]
@@ -180,15 +179,29 @@ export const MoneyList = () => {
                       {translate("income")}
                     </Div>
                   </Grid>
-                  <Grid size={6} className={"d-right"}>
-                    <Div className={`fs-1-0rem fw-600 ${item.money_total_income_color}`}>
-                      {numeral(item.money_total_income).format("0,0")}
-                    </Div>
-                  </Grid>
-                  <Grid size={1} className={"d-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {localCurrency}
-                    </Div>
+                  <Grid size={7}>
+                    <Grid container columns={12} spacing={1}>
+                      <Grid size={10} className={"d-right"}>
+                        {item.money_total_income.length > 12 ? (
+                          <Div className={`fs-0-6rem fw-600 ${item.money_total_income_color}`}>
+                            {numeral(item.money_total_income).format("0.0")}
+                          </Div>
+                        ) : item.money_total_income.length > 8 ? (
+                          <Div className={`fs-0-8rem fw-600 ${item.money_total_income_color}`}>
+                            {numeral(item.money_total_income).format("0,0")}
+                          </Div>
+                        ) : (
+                          <Div className={`fs-1-0rem fw-600 ${item.money_total_income_color}`}>
+                            {numeral(item.money_total_income).format("0,0")}
+                          </Div>
+                        )}
+                      </Grid>
+                      <Grid size={2} className={"d-right lh-2-4"}>
+                        <Div className={"fs-0-6rem"}>
+                          {localCurrency}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
                 <Hr px={30} />
@@ -206,15 +219,29 @@ export const MoneyList = () => {
                       {translate("expense")}
                     </Div>
                   </Grid>
-                  <Grid size={6} className={"d-right"}>
-                    <Div className={`fs-1-0rem fw-600 ${item.money_total_expense_color}`}>
-                      {numeral(item.money_total_expense).format("0,0")}
-                    </Div>
-                  </Grid>
-                  <Grid size={1} className={"d-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {localCurrency}
-                    </Div>
+                  <Grid size={7}>
+                    <Grid container columns={12} spacing={1}>
+                      <Grid size={10} className={"d-right"}>
+                        {item.money_total_expense.length > 12 ? (
+                          <Div className={`fs-0-6rem fw-600 ${item.money_total_expense_color}`}>
+                            {numeral(item.money_total_expense).format("0.0")}
+                          </Div>
+                        ) : item.money_total_expense.length > 8 ? (
+                          <Div className={`fs-0-8rem fw-600 ${item.money_total_expense_color}`}>
+                            {numeral(item.money_total_expense).format("0,0")}
+                          </Div>
+                        ) : (
+                          <Div className={`fs-1-0rem fw-600 ${item.money_total_expense_color}`}>
+                            {numeral(item.money_total_expense).format("0,0")}
+                          </Div>
+                        )}
+                      </Grid>
+                      <Grid size={2} className={"d-right lh-2-4"}>
+                        <Div className={"fs-0-6rem"}>
+                          {localCurrency}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
               </AccordionDetails>
@@ -230,7 +257,7 @@ export const MoneyList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius h-min75vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {listSection()}

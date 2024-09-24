@@ -1,5 +1,4 @@
 // TopNav.tsx
-// Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
@@ -247,7 +246,7 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max60vw h-max70vh border radius p-20"} key={`smile`}>
+          <Card className={"w-max60vw h-max70vh border-1 radius p-20"} key={`smile`}>
             <Grid container spacing={0}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
@@ -366,7 +365,7 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max60vw h-max70vh border radius p-20"} key={`property`}>
+          <Card className={"w-max60vw h-max70vh border-1 radius p-20"} key={`property`}>
             <Grid container spacing={0}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
@@ -500,7 +499,7 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max60vw h-max70vh border radius p-20"} key={`scale`}>
+          <Card className={"w-max60vw h-max70vh border-1 radius p-20"} key={`scale`}>
             <Grid container spacing={0}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
@@ -644,7 +643,7 @@ export const TopNav = () => {
     );
     // 5. return
     return (
-      <Paper className={"layout-wrapper p-sticky top-8vh h-8vh radius border"}>
+      <Paper className={"layout-wrapper p-sticky top-8vh h-8vh border-1 radius"}>
         <Grid container spacing={2} columns={25}>
           <Grid size={3}>
             {smileSection()}

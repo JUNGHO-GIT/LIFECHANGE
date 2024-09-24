@@ -1,5 +1,4 @@
 // UserSignup.tsx
-// Node -> Section -> Fragment
 
 import { useState } from "@imports/ImportReacts";
 import { useCommonValue,  useTranslate } from "@imports/ImportHooks";
@@ -200,11 +199,21 @@ export const UserSignup = () => {
                 inputRef={REFS[i]?.user_id}
                 error={ERRORS[i]?.user_id}
                 disabled={OBJECT.user_id_verified === true}
+                placeholder={"abcd@naver.com"}
                 onChange={(e: any) => {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    user_id: e.target.value
-                  }))
+                  const value = e.target.value;
+                  if (value.length > 30) {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      user_id: prev.user_id,
+                    }));
+                  }
+                  else {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      user_id: value,
+                    }));
+                  }
                 }}
               />
             </Grid>
@@ -453,7 +462,7 @@ export const UserSignup = () => {
     return (
       <>
       {LOADING && <Loading />}
-      <Paper className={"content-wrapper d-center radius border h-min94vh"}>
+      <Paper className={"content-wrapper d-center border-1 radius h-min94vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {titleSection()}

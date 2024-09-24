@@ -1,5 +1,4 @@
 // UserDelete.tsx
-// Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useTranslate } from "@imports/ImportHooks";
@@ -109,7 +108,7 @@ export const UserDelete = () => {
             <Hr px={20} />
             <Grid size={12}>
               <TextArea
-                className={"border radius resize-none cursor-none w-100p p-10"}
+                className={"border-1 radius resize-none cursor-none w-100p p-10"}
                 value={translate("deleteUser")}
               />
             </Grid>
@@ -136,7 +135,7 @@ export const UserDelete = () => {
     return (
       <>
       {LOADING && <Loading />}
-      <Paper className={"content-wrapper d-center radius border h-min84vh"}>
+      <Paper className={"content-wrapper d-center border-1 radius h-min84vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {titleSection()}

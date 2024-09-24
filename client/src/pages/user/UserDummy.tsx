@@ -1,5 +1,4 @@
 // UserDummy.tsx
-// Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useTranslate, useStorage } from "@imports/ImportHooks";
@@ -167,12 +166,12 @@ export const UserDummy = () => {
     // 7-1. exerciseGoal
     const exerciseGoalSection = () => {
       const emptyFragment = () => (
-        <Card className={"border radius p-10"} key={"empty"}>
+        <Card className={"border-1 radius p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
       const detailFragment = (i: number) => (
-        <Card className={"border radius p-0"} key={i}>
+        <Card className={"border-1 radius p-0"} key={i}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -228,12 +227,12 @@ export const UserDummy = () => {
     // 7-2. exercise
     const exerciseSection = () => {
       const emptyFragment = () => (
-        <Card className={"border radius p-10"} key={"empty"}>
+        <Card className={"border-1 radius p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
       const detailFragment = (i: number) => (
-        <Card className={"border radius p-0"} key={i}>
+        <Card className={"border-1 radius p-0"} key={i}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -285,12 +284,12 @@ export const UserDummy = () => {
     // 7-3. foodGoal
     const foodGoalSection = () => {
       const emptyFragment = () => (
-        <Card className={"border radius p-10"} key={"empty"}>
+        <Card className={"border-1 radius p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
       const detailFragment = (i: number) => (
-        <Card className={"border radius p-0"} key={i}>
+        <Card className={"border-1 radius p-0"} key={i}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -346,12 +345,12 @@ export const UserDummy = () => {
     // 7-4. food
     const foodSection = () => {
       const emptyFragment = () => (
-        <Card className={"border radius p-10"} key={"empty"}>
+        <Card className={"border-1 radius p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
       const detailFragment = (i: number) => (
-        <Card className={"border radius p-0"} key={i}>
+        <Card className={"border-1 radius p-0"} key={i}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -407,12 +406,12 @@ export const UserDummy = () => {
     // 7-5. moneyGoal
     const moneyGoalSection = () => {
       const emptyFragment = () => (
-        <Card className={"border radius p-10"} key={"empty"}>
+        <Card className={"border-1 radius p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
       const detailFragment = (i: number) => (
-        <Card className={"border radius p-0"} key={i}>
+        <Card className={"border-1 radius p-0"} key={i}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -460,12 +459,12 @@ export const UserDummy = () => {
     // 7-6. money
     const moneySection = () => {
       const emptyFragment = () => (
-        <Card className={"border radius p-10"} key={"empty"}>
+        <Card className={"border-1 radius p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
       const detailFragment = (i: number) => (
-        <Card className={"border radius p-0"} key={i}>
+        <Card className={"border-1 radius p-0"} key={i}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -513,12 +512,12 @@ export const UserDummy = () => {
     // 7-7. sleepGoal
     const sleepGoalSection = () => {
       const emptyFragment = () => (
-        <Card className={"border radius p-10"} key={"empty"}>
+        <Card className={"border-1 radius p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
       const detailFragment = (i: number) => (
-        <Card className={"border radius p-0"} key={i}>
+        <Card className={"border-1 radius p-0"} key={i}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -570,12 +569,12 @@ export const UserDummy = () => {
     // 7-8. sleep
     const sleepSection = () => {
       const emptyFragment = () => (
-        <Card className={"border radius p-10"} key={"empty"}>
+        <Card className={"border-1 radius p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
       const detailFragment = (i: number) => (
-        <Card className={"border radius p-0"} key={i}>
+        <Card className={"border-1 radius p-0"} key={i}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -626,7 +625,7 @@ export const UserDummy = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min84vh"}>
+      <Paper className={"content-wrapper border-1 radius h-min84vh"}>
         <Grid container spacing={2}>
           <Grid size={12} >
             {PART === "exerciseGoal" && exerciseGoalSection()}

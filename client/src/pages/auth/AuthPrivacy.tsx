@@ -1,5 +1,4 @@
 // AuthPrivacy.tsx
-// Node -> Section -> Fragment
 
 import { Paper, Grid, Card } from "@imports/ImportMuis";
 import { Div, Hr } from "@imports/ImportComponents";
@@ -184,7 +183,7 @@ export const AuthPrivacy = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min100vh"}>
+      <Paper className={"content-wrapper border-1 radius h-min100vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {privacySection()}

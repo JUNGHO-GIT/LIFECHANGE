@@ -1,5 +1,4 @@
 // Header.tsx
-// Node -> Section -> Fragment
 
 import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { Div, Img, Icons } from "@imports/ImportComponents";
@@ -65,7 +64,7 @@ export const Header = () => {
       )
     );
     return (
-      <Paper className={"layout-wrapper p-sticky top-0vh h-8vh radius border"}>
+      <Paper className={"layout-wrapper p-sticky top-0vh h-8vh border-1 radius"}>
         <Grid container spacing={2}>
           <Grid size={10} className={"d-left"}>
             {iconSection()}

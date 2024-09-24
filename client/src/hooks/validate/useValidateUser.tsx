@@ -73,6 +73,9 @@ export const useValidateUser = () => {
         if (!OBJECT.user_id) {
           return showAlertAndFocus("user_id", "errorUserId", 0);
         }
+        else if (!validateEmail(OBJECT.user_id)) {
+          return showAlertAndFocus("user_id", "errorUserIdAt", 0);
+        }
         else if (!OBJECT.user_pw) {
           return showAlertAndFocus("user_pw", "errorUserPw", 0);
         }

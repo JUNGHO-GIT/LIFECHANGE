@@ -1,5 +1,4 @@
 // AuthError.tsx
-// Node -> Section -> Fragment
 
 import { useCommonValue } from "@imports/ImportHooks";
 import { Div, Btn } from "@imports/ImportComponents";
@@ -134,7 +133,7 @@ export const AuthError = () => {
       </Grid>
     );
     return (
-      <Paper className={"content-wrapper d-center radius border h-min100vh"}>
+      <Paper className={"content-wrapper d-center border-1 radius h-min100vh"}>
         <Grid container spacing={2}>
           <Grid size={6}>
             {imageSection()}

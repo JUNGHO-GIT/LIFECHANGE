@@ -1,5 +1,4 @@
 // FoodDetail.tsx
-// Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
@@ -348,7 +347,7 @@ export const FoodDetail = () => {
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Card className={"border radius p-20"}>
+      <Card className={"border-1 radius p-20"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             <Picker
@@ -372,7 +371,7 @@ export const FoodDetail = () => {
     );
     // 7-2. total
     const totalSection = () => (
-      <Card className={"border radius p-20"}>
+      <Card className={"border-1 radius p-20"}>
         <Grid container spacing={2}>
           <Grid size={6}>
             <Input
@@ -448,7 +447,7 @@ export const FoodDetail = () => {
     // 7-3. card
     const detailSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={`${LOCKED === "locked" ? "locked" : ""} border radius p-20`} key={i}>
+        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius p-20`} key={i}>
           <Grid container spacing={2}>
             <Grid size={6} className={"d-left"}>
               <Bg
@@ -810,7 +809,7 @@ export const FoodDetail = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius h-min75vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {dateCountSection()}

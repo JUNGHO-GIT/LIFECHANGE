@@ -298,12 +298,12 @@ export const SleepChartPie = () => {
     // 7-2. chart
     const chartSection = () => {
       const chartFragment1 = (i: number) => (
-        <Card className={"border radius p-20"} key={i}>
+        <Card className={"border-1 radius p-20"} key={i}>
           {chartWeek()}
         </Card>
       );
       const chartFragment2 = (i: number) => (
-        <Card className={"border radius p-20"} key={i}>
+        <Card className={"border-1 radius p-20"} key={i}>
           {chartMonth()}
         </Card>
       );
@@ -316,7 +316,7 @@ export const SleepChartPie = () => {
     }
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min40vh"}>
+      <Paper className={"content-wrapper border-1 radius h-min40vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {headSection()}

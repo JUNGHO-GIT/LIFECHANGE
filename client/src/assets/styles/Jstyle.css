@@ -11083,102 +11083,146 @@
 }
 
 /** 96. shadow ************************************************************************************/
-.shadow {
-  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.25) !important;
-  transition: box-shadow 0.3s ease !important;
-}
-.shadow-top {
-  box-shadow: 0px -5px 20px rgba(0, 0, 0, 0.25) !important;
-  transition: box-shadow 0.3s ease !important;
-}
-.shadow-right {
-  box-shadow: 5px 0px 20px rgba(0, 0, 0, 0.25) !important;
-  transition: box-shadow 0.3s ease !important;
-}
-.shadow-bottom {
-  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.25) !important;
-  transition: box-shadow 0.3s ease !important;
-}
-.shadow-left {
-  box-shadow: -5px 0px 20px rgba(0, 0, 0, 0.25) !important;
-  transition: box-shadow 0.3s ease !important;
-}
 .shadow-none {
   box-shadow: none !important;
 }
+.shadow {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1) !important;
+  transition: box-shadow 0.3s ease !important;
+}
+.shadow-top {
+  box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1) !important;
+  transition: box-shadow 0.3s ease !important;
+}
+.shadow-right {
+  box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.1) !important;
+  transition: box-shadow 0.3s ease !important;
+}
+.shadow-bottom {
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1) !important;
+  transition: box-shadow 0.3s ease !important;
+}
+.shadow-left {
+  box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.1) !important;
+  transition: box-shadow 0.3s ease !important;
+}
 
 /** 97. radius ************************************************************************************/
+.radius-none {
+  border-radius: 0px !important;
+}
 .radius {
   border-radius: 10px !important;
 }
 .radius-top {
-  border-top-left-radius : 10px !important;
+  border-top-left-radius: 10px !important;
   border-top-right-radius: 10px !important;
   border-bottom-left-radius: 0px !important;
   border-bottom-right-radius: 0px !important;
 }
 .radius-right {
-  border-top-left-radius : 0px !important;
+  border-top-left-radius: 0px !important;
   border-top-right-radius: 10px !important;
   border-bottom-left-radius: 0px !important;
   border-bottom-right-radius: 10px !important;
 }
 .radius-bottom {
-  border-top-left-radius : 0px !important;
+  border-top-left-radius: 0px !important;
   border-top-right-radius: 0px !important;
   border-bottom-left-radius: 10px !important;
   border-bottom-right-radius: 10px !important;
 }
 .radius-left {
-  border-top-left-radius : 10px !important;
+  border-top-left-radius: 10px !important;
   border-top-right-radius: 0px !important;
   border-bottom-left-radius: 10px !important;
   border-bottom-right-radius: 0px !important;
 }
-.radius-none {
-  border-radius: 0px !important;
-}
 
 /** 98. border ************************************************************************************/
-.border {
-  border: 1px solid #dbdbdb !important;
-}
-.border-top {
-  border-top: 1px solid #dbdbdb !important;
+.border-none {
+  border: none !important;
 }
 .border-top-none {
   border-top: none !important;
 }
-.border-right {
-  border-right: 1px solid #dbdbdb !important;
-}
 .border-right-none {
   border-right: none !important;
-}
-.border-bottom {
-  border-bottom: 1px solid #dbdbdb !important;
 }
 .border-bottom-none {
   border-bottom: none !important;
 }
-.border-left {
-  border-left: 1px solid #dbdbdb !important;
-}
 .border-left-none {
   border-left: none !important;
 }
-.border-none {
-  border: none !important;
+.border-1 {
+  border: 1px solid #dbdbdb !important;
+}
+.border-top-1 {
+  border-top: 1px solid #dbdbdb !important;
+}
+.border-right-1 {
+  border-right: 1px solid #dbdbdb !important;
+}
+.border-bottom-1 {
+  border-bottom: 1px solid #dbdbdb !important;
+}
+.border-left-1 {
+  border-left: 1px solid #dbdbdb !important;
+}
+.border-2 {
+  border: 2px solid #dbdbdb !important;
+}
+.border-top-2 {
+  border-top: 2px solid #dbdbdb !important;
+}
+.border-right-2 {
+  border-right: 2px solid #dbdbdb !important;
+}
+.border-bottom-2 {
+  border-bottom: 2px solid #dbdbdb !important;
+}
+.border-left-2 {
+  border-left: 2px solid #dbdbdb !important;
+}
+.border-3 {
+  border: 3px solid #dbdbdb !important;
+}
+.border-top-3 {
+  border-top: 3px solid #dbdbdb !important;
+}
+.border-right-3 {
+  border-right: 3px solid #dbdbdb !important;
+}
+.border-bottom-3 {
+  border-bottom: 3px solid #dbdbdb !important;
+}
+.border-left-3 {
+  border-left: 3px solid #dbdbdb !important;
 }
 
 /** 99. color *************************************************************************************/
+.red {
+  color: #ff0000 !important;
+}
+.pointer-red:hover {
+  cursor: pointer !important;
+  color: #ff0000 !important;
+  transition: transform 0.1s ease-in-out !important;
+  transform: scale(1.1) !important;
+}
+.bg-red {
+  background-color: #ff0000 !important;
+}
+
 .burgundy {
   color: #c30104 !important;
 }
 .pointer-burgundy:hover {
   cursor: pointer !important;
   color: #c30104 !important;
-  transform: scale(1.1);
+  transition: transform 0.1s ease-in-out !important;
+  transform: scale(1.1) !important;
 }
 .bg-burgundy {
   background-color: #c30104 !important;
@@ -11190,7 +11234,8 @@
 .pointer-danger:hover {
   cursor: pointer !important;
   color: #EF4444 !important;
-  transform: scale(1.1);
+  transition: transform 0.1s ease-in-out !important;
+  transform: scale(1.1) !important;
 }
 .bg-danger {
   background-color: #EF4444 !important;
@@ -11202,7 +11247,8 @@
 .pointer-warning:hover {
   cursor: pointer !important;
   color: #F59E0B !important;
-  transform: scale(1.1);
+  transition: transform 0.1s ease-in-out !important;
+  transform: scale(1.1) !important;
 }
 .bg-warning {
   background-color: #F59E0B !important;
@@ -11214,7 +11260,8 @@
 .pointer-orange:hover {
   cursor: pointer !important;
   color: #F59E0B !important;
-  transform: scale(1.1);
+  transition: transform 0.1s ease-in-out !important;
+  transform: scale(1.1) !important;
 }
 .bg-orange {
   background-color: #F59E0B !important;
@@ -11226,7 +11273,8 @@
 .pointer-yellow:hover {
   cursor: pointer !important;
   color: #FBBF24 !important;
-  transform: scale(1.1);
+  transition: transform 0.1s ease-in-out !important;
+  transform: scale(1.1) !important;
 }
 .bg-yellow {
   background-color: #FBBF24 !important;
@@ -11238,7 +11286,8 @@
 .pointer-success:hover {
   cursor: pointer !important;
   color: #10B981 !important;
-  transform: scale(1.1);
+  transition: transform 0.1s ease-in-out !important;
+  transform: scale(1.1) !important;
 }
 .bg-success {
   background-color: #10B981 !important;
@@ -11250,7 +11299,8 @@
 .pointer-green:hover {
   cursor: pointer !important;
   color: #10B981 !important;
-  transform: scale(1.1);
+  transition: transform 0.1s ease-in-out !important;
+  transform: scale(1.1) !important;
 }
 .bg-green {
   background-color: #10B981 !important;
@@ -11262,22 +11312,24 @@
 .pointer-info:hover {
   cursor: pointer !important;
   color: #89e2ff !important;
-  transform: scale(1.1);
+  transition: transform 0.1s ease-in-out !important;
+  transform: scale(1.1) !important;
 }
 .bg-info {
   background-color: #89e2ff !important;
 }
 
 .primary {
-  color: #3B82F6 !important;
+  color: #1976D2 !important;
 }
 .pointer-primary:hover {
   cursor: pointer !important;
-  color: #3B82F6 !important;
-  transform: scale(1.1);
+  color: #1976D2 !important;
+  transition: transform 0.1s ease-in-out !important;
+  transform: scale(1.1) !important;
 }
 .bg-primary {
-  background-color: #3B82F6 !important;
+  background-color: #1976D2 !important;
 }
 
 .blue {
@@ -11286,7 +11338,11 @@
 .pointer-blue:hover {
   cursor: pointer !important;
   color: #3B82F6 !important;
-  transform: scale(1.1);
+  transition: transform 0.1s ease-in-out !important;
+  transform: scale(1.1) !important;
+}
+.bg-blue {
+  background-color: #3B82F6 !important;
 }
 
 .navy {
@@ -11295,7 +11351,8 @@
 .pointer-navy:hover {
   cursor: pointer !important;
   color: #0f2f74 !important;
-  transform: scale(1.1);
+  transition: transform 0.1s ease-in-out !important;
+  transform: scale(1.1) !important;
 }
 .bg-navy {
   background-color: #0f2f74 !important;
@@ -11307,7 +11364,8 @@
 .pointer-secondary:hover {
   cursor: pointer !important;
   color: #6c757d !important;
-  transform: scale(1.1);
+  transition: transform 0.1s ease-in-out !important;
+  transform: scale(1.1) !important;
 }
 .bg-secondary {
   background-color: #6c757d !important;
@@ -11319,7 +11377,8 @@
 .pointer-white:hover {
   cursor: pointer !important;
   color: #FFFFFF !important;
-  transform: scale(1.1);
+  transition: transform 0.1s ease-in-out !important;
+  transform: scale(1.1) !important;
 }
 .bg-white {
   background-color: #FFFFFF !important;
@@ -11331,10 +11390,24 @@
 .pointer-light:hover {
   cursor: pointer !important;
   color: #e1e2e5 !important;
-  transform: scale(1.1);
+  transition: transform 0.1s ease-in-out !important;
+  transform: scale(1.1) !important;
 }
 .bg-light {
   background-color: #e1e2e5 !important;
+}
+
+.light-grey {
+  color: #D1D5DB !important;
+}
+.pointer-light-grey:hover {
+  cursor: pointer !important;
+  color: #D1D5DB !important;
+  transition: transform 0.1s ease-in-out !important;
+  transform: scale(1.1) !important;
+}
+.bg-light-grey {
+  background-color: #D1D5DB !important;
 }
 
 .grey {
@@ -11343,7 +11416,8 @@
 .pointer-grey:hover {
   cursor: pointer !important;
   color: #9CA3AF !important;
-  transform: scale(1.1);
+  transition: transform 0.1s ease-in-out !important;
+  transform: scale(1.1) !important;
 }
 .bg-grey {
   background-color: #9CA3AF !important;
@@ -11355,7 +11429,8 @@
 .pointer-dark:hover {
   cursor: pointer !important;
   color: #5e5e5e !important;
-  transform: scale(1.1);
+  transition: transform 0.1s ease-in-out !important;
+  transform: scale(1.1) !important;
 }
 .bg-dark {
   background-color: #5e5e5e !important;
@@ -11367,14 +11442,15 @@
 .pointer-black:hover {
   cursor: pointer !important;
   color: #111827 !important;
-  transform: scale(1.1);
+  transition: transform 0.1s ease-in-out !important;
+  transform: scale(1.1) !important;
 }
 .bg-black {
   background-color: #111827 !important;
 }
 
 .firstScore {
-  color: #3B82F6 !important;
+  color: #1976D2 !important;
 }
 .secondScore {
   color: #10B981 !important;
@@ -11447,6 +11523,13 @@
 }
 .shake {
   animation: shake 0.7s cubic-bezier(.36,.07,.19,.97) both !important;
+}
+.hover {
+  transition: transform 0.1s ease-in-out;
+  cursor: pointer !important;
+}
+.hover:hover {
+  transform: scale(1.08);
 }
 
 /** 101. keyframes ********************************************************************************/

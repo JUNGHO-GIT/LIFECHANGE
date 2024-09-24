@@ -1,5 +1,4 @@
 // UserAppSetting.tsx
-// Node -> Section -> Fragment
 
 import { useState } from "@imports/ImportReacts";
 import { useCommonValue, useTranslate } from "@imports/ImportHooks";
@@ -29,7 +28,7 @@ export const UserAppSetting = () => {
     // 7-1. card
     const detailSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={"border radius shadow-none p-0"} key={i}>
+        <Card className={"border-1 radius shadow-none p-0"} key={i}>
           <TableContainer>
             <Table>
               <TableBody className={"table-tbody"}>
@@ -84,77 +83,6 @@ export const UserAppSetting = () => {
                     />
                   </TableCell>
                 </TableRow>
-                {/** language **/}
-                {/* <PopUp
-                  type={"innerCenter"}
-                  position={"bottom"}
-                  direction={"center"}
-                  contents={
-                    <Div className={"d-column"}>
-                      <Div
-                        className={"d-center mb-20"}
-                        onClick={() => {
-                          setLang("ko")
-                          localStorage.setItem(`${TITLE}_lang`, "ko")
-                          navigate(0)
-                        }}
-                      >
-                        <Img
-                          key={"flag1"}
-                          src={"flag1"}
-                          className={"w-24 h-24 me-15"}
-                        />
-                        <Div className={`me-15 ${lang === "ko" ? "fw-700" : ""}`}>
-                          한국어
-                        </Div>
-                        <Icons
-                          name={"Check"}
-                          className={`w-16 h-16 black ${lang === "ko" ? "" : "d-none"}`}
-                        />
-                      </Div>
-                      <Div
-                        className={"d-center"}
-                        onClick={() => {
-                          setLang("en")
-                          localStorage.setItem(`${TITLE}_lang`, "en")
-                          navigate(0)
-                        }}
-                      >
-                        <Img
-                          key={"flag2"}
-                          src={"flag2"}
-                          className={"w-24 h-24 me-15"}
-                        />
-                        <Div className={`me-15 ${lang === "en" ? "fw-700" : ""}`}>
-                          English
-                        </Div>
-                        <Icons
-                          name={"Check"}
-                          className={`w-16 h-16 black ${lang === "en" ? "" : "d-none"}`}
-                        />
-                      </Div>
-                    </Div>
-                  }
-                >
-                  {(popTrigger: any) => (
-                    <TableRow
-                      className={"pointer"}
-                      onClick={(e: any) => {
-                        popTrigger.openPopup(e.currentTarget)
-                      }}
-                    >
-                      <TableCell className={"w-90vw p-15"}>
-                        {translate("language")}
-                      </TableCell>
-                      <TableCell className={"w-10vw p-15"}>
-                        <Icons
-                          name={"ChevronRight"}
-                          className={"w-16 h-16 black"}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </PopUp> */}
                 {/** app info **/}
                 <TableRow
                   className={"pointer"}
@@ -221,7 +149,7 @@ export const UserAppSetting = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper d-center radius border h-min90vh"}>
+      <Paper className={"content-wrapper d-center border-1 radius h-min90vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {detailSection()}

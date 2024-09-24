@@ -217,7 +217,7 @@ export const Picker = (
                     views={["day"]}
                     readOnly={false}
                     value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
-                    className={"radius border"}
+                    className={"border-1 radius"}
                     showDaysOutsideCurrentMonth={true}
                     slots={{
                       day: (props) => {
@@ -378,7 +378,7 @@ export const Picker = (
                     views={["day"]}
                     readOnly={false}
                     value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
-                    className={"radius border"}
+                    className={"border-1 radius"}
                     showDaysOutsideCurrentMonth={true}
                     slots={{
                       day: (props) => {
@@ -553,7 +553,7 @@ export const Picker = (
                     views={["day"]}
                     readOnly={false}
                     value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
-                    className={"radius border"}
+                    className={"border-1 radius"}
                     showDaysOutsideCurrentMonth={true}
                     slots={{
                       day: (props) => {
@@ -711,7 +711,7 @@ export const Picker = (
                     views={["day"]}
                     readOnly={false}
                     value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
-                    className={"radius border"}
+                    className={"border-1 radius"}
                     showDaysOutsideCurrentMonth={true}
                     slots={{
                       day: (props) => {
@@ -870,7 +870,7 @@ export const Picker = (
                     views={["day"]}
                     readOnly={false}
                     value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
-                    className={"radius border"}
+                    className={"border-1 radius"}
                     showDaysOutsideCurrentMonth={true}
                     slots={{
                       day: (props) => {
@@ -1013,6 +1013,7 @@ export const Picker = (
         label={translate("dateType")}
         value={clickedType || ""}
         inputclass={listTypeStr}
+        readOnly={isToday}
         onChange={(e: any) => {
           if (e.target.value === "thisToday") {
             setClickedType("thisToday");
@@ -1163,7 +1164,7 @@ export const Picker = (
           </Grid>
         </Grid>
       )
-      
+
       // 1-3. 일정인 경우 (세이브)
       : isCalendarDetail ? (
         <Grid container spacing={2}>

@@ -1,5 +1,4 @@
 // ExerciseList.tsx
-// Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
@@ -99,13 +98,13 @@ export const ExerciseList = () => {
       );
       const listFragment = (i: number) => (
         OBJECT?.map((item: any, index: number) => (
-          <Card className={"border radius p-10"} key={`${index}-${i}`}>
+          <Card className={"border-1 radius p-10"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
               <AccordionSummary expandIcon={
                 <Icons
                   name={"ChevronDown"}
                   className={"w-18 h-18 black"}
-                  onClick={(e: any) => {
+                  onClick={() => {
                     setIsExpanded(isExpanded.includes(index)
                     ? isExpanded.filter((el) => el !== index)
                     : [...isExpanded, index]
@@ -175,20 +174,24 @@ export const ExerciseList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={2} className={"d-left"}>
+                  <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("volume")}
                     </Div>
                   </Grid>
-                  <Grid size={7} className={"d-right"}>
-                    <Div className={`fs-1-0rem fw-600 ${item.exercise_total_volume_color}`}>
-                      {numeral(item.exercise_total_volume).format("0,0")}
-                    </Div>
-                  </Grid>
-                  <Grid size={1} className={"d-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("vol")}
-                    </Div>
+                  <Grid size={7}>
+                    <Grid container columns={12} spacing={1}>
+                      <Grid size={10} className={"d-right"}>
+                        <Div className={`fs-1-0rem fw-600 ${item.exercise_total_volume_color}`}>
+                          {numeral(item.exercise_total_volume).format("0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-right lh-2-4"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("vol")}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
                 <Hr px={30} />
@@ -206,15 +209,19 @@ export const ExerciseList = () => {
                       {translate("cardio")}
                     </Div>
                   </Grid>
-                  <Grid size={6} className={"d-right"}>
-                    <Div className={`fs-1-0rem fw-600 ${item.exercise_total_cardio_color}`}>
-                      {item.exercise_total_cardio}
-                    </Div>
-                  </Grid>
-                  <Grid size={1} className={"d-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("hm")}
-                    </Div>
+                  <Grid size={7}>
+                    <Grid container columns={12} spacing={1}>
+                      <Grid size={10} className={"d-right"}>
+                        <Div className={`fs-1-0rem fw-600 ${item.exercise_total_cardio_color}`}>
+                          {item.exercise_total_cardio}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-right lh-2-4"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("hm")}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
                 <Hr px={30} />
@@ -232,15 +239,19 @@ export const ExerciseList = () => {
                       {translate("weight")}
                     </Div>
                   </Grid>
-                  <Grid size={6} className={"d-right"}>
-                    <Div className={`fs-1-0rem fw-600 ${item.exercise_total_weight_color}`}>
-                      {item.exercise_total_weight}
-                    </Div>
-                  </Grid>
-                  <Grid size={1} className={"d-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("k")}
-                    </Div>
+                  <Grid size={7}>
+                    <Grid container columns={12} spacing={1}>
+                      <Grid size={10} className={"d-right"}>
+                        <Div className={`fs-1-0rem fw-600 ${item.exercise_total_volume_color}`}>
+                          {numeral(item.exercise_total_volume).format("0,0.0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-right lh-2-4"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("k")}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
               </AccordionDetails>
@@ -256,7 +267,7 @@ export const ExerciseList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius h-min75vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {listSection()}

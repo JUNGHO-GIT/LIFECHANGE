@@ -1,5 +1,4 @@
 // FoodList.tsx
-// Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
@@ -100,13 +99,13 @@ export const FoodList = () => {
       );
       const listFragment = (i: number) => (
         OBJECT?.map((item: any, index: number) => (
-          <Card className={"border radius"} key={`${index}-${i}`}>
+          <Card className={"border-1 radius"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
               <AccordionSummary expandIcon={
                 <Icons
                   name={"ChevronDown"}
                   className={"w-18 h-18 black"}
-                  onClick={(e: any) => {
+                  onClick={() => {
                     setIsExpanded(isExpanded.includes(index)
                     ? isExpanded.filter((el) => el !== index)
                     : [...isExpanded, index]
@@ -181,15 +180,29 @@ export const FoodList = () => {
                       {translate("kcal")}
                     </Div>
                   </Grid>
-                  <Grid size={6} className={"d-right"}>
-                    <Div className={`fs-1-0rem fw-600 ${item.food_total_kcal_color}`}>
-                      {numeral(item.food_total_kcal).format("0,0")}
-                    </Div>
-                  </Grid>
-                  <Grid size={1} className={"d-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("kc")}
-                    </Div>
+                  <Grid size={7}>
+                    <Grid container columns={12} spacing={1}>
+                      <Grid size={10} className={"d-right"}>
+                        {item.food_total_kcal.length > 12 ? (
+                          <Div className={`fs-0-6rem fw-600 ${item.food_total_kcal_color}`}>
+                            {numeral(item.food_total_kcal).format("0,0")}
+                          </Div>
+                        ) : item.food_total_kcal.length > 8 ? (
+                          <Div className={`fs-0-8rem fw-600 ${item.food_total_kcal_color}`}>
+                            {numeral(item.food_total_kcal).format("0,0")}
+                          </Div>
+                        ) : (
+                          <Div className={`fs-1-0rem fw-600 ${item.food_total_kcal_color}`}>
+                            {numeral(item.food_total_kcal).format("0,0")}
+                          </Div>
+                        )}
+                      </Grid>
+                      <Grid size={2} className={"d-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("kc")}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
                 <Hr px={30} />
@@ -207,15 +220,29 @@ export const FoodList = () => {
                       {translate("carb")}
                     </Div>
                   </Grid>
-                  <Grid size={6} className={"d-right"}>
-                    <Div className={`fs-1-0rem fw-600 ${item.food_total_carb_color}`}>
-                      {numeral(item.food_total_carb).format("0,0")}
-                    </Div>
-                  </Grid>
-                  <Grid size={1} className={"d-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("g")}
-                    </Div>
+                  <Grid size={7}>
+                    <Grid container columns={12} spacing={1}>
+                      <Grid size={10} className={"d-right"}>
+                        {item.food_total_carb.length > 12 ? (
+                          <Div className={`fs-0-6rem fw-600 ${item.food_total_carb_color}`}>
+                            {numeral(item.food_total_carb).format("0,0")}
+                          </Div>
+                        ) : item.food_total_carb.length > 8 ? (
+                          <Div className={`fs-0-8rem fw-600 ${item.food_total_carb_color}`}>
+                            {numeral(item.food_total_carb).format("0,0")}
+                          </Div>
+                        ) : (
+                          <Div className={`fs-1-0rem fw-600 ${item.food_total_carb_color}`}>
+                            {numeral(item.food_total_carb).format("0,0")}
+                          </Div>
+                        )}
+                      </Grid>
+                      <Grid size={2} className={"d-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("g")}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
                 <Hr px={30} />
@@ -233,15 +260,29 @@ export const FoodList = () => {
                       {translate("protein")}
                     </Div>
                   </Grid>
-                  <Grid size={6} className={"d-right"}>
-                    <Div className={`fs-1-0rem fw-600 ${item.food_total_protein_color}`}>
-                      {numeral(item.food_total_protein).format("0,0")}
-                    </Div>
-                  </Grid>
-                  <Grid size={1} className={"d-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("g")}
-                    </Div>
+                  <Grid size={7}>
+                    <Grid container columns={12} spacing={1}>
+                      <Grid size={10} className={"d-right"}>
+                        {item.food_total_protein.length > 12 ? (
+                          <Div className={`fs-0-6rem fw-600 ${item.food_total_protein_color}`}>
+                            {numeral(item.food_total_protein).format("0,0")}
+                          </Div>
+                        ) : item.food_total_protein.length > 8 ? (
+                          <Div className={`fs-0-8rem fw-600 ${item.food_total_protein_color}`}>
+                            {numeral(item.food_total_protein).format("0,0")}
+                          </Div>
+                        ) : (
+                          <Div className={`fs-1-0rem fw-600 ${item.food_total_protein_color}`}>
+                            {numeral(item.food_total_protein).format("0,0")}
+                          </Div>
+                        )}
+                      </Grid>
+                      <Grid size={2} className={"d-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("g")}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
                 <Hr px={30} />
@@ -259,15 +300,29 @@ export const FoodList = () => {
                       {translate("fat")}
                     </Div>
                   </Grid>
-                  <Grid size={6} className={"d-right"}>
-                    <Div className={`fs-1-0rem fw-600 ${item.food_total_fat_color}`}>
-                      {numeral(item.food_total_fat).format("0,0")}
-                    </Div>
-                  </Grid>
-                  <Grid size={1} className={"d-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("g")}
-                    </Div>
+                  <Grid size={7}>
+                    <Grid container columns={12} spacing={1}>
+                      <Grid size={10} className={"d-right"}>
+                        {item.food_total_fat.length > 12 ? (
+                          <Div className={`fs-0-6rem fw-600 ${item.food_total_fat_color}`}>
+                            {numeral(item.food_total_fat).format("0,0")}
+                          </Div>
+                        ) : item.food_total_fat.length > 8 ? (
+                          <Div className={`fs-0-8rem fw-600 ${item.food_total_fat_color}`}>
+                            {numeral(item.food_total_fat).format("0,0")}
+                          </Div>
+                        ) : (
+                          <Div className={`fs-1-0rem fw-600 ${item.food_total_fat_color}`}>
+                            {numeral(item.food_total_fat).format("0,0")}
+                          </Div>
+                        )}
+                      </Grid>
+                      <Grid size={2} className={"d-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("g")}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
               </AccordionDetails>
@@ -283,7 +338,7 @@ export const FoodList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min75vh z-300"}>
+      <Paper className={"content-wrapper border-1 radius h-min75vh z-300"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {listSection()}

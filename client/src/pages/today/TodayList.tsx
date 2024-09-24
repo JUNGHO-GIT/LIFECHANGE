@@ -1,5 +1,4 @@
 // TodayList.tsx
-// Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
@@ -144,7 +143,7 @@ export const TodayList = () => {
       );
       const listFragment = (i: number) => (
         OBJECT_EXERCISE?.map((item: any, index: number) => (
-          <Card className={"border radius p-10"} key={`${index}-${i}`}>
+          <Card className={"border-1 radius p-10"} key={`${index}-${i}`}>
             <Accordion
               className={"shadow-none"}
               expanded={isExpanded.exercise.includes(index)}
@@ -153,7 +152,7 @@ export const TodayList = () => {
                 <Icons
                   name={"ChevronDown"}
                   className={"w-18 h-18 black"}
-                  onClick={(e: any) => {
+                  onClick={() => {
                     setIsExpanded((prev: any) => ({
                       ...prev,
                       exercise: prev.exercise.includes(index)
@@ -316,7 +315,7 @@ export const TodayList = () => {
       );
       const listFragment = (i: number) => (
         OBJECT_FOOD?.map((item: any, index: number) => (
-          <Card className={"border radius"} key={`${index}-${i}`}>
+          <Card className={"border-1 radius"} key={`${index}-${i}`}>
             <Accordion
               className={"shadow-none"}
               expanded={isExpanded.food.includes(index)}
@@ -325,7 +324,7 @@ export const TodayList = () => {
                 <Icons
                   name={"ChevronDown"}
                   className={"w-18 h-18 black"}
-                  onClick={(e: any) => {
+                  onClick={() => {
                     setIsExpanded((prev: any) => ({
                       ...prev,
                       food: prev.food.includes(index)
@@ -514,7 +513,7 @@ export const TodayList = () => {
       );
       const listFragment = (i: number) => (
         OBJECT_MONEY?.map((item: any, index: number) => (
-          <Card className={"border radius"} key={`${index}-${i}`}>
+          <Card className={"border-1 radius"} key={`${index}-${i}`}>
             <Accordion
               className={"shadow-none"}
               expanded={isExpanded.money.includes(index)}
@@ -523,7 +522,7 @@ export const TodayList = () => {
                 <Icons
                   name={"ChevronDown"}
                   className={"w-18 h-18 black"}
-                  onClick={(e: any) => {
+                  onClick={() => {
                     setIsExpanded((prev: any) => ({
                       ...prev,
                       money: prev.money.includes(index)
@@ -660,7 +659,7 @@ export const TodayList = () => {
       );
       const listFragment = (i: number) => (
         OBJECT_SLEEP?.map((item: any, index: number) => (
-          <Card className={"border radius"} key={`${index}-${i}`}>
+          <Card className={"border-1 radius"} key={`${index}-${i}`}>
             <Accordion
               className={"shadow-none"}
               expanded={isExpanded.sleep.includes(index)}
@@ -669,7 +668,7 @@ export const TodayList = () => {
                 <Icons
                   name={"ChevronDown"}
                   className={"w-18 h-18 black"}
-                  onClick={(e: any) => {
+                  onClick={() => {
                     setIsExpanded((prev: any) => ({
                       ...prev,
                       sleep: prev.sleep.includes(index)
@@ -823,7 +822,7 @@ export const TodayList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius h-min75vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {exerciseSection()}

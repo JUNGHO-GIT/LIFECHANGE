@@ -1,5 +1,4 @@
 // UserCategory.tsx
-// Node -> Section -> Fragment
 
 import { useState, useEffect, createRef, useRef } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
@@ -234,7 +233,7 @@ export const UserCategory = () => {
   const userCategoryNode = () => {
     // 7-1. popup
     const popupSection = (i: number) => (
-      <Card className={"w-85vw h-60vh d-row border radius p-0"} key={`${i}`}>
+      <Card className={"w-85vw h-60vh d-row border-1 radius p-0"} key={`${i}`}>
         <TableContainer className={"border-right over-x-hidden"} key={`category2-${i}`}>
           <Table>
             <TableHead className={"table-thead"}>
@@ -463,7 +462,7 @@ export const UserCategory = () => {
     // 7-2. card
     const detailSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={"border radius p-0"} key={`category1-${i}`}>
+        <Card className={"border-1 radius p-0"} key={`category1-${i}`}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -525,7 +524,7 @@ export const UserCategory = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min95vh"}>
+      <Paper className={"content-wrapper border-1 radius h-min95vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {detailSection()}

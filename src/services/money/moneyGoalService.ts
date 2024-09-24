@@ -118,8 +118,8 @@ export const list = async (
 
       return {
         ...goal,
-        money_total_income: String(moneyTotalIncome),
-        money_total_expense: String(moneyTotalExpense)
+        money_total_income: String(moneyTotalIncome.toFixed(0)),
+        money_total_expense: String(moneyTotalExpense.toFixed(0)),
       };
     }));
     statusResult = "success";

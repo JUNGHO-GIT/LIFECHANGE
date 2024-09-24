@@ -1,5 +1,4 @@
 // FindListFilter.tsx
-// Node -> Section -> Fragment
 
 import { useCommonValue, useTranslate } from "@imports/ImportHooks";
 import { Icons, Input, Div } from "@imports/ImportComponents";

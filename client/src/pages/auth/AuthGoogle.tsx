@@ -1,5 +1,4 @@
 // AuthGoogle.tsx
-// Node -> Section -> Fragment
 
 import { useEffect } from "@imports/ImportReacts";
 import { useCommonValue } from "@imports/ImportHooks";
@@ -51,7 +50,7 @@ export const AuthGoogle = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min95vh"}>
+      <Paper className={"content-wrapper border-1 radius h-min95vh"}>
         {empty()}
       </Paper>
     );

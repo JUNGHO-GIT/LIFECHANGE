@@ -1,5 +1,4 @@
 // BottomNav.tsx
-// Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
@@ -197,7 +196,7 @@ export const BottomNav = () => {
 
     // 2. return
     return (
-      <Paper className={"layout-wrapper p-sticky bottom-0 h-8vh radius border"}>
+      <Paper className={"layout-wrapper p-sticky bottom-0 h-8vh border-1 radius"}>
         <Grid container spacing={2}>
           <Grid size={12} className={"d-center"}>
             {tabsSection()}

@@ -1,5 +1,4 @@
 // UserAppInfo.tsx
-// Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue } from "@imports/ImportHooks";
@@ -60,7 +59,7 @@ export const UserAppInfo = () => {
     // 7-2. card
     const detailSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={"border radius shadow-none p-0"} key={i}>
+        <Card className={"border-1 radius shadow-none p-0"} key={i}>
           <TableContainer className={"over-hidden"}>
             <Table>
               <TableBody className={"table-tbody"}>
@@ -116,7 +115,7 @@ export const UserAppInfo = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper d-center radius border h-min90vh"}>
+      <Paper className={"content-wrapper d-center border-1 radius h-min90vh"}>
         <Grid container spacing={4}>
           <Grid size={12} className={"d-center mb-30"}>
             {imageSection()}

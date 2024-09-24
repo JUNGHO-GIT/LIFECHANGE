@@ -1,7 +1,6 @@
 // ListFilter.tsx
-// Node -> Section -> Fragment
 
-import { useTranslate } from "@imports/ImportHooks";
+import { useTranslate, useCommonValue } from "@imports/ImportHooks";
 import { Select, Div } from "@imports/ImportComponents";
 import { Picker } from "@imports/ImportContainers";
 import { MenuItem, Grid } from "@imports/ImportMuis";
@@ -19,6 +18,9 @@ export const ListFilter = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
+  const {
+    PATH,
+  } = useCommonValue();
   const {
     translate
   } = useTranslate();
@@ -60,16 +62,25 @@ export const ListFilter = (
         setEXIST={setState?.setEXIST}
       />
     );
-    // 3. return
+
+    // 10. return
     return (
-      <Grid container spacing={1}>
-        <Grid size={3}>
-          {sortSection()}
+      PATH.includes("/today") ? (
+        <Grid container spacing={1}>
+          <Grid size={12}>
+            {pickerSection()}
+          </Grid>
         </Grid>
-        <Grid size={9}>
-          {pickerSection()}
+      ) : (
+        <Grid container spacing={1}>
+          <Grid size={3}>
+            {sortSection()}
+          </Grid>
+          <Grid size={9}>
+            {pickerSection()}
+          </Grid>
         </Grid>
-      </Grid>
+      )
     );
   };
 

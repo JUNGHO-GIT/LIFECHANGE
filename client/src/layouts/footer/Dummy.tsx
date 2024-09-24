@@ -1,5 +1,4 @@
 // Dummy.tsx
-// Node -> Section -> Fragment
 
 import { useTranslate } from "@imports/ImportHooks";
 import { numeral } from "@imports/ImportLibs";
