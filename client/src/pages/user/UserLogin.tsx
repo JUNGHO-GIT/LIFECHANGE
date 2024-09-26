@@ -230,7 +230,7 @@ export const UserLogin = () => {
                 }}
               />
             </Grid>
-            <Grid size={6} className={"d-right"}>
+            <Grid size={6} className={"d-row-right"}>
               <Div className={"d-center fs-0-8rem"}>
                 {translate("autoLogin")}
                 <Checkbox
@@ -243,7 +243,7 @@ export const UserLogin = () => {
                 />
               </Div>
             </Grid>
-            <Grid size={6} className={"d-left"}>
+            <Grid size={6} className={"d-row-left"}>
               <Div className={"fs-0-8rem"}>
                 {translate("saveId")}
                 <Checkbox

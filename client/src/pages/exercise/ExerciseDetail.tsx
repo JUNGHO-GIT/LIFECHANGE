@@ -411,7 +411,7 @@ export const ExerciseDetail = () => {
       const detailFragment = (i: number) => (
         <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius p-20`} key={i}>
           <Grid container spacing={2}>
-            <Grid size={6} className={"d-left"}>
+            <Grid size={6} className={"d-row-left"}>
               <Bg
                 badgeContent={i + 1}
                 bgcolor={
@@ -429,7 +429,7 @@ export const ExerciseDetail = () => {
                 }
               />
             </Grid>
-            <Grid size={6} className={"d-right"}>
+            <Grid size={6} className={"d-row-right"}>
               <Delete
                 index={i}
                 handlerDelete={handlerDelete}

@@ -133,13 +133,13 @@ export const Dummy = (
         <Grid size={3} className={"d-center"}>
           {countSection()}
         </Grid>
-        <Grid size={2} className={"d-right"}>
+        <Grid size={2} className={"d-row-right"}>
           {saveSection()}
         </Grid>
         <Grid size={2} className={"d-center"}>
           {deleteSection()}
         </Grid>
-        <Grid size={2} className={"d-left"}>
+        <Grid size={2} className={"d-row-left"}>
           {deleteAllSection()}
         </Grid>
       </Grid>

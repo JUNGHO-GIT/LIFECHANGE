@@ -458,13 +458,13 @@ export const FoodChartPie = () => {
       return (
         <Card className={"p-0"}>
           <Grid container spacing={2}>
-            <Grid size={3} className={"d-left"}>
+            <Grid size={3} className={"d-row-left"}>
               {selectFragment1()}
             </Grid>
             <Grid size={6} className={"d-center"}>
               {titleFragment()}
             </Grid>
-            <Grid size={3} className={"d-right"}>
+            <Grid size={3} className={"d-row-right"}>
               {selectFragment2()}
             </Grid>
           </Grid>

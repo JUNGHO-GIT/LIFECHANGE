@@ -216,7 +216,7 @@ export const FoodFindList = () => {
                       }}
                     />
                   </Grid>
-                  <Grid size={6} className={"d-left"}>
+                  <Grid size={6} className={"d-row-left"}>
                     {/** 1 ~ 5 글자 **/}
                     {item.food_name.length >= 1 && item.food_name.length < 6 && (
                       <Div className={"fs-1-0rem fw-600 black"}>
@@ -236,7 +236,7 @@ export const FoodFindList = () => {
                       </Div>
                     )}
                   </Grid>
-                  <Grid size={4} className={"d-right"}>
+                  <Grid size={4} className={"d-row-right"}>
                     <Div className={"fs-0-9rem fw-500 dark me-10"}>
                       {item.food_brand}
                     </Div>
@@ -253,19 +253,19 @@ export const FoodFindList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("kcal")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
-                      <Grid size={10} className={"d-right"}>
+                      <Grid size={10} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.food_kcal_color}`}>
                           {numeral(item.food_kcal).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("kc")}
                         </Div>
@@ -283,19 +283,19 @@ export const FoodFindList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("carb")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
-                      <Grid size={10} className={"d-right"}>
+                      <Grid size={10} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.food_carb_color}`}>
                           {item.food_carb}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
@@ -313,19 +313,19 @@ export const FoodFindList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("protein")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
-                      <Grid size={10} className={"d-right"}>
+                      <Grid size={10} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.food_protein_color}`}>
                           {item.food_protein}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
@@ -343,19 +343,19 @@ export const FoodFindList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("fat")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
-                      <Grid size={10} className={"d-right"}>
+                      <Grid size={10} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.food_fat_color}`}>
                           {item.food_fat}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>

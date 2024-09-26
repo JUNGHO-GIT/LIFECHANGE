@@ -132,7 +132,7 @@ export const SleepList = () => {
                       className={"w-18 h-18 black"}
                     />
                   </Grid>
-                  <Grid size={10} className={"d-left"}>
+                  <Grid size={10} className={"d-row-left"}>
                     {item.sleep_dateStart === item.sleep_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
@@ -174,19 +174,19 @@ export const SleepList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("bedTime")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
-                      <Grid size={10} className={"d-right"}>
+                      <Grid size={10} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.sleep_section[0]?.sleep_bedTime_color}`}>
                           {item.sleep_section[0]?.sleep_bedTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
@@ -204,19 +204,19 @@ export const SleepList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("wakeTime")}
                     </Div>
                   </Grid>
-                  <Grid size={7} className={"d-right"}>
+                  <Grid size={7} className={"d-row-right"}>
                     <Grid container columns={12} spacing={1}>
-                      <Grid size={10} className={"d-right"}>
+                      <Grid size={10} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.sleep_section[0]?.sleep_wakeTime_color}`}>
                           {item.sleep_section[0]?.sleep_wakeTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
@@ -234,19 +234,19 @@ export const SleepList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("sleepTime")}
                     </Div>
                   </Grid>
-                  <Grid size={7} className={"d-right"}>
+                  <Grid size={7} className={"d-row-right"}>
                     <Grid container columns={12} spacing={1}>
-                      <Grid size={10} className={"d-right"}>
+                      <Grid size={10} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.sleep_section[0]?.sleep_sleepTime_color}`}>
                           {item.sleep_section[0]?.sleep_sleepTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>

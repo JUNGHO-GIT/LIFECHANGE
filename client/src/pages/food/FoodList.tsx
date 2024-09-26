@@ -133,7 +133,7 @@ export const FoodList = () => {
                       className={"w-18 h-18 black"}
                     />
                   </Grid>
-                  <Grid size={10} className={"d-left"}>
+                  <Grid size={10} className={"d-row-left"}>
                     {item.food_dateStart === item.food_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
@@ -175,14 +175,14 @@ export const FoodList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("kcal")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
-                      <Grid size={10} className={"d-right"}>
+                      <Grid size={10} className={"d-row-right"}>
                         {item.food_total_kcal.length > 12 ? (
                           <Div className={`fs-0-6rem fw-600 ${item.food_total_kcal_color}`}>
                             {numeral(item.food_total_kcal).format("0,0")}
@@ -197,7 +197,7 @@ export const FoodList = () => {
                           </Div>
                         )}
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("kc")}
                         </Div>
@@ -215,14 +215,14 @@ export const FoodList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("carb")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
-                      <Grid size={10} className={"d-right"}>
+                      <Grid size={10} className={"d-row-right"}>
                         {item.food_total_carb.length > 12 ? (
                           <Div className={`fs-0-6rem fw-600 ${item.food_total_carb_color}`}>
                             {numeral(item.food_total_carb).format("0,0")}
@@ -237,7 +237,7 @@ export const FoodList = () => {
                           </Div>
                         )}
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
@@ -255,14 +255,14 @@ export const FoodList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("protein")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
-                      <Grid size={10} className={"d-right"}>
+                      <Grid size={10} className={"d-row-right"}>
                         {item.food_total_protein.length > 12 ? (
                           <Div className={`fs-0-6rem fw-600 ${item.food_total_protein_color}`}>
                             {numeral(item.food_total_protein).format("0,0")}
@@ -277,7 +277,7 @@ export const FoodList = () => {
                           </Div>
                         )}
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
@@ -295,14 +295,14 @@ export const FoodList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("fat")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
-                      <Grid size={10} className={"d-right"}>
+                      <Grid size={10} className={"d-row-right"}>
                         {item.food_total_fat.length > 12 ? (
                           <Div className={`fs-0-6rem fw-600 ${item.food_total_fat_color}`}>
                             {numeral(item.food_total_fat).format("0,0")}
@@ -317,7 +317,7 @@ export const FoodList = () => {
                           </Div>
                         )}
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>

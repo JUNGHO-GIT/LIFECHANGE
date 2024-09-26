@@ -269,7 +269,7 @@ export const UserDetail = () => {
               />
             </Grid>
             {/** 포함 여부 **/}
-            <Grid size={12} className={"d-left"}>
+            <Grid size={12} className={"d-row-left"}>
               <Div className={"fs-0-7rem fw-500 dark ms-10"}>
                 {translate("includingExclusions")}
               </Div>

@@ -132,7 +132,7 @@ export const FoodGoalList = () => {
                       className={"w-18 h-18 black"}
                     />
                   </Grid>
-                  <Grid size={10} className={"d-left"}>
+                  <Grid size={10} className={"d-row-left"}>
                     {item.food_goal_dateStart === item.food_goal_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
@@ -174,7 +174,7 @@ export const FoodGoalList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("kcal")}
                     </Div>
@@ -182,12 +182,12 @@ export const FoodGoalList = () => {
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
                       {/** goal **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         {item.food_goal_kcal.length > 12 ? (
                           <Div className={`fs-0-6rem fw-600 ${item.food_goal_kcal_color}`}>
                             {numeral(item.food_goal_kcal).format("0,0")}
@@ -202,18 +202,18 @@ export const FoodGoalList = () => {
                           </Div>
                         )}
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("kc")}
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         {item.food_total_kcal.length > 12 ? (
                           <Div className={`fs-0-6rem fw-600 ${item.food_total_kcal_color}`}>
                             {numeral(item.food_total_kcal).format("0,0")}
@@ -228,18 +228,18 @@ export const FoodGoalList = () => {
                           </Div>
                         )}
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("kc")}
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         {item.food_diff_kcal.length > 12 ? (
                           <Div className={`fs-0-6rem fw-600 ${item.food_diff_kcal_color}`}>
                             {numeral(item.food_diff_kcal).format("+0,0")}
@@ -254,7 +254,7 @@ export const FoodGoalList = () => {
                           </Div>
                         )}
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("kc")}
                         </Div>
@@ -272,7 +272,7 @@ export const FoodGoalList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("carb")}
                     </Div>
@@ -280,12 +280,12 @@ export const FoodGoalList = () => {
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
                       {/** goal **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         {item.food_goal_carb.length > 12 ? (
                           <Div className={`fs-0-6rem fw-600 ${item.food_goal_carb_color}`}>
                             {numeral(item.food_goal_carb).format("0,0")}
@@ -300,18 +300,18 @@ export const FoodGoalList = () => {
                           </Div>
                         )}
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         {item.food_total_carb.length > 12 ? (
                           <Div className={`fs-0-6rem fw-600 ${item.food_total_carb_color}`}>
                             {numeral(item.food_total_carb).format("0,0")}
@@ -326,18 +326,18 @@ export const FoodGoalList = () => {
                           </Div>
                         )}
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         {item.food_diff_carb.length > 12 ? (
                           <Div className={`fs-0-6rem fw-600 ${item.food_diff_carb_color}`}>
                             {numeral(item.food_diff_carb).format("+0,0")}
@@ -352,7 +352,7 @@ export const FoodGoalList = () => {
                           </Div>
                         )}
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
@@ -370,7 +370,7 @@ export const FoodGoalList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("protein")}
                     </Div>
@@ -378,12 +378,12 @@ export const FoodGoalList = () => {
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
                       {/** goal **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         {item.food_goal_protein.length > 12 ? (
                           <Div className={`fs-0-6rem fw-600 ${item.food_goal_protein_color}`}>
                             {numeral(item.food_goal_protein).format("0,0")}
@@ -398,18 +398,18 @@ export const FoodGoalList = () => {
                           </Div>
                         )}
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         {item.food_total_protein.length > 12 ? (
                           <Div className={`fs-0-6rem fw-600 ${item.food_total_protein_color}`}>
                             {numeral(item.food_total_protein).format("0,0")}
@@ -424,18 +424,18 @@ export const FoodGoalList = () => {
                           </Div>
                         )}
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         {item.food_diff_protein.length > 12 ? (
                           <Div className={`fs-0-6rem fw-600 ${item.food_diff_protein_color}`}>
                             {numeral(item.food_diff_protein).format("+0,0")}
@@ -450,7 +450,7 @@ export const FoodGoalList = () => {
                           </Div>
                         )}
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
@@ -468,7 +468,7 @@ export const FoodGoalList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("fat")}
                     </Div>
@@ -476,12 +476,12 @@ export const FoodGoalList = () => {
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
                       {/** goal **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         {item.food_goal_fat.length > 12 ? (
                           <Div className={`fs-0-6rem fw-600 ${item.food_goal_fat_color}`}>
                             {numeral(item.food_goal_fat).format("0,0")}
@@ -496,18 +496,18 @@ export const FoodGoalList = () => {
                           </Div>
                         )}
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         {item.food_total_fat.length > 12 ? (
                           <Div className={`fs-0-6rem fw-600 ${item.food_total_fat_color}`}>
                             {numeral(item.food_total_fat).format("0,0")}
@@ -522,18 +522,18 @@ export const FoodGoalList = () => {
                           </Div>
                         )}
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         {item.food_diff_fat.length > 12 ? (
                           <Div className={`fs-0-6rem fw-600 ${item.food_diff_fat_color}`}>
                             {numeral(item.food_diff_fat).format("+0,0")}
@@ -548,7 +548,7 @@ export const FoodGoalList = () => {
                           </Div>
                         )}
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>

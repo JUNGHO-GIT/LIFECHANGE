@@ -42,7 +42,7 @@ export const Empty = (
                   {translate("search")}
                 </Div>
               </Grid>
-              <Grid size={10} className={"d-left"}>
+              <Grid size={10} className={"d-row-left"}>
                 <Div className={"fs-1-0rem fw-500 black"}>
                   {translate("notFound")}
                 </Div>
@@ -76,12 +76,12 @@ export const Empty = (
                   className={"w-18 h-18 black"}
                 />
               </Grid>
-              <Grid size={2} className={"d-left"}>
+              <Grid size={2} className={"d-row-left"}>
                 <Div className={"fs-0-9rem fw-600 dark"}>
                   {translate(`${extra}`)}
                 </Div>
               </Grid>
-              <Grid size={8} className={"d-left"}>
+              <Grid size={8} className={"d-row-left"}>
                 <Div className={"fs-1-0rem fw-500 black"}>
                   {translate("empty")}
                 </Div>

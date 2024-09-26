@@ -132,7 +132,7 @@ export const ExerciseList = () => {
                       className={"w-18 h-18 black"}
                     />
                   </Grid>
-                  <Grid size={10} className={"d-left"}>
+                  <Grid size={10} className={"d-row-left"}>
                     {item.exercise_dateStart === item.exercise_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
@@ -174,19 +174,19 @@ export const ExerciseList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("volume")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
-                      <Grid size={10} className={"d-right"}>
+                      <Grid size={10} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.exercise_total_volume_color}`}>
                           {numeral(item.exercise_total_volume).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("vol")}
                         </Div>
@@ -204,19 +204,19 @@ export const ExerciseList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("cardio")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
-                      <Grid size={10} className={"d-right"}>
+                      <Grid size={10} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.exercise_total_cardio_color}`}>
                           {item.exercise_total_cardio}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
@@ -234,19 +234,19 @@ export const ExerciseList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("weight")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
-                      <Grid size={10} className={"d-right"}>
+                      <Grid size={10} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.exercise_total_volume_color}`}>
                           {numeral(item.exercise_total_volume).format("0,0.0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("k")}
                         </Div>

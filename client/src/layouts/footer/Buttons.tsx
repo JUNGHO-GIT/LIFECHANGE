@@ -75,7 +75,7 @@ export const Buttons = ( { state, setState, flow }: ButtonsProps ) => {
               </Grid>
               <Grid
                 size={PATH.includes("/sleep") ? 12 : 6}
-                className={PATH.includes("/sleep") ? "d-center" : "d-right"}
+                className={PATH.includes("/sleep") ? "d-center" : "d-row-right"}
               >
                 <Btn
                   size={"large"}
@@ -91,7 +91,7 @@ export const Buttons = ( { state, setState, flow }: ButtonsProps ) => {
               </Grid>
               <Grid
                 size={PATH.includes("/sleep") ? 0 : 6}
-                className={PATH.includes("/sleep") ? "d-none" : "d-left"}
+                className={PATH.includes("/sleep") ? "d-none" : "d-row-left"}
               >
                 <Btn
                   size={"large"}

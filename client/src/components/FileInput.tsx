@@ -173,7 +173,7 @@ export const FileInput = ({ handleExistingFilesChange, ...props }: any) => {
     <Grid container spacing={2} columns={12}>
       <Grid size={8}>
         {fileList && fileList.length > 0 && fileList.map((file: any, index: number) => (
-          <Grid size={12} className={"d-left"} key={index}>
+          <Grid size={12} className={"d-row-left"} key={index}>
             <Div className={"d-center"}>
               <Img
                 key={file?.name}
@@ -195,7 +195,7 @@ export const FileInput = ({ handleExistingFilesChange, ...props }: any) => {
         ))}
       </Grid>
       <Grid size={4}>
-        <Grid size={12} className={"d-right"}>
+        <Grid size={12} className={"d-row-right"}>
           <Div
             className={"fs-1-0rem fw-600 pointer-burgundy"}
             onClick={(e: any) => handleFileAdd(e)}
@@ -204,7 +204,7 @@ export const FileInput = ({ handleExistingFilesChange, ...props }: any) => {
           </Div>
         </Grid>
         <Br px={10} />
-        <Grid size={12} className={"d-right"}>
+        <Grid size={12} className={"d-row-right"}>
           <Div
             className={"fs-1-0rem fw-600 pointer-burgundy"}
             onClick={() => handleFileDelete(0, "all")}
@@ -220,7 +220,7 @@ export const FileInput = ({ handleExistingFilesChange, ...props }: any) => {
   const existingNode = () => (
     <Grid container spacing={2} columns={12}>
       {fileExisting.map((file: any, index: number) => (
-        <Grid size={12} key={index} className={"d-left"}>
+        <Grid size={12} key={index} className={"d-row-left"}>
           <Img
             key={file}
             group={props?.group}
@@ -247,7 +247,7 @@ export const FileInput = ({ handleExistingFilesChange, ...props }: any) => {
   return (
     <Div className={"w-100p mt-10"}>
       <Div
-        className={"d-left fs-0-9rem fw-400"}
+        className={"d-row-left fs-0-9rem fw-400"}
         style={{ color: "#484848de" }}
       >
         {props?.label ? props?.required ? `${props?.label} *` : props?.label : ""}

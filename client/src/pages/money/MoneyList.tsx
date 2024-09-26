@@ -132,7 +132,7 @@ export const MoneyList = () => {
                       className={"w-18 h-18 black"}
                     />
                   </Grid>
-                  <Grid size={10} className={"d-left"}>
+                  <Grid size={10} className={"d-row-left"}>
                     {item.money_dateStart === item.money_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
@@ -174,14 +174,14 @@ export const MoneyList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("income")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
-                      <Grid size={10} className={"d-right"}>
+                      <Grid size={10} className={"d-row-right"}>
                         {item.money_total_income.length > 12 ? (
                           <Div className={`fs-0-6rem fw-600 ${item.money_total_income_color}`}>
                             {numeral(item.money_total_income).format("0.0")}
@@ -196,7 +196,7 @@ export const MoneyList = () => {
                           </Div>
                         )}
                       </Grid>
-                      <Grid size={2} className={"d-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
                         <Div className={"fs-0-6rem"}>
                           {localCurrency}
                         </Div>
@@ -214,14 +214,14 @@ export const MoneyList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("expense")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
-                      <Grid size={10} className={"d-right"}>
+                      <Grid size={10} className={"d-row-right"}>
                         {item.money_total_expense.length > 12 ? (
                           <Div className={`fs-0-6rem fw-600 ${item.money_total_expense_color}`}>
                             {numeral(item.money_total_expense).format("0.0")}
@@ -236,7 +236,7 @@ export const MoneyList = () => {
                           </Div>
                         )}
                       </Grid>
-                      <Grid size={2} className={"d-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
                         <Div className={"fs-0-6rem"}>
                           {localCurrency}
                         </Div>

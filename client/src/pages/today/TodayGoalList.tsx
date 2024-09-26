@@ -183,7 +183,7 @@ export const TodayGoalList = () => {
                       className={"w-18 h-18 black"}
                     />
                   </Grid>
-                  <Grid size={10} className={"d-left"}>
+                  <Grid size={10} className={"d-row-left"}>
                     {item.exercise_goal_dateStart === item.exercise_goal_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
@@ -225,7 +225,7 @@ export const TodayGoalList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("exerciseCount")}
                     </Div>
@@ -233,49 +233,49 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
                       {/** goal **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.exercise_goal_count_color}`}>
                           {numeral(item.exercise_goal_count).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("c")}
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.exercise_total_count_color}`}>
                           {numeral(item.exercise_total_count).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("c")}
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_count_color}`}>
                           {numeral(item.exercise_diff_count).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("c")}
                         </Div>
@@ -293,7 +293,7 @@ export const TodayGoalList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("volume")}
                     </Div>
@@ -301,49 +301,49 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
                       {/** goal **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.exercise_goal_volume_color}`}>
                           {numeral(item.exercise_goal_volume).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("vol")}
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.exercise_total_volume_color}`}>
                           {numeral(item.exercise_total_volume).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("vol")}
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_volume_color}`}>
                           {numeral(item.exercise_diff_volume).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("vol")}
                         </Div>
@@ -361,7 +361,7 @@ export const TodayGoalList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("cardio")}
                     </Div>
@@ -369,49 +369,49 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
                       {/** goal **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.exercise_goal_cardio_color}`}>
                           {item.exercise_goal_cardio}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("min")}
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.exercise_total_cardio_color}`}>
                           {item.exercise_total_cardio}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("min")}
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_cardio_color}`}>
                           {item.exercise_diff_cardio}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("min")}
                         </Div>
@@ -429,7 +429,7 @@ export const TodayGoalList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("weight")}
                     </Div>
@@ -437,49 +437,49 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
                       {/** goal **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.exercise_goal_weight_color}`}>
                           {item.exercise_goal_weight}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("k")}
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.exercise_total_weight_color}`}>
                           {item.exercise_total_weight}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("k")}
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_weight_color}`}>
                           {item.exercise_diff_weight}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("k")}
                         </Div>
@@ -549,7 +549,7 @@ export const TodayGoalList = () => {
                       className={"w-18 h-18 black"}
                     />
                   </Grid>
-                  <Grid size={10} className={"d-left"}>
+                  <Grid size={10} className={"d-row-left"}>
                     {item.food_goal_dateStart === item.food_goal_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
@@ -591,7 +591,7 @@ export const TodayGoalList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("kcal")}
                     </Div>
@@ -599,49 +599,49 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
                       {/** goal **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.food_goal_kcal_color}`}>
                           {numeral(item.food_goal_kcal).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("kc")}
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.food_total_kcal_color}`}>
                           {numeral(item.food_total_kcal).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("kc")}
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.food_diff_kcal_color}`}>
                           {numeral(item.food_diff_kcal).format("+0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("kc")}
                         </Div>
@@ -659,7 +659,7 @@ export const TodayGoalList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("carb")}
                     </Div>
@@ -667,49 +667,49 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
                       {/** goal **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.food_goal_carb_color}`}>
                           {numeral(item.food_goal_carb).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.food_total_carb_color}`}>
                           {numeral(item.food_total_carb).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.food_diff_carb_color}`}>
                           {numeral(item.food_diff_carb).format("+0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
@@ -727,7 +727,7 @@ export const TodayGoalList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("protein")}
                     </Div>
@@ -735,49 +735,49 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
                       {/** goal **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.food_goal_protein_color}`}>
                           {item.food_goal_protein}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.food_total_protein_color}`}>
                           {numeral(item.food_total_protein).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.food_diff_protein_color}`}>
                           {numeral(item.food_diff_protein).format("+0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
@@ -795,7 +795,7 @@ export const TodayGoalList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("fat")}
                     </Div>
@@ -803,49 +803,49 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
                       {/** goal **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.food_goal_fat_color}`}>
                           {item.food_goal_weight}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.food_total_fat_color}`}>
                           {numeral(item.food_total_fat).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.food_diff_fat_color}`}>
                           {numeral(item.food_diff_fat).format("+0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
@@ -915,7 +915,7 @@ export const TodayGoalList = () => {
                       className={"w-18 h-18 black"}
                     />
                   </Grid>
-                  <Grid size={10} className={"d-left"}>
+                  <Grid size={10} className={"d-row-left"}>
                     {item.money_goal_dateStart === item.money_goal_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
@@ -957,7 +957,7 @@ export const TodayGoalList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("income")}
                     </Div>
@@ -965,49 +965,49 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
                       {/** goal **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.money_goal_income_color}`}>
                           {numeral(item.money_goal_income).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {localCurrency}
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.money_total_income_color}`}>
                           {numeral(item.money_total_income).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {localCurrency}
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.money_diff_income_color}`}>
                           {numeral(item.money_diff_income).format("+0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {localCurrency}
                         </Div>
@@ -1025,7 +1025,7 @@ export const TodayGoalList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("expense")}
                     </Div>
@@ -1033,49 +1033,49 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
                       {/** goal **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.money_goal_expense_color}`}>
                           {numeral(item.money_goal_expense).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {localCurrency}
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.money_total_expense_color}`}>
                           {numeral(item.money_total_expense).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {localCurrency}
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.money_diff_expense_color}`}>
                           {numeral(item.money_diff_expense).format("+0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {localCurrency}
                         </Div>
@@ -1145,7 +1145,7 @@ export const TodayGoalList = () => {
                       className={"w-18 h-18 black"}
                     />
                   </Grid>
-                  <Grid size={10} className={"d-left"}>
+                  <Grid size={10} className={"d-row-left"}>
                     {item.sleep_goal_dateStart === item.sleep_goal_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
@@ -1187,7 +1187,7 @@ export const TodayGoalList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("bedTime")}
                     </Div>
@@ -1195,49 +1195,49 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
                       {/** goal **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.sleep_goal_bedTime_color}`}>
                           {item.sleep_goal_bedTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.sleep_bedTime_color}`}>
                           {item.sleep_bedTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.sleep_diff_bedTime_color}`}>
                           {item.sleep_diff_bedTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
@@ -1255,7 +1255,7 @@ export const TodayGoalList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("wakeTime")}
                     </Div>
@@ -1263,49 +1263,49 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
                       {/** goal **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.sleep_goal_wakeTime_color}`}>
                           {item.sleep_goal_wakeTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.sleep_wakeTime_color}`}>
                           {item.sleep_wakeTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.sleep_diff_wakeTime_color}`}>
                           {item.sleep_diff_wakeTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
@@ -1323,7 +1323,7 @@ export const TodayGoalList = () => {
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("sleepTime")}
                     </Div>
@@ -1331,49 +1331,49 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container columns={12} spacing={1}>
                       {/** goal **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.sleep_goal_sleepTime_color}`}>
                           {item.sleep_goal_sleepTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.sleep_sleepTime_color}`}>
                           {item.sleep_sleepTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={8} className={"d-right"}>
+                      <Grid size={8} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.sleep_diff_sleepTime_color}`}>
                           {item.sleep_diff_sleepTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-right"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
