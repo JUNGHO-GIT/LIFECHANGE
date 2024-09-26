@@ -43,18 +43,10 @@ export const AuthGoogle = () => {
   }, []);
 
   // 7. authGoogle ---------------------------------------------------------------------------------
-  const authGoogleNode = () => {
-    // 1. empty
-    const empty = () => (
-      null
-    );
-    // 7-10. return
-    return (
-      <Paper className={"content-wrapper border-1 radius h-min95vh"}>
-        {empty()}
-      </Paper>
-    );
-  };
+  const authGoogleNode = () => (
+    <Paper className={"content-wrapper border-1 radius h-min95vh"}>
+    </Paper>
+  );
 
   // 10. return ------------------------------------------------------------------------------------
   return (

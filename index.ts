@@ -24,6 +24,7 @@ import { router as sleepGoalRouter } from "@routers/sleep/sleepGoalRouter";
 import { router as userSyncRouter } from "@routers/user/userSyncRouter";
 import { router as userRouter } from "@routers/user/userRouter";
 import { router as googleRouter } from "@routers/auth/googleRouter";
+import { router as admobRouter } from "@routers/auth/admobRouter";
 
 // -------------------------------------------------------------------------------------------------
 dotenv.config();
@@ -116,3 +117,4 @@ app.use(`${preFix}/sleep`, sleepRouter);
 app.use(`${preFix}/user/sync`, userSyncRouter);
 app.use(`${preFix}/user`, userRouter);
 app.use(`${preFix}/auth/google`, googleRouter);
+app.use(`${preFix}/auth/admob`, admobRouter);

@@ -55,7 +55,7 @@ import {
 } from "@imports/ImportPages";
 
 import {
-  AuthError, AuthGoogle, AuthPrivacy
+  AuthError, AuthGoogle, AuthPrivacy,
 } from "@imports/ImportPages";
 
 // -------------------------------------------------------------------------------------------------
