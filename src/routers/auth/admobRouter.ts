@@ -7,7 +7,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // 4. app-ads.txt ----------------------------------------------------------------------------------
-router.get("/app-ads.txt", async (req: Request, res: Response) => {
+router.get("/", async (req: Request, res: Response) => {
   try {
     res.sendFile("app-ads.txt", { root: "./src/assets/auth/" });
   }
