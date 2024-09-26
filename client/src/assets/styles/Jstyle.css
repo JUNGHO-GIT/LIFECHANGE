@@ -1,6 +1,7 @@
 @charset "UTF-8";
 
 /** 0. width (percent) ****************************************************************************/
+.w-auto {width: auto !important;}
 .w-0p {width: 0% !important;}
 .w-1p {width: 1% !important;}
 .w-2p {width: 2% !important;}
@@ -204,6 +205,7 @@
 .w-200p {width: 200% !important;}
 
 /** 0. height (percent) ***************************************************************************/
+.h-auto {height: auto !important;}
 .h-0p {height: 0% !important;}
 .h-1p {height: 1% !important;}
 .h-2p {height: 2% !important;}
@@ -11511,6 +11513,10 @@
   box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.1) !important;
   transition: box-shadow 0.3s ease !important;
 }
+.drop-shadow {
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)) !important;
+  transition: filter 0.3s ease !important;
+}
 
 /** 97. radius ************************************************************************************/
 .radius-none {
@@ -11821,29 +11827,29 @@
 }
 
 .light {
-  color: #e1e2e5 !important;
+  color: #f8f8f8 !important;
 }
 .pointer-light:hover {
   cursor: pointer !important;
-  color: #e1e2e5 !important;
+  color: #f8f8f8 !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 .bg-light {
-  background-color: #e1e2e5 !important;
+  background-color: #f8f8f8 !important;
 }
 
 .light-grey {
-  color: #D1D5DB !important;
+  color: #dbdbdb !important;
 }
 .pointer-light-grey:hover {
   cursor: pointer !important;
-  color: #D1D5DB !important;
+  color: #dbdbdb !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 .bg-light-grey {
-  background-color: #D1D5DB !important;
+  background-color: #dbdbdb !important;
 }
 
 .grey {
