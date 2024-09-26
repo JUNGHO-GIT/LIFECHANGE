@@ -166,7 +166,7 @@ export const MoneyList = () => {
               </AccordionSummary>
               <AccordionDetails>
                 {/** row 1 **/}
-                <Grid container spacing={1}>
+                <Grid container spacing={2} columns={12}>
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"money2"}
@@ -206,7 +206,7 @@ export const MoneyList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 2 **/}
-                <Grid container spacing={1}>
+                <Grid container spacing={2} columns={12}>
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"money2"}

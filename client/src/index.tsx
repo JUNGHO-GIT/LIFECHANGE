@@ -1,6 +1,5 @@
 // index.tsx
 
-import "./index.css";
 import "react-calendar/dist/Calendar.css";
 import "@styles/Calendar.css";
 import "@styles/Chart.css";
@@ -9,6 +8,7 @@ import "@styles/Components.css";
 import "@styles/Core.css";
 import "@styles/Error.css";
 import "@styles/Jstyle.css";
+import "./index.css";
 
 import {
   useLocation, ReactDOM, BrowserRouter, Routes, Route

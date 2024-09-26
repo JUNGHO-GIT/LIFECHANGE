@@ -166,7 +166,7 @@ export const SleepList = () => {
               </AccordionSummary>
               <AccordionDetails>
                 {/** row 1 **/}
-                <Grid container spacing={1}>
+                <Grid container spacing={2} columns={12}>
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"sleep2"}
@@ -196,7 +196,7 @@ export const SleepList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 2 **/}
-                <Grid container spacing={1}>
+                <Grid container spacing={2} columns={12}>
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"sleep3"}
@@ -226,7 +226,7 @@ export const SleepList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 3 **/}
-                <Grid container spacing={1}>
+                <Grid container spacing={2} columns={12}>
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"sleep4"}

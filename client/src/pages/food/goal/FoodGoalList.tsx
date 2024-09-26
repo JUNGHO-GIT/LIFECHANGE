@@ -166,7 +166,7 @@ export const FoodGoalList = () => {
               </AccordionSummary>
               <AccordionDetails>
                 {/** row 1 **/}
-                <Grid container spacing={1}>
+                <Grid container spacing={2} columns={12}>
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"food2"}
@@ -264,7 +264,7 @@ export const FoodGoalList = () => {
                 </Grid>
                 <Hr px={20} />
                 {/** row 2 **/}
-                <Grid container spacing={1}>
+                <Grid container spacing={2} columns={12}>
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"food3"}
@@ -362,7 +362,7 @@ export const FoodGoalList = () => {
                 </Grid>
                 <Hr px={20} />
                 {/** row 3 **/}
-                <Grid container spacing={1}>
+                <Grid container spacing={2} columns={12}>
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"food4"}
@@ -460,7 +460,7 @@ export const FoodGoalList = () => {
                 </Grid>
                 <Hr px={20} />
                 {/** row 4 **/}
-                <Grid container spacing={1}>
+                <Grid container spacing={2} columns={12}>
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"food5"}

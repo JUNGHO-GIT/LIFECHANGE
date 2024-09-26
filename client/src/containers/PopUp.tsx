@@ -108,7 +108,6 @@ export const PopUp = (props: any) => {
     <Popover
       {...bindPopover(popupState)}
       id={"popover"}
-      className={props?.className}
       open={popupState.isOpen}
       anchorEl={null}
       // @ts-ignore
@@ -126,6 +125,7 @@ export const PopUp = (props: any) => {
         vertical: "center",
         horizontal: "center",
       }}
+      className={props?.className}
       slotProps={{
         paper: {
           style: {

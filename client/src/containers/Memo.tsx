@@ -44,7 +44,7 @@ export const Memo = (
                   fontSize: "inherit",
                   fontWeight: "inherit"
                 }}
-                className={"w-86vw h-55vh border p-10"}
+                className={"w-86vw h-55vh border-1 p-10"}
                 value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
                 onChange={(e: any) => {
                   const newContent = e.target.value;

@@ -112,58 +112,57 @@ export const UserCategory = () => {
 
   // 4-1. handler ----------------------------------------------------------------------------------
   const handlerAdd = (type: string) => {
-  if (type === "part") {
-    setOBJECT((prev: any) => {
-      const updatedObject = {
-        ...prev,
-        [dataType]: [
-          ...prev[dataType],
-          {
-            [`${dataType}_part`]: ""
-          }
-        ]
-      };
-      REFS.current = {
-        ...REFS.current,
-        [dataType]: updatedObject[dataType].map((_: any, idx: number) =>
-          REFS.current[dataType]?.[idx] || {
-            [`${dataType}_part`]: createRef()
-          }
-        )
-      };
-      return updatedObject;
-    });
-  }
-  else if (type === "title") {
-    setOBJECT((prev: any) => {
-      const updatedObject = {
-        ...prev,
-        [dataType]: [
-          ...prev[dataType]?.slice(0, selectedIdx.category2Idx),
-          {
-            ...prev[dataType]?.[selectedIdx.category2Idx],
-            [`${dataType}_title`]: [
-              ...prev[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`],
-              ""
-            ]
-          },
-          ...prev[dataType]?.slice(selectedIdx.category2Idx + 1)
-        ]
-      };
-      REFS.current = {
-        ...REFS.current,
-        [dataType]: updatedObject[dataType].map((part: any, idx: number) => ({
-          ...REFS.current[dataType]?.[idx],
-          [`${dataType}_title`]: part[`${dataType}_title`].map((_: any, titleIdx: number) =>
-            REFS.current[dataType]?.[idx]?.[`${dataType}_title`]?.[titleIdx] || createRef()
+    if (type === "part") {
+      setOBJECT((prev: any) => {
+        const updatedObject = {
+          ...prev,
+          [dataType]: [
+            ...prev[dataType],
+            {
+              [`${dataType}_part`]: ""
+            }
+          ]
+        };
+        REFS.current = {
+          ...REFS.current,
+          [dataType]: updatedObject[dataType].map((_: any, idx: number) =>
+            REFS.current[dataType]?.[idx] || {
+              [`${dataType}_part`]: createRef()
+            }
           )
-        }))
-      };
-      return updatedObject;
-    });
-  }
-};
-
+        };
+        return updatedObject;
+      });
+    }
+    else if (type === "title") {
+      setOBJECT((prev: any) => {
+        const updatedObject = {
+          ...prev,
+          [dataType]: [
+            ...prev[dataType]?.slice(0, selectedIdx.category2Idx),
+            {
+              ...prev[dataType]?.[selectedIdx.category2Idx],
+              [`${dataType}_title`]: [
+                ...prev[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`],
+                ""
+              ]
+            },
+            ...prev[dataType]?.slice(selectedIdx.category2Idx + 1)
+          ]
+        };
+        REFS.current = {
+          ...REFS.current,
+          [dataType]: updatedObject[dataType].map((part: any, idx: number) => ({
+            ...REFS.current[dataType]?.[idx],
+            [`${dataType}_title`]: part[`${dataType}_title`].map((_: any, titleIdx: number) =>
+              REFS.current[dataType]?.[idx]?.[`${dataType}_title`]?.[titleIdx] || createRef()
+            )
+          }))
+        };
+        return updatedObject;
+      });
+    }
+  };
 
   // 4-2. handler ----------------------------------------------------------------------------------
   const handlerRename = (type: string, index: number) => {
@@ -245,7 +244,7 @@ export const UserCategory = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT[dataType]?.map((item: any, index: number) => (index > 0) && (
-                <TableRow key={index} className={"table-tbody-tr border-bottom"}>
+                <TableRow key={index} className={"table-tbody-tr border-bottom-1"}>
                   <TableCell className={selectedIdx.category2Idx === index ? "bg-light" : ""}>
                     <Div className={"d-center"}>
                       <Div className={"fs-0-9rem ms-auto"}>
@@ -290,10 +289,10 @@ export const UserCategory = () => {
                           }}
                         />
                       </Div>
-                      <Div className={"fs-0-9rem ms-auto d-row"}>
+                      <Div className={"fs-0-9rem ms-auto d-row-right"}>
                         <Icons
                           name={"Search"}
-                          className={"w-14 h-14 black me-2"}
+                          className={"w-12 h-12 black"}
                           onClick={() => {
                             setSelectedIdx((prev: any) => ({
                               ...prev,
@@ -303,7 +302,7 @@ export const UserCategory = () => {
                         />
                         <Icons
                           name={"Pencil"}
-                          className={"w-14 h-14 navy me-2"}
+                          className={"w-12 h-12 navy"}
                           onClick={() => {
                             setSelectedIdx((prev: any) => ({
                               ...prev,
@@ -314,7 +313,7 @@ export const UserCategory = () => {
                         />
                         <Icons
                           name={"Trash"}
-                          className={"w-14 h-14 burgundy me-2"}
+                          className={"w-12 h-12 burgundy"}
                           onClick={() => {
                             setSelectedIdx((prev: any) => ({
                               ...prev,
@@ -336,7 +335,7 @@ export const UserCategory = () => {
                     <Icons
                       key={"Plus"}
                       name={"Plus"}
-                      className={"w-14 h-14"}
+                      className={"w-12 h-12"}
                       onClick={() => {
                         handlerAdd("part");
                       }}
@@ -359,7 +358,7 @@ export const UserCategory = () => {
               </TableHead>
               <TableBody className={"table-tbody"}>
                 {OBJECT[dataType]?.[selectedIdx?.category2Idx]?.[`${dataType}_title`]?.map((item: any, index: number) => (index > 0) && (
-                  <TableRow key={index} className={"table-tbody-tr border-bottom"}>
+                  <TableRow key={index} className={"table-tbody-tr border-bottom-1"}>
                     <TableCell>
                       <Div className={"d-center"}>
                         <Div className={"fs-0-9rem ms-auto"}>
@@ -408,10 +407,10 @@ export const UserCategory = () => {
                             }}
                           />
                         </Div>
-                        <Div className={"fs-0-9rem ms-auto d-row"}>
+                        <Div className={"fs-0-9rem ms-auto d-row-right"}>
                           <Icons
                             name={"Pencil"}
-                            className={"w-14 h-14 navy"}
+                            className={"w-12 h-12 navy"}
                             onClick={() => {
                               setSelectedIdx((prev: any) => ({
                                 ...prev,
@@ -422,7 +421,7 @@ export const UserCategory = () => {
                           />
                           <Icons
                             name={"Trash"}
-                            className={"w-14 h-14 burgundy"}
+                            className={"w-12 h-12 burgundy"}
                             onClick={() => {
                               setSelectedIdx((prev: any) => ({
                                 ...prev,
@@ -444,7 +443,7 @@ export const UserCategory = () => {
                       <Icons
                         key={"Plus"}
                         name={"Plus"}
-                        className={"w-14 h-14"}
+                        className={"w-12 h-12"}
                         onClick={() => {
                           handlerAdd("part");
                         }}
@@ -484,7 +483,7 @@ export const UserCategory = () => {
                         <PopUp
                           key={i}
                           type={"innerCenter"}
-                          position={"bottom"}
+                          position={"center"}
                           direction={"center"}
                           contents={
                             popupSection(i)

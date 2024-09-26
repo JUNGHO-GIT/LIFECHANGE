@@ -1140,7 +1140,7 @@ export const Picker = (
 
       // 1-1. 목표인 경우 (리스트)
       isGoalList ? (
-        <Grid container spacing={1}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={4} className={"d-center"}>
             {listTypeSection()}
           </Grid>
@@ -1183,7 +1183,7 @@ export const Picker = (
 
       // 2-1. 실제인 경우 (리스트)
       : isRealList ? (
-        <Grid container spacing={1}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={4} className={"d-center"}>
             {listTypeSection()}
           </Grid>

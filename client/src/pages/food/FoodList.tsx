@@ -167,7 +167,7 @@ export const FoodList = () => {
               </AccordionSummary>
               <AccordionDetails>
                 {/** row 1 **/}
-                <Grid container spacing={1}>
+                <Grid container spacing={2} columns={12}>
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"food2"}
@@ -207,7 +207,7 @@ export const FoodList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 2 **/}
-                <Grid container spacing={1}>
+                <Grid container spacing={2} columns={12}>
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"food3"}
@@ -247,7 +247,7 @@ export const FoodList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 3 **/}
-                <Grid container spacing={1}>
+                <Grid container spacing={2} columns={12}>
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"food4"}
@@ -287,7 +287,7 @@ export const FoodList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 4 **/}
-                <Grid container spacing={1}>
+                <Grid container spacing={2} columns={12}>
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"food5"}

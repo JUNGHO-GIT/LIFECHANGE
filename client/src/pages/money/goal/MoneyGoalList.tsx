@@ -21,7 +21,8 @@ export const MoneyGoalList = () => {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, localCurrency, toDetail
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT,
+    sessionId, TITLE, localCurrency, toDetail
   } = useCommonValue();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -166,7 +167,7 @@ export const MoneyGoalList = () => {
               </AccordionSummary>
               <AccordionDetails>
                 {/** row 1 **/}
-                <Grid container spacing={1}>
+                <Grid container spacing={2} columns={12}>
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"money2"}
@@ -264,7 +265,7 @@ export const MoneyGoalList = () => {
                 </Grid>
                 <Hr px={20} />
                 {/** row 2 **/}
-                <Grid container spacing={1}>
+                <Grid container spacing={2} columns={12}>
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"money2"}
