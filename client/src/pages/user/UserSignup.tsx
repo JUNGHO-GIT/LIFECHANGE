@@ -28,7 +28,7 @@ export const UserSignup = () => {
   const [OBJECT, setOBJECT] = useState<any>(User);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSendEmail = async () => {
+  const flowSendEmail = () => {
     setLOADING(true);
     if (!validate(OBJECT, "send")) {
       setLOADING(false);
@@ -77,7 +77,7 @@ export const UserSignup = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowVerifyEmail = async () => {
+  const flowVerifyEmail = () => {
     setLOADING(true);
     if (!validate(OBJECT, "verify")) {
       setLOADING(false);
@@ -161,7 +161,7 @@ export const UserSignup = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowGoogle = async () => {
+  const flowGoogle = () => {
     axios.get (`${URL_GOOGLE}/login`)
     .then((res: any) => {
       if (res.data.status === "success") {
@@ -301,6 +301,8 @@ export const UserSignup = () => {
               <Select
                 label={translate("gender")}
                 value={OBJECT.user_gender || "N"}
+                inputRef={REFS[i]?.user_gender}
+                error={ERRORS[i]?.user_gender}
                 disabled={OBJECT.user_id_verified === false}
                 onChange={(e: any) => {
                   setOBJECT((prev: any) => ({

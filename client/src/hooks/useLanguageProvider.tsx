@@ -1928,16 +1928,20 @@ export const useTranslate = () => {
       ko: "키를 입력해주세요",
       en: "Please enter Height"
     },
-    errorUserWeight: {
+    errorUserInitScale: {
       ko: "체중을 입력해주세요",
       en: "Please enter Weight"
     },
+    errorUserCurScale: {
+      ko: "현재 체중을 입력해주세요",
+      en: "Please enter Weight"
+    },
     errorUserInitProperty: {
-      ko: "초기자산을 입력해주세요",
+      ko: "초기 자산을 입력해주세요",
       en: "Please enter Initial Property"
     },
     errorUserCurProperty: {
-      ko: "현재자산을 입력해주세요",
+      ko: "현재 자산을 입력해주세요",
       en: "Please enter Current Property"
     },
   };

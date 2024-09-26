@@ -97,7 +97,7 @@ export const UserDummy = () => {
   }, [sessionId, PAGING.sort, PAGING.page, PART]);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowDummyDetail = async () => {
+  const flowDummyDetail = () => {
     const previousPART = PART;
     axios.post(`${URL_OBJECT}/dummyDetail`, {
       user_id: sessionId,
@@ -129,7 +129,7 @@ export const UserDummy = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowDummyDelete = async () => {
+  const flowDummyDelete = () => {
     const previousPART = PART;
     axios.delete(`${URL_OBJECT}/dummyDelete`, {
       data: {

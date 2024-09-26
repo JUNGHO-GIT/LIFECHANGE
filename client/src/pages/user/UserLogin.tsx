@@ -144,7 +144,7 @@ export const UserLogin = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowGoogle = async () => {
+  const flowGoogle = () => {
     axios.get(`${URL_GOOGLE}/login`)
     .then((res: any) => {
       if (res.data.status === "success") {

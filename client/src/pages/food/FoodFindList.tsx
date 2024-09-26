@@ -131,7 +131,7 @@ export const FoodFindList = () => {
   }, [checkedQueries, PAGING.page, OBJECT]);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowFind = async () => {
+  const flowFind = () => {
     setLOADING(true);
     axios.get(`${URL_OBJECT}/find/list`, {
       params: {

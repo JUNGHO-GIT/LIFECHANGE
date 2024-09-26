@@ -163,7 +163,7 @@ router.post("/signup", async (req: Request, res: Response) => {
     }
     else if (finalResult.status === "duplicated") {
       res.json({
-        msg: "duplicatedId",
+        msg: "duplicatedEmail",
         status: finalResult.status,
         result: finalResult.result,
       });
@@ -257,7 +257,7 @@ router.post("/login", async (req: Request, res: Response) => {
     }
     else if (finalResult.status === "fail") {
       res.json({
-        msg: "loginFailed",
+        msg: "theIdOrPwIsIncorrect",
         status: finalResult.status,
         admin: finalResult.admin,
         result: finalResult.result,

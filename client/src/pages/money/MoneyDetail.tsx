@@ -208,7 +208,7 @@ export const MoneyDetail = () => {
   },[COUNT?.newSectionCnt]);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = async (type: string) => {
+  const flowSave = (type: string) => {
     if (!validate(OBJECT, COUNT)) {
       setLOADING(false);
       return;
@@ -246,7 +246,7 @@ export const MoneyDetail = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowDelete = async () => {
+  const flowDelete = () => {
     if (OBJECT?._id === "") {
       alert(translate("noData"));
       return;
