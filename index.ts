@@ -117,4 +117,4 @@ app.use(`${preFix}/sleep`, sleepRouter);
 app.use(`${preFix}/user/sync`, userSyncRouter);
 app.use(`${preFix}/user`, userRouter);
 app.use(`${preFix}/auth/google`, googleRouter);
-app.use(`app-ads.txt`, admobRouter);
+app.use(`${preFix}/admob`, admobRouter);
