@@ -25,12 +25,12 @@ export const login = async () => {
   let statusResult: string = "";
 
   findResult = oAuth2Client.generateAuthUrl({
-    access_type: 'offline',
     scope: [
       'https://www.googleapis.com/auth/userinfo.profile',
       'https://www.googleapis.com/auth/userinfo.email'
     ],
-    prompt: 'consent'
+    access_type: 'offline',
+    prompt: 'consent',
   });
 
   if (!findResult) {

@@ -1,6 +1,5 @@
 // Time.tsx
 
-import { useEffect, createRef } from "@imports/ImportReacts";
 import { useCommonValue, useTranslate } from "@imports/ImportHooks";
 import { moment } from "@imports/ImportLibs";
 import { Img, Input } from "@imports/ImportComponents";
@@ -112,7 +111,7 @@ export const Time = (
         direction={"center"}
         contents={({closePopup}: any) => (
           <Card className={"w-max40vw h-max40vh"}>
-            <LocalizationProvider dateAdapter={AdapterMoment}>
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLocale}>
               <DigitalClock
                 timeStep={10}
                 ampm={false}

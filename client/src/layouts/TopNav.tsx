@@ -599,7 +599,7 @@ export const TopNav = () => {
     // 4. tabs
     const tabsSection = () => (
       <Tabs
-        value={selectedTab}
+        value={selectedTab || false}
         variant={"scrollable"}
         selectionFollowsFocus={true}
         scrollButtons={false}
