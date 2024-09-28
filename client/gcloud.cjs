@@ -40,12 +40,13 @@ const runRemoteScript = () => {
   const cmdGs = 'sudo gcloud storage cp gs://jungho-bucket/JPAGE/SERVER/build.tar.gz .';
   const cmdTar = 'sudo tar -zvxf build.tar.gz --strip-components=1';
   const cmdRm = 'sudo rm build.tar.gz';
+  const cmdCh = 'sudo chmod -R 755 /var/www/junghomun.com/JPAGE/client'
   const cmdRestart = 'sudo systemctl restart nginx';
 
-  const winCommand = `powershell -Command "ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGs} && ${cmdTar} && ${cmdRm} && ${cmdRestart}\'"
+  const winCommand = `powershell -Command "ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGs} && ${cmdTar} && ${cmdRm} && ${cmdCh} && ${cmdRestart}\'"
   `;
 
-  const linuxCommand = `ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGs} && ${cmdTar} && ${cmdRm} && ${cmdRestart}\'`;
+  const linuxCommand = `ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGs} && ${cmdTar} && ${cmdRm} && ${cmdCh} && ${cmdRestart}\'`;
 
   const sshCommand = winOrLinux === "win" ? winCommand : linuxCommand;
 
