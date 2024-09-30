@@ -1,6 +1,6 @@
 // Dial.tsx
 
-import { useState, useEffect } from "@imports/ImportReacts";
+import { useState } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
 import { Div, Icons } from "@imports/ImportComponents";
 import { SpeedDial, SpeedDialAction, SpeedDialIcon, Backdrop } from "@imports/ImportMuis";
@@ -22,14 +22,14 @@ export const Dial = (
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate,
-  } = useTranslate();
+    navigate, toDetail, PATH, localIsoCode
+  } = useCommonValue();
   const {
     dayFmt
   } = useCommonDate();
   const {
-    navigate, toDetail, PATH, localIsoCode
-  } = useCommonValue();
+    translate,
+  } = useTranslate();
 
   // 2-1. useState ---------------------------------------------------------------------------------
   const [open, setOpen] = useState(false);
@@ -308,8 +308,8 @@ export const Dial = (
             }}
           />
           <SpeedDialAction
-            key={translate("nation")}
-            tooltipTitle={translate("nation")}
+            key={translate("locale")}
+            tooltipTitle={translate("locale")}
             className={`${open ? "" : "d-none"}`}
             FabProps={{
               size: "small",

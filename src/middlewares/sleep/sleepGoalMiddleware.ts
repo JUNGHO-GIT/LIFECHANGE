@@ -2,179 +2,216 @@
 
 import { differenceInMinutes } from "date-fns";
 
-// 1. list (리스트는 gte lte) ----------------------------------------------------------------------
+// 1. list -----------------------------------------------------------------------------------------
 export const list = async (object: any) => {
 
   // 1. compareTime --------------------------------------------------------------------------------
   const compareTime = (goalParam: string, realParam: string, extra: string) => {
-    const goal = goalParam;
-    const real = realParam;
+
+    let goal: string = goalParam;
+    let real: string = realParam;
+    let diffVal: number = 0;
+    let finalResult: string = "";
+
+    // 1. bedTime, wakeTime
     if (extra === "bedTime" || extra === "wakeTime") {
       const goalDate = new Date(`1970-01-01T${goal}:00Z`);
       const realDate = new Date(`1970-01-01T${real}:00Z`);
 
-      // 밤을 넘어가는 시간 처리
-      let diff = differenceInMinutes(realDate, goalDate);
+      diffVal = differenceInMinutes(realDate, goalDate);
 
       // 차이가 음수인 경우, 절대값을 사용하여 계산
-      if (diff < 0) {
-        diff = Math.abs(diff);
+      if (diffVal < 0) {
+        diffVal = Math.abs(diffVal);
       }
 
       // HH:mm 형식으로 결과 반환
-      const hours = Math.floor(diff / 60);
-      const minutes = diff % 60;
+      const hours = Math.floor(diffVal / 60);
+      const minutes = diffVal % 60;
 
       if (goalDate > realDate) {
-        return `-${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+        finalResult = `-${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
       }
       else {
-        return `+${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+        finalResult = `+${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
       }
     }
+    // 2. sleepTime
     else if (extra === "sleepTime") {
       const goalDate = new Date(`1970-01-01T${goal}:00Z`);
       const realDate = new Date(`1970-01-01T${real}:00Z`);
 
-      let diff = differenceInMinutes(realDate, goalDate);
+      diffVal = differenceInMinutes(realDate, goalDate);
 
       // 시간 차이가 음수인 경우 절대값 적용
-      if (diff < 0) {
-        diff = Math.abs(diff);
+      if (diffVal < 0) {
+        diffVal = Math.abs(diffVal);
       }
 
-      const hours = Math.floor(diff / 60);
-      const minutes = diff % 60;
+      const hours = Math.floor(diffVal / 60);
+      const minutes = diffVal % 60;
 
       if (goalDate > realDate) {
-        return `-${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+        finalResult = `-${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
       }
       else {
-        return `+${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+        finalResult = `+${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
       }
     }
+
+    return finalResult;
   };
 
-  // 3. makeNonValueColor -------------------------------------------------------------------------
-  const makeNonValueColor = (param: string) => {
-    if (param === "0" || param === "00:00") {
-      return "grey";
+  // 3. calcNonValueColor --------------------------------------------------------------------------
+  const calcNonValueColor = (param: string) => {
+
+    let finalResult: string = "";
+
+    if (param.length > 12) {
+      finalResult = "fs-0-6rem fw-600";
+    }
+    else if (param.length > 6) {
+      finalResult = "fs-0-8rem fw-600";
     }
     else {
-      return "";
+      finalResult = "fs-1-0rem fw-600";
     }
+
+    if (param === "0" || param === "00:00") {
+      finalResult += " grey";
+    }
+    else {
+      finalResult += " black";
+    }
+
+    return finalResult;
   };
 
-  // 4. makeDiffColor ------------------------------------------------------------------------------
-  const makeDiffColor = (goalParam: string, realParam: string, extra: string) => {
-    const goal = goalParam;
-    const real = realParam;
+  // 4. calcDiffColor ------------------------------------------------------------------------------
+  const calcDiffColor = (goalParam: string, realParam: string, extra: string) => {
+
+    let goal: string = goalParam;
+    let real: string = realParam;
+    let diffVal: number = 0;
+    let finalResult: string = "";
+
+    if (goalParam.length > 12 || realParam.length > 12) {
+      finalResult = "fs-0-6rem fw-600";
+    }
+    else if (goalParam.length > 6 || realParam.length > 6) {
+      finalResult = "fs-0-8rem fw-600";
+    }
+    else {
+      finalResult = "fs-1-0rem fw-600";
+    }
+
+    // 1. bedTime, wakeTime
     if (extra === "bedTime" || extra === "wakeTime") {
-      const goalDate = new Date(`1970-01-01T${goal}Z`);
-      const realDate = new Date(`1970-01-01T${real}Z`);
-      let diffVal = 0;
+      const goalDate = new Date(`1970-01-01T${goal}:00Z`);
+      const realDate = new Date(`1970-01-01T${real}:00Z`);
+
       if (realDate < goalDate) {
         diffVal = goalDate.getTime() - realDate.getTime();
       }
       else {
         diffVal = realDate.getTime() - goalDate.getTime();
       }
+
       // 1. ~ 10분
       if (0 <= diffVal && diffVal <= 600000) {
-        return "firstScore";
+        finalResult += " firstScore";
       }
       // 2. 10분 ~ 20분
       else if (600000 < diffVal && diffVal <= 1200000) {
-        return "secondScore";
+        finalResult += " secondScore";
       }
       // 3. 20분 ~ 40분
       else if (1200000 < diffVal && diffVal <= 2400000) {
-        return "thirdScore";
+        finalResult += " thirdScore";
       }
       // 4. 40분 ~ 60분
       else if (2400000 < diffVal && diffVal <= 3600000) {
-        return "fourthScore";
+        finalResult += " fourthScore";
       }
       // 5. 60분 ~
       else {
-        return "fifthScore";
+        finalResult += " fifthScore";
       }
     }
+    // 2. sleepTime
     else if (extra === "sleepTime") {
-      const hoursGoal = parseFloat(goal?.split(":")[0]);
-      const minutesGoal = parseFloat(goal?.split(":")[1]);
-
-      const hoursReal = parseFloat(real?.split(":")[0]);
-      const minutesReal = parseFloat(real?.split(":")[1]);
-
+      const hoursGoal = parseFloat(goalParam?.split(":")[0]);
+      const hoursReal = parseFloat(realParam?.split(":")[0]);
       const hours = Math.abs(hoursGoal - hoursReal);
+      const minutesGoal = parseFloat(goalParam?.split(":")[1]);
+      const minutesReal = parseFloat(realParam?.split(":")[1]);
       const minutes = Math.abs(minutesGoal - minutesReal);
 
-      const diffVal = (hours * 60) + minutes;
+      diffVal = (hours * 60) + minutes;
 
       // 1. ~ 10분
       if (0 <= diffVal && diffVal <= 10) {
-        return "firstScore";
+        finalResult += " firstScore";
       }
       // 2. 10분 ~ 20분
       else if (10 < diffVal && diffVal <= 20) {
-        return "secondScore";
+        finalResult += " secondScore";
       }
       // 3. 20분 ~ 40분
       else if (20 < diffVal && diffVal <= 40) {
-        return "thirdScore";
+        finalResult += " thirdScore";
       }
       // 4. 40분 ~ 60분
       else if (40 < diffVal && diffVal <= 60) {
-        return "fourthScore";
+        finalResult += " fourthScore";
       }
       // 5. 60분 ~
       else {
-        return "fifthScore";
+        finalResult += " fifthScore";
       }
     }
+
+    return finalResult;
   };
 
-  // 4. result -------------------------------------------------------------------------------------
+  // 10. return ------------------------------------------------------------------------------------
   object?.result?.forEach((item: any) => {
-    Object.assign(item, {
-      sleep_bedTime_color: makeNonValueColor(
-        item?.sleep_bedTime
-      ),
-      sleep_wakeTime_color: makeNonValueColor(
-        item?.sleep_wakeTime
-      ),
-      sleep_sleepTime_color: makeNonValueColor(
-        item?.sleep_sleepTime
-      ),
-      sleep_goal_bedTime_color: makeNonValueColor(
-        item?.sleep_goal_bedTime
-      ),
-      sleep_goal_wakeTime_color: makeNonValueColor(
-        item?.sleep_goal_wakeTime
-      ),
-      sleep_goal_sleepTime_color: makeNonValueColor(
-        item?.sleep_goal_sleepTime
-      ),
-      sleep_diff_bedTime: compareTime(
-        item?.sleep_goal_bedTime, item?.sleep_bedTime, "bedTime"
-      ),
-      sleep_diff_wakeTime: compareTime(
-        item?.sleep_goal_wakeTime, item?.sleep_wakeTime, "wakeTime"
-      ),
-      sleep_diff_sleepTime: compareTime(
-        item?.sleep_goal_sleepTime, item?.sleep_sleepTime, "sleepTime"
-      ),
-      sleep_diff_bedTime_color: makeDiffColor(
-        item?.sleep_goal_bedTime, item?.sleep_bedTime, "bedTime"
-      ),
-      sleep_diff_wakeTime_color: makeDiffColor(
-        item?.sleep_goal_wakeTime, item?.sleep_wakeTime, "wakeTime"
-      ),
-      sleep_diff_sleepTime_color: makeDiffColor(
-        item?.sleep_goal_sleepTime, item?.sleep_sleepTime, "sleepTime"
-      ),
-    });
+    item.sleep_bedTime_color = calcNonValueColor(
+      item?.sleep_bedTime
+    );
+    item.sleep_wakeTime_color = calcNonValueColor(
+      item?.sleep_wakeTime
+    );
+    item.sleep_sleepTime_color = calcNonValueColor(
+      item?.sleep_sleepTime
+    );
+    item.sleep_goal_bedTime_color = calcNonValueColor(
+      item?.sleep_goal_bedTime
+    );
+    item.sleep_goal_wakeTime_color = calcNonValueColor(
+      item?.sleep_goal_wakeTime
+    );
+    item.sleep_goal_sleepTime_color = calcNonValueColor(
+      item?.sleep_goal_sleepTime
+    );
+    item.sleep_diff_bedTime = compareTime(
+      item?.sleep_goal_bedTime, item?.sleep_bedTime, "bedTime"
+    );
+    item.sleep_diff_wakeTime = compareTime(
+      item?.sleep_goal_wakeTime, item?.sleep_wakeTime, "wakeTime"
+    );
+    item.sleep_diff_sleepTime = compareTime(
+      item?.sleep_goal_sleepTime, item?.sleep_sleepTime, "sleepTime"
+    );
+    item.sleep_diff_bedTime_color = calcDiffColor(
+      item?.sleep_goal_bedTime, item?.sleep_bedTime, "bedTime"
+    );
+    item.sleep_diff_wakeTime_color = calcDiffColor(
+      item?.sleep_goal_wakeTime, item?.sleep_wakeTime, "wakeTime"
+    );
+    item.sleep_diff_sleepTime_color = calcDiffColor(
+      item?.sleep_goal_sleepTime, item?.sleep_sleepTime, "sleepTime"
+    );
   });
 
   return object;

@@ -44,7 +44,7 @@ export const AuthGoogle = () => {
 
   // 7. authGoogle ---------------------------------------------------------------------------------
   const authGoogleNode = () => (
-    <Paper className={"content-wrapper border-1 radius h-min95vh"}>
+    <Paper className={"content-wrapper border-1 radius-1 h-min95vh"}>
     </Paper>
   );
 

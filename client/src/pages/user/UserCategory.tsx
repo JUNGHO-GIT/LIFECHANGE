@@ -6,8 +6,8 @@ import { Category } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
-import { Div, Icons, Input } from "@imports/ImportComponents";
-import { PopUp } from "@imports/ImportContainers";
+import { PopUp, Input } from "@imports/ImportContainers";
+import { Div, Icons } from "@imports/ImportComponents";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
 import { TableContainer, Table, TableFooter } from "@imports/ImportMuis";
 import { TableHead, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
@@ -17,14 +17,14 @@ export const UserCategory = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate,
-  } = useTranslate();
+    location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, location_dateType
+  } = useCommonValue();
   const {
     dayFmt
   } = useCommonDate();
   const {
-    location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, location_dateType
-  } = useCommonValue();
+    translate,
+  } = useTranslate();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
@@ -155,7 +155,7 @@ export const UserCategory = () => {
           [dataType]: updatedObject[dataType].map((part: any, idx: number) => ({
             ...REFS.current[dataType]?.[idx],
             [`${dataType}_title`]: part[`${dataType}_title`].map((_: any, titleIdx: number) =>
-              REFS.current[dataType]?.[idx]?.[`${dataType}_title`]?.[titleIdx] || createRef()
+              REFS.current[dataType]?.[idx]?.[`${dataType}_title`]?.[titleIdx] || {}
             )
           }))
         };
@@ -168,7 +168,7 @@ export const UserCategory = () => {
   const handlerRename = (type: string, index: number) => {
     setIsEditable(`${dataType}_${type}_${index}`);
     setTimeout(() => {
-      REFS.current[dataType][index][`${dataType}_${type}`].current.focus();
+      REFS?.current?.[dataType]?.[index]?.[`${dataType}_${type}`]?.current?.focus();
     }, 10);
   };
 
@@ -232,8 +232,8 @@ export const UserCategory = () => {
   const userCategoryNode = () => {
     // 7-1. popup
     const popupSection = (i: number) => (
-      <Card className={"w-85vw h-60vh d-row border-1 radius p-0"} key={`${i}`}>
-        <TableContainer className={"border-right over-x-hidden"} key={`category2-${i}`}>
+      <Card className={"w-85vw h-60vh d-row border-1 radius-1 p-0"} key={`${i}`}>
+        <TableContainer className={"border-right-1 over-x-hidden"} key={`category2-${i}`}>
           <Table>
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr p-sticky top-0 z-900"}>
@@ -292,7 +292,7 @@ export const UserCategory = () => {
                       <Div className={"fs-0-9rem ms-auto d-row-right"}>
                         <Icons
                           name={"Search"}
-                          className={"w-12 h-12 black"}
+                          className={"w-12 h-12"}
                           onClick={() => {
                             setSelectedIdx((prev: any) => ({
                               ...prev,
@@ -347,7 +347,7 @@ export const UserCategory = () => {
           </Table>
         </TableContainer>
         {(dataType === "exercise" || dataType === "money") && (
-          <TableContainer className={"border-left over-x-hidden"} key={`category3-${i}`}>
+          <TableContainer className={"border-left-1 over-x-hidden"} key={`category3-${i}`}>
             <Table>
               <TableHead className={"table-thead"}>
                 <TableRow className={"table-thead-tr p-sticky top-0 z-900"}>
@@ -461,7 +461,7 @@ export const UserCategory = () => {
     // 7-2. card
     const detailSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={"border-1 radius p-0"} key={`category1-${i}`}>
+        <Card className={"border-1 radius-1 p-0"} key={`category1-${i}`}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -473,7 +473,7 @@ export const UserCategory = () => {
               </TableHead>
               <TableBody className={"table-tbody"}>
                 {Object.keys(OBJECT).map((item: any, index: number) => (
-                  <TableRow key={index} className={"table-tbody-tr border-top"}>
+                  <TableRow key={index} className={"table-tbody-tr border-top-1"}>
                     <TableCell className={`${dataType === item ? "bg-light" : ""}`}>
                       <Div className={"d-center"}>
                         <Div className={"fs-1-0rem ms-0"}>
@@ -523,7 +523,7 @@ export const UserCategory = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius h-min95vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 h-min95vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {detailSection()}

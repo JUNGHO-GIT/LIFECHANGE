@@ -7,7 +7,8 @@ import { User } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Footer, Loading } from "@imports/ImportLayouts";
-import { Input, Select, Hr, Img, Div } from "@imports/ImportComponents";
+import { Input, Select } from "@imports/ImportContainers";
+import { Hr, Img, Div } from "@imports/ImportComponents";
 import { Paper, Avatar, MenuItem, Card, Grid, Checkbox } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -15,11 +16,11 @@ export const UserDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate
-  } = useTranslate();
-  const {
     navigate, URL_OBJECT, sessionId, localCurrency,
   } = useCommonValue();
+  const {
+    translate
+  } = useTranslate();
   const {
     ERRORS, REFS, validate
   } = useValidateUser();
@@ -293,7 +294,7 @@ export const UserDetail = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
         <Grid container spacing={2}>
           <Grid size={12} className={"d-center"}>
             {imageSection()}

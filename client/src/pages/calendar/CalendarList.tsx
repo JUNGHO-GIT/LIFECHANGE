@@ -4,7 +4,7 @@ import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
 import { Calendar } from "@imports/ImportSchemas";
 import { moment, axios, CalendarReact } from "@imports/ImportLibs";
-import { Loading, Footer } from "@imports/ImportLayouts";
+import { Loading, Footer, Empty } from "@imports/ImportLayouts";
 import { Icons, Div } from "@imports/ImportComponents";
 import { Paper, Grid, Card } from "@imports/ImportMuis";
 
@@ -12,9 +12,6 @@ import { Paper, Grid, Card } from "@imports/ImportMuis";
 export const CalendarList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    translate,
-  } = useTranslate();
   const {
     navigate, PATH, URL_OBJECT, sessionId, TITLE, toDetail, localLocale
   } = useCommonValue();
@@ -71,7 +68,7 @@ export const CalendarList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, DATE.dateEnd]);
+  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
@@ -250,7 +247,7 @@ export const CalendarList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {listSection()}

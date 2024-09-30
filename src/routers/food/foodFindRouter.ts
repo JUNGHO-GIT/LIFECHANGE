@@ -2,16 +2,18 @@
 
 import express from "express";
 import { Request, Response } from "express";
-import * as findService from "@services/food/foodFindService.ts";
+import * as service from "@services/food/foodFindService";
+import * as middleware from "@middlewares/food/foodFindMiddleware";
 export const router = express.Router();
 
 // 0. list -----------------------------------------------------------------------------------------
 router.get("/list", async (req: Request, res: Response) => {
   try {
-    let finalResult = await findService.list(
+    let finalResult = await service.list (
       req.query.PAGING as any,
       req.query.isoCode as string,
     );
+    finalResult = await middleware.list(finalResult);
     if (finalResult.status === "success") {
       res.json({
         msg: "searchSuccessful",

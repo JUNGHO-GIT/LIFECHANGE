@@ -207,6 +207,36 @@ export const update = {
   },
 
   // 2. insert (기존항목 제거 + 타겟항목에 추가)
+  insert: async (
+    user_id_param: string,
+    OBJECT_param: any,
+    dateType_param: string,
+    dateStart_param: string,
+    dateEnd_param: string,
+  ) => {
+
+    const finalResult:any = await Sleep.findOneAndUpdate(
+      {
+        user_id: user_id_param,
+        sleep_dateStart: dateStart_param,
+        sleep_dateEnd: dateEnd_param,
+        ...dateType_param ? { sleep_dateType: dateType_param } : {},
+      },
+      {
+        $set: {
+          sleep_section: OBJECT_param.sleep_section,
+          sleep_updateDt: newDate,
+        },
+      },
+      {
+        upsert: true,
+        new: true
+      }
+    )
+    .lean();
+
+    return finalResult;
+  },
 
   // 3. replace (기존항목 제거 + 타겟항목을 교체)
   replace: async (

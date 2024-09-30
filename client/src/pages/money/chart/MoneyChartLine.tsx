@@ -6,10 +6,10 @@ import { MoneyLine } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { handlerY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
-import { Div, Img, Select } from "@imports/ImportComponents";
+import { Select } from "@imports/ImportContainers";
+import { Div, Img } from "@imports/ImportComponents";
 import { PopUp } from "@imports/ImportContainers";
-import { Paper, Card, MenuItem, Grid } from "@imports/ImportMuis";
-import { FormGroup, FormControlLabel, Switch } from "@imports/ImportMuis";
+import { Paper, Card, MenuItem, Grid, FormGroup, FormControlLabel, Switch } from "@imports/ImportMuis";
 import { Line, LineChart } from "recharts";
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
@@ -268,7 +268,7 @@ export const MoneyChartLine = () => {
     const headSection = () => {
       const titleFragment = () => (
         <Div className={"d-center"}>
-          <Div className={"fs-1-0rem fw-600 black"}>
+          <Div className={"fs-1-0rem fw-600"}>
             {translate("chartLine")}
           </Div>
         </Div>
@@ -336,7 +336,7 @@ export const MoneyChartLine = () => {
             <Grid size={3} className={"d-row-left"}>
               {selectFragment1()}
             </Grid>
-            <Grid size={6} className={"d-center"}>
+            <Grid size={6} className={"d-row-center"}>
               {titleFragment()}
             </Grid>
             <Grid size={3} className={"d-row-right"}>
@@ -349,12 +349,12 @@ export const MoneyChartLine = () => {
     // 7-2. chart
     const chartSection = () => {
       const chartFragment1 = (i: number) => (
-        <Card className={"border-1 radius p-20"} key={i}>
+        <Card className={"border-1 radius-1 p-20"} key={i}>
           {chartWeek()}
         </Card>
       );
       const chartFragment2 = (i: number) => (
-        <Card className={"border-1 radius p-20"} key={i}>
+        <Card className={"border-1 radius-1 p-20"} key={i}>
           {chartMonth()}
         </Card>
       );
@@ -367,7 +367,7 @@ export const MoneyChartLine = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius h-min40vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 h-min40vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {headSection()}

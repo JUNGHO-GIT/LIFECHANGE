@@ -21,7 +21,7 @@ export const Delete = (
         key={"X"}
         name={"X"}
         locked={LOCKED}
-        className={"w-20 h-20 black"}
+        className={"w-20 h-20"}
         onClick={() => {
           handlerDelete(index);
         }}

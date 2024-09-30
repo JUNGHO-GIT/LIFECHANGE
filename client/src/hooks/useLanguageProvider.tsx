@@ -660,6 +660,10 @@ export const useTranslate = () => {
     },
     // ---------------------------------------------------------------------------------------------
     // l
+    locale: {
+      ko: "언어",
+      en: "Locale"
+    },
     language: {
       ko: "언어",
       en: "Language"
@@ -1054,15 +1058,15 @@ export const useTranslate = () => {
     },
     thisWeek: {
       ko: "이번주",
-      en: "This Week"
+      en: "Week"
     },
     thisMonth: {
       ko: "이번달",
-      en: "This Month"
+      en: "Month"
     },
     thisYear: {
       ko: "올해",
-      en: "This Year"
+      en: "Year"
     },
     title: {
       ko: "소분류",

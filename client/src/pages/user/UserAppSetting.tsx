@@ -13,22 +13,31 @@ export const UserAppSetting = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
+    navigate, isAdmin, TITLE, localLocale, localLangSet
+  } = useCommonValue();
+  const {
     translate,
   } = useTranslate();
-  const {
-    navigate, isAdmin, TITLE, localLocale
-  } = useCommonValue();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [lang, setLang] = useState<string>(localLocale);
+
+  // 4. handle -------------------------------------------------------------------------------------
+  const handleChangeLanguage = (lang: string) => {
+    setLang(lang);
+    const localLang = JSON.parse(localLangSet);
+    localLang.locale = lang;
+    localStorage.setItem(`${TITLE}_localLangSet`, JSON.stringify(localLang));
+    navigate(0);
+  };
 
   // 7. userAppSetting ----------------------------------------------------------------------------
   const userAppSettingNode = () => {
     // 7-1. card
     const detailSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={"border-1 radius shadow-none p-0"} key={i}>
+        <Card className={"border-1 radius-1 shadow-none p-0"} key={i}>
           <TableContainer>
             <Table>
               <TableBody className={"table-tbody"}>
@@ -45,7 +54,7 @@ export const UserAppSetting = () => {
                   <TableCell className={"w-10vw p-15"}>
                     <Icons
                       name={"ChevronRight"}
-                      className={"w-16 h-16 black"}
+                      className={"w-16 h-16"}
                     />
                   </TableCell>
                 </TableRow>
@@ -62,11 +71,11 @@ export const UserAppSetting = () => {
                   <TableCell className={"w-10vw p-15"}>
                     <Icons
                       name={"ChevronRight"}
-                      className={"w-16 h-16 black"}
+                      className={"w-16 h-16"}
                     />
                   </TableCell>
                 </TableRow>
-                {/** list **/}
+                {/** dummy **/}
                 <TableRow
                   className={`${isAdmin !== "true" ? "d-none" : ""} pointer`}
                   onClick={() => {
@@ -79,10 +88,78 @@ export const UserAppSetting = () => {
                   <TableCell className={"w-10vw p-15"}>
                     <Icons
                       name={"ChevronRight"}
-                      className={"w-16 h-16 black"}
+                      className={"w-16 h-16"}
                     />
                   </TableCell>
                 </TableRow>
+                {/** language **/}
+                <PopUp
+                  type={"innerCenter"}
+                  position={"bottom"}
+                  direction={"center"}
+                  contents={
+                    <Div className={"d-column"}>
+                      <Div
+                        className={"d-center mb-20"}
+                        onClick={() => {
+                          handleChangeLanguage("ko")
+                        }}
+                      >
+                        <Img
+                          key={"flag1"}
+                          src={"flag1"}
+                          className={"w-24 h-24 me-15"}
+                        />
+                        <Div className={`me-15 ${lang === "ko" ? "fw-700" : ""}`}>
+                          한국어
+                        </Div>
+                        <Icons
+                          name={"Check"}
+                          className={`w-16 h-16 black ${lang === "ko" ? "" : "d-none"}`}
+                        />
+                      </Div>
+                      <Div
+                        className={"d-center"}
+                        onClick={() => {
+                          handleChangeLanguage("en")
+                        }}
+                      >
+                        <Img
+                          key={"flag2"}
+                          src={"flag2"}
+                          className={"w-24 h-24 me-15"}
+                        />
+                        <Div className={`me-15 ${lang === "en" ? "fw-700" : ""}`}>
+                          English
+                        </Div>
+                        <Icons
+                          name={"Check"}
+                          className={`w-16 h-16 black ${lang === "en" ? "" : "d-none"}`}
+                        />
+                      </Div>
+                    </Div>
+                  }
+                >
+                  {(popTrigger: any) => (
+                    <TableRow
+                      className={"pointer"}
+                      onClick={(e: any) => {
+                        popTrigger.openPopup(e.currentTarget)
+                      }}
+                    >
+                      <TableCell className={"w-90vw p-15"}>
+                        {translate("language")}
+                      </TableCell>
+                      <TableCell className={"w-10vw p-15"}>
+                        <Icons
+                          key={"ChevronRight"}
+                          name={"ChevronRight"}
+                          className={"w-16 h-16"}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </PopUp>
                 {/** app info **/}
                 <TableRow
                   className={"pointer"}
@@ -96,7 +173,7 @@ export const UserAppSetting = () => {
                   <TableCell className={"w-10vw p-15"}>
                     <Icons
                       name={"ChevronRight"}
-                      className={"w-16 h-16 black"}
+                      className={"w-16 h-16"}
                     />
                   </TableCell>
                 </TableRow>
@@ -117,7 +194,7 @@ export const UserAppSetting = () => {
                   <TableCell className={"w-10vw p-15"}>
                     <Icons
                       name={"ChevronRight"}
-                      className={"w-16 h-16 black"}
+                      className={"w-16 h-16"}
                     />
                   </TableCell>
                 </TableRow>
@@ -134,7 +211,7 @@ export const UserAppSetting = () => {
                   <TableCell className={"w-10vw p-15"}>
                     <Icons
                       name={"ChevronRight"}
-                      className={"w-16 h-16 black"}
+                      className={"w-16 h-16"}
                     />
                   </TableCell>
                 </TableRow>
@@ -149,7 +226,7 @@ export const UserAppSetting = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper d-center border-1 radius h-min90vh"}>
+      <Paper className={"content-wrapper d-center border-1 radius-1 h-min90vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {detailSection()}

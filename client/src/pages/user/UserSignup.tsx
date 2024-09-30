@@ -6,7 +6,8 @@ import { useValidateUser } from "@imports/ImportValidates";
 import { User } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { Loading } from "@imports/ImportLayouts";
-import { Input, Div, Img, Hr, Select, Btn } from "@imports/ImportComponents";
+import { Input, Select } from "@imports/ImportContainers";
+import { Div, Img, Hr, Btn } from "@imports/ImportComponents";
 import { Paper, MenuItem, Grid, Card } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -14,11 +15,11 @@ export const UserSignup = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate,
-  } = useTranslate();
-  const {
     navigate, URL_OBJECT, URL_GOOGLE, localCurrency
   } = useCommonValue();
+  const {
+    translate,
+  } = useTranslate();
   const {
     ERRORS, REFS, validate
   } = useValidateUser();
@@ -425,7 +426,7 @@ export const UserSignup = () => {
     const googleSection = () => (
       <Btn
         color={"primary"}
-        className={"w-100p fs-1-0rem bg-white black"}
+        className={"w-100p fs-1-0rem bg-white"}
         onClick={() => {
           flowGoogle();
         }}
@@ -464,7 +465,7 @@ export const UserSignup = () => {
     return (
       <>
       {LOADING && <Loading />}
-      <Paper className={"content-wrapper d-center border-1 radius h-min94vh"}>
+      <Paper className={"content-wrapper d-center border-1 radius-1 h-min94vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {titleSection()}

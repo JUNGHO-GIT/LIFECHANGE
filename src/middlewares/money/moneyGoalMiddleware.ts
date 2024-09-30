@@ -1,171 +1,184 @@
 // moneyGoalMiddleware.ts
 
-// 1. list (리스트는 gte lte) ----------------------------------------------------------------------
+// 1. list -----------------------------------------------------------------------------------------
 export const list = async (object: any) => {
 
   // 1. compareValue -------------------------------------------------------------------------------
   const compareValue = (goalParam: string, realParam: string, extra: string) => {
-    const goal = parseFloat(goalParam);
-    const real = parseFloat(realParam);
+
+    let goal: number = parseFloat(goalParam);
+    let real: number = parseFloat(realParam);
+    let finalResult: string = "";
+
     if (extra === "income") {
       if (goal > real) {
-        return `-${(parseFloat(Math.abs(goal - real).toFixed(2)).toString())}`;
+        finalResult = `-${(parseFloat(Math.abs(goal - real).toFixed(2)).toString())}`;
       }
       else {
-        return `+${(parseFloat(Math.abs(real - goal).toFixed(2)).toString())}`;
+        finalResult = `+${(parseFloat(Math.abs(real - goal).toFixed(2)).toString())}`;
       }
     }
     if (extra === "expense") {
       if (goal > real) {
-        return `-${(parseFloat(Math.abs(real - goal).toFixed(2)).toString())}`;
+        finalResult = `-${(parseFloat(Math.abs(real - goal).toFixed(2)).toString())}`;
       }
       else {
-        return `+${(parseFloat(Math.abs(real - goal).toFixed(2)).toString())}`;
+        finalResult = `+${(parseFloat(Math.abs(real - goal).toFixed(2)).toString())}`;
       }
     }
+
+    return finalResult;
   }
 
-  // 3. makeNonValueColor -------------------------------------------------------------------------
-  const makeNonValueColor = (param: string) => {
-    if (param === "0" || param === "00:00") {
-      return "grey";
+  // 3. calcNonValueColor --------------------------------------------------------------------------
+  const calcNonValueColor = (param: string) => {
+
+    let finalResult: string = "";
+
+    if (param.length > 12) {
+      finalResult = "fs-0-6rem fw-600";
+    }
+    else if (param.length > 6) {
+      finalResult = "fs-0-8rem fw-600";
     }
     else {
-      return "";
+      finalResult = "fs-1-0rem fw-600";
     }
+
+    if (param === "0" || param === "00:00") {
+      finalResult += " grey";
+    }
+    else {
+      finalResult += " black";
+    }
+
+    return finalResult;
   };
 
-  // 4. makeDiffColor ------------------------------------------------------------------------------
-  const makeDiffColor = (goalParam: string, realParam: string, extra: string) => {
-    const goal = parseFloat(goalParam);
-    const real = parseFloat(realParam);
-    if (goal === undefined || real === undefined) {
-      return "fifthScore";
-    }
-    else if (extra === "income") {
-      const percent = (Math.abs(goal - real) / goal) * 100;
-      if (goal > real) {
-        if (percent > 0 && percent <= 1) {
-          return "firstScore";
-        }
-        // 2. 1% ~ 10%
-        else if (percent > 1 && percent <= 10) {
-          return "secondScore";
-        }
-        // 3. 10% ~ 30%
-        else if (percent > 10 && percent <= 30) {
-          return "thirdScore";
-        }
-        // 4. 30% ~ 50%
-        else if (percent > 30 && percent <= 50) {
-          return "fourthScore";
-        }
-        // 5. 50% ~
-        else {
-          return "fifthScore";
-        }
-      }
-      else {
-        // 1. 0% ~ 1%
-        if (percent > 0 && percent <= 1) {
-          return "fifthScore";
-        }
-        // 2. 1% ~ 10%
-        else if (percent > 1 && percent <= 10) {
-          return "fourthScore";
-        }
-        // 3. 10% ~ 30%
-        else if (percent > 10 && percent <= 30) {
-          return "thirdScore";
-        }
-        // 4. 30% ~ 50%
-        else if (percent > 30 && percent <= 50) {
-          return "secondScore";
-        }
-        // 5. 50% ~
-        else {
-          return "firstScore";
-        }
-      }
-    }
-    if (extra === "expense") {
-      const percent = (Math.abs(goal - real) / goal) * 100;
-      if (goal > real) {
-        // 1. 0% ~ 1%
-        if (percent > 0 && percent <= 1) {
-          return "fifthScore";
-        }
-        // 2. 1% ~ 10%
-        else if (percent > 1 && percent <= 10) {
-          return "fourthScore";
-        }
-        // 3. 10% ~ 30%
-        else if (percent > 10 && percent <= 30) {
-          return "thirdScore";
-        }
-        // 4. 30% ~ 50%
-        else if (percent > 30 && percent <= 50) {
-          return "secondScore";
-        }
-        // 5. 50% ~
-        else {
-          return "firstScore";
-        }
-      }
-      else {
-        // 1. 0% ~ 1%
-        if (percent > 0 && percent <= 1) {
-          return "firstScore";
-        }
-        // 2. 1% ~ 10%
-        else if (percent > 1 && percent <= 10) {
-          return "secondScore";
-        }
-        // 3. 10% ~ 30%
-        else if (percent > 10 && percent <= 30) {
-          return "thirdScore";
-        }
-        // 4. 30% ~ 50%
-        else if (percent > 30 && percent <= 50) {
-          return "fourthScore";
-        }
-        // 5. 50% ~
-        else {
-          return "fifthScore";
-        }
-      }
-    }
-  }
+  // 4. calcDiffColor ------------------------------------------------------------------------------
+  const calcDiffColor = (goalParam: string, realParam: string, extra: string) => {
 
-  // 4. result -------------------------------------------------------------------------------------
+    let goal: number = parseFloat(goalParam);
+    let real: number = parseFloat(realParam);
+    let percent: number = 0;
+    let finalResult: string = "";
+
+    if (goalParam.length > 12 || realParam.length > 12) {
+      finalResult = "fs-0-6rem fw-600";
+    }
+    else if (goalParam.length > 6 || realParam.length > 6) {
+      finalResult = "fs-0-8rem fw-600";
+    }
+    else {
+      finalResult = "fs-1-0rem fw-600";
+    }
+
+    // 1. income
+    if (extra === "income") {
+      percent = (Math.abs(goal - real) / goal) * 100;
+      if (goal > real) {
+        if (percent > 0 && percent <= 1) {
+          finalResult += " firstScore";
+        }
+        else if (percent > 1 && percent <= 10) {
+          finalResult += " secondScore";
+        }
+        else if (percent > 10 && percent <= 30) {
+          finalResult += " thirdScore";
+        }
+        else if (percent > 30 && percent <= 50) {
+          finalResult += " fourthScore";
+        }
+        else {
+          finalResult += " fifthScore";
+        }
+      }
+      else {
+        if (percent > 0 && percent <= 1) {
+          finalResult += " fifthScore";
+        }
+        else if (percent > 1 && percent <= 10) {
+          finalResult += " fourthScore";
+        }
+        else if (percent > 10 && percent <= 30) {
+          finalResult += " thirdScore";
+        }
+        else if (percent > 30 && percent <= 50) {
+          finalResult += " secondScore";
+        }
+        else {
+          finalResult += " firstScore";
+        }
+      }
+    }
+    // 2. expense
+    if (extra === "expense") {
+      percent = (Math.abs(goal - real) / goal) * 100;
+      if (goal > real) {
+        if (percent > 0 && percent <= 1) {
+          finalResult += " fifthScore";
+        }
+        else if (percent > 1 && percent <= 10) {
+          finalResult += " fourthScore";
+        }
+        else if (percent > 10 && percent <= 30) {
+          finalResult += " thirdScore";
+        }
+        else if (percent > 30 && percent <= 50) {
+          finalResult += " secondScore";
+        }
+        else {
+          finalResult += " firstScore";
+        }
+      }
+      else {
+        if (percent > 0 && percent <= 1) {
+          finalResult += " firstScore";
+        }
+        else if (percent > 1 && percent <= 10) {
+          finalResult += " secondScore";
+        }
+        else if (percent > 10 && percent <= 30) {
+          finalResult += " thirdScore";
+        }
+        else if (percent > 30 && percent <= 50) {
+          finalResult += " fourthScore";
+        }
+        else {
+          finalResult += " fifthScore";
+        }
+      }
+    }
+
+    return finalResult;
+  };
+
+  // 10. return ------------------------------------------------------------------------------------
   object?.result?.forEach((item: any) => {
-    Object.assign(item, {
-      ...item,
-      money_goal_income_color: makeNonValueColor(
-        item?.money_goal_income
-      ),
-      money_goal_expense_color: makeNonValueColor(
-        item?.money_goal_expense
-      ),
-      money_total_income_color: makeNonValueColor(
-        item?.money_total_income
-      ),
-      money_total_expense_color: makeNonValueColor(
-        item?.money_total_expense
-      ),
-      money_diff_income: compareValue(
-        item?.money_goal_income, item?.money_total_income, "income"
-      ),
-      money_diff_expense: compareValue(
-        item?.money_goal_expense, item?.money_total_expense, "expense"
-      ),
-      money_diff_income_color: makeDiffColor(
-        item?.money_goal_income, item?.money_total_income, "income"
-      ),
-      money_diff_expense_color: makeDiffColor(
-        item?.money_goal_expense, item?.money_total_expense, "expense"
-      ),
-    });
+    item.money_goal_income_color = calcNonValueColor(
+      item?.money_goal_income
+    );
+    item.money_goal_expense_color = calcNonValueColor(
+      item?.money_goal_expense
+    );
+    item.money_total_income_color = calcNonValueColor(
+      item?.money_total_income
+    );
+    item.money_total_expense_color = calcNonValueColor(
+      item?.money_total_expense
+    );
+    item.money_diff_income = compareValue(
+      item?.money_goal_income, item?.money_total_income, "income"
+    );
+    item.money_diff_expense = compareValue(
+      item?.money_goal_expense, item?.money_total_expense, "expense"
+    );
+    item.money_diff_income_color = calcDiffColor(
+      item?.money_goal_income, item?.money_total_income, "income"
+    );
+    item.money_diff_expense_color = calcDiffColor(
+      item?.money_goal_expense, item?.money_total_expense, "expense"
+    );
   });
 
   return object;

@@ -52,14 +52,13 @@ export const UserAppInfo = () => {
       <Img
         key={"logo1"}
         src={"logo1"}
-        alt={"logo1"}
         className={"w-240 h-200"}
       />
     );
     // 7-2. card
     const detailSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={"border-1 radius shadow-none p-0"} key={i}>
+        <Card className={"border-1 radius-1 shadow-none p-0"} key={i}>
           <TableContainer className={"over-hidden"}>
             <Table>
               <TableBody className={"table-tbody"}>
@@ -115,7 +114,7 @@ export const UserAppInfo = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper d-center border-1 radius h-min90vh"}>
+      <Paper className={"content-wrapper d-center border-1 radius-1 h-min90vh"}>
         <Grid container spacing={4}>
           <Grid size={12} className={"d-center mb-30"}>
             {imageSection()}

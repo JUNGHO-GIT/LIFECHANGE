@@ -1,13 +1,14 @@
 // UserLogin.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useTranslate, useTimeZone } from "@imports/ImportHooks";
+import { useCommonValue, useTranslate } from "@imports/ImportHooks";
 import { useValidateUser } from "@imports/ImportValidates";
 import { User } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
-import { Input, Div, Btn, Img, Hr } from "@imports/ImportComponents";
+import { Input } from "@imports/ImportContainers";
+import { Div, Btn, Img, Hr } from "@imports/ImportComponents";
 import { Paper, Checkbox, Card, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -15,11 +16,11 @@ export const UserLogin = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate
-  } = useTranslate();
-  const {
     navigate, URL_OBJECT, URL_GOOGLE, ADMIN_ID, ADMIN_PW, TITLE,
   } = useCommonValue();
+  const {
+    translate
+  } = useTranslate();
   const {
     ERRORS, REFS, validate
   } = useValidateUser();
@@ -279,7 +280,7 @@ export const UserLogin = () => {
     const googleSection = () => (
       <Btn
         color={"primary"}
-        className={"w-100p fs-1-0rem bg-white black"}
+        className={"w-100p fs-1-0rem bg-white"}
         onClick={() => {
           flowGoogle();
         }}
@@ -318,7 +319,7 @@ export const UserLogin = () => {
     return (
       <>
       {LOADING && <Loading />}
-      <Paper className={"content-wrapper d-center border-1 radius h-min100vh"}>
+      <Paper className={"content-wrapper d-center border-1 radius-1 h-min100vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {titleSection()}

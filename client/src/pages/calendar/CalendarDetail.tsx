@@ -6,8 +6,8 @@ import { useValidateCalendar } from "@imports/ImportValidates";
 import { Calendar } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
-import { Input, Select, Img, Bg } from "@imports/ImportComponents";
-import { Picker, Memo, Count, Delete, Dial } from "@imports/ImportContainers";
+import { PickerDay, Memo, Count, Delete, Dial, Input, Select } from "@imports/ImportContainers";
+import { Img, Bg } from "@imports/ImportComponents";
 import { Card, Paper, MenuItem, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -15,14 +15,14 @@ export const CalendarDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate
-  } = useTranslate();
+    navigate, location_dateType, location_dateStart, location_dateEnd, calendarArray, colors, URL_OBJECT, sessionId, toList
+  } = useCommonValue();
   const {
     dayFmt, getMonthStartFmt, getMonthEndFmt
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, calendarArray, colors, URL_OBJECT, sessionId, toList
-  } = useCommonValue();
+    translate
+  } = useTranslate();
   const {
     ERRORS, REFS, validate
   } = useValidateCalendar();
@@ -55,7 +55,7 @@ export const CalendarDetail = () => {
     newSectionCnt: 0
   });
   const [DATE, setDATE] = useState<any>({
-    dateType: location_dateType || "",
+    dateType: location_dateType || "select",
     dateStart: location_dateStart || dayFmt,
     dateEnd: location_dateEnd || dayFmt,
   });
@@ -107,7 +107,7 @@ export const CalendarDetail = () => {
     .catch((err: any) => {
       console.error(err);
     });
-  }, [sessionId, DATE.dateEnd]);
+  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -136,7 +136,7 @@ export const CalendarDetail = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, DATE.dateEnd]);
+  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -243,10 +243,10 @@ export const CalendarDetail = () => {
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Card className={"border-1 radius p-20"}>
+      <Card className={"border-1 radius-1 p-20"}>
         <Grid container spacing={2}>
           <Grid size={12}>
-            <Picker
+            <PickerDay
               DATE={DATE}
               setDATE={setDATE}
               EXIST={EXIST}
@@ -268,7 +268,7 @@ export const CalendarDetail = () => {
     // 7-3. detail
     const detailSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius p-20`} key={i}>
+        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={i}>
           <Grid container spacing={2}>
             <Grid size={6} className={"d-row-left"}>
               <Bg
@@ -301,7 +301,6 @@ export const CalendarDetail = () => {
                 value={OBJECT?.calendar_section[i]?.calendar_part_idx}
                 inputRef={REFS[i]?.calendar_part_idx}
                 error={ERRORS[i]?.calendar_part_idx}
-                inputclass={"fs-0-8rem"}
                 locked={LOCKED}
                 onChange={(e: any) => {
                   const newIndex = Number(e.target.value);
@@ -330,7 +329,6 @@ export const CalendarDetail = () => {
                 value={OBJECT?.calendar_section[i]?.calendar_color}
                 inputRef={REFS[i]?.calendar_color}
                 error={ERRORS[i]?.calendar_color}
-                inputclass={"fs-0-8rem"}
                 locked={LOCKED}
                 onChange={(e: any) => {
                   const newColor = e.target.value;
@@ -403,7 +401,7 @@ export const CalendarDetail = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {dateCountSection()}

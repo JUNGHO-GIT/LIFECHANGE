@@ -1,109 +1,147 @@
 // foodDiffMiddleware.ts
 
-// 1. list (리스트는 gte lte) ----------------------------------------------------------------------
+// 1. list -----------------------------------------------------------------------------------------
 export const list = async (object: any) => {
 
   // 1. compareValue -------------------------------------------------------------------------------
   const compareValue = (goalParam: string, realParam: string) => {
-    const goal = parseFloat(goalParam);
-    const real = parseFloat(realParam);
+
+    let goal: number = parseFloat(goalParam);
+    let real: number = parseFloat(realParam);
+    let finalResult: string = "";
+
     if (goal > real) {
-      return `-${(parseFloat(Math.abs(goal - real).toFixed(2)).toString())}`;
+      finalResult = `-${(parseFloat(Math.abs(goal - real).toFixed(2)).toString())}`;
     }
     else {
-      return `+${(parseFloat(Math.abs(real - goal).toFixed(2)).toString())}`;
+      finalResult = `+${(parseFloat(Math.abs(real - goal).toFixed(2)).toString())}`;
     }
+
+    return finalResult;
   };
 
-  // 3. makeNonValueColor -------------------------------------------------------------------------
-  const makeNonValueColor = (param: string) => {
+  // 3. calcNonValueColor --------------------------------------------------------------------------
+  const calcNonValueColor = (param: string) => {
+
+    let finalResult: string = "";
+
+    if (param.length > 12) {
+      finalResult = "fs-0-6rem fw-600";
+    }
+    else if (param.length > 6) {
+      finalResult = "fs-0-8rem fw-600";
+    }
+    else {
+      finalResult = "fs-1-0rem fw-600";
+    }
+
     if (param === "0" || param === "00:00") {
-      return "grey";
+      finalResult += " grey";
     }
     else {
-      return "";
+      finalResult += " black";
     }
+
+    return finalResult;
   };
 
-  // 4. makeDiffColor ------------------------------------------------------------------------------
-  const makeDiffColor = (goalParam: string, realParam: string, extra: string) => {
-    const goal = parseFloat(goalParam);
-    const real = parseFloat(realParam);
-    const percent = ((real - goal) / goal) * 100;
-    // 1. ~ 1%
-    if (percent > 0 && percent <= 1) {
-      return "firstScore";
+  // 4. calcDiffColor ------------------------------------------------------------------------------
+  const calcDiffColor = (goalParam: string, realParam: string, extra: string) => {
+
+    let goal: number = parseFloat(goalParam);
+    let real: number = parseFloat(realParam);
+    let percent: number = 0;
+    let finalResult: string = "";
+
+    if (goalParam.length > 12 || realParam.length > 12) {
+      finalResult = "fs-0-6rem fw-600";
     }
-    // 2. 1% ~ 10%
-    else if (percent > 1 && percent <= 10) {
-      return "secondScore";
+    else if (goalParam.length > 6 || realParam.length > 6) {
+      finalResult = "fs-0-8rem fw-600";
     }
-    // 3. 10% ~ 30%
-    else if (percent > 10 && percent <= 30) {
-      return "thirdScore";
-    }
-    // 4. 30% ~ 50%
-    else if (percent > 30 && percent <= 50) {
-      return "fourthScore";
-    }
-    // 5. 50% ~
     else {
-      return "fifthScore";
+      finalResult = "fs-1-0rem fw-600";
     }
+
+    // 1. kcal, carb, protein, fat
+    if (extra === "kcal" || extra === "carb" || extra === "protein" || extra === "fat") {
+      percent = Math.abs(((goal - real) / goal) * 100);
+
+      // 1. ~ 1%
+      if (percent > 0 && percent <= 1) {
+        finalResult += " firstScore";
+      }
+      // 2. 1% ~ 10%
+      else if (percent > 1 && percent <= 10) {
+        finalResult += " secondScore";
+      }
+      // 3. 10% ~ 30%
+      else if (percent > 10 && percent <= 30) {
+        finalResult += " thirdScore";
+      }
+      // 4. 30% ~ 50%
+      else if (percent > 30 && percent <= 50) {
+        finalResult += " fourthScore";
+      }
+      // 5. 50% ~
+      else {
+        finalResult += " fifthScore";
+      }
+    }
+
+    return finalResult;
   };
 
-  // 4. result -------------------------------------------------------------------------------------
+  // 10. return ------------------------------------------------------------------------------------
   object?.result?.forEach((item: any) => {
-    Object.assign(item, {
-      food_total_kcal_color: makeNonValueColor(
-        item?.food_total_kcal
-      ),
-      food_total_carb_color: makeNonValueColor(
-        item?.food_total_carb
-      ),
-      food_total_protein_color: makeNonValueColor(
-        item?.food_total_protein
-      ),
-      food_total_fat_color: makeNonValueColor(
-        item?.food_total_fat
-      ),
-      food_goal_kcal_color: makeNonValueColor(
-        item?.food_goal_kcal
-      ),
-      food_goal_carb_color: makeNonValueColor(
-        item?.food_goal_carb
-      ),
-      food_goal_protein_color: makeNonValueColor(
-        item?.food_goal_protein
-      ),
-      food_goal_fat_color: makeNonValueColor(
-        item?.food_goal_fat
-      ),
-      food_diff_kcal: compareValue(
-        item?.food_goal_kcal, item?.food_total_kcal
-      ),
-      food_diff_carb: compareValue(
-        item?.food_goal_carb, item?.food_total_carb
-      ),
-      food_diff_protein: compareValue(
-        item?.food_goal_protein, item?.food_total_protein
-      ),
-      food_diff_fat: compareValue(
-        item?.food_goal_fat, item?.food_total_fat
-      ),
-      food_diff_kcal_color: makeDiffColor(
-        item?.food_goal_kcal, item?.food_total_kcal, "kcal"
-      ),
-      food_diff_carb_color: makeDiffColor(
-        item?.food_goal_carb, item?.food_total_carb, "carb"
-      ),
-      food_diff_protein_color: makeDiffColor(
-        item?.food_goal_protein, item?.food_total_protein, "protein"
-      ),
-      food_diff_fat_color: makeDiffColor(
-        item?.food_goal_fat, item?.food_total_fat, "fat"
-      ),
-    });
+    item.food_total_kcal_color = calcNonValueColor(
+      item?.food_total_kcal
+    );
+    item.food_total_carb_color = calcNonValueColor(
+      item?.food_total_carb
+    );
+    item.food_total_protein_color = calcNonValueColor(
+      item?.food_total_protein
+    );
+    item.food_total_fat_color = calcNonValueColor(
+      item?.food_total_fat
+    );
+    item.food_goal_kcal_color = calcNonValueColor(
+      item?.food_goal_kcal
+    );
+    item.food_goal_carb_color = calcNonValueColor(
+      item?.food_goal_carb
+    );
+    item.food_goal_protein_color = calcNonValueColor(
+      item?.food_goal_protein
+    );
+    item.food_goal_fat_color = calcNonValueColor(
+      item?.food_goal_fat
+    );
+    item.food_diff_kcal = compareValue(
+      item?.food_goal_kcal, item?.food_total_kcal
+    );
+    item.food_diff_carb = compareValue(
+      item?.food_goal_carb, item?.food_total_carb
+    );
+    item.food_diff_protein = compareValue(
+      item?.food_goal_protein, item?.food_total_protein
+    );
+    item.food_diff_fat = compareValue(
+      item?.food_goal_fat, item?.food_total_fat
+    );
+    item.food_diff_kcal_color = calcDiffColor(
+      item?.food_goal_kcal, item?.food_total_kcal, "kcal"
+    );
+    item.food_diff_carb_color = calcDiffColor(
+      item?.food_goal_carb, item?.food_total_carb, "carb"
+    );
+    item.food_diff_protein_color = calcDiffColor(
+      item?.food_goal_protein, item?.food_total_protein, "protein"
+    );
+    item.food_diff_fat_color = calcDiffColor(
+      item?.food_goal_fat, item?.food_total_fat, "fat"
+    );
   });
 
   return object;

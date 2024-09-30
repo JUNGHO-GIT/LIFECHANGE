@@ -58,8 +58,8 @@ export const useCommonValue = () => {
   // string 타입
   const isAdmin: string = sessionStorage.getItem(`${TITLE}_admin`) || "";
   const sessionId: string = sessionStorage.getItem(`${TITLE}_sessionId`) || "";
-
   const localLangSet: any = localStorage.getItem(`${TITLE}_localLangSet`) || "{}";
+
   const localTimeZone: string = JSON.parse(localLangSet)?.timeZone || "Asia/Seoul";
   const localZoneName: string = JSON.parse(localLangSet)?.zoneName || "KST";
   const localLocale: string = JSON.parse(localLangSet)?.locale || "ko";
@@ -126,6 +126,7 @@ export const useCommonValue = () => {
     ADMIN_PW,
     isAdmin,
     sessionId,
+    localLangSet,
     localTimeZone,
     localZoneName,
     localLocale,

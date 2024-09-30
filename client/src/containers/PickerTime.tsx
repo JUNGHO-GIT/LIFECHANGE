@@ -1,14 +1,13 @@
-// Time.tsx
+// PickerTime.tsx
 
 import { useCommonValue, useTranslate } from "@imports/ImportHooks";
 import { moment } from "@imports/ImportLibs";
-import { Img, Input } from "@imports/ImportComponents";
-import { PopUp } from "@imports/ImportContainers";
-import { Card } from "@imports/ImportMuis";
-import { DigitalClock, AdapterMoment, LocalizationProvider } from "@imports/ImportMuis";
+import { PopUp, Input } from "@imports/ImportContainers";
+import { Img } from "@imports/ImportComponents";
+import { Card, DigitalClock, AdapterMoment, LocalizationProvider } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-declare interface TimeProps {
+declare interface PickerTimeProps {
   OBJECT: any;
   setOBJECT: any;
   REFS: any;
@@ -20,8 +19,8 @@ declare interface TimeProps {
 }
 
 // -------------------------------------------------------------------------------------------------
-export const Time = (
-  { OBJECT, setOBJECT, REFS, ERRORS, DATE, LOCKED, extra, i }: TimeProps
+export const PickerTime = (
+  { OBJECT, setOBJECT, REFS, ERRORS, DATE, LOCKED, extra, i }: PickerTimeProps
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------

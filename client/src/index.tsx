@@ -19,7 +19,7 @@ import {
 } from "@imports/ImportMuis";
 
 import {
-  useRoot, useScrollTop, useFoodSection, LanguageProvider, useTimeZone
+  useRoot, useScrollTop, useFoodSection, LanguageProvider, useLangSet
 } from "@imports/ImportHooks";
 
 import {
@@ -140,7 +140,7 @@ const Auth = () => (
 const App = () => {
 
   useRoot();
-  useTimeZone();
+  useLangSet();
   useScrollTop();
   useFoodSection();
 

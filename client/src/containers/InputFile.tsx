@@ -1,11 +1,11 @@
-// FileInput.tsx
+// InputFile.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { Div, Br, Img } from "@imports/ImportComponents";
 import { MuiFileInput, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-export const FileInput = ({ handleExistingFilesChange, ...props }: any) => {
+export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
 
   // 2-1. useState ---------------------------------------------------------------------------------
   const [fileExisting, setFileExisting] = useState<any[]>([]);
@@ -107,6 +107,18 @@ export const FileInput = ({ handleExistingFilesChange, ...props }: any) => {
       return;
     }
 
+    // 파일이 5mb 이상인 경우
+    else if (newFiles && newFiles.some((file: File) => (file.size > 5 * 1024 * 1024))) {
+      alert("파일은 최대 5MB까지 업로드 가능합니다.");
+
+      // input 요소 삭제
+      const input = document.querySelector("input[type=file]");
+      if (input) {
+        input.remove();
+      }
+      return;
+    }
+
     if (newFiles) {
       const existingFiles = fileList || [];
 
@@ -160,7 +172,7 @@ export const FileInput = ({ handleExistingFilesChange, ...props }: any) => {
 
   // 6. handle (파일 삭제) -------------------------------------------------------------------------
   const handleExistingFileDelete = (index: number) => {
-    const updatedExistingFile = fileExisting.filter((_file, i) => i !== index);
+    const updatedExistingFile = fileExisting.filter((_file: any, i: number) => i !== index);
     setFileExisting(updatedExistingFile);
 
     if (handleExistingFilesChange) {
@@ -174,16 +186,17 @@ export const FileInput = ({ handleExistingFilesChange, ...props }: any) => {
       <Grid size={8}>
         {fileList && fileList.length > 0 && fileList.map((file: any, index: number) => (
           <Grid size={12} className={"d-row-left"} key={index}>
-            <Div className={"d-center"}>
-              <Img
-                key={file?.name}
-                group={"new"}
-                src={URL.createObjectURL(file)}
-                className={"w-25 h-25 me-10"}
-              />
-            </Div>
-            <Div className={"black fs-0-9rem fw-500"}>
-              {file?.name.length > 20 ? `${file?.name.slice(0, 20)}...` : file?.name}
+            <Img
+              max={40}
+              hover={false}
+              shadow={false}
+              radius={true}
+              group={"new"}
+              src={URL.createObjectURL(file)}
+              className={"w-35 h-35 me-10"}
+            />
+            <Div className={"black fs-0-9rem fw-500"} max={15}>
+              {file?.name}
             </Div>
             <Div
               className={"black fs-0-9rem fw-500 pointer-burgundy ms-15"}
@@ -194,24 +207,20 @@ export const FileInput = ({ handleExistingFilesChange, ...props }: any) => {
           </Grid>
         ))}
       </Grid>
-      <Grid size={4}>
-        <Grid size={12} className={"d-row-right"}>
-          <Div
-            className={"fs-1-0rem fw-600 pointer-burgundy"}
-            onClick={(e: any) => handleFileAdd(e)}
-          >
-            파일 추가
-          </Div>
-        </Grid>
+      <Grid size={4} className={"d-column-right"}>
+        <Div
+          className={"fs-0-9rem fw-600 pointer-burgundy"}
+          onClick={(e: any) => handleFileAdd(e)}
+        >
+          파일 추가
+        </Div>
         <Br px={10} />
-        <Grid size={12} className={"d-row-right"}>
-          <Div
-            className={"fs-1-0rem fw-600 pointer-burgundy"}
-            onClick={() => handleFileDelete(0, "all")}
-          >
-            전체 삭제
-          </Div>
-        </Grid>
+        <Div
+          className={"fs-0-9rem fw-600 pointer-burgundy"}
+          onClick={() => handleFileDelete(0, "all")}
+        >
+          전체 삭제
+        </Div>
       </Grid>
     </Grid>
   );
@@ -222,13 +231,16 @@ export const FileInput = ({ handleExistingFilesChange, ...props }: any) => {
       {fileExisting.map((file: any, index: number) => (
         <Grid size={12} key={index} className={"d-row-left"}>
           <Img
-            key={file}
+            max={40}
+            hover={false}
+            shadow={false}
+            radius={true}
             group={props?.group}
             src={file}
-            className={"w-25 h-25 me-10"}
+            className={"w-35 h-35 me-10"}
           />
-          <Div className={"black fs-0-9rem fw-500"}>
-            {file.length > 20 ? `${file.slice(0, 20)}...` : file}
+          <Div className={"black fs-0-9rem fw-500"} max={20}>
+            {file}
           </Div>
           <Div
             className={"black fs-0-9rem fw-500 pointer-burgundy ms-15"}
@@ -247,7 +259,7 @@ export const FileInput = ({ handleExistingFilesChange, ...props }: any) => {
   return (
     <Div className={"w-100p mt-10"}>
       <Div
-        className={"d-row-left fs-0-9rem fw-400"}
+        className={"d-column-left fs-0-9rem fw-400"}
         style={{ color: "#484848de" }}
       >
         {props?.label ? props?.required ? `${props?.label} *` : props?.label : ""}
@@ -284,7 +296,7 @@ export const FileInput = ({ handleExistingFilesChange, ...props }: any) => {
           startAdornment: adornmentNode,
         }}
       />
-      <Br px={10} />
+      <Br px={20} />
       {/** 기존 이미지 표시하기 **/}
       {fileExisting.length > 0 && existingNode()}
     </Div>

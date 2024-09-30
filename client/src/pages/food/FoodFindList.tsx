@@ -4,9 +4,9 @@ import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
 import { FoodFind } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
-import { Loading, Footer } from "@imports/ImportLayouts";
+import { Loading, Footer, Empty } from "@imports/ImportLayouts";
 import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
-import { Empty, Dial } from "@imports/ImportContainers";
+import { Dial } from "@imports/ImportContainers";
 import { Paper, Card, Checkbox, Grid } from "@imports/ImportMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 
@@ -15,14 +15,14 @@ export const FoodFindList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate,
-  } = useTranslate();
+    location_dateStart, location_dateEnd, PATH, URL_OBJECT, TITLE, localIsoCode
+  } = useCommonValue();
   const {
     dayFmt,
   } = useCommonDate();
   const {
-    location_dateStart, location_dateEnd, PATH, URL_OBJECT, TITLE, localIsoCode
-  } = useCommonValue();
+    translate,
+  } = useTranslate();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용 (find 사용금지)
@@ -143,7 +143,7 @@ export const FoodFindList = () => {
       setOBJECT(res.data.result.length > 0 ? res.data.result : []);
       setCOUNT((prev: any) => ({
         ...prev,
-        totalCnt: res.data.totalCnt ? res.data.totalCnt : 0,
+        totalCnt: res.data.totalCnt || 0,
       }));
       // Accordion 초기값 설정
       setIsExpanded(res.data.result.map((_item: any, index: number) => index));
@@ -173,34 +173,37 @@ export const FoodFindList = () => {
     const listSection = () => {
       const emptyFragment = () => (
         <Empty
-          DATE={DATE}
           SEND={SEND}
           extra={"food"}
         />
       );
       const listFragment = (i: number) => (
         OBJECT?.map((item: any, index: number) => (
-          <Card className={"border-1 radius"} key={`${index}-${i}`}>
+          <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
               <AccordionSummary
+                className={"me-n10"}
                 expandIcon={
                   <Icons
+                    key={"ChevronDown"}
                     name={"ChevronDown"}
-                    className={"w-18 h-18 black z-1000"}
+                    className={"w-18 h-18"}
                     onClick={() => {
                       setIsExpanded(isExpanded.includes(index)
-                      ? isExpanded.filter((el) => el !== index)
+                      ? isExpanded.filter((el: number) => el !== index)
                       : [...isExpanded, index]
                     )}}
                   />
                 }
               >
-                <Grid container spacing={2}
+                <Grid
+                  container={true}
+                  spacing={2}
                   onClick={() => {
                     handlerCheckboxChange(index);
                   }}
                 >
-                  <Grid size={2} className={"d-center"}>
+                  <Grid size={2} className={"d-row-center"}>
                     <Checkbox
                       key={`check-${index}`}
                       color={"primary"}
@@ -217,36 +220,23 @@ export const FoodFindList = () => {
                     />
                   </Grid>
                   <Grid size={6} className={"d-row-left"}>
-                    {/** 1 ~ 5 글자 **/}
-                    {item.food_name.length >= 1 && item.food_name.length < 6 && (
-                      <Div className={"fs-1-0rem fw-600 black"}>
-                        {item.food_name}
-                      </Div>
-                    )}
-                    {/** 6 ~ 10 글자 **/}
-                    {item.food_name.length >= 6 && item.food_name.length < 11 && (
-                      <Div className={"fs-0-9rem fw-600 black"}>
-                        {item.food_name}
-                      </Div>
-                    )}
-                    {/** 10 글자 이상 **/}
-                    {item.food_name.length >= 11 && (
-                      <Div className={"fs-0-8rem fw-600 black"}>
-                        {item.food_name}
-                      </Div>
-                    )}
+                    <Div className={`${item.food_name_color}`}>
+                      {item.food_name}
+                    </Div>
                   </Grid>
                   <Grid size={4} className={"d-row-right"}>
-                    <Div className={"fs-0-9rem fw-500 dark me-10"}>
-                      {item.food_brand}
+                    <Div className={`${item.food_brand_color}`}>
+                      <Div className={`fs-0-8rem fw-500 dark me-10`}>
+                        {item.food_brand}
+                      </Div>
                     </Div>
                   </Grid>
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                {/** row 1 **/}
                 <Grid container spacing={2} columns={12}>
-                  <Grid size={2} className={"d-center"}>
+                  {/** row 1 **/}
+                  <Grid size={2} className={"d-row-center"}>
                     <Img
                     	key={"food2"}
                     	src={"food2"}
@@ -254,14 +244,14 @@ export const FoodFindList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
                       {translate("kcal")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container columns={12} spacing={1}>
+                    <Grid container spacing={2} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
-                        <Div className={`fs-1-0rem fw-600 ${item.food_kcal_color}`}>
+                        <Div className={`${item.food_kcal_color}`}>
                           {numeral(item.food_kcal).format("0,0")}
                         </Div>
                       </Grid>
@@ -272,10 +262,8 @@ export const FoodFindList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-                <Hr px={30} />
-                {/** row 2 **/}
-                <Grid container spacing={2} columns={12}>
+                  <Hr px={1} />
+                  {/** row 2 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"food3"}
@@ -284,14 +272,14 @@ export const FoodFindList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
                       {translate("carb")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container columns={12} spacing={1}>
+                    <Grid container spacing={2} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
-                        <Div className={`fs-1-0rem fw-600 ${item.food_carb_color}`}>
+                        <Div className={`${item.food_carb_color}`}>
                           {item.food_carb}
                         </Div>
                       </Grid>
@@ -302,10 +290,8 @@ export const FoodFindList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-                <Hr px={30} />
-                {/** row 3 **/}
-                <Grid container spacing={2} columns={12}>
+                  <Hr px={1} />
+                  {/** row 3 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"food4"}
@@ -314,14 +300,14 @@ export const FoodFindList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
                       {translate("protein")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container columns={12} spacing={1}>
+                    <Grid container spacing={2} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
-                        <Div className={`fs-1-0rem fw-600 ${item.food_protein_color}`}>
+                        <Div className={`${item.food_protein_color}`}>
                           {item.food_protein}
                         </Div>
                       </Grid>
@@ -332,10 +318,8 @@ export const FoodFindList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-                <Hr px={30} />
-                {/** row 4 **/}
-                <Grid container spacing={2} columns={12}>
+                  <Hr px={1} />
+                  {/** row 3 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"food5"}
@@ -344,14 +328,14 @@ export const FoodFindList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
                       {translate("fat")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container columns={12} spacing={1}>
+                    <Grid container spacing={2} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
-                        <Div className={`fs-1-0rem fw-600 ${item.food_fat_color}`}>
+                        <Div className={`${item.food_fat_color}`}>
                           {item.food_fat}
                         </Div>
                       </Grid>
@@ -376,7 +360,7 @@ export const FoodFindList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {listSection()}
@@ -400,10 +384,10 @@ export const FoodFindList = () => {
   const footerNode = () => (
     <Footer
       state={{
-        DATE, PAGING, SEND, COUNT
+        DATE, SEND, PAGING, COUNT,
       }}
       setState={{
-        setDATE, setPAGING, setSEND, setCOUNT
+        setDATE, setSEND, setPAGING, setCOUNT,
       }}
       flow={{
         flowFind

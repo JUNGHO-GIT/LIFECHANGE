@@ -13,7 +13,9 @@ declare interface ButtonsProps {
 }
 
 // -------------------------------------------------------------------------------------------------
-export const Buttons = ( { state, setState, flow }: ButtonsProps ) => {
+export const Buttons = (
+  { state, setState, flow }: ButtonsProps
+) => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
@@ -158,7 +160,7 @@ export const Buttons = ( { state, setState, flow }: ButtonsProps ) => {
       : PATH.includes("/detail") ? (
         <Grid container spacing={2}>
           <Grid size={10} className={"d-center"}>
-            {PATH.includes("/food") ? toFindSection() : null}
+            {PATH.includes("/food/detail") && toFindSection()}
             {saveSection()}
             {deleteSection()}
           </Grid>

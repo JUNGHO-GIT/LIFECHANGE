@@ -6,7 +6,7 @@ import { Paper, Grid } from "@imports/ImportMuis";
 import { Buttons } from "./footer/Buttons";
 import { Dummy } from "./footer/Dummy";
 import { ListFilter } from "./footer/ListFilter";
-import { FindListFilter } from "./footer/FindListFilter";
+import { FindFilter } from "./footer/FindFilter";
 
 // -------------------------------------------------------------------------------------------------
 declare interface FooterProps {
@@ -41,31 +41,31 @@ export const Footer = (
       PATH.includes("/user/category") || PATH.includes("/user/detail")
     ) {
       setTypeName("btn");
-      setStyleClass("layout-wrapper p-sticky bottom-0 h-8vh border-1 radius");
+      setStyleClass("layout-wrapper p-sticky bottom-0 h-8vh border-1 radius-1");
     }
     else if (
       PATH.includes("/user/dummy")
     ) {
       setTypeName("dummy");
-      setStyleClass("layout-wrapper p-sticky bottom-0 h-8vh border-1 radius");
+      setStyleClass("layout-wrapper p-sticky bottom-0 h-8vh border-1 radius-1");
     }
     else if (
       PATH.includes("/food/find/list")
     ) {
-      setTypeName("findList");
-      setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh border-1 radius");
+      setTypeName("findFilter");
+      setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh border-1 radius-1");
     }
     else if (
       PATH.includes("/goal/list") || PATH.includes("/list")
     ) {
       setTypeName("listFilter");
-      setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh border-1 radius");
+      setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh border-1 radius-1");
     }
     else if (
       PATH.includes("/goal/detail") || PATH.includes("/detail")
     ) {
       setTypeName("btn");
-      setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh border-1 radius");
+      setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh border-1 radius-1");
     }
     else {
       setTypeName("");
@@ -99,9 +99,9 @@ export const Footer = (
         flow={flow}
       />
     );
-    // 4. findList
-    const findListSection = () => (
-      <FindListFilter
+    // 4. findFilter
+    const findFilterSection = () => (
+      <FindFilter
         state={state}
         setState={setState}
         flow={flow}
@@ -115,7 +115,7 @@ export const Footer = (
             {typeName === "btn" && btnSection()}
             {typeName === "dummy" && dummySection()}
             {typeName === "listFilter" && listFilterSection()}
-            {typeName === "findList" && findListSection()}
+            {typeName === "findFilter" && findFilterSection()}
           </Grid>
         </Grid>
       </Paper>

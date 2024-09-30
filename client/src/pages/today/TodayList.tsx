@@ -4,9 +4,9 @@ import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
 import { Exercise, Food, Money, Sleep } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
-import { Loading, Footer } from "@imports/ImportLayouts";
+import { Loading, Footer, Empty } from "@imports/ImportLayouts";
 import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
-import { Empty, Dial } from "@imports/ImportContainers";
+import { Dial } from "@imports/ImportContainers";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 
@@ -15,14 +15,14 @@ export const TodayList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate,
-  } = useTranslate();
+    navigate, PATH, URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP, sessionId, TITLE, localCurrency,
+  } = useCommonValue();
   const {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, PATH, URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP, sessionId, TITLE, localCurrency,
-  } = useCommonValue();
+    translate,
+  } = useTranslate();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
@@ -136,33 +136,38 @@ export const TodayList = () => {
     const exerciseSection = () => {
       const emptyFragment = () => (
         <Empty
-          DATE={DATE}
           SEND={SEND}
           extra={"exercise"}
         />
       );
       const listFragment = (i: number) => (
         OBJECT_EXERCISE?.map((item: any, index: number) => (
-          <Card className={"border-1 radius p-10"} key={`${index}-${i}`}>
+          <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
             <Accordion
               className={"shadow-none"}
               expanded={isExpanded.exercise.includes(index)}
             >
-              <AccordionSummary expandIcon={
-                <Icons
-                  name={"ChevronDown"}
-                  className={"w-18 h-18 black"}
-                  onClick={() => {
-                    setIsExpanded((prev: any) => ({
-                      ...prev,
-                      exercise: prev.exercise.includes(index)
-                        ? prev.exercise.filter((el: number) => el !== index)
-                        : [...prev.exercise, index]
-                    }))
-                  }}
-                />
-              }>
-                <Grid container spacing={2}
+              <AccordionSummary
+                className={"me-n10"}
+                expandIcon={
+                  <Icons
+                    key={"ChevronDown"}
+                    name={"ChevronDown"}
+                    className={"w-18 h-18"}
+                    onClick={() => {
+                      setIsExpanded((prev: any) => ({
+                        ...prev,
+                        exercise: prev.exercise.includes(index)
+                          ? prev.exercise.filter((el: number) => el !== index)
+                          : [...prev.exercise, index]
+                      }))
+                    }}
+                  />
+                }
+              >
+                <Grid
+                  container={true}
+                  spacing={2}
                   onClick={(e: any) => {
                     e.stopPropagation();
                     Object.assign(SEND, {
@@ -176,69 +181,51 @@ export const TodayList = () => {
                     });
                   }}
                 >
-                  <Grid size={2} className={"d-center"}>
+                  <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
                       name={"Search"}
-                      className={"w-18 h-18 black"}
+                      className={"w-18 h-18"}
                     />
                   </Grid>
                   <Grid size={10} className={"d-row-left"}>
-                    {item.exercise_dateStart === item.exercise_dateEnd ? (
-                      <>
-                        <Div className={"fs-1-2rem fw-600"}>
-                          {item.exercise_dateStart?.substring(5, 10)}
-                        </Div>
-                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(getDayNotFmt(item.exercise_dateStart).format("ddd"))}
-                        </Div>
-                      </>
-                    ) : (
-                      <>
-                        <Div className={"fs-1-2rem fw-600"}>
-                          {item.exercise_dateStart?.substring(5, 10)}
-                        </Div>
-                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(getDayNotFmt(item.exercise_dateStart).format("ddd"))}
-                        </Div>
-                        <Div className={"fs-1-0rem ms-3vw me-3vw"}>
-                          ~
-                        </Div>
-                        <Div className={"fs-1-2rem fw-600"}>
-                          {item.exercise_dateEnd?.substring(5, 10)}
-                        </Div>
-                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(getDayNotFmt(item.exercise_dateEnd).format("ddd"))}
-                        </Div>
-                      </>
-                    )}
+                    <Div className={"fs-1-1rem fw-600 black me-5"}>
+                      {item.exercise_dateStart?.substring(5, 10)}
+                    </Div>
+                    <Div className={"fs-0-9rem fw-500 dark ms-5"}>
+                      {translate(getDayNotFmt(item.exercise_dateStart).format("ddd"))}
+                    </Div>
                   </Grid>
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                {/** row 1 **/}
                 <Grid container spacing={2} columns={12}>
-                  <Grid size={2} className={"d-center"}>
+                  {/** row 1 **/}
+                  <Grid size={2} className={"d-row-center"}>
                     <Img
                     	key={"exercise3_1"}
                     	src={"exercise3_1"}
                     	className={"w-15 h-15"}
                     />
                   </Grid>
-                  <Grid size={2} className={"d-row-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
+                  <Grid size={3} className={"d-row-left"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
                       {translate("volume")}
                     </Div>
                   </Grid>
-                  <Grid size={7} className={"d-row-right"}>
-                    <Div className={`fs-1-0rem fw-600 ${item.exercise_total_volume_color}`}>
-                      {numeral(item.exercise_total_volume).format("0,0")}
-                    </Div>
-                  </Grid>
-                  <Grid size={1} className={"d-row-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("vol")}
-                    </Div>
+                  <Grid size={7}>
+                    <Grid container spacing={2} columns={12}>
+                      <Grid size={10} className={"d-row-right"}>
+                        <Div className={`${item.exercise_total_volume_color}`}>
+                          {numeral(item.exercise_total_volume).format("0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("vol")}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
                 <Hr px={30} />
@@ -252,19 +239,23 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
                       {translate("cardio")}
                     </Div>
                   </Grid>
-                  <Grid size={6} className={"d-row-right"}>
-                    <Div className={`fs-1-0rem fw-600 ${item.exercise_total_cardio_color}`}>
-                      {item.exercise_total_cardio}
-                    </Div>
-                  </Grid>
-                  <Grid size={1} className={"d-row-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("hm")}
-                    </Div>
+                  <Grid size={7}>
+                    <Grid container spacing={2} columns={12}>
+                      <Grid size={10} className={"d-row-right"}>
+                        <Div className={`${item.exercise_total_cardio_color}`}>
+                          {item.exercise_total_cardio}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("hm")}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
                 <Hr px={30} />
@@ -278,19 +269,23 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
                       {translate("weight")}
                     </Div>
                   </Grid>
-                  <Grid size={6} className={"d-row-right"}>
-                    <Div className={`fs-1-0rem fw-600 ${item.exercise_total_weight_color}`}>
-                      {item.exercise_total_weight}
-                    </Div>
-                  </Grid>
-                  <Grid size={1} className={"d-row-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("k")}
-                    </Div>
+                  <Grid size={7}>
+                    <Grid container spacing={2} columns={12}>
+                      <Grid size={10} className={"d-row-right"}>
+                        <Div className={`${item.exercise_total_volume_color}`}>
+                          {numeral(item.exercise_total_volume).format("0,0.0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("k")}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
               </AccordionDetails>
@@ -308,33 +303,38 @@ export const TodayList = () => {
     const foodSection = () => {
       const emptyFragment = () => (
         <Empty
-          DATE={DATE}
           SEND={SEND}
           extra={"food"}
         />
       );
       const listFragment = (i: number) => (
         OBJECT_FOOD?.map((item: any, index: number) => (
-          <Card className={"border-1 radius"} key={`${index}-${i}`}>
+          <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
             <Accordion
               className={"shadow-none"}
               expanded={isExpanded.food.includes(index)}
             >
-              <AccordionSummary expandIcon={
-                <Icons
-                  name={"ChevronDown"}
-                  className={"w-18 h-18 black"}
-                  onClick={() => {
-                    setIsExpanded((prev: any) => ({
-                      ...prev,
-                      food: prev.food.includes(index)
-                        ? prev.food.filter((el: number) => el !== index)
-                        : [...prev.food, index]
-                    }))
-                  }}
-                />
-              }>
-                <Grid container spacing={2}
+              <AccordionSummary
+                className={"me-n10"}
+                expandIcon={
+                  <Icons
+                    key={"ChevronDown"}
+                    name={"ChevronDown"}
+                    className={"w-18 h-18"}
+                    onClick={() => {
+                      setIsExpanded((prev: any) => ({
+                        ...prev,
+                        food: prev.food.includes(index)
+                          ? prev.food.filter((el: number) => el !== index)
+                          : [...prev.food, index]
+                      }))
+                    }}
+                  />
+                }
+              >
+                <Grid
+                  container={true}
+                  spacing={2}
                   onClick={(e: any) => {
                     e.stopPropagation();
                     Object.assign(SEND, {
@@ -348,49 +348,27 @@ export const TodayList = () => {
                     });
                   }}
                 >
-                  <Grid size={2} className={"d-center"}>
+                  <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
                       name={"Search"}
-                      className={"w-18 h-18 black"}
+                      className={"w-18 h-18"}
                     />
                   </Grid>
                   <Grid size={10} className={"d-row-left"}>
-                    {item.food_dateStart === item.food_dateEnd ? (
-                      <>
-                        <Div className={"fs-1-2rem fw-600"}>
-                          {item.food_dateStart?.substring(5, 10)}
-                        </Div>
-                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(getDayNotFmt(item.food_dateStart).format("ddd"))}
-                        </Div>
-                      </>
-                    ) : (
-                      <>
-                        <Div className={"fs-1-2rem fw-600"}>
-                          {item.food_dateStart?.substring(5, 10)}
-                        </Div>
-                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(getDayNotFmt(item.food_dateStart).format("ddd"))}
-                        </Div>
-                        <Div className={"fs-1-0rem ms-3vw me-3vw"}>
-                          ~
-                        </Div>
-                        <Div className={"fs-1-2rem fw-600"}>
-                          {item.food_dateEnd?.substring(5, 10)}
-                        </Div>
-                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(getDayNotFmt(item.food_dateEnd).format("ddd"))}
-                        </Div>
-                      </>
-                    )}
+                    <Div className={"fs-1-1rem fw-600 black me-5"}>
+                      {item.food_dateStart?.substring(5, 10)}
+                    </Div>
+                    <Div className={"fs-0-9rem fw-500 dark ms-5"}>
+                      {translate(getDayNotFmt(item.food_dateStart).format("ddd"))}
+                    </Div>
                   </Grid>
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                {/** row 1 **/}
                 <Grid container spacing={2} columns={12}>
-                  <Grid size={2} className={"d-center"}>
+                  {/** row 1 **/}
+                  <Grid size={2} className={"d-row-center"}>
                     <Img
                     	key={"food2"}
                     	src={"food2"}
@@ -398,24 +376,26 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
                       {translate("kcal")}
                     </Div>
                   </Grid>
-                  <Grid size={6} className={"d-row-right"}>
-                    <Div className={`fs-1-0rem fw-600 ${item.food_total_kcal_color}`}>
-                      {numeral(item.food_total_kcal).format("0,0")}
-                    </Div>
+                  <Grid size={7}>
+                    <Grid container spacing={2} columns={12}>
+                      <Grid size={10} className={"d-row-right"}>
+                        <Div className={`${item.food_total_kcal_color}`}>
+                          {numeral(item.food_total_kcal).format("0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("kc")}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
-                  <Grid size={1} className={"d-row-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("kc")}
-                    </Div>
-                  </Grid>
-                </Grid>
-                <Hr px={30} />
-                {/** row 2 **/}
-                <Grid container spacing={2} columns={12}>
+                  <Hr px={1} />
+                  {/** row 2 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"food3"}
@@ -424,24 +404,26 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
                       {translate("carb")}
                     </Div>
                   </Grid>
-                  <Grid size={6} className={"d-row-right"}>
-                    <Div className={`fs-1-0rem fw-600 ${item.food_total_carb_color}`}>
-                      {numeral(item.food_total_carb).format("0,0")}
-                    </Div>
+                  <Grid size={7}>
+                    <Grid container spacing={2} columns={12}>
+                      <Grid size={10} className={"d-row-right"}>
+                        <Div className={`${item.food_total_carb_color}`}>
+                          {numeral(item.food_total_carb).format("0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("g")}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
-                  <Grid size={1} className={"d-row-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("g")}
-                    </Div>
-                  </Grid>
-                </Grid>
-                <Hr px={30} />
-                {/** row 3 **/}
-                <Grid container spacing={2} columns={12}>
+                  <Hr px={1} />
+                  {/** row 3 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"food4"}
@@ -450,24 +432,26 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
                       {translate("protein")}
                     </Div>
                   </Grid>
-                  <Grid size={6} className={"d-row-right"}>
-                    <Div className={`fs-1-0rem fw-600 ${item.food_total_protein_color}`}>
-                      {numeral(item.food_total_protein).format("0,0")}
-                    </Div>
+                  <Grid size={7}>
+                    <Grid container spacing={2} columns={12}>
+                      <Grid size={10} className={"d-row-right"}>
+                        <Div className={`${item.food_total_protein_color}`}>
+                          {numeral(item.food_total_protein).format("0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("g")}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
-                  <Grid size={1} className={"d-row-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("g")}
-                    </Div>
-                  </Grid>
-                </Grid>
-                <Hr px={30} />
-                {/** row 4 **/}
-                <Grid container spacing={2} columns={12}>
+                  <Hr px={1} />
+                  {/** row 4 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"food5"}
@@ -476,19 +460,23 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
                       {translate("fat")}
                     </Div>
                   </Grid>
-                  <Grid size={6} className={"d-row-right"}>
-                    <Div className={`fs-1-0rem fw-600 ${item.food_total_fat_color}`}>
-                      {numeral(item.food_total_fat).format("0,0")}
-                    </Div>
-                  </Grid>
-                  <Grid size={1} className={"d-row-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("g")}
-                    </Div>
+                  <Grid size={7}>
+                    <Grid container spacing={2} columns={12}>
+                      <Grid size={10} className={"d-row-right"}>
+                        <Div className={`${item.food_total_fat_color}`}>
+                          {numeral(item.food_total_fat).format("0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("g")}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
               </AccordionDetails>
@@ -506,33 +494,38 @@ export const TodayList = () => {
     const moneySection = () => {
       const emptyFragment = () => (
         <Empty
-          DATE={DATE}
           SEND={SEND}
           extra={"money"}
         />
       );
       const listFragment = (i: number) => (
         OBJECT_MONEY?.map((item: any, index: number) => (
-          <Card className={"border-1 radius"} key={`${index}-${i}`}>
+          <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
             <Accordion
               className={"shadow-none"}
               expanded={isExpanded.money.includes(index)}
             >
-              <AccordionSummary expandIcon={
-                <Icons
-                  name={"ChevronDown"}
-                  className={"w-18 h-18 black"}
-                  onClick={() => {
-                    setIsExpanded((prev: any) => ({
-                      ...prev,
-                      money: prev.money.includes(index)
-                        ? prev.money.filter((el: number) => el !== index)
-                        : [...prev.money, index]
-                    }))
-                  }}
-                />
-              }>
-                <Grid container spacing={2}
+              <AccordionSummary
+                className={"me-n10"}
+                expandIcon={
+                  <Icons
+                    key={"ChevronDown"}
+                    name={"ChevronDown"}
+                    className={"w-18 h-18"}
+                    onClick={() => {
+                      setIsExpanded((prev: any) => ({
+                        ...prev,
+                        money: prev.money.includes(index)
+                          ? prev.money.filter((el: number) => el !== index)
+                          : [...prev.money, index]
+                      }))
+                    }}
+                  />
+                }
+              >
+                <Grid
+                  container={true}
+                  spacing={2}
                   onClick={(e: any) => {
                     e.stopPropagation();
                     Object.assign(SEND, {
@@ -546,48 +539,26 @@ export const TodayList = () => {
                     });
                   }}
                 >
-                  <Grid size={2} className={"d-center"}>
+                  <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
                       name={"Search"}
-                      className={"w-18 h-18 black"}
+                      className={"w-18 h-18"}
                     />
                   </Grid>
                   <Grid size={10} className={"d-row-left"}>
-                    {item.money_dateStart === item.money_dateEnd ? (
-                      <>
-                        <Div className={"fs-1-2rem fw-600"}>
-                          {item.money_dateStart?.substring(5, 10)}
-                        </Div>
-                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(getDayNotFmt(item.money_dateStart).format("ddd"))}
-                        </Div>
-                      </>
-                    ) : (
-                      <>
-                        <Div className={"fs-1-2rem fw-600"}>
-                          {item.money_dateStart?.substring(5, 10)}
-                        </Div>
-                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(getDayNotFmt(item.money_dateStart).format("ddd"))}
-                        </Div>
-                        <Div className={"fs-1-0rem ms-3vw me-3vw"}>
-                          ~
-                        </Div>
-                        <Div className={"fs-1-2rem fw-600"}>
-                          {item.money_dateEnd?.substring(5, 10)}
-                        </Div>
-                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(getDayNotFmt(item.money_dateEnd).format("ddd"))}
-                        </Div>
-                      </>
-                    )}
+                    <Div className={"fs-1-1rem fw-600 black me-5"}>
+                      {item.money_dateStart?.substring(5, 10)}
+                    </Div>
+                    <Div className={"fs-0-9rem fw-500 dark ms-5"}>
+                      {translate(getDayNotFmt(item.money_dateStart).format("ddd"))}
+                    </Div>
                   </Grid>
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                {/** row 1 **/}
                 <Grid container spacing={2} columns={12}>
+                  {/** row 1 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"money2"}
@@ -596,24 +567,26 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
                       {translate("income")}
                     </Div>
                   </Grid>
-                  <Grid size={6} className={"d-row-right"}>
-                    <Div className={`fs-1-0rem fw-600 ${item.money_total_income_color}`}>
-                      {numeral(item.money_total_income).format("0,0")}
-                    </Div>
+                  <Grid size={7}>
+                    <Grid container spacing={2} columns={12}>
+                      <Grid size={10} className={"d-row-right"}>
+                        <Div className={`${item.money_total_income_color}`}>
+                          {numeral(item.money_total_income).format("0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate(localCurrency)}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
-                  <Grid size={1} className={"d-row-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {localCurrency}
-                    </Div>
-                  </Grid>
-                </Grid>
-                <Hr px={30} />
-                {/** row 2 **/}
-                <Grid container spacing={2} columns={12}>
+                  <Hr px={1} />
+                  {/** row 2 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"money2"}
@@ -622,19 +595,23 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
                       {translate("expense")}
                     </Div>
                   </Grid>
-                  <Grid size={6} className={"d-row-right"}>
-                    <Div className={`fs-1-0rem fw-600 ${item.money_total_expense_color}`}>
-                      {numeral(item.money_total_expense).format("0,0")}
-                    </Div>
-                  </Grid>
-                  <Grid size={1} className={"d-row-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {localCurrency}
-                    </Div>
+                  <Grid size={7}>
+                    <Grid container spacing={2} columns={12}>
+                      <Grid size={10} className={"d-row-right"}>
+                        <Div className={`${item.money_total_expense_color}`}>
+                          {numeral(item.money_total_expense).format("0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate(localCurrency)}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
               </AccordionDetails>
@@ -652,33 +629,38 @@ export const TodayList = () => {
     const sleepSection = () => {
       const emptyFragment = () => (
         <Empty
-          DATE={DATE}
           SEND={SEND}
           extra={"sleep"}
         />
       );
       const listFragment = (i: number) => (
         OBJECT_SLEEP?.map((item: any, index: number) => (
-          <Card className={"border-1 radius"} key={`${index}-${i}`}>
+          <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
             <Accordion
               className={"shadow-none"}
               expanded={isExpanded.sleep.includes(index)}
             >
-              <AccordionSummary expandIcon={
-                <Icons
-                  name={"ChevronDown"}
-                  className={"w-18 h-18 black"}
-                  onClick={() => {
-                    setIsExpanded((prev: any) => ({
-                      ...prev,
-                      sleep: prev.sleep.includes(index)
-                        ? prev.sleep.filter((el: number) => el !== index)
-                        : [...prev.sleep, index]
-                    }))
-                  }}
-                />
-              }>
-                <Grid container spacing={2}
+              <AccordionSummary
+                className={"me-n10"}
+                expandIcon={
+                  <Icons
+                    key={"ChevronDown"}
+                    name={"ChevronDown"}
+                    className={"w-18 h-18"}
+                    onClick={() => {
+                      setIsExpanded((prev: any) => ({
+                        ...prev,
+                        sleep: prev.sleep.includes(index)
+                          ? prev.sleep.filter((el: number) => el !== index)
+                          : [...prev.sleep, index]
+                      }))
+                    }}
+                  />
+                }
+              >
+                <Grid
+                  container={true}
+                  spacing={2}
                   onClick={(e: any) => {
                     e.stopPropagation();
                     Object.assign(SEND, {
@@ -692,49 +674,27 @@ export const TodayList = () => {
                     });
                   }}
                 >
-                  <Grid size={2} className={"d-center"}>
+                  <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
                       name={"Search"}
-                      className={"w-18 h-18 black"}
+                      className={"w-18 h-18"}
                     />
                   </Grid>
                   <Grid size={10} className={"d-row-left"}>
-                    {item.sleep_dateStart === item.sleep_dateEnd ? (
-                      <>
-                        <Div className={"fs-1-2rem fw-600"}>
-                          {item.sleep_dateStart?.substring(5, 10)}
-                        </Div>
-                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(getDayNotFmt(item.sleep_dateStart).format("ddd"))}
-                        </Div>
-                      </>
-                    ) : (
-                      <>
-                        <Div className={"fs-1-2rem fw-600"}>
-                          {item.sleep_dateStart?.substring(5, 10)}
-                        </Div>
-                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(getDayNotFmt(item.sleep_dateStart).format("ddd"))}
-                        </Div>
-                        <Div className={"fs-1-0rem ms-3vw me-3vw"}>
-                          ~
-                        </Div>
-                        <Div className={"fs-1-2rem fw-600"}>
-                          {item.sleep_dateEnd?.substring(5, 10)}
-                        </Div>
-                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(getDayNotFmt(item.sleep_dateEnd).format("ddd"))}
-                        </Div>
-                      </>
-                    )}
+                    <Div className={"fs-1-1rem fw-600 black me-5"}>
+                      {item.sleep_dateStart?.substring(5, 10)}
+                    </Div>
+                    <Div className={"fs-0-9rem fw-500 dark ms-5"}>
+                      {translate(getDayNotFmt(item.sleep_dateStart).format("ddd"))}
+                    </Div>
                   </Grid>
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                {/** row 1 **/}
                 <Grid container spacing={2} columns={12}>
-                  <Grid size={2} className={"d-center"}>
+                  {/** row 1 **/}
+                  <Grid size={2} className={"d-row-center"}>
                     <Img
                     	key={"sleep2"}
                     	src={"sleep2"}
@@ -742,24 +702,26 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
                       {translate("bedTime")}
                     </Div>
                   </Grid>
-                  <Grid size={6} className={"d-row-right"}>
-                    <Div className={`fs-1-0rem fw-600 ${item.sleep_section[0]?.sleep_bedTime_color}`}>
-                      {item.sleep_section[0]?.sleep_bedTime}
-                    </Div>
+                  <Grid size={7}>
+                    <Grid container spacing={2} columns={12}>
+                      <Grid size={10} className={"d-row-right"}>
+                        <Div className={`${item.sleep_section[0]?.sleep_bedTime_color}`}>
+                          {item.sleep_section[0]?.sleep_bedTime}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("hm")}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
-                  <Grid size={1} className={"d-row-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("hm")}
-                    </Div>
-                  </Grid>
-                </Grid>
-                <Hr px={30} />
-                {/** row 2 **/}
-                <Grid container spacing={2} columns={12}>
+                  <Hr px={1} />
+                  {/** row 2 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"sleep3"}
@@ -768,24 +730,26 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
                       {translate("wakeTime")}
                     </Div>
                   </Grid>
-                  <Grid size={6} className={"d-row-right"}>
-                    <Div className={`fs-1-0rem fw-600 ${item.sleep_section[0]?.sleep_wakeTime_color}`}>
-                      {item.sleep_section[0]?.sleep_wakeTime}
-                    </Div>
+                  <Grid size={7} className={"d-row-right"}>
+                    <Grid container spacing={2} columns={12}>
+                      <Grid size={10} className={"d-row-right"}>
+                        <Div className={`${item.sleep_section[0]?.sleep_wakeTime_color}`}>
+                          {item.sleep_section[0]?.sleep_wakeTime}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("hm")}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
-                  <Grid size={1} className={"d-row-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("hm")}
-                    </Div>
-                  </Grid>
-                </Grid>
-                <Hr px={30} />
-                {/** row 3 **/}
-                <Grid container spacing={2} columns={12}>
+                  <Hr px={1} />
+                  {/** row 3 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"sleep4"}
@@ -794,19 +758,23 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
                       {translate("sleepTime")}
                     </Div>
                   </Grid>
-                  <Grid size={6} className={"d-row-right"}>
-                    <Div className={`fs-1-0rem fw-600 ${item.sleep_section[0]?.sleep_sleepTime_color}`}>
-                      {item.sleep_section[0]?.sleep_sleepTime}
-                    </Div>
-                  </Grid>
-                  <Grid size={1} className={"d-row-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("hm")}
-                    </Div>
+                  <Grid size={7} className={"d-row-right"}>
+                    <Grid container spacing={2} columns={12}>
+                      <Grid size={10} className={"d-row-right"}>
+                        <Div className={`${item.sleep_section[0]?.sleep_sleepTime_color}`}>
+                          {item.sleep_section[0]?.sleep_sleepTime}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("hm")}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
               </AccordionDetails>
@@ -822,7 +790,7 @@ export const TodayList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {exerciseSection()}

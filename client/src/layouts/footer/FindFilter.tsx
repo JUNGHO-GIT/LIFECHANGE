@@ -1,19 +1,20 @@
-// FindListFilter.tsx
+// FindFilter.tsx
 
 import { useCommonValue, useTranslate } from "@imports/ImportHooks";
-import { Icons, Input, Div } from "@imports/ImportComponents";
+import { Input } from "@imports/ImportContainers";
+import { Icons, Div } from "@imports/ImportComponents";
 import { TablePagination, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-declare interface FindListFilterProps {
+declare interface FindFilterProps {
   state: any;
   setState: any;
   flow: any;
 }
 
 // -------------------------------------------------------------------------------------------------
-export const FindListFilter = (
-  { state, setState, flow }: FindListFilterProps
+export const FindFilter = (
+  { state, setState, flow }: FindFilterProps
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
@@ -55,8 +56,9 @@ export const FindListFilter = (
     const findSection = () => (
       <Div className={"d-center me-n3"}>
         <Icons
+          key={"Search"}
           name={"Search"}
-          className={"w-22 h-22 black"}
+          className={"w-22 h-22"}
           onClick={() => {
             flow.flowFind();
             setState?.setPAGING((prev: any) => ({
@@ -72,8 +74,9 @@ export const FindListFilter = (
     const doneSection = () => (
       <Div className={"d-center ms-n3"}>
         <Icons
+          key={"CheckCircle"}
           name={"CheckCircle"}
-          className={"w-22 h-22 black"}
+          className={"w-22 h-22"}
           onClick={() => {
             Object.assign(state?.SEND, {
               dateType: state?.DATE.dateType,
@@ -114,7 +117,7 @@ export const FindListFilter = (
           marginLeft: "3vw"
         }}
         rowsPerPage={10}
-        onPageChange={(event, newPage) => {
+        onPageChange={(_event, newPage) => {
           setState?.setPAGING((prev: any) => ({
             ...prev,
             page: newPage

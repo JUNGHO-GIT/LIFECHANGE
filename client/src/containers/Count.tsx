@@ -1,8 +1,8 @@
 // Count.tsx
 
 import { useCommonValue, useTranslate } from "@imports/ImportHooks";
-import { Img, Div, Icons, Input } from "@imports/ImportComponents";
-import { PopUp } from "@imports/ImportContainers";
+import { PopUp, Input } from "@imports/ImportContainers";
+import { Img, Div, Icons } from "@imports/ImportComponents";
 import { Card, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -21,11 +21,11 @@ export const Count = (
 
   // 1. common -------------------------------------------------------------------------------------
   const {
+    PATH, localLocale
+  } = useCommonValue();
+  const {
     translate,
   } = useTranslate();
-  const {
-    PATH
-  } = useCommonValue();
 
   // 7. countNode ----------------------------------------------------------------------------------
   const countNode = () => {
@@ -34,8 +34,8 @@ export const Count = (
         label={translate("itemLock")}
         readOnly={true}
         value={translate(LOCKED) || ""}
-        className={"w-100p d-center"}
-        inputclass={"fs-0-8rem"}
+        className={"w-100p pointer"}
+        inputclass={"fs-0-8rem pointer"}
         adornmentclass={"ms-n10 p-0"}
         onClick={() => {
           if (LOCKED === "locked") {
@@ -69,7 +69,11 @@ export const Count = (
         direction={"center"}
         contents={
           <Card className={"d-center"}>
-            {`${COUNT.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`}
+            {localLocale === "ko" ? (
+              `${COUNT.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
+            ) : (
+              `Please enter ${COUNT.sectionCnt} or more and ${limit} or less.`
+            )}
           </Card>
         }
       >
@@ -88,10 +92,12 @@ export const Count = (
               />
             }
             endadornment={
-              <Div className={"d-center me-n10"}>
+              <Div className={"d-row-center me-n10"}>
                 <Icons
+                  key={"Minus"}
                   name={"Minus"}
-                  className={"w-20 h-20 black"}
+                  className={"w-20 h-20"}
+                  locked={LOCKED}
                   onClick={(e: any) => {
                     if (LOCKED === "locked") {
                       return;
@@ -110,8 +116,10 @@ export const Count = (
                   }}
                 />
                 <Icons
+                  key={"Plus"}
                   name={"Plus"}
-                  className={"w-20 h-20 black"}
+                  className={"w-20 h-20"}
+                  locked={LOCKED}
                   onClick={(e: any) => {
                     if (LOCKED === "locked") {
                       return;

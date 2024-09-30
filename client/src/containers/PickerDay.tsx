@@ -1,16 +1,16 @@
 // Picker.tsx
-// 계획은 week, month, year, select
+// 계획은 week, month, year
 // 실제는 day
 
 import { useEffect, useState } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useStorage, useTranslate } from "@imports/ImportHooks";
-import { Btn, Input, Img, Div, Select } from "@imports/ImportComponents";
-import { PopUp } from "@imports/ImportContainers";
+import { PopUp, Input, Select } from "@imports/ImportContainers";
+import { Btn, Img, Div } from "@imports/ImportComponents";
 import { MenuItem, PickersDay, Grid, Card, Badge } from "@imports/ImportMuis";
 import { DateCalendar, AdapterMoment, LocalizationProvider } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-declare interface PickerProps {
+declare interface PickerDayProps {
   DATE: any;
   setDATE: any;
   EXIST: any;
@@ -18,17 +18,19 @@ declare interface PickerProps {
 }
 
 // -------------------------------------------------------------------------------------------------
-export const Picker = (
-  { DATE, setDATE, EXIST, setEXIST }: PickerProps
+export const PickerDay = (
+  { DATE, setDATE, EXIST, setEXIST }: PickerDayProps
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate,
-  } = useTranslate();
+    localLocale, localTimeZone, TITLE, PATH
+  } = useCommonValue();
   const {
     dayFmt,
-    weekStartFmt, weekEndFmt, monthStartFmt, monthEndFmt, yearStartFmt, yearEndFmt,
+    weekStartFmt, weekEndFmt,
+    monthStartFmt, monthEndFmt,
+    yearStartFmt, yearEndFmt,
     getDayFmt, getDayNotFmt,
     getDayStartFmt, getDayEndFmt,
     getWeekStartFmt, getWeekEndFmt,
@@ -42,12 +44,11 @@ export const Picker = (
     getNextYearStartFmt, getNextYearEndFmt,
   } = useCommonDate();
   const {
-    localLocale, localTimeZone, TITLE, PATH
-  } = useCommonValue();
+    translate,
+  } = useTranslate();
 
   const isGoalToday = PATH.includes("/today/goal");
   const isToday = !isGoalToday && PATH.includes("/today/list");
-  const isCalendarList = PATH.includes("/calendar/list");
   const isCalendarDetail = PATH.includes("/calendar/detail");
   const isGoalList = PATH.includes("/goal/list");
   const isGoalDetail = PATH.includes("/goal/detail");
@@ -60,16 +61,8 @@ export const Picker = (
   let dateEnd = parseDate?.dateEnd;
 
   // ex. 2024-11-12 ~ 12-15
-  const durStr =
-    `${DATE.dateStart} ~ ${DATE.dateEnd.split("-")[1] || "" }-${DATE.dateEnd.split("-")[2] || "" }`;
-
-  // 2-1. useState ---------------------------------------------------------------------------------
-  const [saveTypeStr, setDetailTypeStr] = useState<string>("");
-  const [listTypeStr, setListTypeStr] = useState<string>("");
-
-  // 2-2. useStorage -------------------------------------------------------------------------------
-  const [clickedType, setClickedType] = useStorage(
-    `${TITLE}_clickedType_(${PATH})`, "thisToday"
+  const durStr = (
+    `${DATE.dateStart} ~ ${DATE.dateEnd.split("-")[1] || "" }-${DATE.dateEnd.split("-")[2] || "" }`
   );
   const clickedDate = {
     todayDate: {
@@ -99,24 +92,15 @@ export const Picker = (
     }
   };
 
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  // 페이지 진입시 location이 없는경우 처리
-  useEffect(() => {
-    if (!DATE.dateType) {
-      if (isGoalList || isGoalDetail) {
-        setDATE((prev: any) => ({
-          ...prev,
-          dateType: "select",
-        }));
-      }
-      else if (isRealList || isRealDetail) {
-        setDATE((prev: any) => ({
-          ...prev,
-          dateType: "day",
-        }));
-      }
-    }
-  }, []);
+  // 2-1. useState ---------------------------------------------------------------------------------
+  const [saveTypeStr, setDetailTypeStr] = useState<string>("");
+  const [listTypeStr, setListTypeStr] = useState<string>("");
+
+  // 2-2. useStorage -------------------------------------------------------------------------------
+  const [saveType, setSaveType] = useState<string>("");
+  const [listType, setListType] = useStorage(
+    `${TITLE}_listType_(${PATH})`, "thisToday"
+  );
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -145,20 +129,64 @@ export const Picker = (
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (isGoalList || isRealList) {
-      if (clickedType === "thisToday") {
+      if (listType === "thisToday") {
         setDATE(clickedDate?.todayDate);
       }
-      else if (clickedType === "thisWeek") {
+      else if (listType === "thisWeek") {
         setDATE(clickedDate?.weekDate);
       }
-      else if (clickedType === "thisMonth") {
+      else if (listType === "thisMonth") {
         setDATE(clickedDate?.monthDate);
       }
-      else if (clickedType === "thisYear") {
+      else if (listType === "thisYear") {
         setDATE(clickedDate?.yearDate);
       }
     }
-  }, [clickedType]);
+  }, [listType]);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    if (saveType === "day") {
+      setDATE((prev: any) => ({
+        ...prev,
+        dateType: "day",
+        dateStart: dayFmt,
+        dateEnd: dayFmt,
+      }));
+    }
+    else if (saveType === "week") {
+      setDATE((prev: any) => ({
+        ...prev,
+        dateType: "week",
+        dateStart: weekStartFmt,
+        dateEnd: weekEndFmt,
+      }));
+    }
+    else if (saveType === "month") {
+      setDATE((prev: any) => ({
+        ...prev,
+        dateType: "month",
+        dateStart: monthStartFmt,
+        dateEnd: monthEndFmt,
+      }));
+    }
+    else if (saveType === "year") {
+      setDATE((prev: any) => ({
+        ...prev,
+        dateType: "year",
+        dateStart: yearStartFmt,
+        dateEnd: yearEndFmt,
+      }));
+    }
+    else if (saveType === "select") {
+      setDATE((prev: any) => ({
+        ...prev,
+        dateType: "select",
+        dateStart: dayFmt,
+        dateEnd: dayFmt
+      }));
+    }
+  }, [saveType]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -167,28 +195,28 @@ export const Picker = (
         (DATE?.dateStart === clickedDate?.todayDate?.dateStart) &&
         (DATE?.dateEnd === clickedDate?.todayDate?.dateEnd)
       ) {
-        setClickedType("thisToday");
+        setListType("thisToday");
       }
       else if (
         (DATE?.dateStart === clickedDate?.weekDate?.dateStart) &&
         (DATE?.dateEnd === clickedDate?.weekDate?.dateEnd)
       ) {
-        setClickedType("thisWeek");
+        setListType("thisWeek");
       }
       else if (
         (DATE?.dateStart === clickedDate?.monthDate?.dateStart) &&
         (DATE?.dateEnd === clickedDate?.monthDate?.dateEnd)
       ) {
-        setClickedType("thisMonth");
+        setListType("thisMonth");
       }
       else if (
         (DATE?.dateStart === clickedDate?.yearDate?.dateStart) &&
         (DATE?.dateEnd === clickedDate?.yearDate?.dateEnd)
       ) {
-        setClickedType("thisYear");
+        setListType("thisYear");
       }
       else {
-        setClickedType("selectDate");
+        setListType("selectDate");
       }
     }
   }, [DATE]);
@@ -204,7 +232,7 @@ export const Picker = (
         direction={"center"}
         contents={
           <Card className={"w-min70vw p-0"}>
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewDay")}
@@ -217,7 +245,7 @@ export const Picker = (
                     views={["day"]}
                     readOnly={false}
                     value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
-                    className={"border-1 radius"}
+                    className={"border-1 radius-1"}
                     showDaysOutsideCurrentMonth={true}
                     slots={{
                       day: (props) => {
@@ -365,7 +393,7 @@ export const Picker = (
         direction={"center"}
         contents={
           <Card className={"w-min70vw p-0"}>
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewWeek")}
@@ -378,7 +406,7 @@ export const Picker = (
                     views={["day"]}
                     readOnly={false}
                     value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
-                    className={"border-1 radius"}
+                    className={"border-1 radius-1"}
                     showDaysOutsideCurrentMonth={true}
                     slots={{
                       day: (props) => {
@@ -540,7 +568,7 @@ export const Picker = (
         direction={"center"}
         contents={
           <Card className={"w-min70vw p-0"}>
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewMonth")}
@@ -553,7 +581,7 @@ export const Picker = (
                     views={["day"]}
                     readOnly={false}
                     value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
-                    className={"border-1 radius"}
+                    className={"border-1 radius-1"}
                     showDaysOutsideCurrentMonth={true}
                     slots={{
                       day: (props) => {
@@ -698,7 +726,7 @@ export const Picker = (
         direction={"center"}
         contents={
           <Card className={"w-min70vw p-0"}>
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewYear")}
@@ -711,7 +739,7 @@ export const Picker = (
                     views={["day"]}
                     readOnly={false}
                     value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
-                    className={"border-1 radius"}
+                    className={"border-1 radius-1"}
                     showDaysOutsideCurrentMonth={true}
                     slots={{
                       day: (props) => {
@@ -855,9 +883,10 @@ export const Picker = (
         type={"innerCenter"}
         position={"center"}
         direction={"center"}
+        className={"p-10"}
         contents={
           <Card className={"p-0"}>
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewSelect")}
@@ -870,7 +899,7 @@ export const Picker = (
                     views={["day"]}
                     readOnly={false}
                     value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
-                    className={"border-1 radius"}
+                    className={"border-1 radius-1"}
                     showDaysOutsideCurrentMonth={true}
                     slots={{
                       day: (props) => {
@@ -1011,21 +1040,21 @@ export const Picker = (
     const listTypeSection = () => (
       <Select
         label={translate("dateType")}
-        value={clickedType || ""}
+        value={listType || ""}
         inputclass={listTypeStr}
         readOnly={isToday}
         onChange={(e: any) => {
           if (e.target.value === "thisToday") {
-            setClickedType("thisToday");
+            setListType("thisToday");
           }
           else if (e.target.value === "thisWeek") {
-            setClickedType("thisWeek");
+            setListType("thisWeek");
           }
           else if (e.target.value === "thisMonth") {
-            setClickedType("thisMonth");
+            setListType("thisMonth");
           }
           else if (e.target.value === "thisYear") {
-            setClickedType("thisYear");
+            setListType("thisYear");
           }
         }}
       >
@@ -1033,7 +1062,7 @@ export const Picker = (
           <MenuItem
             key={item}
             value={item}
-            selected={item === clickedType}
+            selected={item === listType}
           >
             <Div className={"fs-0-6rem"}>
               {translate(item)}
@@ -1047,70 +1076,28 @@ export const Picker = (
     const saveTypeSection = () => (
       <Select
         label={translate("dateType")}
-        value={
-          isRealDetail ? (
-            DATE.dateType || "day"
-          ) : (
-            DATE.dateType || ""
-          )
-        }
+        value={DATE.dateType}
         inputclass={saveTypeStr}
         readOnly={isRealDetail && !isCalendarDetail}
         onChange={(e: any) => {
           if (e.target.value === "day") {
-            setDATE((prev: any) => ({
-              ...prev,
-              dateType: "day",
-              dateStart: dayFmt,
-              dateEnd: dayFmt
-            }));
+            setSaveType("day");
           }
           else if (e.target.value === "week") {
-            setDATE((prev: any) => ({
-              ...prev,
-              dateType: "week",
-              dateStart: weekStartFmt,
-              dateEnd: weekEndFmt
-            }));
+            setSaveType("week");
           }
           else if (e.target.value === "month") {
-            setDATE((prev: any) => ({
-              ...prev,
-              dateType: "month",
-              dateStart: monthStartFmt,
-              dateEnd: monthEndFmt
-            }));
+            setSaveType("month");
           }
           else if (e.target.value === "year") {
-            setDATE((prev: any) => ({
-              ...prev,
-              dateType: "year",
-              dateStart: yearStartFmt,
-              dateEnd: yearEndFmt
-            }));
+            setSaveType("year");
           }
           else if (e.target.value === "select") {
-            setDATE((prev: any) => ({
-              ...prev,
-              dateType: "select",
-              dateStart: dayFmt,
-              dateEnd: dayFmt
-            }));
+            setSaveType("select");
           }
         }}
       >
-        {isGoalDetail ? (
-          ["week", "month", "year", "select"]?.map((item: any) => (
-            <MenuItem
-              key={item}
-              value={item}
-              selected={item === DATE.dateType}
-            >
-              {translate(item)}
-            </MenuItem>
-          ))
-        )
-        : isCalendarDetail ? (
+        {isCalendarDetail ? (
           ["day", "week", "month", "year", "select"]?.map((item: any) => (
             <MenuItem
               key={item}
@@ -1120,8 +1107,17 @@ export const Picker = (
               {translate(item)}
             </MenuItem>
           ))
-        )
-        : (
+        ) : isGoalDetail ? (
+          ["week", "month", "year"]?.map((item: any) => (
+            <MenuItem
+              key={item}
+              value={item}
+              selected={item === DATE.dateType}
+            >
+              {translate(item)}
+            </MenuItem>
+          ))
+        ) : (
           ["day"]?.map((item: any) => (
             <MenuItem
               key={item}
@@ -1135,11 +1131,27 @@ export const Picker = (
       </Select>
     );
 
-    // 10. return
+    // 10. return ----------------------------------------------------------------------------------
     return (
 
+      // 0. 일정인 경우 (세이브)
+      isCalendarDetail ? (
+        <Grid container spacing={2}>
+          <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
+            {saveTypeSection()}
+          </Grid>
+          <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
+            {DATE.dateType === "day" && daySection()}
+            {DATE.dateType === "week" && weekSection()}
+            {DATE.dateType === "month" && monthSection()}
+            {DATE.dateType === "year" && yearSection()}
+            {DATE.dateType === "select" && selectSection()}
+          </Grid>
+        </Grid>
+      )
+
       // 1-1. 목표인 경우 (리스트)
-      isGoalList ? (
+      : isGoalList ? (
         <Grid container spacing={2} columns={12}>
           <Grid size={4} className={"d-center"}>
             {listTypeSection()}
@@ -1160,23 +1172,6 @@ export const Picker = (
             {DATE.dateType === "week" && weekSection()}
             {DATE.dateType === "month" && monthSection()}
             {DATE.dateType === "year" && yearSection()}
-            {DATE.dateType === "select" && selectSection()}
-          </Grid>
-        </Grid>
-      )
-
-      // 1-3. 일정인 경우 (세이브)
-      : isCalendarDetail ? (
-        <Grid container spacing={2}>
-          <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
-            {saveTypeSection()}
-          </Grid>
-          <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
-            {DATE.dateType === "day" && daySection()}
-            {DATE.dateType === "week" && weekSection()}
-            {DATE.dateType === "month" && monthSection()}
-            {DATE.dateType === "year" && yearSection()}
-            {DATE.dateType === "select" && selectSection()}
           </Grid>
         </Grid>
       )

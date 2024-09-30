@@ -4,9 +4,9 @@ import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
 import { Exercise } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
-import { Loading, Footer } from "@imports/ImportLayouts";
+import { Loading, Footer, Empty } from "@imports/ImportLayouts";
 import { Div, Hr, Icons, Img } from "@imports/ImportComponents";
-import { Empty, Dial } from "@imports/ImportContainers";
+import { Dial } from "@imports/ImportContainers";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 
@@ -15,14 +15,14 @@ export const ExerciseList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate,
-  } = useTranslate();
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, toDetail
+  } = useCommonValue();
   const {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, toDetail
-  } = useCommonValue();
+    translate,
+  } = useTranslate();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
@@ -76,7 +76,6 @@ export const ExerciseList = () => {
       }));
       // Accordion 초기값 설정
       setIsExpanded(res.data.result.map((_item: any, index: number) => index));
-      // setIsExpanded([]);
     })
     .catch((err: any) => {
       console.error(err);
@@ -91,27 +90,32 @@ export const ExerciseList = () => {
     const listSection = () => {
       const emptyFragment = () => (
         <Empty
-          DATE={DATE}
           SEND={SEND}
           extra={"exercise"}
         />
       );
       const listFragment = (i: number) => (
         OBJECT?.map((item: any, index: number) => (
-          <Card className={"border-1 radius p-10"} key={`${index}-${i}`}>
+          <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
-              <AccordionSummary expandIcon={
-                <Icons
-                  name={"ChevronDown"}
-                  className={"w-18 h-18 black"}
-                  onClick={() => {
-                    setIsExpanded(isExpanded.includes(index)
-                    ? isExpanded.filter((el) => el !== index)
-                    : [...isExpanded, index]
-                  )}}
-                />
-              }>
-                <Grid container spacing={2}
+              <AccordionSummary
+                className={"me-n10"}
+                expandIcon={
+                  <Icons
+                    key={"ChevronDown"}
+                    name={"ChevronDown"}
+                    className={"w-18 h-18"}
+                    onClick={() => {
+                      setIsExpanded(isExpanded.includes(index)
+                      ? isExpanded.filter((el: number) => el !== index)
+                      : [...isExpanded, index]
+                    )}}
+                  />
+                }
+              >
+                <Grid
+                  container={true}
+                  spacing={2}
                   onClick={(e: any) => {
                     e.stopPropagation();
                     Object.assign(SEND, {
@@ -125,49 +129,27 @@ export const ExerciseList = () => {
                     });
                   }}
                 >
-                  <Grid size={2} className={"d-center"}>
+                  <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
                       name={"Search"}
-                      className={"w-18 h-18 black"}
+                      className={"w-18 h-18"}
                     />
                   </Grid>
                   <Grid size={10} className={"d-row-left"}>
-                    {item.exercise_dateStart === item.exercise_dateEnd ? (
-                      <>
-                        <Div className={"fs-1-2rem fw-600"}>
-                          {item.exercise_dateStart?.substring(5, 10)}
-                        </Div>
-                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(getDayNotFmt(item.exercise_dateStart).format("ddd"))}
-                        </Div>
-                      </>
-                    ) : (
-                      <>
-                        <Div className={"fs-1-2rem fw-600"}>
-                          {item.exercise_dateStart?.substring(5, 10)}
-                        </Div>
-                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(getDayNotFmt(item.exercise_dateStart).format("ddd"))}
-                        </Div>
-                        <Div className={"fs-1-0rem ms-3vw me-3vw"}>
-                          ~
-                        </Div>
-                        <Div className={"fs-1-2rem fw-600"}>
-                          {item.exercise_dateEnd?.substring(5, 10)}
-                        </Div>
-                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(getDayNotFmt(item.exercise_dateEnd).format("ddd"))}
-                        </Div>
-                      </>
-                    )}
+                    <Div className={"fs-1-1rem fw-600 black me-5"}>
+                      {item.exercise_dateStart?.substring(5, 10)}
+                    </Div>
+                    <Div className={"fs-0-9rem fw-500 dark ms-5"}>
+                      {translate(getDayNotFmt(item.exercise_dateStart).format("ddd"))}
+                    </Div>
                   </Grid>
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                {/** row 1 **/}
                 <Grid container spacing={2} columns={12}>
-                  <Grid size={2} className={"d-center"}>
+                  {/** row 1 **/}
+                  <Grid size={2} className={"d-row-center"}>
                     <Img
                     	key={"exercise3_1"}
                     	src={"exercise3_1"}
@@ -175,14 +157,14 @@ export const ExerciseList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
                       {translate("volume")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container columns={12} spacing={1}>
+                    <Grid container spacing={2} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
-                        <Div className={`fs-1-0rem fw-600 ${item.exercise_total_volume_color}`}>
+                        <Div className={`${item.exercise_total_volume_color}`}>
                           {numeral(item.exercise_total_volume).format("0,0")}
                         </Div>
                       </Grid>
@@ -205,14 +187,14 @@ export const ExerciseList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
                       {translate("cardio")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container columns={12} spacing={1}>
+                    <Grid container spacing={2} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
-                        <Div className={`fs-1-0rem fw-600 ${item.exercise_total_cardio_color}`}>
+                        <Div className={`${item.exercise_total_cardio_color}`}>
                           {item.exercise_total_cardio}
                         </Div>
                       </Grid>
@@ -235,14 +217,14 @@ export const ExerciseList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
                       {translate("weight")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container columns={12} spacing={1}>
+                    <Grid container spacing={2} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
-                        <Div className={`fs-1-0rem fw-600 ${item.exercise_total_volume_color}`}>
+                        <Div className={`${item.exercise_total_volume_color}`}>
                           {numeral(item.exercise_total_volume).format("0,0.0")}
                         </Div>
                       </Grid>
@@ -267,7 +249,7 @@ export const ExerciseList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {listSection()}

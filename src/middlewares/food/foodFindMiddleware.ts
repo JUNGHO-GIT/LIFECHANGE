@@ -9,10 +9,10 @@ export const list = async (object: any) => {
     let finalResult: string = "";
 
     if (param.length > 12) {
-      finalResult = "fs-0-6rem fw-600";
+      finalResult = "fs-0-8rem fw-600";
     }
     else if (param.length > 6) {
-      finalResult = "fs-0-8rem fw-600";
+      finalResult = "fs-0-9rem fw-600";
     }
     else {
       finalResult = "fs-1-0rem fw-600";
@@ -30,17 +30,32 @@ export const list = async (object: any) => {
 
   // 10. return ------------------------------------------------------------------------------------
   object?.result?.forEach((item: any) => {
-    item.food_total_kcal_color = calcNonValueColor(
-      item?.food_total_kcal
+    item.food_name_color = calcNonValueColor(
+      item?.food_name
     );
-    item.food_total_carb_color = calcNonValueColor(
-      item?.food_total_carb
+    item.food_brand_color = calcNonValueColor(
+      item?.food_brand
     );
-    item.food_total_protein_color = calcNonValueColor(
-      item?.food_total_protein
+    item.food_count_color = calcNonValueColor(
+      item?.food_count
     );
-    item.food_total_fat_color = calcNonValueColor(
-      item?.food_total_fat
+    item.food_serv_color = calcNonValueColor(
+      item?.food_serv
+    );
+    item.food_gram_color = calcNonValueColor(
+      item?.food_gram
+    );
+    item.food_kcal_color = calcNonValueColor(
+      item?.food_kcal
+    );
+    item.food_fat_color = calcNonValueColor(
+      item?.food_fat
+    );
+    item.food_carb_color = calcNonValueColor(
+      item?.food_carb
+    );
+    item.food_protein_color = calcNonValueColor(
+      item?.food_protein
     );
   });
 

@@ -1,17 +1,16 @@
-// Select.tsx
+// Input.tsx
 
 import { TextField } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-export const Select = (props: any) => (
+export const Input = (props: any) => (
   <TextField
     {...props}
-    select={true}
+    select={false}
     type={props?.type || "text"}
     variant={props?.variant || "outlined"}
     size={props?.size || "small"}
     fullWidth={props?.fullWidth || true}
-    className={props?.className || ""}
     inputRef={props?.inputRef || null}
     error={props?.error || false}
     onClick={(e: React.MouseEvent) => {
@@ -35,33 +34,16 @@ export const Select = (props: any) => (
       "& .MuiSelect-icon": {
         display: props?.readOnly && "none"
       },
-      "& .MuiOutlinedInput-root": {
-        cursor: props?.readOnly && "pointer",
-        caretColor: props?.readOnly && "transparent",
-      },
-      "& .MuiOutlinedInput-input": {
-        cursor: props?.readOnly && "pointer",
-        caretColor: props?.readOnly && "transparent",
-      },
-      "& .MuiOutlinedInput-root.Mui-focused": {
-        "& .MuiOutlinedInput-notchedOutline": {
-          border: "2px solid #1976d2",
-        }
-      },
-      "& .MuiOutlinedInput-root.Mui-error": {
-        "& .MuiOutlinedInput-notchedOutline": {
-          border: "2px solid #d32f2f",
-        },
-      },
-      "& .MuiInputLabel-root.Mui-focused": {
-        color: "#1976d2",
-      },
-      "& .MuiInputLabel-root.Mui-error": {
-        color: "#d32f2f",
-      },
     }}
+    className={(
+      props?.variant === "standard"
+      ? `${props?.className} border-bottom-1`
+      : props?.className || ""
+    )}
     slotProps={{
+      ...props?.slotProps,
       input: {
+        ...props?.slotProps?.input,
         readOnly: (
           props?.readOnly || props?.locked === "locked" || false
         ),
@@ -75,11 +57,11 @@ export const Select = (props: any) => (
         startAdornment: (
           props?.startadornment ? (
             typeof props?.startadornment === "string" ? (
-              <div className={props?.adornmentclass || "fs-0-6rem"}>
+              <div className={props?.adornmentclass ? `${props?.adornmentclass} d-center fs-0-6rem` : "d-center fs-0-6rem"}>
                 {props?.startadornment}
               </div>
             ) : (
-              <div className={props?.adornmentclass || "me-2vw"}>
+              <div className={props?.adornmentclass ? `${props?.adornmentclass} d-center me-2vw` : "d-center me-2vw"}>
                 {props?.startadornment}
               </div>
             )
@@ -88,16 +70,20 @@ export const Select = (props: any) => (
         endAdornment: (
           props?.endadornment ? (
             typeof props?.endadornment === "string" ? (
-              <div className={props?.adornmentclass || "fs-0-6rem"}>
+              <div className={props?.adornmentclass ? `${props?.adornmentclass} d-center fs-0-6rem` : "d-center fs-0-6rem"}>
                 {props?.endadornment}
               </div>
             ) : (
-              <div className={props?.adornmentclass || "ms-2vw"}>
+              <div className={props?.adornmentclass ? `${props?.adornmentclass} d-center ms-2vw` : "d-center ms-2vw"}>
                 {props?.endadornment}
               </div>
             )
           ) : null
         ),
+      },
+      inputLabel: {
+        ...props?.slotProps?.inputLabel,
+        shrink: (props?.shrink === "shrink" ? true : undefined),
       }
     }}
   />

@@ -5,6 +5,7 @@ import { TopNav } from "@layouts/TopNav";
 import { Footer } from "@layouts/Footer";
 import { BottomNav } from "@layouts/BottomNav";
 import { Loading } from "@layouts/Loading";
+import { Empty } from "@layouts/Empty";
 
 // -------------------------------------------------------------------------------------------------
 export {
@@ -13,4 +14,5 @@ export {
   Footer,
   BottomNav,
   Loading,
+  Empty
 };

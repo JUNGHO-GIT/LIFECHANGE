@@ -8,6 +8,7 @@ export const randomNumber = (data: number) => {
 export const randomTime = () => {
   const hour = Math.floor(Math.random() * 23).toString().padStart(2, '0');
   const minute = Math.floor(Math.random() * 60).toString().padStart(2, '0');
+
   return `${hour}:${minute}`;
 }
 // 1-3. date ---------------------------------------------------------------------------------------
@@ -15,12 +16,13 @@ export const calcDate = (startTime: string, endTime: string) => {
   const start = new Date(`1970/01/01 ${startTime}`);
   const end = new Date(`1970/01/01 ${endTime}`);
   const duration = new Date(Number(end) - Number(start) + 24 * 60 * 60 * 1000);
+
   return `${duration.getHours().toString().padStart(2, '0')}:${duration.getMinutes().toString().padStart(2, '0')}`;
 }
 
 // 1-2. format -------------------------------------------------------------------------------------
 export const timeToDecimal = (data: string) => {
-  if (!data) {
+  if (!data || data === null || data === undefined) {
     return "0";
   }
   const time = data.split(":");
@@ -37,7 +39,7 @@ export const timeToDecimal = (data: string) => {
 };
 
 export const decimalToTime = (data: number) => {
-  if (!data) {
+  if (!data || isNaN(data) || data === null || data === undefined) {
     return "00:00";
   }
   const floatHours = parseFloat(data.toString());
@@ -50,7 +52,7 @@ export const decimalToTime = (data: number) => {
 
 // 1-2. convert ------------------------------------------------------------------------------------
 export const strToDecimal = (time: string) => {
-  if (!time) {
+  if (!time || time === null || time === undefined) {
     return 0;
   }
   const [hours, minutes] = time.split(":").map(Number);
@@ -61,7 +63,7 @@ export const strToDecimal = (time: string) => {
 };
 
 export const decimalToStr = (time: number) => {
-  if (time === null || time === undefined) {
+  if (!time || isNaN(time) || time === null || time === undefined) {
     return "00:00";
   }
   const hours = Math.floor(time);
@@ -70,26 +72,4 @@ export const decimalToStr = (time: number) => {
   const adjustedMinutes = minutes % 60;
 
   return `${String(adjustedHours).padStart(2, "0")}:${String(adjustedMinutes).padStart(2, "0")}`;
-};
-
-// 2-1. log ----------------------------------------------------------------------------------------
-export const log = (name: string, data: any) => {
-  const cache = new Set();
-
-  // 순환 참조 발견
-  const jsonString = JSON.stringify(data, (key, value) => {
-    if (typeof value === "object" && value !== null) {
-      if (cache.has(value)) {
-        return "[Circular]";
-      }
-      cache.add(value);
-    }
-    return value;
-  }, 2);
-
-  // 로그 출력
-  console.log(`${name} : ${jsonString}`);
-
-  // 캐시 클리어
-  cache.clear();
 };

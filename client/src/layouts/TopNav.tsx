@@ -3,8 +3,8 @@
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
 import { numeral } from "@imports/ImportLibs";
-import { PopUp } from "@imports/ImportContainers";
-import { Div, Img, Hr, Br, Input } from "@imports/ImportComponents";
+import { PopUp, Input } from "@imports/ImportContainers";
+import { Div, Img, Hr, Br } from "@imports/ImportComponents";
 import { Tabs, Tab, Paper, Grid, Card, Checkbox } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -246,94 +246,100 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max60vw h-max70vh border-1 radius p-20"} key={`smile`}>
-            <Grid container spacing={0}>
+          <Card className={"w-max60vw h-max70vh border-1 radius-1 p-20"} key={`smile`}>
+            <Grid container spacing={2}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {`${dayFmt} (${dayNotFmt.format("ddd")})`}
                 </Div>
               </Grid>
-              <Hr px={40} />
-              <Grid size={12} className={"d-center"}>
-                <Div className={"d-center me-2vw"}>
-                  <Img
-                    key={smileImage.total}
-                  	src={smileImage.total}
-                  	className={"w-max25 h-max25"}
-                  />
-                </Div>
-                <Div className={"fs-1-1rem me-2vw"}>
+              <Hr px={20} />
+              <Grid size={4} className={"d-row-right"}>
+                <Img
+                  key={smileImage.total}
+                  src={smileImage.total}
+                  className={"w-max25 h-max25"}
+                />
+              </Grid>
+              <Grid size={4} className={"d-row-center"}>
+                <Div className={"fs-1-1rem"}>
                   {translate("total")}
                 </Div>
+              </Grid>
+              <Grid size={4} className={"d-row-left"}>
                 <Div className={"fs-0-8rem"}>
                   {smileScore.total}
                 </Div>
               </Grid>
-              <Br px={15} />
-              <Grid size={12} className={"d-center"}>
-                <Div className={"d-center me-2vw"}>
-                  <Img
-                    key={smileImage.exercise}
-                  	src={smileImage.exercise}
-                  	className={"w-max25 h-max25"}
-                  />
-                </Div>
-                <Div className={"fs-1-1rem me-2vw"}>
+              <Grid size={4} className={"d-row-right"}>
+                <Img
+                  key={smileImage.exercise}
+                  src={smileImage.exercise}
+                  className={"w-max25 h-max25"}
+                />
+              </Grid>
+              <Grid size={4} className={"d-row-center"}>
+                <Div className={"fs-1-1rem"}>
                   {translate("exercise")}
                 </Div>
+              </Grid>
+              <Grid size={4} className={"d-row-left"}>
                 <Div className={"fs-0-8rem"}>
                   {smileScore.exercise}
                 </Div>
               </Grid>
-              <Br px={15} />
-              <Grid size={12} className={"d-center"}>
-                <Div className={"d-center me-2vw"}>
-                  <Img
-                    key={smileImage.food}
-                  	src={smileImage.food}
-                  	className={"w-max25 h-max25"}
-                  />
-                </Div>
-                <Div className={"fs-1-1rem me-2vw"}>
+              <Grid size={4} className={"d-row-right"}>
+                <Img
+                  key={smileImage.food}
+                  src={smileImage.food}
+                  className={"w-max25 h-max25"}
+                />
+              </Grid>
+              <Grid size={4} className={"d-row-center"}>
+                <Div className={"fs-1-1rem"}>
                   {translate("food")}
                 </Div>
+              </Grid>
+              <Grid size={4} className={"d-row-left"}>
                 <Div className={"fs-0-8rem"}>
                   {smileScore.food}
                 </Div>
               </Grid>
-              <Br px={15} />
-              <Grid size={12} className={"d-center"}>
-                <Div className={"d-center me-2vw"}>
-                  <Img
-                    key={smileImage.money}
-                  	src={smileImage.money}
-                  	className={"w-max25 h-max25"}
-                  />
-                </Div>
-                <Div className={"fs-1-1rem me-2vw"}>
+              <Grid size={4} className={"d-row-right"}>
+                <Img
+                  key={smileImage.money}
+                  src={smileImage.money}
+                  className={"w-max25 h-max25"}
+                />
+              </Grid>
+              <Grid size={4} className={"d-row-center"}>
+                <Div className={"fs-1-1rem"}>
                   {translate("money")}
                 </Div>
+              </Grid>
+              <Grid size={4} className={"d-row-left"}>
                 <Div className={"fs-0-8rem"}>
                   {smileScore.money}
                 </Div>
               </Grid>
-              <Br px={15} />
-              <Grid size={12} className={"d-center"}>
-                <Div className={"d-center me-2vw"}>
-                  <Img
-                    key={smileImage.sleep}
-                  	src={smileImage.sleep}
-                  	className={"w-max25 h-max25"}
-                  />
-                </Div>
-                <Div className={"fs-1-1rem me-2vw"}>
+              <Grid size={4} className={"d-row-right"}>
+                <Img
+                  key={smileImage.sleep}
+                  src={smileImage.sleep}
+                  className={"w-max25 h-max25"}
+                />
+              </Grid>
+              <Grid size={4} className={"d-row-center"}>
+                <Div className={"fs-1-1rem"}>
                   {translate("sleep")}
                 </Div>
+              </Grid>
+              <Grid size={4} className={"d-row-left"}>
                 <Div className={"fs-0-8rem"}>
                   {smileScore.sleep}
                 </Div>
               </Grid>
-              <Hr px={40} />
+              <Hr px={20} />
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-0-8rem"}>
                   {translate("score")}
@@ -365,24 +371,19 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max60vw h-max70vh border-1 radius p-20"} key={`property`}>
-            <Grid container spacing={0}>
-              <Grid size={12} className={"d-center"}>
+          <Card className={"w-max60vw h-max70vh border-1 radius-1 p-20"} key={`property`}>
+            <Grid container spacing={2}>
+              <Grid size={12} className={"d-column-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
                   {translate("property")}
                 </Div>
-              </Grid>
-              <Br px={10} />
-              <Grid size={12} className={"d-center"}>
+                <Br px={10} />
                 <Div className={"fs-0-9rem fw-500 dark"}>
                   {`(${property?.dateStart} ~ ${property?.dateEnd})`}
                 </Div>
-              </Grid>
-              <Br px={10} />
-              <Grid size={12} className={"d-center"}>
+                <Br px={10} />
                 <Div className={"fs-0-7rem fw-500 dark ms-10"}>
                   {translate("includingExclusions")}
-                </Div>
                 <Checkbox
                   size={"small"}
                   className={"p-0 ms-5"}
@@ -391,9 +392,10 @@ export const TopNav = () => {
                     setIncludingExclusions(e.target.checked);
                   }}
                 />
+                </Div>
               </Grid>
-              <Hr px={40} />
-              <Grid size={12} className={"d-center"}>
+              <Hr px={10} />
+              <Grid size={12} className={"d-row-center"}>
                 <Img
                   key={"money2"}
                   src={"money2"}
@@ -407,7 +409,7 @@ export const TopNav = () => {
                   )}
                 </Div>
               </Grid>
-              <Hr px={40} />
+              <Hr px={10} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("initProperty")}
@@ -425,7 +427,6 @@ export const TopNav = () => {
                   }
                 />
               </Grid>
-              <Br px={15} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("sumIncome")}
@@ -449,7 +450,6 @@ export const TopNav = () => {
                   }
                 />
               </Grid>
-              <Br px={15} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("sumExpense")}
@@ -499,21 +499,19 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max60vw h-max70vh border-1 radius p-20"} key={`scale`}>
-            <Grid container spacing={0}>
-              <Grid size={12} className={"d-center"}>
+          <Card className={"w-max60vw h-max70vh border-1 radius-1 p-20"} key={`scale`}>
+            <Grid container spacing={2}>
+              <Grid size={12} className={"d-column-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
                   {translate("weight")}
                 </Div>
-              </Grid>
-              <Br px={10} />
-              <Grid size={12} className={"d-center"}>
+                <Br px={10} />
                 <Div className={"fs-0-9rem fw-500 dark"}>
                   {`(${scale?.dateStart} ~ ${scale?.dateEnd})`}
                 </Div>
               </Grid>
-              <Hr px={40} />
-              <Grid size={12} className={"d-center"}>
+              <Hr px={10} />
+              <Grid size={12} className={"d-row-center"}>
                 <Img
                   key={"exercise5"}
                   src={"exercise5"}
@@ -523,7 +521,7 @@ export const TopNav = () => {
                   {scale.curScale}
                 </Div>
               </Grid>
-              <Hr px={40} />
+              <Hr px={10} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("initScale")}
@@ -541,7 +539,6 @@ export const TopNav = () => {
                   }
                 />
               </Grid>
-              <Br px={15} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("minScale")}
@@ -559,7 +556,6 @@ export const TopNav = () => {
                   }
                 />
               </Grid>
-              <Br px={15} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("maxScale")}
@@ -643,7 +639,7 @@ export const TopNav = () => {
     );
     // 5. return
     return (
-      <Paper className={"layout-wrapper p-sticky top-8vh h-8vh border-1 radius"}>
+      <Paper className={"layout-wrapper p-sticky top-8vh h-8vh border-1 radius-1"}>
         <Grid container spacing={2} columns={25}>
           <Grid size={3}>
             {smileSection()}

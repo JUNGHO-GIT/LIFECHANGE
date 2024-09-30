@@ -9,7 +9,7 @@ import { useScrollTop } from "@hooks/useScrollTop";
 import { useFoodSection } from "@hooks/useFoodSection";
 import { useStorage } from "@hooks/useStorage";
 import { useTime } from "@hooks/useTime";
-import { useTimeZone } from "@hooks/useTimeZone";
+import { useLangSet } from "@hooks/useLangSet";
 
 // -------------------------------------------------------------------------------------------------
 export {
@@ -22,5 +22,5 @@ export {
   useFoodSection,
   useStorage,
   useTime,
-  useTimeZone,
+  useLangSet,
 };

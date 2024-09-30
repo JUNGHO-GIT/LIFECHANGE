@@ -6,7 +6,8 @@ import { useValidateUser } from "@imports/ImportValidates";
 import { User } from "@imports/ImportSchemas";
 import { moment, axios } from "@imports/ImportLibs";
 import { Loading } from "@imports/ImportLayouts";
-import { Div, Hr, Input, Btn } from "@imports/ImportComponents";
+import { Input } from "@imports/ImportContainers";
+import { Div, Hr, Btn } from "@imports/ImportComponents";
 import { Paper, TextArea, Grid, Card } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -14,11 +15,11 @@ export const UserDelete = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate,
-  } = useTranslate();
-  const {
     navigate, sessionId, URL_OBJECT
   } = useCommonValue();
+  const {
+    translate,
+  } = useTranslate();
   const {
     ERRORS, REFS, validate
   } = useValidateUser();
@@ -108,7 +109,7 @@ export const UserDelete = () => {
             <Hr px={20} />
             <Grid size={12}>
               <TextArea
-                className={"border-1 radius resize-none cursor-none w-100p p-10"}
+                className={"border-1 radius-1 resize-none cursor-none w-100p p-10"}
                 value={translate("deleteUser")}
               />
             </Grid>
@@ -135,7 +136,7 @@ export const UserDelete = () => {
     return (
       <>
       {LOADING && <Loading />}
-      <Paper className={"content-wrapper d-center border-1 radius h-min84vh"}>
+      <Paper className={"content-wrapper d-center border-1 radius-1 h-min84vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {titleSection()}

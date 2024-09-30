@@ -4,9 +4,9 @@ import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
 import { Sleep } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
-import { Loading, Footer } from "@imports/ImportLayouts";
+import { Loading, Footer, Empty } from "@imports/ImportLayouts";
 import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
-import { Empty, Dial } from "@imports/ImportContainers";
+import { Dial } from "@imports/ImportContainers";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 
@@ -15,14 +15,14 @@ export const SleepList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate,
-  } = useTranslate();
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, toDetail
+  } = useCommonValue();
   const {
     dayFmt, getDayNotFmt,
   } = useCommonDate();
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, toDetail
-  } = useCommonValue();
+    translate,
+  } = useTranslate();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
@@ -76,7 +76,6 @@ export const SleepList = () => {
       }));
       // Accordion 초기값 설정
       setIsExpanded(res.data.result.map((_item: any, index: number) => index));
-      // setIsExpanded([]);
     })
     .catch((err: any) => {
       console.error(err);
@@ -91,27 +90,32 @@ export const SleepList = () => {
     const listSection = () => {
       const emptyFragment = () => (
         <Empty
-          DATE={DATE}
           SEND={SEND}
           extra={"sleep"}
         />
       );
       const listFragment = (i: number) => (
         OBJECT?.map((item: any, index: number) => (
-          <Card className={"border-1 radius"} key={`${index}-${i}`}>
+          <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
-              <AccordionSummary expandIcon={
-                <Icons
-                  name={"ChevronDown"}
-                  className={"w-18 h-18 black"}
-                  onClick={() => {
-                    setIsExpanded(isExpanded.includes(index)
-                    ? isExpanded.filter((el) => el !== index)
-                    : [...isExpanded, index]
-                  )}}
-                />
-              }>
-                <Grid container spacing={2}
+              <AccordionSummary
+                className={"me-n10"}
+                expandIcon={
+                  <Icons
+                    key={"ChevronDown"}
+                    name={"ChevronDown"}
+                    className={"w-18 h-18"}
+                    onClick={() => {
+                      setIsExpanded(isExpanded.includes(index)
+                      ? isExpanded.filter((el: number) => el !== index)
+                      : [...isExpanded, index]
+                    )}}
+                  />
+                }
+              >
+                <Grid
+                  container={true}
+                  spacing={2}
                   onClick={(e: any) => {
                     e.stopPropagation();
                     Object.assign(SEND, {
@@ -125,49 +129,27 @@ export const SleepList = () => {
                     });
                   }}
                 >
-                  <Grid size={2} className={"d-center"}>
+                  <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
                       name={"Search"}
-                      className={"w-18 h-18 black"}
+                      className={"w-18 h-18"}
                     />
                   </Grid>
                   <Grid size={10} className={"d-row-left"}>
-                    {item.sleep_dateStart === item.sleep_dateEnd ? (
-                      <>
-                        <Div className={"fs-1-2rem fw-600"}>
-                          {item.sleep_dateStart?.substring(5, 10)}
-                        </Div>
-                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(getDayNotFmt(item.sleep_dateStart).format("ddd"))}
-                        </Div>
-                      </>
-                    ) : (
-                      <>
-                        <Div className={"fs-1-2rem fw-600"}>
-                          {item.sleep_dateStart?.substring(5, 10)}
-                        </Div>
-                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(getDayNotFmt(item.sleep_dateStart).format("ddd"))}
-                        </Div>
-                        <Div className={"fs-1-0rem ms-3vw me-3vw"}>
-                          ~
-                        </Div>
-                        <Div className={"fs-1-2rem fw-600"}>
-                          {item.sleep_dateEnd?.substring(5, 10)}
-                        </Div>
-                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {translate(getDayNotFmt(item.sleep_dateEnd).format("ddd"))}
-                        </Div>
-                      </>
-                    )}
+                    <Div className={"fs-1-1rem fw-600 black me-5"}>
+                      {item.sleep_dateStart?.substring(5, 10)}
+                    </Div>
+                    <Div className={"fs-0-9rem fw-500 dark ms-5"}>
+                      {translate(getDayNotFmt(item.sleep_dateStart).format("ddd"))}
+                    </Div>
                   </Grid>
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                {/** row 1 **/}
                 <Grid container spacing={2} columns={12}>
-                  <Grid size={2} className={"d-center"}>
+                  {/** row 1 **/}
+                  <Grid size={2} className={"d-row-center"}>
                     <Img
                     	key={"sleep2"}
                     	src={"sleep2"}
@@ -175,14 +157,14 @@ export const SleepList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
                       {translate("bedTime")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container columns={12} spacing={1}>
+                    <Grid container spacing={2} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
-                        <Div className={`fs-1-0rem fw-600 ${item.sleep_section[0]?.sleep_bedTime_color}`}>
+                        <Div className={`${item.sleep_section[0]?.sleep_bedTime_color}`}>
                           {item.sleep_section[0]?.sleep_bedTime}
                         </Div>
                       </Grid>
@@ -193,10 +175,8 @@ export const SleepList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-                <Hr px={30} />
-                {/** row 2 **/}
-                <Grid container spacing={2} columns={12}>
+                  <Hr px={1} />
+                  {/** row 2 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"sleep3"}
@@ -205,14 +185,14 @@ export const SleepList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
                       {translate("wakeTime")}
                     </Div>
                   </Grid>
                   <Grid size={7} className={"d-row-right"}>
-                    <Grid container columns={12} spacing={1}>
+                    <Grid container spacing={2} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
-                        <Div className={`fs-1-0rem fw-600 ${item.sleep_section[0]?.sleep_wakeTime_color}`}>
+                        <Div className={`${item.sleep_section[0]?.sleep_wakeTime_color}`}>
                           {item.sleep_section[0]?.sleep_wakeTime}
                         </Div>
                       </Grid>
@@ -223,10 +203,8 @@ export const SleepList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-                <Hr px={30} />
-                {/** row 3 **/}
-                <Grid container spacing={2} columns={12}>
+                  <Hr px={1} />
+                  {/** row 3 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"sleep4"}
@@ -235,14 +213,14 @@ export const SleepList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
                       {translate("sleepTime")}
                     </Div>
                   </Grid>
                   <Grid size={7} className={"d-row-right"}>
-                    <Grid container columns={12} spacing={1}>
+                    <Grid container spacing={2} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
-                        <Div className={`fs-1-0rem fw-600 ${item.sleep_section[0]?.sleep_sleepTime_color}`}>
+                        <Div className={`${item.sleep_section[0]?.sleep_sleepTime_color}`}>
                           {item.sleep_section[0]?.sleep_sleepTime}
                         </Div>
                       </Grid>
@@ -267,7 +245,7 @@ export const SleepList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {listSection()}

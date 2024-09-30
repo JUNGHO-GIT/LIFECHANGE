@@ -7,43 +7,41 @@ import { Card, Accordion, AccordionSummary, Grid } from "@imports/ImportMuis";
 // -------------------------------------------------------------------------------------------------
 declare interface EmptyProps {
   SEND: any;
-  DATE: any;
   extra: string;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const Empty = (
-  { SEND, DATE, extra }: EmptyProps
+  { SEND, extra }: EmptyProps
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate
-  } = useTranslate();
-  const {
     PATH, navigate
   } = useCommonValue();
+  const {
+    translate
+  } = useTranslate();
 
   const isFindList = PATH.includes("food/find/list");
   const isGoalList = !isFindList && PATH.includes("goal/list");
-  const isList = !isFindList && !isGoalList && PATH.includes("list");
   const toDetail = isGoalList ? `/${extra}/goal/detail` : `/${extra}/detail`;
 
   // 7. emptyNode ----------------------------------------------------------------------------------
   const emptyNode = () => {
     // 1. isFindSection
     const isFindSection = () => (
-      <Card className={"border-1 radius"} key={`empty-${extra}`}>
+      <Card className={"border-1 radius-1"} key={`empty-${extra}`}>
         <Accordion className={"shadow-none"} expanded={false}>
           <AccordionSummary>
             <Grid container spacing={2}>
-              <Grid size={2} className={"d-center"}>
+              <Grid size={4} className={"d-row-left"}>
                 <Div className={"fs-1-0rem fw-600 dark"}>
                   {translate("search")}
                 </Div>
               </Grid>
-              <Grid size={10} className={"d-row-left"}>
-                <Div className={"fs-1-0rem fw-500 black"}>
+              <Grid size={8} className={"d-row-left"}>
+                <Div className={"fs-1-0rem fw-500"}>
                   {translate("notFound")}
                 </Div>
               </Grid>
@@ -54,35 +52,38 @@ export const Empty = (
     );
     // 2. nonFindSection
     const nonFindSection = () => (
-      <Card className={"border-1 radius"} key={`empty`}>
+      <Card className={"border-1 radius-1"} key={`empty-${extra}`}>
         <Accordion className={"shadow-none"} expanded={false}>
           <AccordionSummary>
-            <Grid container spacing={1}
+            <Grid
+              container={true}
+              spacing={2}
               onClick={(e: any) => {
                 e.stopPropagation();
                 Object.assign(SEND, {
-                  dateType: DATE.dateType,
-                  dateStart: DATE.dateStart,
-                  dateEnd: DATE.dateEnd,
+                  dateType: "",
+                  dateStart: "",
+                  dateEnd: "",
                 });
                 navigate(toDetail, {
                   state: SEND
                 });
               }}
             >
-              <Grid size={2} className={"d-center"}>
+              <Grid size={2} className={"d-row-center"}>
                 <Icons
+                  key={"Search"}
                   name={"Search"}
-                  className={"w-18 h-18 black"}
+                  className={"w-18 h-18"}
                 />
               </Grid>
-              <Grid size={2} className={"d-row-left"}>
+              <Grid size={4} className={"d-row-left"}>
                 <Div className={"fs-0-9rem fw-600 dark"}>
                   {translate(`${extra}`)}
                 </Div>
               </Grid>
-              <Grid size={8} className={"d-row-left"}>
-                <Div className={"fs-1-0rem fw-500 black"}>
+              <Grid size={6} className={"d-row-left"}>
+                <Div className={"fs-1-0rem fw-500"}>
                   {translate("empty")}
                 </Div>
               </Grid>
@@ -93,11 +94,7 @@ export const Empty = (
     );
     // 3. return
     return (
-      isFindList ? (
-        isFindSection()
-      ) : (
-        nonFindSection()
-      )
+      isFindList ? isFindSection() : nonFindSection()
     );
   };
 

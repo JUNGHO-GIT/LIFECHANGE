@@ -6,7 +6,8 @@ import { useValidateUser } from "@imports/ImportValidates";
 import { User } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportLibs";
 import { Loading } from "@imports/ImportLayouts";
-import { Div, Hr, Btn, Input } from "@imports/ImportComponents";
+import { Input } from "@imports/ImportContainers";
+import { Div, Hr, Btn } from "@imports/ImportComponents";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -14,11 +15,11 @@ export const UserResetPw = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate
-  } = useTranslate();
-  const {
     navigate, URL_OBJECT,
   } = useCommonValue();
+  const {
+    translate
+  } = useTranslate();
   const {
     ERRORS, REFS, validate
   } = useValidateUser();
@@ -316,7 +317,7 @@ export const UserResetPw = () => {
     return (
       <>
       {LOADING && <Loading />}
-      <Paper className={"content-wrapper d-center border-1 radius h-min100vh"}>
+      <Paper className={"content-wrapper d-center border-1 radius-1 h-min100vh"}>
         <Grid container spacing={2}>
           <Grid size={12}>
             {titleSection()}

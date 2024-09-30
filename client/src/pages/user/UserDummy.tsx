@@ -7,7 +7,7 @@ import { FoodGoal, Food } from "@imports/ImportSchemas";
 import { MoneyGoal, Money } from "@imports/ImportSchemas";
 import { SleepGoal, Sleep } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
-import { Loading, Footer } from "@imports/ImportLayouts";
+import { Loading, Footer, Empty } from "@imports/ImportLayouts";
 import { Div } from "@imports/ImportComponents";
 import { Paper, TableContainer, Table, Card, Grid } from "@imports/ImportMuis";
 import { TableHead, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
@@ -17,11 +17,11 @@ export const UserDummy = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate,
-  } = useTranslate();
-  const {
     navigate, PATH, URL_OBJECT, sessionId, TITLE,
   } = useCommonValue();
+  const {
+    translate,
+  } = useTranslate();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -166,12 +166,12 @@ export const UserDummy = () => {
     // 7-1. exerciseGoal
     const exerciseGoalSection = () => {
       const emptyFragment = () => (
-        <Card className={"border-1 radius p-10"} key={"empty"}>
+        <Card className={"border-1 radius-1 p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
       const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius p-0"} key={i}>
+        <Card className={"border-1 radius-1 p-0"} key={i}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -227,12 +227,12 @@ export const UserDummy = () => {
     // 7-2. exercise
     const exerciseSection = () => {
       const emptyFragment = () => (
-        <Card className={"border-1 radius p-10"} key={"empty"}>
+        <Card className={"border-1 radius-1 p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
       const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius p-0"} key={i}>
+        <Card className={"border-1 radius-1 p-0"} key={i}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -284,12 +284,12 @@ export const UserDummy = () => {
     // 7-3. foodGoal
     const foodGoalSection = () => {
       const emptyFragment = () => (
-        <Card className={"border-1 radius p-10"} key={"empty"}>
+        <Card className={"border-1 radius-1 p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
       const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius p-0"} key={i}>
+        <Card className={"border-1 radius-1 p-0"} key={i}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -345,12 +345,12 @@ export const UserDummy = () => {
     // 7-4. food
     const foodSection = () => {
       const emptyFragment = () => (
-        <Card className={"border-1 radius p-10"} key={"empty"}>
+        <Card className={"border-1 radius-1 p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
       const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius p-0"} key={i}>
+        <Card className={"border-1 radius-1 p-0"} key={i}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -406,12 +406,12 @@ export const UserDummy = () => {
     // 7-5. moneyGoal
     const moneyGoalSection = () => {
       const emptyFragment = () => (
-        <Card className={"border-1 radius p-10"} key={"empty"}>
+        <Card className={"border-1 radius-1 p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
       const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius p-0"} key={i}>
+        <Card className={"border-1 radius-1 p-0"} key={i}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -459,12 +459,12 @@ export const UserDummy = () => {
     // 7-6. money
     const moneySection = () => {
       const emptyFragment = () => (
-        <Card className={"border-1 radius p-10"} key={"empty"}>
+        <Card className={"border-1 radius-1 p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
       const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius p-0"} key={i}>
+        <Card className={"border-1 radius-1 p-0"} key={i}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -512,12 +512,12 @@ export const UserDummy = () => {
     // 7-7. sleepGoal
     const sleepGoalSection = () => {
       const emptyFragment = () => (
-        <Card className={"border-1 radius p-10"} key={"empty"}>
+        <Card className={"border-1 radius-1 p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
       const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius p-0"} key={i}>
+        <Card className={"border-1 radius-1 p-0"} key={i}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -569,12 +569,12 @@ export const UserDummy = () => {
     // 7-8. sleep
     const sleepSection = () => {
       const emptyFragment = () => (
-        <Card className={"border-1 radius p-10"} key={"empty"}>
+        <Card className={"border-1 radius-1 p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
       const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius p-0"} key={i}>
+        <Card className={"border-1 radius-1 p-0"} key={i}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -625,7 +625,7 @@ export const UserDummy = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius h-min84vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 h-min84vh"}>
         <Grid container spacing={2}>
           <Grid size={12} >
             {PART === "exerciseGoal" && exerciseGoalSection()}

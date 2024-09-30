@@ -1,8 +1,8 @@
 // Memo.tsx
 
 import { useCommonValue, useTranslate } from "@imports/ImportHooks";
-import { Img, Input } from "@imports/ImportComponents";
-import { PopUp } from "@imports/ImportContainers";
+import { PopUp, Input } from "@imports/ImportContainers";
+import { Img } from "@imports/ImportComponents";
 import { TextArea, Grid, Card } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
