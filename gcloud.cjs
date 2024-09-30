@@ -68,7 +68,7 @@ const modifyChangelog = () => {
 // git push ----------------------------------------------------------------------------------------
 const gitPush = () => {
   execSync('git add .', { stdio: 'inherit' });
-  execSync('git commit -m "update"', { stdio: 'inherit' });
+  execSync('git commit -m \"%date% %time:~0,8%\"', { stdio: 'inherit' });
   execSync('git push origin master', { stdio: 'inherit' });
 };
 

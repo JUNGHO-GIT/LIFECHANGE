@@ -27,7 +27,6 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "test": "craco test",
     "gcloud": "node gcloud.cjs"
   },
   "dependencies": {
