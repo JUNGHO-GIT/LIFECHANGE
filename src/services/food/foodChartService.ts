@@ -72,9 +72,10 @@ export const barToday = async (
     statusResult = "fail";
   }
 
-  return  {
+  return {
     status: statusResult,
-    result: finalResult
+    result: finalResult,
+    date: `${dateStart} ~ ${dateEnd}`
   };
 };
 
@@ -438,7 +439,7 @@ export const avgWeek = async (
   // date 변수 정의
   const monthStartFmt = DATE_param.monthStartFmt;
 
-  // weekStartDate 정의
+  // weekStartDates 정의
   const weekStartDate = Array.from({ length: 5 }, (_, i) => (
     moment(monthStartFmt).startOf("month").add(i, 'weeks')
   ));
@@ -459,7 +460,7 @@ export const avgWeek = async (
     // promise 사용하여 병렬 처리
     const parallelResult = await Promise.all(
       weekStartDate.map(async (startDate, i) => {
-        const dateStart = startDate.format("YYYY-MM-DD");
+        const dateStart = startDate.clone().startOf('isoWeek').format("YYYY-MM-DD");
         const dateEnd = startDate.clone().endOf('isoWeek').format("YYYY-MM-DD");
 
         [findResultKcal, findResultNut] = await Promise.all([
@@ -480,7 +481,7 @@ export const avgWeek = async (
     );
 
     // sum, count 설정
-    parallelResult.forEach(({findResultKcal, findResultNut, index}) => {
+    parallelResult.forEach(({ findResultKcal, findResultNut, index }) => {
       findResultKcal.forEach((item: any) => {
         sumKcal[index] += Number(item.food_total_kcal || "0");
         countRecordsKcal[index]++;
@@ -584,7 +585,7 @@ export const avgMonth = async (
     // promise 사용하여 병렬 처리
     const parallelResult = await Promise.all(
       monthStartDate.map(async (startDate, i) => {
-        const dateStart = startDate.format("YYYY-MM-DD");
+        const dateStart = startDate.clone().startOf('month').format("YYYY-MM-DD");
         const dateEnd = startDate.clone().endOf('month').format("YYYY-MM-DD");
 
         [findResultKcal, findResultNut] = await Promise.all([

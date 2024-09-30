@@ -32,7 +32,7 @@ export const MoneyChartAvg = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(true);
-  const [SECTION, setSECTION] = useState<string>("month");
+  const [SECTION, setSECTION] = useState<string>("week");
   const [LINE, setLINE] = useState<any>(moneyChartArray);
   const [DATE, setDATE] = useState<any>({
     dateType: "",

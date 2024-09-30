@@ -11,7 +11,7 @@ export const barToday = async (
 
   // result 변수 선언
   let findResultGoal: any[] = [];
-  let findResultReal:any[] = [];
+  let findResultReal: any[] = [];
   let finalResult: any = [];
   let statusResult: string = "";
 
@@ -43,7 +43,7 @@ export const barToday = async (
         date: String(dateStart),
         goal: String(findResultGoal?.[0]?.money_goal_expense || "0"),
         real: String(findResultReal?.[0]?.money_total_expense || "0"),
-      }
+      },
     ]).flat();
 
     statusResult = "success";
@@ -55,7 +55,8 @@ export const barToday = async (
 
   return {
     status: statusResult,
-    result: finalResult
+    result: finalResult,
+    date: `${dateStart} ~ ${dateEnd}`
   };
 };
 
@@ -114,7 +115,8 @@ export const pieWeek = async (
 
   return {
     status: statusResult,
-    result: finalResult
+    result: finalResult,
+    date: `${dateStart} ~ ${dateEnd}`
   };
 };
 
@@ -173,7 +175,8 @@ export const pieMonth = async (
 
   return {
     status: statusResult,
-    result: finalResult
+    result: finalResult,
+    date: `${dateStart} ~ ${dateEnd}`
   };
 };
 
@@ -205,9 +208,11 @@ export const lineWeek = async (
 
   try {
     // promise 사용하여 병렬 처리
-    findResult = await repository.lineAll(
-      user_id_param, dateStart, dateEnd
-    );
+    [findResult] = await Promise.all([
+      repository.lineAll(
+        user_id_param, dateStart, dateEnd
+      ),
+    ]);
 
     // name 배열을 순회하며 결과 저장
     name.forEach((data: any, index: number) => {
@@ -240,7 +245,8 @@ export const lineWeek = async (
 
   return {
     status: statusResult,
-    result: finalResult
+    result: finalResult,
+    date: `${dateStart} ~ ${dateEnd}`
   };
 };
 
@@ -273,9 +279,11 @@ export const lineMonth = async (
 
   try {
     // promise 사용하여 병렬 처리
-    findResult = await repository.lineAll(
-      user_id_param, dateStart, dateEnd
-    );
+    [findResult] = await Promise.all([
+      repository.lineAll(
+        user_id_param, dateStart, dateEnd
+      ),
+    ]);
 
     // name 배열을 순회하며 결과 저장
     name.forEach((data: any, index: number) => {
@@ -308,11 +316,12 @@ export const lineMonth = async (
 
   return {
     status: statusResult,
-    result: finalResult
+    result: finalResult,
+    date: `${dateStart} ~ ${dateEnd}`
   };
 };
 
-// 4-1. chart (avg - week) ------------------------------------------------------------------------
+// 4-1. chart (avg - week) -------------------------------------------------------------------------
 export const avgWeek = async (
   user_id_param: string,
   DATE_param: any,
@@ -352,12 +361,14 @@ export const avgWeek = async (
     // promise 사용하여 병렬 처리
     const parallelResult = await Promise.all(
       weekStartDate.map(async (startDate, i) => {
-        const dateStart = startDate.format("YYYY-MM-DD");
+        const dateStart = startDate.clone().startOf('isoWeek').format("YYYY-MM-DD");
         const dateEnd = startDate.clone().endOf('isoWeek').format("YYYY-MM-DD");
 
-        findResult = await repository.avgAll(
-          user_id_param, dateStart, dateEnd
-        );
+        [findResult] = await Promise.all([
+          repository.avgAll(
+            user_id_param, dateStart, dateEnd
+          ),
+        ]);
 
         return {
           findResult,
@@ -400,7 +411,7 @@ export const avgWeek = async (
 
   return {
     status: statusResult,
-    result: finalResult
+    result: finalResult,
   };
 };
 
@@ -444,12 +455,14 @@ export const avgMonth = async (
     // promise 사용하여 병렬 처리
     const parallelResult = await Promise.all(
       monthStartDate.map(async (startDate, i) => {
-        const dateStart = startDate.format("YYYY-MM-DD");
+        const dateStart = startDate.clone().startOf('month').format("YYYY-MM-DD");
         const dateEnd = startDate.clone().endOf('month').format("YYYY-MM-DD");
 
-        findResult = await repository.avgAll(
-          user_id_param, dateStart, dateEnd
-        );
+        [findResult] = await Promise.all([
+          repository.avgAll(
+            user_id_param, dateStart, dateEnd
+          ),
+        ]);
 
         return {
           findResult,
@@ -492,6 +505,6 @@ export const avgMonth = async (
 
   return {
     status: statusResult,
-    result: finalResult
+    result: finalResult,
   };
 };

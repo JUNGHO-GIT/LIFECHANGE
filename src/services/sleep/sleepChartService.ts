@@ -91,9 +91,11 @@ export const pieWeek = async (
 
   try {
     // promise 사용하여 병렬 처리
-    findResult = await repository.pieAll(
-      user_id_param, dateStart, dateEnd
-    );
+    [findResult] = await Promise.all([
+      repository.pieAll(
+        user_id_param, dateStart, dateEnd
+      ),
+    ]);
 
     // sum, count 설정
     findResult.forEach((data: any, index: number) => {
@@ -160,9 +162,11 @@ export const pieMonth = async (
 
   try {
     // promise 사용하여 병렬 처리
-    findResult = await repository.pieAll(
-      user_id_param, dateStart, dateEnd
-    );
+    [findResult] = await Promise.all([
+      repository.pieAll(
+        user_id_param, dateStart, dateEnd
+      ),
+    ]);
 
     // sum, count 설정
     findResult.forEach((data: any, index: number) => {
@@ -232,9 +236,11 @@ export const lineWeek = async (
 
   try {
     // promise 사용하여 병렬 처리
-    findResult = await repository.lineAll(
-      user_id_param, dateStart, dateEnd
-    );
+    [findResult] = await Promise.all([
+      repository.lineAll(
+        user_id_param, dateStart, dateEnd
+      ),
+    ]);
 
     // name 배열을 순회하며 결과 저장
     name.forEach((data: any, index: number) => {
@@ -304,9 +310,11 @@ export const lineMonth = async (
 
   try {
     // promise 사용하여 병렬 처리
-    findResult = await repository.lineAll(
-      user_id_param, dateStart, dateEnd
-    );
+    [findResult] = await Promise.all([
+      repository.lineAll(
+        user_id_param, dateStart, dateEnd
+      ),
+    ]);
 
     // name 배열을 순회하며 결과 저장
     name.forEach((data: any, index: number) => {
@@ -388,12 +396,14 @@ export const avgWeek = async (
     // promise 사용하여 병렬 처리
     const parallelResult = await Promise.all(
       weekStartDate.map(async (startDate, i) => {
-        const dateStart = startDate.format("YYYY-MM-DD");
+        const dateStart = startDate.clone().startOf('isoWeek').format("YYYY-MM-DD");
         const dateEnd = startDate.clone().endOf('isoWeek').format("YYYY-MM-DD");
 
-        findResult = await repository.avgAll(
-          user_id_param, dateStart, dateEnd
-        );
+        [findResult] = await Promise.all([
+          repository.avgAll(
+            user_id_param, dateStart, dateEnd
+          )
+        ]);
 
         return {
           findResult,
@@ -486,12 +496,14 @@ export const avgMonth = async (
     // promise 사용하여 병렬 처리
     const parallelResult = await Promise.all(
       monthStartDate.map(async (startDate, i) => {
-        const dateStart = startDate.format("YYYY-MM-DD");
+        const dateStart = startDate.clone().startOf('month').format("YYYY-MM-DD");
         const dateEnd = startDate.clone().endOf('month').format("YYYY-MM-DD");
 
-        findResult = await repository.avgAll(
-          user_id_param, dateStart, dateEnd
-        );
+        [findResult] = await Promise.all([
+          repository.avgAll(
+            user_id_param, dateStart, dateEnd
+          )
+        ]);
 
         return {
           findResult,

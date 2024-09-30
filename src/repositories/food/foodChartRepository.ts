@@ -25,6 +25,7 @@ export const barGoal = async (
     },
     {
       $project: {
+        _id: 0,
         food_goal_dateStart: 1,
         food_goal_dateEnd: 1,
         food_goal_kcal: 1,
@@ -35,7 +36,7 @@ export const barGoal = async (
     },
     {
       $sort: {
-        food_goal_dateStart: -1
+        food_goal_dateStart: 1
       }
     }
   ]);
@@ -65,6 +66,7 @@ export const barReal = async (
     },
     {
       $project: {
+        _id: 0,
         food_dateStart: 1,
         food_dateEnd: 1,
         food_total_kcal: 1,
@@ -75,7 +77,7 @@ export const barReal = async (
     },
     {
       $sort: {
-        food_dateStart: -1
+        food_dateStart: 1
       }
     }
   ]);
@@ -179,7 +181,7 @@ export const pieNut = async (
     },
     {
       $sort: {
-        food_dateStart: -1
+        food_dateStart: 1
       }
     }
   ]);
@@ -209,6 +211,7 @@ export const lineKcal = async (
     },
     {
       $project: {
+        _id: 0,
         food_dateStart: 1,
         food_dateEnd: 1,
         food_total_kcal: 1
@@ -216,7 +219,7 @@ export const lineKcal = async (
     },
     {
       $sort: {
-        food_dateStart: -1
+        food_dateStart: 1
       }
     }
   ]);
@@ -246,6 +249,7 @@ export const lineNut = async (
     },
     {
       $project: {
+        _id: 0,
         food_dateStart: 1,
         food_dateEnd: 1,
         food_total_carb: 1,
@@ -255,7 +259,7 @@ export const lineNut = async (
     },
     {
       $sort: {
-        food_dateStart: -1
+        food_dateStart: 1
       }
     }
   ]);
@@ -285,6 +289,7 @@ export const avgKcal = async (
     },
     {
       $project: {
+        _id: 0,
         food_dateStart: 1,
         food_dateEnd: 1,
         food_total_kcal: 1
@@ -292,7 +297,7 @@ export const avgKcal = async (
     },
     {
       $sort: {
-        food_dateStart: -1
+        food_dateStart: 1
       }
     }
   ]);
@@ -322,6 +327,7 @@ export const avgNut = async (
     },
     {
       $project: {
+        _id: 0,
         food_dateStart: 1,
         food_dateEnd: 1,
         food_total_carb: 1,
@@ -331,7 +337,7 @@ export const avgNut = async (
     },
     {
       $sort: {
-        food_dateStart: -1
+        food_dateStart: 1
       }
     }
   ]);

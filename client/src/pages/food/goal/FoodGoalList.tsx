@@ -183,7 +183,7 @@ export const FoodGoalList = () => {
                     <Grid container columns={12} spacing={1}>
                       {/** goal **/}
                       <Grid size={2} className={"d-row-right"}>
-                        <Div className={"fs-0-8rem fw-500 dark"}>
+                        <Div className={"fs-0-8rem fw-500 dark horizontal-text"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
@@ -209,7 +209,7 @@ export const FoodGoalList = () => {
                       </Grid>
                       {/** real **/}
                       <Grid size={2} className={"d-row-right"}>
-                        <Div className={"fs-0-8rem fw-500 dark"}>
+                        <Div className={"fs-0-8rem fw-500 dark horizontal-text"}>
                           {translate("real")}
                         </Div>
                       </Grid>
@@ -235,7 +235,7 @@ export const FoodGoalList = () => {
                       </Grid>
                       {/** diff **/}
                       <Grid size={2} className={"d-row-right"}>
-                        <Div className={"fs-0-8rem fw-500 dark"}>
+                        <Div className={"fs-0-8rem fw-500 dark horizontal-text"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
@@ -281,7 +281,7 @@ export const FoodGoalList = () => {
                     <Grid container columns={12} spacing={1}>
                       {/** goal **/}
                       <Grid size={2} className={"d-row-right"}>
-                        <Div className={"fs-0-8rem fw-500 dark"}>
+                        <Div className={"fs-0-8rem fw-500 dark horizontal-text"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
@@ -307,7 +307,7 @@ export const FoodGoalList = () => {
                       </Grid>
                       {/** real **/}
                       <Grid size={2} className={"d-row-right"}>
-                        <Div className={"fs-0-8rem fw-500 dark"}>
+                        <Div className={"fs-0-8rem fw-500 dark horizontal-text"}>
                           {translate("real")}
                         </Div>
                       </Grid>
@@ -333,7 +333,7 @@ export const FoodGoalList = () => {
                       </Grid>
                       {/** diff **/}
                       <Grid size={2} className={"d-row-right"}>
-                        <Div className={"fs-0-8rem fw-500 dark"}>
+                        <Div className={"fs-0-8rem fw-500 dark horizontal-text"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
@@ -379,7 +379,7 @@ export const FoodGoalList = () => {
                     <Grid container columns={12} spacing={1}>
                       {/** goal **/}
                       <Grid size={2} className={"d-row-right"}>
-                        <Div className={"fs-0-8rem fw-500 dark"}>
+                        <Div className={"fs-0-8rem fw-500 dark horizontal-text"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
@@ -405,7 +405,7 @@ export const FoodGoalList = () => {
                       </Grid>
                       {/** real **/}
                       <Grid size={2} className={"d-row-right"}>
-                        <Div className={"fs-0-8rem fw-500 dark"}>
+                        <Div className={"fs-0-8rem fw-500 dark horizontal-text"}>
                           {translate("real")}
                         </Div>
                       </Grid>
@@ -431,7 +431,7 @@ export const FoodGoalList = () => {
                       </Grid>
                       {/** diff **/}
                       <Grid size={2} className={"d-row-right"}>
-                        <Div className={"fs-0-8rem fw-500 dark"}>
+                        <Div className={"fs-0-8rem fw-500 dark horizontal-text"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
@@ -477,7 +477,7 @@ export const FoodGoalList = () => {
                     <Grid container columns={12} spacing={1}>
                       {/** goal **/}
                       <Grid size={2} className={"d-row-right"}>
-                        <Div className={"fs-0-8rem fw-500 dark"}>
+                        <Div className={"fs-0-8rem fw-500 dark horizontal-text"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
@@ -503,7 +503,7 @@ export const FoodGoalList = () => {
                       </Grid>
                       {/** real **/}
                       <Grid size={2} className={"d-row-right"}>
-                        <Div className={"fs-0-8rem fw-500 dark"}>
+                        <Div className={"fs-0-8rem fw-500 dark horizontal-text"}>
                           {translate("real")}
                         </Div>
                       </Grid>
@@ -529,7 +529,7 @@ export const FoodGoalList = () => {
                       </Grid>
                       {/** diff **/}
                       <Grid size={2} className={"d-row-right"}>
-                        <Div className={"fs-0-8rem fw-500 dark"}>
+                        <Div className={"fs-0-8rem fw-500 dark horizontal-text"}>
                           {translate("diff")}
                         </Div>
                       </Grid>

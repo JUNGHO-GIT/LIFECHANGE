@@ -11942,7 +11942,7 @@
 .upper {
   text-transform: uppercase !important;
 }
-.horizon-text {
+.horizontal-text {
   writing-mode: horizontal-tb !important;
   text-orientation: mixed !important;
   white-space: nowrap !important;

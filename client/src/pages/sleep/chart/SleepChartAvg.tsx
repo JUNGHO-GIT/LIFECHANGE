@@ -32,7 +32,7 @@ export const SleepChartAvg = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(true);
-  const [SECTION, setSECTION] = useState<string>("month");
+  const [SECTION, setSECTION] = useState<string>("week");
   const [PART, setPART] = useState<any>(sleepChartArray);
   const [DATE, setDATE] = useState<any>({
     dateType: "",

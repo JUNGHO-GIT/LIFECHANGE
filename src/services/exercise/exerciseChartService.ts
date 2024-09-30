@@ -537,7 +537,7 @@ export const avgWeek = async (
     // promise 사용하여 병렬 처리
     const parallelResult = await Promise.all(
       weekStartDate.map(async (startDate, i) => {
-        const dateStart = startDate.format("YYYY-MM-DD");
+        const dateStart = startDate.clone().startOf('isoWeek').format("YYYY-MM-DD");
         const dateEnd = startDate.clone().endOf('isoWeek').format("YYYY-MM-DD");
 
         [findResultVolume, findResultCardio] = await Promise.all([
@@ -650,7 +650,7 @@ export const avgMonth = async (
     // promise 사용하여 병렬 처리
     const parallelResult = await Promise.all(
       monthStartDate.map(async (startDate, i) => {
-        const dateStart = startDate.format("YYYY-MM-DD");
+        const dateStart = startDate.clone().startOf('month').format("YYYY-MM-DD");
         const dateEnd = startDate.clone().endOf('month').format("YYYY-MM-DD");
 
         [findResultVolume, findResultCardio] = await Promise.all([

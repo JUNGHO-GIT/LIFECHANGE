@@ -1172,7 +1172,7 @@ export const Picker = (
             {saveTypeSection()}
           </Grid>
           <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
-            {DATE.dateType === "day" && weekSection()}
+            {DATE.dateType === "day" && daySection()}
             {DATE.dateType === "week" && weekSection()}
             {DATE.dateType === "month" && monthSection()}
             {DATE.dateType === "year" && yearSection()}
