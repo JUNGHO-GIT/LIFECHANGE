@@ -8,7 +8,7 @@ import { axios, numeral } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Picker, Memo, Count, Delete, Dial } from "@imports/ImportContainers";
-import { Select, Input, Img, Bg, Icons, Div } from "@imports/ImportComponents";
+import { Select, Input, Img, Bg, Div } from "@imports/ImportComponents";
 import { Paper, Card, MenuItem, Grid, Checkbox } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------

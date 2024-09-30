@@ -5,6 +5,7 @@ import { useCommonValue, useTranslate } from "@imports/ImportHooks";
 import { useValidateUser } from "@imports/ImportValidates";
 import { User } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportLibs";
+import { sync } from "@imports/ImportUtils";
 import { Footer, Loading } from "@imports/ImportLayouts";
 import { Input, Select, Hr, Img, Div } from "@imports/ImportComponents";
 import { Paper, Avatar, MenuItem, Card, Grid, Checkbox } from "@imports/ImportMuis";
@@ -67,6 +68,7 @@ export const UserDetail = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         alert(translate(res.data.msg));
+        sync();
         navigate("/user/detail");
       }
       else {

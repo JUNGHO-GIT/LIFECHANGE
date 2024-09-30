@@ -153,15 +153,15 @@ export const property = async (
   );
 
   curPropertyAll = String (
-    parseFloat(findInitProperty?.user_initProperty) +
-    parseFloat(findMoney?.curPropertyAllResult?.money_total_income) -
-    parseFloat(findMoney?.curPropertyAllResult?.money_total_expense)
+    parseFloat(findInitProperty?.user_initProperty || "0") +
+    parseFloat(findMoney?.curPropertyAllResult?.money_total_income || "0") -
+    parseFloat(findMoney?.curPropertyAllResult?.money_total_expense || "0")
   );
 
   curProperty = String (
-    parseFloat(findInitProperty?.user_initProperty) +
-    parseFloat(findMoney?.curPropertyResult?.money_total_income) -
-    parseFloat(findMoney?.curPropertyResult?.money_total_expense)
+    parseFloat(findInitProperty?.user_initProperty || "0") +
+    parseFloat(findMoney?.curPropertyResult?.money_total_income || "0") -
+    parseFloat(findMoney?.curPropertyResult?.money_total_expense || "0")
   );
 
   await repository.updateProperty(
@@ -176,19 +176,29 @@ export const property = async (
     statusResult = "success";
     finalResult = {
       initProperty: String (
-        findInitProperty?.user_initProperty ? parseFloat(findInitProperty?.user_initProperty) : 0
+        findInitProperty?.user_initProperty
+        ? parseFloat(findInitProperty?.user_initProperty)
+        : "0"
       ),
       totalIncomeAll: String (
-        findMoney?.curPropertyAllResult?.money_total_income ? parseFloat(findMoney?.curPropertyAllResult?.money_total_income) : 0
+        findMoney?.curPropertyAllResult?.money_total_income
+        ? parseFloat(findMoney?.curPropertyAllResult?.money_total_income)
+        : "0"
       ),
       totalExpenseAll: String (
-        findMoney?.curPropertyAllResult?.money_total_expense ? parseFloat(findMoney?.curPropertyAllResult?.money_total_expense) : 0
+        findMoney?.curPropertyAllResult?.money_total_expense
+        ? parseFloat(findMoney?.curPropertyAllResult?.money_total_expense)
+        : "0"
       ),
       totalIncome: String (
-        findMoney?.curPropertyResult?.money_total_income ? parseFloat(findMoney?.curPropertyResult?.money_total_income) : 0
+        findMoney?.curPropertyResult?.money_total_income
+        ? parseFloat(findMoney?.curPropertyResult?.money_total_income)
+        : "0"
       ),
       totalExpense: String (
-        findMoney?.curPropertyResult?.money_total_expense ? parseFloat(findMoney?.curPropertyResult?.money_total_expense) : 0
+        findMoney?.curPropertyResult?.money_total_expense
+        ? parseFloat(findMoney?.curPropertyResult?.money_total_expense)
+        : "0"
       ),
       curPropertyAll: curPropertyAll,
       curProperty: curProperty,
@@ -248,16 +258,24 @@ export const scale = async (
     statusResult = "success";
     finalResult = {
       initScale: String (
-        findInitScale?.user_initScale ? parseFloat(findInitScale?.user_initScale) : 0
+        findInitScale?.user_initScale
+        ? parseFloat(findInitScale?.user_initScale)
+        : "0"
       ),
       minScale: String (
-        findScaleMinMax?.scale_min ? parseFloat(findScaleMinMax?.scale_min) : 0
+        findScaleMinMax?.scale_min
+        ? parseFloat(findScaleMinMax?.scale_min)
+        : "0"
       ),
       maxScale: String (
-        findScaleMinMax?.scale_max ? parseFloat(findScaleMinMax?.scale_max) : 0
+        findScaleMinMax?.scale_max
+        ? parseFloat(findScaleMinMax?.scale_max)
+        : "0"
       ),
       curScale: String (
-        findScaleCur?.exercise_total_weight ? parseFloat(findScaleCur?.exercise_total_weight) : 0
+        findScaleCur?.exercise_total_weight
+        ? parseFloat(findScaleCur?.exercise_total_weight)
+        : "0"
       ),
       dateStart: regDt,
       dateEnd: todayDt,
