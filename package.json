@@ -9,7 +9,7 @@
   "scripts": {
     "start": "tsx watch --clear-screen=false --ignore node_modules index.ts",
     "fetch": "git fetch --all && git reset --hard origin/master",
-    "push": "git add . && git commit -m \"in window $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')\" && git push origin master",
+    "push": "git add . && git commit -m \"update %date% %time:~0,8%\" && git push origin master",
     "gcloud": "node gcloud.cjs"
   },
   "dependencies": {
