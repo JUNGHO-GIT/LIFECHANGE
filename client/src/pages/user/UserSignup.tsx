@@ -426,17 +426,21 @@ export const UserSignup = () => {
     const googleSection = () => (
       <Btn
         color={"primary"}
-        className={"w-100p fs-1-0rem bg-white"}
+        className={"w-100p bg-white"}
         onClick={() => {
           flowGoogle();
         }}
       >
-        <Img
-        	key={"user1"}
-        	src={"user1"}
-        	className={"w-15 h-15 me-10"}
-        />
-        {translate("googleLogin")}
+        <Div className={"d-row-center"}>
+          <Img
+          	key={"user1"}
+          	src={"user1"}
+          	className={"w-15 h-15 me-10"}
+          />
+          <Div className={"fs-1-0rem black"}>
+            {translate("googleLogin")}
+          </Div>
+        </Div>
       </Btn>
     );
     // 7-5. toLogin
