@@ -120,8 +120,6 @@ export const list = async (
       const exerciseTotalCardio = listReal.reduce((acc: any, curr: any) => (
         acc + strToDecimal(curr?.exercise_total_cardio ?? "00:00")
       ), 0);
-
-      // 기간중 가장 최신의 몸무게를 가져옴
       const exerciseCurBodyWeight = listReal.reduce((latest: any, curr: any) => {
         if (curr?.exercise_total_weight) {
           return curr.exercise_total_weight;

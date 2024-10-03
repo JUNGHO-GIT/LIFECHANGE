@@ -24,6 +24,8 @@ export const sync = async () => {
     dateType: "day",
     dateStart: moment().tz(localTimeZone).format("YYYY-MM-DD"),
     dateEnd: moment().tz(localTimeZone).format("YYYY-MM-DD"),
+    monthStart: moment().tz(localTimeZone).startOf("month").format("YYYY-MM-DD"),
+    monthEnd: moment().tz(localTimeZone).endOf("month").format("YYYY-MM-DD"),
   };
   const params = {
     user_id: sessionId,

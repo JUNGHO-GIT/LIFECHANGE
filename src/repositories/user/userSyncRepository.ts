@@ -13,9 +13,7 @@ import { newDate } from "@scripts/date";
 
 // 0. category -------------------------------------------------------------------------------------
 export const listCategory = async (
-  user_id_param: string,
-  dateStart_param: string,
-  dateEnd_param: string,
+  user_id_param: string
 ) => {
 
   const finalResult:any = await User.aggregate([
@@ -70,7 +68,7 @@ export const listExerciseGoal = async (
     }
   ]);
 
-  return finalResult[0];
+  return finalResult;
 };
 
 // 1-2. exercise (real) ----------------------------------------------------------------------------
@@ -119,7 +117,7 @@ export const listExercise = async (
     }
   ]);
 
-  return finalResult[0];
+  return finalResult;
 };
 
 // 2-1. food (goal) -------------------------------------------------------------------------------
@@ -153,7 +151,7 @@ export const listFoodGoal = async (
     }
   ]);
 
-  return finalResult[0];
+  return finalResult;
 };
 
 // 2-2. food (real) -------------------------------------------------------------------------------
@@ -187,7 +185,7 @@ export const listFood = async (
     }
   ]);
 
-  return finalResult[0];
+  return finalResult;
 };
 
 // 3-1. money (goal) ------------------------------------------------------------------------------
@@ -219,7 +217,7 @@ export const listMoneyGoal = async (
     }
   ]);
 
-  return finalResult[0];
+  return finalResult;
 };
 
 // 3-2. money (real) ------------------------------------------------------------------------------
@@ -251,7 +249,7 @@ export const listMoney = async (
     }
   ]);
 
-  return finalResult[0];
+  return finalResult;
 };
 
 // 4-1. sleep (goal) ------------------------------------------------------------------------------
@@ -284,7 +282,7 @@ export const listSleepGoal = async (
     }
   ]);
 
-  return finalResult[0];
+  return finalResult;
 };
 
 // 4-2. sleep (real) ------------------------------------------------------------------------------
@@ -317,7 +315,7 @@ export const listSleep = async (
     }
   ]);
 
-  return finalResult[0];
+  return finalResult;
 };
 
 // 5-1. property (regDt) ---------------------------------------------------------------------------

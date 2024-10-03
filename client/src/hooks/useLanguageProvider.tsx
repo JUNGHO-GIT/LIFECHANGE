@@ -710,6 +710,10 @@ export const useTranslate = () => {
     },
     // ---------------------------------------------------------------------------------------------
     // m
+    monthScore: {
+      ko: "월간 목표 달성 점수",
+      en: "Monthly Goal Achievement Score"
+    },
     minScale: {
       ko: "최저 체중",
       en: "Min Weight"

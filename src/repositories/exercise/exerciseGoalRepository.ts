@@ -148,6 +148,22 @@ export const listReal = async (
         exercise_total_volume: 1,
         exercise_total_cardio: 1,
         exercise_total_weight: 1,
+        exercise_total_count: {
+          $cond: {
+            if: {
+              $and: [
+                {
+                  $lte: ["$exercise_total_volume", 1]
+                },
+                {
+                  $eq: ["$exercise_total_cardio", "00:00"]
+                }
+              ]
+            },
+            then: "",
+            else: "1"
+          }
+        }
       }
     },
     {

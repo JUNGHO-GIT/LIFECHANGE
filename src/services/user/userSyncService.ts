@@ -1,12 +1,13 @@
 // userSyncService.ts
 
 import * as repository from "@repositories/user/userSyncRepository";
+import { strToDecimal, decimalToStr } from "@scripts/utils";
+import { timeToDecimal, decimalToTime } from "@scripts/utils";
 
 // 0. category -------------------------------------------------------------------------------------
 // 카테고리 조회
 export const category = async (
-  user_id_param: string,
-  DATE_param: any,
+  user_id_param: string
 ) => {
 
   // result 변수 선언
@@ -14,12 +15,8 @@ export const category = async (
   let finalResult: any = null;
   let statusResult: string = "";
 
-  // date 변수 선언
-  const dateStart = DATE_param.dateStart;
-  const dateEnd = DATE_param.dateEnd;
-
   findCategory = await repository.listCategory(
-    user_id_param, dateStart, dateEnd
+    user_id_param
   );
 
   if (!findCategory) {
@@ -58,51 +55,135 @@ export const percent = async (
   let finalResult: any = null;
   let statusResult: string = "";
 
-  // date 변수 선언
-  const dateStart = DATE_param.dateStart;
-  const dateEnd = DATE_param.dateEnd;
+  // date 변수 선언 (이번달 기간 계산)
+  const dateStart = DATE_param.monthStart;
+  const dateEnd = DATE_param.monthEnd;
 
-  // 1. exercise
+  // 1-1. exerciseGoal
   findExerciseGoal = await repository.listExerciseGoal(
     user_id_param, dateStart, dateEnd
   );
+
+  // 1-2. exercise
   findExercise = await repository.listExercise(
     user_id_param, dateStart, dateEnd
   );
 
-  // 2. food
+  findExercise = findExercise?.reduce((acc: any, curr: any) => {
+    const exerciseTotalCount = (
+      parseFloat(acc?.exercise_total_count) + parseFloat(curr?.exercise_total_count)
+    );
+    const exerciseTotalVolume = (
+      parseFloat(acc?.exercise_total_volume) +  parseFloat(curr?.exercise_total_volume)
+    );
+    const exerciseTotalCardio = (
+      timeToDecimal(acc?.exercise_total_cardio) + timeToDecimal(curr?.exercise_total_cardio)
+    );
+    const exerciseTotalWeight = (
+      curr?.exercise_total_weight !== '0'
+      ? curr?.exercise_total_weight
+      : acc?.exercise_total_weight
+    );
+    return {
+      exercise_total_count: String(exerciseTotalCount.toFixed(0)),
+      exercise_total_volume: String(exerciseTotalVolume.toFixed(0)),
+      exercise_total_cardio: String(decimalToTime(exerciseTotalCardio)),
+      exercise_total_weight: String(exerciseTotalWeight),
+    };
+  });
+
+  // 2-1. foodGoal
   findFoodGoal = await repository.listFoodGoal(
     user_id_param, dateStart, dateEnd
   );
+
+  // 2-2. food
   findFood = await repository.listFood(
     user_id_param, dateStart, dateEnd
   );
+  findFood = findFood?.reduce((acc: any, curr: any) => {
+    const foodTotalKcal = (
+      parseFloat(acc?.food_total_kcal) + parseFloat(curr?.food_total_kcal)
+    );
+    const foodTotalCarb = (
+      parseFloat(acc?.food_total_carb) + parseFloat(curr?.food_total_carb)
+    );
+    const foodTotalProtein = (
+      parseFloat(acc?.food_total_protein) + parseFloat(curr?.food_total_protein)
+    );
+    const foodTotalFat = (
+      parseFloat(acc?.food_total_fat) + parseFloat(curr?.food_total_fat)
+    );
+    return {
+      food_total_kcal: String(foodTotalKcal.toFixed(0)),
+      food_total_carb: String(foodTotalCarb.toFixed(0)),
+      food_total_protein: String(foodTotalProtein.toFixed(0)),
+      food_total_fat: String(foodTotalFat.toFixed(0)),
+    };
+  });
 
-  // 3. money
+  // 3-1. moneyGoal
   findMoneyGoal = await repository.listMoneyGoal(
     user_id_param, dateStart, dateEnd
   );
+
+  // 3-2. money
   findMoney = await repository.listMoney(
     user_id_param, dateStart, dateEnd
   );
+  findMoney = findMoney?.reduce((acc: any, curr: any) => {
+    const moneyTotalIncome = (
+      parseFloat(acc?.money_total_income) + parseFloat(curr?.money_total_income)
+    );
+    const moneyTotalExpense = (
+      parseFloat(acc?.money_total_expense) + parseFloat(curr?.money_total_expense)
+    );
+    return {
+      money_total_income: String(moneyTotalIncome.toFixed(0)),
+      money_total_expense: String(moneyTotalExpense.toFixed(0)),
+    };
+  });
 
-  // 4. sleep
+  // 4-1. sleepGoal
   findSleepGoal = await repository.listSleepGoal(
     user_id_param, dateStart, dateEnd
   );
+
+  // 4-2. sleep
   findSleep = await repository.listSleep(
     user_id_param, dateStart, dateEnd
   );
+  const findSleepLength = findSleep?.length;
+  findSleep = findSleep?.reduce((acc: any, curr: any) => {
+    const sleepBedTime = (
+      timeToDecimal(acc?.sleep_bedTime) + timeToDecimal(curr?.sleep_bedTime)
+    );
+    const sleepWakeTime = (
+      timeToDecimal(acc?.sleep_wakeTime) + timeToDecimal(curr?.sleep_wakeTime)
+    );
+    const sleepSleepTime = (
+      timeToDecimal(acc?.sleep_sleepTime) + timeToDecimal(curr?.sleep_sleepTime)
+    );
+    return {
+      sleep_bedTime: String(decimalToTime(sleepBedTime)),
+      sleep_wakeTime: String(decimalToTime(sleepWakeTime)),
+      sleep_sleepTime: String(decimalToTime(sleepSleepTime)),
+    };
+  });
 
   findResult = {
-    exerciseGoal: findExerciseGoal,
+    exerciseGoal: findExerciseGoal[0],
     exercise: findExercise,
-    foodGoal: findFoodGoal,
+    foodGoal: findFoodGoal[0],
     food: findFood,
-    moneyGoal: findMoneyGoal,
+    moneyGoal: findMoneyGoal[0],
     money: findMoney,
-    sleepGoal: findSleepGoal,
-    sleep: findSleep,
+    sleepGoal: findSleepGoal[0],
+    sleep: {
+      sleep_bedTime: decimalToTime(timeToDecimal(findSleep?.sleep_bedTime) / findSleepLength),
+      sleep_wakeTime: decimalToTime(timeToDecimal(findSleep?.sleep_wakeTime) / findSleepLength),
+      sleep_sleepTime: decimalToTime(timeToDecimal(findSleep?.sleep_sleepTime) / findSleepLength),
+    },
   };
 
   if (!findResult) {

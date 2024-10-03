@@ -22,52 +22,50 @@ export const calcDate = (startTime: string, endTime: string) => {
 
 // 1-2. format -------------------------------------------------------------------------------------
 export const timeToDecimal = (data: string) => {
-  if (!data || data === null || data === undefined) {
-    return "0";
+  if (typeof data !== 'string' || !data || data === null || data === undefined) {
+    return 0;
   }
   const time = data.split(":");
   if (time.length !== 2) {
-    return "0";
+    return 0;
   }
-  else {
-    const hours = parseFloat(time[0]);
-    // 10분 단위로 반올림
-    const minutes = Math.round(parseFloat(time[1]) / 10) * 10 / 60;
+  // 10분 단위로 반올림
+  const hours = parseFloat(time[0]);
+  const minutes = Math.round(parseFloat(time[1]) / 10) * 10 / 60;
 
-    return (hours + minutes).toFixed(1).toString();
-  }
+  return hours + minutes;
 };
 
 export const decimalToTime = (data: number) => {
-  if (!data || isNaN(data) || data === null || data === undefined) {
+  if (typeof data !== 'number' || !data || isNaN(data) || data === null || data === undefined) {
     return "00:00";
   }
+  // 10분 단위로 반올림
   const floatHours = parseFloat(data.toString());
   const hours = Math.floor(floatHours);
-  // 10분 단위로 반올림
   const minutes = Math.round((floatHours - hours) * 60 / 10) * 10;
 
   return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 };
 
 // 1-2. convert ------------------------------------------------------------------------------------
-export const strToDecimal = (time: string) => {
-  if (!time || time === null || time === undefined) {
+export const strToDecimal = (data: string) => {
+  if (!data || data === null || data === undefined) {
     return 0;
   }
-  const [hours, minutes] = time.split(":").map(Number);
+  const [hours, minutes] = data.split(":").map(Number);
   const adjustedHours = hours + Math.floor(minutes / 60);
   const adjustedMinutes = minutes % 60;
 
   return adjustedHours + adjustedMinutes / 60;
 };
 
-export const decimalToStr = (time: number) => {
-  if (!time || isNaN(time) || time === null || time === undefined) {
+export const decimalToStr = (data: number) => {
+  if (!data || isNaN(data) || data === null || data === undefined) {
     return "00:00";
   }
-  const hours = Math.floor(time);
-  const minutes = Math.round((time - hours) * 60);
+  const hours = Math.floor(data);
+  const minutes = Math.round((data - hours) * 60);
   const adjustedHours = hours + Math.floor(minutes / 60);
   const adjustedMinutes = minutes % 60;
 

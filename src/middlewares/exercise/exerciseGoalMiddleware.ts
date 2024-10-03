@@ -58,10 +58,10 @@ export const list = async (object: any) => {
     let finalResult: string = "";
 
     if (param.length > 12) {
-      finalResult = "fs-0-6rem fw-600";
+      finalResult = "fs-0-8rem fw-600";
     }
     else if (param.length > 6) {
-      finalResult = "fs-0-8rem fw-600";
+      finalResult = "fs-0-9rem fw-600";
     }
     else {
       finalResult = "fs-1-0rem fw-600";
@@ -86,10 +86,10 @@ export const list = async (object: any) => {
     let finalResult: string = "";
 
     if (goalParam.length > 12 || realParam.length > 12) {
-      finalResult = "fs-0-6rem fw-600";
+      finalResult = "fs-0-8rem fw-600";
     }
     else if (goalParam.length > 6 || realParam.length > 6) {
-      finalResult = "fs-0-8rem fw-600";
+      finalResult = "fs-0-9rem fw-600";
     }
     else {
       finalResult = "fs-1-0rem fw-600";

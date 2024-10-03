@@ -276,8 +276,8 @@ export const TodayList = () => {
                   <Grid size={7}>
                     <Grid container spacing={2} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.exercise_total_volume_color}`}>
-                          {numeral(item.exercise_total_volume).format("0,0.0")}
+                        <Div className={`${item.exercise_total_weight_color}`}>
+                          {item.exercise_total_weight}
                         </Div>
                       </Grid>
                       <Grid size={2} className={"d-row-right lh-2-4"}>

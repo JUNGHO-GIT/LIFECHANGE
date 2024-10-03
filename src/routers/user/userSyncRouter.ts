@@ -10,8 +10,7 @@ export const router = express.Router();
 router.get("/category", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.category(
-      req.query.user_id as string,
-      req.query.DATE as any,
+      req.query.user_id as string
     );
     if (finalResult.status === "success") {
       res.json({

@@ -12,14 +12,14 @@ export const TopNav = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate,
-  } = useTranslate();
-  const {
     navigate, firstStr, secondStr, TITLE, sessionPercent, sessionProperty, sessionScale, PATH, localCurrency,
   } = useCommonValue();
   const {
-    dayFmt, dayNotFmt,
+    dayFmt, dayNotFmt, monthStartFmt, monthEndFmt,
   } = useCommonDate();
+  const {
+    translate,
+  } = useTranslate();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [percent, setPercent] = useState<any>({
@@ -248,29 +248,34 @@ export const TopNav = () => {
         contents={
           <Card className={"w-max60vw h-max70vh border-1 radius-1 p-20"} key={`smile`}>
             <Grid container spacing={2}>
-              <Grid size={12} className={"d-center"}>
-                <Div className={"fs-1-2rem fw-600"}>
-                  {`${dayFmt} (${dayNotFmt.format("ddd")})`}
+              <Grid size={12} className={"d-column-center"}>
+                <Div className={"fs-1-3rem fw-600"}>
+                  {translate("monthScore")}
+                </Div>
+                <Br px={10} />
+                <Div className={"fs-0-9rem fw-500 dark"}>
+                  {`(${monthStartFmt} ~ ${monthEndFmt})`}
                 </Div>
               </Grid>
-              <Hr px={20} />
+              <Hr px={10} />
               <Grid size={4} className={"d-row-right"}>
                 <Img
                   key={smileImage.total}
                   src={smileImage.total}
-                  className={"w-max25 h-max25"}
+                  className={"w-max30 h-max30"}
                 />
               </Grid>
               <Grid size={4} className={"d-row-center"}>
-                <Div className={"fs-1-1rem"}>
+                <Div className={"fs-1-2rem fw-600"}>
                   {translate("total")}
                 </Div>
               </Grid>
               <Grid size={4} className={"d-row-left"}>
-                <Div className={"fs-0-8rem"}>
+                <Div className={"fs-1-0rem fw-600"}>
                   {smileScore.total}
                 </Div>
               </Grid>
+              <Hr px={10} />
               <Grid size={4} className={"d-row-right"}>
                 <Img
                   key={smileImage.exercise}
@@ -339,7 +344,7 @@ export const TopNav = () => {
                   {smileScore.sleep}
                 </Div>
               </Grid>
-              <Hr px={20} />
+              <Hr px={10} />
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-0-8rem"}>
                   {translate("score")}

@@ -11,14 +11,14 @@ export const BottomNav = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate,
-  } = useTranslate();
-  const {
     navigate, firstStr, TITLE,
   } = useCommonValue();
   const {
     dayFmt
   } = useCommonDate();
+  const {
+    translate,
+  } = useTranslate();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [selectedTab, setSelectedTab] = useState<string>("today");

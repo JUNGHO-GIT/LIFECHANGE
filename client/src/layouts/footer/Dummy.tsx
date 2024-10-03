@@ -89,59 +89,60 @@ export const Dummy = (
         }}
       />
     );
-    // 3. create
-    const saveSection = () => (
-      <Btn
-        color={"primary"}
-        className={"pt-3 pb-3 ps-9 pe-9 fs-0-7rem"}
-        onClick={() => {
-          flow.flowDummyDetail();
-        }}
-      >
-        {translate("save")}
-      </Btn>
-    );
-    // 4. delete
-    const deleteSection = () => (
-      <Btn
-        color={"error"}
-        className={"pt-3 pb-3 ps-9 pe-9 fs-0-7rem"}
-        onClick={() => {
-          flow.flowDummyDelete();
-        }}
-      >
-        {translate("delete")}
-      </Btn>
-    );
-    // 5. deleteAll
-    const deleteAllSection = () => (
-      <Btn
-        color={"warning"}
-        className={"pt-3 pb-3 ps-9 pe-9 fs-0-7rem"}
-        onClick={() => {
-          flow.flowDummyDelete("all");
-        }}
-      >
-        {translate("deleteAll")}
-      </Btn>
-    );
+    // 3. btn
+    const btnSection = () => {
+      const saveFragment = () => (
+        <Btn
+          color={"primary"}
+          className={"pt-3 pb-3 ps-9 pe-9 fs-0-7rem me-10"}
+          onClick={() => {
+            flow.flowDummyDetail();
+          }}
+        >
+          {translate("save")}
+        </Btn>
+      );
+      const deleteFragment = () => (
+        <Btn
+          color={"error"}
+          className={"pt-3 pb-3 ps-9 pe-9 fs-0-7rem me-10"}
+          onClick={() => {
+            flow.flowDummyDelete();
+          }}
+        >
+          {translate("delete")}
+        </Btn>
+      );
+      const deleteAllFragment = () => (
+        <Btn
+          color={"warning"}
+          className={"pt-3 pb-3 ps-9 pe-9 fs-0-7rem"}
+          onClick={() => {
+            flow.flowDummyDelete("all");
+          }}
+        >
+          {translate("deleteAll")}
+        </Btn>
+      );
+      return (
+        <>
+          {saveFragment()}
+          {deleteFragment()}
+          {deleteAllFragment()}
+        </>
+      );
+    }
     // 6. return
     return (
       <Grid container spacing={2}>
-        <Grid size={3} className={"d-center"}>
+        <Grid size={3} className={"d-row-center"}>
           {partSection()}
         </Grid>
-        <Grid size={3} className={"d-center"}>
+        <Grid size={3} className={"d-row-center"}>
           {countSection()}
         </Grid>
-        <Grid size={2} className={"d-row-right"}>
-          {saveSection()}
-        </Grid>
-        <Grid size={2} className={"d-center"}>
-          {deleteSection()}
-        </Grid>
-        <Grid size={2} className={"d-row-left"}>
-          {deleteAllSection()}
+        <Grid size={6} className={"d-row-center"}>
+          {btnSection()}
         </Grid>
       </Grid>
     );
