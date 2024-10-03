@@ -67,15 +67,34 @@ const modifyChangelog = () => {
 
 // git push ----------------------------------------------------------------------------------------
 const gitPush = () => {
-  execSync('git add .', { stdio: 'inherit' });
-  execSync('git commit -m \"%date% %time:~0,8%\"', { stdio: 'inherit' });
-  execSync('git push origin master', { stdio: 'inherit' });
+  const gitAdd = 'git add .';
+  const gitCommit = (
+    winOrLinux === "win"
+    ? 'git commit -m \"%date% %time:~0,8%\"'
+    : 'git commit -m \"$(date +%Y-%m-%d) $(date +%H:%M:%S)\"'
+  );
+  const gitPush = 'git push origin master';
+
+  execSync(gitAdd, { stdio: 'inherit' });
+  execSync(gitCommit, { stdio: 'inherit' });
+  execSync(gitPush, { stdio: 'inherit' });
 };
 
 // 원격 서버에서 스크립트 실행 ---------------------------------------------------------------------
 const runRemoteScript = () => {
-  const keyPath = winOrLinux === "win" ? "C:\\Users\\jungh\\.ssh\\JKEY" : "~/ssh/JKEY";
-  const serviceId = winOrLinux === "win" ? 'junghomun00' : 'junghomun1234';
+
+  const keyPath = (
+    winOrLinux === "win"
+    ? "C:\\Users\\jungh\\.ssh\\JKEY"
+    : "~/ssh/JKEY"
+  );
+
+  const serviceId = (
+    winOrLinux === "win"
+    ? 'junghomun00'
+    : 'junghomun1234'
+  );
+
   const ipAddr = "34.23.233.23";
   const cmdCd = 'cd /var/www/junghomun.com/JPAGE/server';
   const cmdGitFetch = 'sudo git fetch --all';
