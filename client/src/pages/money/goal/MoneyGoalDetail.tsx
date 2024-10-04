@@ -268,8 +268,8 @@ export const MoneyGoalDetail = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.money_goal_income).format("0,0")}
-                inputRef={REFS[i]?.money_goal_income}
-                error={ERRORS[i]?.money_goal_income}
+                inputRef={REFS?.[i]?.money_goal_income}
+                error={ERRORS?.[i]?.money_goal_income}
                 locked={LOCKED}
                 label={
                   DATE.dateType === "day" ? (
@@ -309,8 +309,8 @@ export const MoneyGoalDetail = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.money_goal_expense).format("0,0")}
-                inputRef={REFS[i]?.money_goal_expense}
-                error={ERRORS[i]?.money_goal_expense}
+                inputRef={REFS?.[i]?.money_goal_expense}
+                error={ERRORS?.[i]?.money_goal_expense}
                 locked={LOCKED}
                 label={
                   DATE.dateType === "day" ? (

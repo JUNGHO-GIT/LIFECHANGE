@@ -159,8 +159,44 @@ export const useValidateUser = () => {
         return true;
       }
 
-      // 3. resetPw
-      else if (PATH.includes("user/resetPw")) {
+      // 3. detail
+      else if (PATH.includes("user/detail")) {
+        const target = [
+          "user_age",
+          "user_initScale",
+          "user_initProperty",
+        ];
+        REFS.current = (
+          Array.from({ length: 1}, (_, _idx) => (
+            target.reduce((acc, cur) => ({
+              ...acc,
+              [cur]: createRef()
+            }), {})
+          ))
+        );
+        setERRORS (
+          Array.from({ length: 1}, (_, _idx) => (
+            target.reduce((acc, cur) => ({
+              ...acc,
+              [cur]: false
+            }), {})
+          ))
+        );
+
+        if (!OBJECT.user_age) {
+          return showAlertAndFocus("user_age", "errorUserAge", 0);
+        }
+        else if (!OBJECT.user_initScale) {
+          return showAlertAndFocus("user_initScale", "errorUserInitScale", 0);
+        }
+        else if (!OBJECT.user_initProperty) {
+          return showAlertAndFocus("user_initProperty", "errorUserInitProperty", 0);
+        }
+        return true;
+      }
+
+      // 4. resetPw, delete
+      else if (PATH.includes("user/resetPw") || PATH.includes("user/delete")) {
         const target = [
           "user_id",
           "user_id_sended",
@@ -220,69 +256,6 @@ export const useValidateUser = () => {
           else if (OBJECT.user_pw !== OBJECT.user_pw_verified) {
             return showAlertAndFocus("user_pw_verified", "errorUserPwMatch", 0);
           }
-        }
-        return true;
-      }
-
-      // 4. delete
-      else if (PATH.includes("user/delete")) {
-        const target = [
-          "user_pw",
-        ];
-        REFS.current = (
-          Array.from({ length: 1}, (_, _idx) => (
-            target.reduce((acc, cur) => ({
-              ...acc,
-              [cur]: createRef()
-            }), {})
-          ))
-        );
-        setERRORS (
-          Array.from({ length: 1}, (_, _idx) => (
-            target.reduce((acc, cur) => ({
-              ...acc,
-              [cur]: false
-            }), {})
-          ))
-        );
-        if (!OBJECT.user_pw) {
-          return showAlertAndFocus("user_pw", "errorUserPw", 0);
-        }
-        return true;
-      }
-
-      // 5. detail
-      else if (PATH.includes("user/detail")) {
-        const target = [
-          "user_age",
-          "user_initScale",
-          "user_initProperty",
-        ];
-        REFS.current = (
-          Array.from({ length: 1}, (_, _idx) => (
-            target.reduce((acc, cur) => ({
-              ...acc,
-              [cur]: createRef()
-            }), {})
-          ))
-        );
-        setERRORS (
-          Array.from({ length: 1}, (_, _idx) => (
-            target.reduce((acc, cur) => ({
-              ...acc,
-              [cur]: false
-            }), {})
-          ))
-        );
-
-        if (!OBJECT.user_age) {
-          return showAlertAndFocus("user_age", "errorUserAge", 0);
-        }
-        else if (!OBJECT.user_initScale) {
-          return showAlertAndFocus("user_initScale", "errorUserInitScale", 0);
-        }
-        else if (!OBJECT.user_initProperty) {
-          return showAlertAndFocus("user_initProperty", "errorUserInitProperty", 0);
         }
         return true;
       }

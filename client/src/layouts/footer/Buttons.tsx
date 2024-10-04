@@ -41,7 +41,7 @@ export const Buttons = (
     // 1. find
     const toFindSection = () => (
       <Btn
-        color={"warning"}
+        color={"success"}
         className={"ms-1vw me-1vw"}
         onClick={() => {
           Object.assign(state?.SEND, {

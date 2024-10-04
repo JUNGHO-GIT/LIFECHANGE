@@ -83,42 +83,41 @@ export const sendEmail = async (
     user_id_param
   );
 
-  if (type_param === "signup") {
-    if (findResult) {
-      finalResult = null;
-      statusResult = "duplicate";
-    }
-  }
-  else if (type_param === "resetPw") {
-    if (findResult) {
-      if (findResult.user_google === "Y") {
-        finalResult = null;
-        statusResult = "isGoogle";
-      }
-    }
-    else {
-      finalResult = null;
-      statusResult = "notExist";
-    }
-  }
+  console.log("user_id_param", user_id_param);
+  console.log("type_param", type_param);
+  console.log("findResult", findResult);
 
-  sendResult = await emailSending(
-    user_id_param, code
-  );
-  await repository.emailSendEmail(
-    user_id_param, code
-  );
-
-  if (!sendResult) {
+  if (type_param === "signup" && findResult) {
     finalResult = null;
-    statusResult = "fail";
+    statusResult = "duplicate";
+  }
+  else if ((type_param === "resetPw" || type_param === "delete") && !findResult) {
+    finalResult = null;
+    statusResult = "notExist";
+  }
+  else if((type_param === "resetPw" || type_param === "delete") && findResult.user_google === "Y") {
+    finalResult = null;
+    statusResult = "isGoogle";
   }
   else {
-    finalResult = {
-      code: code,
-      result: sendResult
-    };
-    statusResult = "success";
+    sendResult = await emailSending(
+      user_id_param, code
+    );
+    await repository.emailSendEmail(
+      user_id_param, code
+    );
+
+    if (!sendResult) {
+      finalResult = null;
+      statusResult = "fail";
+    }
+    else {
+      finalResult = {
+        code: code,
+        result: sendResult
+      };
+      statusResult = "success";
+    }
   }
 
   return {
@@ -313,10 +312,9 @@ export const userLogin = async (
 
     // 비밀번호 비교
     const isPasswordMatch = await bcrypt.compare(combinedPw, findResult.user_pw);
-
     if (!isPasswordMatch) {
       finalResult = null;
-      statusResult = "fail";
+      statusResult = "pwDoesNotMatch";
     }
     else {
       finalResult = findResult;
@@ -400,32 +398,63 @@ export const userUpdate = async (
 
 // 2-6. userDelete --------------------------------------------------------------------------------
 export const userDelete = async (
-  user_id_param: string
+  user_id_param: string,
+  user_pw_param: string,
 ) => {
 
   // result 변수 선언
   let findResult: any = null;
+  let deleteResult: any = null;
+  let combinedPw: string = "";
   let finalResult: any = null;
   let statusResult: string = "";
 
-  findResult = await repository.userDelete(
+  findResult = await repository.userCheckId(
     user_id_param
   );
 
+  // ID가 존재하지 않는 경우
   if (!findResult) {
     finalResult = null;
     statusResult = "fail";
   }
+  // ID가 존재하는 경우
   else {
-    finalResult = findResult;
-    statusResult = "success";
+    // google 사용자인 경우
+    if (findResult.user_google === "Y") {
+      combinedPw = `${user_id_param}_${findResult.user_token}`;
+    }
+    // 일반 사용자인 경우
+    else {
+      combinedPw = `${user_pw_param}_${findResult.user_token}`;
+    }
+
+    // 비밀번호 비교
+    const isPasswordMatch = await bcrypt.compare(combinedPw, findResult.user_pw);
+    if (!isPasswordMatch) {
+      finalResult = null;
+      statusResult = "pwDoesNotMatch";
+    }
+    else {
+      deleteResult = await repository.userDelete(
+        user_id_param,
+      );
+      if (!deleteResult) {
+        finalResult = null;
+        statusResult = "fail";
+      }
+      else {
+        finalResult = deleteResult;
+        statusResult = "success";
+      }
+    }
   }
 
   return {
     status: statusResult,
     result: finalResult
   };
-};
+}
 
 // 3-2. categoryDetail -----------------------------------------------------------------------------
 export const categoryDetail = async (

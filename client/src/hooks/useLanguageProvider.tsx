@@ -880,6 +880,10 @@ export const useTranslate = () => {
       ko: "비율",
       en: "Proportion"
     },
+    pwDoesNotMatch: {
+      ko: "비밀번호가 일치하지 않습니다",
+      en: "Passwords do not match"
+    },
     // ---------------------------------------------------------------------------------------------
     // q
     query: {

@@ -299,8 +299,8 @@ export const CalendarDetail = () => {
               <Select
                 label={translate("part")}
                 value={OBJECT?.calendar_section[i]?.calendar_part_idx}
-                inputRef={REFS[i]?.calendar_part_idx}
-                error={ERRORS[i]?.calendar_part_idx}
+                inputRef={REFS?.[i]?.calendar_part_idx}
+                error={ERRORS?.[i]?.calendar_part_idx}
                 locked={LOCKED}
                 onChange={(e: any) => {
                   const newIndex = Number(e.target.value);
@@ -327,8 +327,8 @@ export const CalendarDetail = () => {
               <Select
                 label={translate("color")}
                 value={OBJECT?.calendar_section[i]?.calendar_color}
-                inputRef={REFS[i]?.calendar_color}
-                error={ERRORS[i]?.calendar_color}
+                inputRef={REFS?.[i]?.calendar_color}
+                error={ERRORS?.[i]?.calendar_color}
                 locked={LOCKED}
                 onChange={(e: any) => {
                   const newColor = e.target.value;
@@ -355,8 +355,8 @@ export const CalendarDetail = () => {
               <Input
                 label={translate("calendarTitle")}
                 value={OBJECT?.calendar_section[i]?.calendar_title}
-                inputRef={REFS[i]?.calendar_title}
-                error={ERRORS[i]?.calendar_title}
+                inputRef={REFS?.[i]?.calendar_title}
+                error={ERRORS?.[i]?.calendar_title}
                 locked={LOCKED}
                 startadornment={
                   <Img

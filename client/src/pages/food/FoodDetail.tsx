@@ -190,7 +190,7 @@ export const FoodDetail = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    const totals = OBJECT?.food_section?.reduce((acc: any, cur: any) => {
+    const totals = OBJECT?.food_section.length > 0 && OBJECT?.food_section.reduce((acc: any, cur: any) => {
       return {
         totalKcal: acc.totalKcal + Number(cur.food_kcal),
         totalFat: acc.totalFat + Number(cur.food_fat),
@@ -478,8 +478,8 @@ export const FoodDetail = () => {
               <Select
                 label={translate("part")}
                 value={OBJECT?.food_section[i]?.food_part_idx}
-                inputRef={REFS[i]?.food_part_idx}
-                error={ERRORS[i]?.food_part_idx}
+                inputRef={REFS?.[i]?.food_part_idx}
+                error={ERRORS?.[i]?.food_part_idx}
                 locked={LOCKED}
                 onChange={(e: any) => {
                   const newPart = Number(e.target.value);
@@ -578,8 +578,8 @@ export const FoodDetail = () => {
               <Input
                 label={translate("foodName")}
                 value={OBJECT?.food_section[i]?.food_name}
-                inputRef={REFS[i]?.food_name}
-                error={ERRORS[i]?.food_name}
+                inputRef={REFS?.[i]?.food_name}
+                error={ERRORS?.[i]?.food_name}
                 locked={LOCKED}
                 shrink={"shrink"}
                 onChange={(e: any) => {
@@ -620,8 +620,8 @@ export const FoodDetail = () => {
               <Input
                 label={translate("kcal")}
                 value={numeral(OBJECT?.food_section[i]?.food_kcal).format("0,0")}
-                inputRef={REFS[i]?.food_kcal}
-                error={ERRORS[i]?.food_kcal}
+                inputRef={REFS?.[i]?.food_kcal}
+                error={ERRORS?.[i]?.food_kcal}
                 locked={LOCKED}
                 startadornment={
                   <Img
@@ -665,8 +665,8 @@ export const FoodDetail = () => {
               <Input
                 label={translate("carb")}
                 value={numeral(OBJECT?.food_section[i]?.food_carb).format("0,0")}
-                inputRef={REFS[i]?.food_carb}
-                error={ERRORS[i]?.food_carb}
+                inputRef={REFS?.[i]?.food_carb}
+                error={ERRORS?.[i]?.food_carb}
                 locked={LOCKED}
                 startadornment={
                   <Img
@@ -710,8 +710,8 @@ export const FoodDetail = () => {
               <Input
                 label={translate("protein")}
                 value={numeral(OBJECT?.food_section[i]?.food_protein).format("0,0")}
-                inputRef={REFS[i]?.food_protein}
-                error={ERRORS[i]?.food_protein}
+                inputRef={REFS?.[i]?.food_protein}
+                error={ERRORS?.[i]?.food_protein}
                 locked={LOCKED}
                 startadornment={
                   <Img
@@ -755,8 +755,8 @@ export const FoodDetail = () => {
               <Input
                 label={translate("fat")}
                 value={numeral(OBJECT?.food_section[i]?.food_fat).format("0,0")}
-                inputRef={REFS[i]?.food_fat}
-                error={ERRORS[i]?.food_fat}
+                inputRef={REFS?.[i]?.food_fat}
+                error={ERRORS?.[i]?.food_fat}
                 locked={LOCKED}
                 startadornment={
                   <Img

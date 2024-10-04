@@ -392,8 +392,8 @@ export const MoneyDetail = () => {
               <Select
                 label={translate("part")}
                 value={OBJECT?.money_section[i]?.money_part_idx}
-                inputRef={REFS[i]?.money_part_idx}
-                error={ERRORS[i]?.money_part_idx}
+                inputRef={REFS?.[i]?.money_part_idx}
+                error={ERRORS?.[i]?.money_part_idx}
                 locked={LOCKED}
                 onChange={(e: any) => {
                   const newIndex = Number(e.target.value);
@@ -422,8 +422,8 @@ export const MoneyDetail = () => {
               <Select
                 label={translate("title")}
                 value={OBJECT?.money_section[i]?.money_title_idx}
-                inputRef={REFS[i]?.money_title_idx}
-                error={ERRORS[i]?.money_title_idx}
+                inputRef={REFS?.[i]?.money_title_idx}
+                error={ERRORS?.[i]?.money_title_idx}
                 locked={LOCKED}
                 onChange={(e: any) => {
                   const newTitleIdx = Number(e.target.value);
@@ -453,8 +453,8 @@ export const MoneyDetail = () => {
               <Input
                 label={translate("amount")}
                 value={numeral(OBJECT?.money_section[i]?.money_amount).format("0,0")}
-                inputRef={REFS[i]?.money_amount}
-                error={ERRORS[i]?.money_amount}
+                inputRef={REFS?.[i]?.money_amount}
+                error={ERRORS?.[i]?.money_amount}
                 locked={LOCKED}
                 startadornment={
                   <Img

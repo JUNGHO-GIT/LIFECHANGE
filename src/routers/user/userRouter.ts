@@ -255,6 +255,13 @@ router.post("/login", async (req: Request, res: Response) => {
         result: finalResult.result,
       });
     }
+    else if (finalResult.status === "pwDoesNotMatch") {
+      res.json({
+        msg: "pwDoesNotMatch",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
     else if (finalResult.status === "fail") {
       res.json({
         msg: "theIdOrPwIsIncorrect",
@@ -342,6 +349,13 @@ router.put("/update", async (req: Request, res: Response) => {
         result: finalResult.result,
       });
     }
+    else if (finalResult.status === "pwDoesNotMatch") {
+      res.json({
+        msg: "pwDoesNotMatch",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
     else if (finalResult.status === "fail") {
       res.json({
         msg: "updateFailed",
@@ -372,10 +386,18 @@ router.delete("/delete", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.userDelete (
       req.body.user_id as string,
+      req.body.user_pw as string,
     );
     if (finalResult.status === "success") {
       res.json({
         msg: "deleteSuccessful",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "pwDoesNotMatch") {
+      res.json({
+        msg: "pwDoesNotMatch",
         status: finalResult.status,
         result: finalResult.result,
       });

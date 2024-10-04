@@ -8,7 +8,7 @@ export const useRoot = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, location, sessionId
+    PATH, navigate, sessionId
   } = useCommonValue();
 
   // 2-3. useEffect --------------------------------------------------------------------------------
@@ -16,14 +16,12 @@ export const useRoot = () => {
 
     // 1. 리디렉트 처리
     if (
-      location.pathname.indexOf("/user/login") === -1 &&
-      location.pathname.indexOf("/user/signup") === -1 &&
-      location.pathname.indexOf("/user/resetPw") === -1 &&
-      location.pathname.indexOf("/auth") === -1
+      !PATH.includes("user/login") && !PATH.includes("user/signup") &&
+      !PATH.includes("user/resetPw") && !PATH.includes("user/delete") &&  !PATH.includes("auth")
     ) {
 
       // '/'경로로 진입했을때의 처리
-      if (location.pathname === '/') {
+      if (PATH === "/") {
         if (sessionId === null || sessionId === undefined || sessionId === "") {
           navigate("/user/login");
         }
@@ -39,5 +37,5 @@ export const useRoot = () => {
         }
       }
     }
-  }, [location, navigate, sessionId]);
+  }, [navigate, sessionId]);
 };

@@ -69,7 +69,7 @@ export const percent = async (
     user_id_param, dateStart, dateEnd
   );
 
-  findExercise = findExercise?.reduce((acc: any, curr: any) => {
+  findExercise = findExercise.length > 0 && findExercise?.reduce((acc: any, curr: any) => {
     const exerciseTotalCount = (
       parseFloat(acc?.exercise_total_count) + parseFloat(curr?.exercise_total_count)
     );
@@ -80,9 +80,7 @@ export const percent = async (
       timeToDecimal(acc?.exercise_total_cardio) + timeToDecimal(curr?.exercise_total_cardio)
     );
     const exerciseTotalWeight = (
-      curr?.exercise_total_weight !== '0'
-      ? curr?.exercise_total_weight
-      : acc?.exercise_total_weight
+      curr?.exercise_total_weight !== '0' ? curr?.exercise_total_weight : acc?.exercise_total_weight
     );
     return {
       exercise_total_count: String(exerciseTotalCount.toFixed(0)),
@@ -101,7 +99,7 @@ export const percent = async (
   findFood = await repository.listFood(
     user_id_param, dateStart, dateEnd
   );
-  findFood = findFood?.reduce((acc: any, curr: any) => {
+  findFood = findFood.length > 0 && findFood?.reduce((acc: any, curr: any) => {
     const foodTotalKcal = (
       parseFloat(acc?.food_total_kcal) + parseFloat(curr?.food_total_kcal)
     );
@@ -131,7 +129,7 @@ export const percent = async (
   findMoney = await repository.listMoney(
     user_id_param, dateStart, dateEnd
   );
-  findMoney = findMoney?.reduce((acc: any, curr: any) => {
+  findMoney = findMoney.length > 0 && findMoney?.reduce((acc: any, curr: any) => {
     const moneyTotalIncome = (
       parseFloat(acc?.money_total_income) + parseFloat(curr?.money_total_income)
     );
@@ -154,7 +152,7 @@ export const percent = async (
     user_id_param, dateStart, dateEnd
   );
   const findSleepLength = findSleep?.length;
-  findSleep = findSleep?.reduce((acc: any, curr: any) => {
+  findSleep = findSleep.length > 0 && findSleep?.reduce((acc: any, curr: any) => {
     const sleepBedTime = (
       timeToDecimal(acc?.sleep_bedTime) + timeToDecimal(curr?.sleep_bedTime)
     );

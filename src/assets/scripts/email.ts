@@ -68,7 +68,7 @@ export const emailSending = async (email: string, code: string) => {
                 "
               >
                 <img
-                  src="https://storage.googleapis.com/jungho-bucket/JPAGE/IMAGE/webp/logo2.webp"
+                  src="https://storage.googleapis.com/jungho-bucket/JPAGE/IMAGE/main/logo2.webp"
                   alt="logo2"
                   loading="lazy"
                   style="
@@ -78,7 +78,7 @@ export const emailSending = async (email: string, code: string) => {
                   "
                 />
                 <img
-                  src="https://storage.googleapis.com/jungho-bucket/JPAGE/IMAGE/webp/logo3.webp"
+                  src="https://storage.googleapis.com/jungho-bucket/JPAGE/IMAGE/main/logo3.webp"
                   alt="logo3"
                   loading="lazy"
                   style="

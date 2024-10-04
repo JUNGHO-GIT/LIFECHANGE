@@ -271,8 +271,8 @@ export const FoodGoalDetail = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.food_goal_kcal).format("0,0")}
-                inputRef={REFS[i]?.food_goal_kcal}
-                error={ERRORS[i]?.food_goal_kcal}
+                inputRef={REFS?.[i]?.food_goal_kcal}
+                error={ERRORS?.[i]?.food_goal_kcal}
                 locked={LOCKED}
                 label={
                   DATE.dateType === "day" ? (
@@ -312,8 +312,8 @@ export const FoodGoalDetail = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.food_goal_carb).format("0,0")}
-                inputRef={REFS[i]?.food_goal_carb}
-                error={ERRORS[i]?.food_goal_carb}
+                inputRef={REFS?.[i]?.food_goal_carb}
+                error={ERRORS?.[i]?.food_goal_carb}
                 locked={LOCKED}
                 label={
                   DATE.dateType === "day" ? (
@@ -353,8 +353,8 @@ export const FoodGoalDetail = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.food_goal_protein).format("0,0")}
-                inputRef={REFS[i]?.food_goal_protein}
-                error={ERRORS[i]?.food_goal_protein}
+                inputRef={REFS?.[i]?.food_goal_protein}
+                error={ERRORS?.[i]?.food_goal_protein}
                 locked={LOCKED}
                 label={
                   DATE.dateType === "day" ? (
@@ -394,8 +394,8 @@ export const FoodGoalDetail = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.food_goal_fat).format("0,0")}
-                inputRef={REFS[i]?.food_goal_fat}
-                error={ERRORS[i]?.food_goal_fat}
+                inputRef={REFS?.[i]?.food_goal_fat}
+                error={ERRORS?.[i]?.food_goal_fat}
                 locked={LOCKED}
                 label={
                   DATE.dateType === "day" ? (

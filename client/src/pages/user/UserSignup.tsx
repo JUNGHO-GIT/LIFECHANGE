@@ -130,27 +130,9 @@ export const UserSignup = () => {
       }
       else if (res.data.status === "alreadyExist") {
         alert(translate(res.data.msg));
-        setOBJECT((prev: any) => ({
-          ...prev,
-          user_id: "",
-          user_pw: "",
-        }));
-      }
-      else if (res.data.status === "fail") {
-        alert(translate(res.data.msg));
-        setOBJECT((prev: any) => ({
-          ...prev,
-          user_id: "",
-          user_pw: "",
-        }));
       }
       else {
         alert(translate(res.data.msg));
-        setOBJECT((prev: any) => ({
-          ...prev,
-          user_id: "",
-          user_pw: "",
-        }));
       }
     })
     .catch((err: any) => {
@@ -197,8 +179,8 @@ export const UserSignup = () => {
                 label={`${translate("id")}`}
                 helperText={`* ${translate("helperId")}`}
                 value={OBJECT.user_id}
-                inputRef={REFS[i]?.user_id}
-                error={ERRORS[i]?.user_id}
+                inputRef={REFS?.[i]?.user_id}
+                error={ERRORS?.[i]?.user_id}
                 disabled={OBJECT.user_id_verified === true}
                 placeholder={"abcd@naver.com"}
                 onChange={(e: any) => {
@@ -236,8 +218,8 @@ export const UserSignup = () => {
                 label={translate("verify")}
                 helperText={`* ${translate("helperIdVerified")}`}
                 value={OBJECT.user_verify_code}
-                inputRef={REFS[i]?.user_id_verified}
-                error={ERRORS[i]?.user_id_verified}
+                inputRef={REFS?.[i]?.user_id_verified}
+                error={ERRORS?.[i]?.user_id_verified}
                 disabled={OBJECT.user_id_verified === true}
                 onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
@@ -267,8 +249,8 @@ export const UserSignup = () => {
                 label={translate("pw")}
                 helperText={`* ${translate("helperPw")}`}
                 value={OBJECT.user_pw}
-                inputRef={REFS[i]?.user_pw}
-                error={ERRORS[i]?.user_pw}
+                inputRef={REFS?.[i]?.user_pw}
+                error={ERRORS?.[i]?.user_pw}
                 disabled={OBJECT.user_id_verified === false}
                 onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
@@ -285,8 +267,8 @@ export const UserSignup = () => {
                 label={translate("pwVerified")}
                 helperText={`* ${translate("helperPwVerified")}`}
                 value={OBJECT.user_pw_verified}
-                inputRef={REFS[i]?.user_pw_verified}
-                error={ERRORS[i]?.user_pw_verified}
+                inputRef={REFS?.[i]?.user_pw_verified}
+                error={ERRORS?.[i]?.user_pw_verified}
                 disabled={OBJECT.user_id_verified === false}
                 onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
@@ -302,8 +284,8 @@ export const UserSignup = () => {
               <Select
                 label={translate("gender")}
                 value={OBJECT.user_gender || "N"}
-                inputRef={REFS[i]?.user_gender}
-                error={ERRORS[i]?.user_gender}
+                inputRef={REFS?.[i]?.user_gender}
+                error={ERRORS?.[i]?.user_gender}
                 disabled={OBJECT.user_id_verified === false}
                 onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
@@ -324,8 +306,8 @@ export const UserSignup = () => {
               <Input
                 label={translate("age")}
                 value={OBJECT.user_age}
-                inputRef={REFS[i]?.user_age}
-                error={ERRORS[i]?.user_age}
+                inputRef={REFS?.[i]?.user_age}
+                error={ERRORS?.[i]?.user_age}
                 disabled={OBJECT.user_id_verified === false}
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
@@ -350,8 +332,8 @@ export const UserSignup = () => {
               <Input
                 label={translate("scale")}
                 value={OBJECT.user_initScale}
-                inputRef={REFS[i]?.user_initScale}
-                error={ERRORS[i]?.user_initScale}
+                inputRef={REFS?.[i]?.user_initScale}
+                error={ERRORS?.[i]?.user_initScale}
                 disabled={OBJECT.user_id_verified === false}
                 endadornment={
                   translate("cm")
@@ -379,8 +361,8 @@ export const UserSignup = () => {
               <Input
                 label={translate("property")}
                 value={OBJECT.user_initProperty}
-                inputRef={REFS[i]?.user_initProperty}
-                error={ERRORS[i]?.user_initProperty}
+                inputRef={REFS?.[i]?.user_initProperty}
+                error={ERRORS?.[i]?.user_initProperty}
                 disabled={OBJECT.user_id_verified === false}
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');

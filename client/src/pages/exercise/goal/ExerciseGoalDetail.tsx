@@ -273,8 +273,8 @@ export const ExerciseGoalDetail = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.exercise_goal_count).format("0,0")}
-                inputRef={REFS[i]?.exercise_goal_count}
-                error={ERRORS[i]?.exercise_goal_count}
+                inputRef={REFS?.[i]?.exercise_goal_count}
+                error={ERRORS?.[i]?.exercise_goal_count}
                 locked={LOCKED}
                 label={
                   DATE.dateType === "day" ? (
@@ -314,8 +314,8 @@ export const ExerciseGoalDetail = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.exercise_goal_volume).format("0,0")}
-                inputRef={REFS[i]?.exercise_goal_volume}
-                error={ERRORS[i]?.exercise_goal_volume}
+                inputRef={REFS?.[i]?.exercise_goal_volume}
+                error={ERRORS?.[i]?.exercise_goal_volume}
                 locked={LOCKED}
                 label={
                   DATE.dateType === "day" ? (
@@ -367,8 +367,8 @@ export const ExerciseGoalDetail = () => {
             <Input
               label={translate("goalWeight")}
               value={OBJECT?.exercise_goal_weight}
-              inputRef={REFS[i]?.exercise_goal_weight}
-              error={ERRORS[i]?.exercise_goal_weight}
+              inputRef={REFS?.[i]?.exercise_goal_weight}
+              error={ERRORS?.[i]?.exercise_goal_weight}
               locked={LOCKED}
               startadornment={
                 <Img

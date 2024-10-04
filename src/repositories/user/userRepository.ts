@@ -209,7 +209,7 @@ export const userUpdate = async (
 
 // 2-7. user - delete -----------------------------------------------------------------------------
 export const userDelete = async (
-  user_id_param: string
+  user_id_param: string,
 ) => {
 
   const finalResult =
