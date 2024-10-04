@@ -7,27 +7,23 @@ import { Div } from "@imports/ImportComponents";
 export const Loading = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    PATH
-  } = useCommonValue();
+  const { PATH } = useCommonValue();
 
   // 7.loading -------------------------------------------------------------------------------------
   const loadingNode = () => {
     const wrapperSection = () => (
-      <Div className={"loader-wrapper d-center"}>
+      <Div className={"loader-wrapper d-column-center"}>
         <Div className={"loader"} />
       </Div>
     );
     const nonWrapperSection = () => (
-      <Div className={`h-min60vh d-center`}>
+      <Div className={"h-min60vh d-column-center"}>
         <Div className={"loader"} />
       </Div>
     );
     return (
-      PATH.includes("/user/signup") ||
-      PATH.includes("/user/login") ||
-      PATH.includes("/user/delete") ||
-      PATH.includes("/user/resetPw") ? (
+      PATH.includes("/user/signup") || PATH.includes("/user/login") ||
+      PATH.includes("/user/delete") || PATH.includes("/user/resetPw") ? (
         wrapperSection()
       ) : (
         nonWrapperSection()

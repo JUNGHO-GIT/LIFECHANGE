@@ -1,12 +1,13 @@
-// Dial.tsx
+// Dialog.tsx
 
 import { useState } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
+import { useLanguageStore } from "@imports/ImportStores";
 import { Div, Icons } from "@imports/ImportComponents";
 import { SpeedDial, SpeedDialAction, SpeedDialIcon, Backdrop } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-declare interface DialProps {
+declare interface DialogProps {
   COUNT?: any;
   setCOUNT?: any;
   LOCKED?: any;
@@ -16,20 +17,14 @@ declare interface DialProps {
 }
 
 // -------------------------------------------------------------------------------------------------
-export const Dial = (
-  { COUNT, setCOUNT, LOCKED, setLOCKED, isExpanded, setIsExpanded }: DialProps
+export const Dialog = (
+  { COUNT, setCOUNT, LOCKED, setLOCKED, isExpanded, setIsExpanded }: DialogProps
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, toDetail, PATH, localIsoCode
-  } = useCommonValue();
-  const {
-    dayFmt
-  } = useCommonDate();
-  const {
-    translate,
-  } = useTranslate();
+  const { PATH, navigate, toDetail, localIsoCode } = useCommonValue();
+  const { dayFmt } = useCommonDate();
+  const { translate } = useLanguageStore();
 
   // 2-1. useState ---------------------------------------------------------------------------------
   const [open, setOpen] = useState(false);
@@ -39,8 +34,8 @@ export const Dial = (
   const isList = !isGoalList && !isFindList && PATH.includes("/list");
   const isDetail = PATH.includes("/detail");
 
-  // 7. dial ---------------------------------------------------------------------------------------
-  const dialNode = () => {
+  // 7. dialog -------------------------------------------------------------------------------------
+  const dialogNode = () => {
     // 1. list (today o)
     const listTodaySection = () => (
       <Div className={`p-fixed bottom-18vh z-600 right-6vw`}>
@@ -433,7 +428,7 @@ export const Dial = (
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {dialNode()}
+      {dialogNode()}
     </>
   );
 };

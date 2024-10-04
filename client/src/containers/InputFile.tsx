@@ -1,11 +1,17 @@
 // InputFile.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
+import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
+import { Alert } from "@imports/ImportLayouts";
 import { Div, Br, Img } from "@imports/ImportComponents";
 import { MuiFileInput, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
+
+  // 1. common -------------------------------------------------------------------------------------
+  const { translate } = useLanguageStore();
+  const { setALERT } = useAlertStore();
 
   // 2-1. useState ---------------------------------------------------------------------------------
   const [fileExisting, setFileExisting] = useState<any[]>([]);
@@ -85,7 +91,11 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
 
     // 파일이 이미지가 아닌 경우
     if (newFiles && newFiles.some((file: File) => !file.type.startsWith("image/"))) {
-      alert("이미지 파일만 업로드 가능합니다.");
+      setALERT({
+        open: true,
+        msg: translate("uploadImageOnly"),
+        severity: "error",
+      });
 
       // input 요소 삭제
       const input = document.querySelector("input[type=file]");
@@ -97,7 +107,11 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
 
     // 파일이 제한 개수 이상인 경우
     else if (newFiles && newFiles.length + fileCount > fileLimit) {
-      alert(`파일은 최대 ${fileLimit}개까지 업로드 가능합니다.`);
+      setALERT({
+        open: true,
+        msg: translate(`uploadMaxFileCount`),
+        severity: "error",
+      });
 
       // input 요소 삭제
       const input = document.querySelector("input[type=file]");
@@ -109,7 +123,11 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
 
     // 파일이 5mb 이상인 경우
     else if (newFiles && newFiles.some((file: File) => (file.size > 5 * 1024 * 1024))) {
-      alert("파일은 최대 5MB까지 업로드 가능합니다.");
+      setALERT({
+        open: true,
+        msg: translate("uploadMaxFileSize"),
+        severity: "error",
+      });
 
       // input 요소 삭제
       const input = document.querySelector("input[type=file]");

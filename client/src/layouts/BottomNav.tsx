@@ -1,24 +1,18 @@
 // BottomNav.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
+import { useLanguageStore } from "@imports/ImportStores";
 import { Img } from "@imports/ImportComponents";
-import { BottomNavigation, BottomNavigationAction } from "@imports/ImportMuis";
-import { Paper, Grid } from "@imports/ImportMuis";
+import { BottomNavigation, BottomNavigationAction, Paper, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const BottomNav = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, firstStr, TITLE,
-  } = useCommonValue();
-  const {
-    dayFmt
-  } = useCommonDate();
-  const {
-    translate,
-  } = useTranslate();
+  const { TITLE, navigate, firstStr } = useCommonValue();
+  const { dayFmt } = useCommonDate();
+  const { translate } = useLanguageStore();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [selectedTab, setSelectedTab] = useState<string>("today");
@@ -197,7 +191,7 @@ export const BottomNav = () => {
     // 2. return
     return (
       <Paper className={"layout-wrapper p-sticky bottom-0 h-8vh border-1 radius-1"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={12} className={"d-center"}>
             {tabsSection()}
           </Grid>

@@ -1,6 +1,7 @@
 // Empty.tsx
 
-import { useTranslate, useCommonValue } from "@imports/ImportHooks";
+import { useCommonValue } from "@imports/ImportHooks";
+import { useLanguageStore } from "@imports/ImportStores";
 import { Div, Icons } from "@imports/ImportComponents";
 import { Card, Accordion, AccordionSummary, Grid } from "@imports/ImportMuis";
 
@@ -16,12 +17,8 @@ export const Empty = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    PATH, navigate
-  } = useCommonValue();
-  const {
-    translate
-  } = useTranslate();
+  const { PATH, navigate } = useCommonValue();
+  const { translate } = useLanguageStore();
 
   const isFindList = PATH.includes("food/find/list");
   const isGoalList = !isFindList && PATH.includes("goal/list");
@@ -32,9 +29,9 @@ export const Empty = (
     // 1. isFindSection
     const isFindSection = () => (
       <Card className={"border-1 radius-1"} key={`empty-${extra}`}>
-        <Accordion className={"shadow-none"} expanded={false}>
+        <Accordion className={"shadow-0"} expanded={false}>
           <AccordionSummary>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} columns={12}>
               <Grid size={4} className={"d-row-left"}>
                 <Div className={"fs-1-0rem fw-600 dark"}>
                   {translate("search")}
@@ -53,20 +50,19 @@ export const Empty = (
     // 2. nonFindSection
     const nonFindSection = () => (
       <Card className={"border-1 radius-1"} key={`empty-${extra}`}>
-        <Accordion className={"shadow-none"} expanded={false}>
+        <Accordion className={"shadow-0"} expanded={false}>
           <AccordionSummary>
             <Grid
               container={true}
               spacing={2}
               onClick={(e: any) => {
                 e.stopPropagation();
-                Object.assign(SEND, {
-                  dateType: "",
-                  dateStart: "",
-                  dateEnd: "",
-                });
                 navigate(toDetail, {
-                  state: SEND
+                  state: {
+                    dateType: "",
+                    dateStart: "",
+                    dateEnd: "",
+                  }
                 });
               }}
             >

@@ -1,11 +1,12 @@
 // UserCategory.tsx
 
 import { useState, useEffect, createRef, useRef } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useStorage } from "@imports/ImportHooks";
+import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { Category } from "@imports/ImportSchemas";
-import { axios } from "@imports/ImportLibs";
+import { axios } from "@imports/ImportUtils";
 import { sync } from "@imports/ImportUtils";
-import { Loading, Footer } from "@imports/ImportLayouts";
+import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PopUp, Input } from "@imports/ImportContainers";
 import { Div, Icons } from "@imports/ImportComponents";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
@@ -16,15 +17,11 @@ import { TableHead, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
 export const UserCategory = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, location_dateType
-  } = useCommonValue();
-  const {
-    dayFmt
-  } = useCommonDate();
-  const {
-    translate,
-  } = useTranslate();
+  const { URL_OBJECT, PATH, TITLE, sessionId } = useCommonValue();
+  const { location_dateStart, location_dateEnd, location_dateType } = useCommonValue();
+  const { dayFmt } = useCommonDate();
+  const { setALERT } = useAlertStore();
+  const { translate } = useLanguageStore();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
@@ -38,8 +35,6 @@ export const UserCategory = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-
-  // 2-2. useState ---------------------------------------------------------------------------------
   const [OBJECT, setOBJECT] = useState<any>(Category);
   const REFS = useRef<any>();
   const [dataType, setDataType] = useState<string>("exercise");
@@ -84,7 +79,7 @@ export const UserCategory = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId]);
+  }, [URL_OBJECT, sessionId]);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = () => {
@@ -95,11 +90,19 @@ export const UserCategory = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        alert(translate(res.data.msg));
         sync();
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "success",
+        });
       }
       else {
-        alert(translate(res.data.msg));
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
       }
     })
     .catch((err: any) => {
@@ -176,7 +179,11 @@ export const UserCategory = () => {
   const handlerRemove = (type: string, index: number) => {
     if (type === "part") {
       if (OBJECT[dataType].length <= 1) {
-        alert(translate("cantBeDeletedLastItem"));
+        setALERT({
+          open: true,
+          msg: translate("cantBeDeletedLastItem"),
+          severity: "error",
+        });
         return;
       }
       setOBJECT((prev: any) => {
@@ -196,7 +203,11 @@ export const UserCategory = () => {
     }
     else if (type === "title") {
       if (OBJECT[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`]?.length <= 2) {
-        alert(translate("cantBeDeletedLastItem"));
+        setALERT({
+          open: true,
+          msg: translate("cantBeDeletedLastItem"),
+          severity: "error",
+        });
         return;
       }
       setOBJECT((prev: any) => {
@@ -524,7 +535,7 @@ export const UserCategory = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min95vh"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={12}>
             {detailSection()}
           </Grid>

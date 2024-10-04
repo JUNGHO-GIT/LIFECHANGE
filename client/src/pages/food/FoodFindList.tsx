@@ -1,12 +1,12 @@
 // FoodFindList.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useStorage } from "@imports/ImportHooks";
+import { useLanguageStore } from "@imports/ImportStores";
 import { FoodFind } from "@imports/ImportSchemas";
-import { axios, numeral } from "@imports/ImportLibs";
-import { Loading, Footer, Empty } from "@imports/ImportLayouts";
+import { axios, numeral } from "@imports/ImportUtils";
+import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
 import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
-import { Dial } from "@imports/ImportContainers";
 import { Paper, Card, Checkbox, Grid } from "@imports/ImportMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 
@@ -14,15 +14,10 @@ import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMu
 export const FoodFindList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    location_dateStart, location_dateEnd, PATH, URL_OBJECT, TITLE, localIsoCode
-  } = useCommonValue();
-  const {
-    dayFmt,
-  } = useCommonDate();
-  const {
-    translate,
-  } = useTranslate();
+  const { URL_OBJECT, PATH, TITLE, localIsoCode } = useCommonValue();
+  const { location_dateStart, location_dateEnd } = useCommonValue();
+  const { dayFmt } = useCommonDate();
+  const { translate } = useLanguageStore();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용 (find 사용금지)
@@ -180,7 +175,7 @@ export const FoodFindList = () => {
       const listFragment = (i: number) => (
         OBJECT?.map((item: any, index: number) => (
           <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
-            <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
+            <Accordion className={"shadow-0"} expanded={isExpanded.includes(index)}>
               <AccordionSummary
                 className={"me-n10"}
                 expandIcon={
@@ -353,26 +348,24 @@ export const FoodFindList = () => {
         ))
       );
       return (
-        LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : listFragment(0)
-        )
+        COUNT.totalCnt === 0 ? emptyFragment() : listFragment(0)
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={12}>
-            {listSection()}
+            {!LOADING ? listSection() : <Loading />}
           </Grid>
         </Grid>
       </Paper>
     );
   };
 
-  // 8. dial ---------------------------------------------------------------------------------------
-  const dialNode = () => (
-    <Dial
+  // 8. dialog -------------------------------------------------------------------------------------
+  const dialogNode = () => (
+    <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
       isExpanded={isExpanded}
@@ -399,7 +392,7 @@ export const FoodFindList = () => {
   return (
     <>
       {findNode()}
-      {dialNode()}
+      {dialogNode()}
       {footerNode()}
     </>
   );

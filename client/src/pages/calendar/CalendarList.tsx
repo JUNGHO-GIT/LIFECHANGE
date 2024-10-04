@@ -1,10 +1,10 @@
 // CalendarList.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useStorage } from "@imports/ImportHooks";
 import { Calendar } from "@imports/ImportSchemas";
-import { moment, axios, CalendarReact } from "@imports/ImportLibs";
-import { Loading, Footer, Empty } from "@imports/ImportLayouts";
+import { moment, axios, CalendarReact } from "@imports/ImportUtils";
+import { Loading, Footer } from "@imports/ImportLayouts";
 import { Icons, Div } from "@imports/ImportComponents";
 import { Paper, Grid, Card } from "@imports/ImportMuis";
 
@@ -12,13 +12,11 @@ import { Paper, Grid, Card } from "@imports/ImportMuis";
 export const CalendarList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, PATH, URL_OBJECT, sessionId, TITLE, toDetail, localLocale
-  } = useCommonValue();
-  const {
-    getDayNotFmt, getDayFmt, getDayStartFmt, getDayEndFmt, monthStartFmt, monthEndFmt,
-    getMonthStartFmt, getMonthEndFmt,
-  } = useCommonDate();
+  const { URL_OBJECT, PATH, TITLE } = useCommonValue();
+  const { sessionId, navigate, toDetail, localLocale } = useCommonValue();
+  const { monthStartFmt, monthEndFmt } = useCommonDate();
+  const { getDayFmt, getDayStartFmt, getDayEndFmt, getDayNotFmt } = useCommonDate();
+  const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
@@ -68,7 +66,7 @@ export const CalendarList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
@@ -92,15 +90,14 @@ export const CalendarList = () => {
             }}
             onClick={(e: any) => {
               e.stopPropagation();
-              Object.assign(SEND, {
-                id: calendar._id,
-                section_id: section._id,
-                dateType: calendar.calendar_dateType,
-                dateStart: calendar.calendar_dateStart,
-                dateEnd: calendar.calendar_dateEnd,
-              });
               navigate(toDetail, {
-                state: SEND
+                state: {
+                  id: calendar._id,
+                  section_id: section._id,
+                  dateType: calendar.calendar_dateType,
+                  dateStart: calendar.calendar_dateStart,
+                  dateEnd: calendar.calendar_dateEnd,
+                }
               });
             }}
           >
@@ -129,7 +126,7 @@ export const CalendarList = () => {
     const listSection = () => {
       const listFragment = (i: number) => (
         <Card className={"pt-20 pb-20"} key={`${i}-card`}>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} columns={12}>
             <CalendarReact
               key={`${i}-calendar`}
               view={"month"}
@@ -174,15 +171,14 @@ export const CalendarList = () => {
                 ));
                 // 항목이 없는 경우에만 클릭 가능
                 if (calendarForDate.length === 0) {
-                  Object.assign(SEND, {
-                    id: "",
-                    section_id: "",
-                    dateType: "day",
-                    dateStart: getDayFmt(value),
-                    dateEnd: getDayFmt(value),
-                  });
                   navigate(toDetail, {
-                    state: SEND
+                    state: {
+                      id: "",
+                      section_id: "",
+                      dateType: "day",
+                      dateStart: getDayFmt(value),
+                      dateEnd: getDayFmt(value),
+                    }
                   });
                 }
               }}
@@ -242,15 +238,15 @@ export const CalendarList = () => {
         </Card>
       );
       return (
-        LOADING ? <Loading /> : listFragment(0)
+        listFragment(0)
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={12}>
-            {listSection()}
+            {!LOADING ? listSection() : <Loading />}
           </Grid>
         </Grid>
       </Paper>

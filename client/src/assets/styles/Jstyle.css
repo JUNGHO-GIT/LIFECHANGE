@@ -11764,6 +11764,9 @@
 .border-left-3 {
   border-left: 3px solid #dbdbdb !important;
 }
+.border-dark {
+  border: 1px solid #b3b3b3 !important;
+}
 
 /** 99. color *************************************************************************************/
 .red {
@@ -12090,8 +12093,6 @@
 .locked {
   border: 2px solid #bdbdbd !important;
 }
-
-/** 100. animation ********************************************************************************/
 .transform-none {
   transform: none !important;
 }
@@ -12105,12 +12106,8 @@
 .hover:hover {
   transform: scale(1.08);
 }
-.fadeIn {
-  animation: fadeIn 0.5s cubic-bezier(0.42, 0, 0.58, 1) !important;
-}
-.shake {
-  animation: shake 0.7s cubic-bezier(.36,.07,.19,.97) both !important;
-}
+
+/** 100. animation ********************************************************************************/
 .loader-wrapper {
   position: fixed;
   top: 0;
@@ -12121,7 +12118,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 99999;
+  z-index: 999999;
 }
 .loader {
   width: 50px;
@@ -12135,10 +12132,8 @@
   border-top: 3px solid #1976D2 !important;
   border-right: 3px solid transparent;
   animation: loaderAnimation 0.7s linear infinite;
-  z-index: 100000;
+  z-index: 1000000;
 }
-
-/** 101. keyframes ********************************************************************************/
 @keyframes loaderAnimation {
   0% {
     transform: rotate(0deg);
@@ -12146,6 +12141,13 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.fadeIn {
+  animation: fadeIn 0.5s cubic-bezier(0.42, 0, 0.58, 1) !important;
+}
+.snackbar {
+  animation: fadeIn 0.1s cubic-bezier(0.42, 0, 0.58, 1) !important;
 }
 @keyframes fadeIn {
   0% {
@@ -12160,6 +12162,10 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.shake {
+  animation: shake 0.7s cubic-bezier(.36,.07,.19,.97) both !important;
 }
 @keyframes shake {
   0%, 100% {

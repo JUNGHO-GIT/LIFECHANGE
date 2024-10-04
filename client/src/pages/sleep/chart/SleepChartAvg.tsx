@@ -1,14 +1,14 @@
 // SleepChartAvg.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
+import { useLanguageStore } from "@imports/ImportStores";
 import { SleepAvg } from "@imports/ImportSchemas";
-import { axios } from "@imports/ImportLibs";
+import { axios } from "@imports/ImportUtils";
 import { handlerY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
-import { Select } from "@imports/ImportContainers";
+import { Select, PopUp } from "@imports/ImportContainers";
 import { Div, Img } from "@imports/ImportComponents";
-import { PopUp } from "@imports/ImportContainers";
 import { Paper, Card, Grid, MenuItem } from "@imports/ImportMuis";
 import { FormGroup, FormControlLabel, Switch } from "@imports/ImportMuis";
 import { ComposedChart, Bar } from "recharts";
@@ -18,18 +18,10 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } fro
 export const SleepChartAvg = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    translate,
-  } = useTranslate();
-  const {
-    dayFmt,
-    weekStartFmt, weekEndFmt,
-    monthStartFmt, monthEndFmt,
-    yearStartFmt, yearEndFmt,
-  } = useCommonDate();
-  const {
-    URL_OBJECT, sessionId, sleepChartArray, COLORS,
-  } = useCommonValue();
+  const { URL_OBJECT, COLORS, sessionId, sleepChartArray } = useCommonValue();
+  const { dayFmt, weekStartFmt, weekEndFmt} = useCommonDate();
+  const { monthStartFmt, monthEndFmt, yearStartFmt, yearEndFmt } = useCommonDate();
+  const { translate } = useLanguageStore();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(true);
@@ -54,26 +46,33 @@ export const SleepChartAvg = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
-    const params = {
-      user_id: sessionId,
-      DATE: DATE,
-    };
-    const [resWeek, resMonth] = await Promise.all([
-      axios.get(`${URL_OBJECT}/chart/avg/week`, {
-        params: params,
-      }),
-      axios.get(`${URL_OBJECT}/chart/avg/month`, {
-        params: params,
-      }),
-    ]);
-    setOBJECT_MONTH(
-      resWeek.data.result.length > 0 ? resWeek.data.result : [SleepAvg]
-    );
-    setOBJECT_YEAR(
-      resMonth.data.result.length > 0 ? resMonth.data.result : [SleepAvg]
-    );
-    setLOADING(false);
-  })()}, [sessionId]);
+    try {
+      const params = {
+        user_id: sessionId,
+        DATE: DATE,
+      };
+      const [resWeek, resMonth] = await Promise.all([
+        axios.get(`${URL_OBJECT}/chart/avg/week`, {
+          params: params,
+        }),
+        axios.get(`${URL_OBJECT}/chart/avg/month`, {
+          params: params,
+        }),
+      ]);
+      setOBJECT_MONTH(
+        resWeek.data.result.length > 0 ? resWeek.data.result : [SleepAvg]
+      );
+      setOBJECT_YEAR(
+        resMonth.data.result.length > 0 ? resMonth.data.result : [SleepAvg]
+      );
+    }
+    catch (err: any) {
+      console.error(err);
+    }
+    finally {
+      setLOADING(false);
+    }
+  })()}, [URL_OBJECT, DATE, sessionId]);
 
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartWeek = () => {
@@ -327,7 +326,7 @@ export const SleepChartAvg = () => {
       );
       return (
         <Card className={"p-0"}>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} columns={12}>
             <Grid size={3} className={"d-row-left"}>
               {selectFragment1()}
             </Grid>
@@ -363,7 +362,7 @@ export const SleepChartAvg = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min40vh"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={12}>
             {headSection()}
           </Grid>

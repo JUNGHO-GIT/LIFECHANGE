@@ -1,9 +1,10 @@
 // MoneyChartBar.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
+import { useLanguageStore } from "@imports/ImportStores";
 import { MoneyBar } from "@imports/ImportSchemas";
-import { axios } from "@imports/ImportLibs";
+import { axios } from "@imports/ImportUtils";
 import { handlerY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Input } from "@imports/ImportContainers";
@@ -16,18 +17,10 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } fro
 export const MoneyChartBar = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    translate,
-  } = useTranslate();
-  const {
-    dayFmt,
-    weekStartFmt, weekEndFmt,
-    monthStartFmt, monthEndFmt,
-    yearStartFmt, yearEndFmt,
-  } = useCommonDate();
-  const {
-    URL_OBJECT, sessionId, barChartArray, COLORS,
-  } = useCommonValue();
+  const { URL_OBJECT, COLORS, sessionId, barChartArray } = useCommonValue();
+  const { dayFmt, weekStartFmt, weekEndFmt} = useCommonDate();
+  const { monthStartFmt, monthEndFmt, yearStartFmt, yearEndFmt } = useCommonDate();
+  const { translate } = useLanguageStore();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(true);
@@ -50,20 +43,27 @@ export const MoneyChartBar = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
-    const params = {
-      user_id: sessionId,
-      DATE: DATE,
-    };
-    const [resToday] = await Promise.all([
-      axios.get(`${URL_OBJECT}/chart/bar/today`, {
-        params: params,
-      }),
-    ]);
-    setOBJECT_TODAY(
-      resToday.data.result.length > 0 ? resToday.data.result : [MoneyBar]
-    );
-    setLOADING(false);
-  })()}, [sessionId]);
+    try {
+      const params = {
+        user_id: sessionId,
+        DATE: DATE,
+      };
+      const [resToday] = await Promise.all([
+        axios.get(`${URL_OBJECT}/chart/bar/today`, {
+          params: params,
+        }),
+      ]);
+      setOBJECT_TODAY(
+        resToday.data.result.length > 0 ? resToday.data.result : [MoneyBar]
+      );
+    }
+    catch (err: any) {
+      console.error(err);
+    }
+    finally {
+      setLOADING(false);
+    }
+  })()}, [URL_OBJECT, DATE, sessionId]);
 
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartToday = () => {
@@ -186,7 +186,7 @@ export const MoneyChartBar = () => {
       );
       return (
         <Card className={"p-0"}>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} columns={12}>
             <Grid size={3} className={"d-row-left"}>
               {selectFragment1()}
             </Grid>
@@ -214,7 +214,7 @@ export const MoneyChartBar = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min40vh"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={12}>
             {headSection()}
           </Grid>

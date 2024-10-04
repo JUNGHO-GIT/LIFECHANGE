@@ -1,6 +1,6 @@
 // useCommonDate.tsx
 
-import { moment, Moment } from "@imports/ImportLibs";
+import { moment, Moment } from "@imports/ImportUtils";
 
 // -------------------------------------------------------------------------------------------------
 export const useCommonDate = () => {
@@ -48,6 +48,30 @@ export const useCommonDate = () => {
       return moment().tz(localTimeZone).endOf("day");
     }
     return moment(params).tz(localTimeZone).endOf("day");
+  }
+  const getPrevDayStartNotFmt = (params: any) => {
+    if (!params || params === "0000-00-00") {
+      return moment().tz(localTimeZone).subtract(1, "days").startOf("day");
+    }
+    return moment(params).tz(localTimeZone).subtract(1, "days").startOf("day");
+  }
+  const getPrevDayEndNotFmt = (params: any) => {
+    if (!params || params === "0000-00-00") {
+      return moment().tz(localTimeZone).subtract(1, "days").endOf("day");
+    }
+    return moment(params).tz(localTimeZone).subtract(1, "days").endOf("day");
+  }
+  const getNextDayStartNotFmt = (params: any) => {
+    if (!params || params === "0000-00-00") {
+      return moment().tz(localTimeZone).add(1, "days").startOf("day");
+    }
+    return moment(params).tz(localTimeZone).add(1, "days").startOf("day");
+  }
+  const getNextDayEndNotFmt = (params: any) => {
+    if (!params || params === "0000-00-00") {
+      return moment().tz(localTimeZone).add(1, "days").endOf("day");
+    }
+    return moment(params).tz(localTimeZone).add(1, "days").endOf("day");
   }
   const getWeekStartNotFmt = (params: any) => {
     if (!params || params === "0000-00-00") {
@@ -176,6 +200,30 @@ export const useCommonDate = () => {
       return moment().tz(localTimeZone).endOf("day").format("YYYY-MM-DD");
     }
     return moment(params).tz(localTimeZone).endOf("day").format("YYYY-MM-DD");
+  }
+  const getPrevDayStartFmt = (params: any) => {
+    if (!params || params === "0000-00-00") {
+      return moment().tz(localTimeZone).subtract(1, "days").startOf("day").format("YYYY-MM-DD");
+    }
+    return moment(params).tz(localTimeZone).subtract(1, "days").startOf("day").format("YYYY-MM-DD");
+  }
+  const getPrevDayEndFmt = (params: any) => {
+    if (!params || params === "0000-00-00") {
+      return moment().tz(localTimeZone).subtract(1, "days").endOf("day").format("YYYY-MM-DD");
+    }
+    return moment(params).tz(localTimeZone).subtract(1, "days").endOf("day").format("YYYY-MM-DD");
+  }
+  const getNextDayStartFmt = (params: any) => {
+    if (!params || params === "0000-00-00") {
+      return moment().tz(localTimeZone).add(1, "days").startOf("day").format("YYYY-MM-DD");
+    }
+    return moment(params).tz(localTimeZone).add(1, "days").startOf("day").format("YYYY-MM-DD");
+  }
+  const getNextDayEndFmt = (params: any) => {
+    if (!params || params === "0000-00-00") {
+      return moment().tz(localTimeZone).add(1, "days").endOf("day").format("YYYY-MM-DD");
+    }
+    return moment(params).tz(localTimeZone).add(1, "days").endOf("day").format("YYYY-MM-DD");
   }
   const getWeekStartFmt = (params: any) => {
     if (!params || params === "0000-00-00") {
@@ -309,6 +357,14 @@ export const useCommonDate = () => {
     getDayStartFmt,
     getDayEndNotFmt,
     getDayEndFmt,
+    getPrevDayStartNotFmt,
+    getPrevDayStartFmt,
+    getPrevDayEndNotFmt,
+    getPrevDayEndFmt,
+    getNextDayStartNotFmt,
+    getNextDayStartFmt,
+    getNextDayEndNotFmt,
+    getNextDayEndFmt,
     getWeekStartNotFmt,
     getWeekStartFmt,
     getWeekEndNotFmt,

@@ -1,7 +1,8 @@
 // PickerTime.tsx
 
-import { useCommonValue, useTranslate } from "@imports/ImportHooks";
-import { moment } from "@imports/ImportLibs";
+import { useCommonValue } from "@imports/ImportHooks";
+import { useLanguageStore } from "@imports/ImportStores";
+import { moment } from "@imports/ImportUtils";
 import { PopUp, Input } from "@imports/ImportContainers";
 import { Img } from "@imports/ImportComponents";
 import { Card, DigitalClock, AdapterMoment, LocalizationProvider } from "@imports/ImportMuis";
@@ -24,12 +25,8 @@ export const PickerTime = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    translate
-  } = useTranslate();
-  const {
-    firstStr, secondStr, localLocale, localTimeZone,
-  } = useCommonValue();
+  const { firstStr, secondStr, localLocale, localTimeZone } = useCommonValue();
+  const { translate } = useLanguageStore();
 
   // displayed image, label
   let image = null;

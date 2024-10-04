@@ -13,7 +13,8 @@
       "@imports/*": ["src/imports/*"],
       "@layouts/*": ["src/layouts/*"],
       "@pages/*": ["src/pages/*"],
-      "@schemas/*": ["src/schemas/*"]
+      "@schemas/*": ["src/schemas/*"],
+      "@stores/*": ["src/stores/*"]
     },
     "typeRoots": [
       "./node_modules/@types",

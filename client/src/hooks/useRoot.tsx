@@ -7,9 +7,7 @@ import { useCommonValue } from "@imports/ImportHooks";
 export const useRoot = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    PATH, navigate, sessionId
-  } = useCommonValue();
+  const { PATH, navigate, sessionId } = useCommonValue();
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {

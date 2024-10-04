@@ -1,6 +1,7 @@
 // FindFilter.tsx
 
-import { useCommonValue, useTranslate } from "@imports/ImportHooks";
+import { useCommonValue } from "@imports/ImportHooks";
+import { useLanguageStore } from "@imports/ImportStores";
 import { Input } from "@imports/ImportContainers";
 import { Icons, Div } from "@imports/ImportComponents";
 import { TablePagination, Grid } from "@imports/ImportMuis";
@@ -18,12 +19,8 @@ export const FindFilter = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    location, toDetail, navigate
-  } = useCommonValue();
-  const {
-    translate
-  } = useTranslate();
+  const { navigate , toDetail } = useCommonValue();
+  const { translate } = useLanguageStore();
 
   // 7. find ---------------------------------------------------------------------------------------
   const findFilterNode = () => {
@@ -78,23 +75,13 @@ export const FindFilter = (
           name={"CheckCircle"}
           className={"w-22 h-22"}
           onClick={() => {
-            Object.assign(state?.SEND, {
-              dateType: state?.DATE.dateType,
-              dateStart: state?.DATE.dateStart,
-              dateEnd: state?.DATE.dateEnd
+            navigate(toDetail, {
+              state: {
+                dateType: state?.DATE.dateType,
+                dateStart: state?.DATE.dateStart,
+                dateEnd: state?.DATE.dateEnd
+              }
             });
-            // 이전 페이지가 update인경우
-            if (location?.state?.url?.includes("update")) {
-              navigate(toDetail, {
-                state: state?.SEND,
-              });
-            }
-            // 이전 페이지가 save인경우
-            else {
-              navigate(toDetail, {
-                state: state?.SEND,
-              });
-            }
           }}
         />
       </Div>

@@ -1,15 +1,16 @@
 // FoodChartAvg.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
+import { useLanguageStore } from "@imports/ImportStores";
 import { FoodAvgKcal, FoodAvgNut } from "@imports/ImportSchemas";
-import { axios } from "@imports/ImportLibs";
+import { axios } from "@imports/ImportUtils";
 import { handlerY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
-import { Select } from "@imports/ImportContainers";
+import { Select, PopUp } from "@imports/ImportContainers";
 import { Div, Img } from "@imports/ImportComponents";
-import { PopUp } from "@imports/ImportContainers";
-import { Paper, Card, MenuItem, Grid, FormGroup, FormControlLabel, Switch } from "@imports/ImportMuis";
+import { Paper, Card, MenuItem, Grid } from "@imports/ImportMuis";
+import { FormGroup, FormControlLabel, Switch } from "@imports/ImportMuis";
 import { ComposedChart, Bar } from "recharts";
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
@@ -17,18 +18,10 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } fro
 export const FoodChartAvg = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    translate,
-  } = useTranslate();
-  const {
-    dayFmt,
-    weekStartFmt, weekEndFmt,
-    monthStartFmt, monthEndFmt,
-    yearStartFmt, yearEndFmt,
-  } = useCommonDate();
-  const {
-    URL_OBJECT, sessionId, foodChartArray, COLORS,
-  } = useCommonValue();
+  const { URL_OBJECT, COLORS, sessionId, foodChartArray } = useCommonValue();
+  const { dayFmt, weekStartFmt, weekEndFmt} = useCommonDate();
+  const { monthStartFmt, monthEndFmt, yearStartFmt, yearEndFmt } = useCommonDate();
+  const { translate } = useLanguageStore();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(true);
@@ -55,32 +48,39 @@ export const FoodChartAvg = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
-    const params = {
-      user_id: sessionId,
-      DATE: DATE,
-    };
-    const [resWeek, resMonth] = await Promise.all([
-      axios.get(`${URL_OBJECT}/chart/avg/week`, {
-        params: params,
-      }),
-      axios.get(`${URL_OBJECT}/chart/avg/month`, {
-        params: params,
-      }),
-    ]);
-    setOBJECT_KCAL_WEEK(
-      resWeek.data.result.kcal.length > 0 ? resWeek.data.result.kcal : [FoodAvgKcal]
-    );
-    setOBJECT_NUT_WEEK(
-      resWeek.data.result.nut.length > 0 ? resWeek.data.result.nut : [FoodAvgNut]
-    );
-    setOBJECT_KCAL_MONTH(
-      resMonth.data.result.kcal.length > 0 ? resMonth.data.result.kcal : [FoodAvgKcal]
-    );
-    setOBJECT_NUT_MONTH(
-      resMonth.data.result.nut.length > 0 ? resMonth.data.result.nut : [FoodAvgNut]
-    );
-    setLOADING(false);
-  })()}, [sessionId]);
+    try {
+      const params = {
+        user_id: sessionId,
+        DATE: DATE,
+      };
+      const [resWeek, resMonth] = await Promise.all([
+        axios.get(`${URL_OBJECT}/chart/avg/week`, {
+          params: params,
+        }),
+        axios.get(`${URL_OBJECT}/chart/avg/month`, {
+          params: params,
+        }),
+      ]);
+      setOBJECT_KCAL_WEEK(
+        resWeek.data.result.kcal.length > 0 ? resWeek.data.result.kcal : [FoodAvgKcal]
+      );
+      setOBJECT_NUT_WEEK(
+        resWeek.data.result.nut.length > 0 ? resWeek.data.result.nut : [FoodAvgNut]
+      );
+      setOBJECT_KCAL_MONTH(
+        resMonth.data.result.kcal.length > 0 ? resMonth.data.result.kcal : [FoodAvgKcal]
+      );
+      setOBJECT_NUT_MONTH(
+        resMonth.data.result.nut.length > 0 ? resMonth.data.result.nut : [FoodAvgNut]
+      );
+    }
+    catch (err: any) {
+      console.error(err);
+    }
+    finally {
+      setLOADING(false);
+    }
+  })()}, [URL_OBJECT, DATE, sessionId]);
 
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartKcalWeek = () => {
@@ -498,7 +498,7 @@ export const FoodChartAvg = () => {
       );
       return (
         <Card className={"p-0"}>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} columns={12}>
             <Grid size={3} className={"d-row-left"}>
               {selectFragment1()}
             </Grid>
@@ -550,7 +550,7 @@ export const FoodChartAvg = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min40vh"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={12}>
             {headSection()}
           </Grid>

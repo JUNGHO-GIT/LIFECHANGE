@@ -1,7 +1,7 @@
 // Dummy.tsx
 
-import { useTranslate } from "@imports/ImportHooks";
-import { numeral } from "@imports/ImportLibs";
+import { useLanguageStore } from "@imports/ImportStores";
+import { numeral } from "@imports/ImportUtils";
 import { Input, Select } from "@imports/ImportContainers";
 import { Btn } from "@imports/ImportComponents";
 import { MenuItem, Grid } from "@imports/ImportMuis";
@@ -19,9 +19,7 @@ export const Dummy = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    translate
-  } = useTranslate();
+  const { translate } = useLanguageStore();
 
   // 7. dummy --------------------------------------------------------------------------------------
   const dummyNode = () => {
@@ -134,7 +132,7 @@ export const Dummy = (
     }
     // 6. return
     return (
-      <Grid container spacing={2}>
+      <Grid container spacing={2} columns={12}>
         <Grid size={3} className={"d-row-center"}>
           {partSection()}
         </Grid>

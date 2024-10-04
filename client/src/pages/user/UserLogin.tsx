@@ -1,10 +1,11 @@
 // UserLogin.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useTranslate } from "@imports/ImportHooks";
+import { useCommonValue } from "@imports/ImportHooks";
+import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { useValidateUser } from "@imports/ImportValidates";
 import { User } from "@imports/ImportSchemas";
-import { axios } from "@imports/ImportLibs";
+import { axios } from "@imports/ImportUtils";
 import { sync } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Input } from "@imports/ImportContainers";
@@ -15,15 +16,10 @@ import { Paper, Checkbox, Card, Grid } from "@imports/ImportMuis";
 export const UserLogin = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, URL_OBJECT, URL_GOOGLE, ADMIN_ID, ADMIN_PW, TITLE,
-  } = useCommonValue();
-  const {
-    translate
-  } = useTranslate();
-  const {
-    ERRORS, REFS, validate
-  } = useValidateUser();
+  const { URL_OBJECT, URL_GOOGLE, ADMIN_ID, ADMIN_PW, TITLE, navigate } = useCommonValue();
+  const { translate } = useLanguageStore();
+  const { setALERT } = useAlertStore();
+  const { ERRORS, REFS, validate } = useValidateUser();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -98,7 +94,7 @@ export const UserLogin = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = () => {
     setLOADING(true);
-    if (!validate(OBJECT)) {
+    if (!validate(OBJECT, "login", "")) {
       setLOADING(false);
       return;
     }
@@ -128,11 +124,19 @@ export const UserLogin = () => {
         navigate("/today/list");
       }
       else if (res.data.status === "isGoogleUser") {
-        alert(translate(res.data.msg));
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
         sessionStorage.setItem(`${TITLE}_sessionId`, "");
       }
       else {
-        alert(translate(res.data.msg));
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
         sessionStorage.setItem(`${TITLE}_sessionId`, "");
       }
     })
@@ -152,7 +156,11 @@ export const UserLogin = () => {
         window.location.href = res.data.url;
       }
       else {
-        alert(translate(res.data.msg));
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
       }
     })
     .catch((err: any) => {
@@ -191,7 +199,7 @@ export const UserLogin = () => {
     const detailSection = () => {
       const detailFragment = (i: number) => (
         <Card className={"p-10 mb-n20"} key={i}>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} columns={12}>
             <Grid size={12}>
               <Input
                 label={translate("id")}
@@ -324,7 +332,7 @@ export const UserLogin = () => {
       <>
       {LOADING && <Loading />}
       <Paper className={"content-wrapper d-center border-1 radius-1 h-min100vh"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={12}>
             {titleSection()}
           </Grid>

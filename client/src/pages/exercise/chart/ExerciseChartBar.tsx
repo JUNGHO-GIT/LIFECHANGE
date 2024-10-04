@@ -1,9 +1,10 @@
 // ExerciseChartBar.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
+import { useLanguageStore } from "@imports/ImportStores";
 import { ExerciseBar } from "@imports/ImportSchemas";
-import { axios } from "@imports/ImportLibs";
+import { axios } from "@imports/ImportUtils";
 import { handlerY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Select } from "@imports/ImportContainers";
@@ -16,18 +17,10 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } fro
 export const ExerciseChartBar = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    translate,
-  } = useTranslate();
-  const {
-    dayFmt,
-    weekStartFmt, weekEndFmt,
-    monthStartFmt, monthEndFmt,
-    yearStartFmt, yearEndFmt,
-  } = useCommonDate();
-  const {
-    sessionId, URL_OBJECT, COLORS, barChartArray,
-  } = useCommonValue();
+  const { URL_OBJECT, COLORS, sessionId,  barChartArray } = useCommonValue();
+  const { dayFmt, weekStartFmt, weekEndFmt} = useCommonDate();
+  const { monthStartFmt, monthEndFmt, yearStartFmt, yearEndFmt } = useCommonDate();
+  const { translate } = useLanguageStore();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(true);
@@ -51,26 +44,33 @@ export const ExerciseChartBar = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
-    const params = {
-      user_id: sessionId,
-      DATE: DATE,
-    };
-    const [resWeek, resMonth] = await Promise.all([
-      axios.get(`${URL_OBJECT}/chart/bar/week`, {
-        params: params,
-      }),
-      axios.get(`${URL_OBJECT}/chart/bar/month`, {
-        params: params,
-      }),
-    ]);
-    setOBJECT_WEEK(
-      resWeek.data.result.length > 0 ? resWeek.data.result : [ExerciseBar]
-    );
-    setOBJECT_MONTH(
-      resMonth.data.result.length > 0 ? resMonth.data.result : [ExerciseBar]
-    );
-    setLOADING(false);
-  })()}, [sessionId]);
+    try {
+      const params = {
+        user_id: sessionId,
+        DATE: DATE,
+      };
+      const [resWeek, resMonth] = await Promise.all([
+        axios.get(`${URL_OBJECT}/chart/bar/week`, {
+          params: params,
+        }),
+        axios.get(`${URL_OBJECT}/chart/bar/month`, {
+          params: params,
+        }),
+      ]);
+      setOBJECT_WEEK(
+        resWeek.data.result.length > 0 ? resWeek.data.result : [ExerciseBar]
+      );
+      setOBJECT_MONTH(
+        resMonth.data.result.length > 0 ? resMonth.data.result : [ExerciseBar]
+      );
+    }
+    catch (err: any) {
+      console.error(err);
+    }
+    finally {
+      setLOADING(false);
+    }
+  })()}, [URL_OBJECT, DATE, sessionId]);
 
   // 5-2. chart ------------------------------------------------------------------------------------
   const chartWeek = () => {
@@ -278,7 +278,7 @@ export const ExerciseChartBar = () => {
       );
       return (
         <Card className={"p-0"}>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} columns={12}>
             <Grid size={3} className={"d-row-left"}>
               {selectFragment1()}
             </Grid>
@@ -314,7 +314,7 @@ export const ExerciseChartBar = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min40vh"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={12}>
             {headSection()}
           </Grid>

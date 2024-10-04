@@ -1,6 +1,7 @@
 // Count.tsx
 
-import { useCommonValue, useTranslate } from "@imports/ImportHooks";
+import { useCommonValue } from "@imports/ImportHooks";
+import { useLanguageStore } from "@imports/ImportStores";
 import { PopUp, Input } from "@imports/ImportContainers";
 import { Img, Div, Icons } from "@imports/ImportComponents";
 import { Card, Grid } from "@imports/ImportMuis";
@@ -20,12 +21,8 @@ export const Count = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    PATH, localLocale
-  } = useCommonValue();
-  const {
-    translate,
-  } = useTranslate();
+  const { PATH, localLocale } = useCommonValue();
+  const { translate } = useLanguageStore();
 
   // 7. countNode ----------------------------------------------------------------------------------
   const countNode = () => {
@@ -92,51 +89,55 @@ export const Count = (
               />
             }
             endadornment={
-              <Div className={"d-row-center me-n10"}>
-                <Icons
-                  key={"Minus"}
-                  name={"Minus"}
-                  className={"w-20 h-20"}
-                  locked={LOCKED}
-                  onClick={(e: any) => {
-                    if (LOCKED === "locked") {
-                      return;
-                    }
-                    if (PATH.includes("/food/find/list")) {
-                      return;
-                    }
-                    COUNT.newSectionCnt > COUNT.sectionCnt ? (
-                      setCOUNT((prev: any) => ({
-                        ...prev,
-                        newSectionCnt: prev.newSectionCnt - 1
-                      }))
-                    ) : (
-                      popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
-                    )
-                  }}
-                />
-                <Icons
-                  key={"Plus"}
-                  name={"Plus"}
-                  className={"w-20 h-20"}
-                  locked={LOCKED}
-                  onClick={(e: any) => {
-                    if (LOCKED === "locked") {
-                      return;
-                    }
-                    if (PATH.includes("/food/find/list")) {
-                      return;
-                    }
-                    COUNT.newSectionCnt < limit ? (
-                      setCOUNT((prev: any) => ({
-                        ...prev,
-                        newSectionCnt: prev.newSectionCnt + 1
-                      }))
-                    ) : (
-                      popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
-                    )
-                  }}
-                />
+              <Div className={"d-row-center"}>
+                <Div className={"me-n5"}>
+                  <Icons
+                    key={"Minus"}
+                    name={"Minus"}
+                    className={"w-16 h-16"}
+                    locked={LOCKED}
+                    onClick={(e: any) => {
+                      if (LOCKED === "locked") {
+                        return;
+                      }
+                      if (PATH.includes("/food/find/list")) {
+                        return;
+                      }
+                      COUNT.newSectionCnt > COUNT.sectionCnt ? (
+                        setCOUNT((prev: any) => ({
+                          ...prev,
+                          newSectionCnt: prev.newSectionCnt - 1
+                        }))
+                      ) : (
+                        popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
+                      )
+                    }}
+                  />
+                </Div>
+                <Div className={"me-n10"}>
+                  <Icons
+                    key={"Plus"}
+                    name={"Plus"}
+                    className={"w-16 h-16"}
+                    locked={LOCKED}
+                    onClick={(e: any) => {
+                      if (LOCKED === "locked") {
+                        return;
+                      }
+                      if (PATH.includes("/food/find/list")) {
+                        return;
+                      }
+                      COUNT.newSectionCnt < limit ? (
+                        setCOUNT((prev: any) => ({
+                          ...prev,
+                          newSectionCnt: prev.newSectionCnt + 1
+                        }))
+                      ) : (
+                        popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
+                      )
+                    }}
+                  />
+                </Div>
               </Div>
             }
           />
@@ -145,7 +146,7 @@ export const Count = (
     );
 
     return (
-      <Grid container spacing={2}>
+      <Grid container spacing={2} columns={12}>
         <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
           {lockSection()}
         </Grid>

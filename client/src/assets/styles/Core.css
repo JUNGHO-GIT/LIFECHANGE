@@ -24,7 +24,6 @@
   border-radius: 0px !important;
   overflow-x: hidden;
   overflow-y: hidden;
-  box-shadow: none !important;
   z-index: 500;
 }
 .content-wrapper {
@@ -40,7 +39,6 @@
   border-radius: 0px !important;
   overflow-x: hidden;
   overflow-y: hidden;
-  box-shadow: none !important;
   z-index: 100;
   animation: fadeIn 0.4s ease-in-out;
 }

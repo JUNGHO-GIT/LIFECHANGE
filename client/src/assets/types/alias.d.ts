@@ -49,3 +49,7 @@ declare module "@schemas/*" {
   const value: any;
   export default value;
 }
+declare module "@stores/*" {
+  const value: any;
+  export default value;
+}

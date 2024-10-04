@@ -1,6 +1,7 @@
 // ListFilter.tsx
 
-import { useTranslate, useCommonValue } from "@imports/ImportHooks";
+import { useCommonValue } from "@imports/ImportHooks";
+import { useLanguageStore } from "@imports/ImportStores";
 import { PickerDay, Select } from "@imports/ImportContainers";
 import { Div } from "@imports/ImportComponents";
 import { MenuItem, Grid } from "@imports/ImportMuis";
@@ -18,12 +19,8 @@ export const ListFilter = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    PATH,
-  } = useCommonValue();
-  const {
-    translate
-  } = useTranslate();
+  const { PATH } = useCommonValue();
+  const { translate } = useLanguageStore();
 
   // 7. filter -------------------------------------------------------------------------------------
   const listFilterNode = () => {

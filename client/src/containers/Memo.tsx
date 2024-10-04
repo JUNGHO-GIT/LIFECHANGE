@@ -1,6 +1,7 @@
 // Memo.tsx
 
-import { useCommonValue, useTranslate } from "@imports/ImportHooks";
+import { useCommonValue } from "@imports/ImportHooks";
+import { useLanguageStore } from "@imports/ImportStores";
 import { PopUp, Input } from "@imports/ImportContainers";
 import { Img } from "@imports/ImportComponents";
 import { TextArea, Grid, Card } from "@imports/ImportMuis";
@@ -20,12 +21,8 @@ export const Memo = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    translate,
-  } = useTranslate();
-  const {
-    firstStr,
-  } = useCommonValue();
+  const { firstStr } = useCommonValue();
+  const { translate } = useLanguageStore();
 
   // 3. memoNode -----------------------------------------------------------------------------------
   const memoNode = () => (

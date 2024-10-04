@@ -1,8 +1,9 @@
 // TopNav.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
-import { numeral } from "@imports/ImportLibs";
+import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
+import { useLanguageStore } from "@imports/ImportStores";
+import { numeral } from "@imports/ImportUtils";
 import { PopUp, Input } from "@imports/ImportContainers";
 import { Div, Img, Hr, Br } from "@imports/ImportComponents";
 import { Tabs, Tab, Paper, Grid, Card, Checkbox } from "@imports/ImportMuis";
@@ -11,15 +12,10 @@ import { Tabs, Tab, Paper, Grid, Card, Checkbox } from "@imports/ImportMuis";
 export const TopNav = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, firstStr, secondStr, TITLE, sessionPercent, sessionProperty, sessionScale, PATH, localCurrency,
-  } = useCommonValue();
-  const {
-    dayFmt, dayNotFmt, monthStartFmt, monthEndFmt,
-  } = useCommonDate();
-  const {
-    translate,
-  } = useTranslate();
+  const { PATH, TITLE, firstStr, secondStr, localCurrency } = useCommonValue();
+  const { navigate, sessionPercent, sessionProperty, sessionScale } = useCommonValue();
+  const { dayFmt, monthStartFmt, monthEndFmt } = useCommonDate();
+  const { translate } = useLanguageStore();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [percent, setPercent] = useState<any>({
@@ -168,7 +164,7 @@ export const TopNav = () => {
   useEffect(() => {
     // 1. calendar
     if (firstStr === "calendar") {
-      if (secondStr === "list" || secondStr === "save" || secondStr === "update") {
+      if (secondStr === "list" || secondStr === "detail") {
         setSelectedTab("schedule");
       }
     }
@@ -177,7 +173,7 @@ export const TopNav = () => {
       if (secondStr === "goal") {
         setSelectedTab("goal");
       }
-      else if (secondStr === "list" || secondStr === "save" || secondStr === "update") {
+      else if (secondStr === "list" || secondStr === "detail") {
         setSelectedTab("real");
       }
     }
@@ -189,7 +185,7 @@ export const TopNav = () => {
       else if (secondStr === "goal") {
         setSelectedTab("goal");
       }
-      else if (secondStr === "list" || secondStr === "save" || secondStr === "update") {
+      else if (secondStr === "list" || secondStr === "detail") {
         setSelectedTab("real");
       }
       else if (secondStr === "find") {
@@ -204,7 +200,7 @@ export const TopNav = () => {
       else if (secondStr === "goal") {
         setSelectedTab("goal");
       }
-      else if (secondStr === "list" || secondStr === "save" || secondStr === "update") {
+      else if (secondStr === "list" || secondStr === "detail") {
         setSelectedTab("real");
       }
     }
@@ -247,7 +243,7 @@ export const TopNav = () => {
         direction={"center"}
         contents={
           <Card className={"w-max60vw h-max70vh border-1 radius-1 p-20"} key={`smile`}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} columns={12}>
               <Grid size={12} className={"d-column-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
                   {translate("monthScore")}
@@ -377,7 +373,7 @@ export const TopNav = () => {
         direction={"center"}
         contents={
           <Card className={"w-max60vw h-max70vh border-1 radius-1 p-20"} key={`property`}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} columns={12}>
               <Grid size={12} className={"d-column-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
                   {translate("property")}
@@ -505,7 +501,7 @@ export const TopNav = () => {
         direction={"center"}
         contents={
           <Card className={"w-max60vw h-max70vh border-1 radius-1 p-20"} key={`scale`}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} columns={12}>
               <Grid size={12} className={"d-column-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
                   {translate("weight")}

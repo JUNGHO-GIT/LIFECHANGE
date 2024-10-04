@@ -19,11 +19,11 @@ import {
 } from "@imports/ImportMuis";
 
 import {
-  useRoot, useScrollTop, useFoodSection, LanguageProvider, useLangSet
+  useRoot, useScrollTop, useFoodSection, useLocale, useInitializeLanguage
 } from "@imports/ImportHooks";
 
 import {
-  Header, TopNav, BottomNav,
+  Header, TopNav, BottomNav, Alert
 } from "@imports/ImportLayouts";
 
 import {
@@ -140,9 +140,10 @@ const Auth = () => (
 const App = () => {
 
   useRoot();
-  useLangSet();
+  useLocale();
   useScrollTop();
   useFoodSection();
+  useInitializeLanguage();
 
   const location = useLocation();
   const noneHeader = (
@@ -175,6 +176,7 @@ const App = () => {
         <Route path="/user/*" element={<User />} />
         <Route path="/auth/*" element={<Auth />} />
       </Routes>
+      {<Alert />}
       {!noneBottom && <BottomNav />}
     </div>
   );
@@ -195,11 +197,9 @@ if (rootElement === null) {
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <BrowserRouter basename={"/JPAGE"}>
-    <LanguageProvider>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <App />
-      </ThemeProvider>
-    </LanguageProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <App />
+    </ThemeProvider>
   </BrowserRouter>
 );

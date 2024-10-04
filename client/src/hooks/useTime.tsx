@@ -12,10 +12,7 @@ export const useTime = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    dayFmt
-  } = useCommonDate();
-
+  const { dayFmt } = useCommonDate();
   const match = PATH.match(/\/([^/]+)\//);
   const strLow = match ? match[1] : null;
 

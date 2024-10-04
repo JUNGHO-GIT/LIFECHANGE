@@ -1,6 +1,6 @@
 // sync.js
 
-import { moment, axios } from "@imports/ImportLibs";
+import { moment, axios } from "@imports/ImportUtils";
 
 // -------------------------------------------------------------------------------------------------
 export const sync = async () => {

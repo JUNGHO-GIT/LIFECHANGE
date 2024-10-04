@@ -1,13 +1,13 @@
 // MoneyDetail.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTranslate } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
+import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { useValidateMoney } from "@imports/ImportValidates";
 import { Money } from "@imports/ImportSchemas";
-import { axios, numeral } from "@imports/ImportLibs";
-import { sync } from "@imports/ImportUtils";
-import { Loading, Footer } from "@imports/ImportLayouts";
-import { PickerDay, Memo, Count, Delete, Dial, Select, Input } from "@imports/ImportContainers";
+import { axios, numeral, sync } from "@imports/ImportUtils";
+import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
+import { PickerDay, Memo, Count, Delete, Select, Input } from "@imports/ImportContainers";
 import { Img, Bg, Div } from "@imports/ImportComponents";
 import { Paper, Card, MenuItem, Grid, Checkbox } from "@imports/ImportMuis";
 
@@ -15,18 +15,12 @@ import { Paper, Card, MenuItem, Grid, Checkbox } from "@imports/ImportMuis";
 export const MoneyDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, moneyArray, URL_OBJECT, sessionId, localCurrency, toList
-  } = useCommonValue();
-  const {
-    dayFmt, getMonthStartFmt, getMonthEndFmt
-  } = useCommonDate();
-  const {
-    translate,
-  } = useTranslate();
-  const {
-    ERRORS, REFS, validate
-  } = useValidateMoney();
+  const { URL_OBJECT, sessionId, localCurrency, moneyArray, toList } = useCommonValue();
+  const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
+  const { dayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
+  const { translate } = useLanguageStore();
+  const { setALERT } = useAlertStore();
+  const { ERRORS, REFS, validate } = useValidateMoney();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -108,14 +102,15 @@ export const MoneyDetail = () => {
     .catch((err: any) => {
       console.error(err);
     });
-  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
+    setLOADING(true);
     if (LOCKED === "locked") {
+      setLOADING(false);
       return;
     }
-    setLOADING(true);
     axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId,
@@ -157,7 +152,7 @@ export const MoneyDetail = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -209,7 +204,8 @@ export const MoneyDetail = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = (type: string) => {
-    if (!validate(OBJECT, COUNT)) {
+    setLOADING(true);
+    if (!validate(OBJECT, COUNT, "real")) {
       setLOADING(false);
       return;
     }
@@ -225,30 +221,41 @@ export const MoneyDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        alert(translate(res.data.msg));
         sync();
-        Object.assign(SEND, {
-          dateType: "",
-          dateStart: DATE.dateStart,
-          dateEnd: DATE.dateEnd
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "success",
         });
         navigate(toList, {
-          state: SEND
+          state: {
+            dateType: "",
+            dateStart: DATE.dateStart,
+            dateEnd: DATE.dateEnd
+          }
         });
       }
       else {
-        alert(translate(res.data.msg));
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
       }
     })
     .catch((err: any) => {
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDelete = () => {
-    if (OBJECT?._id === "") {
-      alert(translate("noData"));
+    setLOADING(true);
+    if (!validate(OBJECT, COUNT, "delete")) {
+      setLOADING(false);
       return;
     }
     axios.delete(`${URL_OBJECT}/delete`, {
@@ -259,23 +266,33 @@ export const MoneyDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        alert(translate(res.data.msg));
         sync();
-        Object.assign(SEND, {
-          dateType: "",
-          dateStart: DATE.dateStart,
-          dateEnd: DATE.dateEnd
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "success",
         });
         navigate(toList, {
-          state: SEND
+          state: {
+            dateType: "",
+            dateStart: DATE.dateStart,
+            dateEnd: DATE.dateEnd
+          }
         });
       }
       else {
-        alert(translate(res.data.msg));
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
       }
     })
     .catch((err: any) => {
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 
@@ -296,7 +313,7 @@ export const MoneyDetail = () => {
     // 7-1. date + count
     const dateCountSection = () => (
       <Card className={"border-1 radius-1 p-20"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={12}>
             <PickerDay
               DATE={DATE}
@@ -320,7 +337,7 @@ export const MoneyDetail = () => {
     // 7-2. total
     const totalSection = () => (
       <Card className={"border-1 radius-1 p-20"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={6}>
             <Input
               label={translate("totalIncome")}
@@ -362,7 +379,7 @@ export const MoneyDetail = () => {
     const detailSection = () => {
       const detailFragment = (i: number) => (
         <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={i}>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} columns={12}>
             <Grid size={6} className={"d-row-left"}>
               <Bg
                 badgeContent={i + 1}
@@ -494,7 +511,7 @@ export const MoneyDetail = () => {
                 }}
               />
             </Grid>
-            <Grid size={{ xs: 6, sm: 8 }} className={"d-center"}>
+            <Grid size={{ xs: 7, sm: 8 }} className={"d-center"}>
               <Memo
                 OBJECT={OBJECT}
                 setOBJECT={setOBJECT}
@@ -503,7 +520,7 @@ export const MoneyDetail = () => {
                 i={i}
               />
             </Grid>
-            <Grid size={{ xs: 6, sm: 4 }} className={"d-center"}>
+            <Grid size={{ xs: 5, sm: 4 }} className={"d-center"}>
               <Div className={"fs-0-7rem fw-500 dark ms-10"}>
                 {translate("includeProperty")}
               </Div>
@@ -528,30 +545,34 @@ export const MoneyDetail = () => {
         </Card>
       );
       return (
-        COUNT?.newSectionCnt > 0 && (
-          LOADING ? <Loading /> : OBJECT?.money_section?.map((_item: any, idx: number) => (
-            detailFragment(idx)
-          ))
-        )
+        COUNT?.newSectionCnt > 0 && OBJECT?.money_section?.map((_item: any, idx: number) => (
+          detailFragment(idx)
+        ))
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={12}>
             {dateCountSection()}
-            {totalSection()}
-            {detailSection()}
+            {!LOADING ? (
+              <>
+                {totalSection()}
+                {detailSection()}
+              </>
+            ) : (
+              <Loading />
+            )}
           </Grid>
         </Grid>
       </Paper>
     );
   };
 
-  // 8. dial ---------------------------------------------------------------------------------------
-  const dialNode = () => (
-    <Dial
+  // 8. dialog -------------------------------------------------------------------------------------
+  const dialogNode = () => (
+    <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
       LOCKED={LOCKED}
@@ -578,7 +599,7 @@ export const MoneyDetail = () => {
   return (
     <>
       {detailNode()}
-      {dialNode()}
+      {dialogNode()}
       {footerNode()}
     </>
   );

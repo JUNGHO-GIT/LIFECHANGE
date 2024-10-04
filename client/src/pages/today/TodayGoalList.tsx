@@ -1,11 +1,11 @@
 // TodayGoalList.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useStorage } from "@imports/ImportHooks";
+import { useLanguageStore } from "@imports/ImportStores";
 import { ExerciseGoal, FoodGoal, MoneyGoal, SleepGoal } from "@imports/ImportSchemas";
-import { axios, numeral } from "@imports/ImportLibs";
-import { Loading, Footer, Empty } from "@imports/ImportLayouts";
-import { Dial } from "@imports/ImportContainers";
+import { axios, numeral } from "@imports/ImportUtils";
+import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
 import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
@@ -14,15 +14,10 @@ import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMu
 export const TodayGoalList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, PATH, URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP, sessionId, TITLE, localCurrency,
-  } = useCommonValue();
-  const {
-    dayFmt, getDayNotFmt,
-  } = useCommonDate();
-  const {
-    translate,
-  } = useTranslate();
+  const { URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP } = useCommonValue();
+  const { PATH, TITLE, navigate, sessionId, localCurrency } = useCommonValue();
+  const { dayFmt, getDayNotFmt } = useCommonDate();
+  const { translate } = useLanguageStore();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
@@ -128,7 +123,10 @@ export const TodayGoalList = () => {
     finally {
       setLOADING(false);
     }
-  })()}, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
+  })()}, [
+    URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP,
+    sessionId, PAGING.sort, PAGING.page, DATE.dateEnd
+  ]);
 
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
@@ -144,7 +142,7 @@ export const TodayGoalList = () => {
         OBJECT_EXERCISE?.map((item: any, index: number) => (
           <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
             <Accordion
-              className={"shadow-none"}
+              className={"shadow-0"}
               expanded={isExpanded.exercise.includes(index)}
             >
               <AccordionSummary
@@ -170,14 +168,13 @@ export const TodayGoalList = () => {
                   spacing={2}
                   onClick={(e: any) => {
                     e.stopPropagation();
-                    Object.assign(SEND, {
-                      id: item._id,
-                      dateType: item.exercise_goal_dateType,
-                      dateStart: item.exercise_goal_dateStart,
-                      dateEnd: item.exercise_goal_dateEnd,
-                    });
                     navigate(SEND.toExerciseGoal, {
-                      state: SEND
+                      state: {
+                        id: item._id,
+                        dateType: item.exercise_goal_dateType,
+                        dateStart: item.exercise_goal_dateStart,
+                        dateEnd: item.exercise_goal_dateEnd,
+                      }
                     });
                   }}
                 >
@@ -483,9 +480,7 @@ export const TodayGoalList = () => {
         ))
       );
       return (
-        LOADING ? <Loading /> : (
-          COUNT.exercise === 0 ? emptyFragment() : listFragment(0)
-        )
+        COUNT.exercise === 0 ? emptyFragment() : listFragment(0)
       );
     };
     // 7-2. food
@@ -500,7 +495,7 @@ export const TodayGoalList = () => {
         OBJECT_FOOD?.map((item: any, index: number) => (
           <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
             <Accordion
-              className={"shadow-none"}
+              className={"shadow-0"}
               expanded={isExpanded.food.includes(index)}
             >
               <AccordionSummary
@@ -526,14 +521,13 @@ export const TodayGoalList = () => {
                   spacing={2}
                   onClick={(e: any) => {
                     e.stopPropagation();
-                    Object.assign(SEND, {
-                      id: item._id,
-                      dateType: item.food_goal_dateType,
-                      dateStart: item.food_goal_dateStart,
-                      dateEnd: item.food_goal_dateEnd,
-                    });
                     navigate(SEND.toFoodGoal, {
-                      state: SEND
+                      state: {
+                        id: item._id,
+                        dateType: item.food_goal_dateType,
+                        dateStart: item.food_goal_dateStart,
+                        dateEnd: item.food_goal_dateEnd,
+                      }
                     });
                   }}
                 >
@@ -835,9 +829,7 @@ export const TodayGoalList = () => {
         ))
       );
       return (
-        LOADING ? <Loading /> : (
-          COUNT.food === 0 ? emptyFragment() : listFragment(0)
-        )
+        COUNT.food === 0 ? emptyFragment() : listFragment(0)
       );
     };
     // 7-3. money
@@ -852,7 +844,7 @@ export const TodayGoalList = () => {
         OBJECT_MONEY?.map((item: any, index: number) => (
           <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
             <Accordion
-              className={"shadow-none"}
+              className={"shadow-0"}
               expanded={isExpanded.money.includes(index)}
             >
               <AccordionSummary
@@ -878,14 +870,13 @@ export const TodayGoalList = () => {
                   spacing={2}
                   onClick={(e: any) => {
                     e.stopPropagation();
-                    Object.assign(SEND, {
-                      id: item._id,
-                      dateType: item.money_goal_dateType,
-                      dateStart: item.money_goal_dateStart,
-                      dateEnd: item.money_goal_dateEnd,
-                    });
                     navigate(SEND.toMoneyGoal, {
-                      state: SEND
+                      state: {
+                        id: item._id,
+                        dateType: item.money_goal_dateType,
+                        dateStart: item.money_goal_dateStart,
+                        dateEnd: item.money_goal_dateEnd,
+                      }
                     });
                   }}
                 >
@@ -1055,9 +1046,7 @@ export const TodayGoalList = () => {
         ))
       );
       return (
-        LOADING ? <Loading /> : (
-          COUNT.money === 0 ? emptyFragment() : listFragment(0)
-        )
+        COUNT.money === 0 ? emptyFragment() : listFragment(0)
       );
     };
     // 7-4. sleep
@@ -1072,7 +1061,7 @@ export const TodayGoalList = () => {
         OBJECT_SLEEP?.map((item: any, index: number) => (
           <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
             <Accordion
-              className={"shadow-none"}
+              className={"shadow-0"}
               expanded={isExpanded.sleep.includes(index)}
             >
               <AccordionSummary
@@ -1098,14 +1087,13 @@ export const TodayGoalList = () => {
                   spacing={2}
                   onClick={(e: any) => {
                     e.stopPropagation();
-                    Object.assign(SEND, {
-                      id: item._id,
-                      dateType: item.sleep_goal_dateType,
-                      dateStart: item.sleep_goal_dateStart,
-                      dateEnd: item.sleep_goal_dateEnd,
-                    });
                     navigate(SEND.toSleepGoal, {
-                      state: SEND
+                      state: {
+                        id: item._id,
+                        dateType: item.sleep_goal_dateType,
+                        dateStart: item.sleep_goal_dateStart,
+                        dateEnd: item.sleep_goal_dateEnd,
+                      }
                     });
                   }}
                 >
@@ -1341,35 +1329,41 @@ export const TodayGoalList = () => {
         ))
       );
       return (
-        LOADING ? <Loading /> : (
-          COUNT.sleep === 0 ? emptyFragment() : listFragment(0)
-        )
+        COUNT.sleep === 0 ? emptyFragment() : listFragment(0)
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
-        <Grid container spacing={2}>
-          <Grid size={12}>
-            {exerciseSection()}
+        {!LOADING ? (
+          <Grid container spacing={2} columns={12}>
+            <Grid size={12}>
+              {exerciseSection()}
+            </Grid>
+            <Grid size={12}>
+              {foodSection()}
+            </Grid>
+            <Grid size={12}>
+              {moneySection()}
+            </Grid>
+            <Grid size={12}>
+              {sleepSection()}
+            </Grid>
           </Grid>
-          <Grid size={12}>
-            {foodSection()}
+        ) : (
+          <Grid container spacing={2} columns={12}>
+            <Grid size={12}>
+              <Loading />
+            </Grid>
           </Grid>
-          <Grid size={12}>
-            {moneySection()}
-          </Grid>
-          <Grid size={12}>
-            {sleepSection()}
-          </Grid>
-        </Grid>
+        )}
       </Paper>
     );
   };
 
-  // 8. dial ---------------------------------------------------------------------------------------
-  const dialNode = () => (
-    <Dial
+  // 8. dialog -------------------------------------------------------------------------------------
+  const dialogNode = () => (
+    <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
       isExpanded={isExpanded}
@@ -1395,7 +1389,7 @@ export const TodayGoalList = () => {
   return (
     <>
       {listNode()}
-      {dialNode()}
+      {dialogNode()}
       {footerNode()}
     </>
   );

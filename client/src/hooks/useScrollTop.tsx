@@ -7,9 +7,7 @@ import { useCommonValue } from "@imports/ImportHooks";
 export const useScrollTop = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, location
-  } = useCommonValue();
+  const { navigate, location } = useCommonValue();
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {

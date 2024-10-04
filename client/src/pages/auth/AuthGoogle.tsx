@@ -2,7 +2,7 @@
 
 import { useEffect } from "@imports/ImportReacts";
 import { useCommonValue } from "@imports/ImportHooks";
-import { axios } from "@imports/ImportLibs";
+import { axios } from "@imports/ImportUtils";
 import { sync } from "@imports/ImportUtils";
 import { Paper } from "@imports/ImportMuis";
 
@@ -10,9 +10,7 @@ import { Paper } from "@imports/ImportMuis";
 export const AuthGoogle = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    URL_GOOGLE, navigate, TITLE,
-  } = useCommonValue();
+  const { URL_GOOGLE, TITLE, navigate } = useCommonValue();
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {

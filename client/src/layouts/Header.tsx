@@ -8,12 +8,8 @@ import { Paper, Grid } from "@imports/ImportMuis";
 export const Header = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, firstStr,
-  } = useCommonValue();
-  const {
-    dayFmt,
-  } = useCommonDate();
+  const { navigate, firstStr } = useCommonValue();
+  const { dayFmt } = useCommonDate();
 
   // 7. header -------------------------------------------------------------------------------------
   const headerNode = () => {
@@ -65,7 +61,7 @@ export const Header = () => {
     );
     return (
       <Paper className={"layout-wrapper p-sticky top-0vh h-8vh border-1 radius-1"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={10} className={"d-row-left"}>
             {iconSection()}
           </Grid>

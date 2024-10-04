@@ -1,12 +1,12 @@
 // SleepList.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useStorage } from "@imports/ImportHooks";
+import { useLanguageStore } from "@imports/ImportStores";
 import { Sleep } from "@imports/ImportSchemas";
-import { axios } from "@imports/ImportLibs";
-import { Loading, Footer, Empty } from "@imports/ImportLayouts";
+import { axios } from "@imports/ImportUtils";
+import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
 import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
-import { Dial } from "@imports/ImportContainers";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 
@@ -14,15 +14,10 @@ import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMu
 export const SleepList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, TITLE, toDetail
-  } = useCommonValue();
-  const {
-    dayFmt, getDayNotFmt,
-  } = useCommonDate();
-  const {
-    translate,
-  } = useTranslate();
+  const { URL_OBJECT, PATH, TITLE, sessionId, toDetail } = useCommonValue();
+  const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
+  const { dayFmt, getDayNotFmt } = useCommonDate();
+  const { translate } = useLanguageStore();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
@@ -83,7 +78,7 @@ export const SleepList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
+  }, [URL_OBJECT, sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
 
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
@@ -97,7 +92,7 @@ export const SleepList = () => {
       const listFragment = (i: number) => (
         OBJECT?.map((item: any, index: number) => (
           <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
-            <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
+            <Accordion className={"shadow-0"} expanded={isExpanded.includes(index)}>
               <AccordionSummary
                 className={"me-n10"}
                 expandIcon={
@@ -118,14 +113,13 @@ export const SleepList = () => {
                   spacing={2}
                   onClick={(e: any) => {
                     e.stopPropagation();
-                    Object.assign(SEND, {
-                      id: item._id,
-                      dateType: item.sleep_dateType,
-                      dateStart: item.sleep_dateStart,
-                      dateEnd: item.sleep_dateEnd,
-                    });
                     navigate(toDetail, {
-                      state: SEND
+                      state: {
+                        id: item._id,
+                        dateType: item.sleep_dateType,
+                        dateStart: item.sleep_dateStart,
+                        dateEnd: item.sleep_dateEnd,
+                      }
                     });
                   }}
                 >
@@ -238,26 +232,24 @@ export const SleepList = () => {
         ))
       );
       return (
-        LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : listFragment(0)
-        )
+        COUNT.totalCnt === 0 ? emptyFragment() : listFragment(0)
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={12}>
-            {listSection()}
+            {!LOADING ? listSection() : <Loading />}
           </Grid>
         </Grid>
       </Paper>
     );
   };
 
-  // 8. dial ---------------------------------------------------------------------------------------
-  const dialNode = () => (
-    <Dial
+  // 8. dialog -------------------------------------------------------------------------------------
+  const dialogNode = () => (
+    <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
       isExpanded={isExpanded}
@@ -283,7 +275,7 @@ export const SleepList = () => {
   return (
     <>
       {listNode()}
-      {dialNode()}
+      {dialogNode()}
       {footerNode()}
     </>
   );

@@ -1,11 +1,11 @@
 // UserDetail.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useTranslate } from "@imports/ImportHooks";
+import { useCommonValue } from "@imports/ImportHooks";
+import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { useValidateUser } from "@imports/ImportValidates";
 import { User } from "@imports/ImportSchemas";
-import { axios, numeral } from "@imports/ImportLibs";
-import { sync } from "@imports/ImportUtils";
+import { axios, numeral, sync } from "@imports/ImportUtils";
 import { Footer, Loading } from "@imports/ImportLayouts";
 import { Input, Select } from "@imports/ImportContainers";
 import { Hr, Img, Div } from "@imports/ImportComponents";
@@ -15,15 +15,10 @@ import { Paper, Avatar, MenuItem, Card, Grid, Checkbox } from "@imports/ImportMu
 export const UserDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, URL_OBJECT, sessionId, localCurrency,
-  } = useCommonValue();
-  const {
-    translate
-  } = useTranslate();
-  const {
-    ERRORS, REFS, validate
-  } = useValidateUser();
+  const { URL_OBJECT, navigate, sessionId, localCurrency } = useCommonValue();
+  const { translate } = useLanguageStore();
+  const { setALERT } = useAlertStore();
+  const { ERRORS, REFS, validate } = useValidateUser();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -53,12 +48,12 @@ export const UserDetail = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId]);
+  }, [URL_OBJECT, sessionId]);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = () => {
     setLOADING(true);
-    if (!validate(OBJECT)) {
+    if (!validate(OBJECT, "detail", "")) {
       setLOADING(false);
       return;
     }
@@ -68,12 +63,20 @@ export const UserDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        alert(translate(res.data.msg));
         sync();
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "success",
+        });
         navigate("/user/detail");
       }
       else {
-        alert(translate(res.data.msg));
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
       }
     })
     .catch((err: any) => {
@@ -98,7 +101,7 @@ export const UserDetail = () => {
     const detailSection = () => {
       const detailFragment = (i: number) => (
         <Card className={"p-10"} key={i}>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} columns={12}>
             {/** 아이디 **/}
             <Grid size={12}>
               <Input
@@ -295,7 +298,7 @@ export const UserDetail = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={12} className={"d-center"}>
             {imageSection()}
           </Grid>

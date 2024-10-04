@@ -1,13 +1,13 @@
 // ExerciseDetail.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTranslate, useTime } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useTime } from "@imports/ImportHooks";
+import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { useValidateExercise } from "@imports/ImportValidates";
 import { Exercise } from "@imports/ImportSchemas";
-import { axios, numeral } from "@imports/ImportLibs";
-import { sync } from "@imports/ImportUtils";
-import { Loading, Footer } from "@imports/ImportLayouts";
-import { PickerDay, PickerTime, Count, Delete, Dial, Input, Select}from "@imports/ImportContainers";
+import { axios, numeral, sync } from "@imports/ImportUtils";
+import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
+import { PickerDay, PickerTime, Count, Delete, Input, Select}from "@imports/ImportContainers";
 import { Bg, Img } from "@imports/ImportComponents";
 import { Card, Paper, MenuItem, Grid } from "@imports/ImportMuis";
 
@@ -15,18 +15,12 @@ import { Card, Paper, MenuItem, Grid } from "@imports/ImportMuis";
 export const ExerciseDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, exerciseArray, URL_OBJECT, sessionId, toList,
-  } = useCommonValue();
-  const {
-    dayFmt, getMonthStartFmt, getMonthEndFmt
-  } = useCommonDate();
-  const {
-    translate
-  } = useTranslate();
-  const {
-    ERRORS, REFS, validate
-  } = useValidateExercise();
+  const { URL_OBJECT, PATH, sessionId, toList, exerciseArray } = useCommonValue();
+  const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
+  const { dayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
+  const { translate } = useLanguageStore();
+  const { setALERT } = useAlertStore();
+  const { ERRORS, REFS, validate } = useValidateExercise();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -111,14 +105,15 @@ export const ExerciseDetail = () => {
     .catch((err: any) => {
       console.error(err);
     });
-  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
+    setLOADING(true);
     if (LOCKED === "locked") {
+      setLOADING(false);
       return;
     }
-    setLOADING(true);
     axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId,
@@ -160,7 +155,7 @@ export const ExerciseDetail = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -224,7 +219,8 @@ export const ExerciseDetail = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = (type: string) => {
-    if (!validate(OBJECT, COUNT)) {
+    setLOADING(true);
+    if (!validate(OBJECT, COUNT, "real")) {
       setLOADING(false);
       return false;
     }
@@ -240,30 +236,41 @@ export const ExerciseDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        alert(translate(res.data.msg));
         sync();
-        Object.assign(SEND, {
-          dateType: "",
-          dateStart: DATE.dateStart,
-          dateEnd: DATE.dateEnd
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "success",
         });
         navigate(toList, {
-          state: SEND
+          state: {
+            dateType: "",
+            dateStart: DATE.dateStart,
+            dateEnd: DATE.dateEnd
+          }
         });
       }
       else {
-        alert(translate(res.data.msg));
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
       }
     })
     .catch((err: any) => {
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDelete = () => {
-    if (OBJECT?._id === "") {
-      alert(translate("noData"));
+    setLOADING(true);
+    if (!validate(OBJECT, COUNT, "delete")) {
+      setLOADING(false);
       return;
     }
     axios.delete(`${URL_OBJECT}/delete`, {
@@ -274,23 +281,33 @@ export const ExerciseDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        alert(translate(res.data.msg));
         sync();
-        Object.assign(SEND, {
-          dateType: "",
-          dateStart: DATE.dateStart,
-          dateEnd: DATE.dateEnd
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "success",
         });
         navigate(toList, {
-          state: SEND
+          state: {
+            dateType: "",
+            dateStart: DATE.dateStart,
+            dateEnd: DATE.dateEnd
+          }
         });
       }
       else {
-        alert(translate(res.data.msg));
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
       }
     })
     .catch((err: any) => {
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 
@@ -311,7 +328,7 @@ export const ExerciseDetail = () => {
     // 7-1. date + count
     const dateCountSection = () => (
       <Card className={"border-1 radius-1 p-20"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={12}>
             <PickerDay
               DATE={DATE}
@@ -335,7 +352,7 @@ export const ExerciseDetail = () => {
     // 7-2. total
     const totalSection = () => (
       <Card className={"border-1 radius-1 p-20"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={6}>
             <Input
               label={translate("totalVolume")}
@@ -410,7 +427,7 @@ export const ExerciseDetail = () => {
     const detailSection = () => {
       const detailFragment = (i: number) => (
         <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={i}>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} columns={12}>
             <Grid size={6} className={"d-row-left"}>
               <Bg
                 badgeContent={i + 1}
@@ -648,30 +665,34 @@ export const ExerciseDetail = () => {
         </Card>
       );
       return (
-        COUNT?.newSectionCnt > 0 && (
-          LOADING ? <Loading /> : OBJECT?.exercise_section?.map((_item: any, i: number) => (
-            detailFragment(i)
-          ))
-        )
+        COUNT?.newSectionCnt > 0 && OBJECT?.exercise_section?.map((_item: any, i: number) => (
+          detailFragment(i)
+        ))
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={12}>
             {dateCountSection()}
-            {totalSection()}
-            {detailSection()}
+            {!LOADING ? (
+              <>
+                {totalSection()}
+                {detailSection()}
+              </>
+            ) : (
+              <Loading />
+            )}
           </Grid>
         </Grid>
       </Paper>
     );
   };
 
-  // 8. dial ---------------------------------------------------------------------------------------
-  const dialNode = () => (
-    <Dial
+  // 8. dialog -------------------------------------------------------------------------------------
+  const dialogNode = () => (
+    <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
       LOCKED={LOCKED}
@@ -698,7 +719,7 @@ export const ExerciseDetail = () => {
   return (
     <>
       {detailNode()}
-      {dialNode()}
+      {dialogNode()}
       {footerNode()}
     </>
   );

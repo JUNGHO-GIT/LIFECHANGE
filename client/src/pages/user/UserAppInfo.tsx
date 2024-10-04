@@ -3,7 +3,7 @@
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue } from "@imports/ImportHooks";
 import { AppInfo } from "@imports/ImportSchemas";
-import { axios } from "@imports/ImportLibs"
+import { axios } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Img } from "@imports/ImportComponents";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
@@ -13,19 +13,17 @@ import { TableContainer, Table, TableBody, TableRow, TableCell } from "@imports/
 export const UserAppInfo = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    URL_OBJECT, sessionId, TITLE,
-  } = useCommonValue();
+  const { URL_OBJECT, TITLE, sessionId } = useCommonValue();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>(AppInfo);
-  const localLangSet:any = localStorage.getItem(`${TITLE}_localLangSet`);
-  const timeZone: string = JSON.parse(localLangSet)?.timeZone || "";
-  const zoneName: string = JSON.parse(localLangSet)?.zoneName || "";
-  const locale: string = JSON.parse(localLangSet)?.locale || "";
-  const isoCode: string = JSON.parse(localLangSet)?.isoCode || "";
-  const currency: string = JSON.parse(localLangSet)?.currency || "";
+  const localeSetting:any = localStorage.getItem(`${TITLE}_localeSetting`) || "{}";
+  const timeZone: string = JSON.parse(localeSetting)?.timeZone || "";
+  const zoneName: string = JSON.parse(localeSetting)?.zoneName || "";
+  const locale: string = JSON.parse(localeSetting)?.locale || "";
+  const isoCode: string = JSON.parse(localeSetting)?.isoCode || "";
+  const currency: string = JSON.parse(localeSetting)?.currency || "";
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -58,7 +56,7 @@ export const UserAppInfo = () => {
     // 7-2. card
     const detailSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={"border-1 radius-1 shadow-none p-0"} key={i}>
+        <Card className={"border-1 radius-1 shadow-0 p-0"} key={i}>
           <TableContainer className={"over-hidden"}>
             <Table>
               <TableBody className={"table-tbody"}>

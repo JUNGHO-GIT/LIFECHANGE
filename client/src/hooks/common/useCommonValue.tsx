@@ -58,13 +58,13 @@ export const useCommonValue = () => {
   // string 타입
   const isAdmin: string = sessionStorage.getItem(`${TITLE}_admin`) || "";
   const sessionId: string = sessionStorage.getItem(`${TITLE}_sessionId`) || "";
-  const localLangSet: any = localStorage.getItem(`${TITLE}_localLangSet`) || "{}";
+  const localeSetting: any = localStorage.getItem(`${TITLE}_localeSetting`) || "{}";
 
-  const localTimeZone: string = JSON.parse(localLangSet)?.timeZone || "Asia/Seoul";
-  const localZoneName: string = JSON.parse(localLangSet)?.zoneName || "KST";
-  const localLocale: string = JSON.parse(localLangSet)?.locale || "ko";
-  const localIsoCode: string = JSON.parse(localLangSet)?.isoCode || "KR";
-  const localCurrency: string = JSON.parse(localLangSet)?.currency || "KRW";
+  const localTimeZone: string = JSON.parse(localeSetting)?.timeZone || "Asia/Seoul";
+  const localZoneName: string = JSON.parse(localeSetting)?.zoneName || "KST";
+  const localLocale: string = JSON.parse(localeSetting)?.locale || "ko";
+  const localIsoCode: string = JSON.parse(localeSetting)?.isoCode || "KR";
+  const localCurrency: string = JSON.parse(localeSetting)?.currency || "KRW";
 
   const exerciseChartArray: any[] = [
     "volume", "cardio"
@@ -126,7 +126,7 @@ export const useCommonValue = () => {
     ADMIN_PW,
     isAdmin,
     sessionId,
-    localLangSet,
+    localeSetting,
     localTimeZone,
     localZoneName,
     localLocale,

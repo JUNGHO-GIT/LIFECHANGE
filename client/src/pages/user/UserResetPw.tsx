@@ -1,10 +1,11 @@
 // UserResetPw.tsx
 
 import { useState } from "@imports/ImportReacts";
-import { useCommonValue, useTranslate } from "@imports/ImportHooks";
+import { useCommonValue } from "@imports/ImportHooks";
+import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { useValidateUser } from "@imports/ImportValidates";
 import { User } from "@imports/ImportSchemas";
-import { axios } from "@imports/ImportLibs";
+import { axios } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Input } from "@imports/ImportContainers";
 import { Div, Hr, Btn } from "@imports/ImportComponents";
@@ -14,15 +15,10 @@ import { Paper, Card, Grid } from "@imports/ImportMuis";
 export const UserResetPw = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, URL_OBJECT,
-  } = useCommonValue();
-  const {
-    translate
-  } = useTranslate();
-  const {
-    ERRORS, REFS, validate
-  } = useValidateUser();
+  const { URL_OBJECT, navigate } = useCommonValue();
+  const { translate } = useLanguageStore();
+  const { setALERT } = useAlertStore();
+  const { ERRORS, REFS, validate } = useValidateUser();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -31,7 +27,7 @@ export const UserResetPw = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSendEmail = () => {
     setLOADING(true);
-    if (!validate(OBJECT, "send")) {
+    if (!validate(OBJECT, "resetPw", "send")) {
       setLOADING(false);
       return;
     }
@@ -41,28 +37,44 @@ export const UserResetPw = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        alert(translate(res.data.msg));
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "success",
+        });
         setOBJECT((prev: any) => ({
           ...prev,
           user_id_sended: true
         }));
       }
       else if (res.data.status === "notExist") {
-        alert(translate(res.data.msg));
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
         setOBJECT((prev: any) => ({
           ...prev,
           user_id_sended: false
         }));
       }
       else if (res.data.status === "isGoogle") {
-        alert(translate(res.data.msg));
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
         setOBJECT((prev: any) => ({
           ...prev,
           user_id_sended: false
         }));
       }
       else if (res.data.status === "fail") {
-        alert(translate(res.data.msg));
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
         setOBJECT((prev: any) => ({
           ...prev,
           user_id_sended: false
@@ -80,7 +92,7 @@ export const UserResetPw = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowVerifyEmail = () => {
     setLOADING(true);
-    if (!validate(OBJECT, "verify")) {
+    if (!validate(OBJECT, "resetPw", "verify")) {
       setLOADING(false);
       return;
     }
@@ -90,14 +102,22 @@ export const UserResetPw = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        alert(translate(res.data.msg));
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "success",
+        });
         setOBJECT((prev: any) => ({
           ...prev,
           user_id_verified: true
         }));
       }
       else {
-        alert(translate(res.data.msg));
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
         setOBJECT((prev: any) => ({
           ...prev,
           user_id_verified: false
@@ -115,7 +135,7 @@ export const UserResetPw = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = () => {
     setLOADING(true);
-    if (!validate(OBJECT, "save")) {
+    if (!validate(OBJECT, "resetPw", "save")) {
       setLOADING(false);
       return;
     }
@@ -125,11 +145,19 @@ export const UserResetPw = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        alert(translate(res.data.msg));
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "success",
+        });
         navigate("/user/login");
       }
       else {
-        alert(translate(res.data.msg));
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
       }
     })
     .catch((err: any) => {
@@ -153,7 +181,7 @@ export const UserResetPw = () => {
       const detailFragment = (i: number) => (
         <Card className={"p-10"} key={i}>
           {/** section 1 **/}
-          <Grid container spacing={2}>
+          <Grid container spacing={2} columns={12}>
             {/** 이메일 **/}
             <Grid size={10}>
               <Input
@@ -305,7 +333,7 @@ export const UserResetPw = () => {
       <>
       {LOADING && <Loading />}
       <Paper className={"content-wrapper d-center border-1 radius-1 h-min100vh"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={12}>
             {titleSection()}
           </Grid>

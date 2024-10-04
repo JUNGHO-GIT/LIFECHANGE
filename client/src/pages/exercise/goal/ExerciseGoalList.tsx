@@ -1,11 +1,11 @@
 // ExerciseGoalList.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useStorage } from "@imports/ImportHooks";
+import { useLanguageStore } from "@imports/ImportStores";
 import { ExerciseGoal } from "@imports/ImportSchemas";
-import { axios, numeral } from "@imports/ImportLibs";
-import { Loading, Footer, Empty } from "@imports/ImportLayouts";
-import { Dial } from "@imports/ImportContainers";
+import { axios, numeral } from "@imports/ImportUtils";
+import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
 import { Div, Img, Hr, Icons } from "@imports/ImportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
@@ -14,16 +14,10 @@ import { Paper, Card, Grid } from "@imports/ImportMuis";
 export const ExerciseGoalList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, URL_OBJECT,
-    sessionId, TITLE, toDetail
-  } = useCommonValue();
-  const {
-    dayFmt, getDayNotFmt
-  } = useCommonDate();
-  const {
-    translate
-  } = useTranslate();
+  const { URL_OBJECT, PATH, TITLE, sessionId, toDetail } = useCommonValue();
+  const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
+  const { dayFmt, getDayNotFmt } = useCommonDate();
+  const { translate } = useLanguageStore();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
@@ -84,7 +78,7 @@ export const ExerciseGoalList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
+  }, [URL_OBJECT, sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
 
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
@@ -98,7 +92,7 @@ export const ExerciseGoalList = () => {
       const listFragment = (i: number) => (
         OBJECT?.map((item: any, index: number) => (
           <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
-            <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
+            <Accordion className={"shadow-0"} expanded={isExpanded.includes(index)}>
               <AccordionSummary
                 className={"me-n10"}
                 expandIcon={
@@ -119,14 +113,13 @@ export const ExerciseGoalList = () => {
                   spacing={2}
                   onClick={(e: any) => {
                     e.stopPropagation();
-                    Object.assign(SEND, {
-                      id: item._id,
-                      dateType: item.exercise_goal_dateType,
-                      dateStart: item.exercise_goal_dateStart,
-                      dateEnd: item.exercise_goal_dateEnd,
-                    });
                     navigate(toDetail, {
-                      state: SEND
+                      state: {
+                        id: item._id,
+                        dateType: item.exercise_goal_dateType,
+                        dateStart: item.exercise_goal_dateStart,
+                        dateEnd: item.exercise_goal_dateEnd,
+                      }
                     });
                   }}
                 >
@@ -432,26 +425,24 @@ export const ExerciseGoalList = () => {
         ))
       );
       return (
-        LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : listFragment(0)
-        )
+        COUNT.totalCnt === 0 ? emptyFragment() : listFragment(0)
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={12}>
-            {listSection()}
+            {!LOADING ? listSection() : <Loading />}
           </Grid>
         </Grid>
       </Paper>
     );
   };
 
-  // 8. dial ---------------------------------------------------------------------------------------
-  const dialNode = () => (
-    <Dial
+  // 8. dialog -------------------------------------------------------------------------------------
+  const dialogNode = () => (
+    <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
       isExpanded={isExpanded}
@@ -477,7 +468,7 @@ export const ExerciseGoalList = () => {
   return (
     <>
       {listNode()}
-      {dialNode()}
+      {dialogNode()}
       {footerNode()}
     </>
   );

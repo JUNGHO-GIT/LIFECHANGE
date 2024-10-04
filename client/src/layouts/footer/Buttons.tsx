@@ -1,8 +1,9 @@
 // Buttons.tsx
 
-import { useCommonValue, useTranslate } from "@imports/ImportHooks";
-import { Btn, Div } from "@imports/ImportComponents";
+import { useCommonValue } from "@imports/ImportHooks";
+import { useLanguageStore } from "@imports/ImportStores";
 import { PopUp } from "@imports/ImportContainers";
+import { Btn, Div } from "@imports/ImportComponents";
 import { Grid, Card } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -18,12 +19,8 @@ export const Buttons = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    PATH, toFind, navigate,
-  } = useCommonValue();
-  const {
-    translate,
-  } = useTranslate();
+  const { PATH, toFind, navigate } = useCommonValue();
+  const { translate } = useLanguageStore();
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = (type: string) => {
@@ -44,14 +41,13 @@ export const Buttons = (
         color={"success"}
         className={"ms-1vw me-1vw"}
         onClick={() => {
-          Object.assign(state?.SEND, {
-            url: PATH,
-            dateType: state?.DATE.dateType,
-            dateStart: state?.DATE.dateStart,
-            dateEnd: state?.DATE.dateEnd
-          });
           navigate(toFind, {
-            state: state?.SEND,
+            state: {
+              url: PATH,
+              dateType: state?.DATE.dateType,
+              dateStart: state?.DATE.dateStart,
+              dateEnd: state?.DATE.dateEnd
+            },
           });
         }}
       >
@@ -69,7 +65,7 @@ export const Buttons = (
         padding={"6px"}
         contents={
           <Card className={"h-max30vh d-center"}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} columns={12}>
               <Grid size={12}>
                 <Div className={"fs-1-0rem fw-600 pre-line dark-grey"}>
                   {translate("replaceOrInsert")}
@@ -151,14 +147,14 @@ export const Buttons = (
     // 10. return
     return (
       PATH.includes("/user/category") || PATH.includes("/user/detail") ? (
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={10} className={"d-center"}>
             {saveSection()}
           </Grid>
         </Grid>
       )
       : PATH.includes("/detail") ? (
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={10} className={"d-center"}>
             {PATH.includes("/food/detail") && toFindSection()}
             {saveSection()}

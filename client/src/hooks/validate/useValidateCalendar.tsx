@@ -1,14 +1,14 @@
 // useValidateCalendar.tsx
 
-import { useState, useEffect, createRef, useRef } from "@imports/ImportReacts";
-import { useCommonValue, useTranslate } from "@imports/ImportHooks";
+import { useState, createRef, useRef } from "@imports/ImportReacts";
+import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 
 // -------------------------------------------------------------------------------------------------
 export const useValidateCalendar = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { PATH } = useCommonValue();
-  const { translate } = useTranslate();
+  const { translate } = useLanguageStore();
+  const { setALERT } = useAlertStore();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const REFS = useRef<any[]>([]);
@@ -17,69 +17,102 @@ export const useValidateCalendar = () => {
 
   // alert 표시 및 focus ---------------------------------------------------------------------------
   const showAlertAndFocus = (field: string, msg: string, idx: number) => {
-    alert(translate(msg));
-    setTimeout(() => {
-      REFS?.current?.[idx]?.[field]?.current?.focus();
-    }, 10);
-    setERRORS((prev) => {
-      const updatedErrors = [...prev];
-      updatedErrors[idx] = {
-        ...updatedErrors[idx],
-        [field]: true,
-      };
-      return updatedErrors;
+    setALERT({
+      open: true,
+      msg: translate(msg),
+      severity: "error",
     });
+    if (field) {
+      setTimeout(() => {
+        REFS?.current?.[idx]?.[field]?.current?.focus();
+      }, 10);
+      setERRORS((prev) => {
+        const updatedErrors = [...prev];
+        updatedErrors[idx] = {
+          ...updatedErrors[idx],
+          [field]: true,
+        };
+        return updatedErrors;
+      });
+    }
     return false;
   };
 
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
-    validate.current = (OBJECT: any, COUNT: any) => {
+  // 7. validate -----------------------------------------------------------------------------------
+  validate.current = (OBJECT: any, COUNT: any, extra: string) => {
 
-      // 2. real
-      if (PATH.includes("calendar/detail")) {
-        const target = [
-          "calendar_part_idx",
-          "calendar_color",
-          "calendar_title",
-        ];
-        REFS.current = (
-          Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
-            target.reduce((acc, cur) => ({
-              ...acc,
-              [cur]: createRef()
-            }), {})
-          ))
-        );
-        setERRORS (
-          Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
-            target.reduce((acc, cur) => ({
-              ...acc,
-              [cur]: false
-            }), {})
-          ))
-        );
+    // 2. real -----------------------------------------------------------------------------------
+    if (extra === "real") {
+      const target = [
+        "calendar_part_idx",
+        "calendar_color",
+        "calendar_title",
+      ];
+      REFS.current = (
+        Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
+          target.reduce((acc, cur) => ({
+            ...acc,
+            [cur]: createRef()
+          }), {})
+        ))
+      );
+      setERRORS (
+        Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
+          target.reduce((acc, cur) => ({
+            ...acc,
+            [cur]: false
+          }), {})
+        ))
+      );
 
-        const section = OBJECT.calendar_section;
-        if (COUNT.newSectionCnt <= 0) {
-          alert(translate("errorCount"));
-          return false;
-        }
-        for (let i = 0; i < section.length; i++) {
-          if (!section[i].calendar_part_idx || section[i].calendar_part_idx === 0) {
-            return showAlertAndFocus('calendar_part_idx', "errorCalendarPartIdx", i);
-          }
-          else if (!section[i].calendar_title) {
-            return showAlertAndFocus('calendar_title', "errorCalendarTitle", i);
-          }
-          else if (!section[i].calendar_color) {
-            return showAlertAndFocus('calendar_color', "errorCalendarColor", i);
-          }
-        }
-        return true;
+      const section = OBJECT.calendar_section;
+
+      if (COUNT.newSectionCnt <= 0) {
+        return showAlertAndFocus("", "errorCount", 0);
       }
+
+      for (let i = 0; i < section.length; i++) {
+        if (!section[i].calendar_part_idx || section[i].calendar_part_idx === 0) {
+          return showAlertAndFocus('calendar_part_idx', "errorCalendarPartIdx", i);
+        }
+        else if (!section[i].calendar_title) {
+          return showAlertAndFocus('calendar_title', "errorCalendarTitle", i);
+        }
+        else if (!section[i].calendar_color) {
+          return showAlertAndFocus('calendar_color', "errorCalendarColor", i);
+        }
+      }
+      return true;
     }
-  }, [PATH]);
+
+    // 3. delete ---------------------------------------------------------------------------------
+    else if (extra === "delete") {
+      const target = [
+        "_id",
+      ];
+      REFS.current = (
+        Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
+          target.reduce((acc, cur) => ({
+            ...acc,
+            [cur]: createRef()
+          }), {})
+        ))
+      );
+      setERRORS (
+        Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
+          target.reduce((acc, cur) => ({
+            ...acc,
+            [cur]: false
+          }), {})
+        ))
+      );
+
+      if (!OBJECT?._id || OBJECT?._id === "") {
+        return showAlertAndFocus("", "noData", 0);
+      }
+      return true;
+    }
+  };
 
   // 10. return ------------------------------------------------------------------------------------
   return {

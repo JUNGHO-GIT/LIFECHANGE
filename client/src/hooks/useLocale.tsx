@@ -1,11 +1,11 @@
-// useLangSet.tsx
+// useLocale.tsx
 
 import { useEffect } from "@imports/ImportReacts";
 import { useCommonValue } from "@imports/ImportHooks";
-import { moment, getCountryForTimezone, getAllInfoByISO } from "@imports/ImportLibs";
+import { moment, getCountryForTimezone, getAllInfoByISO } from "@imports/ImportUtils";
 
 // -------------------------------------------------------------------------------------------------
-export const useLangSet = () => {
+export const useLocale = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { TITLE } = useCommonValue();
@@ -33,7 +33,7 @@ export const useLangSet = () => {
       currency = getAllInfoByISO(isoCode).currency;
 
       // ex. ko
-      const existedLocale = localStorage.getItem(`${TITLE}_localLangSet`) || "{}";
+      const existedLocale = localStorage.getItem(`${TITLE}_localeSetting`) || "{}";
       const parsedLocale = JSON.parse(existedLocale).locale;
       locale = parsedLocale || (navigator.language && navigator.language.split("-")[0]);
 
@@ -43,18 +43,20 @@ export const useLangSet = () => {
       }
 
       // Save to local storage
-      const localLangSet = {
+      const localeSetting = {
         timeZone: timeZone,
         locale: locale,
         zoneName: zoneName,
         isoCode: isoCode,
         currency: currency,
       };
-      localStorage.setItem(`${TITLE}_localLangSet`, JSON.stringify(localLangSet));
+      localStorage.setItem(`${TITLE}_localeSetting`, JSON.stringify(localeSetting));
 
     }
     catch (err: any) {
       console.error(err);
     }
-  }, [TITLE]);
+
+    // 종속성에 locale은 추가하지 않음
+  }, [TITLE, timeZone, zoneName, isoCode, currency]);
 };

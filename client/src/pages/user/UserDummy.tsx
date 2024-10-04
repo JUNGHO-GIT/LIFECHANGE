@@ -1,12 +1,13 @@
 // UserDummy.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useTranslate, useStorage } from "@imports/ImportHooks";
+import { useCommonValue, useStorage } from "@imports/ImportHooks";
+import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { ExerciseGoal, Exercise } from "@imports/ImportSchemas";
 import { FoodGoal, Food } from "@imports/ImportSchemas";
 import { MoneyGoal, Money } from "@imports/ImportSchemas";
 import {  SleepGoal, Sleep } from "@imports/ImportSchemas";
-import { axios, numeral } from "@imports/ImportLibs";
+import { axios, numeral } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div } from "@imports/ImportComponents";
 import { Paper, TableContainer, Table, Card, Grid } from "@imports/ImportMuis";
@@ -16,12 +17,9 @@ import { TableHead, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
 export const UserDummy = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, PATH, URL_OBJECT, sessionId, TITLE,
-  } = useCommonValue();
-  const {
-    translate,
-  } = useTranslate();
+  const { URL_OBJECT, PATH, TITLE, navigate, sessionId } = useCommonValue();
+  const { setALERT } = useAlertStore();
+  const { translate } = useLanguageStore();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -94,10 +92,11 @@ export const UserDummy = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, PAGING.sort, PAGING.page, PART]);
+  }, [URL_OBJECT, sessionId, PAGING, PART]);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDummyDetail = () => {
+    setLOADING(true);
     const previousPART = PART;
     axios.post(`${URL_OBJECT}/dummyDetail`, {
       user_id: sessionId,
@@ -106,7 +105,11 @@ export const UserDummy = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        alert(translate(res.data.msg));
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "success",
+        });
         setCOUNT((prev: any) => ({
           ...prev,
           inputCnt: 0,
@@ -120,16 +123,24 @@ export const UserDummy = () => {
         setPART(previousPART);
       }
       else {
-        alert(translate(res.data.msg));
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
       }
     })
     .catch((err: any) => {
       console.error(err);
     })
+    .finally(() => {
+      setLOADING(false);
+    });
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDummyDelete = () => {
+    setLOADING(true);
     const previousPART = PART;
     axios.delete(`${URL_OBJECT}/dummyDelete`, {
       data: {
@@ -139,7 +150,11 @@ export const UserDummy = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        alert(translate(res.data.msg));
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "success",
+        });
         setCOUNT((prev: any) => ({
           ...prev,
           inputCnt: 0,
@@ -153,12 +168,19 @@ export const UserDummy = () => {
         setPART(previousPART);
       }
       else {
-        alert(translate(res.data.msg));
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
       }
     })
     .catch((err: any) => {
       console.error(err);
     })
+    .finally(() => {
+      setLOADING(false);
+    });
   };
 
   // 6. userDummy ----------------------------------------------------------------------------------
@@ -626,7 +648,7 @@ export const UserDummy = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min84vh"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={12} >
             {PART === "exerciseGoal" && exerciseGoalSection()}
             {PART === "exercise" && exerciseSection()}

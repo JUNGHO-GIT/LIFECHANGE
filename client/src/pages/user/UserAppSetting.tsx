@@ -1,7 +1,8 @@
 // UserAppSetting.tsx
 
-import { useState } from "@imports/ImportReacts";
-import { useCommonValue, useTranslate } from "@imports/ImportHooks";
+import { useState, useEffect } from "@imports/ImportReacts";
+import { useCommonValue } from "@imports/ImportHooks";
+import { useLanguageStore } from "@imports/ImportStores";
 import { Loading } from "@imports/ImportLayouts";
 import { Icons, Img, Div } from "@imports/ImportComponents";
 import { PopUp } from "@imports/ImportContainers";
@@ -12,23 +13,27 @@ import { TableContainer, Table, TableBody, TableRow, TableCell } from "@imports/
 export const UserAppSetting = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, isAdmin, TITLE, localLocale, localLangSet
-  } = useCommonValue();
-  const {
-    translate,
-  } = useTranslate();
+  const { TITLE, navigate, isAdmin, localLocale, localeSetting } = useCommonValue();
+  const { translate } = useLanguageStore();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [lang, setLang] = useState<string>(localLocale);
 
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    setLOADING(true);
+    setTimeout(() => {
+      setLOADING(false);
+    }, 500);
+  }, []);
+
   // 4. handle -------------------------------------------------------------------------------------
   const handleChangeLanguage = (lang: string) => {
     setLang(lang);
-    const localLang = JSON.parse(localLangSet);
+    const localLang = JSON.parse(localeSetting);
     localLang.locale = lang;
-    localStorage.setItem(`${TITLE}_localLangSet`, JSON.stringify(localLang));
+    localStorage.setItem(`${TITLE}_localeSetting`, JSON.stringify(localLang));
     navigate(0);
   };
 
@@ -37,7 +42,7 @@ export const UserAppSetting = () => {
     // 7-1. card
     const detailSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={"border-1 radius-1 shadow-none p-0"} key={i}>
+        <Card className={"border-1 radius-1 shadow-0 p-0"} key={i}>
           <TableContainer>
             <Table>
               <TableBody className={"table-tbody"}>
@@ -227,7 +232,7 @@ export const UserAppSetting = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper d-center border-1 radius-1 h-min90vh"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={12}>
             {detailSection()}
           </Grid>

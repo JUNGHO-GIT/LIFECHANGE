@@ -21,9 +21,7 @@ export const Footer = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    PATH
-  } = useCommonValue();
+  const { PATH } = useCommonValue();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [typeName, setTypeName] = useState<string>("");
@@ -110,7 +108,7 @@ export const Footer = (
     // 5. return
     return (
       <Paper className={styleClass}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={12} className={"d-center fadeIn"}>
             {typeName === "btn" && btnSection()}
             {typeName === "dummy" && dummySection()}

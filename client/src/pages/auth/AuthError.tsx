@@ -8,14 +8,12 @@ import { Grid, Paper } from "@imports/ImportMuis";
 export const AuthError = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate
-  } = useCommonValue();
+  const { navigate } = useCommonValue();
 
   // 7. errorNode ----------------------------------------------------------------------------------
   const errorNode = () => {
     const imageSection = () => (
-      <Grid container spacing={2}>
+      <Grid container spacing={2} columns={12}>
         <Grid size={12}>
           <svg
             className="error_paper__main"
@@ -110,7 +108,7 @@ export const AuthError = () => {
       </Grid>
     );
     const textSection = () => (
-      <Grid container spacing={2}>
+      <Grid container spacing={2} columns={12}>
         <Grid size={12}>
           <Div className={"fs-50 fw-700"}>
             404
@@ -134,7 +132,7 @@ export const AuthError = () => {
     );
     return (
       <Paper className={"content-wrapper d-center border-1 radius-1 h-min100vh"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={6}>
             {imageSection()}
           </Grid>

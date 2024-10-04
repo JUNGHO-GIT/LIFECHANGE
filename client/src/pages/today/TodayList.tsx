@@ -1,12 +1,12 @@
 // TodayList.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTranslate, useStorage } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useStorage } from "@imports/ImportHooks";
+import { useLanguageStore } from "@imports/ImportStores";
 import { Exercise, Food, Money, Sleep } from "@imports/ImportSchemas";
-import { axios, numeral } from "@imports/ImportLibs";
-import { Loading, Footer, Empty } from "@imports/ImportLayouts";
+import { axios, numeral } from "@imports/ImportUtils";
+import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
 import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
-import { Dial } from "@imports/ImportContainers";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 
@@ -14,15 +14,10 @@ import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMu
 export const TodayList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, PATH, URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP, sessionId, TITLE, localCurrency,
-  } = useCommonValue();
-  const {
-    dayFmt, getDayNotFmt,
-  } = useCommonDate();
-  const {
-    translate,
-  } = useTranslate();
+  const { URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP } = useCommonValue();
+  const { PATH, TITLE, navigate, sessionId, localCurrency } = useCommonValue();
+  const { dayFmt, getDayNotFmt } = useCommonDate();
+  const { translate } = useLanguageStore();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
@@ -128,7 +123,10 @@ export const TodayList = () => {
     finally {
       setLOADING(false);
     }
-  })()}, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
+  })()}, [
+    URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP,
+    sessionId, PAGING.sort, PAGING.page, DATE.dateEnd
+  ]);
 
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
@@ -144,7 +142,7 @@ export const TodayList = () => {
         OBJECT_EXERCISE?.map((item: any, index: number) => (
           <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
             <Accordion
-              className={"shadow-none"}
+              className={"shadow-0"}
               expanded={isExpanded.exercise.includes(index)}
             >
               <AccordionSummary
@@ -170,14 +168,13 @@ export const TodayList = () => {
                   spacing={2}
                   onClick={(e: any) => {
                     e.stopPropagation();
-                    Object.assign(SEND, {
-                      id: item._id,
-                      dateType: item.exercise_dateType,
-                      dateStart: item.exercise_dateStart,
-                      dateEnd: item.exercise_dateEnd,
-                    });
                     navigate(SEND.toExercise, {
-                      state: SEND
+                      state: {
+                        id: item._id,
+                        dateType: item.exercise_dateType,
+                        dateStart: item.exercise_dateStart,
+                        dateEnd: item.exercise_dateEnd,
+                      }
                     });
                   }}
                 >
@@ -294,9 +291,7 @@ export const TodayList = () => {
         ))
       );
       return (
-        LOADING ? <Loading /> : (
-          COUNT.exercise === 0 ? emptyFragment() : listFragment(0)
-        )
+        COUNT.exercise === 0 ? emptyFragment() : listFragment(0)
       );
     };
     // 7-2. food
@@ -311,7 +306,7 @@ export const TodayList = () => {
         OBJECT_FOOD?.map((item: any, index: number) => (
           <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
             <Accordion
-              className={"shadow-none"}
+              className={"shadow-0"}
               expanded={isExpanded.food.includes(index)}
             >
               <AccordionSummary
@@ -337,14 +332,13 @@ export const TodayList = () => {
                   spacing={2}
                   onClick={(e: any) => {
                     e.stopPropagation();
-                    Object.assign(SEND, {
-                      id: item._id,
-                      dateType: item.food_dateType,
-                      dateStart: item.food_dateStart,
-                      dateEnd: item.food_dateEnd,
-                    });
                     navigate(SEND.toFood, {
-                      state: SEND
+                      state: {
+                        id: item._id,
+                        dateType: item.food_dateType,
+                        dateStart: item.food_dateStart,
+                        dateEnd: item.food_dateEnd,
+                      }
                     });
                   }}
                 >
@@ -485,9 +479,7 @@ export const TodayList = () => {
         ))
       );
       return (
-        LOADING ? <Loading /> : (
-          COUNT.food === 0 ? emptyFragment() : listFragment(0)
-        )
+        COUNT.food === 0 ? emptyFragment() : listFragment(0)
       );
     };
     // 7-3. money
@@ -502,7 +494,7 @@ export const TodayList = () => {
         OBJECT_MONEY?.map((item: any, index: number) => (
           <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
             <Accordion
-              className={"shadow-none"}
+              className={"shadow-0"}
               expanded={isExpanded.money.includes(index)}
             >
               <AccordionSummary
@@ -528,14 +520,13 @@ export const TodayList = () => {
                   spacing={2}
                   onClick={(e: any) => {
                     e.stopPropagation();
-                    Object.assign(SEND, {
-                      id: item._id,
-                      dateType: item.money_dateType,
-                      dateStart: item.money_dateStart,
-                      dateEnd: item.money_dateEnd,
-                    });
                     navigate(SEND.toMoney, {
-                      state: SEND
+                      state: {
+                        id: item._id,
+                        dateType: item.money_dateType,
+                        dateStart: item.money_dateStart,
+                        dateEnd: item.money_dateEnd,
+                      }
                     });
                   }}
                 >
@@ -620,9 +611,7 @@ export const TodayList = () => {
         ))
       );
       return (
-        LOADING ? <Loading /> : (
-          COUNT.money === 0 ? emptyFragment() : listFragment(0)
-        )
+        COUNT.money === 0 ? emptyFragment() : listFragment(0)
       );
     };
     // 7-4. sleep
@@ -637,7 +626,7 @@ export const TodayList = () => {
         OBJECT_SLEEP?.map((item: any, index: number) => (
           <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
             <Accordion
-              className={"shadow-none"}
+              className={"shadow-0"}
               expanded={isExpanded.sleep.includes(index)}
             >
               <AccordionSummary
@@ -663,14 +652,13 @@ export const TodayList = () => {
                   spacing={2}
                   onClick={(e: any) => {
                     e.stopPropagation();
-                    Object.assign(SEND, {
-                      id: item._id,
-                      dateType: item.sleep_dateType,
-                      dateStart: item.sleep_dateStart,
-                      dateEnd: item.sleep_dateEnd,
-                    });
                     navigate(SEND.toSleep, {
-                      state: SEND
+                      state: {
+                        id: item._id,
+                        dateType: item.sleep_dateType,
+                        dateStart: item.sleep_dateStart,
+                        dateEnd: item.sleep_dateEnd,
+                      }
                     });
                   }}
                 >
@@ -783,35 +771,41 @@ export const TodayList = () => {
         ))
       );
       return (
-        LOADING ? <Loading /> : (
-          COUNT.sleep === 0 ? emptyFragment() : listFragment(0)
-        )
+        COUNT.sleep === 0 ? emptyFragment() : listFragment(0)
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
-        <Grid container spacing={2}>
-          <Grid size={12}>
-            {exerciseSection()}
+        {!LOADING ? (
+          <Grid container spacing={2} columns={12}>
+            <Grid size={12}>
+              {exerciseSection()}
+            </Grid>
+            <Grid size={12}>
+              {foodSection()}
+            </Grid>
+            <Grid size={12}>
+              {moneySection()}
+            </Grid>
+            <Grid size={12}>
+              {sleepSection()}
+            </Grid>
           </Grid>
-          <Grid size={12}>
-            {foodSection()}
+        ) : (
+          <Grid container spacing={2} columns={12}>
+            <Grid size={12}>
+              <Loading />
+            </Grid>
           </Grid>
-          <Grid size={12}>
-            {moneySection()}
-          </Grid>
-          <Grid size={12}>
-            {sleepSection()}
-          </Grid>
-        </Grid>
+        )}
       </Paper>
     );
   };
 
-  // 8. dial ---------------------------------------------------------------------------------------
-  const dialNode = () => (
-    <Dial
+  // 8. dialog -------------------------------------------------------------------------------------
+  const dialogNode = () => (
+    <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
       isExpanded={isExpanded}
@@ -837,7 +831,7 @@ export const TodayList = () => {
   return (
     <>
       {listNode()}
-      {dialNode()}
+      {dialogNode()}
       {footerNode()}
     </>
   );

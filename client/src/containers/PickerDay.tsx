@@ -3,9 +3,10 @@
 // 실제는 day
 
 import { useEffect, useState } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useStorage, useTranslate } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useStorage } from "@imports/ImportHooks";
+import { useLanguageStore } from "@imports/ImportStores";
 import { PopUp, Input, Select } from "@imports/ImportContainers";
-import { Btn, Img, Div } from "@imports/ImportComponents";
+import { Btn, Img, Div, Icons } from "@imports/ImportComponents";
 import { MenuItem, PickersDay, Grid, Card, Badge } from "@imports/ImportMuis";
 import { DateCalendar, AdapterMoment, LocalizationProvider } from "@imports/ImportMuis";
 
@@ -23,29 +24,22 @@ export const PickerDay = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    localLocale, localTimeZone, TITLE, PATH
-  } = useCommonValue();
-  const {
-    dayFmt,
-    weekStartFmt, weekEndFmt,
-    monthStartFmt, monthEndFmt,
-    yearStartFmt, yearEndFmt,
-    getDayFmt, getDayNotFmt,
-    getDayStartFmt, getDayEndFmt,
-    getWeekStartFmt, getWeekEndFmt,
-    getPrevWeekStartFmt, getPrevWeekEndFmt,
-    getNextWeekStartFmt, getNextWeekEndFmt,
-    getMonthStartFmt, getMonthEndFmt,
-    getPrevMonthStartFmt, getPrevMonthEndFmt,
-    getNextMonthStartFmt, getNextMonthEndFmt,
-    getYearStartFmt, getYearEndFmt,
-    getPrevYearStartFmt, getPrevYearEndFmt,
-    getNextYearStartFmt, getNextYearEndFmt,
-  } = useCommonDate();
-  const {
-    translate,
-  } = useTranslate();
+  const { PATH, TITLE, localLocale, localTimeZone } = useCommonValue();
+  const { dayFmt, weekStartFmt, weekEndFmt } = useCommonDate();
+  const { monthStartFmt, monthEndFmt, yearStartFmt, yearEndFmt } = useCommonDate();
+  const { getDayFmt, getDayNotFmt, getDayStartFmt, getDayEndFmt } = useCommonDate();
+  const { getPrevDayStartFmt, getPrevDayEndFmt } = useCommonDate();
+  const { getNextDayStartFmt, getNextDayEndFmt } = useCommonDate();
+  const { getWeekStartFmt, getWeekEndFmt } = useCommonDate();
+  const { getPrevWeekStartFmt, getPrevWeekEndFmt } = useCommonDate();
+  const { getNextWeekStartFmt, getNextWeekEndFmt } = useCommonDate();
+  const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
+  const { getPrevMonthStartFmt, getPrevMonthEndFmt } = useCommonDate();
+  const { getNextMonthStartFmt, getNextMonthEndFmt } = useCommonDate();
+  const { getYearStartFmt, getYearEndFmt } = useCommonDate();
+  const { getPrevYearStartFmt, getPrevYearEndFmt } = useCommonDate();
+  const { getNextYearStartFmt, getNextYearEndFmt } = useCommonDate();
+  const { translate } = useLanguageStore();
 
   const isGoalToday = PATH.includes("/today/goal");
   const isToday = !isGoalToday && PATH.includes("/today/list");
@@ -62,7 +56,8 @@ export const PickerDay = (
 
   // ex. 2024-11-12 ~ 12-15
   const durStr = (
-    `${DATE.dateStart} ~ ${DATE.dateEnd.split("-")[1] || "" }-${DATE.dateEnd.split("-")[2] || "" }`
+    `${DATE.dateStart.split("-")[1] || "" }-${DATE.dateStart.split("-")[2] || "" } ~ ` +
+    `${DATE.dateEnd.split("-")[1] || "" }-${DATE.dateEnd.split("-")[2] || "" }`
   );
   const clickedDate = {
     todayDate: {
@@ -232,7 +227,7 @@ export const PickerDay = (
         direction={"center"}
         contents={
           <Card className={"w-min70vw p-0"}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} columns={12}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewDay")}
@@ -375,6 +370,40 @@ export const PickerDay = (
               	className={"w-16 h-16"}
               />
             }
+            endadornment={
+              <Div className={"d-row-center"}>
+                <Div className={"me-n10"}>
+                  <Icons
+                    key={"ChevronLeft"}
+                    name={"ChevronLeft"}
+                    className={"w-16 h-16"}
+                    onClick={(e: any) => {
+                      e.stopPropagation();
+                      setDATE((prev: any) => ({
+                        ...prev,
+                        dateStart: getPrevDayStartFmt(prev.dateStart),
+                        dateEnd: getPrevDayEndFmt(prev.dateStart),
+                      }));
+                    }}
+                  />
+                </Div>
+                <Div className={"me-n15"}>
+                  <Icons
+                    key={"ChevronRight"}
+                    name={"ChevronRight"}
+                    className={"w-16 h-16"}
+                    onClick={(e: any) => {
+                      e.stopPropagation();
+                      setDATE((prev: any) => ({
+                        ...prev,
+                        dateStart: getNextDayStartFmt(prev.dateStart),
+                        dateEnd: getNextDayEndFmt(prev.dateStart),
+                      }));
+                    }}
+                  />
+                </Div>
+              </Div>
+            }
             onClick={(e: any) => {
               if (!isToday && !isGoalToday) {
                 popTrigger.openPopup(e.currentTarget);
@@ -393,7 +422,7 @@ export const PickerDay = (
         direction={"center"}
         contents={
           <Card className={"w-min70vw p-0"}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} columns={12}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewWeek")}
@@ -550,6 +579,40 @@ export const PickerDay = (
               	className={"w-16 h-16"}
               />
             }
+            endadornment={
+              <Div className={"d-row-center"}>
+                <Div className={"me-n10"}>
+                  <Icons
+                    key={"ChevronLeft"}
+                    name={"ChevronLeft"}
+                    className={"w-16 h-16"}
+                    onClick={(e: any) => {
+                      e.stopPropagation();
+                      setDATE((prev: any) => ({
+                        ...prev,
+                        dateStart: getPrevWeekStartFmt(prev.dateStart),
+                        dateEnd: getPrevWeekEndFmt(prev.dateStart),
+                      }));
+                    }}
+                  />
+                </Div>
+                <Div className={"me-n15"}>
+                  <Icons
+                    key={"ChevronRight"}
+                    name={"ChevronRight"}
+                    className={"w-16 h-16"}
+                    onClick={(e: any) => {
+                      e.stopPropagation();
+                      setDATE((prev: any) => ({
+                        ...prev,
+                        dateStart: getNextWeekStartFmt(prev.dateStart),
+                        dateEnd: getNextWeekEndFmt(prev.dateStart),
+                      }));
+                    }}
+                  />
+                </Div>
+              </Div>
+            }
             onClick={(e: any) => {
               if (!isToday && !isGoalToday) {
                 popTrigger.openPopup(e.currentTarget);
@@ -568,7 +631,7 @@ export const PickerDay = (
         direction={"center"}
         contents={
           <Card className={"w-min70vw p-0"}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} columns={12}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewMonth")}
@@ -708,6 +771,40 @@ export const PickerDay = (
               	className={"w-16 h-16"}
               />
             }
+            endadornment={
+              <Div className={"d-row-center"}>
+                <Div className={"me-n10"}>
+                  <Icons
+                    key={"ChevronLeft"}
+                    name={"ChevronLeft"}
+                    className={"w-16 h-16"}
+                    onClick={(e: any) => {
+                      e.stopPropagation();
+                      setDATE((prev: any) => ({
+                        ...prev,
+                        dateStart: getPrevMonthStartFmt(prev.dateStart),
+                        dateEnd: getPrevMonthEndFmt(prev.dateStart),
+                      }));
+                    }}
+                  />
+                </Div>
+                <Div className={"me-n15"}>
+                  <Icons
+                    key={"ChevronRight"}
+                    name={"ChevronRight"}
+                    className={"w-16 h-16"}
+                    onClick={(e: any) => {
+                      e.stopPropagation();
+                      setDATE((prev: any) => ({
+                        ...prev,
+                        dateStart: getNextMonthStartFmt(prev.dateStart),
+                        dateEnd: getNextMonthEndFmt(prev.dateStart),
+                      }));
+                    }}
+                  />
+                </Div>
+              </Div>
+            }
             onClick={(e: any) => {
               if (!isToday && !isGoalToday) {
                 popTrigger.openPopup(e.currentTarget);
@@ -726,7 +823,7 @@ export const PickerDay = (
         direction={"center"}
         contents={
           <Card className={"w-min70vw p-0"}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} columns={12}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewYear")}
@@ -867,6 +964,40 @@ export const PickerDay = (
               	className={"w-16 h-16"}
               />
             }
+            endadornment={
+              <Div className={"d-row-center"}>
+                <Div className={"me-n10"}>
+                  <Icons
+                    key={"ChevronLeft"}
+                    name={"ChevronLeft"}
+                    className={"w-16 h-16"}
+                    onClick={(e: any) => {
+                      e.stopPropagation();
+                      setDATE((prev: any) => ({
+                        ...prev,
+                        dateStart: getPrevYearStartFmt(prev.dateStart),
+                        dateEnd: getPrevYearEndFmt(prev.dateStart),
+                      }));
+                    }}
+                  />
+                </Div>
+                <Div className={"me-n15"}>
+                  <Icons
+                    key={"ChevronRight"}
+                    name={"ChevronRight"}
+                    className={"w-16 h-16"}
+                    onClick={(e: any) => {
+                      e.stopPropagation();
+                      setDATE((prev: any) => ({
+                        ...prev,
+                        dateStart: getNextYearStartFmt(prev.dateStart),
+                        dateEnd: getNextYearEndFmt(prev.dateStart),
+                      }));
+                    }}
+                  />
+                </Div>
+              </Div>
+            }
             onClick={(e: any) => {
               if (!isToday && !isGoalToday) {
                 popTrigger.openPopup(e.currentTarget);
@@ -886,7 +1017,7 @@ export const PickerDay = (
         className={"p-10"}
         contents={
           <Card className={"p-0"}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} columns={12}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewSelect")}
@@ -1136,7 +1267,7 @@ export const PickerDay = (
 
       // 0. 일정인 경우 (세이브)
       isCalendarDetail ? (
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
             {saveTypeSection()}
           </Grid>
@@ -1164,7 +1295,7 @@ export const PickerDay = (
 
       // 1-2. 목표인 경우 (세이브)
       : isGoalDetail ? (
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
             {saveTypeSection()}
           </Grid>
@@ -1190,7 +1321,7 @@ export const PickerDay = (
 
       // 2-2. 실제인 경우 (세이브)
       : isRealDetail ? (
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
             {saveTypeSection()}
           </Grid>
