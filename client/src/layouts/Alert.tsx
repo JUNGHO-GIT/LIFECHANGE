@@ -35,7 +35,7 @@ export const Alert = () => {
       <MuiAlert
         severity={ALERT.severity}
         variant={"standard"}
-        className={"w-100p border-dark radius-1 shadow-4 snackbar"}
+        className={"w-100p h-8vh d-center border-dark radius-1 shadow-4 fs-1-0rem fw-600 snackbar z-10000"}
         onClose={() => {
           setALERT({
             open: false

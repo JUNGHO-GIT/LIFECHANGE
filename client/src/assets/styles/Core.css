@@ -22,6 +22,7 @@
   justify-content: center;
   border: none !important;
   border-radius: 0px !important;
+  box-shadow: none !important;
   overflow-x: hidden;
   overflow-y: hidden;
   z-index: 500;
@@ -37,6 +38,7 @@
   justify-content: flex-start;
   border: none !important;
   border-radius: 0px !important;
+  box-shadow: none !important;
   overflow-x: hidden;
   overflow-y: hidden;
   z-index: 100;

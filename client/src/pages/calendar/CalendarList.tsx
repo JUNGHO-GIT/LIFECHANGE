@@ -243,7 +243,7 @@ export const CalendarList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 h-min70vh"}>
         <Grid container spacing={2} columns={12}>
           <Grid size={12}>
             {!LOADING ? listSection() : <Loading />}

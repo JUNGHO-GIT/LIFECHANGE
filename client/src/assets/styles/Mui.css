@@ -57,7 +57,7 @@
   border-bottom: 2px solid #006ab3 !important;
 }
 [class*="MuiInput-root"][class*="Mui-error"]::after {
-  border-bottom: 2px solid #ff0000 !important;
+  border-bottom: 2px solid #f44336 !important;
 }
 
 .MuiInputLabel-root {
@@ -71,7 +71,7 @@
   color: #006ab3 !important;
 }
 [class*="MuiFormLabel-root"][class*="Mui-error"] {
-  color: #ff0000 !important;
+  color: #f44336 !important;
 }
 
 [class*="MuiInputBase-input-MuiInput-input"][class*="Mui-disabled"] {
@@ -86,7 +86,7 @@
   border-width: 2px !important;
 }
 .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
-  border-color: #ff0000 !important;
+  border-color: #f44336 !important;
   border-width: 2px !important;
 }
 
