@@ -19,7 +19,7 @@ export const Header = () => {
   const headerNode = () => {
     const iconSection = () => (
       <Div
-        className={"d-center pointer ms-10"}
+        className={"d-center pointer"}
         onClick={() => {
           navigate("/today/list", {
             state: {
