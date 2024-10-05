@@ -1,6 +1,9 @@
+// useAlertStore.tsx
+
 import { create } from 'zustand';
 
-declare interface AlertState {
+// -------------------------------------------------------------------------------------------------
+declare type AlertState = {
   ALERT: {
     open: boolean;
     msg: string;
@@ -9,6 +12,7 @@ declare interface AlertState {
   setALERT: (payload: Partial<AlertState['ALERT']>) => void;
 }
 
+// -------------------------------------------------------------------------------------------------
 export const useAlertStore = create<AlertState>((set) => ({
   ALERT: {
     open: false,

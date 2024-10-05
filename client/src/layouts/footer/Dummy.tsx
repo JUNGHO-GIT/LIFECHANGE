@@ -7,7 +7,7 @@ import { Btn } from "@imports/ImportComponents";
 import { MenuItem, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-declare interface DummyProps {
+declare type DummyProps = {
   state: any;
   setState: any;
   flow: any;

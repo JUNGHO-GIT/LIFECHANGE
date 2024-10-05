@@ -17,7 +17,7 @@ export const UserSignup = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, URL_GOOGLE, navigate,  localCurrency } = useCommonValue();
   const { translate } = useLanguageStore();
-  const { setALERT } = useAlertStore();
+  const { ALERT, setALERT } = useAlertStore();
   const { ERRORS, REFS, validate } = useValidateUser();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ export const UserSignup = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -49,7 +49,7 @@ export const UserSignup = () => {
       }
       else if (res.data.status === "duplicate") {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -60,7 +60,7 @@ export const UserSignup = () => {
       }
       else if (res.data.status === "fail") {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -71,7 +71,7 @@ export const UserSignup = () => {
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -103,7 +103,7 @@ export const UserSignup = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -114,7 +114,7 @@ export const UserSignup = () => {
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -146,7 +146,7 @@ export const UserSignup = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -154,14 +154,14 @@ export const UserSignup = () => {
       }
       else if (res.data.status === "alreadyExist") {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -184,7 +184,7 @@ export const UserSignup = () => {
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });

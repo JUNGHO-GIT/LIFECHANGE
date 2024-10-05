@@ -28,7 +28,7 @@ export const TodayList = () => {
       dateEnd: dayFmt,
     }
   );
-  const [PAGING, setPAGING] = useStorage(
+  const [PAGING, _setPAGING] = useStorage(
     `${TITLE}_paging_(${PATH})`, {
       sort: "asc",
       page: 1,
@@ -817,12 +817,10 @@ export const TodayList = () => {
   const footerNode = () => (
     <Footer
       state={{
-        DATE, SEND
+        DATE, SEND,
       }}
       setState={{
-        setDATE, setSEND
-      }}
-      flow={{
+        setDATE, setSEND,
       }}
     />
   );

@@ -19,7 +19,7 @@ export const CalendarDetail = () => {
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { dayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
-  const { setALERT } = useAlertStore();
+  const { ALERT, setALERT } = useAlertStore();
   const { ERRORS, REFS, validate } = useValidateCalendar();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -173,7 +173,7 @@ export const CalendarDetail = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -187,7 +187,7 @@ export const CalendarDetail = () => {
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -217,7 +217,7 @@ export const CalendarDetail = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -231,7 +231,7 @@ export const CalendarDetail = () => {
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -268,7 +268,6 @@ export const CalendarDetail = () => {
               DATE={DATE}
               setDATE={setDATE}
               EXIST={EXIST}
-              setEXIST={setEXIST}
             />
           </Grid>
           <Grid size={12}>
@@ -316,10 +315,14 @@ export const CalendarDetail = () => {
             <Grid size={6}>
               <Select
                 label={translate("part")}
-                value={OBJECT?.calendar_section[i]?.calendar_part_idx}
+                locked={LOCKED}
                 inputRef={REFS?.[i]?.calendar_part_idx}
                 error={ERRORS?.[i]?.calendar_part_idx}
-                locked={LOCKED}
+                value={
+                  calendarArray[OBJECT?.calendar_section[i]?.calendar_part_idx]?.calendar_part
+                  ? OBJECT?.calendar_section[i]?.calendar_part_idx
+                  : 0
+                }
                 onChange={(e: any) => {
                   const newIndex = Number(e.target.value);
                   setOBJECT((prev: any) => ({

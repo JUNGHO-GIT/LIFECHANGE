@@ -17,7 +17,7 @@ export const UserResetPw = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, navigate } = useCommonValue();
   const { translate } = useLanguageStore();
-  const { setALERT } = useAlertStore();
+  const { ALERT, setALERT } = useAlertStore();
   const { ERRORS, REFS, validate } = useValidateUser();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ export const UserResetPw = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -49,7 +49,7 @@ export const UserResetPw = () => {
       }
       else if (res.data.status === "notExist") {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -60,7 +60,7 @@ export const UserResetPw = () => {
       }
       else if (res.data.status === "isGoogle") {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -71,7 +71,7 @@ export const UserResetPw = () => {
       }
       else if (res.data.status === "fail") {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -103,7 +103,7 @@ export const UserResetPw = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -114,7 +114,7 @@ export const UserResetPw = () => {
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -146,7 +146,7 @@ export const UserResetPw = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -154,7 +154,7 @@ export const UserResetPw = () => {
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });

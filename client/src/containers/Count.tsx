@@ -1,13 +1,13 @@
 // Count.tsx
 
 import { useCommonValue } from "@imports/ImportHooks";
-import { useLanguageStore } from "@imports/ImportStores";
-import { PopUp, Input } from "@imports/ImportContainers";
+import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
+import { Input } from "@imports/ImportContainers";
 import { Img, Div, Icons } from "@imports/ImportComponents";
-import { Card, Grid } from "@imports/ImportMuis";
+import { Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-declare interface CountProps {
+declare type CountProps = {
   COUNT: any;
   setCOUNT: any;
   LOCKED: string;
@@ -23,6 +23,7 @@ export const Count = (
   // 1. common -------------------------------------------------------------------------------------
   const { PATH, localLocale } = useCommonValue();
   const { translate } = useLanguageStore();
+  const { ALERT, setALERT } = useAlertStore();
 
   // 7. countNode ----------------------------------------------------------------------------------
   const countNode = () => {
@@ -60,89 +61,88 @@ export const Count = (
       />
     );
     const countSection = () => (
-      <PopUp
-        type={"alert"}
-        position={"bottom"}
-        direction={"center"}
-        contents={
-          <Card className={"d-center"}>
-            {localLocale === "ko" ? (
-              `${COUNT.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
-            ) : (
-              `Please enter ${COUNT.sectionCnt} or more and ${limit} or less.`
-            )}
-          </Card>
-        }
-      >
-        {(popTrigger: any) => (
-          <Input
-            label={translate("item")}
-            value={COUNT.newSectionCnt}
-            readOnly={true}
-            error={COUNT.newSectionCnt <= 0}
-            locked={LOCKED}
-            startadornment={
-              <Img
-                key={"common2"}
-                src={"common2"}
-                className={"w-16 h-16"}
-              />
-            }
-            endadornment={
-              <Div className={"d-row-center"}>
-                <Div className={"me-n5"}>
-                  <Icons
-                    key={"Minus"}
-                    name={"Minus"}
-                    className={"w-16 h-16"}
-                    locked={LOCKED}
-                    onClick={(e: any) => {
-                      if (LOCKED === "locked") {
-                        return;
-                      }
-                      if (PATH.includes("/food/find/list")) {
-                        return;
-                      }
-                      COUNT.newSectionCnt > COUNT.sectionCnt ? (
-                        setCOUNT((prev: any) => ({
-                          ...prev,
-                          newSectionCnt: prev.newSectionCnt - 1
-                        }))
-                      ) : (
-                        popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
-                      )
-                    }}
-                  />
-                </Div>
-                <Div className={"me-n10"}>
-                  <Icons
-                    key={"Plus"}
-                    name={"Plus"}
-                    className={"w-16 h-16"}
-                    locked={LOCKED}
-                    onClick={(e: any) => {
-                      if (LOCKED === "locked") {
-                        return;
-                      }
-                      if (PATH.includes("/food/find/list")) {
-                        return;
-                      }
-                      COUNT.newSectionCnt < limit ? (
-                        setCOUNT((prev: any) => ({
-                          ...prev,
-                          newSectionCnt: prev.newSectionCnt + 1
-                        }))
-                      ) : (
-                        popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
-                      )
-                    }}
-                  />
-                </Div>
-              </Div>
-            }
+      <Input
+        label={translate("item")}
+        value={COUNT.newSectionCnt}
+        readOnly={true}
+        error={COUNT.newSectionCnt <= 0}
+        locked={LOCKED}
+        startadornment={
+          <Img
+            key={"common2"}
+            src={"common2"}
+            className={"w-16 h-16"}
           />
-        )}
-      </PopUp>
+        }
+        endadornment={
+          <Div className={"d-row-center"}>
+            <Div className={"me-n5"}>
+              <Icons
+                key={"Minus"}
+                name={"Minus"}
+                className={"w-16 h-16"}
+                locked={LOCKED}
+                onClick={() => {
+                  if (LOCKED === "locked") {
+                    return;
+                  }
+                  if (PATH.includes("/food/find/list")) {
+                    return;
+                  }
+                  COUNT.newSectionCnt > COUNT.sectionCnt ? (
+                    setCOUNT((prev: any) => ({
+                      ...prev,
+                      newSectionCnt: prev.newSectionCnt - 1
+                    }))
+                  ) : (
+                    setALERT({
+                      open: !ALERT.open,
+                      severity: "error",
+                      msg: (
+                        localLocale === "ko"
+                        ? `${COUNT.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
+                        : `Please enter ${COUNT.sectionCnt} or more and ${limit} or less.`
+                      ),
+                    })
+                  )
+                }}
+              />
+            </Div>
+            <Div className={"me-n10"}>
+              <Icons
+                key={"Plus"}
+                name={"Plus"}
+                className={"w-16 h-16"}
+                locked={LOCKED}
+                onClick={() => {
+                  if (LOCKED === "locked") {
+                    return;
+                  }
+                  if (PATH.includes("/food/find/list")) {
+                    return;
+                  }
+                  COUNT.newSectionCnt < limit ? (
+                    setCOUNT((prev: any) => ({
+                      ...prev,
+                      newSectionCnt: prev.newSectionCnt + 1
+                    }))
+                  ) : (
+                    setALERT({
+                      open: !ALERT.open,
+                      severity: "error",
+                      msg: (
+                        localLocale === "ko"
+                        ? `${COUNT.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
+                        : `Please enter ${COUNT.sectionCnt} or more and ${limit} or less.`
+                      ),
+                    })
+                  )
+                }}
+              />
+            </Div>
+          </Div>
+        }
+      />
     );
 
     return (

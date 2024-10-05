@@ -20,7 +20,7 @@ export const SleepDetail = () => {
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { dayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
-  const { setALERT } = useAlertStore();
+  const { ALERT, setALERT } = useAlertStore();
   const { ERRORS, REFS, validate } = useValidateSleep();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -196,7 +196,7 @@ export const SleepDetail = () => {
       if (res.data.status === "success") {
         sync();
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -210,7 +210,7 @@ export const SleepDetail = () => {
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -241,7 +241,7 @@ export const SleepDetail = () => {
       if (res.data.status === "success") {
         sync();
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -255,7 +255,7 @@ export const SleepDetail = () => {
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -292,7 +292,6 @@ export const SleepDetail = () => {
               DATE={DATE}
               setDATE={setDATE}
               EXIST={EXIST}
-              setEXIST={setEXIST}
             />
           </Grid>
           <Grid size={12}>

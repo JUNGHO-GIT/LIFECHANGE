@@ -8,7 +8,7 @@ import { Img } from "@imports/ImportComponents";
 import { Card, DigitalClock, AdapterMoment, LocalizationProvider } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-declare interface PickerTimeProps {
+declare type PickerTimeProps = {
   OBJECT: any;
   setOBJECT: any;
   REFS: any;

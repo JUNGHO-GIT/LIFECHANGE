@@ -20,7 +20,7 @@ export const UserCategory = () => {
   const { URL_OBJECT, PATH, TITLE, sessionId } = useCommonValue();
   const { location_dateStart, location_dateEnd, location_dateType } = useCommonValue();
   const { dayFmt } = useCommonDate();
-  const { setALERT } = useAlertStore();
+  const { ALERT, setALERT } = useAlertStore();
   const { translate } = useLanguageStore();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -92,14 +92,14 @@ export const UserCategory = () => {
       if (res.data.status === "success") {
         sync();
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -180,7 +180,7 @@ export const UserCategory = () => {
     if (type === "part") {
       if (OBJECT[dataType].length <= 1) {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate("cantBeDeletedLastItem"),
           severity: "error",
         });
@@ -204,7 +204,7 @@ export const UserCategory = () => {
     else if (type === "title") {
       if (OBJECT[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`]?.length <= 2) {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate("cantBeDeletedLastItem"),
           severity: "error",
         });

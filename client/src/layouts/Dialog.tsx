@@ -7,7 +7,7 @@ import { Div, Icons } from "@imports/ImportComponents";
 import { SpeedDial, SpeedDialAction, SpeedDialIcon, Backdrop } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-declare interface DialogProps {
+declare type DialogProps = {
   COUNT?: any;
   setCOUNT?: any;
   LOCKED?: any;

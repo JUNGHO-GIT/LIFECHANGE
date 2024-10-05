@@ -12,7 +12,7 @@ import { Paper, Card, MenuItem, Grid } from "@imports/ImportMuis";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from 'recharts';
 
 // -------------------------------------------------------------------------------------------------
-declare interface PieProps {
+declare type PieProps = {
   cx: number;
   cy: number;
   midAngle: number;
@@ -35,7 +35,7 @@ export const SleepChartPie = () => {
   const [LOADING, setLOADING] = useState<boolean>(true);
   const [radius, setRadius] = useState<number>(120);
   const [SECTION, setSECTION] = useState<string>("week");
-  const [DATE, setDATE] = useState<any>({
+  const [DATE, _setDATE] = useState<any>({
     dateType: "",
     dateStart: dayFmt,
     dateEnd: dayFmt,

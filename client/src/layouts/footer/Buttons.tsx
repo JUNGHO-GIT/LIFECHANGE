@@ -7,7 +7,7 @@ import { Btn, Div } from "@imports/ImportComponents";
 import { Grid, Card } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-declare interface ButtonsProps {
+declare type ButtonsProps = {
   state: any;
   setState: any;
   flow: any;

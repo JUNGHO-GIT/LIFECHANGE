@@ -19,7 +19,7 @@ export const FoodDetail = () => {
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { dayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
-  const { setALERT } = useAlertStore();
+  const { ALERT, setALERT } = useAlertStore();
   const { ERRORS, REFS, validate } = useValidateFood();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -254,7 +254,7 @@ export const FoodDetail = () => {
       if (res.data.status === "success") {
         sync();
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -268,7 +268,7 @@ export const FoodDetail = () => {
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -299,7 +299,7 @@ export const FoodDetail = () => {
       if (res.data.status === "success") {
         sync();
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -313,7 +313,7 @@ export const FoodDetail = () => {
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -371,7 +371,6 @@ export const FoodDetail = () => {
               DATE={DATE}
               setDATE={setDATE}
               EXIST={EXIST}
-              setEXIST={setEXIST}
             />
           </Grid>
           <Grid size={12}>
@@ -494,19 +493,23 @@ export const FoodDetail = () => {
             <Grid size={6}>
               <Select
                 label={translate("part")}
-                value={OBJECT?.food_section[i]?.food_part_idx}
+                locked={LOCKED}
                 inputRef={REFS?.[i]?.food_part_idx}
                 error={ERRORS?.[i]?.food_part_idx}
-                locked={LOCKED}
+                value={
+                  foodArray[OBJECT?.food_section[i]?.food_part_idx]?.food_part
+                  ? OBJECT?.food_section[i]?.food_part_idx
+                  : 0
+                }
                 onChange={(e: any) => {
-                  const newPart = Number(e.target.value);
+                  const newIndex = Number(e.target.value);
                   setOBJECT((prev: any) => ({
                     ...prev,
                     food_section: prev?.food_section?.map((item: any, idx: number) => (
                       idx === i ? {
                         ...item,
-                        food_part_idx: newPart,
-                        food_part_val: foodArray[newPart]?.food_part,
+                        food_part_idx: newIndex,
+                        food_part_val: foodArray[newIndex]?.food_part,
                       } : item
                     ))
                   }));
@@ -522,8 +525,8 @@ export const FoodDetail = () => {
             <Grid size={3}>
               <Select
                 label={translate("foodCount")}
-                value={Math.min(Number(OBJECT?.food_section[i]?.food_count), 100) || 1}
                 locked={LOCKED}
+                value={Math.min(Number(OBJECT?.food_section[i]?.food_count), 100) || 1}
                 onChange={(e: any) => {
                   const newCount = Number(e.target.value);
                   const newValue = (value: any) => (
@@ -561,8 +564,8 @@ export const FoodDetail = () => {
             <Grid size={3}>
               <Input
                 label={translate("gram")}
-                value={numeral(OBJECT?.food_section[i]?.food_gram).format("0,0")}
                 locked={LOCKED}
+                value={numeral(OBJECT?.food_section[i]?.food_gram).format("0,0")}
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
                   const newValue = value === "" ? 0 : Number(value);

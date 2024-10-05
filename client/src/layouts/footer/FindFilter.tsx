@@ -7,7 +7,7 @@ import { Icons, Div } from "@imports/ImportComponents";
 import { TablePagination, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-declare interface FindFilterProps {
+declare type FindFilterProps = {
   state: any;
   setState: any;
   flow: any;

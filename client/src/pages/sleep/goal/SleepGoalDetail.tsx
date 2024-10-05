@@ -20,7 +20,7 @@ export const SleepGoalDetail = () => {
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { weekStartFmt, weekEndFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
-  const { setALERT } = useAlertStore();
+  const { ALERT, setALERT } = useAlertStore();
   const { ERRORS, REFS, validate } = useValidateSleep();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -159,7 +159,7 @@ export const SleepGoalDetail = () => {
       if (res.data.status === "success") {
         sync();
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -173,7 +173,7 @@ export const SleepGoalDetail = () => {
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -204,7 +204,7 @@ export const SleepGoalDetail = () => {
       if (res.data.status === "success") {
         sync();
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -218,7 +218,7 @@ export const SleepGoalDetail = () => {
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -257,7 +257,6 @@ export const SleepGoalDetail = () => {
               DATE={DATE}
               setDATE={setDATE}
               EXIST={EXIST}
-              setEXIST={setEXIST}
             />
           </Grid>
           <Grid size={12}>

@@ -8,7 +8,7 @@ export const useValidateExercise = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { translate } = useLanguageStore();
-  const { setALERT } = useAlertStore();
+  const { ALERT, setALERT } = useAlertStore();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const REFS = useRef<any[]>([]);
@@ -18,7 +18,7 @@ export const useValidateExercise = () => {
   // alert 표시 및 focus ---------------------------------------------------------------------------
   const showAlertAndFocus = (field: string, msg: string, idx: number) => {
     setALERT({
-      open: true,
+      open: !ALERT.open,
       msg: translate(msg),
       severity: "error",
     });
@@ -122,13 +122,13 @@ export const useValidateExercise = () => {
         else if (!section[i].exercise_title_idx || section[i].exercise_title_idx === 0) {
           return showAlertAndFocus('exercise_title_idx', "errorExerciseTitleIdx", i);
         }
-        else if (!section[i].exercise_set || section[i].exercise_set === "0") {
+        else if (!section[i].exercise_set) {
           return showAlertAndFocus('exercise_set', "errorExerciseSet", i);
         }
-        else if (!section[i].exercise_rep || section[i].exercise_rep === "0") {
+        else if (!section[i].exercise_rep) {
           return showAlertAndFocus('exercise_rep', "errorExerciseRep", i);
         }
-        else if (!section[i].exercise_kg || section[i].exercise_kg === "0") {
+        else if (!section[i].exercise_kg) {
           return showAlertAndFocus('exercise_kg', "errorExerciseKg", i);
         }
       }

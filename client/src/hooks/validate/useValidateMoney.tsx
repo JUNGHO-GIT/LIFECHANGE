@@ -8,7 +8,7 @@ export const useValidateMoney = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { translate } = useLanguageStore();
-  const { setALERT } = useAlertStore();
+  const { ALERT, setALERT } = useAlertStore();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const REFS = useRef<any[]>([]);
@@ -18,7 +18,7 @@ export const useValidateMoney = () => {
   // alert 표시 및 focus ---------------------------------------------------------------------------
   const showAlertAndFocus = (field: string, msg: string, idx: number) => {
     setALERT({
-      open: true,
+      open: !ALERT.open,
       msg: translate(msg),
       severity: "error",
     });
@@ -114,7 +114,7 @@ export const useValidateMoney = () => {
         else if (!section[i]?.money_title_idx || section[i].money_title_idx === 0) {
           return showAlertAndFocus("money_title_idx", "errorMoneyTitleIdx", i);
         }
-        else if (!section[i]?.money_amount || section[i].money_amount === "0") {
+        else if (!section[i]?.money_amount) {
           return showAlertAndFocus("money_amount", "errorMoneyAmount", i);
         }
       }

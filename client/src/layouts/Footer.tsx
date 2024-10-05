@@ -9,10 +9,10 @@ import { ListFilter } from "./footer/ListFilter";
 import { FindFilter } from "./footer/FindFilter";
 
 // -------------------------------------------------------------------------------------------------
-declare interface FooterProps {
+declare type FooterProps = {
   state: any;
   setState: any;
-  flow: any;
+  flow?: any;
 }
 
 // -------------------------------------------------------------------------------------------------

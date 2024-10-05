@@ -19,7 +19,7 @@ export const ExerciseGoalDetail = () => {
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { weekStartFmt, weekEndFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
-  const { setALERT } = useAlertStore();
+  const { ALERT, setALERT } = useAlertStore();
   const { ERRORS, REFS, validate } = useValidateExercise();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -154,7 +154,7 @@ export const ExerciseGoalDetail = () => {
       if (res.data.status === "success") {
         sync();
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -168,7 +168,7 @@ export const ExerciseGoalDetail = () => {
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -199,7 +199,7 @@ export const ExerciseGoalDetail = () => {
       if (res.data.status === "success") {
         sync();
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -213,7 +213,7 @@ export const ExerciseGoalDetail = () => {
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -253,7 +253,6 @@ export const ExerciseGoalDetail = () => {
               DATE={DATE}
               setDATE={setDATE}
               EXIST={EXIST}
-              setEXIST={setEXIST}
             />
           </Grid>
           <Grid size={12}>

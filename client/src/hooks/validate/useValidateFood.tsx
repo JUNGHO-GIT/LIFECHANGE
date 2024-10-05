@@ -8,7 +8,7 @@ export const useValidateFood = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { translate } = useLanguageStore();
-  const { setALERT } = useAlertStore();
+  const { ALERT, setALERT } = useAlertStore();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const REFS = useRef<any[]>([]);
@@ -18,7 +18,7 @@ export const useValidateFood = () => {
   // alert 표시 및 focus ---------------------------------------------------------------------------
   const showAlertAndFocus = (field: string, msg: string, idx: number) => {
     setALERT({
-      open: true,
+      open: !ALERT.open,
       msg: translate(msg),
       severity: "error",
     });
@@ -125,16 +125,16 @@ export const useValidateFood = () => {
         else if (!section[i].food_name || section[i].food_name === "") {
           return showAlertAndFocus('food_name', "errorFoodName", i);
         }
-        else if (!section[i].food_kcal || section[i].food_kcal === "0") {
+        else if (!section[i].food_kcal) {
           return showAlertAndFocus('food_kcal', "errorFoodKcal", i);
         }
-        else if (!section[i].food_carb || section[i].food_carb === "0") {
+        else if (!section[i].food_carb) {
           return showAlertAndFocus('food_carb', "errorFoodCarb", i);
         }
-        else if (!section[i].food_protein || section[i].food_protein === "0") {
+        else if (!section[i].food_protein) {
           return showAlertAndFocus('food_protein', "errorFoodProtein", i);
         }
-        else if (!section[i].food_fat || section[i].food_fat === "0") {
+        else if (!section[i].food_fat) {
           return showAlertAndFocus('food_fat', "errorFoodFat", i);
         }
       }

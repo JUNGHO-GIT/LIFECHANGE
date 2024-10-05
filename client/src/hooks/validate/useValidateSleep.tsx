@@ -8,7 +8,7 @@ export const useValidateSleep = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { translate } = useLanguageStore();
-  const { setALERT } = useAlertStore();
+  const { ALERT, setALERT } = useAlertStore();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const REFS = useRef<any[]>([]);
@@ -18,7 +18,7 @@ export const useValidateSleep = () => {
   // alert 표시 및 focus ---------------------------------------------------------------------------
   const showAlertAndFocus = (field: string, msg: string, idx: number) => {
     setALERT({
-      open: true,
+      open: !ALERT.open,
       msg: translate(msg),
       severity: "error",
     });

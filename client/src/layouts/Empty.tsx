@@ -6,7 +6,7 @@ import { Div, Icons } from "@imports/ImportComponents";
 import { Card, Accordion, AccordionSummary, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-declare interface EmptyProps {
+declare type EmptyProps = {
   SEND: any;
   extra: string;
 }

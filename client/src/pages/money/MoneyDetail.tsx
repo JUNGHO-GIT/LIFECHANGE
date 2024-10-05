@@ -19,7 +19,7 @@ export const MoneyDetail = () => {
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { dayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
-  const { setALERT } = useAlertStore();
+  const { ALERT, setALERT } = useAlertStore();
   const { ERRORS, REFS, validate } = useValidateMoney();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -223,7 +223,7 @@ export const MoneyDetail = () => {
       if (res.data.status === "success") {
         sync();
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -237,7 +237,7 @@ export const MoneyDetail = () => {
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -268,7 +268,7 @@ export const MoneyDetail = () => {
       if (res.data.status === "success") {
         sync();
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -282,7 +282,7 @@ export const MoneyDetail = () => {
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -319,7 +319,6 @@ export const MoneyDetail = () => {
               DATE={DATE}
               setDATE={setDATE}
               EXIST={EXIST}
-              setEXIST={setEXIST}
             />
           </Grid>
           <Grid size={12}>
@@ -408,10 +407,14 @@ export const MoneyDetail = () => {
             <Grid size={6}>
               <Select
                 label={translate("part")}
-                value={OBJECT?.money_section[i]?.money_part_idx}
+                locked={LOCKED}
                 inputRef={REFS?.[i]?.money_part_idx}
                 error={ERRORS?.[i]?.money_part_idx}
-                locked={LOCKED}
+                value={
+                  moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_part
+                  ? OBJECT?.money_section[i]?.money_part_idx
+                  : 0
+                }
                 onChange={(e: any) => {
                   const newIndex = Number(e.target.value);
                   setOBJECT((prev: any) => ({
@@ -438,13 +441,21 @@ export const MoneyDetail = () => {
             <Grid size={6}>
               <Select
                 label={translate("title")}
-                value={OBJECT?.money_section[i]?.money_title_idx}
+                locked={LOCKED}
                 inputRef={REFS?.[i]?.money_title_idx}
                 error={ERRORS?.[i]?.money_title_idx}
-                locked={LOCKED}
+                value={
+                  moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title?.[OBJECT?.money_section[i]?.money_title_idx]
+                  ? OBJECT?.money_section[i]?.money_title_idx
+                  : 0
+                }
                 onChange={(e: any) => {
-                  const newTitleIdx = Number(e.target.value);
-                  const newTitleVal = moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];
+                  const newTitleIdx = (
+                    Number(e.target.value)
+                  );
+                  const newTitleVal = (
+                    moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx]
+                  );
                   if (newTitleIdx >= 0 && newTitleVal) {
                     setOBJECT((prev: any) => ({
                       ...prev,

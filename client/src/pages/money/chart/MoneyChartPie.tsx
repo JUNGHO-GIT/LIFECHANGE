@@ -13,7 +13,7 @@ import { FormGroup, FormControlLabel, Switch } from "@imports/ImportMuis";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
 // -------------------------------------------------------------------------------------------------
-declare interface PieProps {
+declare type PieProps = {
   cx: number;
   cy: number;
   midAngle: number;

@@ -11,16 +11,15 @@ import { MenuItem, PickersDay, Grid, Card, Badge } from "@imports/ImportMuis";
 import { DateCalendar, AdapterMoment, LocalizationProvider } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-declare interface PickerDayProps {
+declare type PickerDayProps = {
   DATE: any;
   setDATE: any;
   EXIST: any;
-  setEXIST: any;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const PickerDay = (
-  { DATE, setDATE, EXIST, setEXIST }: PickerDayProps
+  { DATE, setDATE, EXIST }: PickerDayProps
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
@@ -49,53 +48,21 @@ export const PickerDay = (
   const isRealList = !PATH.includes("/goal") && PATH.includes("/list");
   const isRealDetail = !PATH.includes("/goal") && PATH.includes("/detail");
 
-  let sessionDate = sessionStorage?.getItem(`${TITLE}_date_(${PATH})`);
-  let parseDate = JSON?.parse(sessionDate || "{}");
-  let dateStart = parseDate?.dateStart;
-  let dateEnd = parseDate?.dateEnd;
-
   // ex. 2024-11-12 ~ 12-15
   const durStr = (
     `${DATE.dateStart.split("-")[1] || "" }-${DATE.dateStart.split("-")[2] || "" } ~ ` +
     `${DATE.dateEnd.split("-")[1] || "" }-${DATE.dateEnd.split("-")[2] || "" }`
   );
-  const clickedDate = {
-    todayDate: {
-      dateType: isToday ? "day" : "",
-      dateStart: dayFmt,
-      dateEnd: dayFmt,
-    },
-    weekDate: {
-      dateType: isToday ? "day" : "",
-      dateStart: weekStartFmt,
-      dateEnd: weekEndFmt,
-    },
-    monthDate: {
-      dateType: isToday ? "day" : "",
-      dateStart: monthStartFmt,
-      dateEnd: monthEndFmt,
-    },
-    yearDate: {
-      dateType: isToday ? "day" : "",
-      dateStart: yearStartFmt,
-      dateEnd: yearEndFmt,
-    },
-    selectDate: {
-      dateType: isToday ? "day" : "",
-      dateStart: dateStart,
-      dateEnd: dateEnd,
-    }
-  };
 
   // 2-1. useState ---------------------------------------------------------------------------------
-  const [saveTypeStr, setDetailTypeStr] = useState<string>("");
   const [listTypeStr, setListTypeStr] = useState<string>("");
+  const [saveTypeStr, setDetailTypeStr] = useState<string>("");
 
   // 2-2. useStorage -------------------------------------------------------------------------------
-  const [saveType, setSaveType] = useState<string>("");
   const [listType, setListType] = useStorage(
-    `${TITLE}_listType_(${PATH})`, "thisToday"
+    `${TITLE}_listType_(${PATH})`, "day"
   );
+  const [saveType, setSaveType] = useState<string>("");
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -112,109 +79,84 @@ export const PickerDay = (
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (isGoalList || isRealList) {
-      if (!dateStart) {
-        dateStart = dayFmt;
+      if (listType === "day") {
+        setDATE({
+          dateType: isToday ? "day" : "",
+          dateStart: dayFmt,
+          dateEnd: dayFmt,
+        });
       }
-      if (!dateEnd) {
-        dateEnd = dayFmt;
+      else if (listType === "week") {
+        setDATE({
+          dateType: isToday ? "day" : "",
+          dateStart: weekStartFmt,
+          dateEnd: weekEndFmt,
+        });
       }
-    }
-  }, [dateStart, dateEnd]);
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
-    if (isGoalList || isRealList) {
-      if (listType === "thisToday") {
-        setDATE(clickedDate?.todayDate);
+      else if (listType === "month") {
+        setDATE({
+          dateType: isToday ? "day" : "",
+          dateStart: monthStartFmt,
+          dateEnd: monthEndFmt,
+        });
       }
-      else if (listType === "thisWeek") {
-        setDATE(clickedDate?.weekDate);
+      else if (listType === "year") {
+        setDATE({
+          dateType: isToday ? "day" : "",
+          dateStart: yearStartFmt,
+          dateEnd: yearEndFmt,
+        });
       }
-      else if (listType === "thisMonth") {
-        setDATE(clickedDate?.monthDate);
-      }
-      else if (listType === "thisYear") {
-        setDATE(clickedDate?.yearDate);
+      else if (listType === "select") {
+        setDATE({
+          dateType: isToday ? "day" : "",
+          dateStart: DATE.dateStart,
+          dateEnd: DATE.dateEnd,
+        });
       }
     }
   }, [listType]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (saveType === "day") {
-      setDATE((prev: any) => ({
-        ...prev,
-        dateType: "day",
-        dateStart: dayFmt,
-        dateEnd: dayFmt,
-      }));
-    }
-    else if (saveType === "week") {
-      setDATE((prev: any) => ({
-        ...prev,
-        dateType: "week",
-        dateStart: weekStartFmt,
-        dateEnd: weekEndFmt,
-      }));
-    }
-    else if (saveType === "month") {
-      setDATE((prev: any) => ({
-        ...prev,
-        dateType: "month",
-        dateStart: monthStartFmt,
-        dateEnd: monthEndFmt,
-      }));
-    }
-    else if (saveType === "year") {
-      setDATE((prev: any) => ({
-        ...prev,
-        dateType: "year",
-        dateStart: yearStartFmt,
-        dateEnd: yearEndFmt,
-      }));
-    }
-    else if (saveType === "select") {
-      setDATE((prev: any) => ({
-        ...prev,
-        dateType: "select",
-        dateStart: dayFmt,
-        dateEnd: dayFmt
-      }));
+    if (isGoalDetail || isRealDetail) {
+      if (saveType === "day") {
+        setDATE({
+          dateType: "day",
+          dateStart: dayFmt,
+          dateEnd: dayFmt,
+        });
+      }
+      else if (saveType === "week") {
+        setDATE({
+          dateType: "week",
+          dateStart: weekStartFmt,
+          dateEnd: weekEndFmt,
+        });
+      }
+      else if (saveType === "month") {
+        setDATE({
+          dateType: "month",
+          dateStart: monthStartFmt,
+          dateEnd: monthEndFmt,
+        });
+      }
+      else if (saveType === "year") {
+        setDATE({
+          dateType: "year",
+          dateStart: yearStartFmt,
+          dateEnd: yearEndFmt,
+        });
+      }
+      else if (saveType === "select") {
+        setDATE({
+          dateType: "select",
+          dateStart: DATE.dateStart,
+          dateEnd: DATE.dateEnd,
+        });
+      }
     }
   }, [saveType]);
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
-    if (isGoalList || isRealList) {
-      if (
-        (DATE?.dateStart === clickedDate?.todayDate?.dateStart) &&
-        (DATE?.dateEnd === clickedDate?.todayDate?.dateEnd)
-      ) {
-        setListType("thisToday");
-      }
-      else if (
-        (DATE?.dateStart === clickedDate?.weekDate?.dateStart) &&
-        (DATE?.dateEnd === clickedDate?.weekDate?.dateEnd)
-      ) {
-        setListType("thisWeek");
-      }
-      else if (
-        (DATE?.dateStart === clickedDate?.monthDate?.dateStart) &&
-        (DATE?.dateEnd === clickedDate?.monthDate?.dateEnd)
-      ) {
-        setListType("thisMonth");
-      }
-      else if (
-        (DATE?.dateStart === clickedDate?.yearDate?.dateStart) &&
-        (DATE?.dateEnd === clickedDate?.yearDate?.dateEnd)
-      ) {
-        setListType("thisYear");
-      }
-      else {
-        setListType("selectDate");
-      }
-    }
-  }, [DATE]);
 
   // 7. pickerNode ---------------------------------------------------------------------------------
   const pickerNode = () => {
@@ -222,6 +164,7 @@ export const PickerDay = (
     // 1. day --------------------------------------------------------------------------------------
     const daySection = () => (
       <PopUp
+        key={"day"}
         type={"innerCenter"}
         position={"center"}
         direction={"center"}
@@ -405,9 +348,7 @@ export const PickerDay = (
               </Div>
             }
             onClick={(e: any) => {
-              if (!isToday && !isGoalToday) {
-                popTrigger.openPopup(e.currentTarget);
-              }
+              popTrigger.openPopup(e.currentTarget);
             }}
           />
         )}
@@ -417,6 +358,7 @@ export const PickerDay = (
     // 2. week -------------------------------------------------------------------------------------
     const weekSection = () => (
       <PopUp
+        key={"week"}
         type={"innerCenter"}
         position={"center"}
         direction={"center"}
@@ -614,9 +556,7 @@ export const PickerDay = (
               </Div>
             }
             onClick={(e: any) => {
-              if (!isToday && !isGoalToday) {
-                popTrigger.openPopup(e.currentTarget);
-              }
+              popTrigger.openPopup(e.currentTarget);
             }}
           />
         )}
@@ -626,6 +566,7 @@ export const PickerDay = (
     // 3. month ------------------------------------------------------------------------------------
     const monthSection = () => (
       <PopUp
+        key={"month"}
         type={"innerCenter"}
         position={"center"}
         direction={"center"}
@@ -806,9 +747,7 @@ export const PickerDay = (
               </Div>
             }
             onClick={(e: any) => {
-              if (!isToday && !isGoalToday) {
-                popTrigger.openPopup(e.currentTarget);
-              }
+              popTrigger.openPopup(e.currentTarget);
             }}
           />
         )}
@@ -818,6 +757,7 @@ export const PickerDay = (
     // 4. year -------------------------------------------------------------------------------------
     const yearSection = () => (
       <PopUp
+        key={"year"}
         type={"innerCenter"}
         position={"center"}
         direction={"center"}
@@ -999,9 +939,7 @@ export const PickerDay = (
               </Div>
             }
             onClick={(e: any) => {
-              if (!isToday && !isGoalToday) {
-                popTrigger.openPopup(e.currentTarget);
-              }
+              popTrigger.openPopup(e.currentTarget);
             }}
           />
         )}
@@ -1011,12 +949,12 @@ export const PickerDay = (
     // 5. select -----------------------------------------------------------------------------------
     const selectSection = () => (
       <PopUp
+        key={"select"}
         type={"innerCenter"}
         position={"center"}
         direction={"center"}
-        className={"p-10"}
         contents={
-          <Card className={"p-0"}>
+          <Card className={"w-min70vw p-0"}>
             <Grid container spacing={2} columns={12}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
@@ -1158,9 +1096,7 @@ export const PickerDay = (
               />
             }
             onClick={(e: any) => {
-              if (!isToday && !isGoalToday) {
-                popTrigger.openPopup(e.currentTarget);
-              }
+              popTrigger.openPopup(e.currentTarget);
             }}
           />
         )}
@@ -1171,25 +1107,28 @@ export const PickerDay = (
     const listTypeSection = () => (
       <Select
         label={translate("dateType")}
-        value={listType || ""}
+        value={listType}
         inputclass={listTypeStr}
         readOnly={isToday}
         onChange={(e: any) => {
-          if (e.target.value === "thisToday") {
-            setListType("thisToday");
+          if (e.target.value === "day") {
+            setListType("day");
           }
-          else if (e.target.value === "thisWeek") {
-            setListType("thisWeek");
+          else if (e.target.value === "week") {
+            setListType("week");
           }
-          else if (e.target.value === "thisMonth") {
-            setListType("thisMonth");
+          else if (e.target.value === "month") {
+            setListType("month");
           }
-          else if (e.target.value === "thisYear") {
-            setListType("thisYear");
+          else if (e.target.value === "year") {
+            setListType("year");
+          }
+          else if (e.target.value === "select") {
+            setListType("select");
           }
         }}
       >
-        {["thisToday", "thisWeek", "thisMonth", "thisYear", "selectDate"]?.map((item: any) => (
+        {["day", "week", "month", "year", "select"]?.map((item: any) => (
           <MenuItem
             key={item}
             value={item}
@@ -1233,27 +1172,29 @@ export const PickerDay = (
             <MenuItem
               key={item}
               value={item}
-              selected={item === DATE.dateType}
+              selected={item === saveType}
             >
               {translate(item)}
             </MenuItem>
           ))
-        ) : isGoalDetail ? (
+        )
+        : isGoalDetail ? (
           ["week", "month", "year"]?.map((item: any) => (
             <MenuItem
               key={item}
               value={item}
-              selected={item === DATE.dateType}
+              selected={item === saveType}
             >
               {translate(item)}
             </MenuItem>
           ))
-        ) : (
+        )
+        : (
           ["day"]?.map((item: any) => (
             <MenuItem
               key={item}
               value={item}
-              selected={item === DATE.dateType}
+              selected={item === saveType}
             >
               {translate(item)}
             </MenuItem>
@@ -1288,7 +1229,11 @@ export const PickerDay = (
             {listTypeSection()}
           </Grid>
           <Grid size={8} className={"d-center"}>
-            {selectSection()}
+            {listType === "day" && daySection()}
+            {listType === "week" && weekSection()}
+            {listType === "month" && monthSection()}
+            {listType === "year" && yearSection()}
+            {listType === "select" && selectSection()}
           </Grid>
         </Grid>
       )
@@ -1314,7 +1259,11 @@ export const PickerDay = (
             {listTypeSection()}
           </Grid>
           <Grid size={8} className={"d-center"}>
-            {selectSection()}
+            {listType === "day" && daySection()}
+            {listType === "week" && weekSection()}
+            {listType === "month" && monthSection()}
+            {listType === "year" && yearSection()}
+            {listType === "select" && selectSection()}
           </Grid>
         </Grid>
       )

@@ -3,7 +3,7 @@
 import { Icons, Div } from "@imports/ImportComponents";
 
 // -------------------------------------------------------------------------------------------------
-declare interface DeleteProps {
+declare type DeleteProps = {
   index: number;
   handlerDelete: any;
   LOCKED: string;

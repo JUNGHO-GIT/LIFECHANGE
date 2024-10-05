@@ -7,7 +7,7 @@ import { Div } from "@imports/ImportComponents";
 import { MenuItem, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-declare interface ListFilterProps {
+declare type ListFilterProps = {
   state: any;
   setState: any;
   flow: any;
@@ -56,7 +56,6 @@ export const ListFilter = (
         DATE={state?.DATE}
         setDATE={setState?.setDATE}
         EXIST={state?.EXIST}
-        setEXIST={setState?.setEXIST}
       />
     );
 

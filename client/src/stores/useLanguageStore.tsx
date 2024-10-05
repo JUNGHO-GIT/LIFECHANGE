@@ -3,7 +3,7 @@
 import { create } from "zustand";
 
 // -------------------------------------------------------------------------------------------------
-interface LanguageState {
+declare type LanguageState = {
   lang: string;
   setLang: (lang: string) => void;
   translate: (key: string) => string;

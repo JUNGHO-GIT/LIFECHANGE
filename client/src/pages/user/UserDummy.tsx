@@ -18,7 +18,7 @@ export const UserDummy = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, TITLE, navigate, sessionId } = useCommonValue();
-  const { setALERT } = useAlertStore();
+  const { ALERT, setALERT } = useAlertStore();
   const { translate } = useLanguageStore();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -106,7 +106,7 @@ export const UserDummy = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -124,7 +124,7 @@ export const UserDummy = () => {
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -151,7 +151,7 @@ export const UserDummy = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -169,7 +169,7 @@ export const UserDummy = () => {
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });

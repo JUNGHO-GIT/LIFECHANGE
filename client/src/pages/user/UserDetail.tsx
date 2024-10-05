@@ -17,7 +17,7 @@ export const UserDetail = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, navigate, sessionId, localCurrency } = useCommonValue();
   const { translate } = useLanguageStore();
-  const { setALERT } = useAlertStore();
+  const { ALERT, setALERT } = useAlertStore();
   const { ERRORS, REFS, validate } = useValidateUser();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ export const UserDetail = () => {
       if (res.data.status === "success") {
         sync();
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -73,7 +73,7 @@ export const UserDetail = () => {
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });

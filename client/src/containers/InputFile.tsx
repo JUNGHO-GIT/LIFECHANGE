@@ -11,7 +11,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { translate } = useLanguageStore();
-  const { setALERT } = useAlertStore();
+  const { ALERT, setALERT } = useAlertStore();
 
   // 2-1. useState ---------------------------------------------------------------------------------
   const [fileExisting, setFileExisting] = useState<any[]>([]);

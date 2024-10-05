@@ -3,7 +3,7 @@
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useStorage } from "@imports/ImportHooks";
 import { Calendar } from "@imports/ImportSchemas";
-import { moment, axios, CalendarReact } from "@imports/ImportUtils";
+import { axios, CalendarReact } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Icons, Div } from "@imports/ImportComponents";
 import { Paper, Grid, Card } from "@imports/ImportMuis";
@@ -15,7 +15,9 @@ export const CalendarList = () => {
   const { URL_OBJECT, PATH, TITLE } = useCommonValue();
   const { sessionId, navigate, toDetail, localLocale } = useCommonValue();
   const { monthStartFmt, monthEndFmt } = useCommonDate();
-  const { getDayFmt, getDayStartFmt, getDayEndFmt, getDayNotFmt } = useCommonDate();
+  const { getMoment, getDayFmt, getDayStartFmt, getDayEndFmt, getDayNotFmt } = useCommonDate();
+  const { getPrevMonthStartFmt, getPrevMonthEndFmt } = useCommonDate();
+  const { getNextMonthStartFmt, getNextMonthEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -27,7 +29,7 @@ export const CalendarList = () => {
       dateEnd: monthEndFmt,
     }
   );
-  const [PAGING, setPAGING] = useStorage(
+  const [PAGING, _setPAGING] = useStorage(
     `${TITLE}_paging_(${PATH})`, {
       sort: "asc",
       page: 1,
@@ -37,6 +39,13 @@ export const CalendarList = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>([Calendar]);
+  const [EXIST, setEXIST] = useState<any>({
+    day: [""],
+    week: [""],
+    month: [""],
+    year: [""],
+    select: [""],
+  });
   const [SEND, setSEND] = useState<any>({
     id: "",
     section_id: "",
@@ -71,6 +80,7 @@ export const CalendarList = () => {
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
 
+    // 7-1. dateInRange
     const dateInRange = (date: any, dateStart: any, dateEnd: any) => {
       const dayFmt = getDayFmt(date);
       const dayStart = getDayStartFmt(dateStart);
@@ -79,6 +89,7 @@ export const CalendarList = () => {
       return dayFmt >= dayStart && dayFmt <= dayEnd;
     };
 
+    // 7-2. activeLine
     const activeLine = (calendarForDates: any) => (
       calendarForDates?.map((calendar: any) =>
         calendar.calendar_section?.map((section: any) => (
@@ -108,6 +119,8 @@ export const CalendarList = () => {
         ))
       )
     );
+
+    // 7-3. unActiveLine
     const unActiveLine = (calendarForDates: any) => (
       calendarForDates?.map((calendar: any) =>
         calendar.calendar_section.map((section: any) => (
@@ -122,43 +135,79 @@ export const CalendarList = () => {
         ))
       )
     );
-    // 7-3. list
-    const listSection = () => {
-      const listFragment = (i: number) => (
-        <Card className={"pt-20 pb-20"} key={`${i}-card`}>
-          <Grid container spacing={2} columns={12}>
+
+    // 7-4. title
+    const titleSection = (i: number) => (
+      <Card className={"p-0 mb-20"} key={`${i}-title`}>
+        <Grid container spacing={2} columns={12}>
+          <Grid size={3} className={"d-row-left"}>
+            <Icons
+              key={"ArrowLeft"}
+              name={"ArrowLeft"}
+              className={"w-24 h-24"}
+              onClick={() => {
+                setDATE((prev: any) => ({
+                  ...prev,
+                  dateStart: getPrevMonthStartFmt(prev.dateStart),
+                  dateEnd: getPrevMonthEndFmt(prev.dateStart),
+                }));
+              }}
+            />
+          </Grid>
+          <Grid size={6} className={"d-row-center"}>
+            <Div
+              className={"fs-1-4rem fw-500"}
+              onClick={() => {
+                setDATE((prev: any) => ({
+                  ...prev,
+                  dateStart: monthStartFmt,
+                  dateEnd: monthEndFmt,
+                }));
+              }}
+            >
+              {getDayNotFmt(DATE.dateStart).format("YYYY-MM")}
+            </Div>
+          </Grid>
+          <Grid size={3} className={"d-row-right"}>
+            <Icons
+              key={"ArrowRight"}
+              name={"ArrowRight"}
+              className={"w-24 h-24"}
+              onClick={() => {
+                setDATE((prev: any) => ({
+                  ...prev,
+                  dateStart: getNextMonthStartFmt(prev.dateStart),
+                  dateEnd: getNextMonthEndFmt(prev.dateStart),
+                }));
+              }}
+            />
+          </Grid>
+        </Grid>
+      </Card>
+    );
+    // 7-5. calendar
+    const calendarSection = (i: number) => (
+      <Card className={"p-0"} key={`${i}-calendar`}>
+        <Grid container spacing={2} columns={12}>
+          <Grid size={12} className={"d-row-center"}>
             <CalendarReact
               key={`${i}-calendar`}
               view={"month"}
               locale={localLocale}
               calendarType={"gregory"}
               value={new Date(DATE.dateStart)}
-              showNavigation={true}
-              showNeighboringMonth={true}
+              showNavigation={false}
               showDoubleView={false}
+              showNeighboringMonth={true}
               prev2Label={null}
               next2Label={null}
-              formatDay={(locale, date) => getDayNotFmt(date).format("D")}
-              formatWeekday={(locale, date) => getDayNotFmt(date).format("d")}
-              formatMonth={(locale, date) => getDayNotFmt(date).format("MM")}
-              formatYear={(locale, date) => getDayNotFmt(date).format("YYYY")}
-              formatLongDate={(locale, date) => getDayNotFmt(date).format("YYYY-MM-DD")}
-              formatMonthYear={(locale, date) => getDayNotFmt(date).format("YYYY-MM")}
-              prevLabel={
-                <Icons
-                  key={"ArrowLeft"}
-                  name={"ArrowLeft"}
-                  className={"w-24 h-24"}
-                />
-              }
-              nextLabel={
-                <Icons
-                  key={"ArrowRight"}
-                  name={"ArrowRight"}
-                  className={"w-24 h-24"}
-                />
-              }
-              onActiveStartDateChange={({ activeStartDate, view }) => {
+              formatDay={(_locale, date) => getDayNotFmt(date).format("D")}
+              formatWeekday={(_locale, date) => getDayNotFmt(date).format("d")}
+              formatMonth={(_locale, date) => getDayNotFmt(date).format("MM")}
+              formatYear={(_locale, date) => getDayNotFmt(date).format("YYYY")}
+              formatLongDate={(_locale, date) => getDayNotFmt(date).format("YYYY-MM-DD")}
+              formatMonthYear={(_locale, date) => getDayNotFmt(date).format("YYYY-MM")}
+              onActiveStartDateChange={({ activeStartDate }) => {
                 setDATE((prev: any) => ({
                   ...prev,
                   dateStart: getMonthStartFmt(activeStartDate),
@@ -182,21 +231,25 @@ export const CalendarList = () => {
                   });
                 }
               }}
-              tileClassName={({ date, view }) => {
-                let className = "calendar-tile";
-                // 토요일
-                let isSat = moment(date).day() === 6;
-                // 일요일
-                let isSun = moment(date).day() === 0;
-                // 오늘
-                let isToday = moment(date).isSame(new Date(), 'day');
-                // 이번달
-                let isCurrentMonth = moment(date).isSame(moment(DATE.dateStart), 'month');
+              tileClassName={({ date }) => {
 
+                // 토요일
+                let isSat = getMoment(date).day() === 6;
+
+                // 일요일
+                let isSun = getMoment(date).day() === 0;
+
+                // 오늘
+                let isToday = getMoment(date).isSame(new Date(), 'day');
+
+                // 이번달
+                let isCurrentMonth = getMoment(date).isSame(getMoment(DATE.dateStart), 'month');
+
+                // 섹션이 3개 이상인 경우 스크롤
+                let className = "calendar-tile";
                 const calendarForDates = OBJECT.filter((calendar: any) => (
                   dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
                 ));
-
                 if (calendarForDates.length > 0) {
                   const hasManySections = calendarForDates.some((calendar: any) => (
                     calendar.calendar_section.length > 2
@@ -205,48 +258,51 @@ export const CalendarList = () => {
                     className += " over-y-auto";
                   }
                 }
+
                 // 토요일 색상 변경
                 if (isSat) {
                   className += " calendar-sat";
                 }
+
                 // 일요일 색상 변경
                 if (isSun) {
                   className += " calendar-sun";
                 }
+
                 // 오늘 날짜
                 if (isToday) {
                   className += " calendar-today";
                 }
+
                 // 이전달 or 다음달
                 if (!isCurrentMonth) {
                   className += " calendar-outside";
                 }
                 return className;
               }}
-              tileContent={({ date, view }) => {
+              tileContent={({ date }) => {
                 const calendarForDates = OBJECT.filter((calendar: any) => (
                   dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
                 ));
-                const content
-                  = calendarForDates.length > 0
-                  ? activeLine(calendarForDates)
-                  : unActiveLine(calendarForDates);
+                const content = (
+                  calendarForDates.length > 0
+                    ? activeLine(calendarForDates)
+                    : unActiveLine(calendarForDates)
+                );
                 return content;
               }}
             />
           </Grid>
-        </Card>
-      );
-      return (
-        listFragment(0)
-      );
-    };
+        </Grid>
+      </Card>
+    );
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min70vh"}>
         <Grid container spacing={2} columns={12}>
           <Grid size={12}>
-            {!LOADING ? listSection() : <Loading />}
+            {titleSection(0)}
+            {!LOADING ? calendarSection(0) : <Loading />}
           </Grid>
         </Grid>
       </Paper>
@@ -257,12 +313,10 @@ export const CalendarList = () => {
   const footerNode = () => (
     <Footer
       state={{
-        DATE, SEND
+        DATE, SEND, EXIST
       }}
       setState={{
-        setDATE, setSEND
-      }}
-      flow={{
+        setDATE, setSEND, setEXIST
       }}
     />
   );

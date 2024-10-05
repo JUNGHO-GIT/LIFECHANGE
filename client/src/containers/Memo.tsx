@@ -7,7 +7,7 @@ import { Img } from "@imports/ImportComponents";
 import { TextArea, Grid, Card } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
-declare interface MemoProps {
+declare type MemoProps = {
   OBJECT: any;
   setOBJECT: any;
   LOCKED: string;

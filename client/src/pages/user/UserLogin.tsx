@@ -18,7 +18,7 @@ export const UserLogin = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, URL_GOOGLE, ADMIN_ID, ADMIN_PW, TITLE, navigate } = useCommonValue();
   const { translate } = useLanguageStore();
-  const { setALERT } = useAlertStore();
+  const { ALERT, setALERT } = useAlertStore();
   const { ERRORS, REFS, validate } = useValidateUser();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -125,7 +125,7 @@ export const UserLogin = () => {
       }
       else if (res.data.status === "isGoogleUser") {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -133,7 +133,7 @@ export const UserLogin = () => {
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -157,7 +157,7 @@ export const UserLogin = () => {
       }
       else {
         setALERT({
-          open: true,
+          open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "error",
         });

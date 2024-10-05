@@ -16,7 +16,7 @@ export const SleepGoalList = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, TITLE, sessionId, toDetail } = useCommonValue();
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
-  const { dayFmt, getDayNotFmt } = useCommonDate();
+  const { dayFmt, getDayNotFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -39,6 +39,13 @@ export const SleepGoalList = () => {
   const [isExpanded, setIsExpanded] = useState<number[]>([0]);
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>([SleepGoal]);
+  const [EXIST, setEXIST] = useState<any>({
+    day: [""],
+    week: [""],
+    month: [""],
+    year: [""],
+    select: [""],
+  });
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "day",
@@ -50,6 +57,28 @@ export const SleepGoalList = () => {
     sectionCnt: 0,
     newSectionCnt: 0
   });
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    axios.get(`${URL_OBJECT}/goal/exist`, {
+      params: {
+        user_id: sessionId,
+        DATE: {
+          dateType: "",
+          dateStart: getMonthStartFmt(DATE.dateStart),
+          dateEnd: getMonthEndFmt(DATE.dateEnd),
+        },
+      },
+    })
+    .then((res: any) => {
+      setEXIST(
+        !res.data.result || res.data.result.length === 0 ? [""] : res.data.result
+      );
+    })
+    .catch((err: any) => {
+      console.error(err);
+    });
+  }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -385,12 +414,10 @@ export const SleepGoalList = () => {
   const footerNode = () => (
     <Footer
       state={{
-        DATE, SEND, PAGING, COUNT
+        DATE, SEND, PAGING, COUNT, EXIST
       }}
       setState={{
-        setDATE, setSEND, setPAGING, setCOUNT
-      }}
-      flow={{
+        setDATE, setSEND, setPAGING, setCOUNT, setEXIST
       }}
     />
   );

@@ -34,6 +34,13 @@ export const FoodFindList = () => {
   const [isExpanded, setIsExpanded] = useState<number[]>([0]);
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>([FoodFind]);
+  const [EXIST, setEXIST] = useState<any>({
+    day: [""],
+    week: [""],
+    month: [""],
+    year: [""],
+    select: [""],
+  });
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "day",
