@@ -73,7 +73,6 @@ const schema = new mongoose.Schema({
 });
 
 // 3. counter --------------------------------------------------------------------------------------
-// @ts-ignore
 schema.pre("save", async function(next) {
   if (this.isNew) {
     this.calendar_number = await incrementSeq("calendar_number", "Calendar");

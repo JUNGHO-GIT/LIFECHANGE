@@ -11,17 +11,30 @@ export const User: any = {
   user_pw: "",
   user_pw_verified: "",
   user_age: "",
-  user_gender: "",
+  user_image: "",
+
   user_initScale: "",
   user_curScale: "",
+
+  user_foodFavorite: [{
+    food_key: "",
+    food_name: "",
+    food_brand: "",
+    food_kcal: "",
+    food_carb: "",
+    food_protein: "",
+    food_fat: "",
+  }],
+
   user_initProperty: "",
-  user_curPropertyAll: "",
-  user_curProperty: "",
-  user_image: "",
+  user_curPropertyInclude: "",
+  user_curPropertyExclude: "",
+
   user_regDt: "",
   user_updateDt: "",
 };
 
+// -------------------------------------------------------------------------------------------------
 export const Category: any = {
   calendar: [
     {
@@ -52,6 +65,7 @@ export const Category: any = {
   ]
 };
 
+// -------------------------------------------------------------------------------------------------
 export const AppInfo: any = {
   version: "",
   date: "",

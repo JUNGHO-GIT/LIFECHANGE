@@ -2,6 +2,7 @@
 
 import mongoose from "mongoose";
 import { Food } from "@schemas/food/Food";
+import { User } from "@schemas/user/User";
 import { newDate } from "@scripts/date";
 
 // 0. exist ----------------------------------------------------------------------------------------
@@ -117,6 +118,25 @@ export const list = async (
   ]);
 
   return finalResult;
+};
+
+// 1-2. listFavorite -------------------------------------------------------------------------------
+export const listFavorite = async (
+  user_id_param: string,
+) => {
+
+  const finalResult:any = await User.findOne(
+    {
+      user_id: user_id_param
+    },
+    {
+      _id: 0,
+      user_foodFavorite: 1
+    }
+  )
+  .lean();
+
+  return finalResult.user_foodFavorite;
 };
 
 // 2. detail ---------------------------------------------------------------------------------------
@@ -308,7 +328,32 @@ export const update = {
     .lean();
 
     return finalResult;
-  }
+  },
+
+  // 4. updateFavorite
+  favorite: async (
+    user_id_param: string,
+    foodFavorite_param: any,
+  ) => {
+
+    const finalResult:any = await User.findOneAndUpdate(
+      {
+        user_id: user_id_param
+      },
+      {
+        $set: {
+          user_foodFavorite: foodFavorite_param
+        }
+      },
+      {
+        upsert: true,
+        new: true
+      }
+    )
+    .lean();
+
+    return finalResult.user_foodFavorite;
+  },
 };
 
 // 5. delete ---------------------------------------------------------------------------------------

@@ -18,7 +18,7 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } fro
 export const SleepChartLine = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, COLORS, sessionId, sleepChartArray } = useCommonValue();
+  const { URL_OBJECT, sessionId, chartColors, sleepChartArray } = useCommonValue();
   const { dayFmt, weekStartFmt, weekEndFmt} = useCommonDate();
   const { monthStartFmt, monthEndFmt, yearStartFmt, yearEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -113,7 +113,7 @@ export const SleepChartLine = () => {
             <Line
               dataKey={"bedTime"}
               type={"monotone"}
-              stroke={COLORS[4]}
+              stroke={chartColors[4]}
               activeDot={{r:8}}
               strokeWidth={2}
             />
@@ -122,7 +122,7 @@ export const SleepChartLine = () => {
             <Line
               dataKey={"wakeTime"}
               type={"monotone"}
-              stroke={COLORS[1]}
+              stroke={chartColors[1]}
               activeDot={{r:8}}
               strokeWidth={2}
             />
@@ -131,7 +131,7 @@ export const SleepChartLine = () => {
             <Line
               dataKey={"sleepTime"}
               type={"monotone"}
-              stroke={COLORS[2]}
+              stroke={chartColors[2]}
               activeDot={{r:8}}
               strokeWidth={2}
             />
@@ -216,7 +216,7 @@ export const SleepChartLine = () => {
             <Line
               dataKey={"bedTime"}
               type={"monotone"}
-              stroke={COLORS[4]}
+              stroke={chartColors[4]}
               activeDot={{r:8}}
               strokeWidth={2}
             />
@@ -225,7 +225,7 @@ export const SleepChartLine = () => {
             <Line
               dataKey={"wakeTime"}
               type={"monotone"}
-              stroke={COLORS[1]}
+              stroke={chartColors[1]}
               activeDot={{r:8}}
               strokeWidth={2}
             />
@@ -234,7 +234,7 @@ export const SleepChartLine = () => {
             <Line
               dataKey={"sleepTime"}
               type={"monotone"}
-              stroke={COLORS[2]}
+              stroke={chartColors[2]}
               activeDot={{r:8}}
               strokeWidth={2}
             />

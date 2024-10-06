@@ -18,7 +18,7 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } fro
 export const ExerciseChartLine = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, COLORS, sessionId, exerciseChartArray } = useCommonValue();
+  const { URL_OBJECT, sessionId, chartColors, exerciseChartArray } = useCommonValue();
   const { dayFmt, weekStartFmt, weekEndFmt} = useCommonDate();
   const { monthStartFmt, monthEndFmt, yearStartFmt, yearEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -120,7 +120,7 @@ export const ExerciseChartLine = () => {
           <Line
             dataKey={"volume"}
             type={"monotone"}
-            stroke={COLORS[1]}
+            stroke={chartColors[1]}
             activeDot={{r:8}}
             strokeWidth={2}
           />
@@ -203,7 +203,7 @@ export const ExerciseChartLine = () => {
           <Line
             dataKey={"cardio"}
             type={"monotone"}
-            stroke={COLORS[3]}
+            stroke={chartColors[3]}
             activeDot={{r:8}}
             strokeWidth={2}
           />
@@ -286,7 +286,7 @@ export const ExerciseChartLine = () => {
           <Line
             dataKey={"volume"}
             type={"monotone"}
-            stroke={COLORS[1]}
+            stroke={chartColors[1]}
             activeDot={{r:8}}
             strokeWidth={2}
           />
@@ -369,7 +369,7 @@ export const ExerciseChartLine = () => {
           <Line
             dataKey={"cardio"}
             type={"monotone"}
-            stroke={COLORS[3]}
+            stroke={chartColors[3]}
             activeDot={{r:8}}
             strokeWidth={2}
           />

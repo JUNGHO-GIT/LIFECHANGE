@@ -1366,7 +1366,6 @@ export const TodayGoalList = () => {
     <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
-      isExpanded={isExpanded}
       setIsExpanded={setIsExpanded}
     />
   );

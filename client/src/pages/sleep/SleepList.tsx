@@ -107,7 +107,7 @@ export const SleepList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [URL_OBJECT, sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
+  }, [URL_OBJECT, sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
 
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
@@ -281,7 +281,6 @@ export const SleepList = () => {
     <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
-      isExpanded={isExpanded}
       setIsExpanded={setIsExpanded}
     />
   );

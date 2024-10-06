@@ -23,7 +23,7 @@ export const AuthGoogle = () => {
         localStorage.setItem(`${TITLE}_isGoogle`, "true");
 
         sessionStorage.setItem(`${TITLE}_sessionId`, res.data.googleId);
-        sessionStorage.setItem(`${TITLE}_category`, JSON.stringify(res.data.result.dataCategory));
+        sessionStorage.setItem(`${TITLE}_category`, JSON.stringify(res.data.result.user_dataCategory));
 
         if (res.data.admin === "admin") {
           sessionStorage.setItem(`${TITLE}_admin`, "true");

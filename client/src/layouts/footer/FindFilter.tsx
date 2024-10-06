@@ -28,13 +28,14 @@ export const FindFilter = (
     const querySection = () => (
       <Input
         label={translate("query")}
-        value={state?.PAGING?.query}
+        value={state?.DISPLAY === "favorite" ? translate("favorite") : state?.PAGING.query}
+        disabled={state?.DISPLAY === "favorite" ? true : false}
         inputclass={"h-30"}
         shrink={"shrink"}
         onChange={(e: any) => {
           setState?.setPAGING((prev: any) => ({
             ...prev,
-            query: e.target.value
+            query: state?.DISPLAY === "favorite" ? "favorite" : e.target.value
           }));
         }}
         onKeyDown={(e: any) => {

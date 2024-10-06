@@ -24,7 +24,7 @@ export const UserLogin = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [loginTrigger, setLoginTrigger] = useState<boolean>(false);
-  const [clickCount, setClickCount] = useState<number>(0);
+  const [_clickCount, setClickCount] = useState<number>(0);
   const [checkedSaveId, setCheckedSaveId] = useState<boolean>(false);
   const [checkedAutoLogin, setCheckedAutoLogin] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>(User);
@@ -119,7 +119,7 @@ export const UserLogin = () => {
           sessionStorage.setItem(`${TITLE}_admin`, "false");
         }
         sessionStorage.setItem(`${TITLE}_sessionId`, res.data.result.user_id);
-        sessionStorage.setItem(`${TITLE}_category`, JSON.stringify(res.data.result.dataCategory));
+        sessionStorage.setItem(`${TITLE}_category`, JSON.stringify(res.data.result.user_dataCategory));
         sync();
         navigate("/today/list");
       }

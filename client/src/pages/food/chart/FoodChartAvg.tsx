@@ -18,7 +18,7 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } fro
 export const FoodChartAvg = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, COLORS, sessionId, foodChartArray } = useCommonValue();
+  const { URL_OBJECT, sessionId, chartColors, foodChartArray } = useCommonValue();
   const { dayFmt, weekStartFmt, weekEndFmt} = useCommonDate();
   const { monthStartFmt, monthEndFmt, yearStartFmt, yearEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -119,7 +119,7 @@ export const FoodChartAvg = () => {
           />
           <Bar
             dataKey={"kcal"}
-            fill={COLORS[3]}
+            fill={chartColors[3]}
             radius={[10, 10, 0, 0]}
             minPointSize={1}
           />
@@ -201,19 +201,19 @@ export const FoodChartAvg = () => {
           />
           <Bar
             dataKey={"carb"}
-            fill={COLORS[1]}
+            fill={chartColors[1]}
             radius={[10, 10, 0, 0]}
             minPointSize={1}
           />
           <Bar
             dataKey={"protein"}
-            fill={COLORS[4]}
+            fill={chartColors[4]}
             radius={[10, 10, 0, 0]}
             minPointSize={1}
           />
           <Bar
             dataKey={"fat"}
-            fill={COLORS[2]}
+            fill={chartColors[2]}
             radius={[10, 10, 0, 0]}
             minPointSize={1}
           />
@@ -294,7 +294,7 @@ export const FoodChartAvg = () => {
             tickFormatter={formatterY}
           />
           <Bar
-            dataKey={"kcal"} fill={COLORS[3]}
+            dataKey={"kcal"} fill={chartColors[3]}
               radius={[10, 10, 0, 0]}
               minPointSize={1}
             />
@@ -375,17 +375,17 @@ export const FoodChartAvg = () => {
             tickFormatter={formatterY}
           />
           <Bar
-            dataKey={"carb"} fill={COLORS[1]}
+            dataKey={"carb"} fill={chartColors[1]}
               radius={[10, 10, 0, 0]}
               minPointSize={1}
             />
           <Bar
-            dataKey={"protein"} fill={COLORS[4]}
+            dataKey={"protein"} fill={chartColors[4]}
               radius={[10, 10, 0, 0]}
               minPointSize={1}
             />
           <Bar
-            dataKey={"fat"} fill={COLORS[2]}
+            dataKey={"fat"} fill={chartColors[2]}
               radius={[10, 10, 0, 0]}
               minPointSize={1}
             />

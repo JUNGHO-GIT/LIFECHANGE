@@ -18,7 +18,7 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } fro
 export const MoneyChartLine = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, COLORS, sessionId, moneyChartArray } = useCommonValue();
+  const { URL_OBJECT, sessionId, chartColors, moneyChartArray } = useCommonValue();
   const { dayFmt, weekStartFmt, weekEndFmt} = useCommonDate();
   const { monthStartFmt, monthEndFmt, yearStartFmt, yearEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -113,7 +113,7 @@ export const MoneyChartLine = () => {
             <Line
               dataKey={"income"}
               type={"monotone"}
-              stroke={COLORS[0]}
+              stroke={chartColors[0]}
               strokeWidth={2}
               activeDot={{r:8}}
             />
@@ -122,7 +122,7 @@ export const MoneyChartLine = () => {
             <Line
               dataKey={"expense"}
               type={"monotone"}
-              stroke={COLORS[3]}
+              stroke={chartColors[3]}
               strokeWidth={2}
               activeDot={{r:8}}
             />
@@ -207,7 +207,7 @@ export const MoneyChartLine = () => {
             <Line
               dataKey={"income"}
               type={"monotone"}
-              stroke={COLORS[0]}
+              stroke={chartColors[0]}
               strokeWidth={2}
               activeDot={{r:8}}
             />
@@ -216,7 +216,7 @@ export const MoneyChartLine = () => {
             <Line
               dataKey={"expense"}
               type={"monotone"}
-              stroke={COLORS[3]}
+              stroke={chartColors[3]}
               strokeWidth={2}
               activeDot={{r:8}}
             />

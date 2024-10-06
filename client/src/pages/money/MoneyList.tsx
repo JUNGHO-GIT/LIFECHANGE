@@ -107,7 +107,7 @@ export const MoneyList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [URL_OBJECT, sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
+  }, [URL_OBJECT, sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
 
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
@@ -253,7 +253,6 @@ export const MoneyList = () => {
     <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
-      isExpanded={isExpanded}
       setIsExpanded={setIsExpanded}
     />
   );

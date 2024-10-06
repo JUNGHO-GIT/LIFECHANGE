@@ -18,7 +18,7 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } fro
 export const FoodChartLine = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, COLORS, sessionId, foodChartArray } = useCommonValue();
+  const { URL_OBJECT, sessionId, chartColors, foodChartArray } = useCommonValue();
   const { dayFmt, weekStartFmt, weekEndFmt} = useCommonDate();
   const { monthStartFmt, monthEndFmt, yearStartFmt, yearEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -120,7 +120,7 @@ export const FoodChartLine = () => {
           <Line
             dataKey={"kcal"}
             type={"monotone"}
-            stroke={COLORS[3]}
+            stroke={chartColors[3]}
             strokeWidth={2}
           activeDot={{r: 6}}/>
           <Tooltip
@@ -202,21 +202,21 @@ export const FoodChartLine = () => {
           <Line
             dataKey={"carb"}
             type={"monotone"}
-            stroke={COLORS[1]}
+            stroke={chartColors[1]}
             strokeWidth={2}
             activeDot={{r: 6}}
           />
           <Line
             dataKey={"protein"}
             type={"monotone"}
-            stroke={COLORS[4]}
+            stroke={chartColors[4]}
             strokeWidth={2}
             activeDot={{r: 6}}
           />
           <Line
             dataKey={"fat"}
             type={"monotone"}
-            stroke={COLORS[2]}
+            stroke={chartColors[2]}
             strokeWidth={2}
             activeDot={{r: 6}}
           />
@@ -299,7 +299,7 @@ export const FoodChartLine = () => {
           <Line
             dataKey={"kcal"}
             type={"monotone"}
-            stroke={COLORS[3]}
+            stroke={chartColors[3]}
             strokeWidth={2}
             activeDot={{r: 6}}
           />
@@ -382,21 +382,21 @@ export const FoodChartLine = () => {
           <Line
             dataKey={"carb"}
             type={"monotone"}
-            stroke={COLORS[1]}
+            stroke={chartColors[1]}
             strokeWidth={2}
             activeDot={{r: 6}}
           />
           <Line
             dataKey={"protein"}
             type={"monotone"}
-            stroke={COLORS[4]}
+            stroke={chartColors[4]}
             strokeWidth={2}
             activeDot={{r: 6}}
           />
           <Line
             dataKey={"fat"}
             type={"monotone"}
-            stroke={COLORS[2]}
+            stroke={chartColors[2]}
             strokeWidth={2}
             activeDot={{r: 6}}
           />

@@ -46,9 +46,10 @@ export const useCommonValue = () => {
 
   // object 타입
   const sessionPercent: any = sessionStorage.getItem(`${TITLE}_percent`) || "{}";
-  const sessionProperty: any = sessionStorage.getItem(`${TITLE}_property`) || "{}";
   const sessionCategory: any = sessionStorage.getItem(`${TITLE}_category`)|| "{}";
-  const sessionScale: string = sessionStorage.getItem(`${TITLE}_scale`) || "";
+  const sessionScale: string = sessionStorage.getItem(`${TITLE}_scale`) || "{}";
+  const sessionFavorite: any = sessionStorage.getItem(`${TITLE}_favorite`) || "{}";
+  const sessionProperty: any = sessionStorage.getItem(`${TITLE}_property`) || "{}";
   const calendarArray: any[] = JSON.parse(sessionCategory)?.calendar || [];
   const exerciseArray: any[] = JSON.parse(sessionCategory)?.exercise || [];
   const foodArray: any[] = JSON.parse(sessionCategory)?.food || [];
@@ -81,12 +82,17 @@ export const useCommonValue = () => {
   const barChartArray: any[] = [
     "goal", "real"
   ];
-  const COLORS: any[] = [
+  const calendarColors: any[] = [
+    "red", "orange", "yellow", "green", "blue", "navy", "purple", "black", "gray"
+  ];
+  const bgColors: any[] = [
+    "#1976d2", "#4CAF50", "#FFC107", "#FF5722", "#673AB7",
+    "#3F51B5", "#2196F3", "#009688", "#CDDC39", "#FFEB3B",
+    "#9E9E9E"
+  ];
+  const chartColors: any[] = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
-  ];
-  const colors: any[] = [
-    "red", "orange", "yellow", "green", "blue", "navy", "purple", "black", "gray"
   ];
 
   // -----------------------------------------------------------------------------------------------
@@ -133,9 +139,10 @@ export const useCommonValue = () => {
     localIsoCode,
     localCurrency,
     sessionPercent,
-    sessionProperty,
     sessionCategory,
     sessionScale,
+    sessionFavorite,
+    sessionProperty,
     calendarArray,
     exerciseArray,
     foodArray,
@@ -146,7 +153,8 @@ export const useCommonValue = () => {
     moneyChartArray,
     sleepChartArray,
     barChartArray,
-    COLORS,
-    colors,
+    calendarColors,
+    bgColors,
+    chartColors,
   };
-}
+};

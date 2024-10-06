@@ -99,7 +99,6 @@ const schema = new mongoose.Schema({
 });
 
 // 3. counter --------------------------------------------------------------------------------------
-// @ts-ignore
 schema.pre("save", async function(next) {
   if (this.isNew) {
     this.money_number = await incrementSeq("money_number", "Money");

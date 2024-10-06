@@ -17,7 +17,7 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } fro
 export const FoodChartBar = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, COLORS, sessionId, barChartArray } = useCommonValue();
+  const { URL_OBJECT, sessionId, chartColors, barChartArray } = useCommonValue();
   const { dayFmt, weekStartFmt, weekEndFmt} = useCommonDate();
   const { monthStartFmt, monthEndFmt, yearStartFmt, yearEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -107,19 +107,19 @@ export const FoodChartBar = () => {
           />
           <Bar
             dataKey={"real"}
-            fill={COLORS[2]}
+            fill={chartColors[2]}
             radius={[10, 10, 0, 0]}
             minPointSize={1}
             barSize={20}
           />
           <ReferenceLine
             y={OBJECT_KCAL_TODAY[0]?.goal}
-            stroke={COLORS[0]}
+            stroke={chartColors[0]}
             strokeDasharray={"3 3"}
           />
           <Line
             dataKey={"goal"}
-            stroke={COLORS[0]}
+            stroke={chartColors[0]}
             strokeWidth={2}
             dot={true}
           />
@@ -201,19 +201,19 @@ export const FoodChartBar = () => {
           />
           <Bar
             dataKey={"real"}
-            fill={COLORS[2]}
+            fill={chartColors[2]}
             radius={[10, 10, 0, 0]}
             minPointSize={1}
             barSize={20}
           />
           <ReferenceLine
             y={OBJECT_NUT_TODAY[0]?.goal}
-            stroke={COLORS[0]}
+            stroke={chartColors[0]}
             strokeDasharray={"3 3"}
           />
           <Line
             dataKey={"goal"}
-            stroke={COLORS[0]}
+            stroke={chartColors[0]}
             strokeWidth={2}
             dot={true}
           />

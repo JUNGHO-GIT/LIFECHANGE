@@ -7,9 +7,9 @@ import { useValidateUser } from "@imports/ImportValidates";
 import { User } from "@imports/ImportSchemas";
 import { axios, numeral, sync } from "@imports/ImportUtils";
 import { Footer, Loading } from "@imports/ImportLayouts";
-import { Input, Select } from "@imports/ImportContainers";
+import { Input } from "@imports/ImportContainers";
 import { Hr, Img, Div } from "@imports/ImportComponents";
-import { Paper, Avatar, MenuItem, Card, Grid, Checkbox } from "@imports/ImportMuis";
+import { Paper, Avatar, Card, Grid, Checkbox } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const UserDetail = () => {
@@ -119,27 +119,6 @@ export const UserDetail = () => {
               />
             </Grid>
             <Hr px={10} />
-            {/** 성별 (N, M, F) **/}
-            <Grid size={12}>
-              <Select
-                label={translate("gender")}
-                value={OBJECT.user_gender}
-                inputRef={REFS?.[i]?.user_gender}
-                error={ERRORS?.[i]?.user_gender}
-                onChange={(e: any) => {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    user_gender: e.target.value
-                  }))
-                }}
-              >
-                {[translate("N"), translate("M"), translate("F")]?.map((item, i) => (
-                  <MenuItem key={i} value={i === 0 ? "N" : i === 1 ? "M" : "F"}>
-                    {item}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Grid>
             {/** 나이 (1세 ~ 100세) **/}
             <Grid size={12}>
               <Input
@@ -257,9 +236,9 @@ export const UserDetail = () => {
                 readOnly={true}
                 value={
                   includingExclusions ? (
-                    numeral(OBJECT.user_curPropertyAll).format("0,0")
+                    numeral(OBJECT.user_curPropertyInclude).format("0,0")
                   ) : (
-                    numeral(OBJECT.user_curProperty).format("0,0")
+                    numeral(OBJECT.user_curPropertyExclude).format("0,0")
                   )
                 }
                 startadornment={

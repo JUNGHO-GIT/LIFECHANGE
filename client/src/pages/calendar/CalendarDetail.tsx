@@ -15,7 +15,7 @@ import { Card, Paper, MenuItem, Grid } from "@imports/ImportMuis";
 export const CalendarDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, sessionId, toList, calendarArray, colors } = useCommonValue();
+  const { URL_OBJECT, sessionId, toList, calendarArray,calendarColors, bgColors} = useCommonValue();
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { dayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -290,19 +290,7 @@ export const CalendarDetail = () => {
             <Grid size={6} className={"d-row-left"}>
               <Bg
                 badgeContent={i + 1}
-                bgcolor={
-                  OBJECT?.calendar_section[i]?.calendar_part_idx === 0 ? '#1976d2' :
-                  OBJECT?.calendar_section[i]?.calendar_part_idx === 1 ? '#4CAF50' :
-                  OBJECT?.calendar_section[i]?.calendar_part_idx === 2 ? '#FFC107' :
-                  OBJECT?.calendar_section[i]?.calendar_part_idx === 3 ? '#FF5722' :
-                  OBJECT?.calendar_section[i]?.calendar_part_idx === 4 ? '#673AB7' :
-                  OBJECT?.calendar_section[i]?.calendar_part_idx === 5 ? '#3F51B5' :
-                  OBJECT?.calendar_section[i]?.calendar_part_idx === 6 ? '#2196F3' :
-                  OBJECT?.calendar_section[i]?.calendar_part_idx === 7 ? '#009688' :
-                  OBJECT?.calendar_section[i]?.calendar_part_idx === 8 ? '#CDDC39' :
-                  OBJECT?.calendar_section[i]?.calendar_part_idx === 9 ? '#FFEB3B' :
-                  '#9E9E9E'
-                }
+                bgcolor={bgColors?.[OBJECT?.calendar_section[i]?.calendar_part_idx]}
               />
             </Grid>
             <Grid size={6} className={"d-row-right"}>
@@ -364,7 +352,7 @@ export const CalendarDetail = () => {
                   }));
                 }}
               >
-                {colors.map((item: any, idx: number) => (
+                {calendarColors.map((item: any, idx: number) => (
                   <MenuItem key={idx} value={item} className={"fs-0-8rem"}>
                     <span className={item}>●</span>
                     <span className={"ms-10"}>{item}</span>

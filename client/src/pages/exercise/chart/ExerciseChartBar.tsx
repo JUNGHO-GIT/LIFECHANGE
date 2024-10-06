@@ -17,7 +17,7 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } fro
 export const ExerciseChartBar = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, COLORS, sessionId,  barChartArray } = useCommonValue();
+  const { URL_OBJECT, sessionId, chartColors,  barChartArray } = useCommonValue();
   const { dayFmt, weekStartFmt, weekEndFmt} = useCommonDate();
   const { monthStartFmt, monthEndFmt, yearStartFmt, yearEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -109,13 +109,13 @@ export const ExerciseChartBar = () => {
           />
           <Scatter
             dataKey={"real"}
-            fill={COLORS[2]}
-            line={{stroke: COLORS[2], strokeWidth: 0.6}}
+            fill={chartColors[2]}
+            line={{stroke: chartColors[2], strokeWidth: 0.6}}
           />
           <Scatter
             dataKey={"goal"}
-            fill={COLORS[0]}
-            line={{stroke: COLORS[0], strokeWidth: 0.6}}
+            fill={chartColors[0]}
+            line={{stroke: chartColors[0], strokeWidth: 0.6}}
           />
           <Tooltip
             labelFormatter={(label: any, payload: any) => {
@@ -195,13 +195,13 @@ export const ExerciseChartBar = () => {
           />
           <Scatter
             dataKey={"real"}
-            fill={COLORS[2]}
-            line={{stroke: COLORS[2], strokeWidth: 0.6}}
+            fill={chartColors[2]}
+            line={{stroke: chartColors[2], strokeWidth: 0.6}}
           />
           <Scatter
             dataKey={"goal"}
-            fill={COLORS[0]}
-            line={{stroke: COLORS[0], strokeWidth: 0.6}}
+            fill={chartColors[0]}
+            line={{stroke: chartColors[0], strokeWidth: 0.6}}
           />
           <Tooltip
             labelFormatter={(label: any, payload: any) => {

@@ -18,7 +18,7 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } fro
 export const ExerciseChartAvg = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, COLORS, sessionId, exerciseChartArray } = useCommonValue();
+  const { URL_OBJECT, sessionId, chartColors, exerciseChartArray } = useCommonValue();
   const { dayFmt, weekStartFmt, weekEndFmt} = useCommonDate();
   const { monthStartFmt, monthEndFmt, yearStartFmt, yearEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -119,7 +119,7 @@ export const ExerciseChartAvg = () => {
           />
           <Bar
             dataKey={"volume"}
-            fill={COLORS[1]}
+            fill={chartColors[1]}
             radius={[10, 10, 0, 0]}
             minPointSize={1}
           />
@@ -201,7 +201,7 @@ export const ExerciseChartAvg = () => {
           />
           <Bar
             dataKey={"cardio"}
-            fill={COLORS[3]}
+            fill={chartColors[3]}
             radius={[10, 10, 0, 0]}
             minPointSize={1}
           />
@@ -283,7 +283,7 @@ export const ExerciseChartAvg = () => {
           />
           <Bar
             dataKey={"volume"}
-            fill={COLORS[1]}
+            fill={chartColors[1]}
             radius={[10, 10, 0, 0]}
             minPointSize={1}
           />
@@ -365,7 +365,7 @@ export const ExerciseChartAvg = () => {
           />
           <Bar
             dataKey={"cardio"}
-            fill={COLORS[3]}
+            fill={chartColors[3]}
             radius={[10, 10, 0, 0]}
             minPointSize={1}
           />

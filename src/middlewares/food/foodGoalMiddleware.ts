@@ -25,7 +25,10 @@ export const list = async (object: any) => {
 
     let finalResult: string = "";
 
-    if (param.length > 12) {
+    if (!param) {
+      return
+    }
+    else if (param.length > 12) {
       finalResult = "fs-0-8rem fw-600";
     }
     else if (param.length > 6) {

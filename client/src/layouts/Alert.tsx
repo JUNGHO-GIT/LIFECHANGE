@@ -6,6 +6,8 @@ import { useAlertStore } from "@imports/ImportStores";
 
 // -------------------------------------------------------------------------------------------------
 export const Alert = () => {
+
+  // 1. common -------------------------------------------------------------------------------------
   const { ALERT, setALERT } = useAlertStore();
 
   // 2-3. useEffect --------------------------------------------------------------------------------
@@ -33,9 +35,9 @@ export const Alert = () => {
       }}
     >
       <MuiAlert
-        severity={ALERT.severity}
+        severity={ALERT.severity === "error" ? "error" : "info"}
         variant={"standard"}
-        className={"w-100p h-8vh d-center border-dark radius-1 shadow-4 fs-1-0rem fw-600 snackbar z-10000"}
+        className={"w-100p h-10vh d-center border-dark radius-1 shadow-4 fs-1-0rem fw-600 snackbar z-10000"}
         onClose={() => {
           setALERT({
             open: false

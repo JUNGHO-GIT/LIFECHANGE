@@ -7,9 +7,9 @@ import { useValidateUser } from "@imports/ImportValidates";
 import { User } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
-import { Input, Select } from "@imports/ImportContainers";
+import { Input } from "@imports/ImportContainers";
 import { Div, Img, Hr, Btn } from "@imports/ImportComponents";
-import { Paper, MenuItem, Grid, Card } from "@imports/ImportMuis";
+import { Paper, Grid, Card } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const UserSignup = () => {
@@ -315,28 +315,6 @@ export const UserSignup = () => {
               />
             </Grid>
             <Hr px={20} />
-            {/** 성별 (N, M, F) **/}
-            <Grid size={12}>
-              <Select
-                label={translate("gender")}
-                value={OBJECT.user_gender || "N"}
-                inputRef={REFS?.[i]?.user_gender}
-                error={ERRORS?.[i]?.user_gender}
-                disabled={OBJECT.user_id_verified === false}
-                onChange={(e: any) => {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    user_gender: e.target.value || "N"
-                  }))
-                }}
-              >
-                {[translate("N"), translate("M"), translate("F")]?.map((item, i) => (
-                  <MenuItem key={i} value={i === 0 ? "N" : i === 1 ? "M" : "F"}>
-                    {item}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Grid>
             {/** 나이 (1세 ~ 100세) **/}
             <Grid size={12}>
               <Input

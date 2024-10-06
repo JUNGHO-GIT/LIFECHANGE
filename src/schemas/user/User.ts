@@ -35,7 +35,6 @@ const schema = new mongoose.Schema({
     default: "",
     required: false
   },
-
   user_image: {
     type: String,
     default: "",
@@ -46,11 +45,7 @@ const schema = new mongoose.Schema({
     default: "",
     required: false
   },
-  user_gender: {
-    type: String,
-    default: "N",
-    required: false
-  },
+
   user_initScale: {
     type: String,
     default: "",
@@ -61,23 +56,62 @@ const schema = new mongoose.Schema({
     default: "",
     required: false
   },
+
+  user_foodFavorite: [{
+    food_key : {
+      type: String,
+      default: "",
+      required: false,
+    },
+    food_name : {
+      type: String,
+      default: "",
+      required: false,
+    },
+    food_brand : {
+      type: String,
+      default: "",
+      required: false
+    },
+    food_kcal : {
+      type: String,
+      default: "",
+      required: false
+    },
+    food_carb : {
+      type: String,
+      default: "",
+      required: false
+    },
+    food_protein : {
+      type: String,
+      default: "",
+      required: false
+    },
+    food_fat : {
+      type: String,
+      default: "",
+      required: false
+    },
+  }],
+
   user_initProperty: {
     type: String,
     default: "",
     required: false
   },
-  user_curPropertyAll: {
+  user_curPropertyInclude: {
     type: String,
     default: "",
     required: false
   },
-  user_curProperty: {
+  user_curPropertyExclude: {
     type: String,
     default: "",
     required: false
   },
 
-  dataCategory: {
+  user_dataCategory: {
     calendar: {
       type: Array,
       default: calendarArray,
@@ -118,7 +152,6 @@ const schema = new mongoose.Schema({
 });
 
 // 3. counter --------------------------------------------------------------------------------------
-// @ts-ignore
 schema.pre("save", async function(next) {
   if (this.isNew) {
     this.user_number = await incrementSeq("user_number", "User");

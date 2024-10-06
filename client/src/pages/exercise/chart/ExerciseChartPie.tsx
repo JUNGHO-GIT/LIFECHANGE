@@ -27,7 +27,7 @@ declare type PieProps = {
 export const ExerciseChartPie = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, COLORS, sessionId } = useCommonValue();
+  const { URL_OBJECT, chartColors, sessionId } = useCommonValue();
   const { dayFmt, weekStartFmt, weekEndFmt} = useCommonDate();
   const { monthStartFmt, monthEndFmt, yearStartFmt, yearEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -205,7 +205,7 @@ export const ExerciseChartPie = () => {
           minAngle={15}
         >
           {OBJECT_PART_WEEK?.map((entry: any, index: number) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
           ))}
         </Pie>
         <Tooltip
@@ -252,7 +252,7 @@ export const ExerciseChartPie = () => {
           minAngle={15}
         >
           {OBJECT_TITLE_WEEK?.map((entry: any, index: number) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
           ))}
         </Pie>
         <Tooltip
@@ -299,7 +299,7 @@ export const ExerciseChartPie = () => {
           minAngle={15}
         >
           {OBJECT_PART_MONTH?.map((entry: any, index: number) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
           ))}
         </Pie>
         <Tooltip
@@ -346,7 +346,7 @@ export const ExerciseChartPie = () => {
           minAngle={15}
         >
           {OBJECT_TITLE_MONTH?.map((entry: any, index: number) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
           ))}
         </Pie>
         <Tooltip

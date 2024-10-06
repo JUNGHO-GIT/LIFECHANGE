@@ -18,7 +18,7 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } fro
 export const SleepChartAvg = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, COLORS, sessionId, sleepChartArray } = useCommonValue();
+  const { URL_OBJECT, sessionId, chartColors, sleepChartArray } = useCommonValue();
   const { dayFmt, weekStartFmt, weekEndFmt} = useCommonDate();
   const { monthStartFmt, monthEndFmt, yearStartFmt, yearEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -111,17 +111,17 @@ export const SleepChartAvg = () => {
           />
           {PART.includes("bedTime") && (
             <Bar
-            dataKey={"bedTime"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1}
+            dataKey={"bedTime"} fill={chartColors[4]} radius={[10, 10, 0, 0]} minPointSize={1}
             />
           )}
           {PART.includes("wakeTime") && (
             <Bar
-            dataKey={"wakeTime"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1}
+            dataKey={"wakeTime"} fill={chartColors[1]} radius={[10, 10, 0, 0]} minPointSize={1}
             />
           )}
           {PART.includes("sleepTime") && (
             <Bar
-            dataKey={"sleepTime"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
+            dataKey={"sleepTime"} fill={chartColors[2]} radius={[10, 10, 0, 0]} minPointSize={1}
             />
           )}
           <Tooltip
@@ -202,17 +202,17 @@ export const SleepChartAvg = () => {
           />
           {PART.includes("bedTime") && (
             <Bar
-            dataKey={"bedTime"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1}
+            dataKey={"bedTime"} fill={chartColors[4]} radius={[10, 10, 0, 0]} minPointSize={1}
             />
           )}
           {PART.includes("wakeTime") && (
             <Bar
-            dataKey={"wakeTime"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1}
+            dataKey={"wakeTime"} fill={chartColors[1]} radius={[10, 10, 0, 0]} minPointSize={1}
             />
           )}
           {PART.includes("sleepTime") && (
             <Bar
-            dataKey={"sleepTime"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
+            dataKey={"sleepTime"} fill={chartColors[2]} radius={[10, 10, 0, 0]} minPointSize={1}
             />
           )}
           <Tooltip

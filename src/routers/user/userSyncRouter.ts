@@ -84,10 +84,10 @@ router.get("/percent", async (req: Request, res: Response) => {
   }
 });
 
-// 2. property -------------------------------------------------------------------------------------
-router.get("/property", async (req: Request, res: Response) => {
+// 2. scale ----------------------------------------------------------------------------------------
+router.get("/scale", async (req: Request, res: Response) => {
   try {
-    let finalResult = await service.property (
+    let finalResult = await service.scale (
       req.query.user_id as string,
       req.query.DATE as any,
     );
@@ -123,10 +123,49 @@ router.get("/property", async (req: Request, res: Response) => {
   }
 });
 
-// 3. scale ----------------------------------------------------------------------------------------
-router.get("/scale", async (req: Request, res: Response) => {
+// 3. favorite -------------------------------------------------------------------------------------
+router.get("/favorite", async (req: Request, res: Response) => {
   try {
-    let finalResult = await service.scale (
+    let finalResult = await service.favorite (
+      req.query.user_id as string,
+      req.query.DATE as any,
+    );
+    if (finalResult.status === "success") {
+      res.json({
+        msg: "searchSuccessful",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "searchFailed",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else {
+      res.json({
+        msg: "searchError",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+  }
+  catch (err: any) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      msg: err.toString(),
+      error: err.toString(),
+    });
+  }
+});
+
+// 4. property -------------------------------------------------------------------------------------
+router.get("/property", async (req: Request, res: Response) => {
+  try {
+    let finalResult = await service.property (
       req.query.user_id as string,
       req.query.DATE as any,
     );

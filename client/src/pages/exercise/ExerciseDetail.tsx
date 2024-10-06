@@ -15,7 +15,7 @@ import { Card, Paper, MenuItem, Grid } from "@imports/ImportMuis";
 export const ExerciseDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, PATH, sessionId, toList, exerciseArray } = useCommonValue();
+  const { URL_OBJECT, PATH, sessionId, toList, exerciseArray, bgColors} = useCommonValue();
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { dayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -236,7 +236,7 @@ export const ExerciseDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        sync();
+        sync("scale");
         setALERT({
           open: !ALERT.open,
           msg: translate(res.data.msg),
@@ -430,19 +430,7 @@ export const ExerciseDetail = () => {
             <Grid size={6} className={"d-row-left"}>
               <Bg
                 badgeContent={i + 1}
-                bgcolor={
-                  OBJECT?.exercise_section[i]?.exercise_part_idx === 0 ? '#1976d2' :
-                  OBJECT?.exercise_section[i]?.exercise_part_idx === 1 ? '#4CAF50' :
-                  OBJECT?.exercise_section[i]?.exercise_part_idx === 2 ? '#FFC107' :
-                  OBJECT?.exercise_section[i]?.exercise_part_idx === 3 ? '#FF5722' :
-                  OBJECT?.exercise_section[i]?.exercise_part_idx === 4 ? '#673AB7' :
-                  OBJECT?.exercise_section[i]?.exercise_part_idx === 5 ? '#3F51B5' :
-                  OBJECT?.exercise_section[i]?.exercise_part_idx === 6 ? '#2196F3' :
-                  OBJECT?.exercise_section[i]?.exercise_part_idx === 7 ? '#009688' :
-                  OBJECT?.exercise_section[i]?.exercise_part_idx === 8 ? '#CDDC39' :
-                  OBJECT?.exercise_section[i]?.exercise_part_idx === 9 ? '#FFEB3B' :
-                  '#9E9E9E'
-                }
+                bgcolor={bgColors?.[OBJECT?.exercise_section[i]?.exercise_part_idx]}
               />
             </Grid>
             <Grid size={6} className={"d-row-right"}>

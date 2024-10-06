@@ -129,7 +129,6 @@ const schema = new mongoose.Schema({
 });
 
 // 3. counter --------------------------------------------------------------------------------------
-// @ts-ignore
 schema.pre("save", async function(next) {
   if (this.isNew) {
     this.food_number = await incrementSeq("food_number", "Food");

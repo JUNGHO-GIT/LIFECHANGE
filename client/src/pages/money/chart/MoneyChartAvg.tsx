@@ -18,7 +18,7 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } fro
 export const MoneyChartAvg = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, COLORS, sessionId, moneyChartArray } = useCommonValue();
+  const { URL_OBJECT, sessionId, chartColors, moneyChartArray } = useCommonValue();
   const { dayFmt, weekStartFmt, weekEndFmt} = useCommonDate();
   const { monthStartFmt, monthEndFmt, yearStartFmt, yearEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -112,7 +112,7 @@ export const MoneyChartAvg = () => {
           {LINE.includes("income") && (
             <Bar
               dataKey={"income"}
-              fill={COLORS[0]}
+              fill={chartColors[0]}
               radius={[10, 10, 0, 0]}
               minPointSize={1}
             />
@@ -120,7 +120,7 @@ export const MoneyChartAvg = () => {
           {LINE.includes("expense") && (
             <Bar
               dataKey={"expense"}
-              fill={COLORS[3]}
+              fill={chartColors[3]}
               radius={[10, 10, 0, 0]}
               minPointSize={1}
             />
@@ -204,7 +204,7 @@ export const MoneyChartAvg = () => {
           {LINE.includes("income") && (
             <Bar
               dataKey={"income"}
-              fill={COLORS[0]}
+              fill={chartColors[0]}
               radius={[10, 10, 0, 0]}
               minPointSize={1}
             />
@@ -212,7 +212,7 @@ export const MoneyChartAvg = () => {
           {LINE.includes("expense") && (
             <Bar
               dataKey={"expense"}
-              fill={COLORS[3]}
+              fill={chartColors[3]}
               radius={[10, 10, 0, 0]}
               minPointSize={1}
             />

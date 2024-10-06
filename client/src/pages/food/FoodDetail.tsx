@@ -8,14 +8,14 @@ import { Food } from "@imports/ImportSchemas";
 import { axios, numeral, sync } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, Count, Delete, Input, Select } from "@imports/ImportContainers";
-import { Img, Bg } from "@imports/ImportComponents";
-import { Card, Paper, MenuItem,  Grid } from "@imports/ImportMuis";
+import { Img, Bg, Icons, Div } from "@imports/ImportComponents";
+import { Card, Paper, MenuItem, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, TITLE, sessionId, toList, foodArray } = useCommonValue();
+  const { URL_OBJECT, TITLE, sessionId, toList, foodArray, bgColors } = useCommonValue();
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { dayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -26,6 +26,7 @@ export const FoodDetail = () => {
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [LOCKED, setLOCKED] = useState<string>("unlocked");
   const [OBJECT, setOBJECT] = useState<any>(Food);
+  const [FAVORITE, setFAVORITE] = useState<any>([]);
   const [EXIST, setEXIST] = useState<any>({
     day: [""],
     week: [""],
@@ -103,6 +104,23 @@ export const FoodDetail = () => {
       console.error(err);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    axios.get(`${URL_OBJECT}/find/listFavorite`, {
+      params: {
+        user_id: sessionId,
+      },
+    })
+    .then((res: any) => {
+      setFAVORITE(
+        !res.data.result || res.data.result.length === 0 ? [] : res.data.result
+      );
+    })
+    .catch((err: any) => {
+      console.error(err);
+    });
+  }, [URL_OBJECT, sessionId]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -327,8 +345,36 @@ export const FoodDetail = () => {
     });
   };
 
+  // 3. flow ---------------------------------------------------------------------------------------
+  const flowUpdateFavorite = (foodFavorite: any) => {
+    axios.put(`${URL_OBJECT}/find/updateFavorite`, {
+      user_id: sessionId,
+      foodFavorite: foodFavorite,
+    })
+    .then((res: any) => {
+      if (res.data.status === "success") {
+        setFAVORITE(res.data.result);
+        sync("favorite");
+      }
+      else {
+        setALERT({
+          open: !ALERT.open,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
+      }
+    })
+    .catch((err: any) => {
+      console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
+    });
+  };
+
   // 4-3. handler ----------------------------------------------------------------------------------
   const handlerDelete = (index: number) => {
+
     // 스토리지 데이터 가져오기
     let sectionArray = [];
     let section = sessionStorage.getItem(`${TITLE}_foodSection`);
@@ -358,6 +404,29 @@ export const FoodDetail = () => {
       ...prev,
       newSectionCnt: prev?.newSectionCnt - 1,
     }));
+  };
+
+  // 4-4. handler (favorite 추가) ------------------------------------------------------------------
+  const handlerFoodFavorite = (index: number) => {
+
+    const count = OBJECT?.food_section[index]?.food_count;
+    const food_name = OBJECT?.food_section[index]?.food_name;
+    const food_brand = OBJECT?.food_section[index]?.food_brand;
+    const food_kcal = (OBJECT?.food_section[index]?.food_kcal / count).toFixed(0);
+    const food_carb = (OBJECT?.food_section[index]?.food_carb / count).toFixed(1);
+    const food_protein = (OBJECT?.food_section[index]?.food_protein / count).toFixed(1);
+    const food_fat = (OBJECT?.food_section[index]?.food_fat / count).toFixed(1);
+    const food_key = `${food_name}_${food_brand}_${food_kcal}_${food_carb}_${food_protein}_${food_fat}`;
+
+    return {
+      food_key: food_key,
+      food_name: food_name,
+      food_brand: food_brand,
+      food_kcal: food_kcal,
+      food_carb: food_carb,
+      food_protein: food_protein,
+      food_fat: food_fat,
+    };
   };
 
   // 7. detail -------------------------------------------------------------------------------------
@@ -468,20 +537,24 @@ export const FoodDetail = () => {
             <Grid size={6} className={"d-row-left"}>
               <Bg
                 badgeContent={i + 1}
-                bgcolor={
-                  OBJECT?.food_section[i]?.food_part_idx === 0 ? '#1976d2' :
-                  OBJECT?.food_section[i]?.food_part_idx === 1 ? '#4CAF50' :
-                  OBJECT?.food_section[i]?.food_part_idx === 2 ? '#FFC107' :
-                  OBJECT?.food_section[i]?.food_part_idx === 3 ? '#FF5722' :
-                  OBJECT?.food_section[i]?.food_part_idx === 4 ? '#673AB7' :
-                  OBJECT?.food_section[i]?.food_part_idx === 5 ? '#3F51B5' :
-                  OBJECT?.food_section[i]?.food_part_idx === 6 ? '#2196F3' :
-                  OBJECT?.food_section[i]?.food_part_idx === 7 ? '#009688' :
-                  OBJECT?.food_section[i]?.food_part_idx === 8 ? '#CDDC39' :
-                  OBJECT?.food_section[i]?.food_part_idx === 9 ? '#FFEB3B' :
-                  '#9E9E9E'
-                }
+                bgcolor={bgColors?.[OBJECT?.food_section[i]?.food_part_idx]}
               />
+              <Div className={"mt-n10 ms-10"}>
+                <Icons
+                  key={"Star"}
+                  name={"Star"}
+                  className={"w-20 h-20"}
+                  color={"darkslategrey"}
+                  fill={
+                    FAVORITE.length > 0 && FAVORITE.some((item: any) => (
+                      item.food_key === handlerFoodFavorite(i).food_key
+                    )) ? "gold" : "white"
+                  }
+                  onClick={() => {
+                    flowUpdateFavorite(handlerFoodFavorite(i));
+                  }}
+                />
+              </Div>
             </Grid>
             <Grid size={6} className={"d-row-right"}>
               <Delete
@@ -684,7 +757,7 @@ export const FoodDetail = () => {
             <Grid size={6}>
               <Input
                 label={translate("carb")}
-                value={numeral(OBJECT?.food_section[i]?.food_carb).format("0,0")}
+                value={numeral(OBJECT?.food_section[i]?.food_carb).format("0,0.0")}
                 inputRef={REFS?.[i]?.food_carb}
                 error={ERRORS?.[i]?.food_carb}
                 locked={LOCKED}
@@ -729,7 +802,7 @@ export const FoodDetail = () => {
             <Grid size={6}>
               <Input
                 label={translate("protein")}
-                value={numeral(OBJECT?.food_section[i]?.food_protein).format("0,0")}
+                value={numeral(OBJECT?.food_section[i]?.food_protein).format("0,0.0")}
                 inputRef={REFS?.[i]?.food_protein}
                 error={ERRORS?.[i]?.food_protein}
                 locked={LOCKED}
@@ -774,7 +847,7 @@ export const FoodDetail = () => {
             <Grid size={6}>
               <Input
                 label={translate("fat")}
-                value={numeral(OBJECT?.food_section[i]?.food_fat).format("0,0")}
+                value={numeral(OBJECT?.food_section[i]?.food_fat).format("0,0.0")}
                 inputRef={REFS?.[i]?.food_fat}
                 error={ERRORS?.[i]?.food_fat}
                 locked={LOCKED}

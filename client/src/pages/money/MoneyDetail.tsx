@@ -15,7 +15,7 @@ import { Paper, Card, MenuItem, Grid, Checkbox } from "@imports/ImportMuis";
 export const MoneyDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, sessionId, localCurrency, moneyArray, toList } = useCommonValue();
+  const { URL_OBJECT, sessionId, localCurrency, moneyArray, toList, bgColors } = useCommonValue();
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { dayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -382,19 +382,7 @@ export const MoneyDetail = () => {
             <Grid size={6} className={"d-row-left"}>
               <Bg
                 badgeContent={i + 1}
-                bgcolor={
-                  OBJECT?.money_section[i]?.money_part_idx === 0 ? '#1976d2' :
-                  OBJECT?.money_section[i]?.money_part_idx === 1 ? '#4CAF50' :
-                  OBJECT?.money_section[i]?.money_part_idx === 2 ? '#FFC107' :
-                  OBJECT?.money_section[i]?.money_part_idx === 3 ? '#FF5722' :
-                  OBJECT?.money_section[i]?.money_part_idx === 4 ? '#673AB7' :
-                  OBJECT?.money_section[i]?.money_part_idx === 5 ? '#3F51B5' :
-                  OBJECT?.money_section[i]?.money_part_idx === 6 ? '#2196F3' :
-                  OBJECT?.money_section[i]?.money_part_idx === 7 ? '#009688' :
-                  OBJECT?.money_section[i]?.money_part_idx === 8 ? '#CDDC39' :
-                  OBJECT?.money_section[i]?.money_part_idx === 9 ? '#FFEB3B' :
-                  '#9E9E9E'
-                }
+                bgcolor={bgColors?.[OBJECT?.money_section[i]?.money_part_idx]}
               />
             </Grid>
             <Grid size={6} className={"d-row-right"}>

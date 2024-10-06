@@ -104,12 +104,11 @@ export const userSignup = async (
       user_token: OBJECT_param.user_token,
       user_pw: OBJECT_param.user_pw,
       user_age: OBJECT_param.user_age,
-      user_gender: OBJECT_param.user_gender,
       user_initScale: OBJECT_param.user_initScale,
       user_curScale: "",
       user_initProperty: OBJECT_param.user_initProperty,
-      user_curPropertyAll: "",
-      user_curProperty: "",
+      user_curPropertyInclude: "",
+      user_curPropertyExclude: "",
       user_image: OBJECT_param.user_image,
       user_regDt: newDate,
       user_updateDt: "",
@@ -188,13 +187,12 @@ export const userUpdate = async (
     },
     {
       $set: {
-        user_gender: OBJECT_param.user_gender,
         user_age: OBJECT_param.user_age,
         user_initScale: OBJECT_param.user_initScale,
         user_curScale: OBJECT_param.user_curScale,
         user_initProperty: OBJECT_param.user_initProperty,
-        user_curPropertyAll: OBJECT_param.user_curPropertyAll,
-        user_curProperty: OBJECT_param.user_curProperty,
+        user_curPropertyInclude: OBJECT_param.user_curPropertyInclude,
+        user_curPropertyExclude: OBJECT_param.user_curPropertyExclude,
         user_image: OBJECT_param.user_image,
       },
     },
@@ -276,11 +274,11 @@ export const categoryDetail = async (
     {
       $project: {
         _id: 0,
-        calendar: "$dataCategory.calendar",
-        exercise: "$dataCategory.exercise",
-        food: "$dataCategory.food",
-        money: "$dataCategory.money",
-        sleep: "$dataCategory.sleep",
+        calendar: "$user_dataCategory.calendar",
+        exercise: "$user_dataCategory.exercise",
+        food: "$user_dataCategory.food",
+        money: "$user_dataCategory.money",
+        sleep: "$user_dataCategory.sleep",
       }
     }
   ]);
@@ -300,7 +298,7 @@ export const categoryUpdate = async (
     },
     {
       $set: {
-        dataCategory: {
+        user_dataCategory: {
           calendar: OBJECT_param.calendar,
           exercise: OBJECT_param.exercise,
           food: OBJECT_param.food,

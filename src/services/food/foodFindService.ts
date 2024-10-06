@@ -2,8 +2,9 @@
 
 import { JSDOM } from "jsdom";
 import axios from "axios";
+import * as repository from "@repositories/food/foodFindRepository";
 
-// 1. list -----------------------------------------------------------------------------------------
+// 1-1. list ---------------------------------------------------------------------------------------
 export const list = async (
   PAGING_param: any,
   isoCode_param: string,
@@ -222,9 +223,9 @@ export const list = async (
       serv: (serv?.match(/[^\d]+$/) || [""])[0],
       gram: gram && gram,
       kcal: nutritionMatch && nutritionMatch[3],
-      fat: nutritionMatch && nutritionMatch[7],
-      carb: nutritionMatch && nutritionMatch[11],
-      protein: nutritionMatch && nutritionMatch[15],
+      fat: nutritionMatch && nutritionMatch[7] && Number(nutritionMatch[7]).toFixed(1),
+      carb: nutritionMatch && nutritionMatch[11] && Number(nutritionMatch[11]).toFixed(1),
+      protein: nutritionMatch && nutritionMatch[15] && Number(nutritionMatch[15]).toFixed(1),
     };
   };
 
@@ -308,6 +309,93 @@ export const list = async (
   return {
     status: statusResult,
     totalCnt: totalCntResult,
+    result: finalResult,
+  };
+};
+
+// 1-2. listFavorite -------------------------------------------------------------------------------
+export const listFavorite = async (
+  user_id_param: string,
+) => {
+
+  // result 변수 선언
+  let findResult: any = null;
+  let finalResult: any = null;
+  let statusResult: string = "";
+
+  findResult = await repository.listFavorite(
+    user_id_param
+  );
+
+  if (!findResult || findResult.length <= 0) {
+    finalResult = [];
+    statusResult = "fail";
+  }
+  else {
+    finalResult = findResult;
+    statusResult = "success";
+  }
+
+  finalResult = finalResult.map((item: any) => ({
+    ...item,
+    food_query: "favorite",
+  }));
+
+  return {
+    status: statusResult,
+    result: finalResult,
+  };
+};
+
+// 4-2. updateFavorite -----------------------------------------------------------------------------
+export const updateFavorite = async (
+  user_id_param: string,
+  foodFavorite_param: any,
+) => {
+
+  // result 변수 선언
+  let findResult: any = null;
+  let updateResult: any = null;
+  let finalResult: any = null;
+  let statusResult: string = "";
+
+  const foodKey = foodFavorite_param.food_key;
+
+  findResult = await repository.listFavorite(
+    user_id_param
+  );
+
+  const existFavorite = findResult.some((item: any) => (
+    item.food_key === foodKey
+  ));
+
+  if (existFavorite) {
+    foodFavorite_param = findResult.filter((item: any) => (
+      item.food_key !== foodKey
+    ));
+  }
+  else {
+    foodFavorite_param = [
+      ...findResult,
+      foodFavorite_param
+    ];
+  }
+
+  updateResult = await repository.updateFavorite(
+    user_id_param, foodFavorite_param
+  );
+
+  if (!updateResult) {
+    finalResult = null;
+    statusResult = "fail";
+  }
+  else {
+    finalResult = updateResult;
+    statusResult = "success";
+  }
+
+  return {
+    status: statusResult,
     result: finalResult,
   };
 };

@@ -808,7 +808,6 @@ export const TodayList = () => {
     <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
-      isExpanded={isExpanded}
       setIsExpanded={setIsExpanded}
     />
   );

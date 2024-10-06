@@ -12,13 +12,14 @@ declare type DialogProps = {
   setCOUNT?: any;
   LOCKED?: any;
   setLOCKED?: any;
-  isExpanded?: any;
+  DISPLAY?: any;
+  setDISPLAY?: any;
   setIsExpanded?: any;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const Dialog = (
-  { COUNT, setCOUNT, LOCKED, setLOCKED, isExpanded, setIsExpanded }: DialogProps
+  { COUNT, setCOUNT, LOCKED, setLOCKED, DISPLAY, setDISPLAY, setIsExpanded }: DialogProps
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
@@ -38,7 +39,7 @@ export const Dialog = (
   const dialogNode = () => {
     // 1. list (today o)
     const listTodaySection = () => (
-      <Div className={`p-fixed bottom-18vh z-600 right-6vw`}>
+      <Div className={`p-fixed d-row-bottom bottom-18vh z-600 right-6vw`}>
         <Backdrop
           open={open}
           onClick={() => {
@@ -64,10 +65,6 @@ export const Dialog = (
             key={translate("openAll")}
             tooltipTitle={translate("openAll")}
             className={open ? "" : "d-none"}
-            FabProps={{
-              size: "small",
-              component: "div",
-            }}
             icon={
               <Icons
                 key={"ChevronDown"}
@@ -89,10 +86,6 @@ export const Dialog = (
             key={translate("closeAll")}
             tooltipTitle={translate("closeAll")}
             className={open ? "" : "d-none"}
-            FabProps={{
-              size: "small",
-              component: "div",
-            }}
             icon={
               <Icons
                 key={"ChevronUp"}
@@ -115,7 +108,7 @@ export const Dialog = (
     );
     // 2. list (today x)
     const listNotTodaySection = () => (
-      <Div className={`p-fixed bottom-18vh z-600 right-6vw`}>
+      <Div className={`p-fixed d-row-bottom bottom-18vh z-600 right-6vw`}>
         <Backdrop
           open={open}
           onClick={() => {
@@ -141,10 +134,6 @@ export const Dialog = (
             key={translate("save")}
             tooltipTitle={translate("save")}
             className={open ? "" : "d-none"}
-            FabProps={{
-              size: "small",
-              component: "div",
-            }}
             icon={
               <Icons
                 key={"Pencil"}
@@ -166,10 +155,6 @@ export const Dialog = (
             key={translate("openAll")}
             tooltipTitle={translate("openAll")}
             className={open ? "" : "d-none"}
-            FabProps={{
-              size: "small",
-              component: "div",
-            }}
             icon={
               <Icons
                 key={"ChevronDown"}
@@ -190,10 +175,6 @@ export const Dialog = (
             key={translate("closeAll")}
             tooltipTitle={translate("closeAll")}
             className={open ? "" : "d-none"}
-            FabProps={{
-              size: "small",
-              component: "div",
-            }}
             icon={
               <Icons
                 key={"ChevronUp"}
@@ -211,7 +192,7 @@ export const Dialog = (
     );
     // 3. find
     const findSection = () => (
-      <Div className={`p-fixed bottom-18vh z-600 right-6vw`}>
+      <Div className={`p-fixed d-row-bottom bottom-18vh z-600 right-6vw`}>
         <Backdrop
           open={open}
           onClick={() => {
@@ -221,6 +202,7 @@ export const Dialog = (
         <SpeedDial
           ariaLabel={"speedDial"}
           direction={"up"}
+          className={"ms-5"}
           open={open}
           icon={
             <SpeedDialIcon />
@@ -234,13 +216,25 @@ export const Dialog = (
           }}
         >
           <SpeedDialAction
+            key={translate("favorite")}
+            tooltipTitle={translate("favorite")}
+            className={open ? "" : "d-none"}
+            icon={
+              <Icons
+                key={"Star"}
+                name={"Star"}
+                fill={DISPLAY === "favorite" ? "gold" : "white"}
+                className={"w-23 h-23"}
+              />
+            }
+            onClick={() => {
+              setDISPLAY(DISPLAY === "favorite" ? "find" : "favorite");
+            }}
+          />
+          <SpeedDialAction
             key={translate("save")}
             tooltipTitle={translate("save")}
             className={open ? "" : "d-none"}
-            FabProps={{
-              size: "small",
-              component: "div",
-            }}
             icon={
               <Icons
                 key={"Pencil"}
@@ -262,10 +256,6 @@ export const Dialog = (
             key={translate("openAll")}
             tooltipTitle={translate("openAll")}
             className={open ? "" : "d-none"}
-            FabProps={{
-              size: "small",
-              component: "div",
-            }}
             icon={
               <Icons
                 key={"ChevronDown"}
@@ -286,10 +276,6 @@ export const Dialog = (
             key={translate("closeAll")}
             tooltipTitle={translate("closeAll")}
             className={open ? "" : "d-none"}
-            FabProps={{
-              size: "small",
-              component: "div",
-            }}
             icon={
               <Icons
                 key={"ChevronUp"}
@@ -305,11 +291,7 @@ export const Dialog = (
           <SpeedDialAction
             key={translate("locale")}
             tooltipTitle={translate("locale")}
-            className={`${open ? "" : "d-none"}`}
-            FabProps={{
-              size: "small",
-              component: "div",
-            }}
+            className={open ? "" : "d-none"}
             icon={
               <Div className={"fw-800 fs-0-8rem"}>
                 {localIsoCode}
@@ -321,7 +303,7 @@ export const Dialog = (
     );
     // 4. detail
     const detailSection = () => (
-      <Div className={`p-fixed bottom-18vh z-600 right-6vw`}>
+      <Div className={`p-fixed d-row-bottom bottom-18vh z-600 right-6vw`}>
         <Backdrop
           open={open}
           onClick={() => {
@@ -347,10 +329,6 @@ export const Dialog = (
             key={translate("itemLock")}
             tooltipTitle={translate("itemLock")}
             className={open ? "" : "d-none"}
-            FabProps={{
-              size: "small",
-              component: "div",
-            }}
             icon={
               LOCKED === "locked" ? (
                 <Icons
@@ -379,10 +357,6 @@ export const Dialog = (
             key={translate("closeAll")}
             tooltipTitle={translate("closeAll")}
             className={open ? "" : "d-none"}
-            FabProps={{
-              size: "small",
-              component: "div",
-            }}
             icon={
               <Icons
                 key={"X"}

@@ -3,7 +3,7 @@
 import { moment, axios } from "@imports/ImportUtils";
 
 // -------------------------------------------------------------------------------------------------
-export const sync = async () => {
+export const sync = async (extra?: string) => {
 
   // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_SERVER_URL || "";
@@ -14,12 +14,6 @@ export const sync = async () => {
   const localTimeZone = sessionStorage.getItem(`${TITLE}_timeZone`) || "Asia/Seoul";
 
   // 2-1. useState ---------------------------------------------------------------------------------
-  const OBJECT = {
-    category: [] as any[],
-    percent: [] as any[],
-    property: [] as any[],
-    scale: [] as any[],
-  };
   const DATE = {
     dateType: "day",
     dateStart: moment().tz(localTimeZone).format("YYYY-MM-DD"),
@@ -33,30 +27,38 @@ export const sync = async () => {
   };
 
   try {
-    const [resCategory, resPercent, resProperty, resScale] = await Promise.all([
-      axios.get(`${URL_OBJECT}/sync/category`, {
-        params: params,
-      }),
-      axios.get(`${URL_OBJECT}/sync/percent`, {
-        params: params,
-      }),
-      axios.get(`${URL_OBJECT}/sync/property`, {
-        params: params,
-      }),
-      axios.get(`${URL_OBJECT}/sync/scale`, {
-        params: params,
-      }),
-    ]);
-
-    OBJECT.category = resCategory.data.result;
-    OBJECT.percent = resPercent.data.result;
-    OBJECT.property = resProperty.data.result;
-    OBJECT.scale = resScale.data.result;
-
-    sessionStorage.setItem(`${TITLE}_category`, JSON.stringify(resCategory.data.result));
-    sessionStorage.setItem(`${TITLE}_percent`, JSON.stringify(resPercent.data.result));
-    sessionStorage.setItem(`${TITLE}_property`, JSON.stringify(resProperty.data.result));
-    sessionStorage.setItem(`${TITLE}_scale`, JSON.stringify(resScale.data.result));
+    if (extra) {
+      const [resExtra] = await Promise.all([
+        axios.get(`${URL_OBJECT}/sync/${extra}`, {
+          params: params,
+        }),
+      ]);
+      sessionStorage.setItem(`${TITLE}_${extra}`, JSON.stringify(resExtra.data.result));
+    }
+    else {
+      const [resCategory, resPercent, resScale, resFavorite, resProperty] = await Promise.all([
+        axios.get(`${URL_OBJECT}/sync/category`, {
+          params: params,
+        }),
+        axios.get(`${URL_OBJECT}/sync/percent`, {
+          params: params,
+        }),
+        axios.get(`${URL_OBJECT}/sync/scale`, {
+          params: params,
+        }),
+        axios.get(`${URL_OBJECT}/sync/favorite`, {
+          params: params,
+        }),
+        axios.get(`${URL_OBJECT}/sync/property`, {
+          params: params,
+        }),
+      ]);
+      sessionStorage.setItem(`${TITLE}_category`, JSON.stringify(resCategory.data.result));
+      sessionStorage.setItem(`${TITLE}_percent`, JSON.stringify(resPercent.data.result));
+      sessionStorage.setItem(`${TITLE}_scale`, JSON.stringify(resScale.data.result));
+      sessionStorage.setItem(`${TITLE}_favorite`, JSON.stringify(resFavorite.data.result));
+      sessionStorage.setItem(`${TITLE}_property`, JSON.stringify(resProperty.data.result));
+    }
   }
   catch (err: any) {
     console.error(`sync error: ${err}`);
