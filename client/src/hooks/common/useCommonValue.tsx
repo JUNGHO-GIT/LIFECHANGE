@@ -19,7 +19,8 @@ export const useCommonValue = () => {
   const secondStr: string = PATH?.split("/")[2] || "";
   const thirdStr: string = PATH?.split("/")[3] || "";
   const isGoal: boolean = secondStr === "goal";
-  const toFind: string = isGoal ? `/${firstStr}/goal/find/list` : `/${firstStr}/find/list`;
+  const toFind: string = `/${firstStr}/find/list`;
+  const toFavorite: string = `/${firstStr}/favorite/list`;
   const toList: string = isGoal ? `/${firstStr}/goal/list` : `/${firstStr}/list`;
   const toDetail: string = isGoal ? `/${firstStr}/goal/detail` : `/${firstStr}/detail`;
   const toDelete: string = isGoal ? `/${firstStr}/goal/delete` : `/${firstStr}/delete`;
@@ -109,6 +110,7 @@ export const useCommonValue = () => {
     secondStr,
     thirdStr,
     toFind,
+    toFavorite,
     toList,
     toDetail,
     toDelete,

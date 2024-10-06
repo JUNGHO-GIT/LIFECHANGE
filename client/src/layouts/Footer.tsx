@@ -65,7 +65,6 @@ export const Footer = (
     const btnSection = () => (
       <Buttons
         state={state}
-        setState={setState}
         flow={flow}
       />
     );

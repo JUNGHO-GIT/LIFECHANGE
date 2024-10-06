@@ -1,7 +1,7 @@
 // FoodFavoriteList.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useStorage } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { FoodFavorite } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportUtils";
@@ -14,21 +14,25 @@ import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMu
 export const FoodFavoriteList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, TITLE, sessionId } = useCommonValue();
+  const { URL_OBJECT, PATH, TITLE, sessionId } = useCommonValue();
   const { location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { dayFmt } = useCommonDate();
   const { translate } = useLanguageStore();
+
+  // 2-1. useStorage -------------------------------------------------------------------------------
+  const [PAGING, setPAGING] = useStorage(
+    `${TITLE}_paging_(${PATH})`, {
+      sort: "asc",
+      query: "favorite",
+      page: 0,
+    }
+  );
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [checkedQueries, setCheckedQueries] = useState<any>({});
   const [isExpanded, setIsExpanded] = useState<number[]>([0]);
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>([FoodFavorite]);
-  const [PAGING, setPAGING] = useState<any>({
-    sort: "asc",
-    query: "favorite",
-    page: 0,
-  });
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "day",

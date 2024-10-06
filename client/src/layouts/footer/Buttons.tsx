@@ -9,17 +9,16 @@ import { Grid, Card } from "@imports/ImportMuis";
 // -------------------------------------------------------------------------------------------------
 declare type ButtonsProps = {
   state: any;
-  setState: any;
   flow: any;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const Buttons = (
-  { state, setState, flow }: ButtonsProps
+  { state, flow }: ButtonsProps
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { PATH, toFind, navigate } = useCommonValue();
+  const { PATH, toFind, toFavorite, navigate } = useCommonValue();
   const { translate } = useLanguageStore();
 
   // 3. flow ---------------------------------------------------------------------------------------
@@ -61,7 +60,14 @@ export const Buttons = (
         color={"warning"}
         className={"ms-1vw me-1vw"}
         onClick={() => {
-          navigate("/food/favorite/list");
+          navigate(toFavorite, {
+            state: {
+              url: PATH,
+              dateType: state?.DATE.dateType,
+              dateStart: state?.DATE.dateStart,
+              dateEnd: state?.DATE.dateEnd
+            },
+          });
         }}
       >
         {translate("favorite")}
