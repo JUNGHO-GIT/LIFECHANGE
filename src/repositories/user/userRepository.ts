@@ -103,7 +103,6 @@ export const userSignup = async (
       user_google: "N",
       user_token: OBJECT_param.user_token,
       user_pw: OBJECT_param.user_pw,
-      user_age: OBJECT_param.user_age,
       user_initScale: OBJECT_param.user_initScale,
       user_curScale: "",
       user_initProperty: OBJECT_param.user_initProperty,
@@ -187,7 +186,6 @@ export const userUpdate = async (
     },
     {
       $set: {
-        user_age: OBJECT_param.user_age,
         user_initScale: OBJECT_param.user_initScale,
         user_curScale: OBJECT_param.user_curScale,
         user_initProperty: OBJECT_param.user_initProperty,

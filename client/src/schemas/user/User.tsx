@@ -10,7 +10,6 @@ export const User: any = {
   user_id_verified: false,
   user_pw: "",
   user_pw_verified: "",
-  user_age: "",
   user_image: "",
 
   user_initScale: "",

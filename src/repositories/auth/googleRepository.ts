@@ -29,7 +29,6 @@ export const createUser = async (
     user_google: "Y",
     user_token: token_param,
     user_pw: user_pw_param,
-    user_age: "",
     user_initScale: "",
     user_curScale: "",
     user_initProperty: "0",

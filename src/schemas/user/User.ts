@@ -40,11 +40,6 @@ const schema = new mongoose.Schema({
     default: "",
     required: false
   },
-  user_age: {
-    type: String,
-    default: "",
-    required: false
-  },
 
   user_initScale: {
     type: String,

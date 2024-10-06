@@ -277,7 +277,7 @@ export const UserSignup = () => {
                 {translate("verify")}
               </Btn>
             </Grid>
-            <Hr px={20} />
+            <Hr px={10} />
             {/** 비밀번호 **/}
             <Grid size={12}>
               <Input
@@ -314,33 +314,7 @@ export const UserSignup = () => {
                 }}
               />
             </Grid>
-            <Hr px={20} />
-            {/** 나이 (1세 ~ 100세) **/}
-            <Grid size={12}>
-              <Input
-                label={translate("age")}
-                value={OBJECT.user_age}
-                inputRef={REFS?.[i]?.user_age}
-                error={ERRORS?.[i]?.user_age}
-                disabled={OBJECT.user_id_verified === false}
-                onChange={(e: any) => {
-                  const value = e.target.value.replace(/,/g, '');
-                  const newValue = value === "" ? 0 : Number(value);
-                  if (value === "") {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      user_age: "0",
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 200) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      user_age: String(newValue),
-                    }));
-                  }
-                }}
-              />
-            </Grid>
+            <Hr px={10} />
             {/** 초기 체중 **/}
             <Grid size={12}>
               <Input

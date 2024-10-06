@@ -252,7 +252,7 @@ export const UserDelete = () => {
                 {translate("verify")}
               </Btn>
             </Grid>
-            <Hr px={20} />
+            <Hr px={10} />
             {/** 비밀번호 **/}
             <Grid size={12}>
               <Input

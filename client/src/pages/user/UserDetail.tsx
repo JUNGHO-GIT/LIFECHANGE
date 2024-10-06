@@ -107,7 +107,7 @@ export const UserDetail = () => {
               <Input
                 label={translate("id")}
                 value={OBJECT?.user_id}
-                readOnly={true}
+                disabled={true}
               />
             </Grid>
             {/** 등록일 **/}
@@ -115,34 +115,7 @@ export const UserDetail = () => {
               <Input
                 label={translate("regDt")}
                 value={OBJECT?.user_regDt.split("T")[0]}
-                readOnly={true}
-              />
-            </Grid>
-            <Hr px={10} />
-            {/** 나이 (1세 ~ 100세) **/}
-            <Grid size={12}>
-              <Input
-                label={translate("age")}
-                value={OBJECT.user_age}
-                inputRef={REFS?.[i]?.user_age}
-                error={ERRORS?.[i]?.user_age}
-                disabled={OBJECT.user_id_verified === false}
-                onChange={(e: any) => {
-                  const value = e.target.value.replace(/,/g, '');
-                  const newValue = value === "" ? 0 : Number(value);
-                  if (value === "") {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      user_age: "0",
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 200) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      user_age: String(newValue),
-                    }));
-                  }
-                }}
+                disabled={true}
               />
             </Grid>
             <Hr px={10} />

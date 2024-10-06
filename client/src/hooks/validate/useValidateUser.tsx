@@ -96,7 +96,6 @@ export const useValidateUser = () => {
         "user_id_verified",
         "user_pw",
         "user_pw_verified",
-        "user_age",
         "user_initScale",
         "user_initProperty",
       ];
@@ -152,9 +151,6 @@ export const useValidateUser = () => {
         else if (OBJECT.user_pw !== OBJECT.user_pw_verified) {
           return showAlertAndFocus("user_pw_verified", "errorUserPwMatch", 0);
         }
-        else if (!OBJECT.user_age) {
-          return showAlertAndFocus("user_age", "errorUserAge", 0);
-        }
         else if (!OBJECT.user_initScale) {
           return showAlertAndFocus("user_initScale", "errorUserInitScale", 0);
         }
@@ -168,7 +164,6 @@ export const useValidateUser = () => {
     // 3. detail ---------------------------------------------------------------------------------
     else if (extra === "detail") {
       const target = [
-        "user_age",
         "user_initScale",
         "user_initProperty",
       ];
@@ -189,10 +184,7 @@ export const useValidateUser = () => {
         ))
       );
 
-      if (!OBJECT.user_age) {
-        return showAlertAndFocus("user_age", "errorUserAge", 0);
-      }
-      else if (!OBJECT.user_initScale) {
+      if (!OBJECT.user_initScale) {
         return showAlertAndFocus("user_initScale", "errorUserInitScale", 0);
       }
       else if (!OBJECT.user_initProperty) {
