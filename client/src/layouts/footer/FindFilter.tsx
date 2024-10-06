@@ -19,7 +19,7 @@ export const FindFilter = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { navigate , toDetail } = useCommonValue();
+  const { PATH, navigate , toDetail } = useCommonValue();
   const { translate } = useLanguageStore();
 
   // 7. find ---------------------------------------------------------------------------------------
@@ -28,14 +28,14 @@ export const FindFilter = (
     const querySection = () => (
       <Input
         label={translate("query")}
-        value={state?.DISPLAY === "favorite" ? translate("favorite") : state?.PAGING.query}
-        disabled={state?.DISPLAY === "favorite" ? true : false}
+        value={PATH.includes("/favorite/list") ? translate("favorite") : state?.PAGING.query}
+        disabled={PATH.includes("/favorite/list") ? true : false}
         inputclass={"h-30"}
         shrink={"shrink"}
         onChange={(e: any) => {
           setState?.setPAGING((prev: any) => ({
             ...prev,
-            query: state?.DISPLAY === "favorite" ? "favorite" : e.target.value
+            query: PATH.includes("/favorite/list") ? "favorite" : e.target.value
           }));
         }}
         onKeyDown={(e: any) => {
@@ -97,6 +97,7 @@ export const FindFilter = (
         page={state?.PAGING.page}
         showFirstButton={true}
         showLastButton={true}
+        disabled={PATH.includes("/favorite/list") ? true : false}
         style={{
           width: "40vw",
           display: "flex",

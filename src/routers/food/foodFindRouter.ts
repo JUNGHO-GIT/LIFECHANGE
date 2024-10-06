@@ -60,6 +60,7 @@ router.get("/listFavorite", async (req: Request, res: Response) => {
       res.json({
         msg: "searchSuccessful",
         status: finalResult.status,
+        totalCnt: finalResult.totalCnt,
         result: finalResult.result,
       });
     }
@@ -67,6 +68,7 @@ router.get("/listFavorite", async (req: Request, res: Response) => {
       res.json({
         msg: "searchFailed",
         status: finalResult.status,
+        totalCnt: finalResult.totalCnt,
         result: finalResult.result,
       });
     }
@@ -74,6 +76,7 @@ router.get("/listFavorite", async (req: Request, res: Response) => {
       res.json({
         msg: "searchError",
         status: finalResult.status,
+        totalCnt: finalResult.totalCnt,
         result: finalResult.result,
       });
     }

@@ -29,39 +29,27 @@ export const Footer = (
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (
-      PATH.includes("/calendar/list")
-    ) {
+    if (PATH.includes("/calendar/list")) {
       setTypeName("");
       setStyleClass("");
     }
-    else if (
-      PATH.includes("/user/category") || PATH.includes("/user/detail")
-    ) {
+    else if (PATH.includes("/user/category") || PATH.includes("/user/detail")) {
       setTypeName("btn");
       setStyleClass("layout-wrapper p-sticky bottom-0 h-8vh border-1 radius-1");
     }
-    else if (
-      PATH.includes("/user/dummy")
-    ) {
+    else if (PATH.includes("/user/dummy")) {
       setTypeName("dummy");
       setStyleClass("layout-wrapper p-sticky bottom-0 h-8vh border-1 radius-1");
     }
-    else if (
-      PATH.includes("/food/find/list")
-    ) {
+    else if (PATH.includes("/food/find/list") || PATH.includes("/favorite/list")) {
       setTypeName("findFilter");
       setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh border-1 radius-1");
     }
-    else if (
-      PATH.includes("/goal/list") || PATH.includes("/list")
-    ) {
+    else if (PATH.includes("/goal/list") || PATH.includes("/list")) {
       setTypeName("listFilter");
       setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh border-1 radius-1");
     }
-    else if (
-      PATH.includes("/goal/detail") || PATH.includes("/detail")
-    ) {
+    else if (PATH.includes("/goal/detail") || PATH.includes("/detail")) {
       setTypeName("btn");
       setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh border-1 radius-1");
     }

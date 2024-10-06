@@ -1,7 +1,7 @@
 // FoodFindList.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useStorage } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { FoodFind } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportUtils";
@@ -14,23 +14,25 @@ import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMu
 export const FoodFindList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, TITLE, localIsoCode, sessionId } = useCommonValue();
+  const { URL_OBJECT, PATH, TITLE, localIsoCode } = useCommonValue();
   const { location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { dayFmt } = useCommonDate();
   const { translate } = useLanguageStore();
+
+  // 2-1. useStorage -------------------------------------------------------------------------------
+  const [PAGING, setPAGING] = useStorage(
+    `${TITLE}_paging_(${PATH})`, {
+      sort: "asc",
+      query: "",
+      page: 0,
+    }
+  );
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [checkedQueries, setCheckedQueries] = useState<any>({});
   const [isExpanded, setIsExpanded] = useState<number[]>([0]);
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>([FoodFind]);
-  const [FAVORITE, setFAVORITE] = useState<any>([]);
-  const [DISPLAY, setDISPLAY] = useState<string>("find");
-  const [PAGING, setPAGING] = useState<any>({
-    sort: "asc",
-    query: "",
-    page: 0,
-  });
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "day",
@@ -133,24 +135,6 @@ export const FoodFindList = () => {
     sessionStorage.setItem(`${TITLE}_foodSection`, JSON.stringify(sectionArray));
 
   }, [checkedQueries, PAGING.page, OBJECT]);
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  // foodFavorite 조회
-  useEffect(() => {
-    axios.get(`${URL_OBJECT}/find/listFavorite`, {
-      params: {
-        user_id: sessionId,
-      },
-    })
-    .then((res: any) => {
-      setFAVORITE(
-        !res.data.result || res.data.result.length === 0 ? [] : res.data.result
-      );
-    })
-    .catch((err: any) => {
-      console.error(err);
-    });
-  }, [URL_OBJECT, sessionId]);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowFind = () => {
@@ -374,196 +358,8 @@ export const FoodFindList = () => {
           </Card>
         ))
       );
-      const favoriteFragment = (i: number) => (
-        FAVORITE?.map((item: any, index: number) => (
-          <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
-            <Accordion className={"shadow-0"} expanded={isExpanded.includes(index)}>
-              <AccordionSummary
-                className={"me-n10"}
-                expandIcon={
-                  <Icons
-                    key={"ChevronDown"}
-                    name={"ChevronDown"}
-                    className={"w-18 h-18"}
-                    onClick={() => {
-                      setIsExpanded(isExpanded.includes(index)
-                      ? isExpanded.filter((el: number) => el !== index)
-                      : [...isExpanded, index]
-                    )}}
-                  />
-                }
-              >
-                <Grid
-                  container={true}
-                  spacing={2}
-                  onClick={() => {
-                    handlerCheckboxChange(index);
-                  }}
-                >
-                  <Grid size={2} className={"d-row-center"}>
-                    <Checkbox
-                      key={`check-${index}`}
-                      color={"primary"}
-                      size={"small"}
-                      checked={
-                        !! (
-                          checkedQueries[`${FAVORITE[index].food_query}_${PAGING.page}`] &&
-                          checkedQueries[`${FAVORITE[index].food_query}_${PAGING.page}`][index]
-                        )
-                      }
-                      onChange={() => {
-                        handlerCheckboxChange(index);
-                      }}
-                    />
-                  </Grid>
-                  <Grid size={6} className={"d-row-left"}>
-                    <Div className={`${item.food_name_color}`}>
-                      {item.food_name}
-                    </Div>
-                    <Div className={"mt-n3 ms-5"}>
-                      <Icons
-                        key={"Star"}
-                        name={"Star"}
-                        className={"w-20 h-20"}
-                        color={"darkslategrey"}
-                        fill={"gold"}
-                      />
-                    </Div>
-                  </Grid>
-                  <Grid size={4} className={"d-row-right"}>
-                    <Div className={`${item.food_brand_color}`}>
-                      <Div className={`fs-0-8rem fw-500 dark me-10`}>
-                        {item.food_brand}
-                      </Div>
-                    </Div>
-                  </Grid>
-                </Grid>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
-                  {/** row 1 **/}
-                  <Grid size={2} className={"d-row-center"}>
-                    <Img
-                    	key={"food2"}
-                    	src={"food2"}
-                    	className={"w-15 h-15"}
-                    />
-                  </Grid>
-                  <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
-                      {translate("kcal")}
-                    </Div>
-                  </Grid>
-                  <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
-                      <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.food_kcal_color}`}>
-                          {numeral(item.food_kcal).format("0,0")}
-                        </Div>
-                      </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
-                        <Div className={"fs-0-6rem"}>
-                          {translate("kc")}
-                        </Div>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Hr px={1} />
-                  {/** row 2 **/}
-                  <Grid size={2} className={"d-center"}>
-                    <Img
-                    	key={"food3"}
-                    	src={"food3"}
-                    	className={"w-15 h-15"}
-                    />
-                  </Grid>
-                  <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
-                      {translate("carb")}
-                    </Div>
-                  </Grid>
-                  <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
-                      <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.food_carb_color}`}>
-                          {item.food_carb}
-                        </Div>
-                      </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
-                        <Div className={"fs-0-6rem"}>
-                          {translate("g")}
-                        </Div>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Hr px={1} />
-                  {/** row 3 **/}
-                  <Grid size={2} className={"d-center"}>
-                    <Img
-                    	key={"food4"}
-                    	src={"food4"}
-                    	className={"w-15 h-15"}
-                    />
-                  </Grid>
-                  <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
-                      {translate("protein")}
-                    </Div>
-                  </Grid>
-                  <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
-                      <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.food_protein_color}`}>
-                          {item.food_protein}
-                        </Div>
-                      </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
-                        <Div className={"fs-0-6rem"}>
-                          {translate("g")}
-                        </Div>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Hr px={1} />
-                  {/** row 3 **/}
-                  <Grid size={2} className={"d-center"}>
-                    <Img
-                    	key={"food5"}
-                    	src={"food5"}
-                    	className={"w-15 h-15"}
-                    />
-                  </Grid>
-                  <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
-                      {translate("fat")}
-                    </Div>
-                  </Grid>
-                  <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
-                      <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.food_fat_color}`}>
-                          {item.food_fat}
-                        </Div>
-                      </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
-                        <Div className={"fs-0-6rem"}>
-                          {translate("g")}
-                        </Div>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </AccordionDetails>
-            </Accordion>
-          </Card>
-        ))
-      );
       return (
-        DISPLAY === "favorite" ? (
-          FAVORITE.length === 0 ? emptyFragment() : favoriteFragment(0)
-        ) : (
-          COUNT.totalCnt === 0 ? emptyFragment() : listFragment(0)
-        )
+        COUNT.totalCnt === 0 ? emptyFragment() : listFragment(0)
       );
     };
     // 7-10. return
@@ -583,8 +379,6 @@ export const FoodFindList = () => {
     <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
-      DISPLAY={DISPLAY}
-      setDISPLAY={setDISPLAY}
       setIsExpanded={setIsExpanded}
     />
   );
@@ -593,10 +387,10 @@ export const FoodFindList = () => {
   const footerNode = () => (
     <Footer
       state={{
-        DATE, SEND, PAGING, COUNT, DISPLAY,
+        DATE, SEND, PAGING, COUNT,
       }}
       setState={{
-        setDATE, setSEND, setPAGING, setCOUNT, setDISPLAY,
+        setDATE, setSEND, setPAGING, setCOUNT,
       }}
       flow={{
         flowFind

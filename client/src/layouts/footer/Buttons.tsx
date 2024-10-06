@@ -55,6 +55,19 @@ export const Buttons = (
       </Btn>
     );
 
+    // 2. favorite
+    const favoriteSection = () => (
+      <Btn
+        color={"warning"}
+        className={"ms-1vw me-1vw"}
+        onClick={() => {
+          navigate("/food/favorite/list");
+        }}
+      >
+        {translate("favorite")}
+      </Btn>
+    );
+
     // 3. save
     const saveSection = () => (
       <PopUp
@@ -157,6 +170,7 @@ export const Buttons = (
         <Grid container spacing={2} columns={12}>
           <Grid size={10} className={"d-center"}>
             {PATH.includes("/food/detail") && toFindSection()}
+            {PATH.includes("/food/detail") && favoriteSection()}
             {saveSection()}
             {deleteSection()}
           </Grid>

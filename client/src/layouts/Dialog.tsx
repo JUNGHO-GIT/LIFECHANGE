@@ -12,14 +12,12 @@ declare type DialogProps = {
   setCOUNT?: any;
   LOCKED?: any;
   setLOCKED?: any;
-  DISPLAY?: any;
-  setDISPLAY?: any;
   setIsExpanded?: any;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const Dialog = (
-  { COUNT, setCOUNT, LOCKED, setLOCKED, DISPLAY, setDISPLAY, setIsExpanded }: DialogProps
+  { COUNT, setCOUNT, LOCKED, setLOCKED, setIsExpanded }: DialogProps
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
@@ -32,7 +30,8 @@ export const Dialog = (
   const isToday = PATH.includes("/today");
   const isGoalList = PATH.includes("/goal/list");
   const isFindList = PATH.includes("/find/list");
-  const isList = !isGoalList && !isFindList && PATH.includes("/list");
+  const isFavoriteList = PATH.includes("/favorite/list");
+  const isList = !isGoalList && !isFindList && !isFavoriteList && PATH.includes("/list");
   const isDetail = PATH.includes("/detail");
 
   // 7. dialog -------------------------------------------------------------------------------------
@@ -223,12 +222,16 @@ export const Dialog = (
               <Icons
                 key={"Star"}
                 name={"Star"}
-                fill={DISPLAY === "favorite" ? "gold" : "white"}
+                fill={PATH.includes("/favorite/list") ? "gold" : "white"}
                 className={"w-23 h-23"}
               />
             }
             onClick={() => {
-              setDISPLAY(DISPLAY === "favorite" ? "find" : "favorite");
+              PATH.includes("/favorite/list") ? (
+                navigate("/food/find/list")
+              ) : (
+                navigate("/food/favorite/list")
+              );
             }}
           />
           <SpeedDialAction
@@ -389,7 +392,7 @@ export const Dialog = (
       : isGoalList || isList ? (
         listNotTodaySection()
       )
-      : isFindList ? (
+      : isFindList || isFavoriteList ? (
         findSection()
       )
       : isDetail ? (

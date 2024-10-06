@@ -9,7 +9,7 @@ import { Exercise } from "@schemas/exercise/Exercise";
 import { FoodBar, FoodPie } from "@schemas/food/FoodChart";
 import { FoodLineKcal, FoodLineNut } from "@schemas/food/FoodChart";
 import { FoodAvgKcal, FoodAvgNut } from "@schemas/food/FoodChart";
-import { FoodFind } from "@schemas/food/FoodFind";
+import { FoodFind, FoodFavorite } from "@schemas/food/FoodFind";
 import { FoodGoal } from "@schemas/food/FoodGoal";
 import { Food } from "@schemas/food/Food";
 import { MoneyBar, MoneyPie, MoneyLine, MoneyAvg } from "@schemas/money/MoneyChart";
@@ -38,6 +38,7 @@ export {
   FoodAvgKcal,
   FoodAvgNut,
   FoodFind,
+  FoodFavorite,
   FoodGoal,
   Food,
   MoneyBar,

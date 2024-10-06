@@ -39,7 +39,7 @@ import {
 } from "@imports/ImportPages";
 
 import {
-  FoodChart, FoodFindList, FoodGoalList, FoodGoalDetail, FoodList, FoodDetail,
+  FoodChart, FoodGoalList, FoodGoalDetail, FoodFindList, FoodFavoriteList, FoodList, FoodDetail,
 } from "@imports/ImportPages";
 
 import {
@@ -89,6 +89,7 @@ const Food = () => (
     <Route path="/goal/list" element={<FoodGoalList />} />
     <Route path="/goal/detail" element={<FoodGoalDetail />} />
     <Route path="/find/list" element={<FoodFindList />} />
+    <Route path="/favorite/list" element={<FoodFavoriteList />} />
     <Route path="/list" element={<FoodList />} />
     <Route path="/detail" element={<FoodDetail />} />
   </Routes>

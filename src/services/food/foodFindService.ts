@@ -321,11 +321,13 @@ export const listFavorite = async (
   // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
+  let totalCntResult: any = null;
   let statusResult: string = "";
 
   findResult = await repository.listFavorite(
     user_id_param
   );
+  totalCntResult = findResult.length;
 
   if (!findResult || findResult.length <= 0) {
     finalResult = [];
@@ -336,13 +338,17 @@ export const listFavorite = async (
     statusResult = "success";
   }
 
-  finalResult = finalResult.map((item: any) => ({
+  finalResult = finalResult.map((item: any, index: number) => ({
     ...item,
     food_query: "favorite",
+    food_perNumber: index + 1,
+    food_part_idx: 1,
+    food_part_val: "breakfast",
   }));
 
   return {
     status: statusResult,
+    totalCnt: totalCntResult,
     result: finalResult,
   };
 };

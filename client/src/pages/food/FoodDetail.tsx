@@ -4,7 +4,7 @@ import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { useValidateFood } from "@imports/ImportValidates";
-import { Food } from "@imports/ImportSchemas";
+import { Food, FoodFavorite } from "@imports/ImportSchemas";
 import { axios, numeral, sync } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, Count, Delete, Input, Select } from "@imports/ImportContainers";
@@ -114,7 +114,7 @@ export const FoodDetail = () => {
     })
     .then((res: any) => {
       setFAVORITE(
-        !res.data.result || res.data.result.length === 0 ? [] : res.data.result
+        !res.data.result || res.data.result.length === 0 ? [""] : res.data.result
       );
     })
     .catch((err: any) => {
@@ -366,9 +366,6 @@ export const FoodDetail = () => {
     })
     .catch((err: any) => {
       console.error(err);
-    })
-    .finally(() => {
-      setLOADING(false);
     });
   };
 
@@ -409,13 +406,21 @@ export const FoodDetail = () => {
   // 4-4. handler (favorite 추가) ------------------------------------------------------------------
   const handlerFoodFavorite = (index: number) => {
 
-    const count = OBJECT?.food_section[index]?.food_count;
+    const count = OBJECT?.food_section[index]?.food_count || 1;
     const food_name = OBJECT?.food_section[index]?.food_name;
     const food_brand = OBJECT?.food_section[index]?.food_brand;
-    const food_kcal = (OBJECT?.food_section[index]?.food_kcal / count).toFixed(0);
-    const food_carb = (OBJECT?.food_section[index]?.food_carb / count).toFixed(1);
-    const food_protein = (OBJECT?.food_section[index]?.food_protein / count).toFixed(1);
-    const food_fat = (OBJECT?.food_section[index]?.food_fat / count).toFixed(1);
+    const food_kcal = (
+      parseFloat(OBJECT?.food_section[index]?.food_kcal) / parseFloat(count)
+    ).toFixed(0);
+    const food_carb = (
+      parseFloat(OBJECT?.food_section[index]?.food_carb) / parseFloat(count)
+    ).toFixed(1);
+    const food_protein = (
+      parseFloat(OBJECT?.food_section[index]?.food_protein) / parseFloat(count)
+    ).toFixed(1);
+    const food_fat = (
+      parseFloat(OBJECT?.food_section[index]?.food_fat) / parseFloat(count)
+    ).toFixed(1);
     const food_key = `${food_name}_${food_brand}_${food_kcal}_${food_carb}_${food_protein}_${food_fat}`;
 
     return {
@@ -546,9 +551,11 @@ export const FoodDetail = () => {
                   className={"w-20 h-20"}
                   color={"darkslategrey"}
                   fill={
-                    FAVORITE.length > 0 && FAVORITE.some((item: any) => (
-                      item.food_key === handlerFoodFavorite(i).food_key
-                    )) ? "gold" : "white"
+                    FAVORITE.length > 0 && FAVORITE.some((item: any) => {
+                      return (
+                        item.food_key === handlerFoodFavorite(i).food_key
+                      );
+                    }) ? "gold" : "white"
                   }
                   onClick={() => {
                     flowUpdateFavorite(handlerFoodFavorite(i));

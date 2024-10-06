@@ -14,9 +14,10 @@ import { ExerciseList } from "@pages/exercise/ExerciseList";
 import { ExerciseDetail } from "@pages/exercise/ExerciseDetail";
 
 import { FoodChart } from "@pages/food/chart/FoodChart";
-import { FoodFindList } from "@pages/food/FoodFindList";
 import { FoodGoalList } from "@pages/food/goal/FoodGoalList";
 import { FoodGoalDetail } from "@pages/food/goal/FoodGoalDetail";
+import { FoodFindList } from "@pages/food/find/FoodFindList";
+import { FoodFavoriteList } from "@pages/food/find/FoodFavoriteList";
 import { FoodList } from "@pages/food/FoodList";
 import { FoodDetail } from "@pages/food/FoodDetail";
 
@@ -58,9 +59,10 @@ export {
   ExerciseList,
   ExerciseDetail,
   FoodChart,
-  FoodFindList,
   FoodGoalList,
   FoodGoalDetail,
+  FoodFindList,
+  FoodFavoriteList,
   FoodList,
   FoodDetail,
   MoneyChart,
