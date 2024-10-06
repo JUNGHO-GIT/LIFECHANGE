@@ -1,5 +1,10 @@
 // utils.ts
 
+import dotenv from "dotenv";
+dotenv.config();
+import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
+
 // 1-1. number -------------------------------------------------------------------------------------
 export const randomNumber = (data: number) => {
   return Math.floor(Math.random() * data);
@@ -71,3 +76,31 @@ export const decimalToStr = (data: number) => {
 
   return `${String(adjustedHours).padStart(2, "0")}:${String(adjustedMinutes).padStart(2, "0")}`;
 };
+
+// 4-1. token --------------------------------------------------------------------------------------
+export const token: string = crypto.randomBytes(20).toString('hex');
+
+// 4-2. adminCheck ---------------------------------------------------------------------------------
+export const adminCheck = (user_id: string) => {
+  const adminId = process.env.ADMIN_ID;
+
+  if (user_id === adminId) {
+    return true;
+  }
+  return false;
+};
+
+// 4-3. combinePw ----------------------------------------------------------------------------------
+export const combinePw = async (inputPw: string, token: string) => {
+  return `${inputPw}_${token}`;
+};
+
+// 4-4. hashPw -------------------------------------------------------------------------------------
+export const hashPw = async (combinedPw: string) => {
+  return await bcrypt.hash(combinedPw, 10);
+}
+
+// 4-5. comparePw ----------------------------------------------------------------------------------
+export const comparePw = async (inputPw: string, storedPw: string) => {
+  return await bcrypt.compare(inputPw, storedPw);
+}
