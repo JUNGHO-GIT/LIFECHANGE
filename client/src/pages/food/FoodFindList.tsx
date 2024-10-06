@@ -99,13 +99,25 @@ export const FoodFindList = () => {
 
     // 체크된 항목들만 sectionArray에 추가 또는 제거
     OBJECT.forEach((item: any, index: number) => {
+      const {
+        food_name, food_brand, food_gram, food_carb, food_count,
+        food_fat, food_kcal, food_protein, food_part_idx, food_part_val,
+        food_perNumber, food_query, food_serv
+      } = item;
+
+      const newItem = {
+        food_name, food_brand, food_gram, food_carb, food_count,
+        food_fat, food_kcal, food_protein, food_part_idx, food_part_val,
+        food_perNumber, food_query, food_serv
+      };
+
       if (pageChecked[index]) {
         if (!sectionArray.some((i) => (
           i.food_name === item.food_name &&
           i.food_brand === item.food_brand &&
           i.food_gram === item.food_gram
         ))) {
-          sectionArray.push(item);
+          sectionArray.push(newItem);
         }
       }
       else {
@@ -176,9 +188,6 @@ export const FoodFindList = () => {
       ...checkedQueries,
       [queryKey]: updatedChecked
     });
-
-    console.log("PAGING", PAGING);
-    console.log("checkedQueries", checkedQueries);
   };
 
   // 7. find ---------------------------------------------------------------------------------------
