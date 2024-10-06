@@ -327,6 +327,11 @@ export const PickerDay = (
                         dateStart: getPrevDayStartFmt(prev.dateStart),
                         dateEnd: getPrevDayEndFmt(prev.dateStart),
                       }));
+                      Object.keys(sessionStorage).forEach((key) => {
+                        if (key.includes(`foodSection`)) {
+                          sessionStorage.removeItem(key);
+                        }
+                      });
                     }}
                   />
                 </Div>
@@ -342,6 +347,11 @@ export const PickerDay = (
                         dateStart: getNextDayStartFmt(prev.dateStart),
                         dateEnd: getNextDayEndFmt(prev.dateStart),
                       }));
+                      Object.keys(sessionStorage).forEach((key) => {
+                        if (key.includes(`foodSection`)) {
+                          sessionStorage.removeItem(key);
+                        }
+                      });
                     }}
                   />
                 </Div>

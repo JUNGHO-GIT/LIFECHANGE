@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useStorage } from "@imports/ImportHooks";
-import { useLanguageStore } from "@imports/ImportStores";
-import { FoodFavorite } from "@imports/ImportSchemas";
-import { axios, numeral } from "@imports/ImportUtils";
+import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
+import { FoodFind } from "@imports/ImportSchemas";
+import { axios, numeral, sync } from "@imports/ImportUtils";
 import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
 import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
 import { Paper, Card, Checkbox, Grid } from "@imports/ImportMuis";
@@ -18,6 +18,7 @@ export const FoodFavoriteList = () => {
   const { location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { dayFmt } = useCommonDate();
   const { translate } = useLanguageStore();
+  const { ALERT, setALERT } = useAlertStore();
 
   // 2-1. useStorage -------------------------------------------------------------------------------
   const [PAGING, setPAGING] = useStorage(
@@ -32,7 +33,7 @@ export const FoodFavoriteList = () => {
   const [checkedQueries, setCheckedQueries] = useState<any>({});
   const [isExpanded, setIsExpanded] = useState<number[]>([0]);
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [OBJECT, setOBJECT] = useState<any>([FoodFavorite]);
+  const [OBJECT, setOBJECT] = useState<any>([FoodFind]);
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "day",
@@ -51,39 +52,19 @@ export const FoodFavoriteList = () => {
   });
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  // foodFavorite 조회
+  // 페이지 번호 변경 시 flowFind 호출
   useEffect(() => {
-    setLOADING(true);
-    axios.get(`${URL_OBJECT}/find/listFavorite`, {
-      params: {
-        user_id: sessionId,
-      },
-    })
-    .then((res: any) => {
-      setOBJECT(res.data.result.length > 0 ? res.data.result : [FoodFavorite]);
-      setCOUNT((prev: any) => ({
-        ...prev,
-        totalCnt: res.data.totalCnt || 0,
-        sectionCnt: res.data.sectionCnt || 0,
-        newSectionCnt: res.data.sectionCnt || 0
-      }));
-      // Accordion 초기값 설정
-      // setIsExpanded(res.data.result.map((_item: any, index: number) => index));
-      setIsExpanded([]);
-    })
-    .catch((err: any) => {
-      console.error(err);
-    })
-    .finally(() => {
-      setLOADING(false);
-    });
-  }, [URL_OBJECT, sessionId]);
+    if (PAGING?.query === "") {
+      return;
+    }
+    flowFind();
+  }, [PAGING.page]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 페이지 로드 시 체크박스 상태 초기화
   useEffect(() => {
     let sectionArray = [];
-    const section = sessionStorage.getItem(`${TITLE}_foodSection`);
+    let section = sessionStorage.getItem(`${TITLE}_foodSection`);
 
     // sectionArray 초기화
     if (section) {
@@ -96,11 +77,62 @@ export const FoodFavoriteList = () => {
         sectionItem.food_key === item.food_key
       ))
     ));
-    setCheckedQueries((prev: any) => ({
-      ...prev,
-      [queryKey]: newChecked,
-    }));
-  }, [OBJECT, PAGING.query, PAGING.page]);
+    setCheckedQueries({
+      ...checkedQueries,
+      [queryKey]: newChecked
+    });
+  }, [OBJECT]);
+
+  // 3. flow ---------------------------------------------------------------------------------------
+  const flowFind = () => {
+    setLOADING(true);
+    axios.get(`${URL_OBJECT}/find/listFavorite`, {
+      params: {
+        user_id: sessionId,
+      },
+    })
+    .then((res: any) => {
+      setOBJECT(res.data.result.length > 0 ? res.data.result : []);
+      setCOUNT((prev: any) => ({
+        ...prev,
+        totalCnt: res.data.totalCnt || 0,
+      }));
+      // Accordion 초기값 설정
+      // setIsExpanded(res.data.result.map((_item: any, index: number) => index));
+      setIsExpanded([]);
+    })
+    .catch((err: any) => {
+      console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
+    });
+  };
+
+  // 3. flow ---------------------------------------------------------------------------------------
+  const flowUpdateFavorite = (foodFavorite: any) => {
+    axios.put(`${URL_OBJECT}/find/updateFavorite`, {
+      user_id: sessionId,
+      foodFavorite: foodFavorite,
+    })
+    .then((res: any) => {
+      if (res.data.status === "success") {
+        setOBJECT(res.data.result.length > 0 ? res.data.result : []);
+        sync("favorite");
+        flowFind();
+      }
+      else {
+        setALERT({
+          open: !ALERT.open,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
+      }
+    })
+    .catch((err: any) => {
+      console.error(err);
+    });
+  };
 
   // 4. handler ------------------------------------------------------------------------------------
   // 체크박스 변경 시
@@ -216,6 +248,10 @@ export const FoodFavoriteList = () => {
                         className={"w-20 h-20"}
                         color={"darkslategrey"}
                         fill={"gold"}
+                        onClick={(e: any) => {
+                          e.stopPropagation();
+                          flowUpdateFavorite(OBJECT[index]);
+                        }}
                       />
                     </Div>
                   </Grid>
@@ -376,10 +412,10 @@ export const FoodFavoriteList = () => {
   const footerNode = () => (
     <Footer
       state={{
-        DATE, SEND, PAGING, COUNT
+        DATE, SEND, PAGING, COUNT,
       }}
       setState={{
-        setDATE, setSEND, setPAGING, setCOUNT
+        setDATE, setSEND, setPAGING, setCOUNT,
       }}
     />
   );

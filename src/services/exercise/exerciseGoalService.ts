@@ -130,7 +130,7 @@ export const list = async (
       return {
         ...goal,
         exercise_total_count: String(exerciseTotalCount),
-        exercise_total_volume: String(exerciseTotalVolume.toFixed(1)),
+        exercise_total_volume: String(exerciseTotalVolume.toFixed(0)),
         exercise_total_cardio: decimalToStr(exerciseTotalCardio),
         exercise_total_weight: String(exerciseCurBodyWeight),
       };

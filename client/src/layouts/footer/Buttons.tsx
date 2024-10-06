@@ -42,7 +42,6 @@ export const Buttons = (
         onClick={() => {
           navigate(toFind, {
             state: {
-              url: PATH,
               dateType: state?.DATE.dateType,
               dateStart: state?.DATE.dateStart,
               dateEnd: state?.DATE.dateEnd
@@ -62,7 +61,6 @@ export const Buttons = (
         onClick={() => {
           navigate(toFavorite, {
             state: {
-              url: PATH,
               dateType: state?.DATE.dateType,
               dateStart: state?.DATE.dateStart,
               dateEnd: state?.DATE.dateEnd

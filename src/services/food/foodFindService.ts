@@ -306,6 +306,11 @@ export const list = async (
     statusResult = "success";
   }
 
+  finalResult = finalResult.map((item: any) => ({
+    ...item,
+    food_key: `${item.food_name}_${item.food_brand}_${item.food_kcal}_${item.food_carb}_${item.food_protein}_${item.food_fat}`,
+  }));
+
   return {
     status: statusResult,
     totalCnt: totalCntResult,

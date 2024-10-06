@@ -126,10 +126,10 @@ export const list = async (
 
       return {
         ...goal,
-        food_total_kcal: String(foodTotalKcal.toFixed(1)),
-        food_total_carb: String(foodTotalCarb.toFixed(1)),
-        food_total_protein: String(foodTotalProtein.toFixed(1)),
-        food_total_fat: String(foodTotalFat.toFixed(1)),
+        food_total_kcal: String(foodTotalKcal.toFixed(0)),
+        food_total_carb: String(foodTotalCarb.toFixed(0)),
+        food_total_protein: String(foodTotalProtein.toFixed(0)),
+        food_total_fat: String(foodTotalFat.toFixed(0)),
       };
     }));
     statusResult = "success";

@@ -13,11 +13,15 @@ export const useFoodSection = () => {
   useEffect(() => {
 
     // foodSection 처리
-    if (!PATH.includes("food/find/list") && !PATH.includes("food/detail")) {
+    if (
+      !PATH.includes("food/find/list") &&
+      !PATH.includes("food/favorite/list") &&
+      !PATH.includes("food/detail")
+    ) {
 
       const section = sessionStorage.getItem(`${TITLE}_foodSection`);
 
-      if (section !== null || section !== undefined || section !== "") {
+      if (section) {
         sessionStorage.removeItem(`${TITLE}_foodSection`);
       }
     }

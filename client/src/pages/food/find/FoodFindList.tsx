@@ -73,9 +73,7 @@ export const FoodFindList = () => {
     const queryKey = `${PAGING.query}_${PAGING.page}`;
     const newChecked = OBJECT.map((item: any) => (
       sectionArray.some((sectionItem: any) => (
-        sectionItem.food_name === item.food_name &&
-        sectionItem.food_brand === item.food_brand &&
-        sectionItem.food_gram === item.food_gram
+        sectionItem.food_key === item.food_key
       ))
     ));
     setCheckedQueries({
@@ -83,58 +81,6 @@ export const FoodFindList = () => {
       [queryKey]: newChecked
     });
   }, [OBJECT]);
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  // 체크박스 상태 변경 시 sessionStorage에 저장
-  useEffect(() => {
-    let sectionArray: any[] = [];
-    let section: any = sessionStorage.getItem(`${TITLE}_foodSection`);
-
-    // sectionArray 초기화
-    if (section) {
-      sectionArray = JSON.parse(section);
-    }
-
-    // 현재 쿼리와 페이지의 체크된 상태
-    const queryKey = `${PAGING.query}_${PAGING.page}`;
-    const pageChecked = checkedQueries[queryKey] || [];
-
-    // 체크된 항목들만 sectionArray에 추가 또는 제거
-    OBJECT.forEach((item: any, index: number) => {
-      const {
-        food_name, food_brand, food_gram, food_carb, food_count,
-        food_fat, food_kcal, food_protein, food_part_idx, food_part_val,
-        food_perNumber, food_query, food_serv
-      } = item;
-
-      const newItem = {
-        food_name, food_brand, food_gram, food_carb, food_count,
-        food_fat, food_kcal, food_protein, food_part_idx, food_part_val,
-        food_perNumber, food_query, food_serv
-      };
-
-      if (pageChecked[index]) {
-        if (!sectionArray.some((i) => (
-          i.food_name === item.food_name &&
-          i.food_brand === item.food_brand &&
-          i.food_gram === item.food_gram
-        ))) {
-          sectionArray.push(newItem);
-        }
-      }
-      else {
-        sectionArray = sectionArray.filter((i) => !(
-          i.food_name === item.food_name &&
-          i.food_brand === item.food_brand &&
-          i.food_gram === item.food_gram
-        ));
-      }
-    });
-
-    // sessionStorage에 저장
-    sessionStorage.setItem(`${TITLE}_foodSection`, JSON.stringify(sectionArray));
-
-  }, [checkedQueries, PAGING.page, OBJECT]);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowFind = () => {
@@ -168,10 +114,50 @@ export const FoodFindList = () => {
     const queryKey = `${PAGING.query}_${PAGING.page}`;
     const updatedChecked = [...(checkedQueries[queryKey] || [])];
     updatedChecked[index] = !updatedChecked[index];
-    setCheckedQueries({
-      ...checkedQueries,
-      [queryKey]: updatedChecked
-    });
+
+    setCheckedQueries((prev: any) => ({
+      ...prev,
+      [queryKey]: updatedChecked,
+    }));
+
+    // sessionStorage 업데이트
+    let sectionArray = [];
+    const section = sessionStorage.getItem(`${TITLE}_foodSection`);
+
+    if (section) {
+      sectionArray = JSON.parse(section);
+    }
+
+    const item = OBJECT[index];
+    const newItem = {
+      food_perNumber: item.food_perNumber,
+      food_part_idx: item.food_part_idx,
+      food_part_val: item.food_part_val,
+      food_key: item.food_key,
+      food_query: item.food_query,
+      food_name: item.food_name,
+      food_brand: item.food_brand,
+      food_gram: item.food_gram,
+      food_serv: item.food_serv,
+      food_count: item.food_count,
+      food_kcal: item.food_kcal,
+      food_carb: item.food_carb,
+      food_protein: item.food_protein,
+      food_fat: item.food_fat,
+    };
+
+    if (updatedChecked[index]) {
+      if (!sectionArray.some((i: any) => i.food_key === item.food_key)) {
+        sectionArray.push(newItem);
+      }
+    }
+    else {
+      sectionArray = sectionArray.filter((i: any) => (
+        i.food_key !== item.food_key
+      ));
+    }
+
+    sessionStorage.setItem(`${TITLE}_foodSection`, JSON.stringify(sectionArray));
   };
 
   // 7. find ---------------------------------------------------------------------------------------

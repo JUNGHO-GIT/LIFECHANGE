@@ -188,7 +188,7 @@ export const TopNav = () => {
       else if (secondStr === "list" || secondStr === "detail") {
         setSelectedTab("real");
       }
-      else if (secondStr === "find") {
+      else if (secondStr === "find" || secondStr === "favorite") {
         setSelectedTab("find");
       }
     }

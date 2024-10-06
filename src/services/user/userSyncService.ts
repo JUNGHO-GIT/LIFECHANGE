@@ -1,7 +1,6 @@
 // userSyncService.ts
 
 import * as repository from "@repositories/user/userSyncRepository";
-import { strToDecimal, decimalToStr } from "@scripts/utils";
 import { timeToDecimal, decimalToTime } from "@scripts/utils";
 
 // 0. category -------------------------------------------------------------------------------------
