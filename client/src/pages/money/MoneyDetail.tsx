@@ -8,7 +8,7 @@ import { Money } from "@imports/ImportSchemas";
 import { axios, numeral, sync } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, Memo, Count, Delete, Select, Input } from "@imports/ImportContainers";
-import { Img, Bg, Div } from "@imports/ImportComponents";
+import { Img, Bg, Div, Br } from "@imports/ImportComponents";
 import { Paper, Card, MenuItem, Grid, Checkbox } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -321,6 +321,7 @@ export const MoneyDetail = () => {
               EXIST={EXIST}
             />
           </Grid>
+          <Br px={1} />
           <Grid size={12}>
             <Count
               COUNT={COUNT}
@@ -337,7 +338,7 @@ export const MoneyDetail = () => {
     const totalSection = () => (
       <Card className={"border-1 radius-1 p-20"}>
         <Grid container spacing={1} columns={12}>
-          <Grid size={6}>
+          <Grid size={12}>
             <Input
               label={translate("totalIncome")}
               value={numeral(OBJECT?.money_total_income).format("0,0")}
@@ -354,7 +355,8 @@ export const MoneyDetail = () => {
               }
             />
           </Grid>
-          <Grid size={6}>
+          <Br px={1} />
+          <Grid size={12}>
             <Input
               label={translate("totalExpense")}
               value={numeral(OBJECT?.money_total_expense).format("0,0")}
@@ -392,6 +394,7 @@ export const MoneyDetail = () => {
                 LOCKED={LOCKED}
               />
             </Grid>
+            <Br px={1} />
             <Grid size={6}>
               <Select
                 label={translate("part")}
@@ -465,6 +468,7 @@ export const MoneyDetail = () => {
                 ))}
               </Select>
             </Grid>
+            <Br px={1} />
             <Grid size={12}>
               <Input
                 label={translate("amount")}
@@ -510,6 +514,7 @@ export const MoneyDetail = () => {
                 }}
               />
             </Grid>
+            <Br px={1} />
             <Grid size={{ xs: 7, sm: 8 }} className={"d-center"}>
               <Memo
                 OBJECT={OBJECT}
@@ -544,24 +549,30 @@ export const MoneyDetail = () => {
         </Card>
       );
       return (
-        COUNT?.newSectionCnt > 0 && OBJECT?.money_section?.map((_item: any, idx: number) => (
-          detailFragment(idx)
-        ))
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT?.newSectionCnt > 0 && (
+                OBJECT?.money_section?.map((_item: any, i: number) => (
+                  detailFragment(i)
+                ))
+              )}
+            </Grid>
+          </Grid>
+        </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {dateCountSection()}
-            {!LOADING ? (
+            {LOADING ? <Loading /> : (
               <>
                 {totalSection()}
                 {detailSection()}
               </>
-            ) : (
-              <Loading />
             )}
           </Grid>
         </Grid>

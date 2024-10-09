@@ -561,6 +561,14 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "비밀번호 확인을 입력해주세요",
         en: "Please enter your password confirmation"
       },
+      helperScale: {
+        ko: "현재 체중을 입력해주세요",
+        en: "Please enter your current weight"
+      },
+      helperProperty: {
+        ko: "현재 자산을 입력해주세요",
+        en: "Please enter your current property"
+      },
 
       // -------------------------------------------------------------------------------------------
       // i

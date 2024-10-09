@@ -5,11 +5,10 @@ import { useCommonValue } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { useValidateUser } from "@imports/ImportValidates";
 import { User } from "@imports/ImportSchemas";
-import { axios } from "@imports/ImportUtils";
-import { sync } from "@imports/ImportUtils";
+import { axios, sync } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Input } from "@imports/ImportContainers";
-import { Div, Btn, Img, Hr } from "@imports/ImportComponents";
+import { Div, Btn, Img, Hr, Br } from "@imports/ImportComponents";
 import { Paper, Checkbox, Card, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -24,7 +23,7 @@ export const UserLogin = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [loginTrigger, setLoginTrigger] = useState<boolean>(false);
-  const [_clickCount, setClickCount] = useState<number>(0);
+  const [clickCount, setClickCount] = useState<number>(0);
   const [checkedSaveId, setCheckedSaveId] = useState<boolean>(false);
   const [checkedAutoLogin, setCheckedAutoLogin] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>(User);
@@ -150,7 +149,7 @@ export const UserLogin = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowGoogle = () => {
-    axios.get(`${URL_GOOGLE}/login`)
+    axios.get (`${URL_GOOGLE}/login`)
     .then((res: any) => {
       if (res.data.status === "success") {
         window.location.href = res.data.url;
@@ -172,33 +171,36 @@ export const UserLogin = () => {
   const userLoginNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <Div
-        className={"d-center fs-2-0rem p-0"}
-        onClick={() => {
-          setClickCount((prevCount) => {
-            const newCount = prevCount + 1;
-            if (newCount === 5) {
-              setOBJECT((prev: any) => ({
-                ...prev,
-                user_id: ADMIN_ID,
-                user_pw: ADMIN_PW,
-              }));
-              setCheckedSaveId(true);
-              setCheckedAutoLogin(true);
-              setLoginTrigger(true);
-              setClickCount(0);
-            }
-            return newCount;
-          });
-        }}
-      >
-        {translate("login")}
-      </Div>
+      <Card className={"p-0"}>
+        <Grid container spacing={1} columns={12}>
+          <Grid size={12}>
+            <Div className={"fs-1-8rem fw-500"} onClick={() => {
+              setClickCount((prevCount) => {
+                const newCount = prevCount + 1;
+                if (newCount === 5) {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    user_id: ADMIN_ID,
+                    user_pw: ADMIN_PW,
+                  }));
+                  setCheckedSaveId(true);
+                  setCheckedAutoLogin(true);
+                  setLoginTrigger(true);
+                  setClickCount(0);
+                }
+                return newCount;
+              });
+            }}>
+              {translate("login")}
+            </Div>
+          </Grid>
+        </Grid>
+      </Card>
     );
-    // 7-2. card
-    const detailSection = () => {
+    // 7-2. login
+    const loginSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={"p-10 mb-n20"} key={i}>
+        <Card className={"p-10"} key={`detail-${i}`}>
           <Grid container spacing={1} columns={12}>
             <Grid size={12}>
               <Input
@@ -224,6 +226,7 @@ export const UserLogin = () => {
                 }}
               />
             </Grid>
+            <Br px={5} />
             <Grid size={12}>
               <Input
                 type={"password"}
@@ -239,6 +242,24 @@ export const UserLogin = () => {
                 }}
               />
             </Grid>
+          </Grid>
+        </Card>
+      );
+      return (
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {detailFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
+      );
+    };
+    // 7-3. check
+    const checkSection = () => {
+      const checkFragment = (i: number) => (
+        <Card key={`check-${i}`}>
+          <Grid container spacing={1} columns={12}>
             <Grid size={6} className={"d-row-right"}>
               <Div className={"d-center fs-0-8rem"}>
                 {translate("autoLogin")}
@@ -269,90 +290,138 @@ export const UserLogin = () => {
         </Card>
       );
       return (
-        detailFragment(0)
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {checkFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
       );
     };
-    // 7-3. button
-    const buttonSection = () => (
-      <Btn
-        color={"primary"}
-        className={"w-100p fs-1-0rem"}
-        onClick={() => {
-          flowSave();
-        }}
-      >
-        {translate("login")}
-      </Btn>
-    );
-    // 7-4. google
-    const googleSection = () => (
-      <Btn
-        color={"primary"}
-        className={"w-100p bg-white"}
-        onClick={() => {
-          flowGoogle();
-        }}
-      >
-        <Div className={"d-row-center"}>
-          <Img
-          	key={"user1"}
-          	src={"user1"}
-          	className={"w-15 h-15 me-10"}
-          />
-          <Div className={"fs-1-0rem black"}>
-            {translate("googleLogin")}
-          </Div>
-        </Div>
-      </Btn>
-    );
-    // 7-5. toSignup
-    const toSignupSection = () => (
-      <Div className={"d-center fs-0-8rem"}>
-        {translate("notId")}
-        <Div className={"d-center blue pointer ms-10"} onClick={() => {
-          navigate("/user/signup");
-        }}>
-          {translate("signup")}
-        </Div>
-      </Div>
-    );
-    // 7-6. toResetPw
-    const toResetPwSection = () => (
-      <Div className={"d-center fs-0-8rem"}>
-        {translate("forgotPw")}
-        <Div className={"d-center blue pointer ms-10"} onClick={() => {
-          navigate("/user/resetPw");
-        }}>
-          {translate("resetPw")}
-        </Div>
-      </Div>
-    );
+    // 7-4. button
+    const buttonSection = () => {
+      const loginFragment = (i: number) => (
+        <Card key={`login-${i}`}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              <Btn
+                color={"primary"}
+                className={"w-90p fs-1-0rem"}
+                onClick={() => {
+                  flowSave();
+                }}
+              >
+                {translate("login")}
+              </Btn>
+            </Grid>
+          </Grid>
+        </Card>
+      );
+      const googleFragment = (i: number) => (
+        <Card key={`google-${i}`}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              <Btn
+                color={"primary"}
+                className={"w-90p bg-white"}
+                onClick={() => {
+                  flowGoogle();
+                }}
+              >
+                <Div className={"d-row-center"}>
+                  <Img
+                    key={"user1"}
+                    src={"user1"}
+                    className={"w-15 h-15 me-10"}
+                  />
+                  <Div className={"fs-1-0rem black"}>
+                    {translate("googleLogin")}
+                  </Div>
+                </Div>
+              </Btn>
+            </Grid>
+          </Grid>
+        </Card>
+      );
+      return (
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {loginFragment(0)}
+              <Br px={10} />
+              {googleFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
+      );
+    };
+    // 7-5. link
+    const linkSection = () => {
+      const toSignupFragment = (i: number) => (
+        <Card key={`signup-${i}`}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={7} className={"d-row-right"}>
+              <Div className={"fs-0-8rem black"}>
+                {translate("notId")}
+              </Div>
+            </Grid>
+            <Grid size={5} className={"d-row-left"}>
+              <Div className={"fs-0-8rem blue pointer"} onClick={() => {
+                navigate("/user/signup");
+              }}>
+                {translate("signup")}
+              </Div>
+            </Grid>
+          </Grid>
+        </Card>
+      );
+      const toResetPwFragment = (i: number) => (
+        <Card key={`resetPw-${i}`}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={7} className={"d-row-right"}>
+              <Div className={"fs-0-8rem black"}>
+                {translate("forgotPw")}
+              </Div>
+            </Grid>
+            <Grid size={5} className={"d-row-left"}>
+              <Div className={"fs-0-8rem blue pointer"} onClick={() => {
+                navigate("/user/resetPw");
+              }}>
+                {translate("resetPw")}
+              </Div>
+            </Grid>
+          </Grid>
+        </Card>
+      );
+      return (
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {toSignupFragment(0)}
+              <Br px={10} />
+              {toResetPwFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
+      );
+    };
     // 7-10. return
     return (
       <>
       {LOADING && <Loading />}
-      <Paper className={"content-wrapper d-center border-1 radius-1 h-min100vh"}>
+      <Paper className={"content-wrapper d-center border-1 radius-1 shadow-1 h-min100vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {titleSection()}
-          </Grid>
-          <Hr px={10} />
-          <Grid size={12}>
-            {detailSection()}
-          </Grid>
-          <Hr px={10} />
-          <Grid size={12}>
+            <Hr px={30} />
+            {loginSection()}
+            <Hr px={10} />
+            {checkSection()}
+            <Hr px={10} />
             {buttonSection()}
-          </Grid>
-          <Grid size={12}>
-            {googleSection()}
-          </Grid>
-          <Hr px={10} />
-          <Grid size={12}>
-            {toSignupSection()}
-          </Grid>
-          <Grid size={12}>
-            {toResetPwSection()}
+            <Hr px={30} />
+            {linkSection()}
           </Grid>
         </Grid>
       </Paper>

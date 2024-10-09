@@ -28,7 +28,7 @@ export const Empty = (
   const emptyNode = () => {
     // 1. isFindSection
     const isFindSection = () => (
-      <Card className={"border-1 radius-2"} key={`empty-${extra}`}>
+      <Card className={"border-1 radius-1"} key={`empty-${extra}`}>
         <Accordion className={"shadow-0"} expanded={false}>
           <AccordionSummary>
             <Grid container spacing={1} columns={12}>
@@ -49,23 +49,19 @@ export const Empty = (
     );
     // 2. nonFindSection
     const nonFindSection = () => (
-      <Card className={"border-1 radius-2"} key={`empty-${extra}`}>
+      <Card className={"border-1 radius-1"} key={`empty-${extra}`}>
         <Accordion className={"shadow-0"} expanded={false}>
           <AccordionSummary>
-            <Grid
-              container={true}
-              spacing={1}
-              onClick={(e: any) => {
-                e.stopPropagation();
-                navigate(toDetail, {
-                  state: {
-                    dateType: "",
-                    dateStart: "",
-                    dateEnd: "",
-                  }
-                });
-              }}
-            >
+            <Grid container spacing={1} columns={12} onClick={(e: any) => {
+              e.stopPropagation();
+              navigate(toDetail, {
+                state: {
+                  dateType: "",
+                  dateStart: "",
+                  dateEnd: "",
+                }
+              });
+            }}>
               <Grid size={2} className={"d-row-center"}>
                 <Icons
                   key={"Search"}

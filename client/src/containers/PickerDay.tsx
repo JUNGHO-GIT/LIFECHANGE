@@ -70,7 +70,15 @@ export const PickerDay = (
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (isGoalToday || isToday) {
+    if (isGoalToday) {
+      setListType("month");
+      setDATE({
+        dateType: "",
+        dateStart: getMonthStartFmt(),
+        dateEnd: getMonthEndFmt(),
+      });
+    }
+    else if (isToday) {
       setListType("day");
       setDATE({
         dateType: "day",

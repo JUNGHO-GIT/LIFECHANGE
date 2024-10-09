@@ -6,7 +6,7 @@ import { useLanguageStore } from "@imports/ImportStores";
 import { SleepGoal } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportUtils";
 import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
-import { Div, Img, Hr, Icons } from "@imports/ImportComponents";
+import { Div, Img, Hr, Br, Icons } from "@imports/ImportComponents";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 
@@ -111,48 +111,34 @@ export const SleepGoalList = () => {
 
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
-    // 1. listSection
     const listSection = () => {
-      const emptyFragment = () => (
-        <Empty
-          SEND={SEND}
-          extra={"sleep"}
-        />
-      );
       const listFragment = (i: number) => (
         OBJECT?.map((item: any, index: number) => (
           <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
             <Accordion className={"shadow-0"} expanded={isExpanded.includes(index)}>
-              <AccordionSummary
-                className={"me-n10"}
-                expandIcon={
-                  <Icons
-                    key={"ChevronDown"}
-                    name={"ChevronDown"}
-                    className={"w-18 h-18"}
-                    onClick={() => {
-                      setIsExpanded(isExpanded.includes(index)
-                      ? isExpanded.filter((el: number) => el !== index)
-                      : [...isExpanded, index]
-                    )}}
-                  />
-                }
-              >
-                <Grid
-                  container={true}
-                  spacing={1}
-                  onClick={(e: any) => {
-                    e.stopPropagation();
-                    navigate(toDetail, {
-                      state: {
-                        id: item._id,
-                        dateType: item.sleep_goal_dateType,
-                        dateStart: item.sleep_goal_dateStart,
-                        dateEnd: item.sleep_goal_dateEnd,
-                      }
-                    });
-                  }}
-                >
+              <AccordionSummary className={"me-n10"} expandIcon={
+                <Icons
+                  key={"ChevronDown"}
+                  name={"ChevronDown"}
+                  className={"w-18 h-18"}
+                  onClick={() => {
+                    setIsExpanded(isExpanded.includes(index)
+                    ? isExpanded.filter((el: number) => el !== index)
+                    : [...isExpanded, index]
+                  )}}
+                />
+              }>
+                <Grid container spacing={1} columns={12} onClick={(e: any) => {
+                  e.stopPropagation();
+                  navigate(toDetail, {
+                    state: {
+                      id: item._id,
+                      dateType: item.sleep_goal_dateType,
+                      dateStart: item.sleep_goal_dateStart,
+                      dateEnd: item.sleep_goal_dateEnd,
+                    }
+                  });
+                }}>
                   <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
@@ -207,11 +193,12 @@ export const SleepGoalList = () => {
                           {item.sleep_goal_bedTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
                       </Grid>
+                      <Br px={1} />
                       {/** real **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -223,11 +210,12 @@ export const SleepGoalList = () => {
                           {item.sleep_bedTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
                       </Grid>
+                      <Br px={1} />
                       {/** diff **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -239,7 +227,7 @@ export const SleepGoalList = () => {
                           {item.sleep_diff_bedTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
@@ -273,11 +261,12 @@ export const SleepGoalList = () => {
                           {item.sleep_goal_wakeTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
                       </Grid>
+                      <Br px={1} />
                       {/** real **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -289,11 +278,12 @@ export const SleepGoalList = () => {
                           {item.sleep_wakeTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
                       </Grid>
+                      <Br px={1} />
                       {/** diff **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -305,7 +295,7 @@ export const SleepGoalList = () => {
                           {item.sleep_diff_wakeTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
@@ -339,11 +329,12 @@ export const SleepGoalList = () => {
                           {item.sleep_goal_sleepTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
                       </Grid>
+                      <Br px={1} />
                       {/** real **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -355,11 +346,12 @@ export const SleepGoalList = () => {
                           {item.sleep_sleepTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
                       </Grid>
+                      <Br px={1} />
                       {/** diff **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -371,7 +363,7 @@ export const SleepGoalList = () => {
                           {item.sleep_diff_sleepTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
@@ -384,16 +376,28 @@ export const SleepGoalList = () => {
           </Card>
         ))
       );
+      const emptyFragment = () => (
+        <Empty
+          SEND={SEND}
+          extra={"sleep"}
+        />
+      );
       return (
-        COUNT.totalCnt === 0 ? emptyFragment() : listFragment(0)
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT.totalCnt === 0 ? emptyFragment() : listFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
-            {!LOADING ? listSection() : <Loading />}
+            {LOADING ? <Loading /> : listSection()}
           </Grid>
         </Grid>
       </Paper>

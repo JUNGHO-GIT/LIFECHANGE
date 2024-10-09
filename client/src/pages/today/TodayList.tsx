@@ -6,7 +6,7 @@ import { useLanguageStore } from "@imports/ImportStores";
 import { Exercise, Food, Money, Sleep } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportUtils";
 import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
-import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
+import { Div, Hr, Br, Img, Icons } from "@imports/ImportComponents";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 
@@ -28,7 +28,7 @@ export const TodayList = () => {
       dateEnd: getDayFmt(),
     }
   );
-  const [PAGING, _setPAGING] = useStorage(
+  const [PAGING, setPAGING] = useStorage(
     `${TITLE}_paging_(${PATH})`, {
       sort: "asc",
       page: 1,
@@ -132,52 +132,36 @@ export const TodayList = () => {
   const listNode = () => {
     // 7-1. exercise
     const exerciseSection = () => {
-      const emptyFragment = () => (
-        <Empty
-          SEND={SEND}
-          extra={"exercise"}
-        />
-      );
       const listFragment = (i: number) => (
         OBJECT_EXERCISE?.map((item: any, index: number) => (
-          <Card className={"border-1 radius-2"} key={`${index}-${i}`}>
-            <Accordion
-              className={"shadow-0"}
-              expanded={isExpanded.exercise.includes(index)}
-            >
-              <AccordionSummary
-                className={"me-n10"}
-                expandIcon={
-                  <Icons
-                    key={"ChevronDown"}
-                    name={"ChevronDown"}
-                    className={"w-18 h-18"}
-                    onClick={() => {
-                      setIsExpanded((prev: any) => ({
-                        ...prev,
-                        exercise: prev.exercise.includes(index)
-                          ? prev.exercise.filter((el: number) => el !== index)
-                          : [...prev.exercise, index]
-                      }))
-                    }}
-                  />
-                }
-              >
-                <Grid
-                  container={true}
-                  spacing={1}
-                  onClick={(e: any) => {
-                    e.stopPropagation();
-                    navigate(SEND.toExercise, {
-                      state: {
-                        id: item._id,
-                        dateType: item.exercise_dateType,
-                        dateStart: item.exercise_dateStart,
-                        dateEnd: item.exercise_dateEnd,
-                      }
-                    });
+          <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
+            <Accordion className={"shadow-0"} expanded={isExpanded.exercise.includes(index)}>
+              <AccordionSummary className={"me-n10"} expandIcon={
+                <Icons
+                  key={"ChevronDown"}
+                  name={"ChevronDown"}
+                  className={"w-18 h-18"}
+                  onClick={() => {
+                    setIsExpanded((prev: any) => ({
+                      ...prev,
+                      exercise: prev.exercise.includes(index)
+                        ? prev.exercise.filter((el: number) => el !== index)
+                        : [...prev.exercise, index]
+                    }))
                   }}
-                >
+                />
+              }>
+                <Grid container spacing={1} columns={12} onClick={(e: any) => {
+                  e.stopPropagation();
+                  navigate(SEND.toExercise, {
+                    state: {
+                      id: item._id,
+                      dateType: item.exercise_dateType,
+                      dateStart: item.exercise_dateStart,
+                      dateEnd: item.exercise_dateEnd,
+                    }
+                  });
+                }}>
                   <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
@@ -217,7 +201,7 @@ export const TodayList = () => {
                           {numeral(item.exercise_total_volume).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("vol")}
                         </Div>
@@ -247,7 +231,7 @@ export const TodayList = () => {
                           {item.exercise_total_cardio}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
@@ -277,7 +261,7 @@ export const TodayList = () => {
                           {item.exercise_total_weight}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("k")}
                         </Div>
@@ -290,58 +274,54 @@ export const TodayList = () => {
           </Card>
         ))
       );
+      const emptyFragment = () => (
+        <Empty
+          SEND={SEND}
+          extra={"exercise"}
+        />
+      );
       return (
-        COUNT.exercise === 0 ? emptyFragment() : listFragment(0)
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT.exercise === 0 ? emptyFragment() : listFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
       );
     };
     // 7-2. food
     const foodSection = () => {
-      const emptyFragment = () => (
-        <Empty
-          SEND={SEND}
-          extra={"food"}
-        />
-      );
       const listFragment = (i: number) => (
         OBJECT_FOOD?.map((item: any, index: number) => (
-          <Card className={"border-1 radius-2"} key={`${index}-${i}`}>
-            <Accordion
-              className={"shadow-0"}
-              expanded={isExpanded.food.includes(index)}
-            >
-              <AccordionSummary
-                className={"me-n10"}
-                expandIcon={
-                  <Icons
-                    key={"ChevronDown"}
-                    name={"ChevronDown"}
-                    className={"w-18 h-18"}
-                    onClick={() => {
-                      setIsExpanded((prev: any) => ({
-                        ...prev,
-                        food: prev.food.includes(index)
-                          ? prev.food.filter((el: number) => el !== index)
-                          : [...prev.food, index]
-                      }))
-                    }}
-                  />
-                }
-              >
-                <Grid
-                  container={true}
-                  spacing={1}
-                  onClick={(e: any) => {
-                    e.stopPropagation();
-                    navigate(SEND.toFood, {
-                      state: {
-                        id: item._id,
-                        dateType: item.food_dateType,
-                        dateStart: item.food_dateStart,
-                        dateEnd: item.food_dateEnd,
-                      }
-                    });
+          <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
+            <Accordion className={"shadow-0"} expanded={isExpanded.food.includes(index)}>
+              <AccordionSummary className={"me-n10"} expandIcon={
+                <Icons
+                  key={"ChevronDown"}
+                  name={"ChevronDown"}
+                  className={"w-18 h-18"}
+                  onClick={() => {
+                    setIsExpanded((prev: any) => ({
+                      ...prev,
+                      food: prev.food.includes(index)
+                        ? prev.food.filter((el: number) => el !== index)
+                        : [...prev.food, index]
+                    }))
                   }}
-                >
+                />
+              }>
+                <Grid container spacing={1} columns={12} onClick={(e: any) => {
+                  e.stopPropagation();
+                  navigate(SEND.toFood, {
+                    state: {
+                      id: item._id,
+                      dateType: item.food_dateType,
+                      dateStart: item.food_dateStart,
+                      dateEnd: item.food_dateEnd,
+                    }
+                  });
+                }}>
                   <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
@@ -381,7 +361,7 @@ export const TodayList = () => {
                           {numeral(item.food_total_kcal).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("kc")}
                         </Div>
@@ -409,7 +389,7 @@ export const TodayList = () => {
                           {numeral(item.food_total_carb).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
@@ -437,7 +417,7 @@ export const TodayList = () => {
                           {numeral(item.food_total_protein).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
@@ -465,7 +445,7 @@ export const TodayList = () => {
                           {numeral(item.food_total_fat).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
@@ -478,58 +458,54 @@ export const TodayList = () => {
           </Card>
         ))
       );
+      const emptyFragment = () => (
+        <Empty
+          SEND={SEND}
+          extra={"food"}
+        />
+      );
       return (
-        COUNT.food === 0 ? emptyFragment() : listFragment(0)
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT.food === 0 ? emptyFragment() : listFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
       );
     };
     // 7-3. money
     const moneySection = () => {
-      const emptyFragment = () => (
-        <Empty
-          SEND={SEND}
-          extra={"money"}
-        />
-      );
       const listFragment = (i: number) => (
         OBJECT_MONEY?.map((item: any, index: number) => (
-          <Card className={"border-1 radius-2"} key={`${index}-${i}`}>
-            <Accordion
-              className={"shadow-0"}
-              expanded={isExpanded.money.includes(index)}
-            >
-              <AccordionSummary
-                className={"me-n10"}
-                expandIcon={
-                  <Icons
-                    key={"ChevronDown"}
-                    name={"ChevronDown"}
-                    className={"w-18 h-18"}
-                    onClick={() => {
-                      setIsExpanded((prev: any) => ({
-                        ...prev,
-                        money: prev.money.includes(index)
-                          ? prev.money.filter((el: number) => el !== index)
-                          : [...prev.money, index]
-                      }))
-                    }}
-                  />
-                }
-              >
-                <Grid
-                  container={true}
-                  spacing={1}
-                  onClick={(e: any) => {
-                    e.stopPropagation();
-                    navigate(SEND.toMoney, {
-                      state: {
-                        id: item._id,
-                        dateType: item.money_dateType,
-                        dateStart: item.money_dateStart,
-                        dateEnd: item.money_dateEnd,
-                      }
-                    });
+          <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
+            <Accordion className={"shadow-0"} expanded={isExpanded.money.includes(index)}>
+              <AccordionSummary className={"me-n10"} expandIcon={
+                <Icons
+                  key={"ChevronDown"}
+                  name={"ChevronDown"}
+                  className={"w-18 h-18"}
+                  onClick={() => {
+                    setIsExpanded((prev: any) => ({
+                      ...prev,
+                      money: prev.money.includes(index)
+                        ? prev.money.filter((el: number) => el !== index)
+                        : [...prev.money, index]
+                    }))
                   }}
-                >
+                />
+              }>
+                <Grid container spacing={1} columns={12} onClick={(e: any) => {
+                  e.stopPropagation();
+                  navigate(SEND.toMoney, {
+                    state: {
+                      id: item._id,
+                      dateType: item.money_dateType,
+                      dateStart: item.money_dateStart,
+                      dateEnd: item.money_dateEnd,
+                    }
+                  });
+                }}>
                   <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
@@ -569,7 +545,7 @@ export const TodayList = () => {
                           {numeral(item.money_total_income).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate(localCurrency)}
                         </Div>
@@ -597,7 +573,7 @@ export const TodayList = () => {
                           {numeral(item.money_total_expense).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate(localCurrency)}
                         </Div>
@@ -610,58 +586,54 @@ export const TodayList = () => {
           </Card>
         ))
       );
+      const emptyFragment = () => (
+        <Empty
+          SEND={SEND}
+          extra={"money"}
+        />
+      );
       return (
-        COUNT.money === 0 ? emptyFragment() : listFragment(0)
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT.money === 0 ? emptyFragment() : listFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
       );
     };
     // 7-4. sleep
     const sleepSection = () => {
-      const emptyFragment = () => (
-        <Empty
-          SEND={SEND}
-          extra={"sleep"}
-        />
-      );
       const listFragment = (i: number) => (
         OBJECT_SLEEP?.map((item: any, index: number) => (
-          <Card className={"border-1 radius-2"} key={`${index}-${i}`}>
-            <Accordion
-              className={"shadow-0"}
-              expanded={isExpanded.sleep.includes(index)}
-            >
-              <AccordionSummary
-                className={"me-n10"}
-                expandIcon={
-                  <Icons
-                    key={"ChevronDown"}
-                    name={"ChevronDown"}
-                    className={"w-18 h-18"}
-                    onClick={() => {
-                      setIsExpanded((prev: any) => ({
-                        ...prev,
-                        sleep: prev.sleep.includes(index)
-                          ? prev.sleep.filter((el: number) => el !== index)
-                          : [...prev.sleep, index]
-                      }))
-                    }}
-                  />
-                }
-              >
-                <Grid
-                  container={true}
-                  spacing={1}
-                  onClick={(e: any) => {
-                    e.stopPropagation();
-                    navigate(SEND.toSleep, {
-                      state: {
-                        id: item._id,
-                        dateType: item.sleep_dateType,
-                        dateStart: item.sleep_dateStart,
-                        dateEnd: item.sleep_dateEnd,
-                      }
-                    });
+          <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
+            <Accordion className={"shadow-0"} expanded={isExpanded.sleep.includes(index)}>
+              <AccordionSummary className={"me-n10"} expandIcon={
+                <Icons
+                  key={"ChevronDown"}
+                  name={"ChevronDown"}
+                  className={"w-18 h-18"}
+                  onClick={() => {
+                    setIsExpanded((prev: any) => ({
+                      ...prev,
+                      sleep: prev.sleep.includes(index)
+                        ? prev.sleep.filter((el: number) => el !== index)
+                        : [...prev.sleep, index]
+                    }))
                   }}
-                >
+                />
+              }>
+                <Grid container spacing={1} columns={12} onClick={(e: any) => {
+                  e.stopPropagation();
+                  navigate(SEND.toSleep, {
+                    state: {
+                      id: item._id,
+                      dateType: item.sleep_dateType,
+                      dateStart: item.sleep_dateStart,
+                      dateEnd: item.sleep_dateEnd,
+                    }
+                  });
+                }}>
                   <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
@@ -701,7 +673,7 @@ export const TodayList = () => {
                           {item.sleep_section[0]?.sleep_bedTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
@@ -729,7 +701,7 @@ export const TodayList = () => {
                           {item.sleep_section[0]?.sleep_wakeTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
@@ -757,7 +729,7 @@ export const TodayList = () => {
                           {item.sleep_section[0]?.sleep_sleepTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
@@ -770,35 +742,40 @@ export const TodayList = () => {
           </Card>
         ))
       );
+      const emptyFragment = () => (
+        <Empty
+          SEND={SEND}
+          extra={"sleep"}
+        />
+      );
       return (
-        COUNT.sleep === 0 ? emptyFragment() : listFragment(0)
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT.sleep === 0 ? emptyFragment() : listFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
-        {!LOADING ? (
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              {exerciseSection()}
-            </Grid>
-            <Grid size={12}>
-              {foodSection()}
-            </Grid>
-            <Grid size={12}>
-              {moneySection()}
-            </Grid>
-            <Grid size={12}>
-              {sleepSection()}
-            </Grid>
+      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
+        <Grid container spacing={1} columns={12}>
+          <Grid size={12}>
+            {LOADING ? <Loading /> : (
+              <>
+                {exerciseSection()}
+                <Br px={10} />
+                {foodSection()}
+                <Br px={10} />
+                {moneySection()}
+                <Br px={10} />
+                {sleepSection()}
+              </>
+            )}
           </Grid>
-        ) : (
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              <Loading />
-            </Grid>
-          </Grid>
-        )}
+        </Grid>
       </Paper>
     );
   };

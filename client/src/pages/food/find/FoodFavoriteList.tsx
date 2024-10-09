@@ -189,38 +189,25 @@ export const FoodFavoriteList = () => {
   // 7. find ---------------------------------------------------------------------------------------
   const findNode = () => {
     const listSection = () => {
-      const emptyFragment = () => (
-        <Empty
-          SEND={SEND}
-          extra={"food"}
-        />
-      );
       const favoriteFragment = (i: number) => (
         OBJECT?.map((item: any, index: number) => (
           <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
             <Accordion className={"shadow-0"} expanded={isExpanded.includes(index)}>
-              <AccordionSummary
-                className={"me-n10"}
-                expandIcon={
-                  <Icons
-                    key={"ChevronDown"}
-                    name={"ChevronDown"}
-                    className={"w-18 h-18"}
-                    onClick={() => {
-                      setIsExpanded(isExpanded.includes(index)
-                      ? isExpanded.filter((el: number) => el !== index)
-                      : [...isExpanded, index]
-                    )}}
-                  />
-                }
-              >
-                <Grid
-                  container={true}
-                  spacing={1}
+              <AccordionSummary className={"me-n10"} expandIcon={
+                <Icons
+                  key={"ChevronDown"}
+                  name={"ChevronDown"}
+                  className={"w-18 h-18"}
                   onClick={() => {
-                    handlerCheckboxChange(index);
-                  }}
-                >
+                    setIsExpanded(isExpanded.includes(index)
+                    ? isExpanded.filter((el: number) => el !== index)
+                    : [...isExpanded, index]
+                  )}}
+                />
+              }>
+                <Grid container spacing={1} columns={12} onClick={() => {
+                  handlerCheckboxChange(index);
+                }}>
                   <Grid size={2} className={"d-row-center"}>
                     <Checkbox
                       key={`check-${index}`}
@@ -286,7 +273,7 @@ export const FoodFavoriteList = () => {
                           {numeral(item.food_kcal).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("kc")}
                         </Div>
@@ -314,7 +301,7 @@ export const FoodFavoriteList = () => {
                           {item.food_carb}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
@@ -342,7 +329,7 @@ export const FoodFavoriteList = () => {
                           {item.food_protein}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
@@ -370,7 +357,7 @@ export const FoodFavoriteList = () => {
                           {item.food_fat}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
@@ -383,16 +370,22 @@ export const FoodFavoriteList = () => {
           </Card>
         ))
       );
+      const emptyFragment = () => (
+        <Empty
+          SEND={SEND}
+          extra={"food"}
+        />
+      );
       return (
         COUNT.totalCnt === 0 ? emptyFragment() : favoriteFragment(0)
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
-            {!LOADING ? listSection() : <Loading />}
+            {LOADING ? <Loading /> : listSection()}
           </Grid>
         </Grid>
       </Paper>

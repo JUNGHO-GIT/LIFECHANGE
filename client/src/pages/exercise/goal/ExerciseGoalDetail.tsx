@@ -8,7 +8,7 @@ import { ExerciseGoal } from "@imports/ImportSchemas";
 import { axios, numeral, sync } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, PickerTime, Count, Delete, Input } from "@imports/ImportContainers";
-import { Img, Bg } from "@imports/ImportComponents";
+import { Img, Bg, Br } from "@imports/ImportComponents";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -255,6 +255,7 @@ export const ExerciseGoalDetail = () => {
               EXIST={EXIST}
             />
           </Grid>
+          <Br px={1} />
           <Grid size={12}>
             <Count
               COUNT={COUNT}
@@ -285,6 +286,7 @@ export const ExerciseGoalDetail = () => {
                 LOCKED={LOCKED}
               />
             </Grid>
+            <Br px={1} />
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.exercise_goal_count).format("0,0")}
@@ -326,6 +328,7 @@ export const ExerciseGoalDetail = () => {
                 }}
               />
             </Grid>
+            <Br px={1} />
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.exercise_goal_volume).format("0,0")}
@@ -367,6 +370,7 @@ export const ExerciseGoalDetail = () => {
                 }}
               />
             </Grid>
+            <Br px={1} />
             <Grid size={12}>
               <PickerTime
                 OBJECT={OBJECT}
@@ -379,53 +383,64 @@ export const ExerciseGoalDetail = () => {
                 i={i}
               />
             </Grid>
-            <Input
-              label={translate("goalWeight")}
-              value={OBJECT?.exercise_goal_weight}
-              inputRef={REFS?.[i]?.exercise_goal_weight}
-              error={ERRORS?.[i]?.exercise_goal_weight}
-              locked={LOCKED}
-              startadornment={
-                <Img
-                	key={"exercise5"}
-                	src={"exercise5"}
-                	className={"w-16 h-16"}
-                />
-              }
-              endadornment={
-                translate("k")
-              }
-              onChange={(e: any) => {
-                const value = e.target.value;
-                const newValue = value.startsWith("0") ? value.slice(1) : value;
-                if (value === "") {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    exercise_goal_weight: "0"
-                  }));
+            <Br px={1} />
+            <Grid size={12}>
+              <Input
+                label={translate("goalWeight")}
+                value={OBJECT?.exercise_goal_weight}
+                inputRef={REFS?.[i]?.exercise_goal_weight}
+                error={ERRORS?.[i]?.exercise_goal_weight}
+                locked={LOCKED}
+                startadornment={
+                  <Img
+                    key={"exercise5"}
+                    src={"exercise5"}
+                    className={"w-16 h-16"}
+                  />
                 }
-                else if (newValue.match(/^\d*\.?\d{0,2}$/) && Number(newValue) <= 999) {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    exercise_goal_weight: String(newValue)
-                  }));
+                endadornment={
+                  translate("k")
                 }
-              }}
-            />
+                onChange={(e: any) => {
+                  const value = e.target.value;
+                  const newValue = value.startsWith("0") ? value.slice(1) : value;
+                  if (value === "") {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      exercise_goal_weight: "0"
+                    }));
+                  }
+                  else if (newValue.match(/^\d*\.?\d{0,2}$/) && Number(newValue) <= 999) {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      exercise_goal_weight: String(newValue)
+                    }));
+                  }
+                }}
+              />
+            </Grid>
           </Grid>
         </Card>
       );
       return (
-        COUNT?.newSectionCnt > 0 && detailFragment(0)
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT?.newSectionCnt > 0 && (
+                detailFragment(0)
+              )}
+            </Grid>
+          </Grid>
+        </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {dateCountSection()}
-            {!LOADING ? detailSection() : <Loading />}
+            {LOADING ? <Loading /> : detailSection()}
           </Grid>
         </Grid>
       </Paper>

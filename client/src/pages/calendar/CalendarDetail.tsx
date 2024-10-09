@@ -8,7 +8,7 @@ import { Calendar } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, Memo, Count, Delete, Input, Select } from "@imports/ImportContainers";
-import { Img, Bg } from "@imports/ImportComponents";
+import { Img, Bg, Br } from "@imports/ImportComponents";
 import { Card, Paper, MenuItem, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -270,6 +270,7 @@ export const CalendarDetail = () => {
               EXIST={EXIST}
             />
           </Grid>
+          <Br px={1} />
           <Grid size={12}>
             <Count
               COUNT={COUNT}
@@ -300,6 +301,7 @@ export const CalendarDetail = () => {
                 LOCKED={LOCKED}
               />
             </Grid>
+            <Br px={1} />
             <Grid size={6}>
               <Select
                 label={translate("part")}
@@ -360,6 +362,7 @@ export const CalendarDetail = () => {
                 ))}
               </Select>
             </Grid>
+            <Br px={1} />
             <Grid size={12}>
               <Input
                 label={translate("calendarTitle")}
@@ -388,6 +391,7 @@ export const CalendarDetail = () => {
                 }}
               />
             </Grid>
+            <Br px={1} />
             <Grid size={12}>
               <Memo
                 OBJECT={OBJECT}
@@ -401,18 +405,26 @@ export const CalendarDetail = () => {
         </Card>
       );
       return (
-        COUNT?.newSectionCnt > 0 && OBJECT?.calendar_section?.map((_item: any, i: number) => (
-          detailFragment(i)
-        ))
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT?.newSectionCnt > 0 && (
+                OBJECT?.calendar_section?.map((_item: any, i: number) => (
+                  detailFragment(i)
+                ))
+              )}
+            </Grid>
+          </Grid>
+        </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {dateCountSection()}
-            {!LOADING ? detailSection() : <Loading />}
+            {LOADING ? <Loading /> : detailSection()}
           </Grid>
         </Grid>
       </Paper>

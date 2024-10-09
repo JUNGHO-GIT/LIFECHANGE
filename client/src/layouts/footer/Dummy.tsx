@@ -133,10 +133,10 @@ export const Dummy = (
     // 6. return
     return (
       <Grid container spacing={1} columns={12}>
-        <Grid size={3} className={"d-row-center"}>
+        <Grid size={3} className={"d-center"}>
           {partSection()}
         </Grid>
-        <Grid size={3} className={"d-row-center"}>
+        <Grid size={3} className={"d-column-center"}>
           {countSection()}
         </Grid>
         <Grid size={6} className={"d-row-center"}>

@@ -2,8 +2,7 @@
 
 import { useEffect } from "@imports/ImportReacts";
 import { useCommonValue } from "@imports/ImportHooks";
-import { axios } from "@imports/ImportUtils";
-import { sync } from "@imports/ImportUtils";
+import { axios, sync } from "@imports/ImportUtils";
 import { Paper } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -42,7 +41,7 @@ export const AuthGoogle = () => {
 
   // 7. authGoogle ---------------------------------------------------------------------------------
   const authGoogleNode = () => (
-    <Paper className={"content-wrapper border-1 radius-1 h-min95vh"}>
+    <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min95vh"}>
     </Paper>
   );
 

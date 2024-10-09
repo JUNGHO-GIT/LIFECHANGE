@@ -101,7 +101,7 @@ export const PickerTime = (
   const timeNode = () => {
     const goalSection = () => (
       <PopUp
-        key={`${i}`}
+        key={`goal-${i}`}
         type={"innerCenter"}
         position={"center"}
         direction={"center"}
@@ -156,7 +156,7 @@ export const PickerTime = (
     );
     const realSection = () => (
       <PopUp
-        key={`${i}`}
+        key={`real-${i}`}
         type={"innerCenter"}
         position={"center"}
         direction={"center"}

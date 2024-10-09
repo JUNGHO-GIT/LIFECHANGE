@@ -7,7 +7,7 @@ import { MoneyPie } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { PopUp, Select } from "@imports/ImportContainers";
-import { Div, Img } from "@imports/ImportComponents";
+import { Div, Img, Br } from "@imports/ImportComponents";
 import { Paper, Card, MenuItem, Grid } from "@imports/ImportMuis";
 import { FormGroup, FormControlLabel, Switch } from "@imports/ImportMuis";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
@@ -496,12 +496,11 @@ export const MoneyChartPie = () => {
     }
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 h-min40vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min40vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {headSection()}
-          </Grid>
-          <Grid size={12}>
+            <Br px={20} />
             {chartSection()}
           </Grid>
         </Grid>

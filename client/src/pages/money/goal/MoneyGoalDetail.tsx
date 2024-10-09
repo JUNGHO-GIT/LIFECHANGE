@@ -8,7 +8,7 @@ import { MoneyGoal } from "@imports/ImportSchemas";
 import { axios, numeral, sync } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, Count, Delete, Input } from "@imports/ImportContainers";
-import { Img, Bg } from "@imports/ImportComponents";
+import { Img, Bg, Br } from "@imports/ImportComponents";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -250,6 +250,7 @@ export const MoneyGoalDetail = () => {
               EXIST={EXIST}
             />
           </Grid>
+          <Br px={1} />
           <Grid size={12}>
             <Count
               COUNT={COUNT}
@@ -280,6 +281,7 @@ export const MoneyGoalDetail = () => {
                 LOCKED={LOCKED}
               />
             </Grid>
+            <Br px={1} />
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.money_goal_income).format("0,0")}
@@ -321,6 +323,7 @@ export const MoneyGoalDetail = () => {
                 }}
               />
             </Grid>
+            <Br px={1} />
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.money_goal_expense).format("0,0")}
@@ -366,15 +369,23 @@ export const MoneyGoalDetail = () => {
         </Card>
       );
       return (
-        COUNT?.newSectionCnt > 0 && detailFragment(0)
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT?.newSectionCnt > 0 && (
+                detailFragment(0)
+              )}
+            </Grid>
+          </Grid>
+        </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid size={12}>
           {dateCountSection()}
-          {!LOADING ? detailSection() : <Loading />}
+          {detailSection()}
         </Grid>
       </Paper>
     );

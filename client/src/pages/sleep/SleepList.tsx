@@ -112,46 +112,33 @@ export const SleepList = () => {
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
     const listSection = () => {
-      const emptyFragment = () => (
-        <Empty
-          SEND={SEND}
-          extra={"sleep"}
-        />
-      );
       const listFragment = (i: number) => (
         OBJECT?.map((item: any, index: number) => (
           <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
             <Accordion className={"shadow-0"} expanded={isExpanded.includes(index)}>
-              <AccordionSummary
-                className={"me-n10"}
-                expandIcon={
-                  <Icons
-                    key={"ChevronDown"}
-                    name={"ChevronDown"}
-                    className={"w-18 h-18"}
-                    onClick={() => {
-                      setIsExpanded(isExpanded.includes(index)
-                      ? isExpanded.filter((el: number) => el !== index)
-                      : [...isExpanded, index]
-                    )}}
-                  />
-                }
-              >
-                <Grid
-                  container={true}
-                  spacing={1}
-                  onClick={(e: any) => {
-                    e.stopPropagation();
-                    navigate(toDetail, {
-                      state: {
-                        id: item._id,
-                        dateType: item.sleep_dateType,
-                        dateStart: item.sleep_dateStart,
-                        dateEnd: item.sleep_dateEnd,
-                      }
-                    });
-                  }}
-                >
+              <AccordionSummary className={"me-n10"} expandIcon={
+                <Icons
+                  key={"ChevronDown"}
+                  name={"ChevronDown"}
+                  className={"w-18 h-18"}
+                  onClick={() => {
+                    setIsExpanded(isExpanded.includes(index)
+                    ? isExpanded.filter((el: number) => el !== index)
+                    : [...isExpanded, index]
+                  )}}
+                />
+              }>
+                <Grid container spacing={1} columns={12} onClick={(e: any) => {
+                  e.stopPropagation();
+                  navigate(toDetail, {
+                    state: {
+                      id: item._id,
+                      dateType: item.sleep_dateType,
+                      dateStart: item.sleep_dateStart,
+                      dateEnd: item.sleep_dateEnd,
+                    }
+                  });
+                }}>
                   <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
@@ -191,7 +178,7 @@ export const SleepList = () => {
                           {item.sleep_section[0]?.sleep_bedTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
@@ -219,7 +206,7 @@ export const SleepList = () => {
                           {item.sleep_section[0]?.sleep_wakeTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
@@ -247,7 +234,7 @@ export const SleepList = () => {
                           {item.sleep_section[0]?.sleep_sleepTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
@@ -260,16 +247,28 @@ export const SleepList = () => {
           </Card>
         ))
       );
+      const emptyFragment = () => (
+        <Empty
+          SEND={SEND}
+          extra={"sleep"}
+        />
+      );
       return (
-        COUNT.totalCnt === 0 ? emptyFragment() : listFragment(0)
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT.totalCnt === 0 ? emptyFragment() : listFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
-            {!LOADING ? listSection() : <Loading />}
+            {LOADING ? <Loading /> : listSection()}
           </Grid>
         </Grid>
       </Paper>

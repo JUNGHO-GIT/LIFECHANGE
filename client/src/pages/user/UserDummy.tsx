@@ -187,11 +187,6 @@ export const UserDummy = () => {
   const userDummyNode = () => {
     // 7-1. exerciseGoal
     const exerciseGoalSection = () => {
-      const emptyFragment = () => (
-        <Card className={"border-1 radius-1 p-10"} key={"empty"}>
-          {translate("empty")}
-        </Card>
-      );
       const dummyFragment = (i: number) => (
         <Card className={"border-1 radius-1 p-0"} key={i}>
           <TableContainer>
@@ -240,19 +235,23 @@ export const UserDummy = () => {
           </TableContainer>
         </Card>
       );
-      return (
-        LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)
-        )
-      );
-    };
-    // 7-2. exercise
-    const exerciseSection = () => {
       const emptyFragment = () => (
         <Card className={"border-1 radius-1 p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
+      return (
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
+      );
+    };
+    // 7-2. exercise
+    const exerciseSection = () => {
       const dummyFragment = (i: number) => (
         <Card className={"border-1 radius-1 p-0"} key={i}>
           <TableContainer>
@@ -297,19 +296,23 @@ export const UserDummy = () => {
           </TableContainer>
         </Card>
       );
-      return (
-        LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)
-        )
-      );
-    };
-    // 7-3. foodGoal
-    const foodGoalSection = () => {
       const emptyFragment = () => (
         <Card className={"border-1 radius-1 p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
+      return (
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
+      );
+    };
+    // 7-3. foodGoal
+    const foodGoalSection = () => {
       const dummyFragment = (i: number) => (
         <Card className={"border-1 radius-1 p-0"} key={i}>
           <TableContainer>
@@ -358,19 +361,23 @@ export const UserDummy = () => {
           </TableContainer>
         </Card>
       );
-      return (
-        LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)
-        )
-      );
-    };
-    // 7-4. food
-    const foodSection = () => {
       const emptyFragment = () => (
         <Card className={"border-1 radius-1 p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
+      return (
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
+      );
+    };
+    // 7-4. food
+    const foodSection = () => {
       const dummyFragment = (i: number) => (
         <Card className={"border-1 radius-1 p-0"} key={i}>
           <TableContainer>
@@ -419,19 +426,23 @@ export const UserDummy = () => {
           </TableContainer>
         </Card>
       );
-      return (
-        LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)
-        )
-      );
-    };
-    // 7-5. moneyGoal
-    const moneyGoalSection = () => {
       const emptyFragment = () => (
         <Card className={"border-1 radius-1 p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
+      return (
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
+      );
+    };
+    // 7-5. moneyGoal
+    const moneyGoalSection = () => {
       const dummyFragment = (i: number) => (
         <Card className={"border-1 radius-1 p-0"} key={i}>
           <TableContainer>
@@ -472,19 +483,23 @@ export const UserDummy = () => {
           </TableContainer>
         </Card>
       );
-      return (
-        LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)
-        )
-      );
-    };
-    // 7-6. money
-    const moneySection = () => {
       const emptyFragment = () => (
         <Card className={"border-1 radius-1 p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
+      return (
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
+      );
+    };
+    // 7-6. money
+    const moneySection = () => {
       const dummyFragment = (i: number) => (
         <Card className={"border-1 radius-1 p-0"} key={i}>
           <TableContainer>
@@ -525,19 +540,23 @@ export const UserDummy = () => {
           </TableContainer>
         </Card>
       );
-      return (
-        LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)
-        )
-      );
-    };
-    // 7-7. sleepGoal
-    const sleepGoalSection = () => {
       const emptyFragment = () => (
         <Card className={"border-1 radius-1 p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
+      return (
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
+      );
+    };
+    // 7-7. sleepGoal
+    const sleepGoalSection = () => {
       const dummyFragment = (i: number) => (
         <Card className={"border-1 radius-1 p-0"} key={i}>
           <TableContainer>
@@ -582,19 +601,23 @@ export const UserDummy = () => {
           </TableContainer>
         </Card>
       );
-      return (
-        LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)
-        )
-      );
-    };
-    // 7-8. sleep
-    const sleepSection = () => {
       const emptyFragment = () => (
         <Card className={"border-1 radius-1 p-10"} key={"empty"}>
           {translate("empty")}
         </Card>
       );
+      return (
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
+      );
+    };
+    // 7-8. sleep
+    const sleepSection = () => {
       const dummyFragment = (i: number) => (
         <Card className={"border-1 radius-1 p-0"} key={i}>
           <TableContainer>
@@ -639,25 +662,38 @@ export const UserDummy = () => {
           </TableContainer>
         </Card>
       );
+      const emptyFragment = () => (
+        <Card className={"border-1 radius-1 p-10"} key={"empty"}>
+          {translate("empty")}
+        </Card>
+      );
       return (
-        LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)
-        )
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 h-min84vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 shadow-1 shadow-1 h-min84vh"}>
         <Grid container spacing={1} columns={12}>
-          <Grid size={12} >
-            {PART === "exerciseGoal" && exerciseGoalSection()}
-            {PART === "exercise" && exerciseSection()}
-            {PART === "foodGoal" && foodGoalSection()}
-            {PART === "food" && foodSection()}
-            {PART === "moneyGoal" && moneyGoalSection()}
-            {PART === "money" && moneySection()}
-            {PART === "sleepGoal" && sleepGoalSection()}
-            {PART === "sleep" && sleepSection()}
+          <Grid size={12}>
+            {LOADING ? <Loading /> : (
+              <>
+                {PART === "exerciseGoal" && exerciseGoalSection()}
+                {PART === "exercise" && exerciseSection()}
+                {PART === "foodGoal" && foodGoalSection()}
+                {PART === "food" && foodSection()}
+                {PART === "moneyGoal" && moneyGoalSection()}
+                {PART === "money" && moneySection()}
+                {PART === "sleepGoal" && sleepGoalSection()}
+                {PART === "sleep" && sleepSection()}
+              </>
+            )}
           </Grid>
         </Grid>
       </Paper>

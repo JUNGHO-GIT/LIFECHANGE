@@ -6,7 +6,7 @@ import { useLanguageStore } from "@imports/ImportStores";
 import { ExerciseGoal } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportUtils";
 import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
-import { Div, Img, Hr, Icons } from "@imports/ImportComponents";
+import { Div, Img, Hr, Br, Icons } from "@imports/ImportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
 
@@ -112,46 +112,33 @@ export const ExerciseGoalList = () => {
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
     const listSection = () => {
-      const emptyFragment = () => (
-        <Empty
-          SEND={SEND}
-          extra={"exercise"}
-        />
-      );
       const listFragment = (i: number) => (
         OBJECT?.map((item: any, index: number) => (
           <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
             <Accordion className={"shadow-0"} expanded={isExpanded.includes(index)}>
-              <AccordionSummary
-                className={"me-n10"}
-                expandIcon={
-                  <Icons
-                    key={"ChevronDown"}
-                    name={"ChevronDown"}
-                    className={"w-18 h-18"}
-                    onClick={() => {
-                      setIsExpanded(isExpanded.includes(index)
-                      ? isExpanded.filter((el: number) => el !== index)
-                      : [...isExpanded, index]
-                    )}}
-                  />
-                }
-              >
-                <Grid
-                  container={true}
-                  spacing={1}
-                  onClick={(e: any) => {
-                    e.stopPropagation();
-                    navigate(toDetail, {
-                      state: {
-                        id: item._id,
-                        dateType: item.exercise_goal_dateType,
-                        dateStart: item.exercise_goal_dateStart,
-                        dateEnd: item.exercise_goal_dateEnd,
-                      }
-                    });
-                  }}
-                >
+              <AccordionSummary className={"me-n10"} expandIcon={
+                <Icons
+                  key={"ChevronDown"}
+                  name={"ChevronDown"}
+                  className={"w-18 h-18"}
+                  onClick={() => {
+                    setIsExpanded(isExpanded.includes(index)
+                    ? isExpanded.filter((el: number) => el !== index)
+                    : [...isExpanded, index]
+                  )}}
+                />
+              }>
+                <Grid container spacing={1} columns={12} onClick={(e: any) => {
+                  e.stopPropagation();
+                  navigate(toDetail, {
+                    state: {
+                      id: item._id,
+                      dateType: item.exercise_goal_dateType,
+                      dateStart: item.exercise_goal_dateStart,
+                      dateEnd: item.exercise_goal_dateEnd,
+                    }
+                  });
+                }}>
                   <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
@@ -206,11 +193,12 @@ export const ExerciseGoalList = () => {
                           {numeral(item.exercise_goal_count).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("c")}
                         </Div>
                       </Grid>
+                      <Br px={1} />
                       {/** real **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -222,11 +210,12 @@ export const ExerciseGoalList = () => {
                           {numeral(item.exercise_total_count).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("c")}
                         </Div>
                       </Grid>
+                      <Br px={1} />
                       {/** diff **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -238,7 +227,7 @@ export const ExerciseGoalList = () => {
                           {numeral(item.exercise_diff_count).format("+0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("c")}
                         </Div>
@@ -272,11 +261,12 @@ export const ExerciseGoalList = () => {
                           {numeral(item.exercise_goal_volume).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("vol")}
                         </Div>
                       </Grid>
+                      <Br px={1} />
                       {/** real **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -288,11 +278,12 @@ export const ExerciseGoalList = () => {
                           {numeral(item.exercise_total_volume).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("vol")}
                         </Div>
                       </Grid>
+                      <Br px={1} />
                       {/** diff **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -304,7 +295,7 @@ export const ExerciseGoalList = () => {
                           {numeral(item.exercise_diff_volume).format("+0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("vol")}
                         </Div>
@@ -340,11 +331,12 @@ export const ExerciseGoalList = () => {
                           {item.exercise_goal_cardio}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("min")}
                         </Div>
                       </Grid>
+                      <Br px={1} />
                       {/** real **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -356,11 +348,12 @@ export const ExerciseGoalList = () => {
                           {item.exercise_total_cardio}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("min")}
                         </Div>
                       </Grid>
+                      <Br px={1} />
                       {/** diff **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -372,7 +365,7 @@ export const ExerciseGoalList = () => {
                           {item.exercise_diff_cardio}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("min")}
                         </Div>
@@ -408,11 +401,12 @@ export const ExerciseGoalList = () => {
                           {item.exercise_goal_weight}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("k")}
                         </Div>
                       </Grid>
+                      <Br px={1} />
                       {/** real **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -424,11 +418,12 @@ export const ExerciseGoalList = () => {
                           {item.exercise_total_weight}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("k")}
                         </Div>
                       </Grid>
+                      <Br px={1} />
                       {/** diff **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -440,7 +435,7 @@ export const ExerciseGoalList = () => {
                           {item.exercise_diff_weight}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("k")}
                         </Div>
@@ -453,16 +448,28 @@ export const ExerciseGoalList = () => {
           </Card>
         ))
       );
+      const emptyFragment = () => (
+        <Empty
+          SEND={SEND}
+          extra={"exercise"}
+        />
+      );
       return (
-        COUNT.totalCnt === 0 ? emptyFragment() : listFragment(0)
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT.totalCnt === 0 ? emptyFragment() : listFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
-            {!LOADING ? listSection() : <Loading />}
+            {LOADING ? <Loading /> : listSection()}
           </Grid>
         </Grid>
       </Paper>

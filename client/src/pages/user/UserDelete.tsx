@@ -174,18 +174,24 @@ export const UserDelete = () => {
   const userResetPwNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <Div className={"d-center fs-2-0rem"}>
-        {translate("userDelete")}
-      </Div>
+      <Card className={"p-0"}>
+        <Grid container spacing={1} columns={12}>
+          <Grid size={12}>
+            <Div className={"fs-1-8rem fw-500"}>
+              {translate("userDelete")}
+            </Div>
+          </Grid>
+        </Grid>
+      </Card>
     );
-    // 7-2. card
-    const detailSection = () => {
+    // 7-2. delete
+    const deleteSection = () => {
       const detailFragment = (i: number) => (
         <Card className={"p-10"} key={i}>
           {/** section 1 **/}
           <Grid container spacing={1} columns={12}>
             {/** 이메일 **/}
-            <Grid size={10}>
+            <Grid size={9}>
               <Input
                 label={`${translate("id")}`}
                 helperText={`* ${translate("helperId")}`}
@@ -211,10 +217,10 @@ export const UserDelete = () => {
                 }}
               />
             </Grid>
-            <Grid size={2}>
+            <Grid size={3}>
               <Btn
                 color={"primary"}
-                className={"mb-25"}
+                className={"mt-n25"}
                 disabled={OBJECT.user_id_verified === true}
                 onClick={() => {
                   flowSendEmail();
@@ -224,7 +230,7 @@ export const UserDelete = () => {
               </Btn>
             </Grid>
             {/** 이메일 인증 **/}
-            <Grid size={10}>
+            <Grid size={9}>
               <Input
                 label={translate("verify")}
                 helperText={`* ${translate("helperIdVerified")}`}
@@ -232,6 +238,7 @@ export const UserDelete = () => {
                 inputRef={REFS?.[i]?.user_id_verified}
                 error={ERRORS?.[i]?.user_id_verified}
                 disabled={OBJECT.user_id_verified === true}
+                placeholder={"123456"}
                 onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
                     ...prev,
@@ -240,10 +247,10 @@ export const UserDelete = () => {
                 }}
               />
             </Grid>
-            <Grid size={2}>
+            <Grid size={3}>
               <Btn
                 color={"primary"}
-                className={"mb-25"}
+                className={"mt-n25"}
                 disabled={!OBJECT.user_id_sended || OBJECT.user_id_verified === true}
                 onClick={() => {
                   flowVerifyEmail();
@@ -293,36 +300,55 @@ export const UserDelete = () => {
         </Card>
       );
       return (
-        detailFragment(0)
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {detailFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
       );
     };
-    // 7-3. button
-    const buttonSection = () => (
-      <Btn
-        color={"error"}
-        className={"w-100p fs-1-0rem"}
-        onClick={() => {
-          flowSave();
-        }}
-      >
-        {translate("userDelete")}
-      </Btn>
-    );
+    // 7-4. button
+    const buttonSection = () => {
+      const deleteFragment = (i: number) => (
+        <Card key={`delete-${i}`}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              <Btn
+                color={"error"}
+                className={"w-90p fs-1-0rem"}
+                onClick={() => {
+                  flowSave();
+                }}
+              >
+                {translate("userDelete")}
+              </Btn>
+            </Grid>
+          </Grid>
+        </Card>
+      );
+      return (
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {deleteFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
+      );
+    };
     // 7-10. return
     return (
       <>
       {LOADING && <Loading />}
-      <Paper className={"content-wrapper d-center border-1 radius-1 h-min100vh"}>
+      <Paper className={"content-wrapper d-center border-1 radius-1 shadow-1 h-min100vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {titleSection()}
-          </Grid>
-          <Hr px={10} />
-          <Grid size={12}>
-            {detailSection()}
-          </Grid>
-          <Hr px={10} />
-          <Grid size={12}>
+            <Hr px={30} />
+            {deleteSection()}
+            <Hr px={10} />
             {buttonSection()}
           </Grid>
         </Grid>

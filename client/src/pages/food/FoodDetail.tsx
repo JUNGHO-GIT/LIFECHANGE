@@ -8,7 +8,7 @@ import { Food } from "@imports/ImportSchemas";
 import { axios, numeral, sync } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, Count, Delete, Input, Select } from "@imports/ImportContainers";
-import { Img, Bg, Icons, Div } from "@imports/ImportComponents";
+import { Img, Bg, Icons, Div, Br } from "@imports/ImportComponents";
 import { Card, Paper, MenuItem, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -453,6 +453,7 @@ export const FoodDetail = () => {
               EXIST={EXIST}
             />
           </Grid>
+          <Br px={1} />
           <Grid size={12}>
             <Count
               COUNT={COUNT}
@@ -503,6 +504,7 @@ export const FoodDetail = () => {
               }
             />
           </Grid>
+          <Br px={1} />
           <Grid size={6}>
             <Input
               label={translate("totalProtein")}
@@ -550,7 +552,7 @@ export const FoodDetail = () => {
                 badgeContent={i + 1}
                 bgcolor={bgColors?.[OBJECT?.food_section[i]?.food_part_idx]}
               />
-              <Div className={"mt-n10 ms-10"}>
+              <Div className={"mt-n10 ms-15"}>
                 <Icons
                   key={"Star"}
                   name={"Star"}
@@ -574,6 +576,7 @@ export const FoodDetail = () => {
                 LOCKED={LOCKED}
               />
             </Grid>
+            <Br px={1} />
             <Grid size={6}>
               <Select
                 label={translate("part")}
@@ -678,6 +681,7 @@ export const FoodDetail = () => {
                 }}
               />
             </Grid>
+            <Br px={1} />
             <Grid size={6}>
               <Input
                 label={translate("foodName")}
@@ -720,6 +724,7 @@ export const FoodDetail = () => {
                 }}
               />
             </Grid>
+            <Br px={1} />
             <Grid size={6}>
               <Input
                 label={translate("kcal")}
@@ -810,6 +815,7 @@ export const FoodDetail = () => {
                 }}
               />
             </Grid>
+            <Br px={1} />
             <Grid size={6}>
               <Input
                 label={translate("protein")}
@@ -904,24 +910,30 @@ export const FoodDetail = () => {
         </Card>
       );
       return (
-        COUNT?.newSectionCnt > 0 && OBJECT?.food_section?.map((_item: any, i: number) => (
-          detailFragment(i)
-        ))
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT?.newSectionCnt > 0 && (
+                OBJECT?.food_section?.map((_item: any, i: number) => (
+                  detailFragment(i)
+                ))
+              )}
+            </Grid>
+          </Grid>
+        </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {dateCountSection()}
-            {!LOADING ? (
+            {LOADING ? <Loading /> : (
               <>
                 {totalSection()}
                 {detailSection()}
               </>
-            ) : (
-              <Loading />
             )}
           </Grid>
         </Grid>

@@ -4,8 +4,7 @@ import { useState, useEffect, createRef, useRef } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useStorage } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { Category } from "@imports/ImportSchemas";
-import { axios } from "@imports/ImportUtils";
-import { sync } from "@imports/ImportUtils";
+import { axios, sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { PopUp, Input } from "@imports/ImportContainers";
 import { Div, Icons } from "@imports/ImportComponents";
@@ -243,8 +242,8 @@ export const UserCategory = () => {
   const userCategoryNode = () => {
     // 7-1. popup
     const popupSection = (i: number) => (
-      <Card className={"w-85vw h-60vh d-row border-1 radius-1 p-0"} key={`${i}`}>
-        <TableContainer className={"border-right-1 over-x-hidden"} key={`category2-${i}`}>
+      <Card className={"w-85vw h-60vh d-row border-1 radius-1 p-0"} key={`category2-${i}`}>
+        <TableContainer className={"border-right-1 over-x-hidden"}>
           <Table>
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr p-sticky top-0 z-900"}>
@@ -529,15 +528,21 @@ export const UserCategory = () => {
         </Card>
       );
       return (
-        LOADING ? <Loading /> : detailFragment(0)
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {detailFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 h-min95vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min90vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
-            {detailSection()}
+            {LOADING ? <Loading /> : detailSection()}
           </Grid>
         </Grid>
       </Paper>

@@ -5,11 +5,10 @@ import { useCommonValue, useCommonDate, useTime } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { useValidateSleep } from "@imports/ImportValidates";
 import { Sleep } from "@imports/ImportSchemas";
-import { axios } from "@imports/ImportUtils";
-import { sync } from "@imports/ImportUtils";
+import { axios, sync } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, PickerTime, Count, Delete } from "@imports/ImportContainers";
-import { Bg } from "@imports/ImportComponents";
+import { Bg, Br } from "@imports/ImportComponents";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -294,6 +293,7 @@ export const SleepDetail = () => {
               EXIST={EXIST}
             />
           </Grid>
+          <Br px={1} />
           <Grid size={12}>
             <Count
               COUNT={COUNT}
@@ -324,6 +324,7 @@ export const SleepDetail = () => {
                 LOCKED={LOCKED}
               />
             </Grid>
+            <Br px={1} />
             <Grid size={12}>
               <PickerTime
                 OBJECT={OBJECT}
@@ -336,6 +337,7 @@ export const SleepDetail = () => {
                 i={i}
               />
             </Grid>
+            <Br px={1} />
             <Grid size={12}>
               <PickerTime
                 OBJECT={OBJECT}
@@ -348,6 +350,7 @@ export const SleepDetail = () => {
                 i={i}
               />
             </Grid>
+            <Br px={1} />
             <Grid size={12}>
               <PickerTime
                 OBJECT={OBJECT}
@@ -364,18 +367,30 @@ export const SleepDetail = () => {
         </Card>
       );
       return (
-        COUNT?.newSectionCnt > 0 && OBJECT?.sleep_section?.map((_item: any, i: number) => (
-          detailFragment(i)
-        ))
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT?.newSectionCnt > 0 && (
+                OBJECT?.sleep_section?.map((_item: any, i: number) => (
+                  detailFragment(i)
+                ))
+              )}
+            </Grid>
+          </Grid>
+        </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {dateCountSection()}
-            {!LOADING ? detailSection() : <Loading />}
+            {LOADING ? <Loading /> : (
+              <>
+                {detailSection()}
+              </>
+            )}
           </Grid>
         </Grid>
       </Paper>

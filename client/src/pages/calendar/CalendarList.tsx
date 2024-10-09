@@ -4,7 +4,7 @@ import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useStorage } from "@imports/ImportHooks";
 import { Calendar } from "@imports/ImportSchemas";
 import { axios, CalendarReact } from "@imports/ImportUtils";
-import { Loading, Footer } from "@imports/ImportLayouts";
+import { Footer } from "@imports/ImportLayouts";
 import { Icons, Div } from "@imports/ImportComponents";
 import { Paper, Grid, Card } from "@imports/ImportMuis";
 
@@ -36,7 +36,6 @@ export const CalendarList = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>([Calendar]);
   const [EXIST, setEXIST] = useState<any>({
     day: [""],
@@ -57,7 +56,6 @@ export const CalendarList = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    setLOADING(true);
     axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: sessionId,
@@ -70,9 +68,6 @@ export const CalendarList = () => {
     })
     .catch((err: any) => {
       console.error(err);
-    })
-    .finally(() => {
-      setLOADING(false);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
@@ -123,10 +118,7 @@ export const CalendarList = () => {
     const unActiveLine = (calendarForDates: any) => (
       calendarForDates?.map((calendar: any) =>
         calendar.calendar_section.map((section: any) => (
-          <Div
-            key={`unfilled-${calendar._id}-${section._id}`}
-            className={"calendar-unfilled"}
-          >
+          <Div key={`unfilled-${calendar._id}-${section._id}`} className={"calendar-unfilled"}>
             <span className={"calendar-category"}>
               {section.calendar_title}
             </span>
@@ -137,7 +129,7 @@ export const CalendarList = () => {
 
     // 7-4. title
     const titleSection = (i: number) => (
-      <Card className={"p-0 mb-20"} key={`${i}-title`}>
+      <Card className={"p-0 mb-20"} key={`title-${i}`}>
         <Grid container spacing={1} columns={12}>
           <Grid size={3} className={"d-row-left"}>
             <Icons
@@ -186,11 +178,10 @@ export const CalendarList = () => {
     );
     // 7-5. calendar
     const calendarSection = (i: number) => (
-      <Card className={"p-0"} key={`${i}-calendar`}>
+      <Card className={"p-0"} key={`calendar-${i}`}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12} className={"d-row-center"}>
             <CalendarReact
-              key={`${i}-calendar`}
               view={"month"}
               locale={localLocale}
               calendarType={"gregory"}
@@ -297,11 +288,11 @@ export const CalendarList = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {titleSection(0)}
-            {!LOADING ? calendarSection(0) : <Loading />}
+            {calendarSection(0)}
           </Grid>
         </Grid>
       </Paper>

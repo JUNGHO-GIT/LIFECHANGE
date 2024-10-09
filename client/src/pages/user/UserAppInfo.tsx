@@ -5,7 +5,7 @@ import { useCommonValue } from "@imports/ImportHooks";
 import { AppInfo } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
-import { Img } from "@imports/ImportComponents";
+import { Img, Br } from "@imports/ImportComponents";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
 import { TableContainer, Table, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
 
@@ -47,11 +47,17 @@ export const UserAppInfo = () => {
   const userAppInfoNode = () => {
     // 7-1. image
     const imageSection = () => (
-      <Img
-        key={"logo1"}
-        src={"logo1"}
-        className={"w-240 h-200"}
-      />
+      <Card className={"p-0"}>
+        <Grid container spacing={1} columns={12}>
+          <Grid size={12} className={"d-center"}>
+            <Img
+              key={"logo1"}
+              src={"logo1"}
+              className={"w-240 h-200"}
+            />
+          </Grid>
+        </Grid>
+      </Card>
     );
     // 7-2. card
     const detailSection = () => {
@@ -107,18 +113,27 @@ export const UserAppInfo = () => {
         </Card>
       );
       return (
-        LOADING ? <Loading /> : detailFragment(0)
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {detailFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper d-center border-1 radius-1 h-min90vh"}>
-        <Grid container spacing={4}>
-          <Grid size={12} className={"d-center mb-30"}>
-            {imageSection()}
-          </Grid>
+        <Grid container spacing={1} columns={12}>
           <Grid size={12}>
-            {detailSection()}
+            {LOADING ? <Loading /> : (
+              <>
+                {imageSection()}
+                <Br px={20} />
+                {detailSection()}
+              </>
+            )}
           </Grid>
         </Grid>
       </Paper>

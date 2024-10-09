@@ -8,7 +8,7 @@ import { User } from "@imports/ImportSchemas";
 import { axios, numeral, sync } from "@imports/ImportUtils";
 import { Footer, Loading } from "@imports/ImportLayouts";
 import { Input } from "@imports/ImportContainers";
-import { Hr, Img, Div } from "@imports/ImportComponents";
+import { Hr, Br, Img, Div } from "@imports/ImportComponents";
 import { Paper, Avatar, Card, Grid, Checkbox } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -91,16 +91,22 @@ export const UserDetail = () => {
   const userDetailNode = () => {
     // 7-1. image
     const imageSection = () => (
-      <Avatar
-        src={OBJECT?.user_image}
-        alt={"user_image"}
-        className={"w-150 h-150"}
-      />
+      <Card className={"p-0"}>
+        <Grid container spacing={1} columns={12}>
+          <Grid size={12} className={"d-center"}>
+            <Avatar
+              src={OBJECT?.user_image}
+              alt={"user_image"}
+              className={"w-150 h-150"}
+            />
+          </Grid>
+        </Grid>
+      </Card>
     );
     // 7-2. card
     const detailSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={"p-10"} key={i}>
+        <Card className={"p-10"} key={`detail-${i}`}>
           <Grid container spacing={1} columns={12}>
             {/** 아이디 **/}
             <Grid size={12}>
@@ -110,6 +116,7 @@ export const UserDetail = () => {
                 disabled={true}
               />
             </Grid>
+            <Br px={5} />
             {/** 등록일 **/}
             <Grid size={12}>
               <Input
@@ -118,7 +125,7 @@ export const UserDetail = () => {
                 disabled={true}
               />
             </Grid>
-            <Hr px={10} />
+            <Hr px={20} />
             {/** 최초 몸무게 **/}
             <Grid size={12}>
               <Input
@@ -152,6 +159,7 @@ export const UserDetail = () => {
                 }}
               />
             </Grid>
+            <Br px={5} />
             {/** 현재 몸무게 **/}
             <Grid size={12}>
               <Input
@@ -168,7 +176,7 @@ export const UserDetail = () => {
                 readOnly={true}
               />
             </Grid>
-            <Hr px={10} />
+            <Hr px={20} />
             {/** 초기 자산 **/}
             <Grid size={12}>
               <Input
@@ -202,6 +210,7 @@ export const UserDetail = () => {
                 }}
               />
             </Grid>
+            <Br px={5} />
             {/** 현재 자산 **/}
             <Grid size={12}>
               <Input
@@ -226,6 +235,7 @@ export const UserDetail = () => {
                 }
               />
             </Grid>
+            <Br px={5} />
             {/** 포함 여부 **/}
             <Grid size={12} className={"d-row-left"}>
               <Div className={"fs-0-7rem fw-500 dark ms-10"}>
@@ -244,19 +254,27 @@ export const UserDetail = () => {
         </Card>
       );
       return (
-        LOADING ? <Loading /> : detailFragment(0)
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {detailFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={1} columns={12}>
-          <Grid size={12} className={"d-center"}>
-            {imageSection()}
-          </Grid>
-          <Hr px={20} />
           <Grid size={12}>
-            {detailSection()}
+            {LOADING ? <Loading /> : (
+              <>
+                {imageSection()}
+                <Hr px={40} />
+                {detailSection()}
+              </>
+            )}
           </Grid>
         </Grid>
       </Paper>

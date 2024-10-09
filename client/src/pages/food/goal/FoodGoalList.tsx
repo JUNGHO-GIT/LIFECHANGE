@@ -6,7 +6,7 @@ import { useLanguageStore } from "@imports/ImportStores";
 import { FoodGoal } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportUtils";
 import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
-import { Div, Img, Hr, Icons } from "@imports/ImportComponents";
+import { Div, Img, Hr, Br, Icons } from "@imports/ImportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 import { Paper, Card, Grid } from "@imports/ImportMuis";
 
@@ -112,46 +112,33 @@ export const FoodGoalList = () => {
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
     const listSection = () => {
-      const emptyFragment = () => (
-        <Empty
-          SEND={SEND}
-          extra={"food"}
-        />
-      );
       const listFragment = (i: number) => (
         OBJECT?.map((item: any, index: number) => (
           <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
             <Accordion className={"shadow-0"} expanded={isExpanded.includes(index)}>
-              <AccordionSummary
-                className={"me-n10"}
-                expandIcon={
-                  <Icons
-                    key={"ChevronDown"}
-                    name={"ChevronDown"}
-                    className={"w-18 h-18"}
-                    onClick={() => {
-                      setIsExpanded(isExpanded.includes(index)
-                      ? isExpanded.filter((el: number) => el !== index)
-                      : [...isExpanded, index]
-                    )}}
-                  />
-                }
-              >
-                <Grid
-                  container={true}
-                  spacing={1}
-                  onClick={(e: any) => {
-                    e.stopPropagation();
-                    navigate(toDetail, {
-                      state: {
-                        id: item._id,
-                        dateType: item.food_goal_dateType,
-                        dateStart: item.food_goal_dateStart,
-                        dateEnd: item.food_goal_dateEnd,
-                      }
-                    });
-                  }}
-                >
+              <AccordionSummary className={"me-n10"} expandIcon={
+                <Icons
+                  key={"ChevronDown"}
+                  name={"ChevronDown"}
+                  className={"w-18 h-18"}
+                  onClick={() => {
+                    setIsExpanded(isExpanded.includes(index)
+                    ? isExpanded.filter((el: number) => el !== index)
+                    : [...isExpanded, index]
+                  )}}
+                />
+              }>
+                <Grid container spacing={1} columns={12} onClick={(e: any) => {
+                  e.stopPropagation();
+                  navigate(toDetail, {
+                    state: {
+                      id: item._id,
+                      dateType: item.food_goal_dateType,
+                      dateStart: item.food_goal_dateStart,
+                      dateEnd: item.food_goal_dateEnd,
+                    }
+                  });
+                }}>
                   <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
@@ -211,6 +198,7 @@ export const FoodGoalList = () => {
                           {translate("kc")}
                         </Div>
                       </Grid>
+                      <Br px={1} />
                       {/** real **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -227,6 +215,7 @@ export const FoodGoalList = () => {
                           {translate("kc")}
                         </Div>
                       </Grid>
+                      <Br px={1} />
                       {/** diff **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -277,6 +266,7 @@ export const FoodGoalList = () => {
                           {translate("g")}
                         </Div>
                       </Grid>
+                      <Br px={1} />
                       {/** real **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -293,6 +283,7 @@ export const FoodGoalList = () => {
                           {translate("g")}
                         </Div>
                       </Grid>
+                      <Br px={1} />
                       {/** diff **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -343,6 +334,7 @@ export const FoodGoalList = () => {
                           {translate("g")}
                         </Div>
                       </Grid>
+                      <Br px={1} />
                       {/** real **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -359,6 +351,7 @@ export const FoodGoalList = () => {
                           {translate("g")}
                         </Div>
                       </Grid>
+                      <Br px={1} />
                       {/** diff **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -409,6 +402,7 @@ export const FoodGoalList = () => {
                           {translate("g")}
                         </Div>
                       </Grid>
+                      <Br px={1} />
                       {/** real **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -425,6 +419,7 @@ export const FoodGoalList = () => {
                           {translate("g")}
                         </Div>
                       </Grid>
+                      <Br px={1} />
                       {/** diff **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -449,16 +444,28 @@ export const FoodGoalList = () => {
           </Card>
         ))
       );
+      const emptyFragment = () => (
+        <Empty
+          SEND={SEND}
+          extra={"food"}
+        />
+      );
       return (
-        COUNT.totalCnt === 0 ? emptyFragment() : listFragment(0)
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT.totalCnt === 0 ? emptyFragment() : listFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
-            {!LOADING ? listSection() : <Loading />}
+            {LOADING ? <Loading /> : listSection()}
           </Grid>
         </Grid>
       </Paper>

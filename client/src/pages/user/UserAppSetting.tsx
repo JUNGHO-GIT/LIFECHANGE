@@ -229,7 +229,13 @@ export const UserAppSetting = () => {
         </Card>
       );
       return (
-        LOADING ? <Loading /> : detailFragment(0)
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {detailFragment(0)}
+            </Grid>
+          </Grid>
+        </Card>
       );
     };
     // 7-10. return
@@ -237,7 +243,7 @@ export const UserAppSetting = () => {
       <Paper className={"content-wrapper d-center border-1 radius-1 h-min90vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
-            {detailSection()}
+            {LOADING ? <Loading /> : detailSection()}
           </Grid>
         </Grid>
       </Paper>

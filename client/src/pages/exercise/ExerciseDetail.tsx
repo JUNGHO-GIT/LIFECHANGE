@@ -8,7 +8,7 @@ import { Exercise } from "@imports/ImportSchemas";
 import { axios, numeral, sync } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, PickerTime, Count, Delete, Input, Select}from "@imports/ImportContainers";
-import { Bg, Img } from "@imports/ImportComponents";
+import { Img, Bg, Br } from "@imports/ImportComponents";
 import { Card, Paper, MenuItem, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -336,6 +336,7 @@ export const ExerciseDetail = () => {
               EXIST={EXIST}
             />
           </Grid>
+          <Br px={1} />
           <Grid size={12}>
             <Count
               COUNT={COUNT}
@@ -386,6 +387,7 @@ export const ExerciseDetail = () => {
               }
             />
           </Grid>
+          <Br px={1} />
           <Grid size={12}>
             <Input
               label={translate("weight")}
@@ -440,6 +442,7 @@ export const ExerciseDetail = () => {
                 LOCKED={LOCKED}
               />
             </Grid>
+            <Br px={1} />
             <Grid size={6}>
               <Select
                 label={translate("part")}
@@ -513,6 +516,7 @@ export const ExerciseDetail = () => {
                 ))}
               </Select>
             </Grid>
+            <Br px={1} />
             <Grid size={6}>
               <Input
                 label={translate("set")}
@@ -603,6 +607,7 @@ export const ExerciseDetail = () => {
                 }}
               />
             </Grid>
+            <Br px={1} />
             <Grid size={6}>
               <Input
                 label={translate("kg")}
@@ -664,24 +669,30 @@ export const ExerciseDetail = () => {
         </Card>
       );
       return (
-        COUNT?.newSectionCnt > 0 && OBJECT?.exercise_section?.map((_item: any, i: number) => (
-          detailFragment(i)
-        ))
+        <Card className={"p-0"}>
+          <Grid container spacing={1} columns={12}>
+            <Grid size={12}>
+              {COUNT?.newSectionCnt > 0 && (
+                OBJECT?.exercise_section?.map((_item: any, i: number) => (
+                  detailFragment(i)
+                ))
+              )}
+            </Grid>
+          </Grid>
+        </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {dateCountSection()}
-            {!LOADING ? (
+            {LOADING ? <Loading /> : (
               <>
                 {totalSection()}
                 {detailSection()}
               </>
-            ) : (
-              <Loading />
             )}
           </Grid>
         </Grid>
