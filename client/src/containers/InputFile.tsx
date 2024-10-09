@@ -1,17 +1,11 @@
 // InputFile.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
-import { Alert } from "@imports/ImportLayouts";
-import { Div, Br, Img } from "@imports/ImportComponents";
+import { Div, Br, Img, Icons } from "@imports/ImportComponents";
 import { MuiFileInput, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
-
-  // 1. common -------------------------------------------------------------------------------------
-  const { translate } = useLanguageStore();
-  const { ALERT, setALERT } = useAlertStore();
 
   // 2-1. useState ---------------------------------------------------------------------------------
   const [fileExisting, setFileExisting] = useState<any[]>([]);
@@ -91,11 +85,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
 
     // 파일이 이미지가 아닌 경우
     if (newFiles && newFiles.some((file: File) => !file.type.startsWith("image/"))) {
-      setALERT({
-        open: true,
-        msg: translate("uploadImageOnly"),
-        severity: "error",
-      });
+      alert("이미지 파일만 업로드 가능합니다.");
 
       // input 요소 삭제
       const input = document.querySelector("input[type=file]");
@@ -107,11 +97,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
 
     // 파일이 제한 개수 이상인 경우
     else if (newFiles && newFiles.length + fileCount > fileLimit) {
-      setALERT({
-        open: true,
-        msg: translate(`uploadMaxFileCount`),
-        severity: "error",
-      });
+      alert(`파일은 최대 ${fileLimit}개까지 업로드 가능합니다.`);
 
       // input 요소 삭제
       const input = document.querySelector("input[type=file]");
@@ -123,11 +109,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
 
     // 파일이 5mb 이상인 경우
     else if (newFiles && newFiles.some((file: File) => (file.size > 5 * 1024 * 1024))) {
-      setALERT({
-        open: true,
-        msg: translate("uploadMaxFileSize"),
-        severity: "error",
-      });
+      alert("파일은 최대 5MB까지 업로드 가능합니다.");
 
       // input 요소 삭제
       const input = document.querySelector("input[type=file]");
@@ -200,20 +182,20 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
 
   // 7. node ---------------------------------------------------------------------------------------
   const adornmentNode = (
-    <Grid container spacing={2} columns={12}>
-      <Grid size={8}>
+    <Grid container spacing={1} columns={12}>
+      <Grid size={8} className={"d-column-left"}>
         {fileList && fileList.length > 0 && fileList.map((file: any, index: number) => (
-          <Grid size={12} className={"d-row-left"} key={index}>
+          <Div className={"d-row-center"} key={index}>
             <Img
-              max={40}
+              max={25}
               hover={false}
-              shadow={false}
+              shadow={true}
               radius={true}
               group={"new"}
               src={URL.createObjectURL(file)}
-              className={"w-35 h-35 me-10"}
+              className={"me-10"}
             />
-            <Div className={"black fs-0-9rem fw-500"} max={15}>
+            <Div className={"black fs-0-9rem fw-500"} max={12}>
               {file?.name}
             </Div>
             <Div
@@ -222,22 +204,31 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
             >
               {!file?.name ? "" : "x"}
             </Div>
-          </Grid>
+          </Div>
         ))}
       </Grid>
       <Grid size={4} className={"d-column-right"}>
-        <Div
-          className={"fs-0-9rem fw-600 pointer-burgundy"}
-          onClick={(e: any) => handleFileAdd(e)}
-        >
-          파일 추가
-        </Div>
-        <Br px={10} />
-        <Div
-          className={"fs-0-9rem fw-600 pointer-burgundy"}
-          onClick={() => handleFileDelete(0, "all")}
-        >
-          전체 삭제
+        <Div className={"me-n20"}>
+          <Div
+            className={"fs-0-9rem fw-600 pointer-burgundy"}
+            onClick={(e: any) => handleFileAdd(e)}
+          >
+            <Icons
+              key={"CirclePlus"}
+              name={"CirclePlus"}
+              className={"w-22 h-22"}
+            />
+          </Div>
+          <Div
+            className={"fs-0-9rem fw-600 pointer-burgundy"}
+            onClick={() => handleFileDelete(0, "all")}
+          >
+            <Icons
+              key={"Trash"}
+              name={"Trash"}
+              className={"w-22 h-22"}
+            />
+          </Div>
         </Div>
       </Grid>
     </Grid>
@@ -245,78 +236,74 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
 
   // 7. node ---------------------------------------------------------------------------------------
   const existingNode = () => (
-    <Grid container spacing={2} columns={12}>
-      {fileExisting.map((file: any, index: number) => (
-        <Grid size={12} key={index} className={"d-row-left"}>
-          <Img
-            max={40}
-            hover={false}
-            shadow={false}
-            radius={true}
-            group={props?.group}
-            src={file}
-            className={"w-35 h-35 me-10"}
-          />
-          <Div className={"black fs-0-9rem fw-500"} max={20}>
-            {file}
+    <Grid container spacing={1} columns={12}>
+      <Grid size={12} className={"d-column-left"}>
+        {fileExisting.map((file: any, index: number) => (
+          <Div className={"d-row-center"} key={index}>
+            <Img
+              max={25}
+              hover={false}
+              shadow={true}
+              radius={true}
+              group={props?.group}
+              src={file}
+              className={"me-10"}
+            />
+            <Div className={"black fs-0-9rem fw-500"} max={20}>
+              {file}
+            </Div>
+            <Div
+              className={"black fs-0-9rem fw-500 pointer-burgundy ms-5"}
+              onClick={() => {
+                handleExistingFileDelete(index);
+              }}
+            >
+              {!file ? "" : "x"}
+            </Div>
           </Div>
-          <Div
-            className={"black fs-0-9rem fw-500 pointer-burgundy ms-15"}
-            onClick={() => {
-              handleExistingFileDelete(index);
-            }}
-          >
-            {!file ? "" : "x"}
-          </Div>
-        </Grid>
-      ))}
+        ))}
+      </Grid>
     </Grid>
   );
 
   // 10. return ------------------------------------------------------------------------------------
   return (
-    <Div className={"w-100p mt-10"}>
-      <Div
-        className={"d-column-left fs-0-9rem fw-400"}
-        style={{ color: "#484848de" }}
-      >
-        {props?.label ? props?.required ? `${props?.label} *` : props?.label : ""}
-      </Div>
-      <Br px={10} />
-      <MuiFileInput
-        {...props}
-        label={""}
-        value={[]}
-        select={false}
-        variant={"outlined"}
-        size={props?.size || "small"}
-        className={props?.className || ""}
-        inputRef={props?.inputRef || null}
-        error={props?.error || false}
-        fullWidth={props?.fullWidth || true}
-        multiline={props?.multiline || true}
-        multiple={props?.multiple || true}
-        onClick={(e: any) => e.preventDefault()}
-        InputProps={{
-          readOnly: (
-            props?.readOnly || false
-          ),
-          style: {
-            height: fileHeight,
-          },
-          className: (
-            props?.inputclass?.includes("fs-") ? (
-              `text-left ${props?.inputclass || ""}`
-            ) : (
-              `text-left fs-1-0rem ${props?.inputclass || ""}`
-            )
-          ),
-          startAdornment: adornmentNode,
-        }}
-      />
-      <Br px={20} />
-      {/** 기존 이미지 표시하기 **/}
-      {fileExisting.length > 0 && existingNode()}
-    </Div>
+    <>
+    <MuiFileInput
+      {...props}
+      label={props?.label || ""}
+      value={[]}
+      select={false}
+      variant={"outlined"}
+      size={props?.size || "small"}
+      className={props?.className || ""}
+      inputRef={props?.inputRef || null}
+      error={props?.error || false}
+      fullWidth={props?.fullWidth || true}
+      multiline={props?.multiline || true}
+      multiple={props?.multiple || true}
+      onClick={(e: any) => e.preventDefault()}
+      InputProps={{
+        ...props?.InputProps,
+        readOnly: (
+          props?.readOnly || false
+        ),
+        style: {
+          height: fileHeight,
+        },
+        className: (
+          props?.inputclass?.includes("fs-") ? (
+            `text-left ${props?.inputclass || ""}`
+          ) : (
+            `fs-1-0rem text-left ${props?.inputclass || ""}`
+          )
+        ),
+        startAdornment: adornmentNode,
+      }}
+    />
+    <Br px={20} />
+    {/** 기존 이미지 표시하기 **/}
+    {fileExisting.length > 0 && existingNode()}
+    </>
   );
 };

@@ -17,7 +17,7 @@ export const MoneyGoalDetail = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, sessionId, localCurrency, toList } = useCommonValue();
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
-  const { weekStartFmt, weekEndFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
+  const { getWeekStartFmt, getWeekEndFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
   const { ALERT, setALERT } = useAlertStore();
   const { ERRORS, REFS, validate } = useValidateMoney();
@@ -51,8 +51,8 @@ export const MoneyGoalDetail = () => {
   });
   const [DATE, setDATE] = useState<any>({
     dateType: location_dateType || "week",
-    dateStart: location_dateStart || weekStartFmt,
-    dateEnd: location_dateEnd || weekEndFmt,
+    dateStart: location_dateStart || getWeekStartFmt(),
+    dateEnd: location_dateEnd || getWeekEndFmt(),
   });
 
   // 2-3. useEffect --------------------------------------------------------------------------------
@@ -242,7 +242,7 @@ export const MoneyGoalDetail = () => {
     // 7-1. date + count
     const dateCountSection = () => (
       <Card className={"border-1 radius-1 p-20"}>
-        <Grid container spacing={2} columns={12}>
+        <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             <PickerDay
               DATE={DATE}
@@ -266,7 +266,7 @@ export const MoneyGoalDetail = () => {
     const detailSection = () => {
       const detailFragment = (i: number) => (
         <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={i}>
-          <Grid container spacing={2} columns={12}>
+          <Grid container spacing={1} columns={12}>
             <Grid size={6} className={"d-row-left"}>
               <Bg
                 badgeContent={i + 1}

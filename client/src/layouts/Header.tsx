@@ -9,7 +9,7 @@ export const Header = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { navigate, firstStr } = useCommonValue();
-  const { dayFmt } = useCommonDate();
+  const { getDayFmt } = useCommonDate();
 
   // 7. header -------------------------------------------------------------------------------------
   const headerNode = () => {
@@ -20,8 +20,8 @@ export const Header = () => {
           navigate("/today/list", {
             state: {
               dateType: "day",
-              dateStart: dayFmt,
-              dateEnd: dayFmt,
+              dateStart: getDayFmt(),
+              dateEnd: getDayFmt(),
             }
           });
         }}
@@ -61,7 +61,7 @@ export const Header = () => {
     );
     return (
       <Paper className={"layout-wrapper p-sticky top-0vh h-8vh border-1 radius-1"}>
-        <Grid container spacing={2} columns={12}>
+        <Grid container spacing={1} columns={12}>
           <Grid size={10} className={"d-row-left"}>
             {iconSection()}
           </Grid>

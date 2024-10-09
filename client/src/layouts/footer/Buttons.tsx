@@ -82,7 +82,7 @@ export const Buttons = (
         padding={"6px"}
         contents={
           <Card className={"h-max30vh d-center"}>
-            <Grid container spacing={2} columns={12}>
+            <Grid container spacing={1} columns={12}>
               <Grid size={12}>
                 <Div className={"fs-1-0rem fw-600 pre-line dark-grey"}>
                   {translate("replaceOrInsert")}
@@ -164,14 +164,14 @@ export const Buttons = (
     // 10. return
     return (
       PATH.includes("/user/category") || PATH.includes("/user/detail") ? (
-        <Grid container spacing={2} columns={12}>
+        <Grid container spacing={1} columns={12}>
           <Grid size={10} className={"d-center"}>
             {saveSection()}
           </Grid>
         </Grid>
       )
       : PATH.includes("/detail") ? (
-        <Grid container spacing={2} columns={12}>
+        <Grid container spacing={1} columns={12}>
           <Grid size={10} className={"d-center"}>
             {PATH.includes("/food/detail") && toFindSection()}
             {PATH.includes("/food/detail") && favoriteSection()}

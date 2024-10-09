@@ -9,6 +9,7 @@ export const Input = (props: any) => (
     select={false}
     type={props?.type || "text"}
     variant={props?.variant || "outlined"}
+    className={props?.className || ""}
     size={props?.size || "small"}
     fullWidth={props?.fullWidth || true}
     inputRef={props?.inputRef || null}
@@ -35,11 +36,6 @@ export const Input = (props: any) => (
         display: props?.readOnly && "none"
       },
     }}
-    className={(
-      props?.variant === "standard"
-      ? `${props?.className} border-bottom-1`
-      : props?.className || ""
-    )}
     slotProps={{
       ...props?.slotProps,
       input: {

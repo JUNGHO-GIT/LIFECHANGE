@@ -10,12 +10,11 @@ import { MenuItem, Grid } from "@imports/ImportMuis";
 declare type ListFilterProps = {
   state: any;
   setState: any;
-  flow: any;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const ListFilter = (
-  { state, setState, flow }: ListFilterProps
+  { state, setState }: ListFilterProps
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
@@ -62,13 +61,13 @@ export const ListFilter = (
     // 10. return
     return (
       PATH.includes("/today") ? (
-        <Grid container spacing={2} columns={12}>
+        <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {pickerSection()}
           </Grid>
         </Grid>
       ) : (
-        <Grid container spacing={2} columns={12}>
+        <Grid container spacing={1} columns={12}>
           <Grid size={3}>
             {sortSection()}
           </Grid>

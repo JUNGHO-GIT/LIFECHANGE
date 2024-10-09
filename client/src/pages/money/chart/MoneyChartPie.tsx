@@ -28,8 +28,8 @@ export const MoneyChartPie = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, chartColors, sessionId } = useCommonValue();
-  const { dayFmt, weekStartFmt, weekEndFmt} = useCommonDate();
-  const { monthStartFmt, monthEndFmt, yearStartFmt, yearEndFmt } = useCommonDate();
+  const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
+  const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -39,14 +39,14 @@ export const MoneyChartPie = () => {
   const [LINE, setLINE] = useState<string>("income");
   const [DATE, setDATE] = useState<any>({
     dateType: "",
-    dateStart: dayFmt,
-    dateEnd: dayFmt,
-    weekStartFmt: weekStartFmt,
-    weekEndFmt: weekEndFmt,
-    monthStartFmt: monthStartFmt,
-    monthEndFmt: monthEndFmt,
-    yearStartFmt: yearStartFmt,
-    yearEndFmt: yearEndFmt,
+    dateStart: getDayFmt(),
+    dateEnd: getDayFmt(),
+    weekStartFmt: getWeekStartFmt(),
+    weekEndFmt: getWeekEndFmt(),
+    monthStartFmt: getMonthStartFmt(),
+    monthEndFmt: getMonthEndFmt(),
+    yearStartFmt: getYearStartFmt(),
+    yearEndFmt: getYearEndFmt(),
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -445,7 +445,7 @@ export const MoneyChartPie = () => {
       );
       return (
         <Card className={"p-0"}>
-          <Grid container spacing={2} columns={12}>
+          <Grid container spacing={1} columns={12}>
             <Grid size={3} className={"d-row-left"}>
               {selectFragment1()}
             </Grid>
@@ -497,7 +497,7 @@ export const MoneyChartPie = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min40vh"}>
-        <Grid container spacing={2} columns={12}>
+        <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {headSection()}
           </Grid>

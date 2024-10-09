@@ -24,8 +24,8 @@ export const PickerDay = (
 
   // 1. common -------------------------------------------------------------------------------------
   const { PATH, TITLE, localLocale, localTimeZone } = useCommonValue();
-  const { dayFmt, weekStartFmt, weekEndFmt } = useCommonDate();
-  const { monthStartFmt, monthEndFmt, yearStartFmt, yearEndFmt } = useCommonDate();
+  const { isToday, isGoalToday, isGoalList, isGoalDetail } = useCommonValue();
+  const { isRealList, isRealDetail, isCalendarDetail } = useCommonValue();
   const { getDayFmt, getDayNotFmt, getDayStartFmt, getDayEndFmt } = useCommonDate();
   const { getPrevDayStartFmt, getPrevDayEndFmt } = useCommonDate();
   const { getNextDayStartFmt, getNextDayEndFmt } = useCommonDate();
@@ -40,14 +40,6 @@ export const PickerDay = (
   const { getNextYearStartFmt, getNextYearEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
-  const isGoalToday = PATH.includes("/today/goal");
-  const isToday = !isGoalToday && PATH.includes("/today/list");
-  const isCalendarDetail = PATH.includes("/calendar/detail");
-  const isGoalList = PATH.includes("/goal/list");
-  const isGoalDetail = PATH.includes("/goal/detail");
-  const isRealList = !PATH.includes("/goal") && PATH.includes("/list");
-  const isRealDetail = !PATH.includes("/goal") && PATH.includes("/detail");
-
   // ex. 2024-11-12 ~ 12-15
   const durStr = (
     `${DATE.dateStart.split("-")[1] || "" }-${DATE.dateStart.split("-")[2] || "" } ~ ` +
@@ -60,7 +52,7 @@ export const PickerDay = (
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   const [listType, setListType] = useStorage(
-    `${TITLE}_listType_(${PATH})`, "day"
+    `${TITLE}_listType_(${PATH})`, "month"
   );
   const [saveType, setSaveType] = useState<string>("");
 
@@ -78,38 +70,46 @@ export const PickerDay = (
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (isGoalList || isRealList) {
+    if (isGoalToday || isToday) {
+      setListType("day");
+      setDATE({
+        dateType: "day",
+        dateStart: getDayFmt(),
+        dateEnd: getDayFmt(),
+      });
+    }
+    else if (isGoalList || isRealList) {
       if (listType === "day") {
         setDATE({
-          dateType: isToday ? "day" : "",
-          dateStart: dayFmt,
-          dateEnd: dayFmt,
+          dateType: "",
+          dateStart: getDayFmt(),
+          dateEnd: getDayFmt(),
         });
       }
       else if (listType === "week") {
         setDATE({
-          dateType: isToday ? "day" : "",
-          dateStart: weekStartFmt,
-          dateEnd: weekEndFmt,
+          dateType: "",
+          dateStart: getWeekStartFmt(),
+          dateEnd: getWeekEndFmt(),
         });
       }
       else if (listType === "month") {
         setDATE({
-          dateType: isToday ? "day" : "",
-          dateStart: monthStartFmt,
-          dateEnd: monthEndFmt,
+          dateType: "",
+          dateStart: getMonthStartFmt(),
+          dateEnd: getMonthEndFmt(),
         });
       }
       else if (listType === "year") {
         setDATE({
-          dateType: isToday ? "day" : "",
-          dateStart: yearStartFmt,
-          dateEnd: yearEndFmt,
+          dateType: "",
+          dateStart: getYearStartFmt(),
+          dateEnd: getYearEndFmt(),
         });
       }
       else if (listType === "select") {
         setDATE({
-          dateType: isToday ? "day" : "",
+          dateType: "",
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd,
         });
@@ -123,29 +123,29 @@ export const PickerDay = (
       if (saveType === "day") {
         setDATE({
           dateType: "day",
-          dateStart: dayFmt,
-          dateEnd: dayFmt,
+          dateStart: getDayFmt(),
+          dateEnd: getDayFmt(),
         });
       }
       else if (saveType === "week") {
         setDATE({
           dateType: "week",
-          dateStart: weekStartFmt,
-          dateEnd: weekEndFmt,
+          dateStart: getWeekStartFmt(),
+          dateEnd: getWeekEndFmt(),
         });
       }
       else if (saveType === "month") {
         setDATE({
           dateType: "month",
-          dateStart: monthStartFmt,
-          dateEnd: monthEndFmt,
+          dateStart: getMonthStartFmt(),
+          dateEnd: getMonthEndFmt(),
         });
       }
       else if (saveType === "year") {
         setDATE({
           dateType: "year",
-          dateStart: yearStartFmt,
-          dateEnd: yearEndFmt,
+          dateStart: getYearStartFmt(),
+          dateEnd: getYearEndFmt(),
         });
       }
       else if (saveType === "select") {
@@ -170,7 +170,7 @@ export const PickerDay = (
         direction={"center"}
         contents={
           <Card className={"w-min70vw p-0"}>
-            <Grid container spacing={2} columns={12}>
+            <Grid container spacing={1} columns={12}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewDay")}
@@ -358,7 +358,7 @@ export const PickerDay = (
               </Div>
             }
             onClick={(e: any) => {
-              popTrigger.openPopup(e.currentTarget);
+              (!isGoalToday && !isToday) && popTrigger.openPopup(e.currentTarget);
             }}
           />
         )}
@@ -374,7 +374,7 @@ export const PickerDay = (
         direction={"center"}
         contents={
           <Card className={"w-min70vw p-0"}>
-            <Grid container spacing={2} columns={12}>
+            <Grid container spacing={1} columns={12}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewWeek")}
@@ -566,7 +566,7 @@ export const PickerDay = (
               </Div>
             }
             onClick={(e: any) => {
-              popTrigger.openPopup(e.currentTarget);
+              (!isGoalToday && !isToday) && popTrigger.openPopup(e.currentTarget);
             }}
           />
         )}
@@ -582,7 +582,7 @@ export const PickerDay = (
         direction={"center"}
         contents={
           <Card className={"w-min70vw p-0"}>
-            <Grid container spacing={2} columns={12}>
+            <Grid container spacing={1} columns={12}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewMonth")}
@@ -757,7 +757,7 @@ export const PickerDay = (
               </Div>
             }
             onClick={(e: any) => {
-              popTrigger.openPopup(e.currentTarget);
+              (!isGoalToday && !isToday) && popTrigger.openPopup(e.currentTarget);
             }}
           />
         )}
@@ -773,7 +773,7 @@ export const PickerDay = (
         direction={"center"}
         contents={
           <Card className={"w-min70vw p-0"}>
-            <Grid container spacing={2} columns={12}>
+            <Grid container spacing={1} columns={12}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewYear")}
@@ -949,7 +949,7 @@ export const PickerDay = (
               </Div>
             }
             onClick={(e: any) => {
-              popTrigger.openPopup(e.currentTarget);
+              (!isGoalToday && !isToday) && popTrigger.openPopup(e.currentTarget);
             }}
           />
         )}
@@ -965,7 +965,7 @@ export const PickerDay = (
         direction={"center"}
         contents={
           <Card className={"w-min70vw p-0"}>
-            <Grid container spacing={2} columns={12}>
+            <Grid container spacing={1} columns={12}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("viewSelect")}
@@ -1106,7 +1106,7 @@ export const PickerDay = (
               />
             }
             onClick={(e: any) => {
-              popTrigger.openPopup(e.currentTarget);
+              (!isGoalToday && !isToday) && popTrigger.openPopup(e.currentTarget);
             }}
           />
         )}
@@ -1216,9 +1216,67 @@ export const PickerDay = (
     // 10. return ----------------------------------------------------------------------------------
     return (
 
-      // 0. 일정인 경우 (세이브)
-      isCalendarDetail ? (
-        <Grid container spacing={2} columns={12}>
+      // 1-1. 리스트 (목표)
+      isGoalList ? (
+        <Grid container spacing={1} columns={12}>
+          <Grid size={3} className={"d-center"}>
+            {listTypeSection()}
+          </Grid>
+          <Grid size={9} className={"d-center"}>
+            {listType === "day" && daySection()}
+            {listType === "week" && weekSection()}
+            {listType === "month" && monthSection()}
+            {listType === "year" && yearSection()}
+            {listType === "select" && selectSection()}
+          </Grid>
+        </Grid>
+      )
+
+      // 1-2. 리스트 (실제)
+      : isRealList ? (
+        <Grid container spacing={1} columns={12}>
+          <Grid size={3} className={"d-center"}>
+            {listTypeSection()}
+          </Grid>
+          <Grid size={9} className={"d-center"}>
+            {listType === "day" && daySection()}
+            {listType === "week" && weekSection()}
+            {listType === "month" && monthSection()}
+            {listType === "year" && yearSection()}
+            {listType === "select" && selectSection()}
+          </Grid>
+        </Grid>
+      )
+
+      // 2-1. 세이브 (목표)
+      : isGoalDetail ? (
+        <Grid container spacing={1} columns={12}>
+          <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
+            {saveTypeSection()}
+          </Grid>
+          <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
+            {DATE.dateType === "week" && weekSection()}
+            {DATE.dateType === "month" && monthSection()}
+            {DATE.dateType === "year" && yearSection()}
+          </Grid>
+        </Grid>
+      )
+
+      // 2-2. 세이브 (실제)
+      : isRealDetail ? (
+        <Grid container spacing={1} columns={12}>
+          <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
+            {saveTypeSection()}
+          </Grid>
+          <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
+            {DATE.dateType === "day" && daySection()}
+          </Grid>
+        </Grid>
+      )
+
+      // 2-3. 세이브 (일정)
+      : isCalendarDetail ? (
+        <Grid container spacing={1} columns={12}>
           <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
             {saveTypeSection()}
           </Grid>
@@ -1228,64 +1286,6 @@ export const PickerDay = (
             {DATE.dateType === "month" && monthSection()}
             {DATE.dateType === "year" && yearSection()}
             {DATE.dateType === "select" && selectSection()}
-          </Grid>
-        </Grid>
-      )
-
-      // 1-1. 목표인 경우 (리스트)
-      : isGoalList ? (
-        <Grid container spacing={2} columns={12}>
-          <Grid size={4} className={"d-center"}>
-            {listTypeSection()}
-          </Grid>
-          <Grid size={8} className={"d-center"}>
-            {listType === "day" && daySection()}
-            {listType === "week" && weekSection()}
-            {listType === "month" && monthSection()}
-            {listType === "year" && yearSection()}
-            {listType === "select" && selectSection()}
-          </Grid>
-        </Grid>
-      )
-
-      // 1-2. 목표인 경우 (세이브)
-      : isGoalDetail ? (
-        <Grid container spacing={2} columns={12}>
-          <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
-            {saveTypeSection()}
-          </Grid>
-          <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
-            {DATE.dateType === "week" && weekSection()}
-            {DATE.dateType === "month" && monthSection()}
-            {DATE.dateType === "year" && yearSection()}
-          </Grid>
-        </Grid>
-      )
-
-      // 2-1. 실제인 경우 (리스트)
-      : isRealList ? (
-        <Grid container spacing={2} columns={12}>
-          <Grid size={4} className={"d-center"}>
-            {listTypeSection()}
-          </Grid>
-          <Grid size={8} className={"d-center"}>
-            {listType === "day" && daySection()}
-            {listType === "week" && weekSection()}
-            {listType === "month" && monthSection()}
-            {listType === "year" && yearSection()}
-            {listType === "select" && selectSection()}
-          </Grid>
-        </Grid>
-      )
-
-      // 2-2. 실제인 경우 (세이브)
-      : isRealDetail ? (
-        <Grid container spacing={2} columns={12}>
-          <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
-            {saveTypeSection()}
-          </Grid>
-          <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
-            {DATE.dateType === "day" && daySection()}
           </Grid>
         </Grid>
       )

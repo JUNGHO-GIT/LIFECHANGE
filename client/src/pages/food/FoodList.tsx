@@ -16,7 +16,7 @@ export const FoodList = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, TITLE, sessionId, toDetail } = useCommonValue();
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
-  const { dayFmt, getDayNotFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
+  const { getDayFmt,getDayNotFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -24,8 +24,8 @@ export const FoodList = () => {
   const [DATE, setDATE] = useStorage(
     `${TITLE}_date_(${PATH})`, {
       dateType: location_dateType || "",
-      dateStart: location_dateStart || dayFmt,
-      dateEnd: location_dateEnd || dayFmt,
+      dateStart: location_dateStart || getDayFmt(),
+      dateEnd: location_dateEnd || getDayFmt(),
     }
   );
   const [PAGING, setPAGING] = useStorage(
@@ -137,21 +137,17 @@ export const FoodList = () => {
                   />
                 }
               >
-                <Grid
-                  container={true}
-                  spacing={2}
-                  onClick={(e: any) => {
-                    e.stopPropagation();
-                    navigate(toDetail, {
-                      state: {
-                        id: item._id,
-                        dateType: item.food_dateType,
-                        dateStart: item.food_dateStart,
-                        dateEnd: item.food_dateEnd,
-                      }
-                    });
-                  }}
-                >
+                <Grid container spacing={1} columns={12} onClick={(e: any) => {
+                  e.stopPropagation();
+                  navigate(toDetail, {
+                    state: {
+                      id: item._id,
+                      dateType: item.food_dateType,
+                      dateStart: item.food_dateStart,
+                      dateEnd: item.food_dateEnd,
+                    }
+                  });
+                }}>
                   <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
@@ -170,7 +166,7 @@ export const FoodList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
@@ -185,7 +181,7 @@ export const FoodList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.food_total_kcal_color}`}>
                           {numeral(item.food_total_kcal).format("0,0")}
@@ -198,7 +194,7 @@ export const FoodList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Hr px={1} />
+                  <Hr px={10} />
                   {/** row 2 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -213,7 +209,7 @@ export const FoodList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.food_total_carb_color}`}>
                           {numeral(item.food_total_carb).format("0,0")}
@@ -226,7 +222,7 @@ export const FoodList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Hr px={1} />
+                  <Hr px={10} />
                   {/** row 3 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -241,7 +237,7 @@ export const FoodList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.food_total_protein_color}`}>
                           {numeral(item.food_total_protein).format("0,0")}
@@ -254,7 +250,7 @@ export const FoodList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Hr px={1} />
+                  <Hr px={10} />
                   {/** row 4 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -269,7 +265,7 @@ export const FoodList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.food_total_fat_color}`}>
                           {numeral(item.food_total_fat).format("0,0")}
@@ -295,7 +291,7 @@ export const FoodList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
-        <Grid container spacing={2} columns={12}>
+        <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {!LOADING ? listSection() : <Loading />}
           </Grid>

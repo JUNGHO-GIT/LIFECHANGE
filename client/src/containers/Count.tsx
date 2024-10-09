@@ -146,7 +146,7 @@ export const Count = (
     );
 
     return (
-      <Grid container spacing={2} columns={12}>
+      <Grid container spacing={1} columns={12}>
         <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
           {lockSection()}
         </Grid>

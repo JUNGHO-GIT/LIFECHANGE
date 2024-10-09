@@ -6,7 +6,7 @@ import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { Category } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportUtils";
 import { sync } from "@imports/ImportUtils";
-import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
+import { Loading, Footer } from "@imports/ImportLayouts";
 import { PopUp, Input } from "@imports/ImportContainers";
 import { Div, Icons } from "@imports/ImportComponents";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
@@ -19,7 +19,7 @@ export const UserCategory = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, TITLE, sessionId } = useCommonValue();
   const { location_dateStart, location_dateEnd, location_dateType } = useCommonValue();
-  const { dayFmt } = useCommonDate();
+  const { getDayFmt } = useCommonDate();
   const { ALERT, setALERT } = useAlertStore();
   const { translate } = useLanguageStore();
 
@@ -28,8 +28,8 @@ export const UserCategory = () => {
   const [DATE, setDATE] = useStorage(
     `${TITLE}_date_(${PATH})`, {
       dateType: location_dateType || "day",
-      dateStart: location_dateStart || dayFmt,
-      dateEnd: location_dateEnd || dayFmt,
+      dateStart: location_dateStart || getDayFmt(),
+      dateEnd: location_dateEnd || getDayFmt(),
     }
   );
 
@@ -535,7 +535,7 @@ export const UserCategory = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min95vh"}>
-        <Grid container spacing={2} columns={12}>
+        <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {detailSection()}
           </Grid>

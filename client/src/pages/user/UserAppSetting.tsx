@@ -4,8 +4,8 @@ import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { Loading } from "@imports/ImportLayouts";
-import { Icons, Img, Div } from "@imports/ImportComponents";
 import { PopUp } from "@imports/ImportContainers";
+import { Icons, Img, Div, Br } from "@imports/ImportComponents";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
 import { TableContainer, Table, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
 
@@ -100,31 +100,12 @@ export const UserAppSetting = () => {
                 {/** language **/}
                 <PopUp
                   type={"innerCenter"}
-                  position={"bottom"}
+                  position={"center"}
                   direction={"center"}
                   contents={
-                    <Div className={"d-column"}>
+                    <Div className={"d-column-center"}>
                       <Div
-                        className={"d-center mb-20"}
-                        onClick={() => {
-                          handleChangeLanguage("ko")
-                        }}
-                      >
-                        <Img
-                          key={"flag1"}
-                          src={"flag1"}
-                          className={"w-24 h-24 me-15"}
-                        />
-                        <Div className={`me-15 ${lang === "ko" ? "fw-700" : ""}`}>
-                          한국어
-                        </Div>
-                        <Icons
-                          name={"Check"}
-                          className={`w-16 h-16 black ${lang === "ko" ? "" : "d-none"}`}
-                        />
-                      </Div>
-                      <Div
-                        className={"d-center"}
+                        className={"d-center m-auto"}
                         onClick={() => {
                           handleChangeLanguage("en")
                         }}
@@ -138,8 +119,30 @@ export const UserAppSetting = () => {
                           English
                         </Div>
                         <Icons
+                          key={"Check"}
                           name={"Check"}
                           className={`w-16 h-16 black ${lang === "en" ? "" : "d-none"}`}
+                        />
+                      </Div>
+                      <Br px={20} />
+                      <Div
+                        className={"d-center m-auto"}
+                        onClick={() => {
+                          handleChangeLanguage("ko")
+                        }}
+                      >
+                        <Img
+                          key={"flag1"}
+                          src={"flag1"}
+                          className={"w-24 h-24 me-15"}
+                        />
+                        <Div className={`me-15 ${lang === "ko" ? "fw-700" : ""}`}>
+                          한국어
+                        </Div>
+                        <Icons
+                          key={"Check"}
+                          name={"Check"}
+                          className={`w-16 h-16 black ${lang === "ko" ? "" : "d-none"}`}
                         />
                       </Div>
                     </Div>
@@ -232,7 +235,7 @@ export const UserAppSetting = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper d-center border-1 radius-1 h-min90vh"}>
-        <Grid container spacing={2} columns={12}>
+        <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {detailSection()}
           </Grid>

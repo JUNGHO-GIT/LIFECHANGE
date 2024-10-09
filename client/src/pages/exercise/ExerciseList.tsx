@@ -16,7 +16,7 @@ export const ExerciseList = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, TITLE, sessionId, toDetail } = useCommonValue();
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
-  const { dayFmt, getDayNotFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
+  const { getDayFmt,getDayNotFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -24,8 +24,8 @@ export const ExerciseList = () => {
   const [DATE, setDATE] = useStorage(
     `${TITLE}_date_(${PATH})`, {
       dateType: location_dateType || "",
-      dateStart: location_dateStart || dayFmt,
-      dateEnd: location_dateEnd || dayFmt,
+      dateStart: location_dateStart || getDayFmt(),
+      dateEnd: location_dateEnd || getDayFmt(),
     }
   );
   const [PAGING, setPAGING] = useStorage(
@@ -139,7 +139,7 @@ export const ExerciseList = () => {
               >
                 <Grid
                   container={true}
-                  spacing={2}
+                  spacing={1}
                   onClick={(e: any) => {
                     e.stopPropagation();
                     navigate(toDetail, {
@@ -170,7 +170,7 @@ export const ExerciseList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
@@ -185,7 +185,7 @@ export const ExerciseList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.exercise_total_volume_color}`}>
                           {numeral(item.exercise_total_volume).format("0,0")}
@@ -201,7 +201,7 @@ export const ExerciseList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 2 **/}
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"exercise4"}
@@ -215,7 +215,7 @@ export const ExerciseList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.exercise_total_cardio_color}`}>
                           {item.exercise_total_cardio}
@@ -231,7 +231,7 @@ export const ExerciseList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 3 **/}
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"exercise5"}
@@ -245,7 +245,7 @@ export const ExerciseList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.exercise_total_weight_color}`}>
                           {item.exercise_total_weight}
@@ -271,7 +271,7 @@ export const ExerciseList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
-        <Grid container spacing={2} columns={12}>
+        <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {!LOADING ? listSection() : <Loading />}
           </Grid>

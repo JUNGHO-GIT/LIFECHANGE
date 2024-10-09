@@ -12,7 +12,7 @@ export const useTime = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { dayFmt } = useCommonDate();
+  const { getDayFmt } = useCommonDate();
   const match = PATH.match(/\/([^/]+)\//);
   const strLow = match ? match[1] : null;
 
@@ -45,8 +45,8 @@ export const useTime = (
       const wakeTimeTime = OBJECT?.sleep_goal_wakeTime;
 
       if (bedTimeTime && wakeTimeTime) {
-        const startDate = new Date(`${dayFmt}T${bedTimeTime}`);
-        const endDate = new Date(`${dayFmt}T${wakeTimeTime}`);
+        const startDate = new Date(`${getDayFmt()}T${bedTimeTime}`);
+        const endDate = new Date(`${getDayFmt()}T${wakeTimeTime}`);
 
         if (endDate < startDate) {
           endDate.setDate(endDate.getDate() + 1);
@@ -70,8 +70,8 @@ export const useTime = (
       const wakeTimeTime = OBJECT?.sleep_section[0]?.sleep_wakeTime;
 
       if (bedTimeTime && wakeTimeTime) {
-        const startDate = new Date(`${dayFmt}T${bedTimeTime}Z`);
-        const endDate = new Date(`${dayFmt}T${wakeTimeTime}Z`);
+        const startDate = new Date(`${getDayFmt()}T${bedTimeTime}Z`);
+        const endDate = new Date(`${getDayFmt()}T${wakeTimeTime}Z`);
 
         if (endDate < startDate) {
           endDate.setDate(endDate.getDate() + 1);

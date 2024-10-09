@@ -101,7 +101,7 @@ export const UserDetail = () => {
     const detailSection = () => {
       const detailFragment = (i: number) => (
         <Card className={"p-10"} key={i}>
-          <Grid container spacing={2} columns={12}>
+          <Grid container spacing={1} columns={12}>
             {/** 아이디 **/}
             <Grid size={12}>
               <Input
@@ -250,7 +250,7 @@ export const UserDetail = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
-        <Grid container spacing={2} columns={12}>
+        <Grid container spacing={1} columns={12}>
           <Grid size={12} className={"d-center"}>
             {imageSection()}
           </Grid>

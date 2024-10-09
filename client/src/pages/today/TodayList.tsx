@@ -16,7 +16,7 @@ export const TodayList = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP } = useCommonValue();
   const { PATH, TITLE, navigate, sessionId, localCurrency } = useCommonValue();
-  const { dayFmt, getDayNotFmt } = useCommonDate();
+  const { getDayFmt, getDayNotFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -24,8 +24,8 @@ export const TodayList = () => {
   const [DATE, setDATE] = useStorage(
     `${TITLE}_date_(${PATH})`, {
       dateType: "day",
-      dateStart: dayFmt,
-      dateEnd: dayFmt,
+      dateStart: getDayFmt(),
+      dateEnd: getDayFmt(),
     }
   );
   const [PAGING, _setPAGING] = useStorage(
@@ -140,7 +140,7 @@ export const TodayList = () => {
       );
       const listFragment = (i: number) => (
         OBJECT_EXERCISE?.map((item: any, index: number) => (
-          <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
+          <Card className={"border-1 radius-2"} key={`${index}-${i}`}>
             <Accordion
               className={"shadow-0"}
               expanded={isExpanded.exercise.includes(index)}
@@ -165,7 +165,7 @@ export const TodayList = () => {
               >
                 <Grid
                   container={true}
-                  spacing={2}
+                  spacing={1}
                   onClick={(e: any) => {
                     e.stopPropagation();
                     navigate(SEND.toExercise, {
@@ -196,7 +196,7 @@ export const TodayList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
@@ -211,7 +211,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.exercise_total_volume_color}`}>
                           {numeral(item.exercise_total_volume).format("0,0")}
@@ -227,7 +227,7 @@ export const TodayList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 2 **/}
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"exercise4"}
@@ -241,7 +241,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.exercise_total_cardio_color}`}>
                           {item.exercise_total_cardio}
@@ -257,7 +257,7 @@ export const TodayList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 3 **/}
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"exercise5"}
@@ -271,7 +271,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.exercise_total_weight_color}`}>
                           {item.exercise_total_weight}
@@ -304,7 +304,7 @@ export const TodayList = () => {
       );
       const listFragment = (i: number) => (
         OBJECT_FOOD?.map((item: any, index: number) => (
-          <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
+          <Card className={"border-1 radius-2"} key={`${index}-${i}`}>
             <Accordion
               className={"shadow-0"}
               expanded={isExpanded.food.includes(index)}
@@ -329,7 +329,7 @@ export const TodayList = () => {
               >
                 <Grid
                   container={true}
-                  spacing={2}
+                  spacing={1}
                   onClick={(e: any) => {
                     e.stopPropagation();
                     navigate(SEND.toFood, {
@@ -360,7 +360,7 @@ export const TodayList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
@@ -375,7 +375,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.food_total_kcal_color}`}>
                           {numeral(item.food_total_kcal).format("0,0")}
@@ -388,7 +388,7 @@ export const TodayList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Hr px={1} />
+                  <Hr px={10} />
                   {/** row 2 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -403,7 +403,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.food_total_carb_color}`}>
                           {numeral(item.food_total_carb).format("0,0")}
@@ -416,7 +416,7 @@ export const TodayList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Hr px={1} />
+                  <Hr px={10} />
                   {/** row 3 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -431,7 +431,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.food_total_protein_color}`}>
                           {numeral(item.food_total_protein).format("0,0")}
@@ -444,7 +444,7 @@ export const TodayList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Hr px={1} />
+                  <Hr px={10} />
                   {/** row 4 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -459,7 +459,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.food_total_fat_color}`}>
                           {numeral(item.food_total_fat).format("0,0")}
@@ -492,7 +492,7 @@ export const TodayList = () => {
       );
       const listFragment = (i: number) => (
         OBJECT_MONEY?.map((item: any, index: number) => (
-          <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
+          <Card className={"border-1 radius-2"} key={`${index}-${i}`}>
             <Accordion
               className={"shadow-0"}
               expanded={isExpanded.money.includes(index)}
@@ -517,7 +517,7 @@ export const TodayList = () => {
               >
                 <Grid
                   container={true}
-                  spacing={2}
+                  spacing={1}
                   onClick={(e: any) => {
                     e.stopPropagation();
                     navigate(SEND.toMoney, {
@@ -548,7 +548,7 @@ export const TodayList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
                   {/** row 1 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -563,7 +563,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.money_total_income_color}`}>
                           {numeral(item.money_total_income).format("0,0")}
@@ -576,7 +576,7 @@ export const TodayList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Hr px={1} />
+                  <Hr px={10} />
                   {/** row 2 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -591,7 +591,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.money_total_expense_color}`}>
                           {numeral(item.money_total_expense).format("0,0")}
@@ -624,7 +624,7 @@ export const TodayList = () => {
       );
       const listFragment = (i: number) => (
         OBJECT_SLEEP?.map((item: any, index: number) => (
-          <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
+          <Card className={"border-1 radius-2"} key={`${index}-${i}`}>
             <Accordion
               className={"shadow-0"}
               expanded={isExpanded.sleep.includes(index)}
@@ -649,7 +649,7 @@ export const TodayList = () => {
               >
                 <Grid
                   container={true}
-                  spacing={2}
+                  spacing={1}
                   onClick={(e: any) => {
                     e.stopPropagation();
                     navigate(SEND.toSleep, {
@@ -680,7 +680,7 @@ export const TodayList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
@@ -695,7 +695,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.sleep_section[0]?.sleep_bedTime_color}`}>
                           {item.sleep_section[0]?.sleep_bedTime}
@@ -708,7 +708,7 @@ export const TodayList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Hr px={1} />
+                  <Hr px={10} />
                   {/** row 2 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -723,7 +723,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7} className={"d-row-right"}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.sleep_section[0]?.sleep_wakeTime_color}`}>
                           {item.sleep_section[0]?.sleep_wakeTime}
@@ -736,7 +736,7 @@ export const TodayList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Hr px={1} />
+                  <Hr px={10} />
                   {/** row 3 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -751,7 +751,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7} className={"d-row-right"}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.sleep_section[0]?.sleep_sleepTime_color}`}>
                           {item.sleep_section[0]?.sleep_sleepTime}
@@ -778,7 +778,7 @@ export const TodayList = () => {
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
         {!LOADING ? (
-          <Grid container spacing={2} columns={12}>
+          <Grid container spacing={1} columns={12}>
             <Grid size={12}>
               {exerciseSection()}
             </Grid>
@@ -793,7 +793,7 @@ export const TodayList = () => {
             </Grid>
           </Grid>
         ) : (
-          <Grid container spacing={2} columns={12}>
+          <Grid container spacing={1} columns={12}>
             <Grid size={12}>
               <Loading />
             </Grid>

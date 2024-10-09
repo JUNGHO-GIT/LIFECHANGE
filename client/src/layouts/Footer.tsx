@@ -35,11 +35,11 @@ export const Footer = (
     }
     else if (PATH.includes("/user/category") || PATH.includes("/user/detail")) {
       setTypeName("btn");
-      setStyleClass("layout-wrapper p-sticky bottom-0 h-8vh border-1 radius-1");
+      setStyleClass("layout-wrapper p-sticky bottom-0vh h-8vh border-1 radius-1");
     }
     else if (PATH.includes("/user/dummy")) {
       setTypeName("dummy");
-      setStyleClass("layout-wrapper p-sticky bottom-0 h-8vh border-1 radius-1");
+      setStyleClass("layout-wrapper p-sticky bottom-0vh h-8vh border-1 radius-1");
     }
     else if (PATH.includes("/food/find/list") || PATH.includes("/favorite/list")) {
       setTypeName("findFilter");
@@ -81,7 +81,6 @@ export const Footer = (
       <ListFilter
         state={state}
         setState={setState}
-        flow={flow}
       />
     );
     // 4. findFilter
@@ -95,7 +94,7 @@ export const Footer = (
     // 5. return
     return (
       <Paper className={styleClass}>
-        <Grid container spacing={2} columns={12}>
+        <Grid container spacing={1} columns={12}>
           <Grid size={12} className={"d-center fadeIn"}>
             {typeName === "btn" && btnSection()}
             {typeName === "dummy" && dummySection()}

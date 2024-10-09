@@ -208,7 +208,7 @@ export const UserSignup = () => {
       const detailFragment = (i: number) => (
         <Card className={"p-10"} key={i}>
           {/** section 1 **/}
-          <Grid container spacing={2} columns={12}>
+          <Grid container spacing={1} columns={12}>
             {/** 이메일 **/}
             <Grid size={10}>
               <Input
@@ -440,7 +440,7 @@ export const UserSignup = () => {
       <>
       {LOADING && <Loading />}
       <Paper className={"content-wrapper d-center border-1 radius-1 h-min94vh"}>
-        <Grid container spacing={2} columns={12}>
+        <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {titleSection()}
           </Grid>

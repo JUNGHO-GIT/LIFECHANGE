@@ -9,6 +9,7 @@ export const Select = (props: any) => (
     select={true}
     type={props?.type || "text"}
     variant={props?.variant || "outlined"}
+    className={props?.className || ""}
     size={props?.size || "small"}
     fullWidth={props?.fullWidth || true}
     inputRef={props?.inputRef || null}
@@ -20,6 +21,7 @@ export const Select = (props: any) => (
         e.stopPropagation();
         const target = e.currentTarget;
         target.classList.add('shake');
+        target.classList.add("Mui-error");
         setTimeout(() => {
           target.classList.remove('shake');
         }, 700);
@@ -35,11 +37,6 @@ export const Select = (props: any) => (
         display: props?.readOnly && "none"
       },
     }}
-    className={(
-      props?.variant === "standard"
-      ? `${props?.className} border-bottom-1`
-      : props?.className || ""
-    )}
     slotProps={{
       ...props?.slotProps,
       input: {

@@ -14,7 +14,7 @@ export const TopNav = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { PATH, TITLE, firstStr, secondStr, localCurrency } = useCommonValue();
   const { navigate, sessionPercent, sessionProperty, sessionScale } = useCommonValue();
-  const { dayFmt, monthStartFmt, monthEndFmt } = useCommonDate();
+  const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -227,8 +227,8 @@ export const TopNav = () => {
     navigate(url, {
       state: {
         dateType: "",
-        dateStart: dayFmt,
-        dateEnd: dayFmt,
+        dateStart: getDayFmt(),
+        dateEnd: getDayFmt(),
       }
     });
   };
@@ -243,14 +243,14 @@ export const TopNav = () => {
         direction={"center"}
         contents={
           <Card className={"w-max60vw h-max70vh border-1 radius-1 p-20"} key={`smile`}>
-            <Grid container spacing={2} columns={12}>
+            <Grid container spacing={1} columns={12}>
               <Grid size={12} className={"d-column-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {translate("monthScore")}
                 </Div>
                 <Br px={10} />
-                <Div className={"fs-0-9rem fw-500 dark"}>
-                  {`(${monthStartFmt} ~ ${monthEndFmt})`}
+                <Div className={"fs-0-8rem fw-500 dark"}>
+                  {`(${getMonthStartFmt()} ~ ${getMonthEndFmt()})`}
                 </Div>
               </Grid>
               <Hr px={10} />
@@ -373,13 +373,13 @@ export const TopNav = () => {
         direction={"center"}
         contents={
           <Card className={"w-max60vw h-max70vh border-1 radius-1 p-20"} key={`property`}>
-            <Grid container spacing={2} columns={12}>
+            <Grid container spacing={1} columns={12}>
               <Grid size={12} className={"d-column-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
                   {translate("property")}
                 </Div>
                 <Br px={10} />
-                <Div className={"fs-0-9rem fw-500 dark"}>
+                <Div className={"fs-0-8rem fw-500 dark"}>
                   {`(${property?.dateStart} ~ ${property?.dateEnd})`}
                 </Div>
                 <Br px={10} />
@@ -402,12 +402,15 @@ export const TopNav = () => {
                   src={"money2"}
                 	className={"w-16 h-16"}
                 />
-                <Div className={"fs-1-4rem fw-600 ms-2vw"}>
+                <Div className={"fs-1-4rem fw-600 ms-2vw me-2vw"}>
                   {includingExclusions ? (
                     numeral(property.curPropertyAll).format("0,0")
                   ) : (
                     numeral(property.curProperty).format("0,0")
                   )}
+                </Div>
+                <Div className={"fs-0-6rem fw-500 dark"}>
+                  {localCurrency}
                 </Div>
               </Grid>
               <Hr px={10} />
@@ -501,13 +504,13 @@ export const TopNav = () => {
         direction={"center"}
         contents={
           <Card className={"w-max60vw h-max70vh border-1 radius-1 p-20"} key={`scale`}>
-            <Grid container spacing={2} columns={12}>
+            <Grid container spacing={1} columns={12}>
               <Grid size={12} className={"d-column-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
                   {translate("weight")}
                 </Div>
                 <Br px={10} />
-                <Div className={"fs-0-9rem fw-500 dark"}>
+                <Div className={"fs-0-8rem fw-500 dark"}>
                   {`(${scale?.dateStart} ~ ${scale?.dateEnd})`}
                 </Div>
               </Grid>
@@ -518,8 +521,11 @@ export const TopNav = () => {
                   src={"exercise5"}
                 	className={"w-16 h-16"}
                 />
-                <Div className={"fs-1-4rem fw-600 ms-2vw"}>
+                <Div className={"fs-1-4rem fw-600 ms-2vw me-2vw"}>
                   {scale.curScale}
+                </Div>
+                <Div className={"fs-0-6rem fw-500 dark"}>
+                  {translate("k")}
                 </Div>
               </Grid>
               <Hr px={10} />
@@ -641,7 +647,7 @@ export const TopNav = () => {
     // 5. return
     return (
       <Paper className={"layout-wrapper p-sticky top-8vh h-8vh border-1 radius-1"}>
-        <Grid container spacing={2} columns={25}>
+        <Grid container spacing={1} columns={25}>
           <Grid size={3}>
             {smileSection()}
           </Grid>

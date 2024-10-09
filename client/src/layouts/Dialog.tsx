@@ -22,7 +22,7 @@ export const Dialog = (
 
   // 1. common -------------------------------------------------------------------------------------
   const { PATH, navigate, toDetail, localIsoCode } = useCommonValue();
-  const { dayFmt } = useCommonDate();
+  const { getDayFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
   // 2-1. useState ---------------------------------------------------------------------------------
@@ -144,8 +144,8 @@ export const Dialog = (
               navigate(toDetail, {
                 state: {
                   dateType: isGoalList ? "" : "day",
-                  dateStart: dayFmt,
-                  dateEnd: dayFmt,
+                  dateStart: getDayFmt(),
+                  dateEnd: getDayFmt(),
                 },
               });
             }}
@@ -249,8 +249,8 @@ export const Dialog = (
               navigate(toDetail, {
                 state: {
                   dateType: isGoalList ? "" : "day",
-                  dateStart: dayFmt,
-                  dateEnd: dayFmt,
+                  dateStart: getDayFmt(),
+                  dateEnd: getDayFmt(),
                 },
               });
             }}

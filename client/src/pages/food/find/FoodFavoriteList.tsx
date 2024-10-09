@@ -16,7 +16,7 @@ export const FoodFavoriteList = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, TITLE, sessionId } = useCommonValue();
   const { location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
-  const { dayFmt } = useCommonDate();
+  const { getDayFmt } = useCommonDate();
   const { translate } = useLanguageStore();
   const { ALERT, setALERT } = useAlertStore();
 
@@ -47,8 +47,8 @@ export const FoodFavoriteList = () => {
   });
   const [DATE, setDATE] = useState<any>({
     dateType: location_dateType || "day",
-    dateStart: location_dateStart || dayFmt,
-    dateEnd: location_dateEnd || dayFmt,
+    dateStart: location_dateStart || getDayFmt(),
+    dateEnd: location_dateEnd || getDayFmt(),
   });
 
   // 2-3. useEffect --------------------------------------------------------------------------------
@@ -216,7 +216,7 @@ export const FoodFavoriteList = () => {
               >
                 <Grid
                   container={true}
-                  spacing={2}
+                  spacing={1}
                   onClick={() => {
                     handlerCheckboxChange(index);
                   }}
@@ -265,7 +265,7 @@ export const FoodFavoriteList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
@@ -280,7 +280,7 @@ export const FoodFavoriteList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.food_kcal_color}`}>
                           {numeral(item.food_kcal).format("0,0")}
@@ -293,7 +293,7 @@ export const FoodFavoriteList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Hr px={1} />
+                  <Hr px={10} />
                   {/** row 2 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -308,7 +308,7 @@ export const FoodFavoriteList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.food_carb_color}`}>
                           {item.food_carb}
@@ -321,7 +321,7 @@ export const FoodFavoriteList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Hr px={1} />
+                  <Hr px={10} />
                   {/** row 3 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -336,7 +336,7 @@ export const FoodFavoriteList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.food_protein_color}`}>
                           {item.food_protein}
@@ -349,7 +349,7 @@ export const FoodFavoriteList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Hr px={1} />
+                  <Hr px={10} />
                   {/** row 3 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -364,7 +364,7 @@ export const FoodFavoriteList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.food_fat_color}`}>
                           {item.food_fat}
@@ -390,7 +390,7 @@ export const FoodFavoriteList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
-        <Grid container spacing={2} columns={12}>
+        <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {!LOADING ? listSection() : <Loading />}
           </Grid>

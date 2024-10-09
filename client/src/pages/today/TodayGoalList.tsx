@@ -16,7 +16,7 @@ export const TodayGoalList = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP } = useCommonValue();
   const { PATH, TITLE, navigate, sessionId, localCurrency } = useCommonValue();
-  const { dayFmt, getDayNotFmt } = useCommonDate();
+  const { getDayFmt, getDayNotFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -24,8 +24,8 @@ export const TodayGoalList = () => {
   const [DATE, setDATE] = useStorage(
     `${TITLE}_date_(${PATH})`, {
       dateType: "",
-      dateStart: dayFmt,
-      dateEnd: dayFmt,
+      dateStart: getDayFmt(),
+      dateEnd: getDayFmt(),
     }
   );
   const [PAGING, _setPAGING] = useStorage(
@@ -165,7 +165,7 @@ export const TodayGoalList = () => {
               >
                 <Grid
                   container={true}
-                  spacing={2}
+                  spacing={1}
                   onClick={(e: any) => {
                     e.stopPropagation();
                     navigate(SEND.toExerciseGoal, {
@@ -205,7 +205,7 @@ export const TodayGoalList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
@@ -220,7 +220,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -271,7 +271,7 @@ export const TodayGoalList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Hr px={1} />
+                  <Hr px={10} />
                   {/** row 2 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
@@ -286,7 +286,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -340,7 +340,7 @@ export const TodayGoalList = () => {
                 </Grid>
                 <Hr px={20} />
                 {/** row 3 **/}
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"exercise4"}
@@ -354,7 +354,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -408,7 +408,7 @@ export const TodayGoalList = () => {
                 </Grid>
                 <Hr px={20} />
                 {/** row 4 **/}
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
                   <Grid size={2} className={"d-center"}>
                     <Img
                     	key={"exercise5"}
@@ -422,7 +422,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -518,7 +518,7 @@ export const TodayGoalList = () => {
               >
                 <Grid
                   container={true}
-                  spacing={2}
+                  spacing={1}
                   onClick={(e: any) => {
                     e.stopPropagation();
                     navigate(SEND.toFoodGoal, {
@@ -558,7 +558,7 @@ export const TodayGoalList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
@@ -573,7 +573,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -624,7 +624,7 @@ export const TodayGoalList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Hr px={1} />
+                  <Hr px={10} />
                   {/** row 2 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
@@ -639,7 +639,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -690,7 +690,7 @@ export const TodayGoalList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Hr px={1} />
+                  <Hr px={10} />
                   {/** row 3 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -705,7 +705,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -756,7 +756,7 @@ export const TodayGoalList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Hr px={1} />
+                  <Hr px={10} />
                   {/** row 4 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -771,7 +771,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -867,7 +867,7 @@ export const TodayGoalList = () => {
               >
                 <Grid
                   container={true}
-                  spacing={2}
+                  spacing={1}
                   onClick={(e: any) => {
                     e.stopPropagation();
                     navigate(SEND.toMoneyGoal, {
@@ -907,7 +907,7 @@ export const TodayGoalList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
@@ -922,7 +922,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -973,7 +973,7 @@ export const TodayGoalList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Hr px={1} />
+                  <Hr px={10} />
                   {/** row 2 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
@@ -988,7 +988,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -1084,7 +1084,7 @@ export const TodayGoalList = () => {
               >
                 <Grid
                   container={true}
-                  spacing={2}
+                  spacing={1}
                   onClick={(e: any) => {
                     e.stopPropagation();
                     navigate(SEND.toSleepGoal, {
@@ -1124,7 +1124,7 @@ export const TodayGoalList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
@@ -1139,7 +1139,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -1190,7 +1190,7 @@ export const TodayGoalList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Hr px={1} />
+                  <Hr px={10} />
                   {/** row 2 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -1205,7 +1205,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -1256,7 +1256,7 @@ export const TodayGoalList = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Hr px={1} />
+                  <Hr px={10} />
                   {/** row 3 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -1271,7 +1271,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -1336,7 +1336,7 @@ export const TodayGoalList = () => {
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
         {!LOADING ? (
-          <Grid container spacing={2} columns={12}>
+          <Grid container spacing={1} columns={12}>
             <Grid size={12}>
               {exerciseSection()}
             </Grid>
@@ -1351,7 +1351,7 @@ export const TodayGoalList = () => {
             </Grid>
           </Grid>
         ) : (
-          <Grid container spacing={2} columns={12}>
+          <Grid container spacing={1} columns={12}>
             <Grid size={12}>
               <Loading />
             </Grid>

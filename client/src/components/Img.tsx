@@ -36,27 +36,23 @@ export const Img = ( { group, src, hover, shadow, radius, max, ...props }: ImgPr
   }
 
   if (!props?.className) {
-    imageClass = `h-auto object-cover`;
+    imageClass = `h-auto object-contain`;
   }
   else {
-    imageClass = `${props?.className} h-auto object-cover`;
+    imageClass = `${props?.className} h-auto object-contain`;
   }
 
   if (hover) {
     imageClass += " hover";
   }
   if (shadow) {
-    imageClass += " shadow-4";
+    imageClass += " shadow-3";
   }
   if (radius) {
-    imageClass += " radius-1";
+    imageClass += " radius-2";
   }
-
   if (max) {
-    imageStyle = {
-      maxWidth: `${max}px`,
-      maxHeight: `${max}px`,
-    };
+    imageClass += ` w-max${max || ""} h-max${max || ""}`
   }
 
   // 2-1. useState ---------------------------------------------------------------------------------

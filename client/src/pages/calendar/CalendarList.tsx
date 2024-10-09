@@ -14,7 +14,6 @@ export const CalendarList = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, TITLE } = useCommonValue();
   const { sessionId, navigate, toDetail, localLocale } = useCommonValue();
-  const { monthStartFmt, monthEndFmt } = useCommonDate();
   const { getMoment, getDayFmt, getDayStartFmt, getDayEndFmt, getDayNotFmt } = useCommonDate();
   const { getPrevMonthStartFmt, getPrevMonthEndFmt } = useCommonDate();
   const { getNextMonthStartFmt, getNextMonthEndFmt } = useCommonDate();
@@ -25,8 +24,8 @@ export const CalendarList = () => {
   const [DATE, setDATE] = useStorage(
     `${TITLE}_date_(${PATH})`, {
       dateType: "",
-      dateStart: monthStartFmt,
-      dateEnd: monthEndFmt,
+      dateStart: getMonthStartFmt(),
+      dateEnd: getMonthEndFmt(),
     }
   );
   const [PAGING, _setPAGING] = useStorage(
@@ -139,7 +138,7 @@ export const CalendarList = () => {
     // 7-4. title
     const titleSection = (i: number) => (
       <Card className={"p-0 mb-20"} key={`${i}-title`}>
-        <Grid container spacing={2} columns={12}>
+        <Grid container spacing={1} columns={12}>
           <Grid size={3} className={"d-row-left"}>
             <Icons
               key={"ArrowLeft"}
@@ -160,8 +159,8 @@ export const CalendarList = () => {
               onClick={() => {
                 setDATE((prev: any) => ({
                   ...prev,
-                  dateStart: monthStartFmt,
-                  dateEnd: monthEndFmt,
+                  dateStart: getMonthStartFmt(DATE.dateStart),
+                  dateEnd: getMonthEndFmt(DATE.dateStart),
                 }));
               }}
             >
@@ -188,7 +187,7 @@ export const CalendarList = () => {
     // 7-5. calendar
     const calendarSection = (i: number) => (
       <Card className={"p-0"} key={`${i}-calendar`}>
-        <Grid container spacing={2} columns={12}>
+        <Grid container spacing={1} columns={12}>
           <Grid size={12} className={"d-row-center"}>
             <CalendarReact
               key={`${i}-calendar`}
@@ -299,7 +298,7 @@ export const CalendarList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
-        <Grid container spacing={2} columns={12}>
+        <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {titleSection(0)}
             {!LOADING ? calendarSection(0) : <Loading />}

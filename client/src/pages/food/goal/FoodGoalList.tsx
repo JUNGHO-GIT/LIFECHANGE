@@ -16,7 +16,7 @@ export const FoodGoalList = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, TITLE, PATH, sessionId, toDetail } = useCommonValue();
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
-  const { dayFmt, getDayNotFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
+  const { getDayFmt,getDayNotFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
@@ -24,8 +24,8 @@ export const FoodGoalList = () => {
   const [DATE, setDATE] = useStorage(
     `${TITLE}_date_(${PATH})`, {
       dateType: location_dateType || "",
-      dateStart: location_dateStart || dayFmt,
-      dateEnd: location_dateEnd || dayFmt,
+      dateStart: location_dateStart || getDayFmt(),
+      dateEnd: location_dateEnd || getDayFmt(),
     }
   );
   const [PAGING, setPAGING] = useStorage(
@@ -139,7 +139,7 @@ export const FoodGoalList = () => {
               >
                 <Grid
                   container={true}
-                  spacing={2}
+                  spacing={1}
                   onClick={(e: any) => {
                     e.stopPropagation();
                     navigate(toDetail, {
@@ -179,7 +179,7 @@ export const FoodGoalList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
@@ -194,7 +194,7 @@ export const FoodGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -206,7 +206,7 @@ export const FoodGoalList = () => {
                           {numeral(item.food_goal_kcal).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("kc")}
                         </Div>
@@ -222,7 +222,7 @@ export const FoodGoalList = () => {
                           {numeral(item.food_total_kcal).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("kc")}
                         </Div>
@@ -238,14 +238,14 @@ export const FoodGoalList = () => {
                           {numeral(item.food_diff_kcal).format("+0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("kc")}
                         </Div>
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Hr px={1} />
+                  <Hr px={10} />
                   {/** row 2 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
@@ -260,7 +260,7 @@ export const FoodGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -272,7 +272,7 @@ export const FoodGoalList = () => {
                           {numeral(item.food_goal_carb).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
@@ -288,7 +288,7 @@ export const FoodGoalList = () => {
                           {numeral(item.food_total_carb).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
@@ -304,14 +304,14 @@ export const FoodGoalList = () => {
                           {numeral(item.food_diff_carb).format("+0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Hr px={1} />
+                  <Hr px={10} />
                   {/** row 3 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -326,7 +326,7 @@ export const FoodGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -338,7 +338,7 @@ export const FoodGoalList = () => {
                           {numeral(item.food_goal_protein).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
@@ -354,7 +354,7 @@ export const FoodGoalList = () => {
                           {numeral(item.food_total_protein).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
@@ -370,14 +370,14 @@ export const FoodGoalList = () => {
                           {numeral(item.food_diff_protein).format("+0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Hr px={1} />
+                  <Hr px={10} />
                   {/** row 4 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -392,7 +392,7 @@ export const FoodGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -404,7 +404,7 @@ export const FoodGoalList = () => {
                           {numeral(item.food_goal_fat).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
@@ -420,7 +420,7 @@ export const FoodGoalList = () => {
                           {numeral(item.food_total_fat).format("0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
@@ -436,7 +436,7 @@ export const FoodGoalList = () => {
                           {numeral(item.food_diff_fat).format("+0,0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right lh-2-4"}>
+                      <Grid size={2} className={"d-row-right"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("g")}
                         </Div>
@@ -456,7 +456,7 @@ export const FoodGoalList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 h-min75vh"}>
-        <Grid container spacing={2} columns={12}>
+        <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {!LOADING ? listSection() : <Loading />}
           </Grid>

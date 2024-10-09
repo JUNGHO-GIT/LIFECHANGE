@@ -11,7 +11,7 @@ export const BottomNav = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { TITLE, navigate, firstStr } = useCommonValue();
-  const { dayFmt } = useCommonDate();
+  const { getDayFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -85,8 +85,8 @@ export const BottomNav = () => {
     navigate(url, {
       state: {
         dateType: "",
-        dateStart: dayFmt,
-        dateEnd: dayFmt,
+        dateStart: getDayFmt(),
+        dateEnd: getDayFmt(),
       }
     });
   };
@@ -190,8 +190,8 @@ export const BottomNav = () => {
 
     // 2. return
     return (
-      <Paper className={"layout-wrapper p-sticky bottom-0 h-8vh border-1 radius-1"}>
-        <Grid container spacing={2} columns={12}>
+      <Paper className={"layout-wrapper p-sticky bottom-0vh h-8vh border-1 radius-1"}>
+        <Grid container spacing={1} columns={12}>
           <Grid size={12} className={"d-center"}>
             {tabsSection()}
           </Grid>

@@ -6,13 +6,13 @@
   min-width: 0px !important;
 }
 .MuiTab-root.Mui-selected {
-  color: #1976d2 !important;
+  color: #c30104 !important;
   font-weight: bold !important;
   text-decoration: none !important;
   scale: 1.2 !important;
 }
 .MuiTabs-indicator {
-  background-color: #1976d2 !important;
+  background-color: #c30104 !important;
 }
 .MuiTabs-scroller {
   margin: 0px 0px 5px 0px !important;
@@ -63,10 +63,10 @@
   border-bottom: 2px solid #dbdbdb !important;
 }
 [class*="MuiInput-root"][class*="Mui-focused"]::after {
-  border-bottom: 2px solid #1976d2 !important;
+  border-bottom: 2px solid #000000 !important;
 }
 [class*="MuiInput-root"][class*="Mui-error"]::after {
-  border-bottom: 2px solid #f44336 !important;
+  border-bottom: 2px solid #c30104 !important;
 }
 
 .MuiInputLabel-root {
@@ -77,10 +77,10 @@
   margin-right: 0px !important;
 }
 [class*="MuiFormLabel-root"][class*="Mui-focused"] {
-  color: #1976d2 !important;
+  color: #000000 !important;
 }
 [class*="MuiFormLabel-root"][class*="Mui-error"] {
-  color: #f44336 !important;
+  color: #c30104 !important;
 }
 
 [class*="MuiInputBase-input-MuiInput-input"][class*="Mui-disabled"] {
@@ -91,11 +91,11 @@
 }
 
 .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-  border-color: #1976d2 !important;
+  border-color: #000000 !important;
   border-width: 2px !important;
 }
 .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
-  border-color: #f44336 !important;
+  border-color: #c30104 !important;
   border-width: 2px !important;
 }
 
@@ -124,7 +124,7 @@
   min-width: 14vw !important;
 }
 .MuiBottomNavigationAction-root.Mui-selected {
-  color: #1976d2 !important;
+  color: #c30104 !important;
   font-weight: bold !important;
   text-decoration: none !important;
   scale: 1.2 !important;
@@ -163,8 +163,8 @@
   margin-right: 0px !important;
 }
 .MuiStepIcon-root.Mui-completed {
-  color: #1976d2 !important;
+  color: #c30104 !important;
 }
 .MuiStepIcon-root.Mui-active {
-  color: #1976d2 !important;
+  color: #c30104 !important;
 }
