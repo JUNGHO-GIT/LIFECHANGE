@@ -187,7 +187,7 @@ export const UserDelete = () => {
     // 7-2. delete
     const deleteSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={"p-10"} key={i}>
+        <Card className={"p-10"} key={`detail-${i}`}>
           {/** section 1 **/}
           <Grid container spacing={1} columns={12}>
             {/** 이메일 **/}

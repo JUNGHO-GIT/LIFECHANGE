@@ -62,7 +62,7 @@ export const UserAppInfo = () => {
     // 7-2. card
     const detailSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={"border-1 radius-1 shadow-0 p-0"} key={i}>
+        <Card className={"border-1 radius-1 shadow-0 p-0"} key={`detail-${i}`}>
           <TableContainer className={"over-hidden"}>
             <Table>
               <TableBody className={"table-tbody"}>

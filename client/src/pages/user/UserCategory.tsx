@@ -60,17 +60,18 @@ export const UserCategory = () => {
     })
     .then((res: any) => {
       setOBJECT(res.data.result || Category);
-      Object.keys(res.data.result).map((dataType: string) => (
+      Object.keys(res.data.result).forEach((dataType: string) => {
         REFS.current = {
           ...REFS.current,
-          [dataType]: Array.from({ length: res.data.result[dataType].length }, (_, _idx) => (
-            Object.keys(res.data.result[dataType][_idx]).reduce((acc: any, cur: string) => ({
-              ...acc,
-              [cur]: createRef()
-            }), {})
-          ))
-        }
-      ));
+          [dataType]: res.data.result[dataType].map((item: any) => {
+            const partRefs = {
+              [`${dataType}_part`]: createRef(),
+              [`${dataType}_title`]: item[`${dataType}_title`]?.map(() => createRef()) || []
+            };
+            return partRefs;
+          })
+        };
+      });
     })
     .catch((err: any) => {
       console.error(err);
@@ -121,7 +122,8 @@ export const UserCategory = () => {
           [dataType]: [
             ...prev[dataType],
             {
-              [`${dataType}_part`]: ""
+              [`${dataType}_part`]: "",
+              [`${dataType}_title`]: []
             }
           ]
         };
@@ -129,7 +131,8 @@ export const UserCategory = () => {
           ...REFS.current,
           [dataType]: updatedObject[dataType].map((_: any, idx: number) =>
             REFS.current[dataType]?.[idx] || {
-              [`${dataType}_part`]: createRef()
+              [`${dataType}_part`]: createRef(),
+              [`${dataType}_title`]: []
             }
           )
         };
@@ -140,27 +143,33 @@ export const UserCategory = () => {
       setOBJECT((prev: any) => {
         const updatedObject = {
           ...prev,
-          [dataType]: [
-            ...prev[dataType]?.slice(0, selectedIdx.category2Idx),
-            {
-              ...prev[dataType]?.[selectedIdx.category2Idx],
-              [`${dataType}_title`]: [
-                ...prev[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`],
-                ""
-              ]
-            },
-            ...prev[dataType]?.slice(selectedIdx.category2Idx + 1)
-          ]
+          [dataType]: prev[dataType].map((part: any, idx: number) => {
+            if (idx === selectedIdx.category2Idx) {
+              return {
+                ...part,
+                [`${dataType}_title`]: [
+                  ...part[`${dataType}_title`], ""
+                ]
+              };
+            }
+            return part;
+          })
         };
         REFS.current = {
           ...REFS.current,
-          [dataType]: updatedObject[dataType].map((part: any, idx: number) => ({
-            ...REFS.current[dataType]?.[idx],
-            [`${dataType}_title`]: part[`${dataType}_title`].map((_: any, titleIdx: number) =>
-              REFS.current[dataType]?.[idx]?.[`${dataType}_title`]?.[titleIdx] || {}
-            )
-          }))
+          [dataType]: updatedObject[dataType].map((part: any, idx: number) => {
+            if (idx === selectedIdx.category2Idx) {
+              return {
+                ...REFS.current[dataType]?.[idx],
+                [`${dataType}_title`]: part[`${dataType}_title`].map((_: any, titleIdx: number) =>
+                  REFS.current[dataType]?.[idx]?.[`${dataType}_title`]?.[titleIdx] || createRef()
+                )
+              };
+            }
+            return REFS.current[dataType]?.[idx] || {};
+          })
         };
+
         return updatedObject;
       });
     }
@@ -169,9 +178,17 @@ export const UserCategory = () => {
   // 4-2. handler ----------------------------------------------------------------------------------
   const handlerRename = (type: string, index: number) => {
     setIsEditable(`${dataType}_${type}_${index}`);
-    setTimeout(() => {
-      REFS?.current?.[dataType]?.[index]?.[`${dataType}_${type}`]?.current?.focus();
-    }, 10);
+
+    if (type === "part") {
+      setTimeout(() => {
+        REFS?.current?.[dataType]?.[index]?.[`${dataType}_part`]?.current?.focus();
+      }, 10);
+    }
+    else if (type === "title") {
+      setTimeout(() => {
+        REFS?.current?.[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`]?.[index]?.current?.focus();
+      }, 10);
+    }
   };
 
   // 4-3. handler ----------------------------------------------------------------------------------
@@ -254,7 +271,7 @@ export const UserCategory = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT[dataType]?.map((item: any, index: number) => (index > 0) && (
-                <TableRow key={index} className={"table-tbody-tr border-bottom-1"}>
+                <TableRow className={"table-tbody-tr border-bottom-1"} key={index}>
                   <TableCell className={selectedIdx.category2Idx === index ? "bg-light" : ""}>
                     <Div className={"d-center"}>
                       <Div className={"fs-0-9rem ms-auto"}>
@@ -265,6 +282,9 @@ export const UserCategory = () => {
                           inputclass={"fs-0-9rem"}
                           inputRef={REFS?.current?.[dataType]?.[index]?.[`${dataType}_part`]}
                           sx={{
+                            "& .MuiInput-root::before": {
+                              borderBottom: "none"
+                            },
                             "& .MuiInput-root::after": {
                               borderBottom: isEditable === `${dataType}_part_${index}` ? (
                                 "2px solid #1976d2"
@@ -379,6 +399,9 @@ export const UserCategory = () => {
                             inputclass={"fs-0-9rem"}
                             inputRef={REFS?.current?.[dataType]?.[selectedIdx?.category2Idx]?.[`${dataType}_title`]?.[index]}
                             sx={{
+                              "& .MuiInput-root::before": {
+                                borderBottom: "none"
+                              },
                               "& .MuiInput-root::after": {
                                 borderBottom: isEditable === `${dataType}_title_${index}` ? (
                                   "2px solid #1976d2"
@@ -455,7 +478,7 @@ export const UserCategory = () => {
                         name={"Plus"}
                         className={"w-12 h-12"}
                         onClick={() => {
-                          handlerAdd("part");
+                          handlerAdd("title");
                         }}
                       />
                     </Div>
@@ -467,7 +490,6 @@ export const UserCategory = () => {
         )}
       </Card>
     );
-
     // 7-2. card
     const detailSection = () => {
       const detailFragment = (i: number) => (
@@ -483,7 +505,7 @@ export const UserCategory = () => {
               </TableHead>
               <TableBody className={"table-tbody"}>
                 {Object.keys(OBJECT).map((item: any, index: number) => (
-                  <TableRow key={index} className={"table-tbody-tr border-top-1"}>
+                  <TableRow className={"table-tbody-tr border-top-1"} key={index}>
                     <TableCell className={`${dataType === item ? "bg-light" : ""}`}>
                       <Div className={"d-center"}>
                         <Div className={"fs-1-0rem ms-0"}>
@@ -491,7 +513,6 @@ export const UserCategory = () => {
                         </Div>
                         <Div className={"fs-1-0rem ms-auto"}>
                         <PopUp
-                          key={i}
                           type={"innerCenter"}
                           position={"center"}
                           direction={"center"}

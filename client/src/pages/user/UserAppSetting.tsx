@@ -42,7 +42,7 @@ export const UserAppSetting = () => {
     // 7-1. card
     const detailSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={"border-1 radius-1 shadow-0 p-0"} key={i}>
+        <Card className={"border-1 radius-1 shadow-0 p-0"} key={`detail-${i}`}>
           <TableContainer>
             <Table>
               <TableBody className={"table-tbody"}>

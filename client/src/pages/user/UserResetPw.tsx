@@ -205,7 +205,7 @@ export const UserResetPw = () => {
     // 7-2. reset
     const resetSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={"p-10"} key={i}>
+        <Card className={"p-10"} key={`detail-${i}`}>
           {/** section 1 **/}
           <Grid container spacing={1} columns={12}>
             {/** 이메일 **/}

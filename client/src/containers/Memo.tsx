@@ -27,7 +27,7 @@ export const Memo = (
   // 3. memoNode -----------------------------------------------------------------------------------
   const memoNode = () => (
     <PopUp
-      key={i}
+      key={`memo-${i}`}
       type={"innerCenter"}
       position={"center"}
       direction={"center"}

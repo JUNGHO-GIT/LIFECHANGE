@@ -188,7 +188,7 @@ export const UserDummy = () => {
     // 7-1. exerciseGoal
     const exerciseGoalSection = () => {
       const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius-1 p-0"} key={i}>
+        <Card className={"border-1 radius-1 p-0"} key={`exerciseGoal-${i}`}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -253,7 +253,7 @@ export const UserDummy = () => {
     // 7-2. exercise
     const exerciseSection = () => {
       const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius-1 p-0"} key={i}>
+        <Card className={"border-1 radius-1 p-0"} key={`exercise-${i}`}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -314,7 +314,7 @@ export const UserDummy = () => {
     // 7-3. foodGoal
     const foodGoalSection = () => {
       const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius-1 p-0"} key={i}>
+        <Card className={"border-1 radius-1 p-0"} key={`foodGoal-${i}`}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -379,7 +379,7 @@ export const UserDummy = () => {
     // 7-4. food
     const foodSection = () => {
       const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius-1 p-0"} key={i}>
+        <Card className={"border-1 radius-1 p-0"} key={`food-${i}`}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -444,7 +444,7 @@ export const UserDummy = () => {
     // 7-5. moneyGoal
     const moneyGoalSection = () => {
       const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius-1 p-0"} key={i}>
+        <Card className={"border-1 radius-1 p-0"} key={`moneyGoal-${i}`}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -501,7 +501,7 @@ export const UserDummy = () => {
     // 7-6. money
     const moneySection = () => {
       const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius-1 p-0"} key={i}>
+        <Card className={"border-1 radius-1 p-0"} key={`money-${i}`}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -558,7 +558,7 @@ export const UserDummy = () => {
     // 7-7. sleepGoal
     const sleepGoalSection = () => {
       const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius-1 p-0"} key={i}>
+        <Card className={"border-1 radius-1 p-0"} key={`sleepGoal-${i}`}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -619,7 +619,7 @@ export const UserDummy = () => {
     // 7-8. sleep
     const sleepSection = () => {
       const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius-1 p-0"} key={i}>
+        <Card className={"border-1 radius-1 p-0"} key={`sleep-${i}`}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
