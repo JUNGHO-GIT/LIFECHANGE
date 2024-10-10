@@ -308,8 +308,8 @@ export const SleepDetail = () => {
     );
     // 7-3. card
     const detailSection = () => {
-      const detailFragment = (i: number) => (
-        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={i}>
+      const detailFragment = (item: any, i: number) => (
+        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
           <Grid container spacing={1} columns={12}>
             <Grid size={6} className={"d-row-left"}>
               <Bg
@@ -369,13 +369,13 @@ export const SleepDetail = () => {
       return (
         <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              {COUNT?.newSectionCnt > 0 && (
-                OBJECT?.sleep_section?.map((_item: any, i: number) => (
-                  detailFragment(i)
-                ))
-              )}
-            </Grid>
+            {OBJECT?.sleep_section?.map((item: any, i: number) => (
+              <Grid size={12} key={`detail-${i}`}>
+                {COUNT?.newSectionCnt > 0 && (
+                  detailFragment(item, i)
+                )}
+              </Grid>
+            ))}
           </Grid>
         </Card>
       );
@@ -386,7 +386,11 @@ export const SleepDetail = () => {
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {dateCountSection()}
-            {LOADING ? <Loading /> : (
+            {LOADING ? (
+              <>
+                <Loading />
+              </>
+            ) : (
               <>
                 {detailSection()}
               </>

@@ -27,12 +27,16 @@ export const FoodFindList = () => {
       page: 0,
     }
   );
+  const [isExpanded, setIsExpanded] = useStorage(
+    `${TITLE}_isExpanded_(${PATH})`, [{
+      expanded: true
+    }]
+  );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [checkedQueries, setCheckedQueries] = useState<any>({});
-  const [isExpanded, setIsExpanded] = useState<number[]>([0]);
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>([FoodFind]);
+  const [checkedQueries, setCheckedQueries] = useState<any>({});
   const [SEND, setSEND] = useState<any>({
     id: "",
     dateType: "day",
@@ -98,7 +102,12 @@ export const FoodFindList = () => {
         totalCnt: res.data.totalCnt || 0,
       }));
       // Accordion 초기값 설정
-      setIsExpanded(res.data.result.map((_item: any, index: number) => index));
+      // 이전 값이 있으면 유지하고 없으면 true로 설정
+      setIsExpanded((prev: any) => (
+        Array(res.data.result.length).fill(null).map((_, i) => ({
+          expanded: prev?.[i]?.expanded ?? true
+        }))
+      ));
     })
     .catch((err: any) => {
       console.error(err);
@@ -163,186 +172,186 @@ export const FoodFindList = () => {
   // 7. find ---------------------------------------------------------------------------------------
   const findNode = () => {
     const listSection = () => {
-      const listFragment = (i: number) => (
-        OBJECT?.map((item: any, index: number) => (
-          <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
-            <Accordion className={"shadow-0"} expanded={isExpanded.includes(index)}>
-              <AccordionSummary className={"me-n10"} expandIcon={
-                <Icons
-                  key={"ChevronDown"}
-                  name={"ChevronDown"}
-                  className={"w-18 h-18"}
-                  onClick={() => {
-                    setIsExpanded(isExpanded.includes(index)
-                    ? isExpanded.filter((el: number) => el !== index)
-                    : [...isExpanded, index]
-                  )}}
-                />
-              }>
-                <Grid container spacing={1} columns={12} onClick={() => {
-                  handlerCheckboxChange(index);
-                }}>
-                  <Grid size={2} className={"d-row-center"}>
-                    <Checkbox
-                      key={`check-${index}`}
-                      color={"primary"}
-                      size={"small"}
-                      checked={
-                        !! (
-                          checkedQueries[`${OBJECT[index].food_query}_${PAGING.page}`] &&
-                          checkedQueries[`${OBJECT[index].food_query}_${PAGING.page}`][index]
-                        )
-                      }
-                      onChange={() => {
-                        handlerCheckboxChange(index);
-                      }}
-                    />
-                  </Grid>
-                  <Grid size={6} className={"d-row-left"}>
-                    <Div className={`${item.food_name_color}`}>
-                      {item.food_name}
+      const listFragment = (item: any, i: number) => (
+        <Card className={"border-1 radius-1"}>
+          <Accordion className={"shadow-0"} expanded={isExpanded[i].expanded}>
+            <AccordionSummary className={"me-n10"} expandIcon={
+              <Icons
+                key={"ChevronDown"}
+                name={"ChevronDown"}
+                className={"w-18 h-18"}
+                onClick={() => {
+                  setIsExpanded(isExpanded.map((el: any, index: number) => (
+                    i === index ? {
+                      expanded: !el.expanded
+                    } : el
+                  )));
+                }}
+              />
+            }>
+              <Grid container spacing={1} columns={12} onClick={() => {
+                handlerCheckboxChange(i);
+              }}>
+                <Grid size={2} className={"d-row-center"}>
+                  <Checkbox
+                    key={`check-${i}`}
+                    color={"primary"}
+                    size={"small"}
+                    checked={
+                      !! (
+                        checkedQueries[`${item.food_query}_${PAGING.page}`] &&
+                        checkedQueries[`${item.food_query}_${PAGING.page}`][i]
+                      )
+                    }
+                    onChange={() => {
+                      handlerCheckboxChange(i);
+                    }}
+                  />
+                </Grid>
+                <Grid size={6} className={"d-row-left"}>
+                  <Div className={`${item.food_name_color}`}>
+                    {item.food_name}
+                  </Div>
+                </Grid>
+                <Grid size={4} className={"d-row-right"}>
+                  <Div className={`${item.food_brand_color}`}>
+                    <Div className={`fs-0-8rem fw-500 dark me-10`}>
+                      {item.food_brand}
                     </Div>
-                  </Grid>
-                  <Grid size={4} className={"d-row-right"}>
-                    <Div className={`${item.food_brand_color}`}>
-                      <Div className={`fs-0-8rem fw-500 dark me-10`}>
-                        {item.food_brand}
+                  </Div>
+                </Grid>
+              </Grid>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Grid container spacing={1} columns={12}>
+                {/** row 1 **/}
+                <Grid size={2} className={"d-row-center"}>
+                  <Img
+                    key={"food2"}
+                    src={"food2"}
+                    className={"w-15 h-15"}
+                  />
+                </Grid>
+                <Grid size={3} className={"d-row-left"}>
+                  <Div className={"fs-0-9rem fw-600 dark"}>
+                    {translate("kcal")}
+                  </Div>
+                </Grid>
+                <Grid size={7}>
+                  <Grid container spacing={1} columns={12}>
+                    <Grid size={10} className={"d-row-right"}>
+                      <Div className={`${item.food_kcal_color}`}>
+                        {numeral(item.food_kcal).format("0,0")}
                       </Div>
-                    </Div>
-                  </Grid>
-                </Grid>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Grid container spacing={1} columns={12}>
-                  {/** row 1 **/}
-                  <Grid size={2} className={"d-row-center"}>
-                    <Img
-                    	key={"food2"}
-                    	src={"food2"}
-                    	className={"w-15 h-15"}
-                    />
-                  </Grid>
-                  <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
-                      {translate("kcal")}
-                    </Div>
-                  </Grid>
-                  <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
-                      <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.food_kcal_color}`}>
-                          {numeral(item.food_kcal).format("0,0")}
-                        </Div>
-                      </Grid>
-                      <Grid size={2} className={"d-row-right"}>
-                        <Div className={"fs-0-6rem"}>
-                          {translate("kc")}
-                        </Div>
-                      </Grid>
                     </Grid>
-                  </Grid>
-                  <Hr px={10} />
-                  {/** row 2 **/}
-                  <Grid size={2} className={"d-center"}>
-                    <Img
-                    	key={"food3"}
-                    	src={"food3"}
-                    	className={"w-15 h-15"}
-                    />
-                  </Grid>
-                  <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
-                      {translate("carb")}
-                    </Div>
-                  </Grid>
-                  <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
-                      <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.food_carb_color}`}>
-                          {item.food_carb}
-                        </Div>
-                      </Grid>
-                      <Grid size={2} className={"d-row-right"}>
-                        <Div className={"fs-0-6rem"}>
-                          {translate("g")}
-                        </Div>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Hr px={10} />
-                  {/** row 3 **/}
-                  <Grid size={2} className={"d-center"}>
-                    <Img
-                    	key={"food4"}
-                    	src={"food4"}
-                    	className={"w-15 h-15"}
-                    />
-                  </Grid>
-                  <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
-                      {translate("protein")}
-                    </Div>
-                  </Grid>
-                  <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
-                      <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.food_protein_color}`}>
-                          {item.food_protein}
-                        </Div>
-                      </Grid>
-                      <Grid size={2} className={"d-row-right"}>
-                        <Div className={"fs-0-6rem"}>
-                          {translate("g")}
-                        </Div>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Hr px={10} />
-                  {/** row 3 **/}
-                  <Grid size={2} className={"d-center"}>
-                    <Img
-                    	key={"food5"}
-                    	src={"food5"}
-                    	className={"w-15 h-15"}
-                    />
-                  </Grid>
-                  <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
-                      {translate("fat")}
-                    </Div>
-                  </Grid>
-                  <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
-                      <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.food_fat_color}`}>
-                          {item.food_fat}
-                        </Div>
-                      </Grid>
-                      <Grid size={2} className={"d-row-right"}>
-                        <Div className={"fs-0-6rem"}>
-                          {translate("g")}
-                        </Div>
-                      </Grid>
+                    <Grid size={2} className={"d-row-right"}>
+                      <Div className={"fs-0-6rem"}>
+                        {translate("kc")}
+                      </Div>
                     </Grid>
                   </Grid>
                 </Grid>
-              </AccordionDetails>
-            </Accordion>
-          </Card>
-        ))
-      );
-      const emptyFragment = () => (
-        <Empty
-          SEND={SEND}
-          extra={"food"}
-        />
+                <Hr px={10} />
+                {/** row 2 **/}
+                <Grid size={2} className={"d-center"}>
+                  <Img
+                    key={"food3"}
+                    src={"food3"}
+                    className={"w-15 h-15"}
+                  />
+                </Grid>
+                <Grid size={3} className={"d-row-left"}>
+                  <Div className={"fs-0-9rem fw-600 dark"}>
+                    {translate("carb")}
+                  </Div>
+                </Grid>
+                <Grid size={7}>
+                  <Grid container spacing={1} columns={12}>
+                    <Grid size={10} className={"d-row-right"}>
+                      <Div className={`${item.food_carb_color}`}>
+                        {item.food_carb}
+                      </Div>
+                    </Grid>
+                    <Grid size={2} className={"d-row-right"}>
+                      <Div className={"fs-0-6rem"}>
+                        {translate("g")}
+                      </Div>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Hr px={10} />
+                {/** row 3 **/}
+                <Grid size={2} className={"d-center"}>
+                  <Img
+                    key={"food4"}
+                    src={"food4"}
+                    className={"w-15 h-15"}
+                  />
+                </Grid>
+                <Grid size={3} className={"d-row-left"}>
+                  <Div className={"fs-0-9rem fw-600 dark"}>
+                    {translate("protein")}
+                  </Div>
+                </Grid>
+                <Grid size={7}>
+                  <Grid container spacing={1} columns={12}>
+                    <Grid size={10} className={"d-row-right"}>
+                      <Div className={`${item.food_protein_color}`}>
+                        {item.food_protein}
+                      </Div>
+                    </Grid>
+                    <Grid size={2} className={"d-row-right"}>
+                      <Div className={"fs-0-6rem"}>
+                        {translate("g")}
+                      </Div>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Hr px={10} />
+                {/** row 3 **/}
+                <Grid size={2} className={"d-center"}>
+                  <Img
+                    key={"food5"}
+                    src={"food5"}
+                    className={"w-15 h-15"}
+                  />
+                </Grid>
+                <Grid size={3} className={"d-row-left"}>
+                  <Div className={"fs-0-9rem fw-600 dark"}>
+                    {translate("fat")}
+                  </Div>
+                </Grid>
+                <Grid size={7}>
+                  <Grid container spacing={1} columns={12}>
+                    <Grid size={10} className={"d-row-right"}>
+                      <Div className={`${item.food_fat_color}`}>
+                        {item.food_fat}
+                      </Div>
+                    </Grid>
+                    <Grid size={2} className={"d-row-right"}>
+                      <Div className={"fs-0-6rem"}>
+                        {translate("g")}
+                      </Div>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </AccordionDetails>
+          </Accordion>
+        </Card>
       );
       return (
         <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              {COUNT.totalCnt === 0 ? emptyFragment() : listFragment(0)}
-            </Grid>
+            {OBJECT?.map((item: any, i: number) => (
+              <Grid size={12} key={`list-${i}`}>
+                {COUNT.totalCnt === 0 ? (
+                  <Empty extra={"food"} />
+                ) : (
+                  listFragment(item, i)
+                )}
+              </Grid>
+            ))}
           </Grid>
         </Card>
       );
@@ -352,7 +361,15 @@ export const FoodFindList = () => {
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
-            {LOADING ? <Loading /> : listSection()}
+            {LOADING ? (
+              <>
+                <Loading />
+              </>
+            ) : (
+              <>
+                {listSection()}
+              </>
+            )}
           </Grid>
         </Grid>
       </Paper>

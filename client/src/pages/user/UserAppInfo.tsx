@@ -59,10 +59,10 @@ export const UserAppInfo = () => {
         </Grid>
       </Card>
     );
-    // 7-2. card
+    // 7-2. detail
     const detailSection = () => {
-      const detailFragment = (i: number) => (
-        <Card className={"border-1 radius-1 shadow-0 p-0"} key={`detail-${i}`}>
+      const detailFragment = (item: any) => (
+        <Card className={"border-1 radius-1 shadow-0 p-0"}>
           <TableContainer className={"over-hidden"}>
             <Table>
               <TableBody className={"table-tbody"}>
@@ -71,7 +71,7 @@ export const UserAppInfo = () => {
                     version
                   </TableCell>
                   <TableCell className={"w-55vw fs-0-8rem p-15"}>
-                    {OBJECT.version}
+                    {item.version}
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -79,7 +79,7 @@ export const UserAppInfo = () => {
                     date
                   </TableCell>
                   <TableCell className={"w-55vw fs-0-8rem p-15"}>
-                    {OBJECT.date}
+                    {item.date}
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -87,7 +87,7 @@ export const UserAppInfo = () => {
                     github
                   </TableCell>
                   <TableCell className={"w-55vw fs-0-8rem p-15"}>
-                    {OBJECT.git}
+                    {item.git}
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -95,7 +95,7 @@ export const UserAppInfo = () => {
                     license
                   </TableCell>
                   <TableCell className={"w-55vw fs-0-8rem p-15"}>
-                    {OBJECT.license}
+                    {item.license}
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -115,8 +115,8 @@ export const UserAppInfo = () => {
       return (
         <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              {detailFragment(0)}
+            <Grid size={12} key={`detail-${0}`}>
+              {detailFragment(OBJECT)}
             </Grid>
           </Grid>
         </Card>
@@ -127,7 +127,11 @@ export const UserAppInfo = () => {
       <Paper className={"content-wrapper d-center border-1 radius-1 h-min90vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
-            {LOADING ? <Loading /> : (
+            {LOADING ? (
+              <>
+                <Loading />
+              </>
+            ) : (
               <>
                 {imageSection()}
                 <Br px={20} />

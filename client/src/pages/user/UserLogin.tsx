@@ -199,13 +199,13 @@ export const UserLogin = () => {
     );
     // 7-2. login
     const loginSection = () => {
-      const detailFragment = (i: number) => (
-        <Card className={"p-10"} key={`detail-${i}`}>
+      const detailFragment = (item: any, i: number) => (
+        <Card className={"p-10"}>
           <Grid container spacing={1} columns={12}>
             <Grid size={12}>
               <Input
                 label={translate("id")}
-                value={OBJECT.user_id}
+                value={item.user_id}
                 inputRef={REFS?.[i]?.user_id}
                 error={ERRORS?.[i]?.user_id}
                 placeholder={"abcd@naver.com"}
@@ -231,7 +231,7 @@ export const UserLogin = () => {
               <Input
                 type={"password"}
                 label={translate("pw")}
-                value={OBJECT.user_pw}
+                value={item.user_pw}
                 inputRef={REFS?.[i]?.user_pw}
                 error={ERRORS?.[i]?.user_pw}
                 onChange={(e: any) => {
@@ -248,61 +248,50 @@ export const UserLogin = () => {
       return (
         <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              {detailFragment(0)}
+            <Grid size={12} key={`detail-${0}`}>
+              {detailFragment(OBJECT, 0)}
             </Grid>
           </Grid>
         </Card>
       );
     };
     // 7-3. check
-    const checkSection = () => {
-      const checkFragment = (i: number) => (
-        <Card key={`check-${i}`}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={6} className={"d-row-right"}>
-              <Div className={"d-center fs-0-8rem"}>
-                {translate("autoLogin")}
-                <Checkbox
-                  color={"primary"}
-                  size={"small"}
-                  checked={checkedAutoLogin}
-                  onChange={(e: any) => {
-                    setCheckedAutoLogin(e.target.checked);
-                  }}
-                />
-              </Div>
-            </Grid>
-            <Grid size={6} className={"d-row-left"}>
-              <Div className={"fs-0-8rem"}>
-                {translate("saveId")}
-                <Checkbox
-                  color={"primary"}
-                  size={"small"}
-                  checked={checkedSaveId}
-                  onChange={(e: any) => {
-                    setCheckedSaveId(e.target.checked);
-                  }}
-                />
-              </Div>
-            </Grid>
+    const checkSection = () => (
+      <Card className={"p-0"}>
+        <Grid container spacing={1} columns={12}>
+          <Grid size={6} className={"d-row-right"}>
+            <Div className={"d-center fs-0-8rem"}>
+              {translate("autoLogin")}
+              <Checkbox
+                color={"primary"}
+                size={"small"}
+                checked={checkedAutoLogin}
+                onChange={(e: any) => {
+                  setCheckedAutoLogin(e.target.checked);
+                }}
+              />
+            </Div>
           </Grid>
-        </Card>
-      );
-      return (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              {checkFragment(0)}
-            </Grid>
+          <Grid size={6} className={"d-row-left"}>
+            <Div className={"fs-0-8rem"}>
+              {translate("saveId")}
+              <Checkbox
+                color={"primary"}
+                size={"small"}
+                checked={checkedSaveId}
+                onChange={(e: any) => {
+                  setCheckedSaveId(e.target.checked);
+                }}
+              />
+            </Div>
           </Grid>
-        </Card>
-      );
-    };
+        </Grid>
+      </Card>
+    );
     // 7-4. button
     const buttonSection = () => {
-      const loginFragment = (i: number) => (
-        <Card key={`login-${i}`}>
+      const loginFragment = () => (
+        <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
             <Grid size={12}>
               <Btn
@@ -318,8 +307,8 @@ export const UserLogin = () => {
           </Grid>
         </Card>
       );
-      const googleFragment = (i: number) => (
-        <Card key={`google-${i}`}>
+      const googleFragment = () => (
+        <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
             <Grid size={12}>
               <Btn
@@ -348,9 +337,9 @@ export const UserLogin = () => {
         <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
             <Grid size={12}>
-              {loginFragment(0)}
+              {loginFragment()}
               <Br px={10} />
-              {googleFragment(0)}
+              {googleFragment()}
             </Grid>
           </Grid>
         </Card>
@@ -358,8 +347,8 @@ export const UserLogin = () => {
     };
     // 7-5. link
     const linkSection = () => {
-      const toSignupFragment = (i: number) => (
-        <Card key={`signup-${i}`}>
+      const toSignupFragment = () => (
+        <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
             <Grid size={7} className={"d-row-right"}>
               <Div className={"fs-0-8rem black"}>
@@ -376,8 +365,8 @@ export const UserLogin = () => {
           </Grid>
         </Card>
       );
-      const toResetPwFragment = (i: number) => (
-        <Card key={`resetPw-${i}`}>
+      const toResetPwFragment = () => (
+        <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
             <Grid size={7} className={"d-row-right"}>
               <Div className={"fs-0-8rem black"}>
@@ -398,9 +387,9 @@ export const UserLogin = () => {
         <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
             <Grid size={12}>
-              {toSignupFragment(0)}
+              {toSignupFragment()}
               <Br px={10} />
-              {toResetPwFragment(0)}
+              {toResetPwFragment()}
             </Grid>
           </Grid>
         </Card>

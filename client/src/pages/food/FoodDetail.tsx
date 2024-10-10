@@ -545,7 +545,7 @@ export const FoodDetail = () => {
     // 7-3. card
     const detailSection = () => {
       const detailFragment = (i: number) => (
-        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={i}>
+        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
           <Grid container spacing={1} columns={12}>
             <Grid size={6} className={"d-row-left"}>
               <Bg
@@ -929,7 +929,11 @@ export const FoodDetail = () => {
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {dateCountSection()}
-            {LOADING ? <Loading /> : (
+            {LOADING ? (
+              <>
+                <Loading />
+              </>
+            ) : (
               <>
                 {totalSection()}
                 {detailSection()}

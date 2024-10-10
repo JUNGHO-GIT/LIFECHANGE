@@ -72,12 +72,20 @@ export const Dialog = (
               />
             }
             onClick={() => {
-              setIsExpanded({
-                exercise: Array.from({ length: COUNT?.totalCnt as number }).map((_, i) => i),
-                food: Array.from({ length: COUNT?.totalCnt as number }).map((_, i) => i),
-                money: Array.from({ length: COUNT?.totalCnt as number }).map((_, i) => i),
-                sleep: Array.from({ length: COUNT?.totalCnt as number }).map((_, i) => i),
-              });
+              setIsExpanded(() => ({
+                exercise: Array.from({ length: COUNT?.exercise as number }).map((_: any) => ({
+                  expanded: true,
+                })),
+                food: Array.from({ length: COUNT?.food as number }).map((_: any) => ({
+                  expanded: true,
+                })),
+                money: Array.from({ length: COUNT?.money as number }).map((_: any) => ({
+                  expanded: true,
+                })),
+                sleep: Array.from({ length: COUNT?.sleep as number }).map((_: any) => ({
+                  expanded: true,
+                })),
+              }));
               window.scrollTo(0, 0);
             }}
           />
@@ -93,12 +101,20 @@ export const Dialog = (
               />
             }
             onClick={() => {
-              setIsExpanded({
-                exercise: [],
-                food: [],
-                money: [],
-                sleep: [],
-              });
+              setIsExpanded(() => ({
+                exercise: Array.from({ length: COUNT?.exercise as number }).map((_: any) => ({
+                  expanded: false,
+                })),
+                food: Array.from({ length: COUNT?.food as number }).map((_: any) => ({
+                  expanded: false,
+                })),
+                money: Array.from({ length: COUNT?.money as number }).map((_: any) => ({
+                  expanded: false,
+                })),
+                sleep: Array.from({ length: COUNT?.sleep as number }).map((_: any) => ({
+                  expanded: false,
+                })),
+              }));
               window.scrollTo(0, 0);
             }}
           />
@@ -162,11 +178,11 @@ export const Dialog = (
               />
             }
             onClick={() => {
-              Array.from({ length: COUNT?.totalCnt as number }).map((_, i) => {
-                setIsExpanded((prev: any) => {
-                  return prev.includes(i) ? prev : [...prev, i];
-                });
-              });
+              setIsExpanded(() => (
+                Array.from({ length: COUNT?.totalCnt as number }).map((_: any) => ({
+                  expanded: true,
+                }))
+              ));
               window.scrollTo(0, 0);
             }}
           />
@@ -182,7 +198,11 @@ export const Dialog = (
               />
             }
             onClick={() => {
-              setIsExpanded([]);
+              setIsExpanded(() => (
+                Array.from({ length: COUNT?.totalCnt as number }).map((_: any) => ({
+                  expanded: false,
+                }))
+              ));
               window.scrollTo(0, 0);
             }}
           />
@@ -267,11 +287,11 @@ export const Dialog = (
               />
             }
             onClick={() => {
-              Array.from({ length: COUNT?.totalCnt as number }).map((_, i) => {
-                setIsExpanded((prev: any) => {
-                  return prev.includes(i) ? prev : [...prev, i];
-                });
-              });
+              setIsExpanded(() => (
+                Array.from({ length: COUNT?.totalCnt as number }).map((_: any) => ({
+                  expanded: true,
+                }))
+              ));
               window.scrollTo(0, 0);
             }}
           />
@@ -287,7 +307,11 @@ export const Dialog = (
               />
             }
             onClick={() => {
-              setIsExpanded([]);
+              setIsExpanded(() => (
+                Array.from({ length: COUNT?.totalCnt as number }).map((_: any) => ({
+                  expanded: false,
+                }))
+              ));
               window.scrollTo(0, 0);
             }}
           />

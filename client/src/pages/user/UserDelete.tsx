@@ -186,19 +186,18 @@ export const UserDelete = () => {
     );
     // 7-2. delete
     const deleteSection = () => {
-      const detailFragment = (i: number) => (
-        <Card className={"p-10"} key={`detail-${i}`}>
-          {/** section 1 **/}
+      const detailFragment = (item: any, i: number) => (
+        <Card className={"p-10"}>
           <Grid container spacing={1} columns={12}>
             {/** 이메일 **/}
             <Grid size={9}>
               <Input
                 label={`${translate("id")}`}
                 helperText={`* ${translate("helperId")}`}
-                value={OBJECT.user_id}
+                value={item.user_id}
                 inputRef={REFS?.[i]?.user_id}
                 error={ERRORS?.[i]?.user_id}
-                disabled={OBJECT.user_id_verified === true}
+                disabled={item.user_id_verified === true}
                 placeholder={"abcd@naver.com"}
                 onChange={(e: any) => {
                   const value = e.target.value;
@@ -221,7 +220,7 @@ export const UserDelete = () => {
               <Btn
                 color={"primary"}
                 className={"mt-n25"}
-                disabled={OBJECT.user_id_verified === true}
+                disabled={item.user_id_verified === true}
                 onClick={() => {
                   flowSendEmail();
                 }}
@@ -234,10 +233,10 @@ export const UserDelete = () => {
               <Input
                 label={translate("verify")}
                 helperText={`* ${translate("helperIdVerified")}`}
-                value={OBJECT.user_verify_code}
+                value={item.user_verify_code}
                 inputRef={REFS?.[i]?.user_id_verified}
                 error={ERRORS?.[i]?.user_id_verified}
-                disabled={OBJECT.user_id_verified === true}
+                disabled={item.user_id_verified === true}
                 placeholder={"123456"}
                 onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
@@ -251,7 +250,7 @@ export const UserDelete = () => {
               <Btn
                 color={"primary"}
                 className={"mt-n25"}
-                disabled={!OBJECT.user_id_sended || OBJECT.user_id_verified === true}
+                disabled={!item.user_id_sended || item.user_id_verified === true}
                 onClick={() => {
                   flowVerifyEmail();
                 }}
@@ -266,10 +265,10 @@ export const UserDelete = () => {
                 type={"password"}
                 label={translate("pw")}
                 helperText={`* ${translate("helperPw")}`}
-                value={OBJECT.user_pw}
+                value={item.user_pw}
                 inputRef={REFS?.[i]?.user_pw}
                 error={ERRORS?.[i]?.user_pw}
-                disabled={OBJECT.user_id_verified === false}
+                disabled={item.user_id_verified === false}
                 onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
                     ...prev,
@@ -284,10 +283,10 @@ export const UserDelete = () => {
                 type={"password"}
                 label={translate("pwVerified")}
                 helperText={`* ${translate("helperPwVerified")}`}
-                value={OBJECT.user_pw_verified}
+                value={item.user_pw_verified}
                 inputRef={REFS?.[i]?.user_pw_verified}
                 error={ERRORS?.[i]?.user_pw_verified}
-                disabled={OBJECT.user_id_verified === false}
+                disabled={item.user_id_verified === false}
                 onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
                     ...prev,
@@ -301,43 +300,32 @@ export const UserDelete = () => {
       );
       return (
         <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              {detailFragment(0)}
+          <Grid container spacing={0} columns={12}>
+            <Grid size={12} key={`detail-${0}`}>
+              {detailFragment(OBJECT, 0)}
             </Grid>
           </Grid>
         </Card>
       );
     };
     // 7-4. button
-    const buttonSection = () => {
-      const deleteFragment = (i: number) => (
-        <Card key={`delete-${i}`}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              <Btn
-                color={"error"}
-                className={"w-90p fs-1-0rem"}
-                onClick={() => {
-                  flowSave();
-                }}
-              >
-                {translate("userDelete")}
-              </Btn>
-            </Grid>
+    const buttonSection = () => (
+      <Card className={"p-0"}>
+        <Grid container spacing={1} columns={12}>
+          <Grid size={12}>
+            <Btn
+              color={"error"}
+              className={"w-90p fs-1-0rem"}
+              onClick={() => {
+                flowSave();
+              }}
+            >
+              {translate("userDelete")}
+            </Btn>
           </Grid>
-        </Card>
-      );
-      return (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              {deleteFragment(0)}
-            </Grid>
-          </Grid>
-        </Card>
-      );
-    };
+        </Grid>
+      </Card>
+    );
     // 7-10. return
     return (
       <>

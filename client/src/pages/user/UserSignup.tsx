@@ -211,18 +211,18 @@ export const UserSignup = () => {
     );
     // 7-2. signup
     const signupSection = () => {
-      const detailFragment = (i: number) => (
-        <Card className={"p-10"} key={`detail-${i}`}>
+      const detailFragment = (item: any, i: number) => (
+        <Card className={"p-10"}>
           <Grid container spacing={1} columns={12}>
             {/** 이메일 **/}
             <Grid size={9}>
               <Input
                 label={translate("id")}
                 helperText={`* ${translate("helperId")}`}
-                value={OBJECT.user_id}
+                value={item.user_id}
                 inputRef={REFS?.[i]?.user_id}
                 error={ERRORS?.[i]?.user_id}
-                disabled={OBJECT.user_id_verified === true}
+                disabled={item.user_id_verified === true}
                 placeholder={"abcd@naver.com"}
                 onChange={(e: any) => {
                   const value = e.target.value;
@@ -245,7 +245,7 @@ export const UserSignup = () => {
               <Btn
                 color={"primary"}
                 className={"mt-n25"}
-                disabled={OBJECT.user_id_verified === true}
+                disabled={item.user_id_verified === true}
                 onClick={() => {
                   flowSendEmail();
                 }}
@@ -258,10 +258,10 @@ export const UserSignup = () => {
               <Input
                 label={translate("verify")}
                 helperText={`* ${translate("helperIdVerified")}`}
-                value={OBJECT.user_verify_code}
+                value={item.user_verify_code}
                 inputRef={REFS?.[i]?.user_id_verified}
                 error={ERRORS?.[i]?.user_id_verified}
-                disabled={OBJECT.user_id_verified === true}
+                disabled={item.user_id_verified === true}
                 placeholder={"123456"}
                 onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
@@ -275,7 +275,7 @@ export const UserSignup = () => {
               <Btn
                 color={"primary"}
                 className={"mt-n25"}
-                disabled={!OBJECT.user_id_sended || OBJECT.user_id_verified === true}
+                disabled={!item.user_id_sended || item.user_id_verified === true}
                 onClick={() => {
                   flowVerifyEmail();
                 }}
@@ -290,10 +290,10 @@ export const UserSignup = () => {
                 type={"password"}
                 label={translate("pw")}
                 helperText={`* ${translate("helperPw")}`}
-                value={OBJECT.user_pw}
+                value={item.user_pw}
                 inputRef={REFS?.[i]?.user_pw}
                 error={ERRORS?.[i]?.user_pw}
-                disabled={OBJECT.user_id_verified === false}
+                disabled={item.user_id_verified === false}
                 onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
                     ...prev,
@@ -308,10 +308,10 @@ export const UserSignup = () => {
                 type={"password"}
                 label={translate("pwVerified")}
                 helperText={`* ${translate("helperPwVerified")}`}
-                value={OBJECT.user_pw_verified}
+                value={item.user_pw_verified}
                 inputRef={REFS?.[i]?.user_pw_verified}
                 error={ERRORS?.[i]?.user_pw_verified}
-                disabled={OBJECT.user_id_verified === false}
+                disabled={item.user_id_verified === false}
                 onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
                     ...prev,
@@ -325,10 +325,10 @@ export const UserSignup = () => {
             <Grid size={12}>
               <Input
                 label={translate("scale")}
-                value={OBJECT.user_initScale}
+                value={item.user_initScale}
                 inputRef={REFS?.[i]?.user_initScale}
                 error={ERRORS?.[i]?.user_initScale}
-                disabled={OBJECT.user_id_verified === false}
+                disabled={item.user_id_verified === false}
                 helperText={`* ${translate("helperScale")}`}
                 endadornment={
                   translate("cm")
@@ -355,10 +355,10 @@ export const UserSignup = () => {
             <Grid size={12}>
               <Input
                 label={translate("property")}
-                value={OBJECT.user_initProperty}
+                value={item.user_initProperty}
                 inputRef={REFS?.[i]?.user_initProperty}
                 error={ERRORS?.[i]?.user_initProperty}
-                disabled={OBJECT.user_id_verified === false}
+                disabled={item.user_id_verified === false}
                 helperText={`* ${translate("helperProperty")}`}
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
@@ -387,8 +387,8 @@ export const UserSignup = () => {
       return (
         <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              {detailFragment(0)}
+            <Grid size={12} key={`detail-${0}`}>
+              {detailFragment(OBJECT, 0)}
             </Grid>
           </Grid>
         </Card>
@@ -396,8 +396,8 @@ export const UserSignup = () => {
     };
     // 7-4. button
     const buttonSection = () => {
-      const signupFragment = (i: number) => (
-        <Card key={`signup-${i}`}>
+      const signupFragment = () => (
+        <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
             <Grid size={12}>
               <Btn
@@ -413,8 +413,8 @@ export const UserSignup = () => {
           </Grid>
         </Card>
       );
-      const googleFragment = (i: number) => (
-        <Card key={`google-${i}`}>
+      const googleFragment = () => (
+        <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
             <Grid size={12}>
               <Btn
@@ -443,9 +443,9 @@ export const UserSignup = () => {
         <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
             <Grid size={12}>
-              {signupFragment(0)}
+              {signupFragment()}
               <Br px={10} />
-              {googleFragment(0)}
+              {googleFragment()}
             </Grid>
           </Grid>
         </Card>
@@ -453,8 +453,8 @@ export const UserSignup = () => {
     };
     // 7-5. link
     const linkSection = () => {
-      const toLoginFragment = (i: number) => (
-        <Card key={`login-${i}`}>
+      const toLoginFragment = () => (
+        <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
             <Grid size={7} className={"d-row-right"}>
               <Div className={"fs-0-8rem black"}>
@@ -471,8 +471,8 @@ export const UserSignup = () => {
           </Grid>
         </Card>
       );
-      const toResetPwFragment = (i: number) => (
-        <Card key={`resetPw-${i}`}>
+      const toResetPwFragment = () => (
+        <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
             <Grid size={7} className={"d-row-right"}>
               <Div className={"fs-0-8rem black"}>
@@ -493,9 +493,9 @@ export const UserSignup = () => {
         <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
             <Grid size={12}>
-              {toLoginFragment(0)}
+              {toLoginFragment()}
               <Br px={10} />
-              {toResetPwFragment(0)}
+              {toResetPwFragment()}
             </Grid>
           </Grid>
         </Card>

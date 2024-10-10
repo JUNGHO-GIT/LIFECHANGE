@@ -265,8 +265,8 @@ export const MoneyGoalDetail = () => {
     );
     // 7-3. detail
     const detailSection = () => {
-      const detailFragment = (i: number) => (
-        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={i}>
+      const detailFragment = (item: any, i: number) => (
+        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
           <Grid container spacing={1} columns={12}>
             <Grid size={6} className={"d-row-left"}>
               <Bg
@@ -284,7 +284,7 @@ export const MoneyGoalDetail = () => {
             <Br px={1} />
             <Grid size={12}>
               <Input
-                value={numeral(OBJECT?.money_goal_income).format("0,0")}
+                value={numeral(item?.money_goal_income).format("0,0")}
                 inputRef={REFS?.[i]?.money_goal_income}
                 error={ERRORS?.[i]?.money_goal_income}
                 locked={LOCKED}
@@ -326,7 +326,7 @@ export const MoneyGoalDetail = () => {
             <Br px={1} />
             <Grid size={12}>
               <Input
-                value={numeral(OBJECT?.money_goal_expense).format("0,0")}
+                value={numeral(item?.money_goal_expense).format("0,0")}
                 inputRef={REFS?.[i]?.money_goal_expense}
                 error={ERRORS?.[i]?.money_goal_expense}
                 locked={LOCKED}
@@ -370,10 +370,10 @@ export const MoneyGoalDetail = () => {
       );
       return (
         <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
+          <Grid container spacing={0} columns={12}>
+            <Grid size={12} key={`detail-${0}`}>
               {COUNT?.newSectionCnt > 0 && (
-                detailFragment(0)
+                detailFragment(OBJECT, 0)
               )}
             </Grid>
           </Grid>
@@ -385,7 +385,15 @@ export const MoneyGoalDetail = () => {
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid size={12}>
           {dateCountSection()}
-          {detailSection()}
+          {LOADING ? (
+            <>
+              <Loading />
+            </>
+          ) : (
+            <>
+              {detailSection()}
+            </>
+          )}
         </Grid>
       </Paper>
     );

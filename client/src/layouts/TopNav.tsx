@@ -242,7 +242,7 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max60vw h-max70vh border-1 radius-1 p-20"} key={`smile`}>
+          <Card className={"w-max60vw h-max70vh border-1 radius-1 p-20"}>
             <Grid container spacing={1} columns={12}>
               <Grid size={12} className={"d-column-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
@@ -375,7 +375,7 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max60vw h-max70vh border-1 radius-1 p-20"} key={`property`}>
+          <Card className={"w-max60vw h-max70vh border-1 radius-1 p-20"}>
             <Grid container spacing={1} columns={12}>
               <Grid size={12} className={"d-column-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
@@ -508,7 +508,7 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max60vw h-max70vh border-1 radius-1 p-20"} key={`scale`}>
+          <Card className={"w-max60vw h-max70vh border-1 radius-1 p-20"}>
             <Grid container spacing={1} columns={12}>
               <Grid size={12} className={"d-column-center"}>
                 <Div className={"fs-1-3rem fw-600"}>

@@ -34,9 +34,13 @@ export const MoneyList = () => {
       page: 1,
     }
   );
+  const [isExpanded, setIsExpanded] = useStorage(
+    `${TITLE}_isExpanded_(${PATH})`, [{
+      expanded: true
+    }]
+  );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [isExpanded, setIsExpanded] = useState<number[]>([0]);
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>([Money]);
   const [EXIST, setEXIST] = useState<any>({
@@ -99,7 +103,12 @@ export const MoneyList = () => {
         newSectionCnt: res.data.sectionCnt || 0
       }));
       // Accordion 초기값 설정
-      setIsExpanded(res.data.result.map((_item: any, index: number) => index));
+      // 이전 값이 있으면 유지하고 없으면 true로 설정
+      setIsExpanded((prev: any) => (
+        Array(res.data.result.length).fill(null).map((_, i) => ({
+          expanded: prev?.[i]?.expanded ?? true
+        }))
+      ));
     })
     .catch((err: any) => {
       console.error(err);
@@ -112,125 +121,125 @@ export const MoneyList = () => {
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
     const listSection = () => {
-      const listFragment = (i: number) => (
-        OBJECT?.map((item: any, index: number) => (
-          <Card className={"border-1 radius-1"} key={`${index}-${i}`}>
-            <Accordion className={"shadow-0"} expanded={isExpanded.includes(index)}>
-              <AccordionSummary className={"me-n10"} expandIcon={
-                <Icons
-                  key={"ChevronDown"}
-                  name={"ChevronDown"}
-                  className={"w-18 h-18"}
-                  onClick={() => {
-                    setIsExpanded(isExpanded.includes(index)
-                    ? isExpanded.filter((el: number) => el !== index)
-                    : [...isExpanded, index]
-                  )}}
-                />
-              }>
-                <Grid container spacing={1} columns={12} onClick={(e: any) => {
-                  e.stopPropagation();
-                  navigate(toDetail, {
-                    state: {
-                      id: item._id,
-                      dateType: item.money_dateType,
-                      dateStart: item.money_dateStart,
-                      dateEnd: item.money_dateEnd,
-                    }
-                  });
-                }}>
-                  <Grid size={2} className={"d-row-center"}>
-                    <Icons
-                      key={"Search"}
-                      name={"Search"}
-                      className={"w-18 h-18"}
-                    />
-                  </Grid>
-                  <Grid size={10} className={"d-row-left"}>
-                    <Div className={"fs-1-1rem fw-600 black me-5"}>
-                      {item.money_dateStart?.substring(5, 10)}
-                    </Div>
-                    <Div className={"fs-0-9rem fw-500 dark ms-5"}>
-                      {translate(getDayNotFmt(item.money_dateStart).format("ddd"))}
-                    </Div>
-                  </Grid>
+      const listFragment = (item: any, i: number) => (
+        <Card className={"border-1 radius-1"}>
+          <Accordion className={"shadow-0"} expanded={isExpanded[i].expanded}>
+            <AccordionSummary className={"me-n10"} expandIcon={
+              <Icons
+                key={"ChevronDown"}
+                name={"ChevronDown"}
+                className={"w-18 h-18"}
+                onClick={() => {
+                  setIsExpanded(isExpanded.map((el: any, index: number) => (
+                    i === index ? {
+                      expanded: !el.expanded
+                    } : el
+                  )));
+                }}
+              />
+            }>
+              <Grid container spacing={1} columns={12} onClick={(e: any) => {
+                e.stopPropagation();
+                navigate(toDetail, {
+                  state: {
+                    id: item._id,
+                    dateType: item.money_dateType,
+                    dateStart: item.money_dateStart,
+                    dateEnd: item.money_dateEnd,
+                  }
+                });
+              }}>
+                <Grid size={2} className={"d-row-center"}>
+                  <Icons
+                    key={"Search"}
+                    name={"Search"}
+                    className={"w-18 h-18"}
+                  />
                 </Grid>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Grid container spacing={1} columns={12}>
-                  {/** row 1 **/}
-                  <Grid size={2} className={"d-center"}>
-                    <Img
-                    	key={"money2"}
-                    	src={"money2"}
-                    	className={"w-15 h-15"}
-                    />
-                  </Grid>
-                  <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
-                      {translate("income")}
-                    </Div>
-                  </Grid>
-                  <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
-                      <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.money_total_income_color}`}>
-                          {numeral(item.money_total_income).format("0,0")}
-                        </Div>
-                      </Grid>
-                      <Grid size={2} className={"d-row-right"}>
-                        <Div className={"fs-0-6rem"}>
-                          {translate(localCurrency)}
-                        </Div>
-                      </Grid>
+                <Grid size={10} className={"d-row-left"}>
+                  <Div className={"fs-1-1rem fw-600 black me-5"}>
+                    {item.money_dateStart?.substring(5, 10)}
+                  </Div>
+                  <Div className={"fs-0-9rem fw-500 dark ms-5"}>
+                    {translate(getDayNotFmt(item.money_dateStart).format("ddd"))}
+                  </Div>
+                </Grid>
+              </Grid>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Grid container spacing={1} columns={12}>
+                {/** row 1 **/}
+                <Grid size={2} className={"d-center"}>
+                  <Img
+                    key={"money2"}
+                    src={"money2"}
+                    className={"w-15 h-15"}
+                  />
+                </Grid>
+                <Grid size={3} className={"d-row-left"}>
+                  <Div className={"fs-0-9rem fw-600 dark"}>
+                    {translate("income")}
+                  </Div>
+                </Grid>
+                <Grid size={7}>
+                  <Grid container spacing={1} columns={12}>
+                    <Grid size={10} className={"d-row-right"}>
+                      <Div className={`${item.money_total_income_color}`}>
+                        {numeral(item.money_total_income).format("0,0")}
+                      </Div>
                     </Grid>
-                  </Grid>
-                  <Hr px={10} />
-                  {/** row 2 **/}
-                  <Grid size={2} className={"d-center"}>
-                    <Img
-                    	key={"money2"}
-                    	src={"money2"}
-                    	className={"w-15 h-15"}
-                    />
-                  </Grid>
-                  <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
-                      {translate("expense")}
-                    </Div>
-                  </Grid>
-                  <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
-                      <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.money_total_expense_color}`}>
-                          {numeral(item.money_total_expense).format("0,0")}
-                        </Div>
-                      </Grid>
-                      <Grid size={2} className={"d-row-right"}>
-                        <Div className={"fs-0-6rem"}>
-                          {translate(localCurrency)}
-                        </Div>
-                      </Grid>
+                    <Grid size={2} className={"d-row-right"}>
+                      <Div className={"fs-0-6rem"}>
+                        {translate(localCurrency)}
+                      </Div>
                     </Grid>
                   </Grid>
                 </Grid>
-              </AccordionDetails>
-            </Accordion>
-          </Card>
-        ))
-      );
-      const emptyFragment = () => (
-        <Empty
-          SEND={SEND}
-          extra={"money"}
-        />
+                <Hr px={10} />
+                {/** row 2 **/}
+                <Grid size={2} className={"d-center"}>
+                  <Img
+                    key={"money2"}
+                    src={"money2"}
+                    className={"w-15 h-15"}
+                  />
+                </Grid>
+                <Grid size={3} className={"d-row-left"}>
+                  <Div className={"fs-0-9rem fw-600 dark"}>
+                    {translate("expense")}
+                  </Div>
+                </Grid>
+                <Grid size={7}>
+                  <Grid container spacing={1} columns={12}>
+                    <Grid size={10} className={"d-row-right"}>
+                      <Div className={`${item.money_total_expense_color}`}>
+                        {numeral(item.money_total_expense).format("0,0")}
+                      </Div>
+                    </Grid>
+                    <Grid size={2} className={"d-row-right"}>
+                      <Div className={"fs-0-6rem"}>
+                        {translate(localCurrency)}
+                      </Div>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </AccordionDetails>
+          </Accordion>
+        </Card>
       );
       return (
         <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              {COUNT.totalCnt === 0 ? emptyFragment() : listFragment(0)}
-            </Grid>
+            {OBJECT?.map((item: any, i: number) => (
+              <Grid size={12} key={`list-${i}`}>
+                {COUNT.totalCnt === 0 ? (
+                  <Empty extra={"money"} />
+                ) : (
+                  listFragment(item, i)
+                )}
+              </Grid>
+            ))}
           </Grid>
         </Card>
       );
@@ -240,7 +249,15 @@ export const MoneyList = () => {
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
-            {LOADING ? <Loading /> : listSection()}
+            {LOADING ? (
+              <>
+                <Loading />
+              </>
+            ) : (
+              <>
+                {listSection()}
+              </>
+            )}
           </Grid>
         </Grid>
       </Paper>

@@ -378,13 +378,13 @@ export const MoneyDetail = () => {
     );
     // 7-3. card
     const detailSection = () => {
-      const detailFragment = (i: number) => (
-        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={i}>
+      const detailFragment = (item: any, i: number) => (
+        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
           <Grid container spacing={1} columns={12}>
             <Grid size={6} className={"d-row-left"}>
               <Bg
                 badgeContent={i + 1}
-                bgcolor={bgColors?.[OBJECT?.money_section[i]?.money_part_idx]}
+                bgcolor={bgColors?.[item?.money_part_idx]}
               />
             </Grid>
             <Grid size={6} className={"d-row-right"}>
@@ -401,30 +401,26 @@ export const MoneyDetail = () => {
                 locked={LOCKED}
                 inputRef={REFS?.[i]?.money_part_idx}
                 error={ERRORS?.[i]?.money_part_idx}
-                value={
-                  moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_part
-                  ? OBJECT?.money_section[i]?.money_part_idx
-                  : 0
-                }
+                value={item?.money_part_idx ?? 0}
                 onChange={(e: any) => {
                   const newIndex = Number(e.target.value);
                   setOBJECT((prev: any) => ({
                     ...prev,
-                    money_section: prev.money_section?.map((item: any, idx: number) => (
+                    money_section: prev.money_section?.map((section: any, idx: number) => (
                       idx === i ? {
-                        ...item,
+                        ...section,
                         money_part_idx: newIndex,
                         money_part_val: moneyArray[newIndex]?.money_part,
                         money_title_idx: 0,
                         money_title_val: moneyArray[newIndex]?.money_title[0],
-                      } : item
-                    ))
+                      } : section
+                    )),
                   }));
                 }}
               >
-                {moneyArray?.map((item: any, idx: number) => (
+                {moneyArray?.map((part: any, idx: number) => (
                   <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
-                    {translate(item.money_part)}
+                    {translate(part.money_part)}
                   </MenuItem>
                 ))}
               </Select>
@@ -435,33 +431,25 @@ export const MoneyDetail = () => {
                 locked={LOCKED}
                 inputRef={REFS?.[i]?.money_title_idx}
                 error={ERRORS?.[i]?.money_title_idx}
-                value={
-                  moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title?.[OBJECT?.money_section[i]?.money_title_idx]
-                  ? OBJECT?.money_section[i]?.money_title_idx
-                  : 0
-                }
+                value={item?.money_title_idx ?? 0}
                 onChange={(e: any) => {
-                  const newTitleIdx = (
-                    Number(e.target.value)
-                  );
-                  const newTitleVal = (
-                    moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx]
-                  );
+                  const newTitleIdx = Number(e.target.value);
+                  const newTitleVal = moneyArray[item?.money_part_idx]?.money_title[newTitleIdx];
                   if (newTitleIdx >= 0 && newTitleVal) {
                     setOBJECT((prev: any) => ({
                       ...prev,
-                      money_section: prev.money_section?.map((item: any, idx: number) => (
+                      money_section: prev.money_section?.map((section: any, idx: number) => (
                         idx === i ? {
-                          ...item,
+                          ...section,
                           money_title_idx: newTitleIdx,
                           money_title_val: newTitleVal,
-                        } : item
-                      ))
+                        } : section
+                      )),
                     }));
                   }
                 }}
               >
-                {moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title?.map((title: any, idx: number) => (
+                {moneyArray[item?.money_part_idx]?.money_title?.map((title: any, idx: number) => (
                   <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
                     {translate(title)}
                   </MenuItem>
@@ -472,45 +460,26 @@ export const MoneyDetail = () => {
             <Grid size={12}>
               <Input
                 label={translate("amount")}
-                value={numeral(OBJECT?.money_section[i]?.money_amount).format("0,0")}
+                value={numeral(item?.money_amount).format("0,0")}
                 inputRef={REFS?.[i]?.money_amount}
                 error={ERRORS?.[i]?.money_amount}
                 locked={LOCKED}
-                startadornment={
-                  <Img
-                  	key={"money2"}
-                  	src={"money2"}
-                  	className={"w-16 h-16"}
-                  />
-                }
+                startadornment={<Img key={"money2"} src={"money2"} className={"w-16 h-16"} />}
                 endadornment={
                   localCurrency
                 }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
                   const newValue = value === "" ? 0 : Number(value);
-                  if (value === "") {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      money_section: prev.money_section?.map((item: any, idx: number) => (
-                        idx === i ? {
-                          ...item,
-                          money_amount: "0",
-                        } : item
-                      ))
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 9999999999) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      money_section: prev.money_section?.map((item: any, idx: number) => (
-                        idx === i ? {
-                          ...item,
-                          money_amount: String(newValue),
-                        } : item
-                      ))
-                    }));
-                  }
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    money_section: prev.money_section?.map((section: any, idx: number) => (
+                      idx === i ? {
+                        ...section,
+                        money_amount: String(newValue),
+                      } : section
+                    )),
+                  }));
                 }}
               />
             </Grid>
@@ -531,16 +500,17 @@ export const MoneyDetail = () => {
               <Checkbox
                 size={"small"}
                 className={"p-0 ms-5"}
-                checked={OBJECT?.money_section[i]?.money_include === "Y"}
+                checked={item?.money_include === "Y"}
+                disabled={LOCKED === "locked"}
                 onChange={(e: any) => {
                   setOBJECT((prev: any) => ({
                     ...prev,
-                    money_section: prev.money_section?.map((item: any, idx: number) => (
+                    money_section: prev.money_section?.map((section: any, idx: number) => (
                       idx === i ? {
-                        ...item,
+                        ...section,
                         money_include: e.target.checked ? "Y" : "N",
-                      } : item
-                    ))
+                      } : section
+                    )),
                   }));
                 }}
               />
@@ -550,14 +520,14 @@ export const MoneyDetail = () => {
       );
       return (
         <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              {COUNT?.newSectionCnt > 0 && (
-                OBJECT?.money_section?.map((_item: any, i: number) => (
-                  detailFragment(i)
-                ))
-              )}
-            </Grid>
+          <Grid container spacing={0} columns={12}>
+            {OBJECT?.money_section?.map((item: any, i: number) => (
+              <Grid size={12} key={`detail-${i}`}>
+                {COUNT?.newSectionCnt > 0 && (
+                  detailFragment(item, i)
+                )}
+              </Grid>
+            ))}
           </Grid>
         </Card>
       );
@@ -568,7 +538,11 @@ export const MoneyDetail = () => {
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {dateCountSection()}
-            {LOADING ? <Loading /> : (
+            {LOADING ? (
+              <>
+                <Loading />
+              </>
+            ) : (
               <>
                 {totalSection()}
                 {detailSection()}

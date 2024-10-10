@@ -7,13 +7,12 @@ import { Card, Accordion, AccordionSummary, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 declare type EmptyProps = {
-  SEND: any;
   extra: string;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const Empty = (
-  { SEND, extra }: EmptyProps
+  { extra }: EmptyProps
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
@@ -28,7 +27,7 @@ export const Empty = (
   const emptyNode = () => {
     // 1. isFindSection
     const isFindSection = () => (
-      <Card className={"border-1 radius-1"} key={`empty-${extra}`}>
+      <Card className={"border-1 radius-1"}>
         <Accordion className={"shadow-0"} expanded={false}>
           <AccordionSummary>
             <Grid container spacing={1} columns={12}>
@@ -49,7 +48,7 @@ export const Empty = (
     );
     // 2. nonFindSection
     const nonFindSection = () => (
-      <Card className={"border-1 radius-1"} key={`empty-${extra}`}>
+      <Card className={"border-1 radius-1"}>
         <Accordion className={"shadow-0"} expanded={false}>
           <AccordionSummary>
             <Grid container spacing={1} columns={12} onClick={(e: any) => {

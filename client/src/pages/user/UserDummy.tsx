@@ -6,7 +6,7 @@ import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { ExerciseGoal, Exercise } from "@imports/ImportSchemas";
 import { FoodGoal, Food } from "@imports/ImportSchemas";
 import { MoneyGoal, Money } from "@imports/ImportSchemas";
-import {  SleepGoal, Sleep } from "@imports/ImportSchemas";
+import { SleepGoal, Sleep } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div } from "@imports/ImportComponents";
@@ -187,8 +187,8 @@ export const UserDummy = () => {
   const userDummyNode = () => {
     // 7-1. exerciseGoal
     const exerciseGoalSection = () => {
-      const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius-1 p-0"} key={`exerciseGoal-${i}`}>
+      const dummyFragment = () => (
+        <Card className={"border-1 radius-1 p-0"}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -244,7 +244,7 @@ export const UserDummy = () => {
         <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
             <Grid size={12}>
-              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)}
+              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment()}
             </Grid>
           </Grid>
         </Card>
@@ -252,8 +252,8 @@ export const UserDummy = () => {
     };
     // 7-2. exercise
     const exerciseSection = () => {
-      const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius-1 p-0"} key={`exercise-${i}`}>
+      const dummyFragment = () => (
+        <Card className={"border-1 radius-1 p-0"}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -305,7 +305,7 @@ export const UserDummy = () => {
         <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
             <Grid size={12}>
-              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)}
+              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment()}
             </Grid>
           </Grid>
         </Card>
@@ -313,8 +313,8 @@ export const UserDummy = () => {
     };
     // 7-3. foodGoal
     const foodGoalSection = () => {
-      const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius-1 p-0"} key={`foodGoal-${i}`}>
+      const dummyFragment = () => (
+        <Card className={"border-1 radius-1 p-0"}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -370,7 +370,7 @@ export const UserDummy = () => {
         <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
             <Grid size={12}>
-              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)}
+              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment()}
             </Grid>
           </Grid>
         </Card>
@@ -378,8 +378,8 @@ export const UserDummy = () => {
     };
     // 7-4. food
     const foodSection = () => {
-      const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius-1 p-0"} key={`food-${i}`}>
+      const dummyFragment = () => (
+        <Card className={"border-1 radius-1 p-0"}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -435,7 +435,7 @@ export const UserDummy = () => {
         <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
             <Grid size={12}>
-              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)}
+              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment()}
             </Grid>
           </Grid>
         </Card>
@@ -443,8 +443,8 @@ export const UserDummy = () => {
     };
     // 7-5. moneyGoal
     const moneyGoalSection = () => {
-      const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius-1 p-0"} key={`moneyGoal-${i}`}>
+      const dummyFragment = () => (
+        <Card className={"border-1 radius-1 p-0"}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -492,7 +492,7 @@ export const UserDummy = () => {
         <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
             <Grid size={12}>
-              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)}
+              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment()}
             </Grid>
           </Grid>
         </Card>
@@ -500,8 +500,8 @@ export const UserDummy = () => {
     };
     // 7-6. money
     const moneySection = () => {
-      const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius-1 p-0"} key={`money-${i}`}>
+      const dummyFragment = () => (
+        <Card className={"border-1 radius-1 p-0"}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -549,7 +549,7 @@ export const UserDummy = () => {
         <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
             <Grid size={12}>
-              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)}
+              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment()}
             </Grid>
           </Grid>
         </Card>
@@ -557,8 +557,8 @@ export const UserDummy = () => {
     };
     // 7-7. sleepGoal
     const sleepGoalSection = () => {
-      const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius-1 p-0"} key={`sleepGoal-${i}`}>
+      const dummyFragment = () => (
+        <Card className={"border-1 radius-1 p-0"}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -610,7 +610,7 @@ export const UserDummy = () => {
         <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
             <Grid size={12}>
-              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)}
+              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment()}
             </Grid>
           </Grid>
         </Card>
@@ -618,8 +618,8 @@ export const UserDummy = () => {
     };
     // 7-8. sleep
     const sleepSection = () => {
-      const dummyFragment = (i: number) => (
-        <Card className={"border-1 radius-1 p-0"} key={`sleep-${i}`}>
+      const dummyFragment = () => (
+        <Card className={"border-1 radius-1 p-0"}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -671,7 +671,7 @@ export const UserDummy = () => {
         <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
             <Grid size={12}>
-              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment(0)}
+              {COUNT.totalCnt === 0 ? emptyFragment() : dummyFragment()}
             </Grid>
           </Grid>
         </Card>
@@ -682,7 +682,11 @@ export const UserDummy = () => {
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 shadow-1 h-min84vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
-            {LOADING ? <Loading /> : (
+            {LOADING ? (
+              <>
+                <Loading />
+              </>
+            ) : (
               <>
                 {PART === "exerciseGoal" && exerciseGoalSection()}
                 {PART === "exercise" && exerciseSection()}

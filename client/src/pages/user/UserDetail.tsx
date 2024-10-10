@@ -103,16 +103,16 @@ export const UserDetail = () => {
         </Grid>
       </Card>
     );
-    // 7-2. card
+    // 7-2. detail
     const detailSection = () => {
-      const detailFragment = (i: number) => (
-        <Card className={"p-10"} key={`detail-${i}`}>
+      const detailFragment = (item: any, i: number) => (
+        <Card className={"p-10"}>
           <Grid container spacing={1} columns={12}>
             {/** 아이디 **/}
             <Grid size={12}>
               <Input
                 label={translate("id")}
-                value={OBJECT?.user_id}
+                value={item?.user_id}
                 disabled={true}
               />
             </Grid>
@@ -121,7 +121,7 @@ export const UserDetail = () => {
             <Grid size={12}>
               <Input
                 label={translate("regDt")}
-                value={OBJECT?.user_regDt.split("T")[0]}
+                value={item?.user_regDt.split("T")[0]}
                 disabled={true}
               />
             </Grid>
@@ -130,7 +130,7 @@ export const UserDetail = () => {
             <Grid size={12}>
               <Input
                 label={translate("initScale")}
-                value={OBJECT.user_initScale}
+                value={item.user_initScale}
                 inputRef={REFS?.[i]?.user_initScale}
                 error={ERRORS?.[i]?.user_initScale}
                 startadornment={
@@ -140,7 +140,9 @@ export const UserDetail = () => {
                   	className={"w-16 h-16"}
                   />
                 }
-                endadornment={translate("k")}
+                endadornment={
+                  translate("k")
+                }
                 onChange={(e: any) => {
                   const value = e.target.value;
                   const newValue = value.startsWith("0") ? value.slice(1) : value;
@@ -164,7 +166,8 @@ export const UserDetail = () => {
             <Grid size={12}>
               <Input
                 label={translate("curScale")}
-                value={OBJECT.user_curScale}
+                value={item.user_curScale}
+                disabled={true}
                 startadornment={
                   <Img
                   	key={"exercise5"}
@@ -172,8 +175,9 @@ export const UserDetail = () => {
                   	className={"w-16 h-16"}
                   />
                 }
-                endadornment={translate("k")}
-                readOnly={true}
+                endadornment={
+                  translate("k")
+                }
               />
             </Grid>
             <Hr px={20} />
@@ -181,7 +185,7 @@ export const UserDetail = () => {
             <Grid size={12}>
               <Input
                 label={translate("initProperty")}
-                value={numeral(OBJECT.user_initProperty).format("0,0")}
+                value={numeral(item.user_initProperty).format("0,0")}
                 inputRef={REFS?.[i]?.user_initProperty}
                 error={ERRORS?.[i]?.user_initProperty}
                 startadornment={
@@ -191,7 +195,9 @@ export const UserDetail = () => {
                   	className={"w-16 h-16"}
                   />
                 }
-                endadornment={localCurrency}
+                endadornment={
+                  localCurrency
+                }
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');
                   const newValue = value === "" ? 0 : Number(value);
@@ -215,12 +221,12 @@ export const UserDetail = () => {
             <Grid size={12}>
               <Input
                 label={translate("curProperty")}
-                readOnly={true}
+                disabled={true}
                 value={
                   includingExclusions ? (
-                    numeral(OBJECT.user_curPropertyInclude).format("0,0")
+                    numeral(item.user_curPropertyInclude).format("0,0")
                   ) : (
-                    numeral(OBJECT.user_curPropertyExclude).format("0,0")
+                    numeral(item.user_curPropertyExclude).format("0,0")
                   )
                 }
                 startadornment={
@@ -256,8 +262,8 @@ export const UserDetail = () => {
       return (
         <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              {detailFragment(0)}
+            <Grid size={12} key={`detail-${0}`}>
+              {detailFragment(OBJECT, 0)}
             </Grid>
           </Grid>
         </Card>
@@ -268,7 +274,11 @@ export const UserDetail = () => {
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
-            {LOADING ? <Loading /> : (
+            {LOADING ? (
+              <>
+                <Loading />
+              </>
+            ) : (
               <>
                 {imageSection()}
                 <Hr px={40} />

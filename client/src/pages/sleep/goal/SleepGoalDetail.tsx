@@ -273,8 +273,8 @@ export const SleepGoalDetail = () => {
     );
     // 7-3. detail
     const detailSection = () => {
-      const detailFragment = (i: number) => (
-        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={i}>
+      const detailFragment = (item: any, i: number) => (
+        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
           <Grid container spacing={1} columns={12}>
             <Grid size={6} className={"d-row-left"}>
               <Bg
@@ -292,7 +292,7 @@ export const SleepGoalDetail = () => {
             <Br px={1} />
             <Grid size={12}>
               <PickerTime
-                OBJECT={OBJECT}
+                OBJECT={item}
                 setOBJECT={setOBJECT}
                 REFS={REFS}
                 ERRORS={ERRORS}
@@ -305,7 +305,7 @@ export const SleepGoalDetail = () => {
             <Br px={1} />
             <Grid size={12}>
               <PickerTime
-                OBJECT={OBJECT}
+                OBJECT={item}
                 setOBJECT={setOBJECT}
                 REFS={REFS}
                 ERRORS={ERRORS}
@@ -318,7 +318,7 @@ export const SleepGoalDetail = () => {
             <Br px={1} />
             <Grid size={12}>
               <PickerTime
-                OBJECT={OBJECT}
+                OBJECT={item}
                 setOBJECT={setOBJECT}
                 REFS={REFS}
                 ERRORS={ERRORS}
@@ -333,10 +333,10 @@ export const SleepGoalDetail = () => {
       );
       return (
         <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
+          <Grid container spacing={0} columns={12}>
+            <Grid size={12} key={`detail`}>
               {COUNT?.newSectionCnt > 0 && (
-                detailFragment(0)
+                detailFragment(OBJECT, 0)
               )}
             </Grid>
           </Grid>
@@ -349,7 +349,15 @@ export const SleepGoalDetail = () => {
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {dateCountSection()}
-            {LOADING ? <Loading /> : detailSection()}
+            {LOADING ? (
+              <>
+                <Loading />
+              </>
+            ) : (
+              <>
+                {detailSection()}
+              </>
+            )}
           </Grid>
         </Grid>
       </Paper>

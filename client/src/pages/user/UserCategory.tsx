@@ -258,8 +258,8 @@ export const UserCategory = () => {
   // 7. userCategory -------------------------------------------------------------------------------
   const userCategoryNode = () => {
     // 7-1. popup
-    const popupSection = (i: number) => (
-      <Card className={"w-85vw h-60vh d-row border-1 radius-1 p-0"} key={`category2-${i}`}>
+    const popupSection = () => (
+      <Card className={"w-85vw h-60vh d-row border-1 radius-1 p-0"}>
         <TableContainer className={"border-right-1 over-x-hidden"}>
           <Table>
             <TableHead className={"table-thead"}>
@@ -377,7 +377,7 @@ export const UserCategory = () => {
           </Table>
         </TableContainer>
         {(dataType === "exercise" || dataType === "money") && (
-          <TableContainer className={"border-left-1 over-x-hidden"} key={`category3-${i}`}>
+          <TableContainer className={"border-left-1 over-x-hidden"}>
             <Table>
               <TableHead className={"table-thead"}>
                 <TableRow className={"table-thead-tr p-sticky top-0 z-900"}>
@@ -490,10 +490,10 @@ export const UserCategory = () => {
         )}
       </Card>
     );
-    // 7-2. card
+    // 7-2. detail
     const detailSection = () => {
-      const detailFragment = (i: number) => (
-        <Card className={"border-1 radius-1 p-0"} key={`category1-${i}`}>
+      const detailFragment = (item: any) => (
+        <Card className={"border-1 radius-1 p-0"}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -504,8 +504,8 @@ export const UserCategory = () => {
                 </TableRow>
               </TableHead>
               <TableBody className={"table-tbody"}>
-                {Object.keys(OBJECT).map((item: any, index: number) => (
-                  <TableRow className={"table-tbody-tr border-top-1"} key={index}>
+                {Object.keys(item).map((item: any, idx: number) => (
+                  <TableRow className={"table-tbody-tr border-top-1"} key={idx}>
                     <TableCell className={`${dataType === item ? "bg-light" : ""}`}>
                       <Div className={"d-center"}>
                         <Div className={"fs-1-0rem ms-0"}>
@@ -517,7 +517,7 @@ export const UserCategory = () => {
                           position={"center"}
                           direction={"center"}
                           contents={
-                            popupSection(i)
+                            popupSection()
                           }
                         >
                           {(popTrigger: any) => (
@@ -529,7 +529,7 @@ export const UserCategory = () => {
                                 setDataType(item);
                                 setSelectedIdx((prev: any) => ({
                                   ...prev,
-                                  category1Idx: index,
+                                  category1Idx: idx,
                                   category2Idx: 1,
                                   category3Idx: 1
                                 }));
@@ -551,8 +551,8 @@ export const UserCategory = () => {
       return (
         <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              {detailFragment(0)}
+            <Grid size={12} key={`detail-${0}`}>
+              {detailFragment(OBJECT)}
             </Grid>
           </Grid>
         </Card>
@@ -563,7 +563,15 @@ export const UserCategory = () => {
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min90vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
-            {LOADING ? <Loading /> : detailSection()}
+            {LOADING ? (
+              <>
+                <Loading />
+              </>
+            ) : (
+              <>
+                {detailSection()}
+              </>
+            )}
           </Grid>
         </Grid>
       </Paper>

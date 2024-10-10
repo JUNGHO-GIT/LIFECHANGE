@@ -74,7 +74,57 @@ export const CalendarList = () => {
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
 
-    // 7-1. dateInRange
+    // 7-1. title
+    const titleSection = () => (
+      <Card className={"p-0 mb-20"}>
+        <Grid container spacing={1} columns={12}>
+          <Grid size={3} className={"d-row-left"}>
+            <Icons
+              key={"ArrowLeft"}
+              name={"ArrowLeft"}
+              className={"w-24 h-24"}
+              onClick={() => {
+                setDATE((prev: any) => ({
+                  ...prev,
+                  dateStart: getPrevMonthStartFmt(prev.dateStart),
+                  dateEnd: getPrevMonthEndFmt(prev.dateStart),
+                }));
+              }}
+            />
+          </Grid>
+          <Grid size={6} className={"d-row-center"}>
+            <Div
+              className={"fs-1-4rem fw-500"}
+              onClick={() => {
+                setDATE((prev: any) => ({
+                  ...prev,
+                  dateStart: getMonthStartFmt(),
+                  dateEnd: getMonthEndFmt(),
+                }));
+              }}
+            >
+              {getDayNotFmt(DATE.dateStart).format("YYYY-MM")}
+            </Div>
+          </Grid>
+          <Grid size={3} className={"d-row-right"}>
+            <Icons
+              key={"ArrowRight"}
+              name={"ArrowRight"}
+              className={"w-24 h-24"}
+              onClick={() => {
+                setDATE((prev: any) => ({
+                  ...prev,
+                  dateStart: getNextMonthStartFmt(prev.dateStart),
+                  dateEnd: getNextMonthEndFmt(prev.dateStart),
+                }));
+              }}
+            />
+          </Grid>
+        </Grid>
+      </Card>
+    );
+
+    // 7-2. dateInRange
     const dateInRange = (date: any, dateStart: any, dateEnd: any) => {
       const dayFmt = getDayFmt(date);
       const dayStart = getDayStartFmt(dateStart);
@@ -83,7 +133,7 @@ export const CalendarList = () => {
       return dayFmt >= dayStart && dayFmt <= dayEnd;
     };
 
-    // 7-2. activeLine
+    // 7-3. activeLine
     const activeLine = (calendarForDates: any) => (
       calendarForDates?.map((calendar: any) =>
         calendar.calendar_section?.map((section: any) => (
@@ -114,7 +164,7 @@ export const CalendarList = () => {
       )
     );
 
-    // 7-3. unActiveLine
+    // 7-4. unActiveLine
     const unActiveLine = (calendarForDates: any) => (
       calendarForDates?.map((calendar: any) =>
         calendar.calendar_section.map((section: any) => (
@@ -126,59 +176,9 @@ export const CalendarList = () => {
         ))
       )
     );
-
-    // 7-4. title
-    const titleSection = (i: number) => (
-      <Card className={"p-0 mb-20"} key={`title-${i}`}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={3} className={"d-row-left"}>
-            <Icons
-              key={"ArrowLeft"}
-              name={"ArrowLeft"}
-              className={"w-24 h-24"}
-              onClick={() => {
-                setDATE((prev: any) => ({
-                  ...prev,
-                  dateStart: getPrevMonthStartFmt(prev.dateStart),
-                  dateEnd: getPrevMonthEndFmt(prev.dateStart),
-                }));
-              }}
-            />
-          </Grid>
-          <Grid size={6} className={"d-row-center"}>
-            <Div
-              className={"fs-1-4rem fw-500"}
-              onClick={() => {
-                setDATE((prev: any) => ({
-                  ...prev,
-                  dateStart: getMonthStartFmt(DATE.dateStart),
-                  dateEnd: getMonthEndFmt(DATE.dateStart),
-                }));
-              }}
-            >
-              {getDayNotFmt(DATE.dateStart).format("YYYY-MM")}
-            </Div>
-          </Grid>
-          <Grid size={3} className={"d-row-right"}>
-            <Icons
-              key={"ArrowRight"}
-              name={"ArrowRight"}
-              className={"w-24 h-24"}
-              onClick={() => {
-                setDATE((prev: any) => ({
-                  ...prev,
-                  dateStart: getNextMonthStartFmt(prev.dateStart),
-                  dateEnd: getNextMonthEndFmt(prev.dateStart),
-                }));
-              }}
-            />
-          </Grid>
-        </Grid>
-      </Card>
-    );
     // 7-5. calendar
-    const calendarSection = (i: number) => (
-      <Card className={"p-0"} key={`calendar-${i}`}>
+    const calendarSection = () => (
+      <Card className={"p-0"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12} className={"d-row-center"}>
             <CalendarReact
@@ -291,8 +291,8 @@ export const CalendarList = () => {
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
-            {titleSection(0)}
-            {calendarSection(0)}
+            {titleSection()}
+            {calendarSection()}
           </Grid>
         </Grid>
       </Paper>

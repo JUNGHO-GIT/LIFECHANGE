@@ -270,8 +270,8 @@ export const ExerciseGoalDetail = () => {
     );
     // 7-3. detail
     const detailSection = () => {
-      const detailFragment = (i: number) => (
-        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={i}>
+      const detailFragment = (item: any, i: number) => (
+        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
           <Grid container spacing={1} columns={12}>
             <Grid size={6} className={"d-row-left"}>
               <Bg
@@ -289,7 +289,7 @@ export const ExerciseGoalDetail = () => {
             <Br px={1} />
             <Grid size={12}>
               <Input
-                value={numeral(OBJECT?.exercise_goal_count).format("0,0")}
+                value={numeral(item?.exercise_goal_count).format("0,0")}
                 inputRef={REFS?.[i]?.exercise_goal_count}
                 error={ERRORS?.[i]?.exercise_goal_count}
                 locked={LOCKED}
@@ -331,7 +331,7 @@ export const ExerciseGoalDetail = () => {
             <Br px={1} />
             <Grid size={12}>
               <Input
-                value={numeral(OBJECT?.exercise_goal_volume).format("0,0")}
+                value={numeral(item?.exercise_goal_volume).format("0,0")}
                 inputRef={REFS?.[i]?.exercise_goal_volume}
                 error={ERRORS?.[i]?.exercise_goal_volume}
                 locked={LOCKED}
@@ -373,7 +373,7 @@ export const ExerciseGoalDetail = () => {
             <Br px={1} />
             <Grid size={12}>
               <PickerTime
-                OBJECT={OBJECT}
+                OBJECT={item}
                 setOBJECT={setOBJECT}
                 REFS={REFS}
                 ERRORS={ERRORS}
@@ -387,7 +387,7 @@ export const ExerciseGoalDetail = () => {
             <Grid size={12}>
               <Input
                 label={translate("goalWeight")}
-                value={OBJECT?.exercise_goal_weight}
+                value={item?.exercise_goal_weight}
                 inputRef={REFS?.[i]?.exercise_goal_weight}
                 error={ERRORS?.[i]?.exercise_goal_weight}
                 locked={LOCKED}
@@ -424,10 +424,10 @@ export const ExerciseGoalDetail = () => {
       );
       return (
         <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
+          <Grid container spacing={0} columns={12}>
+            <Grid size={12} key={`detail`}>
               {COUNT?.newSectionCnt > 0 && (
-                detailFragment(0)
+                detailFragment(OBJECT, 0)
               )}
             </Grid>
           </Grid>
@@ -440,7 +440,15 @@ export const ExerciseGoalDetail = () => {
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {dateCountSection()}
-            {LOADING ? <Loading /> : detailSection()}
+            {LOADING ? (
+              <>
+                <Loading />
+              </>
+            ) : (
+              <>
+                {detailSection()}
+              </>
+            )}
           </Grid>
         </Grid>
       </Paper>

@@ -267,8 +267,8 @@ export const FoodGoalDetail = () => {
     );
     // 7-3. detail
     const detailSection = () => {
-      const detailFragment = (i: number) => (
-        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={i}>
+      const detailFragment = (item: any, i: number) => (
+        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
           <Grid container spacing={1} columns={12}>
             <Grid size={6} className={"d-row-left"}>
               <Bg
@@ -286,7 +286,7 @@ export const FoodGoalDetail = () => {
             <Br px={1} />
             <Grid size={12}>
               <Input
-                value={numeral(OBJECT?.food_goal_kcal).format("0,0")}
+                value={numeral(item?.food_goal_kcal).format("0,0")}
                 inputRef={REFS?.[i]?.food_goal_kcal}
                 error={ERRORS?.[i]?.food_goal_kcal}
                 locked={LOCKED}
@@ -328,7 +328,7 @@ export const FoodGoalDetail = () => {
             <Br px={1} />
             <Grid size={12}>
               <Input
-                value={numeral(OBJECT?.food_goal_carb).format("0,0")}
+                value={numeral(item?.food_goal_carb).format("0,0")}
                 inputRef={REFS?.[i]?.food_goal_carb}
                 error={ERRORS?.[i]?.food_goal_carb}
                 locked={LOCKED}
@@ -370,7 +370,7 @@ export const FoodGoalDetail = () => {
             <Br px={1} />
             <Grid size={12}>
               <Input
-                value={numeral(OBJECT?.food_goal_protein).format("0,0")}
+                value={numeral(item?.food_goal_protein).format("0,0")}
                 inputRef={REFS?.[i]?.food_goal_protein}
                 error={ERRORS?.[i]?.food_goal_protein}
                 locked={LOCKED}
@@ -412,7 +412,7 @@ export const FoodGoalDetail = () => {
             <Br px={1} />
             <Grid size={12}>
               <Input
-                value={numeral(OBJECT?.food_goal_fat).format("0,0")}
+                value={numeral(item?.food_goal_fat).format("0,0")}
                 inputRef={REFS?.[i]?.food_goal_fat}
                 error={ERRORS?.[i]?.food_goal_fat}
                 locked={LOCKED}
@@ -456,10 +456,10 @@ export const FoodGoalDetail = () => {
       );
       return (
         <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
+          <Grid container spacing={0} columns={12}>
+            <Grid size={12} key={`detail`}>
               {COUNT?.newSectionCnt > 0 && (
-                detailFragment(0)
+                detailFragment(OBJECT, 0)
               )}
             </Grid>
           </Grid>
@@ -472,7 +472,15 @@ export const FoodGoalDetail = () => {
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {dateCountSection()}
-            {LOADING ? <Loading /> : detailSection()}
+            {LOADING ? (
+              <>
+                <Loading />
+              </>
+            ) : (
+              <>
+                {detailSection()}
+              </>
+            )}
           </Grid>
         </Grid>
       </Paper>
