@@ -267,9 +267,9 @@ export const ExerciseDetail = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowDelete = () => {
+  const flowDelete = async () => {
     setLOADING(true);
-    if (!validate(OBJECT, COUNT, "delete")) {
+    if (!await validate(OBJECT, COUNT, "delete")) {
       setLOADING(false);
       return;
     }

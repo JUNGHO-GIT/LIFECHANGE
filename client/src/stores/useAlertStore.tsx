@@ -9,7 +9,9 @@ declare type AlertState = {
     msg: string;
     severity: 'success' | 'error' | 'warning' | 'info';
   };
-  setALERT: (payload: Partial<AlertState['ALERT']>) => void;
+  setALERT: (
+    payload: Partial<AlertState['ALERT']>
+  ) => void;
 }
 
 // -------------------------------------------------------------------------------------------------

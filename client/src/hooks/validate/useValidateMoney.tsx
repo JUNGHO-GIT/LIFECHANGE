@@ -40,7 +40,7 @@ export const useValidateMoney = () => {
   };
 
   // 7. validate -----------------------------------------------------------------------------------
-  validate.current = (OBJECT: any, COUNT: any, extra: string) => {
+  validate.current = async (OBJECT: any, COUNT: any, extra: string) => {
 
     // 1. goal -----------------------------------------------------------------------------------
     if (extra === "goal") {
@@ -143,22 +143,24 @@ export const useValidateMoney = () => {
           }), {})
         ))
       );
-
-      setCONFIRM({
-        open: !CONFIRM.open,
-        confirm: false,
-        msg: translate("deleteConfirm"),
-      }, (confirmed: boolean) => {
-        if (!confirmed) {
-          return;
-        }
-        else {
-          if (!OBJECT?._id || OBJECT?._id === "") {
-            return showAlertAndFocus("", "noData", 0);
-          }
-          return true;
-        }
+      const confirmResult = new Promise((resolve) => {
+        setCONFIRM({
+          open: !CONFIRM.open,
+          msg: translate("confirmDelete"),
+        }, (confirmed: boolean) => {
+          resolve(confirmed);
+        });
       });
+
+      if (await confirmResult) {
+        if (!OBJECT?._id || OBJECT?._id === "") {
+          return showAlertAndFocus("", "noData", 0);
+        }
+        return true;
+      }
+      else {
+        return false;
+      }
     }
   };
 
