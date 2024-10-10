@@ -327,7 +327,7 @@ export const SleepDetail = () => {
             <Br px={1} />
             <Grid size={12}>
               <PickerTime
-                OBJECT={OBJECT}
+                OBJECT={item}
                 setOBJECT={setOBJECT}
                 REFS={REFS}
                 ERRORS={ERRORS}
@@ -340,7 +340,7 @@ export const SleepDetail = () => {
             <Br px={1} />
             <Grid size={12}>
               <PickerTime
-                OBJECT={OBJECT}
+                OBJECT={item}
                 setOBJECT={setOBJECT}
                 REFS={REFS}
                 ERRORS={ERRORS}
@@ -353,7 +353,7 @@ export const SleepDetail = () => {
             <Br px={1} />
             <Grid size={12}>
               <PickerTime
-                OBJECT={OBJECT}
+                OBJECT={item}
                 setOBJECT={setOBJECT}
                 REFS={REFS}
                 ERRORS={ERRORS}
@@ -369,7 +369,7 @@ export const SleepDetail = () => {
       return (
         <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
-            {OBJECT?.sleep_section?.map((item: any, i: number) => (
+            {OBJECT?.map((item: any, i: number) => (
               <Grid size={12} key={`detail-${i}`}>
                 {COUNT?.newSectionCnt > 0 && (
                   detailFragment(item, i)

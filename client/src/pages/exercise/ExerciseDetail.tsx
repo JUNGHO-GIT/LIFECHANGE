@@ -426,13 +426,13 @@ export const ExerciseDetail = () => {
     );
     // 7-3. detail
     const detailSection = () => {
-      const detailFragment = (i: number) => (
+      const detailFragment = (item: any, i: number) => (
         <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
           <Grid container spacing={1} columns={12}>
             <Grid size={6} className={"d-row-left"}>
               <Bg
                 badgeContent={i + 1}
-                bgcolor={bgColors?.[OBJECT?.exercise_section[i]?.exercise_part_idx]}
+                bgcolor={bgColors?.[item?.exercise_part_idx]}
               />
             </Grid>
             <Grid size={6} className={"d-row-right"}>
@@ -449,30 +449,26 @@ export const ExerciseDetail = () => {
                 locked={LOCKED}
                 inputRef={REFS?.[i]?.exercise_part_idx}
                 error={ERRORS?.[i]?.exercise_part_idx}
-                value={
-                  exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_part
-                  ? OBJECT?.exercise_section[i]?.exercise_part_idx
-                  : 0
-                }
+                value={item?.exercise_part_idx ?? 0}
                 onChange={(e: any) => {
                   const newIndex = Number(e.target.value);
                   setOBJECT((prev: any) => ({
                     ...prev,
-                    exercise_section: prev.exercise_section?.map((item: any, idx: number) => (
+                    exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
                       idx === i ? {
                         ...item,
                         exercise_part_idx: newIndex,
                         exercise_part_val: exerciseArray[newIndex]?.exercise_part,
                         exercise_title_idx: 0,
                         exercise_title_val: exerciseArray[newIndex]?.exercise_title[0],
-                      } : item
+                      } : section
                     ))
                   }));
                 }}
               >
-                {exerciseArray?.map((item: any, idx: number) => (
+                {exerciseArray?.map((part: any, idx: number) => (
                   <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
-                    {translate(item.exercise_part)}
+                    {translate(part?.exercise_part)}
                   </MenuItem>
                 ))}
               </Select>
@@ -483,33 +479,25 @@ export const ExerciseDetail = () => {
                 locked={LOCKED}
                 inputRef={REFS?.[i]?.exercise_title_idx}
                 error={ERRORS?.[i]?.exercise_title_idx}
-                value={
-                  exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title?.[OBJECT?.exercise_section[i]?.exercise_title_idx]
-                  ? OBJECT?.exercise_section[i]?.exercise_title_idx
-                  : 0
-                }
+                value={item?.exercise_title_idx ?? 0}
                 onChange={(e: any) => {
-                  const newTitleIdx = (
-                    Number(e.target.value)
-                  );
-                  const newTitleVal = (
-                    exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title[newTitleIdx]
-                  );
+                  const newTitleIdx = Number(e.target.value);
+                  const newTitleVal = exerciseArray[item?.exercise_part_idx]?.exercise_title[newTitleIdx];
                   if (newTitleIdx >= 0 && newTitleVal) {
                     setOBJECT((prev: any) => ({
                       ...prev,
-                      exercise_section: prev.exercise_section?.map((item: any, idx: number) => (
+                      exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
                         idx === i ? {
                           ...item,
                           exercise_title_idx: newTitleIdx,
                           exercise_title_val: newTitleVal,
-                        } : item
+                        } : section
                       ))
                     }));
                   }
                 }}
               >
-                {exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title?.map((title: any, idx: number) => (
+                {exerciseArray[item?.exercise_part_idx]?.exercise_title?.map((title: any, idx: number) => (
                   <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
                     {translate(title)}
                   </MenuItem>
@@ -520,7 +508,7 @@ export const ExerciseDetail = () => {
             <Grid size={6}>
               <Input
                 label={translate("set")}
-                value={numeral(OBJECT?.exercise_section[i]?.exercise_set).format("0,0")}
+                value={numeral(item?.exercise_set).format("0,0")}
                 inputRef={REFS?.[i]?.exercise_set}
                 error={ERRORS?.[i]?.exercise_set}
                 locked={LOCKED}
@@ -540,22 +528,22 @@ export const ExerciseDetail = () => {
                   if (value === "") {
                     setOBJECT((prev: any) => ({
                       ...prev,
-                      exercise_section: prev.exercise_section?.map((item: any, idx: number) => (
+                      exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
                         idx === i ? {
                           ...item,
                           exercise_set: "0"
-                        } : item
+                        } : section
                       ))
                     }));
                   }
                   else if (!isNaN(newValue) && newValue <= 999) {
                     setOBJECT((prev: any) => ({
                       ...prev,
-                      exercise_section: prev.exercise_section?.map((item: any, idx: number) => (
+                      exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
                         idx === i ? {
                           ...item,
                           exercise_set: String(newValue)
-                        } : item
+                        } : section
                       ))
                     }));
                   }
@@ -565,7 +553,7 @@ export const ExerciseDetail = () => {
             <Grid size={6}>
               <Input
                 label={translate("rep")}
-                value={numeral(OBJECT?.exercise_section[i]?.exercise_rep).format("0,0")}
+                value={numeral(item?.exercise_rep).format("0,0")}
                 inputRef={REFS?.[i]?.exercise_rep}
                 error={ERRORS?.[i]?.exercise_rep}
                 locked={LOCKED}
@@ -585,22 +573,22 @@ export const ExerciseDetail = () => {
                   if (value === "") {
                     setOBJECT((prev: any) => ({
                       ...prev,
-                      exercise_section: prev.exercise_section?.map((item: any, idx: number) => (
+                      exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
                         idx === i ? {
                           ...item,
                           exercise_rep: "0"
-                        } : item
+                        } : section
                       ))
                     }));
                   }
                   else if (!isNaN(newValue) && newValue <= 999) {
                     setOBJECT((prev: any) => ({
                       ...prev,
-                      exercise_section: prev.exercise_section?.map((item: any, idx: number) => (
+                      exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
                         idx === i ? {
                           ...item,
                           exercise_rep: String(newValue)
-                        } : item
+                        } : section
                       ))
                     }));
                   }
@@ -611,7 +599,7 @@ export const ExerciseDetail = () => {
             <Grid size={6}>
               <Input
                 label={translate("kg")}
-                value={numeral(OBJECT?.exercise_section[i]?.exercise_kg).format("0,0")}
+                value={numeral(item?.exercise_kg).format("0,0")}
                 inputRef={REFS?.[i]?.exercise_kg}
                 error={ERRORS?.[i]?.exercise_kg}
                 locked={LOCKED}
@@ -631,22 +619,22 @@ export const ExerciseDetail = () => {
                   if (value === "") {
                     setOBJECT((prev: any) => ({
                       ...prev,
-                      exercise_section: prev.exercise_section?.map((item: any, idx: number) => (
+                      exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
                         idx === i ? {
                           ...item,
                           exercise_kg: "0"
-                        } : item
+                        } : section
                       ))
                     }));
                   }
                   else if (!isNaN(newValue) && newValue <= 999) {
                     setOBJECT((prev: any) => ({
                       ...prev,
-                      exercise_section: prev.exercise_section?.map((item: any, idx: number) => (
+                      exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
                         idx === i ? {
                           ...item,
                           exercise_kg: String(newValue)
-                        } : item
+                        } : section
                       ))
                     }));
                   }
@@ -670,14 +658,14 @@ export const ExerciseDetail = () => {
       );
       return (
         <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              {COUNT?.newSectionCnt > 0 && (
-                OBJECT?.exercise_section?.map((_item: any, i: number) => (
-                  detailFragment(i)
-                ))
-              )}
-            </Grid>
+          <Grid container spacing={0} columns={12}>
+            {OBJECT?.exercise_section?.map((item: any, i: number) => (
+              <Grid size={12} key={`detail-${i}`}>
+                {COUNT?.newSectionCnt > 0 && (
+                  detailFragment(item, i)
+                )}
+              </Grid>
+            ))}
           </Grid>
         </Card>
       );

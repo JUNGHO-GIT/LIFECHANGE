@@ -464,7 +464,13 @@ export const MoneyDetail = () => {
                 inputRef={REFS?.[i]?.money_amount}
                 error={ERRORS?.[i]?.money_amount}
                 locked={LOCKED}
-                startadornment={<Img key={"money2"} src={"money2"} className={"w-16 h-16"} />}
+                startadornment={
+                  <Img
+                    key={"money2"}
+                    src={"money2"}
+                    className={"w-16 h-16"}
+                  />
+                }
                 endadornment={
                   localCurrency
                 }

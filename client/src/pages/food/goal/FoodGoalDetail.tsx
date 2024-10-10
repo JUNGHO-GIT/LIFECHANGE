@@ -457,7 +457,7 @@ export const FoodGoalDetail = () => {
       return (
         <Card className={"p-0"}>
           <Grid container spacing={0} columns={12}>
-            <Grid size={12} key={`detail`}>
+            <Grid size={12} key={`detail-${0}`}>
               {COUNT?.newSectionCnt > 0 && (
                 detailFragment(OBJECT, 0)
               )}

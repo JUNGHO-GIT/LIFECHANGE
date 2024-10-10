@@ -22,7 +22,7 @@ export const Dialog = (
 
   // 1. common -------------------------------------------------------------------------------------
   const { PATH, navigate, toDetail, localIsoCode } = useCommonValue();
-  const { getDayFmt } = useCommonDate();
+  const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
   // 2-1. useState ---------------------------------------------------------------------------------
@@ -36,8 +36,8 @@ export const Dialog = (
 
   // 7. dialog -------------------------------------------------------------------------------------
   const dialogNode = () => {
-    // 1. list (today o)
-    const listTodaySection = () => (
+    // 1. today
+    const todaySection = () => (
       <Div className={`p-fixed d-row-bottom bottom-18vh z-600 right-6vw`}>
         <Backdrop
           open={open}
@@ -121,8 +121,8 @@ export const Dialog = (
         </SpeedDial>
       </Div>
     );
-    // 2. list (today x)
-    const listNotTodaySection = () => (
+    // 2. goal
+    const listGoalSection = () => (
       <Div className={`p-fixed d-row-bottom bottom-18vh z-600 right-6vw`}>
         <Backdrop
           open={open}
@@ -159,7 +159,95 @@ export const Dialog = (
             onClick={() => {
               navigate(toDetail, {
                 state: {
-                  dateType: isGoalList ? "" : "day",
+                  dateType: "week",
+                  dateStart: getWeekStartFmt(),
+                  dateEnd: getWeekEndFmt(),
+                },
+              });
+            }}
+          />
+          <SpeedDialAction
+            key={translate("openAll")}
+            tooltipTitle={translate("openAll")}
+            className={open ? "" : "d-none"}
+            icon={
+              <Icons
+                key={"ChevronDown"}
+                name={"ChevronDown"}
+                className={"w-25 h-25"}
+              />
+            }
+            onClick={() => {
+              setIsExpanded(() => (
+                Array.from({ length: COUNT?.totalCnt as number }).map((_: any) => ({
+                  expanded: true,
+                }))
+              ));
+              window.scrollTo(0, 0);
+            }}
+          />
+          <SpeedDialAction
+            key={translate("closeAll")}
+            tooltipTitle={translate("closeAll")}
+            className={open ? "" : "d-none"}
+            icon={
+              <Icons
+                key={"ChevronUp"}
+                name={"ChevronUp"}
+                className={"w-25 h-25"}
+              />
+            }
+            onClick={() => {
+              setIsExpanded(() => (
+                Array.from({ length: COUNT?.totalCnt as number }).map((_: any) => ({
+                  expanded: false,
+                }))
+              ));
+              window.scrollTo(0, 0);
+            }}
+          />
+        </SpeedDial>
+      </Div>
+    );
+    // 3. real
+    const listRealSection = () => (
+      <Div className={`p-fixed d-row-bottom bottom-18vh z-600 right-6vw`}>
+        <Backdrop
+          open={open}
+          onClick={() => {
+            setOpen(false);
+          }}
+        />
+        <SpeedDial
+          ariaLabel={"speedDial"}
+          direction={"up"}
+          open={open}
+          icon={
+            <SpeedDialIcon />
+          }
+          FabProps={{
+            size: "small",
+            component: "div",
+          }}
+          onClick={() => {
+            setOpen(!open);
+          }}
+        >
+          <SpeedDialAction
+            key={translate("save")}
+            tooltipTitle={translate("save")}
+            className={open ? "" : "d-none"}
+            icon={
+              <Icons
+                key={"Pencil"}
+                name={"Pencil"}
+                className={"w-25 h-25"}
+              />
+            }
+            onClick={() => {
+              navigate(toDetail, {
+                state: {
+                  dateType: "day",
                   dateStart: getDayFmt(),
                   dateEnd: getDayFmt(),
                 },
@@ -209,7 +297,7 @@ export const Dialog = (
         </SpeedDial>
       </Div>
     );
-    // 3. find
+    // 4. find
     const findSection = () => (
       <Div className={`p-fixed d-row-bottom bottom-18vh z-600 right-6vw`}>
         <Backdrop
@@ -328,7 +416,7 @@ export const Dialog = (
         </SpeedDial>
       </Div>
     );
-    // 4. detail
+    // 5. detail
     const detailSection = () => (
       <Div className={`p-fixed d-row-bottom bottom-18vh z-600 right-6vw`}>
         <Backdrop
@@ -411,13 +499,16 @@ export const Dialog = (
     // 10. return
     return (
       isToday ? (
-        listTodaySection()
+        todaySection()
       )
-      : isGoalList || isList ? (
-        listNotTodaySection()
+      : isGoalList ? (
+        listGoalSection()
       )
       : isFindList || isFavoriteList ? (
         findSection()
+      )
+      : isList ? (
+        listRealSection()
       )
       : isDetail ? (
         detailSection()

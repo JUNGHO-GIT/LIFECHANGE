@@ -285,13 +285,13 @@ export const CalendarDetail = () => {
     );
     // 7-3. detail
     const detailSection = () => {
-      const detailFragment = (i: number) => (
+      const detailFragment = (item: any, i: number) => (
         <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
           <Grid container spacing={1} columns={12}>
             <Grid size={6} className={"d-row-left"}>
               <Bg
                 badgeContent={i + 1}
-                bgcolor={bgColors?.[OBJECT?.calendar_section[i]?.calendar_part_idx]}
+                bgcolor={bgColors?.[item?.calendar_part_idx]}
               />
             </Grid>
             <Grid size={6} className={"d-row-right"}>
@@ -308,28 +308,24 @@ export const CalendarDetail = () => {
                 locked={LOCKED}
                 inputRef={REFS?.[i]?.calendar_part_idx}
                 error={ERRORS?.[i]?.calendar_part_idx}
-                value={
-                  calendarArray[OBJECT?.calendar_section[i]?.calendar_part_idx]?.calendar_part
-                  ? OBJECT?.calendar_section[i]?.calendar_part_idx
-                  : 0
-                }
+                value={item?.calendar_part_idx ?? 0}
                 onChange={(e: any) => {
                   const newIndex = Number(e.target.value);
                   setOBJECT((prev: any) => ({
                     ...prev,
-                    calendar_section: prev.calendar_section?.map((item: any, idx: number) => (
+                    calendar_section: prev.calendar_section?.map((section: any, idx: number) => (
                       idx === i ? {
                         ...item,
                         calendar_part_idx: newIndex,
                         calendar_part_val: calendarArray[newIndex]?.calendar_part
-                      } : item
+                      } : section
                     ))
                   }));
                 }}
               >
-                {calendarArray?.map((item: any, idx: number) => (
+                {calendarArray?.map((part: any, idx: number) => (
                   <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
-                    {translate(item.calendar_part)}
+                    {translate(part?.calendar_part)}
                   </MenuItem>
                 ))}
               </Select>
@@ -337,7 +333,7 @@ export const CalendarDetail = () => {
             <Grid size={6}>
               <Select
                 label={translate("color")}
-                value={OBJECT?.calendar_section[i]?.calendar_color}
+                value={item?.calendar_color}
                 inputRef={REFS?.[i]?.calendar_color}
                 error={ERRORS?.[i]?.calendar_color}
                 locked={LOCKED}
@@ -345,19 +341,19 @@ export const CalendarDetail = () => {
                   const newColor = e.target.value;
                   setOBJECT((prev: any) => ({
                     ...prev,
-                    calendar_section: prev.calendar_section?.map((item: any, idx: number) => (
+                    calendar_section: prev.calendar_section?.map((section: any, idx: number) => (
                       idx === i ? {
                         ...item,
                         calendar_color: newColor
-                      } : item
+                      } : section
                     ))
                   }));
                 }}
               >
-                {calendarColors.map((item: any, idx: number) => (
-                  <MenuItem key={idx} value={item} className={"fs-0-8rem"}>
-                    <span className={item}>●</span>
-                    <span className={"ms-10"}>{item}</span>
+                {calendarColors.map((color: any, idx: number) => (
+                  <MenuItem key={idx} value={color} className={"fs-0-8rem"}>
+                    <span className={color}>●</span>
+                    <span className={"ms-10"}>{color}</span>
                   </MenuItem>
                 ))}
               </Select>
@@ -366,7 +362,7 @@ export const CalendarDetail = () => {
             <Grid size={12}>
               <Input
                 label={translate("calendarTitle")}
-                value={OBJECT?.calendar_section[i]?.calendar_title}
+                value={item?.calendar_title}
                 inputRef={REFS?.[i]?.calendar_title}
                 error={ERRORS?.[i]?.calendar_title}
                 locked={LOCKED}
@@ -381,11 +377,11 @@ export const CalendarDetail = () => {
                   const newTitle = e.target.value;
                   setOBJECT((prev: any) => ({
                     ...prev,
-                    calendar_section: prev.calendar_section?.map((item: any, idx: number) => (
+                    calendar_section: prev.calendar_section?.map((section: any, idx: number) => (
                       idx === i ? {
                         ...item,
                         calendar_title: newTitle
-                      } : item
+                      } : section
                     ))
                   }));
                 }}
@@ -406,14 +402,14 @@ export const CalendarDetail = () => {
       );
       return (
         <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              {COUNT?.newSectionCnt > 0 && (
-                OBJECT?.calendar_section?.map((_item: any, i: number) => (
-                  detailFragment(i)
-                ))
-              )}
-            </Grid>
+          <Grid container spacing={0} columns={12}>
+            {OBJECT?.calendar_section?.map((item: any, i: number) => (
+              <Grid size={12} key={`detail-${i}`}>
+                {COUNT?.newSectionCnt > 0 && (
+                  detailFragment(item, i)
+                )}
+              </Grid>
+            ))}
           </Grid>
         </Card>
       );
