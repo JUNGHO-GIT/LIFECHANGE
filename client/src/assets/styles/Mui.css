@@ -167,3 +167,6 @@
 .MuiStepIcon-root.Mui-active {
   color: #1976d2 !important;
 }
+.MuiAlert-action {
+  padding: 0px 0px 0px 0px !important;
+}

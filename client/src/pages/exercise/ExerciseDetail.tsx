@@ -281,7 +281,6 @@ export const ExerciseDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        sync();
         setALERT({
           open: !ALERT.open,
           msg: translate(res.data.msg),

@@ -373,7 +373,7 @@ export const ExerciseGoalDetail = () => {
             <Br px={1} />
             <Grid size={12}>
               <PickerTime
-                OBJECT={item}
+                OBJECT={OBJECT}
                 setOBJECT={setOBJECT}
                 REFS={REFS}
                 ERRORS={ERRORS}

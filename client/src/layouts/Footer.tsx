@@ -29,29 +29,32 @@ export const Footer = (
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
+
+    const commonStr = "layout-wrapper p-sticky h-8vh border-1 radius-1 shadow-top-1";
+
     if (PATH.includes("/calendar/list")) {
       setTypeName("");
       setStyleClass("");
     }
     else if (PATH.includes("/user/category") || PATH.includes("/user/detail")) {
       setTypeName("btn");
-      setStyleClass("layout-wrapper p-sticky bottom-0vh h-8vh border-1 radius-1 shadow-1");
+      setStyleClass(`${commonStr} bottom-0vh`);
     }
     else if (PATH.includes("/user/dummy")) {
       setTypeName("dummy");
-      setStyleClass("layout-wrapper p-sticky bottom-0vh h-8vh border-1 radius-1 shadow-1");
+      setStyleClass(`${commonStr} bottom-0vh`);
     }
     else if (PATH.includes("/food/find/list") || PATH.includes("/favorite/list")) {
       setTypeName("findFilter");
-      setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh border-1 radius-1 shadow-1");
+      setStyleClass(`${commonStr} bottom-8vh`);
     }
     else if (PATH.includes("/goal/list") || PATH.includes("/list")) {
       setTypeName("listFilter");
-      setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh border-1 radius-1 shadow-1");
+      setStyleClass(`${commonStr} bottom-8vh`);
     }
     else if (PATH.includes("/goal/detail") || PATH.includes("/detail")) {
       setTypeName("btn");
-      setStyleClass("layout-wrapper p-sticky bottom-8vh h-8vh border-1 radius-1 shadow-1");
+      setStyleClass(`${commonStr} bottom-8vh`);
     }
     else {
       setTypeName("");

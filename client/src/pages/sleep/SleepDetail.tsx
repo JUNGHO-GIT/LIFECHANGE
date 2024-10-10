@@ -238,7 +238,6 @@ export const SleepDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        sync();
         setALERT({
           open: !ALERT.open,
           msg: translate(res.data.msg),
@@ -327,7 +326,7 @@ export const SleepDetail = () => {
             <Br px={1} />
             <Grid size={12}>
               <PickerTime
-                OBJECT={item}
+                OBJECT={OBJECT}
                 setOBJECT={setOBJECT}
                 REFS={REFS}
                 ERRORS={ERRORS}
@@ -340,7 +339,7 @@ export const SleepDetail = () => {
             <Br px={1} />
             <Grid size={12}>
               <PickerTime
-                OBJECT={item}
+                OBJECT={OBJECT}
                 setOBJECT={setOBJECT}
                 REFS={REFS}
                 ERRORS={ERRORS}
@@ -353,7 +352,7 @@ export const SleepDetail = () => {
             <Br px={1} />
             <Grid size={12}>
               <PickerTime
-                OBJECT={item}
+                OBJECT={OBJECT}
                 setOBJECT={setOBJECT}
                 REFS={REFS}
                 ERRORS={ERRORS}
@@ -369,7 +368,7 @@ export const SleepDetail = () => {
       return (
         <Card className={"p-0"}>
           <Grid container spacing={1} columns={12}>
-            {OBJECT?.map((item: any, i: number) => (
+            {OBJECT?.sleep_section.map((item: any, i: number) => (
               <Grid size={12} key={`detail-${i}`}>
                 {COUNT?.newSectionCnt > 0 && (
                   detailFragment(item, i)

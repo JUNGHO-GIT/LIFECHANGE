@@ -1,7 +1,7 @@
 // useValidateExercise.tsx
 
 import { useState, createRef, useRef } from "@imports/ImportReacts";
-import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
+import { useLanguageStore, useAlertStore, useConfirmStore } from "@imports/ImportStores";
 
 // -------------------------------------------------------------------------------------------------
 export const useValidateExercise = () => {
@@ -9,6 +9,7 @@ export const useValidateExercise = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { translate } = useLanguageStore();
   const { ALERT, setALERT } = useAlertStore();
+  const { CONFIRM, setCONFIRM } = useConfirmStore();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const REFS = useRef<any[]>([]);
@@ -157,10 +158,21 @@ export const useValidateExercise = () => {
         ))
       );
 
-      if (!OBJECT?._id || OBJECT?._id === "") {
-        return showAlertAndFocus("", "noData", 0);
-      }
-      return true;
+      setCONFIRM({
+        open: !CONFIRM.open,
+        confirm: false,
+        msg: translate("deleteConfirm"),
+      }, (confirmed: boolean) => {
+        if (!confirmed) {
+          return;
+        }
+        else {
+          if (!OBJECT?._id || OBJECT?._id === "") {
+            return showAlertAndFocus("", "noData", 0);
+          }
+          return true;
+        }
+      });
     }
   };
 

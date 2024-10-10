@@ -13,7 +13,7 @@ import {
   Card, Checkbox, Collapse, CssBaseline, Container, createTheme, ThemeProvider,
 
   // d
-  Drawer,
+  Drawer, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
 
   // f
   FormControl, FormControlLabel, FormGroup,
@@ -89,7 +89,7 @@ export {
   Card, Checkbox, Collapse, CssBaseline, Container, createTheme, ThemeProvider,
 
   // d
-  Drawer,
+  Drawer, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
 
   // f
   FormControl, FormControlLabel, FormGroup,

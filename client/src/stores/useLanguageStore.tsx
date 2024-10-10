@@ -265,6 +265,10 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "해당 날짜의 데이터가 이미 존재합니다.\n수정하시겠습니까?",
         en: "Data for the date already exists.\nDo you want to update?"
       },
+      deleteConfirm: {
+        ko: "삭제하시겠습니까?",
+        en: "Do you want to delete?"
+      },
 
       // -------------------------------------------------------------------------------------------
       // e

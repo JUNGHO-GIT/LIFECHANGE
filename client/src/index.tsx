@@ -23,7 +23,7 @@ import {
 } from "@imports/ImportHooks";
 
 import {
-  Header, TopNav, BottomNav, Alert
+  Header, TopNav, BottomNav, Alert, Confirm
 } from "@imports/ImportLayouts";
 
 import {
@@ -178,6 +178,7 @@ const App = () => {
         <Route path="/auth/*" element={<Auth />} />
       </Routes>
       {<Alert />}
+      {<Confirm />}
       {!noneBottom && <BottomNav />}
     </div>
   );

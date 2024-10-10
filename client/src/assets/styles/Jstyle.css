@@ -11544,97 +11544,84 @@
 .shadow-0 {
   box-shadow: none !important;
 }
-.shadow-top-0 {
-  box-shadow: 0px -5px 5px rgba(0, 0, 0, 0.0) !important;
-}
-.shadow-right-0 {
-  box-shadow: 5px 0px 5px rgba(0, 0, 0, 0.0) !important;
-}
-.shadow-bottom-0 {
-  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.0) !important;
-}
-.shadow-left-0 {
-  box-shadow: -5px 0px 5px rgba(0, 0, 0, 0.0) !important;
-}
 .shadow-1 {
-  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.1)) !important;
-  transition: filter 0.3s ease !important;
+  box-shadow:
+    0px -2px 2px rgba(0, 0, 0, 0.05),
+    2px 0px 2px rgba(0, 0, 0, 0.05),
+    0px 2px 2px rgba(0, 0, 0, 0.05),
+    -2px 0px 2px rgba(0, 0, 0, 0.05) !important;
 }
 .shadow-top-1 {
-  filter: drop-shadow(0px -5px 5px rgba(0, 0, 0, 0.1)) !important;
-  transition: filter 0.3s ease !important;
+  box-shadow: 0px -2px 2px rgba(0, 0, 0, 0.05) !important;
 }
 .shadow-right-1 {
-  filter: drop-shadow(5px 0px 5px rgba(0, 0, 0, 0.1)) !important;
-  transition: filter 0.3s ease !important;
+  box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.05) !important;
 }
 .shadow-bottom-1 {
-  filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.1)) !important;
-  transition: filter 0.3s ease !important;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.05) !important;
 }
 .shadow-left-1 {
-  filter: drop-shadow(-5px 0px 5px rgba(0, 0, 0, 0.1)) !important;
-  transition: filter 0.3s ease !important;
+  box-shadow: -2px 0px 2px rgba(0, 0, 0, 0.05) !important;
 }
+
 .shadow-2 {
-  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.2)) !important;
-  transition: filter 0.3s ease !important;
+  box-shadow:
+    0px -2px 2px rgba(0, 0, 0, 0.1),
+    2px 0px 2px rgba(0, 0, 0, 0.1),
+    0px 2px 2px rgba(0, 0, 0, 0.1),
+    -2px 0px 2px rgba(0, 0, 0, 0.1) !important;
 }
 .shadow-top-2 {
-  filter: drop-shadow(0px -5px 5px rgba(0, 0, 0, 0.2)) !important;
-  transition: filter 0.3s ease !important;
+  box-shadow: 0px -2px 2px rgba(0, 0, 0, 0.1) !important;
 }
 .shadow-right-2 {
-  filter: drop-shadow(5px 0px 5px rgba(0, 0, 0, 0.2)) !important;
-  transition: filter 0.3s ease !important;
+  box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.1) !important;
 }
 .shadow-bottom-2 {
-  filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.2)) !important;
-  transition: filter 0.3s ease !important;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1) !important;
 }
 .shadow-left-2 {
-  filter: drop-shadow(-5px 0px 5px rgba(0, 0, 0, 0.2)) !important;
-  transition: filter 0.3s ease !important;
+  box-shadow: -2px 0px 2px rgba(0, 0, 0, 0.1) !important;
 }
+
 .shadow-3 {
-  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.3)) !important;
-  transition: filter 0.3s ease !important;
+  box-shadow:
+    0px -2px 2px rgba(0, 0, 0, 0.15),
+    2px 0px 2px rgba(0, 0, 0, 0.15),
+    0px 2px 2px rgba(0, 0, 0, 0.15),
+    -2px 0px 2px rgba(0, 0, 0, 0.15) !important;
 }
 .shadow-top-3 {
-  filter: drop-shadow(0px -5px 5px rgba(0, 0, 0, 0.3)) !important;
-  transition: filter 0.3s ease !important;
+  box-shadow: 0px -2px 2px rgba(0, 0, 0, 0.15) !important;
 }
 .shadow-right-3 {
-  filter: drop-shadow(5px 0px 5px rgba(0, 0, 0, 0.3)) !important;
-  transition: filter 0.3s ease !important;
+  box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.15) !important;
 }
 .shadow-bottom-3 {
-  filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.3)) !important;
-  transition: filter 0.3s ease !important;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15) !important;
 }
 .shadow-left-3 {
-  filter: drop-shadow(-5px 0px 5px rgba(0, 0, 0, 0.3)) !important;
-  transition: filter 0.3s ease !important;
+  box-shadow: -2px 0px 2px rgba(0, 0, 0, 0.15) !important;
 }
+
 .shadow-4 {
-  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.4)) !important;
-  transition: filter 0.3s ease !important;
+  box-shadow:
+    0px -2px 2px rgba(0, 0, 0, 0.2),
+    2px 0px 2px rgba(0, 0, 0, 0.2),
+    0px 2px 2px rgba(0, 0, 0, 0.2),
+    -2px 0px 2px rgba(0, 0, 0, 0.2) !important;
 }
 .shadow-top-4 {
-  filter: drop-shadow(0px -5px 5px rgba(0, 0, 0, 0.4)) !important;
-  transition: filter 0.3s ease !important;
+  box-shadow: 0px -2px 2px rgba(0, 0, 0, 0.2) !important;
 }
 .shadow-right-4 {
-  filter: drop-shadow(5px 0px 5px rgba(0, 0, 0, 0.4)) !important;
-  transition: filter 0.3s ease !important;
+  box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.2) !important;
 }
 .shadow-bottom-4 {
-  filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.4)) !important;
-  transition: filter 0.3s ease !important;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2) !important;
 }
 .shadow-left-4 {
-  filter: drop-shadow(-5px 0px 5px rgba(0, 0, 0, 0.4)) !important;
-  transition: filter 0.3s ease !important;
+  box-shadow: -2px 0px 2px rgba(0, 0, 0, 0.2) !important;
 }
 
 /** 97. radius ************************************************************************************/
