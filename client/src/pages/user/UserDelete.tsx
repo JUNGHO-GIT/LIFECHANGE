@@ -25,9 +25,9 @@ export const UserDelete = () => {
   const [OBJECT, setOBJECT] = useState<any>(User);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSendEmail = () => {
+  const flowSendEmail = async () => {
     setLOADING(true);
-    if (!validate(OBJECT, "delete", "send")) {
+    if (!await validate(OBJECT, "delete", "send")) {
       setLOADING(false);
       return;
     }
@@ -90,9 +90,9 @@ export const UserDelete = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowVerifyEmail = () => {
+  const flowVerifyEmail = async () => {
     setLOADING(true);
-    if (!validate(OBJECT, "delete", "verify")) {
+    if (!await validate(OBJECT, "delete", "verify")) {
       setLOADING(false);
       return;
     }
@@ -133,9 +133,9 @@ export const UserDelete = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = () => {
+  const flowSave = async () => {
     setLOADING(true);
-    if (!validate(OBJECT, "delete", "save")) {
+    if (!await validate(OBJECT, "delete", "save")) {
       setLOADING(false);
       return;
     }

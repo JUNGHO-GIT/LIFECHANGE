@@ -22,7 +22,7 @@ export const Buttons = (
   const { translate } = useLanguageStore();
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = (type: string) => {
+  const flowSave = async (type: string) => {
     flow?.flowSave(type);
     Object.keys(sessionStorage).forEach((key) => {
       if (key.includes("foodSection") || key.includes("paging")) {

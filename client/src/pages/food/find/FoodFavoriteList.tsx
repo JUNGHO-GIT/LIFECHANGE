@@ -88,7 +88,7 @@ export const FoodFavoriteList = () => {
   }, [OBJECT]);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowFind = () => {
+  const flowFind = async () => {
     setLOADING(true);
     axios.get(`${URL_OBJECT}/find/listFavorite`, {
       params: {

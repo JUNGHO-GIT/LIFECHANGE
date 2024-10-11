@@ -51,9 +51,9 @@ export const UserDetail = () => {
   }, [URL_OBJECT, sessionId]);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = () => {
+  const flowSave = async () => {
     setLOADING(true);
-    if (!validate(OBJECT, "detail", "")) {
+    if (!await validate(OBJECT, "detail", "")) {
       setLOADING(false);
       return;
     }

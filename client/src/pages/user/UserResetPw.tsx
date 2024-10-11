@@ -25,9 +25,9 @@ export const UserResetPw = () => {
   const [OBJECT, setOBJECT] = useState<any>(User);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSendEmail = () => {
+  const flowSendEmail = async () => {
     setLOADING(true);
-    if (!validate(OBJECT, "resetPw", "send")) {
+    if (!await validate(OBJECT, "resetPw", "send")) {
       setLOADING(false);
       return;
     }
@@ -90,9 +90,9 @@ export const UserResetPw = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowVerifyEmail = () => {
+  const flowVerifyEmail = async () => {
     setLOADING(true);
-    if (!validate(OBJECT, "resetPw", "verify")) {
+    if (!await validate(OBJECT, "resetPw", "verify")) {
       setLOADING(false);
       return;
     }
@@ -133,9 +133,9 @@ export const UserResetPw = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = () => {
+  const flowSave = async () => {
     setLOADING(true);
-    if (!validate(OBJECT, "resetPw", "save")) {
+    if (!await validate(OBJECT, "resetPw", "save")) {
       setLOADING(false);
       return;
     }

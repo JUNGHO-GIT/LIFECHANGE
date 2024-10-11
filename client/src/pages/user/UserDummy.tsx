@@ -95,7 +95,7 @@ export const UserDummy = () => {
   }, [URL_OBJECT, sessionId, PAGING, PART]);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowDummyDetail = () => {
+  const flowDummyDetail = async () => {
     setLOADING(true);
     const previousPART = PART;
     axios.post(`${URL_OBJECT}/dummyDetail`, {
@@ -139,7 +139,7 @@ export const UserDummy = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowDummyDelete = () => {
+  const flowDummyDelete = async () => {
     setLOADING(true);
     const previousPART = PART;
     axios.delete(`${URL_OBJECT}/dummyDelete`, {

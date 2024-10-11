@@ -91,9 +91,9 @@ export const UserLogin = () => {
   }, []);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = () => {
+  const flowSave = async () => {
     setLOADING(true);
-    if (!validate(OBJECT, "login", "")) {
+    if (!await validate(OBJECT, "login", "")) {
       setLOADING(false);
       return;
     }

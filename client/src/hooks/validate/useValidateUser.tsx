@@ -51,7 +51,7 @@ export const useValidateUser = () => {
   }
 
   // 7. validate -----------------------------------------------------------------------------------
-  validate.current = (OBJECT: any, extra: string, email: string) => {
+  validate.current = async (OBJECT: any, extra: string, email: string) => {
 
     // 1. login ----------------------------------------------------------------------------------
     if (extra === "login") {

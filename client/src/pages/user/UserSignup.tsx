@@ -25,9 +25,9 @@ export const UserSignup = () => {
   const [OBJECT, setOBJECT] = useState<any>(User);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSendEmail = () => {
+  const flowSendEmail = async () => {
     setLOADING(true);
-    if (!validate(OBJECT, "signup", "send")) {
+    if (!await validate(OBJECT, "signup", "send")) {
       setLOADING(false);
       return;
     }
@@ -90,9 +90,9 @@ export const UserSignup = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowVerifyEmail = () => {
+  const flowVerifyEmail = async () => {
     setLOADING(true);
-    if (!validate(OBJECT, "signup", "verify")) {
+    if (!await validate(OBJECT, "signup", "verify")) {
       setLOADING(false);
       return;
     }
@@ -133,9 +133,9 @@ export const UserSignup = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = () => {
+  const flowSave = async () => {
     setLOADING(true);
-    if (!validate(OBJECT, "signup", "save")) {
+    if (!await validate(OBJECT, "signup", "save")) {
       setLOADING(false);
       return;
     }

@@ -203,9 +203,9 @@ export const MoneyDetail = () => {
   },[COUNT?.newSectionCnt]);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = (type: string) => {
+  const flowSave = async (type: string) => {
     setLOADING(true);
-    if (!validate(OBJECT, COUNT, "real")) {
+    if (!await validate(OBJECT, COUNT, "real")) {
       setLOADING(false);
       return;
     }

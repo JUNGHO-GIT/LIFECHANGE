@@ -134,9 +134,9 @@ export const ExerciseGoalDetail = () => {
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = (type: string) => {
+  const flowSave = async (type: string) => {
     setLOADING(true);
-    if (!validate(OBJECT, COUNT, "goal")) {
+    if (!await validate(OBJECT, COUNT, "goal")) {
       setLOADING(false);
       return;
     }
