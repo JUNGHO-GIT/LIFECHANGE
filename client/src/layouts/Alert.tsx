@@ -24,7 +24,7 @@ export const Alert = () => {
   const alertNode = () => (
     <Snackbar
       open={ALERT.open}
-      autoHideDuration={2000}
+      autoHideDuration={1000}
       anchorOrigin={{
         vertical: "top",
         horizontal: "center"
