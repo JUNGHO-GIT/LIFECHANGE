@@ -1,7 +1,8 @@
 // FoodFindList.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useStorageLocal } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
+import { useStorageSession, useStorageLocal } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { FoodFind } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportUtils";
@@ -20,14 +21,16 @@ export const FoodFindList = () => {
   const { translate } = useLanguageStore();
   const { ALERT, setALERT } = useAlertStore();
 
-  // 2-1. useStorageLocal --------------------------------------------------------------------------
-  const [PAGING, setPAGING] = useStorageLocal(
+  // 2-1. useStorageSession ------------------------------------------------------------------------
+  const [PAGING, setPAGING] = useStorageSession(
     `${TITLE}_paging_(${PATH})`, {
       sort: "asc",
       query: "",
       page: 0,
     }
   );
+
+  // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [isExpanded, setIsExpanded] = useStorageLocal(
     `${TITLE}_isExpanded_(${PATH})`, [{
       expanded: true
