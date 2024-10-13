@@ -1,8 +1,8 @@
 // FoodFindList.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useStorage } from "@imports/ImportHooks";
-import { useLanguageStore } from "@imports/ImportStores";
+import { useCommonValue, useCommonDate, useStorageLocal } from "@imports/ImportHooks";
+import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { FoodFind } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportUtils";
 import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
@@ -18,16 +18,17 @@ export const FoodFindList = () => {
   const { location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt } = useCommonDate();
   const { translate } = useLanguageStore();
+  const { ALERT, setALERT } = useAlertStore();
 
-  // 2-1. useStorage -------------------------------------------------------------------------------
-  const [PAGING, setPAGING] = useStorage(
+  // 2-1. useStorageLocal --------------------------------------------------------------------------
+  const [PAGING, setPAGING] = useStorageLocal(
     `${TITLE}_paging_(${PATH})`, {
       sort: "asc",
       query: "",
       page: 0,
     }
   );
-  const [isExpanded, setIsExpanded] = useStorage(
+  const [isExpanded, setIsExpanded] = useStorageLocal(
     `${TITLE}_isExpanded_(${PATH})`, [{
       expanded: true
     }]
@@ -110,6 +111,11 @@ export const FoodFindList = () => {
       ));
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -117,9 +123,9 @@ export const FoodFindList = () => {
     });
   };
 
-  // 4. handler ------------------------------------------------------------------------------------
+  // 4. handle------------------------------------------------------------------------------------
   // 체크박스 변경 시
-  const handlerCheckboxChange = (index: number) => {
+  const handleCheckboxChange = (index: number) => {
     const queryKey = `${PAGING.query}_${PAGING.page}`;
     const updatedChecked = [...(checkedQueries[queryKey] || [])];
     updatedChecked[index] = !updatedChecked[index];
@@ -190,7 +196,7 @@ export const FoodFindList = () => {
               />
             }>
               <Grid container spacing={1} columns={12} onClick={() => {
-                handlerCheckboxChange(i);
+                handleCheckboxChange(i);
               }}>
                 <Grid size={2} className={"d-row-center"}>
                   <Checkbox
@@ -204,7 +210,7 @@ export const FoodFindList = () => {
                       )
                     }
                     onChange={() => {
-                      handlerCheckboxChange(i);
+                      handleCheckboxChange(i);
                     }}
                   />
                 </Grid>
@@ -359,17 +365,9 @@ export const FoodFindList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12}>
-            {LOADING ? (
-              <>
-                <Loading />
-              </>
-            ) : (
-              <>
-                {listSection()}
-              </>
-            )}
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-column-center"}>
+            {LOADING ? <Loading /> : listSection()}
           </Grid>
         </Grid>
       </Paper>

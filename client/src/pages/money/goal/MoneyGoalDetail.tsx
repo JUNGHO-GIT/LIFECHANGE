@@ -100,6 +100,11 @@ export const MoneyGoalDetail = () => {
       );
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
@@ -123,6 +128,11 @@ export const MoneyGoalDetail = () => {
       }));
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -172,6 +182,11 @@ export const MoneyGoalDetail = () => {
       }
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -217,6 +232,11 @@ export const MoneyGoalDetail = () => {
       }
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -224,8 +244,8 @@ export const MoneyGoalDetail = () => {
     });
   };
 
-  // 4-3. handler ----------------------------------------------------------------------------------
-  const handlerDelete = (_index: number) => {
+  // 4-3. handle----------------------------------------------------------------------------------
+  const handleDelete = (_index: number) => {
     setOBJECT((prev: any) => ({
       ...prev,
       money_goal_income: "",
@@ -277,7 +297,7 @@ export const MoneyGoalDetail = () => {
             <Grid size={6} className={"d-row-right"}>
               <Delete
                 index={i}
-                handlerDelete={handlerDelete}
+                handleDelete={handleDelete}
                 LOCKED={LOCKED}
               />
             </Grid>

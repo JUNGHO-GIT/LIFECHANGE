@@ -1,6 +1,6 @@
 // ImportUtils.tsx
 
-import { handlerY } from "@scripts/chartFmt";
+import { handleY } from "@scripts/chartFmt";
 import { sync } from "@scripts/sync";
 
 import axios from "axios";
@@ -15,7 +15,7 @@ import { randomNumber, randomTime, calcDate, strToDecimal, decimalToStr } from "
 
 // -------------------------------------------------------------------------------------------------
 export {
-  handlerY,
+  handleY,
   sync,
 
   create,

@@ -43,6 +43,11 @@ export const UserDetail = () => {
       setOBJECT(res.data.result || User);
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -80,6 +85,11 @@ export const UserDetail = () => {
       }
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -272,19 +282,11 @@ export const UserDetail = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12}>
-            {LOADING ? (
-              <>
-                <Loading />
-              </>
-            ) : (
-              <>
-                {imageSection()}
-                <Hr px={40} />
-                {detailSection()}
-              </>
-            )}
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-column-center"}>
+            {imageSection()}
+            <Hr px={40} />
+            {LOADING ? <Loading /> : detailSection()}
           </Grid>
         </Grid>
       </Paper>

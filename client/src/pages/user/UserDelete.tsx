@@ -82,6 +82,11 @@ export const UserDelete = () => {
       }
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -125,6 +130,11 @@ export const UserDelete = () => {
       }
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -163,6 +173,11 @@ export const UserDelete = () => {
       }
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {

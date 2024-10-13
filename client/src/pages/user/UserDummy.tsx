@@ -1,7 +1,7 @@
 // UserDummy.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useStorage } from "@imports/ImportHooks";
+import { useCommonValue, useStorageLocal } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { ExerciseGoal, Exercise } from "@imports/ImportSchemas";
 import { FoodGoal, Food } from "@imports/ImportSchemas";
@@ -32,7 +32,7 @@ export const UserDummy = () => {
   const [OBJECT_MONEY, setOBJECT_MONEY] = useState<any>([Money]);
   const [OBJECT_SLEEP_GOAL, setOBJECT_SLEEP_GOAL] = useState<any>([SleepGoal]);
   const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState<any>([Sleep]);
-  const [PAGING, setPAGING] = useStorage(
+  const [PAGING, setPAGING] = useStorageLocal(
     `${TITLE}_paging_(${PATH})`, {
       sort: "asc",
       page: 1,
@@ -87,6 +87,11 @@ export const UserDummy = () => {
       }));
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -131,6 +136,11 @@ export const UserDummy = () => {
       }
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -176,6 +186,11 @@ export const UserDummy = () => {
       }
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -680,13 +695,9 @@ export const UserDummy = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 shadow-1 h-min84vh"}>
-        <Grid container spacing={1} columns={12}>
+        <Grid container spacing={0} columns={12}>
           <Grid size={12}>
-            {LOADING ? (
-              <>
-                <Loading />
-              </>
-            ) : (
+            {LOADING ? <Loading /> : (
               <>
                 {PART === "exerciseGoal" && exerciseGoalSection()}
                 {PART === "exercise" && exerciseSection()}

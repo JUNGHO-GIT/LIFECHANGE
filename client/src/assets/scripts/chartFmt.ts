@@ -1,7 +1,7 @@
 // chartFmt.js
 
 // -------------------------------------------------------------------------------------------------
-export const handlerY = (
+export const handleY = (
   OBJECT: any,
   array: any,
   type: string,
@@ -50,7 +50,7 @@ export const handlerY = (
     tickInterval = 10;
   }
   else {
-    throw new Error("handlerY: type error");
+    throw new Error("handleY: type error");
   }
 
   for (let i = 0; i <= topValue; i += tickInterval) {

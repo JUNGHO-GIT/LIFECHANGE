@@ -101,6 +101,11 @@ export const FoodDetail = () => {
       );
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
@@ -118,6 +123,11 @@ export const FoodDetail = () => {
       );
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     });
   }, [URL_OBJECT, sessionId]);
@@ -194,6 +204,11 @@ export const FoodDetail = () => {
       }));
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -294,6 +309,11 @@ export const FoodDetail = () => {
       }
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -338,6 +358,11 @@ export const FoodDetail = () => {
       }
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -365,12 +390,17 @@ export const FoodDetail = () => {
       }
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     });
   };
 
-  // 4-3. handler ----------------------------------------------------------------------------------
-  const handlerDelete = (index: number) => {
+  // 4-3. handle----------------------------------------------------------------------------------
+  const handleDelete = (index: number) => {
 
     // 스토리지 데이터 가져오기
     let sectionArray = [];
@@ -403,8 +433,8 @@ export const FoodDetail = () => {
     }));
   };
 
-  // 4-4. handler (favorite 추가) ------------------------------------------------------------------
-  const handlerFoodFavorite = (index: number) => {
+  // 4-4. handle(favorite 추가) ------------------------------------------------------------------
+  const handleFoodFavorite = (index: number) => {
 
     const food_name = OBJECT?.food_section[index]?.food_name;
     const food_brand = OBJECT?.food_section[index]?.food_brand;
@@ -559,11 +589,12 @@ export const FoodDetail = () => {
                   color={"darkslategrey"}
                   fill={
                     FAVORITE.length > 0 && FAVORITE.some((item: any) => (
-                      item.food_key === handlerFoodFavorite(i).food_key
+                      item.food_key === handleFoodFavorite(i).food_key
                     )) ? "gold" : "white"
                   }
-                  onClick={() => {
-                    flowUpdateFavorite(handlerFoodFavorite(i));
+                  onClick={(e: any) => {
+                    e.stopPropagation();
+                    flowUpdateFavorite(handleFoodFavorite(i));
                   }}
                 />
               </Div>
@@ -571,7 +602,7 @@ export const FoodDetail = () => {
             <Grid size={6} className={"d-row-right"}>
               <Delete
                 index={i}
-                handlerDelete={handlerDelete}
+                handleDelete={handleDelete}
                 LOCKED={LOCKED}
               />
             </Grid>
@@ -923,16 +954,8 @@ export const FoodDetail = () => {
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {dateCountSection()}
-            {LOADING ? (
-              <>
-                <Loading />
-              </>
-            ) : (
-              <>
-                {totalSection()}
-                {detailSection()}
-              </>
-            )}
+            {totalSection()}
+            {LOADING ? <Loading /> : detailSection()}
           </Grid>
         </Grid>
       </Paper>

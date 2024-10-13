@@ -103,6 +103,11 @@ export const ExerciseGoalDetail = () => {
       );
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
@@ -126,6 +131,11 @@ export const ExerciseGoalDetail = () => {
       }));
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -175,6 +185,11 @@ export const ExerciseGoalDetail = () => {
       }
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -220,6 +235,11 @@ export const ExerciseGoalDetail = () => {
       }
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -227,8 +247,8 @@ export const ExerciseGoalDetail = () => {
     });
   };
 
-  // 4-3. handler ----------------------------------------------------------------------------------
-  const handlerDelete = (_index: number) => {
+  // 4-3. handle----------------------------------------------------------------------------------
+  const handleDelete = (_index: number) => {
     setOBJECT((prev: any) => ({
       ...prev,
       exercise_goal_count: "0",
@@ -282,7 +302,7 @@ export const ExerciseGoalDetail = () => {
             <Grid size={6} className={"d-row-right"}>
               <Delete
                 index={i}
-                handlerDelete={handlerDelete}
+                handleDelete={handleDelete}
                 LOCKED={LOCKED}
               />
             </Grid>
@@ -437,18 +457,10 @@ export const ExerciseGoalDetail = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12}>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-column-center"}>
             {dateCountSection()}
-            {LOADING ? (
-              <>
-                <Loading />
-              </>
-            ) : (
-              <>
-                {detailSection()}
-              </>
-            )}
+            {LOADING ? <Loading /> : detailSection()}
           </Grid>
         </Grid>
       </Paper>

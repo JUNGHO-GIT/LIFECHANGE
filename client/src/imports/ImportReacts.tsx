@@ -2,6 +2,7 @@
 
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { StrictMode } from 'react';
 import { Suspense, lazy } from "react";
 import { useState, useEffect, useLayoutEffect } from "react";
 import { useCallback, useMemo, useRef, createRef } from "react";
@@ -13,6 +14,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 export {
   React,
   ReactDOM,
+  StrictMode,
   Suspense,
   lazy,
   useState,

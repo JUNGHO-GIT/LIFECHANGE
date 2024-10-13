@@ -200,7 +200,9 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
             </Div>
             <Div
               className={"black fs-0-9rem fw-500 pointer-burgundy ms-15"}
-              onClick={() => handleFileDelete(index, "single")}
+              onClick={() => {
+                handleFileDelete(index, "single")
+              }}
             >
               {!file?.name ? "" : "x"}
             </Div>
@@ -221,7 +223,9 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
           </Div>
           <Div
             className={"fs-0-9rem fw-600 pointer-burgundy"}
-            onClick={() => handleFileDelete(0, "all")}
+            onClick={() => {
+              handleFileDelete(0, "all")
+            }}
           >
             <Icons
               key={"Trash"}

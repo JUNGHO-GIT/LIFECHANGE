@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { ExerciseBar } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportUtils";
-import { handlerY } from "@imports/ImportUtils";
+import { handleY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Select } from "@imports/ImportContainers";
 import { Div, Img, Br } from "@imports/ImportComponents";
@@ -74,7 +74,7 @@ export const ExerciseChartBar = () => {
 
   // 5-2. chart ------------------------------------------------------------------------------------
   const chartWeek = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_WEEK, barChartArray, "exercise");
+    const {domain, ticks, formatterY} = handleY(OBJECT_WEEK, barChartArray, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart
@@ -160,7 +160,7 @@ export const ExerciseChartBar = () => {
 
   // 5-3. chart ------------------------------------------------------------------------------------
   const chartMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, barChartArray, "exercise");
+    const {domain, ticks, formatterY} = handleY(OBJECT_MONTH, barChartArray, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart

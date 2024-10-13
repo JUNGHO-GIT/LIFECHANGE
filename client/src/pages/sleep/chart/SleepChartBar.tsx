@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { SleepBar } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportUtils";
-import { handlerY } from "@imports/ImportUtils";
+import { handleY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Input } from "@imports/ImportContainers";
 import { Div, Img, Br } from "@imports/ImportComponents";
@@ -67,7 +67,7 @@ export const SleepChartBar = () => {
 
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartToday = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_TODAY, barChartArray, "sleep");
+    const {domain, ticks, formatterY} = handleY(OBJECT_TODAY, barChartArray, "sleep");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart

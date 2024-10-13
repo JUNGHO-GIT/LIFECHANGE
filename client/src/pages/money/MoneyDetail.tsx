@@ -100,6 +100,11 @@ export const MoneyDetail = () => {
       );
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
@@ -147,6 +152,11 @@ export const MoneyDetail = () => {
       }));
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -244,6 +254,11 @@ export const MoneyDetail = () => {
       }
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -288,6 +303,11 @@ export const MoneyDetail = () => {
       }
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -295,8 +315,8 @@ export const MoneyDetail = () => {
     });
   };
 
-  // 4-3. handler ----------------------------------------------------------------------------------
-  const handlerDelete = (index: number) => {
+  // 4-3. handle----------------------------------------------------------------------------------
+  const handleDelete = (index: number) => {
     setOBJECT((prev: any) => ({
       ...prev,
       money_section: prev.money_section.filter((_item: any, idx: number) => (idx !== index))
@@ -389,7 +409,7 @@ export const MoneyDetail = () => {
             <Grid size={6} className={"d-row-right"}>
               <Delete
                 index={i}
-                handlerDelete={handlerDelete}
+                handleDelete={handleDelete}
                 LOCKED={LOCKED}
               />
             </Grid>
@@ -543,16 +563,8 @@ export const MoneyDetail = () => {
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {dateCountSection()}
-            {LOADING ? (
-              <>
-                <Loading />
-              </>
-            ) : (
-              <>
-                {totalSection()}
-                {detailSection()}
-              </>
-            )}
+            {totalSection()}
+            {LOADING ? <Loading /> : detailSection()}
           </Grid>
         </Grid>
       </Paper>

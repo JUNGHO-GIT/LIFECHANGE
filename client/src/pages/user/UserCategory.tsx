@@ -1,7 +1,7 @@
 // UserCategory.tsx
 
 import { useState, useEffect, createRef, useRef } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useStorage } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useStorageLocal } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { Category } from "@imports/ImportSchemas";
 import { axios, sync } from "@imports/ImportUtils";
@@ -22,9 +22,8 @@ export const UserCategory = () => {
   const { ALERT, setALERT } = useAlertStore();
   const { translate } = useLanguageStore();
 
-  // 2-2. useStorage -------------------------------------------------------------------------------
-  // 리스트에서만 사용
-  const [DATE, setDATE] = useStorage(
+  // 2-1. useStorageLocal ------------------------------------------------------------------------
+  const [DATE, setDATE] = useStorageLocal(
     `${TITLE}_date_(${PATH})`, {
       dateType: location_dateType || "day",
       dateStart: location_dateStart || getDayFmt(),
@@ -74,6 +73,11 @@ export const UserCategory = () => {
       });
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -106,6 +110,11 @@ export const UserCategory = () => {
       }
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -113,8 +122,8 @@ export const UserCategory = () => {
     });
   };
 
-  // 4-1. handler ----------------------------------------------------------------------------------
-  const handlerAdd = (type: string) => {
+  // 4-1. handle----------------------------------------------------------------------------------
+  const handleAdd = (type: string) => {
     if (type === "part") {
       setOBJECT((prev: any) => {
         const updatedObject = {
@@ -175,8 +184,8 @@ export const UserCategory = () => {
     }
   };
 
-  // 4-2. handler ----------------------------------------------------------------------------------
-  const handlerRename = (type: string, index: number) => {
+  // 4-2. handle----------------------------------------------------------------------------------
+  const handleRename = (type: string, index: number) => {
     setIsEditable(`${dataType}_${type}_${index}`);
 
     if (type === "part") {
@@ -191,8 +200,8 @@ export const UserCategory = () => {
     }
   };
 
-  // 4-3. handler ----------------------------------------------------------------------------------
-  const handlerRemove = (type: string, index: number) => {
+  // 4-3. handle----------------------------------------------------------------------------------
+  const handleRemove = (type: string, index: number) => {
     if (type === "part") {
       if (OBJECT[dataType].length <= 1) {
         setALERT({
@@ -338,7 +347,7 @@ export const UserCategory = () => {
                               ...prev,
                               category2Idx: index
                             }));
-                            handlerRename("part", index);
+                            handleRename("part", index);
                           }}
                         />
                         <Icons
@@ -349,7 +358,7 @@ export const UserCategory = () => {
                               ...prev,
                               category2Idx: index
                             }));
-                            handlerRemove("part", index);
+                            handleRemove("part", index);
                           }}
                         />
                       </Div>
@@ -367,7 +376,7 @@ export const UserCategory = () => {
                       name={"Plus"}
                       className={"w-12 h-12"}
                       onClick={() => {
-                        handlerAdd("part");
+                        handleAdd("part");
                       }}
                     />
                   </Div>
@@ -449,7 +458,7 @@ export const UserCategory = () => {
                                 ...prev,
                                 category3Idx: index
                               }));
-                              handlerRename("title", index);
+                              handleRename("title", index);
                             }}
                           />
                           <Icons
@@ -460,7 +469,7 @@ export const UserCategory = () => {
                                 ...prev,
                                 category3Idx: index
                               }));
-                              handlerRemove("title", index);
+                              handleRemove("title", index);
                             }}
                           />
                         </Div>
@@ -478,7 +487,7 @@ export const UserCategory = () => {
                         name={"Plus"}
                         className={"w-12 h-12"}
                         onClick={() => {
-                          handlerAdd("title");
+                          handleAdd("title");
                         }}
                       />
                     </Div>
@@ -561,17 +570,9 @@ export const UserCategory = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min90vh"}>
-        <Grid container spacing={1} columns={12}>
+        <Grid container spacing={0} columns={12}>
           <Grid size={12}>
-            {LOADING ? (
-              <>
-                <Loading />
-              </>
-            ) : (
-              <>
-                {detailSection()}
-              </>
-            )}
+            {LOADING ? <Loading /> : detailSection()}
           </Grid>
         </Grid>
       </Paper>

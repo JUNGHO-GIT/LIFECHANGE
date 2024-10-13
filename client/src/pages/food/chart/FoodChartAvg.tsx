@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { FoodAvgKcal, FoodAvgNut } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportUtils";
-import { handlerY } from "@imports/ImportUtils";
+import { handleY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Select, PopUp } from "@imports/ImportContainers";
 import { Div, Img, Br } from "@imports/ImportComponents";
@@ -84,7 +84,7 @@ export const FoodChartAvg = () => {
 
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartKcalWeek = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_KCAL_WEEK, foodChartArray, "food");
+    const {domain, ticks, formatterY} = handleY(OBJECT_KCAL_WEEK, foodChartArray, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart
@@ -166,7 +166,7 @@ export const FoodChartAvg = () => {
 
   // 5-2. chart ------------------------------------------------------------------------------------
   const chartNutWeek = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_NUT_WEEK, foodChartArray, "food");
+    const {domain, ticks, formatterY} = handleY(OBJECT_NUT_WEEK, foodChartArray, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart
@@ -260,7 +260,7 @@ export const FoodChartAvg = () => {
 
   // 5-3. chart ------------------------------------------------------------------------------------
   const chartKcalMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_KCAL_MONTH, foodChartArray, "food");
+    const {domain, ticks, formatterY} = handleY(OBJECT_KCAL_MONTH, foodChartArray, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart
@@ -341,7 +341,7 @@ export const FoodChartAvg = () => {
 
   // 5-4. chart ------------------------------------------------------------------------------------
   const chartNutMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_NUT_MONTH, foodChartArray, "food");
+    const {domain, ticks, formatterY} = handleY(OBJECT_NUT_MONTH, foodChartArray, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart

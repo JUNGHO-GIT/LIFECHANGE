@@ -3,7 +3,7 @@
 // 실제는 day
 
 import { useEffect, useState } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useStorage } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useStorageLocal } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { PopUp, Input, Select } from "@imports/ImportContainers";
 import { Btn, Img, Div, Icons } from "@imports/ImportComponents";
@@ -50,8 +50,8 @@ export const PickerDay = (
   const [listTypeStr, setListTypeStr] = useState<string>("");
   const [saveTypeStr, setDetailTypeStr] = useState<string>("");
 
-  // 2-2. useStorage -------------------------------------------------------------------------------
-  const [listType, setListType] = useStorage(
+  // 2-1. useStorageLocal ------------------------------------------------------------------------
+  const [listType, setListType] = useStorageLocal(
     `${TITLE}_listType_(${PATH})`, "month"
   );
   const [saveType, setSaveType] = useState<string>("");

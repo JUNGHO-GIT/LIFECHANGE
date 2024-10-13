@@ -1,7 +1,8 @@
 // CalendarList.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useStorage } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useStorageLocal } from "@imports/ImportHooks";
+import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { Calendar } from "@imports/ImportSchemas";
 import { axios, CalendarReact } from "@imports/ImportUtils";
 import { Footer } from "@imports/ImportLayouts";
@@ -18,17 +19,18 @@ export const CalendarList = () => {
   const { getPrevMonthStartFmt, getPrevMonthEndFmt } = useCommonDate();
   const { getNextMonthStartFmt, getNextMonthEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
+  const { translate } = useLanguageStore();
+  const { ALERT, setALERT } = useAlertStore();
 
-  // 2-2. useStorage -------------------------------------------------------------------------------
-  // 리스트에서만 사용
-  const [DATE, setDATE] = useStorage(
+  // 2-1. useStorageLocal ------------------------------------------------------------------------
+  const [DATE, setDATE] = useStorageLocal(
     `${TITLE}_date_(${PATH})`, {
       dateType: "",
       dateStart: getMonthStartFmt(),
       dateEnd: getMonthEndFmt(),
     }
   );
-  const [PAGING, _setPAGING] = useStorage(
+  const [PAGING, _setPAGING] = useStorageLocal(
     `${TITLE}_paging_(${PATH})`, {
       sort: "asc",
       page: 1,
@@ -67,6 +69,11 @@ export const CalendarList = () => {
       setOBJECT(res.data.result.length > 0 ? res.data.result : [Calendar]);
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);

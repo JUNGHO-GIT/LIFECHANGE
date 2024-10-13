@@ -1,8 +1,8 @@
 // MoneyGoalList.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useStorage } from "@imports/ImportHooks";
-import { useLanguageStore } from "@imports/ImportStores";
+import { useCommonValue, useCommonDate, useStorageLocal } from "@imports/ImportHooks";
+import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { MoneyGoal } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportUtils";
 import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
@@ -18,23 +18,23 @@ export const MoneyGoalList = () => {
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt,getDayNotFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
+  const { ALERT, setALERT } = useAlertStore();
 
-  // 2-2. useStorage -------------------------------------------------------------------------------
-  // 리스트에서만 사용
-  const [DATE, setDATE] = useStorage(
+  // 2-1. useStorageLocal ------------------------------------------------------------------------
+  const [DATE, setDATE] = useStorageLocal(
     `${TITLE}_date_(${PATH})`, {
       dateType: location_dateType || "",
       dateStart: location_dateStart || getDayFmt(),
       dateEnd: location_dateEnd || getDayFmt(),
     }
   );
-  const [PAGING, setPAGING] = useStorage(
+  const [PAGING, setPAGING] = useStorageLocal(
     `${TITLE}_paging_(${PATH})`, {
       sort: "asc",
       page: 1,
     }
   );
-  const [isExpanded, setIsExpanded] = useStorage(
+  const [isExpanded, setIsExpanded] = useStorageLocal(
     `${TITLE}_isExpanded_(${PATH})`, [{
       expanded: true
     }]
@@ -80,6 +80,11 @@ export const MoneyGoalList = () => {
       );
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
@@ -111,6 +116,11 @@ export const MoneyGoalList = () => {
       ));
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -336,17 +346,9 @@ export const MoneyGoalList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12}>
-            {LOADING ? (
-              <>
-                <Loading />
-              </>
-            ) : (
-              <>
-                {listSection()}
-              </>
-            )}
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-column-center"}>
+            {LOADING ? <Loading /> : listSection()}
           </Grid>
         </Grid>
       </Paper>

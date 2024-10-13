@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { SleepAvg } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportUtils";
-import { handlerY } from "@imports/ImportUtils";
+import { handleY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Select, PopUp } from "@imports/ImportContainers";
 import { Div, Img, Br } from "@imports/ImportComponents";
@@ -76,7 +76,7 @@ export const SleepChartAvg = () => {
 
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartWeek = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, sleepChartArray, "sleep");
+    const {domain, ticks, formatterY} = handleY(OBJECT_MONTH, sleepChartArray, "sleep");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart
@@ -167,7 +167,7 @@ export const SleepChartAvg = () => {
 
   // 5-2. chart ------------------------------------------------------------------------------------
   const chartMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_YEAR, sleepChartArray, "sleep");
+    const {domain, ticks, formatterY} = handleY(OBJECT_YEAR, sleepChartArray, "sleep");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart

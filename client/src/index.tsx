@@ -11,7 +11,7 @@ import "@styles/Jstyle.css";
 import "./index.css";
 
 import {
-  useLocation, ReactDOM, BrowserRouter, Routes, Route
+  useLocation, ReactDOM, BrowserRouter, Routes, Route, StrictMode
 } from "@imports/ImportReacts";
 
 import {
@@ -177,8 +177,8 @@ const App = () => {
         <Route path="/user/*" element={<User />} />
         <Route path="/auth/*" element={<Auth />} />
       </Routes>
-      {<Alert />}
-      {<Confirm />}
+      <Alert />
+      <Confirm />
       {!noneBottom && <BottomNav />}
     </div>
   );
@@ -198,10 +198,12 @@ if (rootElement === null) {
 
 const root = ReactDOM.createRoot(rootElement);
 root.render(
-  <BrowserRouter basename={"/JPAGE"}>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <App />
-    </ThemeProvider>
-  </BrowserRouter>
+  <StrictMode>
+    <BrowserRouter basename={"/JPAGE"}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <App />
+      </ThemeProvider>
+    </BrowserRouter>
+  </StrictMode>
 );

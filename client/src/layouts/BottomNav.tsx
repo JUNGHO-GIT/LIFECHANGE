@@ -39,7 +39,7 @@ export const BottomNav = () => {
     }
   }, [firstStr]);
 
-  // 4. handler ------------------------------------------------------------------------------------
+  // 4. handle------------------------------------------------------------------------------------
   const handleClickBottomNav = (value: string) => {
     setSelectedTab(value);
 

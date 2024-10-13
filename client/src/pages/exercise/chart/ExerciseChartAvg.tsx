@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { ExerciseAvgVolume, ExerciseAvgCardio } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportUtils";
-import { handlerY } from "@imports/ImportUtils";
+import { handleY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Select, PopUp } from "@imports/ImportContainers";
 import { Div, Img, Br } from "@imports/ImportComponents";
@@ -84,7 +84,7 @@ export const ExerciseChartAvg = () => {
 
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartVolumeWeek = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_VOLUME_WEEK, exerciseChartArray, "exercise");
+    const {domain, ticks, formatterY} = handleY(OBJECT_VOLUME_WEEK, exerciseChartArray, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart
@@ -166,7 +166,7 @@ export const ExerciseChartAvg = () => {
 
   // 5-2. chart ------------------------------------------------------------------------------------
   const chartCardioWeek = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_CARDIO_WEEK, exerciseChartArray, "exercise");
+    const {domain, ticks, formatterY} = handleY(OBJECT_CARDIO_WEEK, exerciseChartArray, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart
@@ -248,7 +248,7 @@ export const ExerciseChartAvg = () => {
 
   // 5-3. chart ------------------------------------------------------------------------------------
   const chartVolumeMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_VOLUME_MONTH, exerciseChartArray, "exercise");
+    const {domain, ticks, formatterY} = handleY(OBJECT_VOLUME_MONTH, exerciseChartArray, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart
@@ -330,7 +330,7 @@ export const ExerciseChartAvg = () => {
 
   // 5-4. chart ------------------------------------------------------------------------------------
   const chartCardioMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_CARDIO_MONTH, exerciseChartArray, "exercise");
+    const {domain, ticks, formatterY} = handleY(OBJECT_CARDIO_MONTH, exerciseChartArray, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart

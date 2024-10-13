@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { MoneyLine } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportUtils";
-import { handlerY } from "@imports/ImportUtils";
+import { handleY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Select, PopUp } from "@imports/ImportContainers";
 import { Div, Img, Br } from "@imports/ImportComponents";
@@ -76,7 +76,7 @@ export const MoneyChartLine = () => {
 
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartWeek = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_WEEK, moneyChartArray, "money");
+    const {domain, ticks, formatterY} = handleY(OBJECT_WEEK, moneyChartArray, "money");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart
@@ -170,7 +170,7 @@ export const MoneyChartLine = () => {
 
   // 5-3. chart ------------------------------------------------------------------------------------
   const chartMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, moneyChartArray, "money");
+    const {domain, ticks, formatterY} = handleY(OBJECT_MONTH, moneyChartArray, "money");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart

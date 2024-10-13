@@ -103,6 +103,11 @@ export const SleepDetail = () => {
       );
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
@@ -150,6 +155,11 @@ export const SleepDetail = () => {
       }));
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -216,6 +226,11 @@ export const SleepDetail = () => {
       }
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -260,6 +275,11 @@ export const SleepDetail = () => {
       }
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -267,8 +287,8 @@ export const SleepDetail = () => {
     });
   };
 
-  // 4-3. handler ----------------------------------------------------------------------------------
-  const handlerDelete = (index: number) => {
+  // 4-3. handle----------------------------------------------------------------------------------
+  const handleDelete = (index: number) => {
     setOBJECT((prev: any) => ({
       ...prev,
       sleep_section: prev.sleep_section.filter((_item: any, idx: number) => (idx !== index))
@@ -319,7 +339,7 @@ export const SleepDetail = () => {
             <Grid size={6} className={"d-row-right"}>
               <Delete
                 index={i}
-                handlerDelete={handlerDelete}
+                handleDelete={handleDelete}
                 LOCKED={LOCKED}
               />
             </Grid>
@@ -385,15 +405,7 @@ export const SleepDetail = () => {
         <Grid container spacing={1} columns={12}>
           <Grid size={12}>
             {dateCountSection()}
-            {LOADING ? (
-              <>
-                <Loading />
-              </>
-            ) : (
-              <>
-                {detailSection()}
-              </>
-            )}
+            {LOADING ? <Loading /> : detailSection()}
           </Grid>
         </Grid>
       </Paper>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue } from "@imports/ImportHooks";
+import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { AppInfo } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
@@ -14,6 +15,8 @@ export const UserAppInfo = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, TITLE, sessionId } = useCommonValue();
+  const { translate } = useLanguageStore();
+  const { ALERT, setALERT } = useAlertStore();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -36,6 +39,11 @@ export const UserAppInfo = () => {
       }));
     })
     .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     })
     .finally(() => {
@@ -125,19 +133,11 @@ export const UserAppInfo = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper d-center border-1 radius-1 h-min90vh"}>
-        <Grid container spacing={1} columns={12}>
+        <Grid container spacing={0} columns={12}>
           <Grid size={12}>
-            {LOADING ? (
-              <>
-                <Loading />
-              </>
-            ) : (
-              <>
-                {imageSection()}
-                <Br px={20} />
-                {detailSection()}
-              </>
-            )}
+            {imageSection()}
+            <Br px={20} />
+            {LOADING ? <Loading /> : detailSection()}
           </Grid>
         </Grid>
       </Paper>

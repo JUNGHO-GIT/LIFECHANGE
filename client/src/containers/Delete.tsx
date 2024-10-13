@@ -5,13 +5,13 @@ import { Icons, Div } from "@imports/ImportComponents";
 // -------------------------------------------------------------------------------------------------
 declare type DeleteProps = {
   index: number;
-  handlerDelete: any;
+  handleDelete: any;
   LOCKED: string;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const Delete = (
-  { index, handlerDelete, LOCKED }: DeleteProps
+  { index, handleDelete, LOCKED }: DeleteProps
 ) => {
 
   // 1. deleteNode --------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ export const Delete = (
         locked={LOCKED}
         className={"w-20 h-20"}
         onClick={() => {
-          handlerDelete(index);
+          handleDelete(index);
         }}
       />
     </Div>

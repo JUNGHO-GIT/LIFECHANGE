@@ -1,10 +1,10 @@
-// useStorage.tsx
+// useStorageSession.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { parseISO, formatISO } from "@imports/ImportUtils";
 
 // -------------------------------------------------------------------------------------------------
-export const useStorage = (key: string, initialVal: any) => {
+export const useStorageSession = (key: string, initialVal: any) => {
 
   // -----------------------------------------------------------------------------------------------
   const datePattern = new RegExp("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}");

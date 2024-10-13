@@ -188,8 +188,11 @@ export const TopNav = () => {
       else if (secondStr === "list" || secondStr === "detail") {
         setSelectedTab("real");
       }
-      else if (secondStr === "find" || secondStr === "favorite") {
+      else if (secondStr === "find") {
         setSelectedTab("find");
+      }
+      else if (secondStr === "favorite") {
+        setSelectedTab("favorite");
       }
     }
     // 3. exercise, money, sleep
@@ -206,7 +209,7 @@ export const TopNav = () => {
     }
   }, [PATH]);
 
-  // 4. handler ------------------------------------------------------------------------------------
+  // 4. handle------------------------------------------------------------------------------------
   const handleClickTobNav = (value: string) => {
     setSelectedTab(value);
 
@@ -623,31 +626,49 @@ export const TopNav = () => {
           label={translate("chart")}
           value={"chart"}
           className={(firstStr === "calendar" || firstStr === "today") ? "d-none" : ""}
-          onClick={() => handleClickTobNav("chart")}
+          onClick={() => {
+            handleClickTobNav("chart");
+          }}
         />
         <Tab
           label={translate("goal")}
           value={"goal"}
           className={firstStr === "calendar" ? "d-none" : ""}
-          onClick={() => handleClickTobNav("goal")}
+          onClick={() => {
+            handleClickTobNav("goal");
+          }}
         />
         <Tab
           label={translate("real")}
           value={"real"}
           className={firstStr === "calendar" ? "d-none" : ""}
-          onClick={() => handleClickTobNav("real")}
+          onClick={() => {
+            handleClickTobNav("real");
+          }}
         />
         <Tab
           label={translate("schedule")}
           value={"schedule"}
           className={firstStr === "calendar" ? "" : "d-none"}
-          onClick={() => handleClickTobNav("schedule")}
+          onClick={() => {
+            handleClickTobNav("schedule");
+          }}
         />
         <Tab
           label={translate("find")}
           value={"find"}
           className={firstStr === "food" ? "" : "d-none"}
-          onClick={() => handleClickTobNav("find")}
+          onClick={() => {
+            handleClickTobNav("find");
+          }}
+        />
+        <Tab
+          label={translate("favorite")}
+          value={"favorite"}
+          className={firstStr === "food" ? "" : "d-none"}
+          onClick={() => {
+            handleClickTobNav("favorite");
+          }}
         />
       </Tabs>
     );
@@ -655,13 +676,13 @@ export const TopNav = () => {
     return (
       <Paper className={"layout-wrapper p-sticky top-8vh h-8vh border-1 radius-1 shadow-bottom-1"}>
         <Grid container spacing={1} columns={25}>
-          <Grid size={3}>
+          <Grid size={3} className={"d-center"}>
             {smileSection()}
           </Grid>
-          <Grid size={3}>
+          <Grid size={3} className={"d-center"}>
             {propertySection()}
           </Grid>
-          <Grid size={3}>
+          <Grid size={3} className={"d-center"}>
             {scaleSection()}
           </Grid>
           <Grid size={16} className={"d-center"}>
