@@ -11,7 +11,7 @@ import "@styles/Jstyle.css";
 import "./index.css";
 
 import {
-  useLocation, ReactDOM, BrowserRouter, Routes, Route, StrictMode
+  useLocation, BrowserRouter, Routes, Route, StrictMode, createRoot
 } from "@imports/ImportReacts";
 
 import {
@@ -191,12 +191,7 @@ const theme = createTheme({
   },
 });
 
-const rootElement = document.getElementById("root");
-if (rootElement === null) {
-  throw new Error("root element is null");
-}
-
-const root = ReactDOM.createRoot(rootElement);
+const root = createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <StrictMode>
     <BrowserRouter basename={"/JPAGE"}>
