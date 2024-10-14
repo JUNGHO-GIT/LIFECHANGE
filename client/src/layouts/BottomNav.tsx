@@ -43,39 +43,42 @@ export const BottomNav = () => {
   const handleClickBottomNav = (value: string) => {
     setSelectedTab(value);
 
-    // ex. TITLE_tabs_(food), TITLE_tabs_(exercise) ..
-    let sessionStorageData = null;
+    // localStorage 에서 값 가져오기
+    let localStorageData = null;
     const pattern = new RegExp(`^${TITLE}_tabs_\\(${value}\\)$`);
 
-    for (let i = 0; i < sessionStorage.length; i++) {
-      const key = sessionStorage.key(i) || "";
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i) || "";
 
       // 값이 있는 경우
       if (pattern.test(key)) {
-        sessionStorageData = sessionStorage.getItem(key);
+        localStorageData = localStorage.getItem(key);
         // 큰따옴표 제거
-        if (sessionStorageData) {
-          sessionStorageData = sessionStorageData.replace(/"/g, "");
+        if (localStorageData) {
+          localStorageData = localStorageData.replace(/"/g, "");
         }
         break;
       }
 
       // 값이 없는 경우
       else {
-        sessionStorageData = "";
+        localStorageData = "";
       }
     }
 
     let url = "";
-    if (sessionStorageData) {
-      if (sessionStorageData === "real" || sessionStorageData === "schedule") {
+    if (localStorageData) {
+      if (localStorageData === "real" || localStorageData === "schedule") {
         url = `${value}/list`;
       }
-      else if (sessionStorageData === "find") {
+      else if (localStorageData === "find") {
         url = `${value}/find/list`;
       }
+      else if (localStorageData === "favorite") {
+        url = `${value}/favorite/list`;
+      }
       else {
-        url = `${value}/${sessionStorageData}/list`;
+        url = `${value}/${localStorageData}/list`;
       }
     }
     else {
@@ -191,7 +194,7 @@ export const BottomNav = () => {
     // 2. return
     return (
       <Paper className={"layout-wrapper p-sticky bottom-0vh h-8vh border-1 radius-1 shadow-bottom-1"}>
-        <Grid container spacing={1} columns={12}>
+        <Grid container spacing={0} columns={12}>
           <Grid size={12} className={"d-center"}>
             {tabsSection()}
           </Grid>

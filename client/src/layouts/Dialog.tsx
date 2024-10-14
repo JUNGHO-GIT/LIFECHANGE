@@ -327,12 +327,20 @@ export const Dialog = (
             tooltipTitle={translate("favorite")}
             className={open ? "" : "d-none"}
             icon={
-              <Icons
-                key={"Star"}
-                name={"Star"}
-                fill={PATH.includes("/favorite/list") ? "gold" : "white"}
-                className={"w-23 h-23"}
-              />
+              PATH.includes("/favorite/list") ? (
+                <Icons
+                  key={"Search"}
+                  name={"Search"}
+                  className={"w-23 h-23"}
+                />
+              ) : (
+                <Icons
+                  key={"Star"}
+                  name={"Star"}
+                  fill={"gold"}
+                  className={"w-23 h-23"}
+                />
+              )
             }
             onClick={() => {
               PATH.includes("/favorite/list") ? (

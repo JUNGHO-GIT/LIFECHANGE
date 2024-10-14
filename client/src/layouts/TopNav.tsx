@@ -213,8 +213,8 @@ export const TopNav = () => {
   const handleClickTobNav = (value: string) => {
     setSelectedTab(value);
 
-    // ex. title_tabs_calendar
-    sessionStorage.setItem(`${TITLE}_tabs_(${firstStr})`, JSON.stringify(value));
+    // localStorage 에 저장
+    localStorage.setItem(`${TITLE}_tabs_(${firstStr})`, JSON.stringify(value));
 
     let url = "";
     if (value === "real" || value === "schedule") {
@@ -222,6 +222,9 @@ export const TopNav = () => {
     }
     else if (value === "find") {
       url = `/${firstStr}/find/list`;
+    }
+    else if (value === "favorite") {
+      url = `/${firstStr}/favorite/list`;
     }
     else {
       url = `/${firstStr}/${value}/list`;
