@@ -18,9 +18,6 @@ export const useInitializeLanguage = () => {
       if (localeSetting === "ko") {
         setLang("ko");
       }
-      else if (localeSetting === "es") {
-        setLang("es");
-      }
       else {
         setLang("en");
       }
