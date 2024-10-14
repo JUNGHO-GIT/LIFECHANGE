@@ -71,11 +71,11 @@ export const useCommonValue = () => {
   const sessionId: string = sessionStorage.getItem(`${TITLE}_sessionId`) || "";
   const localeSetting: any = localStorage.getItem(`${TITLE}_localeSetting`) || "{}";
 
-  const localTimeZone: string = JSON.parse(localeSetting)?.timeZone || "Asia/Seoul";
-  const localZoneName: string = JSON.parse(localeSetting)?.zoneName || "KST";
-  const localLocale: string = JSON.parse(localeSetting)?.locale || "ko";
-  const localIsoCode: string = JSON.parse(localeSetting)?.isoCode || "KR";
-  const localCurrency: string = JSON.parse(localeSetting)?.currency || "KRW";
+  const localTimeZone: string = JSON.parse(localeSetting)?.timeZone || "UTC";
+  const localZoneName: string = JSON.parse(localeSetting)?.zoneName || "UTC";
+  const localLocale: string = JSON.parse(localeSetting)?.locale || "en";
+  const localIsoCode: string = JSON.parse(localeSetting)?.isoCode || "US";
+  const localCurrency: string = JSON.parse(localeSetting)?.currency || "USD";
 
   const exerciseChartArray: any[] = [
     "volume", "cardio"
