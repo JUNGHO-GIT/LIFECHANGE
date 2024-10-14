@@ -1,11 +1,11 @@
-// useLocale.tsx
+// useLocaleSetting.tsx
 
 import { useEffect } from "@imports/ImportReacts";
 import { useCommonValue } from "@imports/ImportHooks";
 import { moment, getCountryForTimezone, getAllInfoByISO } from "@imports/ImportUtils";
 
 // -------------------------------------------------------------------------------------------------
-export const useLocale = () => {
+export const useLocaleSetting = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { TITLE } = useCommonValue();

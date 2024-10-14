@@ -19,7 +19,7 @@ import {
 } from "@imports/ImportMuis";
 
 import {
-  useRoot, useScrollTop, useFoodSection, useLocale, useInitializeLanguage
+  useRoot, useScrollTop, useFoodSection, useLocaleSetting, useInitializeLanguage
 } from "@imports/ImportHooks";
 
 import {
@@ -141,7 +141,7 @@ const Auth = () => (
 const App = () => {
 
   useRoot();
-  useLocale();
+  useLocaleSetting();
   useScrollTop();
   useFoodSection();
   useInitializeLanguage();

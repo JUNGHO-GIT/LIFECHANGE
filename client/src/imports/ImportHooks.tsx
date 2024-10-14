@@ -9,7 +9,7 @@ import { useFoodSection } from "@hooks/useFoodSection";
 import { useStorageSession } from "@hooks/useStorageSession";
 import { useStorageLocal } from "@hooks/useStorageLocal";
 import { useTime } from "@hooks/useTime";
-import { useLocale } from "@hooks/useLocale";
+import { useLocaleSetting } from "@hooks/useLocaleSetting";
 
 // -------------------------------------------------------------------------------------------------
 export {
@@ -22,5 +22,5 @@ export {
   useStorageSession,
   useStorageLocal,
   useTime,
-  useLocale,
+  useLocaleSetting,
 };
