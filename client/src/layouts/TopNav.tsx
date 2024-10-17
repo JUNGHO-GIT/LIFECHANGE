@@ -256,7 +256,7 @@ export const TopNav = () => {
               </Div>
               <Br px={10} />
               <Div className={"fs-0-8rem fw-500 dark"}>
-                {`(${getMonthStartFmt()} ~ ${getMonthEndFmt()})`}
+                {`[${getMonthStartFmt()} ~ ${getMonthEndFmt()}]`}
               </Div>
             </Grid>
             <Hr px={1} />
@@ -385,7 +385,7 @@ export const TopNav = () => {
               </Div>
               <Br px={10} />
               <Div className={"fs-0-8rem fw-500 dark"}>
-                {`(${property?.dateStart} ~ ${property?.dateEnd})`}
+                {`[${property?.dateStart} ~ ${property?.dateEnd}]`}
               </Div>
               <Br px={10} />
               <Div className={"fs-0-7rem fw-500 dark ms-10"}>
@@ -507,15 +507,14 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Grid container spacing={2} columns={12}
-          className={"w-max60vw h-max70vh border-1 radius-1 p-20"}>
+          <Grid container spacing={2} columns={12} className={"w-max60vw h-max70vh border-1 radius-1 p-20"}>
             <Grid size={12} className={"d-col-center"}>
               <Div className={"fs-1-3rem fw-600"}>
                 {translate("weight")}
               </Div>
               <Br px={10} />
               <Div className={"fs-0-8rem fw-500 dark"}>
-                {`(${scale?.dateStart} ~ ${scale?.dateEnd})`}
+                {`[${scale?.dateStart} ~ ${scale?.dateEnd}]`}
               </Div>
             </Grid>
             <Hr px={1} />
@@ -605,7 +604,7 @@ export const TopNav = () => {
     // 4. tabs
     const tabsSection = () => (
       <Tabs
-        value={selectedTab || false}
+        value={selectedTab || "chart" || "goal" || "real" || "schedule" || "find" || "favorite"}
         variant={"scrollable"}
         selectionFollowsFocus={true}
         scrollButtons={false}

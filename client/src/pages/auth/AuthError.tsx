@@ -133,10 +133,10 @@ export const AuthError = () => {
     return (
       <Paper className={"content-wrapper d-center border-1 radius-1 h-min100vh"}>
         <Grid container spacing={2} columns={12}>
-          <Grid size={6}>
+          <Grid size={6} className={"d-col-center"}>
             {imageSection()}
           </Grid>
-          <Grid size={6}>
+          <Grid size={6} className={"d-col-center"}>
             {textSection()}
           </Grid>
         </Grid>

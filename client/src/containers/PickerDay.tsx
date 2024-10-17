@@ -169,9 +169,12 @@ export const PickerDay = (
         direction={"center"}
         contents={
           <Grid container spacing={2} columns={12} className={"w-min70vw"}>
-            <Grid size={12} className={"d-center"}>
-              <Div className={"fs-1-2rem fw-600"}>
+            <Grid size={12} className={"d-row-center"}>
+              <Div className={"fs-1-2rem fw-600 me-10"}>
                 {translate("viewDay")}
+              </Div>
+              <Div className={"fs-0-8rem fw-500 dark"}>
+                {`[${getDayFmt(DATE.dateStart)}]`}
               </Div>
             </Grid>
             <Grid size={12} className={"d-center"}>
@@ -370,9 +373,12 @@ export const PickerDay = (
         direction={"center"}
         contents={
           <Grid container spacing={2} columns={12} className={"w-min70vw"}>
-            <Grid size={12} className={"d-center"}>
-              <Div className={"fs-1-2rem fw-600"}>
+            <Grid size={12} className={"d-row-center"}>
+              <Div className={"fs-1-2rem fw-600 me-10"}>
                 {translate("viewWeek")}
+              </Div>
+              <Div className={"fs-0-8rem fw-500 dark"}>
+                {`[${getWeekStartFmt(DATE.dateStart)} ~ ${getWeekEndFmt(DATE.dateEnd)}]`}
               </Div>
             </Grid>
             <Grid size={12} className={"d-center"}>
@@ -575,9 +581,12 @@ export const PickerDay = (
         direction={"center"}
         contents={
           <Grid container spacing={2} columns={12} className={"w-min70vw"}>
-            <Grid size={12} className={"d-center"}>
-              <Div className={"fs-1-2rem fw-600"}>
+            <Grid size={12} className={"d-row-center"}>
+              <Div className={"fs-1-2rem fw-600 me-10"}>
                 {translate("viewMonth")}
+              </Div>
+              <Div className={"fs-0-8rem fw-500 dark"}>
+                {`[${getMonthStartFmt(DATE.dateStart)} ~ ${getMonthEndFmt(DATE.dateEnd)}]`}
               </Div>
             </Grid>
             <Grid size={12} className={"d-center"}>
@@ -763,9 +772,12 @@ export const PickerDay = (
         direction={"center"}
         contents={
           <Grid container spacing={2} columns={12} className={"w-min70vw"}>
-            <Grid size={12} className={"d-center"}>
-              <Div className={"fs-1-2rem fw-600"}>
+            <Grid size={12} className={"d-row-center"}>
+              <Div className={"fs-1-2rem fw-600 me-10"}>
                 {translate("viewYear")}
+              </Div>
+              <Div className={"fs-0-8rem fw-500 dark"}>
+                {`[${getYearStartFmt(DATE.dateStart)} ~ ${getYearEndFmt(DATE.dateEnd)}]`}
               </Div>
             </Grid>
             <Grid size={12} className={"d-center"}>
@@ -952,9 +964,12 @@ export const PickerDay = (
         direction={"center"}
         contents={
           <Grid container spacing={2} columns={12} className={"w-min70vw"}>
-            <Grid size={12} className={"d-center"}>
-              <Div className={"fs-1-2rem fw-600"}>
+            <Grid size={12} className={"d-row-center"}>
+              <Div className={"fs-1-2rem fw-600 me-10"}>
                 {translate("viewSelect")}
+              </Div>
+              <Div className={"fs-0-8rem fw-500 dark"}>
+                {`[${DATE?.dateStart} ~ ${DATE?.dateEnd}]`}
               </Div>
             </Grid>
             <Grid size={12} className={"d-center"}>
