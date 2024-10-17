@@ -60,7 +60,7 @@ export const Header = () => {
       )
     );
     return (
-      <Paper className={"layout-wrapper p-sticky top-0vh h-8vh border-1 radius-1 shadow-top-1"}>
+      <Paper className={"layout-wrapper p-sticky top-0vh h-8vh border-1 radius-1 shadow-top-3"}>
         <Grid container spacing={2} columns={12}>
           <Grid size={10} className={"d-row-left"}>
             {iconSection()}
