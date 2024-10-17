@@ -355,7 +355,7 @@ export const FoodFindList = () => {
             {OBJECT?.map((item: any, i: number) => (
               <Grid size={12} key={`list-${i}`}>
                 {COUNT.totalCnt === 0 ? (
-                  <Empty extra={"food"} />
+                  <Empty DATE={DATE} extra={"food"} />
                 ) : (
                   listFragment(item, i)
                 )}

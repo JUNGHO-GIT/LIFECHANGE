@@ -82,16 +82,16 @@ export const PickerDay = (
       setListType("day");
       setDATE({
         dateType: "day",
-        dateStart: getDayFmt(),
-        dateEnd: getDayFmt(),
+        dateStart: DATE.dateStart || getDayFmt(),
+        dateEnd: DATE.dateEnd || getDayFmt(),
       });
     }
     else if (isGoalList || isRealList) {
       if (listType === "day") {
         setDATE({
           dateType: "",
-          dateStart: getDayFmt(),
-          dateEnd: getDayFmt(),
+          dateStart: DATE.dateStart || getDayFmt(),
+          dateEnd: DATE.dateEnd || getDayFmt(),
         });
       }
       else if (listType === "week") {
@@ -127,7 +127,7 @@ export const PickerDay = (
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (isGoalDetail || isRealDetail) {
+    if (isGoalDetail || isRealDetail || isCalendarDetail) {
       if (saveType === "day") {
         setDATE({
           dateType: "day",
@@ -1255,7 +1255,23 @@ export const PickerDay = (
           </Grid>
         </Grid>
       )
-
+      
+      // 2-3. 세이브 (일정)
+      : isCalendarDetail ? (
+        <Grid container spacing={1} columns={12}>
+          <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
+            {saveTypeSection()}
+          </Grid>
+          <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
+            {DATE.dateType === "day" && daySection()}
+            {DATE.dateType === "week" && weekSection()}
+            {DATE.dateType === "month" && monthSection()}
+            {DATE.dateType === "year" && yearSection()}
+            {DATE.dateType === "select" && selectSection()}
+          </Grid>
+        </Grid>
+      )
+      
       // 2-1. 세이브 (목표)
       : isGoalDetail ? (
         <Grid container spacing={1} columns={12}>
@@ -1278,22 +1294,6 @@ export const PickerDay = (
           </Grid>
           <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
             {DATE.dateType === "day" && daySection()}
-          </Grid>
-        </Grid>
-      )
-
-      // 2-3. 세이브 (일정)
-      : isCalendarDetail ? (
-        <Grid container spacing={1} columns={12}>
-          <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
-            {saveTypeSection()}
-          </Grid>
-          <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
-            {DATE.dateType === "day" && daySection()}
-            {DATE.dateType === "week" && weekSection()}
-            {DATE.dateType === "month" && monthSection()}
-            {DATE.dateType === "year" && yearSection()}
-            {DATE.dateType === "select" && selectSection()}
           </Grid>
         </Grid>
       )

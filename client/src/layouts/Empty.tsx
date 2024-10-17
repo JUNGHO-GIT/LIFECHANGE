@@ -7,12 +7,13 @@ import { Card, Accordion, AccordionSummary, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 declare type EmptyProps = {
+  DATE: any;
   extra: string;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const Empty = (
-  { extra }: EmptyProps
+  { DATE, extra }: EmptyProps
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
@@ -55,9 +56,9 @@ export const Empty = (
               e.stopPropagation();
               navigate(toDetail, {
                 state: {
-                  dateType: "",
-                  dateStart: "",
-                  dateEnd: "",
+                  dateType: DATE?.dateType,
+                  dateStart: DATE?.dateStart,
+                  dateEnd: DATE?.dateEnd
                 }
               });
             }}>

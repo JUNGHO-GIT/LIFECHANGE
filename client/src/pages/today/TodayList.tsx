@@ -301,7 +301,7 @@ export const TodayList = () => {
             {OBJECT_EXERCISE?.map((item: any, i: number) => (
               <Grid size={12} key={`list-${i}`}>
                 {COUNT.exercise === 0 ? (
-                  <Empty extra={"exercise"} />
+                  <Empty DATE={DATE} extra={"exercise"} />
                 ) : (
                   listFragment(item, i)
                 )}
@@ -486,7 +486,7 @@ export const TodayList = () => {
             {OBJECT_FOOD?.map((item: any, i: number) => (
               <Grid size={12} key={`list-${i}`}>
                 {COUNT.food === 0 ? (
-                  <Empty extra={"food"} />
+                  <Empty DATE={DATE} extra={"food"} />
                 ) : (
                   listFragment(item, i)
                 )}
@@ -615,7 +615,7 @@ export const TodayList = () => {
             {OBJECT_MONEY?.map((item: any, i: number) => (
               <Grid size={12} key={`list-${i}`}>
                 {COUNT.money === 0 ? (
-                  <Empty extra={"money"} />
+                  <Empty DATE={DATE} extra={"money"} />
                 ) : (
                   listFragment(item, i)
                 )}
@@ -772,7 +772,7 @@ export const TodayList = () => {
             {OBJECT_SLEEP?.map((item: any, i: number) => (
               <Grid size={12} key={`list-${i}`}>
                 {COUNT.sleep === 0 ? (
-                  <Empty extra={"sleep"} />
+                  <Empty DATE={DATE} extra={"sleep"} />
                 ) : (
                   listFragment(item, i)
                 )}

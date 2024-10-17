@@ -401,7 +401,7 @@ export const SleepGoalList = () => {
             {OBJECT?.map((item: any, i: number) => (
               <Grid size={12} key={`list-${i}`}>
                 {COUNT.totalCnt === 0 ? (
-                  <Empty extra={"sleep"} />
+                  <Empty DATE={DATE} extra={"sleep"} />
                 ) : (
                   listFragment(item, i)
                 )}
