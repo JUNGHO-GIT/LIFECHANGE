@@ -21,7 +21,6 @@ export const Select = (props: any) => (
         e.stopPropagation();
         const target = e.currentTarget;
         target.classList.add('shake');
-        target.classList.add("Mui-error");
         setTimeout(() => {
           target.classList.remove('shake');
         }, 700);
@@ -34,7 +33,7 @@ export const Select = (props: any) => (
     sx={{
       ...props?.sx,
       "& .MuiSelect-icon": {
-        display: props?.readOnly && "none"
+        display: props?.disabled && "none"
       },
     }}
     slotProps={{
@@ -42,7 +41,10 @@ export const Select = (props: any) => (
       input: {
         ...props?.slotProps?.input,
         readOnly: (
-          props?.readOnly || props?.locked === "locked" || false
+          (props?.readOnly || props?.className?.includes("pointer")) ? true : false
+        ),
+        disabled: (
+          (props?.disabled || props?.locked === "locked") ? true : false
         ),
         className: (
           props?.inputclass?.includes("fs-") ? (
@@ -78,6 +80,14 @@ export const Select = (props: any) => (
           ) : null
         ),
       },
+      htmlInput: {
+        ...props?.slotProps?.htmlInput,
+        className: props?.inputclass?.includes("pointer") ? "pointer" : "",
+      },
+      inputLabel: {
+        ...props?.slotProps?.inputLabel,
+        shrink: ((props?.shrink === "shrink" || props?.disabled) ? true : undefined),
+      }
     }}
   />
 );

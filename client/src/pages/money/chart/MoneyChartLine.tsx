@@ -1,15 +1,14 @@
 // MoneyChartLine.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
+import { useStorageLocal, useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { MoneyLine } from "@imports/ImportSchemas";
-import { axios } from "@imports/ImportUtils";
-import { handleY } from "@imports/ImportUtils";
+import { axios, handleY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Select, PopUp } from "@imports/ImportContainers";
 import { Div, Img, Br } from "@imports/ImportComponents";
-import { Paper, Card, MenuItem, Grid } from "@imports/ImportMuis";
+import { Paper, MenuItem, Grid } from "@imports/ImportMuis";
 import { FormGroup, FormControlLabel, Switch } from "@imports/ImportMuis";
 import { Line, LineChart } from "recharts";
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
@@ -18,15 +17,21 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } fro
 export const MoneyChartLine = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, sessionId, chartColors, moneyChartArray } = useCommonValue();
+  const { URL_OBJECT, TITLE, PATH, sessionId, chartColors, moneyChartArray } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
+  // 2-1. useStorageLocal --------------------------------------------------------------------------
+  const [TYPE, setTYPE] = useStorageLocal(
+    `${TITLE}_type_line_(${PATH})`, {
+      section: "week",
+      line: moneyChartArray,
+    }
+  );
+
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(true);
-  const [SECTION, setSECTION] = useState<string>("week");
-  const [LINE, setLINE] = useState<any>(moneyChartArray);
   const [DATE, setDATE] = useState<any>({
     dateType: "",
     dateStart: getDayFmt(),
@@ -78,93 +83,97 @@ export const MoneyChartLine = () => {
   const chartWeek = () => {
     const {domain, ticks, formatterY} = handleY(OBJECT_WEEK, moneyChartArray, "money");
     return (
-      <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart
-          data={OBJECT_WEEK}
-          margin={{top: 20, right: 20, bottom: 20, left: 20}}
-          barGap={20}
-          barCategoryGap={"20%"}
-        >
-          <CartesianGrid
-            strokeDasharray={"3 3"}
-            stroke={"#f5f5f5"}
-          />
-          <XAxis
-            type={"category"}
-            dataKey={"name"}
-            tickLine={false}
-            axisLine={false}
-            tick={{fill:"#666", fontSize:14}}
-            tickFormatter={(value) => (
-              translate(value)
-            )}
-          />
-          <YAxis
-            type={"number"}
-            domain={domain}
-            ticks={ticks}
-            tickFormatter={formatterY}
-            tickLine={false}
-            axisLine={false}
-            tick={{fill:"#666", fontSize:12}}
-            width={30}
-          />
-          {LINE.includes("income") && (
-            <Line
-              dataKey={"income"}
-              type={"monotone"}
-              stroke={chartColors[0]}
-              strokeWidth={2}
-              activeDot={{r:8}}
-            />
-          )}
-          {LINE.includes("expense") && (
-            <Line
-              dataKey={"expense"}
-              type={"monotone"}
-              stroke={chartColors[3]}
-              strokeWidth={2}
-              activeDot={{r:8}}
-            />
-          )}
-          <Tooltip
-            labelFormatter={(label: any, payload: any) => {
-              const date = payload.length > 0 ? payload[0]?.payload.date : '';
-              return `${date}`;
-            }}
-            formatter={(value: any, name: any, props: any) => {
-              const customName = translate(name);
-              return [`${Number(value).toLocaleString()}`, customName];
-            }}
-            cursor={{
-              fill:"rgba(0, 0, 0, 0.1)"
-            }}
-            contentStyle={{
-              borderRadius:"10px",
-              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-              padding:"10px",
-              border:"none",
-              background:"#fff",
-              color:"#666"
-            }}
-          />
-          <Legend
-            iconType={"circle"}
-            verticalAlign={"bottom"}
-            align={"center"}
-            formatter={(value) => {
-              return translate(value);
-            }}
-            wrapperStyle={{
-              width:"95%",
-              display:"flex",
-              justifyContent:"center",
-              alignItems:"center",
-              fontSize: "0.8rem",
-            }}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+      <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
+        <Grid size={12} className={"d-col-center"}>
+          <ResponsiveContainer width={"100%"} height={350}>
+            <LineChart
+              data={OBJECT_WEEK}
+              margin={{top: 20, right: 20, bottom: 20, left: 20}}
+              barGap={20}
+              barCategoryGap={"20%"}
+            >
+              <CartesianGrid
+                strokeDasharray={"3 3"}
+                stroke={"#f5f5f5"}
+              />
+              <XAxis
+                type={"category"}
+                dataKey={"name"}
+                tickLine={false}
+                axisLine={false}
+                tick={{fill:"#666", fontSize:14}}
+                tickFormatter={(value) => (
+                  translate(value)
+                )}
+              />
+              <YAxis
+                type={"number"}
+                domain={domain}
+                ticks={ticks}
+                tickFormatter={formatterY}
+                tickLine={false}
+                axisLine={false}
+                tick={{fill:"#666", fontSize:12}}
+                width={30}
+              />
+              {TYPE.line.includes("income") && (
+                <Line
+                  dataKey={"income"}
+                  type={"monotone"}
+                  stroke={chartColors[0]}
+                  strokeWidth={2}
+                  activeDot={{r:8}}
+                />
+              )}
+              {TYPE.line.includes("expense") && (
+                <Line
+                  dataKey={"expense"}
+                  type={"monotone"}
+                  stroke={chartColors[3]}
+                  strokeWidth={2}
+                  activeDot={{r:8}}
+                />
+              )}
+              <Tooltip
+                labelFormatter={(_label: any, payload: any) => {
+                  const date = payload.length > 0 ? payload[0]?.payload.date : '';
+                  return `${date}`;
+                }}
+                formatter={(value: any, name: any) => {
+                  const customName = translate(name);
+                  return [`${Number(value).toLocaleString()}`, customName];
+                }}
+                cursor={{
+                  fill:"rgba(0, 0, 0, 0.1)"
+                }}
+                contentStyle={{
+                  borderRadius:"10px",
+                  boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
+                  padding:"10px",
+                  border:"none",
+                  background:"#fff",
+                  color:"#666"
+                }}
+              />
+              <Legend
+                iconType={"circle"}
+                verticalAlign={"bottom"}
+                align={"center"}
+                formatter={(value) => {
+                  return translate(value);
+                }}
+                wrapperStyle={{
+                  width:"95%",
+                  display:"flex",
+                  justifyContent:"center",
+                  alignItems:"center",
+                  fontSize: "0.8rem",
+                }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </Grid>
+      </Grid>
     );
   };
 
@@ -172,93 +181,97 @@ export const MoneyChartLine = () => {
   const chartMonth = () => {
     const {domain, ticks, formatterY} = handleY(OBJECT_MONTH, moneyChartArray, "money");
     return (
-      <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart
-          data={OBJECT_MONTH}
-          margin={{top: 20, right: 20, bottom: 20, left: 20}}
-          barGap={20}
-          barCategoryGap={"20%"}
-        >
-          <CartesianGrid
-            strokeDasharray={"3 3"}
-            stroke={"#f5f5f5"}
-          />
-          <XAxis
-            type={"category"}
-            dataKey={"name"}
-            tickLine={false}
-            axisLine={false}
-            tick={{fill:"#666", fontSize:14}}
-            tickFormatter={(value) => (
-              translate(value)
-            )}
-          />
-          <YAxis
-            type={"number"}
-            domain={domain}
-            ticks={ticks}
-            tickFormatter={formatterY}
-            tickLine={false}
-            axisLine={false}
-            tick={{fill:"#666", fontSize:12}}
-            width={30}
-          />
-          {LINE.includes("income") && (
-            <Line
-              dataKey={"income"}
-              type={"monotone"}
-              stroke={chartColors[0]}
-              strokeWidth={2}
-              activeDot={{r:8}}
-            />
-          )}
-          {LINE.includes("expense") && (
-            <Line
-              dataKey={"expense"}
-              type={"monotone"}
-              stroke={chartColors[3]}
-              strokeWidth={2}
-              activeDot={{r:8}}
-            />
-          )}
-          <Tooltip
-            labelFormatter={(label: any, payload: any) => {
-              const date = payload.length > 0 ? payload[0]?.payload.date : '';
-              return `${date}`;
-            }}
-            formatter={(value: any, name: any, props: any) => {
-              const customName = translate(name);
-              return [`${Number(value).toLocaleString()}`, customName];
-            }}
-            cursor={{
-              fill:"rgba(0, 0, 0, 0.1)"
-            }}
-            contentStyle={{
-              borderRadius:"10px",
-              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-              padding:"10px",
-              border:"none",
-              background:"#fff",
-              color:"#666"
-            }}
-          />
-          <Legend
-            iconType={"circle"}
-            verticalAlign={"bottom"}
-            align={"center"}
-            formatter={(value) => {
-              return translate(value);
-            }}
-            wrapperStyle={{
-              width:"95%",
-              display:"flex",
-              justifyContent:"center",
-              alignItems:"center",
-              fontSize: "0.8rem",
-            }}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+      <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
+        <Grid size={12} className={"d-col-center"}>
+          <ResponsiveContainer width={"100%"} height={350}>
+            <LineChart
+              data={OBJECT_MONTH}
+              margin={{top: 20, right: 20, bottom: 20, left: 20}}
+              barGap={20}
+              barCategoryGap={"20%"}
+            >
+              <CartesianGrid
+                strokeDasharray={"3 3"}
+                stroke={"#f5f5f5"}
+              />
+              <XAxis
+                type={"category"}
+                dataKey={"name"}
+                tickLine={false}
+                axisLine={false}
+                tick={{fill:"#666", fontSize:14}}
+                tickFormatter={(value) => (
+                  translate(value)
+                )}
+              />
+              <YAxis
+                type={"number"}
+                domain={domain}
+                ticks={ticks}
+                tickFormatter={formatterY}
+                tickLine={false}
+                axisLine={false}
+                tick={{fill:"#666", fontSize:12}}
+                width={30}
+              />
+              {TYPE.line.includes("income") && (
+                <Line
+                  dataKey={"income"}
+                  type={"monotone"}
+                  stroke={chartColors[0]}
+                  strokeWidth={2}
+                  activeDot={{r:8}}
+                />
+              )}
+              {TYPE.line.includes("expense") && (
+                <Line
+                  dataKey={"expense"}
+                  type={"monotone"}
+                  stroke={chartColors[3]}
+                  strokeWidth={2}
+                  activeDot={{r:8}}
+                />
+              )}
+              <Tooltip
+                labelFormatter={(_label: any, payload: any) => {
+                  const date = payload.length > 0 ? payload[0]?.payload.date : '';
+                  return `${date}`;
+                }}
+                formatter={(value: any, name: any) => {
+                  const customName = translate(name);
+                  return [`${Number(value).toLocaleString()}`, customName];
+                }}
+                cursor={{
+                  fill:"rgba(0, 0, 0, 0.1)"
+                }}
+                contentStyle={{
+                  borderRadius:"10px",
+                  boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
+                  padding:"10px",
+                  border:"none",
+                  background:"#fff",
+                  color:"#666"
+                }}
+              />
+              <Legend
+                iconType={"circle"}
+                verticalAlign={"bottom"}
+                align={"center"}
+                formatter={(value) => {
+                  return translate(value);
+                }}
+                wrapperStyle={{
+                  width:"95%",
+                  display:"flex",
+                  justifyContent:"center",
+                  alignItems:"center",
+                  fontSize: "0.8rem",
+                }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </Grid>
+      </Grid>
     );
   };
 
@@ -267,22 +280,31 @@ export const MoneyChartLine = () => {
     // 7-1. head
     const headSection = () => {
       const titleFragment = () => (
-        <Div className={"d-center"}>
-          <Div className={"fs-1-0rem fw-600"}>
-            {translate("chartLine")}
-          </Div>
-        </Div>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-row-center"}>
+            <Div className={"fs-1-0rem fw-600"}>
+              {translate("chartLine")}
+            </Div>
+          </Grid>
+        </Grid>
       );
       const selectFragment1 = () => (
-        <Select
-          value={SECTION}
-          onChange={(e: any) => {
-            setSECTION(e.target.value)
-          }}
-        >
-          <MenuItem value={"week"}>{translate("week")}</MenuItem>
-          <MenuItem value={"month"}>{translate("month")}</MenuItem>
-        </Select>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-row-center"}>
+            <Select
+              value={TYPE.section}
+              onChange={(e: any) => {
+                setTYPE((prev: any) => ({
+                  ...prev,
+                  section: e.target.value,
+                }));
+              }}
+            >
+              <MenuItem value={"week"}>{translate("week")}</MenuItem>
+              <MenuItem value={"month"}>{translate("month")}</MenuItem>
+            </Select>
+          </Grid>
+        </Grid>
       );
       const selectFragment2 = () => (
         <PopUp
@@ -290,31 +312,40 @@ export const MoneyChartLine = () => {
           position={"bottom"}
           direction={"center"}
           contents={
-            ["income", "expense"]?.map((key, index) => (
-              <FormGroup key={index}>
-                <FormControlLabel
-                  label={translate(key)}
-                  labelPlacement={"start"}
-                  control={
-                    <Switch
-                      checked={LINE.includes(key)}
-                      onChange={() => {
-                        if (LINE.includes(key)) {
-                          if(LINE.length > 1) {
-                            setLINE(LINE?.filter((item: any) => item !== key));
+            ["income", "expense"]?.map((key: string, index: number) => (
+              <FormGroup
+                key={index}
+                children={
+                  <FormControlLabel
+                    label={translate(key)}
+                    labelPlacement={"start"}
+                    control={
+                      <Switch
+                        checked={TYPE.line.includes(key)}
+                        onChange={() => {
+                          if (TYPE.line.includes(key)) {
+                            if (TYPE.line.length > 1) {
+                              setTYPE((prev: any) => ({
+                                ...prev,
+                                line: TYPE.line.filter((item: any) => item !== key),
+                              }));
+                            }
+                            else {
+                              return;
+                            }
                           }
                           else {
-                            return;
+                            setTYPE((prev: any) => ({
+                              ...prev,
+                              line: [...TYPE.line, key],
+                            }));
                           }
-                        }
-                        else {
-                          setLINE([...LINE, key]);
-                        }
-                      }}
-                    />
-                  }
-                />
-              </FormGroup>
+                        }}
+                      />
+                    }
+                  />
+                }
+              />
             ))
           }
         >
@@ -331,45 +362,37 @@ export const MoneyChartLine = () => {
         </PopUp>
       );
       return (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={3} className={"d-row-left"}>
-              {selectFragment1()}
-            </Grid>
-            <Grid size={6} className={"d-row-center"}>
-              {titleFragment()}
-            </Grid>
-            <Grid size={3} className={"d-row-right"}>
-              {selectFragment2()}
-            </Grid>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={3} className={"d-row-left"}>
+            {selectFragment1()}
           </Grid>
-        </Card>
+          <Grid size={6} className={"d-row-center"}>
+            {titleFragment()}
+          </Grid>
+          <Grid size={3} className={"d-row-right"}>
+            {selectFragment2()}
+          </Grid>
+        </Grid>
       );
     };
     // 7-2. chart
-    const chartSection = () => {
-      const chartFragment1 = (i: number) => (
-        <Card className={"border-1 radius-1 p-20"} key={i}>
-          {chartWeek()}
-        </Card>
-      );
-      const chartFragment2 = (i: number) => (
-        <Card className={"border-1 radius-1 p-20"} key={i}>
-          {chartMonth()}
-        </Card>
-      );
-      if (SECTION === "week") {
-        return LOADING ? <Loading /> : chartFragment1(0);
-      }
-      else if (SECTION === "month") {
-        return LOADING ? <Loading /> : chartFragment2(0);
-      }
-    };
+    const chartSection = () => (
+      <Grid container spacing={0} columns={12}>
+        <Grid size={12} className={"d-row-center"}>
+          {LOADING ? <Loading /> : (
+            <>
+              {TYPE.section === "week" && chartWeek()}
+              {TYPE.section === "month" && chartMonth()}
+            </>
+          )}
+        </Grid>
+      </Grid>
+    );
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min40vh"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12}>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-col-center"}>
             {headSection()}
             <Br px={20} />
             {chartSection()}

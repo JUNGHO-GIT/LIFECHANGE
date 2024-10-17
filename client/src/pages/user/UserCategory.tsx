@@ -8,7 +8,7 @@ import { axios, sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { PopUp, Input } from "@imports/ImportContainers";
 import { Div, Icons } from "@imports/ImportComponents";
-import { Card, Paper, Grid } from "@imports/ImportMuis";
+import { Paper, Grid } from "@imports/ImportMuis";
 import { TableContainer, Table, TableFooter } from "@imports/ImportMuis";
 import { TableHead, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
 
@@ -268,8 +268,8 @@ export const UserCategory = () => {
   const userCategoryNode = () => {
     // 7-1. popup
     const popupSection = () => (
-      <Card className={"w-85vw h-60vh d-row border-1 radius-1 p-0"}>
-        <TableContainer className={"border-right-1 over-x-hidden"}>
+      <Div className={"w-85vw h-60vh d-row"}>
+        <TableContainer className={"border-1 radius-1 over-x-hidden"}>
           <Table>
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr p-sticky top-0 z-900"}>
@@ -386,7 +386,7 @@ export const UserCategory = () => {
           </Table>
         </TableContainer>
         {(dataType === "exercise" || dataType === "money") && (
-          <TableContainer className={"border-left-1 over-x-hidden"}>
+          <TableContainer className={"border-1 radius-1 over-x-hidden"}>
             <Table>
               <TableHead className={"table-thead"}>
                 <TableRow className={"table-thead-tr p-sticky top-0 z-900"}>
@@ -497,81 +497,77 @@ export const UserCategory = () => {
             </Table>
           </TableContainer>
         )}
-      </Card>
+      </Div>
     );
     // 7-2. detail
     const detailSection = () => {
       const detailFragment = (item: any) => (
-        <Card className={"border-1 radius-1 p-0"}>
-          <TableContainer>
-            <Table>
-              <TableHead className={"table-thead"}>
-                <TableRow className={"table-thead-tr"}>
-                  <TableCell className={"fs-1-0rem"}>
-                    {translate("dataCategory1")}
+        <TableContainer className={"border-1 radius-1"}>
+          <Table>
+            <TableHead className={"table-thead"}>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell className={"fs-1-0rem"}>
+                  {translate("dataCategory1")}
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody className={"table-tbody"}>
+              {Object.keys(item).map((item: any, idx: number) => (
+                <TableRow className={"table-tbody-tr border-top-1"} key={idx}>
+                  <TableCell className={`${dataType === item ? "bg-light" : ""}`}>
+                    <Div className={"d-center"}>
+                      <Div className={"fs-1-0rem ms-0"}>
+                        {translate(item)}
+                      </Div>
+                      <Div className={"fs-1-0rem ms-auto"}>
+                      <PopUp
+                        type={"innerCenter"}
+                        position={"center"}
+                        direction={"center"}
+                        contents={
+                          popupSection()
+                        }
+                      >
+                        {(popTrigger: any) => (
+                          <Icons
+                            key={"Search"}
+                            name={"Search"}
+                            className={"w-18 h-18 black ms-auto"}
+                            onClick={(e: any) => {
+                              setDataType(item);
+                              setSelectedIdx((prev: any) => ({
+                                ...prev,
+                                category1Idx: idx,
+                                category2Idx: 1,
+                                category3Idx: 1
+                              }));
+                              popTrigger.openPopup(e.currentTarget)
+                            }}
+                          />
+                        )}
+                        </PopUp>
+                      </Div>
+                    </Div>
                   </TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody className={"table-tbody"}>
-                {Object.keys(item).map((item: any, idx: number) => (
-                  <TableRow className={"table-tbody-tr border-top-1"} key={idx}>
-                    <TableCell className={`${dataType === item ? "bg-light" : ""}`}>
-                      <Div className={"d-center"}>
-                        <Div className={"fs-1-0rem ms-0"}>
-                          {translate(item)}
-                        </Div>
-                        <Div className={"fs-1-0rem ms-auto"}>
-                        <PopUp
-                          type={"innerCenter"}
-                          position={"center"}
-                          direction={"center"}
-                          contents={
-                            popupSection()
-                          }
-                        >
-                          {(popTrigger: any) => (
-                            <Icons
-                              key={"Search"}
-                              name={"Search"}
-                              className={"w-18 h-18 black ms-auto"}
-                              onClick={(e: any) => {
-                                setDataType(item);
-                                setSelectedIdx((prev: any) => ({
-                                  ...prev,
-                                  category1Idx: idx,
-                                  category2Idx: 1,
-                                  category3Idx: 1
-                                }));
-                                popTrigger.openPopup(e.currentTarget)
-                              }}
-                            />
-                          )}
-                          </PopUp>
-                        </Div>
-                      </Div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Card>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       );
       return (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12} key={`detail-${0}`}>
-              {detailFragment(OBJECT)}
-            </Grid>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} key={`detail-${0}`}>
+            {detailFragment(OBJECT)}
           </Grid>
-        </Card>
+        </Grid>
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min90vh"}>
         <Grid container spacing={0} columns={12}>
-          <Grid size={12}>
+          <Grid size={12} className={"d-col-center"}>
             {LOADING ? <Loading /> : detailSection()}
           </Grid>
         </Grid>

@@ -9,7 +9,7 @@ import { axios } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Input } from "@imports/ImportContainers";
 import { Div, Btn, Img, Hr, Br } from "@imports/ImportComponents";
-import { Paper, Card, Grid } from "@imports/ImportMuis";
+import { Paper, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const UserSignup = () => {
@@ -219,306 +219,284 @@ export const UserSignup = () => {
   const userSignupNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <Card className={"p-0"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12}>
-            <Div className={"fs-1-8rem fw-500"}>
-              {translate("signup")}
-            </Div>
-          </Grid>
+      <Grid container spacing={0} columns={12}>
+        <Grid size={12}>
+          <Div className={"fs-1-8rem fw-500"}>
+            {translate("signup")}
+          </Div>
         </Grid>
-      </Card>
+      </Grid>
     );
     // 7-2. signup
     const signupSection = () => {
       const detailFragment = (item: any, i: number) => (
-        <Card className={"p-10"}>
-          <Grid container spacing={1} columns={12}>
-            {/** 이메일 **/}
-            <Grid size={9}>
-              <Input
-                label={translate("id")}
-                helperText={`* ${translate("helperId")}`}
-                value={item.user_id}
-                inputRef={REFS?.[i]?.user_id}
-                error={ERRORS?.[i]?.user_id}
-                disabled={item.user_id_verified === true}
-                placeholder={"abcd@naver.com"}
-                onChange={(e: any) => {
-                  const value = e.target.value;
-                  if (value.length > 30) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      user_id: prev.user_id,
-                    }));
-                  }
-                  else {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      user_id: value,
-                    }));
-                  }
-                }}
-              />
-            </Grid>
-            <Grid size={3}>
-              <Btn
-                color={"primary"}
-                className={"mt-n25"}
-                disabled={item.user_id_verified === true}
-                onClick={() => {
-                  flowSendEmail();
-                }}
-              >
-                {translate("send")}
-              </Btn>
-            </Grid>
-            {/** 이메일 인증 **/}
-            <Grid size={9}>
-              <Input
-                label={translate("verify")}
-                helperText={`* ${translate("helperIdVerified")}`}
-                value={item.user_verify_code}
-                inputRef={REFS?.[i]?.user_id_verified}
-                error={ERRORS?.[i]?.user_id_verified}
-                disabled={item.user_id_verified === true}
-                placeholder={"123456"}
-                onChange={(e: any) => {
+        <Grid container spacing={2} columns={12} className={"p-10"}>
+          {/** 이메일 **/}
+          <Grid size={10}>
+            <Input
+              label={translate("id")}
+              helperText={`* ${translate("helperId")}`}
+              value={item.user_id}
+              inputRef={REFS?.[i]?.user_id}
+              error={ERRORS?.[i]?.user_id}
+              disabled={item.user_id_verified === true}
+              placeholder={"abcd@naver.com"}
+              onChange={(e: any) => {
+                const value = e.target.value;
+                if (value.length > 30) {
                   setOBJECT((prev: any) => ({
                     ...prev,
-                    user_verify_code: e.target.value
-                  }))
-                }}
-              />
-            </Grid>
-            <Grid size={3}>
-              <Btn
-                color={"primary"}
-                className={"mt-n25"}
-                disabled={!item.user_id_sended || item.user_id_verified === true}
-                onClick={() => {
-                  flowVerifyEmail();
-                }}
-              >
-                {translate("verify")}
-              </Btn>
-            </Grid>
-            <Hr px={10} />
-            {/** 비밀번호 **/}
-            <Grid size={12}>
-              <Input
-                type={"password"}
-                label={translate("pw")}
-                helperText={`* ${translate("helperPw")}`}
-                value={item.user_pw}
-                inputRef={REFS?.[i]?.user_pw}
-                error={ERRORS?.[i]?.user_pw}
-                disabled={item.user_id_verified === false}
-                onChange={(e: any) => {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    user_pw: e.target.value
-                  }))
-                }}
-              />
-            </Grid>
-            {/** 비밀번호 확인 **/}
-            <Grid size={12}>
-              <Input
-                type={"password"}
-                label={translate("pwVerified")}
-                helperText={`* ${translate("helperPwVerified")}`}
-                value={item.user_pw_verified}
-                inputRef={REFS?.[i]?.user_pw_verified}
-                error={ERRORS?.[i]?.user_pw_verified}
-                disabled={item.user_id_verified === false}
-                onChange={(e: any) => {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    user_pw_verified: e.target.value
-                  }))
-                }}
-              />
-            </Grid>
-            <Hr px={10} />
-            {/** 초기 체중 **/}
-            <Grid size={12}>
-              <Input
-                label={translate("scale")}
-                value={item.user_initScale}
-                inputRef={REFS?.[i]?.user_initScale}
-                error={ERRORS?.[i]?.user_initScale}
-                disabled={item.user_id_verified === false}
-                helperText={`* ${translate("helperScale")}`}
-                endadornment={
-                  translate("cm")
+                    user_id: prev.user_id,
+                  }));
                 }
-                onChange={(e: any) => {
-                  const value = e.target.value;
-                  const newValue = value.startsWith("0") ? value.slice(1) : value;
-                  if (value === "") {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      user_initScale: "0",
-                    }));
-                  }
-                  else if (newValue.match(/^\d*\.?\d{0,2}$/) && Number(newValue) <= 999) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      user_initScale: String(newValue),
-                    }));
-                  }
-                }}
-              />
-            </Grid>
-            {/** 초기 자산 **/}
-            <Grid size={12}>
-              <Input
-                label={translate("property")}
-                value={item.user_initProperty}
-                inputRef={REFS?.[i]?.user_initProperty}
-                error={ERRORS?.[i]?.user_initProperty}
-                disabled={item.user_id_verified === false}
-                helperText={`* ${translate("helperProperty")}`}
-                onChange={(e: any) => {
-                  const value = e.target.value.replace(/,/g, '');
-                  const newValue = value === "" ? 0 : Number(value);
-                  if (value === "") {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      user_initProperty: "0",
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 9999999999) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      user_initProperty: String(newValue),
-                    }));
-                  }
-                }}
-                endadornment={
-                  localCurrency
+                else {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    user_id: value,
+                  }));
                 }
-              />
-            </Grid>
+              }}
+            />
           </Grid>
-        </Card>
+          <Grid size={2}>
+            <Btn
+              color={"primary"}
+              className={"mt-n25"}
+              disabled={item.user_id_verified === true}
+              onClick={() => {
+                flowSendEmail();
+              }}
+            >
+              {translate("send")}
+            </Btn>
+          </Grid>
+          {/** 이메일 인증 **/}
+          <Grid size={10}>
+            <Input
+              label={translate("verify")}
+              helperText={`* ${translate("helperIdVerified")}`}
+              value={item.user_verify_code}
+              inputRef={REFS?.[i]?.user_id_verified}
+              error={ERRORS?.[i]?.user_id_verified}
+              disabled={item.user_id_verified === true}
+              placeholder={"123456"}
+              onChange={(e: any) => {
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  user_verify_code: e.target.value
+                }))
+              }}
+            />
+          </Grid>
+          <Grid size={2}>
+            <Btn
+              color={"primary"}
+              className={"mt-n25"}
+              disabled={!item.user_id_sended || item.user_id_verified === true}
+              onClick={() => {
+                flowVerifyEmail();
+              }}
+            >
+              {translate("verify")}
+            </Btn>
+          </Grid>
+          <Hr px={1} />
+          {/** 비밀번호 **/}
+          <Grid size={12}>
+            <Input
+              type={"password"}
+              label={translate("pw")}
+              helperText={`* ${translate("helperPw")}`}
+              value={item.user_pw}
+              inputRef={REFS?.[i]?.user_pw}
+              error={ERRORS?.[i]?.user_pw}
+              disabled={item.user_id_verified === false}
+              onChange={(e: any) => {
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  user_pw: e.target.value
+                }))
+              }}
+            />
+          </Grid>
+          {/** 비밀번호 확인 **/}
+          <Grid size={12}>
+            <Input
+              type={"password"}
+              label={translate("pwVerified")}
+              helperText={`* ${translate("helperPwVerified")}`}
+              value={item.user_pw_verified}
+              inputRef={REFS?.[i]?.user_pw_verified}
+              error={ERRORS?.[i]?.user_pw_verified}
+              disabled={item.user_id_verified === false}
+              onChange={(e: any) => {
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  user_pw_verified: e.target.value
+                }))
+              }}
+            />
+          </Grid>
+          <Hr px={1} />
+          {/** 초기 체중 **/}
+          <Grid size={12}>
+            <Input
+              label={translate("scale")}
+              value={item.user_initScale}
+              inputRef={REFS?.[i]?.user_initScale}
+              error={ERRORS?.[i]?.user_initScale}
+              disabled={item.user_id_verified === false}
+              helperText={`* ${translate("helperScale")}`}
+              endadornment={
+                translate("cm")
+              }
+              onChange={(e: any) => {
+                const value = e.target.value;
+                const newValue = value.startsWith("0") ? value.slice(1) : value;
+                if (value === "") {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    user_initScale: "0",
+                  }));
+                }
+                else if (newValue.match(/^\d*\.?\d{0,2}$/) && Number(newValue) <= 999) {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    user_initScale: String(newValue),
+                  }));
+                }
+              }}
+            />
+          </Grid>
+          {/** 초기 자산 **/}
+          <Grid size={12}>
+            <Input
+              label={translate("property")}
+              value={item.user_initProperty}
+              inputRef={REFS?.[i]?.user_initProperty}
+              error={ERRORS?.[i]?.user_initProperty}
+              disabled={item.user_id_verified === false}
+              helperText={`* ${translate("helperProperty")}`}
+              onChange={(e: any) => {
+                const value = e.target.value.replace(/,/g, '');
+                const newValue = value === "" ? 0 : Number(value);
+                if (value === "") {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    user_initProperty: "0",
+                  }));
+                }
+                else if (!isNaN(newValue) && newValue <= 9999999999) {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    user_initProperty: String(newValue),
+                  }));
+                }
+              }}
+              endadornment={
+                localCurrency
+              }
+            />
+          </Grid>
+        </Grid>
       );
       return (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12} key={`detail-${0}`}>
-              {detailFragment(OBJECT, 0)}
-            </Grid>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} key={`detail-${0}`}>
+            {detailFragment(OBJECT, 0)}
           </Grid>
-        </Card>
+        </Grid>
       );
     };
     // 7-4. button
     const buttonSection = () => {
       const signupFragment = () => (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              <Btn
-                color={"primary"}
-                className={"w-90p fs-1-0rem"}
-                onClick={() => {
-                  flowSave();
-                }}
-              >
-                {translate("signup")}
-              </Btn>
-            </Grid>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-col-center"}>
+            <Btn
+              color={"primary"}
+              className={"w-100p fs-1-0rem"}
+              onClick={() => {
+                flowSave();
+              }}
+            >
+              {translate("signup")}
+            </Btn>
           </Grid>
-        </Card>
+        </Grid>
       );
       const googleFragment = () => (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              <Btn
-                color={"primary"}
-                className={"w-90p bg-white"}
-                onClick={() => {
-                  flowGoogle();
-                }}
-              >
-                <Div className={"d-row-center"}>
-                  <Img
-                    key={"user1"}
-                    src={"user1"}
-                    className={"w-15 h-15 me-10"}
-                  />
-                  <Div className={"fs-1-0rem black"}>
-                    {translate("googleLogin")}
-                  </Div>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-col-center"}>
+            <Btn
+              color={"primary"}
+              className={"w-100p bg-white"}
+              onClick={() => {
+                flowGoogle();
+              }}
+            >
+              <Div className={"d-row-center"}>
+                <Img
+                  key={"user1"}
+                  src={"user1"}
+                  className={"w-15 h-15 me-10"}
+                />
+                <Div className={"fs-1-0rem black"}>
+                  {translate("googleLogin")}
                 </Div>
-              </Btn>
-            </Grid>
+              </Div>
+            </Btn>
           </Grid>
-        </Card>
+        </Grid>
       );
       return (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              {signupFragment()}
-              <Br px={10} />
-              {googleFragment()}
-            </Grid>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-col-center"}>
+            {signupFragment()}
+            <Br px={10} />
+            {googleFragment()}
           </Grid>
-        </Card>
+        </Grid>
       );
     };
     // 7-5. link
     const linkSection = () => {
       const toLoginFragment = () => (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={7} className={"d-row-right"}>
-              <Div className={"fs-0-8rem black"}>
-                {translate("alreadyId")}
-              </Div>
-            </Grid>
-            <Grid size={5} className={"d-row-left"}>
-              <Div className={"fs-0-8rem blue pointer"} onClick={() => {
-                navigate("/user/login");
-              }}>
-                {translate("login")}
-              </Div>
-            </Grid>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-row-center"}>
+            <Div className={"fs-0-8rem black me-10"}>
+              {translate("alreadyId")}
+            </Div>
+            <Div className={"fs-0-8rem blue pointer"} onClick={() => {
+              navigate("/user/login");
+            }}>
+              {translate("login")}
+            </Div>
           </Grid>
-        </Card>
+        </Grid>
       );
       const toResetPwFragment = () => (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={7} className={"d-row-right"}>
-              <Div className={"fs-0-8rem black"}>
-                {translate("forgotPw")}
-              </Div>
-            </Grid>
-            <Grid size={5} className={"d-row-left"}>
-              <Div className={"fs-0-8rem blue pointer"} onClick={() => {
-                navigate("/user/resetPw");
-              }}>
-                {translate("resetPw")}
-              </Div>
-            </Grid>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-row-center"}>
+            <Div className={"fs-0-8rem black me-10"}>
+              {translate("forgotPw")}
+            </Div>
+            <Div className={"fs-0-8rem blue pointer"} onClick={() => {
+              navigate("/user/resetPw");
+            }}>
+              {translate("resetPw")}
+            </Div>
           </Grid>
-        </Card>
+        </Grid>
       );
       return (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              {toLoginFragment()}
-              <Br px={10} />
-              {toResetPwFragment()}
-            </Grid>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-col-center"}>
+            {toLoginFragment()}
+            <Br px={10} />
+            {toResetPwFragment()}
           </Grid>
-        </Card>
+        </Grid>
       );
     };
     // 7-10. return
@@ -526,14 +504,14 @@ export const UserSignup = () => {
       <>
       {LOADING && <Loading />}
       <Paper className={"content-wrapper d-center border-1 radius-1 shadow-1 h-min100vh"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12}>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-col-center"}>
             {titleSection()}
-            <Hr px={30} />
+            <Hr px={20} />
             {signupSection()}
-            <Hr px={10} />
+            <Hr px={20} />
             {buttonSection()}
-            <Hr px={30} />
+            <Hr px={20} />
             {linkSection()}
           </Grid>
         </Grid>

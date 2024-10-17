@@ -11,14 +11,13 @@ export const Btn = (props: any) => (
     variant={props?.variant || "contained"}
     style={{
       ...props?.style,
-      margin: props?.style?.margin || "5px",
-      lineHeight: props?.style?.lineHeight || "inherit",
-      padding: props?.style?.padding || "5px 12px",
+      padding: props?.style?.padding || "4px 10px",
       textTransform: props?.style?.textTransform || "none",
       whiteSpace: props?.style?.whiteSpace || "nowrap",
       overflow: props?.style?.overflow || "hidden",
       textOverflow: props?.style?.textOverflow || "ellipsis",
-      fontSize: props?.style?.fontSize || "0.9rem"
+      fontSize: props?.style?.fontSize || "0.8rem",
+      position: "relative",
     }}
   />
 );

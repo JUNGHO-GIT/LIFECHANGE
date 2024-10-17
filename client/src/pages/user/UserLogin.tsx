@@ -9,7 +9,7 @@ import { axios, sync } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Input } from "@imports/ImportContainers";
 import { Div, Btn, Img, Hr, Br } from "@imports/ImportComponents";
-import { Paper, Checkbox, Card, Grid } from "@imports/ImportMuis";
+import { Paper, Checkbox, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const UserLogin = () => {
@@ -181,228 +181,203 @@ export const UserLogin = () => {
   const userLoginNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <Card className={"p-0"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12}>
-            <Div className={"fs-1-8rem fw-500"} onClick={() => {
-              setClickCount((prevCount) => {
-                const newCount = prevCount + 1;
-                if (newCount === 5) {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    user_id: ADMIN_ID,
-                    user_pw: ADMIN_PW,
-                  }));
-                  setCheckedSaveId(true);
-                  setCheckedAutoLogin(true);
-                  setLoginTrigger(true);
-                  setClickCount(0);
-                }
-                return newCount;
-              });
-            }}>
-              {translate("login")}
-            </Div>
-          </Grid>
+      <Grid container spacing={2} columns={12}>
+        <Grid size={12}>
+          <Div className={"fs-1-8rem fw-500"} onClick={() => {
+            setClickCount((prevCount) => {
+              const newCount = prevCount + 1;
+              if (newCount === 5) {
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  user_id: ADMIN_ID,
+                  user_pw: ADMIN_PW,
+                }));
+                setCheckedSaveId(true);
+                setCheckedAutoLogin(true);
+                setLoginTrigger(true);
+                setClickCount(0);
+              }
+              return newCount;
+            });
+          }}>
+            {translate("login")}
+          </Div>
         </Grid>
-      </Card>
+      </Grid>
     );
     // 7-2. login
     const loginSection = () => {
       const detailFragment = (item: any, i: number) => (
-        <Card className={"p-10"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              <Input
-                label={translate("id")}
-                value={item.user_id}
-                inputRef={REFS?.[i]?.user_id}
-                error={ERRORS?.[i]?.user_id}
-                placeholder={"abcd@naver.com"}
-                onChange={(e: any) => {
-                  const value = e.target.value;
-                  if (value.length > 30) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      user_id: prev.user_id,
-                    }));
-                  }
-                  else {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      user_id: value,
-                    }));
-                  }
-                }}
-              />
-            </Grid>
-            <Br px={5} />
-            <Grid size={12}>
-              <Input
-                type={"password"}
-                label={translate("pw")}
-                value={item.user_pw}
-                inputRef={REFS?.[i]?.user_pw}
-                error={ERRORS?.[i]?.user_pw}
-                onChange={(e: any) => {
+        <Grid container spacing={2} columns={12} className={"p-10"}>
+          <Grid size={12}>
+            <Input
+              label={translate("id")}
+              value={item.user_id}
+              inputRef={REFS?.[i]?.user_id}
+              error={ERRORS?.[i]?.user_id}
+              placeholder={"abcd@naver.com"}
+              onChange={(e: any) => {
+                const value = e.target.value;
+                if (value.length > 30) {
                   setOBJECT((prev: any) => ({
                     ...prev,
-                    user_pw: e.target.value,
+                    user_id: prev.user_id,
                   }));
-                }}
-              />
-            </Grid>
+                }
+                else {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    user_id: value,
+                  }));
+                }
+              }}
+            />
           </Grid>
-        </Card>
+          <Grid size={12}>
+            <Input
+              type={"password"}
+              label={translate("pw")}
+              value={item.user_pw}
+              inputRef={REFS?.[i]?.user_pw}
+              error={ERRORS?.[i]?.user_pw}
+              onChange={(e: any) => {
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  user_pw: e.target.value,
+                }));
+              }}
+            />
+          </Grid>
+        </Grid>
       );
       return (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12} key={`detail-${0}`}>
-              {detailFragment(OBJECT, 0)}
-            </Grid>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} key={`detail-${0}`}>
+            {detailFragment(OBJECT, 0)}
           </Grid>
-        </Card>
+        </Grid>
       );
     };
     // 7-3. check
     const checkSection = () => (
-      <Card className={"p-0"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={6} className={"d-row-right"}>
-            <Div className={"d-center fs-0-8rem"}>
-              {translate("autoLogin")}
-              <Checkbox
-                color={"primary"}
-                size={"small"}
-                checked={checkedAutoLogin}
-                onChange={(e: any) => {
-                  setCheckedAutoLogin(e.target.checked);
-                }}
-              />
-            </Div>
-          </Grid>
-          <Grid size={6} className={"d-row-left"}>
-            <Div className={"fs-0-8rem"}>
-              {translate("saveId")}
-              <Checkbox
-                color={"primary"}
-                size={"small"}
-                checked={checkedSaveId}
-                onChange={(e: any) => {
-                  setCheckedSaveId(e.target.checked);
-                }}
-              />
-            </Div>
-          </Grid>
+      <Grid container spacing={2} columns={12}>
+        <Grid size={6} className={"d-row-right"}>
+          <Div className={"d-center fs-0-8rem"}>
+            {translate("autoLogin")}
+            <Checkbox
+              color={"primary"}
+              size={"small"}
+              checked={checkedAutoLogin}
+              onChange={(e: any) => {
+                setCheckedAutoLogin(e.target.checked);
+              }}
+            />
+          </Div>
         </Grid>
-      </Card>
+        <Grid size={6} className={"d-row-left"}>
+          <Div className={"fs-0-8rem"}>
+            {translate("saveId")}
+            <Checkbox
+              color={"primary"}
+              size={"small"}
+              checked={checkedSaveId}
+              onChange={(e: any) => {
+                setCheckedSaveId(e.target.checked);
+              }}
+            />
+          </Div>
+        </Grid>
+      </Grid>
     );
     // 7-4. button
     const buttonSection = () => {
       const loginFragment = () => (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              <Btn
-                color={"primary"}
-                className={"w-90p fs-1-0rem"}
-                onClick={() => {
-                  flowSave();
-                }}
-              >
-                {translate("login")}
-              </Btn>
-            </Grid>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-col-center"}>
+            <Btn
+              color={"primary"}
+              className={"w-100p fs-1-0rem"}
+              onClick={() => {
+                flowSave();
+              }}
+            >
+              {translate("login")}
+            </Btn>
           </Grid>
-        </Card>
+        </Grid>
       );
       const googleFragment = () => (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              <Btn
-                color={"primary"}
-                className={"w-90p bg-white"}
-                onClick={() => {
-                  flowGoogle();
-                }}
-              >
-                <Div className={"d-row-center"}>
-                  <Img
-                    key={"user1"}
-                    src={"user1"}
-                    className={"w-15 h-15 me-10"}
-                  />
-                  <Div className={"fs-1-0rem black"}>
-                    {translate("googleLogin")}
-                  </Div>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-col-center"}>
+            <Btn
+              color={"primary"}
+              className={"w-100p bg-white"}
+              onClick={() => {
+                flowGoogle();
+              }}
+            >
+              <Div className={"d-row-center"}>
+                <Img
+                  key={"user1"}
+                  src={"user1"}
+                  className={"w-15 h-15 me-10"}
+                />
+                <Div className={"fs-1-0rem black"}>
+                  {translate("googleLogin")}
                 </Div>
-              </Btn>
-            </Grid>
+              </Div>
+            </Btn>
           </Grid>
-        </Card>
+        </Grid>
       );
       return (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              {loginFragment()}
-              <Br px={10} />
-              {googleFragment()}
-            </Grid>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-col-center"}>
+            {loginFragment()}
+            <Br px={10} />
+            {googleFragment()}
           </Grid>
-        </Card>
+        </Grid>
       );
     };
     // 7-5. link
     const linkSection = () => {
       const toSignupFragment = () => (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={7} className={"d-row-right"}>
-              <Div className={"fs-0-8rem black"}>
-                {translate("notId")}
-              </Div>
-            </Grid>
-            <Grid size={5} className={"d-row-left"}>
-              <Div className={"fs-0-8rem blue pointer"} onClick={() => {
-                navigate("/user/signup");
-              }}>
-                {translate("signup")}
-              </Div>
-            </Grid>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-row-center"}>
+            <Div className={"fs-0-8rem black me-10"}>
+              {translate("notId")}
+            </Div>
+            <Div className={"fs-0-8rem blue pointer"} onClick={() => {
+              navigate("/user/signup");
+            }}>
+              {translate("signup")}
+            </Div>
           </Grid>
-        </Card>
+        </Grid>
       );
       const toResetPwFragment = () => (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={7} className={"d-row-right"}>
-              <Div className={"fs-0-8rem black"}>
-                {translate("forgotPw")}
-              </Div>
-            </Grid>
-            <Grid size={5} className={"d-row-left"}>
-              <Div className={"fs-0-8rem blue pointer"} onClick={() => {
-                navigate("/user/resetPw");
-              }}>
-                {translate("resetPw")}
-              </Div>
-            </Grid>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-row-center"}>
+            <Div className={"fs-0-8rem black me-10"}>
+              {translate("forgotPw")}
+            </Div>
+            <Div className={"fs-0-8rem blue pointer"} onClick={() => {
+              navigate("/user/resetPw");
+            }}>
+              {translate("resetPw")}
+            </Div>
           </Grid>
-        </Card>
+        </Grid>
       );
       return (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12}>
-              {toSignupFragment()}
-              <Br px={10} />
-              {toResetPwFragment()}
-            </Grid>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-col-center"}>
+            {toSignupFragment()}
+            <Br px={10} />
+            {toResetPwFragment()}
           </Grid>
-        </Card>
+        </Grid>
       );
     };
     // 7-10. return
@@ -410,16 +385,16 @@ export const UserLogin = () => {
       <>
       {LOADING && <Loading />}
       <Paper className={"content-wrapper d-center border-1 radius-1 shadow-1 h-min100vh"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12}>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-col-center"}>
             {titleSection()}
-            <Hr px={30} />
+            <Hr px={20} />
             {loginSection()}
-            <Hr px={10} />
+            <Hr px={20} />
             {checkSection()}
-            <Hr px={10} />
+            <Hr px={20} />
             {buttonSection()}
-            <Hr px={30} />
+            <Hr px={20} />
             {linkSection()}
           </Grid>
         </Grid>

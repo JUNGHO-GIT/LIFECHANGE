@@ -4,7 +4,7 @@ import { useCommonValue } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { PopUp } from "@imports/ImportContainers";
 import { Btn, Div } from "@imports/ImportComponents";
-import { Grid, Card } from "@imports/ImportMuis";
+import { Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 declare type ButtonsProps = {
@@ -81,47 +81,45 @@ export const Buttons = (
         direction={"center"}
         padding={"6px"}
         contents={
-          <Card className={"h-max30vh d-center"}>
-            <Grid container spacing={1} columns={12}>
-              <Grid size={12}>
-                <Div className={"fs-1-0rem fw-600 pre-line dark-grey"}>
-                  {translate("replaceOrInsert")}
-                </Div>
-              </Grid>
-              <Grid
-                size={PATH.includes("/sleep") ? 12 : 6}
-                className={PATH.includes("/sleep") ? "d-center" : "d-row-right"}
-              >
-                <Btn
-                  size={"large"}
-                  color={"primary"}
-                  variant={"text"}
-                  className={"fs-1-2rem fw-600 ms-1vw me-1vw"}
-                  onClick={() => {
-                    flowSave("replace");
-                  }}
-                >
-                  {translate("replace")}
-                </Btn>
-              </Grid>
-              <Grid
-                size={PATH.includes("/sleep") ? 0 : 6}
-                className={PATH.includes("/sleep") ? "d-none" : "d-row-left"}
-              >
-                <Btn
-                  size={"large"}
-                  color={"primary"}
-                  variant={"text"}
-                  className={"fs-1-2rem fw-600 ms-1vw me-1vw"}
-                  onClick={() => {
-                    flowSave("insert");
-                  }}
-                >
-                  {translate("insert")}
-                </Btn>
-              </Grid>
+          <Grid container spacing={2} columns={12} className={"h-max30vh d-row-center"}>
+            <Grid size={12}>
+              <Div className={"fs-1-0rem fw-600 pre-line dark-grey"}>
+                {translate("replaceOrInsert")}
+              </Div>
             </Grid>
-          </Card>
+            <Grid
+              size={PATH.includes("/sleep") ? 12 : 6}
+              className={PATH.includes("/sleep") ? "d-center" : "d-row-right"}
+            >
+              <Btn
+                size={"large"}
+                color={"primary"}
+                variant={"text"}
+                className={"fs-1-2rem fw-600 ms-1vw me-1vw"}
+                onClick={() => {
+                  flowSave("replace");
+                }}
+              >
+                {translate("replace")}
+              </Btn>
+            </Grid>
+            <Grid
+              size={PATH.includes("/sleep") ? 0 : 6}
+              className={PATH.includes("/sleep") ? "d-none" : "d-row-left"}
+            >
+              <Btn
+                size={"large"}
+                color={"primary"}
+                variant={"text"}
+                className={"fs-1-2rem fw-600 ms-1vw me-1vw"}
+                onClick={() => {
+                  flowSave("insert");
+                }}
+              >
+                {translate("insert")}
+              </Btn>
+            </Grid>
+          </Grid>
         }
       >
         {(popTrigger: any) => (
@@ -164,14 +162,14 @@ export const Buttons = (
     // 10. return
     return (
       PATH.includes("/user/category") || PATH.includes("/user/detail") ? (
-        <Grid container spacing={1} columns={12}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={10} className={"d-center"}>
             {saveSection()}
           </Grid>
         </Grid>
       )
       : PATH.includes("/detail") ? (
-        <Grid container spacing={1} columns={12}>
+        <Grid container spacing={2} columns={12}>
           <Grid size={10} className={"d-center"}>
             {PATH.includes("/food/detail") && toFindSection()}
             {PATH.includes("/food/detail") && favoriteSection()}

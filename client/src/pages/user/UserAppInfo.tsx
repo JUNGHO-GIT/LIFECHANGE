@@ -7,7 +7,7 @@ import { AppInfo } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Img, Br } from "@imports/ImportComponents";
-import { Card, Paper, Grid } from "@imports/ImportMuis";
+import { Paper, Grid } from "@imports/ImportMuis";
 import { TableContainer, Table, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -55,88 +55,86 @@ export const UserAppInfo = () => {
   const userAppInfoNode = () => {
     // 7-1. image
     const imageSection = () => (
-      <Card className={"p-0"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12} className={"d-center"}>
-            <Img
-              key={"logo1"}
-              src={"logo1"}
-              className={"w-240 h-200"}
-            />
-          </Grid>
+      <Grid container spacing={2} columns={12}>
+        <Grid size={12} className={"d-center"}>
+          <Img
+            key={"logo1"}
+            src={"logo1"}
+            className={"w-240 h-200"}
+          />
         </Grid>
-      </Card>
+      </Grid>
     );
     // 7-2. detail
     const detailSection = () => {
       const detailFragment = (item: any) => (
-        <Card className={"border-1 radius-1 shadow-0 p-0"}>
-          <TableContainer className={"over-hidden"}>
-            <Table>
-              <TableBody className={"table-tbody"}>
-                <TableRow>
-                  <TableCell className={"w-40vw fs-1-0rem p-15"}>
-                    version
-                  </TableCell>
-                  <TableCell className={"w-55vw fs-0-8rem p-15"}>
-                    {item.version}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className={"w-40vw fs-1-0rem p-15"}>
-                    date
-                  </TableCell>
-                  <TableCell className={"w-55vw fs-0-8rem p-15"}>
-                    {item.date}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className={"w-40vw fs-1-0rem p-15"}>
-                    github
-                  </TableCell>
-                  <TableCell className={"w-55vw fs-0-8rem p-15"}>
-                    {item.git}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className={"w-40vw fs-1-0rem p-15"}>
-                    license
-                  </TableCell>
-                  <TableCell className={"w-55vw fs-0-8rem p-15"}>
-                    {item.license}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className={"w-40vw fs-1-0rem p-15"}>
-                    timezone
-                  </TableCell>
-                  <TableCell className={"w-55vw fs-0-7rem p-15"}>
-                    {timeZone} | &nbsp; {zoneName} | &nbsp;
-                    {locale} | &nbsp; {isoCode} | &nbsp; {currency}
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Card>
+        <Grid container spacing={2} columns={12}>
+          <Grid size={12} className={"border-1 radius-1 shadow-0"}>
+            <TableContainer className={"over-hidden"}>
+              <Table>
+                <TableBody className={"table-tbody"}>
+                  <TableRow>
+                    <TableCell className={"w-40vw fs-1-0rem p-15"}>
+                      version
+                    </TableCell>
+                    <TableCell className={"w-55vw fs-0-8rem p-15"}>
+                      {item.version}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className={"w-40vw fs-1-0rem p-15"}>
+                      date
+                    </TableCell>
+                    <TableCell className={"w-55vw fs-0-8rem p-15"}>
+                      {item.date}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className={"w-40vw fs-1-0rem p-15"}>
+                      github
+                    </TableCell>
+                    <TableCell className={"w-55vw fs-0-8rem p-15"}>
+                      {item.git}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className={"w-40vw fs-1-0rem p-15"}>
+                      license
+                    </TableCell>
+                    <TableCell className={"w-55vw fs-0-8rem p-15"}>
+                      {item.license}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className={"w-40vw fs-1-0rem p-15"}>
+                      timezone
+                    </TableCell>
+                    <TableCell className={"w-55vw fs-0-7rem p-15"}>
+                      {timeZone} | &nbsp; {zoneName} | &nbsp;
+                      {locale} | &nbsp; {isoCode} | &nbsp; {currency}
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
+        </Grid>
       );
       return (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12} key={`detail-${0}`}>
-              {detailFragment(OBJECT)}
-            </Grid>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} key={`detail-${0}`}>
+            {detailFragment(OBJECT)}
           </Grid>
-        </Card>
+        </Grid>
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper d-center border-1 radius-1 h-min90vh"}>
         <Grid container spacing={0} columns={12}>
-          <Grid size={12}>
+          <Grid size={12} className={"d-col-center"}>
             {imageSection()}
-            <Br px={20} />
+            <Br px={40} />
             {LOADING ? <Loading /> : detailSection()}
           </Grid>
         </Grid>

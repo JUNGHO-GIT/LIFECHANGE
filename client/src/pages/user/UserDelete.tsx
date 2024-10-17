@@ -9,7 +9,7 @@ import { axios } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Input } from "@imports/ImportContainers";
 import { Div, Hr, Btn } from "@imports/ImportComponents";
-import { Paper, Card, Grid } from "@imports/ImportMuis";
+import { Paper, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const UserDelete = () => {
@@ -189,169 +189,161 @@ export const UserDelete = () => {
   const userResetPwNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <Card className={"p-0"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12}>
-            <Div className={"fs-1-8rem fw-500"}>
-              {translate("userDelete")}
-            </Div>
-          </Grid>
+      <Grid container spacing={2} columns={12}>
+        <Grid size={12}>
+          <Div className={"fs-1-8rem fw-500"}>
+            {translate("userDelete")}
+          </Div>
         </Grid>
-      </Card>
+      </Grid>
     );
     // 7-2. delete
     const deleteSection = () => {
       const detailFragment = (item: any, i: number) => (
-        <Card className={"p-10"}>
-          <Grid container spacing={1} columns={12}>
-            {/** 이메일 **/}
-            <Grid size={9}>
-              <Input
-                label={`${translate("id")}`}
-                helperText={`* ${translate("helperId")}`}
-                value={item.user_id}
-                inputRef={REFS?.[i]?.user_id}
-                error={ERRORS?.[i]?.user_id}
-                disabled={item.user_id_verified === true}
-                placeholder={"abcd@naver.com"}
-                onChange={(e: any) => {
-                  const value = e.target.value;
-                  if (value.length > 30) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      user_id: prev.user_id,
-                    }));
-                  }
-                  else {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      user_id: value,
-                    }));
-                  }
-                }}
-              />
-            </Grid>
-            <Grid size={3}>
-              <Btn
-                color={"primary"}
-                className={"mt-n25"}
-                disabled={item.user_id_verified === true}
-                onClick={() => {
-                  flowSendEmail();
-                }}
-              >
-                {translate("send")}
-              </Btn>
-            </Grid>
-            {/** 이메일 인증 **/}
-            <Grid size={9}>
-              <Input
-                label={translate("verify")}
-                helperText={`* ${translate("helperIdVerified")}`}
-                value={item.user_verify_code}
-                inputRef={REFS?.[i]?.user_id_verified}
-                error={ERRORS?.[i]?.user_id_verified}
-                disabled={item.user_id_verified === true}
-                placeholder={"123456"}
-                onChange={(e: any) => {
+        <Grid container spacing={2} columns={12} className={"p-10"}>
+          {/** 이메일 **/}
+          <Grid size={10}>
+            <Input
+              label={`${translate("id")}`}
+              helperText={`* ${translate("helperId")}`}
+              value={item.user_id}
+              inputRef={REFS?.[i]?.user_id}
+              error={ERRORS?.[i]?.user_id}
+              disabled={item.user_id_verified === true}
+              placeholder={"abcd@naver.com"}
+              onChange={(e: any) => {
+                const value = e.target.value;
+                if (value.length > 30) {
                   setOBJECT((prev: any) => ({
                     ...prev,
-                    user_verify_code: e.target.value
-                  }))
-                }}
-              />
-            </Grid>
-            <Grid size={3}>
-              <Btn
-                color={"primary"}
-                className={"mt-n25"}
-                disabled={!item.user_id_sended || item.user_id_verified === true}
-                onClick={() => {
-                  flowVerifyEmail();
-                }}
-              >
-                {translate("verify")}
-              </Btn>
-            </Grid>
-            <Hr px={10} />
-            {/** 비밀번호 **/}
-            <Grid size={12}>
-              <Input
-                type={"password"}
-                label={translate("pw")}
-                helperText={`* ${translate("helperPw")}`}
-                value={item.user_pw}
-                inputRef={REFS?.[i]?.user_pw}
-                error={ERRORS?.[i]?.user_pw}
-                disabled={item.user_id_verified === false}
-                onChange={(e: any) => {
+                    user_id: prev.user_id,
+                  }));
+                }
+                else {
                   setOBJECT((prev: any) => ({
                     ...prev,
-                    user_pw: e.target.value
-                  }))
-                }}
-              />
-            </Grid>
-            {/** 비밀번호 확인 **/}
-            <Grid size={12}>
-              <Input
-                type={"password"}
-                label={translate("pwVerified")}
-                helperText={`* ${translate("helperPwVerified")}`}
-                value={item.user_pw_verified}
-                inputRef={REFS?.[i]?.user_pw_verified}
-                error={ERRORS?.[i]?.user_pw_verified}
-                disabled={item.user_id_verified === false}
-                onChange={(e: any) => {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    user_pw_verified: e.target.value
-                  }))
-                }}
-              />
-            </Grid>
+                    user_id: value,
+                  }));
+                }
+              }}
+            />
           </Grid>
-        </Card>
+          <Grid size={2}>
+            <Btn
+              color={"primary"}
+              className={"mt-n25"}
+              disabled={item.user_id_verified === true}
+              onClick={() => {
+                flowSendEmail();
+              }}
+            >
+              {translate("send")}
+            </Btn>
+          </Grid>
+          {/** 이메일 인증 **/}
+          <Grid size={10}>
+            <Input
+              label={translate("verify")}
+              helperText={`* ${translate("helperIdVerified")}`}
+              value={item.user_verify_code}
+              inputRef={REFS?.[i]?.user_id_verified}
+              error={ERRORS?.[i]?.user_id_verified}
+              disabled={item.user_id_verified === true}
+              placeholder={"123456"}
+              onChange={(e: any) => {
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  user_verify_code: e.target.value
+                }))
+              }}
+            />
+          </Grid>
+          <Grid size={2}>
+            <Btn
+              color={"primary"}
+              className={"mt-n25"}
+              disabled={!item.user_id_sended || item.user_id_verified === true}
+              onClick={() => {
+                flowVerifyEmail();
+              }}
+            >
+              {translate("verify")}
+            </Btn>
+          </Grid>
+          <Hr px={1} />
+          {/** 비밀번호 **/}
+          <Grid size={12}>
+            <Input
+              type={"password"}
+              label={translate("pw")}
+              helperText={`* ${translate("helperPw")}`}
+              value={item.user_pw}
+              inputRef={REFS?.[i]?.user_pw}
+              error={ERRORS?.[i]?.user_pw}
+              disabled={item.user_id_verified === false}
+              onChange={(e: any) => {
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  user_pw: e.target.value
+                }))
+              }}
+            />
+          </Grid>
+          {/** 비밀번호 확인 **/}
+          <Grid size={12}>
+            <Input
+              type={"password"}
+              label={translate("pwVerified")}
+              helperText={`* ${translate("helperPwVerified")}`}
+              value={item.user_pw_verified}
+              inputRef={REFS?.[i]?.user_pw_verified}
+              error={ERRORS?.[i]?.user_pw_verified}
+              disabled={item.user_id_verified === false}
+              onChange={(e: any) => {
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  user_pw_verified: e.target.value
+                }))
+              }}
+            />
+          </Grid>
+        </Grid>
       );
       return (
-        <Card className={"p-0"}>
-          <Grid container spacing={0} columns={12}>
-            <Grid size={12} key={`detail-${0}`}>
-              {detailFragment(OBJECT, 0)}
-            </Grid>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} key={`detail-${0}`}>
+            {detailFragment(OBJECT, 0)}
           </Grid>
-        </Card>
+        </Grid>
       );
     };
     // 7-4. button
     const buttonSection = () => (
-      <Card className={"p-0"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12}>
-            <Btn
-              color={"error"}
-              className={"w-90p fs-1-0rem"}
-              onClick={() => {
-                flowSave();
-              }}
-            >
-              {translate("userDelete")}
-            </Btn>
-          </Grid>
+      <Grid container spacing={2} columns={12}>
+        <Grid size={12}>
+          <Btn
+            color={"error"}
+            className={"w-100p fs-1-0rem"}
+            onClick={() => {
+              flowSave();
+            }}
+          >
+            {translate("userDelete")}
+          </Btn>
         </Grid>
-      </Card>
+      </Grid>
     );
     // 7-10. return
     return (
       <>
       {LOADING && <Loading />}
       <Paper className={"content-wrapper d-center border-1 radius-1 shadow-1 h-min100vh"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12}>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-col-center"}>
             {titleSection()}
             <Hr px={30} />
             {deleteSection()}
-            <Hr px={10} />
+            <Hr px={20} />
             {buttonSection()}
           </Grid>
         </Grid>

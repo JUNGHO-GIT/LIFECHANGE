@@ -6,7 +6,7 @@ import { useLanguageStore } from "@imports/ImportStores";
 import { Loading } from "@imports/ImportLayouts";
 import { PopUp } from "@imports/ImportContainers";
 import { Icons, Img, Div, Br } from "@imports/ImportComponents";
-import { Card, Paper, Grid } from "@imports/ImportMuis";
+import { Paper, Grid } from "@imports/ImportMuis";
 import { TableContainer, Table, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -41,197 +41,199 @@ export const UserAppSetting = () => {
   const userAppSettingNode = () => {
     // 7-1. card
     const detailSection = () => (
-      <Card className={"border-1 radius-1 shadow-0 p-0"}>
-        <TableContainer>
-          <Table>
-            <TableBody className={"table-tbody"}>
-              {/** detail **/}
-              <TableRow
-                className={"pointer"}
-                onClick={() => {
-                  navigate("/user/detail")
-                }}
-              >
-                <TableCell className={"w-90vw p-15"}>
-                  {translate("dataDetail")}
-                </TableCell>
-                <TableCell className={"w-10vw p-15"}>
-                  <Icons
-                    name={"ChevronRight"}
-                    className={"w-16 h-16"}
-                  />
-                </TableCell>
-              </TableRow>
-              {/** category **/}
-              <TableRow
-                className={"pointer"}
-                onClick={() => {
-                  navigate("/user/category")
-                }}
-              >
-                <TableCell className={"w-90vw p-15"}>
-                  {translate("category")}
-                </TableCell>
-                <TableCell className={"w-10vw p-15"}>
-                  <Icons
-                    name={"ChevronRight"}
-                    className={"w-16 h-16"}
-                  />
-                </TableCell>
-              </TableRow>
-              {/** dummy **/}
-              <TableRow
-                className={`${isAdmin !== "true" ? "d-none" : ""} pointer`}
-                onClick={() => {
-                  navigate("/user/dummy")
-                }}
-              >
-                <TableCell className={"w-90vw p-15"}>
-                  {translate("dataList")}
-                </TableCell>
-                <TableCell className={"w-10vw p-15"}>
-                  <Icons
-                    name={"ChevronRight"}
-                    className={"w-16 h-16"}
-                  />
-                </TableCell>
-              </TableRow>
-              {/** language **/}
-              <PopUp
-                type={"innerCenter"}
-                position={"center"}
-                direction={"center"}
-                contents={
-                  <Div className={"d-column-center"}>
-                    <Div
-                      className={"d-center m-auto"}
-                      onClick={() => {
-                        handleChangeLanguage("en")
+      <Grid container spacing={0} columns={12} className={"border-1 radius-1 shadow-0"}>
+        <Grid size={12}>
+          <TableContainer>
+            <Table>
+              <TableBody className={"table-tbody"}>
+                {/** detail **/}
+                <TableRow
+                  className={"pointer"}
+                  onClick={() => {
+                    navigate("/user/detail")
+                  }}
+                >
+                  <TableCell className={"w-90vw p-15"}>
+                    {translate("dataDetail")}
+                  </TableCell>
+                  <TableCell className={"w-10vw p-15"}>
+                    <Icons
+                      name={"ChevronRight"}
+                      className={"w-16 h-16"}
+                    />
+                  </TableCell>
+                </TableRow>
+                {/** category **/}
+                <TableRow
+                  className={"pointer"}
+                  onClick={() => {
+                    navigate("/user/category")
+                  }}
+                >
+                  <TableCell className={"w-90vw p-15"}>
+                    {translate("category")}
+                  </TableCell>
+                  <TableCell className={"w-10vw p-15"}>
+                    <Icons
+                      name={"ChevronRight"}
+                      className={"w-16 h-16"}
+                    />
+                  </TableCell>
+                </TableRow>
+                {/** dummy **/}
+                <TableRow
+                  className={`${isAdmin !== "true" ? "d-none" : ""} pointer`}
+                  onClick={() => {
+                    navigate("/user/dummy")
+                  }}
+                >
+                  <TableCell className={"w-90vw p-15"}>
+                    {translate("dataList")}
+                  </TableCell>
+                  <TableCell className={"w-10vw p-15"}>
+                    <Icons
+                      name={"ChevronRight"}
+                      className={"w-16 h-16"}
+                    />
+                  </TableCell>
+                </TableRow>
+                {/** language **/}
+                <PopUp
+                  type={"innerCenter"}
+                  position={"center"}
+                  direction={"center"}
+                  contents={
+                    <Div className={"d-col-center"}>
+                      <Div
+                        className={"d-center m-auto"}
+                        onClick={() => {
+                          handleChangeLanguage("en")
+                        }}
+                      >
+                        <Img
+                          key={"flag2"}
+                          src={"flag2"}
+                          className={"w-24 h-24 me-15"}
+                        />
+                        <Div className={`me-15 ${lang === "en" ? "fw-700" : ""}`}>
+                          English
+                        </Div>
+                        <Icons
+                          key={"Check"}
+                          name={"Check"}
+                          className={`w-16 h-16 black ${lang === "en" ? "" : "d-none"}`}
+                        />
+                      </Div>
+                      <Br px={20} />
+                      <Div
+                        className={"d-center m-auto"}
+                        onClick={() => {
+                          handleChangeLanguage("ko")
+                        }}
+                      >
+                        <Img
+                          key={"flag1"}
+                          src={"flag1"}
+                          className={"w-24 h-24 me-15"}
+                        />
+                        <Div className={`me-15 ${lang === "ko" ? "fw-700" : ""}`}>
+                          한국어
+                        </Div>
+                        <Icons
+                          key={"Check"}
+                          name={"Check"}
+                          className={`w-16 h-16 black ${lang === "ko" ? "" : "d-none"}`}
+                        />
+                      </Div>
+                    </Div>
+                  }
+                >
+                  {(popTrigger: any) => (
+                    <TableRow
+                      className={"pointer"}
+                      onClick={(e: any) => {
+                        popTrigger.openPopup(e.currentTarget)
                       }}
                     >
-                      <Img
-                        key={"flag2"}
-                        src={"flag2"}
-                        className={"w-24 h-24 me-15"}
-                      />
-                      <Div className={`me-15 ${lang === "en" ? "fw-700" : ""}`}>
-                        English
-                      </Div>
-                      <Icons
-                        key={"Check"}
-                        name={"Check"}
-                        className={`w-16 h-16 black ${lang === "en" ? "" : "d-none"}`}
-                      />
-                    </Div>
-                    <Br px={20} />
-                    <Div
-                      className={"d-center m-auto"}
-                      onClick={() => {
-                        handleChangeLanguage("ko")
-                      }}
-                    >
-                      <Img
-                        key={"flag1"}
-                        src={"flag1"}
-                        className={"w-24 h-24 me-15"}
-                      />
-                      <Div className={`me-15 ${lang === "ko" ? "fw-700" : ""}`}>
-                        한국어
-                      </Div>
-                      <Icons
-                        key={"Check"}
-                        name={"Check"}
-                        className={`w-16 h-16 black ${lang === "ko" ? "" : "d-none"}`}
-                      />
-                    </Div>
-                  </Div>
-                }
-              >
-                {(popTrigger: any) => (
-                  <TableRow
-                    className={"pointer"}
-                    onClick={(e: any) => {
-                      popTrigger.openPopup(e.currentTarget)
-                    }}
-                  >
-                    <TableCell className={"w-90vw p-15"}>
-                      {translate("language")}
-                    </TableCell>
-                    <TableCell className={"w-10vw p-15"}>
-                      <Icons
-                        key={"ChevronRight"}
-                        name={"ChevronRight"}
-                        className={"w-16 h-16"}
-                      />
-                    </TableCell>
-                  </TableRow>
-                )}
-              </PopUp>
-              {/** app info **/}
-              <TableRow
-                className={"pointer"}
-                onClick={() => {
-                  navigate("/user/app/info")
-                }}
-              >
-                <TableCell className={"w-90vw p-15"}>
-                  {translate("appInfo")}
-                </TableCell>
-                <TableCell className={"w-10vw p-15"}>
-                  <Icons
-                    name={"ChevronRight"}
-                    className={"w-16 h-16"}
-                  />
-                </TableCell>
-              </TableRow>
-              {/** logout **/}
-              <TableRow
-                className={"pointer"}
-                onClick={() => {
-                  localStorage.setItem(`${TITLE}_autoLogin`, "false")
-                  localStorage.setItem(`${TITLE}_autoLoginId`, "")
-                  localStorage.setItem(`${TITLE}_autoLoginPw`, "")
-                  sessionStorage.clear()
-                  navigate("/")
-                }}
-              >
-                <TableCell className={"w-90vw p-15"}>
-                  {translate("logout")}
-                </TableCell>
-                <TableCell className={"w-10vw p-15"}>
-                  <Icons
-                    name={"ChevronRight"}
-                    className={"w-16 h-16"}
-                  />
-                </TableCell>
-              </TableRow>
-              {/** delete **/}
-              <TableRow
-                className={"pointer"}
-                onClick={() => {
-                  navigate("/user/delete")
-                }}
-              >
-                <TableCell className={"w-90vw p-15 red"}>
-                  {translate("userDelete")}
-                </TableCell>
-                <TableCell className={"w-10vw p-15"}>
-                  <Icons
-                    name={"ChevronRight"}
-                    className={"w-16 h-16"}
-                  />
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
+                      <TableCell className={"w-90vw p-15"}>
+                        {translate("language")}
+                      </TableCell>
+                      <TableCell className={"w-10vw p-15"}>
+                        <Icons
+                          key={"ChevronRight"}
+                          name={"ChevronRight"}
+                          className={"w-16 h-16"}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </PopUp>
+                {/** app info **/}
+                <TableRow
+                  className={"pointer"}
+                  onClick={() => {
+                    navigate("/user/app/info")
+                  }}
+                >
+                  <TableCell className={"w-90vw p-15"}>
+                    {translate("appInfo")}
+                  </TableCell>
+                  <TableCell className={"w-10vw p-15"}>
+                    <Icons
+                      name={"ChevronRight"}
+                      className={"w-16 h-16"}
+                    />
+                  </TableCell>
+                </TableRow>
+                {/** logout **/}
+                <TableRow
+                  className={"pointer"}
+                  onClick={() => {
+                    localStorage.setItem(`${TITLE}_autoLogin`, "false")
+                    localStorage.setItem(`${TITLE}_autoLoginId`, "")
+                    localStorage.setItem(`${TITLE}_autoLoginPw`, "")
+                    sessionStorage.clear()
+                    navigate("/")
+                  }}
+                >
+                  <TableCell className={"w-90vw p-15"}>
+                    {translate("logout")}
+                  </TableCell>
+                  <TableCell className={"w-10vw p-15"}>
+                    <Icons
+                      name={"ChevronRight"}
+                      className={"w-16 h-16"}
+                    />
+                  </TableCell>
+                </TableRow>
+                {/** delete **/}
+                <TableRow
+                  className={"pointer"}
+                  onClick={() => {
+                    navigate("/user/delete")
+                  }}
+                >
+                  <TableCell className={"w-90vw p-15 red"}>
+                    {translate("userDelete")}
+                  </TableCell>
+                  <TableCell className={"w-10vw p-15"}>
+                    <Icons
+                      name={"ChevronRight"}
+                      className={"w-16 h-16"}
+                    />
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
+      </Grid>
     );
     // 7-10. return
     return (
       <Paper className={"content-wrapper d-center border-1 radius-1 h-min90vh"}>
         <Grid container spacing={0} columns={12}>
-          <Grid size={12}>
+          <Grid size={12} className={"d-col-center"}>
             {LOADING ? <Loading /> : detailSection()}
           </Grid>
         </Grid>

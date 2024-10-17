@@ -27,14 +27,13 @@ export const Count = (
 
   // 7. countNode ----------------------------------------------------------------------------------
   const countNode = () => {
+    // 7-1. lock
     const lockSection = () => (
       <Input
         label={translate("itemLock")}
-        readOnly={true}
         value={translate(LOCKED) || ""}
-        className={"w-100p pointer"}
         inputclass={"fs-0-8rem pointer"}
-        adornmentclass={"ms-n10 p-0"}
+        adornmentclass={"ms-n10"}
         onClick={() => {
           if (LOCKED === "locked") {
             setLOCKED("unlocked");
@@ -60,13 +59,14 @@ export const Count = (
         }
       />
     );
+    // 7-2. count
     const countSection = () => (
       <Input
         label={translate("item")}
         value={COUNT.newSectionCnt}
-        readOnly={true}
         error={COUNT.newSectionCnt <= 0}
         locked={LOCKED}
+        inputclass={"pointer"}
         startadornment={
           <Img
             key={"common2"}
@@ -89,22 +89,24 @@ export const Count = (
                   if (PATH.includes("/food/find/list")) {
                     return;
                   }
-                  COUNT.newSectionCnt > COUNT.sectionCnt ? (
-                    setCOUNT((prev: any) => ({
-                      ...prev,
-                      newSectionCnt: prev.newSectionCnt - 1
-                    }))
-                  ) : (
-                    setALERT({
-                      open: !ALERT.open,
-                      severity: "error",
-                      msg: (
-                        localLocale === "ko"
-                        ? `${COUNT.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
-                        : `Please enter ${COUNT.sectionCnt} or more and ${limit} or less.`
-                      ),
-                    })
-                  )
+                  else {
+                    COUNT.newSectionCnt > COUNT.sectionCnt ? (
+                      setCOUNT((prev: any) => ({
+                        ...prev,
+                        newSectionCnt: prev.newSectionCnt - 1
+                      }))
+                    ) : (
+                      setALERT({
+                        open: !ALERT.open,
+                        severity: "error",
+                        msg: (
+                          localLocale === "ko"
+                          ? `${COUNT.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
+                          : `Please enter ${COUNT.sectionCnt} or more and ${limit} or less.`
+                        ),
+                      })
+                    )
+                  }
                 }}
               />
             </Div>
@@ -121,22 +123,24 @@ export const Count = (
                   if (PATH.includes("/food/find/list")) {
                     return;
                   }
-                  COUNT.newSectionCnt < limit ? (
-                    setCOUNT((prev: any) => ({
-                      ...prev,
-                      newSectionCnt: prev.newSectionCnt + 1
-                    }))
-                  ) : (
-                    setALERT({
-                      open: !ALERT.open,
-                      severity: "error",
-                      msg: (
-                        localLocale === "ko"
-                        ? `${COUNT.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
-                        : `Please enter ${COUNT.sectionCnt} or more and ${limit} or less.`
-                      ),
-                    })
-                  )
+                  else {
+                    COUNT.newSectionCnt < limit ? (
+                      setCOUNT((prev: any) => ({
+                        ...prev,
+                        newSectionCnt: prev.newSectionCnt + 1
+                      }))
+                    ) : (
+                      setALERT({
+                        open: !ALERT.open,
+                        severity: "error",
+                        msg: (
+                          localLocale === "ko"
+                          ? `${COUNT.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
+                          : `Please enter ${COUNT.sectionCnt} or more and ${limit} or less.`
+                        ),
+                      })
+                    )
+                  }
                 }}
               />
             </Div>
@@ -144,7 +148,7 @@ export const Count = (
         }
       />
     );
-
+    // 7-3. return
     return (
       <Grid container spacing={1} columns={12}>
         <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>

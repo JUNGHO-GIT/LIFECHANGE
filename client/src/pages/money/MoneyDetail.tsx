@@ -8,8 +8,8 @@ import { Money } from "@imports/ImportSchemas";
 import { axios, numeral, sync } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, Memo, Count, Delete, Select, Input } from "@imports/ImportContainers";
-import { Img, Bg, Div, Br } from "@imports/ImportComponents";
-import { Paper, Card, MenuItem, Grid, Checkbox } from "@imports/ImportMuis";
+import { Img, Bg, Div } from "@imports/ImportComponents";
+import { Paper, MenuItem, Grid, Checkbox } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const MoneyDetail = () => {
@@ -130,7 +130,7 @@ export const MoneyDetail = () => {
       if (res.data.sectionCnt <= 0) {
         setOBJECT((prev: any) => ({
           ...prev,
-          money_section: [],
+          money_section: []
         }));
       }
       // sectionCnt가 0이 아니면 section 내부 part_idx 값에 따라 재정렬
@@ -327,241 +327,241 @@ export const MoneyDetail = () => {
     }));
   };
 
-  // 7. detailNode ---------------------------------------------------------------------------------
+  // 7. detail -------------------------------------------------------------------------------------
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Card className={"border-1 radius-1 p-20"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12}>
-            <PickerDay
-              DATE={DATE}
-              setDATE={setDATE}
-              EXIST={EXIST}
-            />
-          </Grid>
-          <Br px={1} />
-          <Grid size={12}>
-            <Count
-              COUNT={COUNT}
-              setCOUNT={setCOUNT}
-              LOCKED={LOCKED}
-              setLOCKED={setLOCKED}
-              limit={10}
-            />
-          </Grid>
+      <Grid container spacing={2} columns={12} className={"border-1 radius-1 p-20"}>
+        <Grid size={12}>
+          <PickerDay
+            DATE={DATE}
+            setDATE={setDATE}
+            EXIST={EXIST}
+          />
         </Grid>
-      </Card>
+        <Grid size={12}>
+          <Count
+            COUNT={COUNT}
+            setCOUNT={setCOUNT}
+            LOCKED={LOCKED}
+            setLOCKED={setLOCKED}
+            limit={10}
+          />
+        </Grid>
+      </Grid>
     );
     // 7-2. total
     const totalSection = () => (
-      <Card className={"border-1 radius-1 p-20"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12}>
-            <Input
-              label={translate("totalIncome")}
-              value={numeral(OBJECT?.money_total_income).format("0,0")}
-              readOnly={true}
-              startadornment={
-                <Img
-                	key={"money2"}
-                	src={"money2"}
-                	className={"w-16 h-16"}
-                />
-              }
-              endadornment={
-                localCurrency
-              }
-            />
-          </Grid>
-          <Br px={1} />
-          <Grid size={12}>
-            <Input
-              label={translate("totalExpense")}
-              value={numeral(OBJECT?.money_total_expense).format("0,0")}
-              readOnly={true}
-              startadornment={
-                <Img
-                	key={"money2"}
-                	src={"money2"}
-                	className={"w-16 h-16"}
-                />
-              }
-              endadornment={
-                localCurrency
-              }
-            />
-          </Grid>
+      <Grid container spacing={2} columns={12} className={"border-1 radius-1 p-20"}>
+        <Grid size={12}>
+          <Input
+            label={translate("totalIncome")}
+            value={numeral(OBJECT?.money_total_income).format("0,0")}
+            locked={LOCKED}
+            className={"pointer"}
+            startadornment={
+              <Img
+                key={"money2"}
+                src={"money2"}
+                className={"w-16 h-16"}
+              />
+            }
+            endadornment={
+              localCurrency
+            }
+          />
         </Grid>
-      </Card>
+        <Grid size={12}>
+          <Input
+            label={translate("totalExpense")}
+            value={numeral(OBJECT?.money_total_expense).format("0,0")}
+            locked={LOCKED}
+            startadornment={
+              <Img
+                key={"money2"}
+                src={"money2"}
+                className={"w-16 h-16"}
+              />
+            }
+            endadornment={
+              localCurrency
+            }
+          />
+        </Grid>
+      </Grid>
     );
     // 7-3. card
     const detailSection = () => {
       const detailFragment = (item: any, i: number) => (
-        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={6} className={"d-row-left"}>
-              <Bg
-                badgeContent={i + 1}
-                bgcolor={bgColors?.[item?.money_part_idx]}
-              />
-            </Grid>
-            <Grid size={6} className={"d-row-right"}>
-              <Delete
-                index={i}
-                handleDelete={handleDelete}
-                LOCKED={LOCKED}
-              />
-            </Grid>
-            <Br px={1} />
-            <Grid size={6}>
-              <Select
-                label={translate("part")}
-                locked={LOCKED}
-                inputRef={REFS?.[i]?.money_part_idx}
-                error={ERRORS?.[i]?.money_part_idx}
-                value={item?.money_part_idx ?? 0}
-                onChange={(e: any) => {
-                  const newIndex = Number(e.target.value);
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    money_section: prev.money_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...section,
-                        money_part_idx: newIndex,
-                        money_part_val: moneyArray[newIndex]?.money_part,
-                        money_title_idx: 0,
-                        money_title_val: moneyArray[newIndex]?.money_title[0],
-                      } : section
-                    )),
-                  }));
-                }}
-              >
-                {moneyArray?.map((part: any, idx: number) => (
-                  <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
-                    {translate(part.money_part)}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Grid>
-            <Grid size={6}>
-              <Select
-                label={translate("title")}
-                locked={LOCKED}
-                inputRef={REFS?.[i]?.money_title_idx}
-                error={ERRORS?.[i]?.money_title_idx}
-                value={item?.money_title_idx ?? 0}
-                onChange={(e: any) => {
-                  const newTitleIdx = Number(e.target.value);
-                  const newTitleVal = moneyArray[item?.money_part_idx]?.money_title[newTitleIdx];
-                  if (newTitleIdx >= 0 && newTitleVal) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      money_section: prev.money_section?.map((section: any, idx: number) => (
-                        idx === i ? {
-                          ...section,
-                          money_title_idx: newTitleIdx,
-                          money_title_val: newTitleVal,
-                        } : section
-                      )),
-                    }));
-                  }
-                }}
-              >
-                {moneyArray[item?.money_part_idx]?.money_title?.map((title: any, idx: number) => (
-                  <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
-                    {translate(title)}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Grid>
-            <Br px={1} />
-            <Grid size={12}>
-              <Input
-                label={translate("amount")}
-                value={numeral(item?.money_amount).format("0,0")}
-                inputRef={REFS?.[i]?.money_amount}
-                error={ERRORS?.[i]?.money_amount}
-                locked={LOCKED}
-                startadornment={
-                  <Img
-                    key={"money2"}
-                    src={"money2"}
-                    className={"w-16 h-16"}
-                  />
-                }
-                endadornment={
-                  localCurrency
-                }
-                onChange={(e: any) => {
-                  const value = e.target.value.replace(/,/g, '');
-                  const newValue = value === "" ? 0 : Number(value);
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    money_section: prev.money_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...section,
-                        money_amount: String(newValue),
-                      } : section
-                    )),
-                  }));
-                }}
-              />
-            </Grid>
-            <Br px={1} />
-            <Grid size={{ xs: 7, sm: 8 }} className={"d-center"}>
-              <Memo
-                OBJECT={OBJECT}
-                setOBJECT={setOBJECT}
-                LOCKED={LOCKED}
-                extra={"money_content"}
-                i={i}
-              />
-            </Grid>
-            <Grid size={{ xs: 5, sm: 4 }} className={"d-center"}>
-              <Div className={"fs-0-7rem fw-500 dark ms-10"}>
-                {translate("includeProperty")}
-              </Div>
-              <Checkbox
-                size={"small"}
-                className={"p-0 ms-5"}
-                checked={item?.money_include === "Y"}
-                disabled={LOCKED === "locked"}
-                onChange={(e: any) => {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    money_section: prev.money_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...section,
-                        money_include: e.target.checked ? "Y" : "N",
-                      } : section
-                    )),
-                  }));
-                }}
-              />
-            </Grid>
+        <Grid container spacing={2} columns={12}
+        className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
+          <Grid size={6} className={"d-row-left"}>
+            <Bg
+              badgeContent={i + 1}
+              bgcolor={bgColors?.[item?.money_part_idx]}
+            />
           </Grid>
-        </Card>
+          <Grid size={6} className={"d-row-right"}>
+            <Delete
+              index={i}
+              handleDelete={handleDelete}
+              LOCKED={LOCKED}
+            />
+          </Grid>
+          <Grid size={6}>
+            <Select
+              label={translate("part")}
+              locked={LOCKED}
+              inputRef={REFS?.[i]?.money_part_idx}
+              error={ERRORS?.[i]?.money_part_idx}
+              value={item?.money_part_idx ?? 0}
+              onChange={(e: any) => {
+                const newIndex = Number(e.target.value);
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  money_section: prev.money_section?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      money_part_idx: newIndex,
+                      money_part_val: moneyArray[newIndex]?.money_part,
+                      money_title_idx: 0,
+                      money_title_val: moneyArray[newIndex]?.money_title[0],
+                    } : section
+                  ))
+                }));
+              }}
+            >
+              {moneyArray?.map((part: any, idx: number) => (
+                <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
+                  {translate(part?.money_part)}
+                </MenuItem>
+              ))}
+            </Select>
+          </Grid>
+          <Grid size={6}>
+            <Select
+              label={translate("title")}
+              locked={LOCKED}
+              inputRef={REFS?.[i]?.money_title_idx}
+              error={ERRORS?.[i]?.money_title_idx}
+              value={item?.money_title_idx ?? 0}
+              onChange={(e: any) => {
+                const newTitleIdx = Number(e.target.value);
+                const newTitleVal = moneyArray[item?.money_part_idx]?.money_title[newTitleIdx];
+                if (newTitleIdx >= 0 && newTitleVal) {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    money_section: prev.money_section?.map((section: any, idx: number) => (
+                      idx === i ? {
+                        ...section,
+                        money_title_idx: newTitleIdx,
+                        money_title_val: newTitleVal,
+                      } : section
+                    )),
+                  }));
+                }
+              }}
+            >
+              {moneyArray[item?.money_part_idx]?.money_title?.map((title: any, idx: number) => (
+                <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
+                  {translate(title)}
+                </MenuItem>
+              ))}
+            </Select>
+          </Grid>
+          <Grid size={12}>
+            <Input
+              label={translate("amount")}
+              value={numeral(item?.money_amount).format("0,0")}
+              inputRef={REFS?.[i]?.money_amount}
+              error={ERRORS?.[i]?.money_amount}
+              locked={LOCKED}
+              startadornment={
+                <Img
+                  key={"money2"}
+                  src={"money2"}
+                  className={"w-16 h-16"}
+                />
+              }
+              endadornment={
+                localCurrency
+              }
+              onChange={(e: any) => {
+                const value = e.target.value.replace(/,/g, '');
+                const newValue = value === "" ? 0 : Number(value);
+                if (value === "") {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
+                      idx === i ? {
+                        ...section,
+                        exercise_set: "0"
+                      } : section
+                    ))
+                  }));
+                }
+                else if (!isNaN(newValue) && newValue <= 999999999) {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    money_section: prev.money_section?.map((section: any, idx: number) => (
+                      idx === i ? {
+                        ...section,
+                        money_amount: String(newValue)
+                      } : section
+                    ))
+                  }));
+                }
+              }}
+            />
+          </Grid>
+          <Grid size={{ xs: 7, sm: 8 }} className={"d-center"}>
+            <Memo
+              OBJECT={OBJECT}
+              setOBJECT={setOBJECT}
+              LOCKED={LOCKED}
+              extra={"money_content"}
+              i={i}
+            />
+          </Grid>
+          <Grid size={{ xs: 5, sm: 4 }} className={"d-center"}>
+            <Div className={"fs-0-7rem fw-500 dark ms-10"}>
+              {translate("includeProperty")}
+            </Div>
+            <Checkbox
+              size={"small"}
+              className={"p-0 ms-5"}
+              checked={item?.money_include === "Y"}
+              disabled={LOCKED === "locked"}
+              onChange={(e: any) => {
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  money_section: prev.money_section?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      money_include: e.target.checked ? "Y" : "N",
+                    } : section
+                  )),
+                }));
+              }}
+            />
+          </Grid>
+        </Grid>
       );
       return (
-        <Card className={"p-0"}>
-          <Grid container spacing={0} columns={12}>
-            {OBJECT?.money_section?.map((item: any, i: number) => (
-              <Grid size={12} key={`detail-${i}`}>
-                {COUNT?.newSectionCnt > 0 && (
-                  detailFragment(item, i)
-                )}
-              </Grid>
-            ))}
-          </Grid>
-        </Card>
+        <Grid container spacing={0} columns={12}>
+          {OBJECT?.money_section?.map((item: any, i: number) => (
+            <Grid size={12} key={`detail-${i}`}>
+              {COUNT?.newSectionCnt > 0 && detailFragment(item, i)}
+            </Grid>
+          ))}
+        </Grid>
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12}>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-col-center"}>
             {dateCountSection()}
             {totalSection()}
             {LOADING ? <Loading /> : detailSection()}

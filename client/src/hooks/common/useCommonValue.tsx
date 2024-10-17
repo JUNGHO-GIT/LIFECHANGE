@@ -19,15 +19,16 @@ export const useCommonValue = () => {
   const secondStr: string = PATH?.split("/")[2] || "";
   const thirdStr: string = PATH?.split("/")[3] || "";
 
-  const isGoal: boolean = secondStr === "goal";
-  const isGoalToday: boolean = PATH.includes("/today/goal");
-  const isToday: boolean = !isGoalToday && PATH.includes("/today/list");
-  const isCalendarDetail: boolean = PATH.includes("/calendar/detail");
-  const isGoalList: boolean = PATH.includes("/goal/list");
-  const isGoalDetail: boolean = PATH.includes("/goal/detail");
-  const isRealList: boolean = !PATH.includes("/goal") && PATH.includes("/list");
-  const isRealDetail: boolean = !PATH.includes("/goal") && PATH.includes("/detail");
+  const isGoalTodayList: boolean = PATH.includes("/today/goal/list");
+  const isGoalList: boolean = !isGoalTodayList && PATH.includes("/goal/list");
+  const isTodayList: boolean = !isGoalTodayList && !isGoalList && PATH.includes("/today/list");
+  const isRealList: boolean = !isGoalList && !isTodayList && !isGoalTodayList && PATH.includes("/list");
 
+  const isGoalDetail: boolean =  PATH.includes("/goal/detail");
+  const isCalendarDetail: boolean = !isGoalDetail && PATH.includes("/calendar/detail");
+  const isRealDetail: boolean = !isGoalDetail && !isCalendarDetail && PATH.includes("/detail");
+
+  const isGoal: boolean = secondStr === "goal";
   const toFind: string = `/${firstStr}/find/list`;
   const toFavorite: string = `/${firstStr}/favorite/list`;
   const toList: string = isGoal ? `/${firstStr}/goal/list` : `/${firstStr}/list`;
@@ -118,13 +119,12 @@ export const useCommonValue = () => {
     firstStr,
     secondStr,
     thirdStr,
-    isGoal,
-    isGoalToday,
-    isToday,
+    isTodayList,
+    isGoalTodayList,
+    isRealList,
     isCalendarDetail,
     isGoalList,
     isGoalDetail,
-    isRealList,
     isRealDetail,
     toFind,
     toFavorite,

@@ -8,8 +8,8 @@ import { User } from "@imports/ImportSchemas";
 import { axios, numeral, sync } from "@imports/ImportUtils";
 import { Footer, Loading } from "@imports/ImportLayouts";
 import { Input } from "@imports/ImportContainers";
-import { Hr, Br, Img, Div } from "@imports/ImportComponents";
-import { Paper, Avatar, Card, Grid, Checkbox } from "@imports/ImportMuis";
+import { Hr, Img, Div } from "@imports/ImportComponents";
+import { Paper, Avatar, Grid, Checkbox } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const UserDetail = () => {
@@ -101,189 +101,179 @@ export const UserDetail = () => {
   const userDetailNode = () => {
     // 7-1. image
     const imageSection = () => (
-      <Card className={"p-0"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12} className={"d-center"}>
-            <Avatar
-              src={OBJECT?.user_image}
-              alt={"user_image"}
-              className={"w-150 h-150"}
-            />
-          </Grid>
+      <Grid container spacing={2} columns={12}>
+        <Grid size={12} className={"d-center"}>
+          <Avatar
+            src={OBJECT?.user_image}
+            alt={"user_image"}
+            className={"w-150 h-150"}
+          />
         </Grid>
-      </Card>
+      </Grid>
     );
     // 7-2. detail
     const detailSection = () => {
       const detailFragment = (item: any, i: number) => (
-        <Card className={"p-10"}>
-          <Grid container spacing={1} columns={12}>
-            {/** 아이디 **/}
-            <Grid size={12}>
-              <Input
-                label={translate("id")}
-                value={item?.user_id}
-                disabled={true}
-              />
-            </Grid>
-            <Br px={5} />
-            {/** 등록일 **/}
-            <Grid size={12}>
-              <Input
-                label={translate("regDt")}
-                value={item?.user_regDt.split("T")[0]}
-                disabled={true}
-              />
-            </Grid>
-            <Hr px={20} />
-            {/** 최초 몸무게 **/}
-            <Grid size={12}>
-              <Input
-                label={translate("initScale")}
-                value={item.user_initScale}
-                inputRef={REFS?.[i]?.user_initScale}
-                error={ERRORS?.[i]?.user_initScale}
-                startadornment={
-                  <Img
-                  	key={"exercise5"}
-                  	src={"exercise5"}
-                  	className={"w-16 h-16"}
-                  />
-                }
-                endadornment={
-                  translate("k")
-                }
-                onChange={(e: any) => {
-                  const value = e.target.value;
-                  const newValue = value.startsWith("0") ? value.slice(1) : value;
-                  if (value === "") {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      user_initScale: "0",
-                    }));
-                  }
-                  else if (newValue.match(/^\d*\.?\d{0,2}$/) && Number(newValue) <= 999) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      user_initScale: String(newValue),
-                    }));
-                  }
-                }}
-              />
-            </Grid>
-            <Br px={5} />
-            {/** 현재 몸무게 **/}
-            <Grid size={12}>
-              <Input
-                label={translate("curScale")}
-                value={item.user_curScale}
-                disabled={true}
-                startadornment={
-                  <Img
-                  	key={"exercise5"}
-                  	src={"exercise5"}
-                  	className={"w-16 h-16"}
-                  />
-                }
-                endadornment={
-                  translate("k")
-                }
-              />
-            </Grid>
-            <Hr px={20} />
-            {/** 초기 자산 **/}
-            <Grid size={12}>
-              <Input
-                label={translate("initProperty")}
-                value={numeral(item.user_initProperty).format("0,0")}
-                inputRef={REFS?.[i]?.user_initProperty}
-                error={ERRORS?.[i]?.user_initProperty}
-                startadornment={
-                  <Img
-                  	key={"money2"}
-                  	src={"money2"}
-                  	className={"w-16 h-16"}
-                  />
-                }
-                endadornment={
-                  localCurrency
-                }
-                onChange={(e: any) => {
-                  const value = e.target.value.replace(/,/g, '');
-                  const newValue = value === "" ? 0 : Number(value);
-                  if (value === "") {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      user_initProperty: "0",
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 9999999999) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      user_initProperty: String(newValue),
-                    }));
-                  }
-                }}
-              />
-            </Grid>
-            <Br px={5} />
-            {/** 현재 자산 **/}
-            <Grid size={12}>
-              <Input
-                label={translate("curProperty")}
-                disabled={true}
-                value={
-                  includingExclusions ? (
-                    numeral(item.user_curPropertyInclude).format("0,0")
-                  ) : (
-                    numeral(item.user_curPropertyExclude).format("0,0")
-                  )
-                }
-                startadornment={
-                  <Img
-                  	key={"money2"}
-                  	src={"money2"}
-                  	className={"w-16 h-16"}
-                  />
-                }
-                endadornment={
-                  localCurrency
-                }
-              />
-            </Grid>
-            <Br px={5} />
-            {/** 포함 여부 **/}
-            <Grid size={12} className={"d-row-left"}>
-              <Div className={"fs-0-7rem fw-500 dark ms-10"}>
-                {translate("includingExclusions")}
-              </Div>
-              <Checkbox
-                size={"small"}
-                className={"p-0 ms-5"}
-                checked={includingExclusions}
-                onChange={(e: any) => {
-                  setIncludingExclusions(e.target.checked);
-                }}
-              />
-            </Grid>
+        <Grid container spacing={2} columns={12} className={"p-10"}>
+          {/** 아이디 **/}
+          <Grid size={12}>
+            <Input
+              label={translate("id")}
+              value={item?.user_id}
+              disabled={true}
+            />
           </Grid>
-        </Card>
+          {/** 등록일 **/}
+          <Grid size={12}>
+            <Input
+              label={translate("regDt")}
+              value={item?.user_regDt.split("T")[0]}
+              disabled={true}
+            />
+          </Grid>
+          <Hr px={1} />
+          {/** 최초 몸무게 **/}
+          <Grid size={12}>
+            <Input
+              label={translate("initScale")}
+              value={item.user_initScale}
+              inputRef={REFS?.[i]?.user_initScale}
+              error={ERRORS?.[i]?.user_initScale}
+              startadornment={
+                <Img
+                  key={"exercise5"}
+                  src={"exercise5"}
+                  className={"w-16 h-16"}
+                />
+              }
+              endadornment={
+                translate("k")
+              }
+              onChange={(e: any) => {
+                const value = e.target.value;
+                const newValue = value.startsWith("0") ? value.slice(1) : value;
+                if (value === "") {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    user_initScale: "0",
+                  }));
+                }
+                else if (newValue.match(/^\d*\.?\d{0,2}$/) && Number(newValue) <= 999) {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    user_initScale: String(newValue),
+                  }));
+                }
+              }}
+            />
+          </Grid>
+          {/** 현재 몸무게 **/}
+          <Grid size={12}>
+            <Input
+              label={translate("curScale")}
+              value={item.user_curScale}
+              disabled={true}
+              startadornment={
+                <Img
+                  key={"exercise5"}
+                  src={"exercise5"}
+                  className={"w-16 h-16"}
+                />
+              }
+              endadornment={
+                translate("k")
+              }
+            />
+          </Grid>
+          <Hr px={1} />
+          {/** 초기 자산 **/}
+          <Grid size={12}>
+            <Input
+              label={translate("initProperty")}
+              value={numeral(item.user_initProperty).format("0,0")}
+              inputRef={REFS?.[i]?.user_initProperty}
+              error={ERRORS?.[i]?.user_initProperty}
+              startadornment={
+                <Img
+                  key={"money2"}
+                  src={"money2"}
+                  className={"w-16 h-16"}
+                />
+              }
+              endadornment={
+                localCurrency
+              }
+              onChange={(e: any) => {
+                const value = e.target.value.replace(/,/g, '');
+                const newValue = value === "" ? 0 : Number(value);
+                if (value === "") {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    user_initProperty: "0",
+                  }));
+                }
+                else if (!isNaN(newValue) && newValue <= 9999999999) {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    user_initProperty: String(newValue),
+                  }));
+                }
+              }}
+            />
+          </Grid>
+          {/** 현재 자산 **/}
+          <Grid size={12}>
+            <Input
+              label={translate("curProperty")}
+              disabled={true}
+              value={
+                includingExclusions ? (
+                  numeral(item.user_curPropertyInclude).format("0,0")
+                ) : (
+                  numeral(item.user_curPropertyExclude).format("0,0")
+                )
+              }
+              startadornment={
+                <Img
+                  key={"money2"}
+                  src={"money2"}
+                  className={"w-16 h-16"}
+                />
+              }
+              endadornment={
+                localCurrency
+              }
+            />
+          </Grid>
+          {/** 포함 여부 **/}
+          <Grid size={12} className={"d-row-left"}>
+            <Div className={"fs-0-7rem fw-500 dark ms-10"}>
+              {translate("includingExclusions")}
+            </Div>
+            <Checkbox
+              size={"small"}
+              className={"p-0 ms-5"}
+              checked={includingExclusions}
+              onChange={(e: any) => {
+                setIncludingExclusions(e.target.checked);
+              }}
+            />
+          </Grid>
+        </Grid>
       );
       return (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={12} key={`detail-${0}`}>
-              {detailFragment(OBJECT, 0)}
-            </Grid>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} key={`detail-${0}`}>
+            {detailFragment(OBJECT, 0)}
           </Grid>
-        </Card>
+        </Grid>
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={0} columns={12}>
-          <Grid size={12} className={"d-column-center"}>
+          <Grid size={12} className={"d-col-center"}>
             {imageSection()}
             <Hr px={40} />
             {LOADING ? <Loading /> : detailSection()}

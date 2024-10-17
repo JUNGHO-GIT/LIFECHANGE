@@ -8,8 +8,8 @@ import { MoneyGoal } from "@imports/ImportSchemas";
 import { axios, numeral, sync } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, Count, Delete, Input } from "@imports/ImportContainers";
-import { Img, Bg, Br } from "@imports/ImportComponents";
-import { Card, Paper, Grid } from "@imports/ImportMuis";
+import { Img, Bg } from "@imports/ImportComponents";
+import { Paper, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const MoneyGoalDetail = () => {
@@ -261,143 +261,133 @@ export const MoneyGoalDetail = () => {
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Card className={"border-1 radius-1 p-20"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12}>
-            <PickerDay
-              DATE={DATE}
-              setDATE={setDATE}
-              EXIST={EXIST}
-            />
-          </Grid>
-          <Br px={1} />
-          <Grid size={12}>
-            <Count
-              COUNT={COUNT}
-              setCOUNT={setCOUNT}
-              LOCKED={LOCKED}
-              setLOCKED={setLOCKED}
-              limit={1}
-            />
-          </Grid>
+      <Grid container spacing={2} columns={12} className={"border-1 radius-1 p-20"}>
+        <Grid size={12}>
+          <PickerDay
+            DATE={DATE}
+            setDATE={setDATE}
+            EXIST={EXIST}
+          />
         </Grid>
-      </Card>
+        <Grid size={12}>
+          <Count
+            COUNT={COUNT}
+            setCOUNT={setCOUNT}
+            LOCKED={LOCKED}
+            setLOCKED={setLOCKED}
+            limit={1}
+          />
+        </Grid>
+      </Grid>
     );
     // 7-3. detail
     const detailSection = () => {
       const detailFragment = (item: any, i: number) => (
-        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={6} className={"d-row-left"}>
-              <Bg
-                badgeContent={i + 1}
-                bgcolor={"#1976d2"}
-              />
-            </Grid>
-            <Grid size={6} className={"d-row-right"}>
-              <Delete
-                index={i}
-                handleDelete={handleDelete}
-                LOCKED={LOCKED}
-              />
-            </Grid>
-            <Br px={1} />
-            <Grid size={12}>
-              <Input
-                value={numeral(item?.money_goal_income).format("0,0")}
-                inputRef={REFS?.[i]?.money_goal_income}
-                error={ERRORS?.[i]?.money_goal_income}
-                locked={LOCKED}
-                label={
-                  DATE.dateType === "day" ? (
-                    `${translate("goalIncome")}`
-                  ) : (
-                    `${translate("goalIncome")} (${translate("total")})`
-                  )
-                }
-                startadornment={
-                  <Img
-                  	key={"money2"}
-                  	src={"money2"}
-                  	className={"w-16 h-16"}
-                  />
-                }
-                endadornment={
-                  localCurrency
-                }
-                onChange={(e: any) => {
-                  const value = e.target.value.replace(/,/g, '');
-                  const newValue = value === "" ? 0 : Number(value);
-                  if (value === "") {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      money_goal_income: "0",
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 9999999999) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      money_goal_income: String(newValue),
-                    }));
-                  }
-                }}
-              />
-            </Grid>
-            <Br px={1} />
-            <Grid size={12}>
-              <Input
-                value={numeral(item?.money_goal_expense).format("0,0")}
-                inputRef={REFS?.[i]?.money_goal_expense}
-                error={ERRORS?.[i]?.money_goal_expense}
-                locked={LOCKED}
-                label={
-                  DATE.dateType === "day" ? (
-                    `${translate("goalExpense")}`
-                  ) : (
-                    `${translate("goalExpense")} (${translate("total")})`
-                  )
-                }
-                startadornment={
-                  <Img
-                  	key={"money2"}
-                  	src={"money2"}
-                  	className={"w-16 h-16"}
-                  />
-                }
-                endadornment={
-                  localCurrency
-                }
-                onChange={(e: any) => {
-                  const value = e.target.value.replace(/,/g, '');
-                  const newValue = value === "" ? 0 : Number(value);
-                  if (value === "") {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      money_goal_expense: "0",
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 9999999999) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      money_goal_expense: String(newValue),
-                    }));
-                  }
-                }}
-              />
-            </Grid>
+        <Grid container spacing={2} columns={12}
+        className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
+          <Grid size={6} className={"d-row-left"}>
+            <Bg
+              badgeContent={i + 1}
+              bgcolor={"#1976d2"}
+            />
           </Grid>
-        </Card>
+          <Grid size={6} className={"d-row-right"}>
+            <Delete
+              index={i}
+              handleDelete={handleDelete}
+              LOCKED={LOCKED}
+            />
+          </Grid>
+          <Grid size={12}>
+            <Input
+              value={numeral(item?.money_goal_income).format("0,0")}
+              inputRef={REFS?.[i]?.money_goal_income}
+              error={ERRORS?.[i]?.money_goal_income}
+              locked={LOCKED}
+              label={
+                DATE.dateType === "day" ? (
+                  `${translate("goalIncome")}`
+                ) : (
+                  `${translate("goalIncome")} (${translate("total")})`
+                )
+              }
+              startadornment={
+                <Img
+                  key={"money2"}
+                  src={"money2"}
+                  className={"w-16 h-16"}
+                />
+              }
+              endadornment={
+                localCurrency
+              }
+              onChange={(e: any) => {
+                const value = e.target.value.replace(/,/g, '');
+                const newValue = value === "" ? 0 : Number(value);
+                if (value === "") {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    money_goal_income: "0",
+                  }));
+                }
+                else if (!isNaN(newValue) && newValue <= 9999999999) {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    money_goal_income: String(newValue),
+                  }));
+                }
+              }}
+            />
+          </Grid>
+          <Grid size={12}>
+            <Input
+              value={numeral(item?.money_goal_expense).format("0,0")}
+              inputRef={REFS?.[i]?.money_goal_expense}
+              error={ERRORS?.[i]?.money_goal_expense}
+              locked={LOCKED}
+              label={
+                DATE.dateType === "day" ? (
+                  `${translate("goalExpense")}`
+                ) : (
+                  `${translate("goalExpense")} (${translate("total")})`
+                )
+              }
+              startadornment={
+                <Img
+                  key={"money2"}
+                  src={"money2"}
+                  className={"w-16 h-16"}
+                />
+              }
+              endadornment={
+                localCurrency
+              }
+              onChange={(e: any) => {
+                const value = e.target.value.replace(/,/g, '');
+                const newValue = value === "" ? 0 : Number(value);
+                if (value === "") {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    money_goal_expense: "0",
+                  }));
+                }
+                else if (!isNaN(newValue) && newValue <= 9999999999) {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    money_goal_expense: String(newValue),
+                  }));
+                }
+              }}
+            />
+          </Grid>
+        </Grid>
       );
       return (
-        <Card className={"p-0"}>
-          <Grid container spacing={0} columns={12}>
-            <Grid size={12} key={`detail-${0}`}>
-              {COUNT?.newSectionCnt > 0 && (
-                detailFragment(OBJECT, 0)
-              )}
-            </Grid>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} key={`detail-${0}`}>
+            {COUNT?.newSectionCnt > 0 && detailFragment(OBJECT, 0)}
           </Grid>
-        </Card>
+        </Grid>
       );
     };
     // 7-10. return
@@ -405,15 +395,7 @@ export const MoneyGoalDetail = () => {
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid size={12}>
           {dateCountSection()}
-          {LOADING ? (
-            <>
-              <Loading />
-            </>
-          ) : (
-            <>
-              {detailSection()}
-            </>
-          )}
+          {LOADING ? <Loading /> : detailSection()}
         </Grid>
       </Paper>
     );

@@ -5,7 +5,7 @@ import { useLanguageStore } from "@imports/ImportStores";
 import { moment } from "@imports/ImportUtils";
 import { PopUp, Input } from "@imports/ImportContainers";
 import { Img } from "@imports/ImportComponents";
-import { Card, DigitalClock, AdapterMoment, LocalizationProvider } from "@imports/ImportMuis";
+import { Grid, DigitalClock, AdapterMoment, LocalizationProvider } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 declare type PickerTimeProps = {
@@ -106,29 +106,31 @@ export const PickerTime = (
         position={"center"}
         direction={"center"}
         contents={({closePopup}: any) => (
-          <Card className={"w-max40vw h-max40vh"}>
-            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLocale}>
-              <DigitalClock
-                timeStep={10}
-                ampm={false}
-                timezone={localTimeZone}
-                value={moment(OBJECT?.[`${extra}`], "HH:mm")}
-                sx={{
-                  width: "40vw",
-                  height: "40vh"
-                }}
-                onChange={(e: any) => {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    [`${extra}`]: moment(e).format("HH:mm")
-                  }));
-                  closePopup();
-                }}
-              />
-            </LocalizationProvider>
-          </Card>
+          <Grid container spacing={2} columns={12} className={"w-max40vw h-max40vh"}>
+            <Grid size={12} className={"d-center"}>
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLocale}>
+                <DigitalClock
+                  timeStep={10}
+                  ampm={false}
+                  timezone={localTimeZone}
+                  value={moment(OBJECT?.[`${extra}`], "HH:mm")}
+                  sx={{
+                    width: "40vw",
+                    height: "40vh"
+                  }}
+                  onChange={(e: any) => {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      [`${extra}`]: moment(e).format("HH:mm")
+                    }));
+                    closePopup();
+                  }}
+                />
+              </LocalizationProvider>
+            </Grid>
+          </Grid>
         )}
-    >
+      >
         {(popTrigger: any) => (
           <Input
             label={translateStr}
@@ -161,32 +163,34 @@ export const PickerTime = (
         position={"center"}
         direction={"center"}
         contents={({closePopup}: any) => (
-          <Card className={"w-max40vw h-max40vh"}>
-            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLocale}>
-              <DigitalClock
-                timeStep={10}
-                ampm={false}
-                timezone={localTimeZone}
-                value={moment(OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`], "HH:mm")}
-                sx={{
-                  width: "40vw",
-                  height: "40vh"
-                }}
-                onChange={(e: any) => {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    [`${firstStr}_section`]: prev[`${firstStr}_section`]?.map((item: any, idx: number) => (
-                      idx === i ? {
-                        ...item,
-                        [`${extra}`]: moment(e).format("HH:mm")
-                      } : item
-                    ))
-                  }));
-                  closePopup();
-                }}
-              />
-            </LocalizationProvider>
-          </Card>
+          <Grid container spacing={2} columns={12} className={"w-max40vw h-max40vh"}>
+            <Grid size={12} className={"d-center"}>
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLocale}>
+                <DigitalClock
+                  timeStep={10}
+                  ampm={false}
+                  timezone={localTimeZone}
+                  value={moment(OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`], "HH:mm")}
+                  sx={{
+                    width: "40vw",
+                    height: "40vh"
+                  }}
+                  onChange={(e: any) => {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      [`${firstStr}_section`]: prev[`${firstStr}_section`]?.map((section: any, idx: number) => (
+                        idx === i ? {
+                          ...section,
+                          [`${extra}`]: moment(e).format("HH:mm")
+                        } : section
+                      ))
+                    }));
+                    closePopup();
+                  }}
+                />
+              </LocalizationProvider>
+            </Grid>
+          </Grid>
         )}
       >
         {(popTrigger: any) => (

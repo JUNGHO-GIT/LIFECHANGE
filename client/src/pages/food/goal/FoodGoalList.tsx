@@ -8,7 +8,7 @@ import { axios, numeral } from "@imports/ImportUtils";
 import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
 import { Div, Img, Hr, Br, Icons } from "@imports/ImportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
-import { Paper, Card, Grid } from "@imports/ImportMuis";
+import { Paper, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodGoalList = () => {
@@ -132,358 +132,354 @@ export const FoodGoalList = () => {
   const listNode = () => {
     const listSection = () => {
       const listFragment = (item: any, i: number) => (
-        <Card className={"border-1 radius-1"}>
-          <Accordion className={"shadow-0"} expanded={isExpanded[i].expanded}>
-            <AccordionSummary className={"me-n10"} expandIcon={
-              <Icons
-                key={"ChevronDown"}
-                name={"ChevronDown"}
-                className={"w-18 h-18"}
-                onClick={() => {
-                  setIsExpanded(isExpanded.map((el: any, index: number) => (
-                    i === index ? {
-                      expanded: !el.expanded
-                    } : el
-                  )));
-                }}
-              />
-            }>
-              <Grid container spacing={1} columns={12} onClick={(e: any) => {
-                e.stopPropagation();
-                navigate(toDetail, {
-                  state: {
-                    id: item._id,
-                    dateType: item.food_goal_dateType,
-                    dateStart: item.food_goal_dateStart,
-                    dateEnd: item.food_goal_dateEnd,
-                  }
-                });
-              }}>
-                <Grid size={2} className={"d-row-center"}>
+        <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
+          <Grid size={12} className={"p-2"}>
+            <Accordion expanded={isExpanded[i].expanded}>
+              <AccordionSummary
+                className={"me-n10"}
+                expandIcon={
                   <Icons
-                    key={"Search"}
-                    name={"Search"}
+                    key={"ChevronDown"}
+                    name={"ChevronDown"}
                     className={"w-18 h-18"}
+                    onClick={(e: any) => {
+                      e.stopPropagation();
+                      setIsExpanded(isExpanded.map((el: any, index: number) => (
+                        i === index ? {
+                          expanded: !el.expanded
+                        } : el
+                      )));
+                    }}
                   />
+                }
+                onClick={() => {
+                  navigate(toDetail, {
+                    state: {
+                      id: item._id,
+                      dateType: item.food_goal_dateType,
+                      dateStart: item.food_goal_dateStart,
+                      dateEnd: item.food_goal_dateEnd,
+                    }
+                  });
+                }}
+              >
+                <Grid container spacing={2} columns={12}>
+                  <Grid size={2} className={"d-row-center"}>
+                    <Icons
+                      key={"Search"}
+                      name={"Search"}
+                      className={"w-18 h-18"}
+                    />
+                  </Grid>
+                  <Grid size={10} className={"d-row-left"}>
+                    <Div className={"fs-1-1rem fw-600 black me-5"}>
+                      {item.food_goal_dateStart?.substring(5, 10)}
+                    </Div>
+                    <Div className={"fs-0-9rem fw-500 dark ms-5"}>
+                      {translate(getDayNotFmt(item.food_goal_dateStart).format("ddd"))}
+                    </Div>
+                    <Div className={"fs-1-0rem fw-500 dark ms-10 me-10"}>
+                      ~
+                    </Div>
+                    <Div className={"fs-1-1rem fw-600 black me-5"}>
+                      {item.food_goal_dateEnd?.substring(5, 10)}
+                    </Div>
+                    <Div className={"fs-0-9rem fw-500 dark ms-5"}>
+                      {translate(getDayNotFmt(item.food_goal_dateEnd).format("ddd"))}
+                    </Div>
+                  </Grid>
                 </Grid>
-                <Grid size={10} className={"d-row-left"}>
-                  <Div className={"fs-1-1rem fw-600 black me-5"}>
-                    {item.food_goal_dateStart?.substring(5, 10)}
-                  </Div>
-                  <Div className={"fs-0-9rem fw-500 dark ms-5"}>
-                    {translate(getDayNotFmt(item.food_goal_dateStart).format("ddd"))}
-                  </Div>
-                  <Div className={"fs-1-0rem fw-500 dark ms-10 me-10"}>
-                    ~
-                  </Div>
-                  <Div className={"fs-1-1rem fw-600 black me-5"}>
-                    {item.food_goal_dateEnd?.substring(5, 10)}
-                  </Div>
-                  <Div className={"fs-0-9rem fw-500 dark ms-5"}>
-                    {translate(getDayNotFmt(item.food_goal_dateEnd).format("ddd"))}
-                  </Div>
-                </Grid>
-              </Grid>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Grid container spacing={1} columns={12}>
-                {/** row 1 **/}
-                <Grid size={2} className={"d-row-center"}>
-                  <Img
-                    key={"food2"}
-                    src={"food2"}
-                    className={"w-15 h-15"}
-                  />
-                </Grid>
-                <Grid size={3} className={"d-row-left"}>
-                  <Div className={"fs-0-9rem fw-600 dark"}>
-                    {translate("kcal")}
-                  </Div>
-                </Grid>
-                <Grid size={7}>
-                  <Grid container spacing={1} columns={12}>
-                    {/** goal **/}
-                    <Grid size={3} className={"d-row-right"}>
-                      <Div className={"fs-0-7rem fw-500 dark"}>
-                        {translate("goal")}
-                      </Div>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container spacing={2} columns={12}>
+                  {/** row 1 **/}
+                  <Grid size={2} className={"d-row-center"}>
+                    <Img
+                      key={"food2"}
+                      src={"food2"}
+                      className={"w-15 h-15"}
+                    />
+                  </Grid>
+                  <Grid size={3} className={"d-row-left"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
+                      {translate("kcal")}
+                    </Div>
+                  </Grid>
+                  <Grid size={7}>
+                    <Grid container spacing={2} columns={12}>
+                      {/** goal **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("goal")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.food_goal_kcal_color}`}>
+                          {numeral(item.food_goal_kcal).format("0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("kc")}
+                        </Div>
+                      </Grid>
+                      {/** real **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("real")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.food_total_kcal_color}`}>
+                          {numeral(item.food_total_kcal).format("0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("kc")}
+                        </Div>
+                      </Grid>
+                      {/** diff **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("diff")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.food_diff_kcal_color}`}>
+                          {numeral(item.food_diff_kcal).format("+0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("kc")}
+                        </Div>
+                      </Grid>
                     </Grid>
-                    <Grid size={7} className={"d-row-right"}>
-                      <Div className={`${item.food_goal_kcal_color}`}>
-                        {numeral(item.food_goal_kcal).format("0,0")}
-                      </Div>
+                  </Grid>
+                  <Hr px={1} />
+                  {/** row 2 **/}
+                  <Grid size={2} className={"d-row-center"}>
+                    <Img
+                      key={"food3"}
+                      src={"food3"}
+                      className={"w-15 h-15"}
+                    />
+                  </Grid>
+                  <Grid size={3} className={"d-row-left"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
+                      {translate("carb")}
+                    </Div>
+                  </Grid>
+                  <Grid size={7}>
+                    <Grid container spacing={2} columns={12}>
+                      {/** goal **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("goal")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.food_goal_carb_color}`}>
+                          {numeral(item.food_goal_carb).format("0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("g")}
+                        </Div>
+                      </Grid>
+                      {/** real **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("real")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.food_total_carb_color}`}>
+                          {numeral(item.food_total_carb).format("0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("g")}
+                        </Div>
+                      </Grid>
+                      {/** diff **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("diff")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.food_diff_carb_color}`}>
+                          {numeral(item.food_diff_carb).format("+0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("g")}
+                        </Div>
+                      </Grid>
                     </Grid>
-                    <Grid size={2} className={"d-row-right"}>
-                      <Div className={"fs-0-6rem"}>
-                        {translate("kc")}
-                      </Div>
+                  </Grid>
+                  <Hr px={1} />
+                  {/** row 3 **/}
+                  <Grid size={2} className={"d-center"}>
+                    <Img
+                      key={"food4"}
+                      src={"food4"}
+                      className={"w-15 h-15"}
+                    />
+                  </Grid>
+                  <Grid size={3} className={"d-row-left"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
+                      {translate("protein")}
+                    </Div>
+                  </Grid>
+                  <Grid size={7}>
+                    <Grid container spacing={2} columns={12}>
+                      {/** goal **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("goal")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.food_goal_protein_color}`}>
+                          {numeral(item.food_goal_protein).format("0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("g")}
+                        </Div>
+                      </Grid>
+                      {/** real **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("real")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.food_total_protein_color}`}>
+                          {numeral(item.food_total_protein).format("0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("g")}
+                        </Div>
+                      </Grid>
+                      {/** diff **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("diff")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.food_diff_protein_color}`}>
+                          {numeral(item.food_diff_protein).format("+0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("g")}
+                        </Div>
+                      </Grid>
                     </Grid>
-                    <Br px={1} />
-                    {/** real **/}
-                    <Grid size={3} className={"d-row-right"}>
-                      <Div className={"fs-0-7rem fw-500 dark"}>
-                        {translate("real")}
-                      </Div>
-                    </Grid>
-                    <Grid size={7} className={"d-row-right"}>
-                      <Div className={`${item.food_total_kcal_color}`}>
-                        {numeral(item.food_total_kcal).format("0,0")}
-                      </Div>
-                    </Grid>
-                    <Grid size={2} className={"d-row-right"}>
-                      <Div className={"fs-0-6rem"}>
-                        {translate("kc")}
-                      </Div>
-                    </Grid>
-                    <Br px={1} />
-                    {/** diff **/}
-                    <Grid size={3} className={"d-row-right"}>
-                      <Div className={"fs-0-7rem fw-500 dark"}>
-                        {translate("diff")}
-                      </Div>
-                    </Grid>
-                    <Grid size={7} className={"d-row-right"}>
-                      <Div className={`${item.food_diff_kcal_color}`}>
-                        {numeral(item.food_diff_kcal).format("+0,0")}
-                      </Div>
-                    </Grid>
-                    <Grid size={2} className={"d-row-right"}>
-                      <Div className={"fs-0-6rem"}>
-                        {translate("kc")}
-                      </Div>
+                  </Grid>
+                  <Hr px={1} />
+                  {/** row 4 **/}
+                  <Grid size={2} className={"d-center"}>
+                    <Img
+                      key={"food5"}
+                      src={"food5"}
+                      className={"w-15 h-15"}
+                    />
+                  </Grid>
+                  <Grid size={3} className={"d-row-left"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
+                      {translate("fat")}
+                    </Div>
+                  </Grid>
+                  <Grid size={7}>
+                    <Grid container spacing={2} columns={12}>
+                      {/** goal **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("goal")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.food_goal_fat_color}`}>
+                          {numeral(item.food_goal_fat).format("0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("g")}
+                        </Div>
+                      </Grid>
+                      {/** real **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("real")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.food_total_fat_color}`}>
+                          {numeral(item.food_total_fat).format("0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("g")}
+                        </Div>
+                      </Grid>
+                      {/** diff **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("diff")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.food_diff_fat_color}`}>
+                          {numeral(item.food_diff_fat).format("+0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("g")}
+                        </Div>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
-                <Hr px={10} />
-                {/** row 2 **/}
-                <Grid size={2} className={"d-row-center"}>
-                  <Img
-                    key={"food3"}
-                    src={"food3"}
-                    className={"w-15 h-15"}
-                  />
-                </Grid>
-                <Grid size={3} className={"d-row-left"}>
-                  <Div className={"fs-0-9rem fw-600 dark"}>
-                    {translate("carb")}
-                  </Div>
-                </Grid>
-                <Grid size={7}>
-                  <Grid container spacing={1} columns={12}>
-                    {/** goal **/}
-                    <Grid size={3} className={"d-row-right"}>
-                      <Div className={"fs-0-7rem fw-500 dark"}>
-                        {translate("goal")}
-                      </Div>
-                    </Grid>
-                    <Grid size={7} className={"d-row-right"}>
-                      <Div className={`${item.food_goal_carb_color}`}>
-                        {numeral(item.food_goal_carb).format("0,0")}
-                      </Div>
-                    </Grid>
-                    <Grid size={2} className={"d-row-right"}>
-                      <Div className={"fs-0-6rem"}>
-                        {translate("g")}
-                      </Div>
-                    </Grid>
-                    <Br px={1} />
-                    {/** real **/}
-                    <Grid size={3} className={"d-row-right"}>
-                      <Div className={"fs-0-7rem fw-500 dark"}>
-                        {translate("real")}
-                      </Div>
-                    </Grid>
-                    <Grid size={7} className={"d-row-right"}>
-                      <Div className={`${item.food_total_carb_color}`}>
-                        {numeral(item.food_total_carb).format("0,0")}
-                      </Div>
-                    </Grid>
-                    <Grid size={2} className={"d-row-right"}>
-                      <Div className={"fs-0-6rem"}>
-                        {translate("g")}
-                      </Div>
-                    </Grid>
-                    <Br px={1} />
-                    {/** diff **/}
-                    <Grid size={3} className={"d-row-right"}>
-                      <Div className={"fs-0-7rem fw-500 dark"}>
-                        {translate("diff")}
-                      </Div>
-                    </Grid>
-                    <Grid size={7} className={"d-row-right"}>
-                      <Div className={`${item.food_diff_carb_color}`}>
-                        {numeral(item.food_diff_carb).format("+0,0")}
-                      </Div>
-                    </Grid>
-                    <Grid size={2} className={"d-row-right"}>
-                      <Div className={"fs-0-6rem"}>
-                        {translate("g")}
-                      </Div>
-                    </Grid>
-                  </Grid>
-                </Grid>
-                <Hr px={10} />
-                {/** row 3 **/}
-                <Grid size={2} className={"d-center"}>
-                  <Img
-                    key={"food4"}
-                    src={"food4"}
-                    className={"w-15 h-15"}
-                  />
-                </Grid>
-                <Grid size={3} className={"d-row-left"}>
-                  <Div className={"fs-0-9rem fw-600 dark"}>
-                    {translate("protein")}
-                  </Div>
-                </Grid>
-                <Grid size={7}>
-                  <Grid container spacing={1} columns={12}>
-                    {/** goal **/}
-                    <Grid size={3} className={"d-row-right"}>
-                      <Div className={"fs-0-7rem fw-500 dark"}>
-                        {translate("goal")}
-                      </Div>
-                    </Grid>
-                    <Grid size={7} className={"d-row-right"}>
-                      <Div className={`${item.food_goal_protein_color}`}>
-                        {numeral(item.food_goal_protein).format("0,0")}
-                      </Div>
-                    </Grid>
-                    <Grid size={2} className={"d-row-right"}>
-                      <Div className={"fs-0-6rem"}>
-                        {translate("g")}
-                      </Div>
-                    </Grid>
-                    <Br px={1} />
-                    {/** real **/}
-                    <Grid size={3} className={"d-row-right"}>
-                      <Div className={"fs-0-7rem fw-500 dark"}>
-                        {translate("real")}
-                      </Div>
-                    </Grid>
-                    <Grid size={7} className={"d-row-right"}>
-                      <Div className={`${item.food_total_protein_color}`}>
-                        {numeral(item.food_total_protein).format("0,0")}
-                      </Div>
-                    </Grid>
-                    <Grid size={2} className={"d-row-right"}>
-                      <Div className={"fs-0-6rem"}>
-                        {translate("g")}
-                      </Div>
-                    </Grid>
-                    <Br px={1} />
-                    {/** diff **/}
-                    <Grid size={3} className={"d-row-right"}>
-                      <Div className={"fs-0-7rem fw-500 dark"}>
-                        {translate("diff")}
-                      </Div>
-                    </Grid>
-                    <Grid size={7} className={"d-row-right"}>
-                      <Div className={`${item.food_diff_protein_color}`}>
-                        {numeral(item.food_diff_protein).format("+0,0")}
-                      </Div>
-                    </Grid>
-                    <Grid size={2} className={"d-row-right"}>
-                      <Div className={"fs-0-6rem"}>
-                        {translate("g")}
-                      </Div>
-                    </Grid>
-                  </Grid>
-                </Grid>
-                <Hr px={10} />
-                {/** row 4 **/}
-                <Grid size={2} className={"d-center"}>
-                  <Img
-                    key={"food5"}
-                    src={"food5"}
-                    className={"w-15 h-15"}
-                  />
-                </Grid>
-                <Grid size={3} className={"d-row-left"}>
-                  <Div className={"fs-0-9rem fw-600 dark"}>
-                    {translate("fat")}
-                  </Div>
-                </Grid>
-                <Grid size={7}>
-                  <Grid container spacing={1} columns={12}>
-                    {/** goal **/}
-                    <Grid size={3} className={"d-row-right"}>
-                      <Div className={"fs-0-7rem fw-500 dark"}>
-                        {translate("goal")}
-                      </Div>
-                    </Grid>
-                    <Grid size={7} className={"d-row-right"}>
-                      <Div className={`${item.food_goal_fat_color}`}>
-                        {numeral(item.food_goal_fat).format("0,0")}
-                      </Div>
-                    </Grid>
-                    <Grid size={2} className={"d-row-right"}>
-                      <Div className={"fs-0-6rem"}>
-                        {translate("g")}
-                      </Div>
-                    </Grid>
-                    <Br px={1} />
-                    {/** real **/}
-                    <Grid size={3} className={"d-row-right"}>
-                      <Div className={"fs-0-7rem fw-500 dark"}>
-                        {translate("real")}
-                      </Div>
-                    </Grid>
-                    <Grid size={7} className={"d-row-right"}>
-                      <Div className={`${item.food_total_fat_color}`}>
-                        {numeral(item.food_total_fat).format("0,0")}
-                      </Div>
-                    </Grid>
-                    <Grid size={2} className={"d-row-right"}>
-                      <Div className={"fs-0-6rem"}>
-                        {translate("g")}
-                      </Div>
-                    </Grid>
-                    <Br px={1} />
-                    {/** diff **/}
-                    <Grid size={3} className={"d-row-right"}>
-                      <Div className={"fs-0-7rem fw-500 dark"}>
-                        {translate("diff")}
-                      </Div>
-                    </Grid>
-                    <Grid size={7} className={"d-row-right"}>
-                      <Div className={`${item.food_diff_fat_color}`}>
-                        {numeral(item.food_diff_fat).format("+0,0")}
-                      </Div>
-                    </Grid>
-                    <Grid size={2} className={"d-row-right"}>
-                      <Div className={"fs-0-6rem"}>
-                        {translate("g")}
-                      </Div>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </AccordionDetails>
-          </Accordion>
-        </Card>
+              </AccordionDetails>
+            </Accordion>
+          </Grid>
+        </Grid>
       );
       return (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            {OBJECT?.map((item: any, i: number) => (
-              <Grid size={12} key={`list-${i}`}>
-                {COUNT.totalCnt === 0 ? (
-                  <Empty DATE={DATE} extra={"food"} />
-                ) : (
-                  listFragment(item, i)
-                )}
-              </Grid>
-            ))}
-          </Grid>
-        </Card>
+        <Grid container spacing={0} columns={12}>
+          {OBJECT?.map((item: any, i: number) => (
+            <Grid size={12} key={`list-${i}`}>
+              {COUNT.totalCnt === 0 ? (
+                <Empty DATE={DATE} extra={"food"} />
+              ) : (
+                listFragment(item, i)
+              )}
+            </Grid>
+          ))}
+        </Grid>
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={0} columns={12}>
-          <Grid size={12} className={"d-column-center"}>
+          <Grid size={12} className={"d-col-center"}>
             {LOADING ? <Loading /> : listSection()}
           </Grid>
         </Grid>

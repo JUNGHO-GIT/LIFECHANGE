@@ -1,3 +1,5 @@
+// Img.tsx
+
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue } from "@imports/ImportHooks";
 
@@ -12,71 +14,64 @@ declare type ImgProps = React.HTMLAttributes<HTMLImageElement> & {
 };
 
 // -------------------------------------------------------------------------------------------------
-export const Img = ({ group, src, hover, shadow, radius, max, ...props }: ImgProps) => {
+export const Img = (
+  { group, src, hover, shadow, radius, max, ...props }: ImgProps
+) => {
+
   // 1. common -------------------------------------------------------------------------------------
   const { GCLOUD_URL } = useCommonValue();
-  let fileName: string = "";
-  let srcResult: string = "";
-  const defaultImage: string = "https://via.placeholder.com/150";
-  let imageClass: string = "";
-  let imageStyle: any = {};
-
-  if (src && typeof src === "string") {
-    fileName = src.split("/").pop()?.split(".")[0] || "empty";
-    srcResult = (
-      group === "new"
-      ? src
-      : !group
-      ? `${GCLOUD_URL}/main/${src}.webp`
-      : `${GCLOUD_URL}/${group}/${src}.webp`
-    );
-  }
-
-  if (!props?.className) {
-    imageClass = `h-auto object-contain`;
-  }
-  else {
-    imageClass = `${props?.className} h-auto object-contain`;
-  }
-  if (hover) {
-    imageClass += " hover";
-  }
-  if (shadow) {
-    imageClass += " shadow-3";
-  }
-  if (radius) {
-    imageClass += " radius-1";
-  }
-  if (max) {
-    imageClass += ` w-max${max || ""} h-max${max || ""}`;
-  }
 
   // 2-1. useState ---------------------------------------------------------------------------------
-  const [imgSrc, setImgSrc] = useState(srcResult);
-  const [hasError, setHasError] = useState(false);
+  const [fileName, setFileName] = useState<string>("");
+  const [imgSrc, setImgSrc] = useState<string>("");
+  const [imageClass, setImageClass] = useState<string>("");
 
-  // 2-3. useEffect --------------------------------------------------------------------------------
+  // 2-2. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    setImgSrc(srcResult);
-    setHasError(false);
-  }, [srcResult]);
+    if (src && typeof src === "string") {
+      setFileName(src.split("/").pop()?.split(".")[0] || "empty");
+      setImgSrc(group === "new" ? src : `${GCLOUD_URL}/${group || "main"}/${src}.webp`);
+    }
+    else {
+      setFileName("empty");
+      setImgSrc(`${GCLOUD_URL}/main/empty.webp`);
+    }
 
-  // 3. handle -------------------------------------------------------------------------------------
-  const handleError = () => {
-    setHasError(true);
-    setImgSrc(defaultImage);
-  };
+    let newClass = "w-100p h-100p object-contain";
+
+    if (props?.className) {
+      newClass += ` ${props.className}`;
+    }
+    if (hover) {
+      newClass += " hover";
+    }
+    if (shadow) {
+      newClass += " shadow-3";
+    }
+    if (radius) {
+      newClass += " radius-1";
+    }
+    if (max) {
+      newClass += ` w-max${max} h-max${(max * 2 / 3).toFixed(0)}`;
+    }
+
+    setImageClass(newClass);
+
+  }, [group, src, props.className, hover, shadow, radius, max]);
 
   // 10. return ------------------------------------------------------------------------------------
   return (
     <img
       {...props}
-      src={hasError ? defaultImage : imgSrc}
       alt={fileName}
       key={fileName}
-      onError={handleError}
-      style={imageStyle}
+      src={imgSrc}
+      loading={"lazy"}
       className={imageClass}
+      onError={(e) => {
+        e.currentTarget.src = `${GCLOUD_URL}/main/empty.webp`;
+        e.currentTarget.alt = "empty";
+      }}
     />
   );
 };

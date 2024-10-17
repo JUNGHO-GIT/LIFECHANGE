@@ -7,15 +7,15 @@ import { useValidateExercise } from "@imports/ImportValidates";
 import { Exercise } from "@imports/ImportSchemas";
 import { axios, numeral, sync } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
-import { PickerDay, PickerTime, Count, Delete, Input, Select}from "@imports/ImportContainers";
-import { Img, Bg, Br } from "@imports/ImportComponents";
-import { Card, Paper, MenuItem, Grid } from "@imports/ImportMuis";
+import { PickerDay, PickerTime, Count, Delete, Input, Select }from "@imports/ImportContainers";
+import { Img, Bg } from "@imports/ImportComponents";
+import { Paper, MenuItem, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, PATH, sessionId, toList, exerciseArray, bgColors} = useCommonValue();
+  const { URL_OBJECT, PATH, sessionId, toList, exerciseArray, bgColors } = useCommonValue();
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt,getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -57,6 +57,11 @@ export const ExerciseDetail = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
+
+  useEffect(() => {
+    console.log("===================================");
+    console.log("OBJECT", JSON.stringify(OBJECT, null, 2));
+  }, []);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -202,7 +207,7 @@ export const ExerciseDetail = () => {
       exercise_total_cardio: `${Math.floor(totalTime / 60).toString().padStart(2, '0')}:${(totalTime % 60).toString().padStart(2, '0')}`
     }));
 
-  }, [JSON.stringify(OBJECT?.exercise_section)]);
+  }, [OBJECT?.exercise_section]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -232,7 +237,7 @@ export const ExerciseDetail = () => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "real")) {
       setLOADING(false);
-      return false;
+      return;
     }
     axios({
       method: type === "create" ? "post" : "put",
@@ -346,354 +351,342 @@ export const ExerciseDetail = () => {
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Card className={"border-1 radius-1 p-20"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12}>
-            <PickerDay
-              DATE={DATE}
-              setDATE={setDATE}
-              EXIST={EXIST}
-            />
-          </Grid>
-          <Br px={1} />
-          <Grid size={12}>
-            <Count
-              COUNT={COUNT}
-              setCOUNT={setCOUNT}
-              LOCKED={LOCKED}
-              setLOCKED={setLOCKED}
-              limit={10}
-            />
-          </Grid>
+      <Grid container spacing={2} columns={12} className={"border-1 radius-1 p-20"}>
+        <Grid size={12}>
+          <PickerDay
+            DATE={DATE}
+            setDATE={setDATE}
+            EXIST={EXIST}
+          />
         </Grid>
-      </Card>
+        <Grid size={12}>
+          <Count
+            COUNT={COUNT}
+            setCOUNT={setCOUNT}
+            LOCKED={LOCKED}
+            setLOCKED={setLOCKED}
+            limit={10}
+          />
+        </Grid>
+      </Grid>
     );
     // 7-2. total
     const totalSection = () => (
-      <Card className={"border-1 radius-1 p-20"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={6}>
-            <Input
-              label={translate("totalVolume")}
-              value={numeral(OBJECT?.exercise_total_volume).format("0,0")}
-              readOnly={true}
-              startadornment={
-                <Img
-                	key={"exercise3_1"}
-                	src={"exercise3_1"}
-                	className={"w-16 h-16"}
-                />
+      <Grid container spacing={2} columns={12} className={"border-1 radius-1 p-20"}>
+        <Grid size={12}>
+          <Input
+            label={translate("totalVolume")}
+            value={numeral(OBJECT?.exercise_total_volume).format("0,0")}
+            locked={LOCKED}
+            className={"pointer"}
+            startadornment={
+              <Img
+                key={"exercise3_1"}
+                src={"exercise3_1"}
+                className={"w-16 h-16"}
+              />
+            }
+            endadornment={
+              translate("vol")
+            }
+          />
+        </Grid>
+        <Grid size={12}>
+          <Input
+            label={translate("totalCardio")}
+            value={OBJECT?.exercise_total_cardio}
+            locked={LOCKED}
+            className={"pointer"}
+            startadornment={
+              <Img
+                key={"exercise4"}
+                src={"exercise4"}
+                className={"w-16 h-16"}
+              />
+            }
+            endadornment={
+              translate("hm")
+            }
+          />
+        </Grid>
+        <Grid size={12}>
+          <Input
+            label={translate("weight")}
+            value={OBJECT?.exercise_total_weight}
+            locked={LOCKED}
+            startadornment={
+              <Img
+                key={"exercise5"}
+                src={"exercise5"}
+                className={"w-16 h-16"}
+              />
+            }
+            endadornment={
+              translate("k")
+            }
+            onChange={(e: any) => {
+              const value = e.target.value;
+              const newValue = value.startsWith("0") ? value.slice(1) : value;
+              if (value === "") {
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  exercise_total_weight: "0"
+                }));
               }
-              endadornment={
-                translate("vol")
+              else if (newValue.match(/^\d*\.?\d{0,2}$/) && Number(newValue) <= 999) {
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  exercise_total_weight: String(newValue)
+                }));
               }
+            }}
+          />
+        </Grid>
+      </Grid>
+    );
+    // 7-3. detail
+    const detailSection = () => {
+      const detailFragment = (item: any, i: number) => (
+        <Grid container spacing={2} columns={12}
+        className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
+          <Grid size={6} className={"d-row-left"}>
+            <Bg
+              badgeContent={i + 1}
+              bgcolor={bgColors?.[item?.exercise_part_idx]}
+            />
+          </Grid>
+          <Grid size={6} className={"d-row-right"}>
+            <Delete
+              index={i}
+              handleDelete={handleDelete}
+              LOCKED={LOCKED}
             />
           </Grid>
           <Grid size={6}>
-            <Input
-              label={translate("totalCardio")}
-              value={OBJECT?.exercise_total_cardio}
-              readOnly={true}
-              startadornment={
-                <Img
-                	key={"exercise4"}
-                	src={"exercise4"}
-                	className={"w-16 h-16"}
-                />
-              }
-              endadornment={
-                translate("hm")
-              }
-            />
+            <Select
+              label={translate("part")}
+              locked={LOCKED}
+              inputRef={REFS?.[i]?.exercise_part_idx}
+              error={ERRORS?.[i]?.exercise_part_idx}
+              value={item?.exercise_part_idx ?? 0}
+              onChange={(e: any) => {
+                const newIndex = Number(e.target.value);
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      exercise_part_idx: newIndex,
+                      exercise_part_val: exerciseArray[newIndex]?.exercise_part,
+                      exercise_title_idx: 0,
+                      exercise_title_val: exerciseArray[newIndex]?.exercise_title[0],
+                    } : section
+                  ))
+                }));
+              }}
+            >
+              {exerciseArray?.map((part: any, idx: number) => (
+                <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
+                  {translate(part?.exercise_part)}
+                </MenuItem>
+              ))}
+            </Select>
           </Grid>
-          <Br px={1} />
-          <Grid size={12}>
+          <Grid size={6}>
+            <Select
+              label={translate("title")}
+              locked={LOCKED}
+              inputRef={REFS?.[i]?.exercise_title_idx}
+              error={ERRORS?.[i]?.exercise_title_idx}
+              value={item?.exercise_title_idx ?? 0}
+              onChange={(e: any) => {
+                const newTitleIdx = Number(e.target.value);
+                const newTitleVal = exerciseArray[item?.exercise_part_idx]?.exercise_title[newTitleIdx];
+                if (newTitleIdx >= 0 && newTitleVal) {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
+                      idx === i ? {
+                        ...section,
+                        exercise_title_idx: newTitleIdx,
+                        exercise_title_val: newTitleVal,
+                      } : section
+                    ))
+                  }));
+                }
+              }}
+            >
+              {exerciseArray[item?.exercise_part_idx]?.exercise_title?.map((title: any, idx: number) => (
+                <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
+                  {translate(title)}
+                </MenuItem>
+              ))}
+            </Select>
+          </Grid>
+          <Grid size={6}>
             <Input
-              label={translate("weight")}
-              value={OBJECT?.exercise_total_weight}
+              label={translate("set")}
+              value={numeral(item?.exercise_set).format("0,0")}
+              inputRef={REFS?.[i]?.exercise_set}
+              error={ERRORS?.[i]?.exercise_set}
               locked={LOCKED}
               startadornment={
                 <Img
-                	key={"exercise5"}
-                	src={"exercise5"}
-                	className={"w-16 h-16"}
+                  key={"exercise3_1"}
+                  src={"exercise3_1"}
+                  className={"w-16 h-16"}
+                />
+              }
+              endadornment={
+                translate("s")
+              }
+              onChange={(e: any) => {
+                const value = e.target.value.replace(/,/g, '');
+                const newValue = value === "" ? 0 : Number(value);
+                if (value === "") {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
+                      idx === i ? {
+                        ...section,
+                        exercise_set: "0"
+                      } : section
+                    ))
+                  }));
+                }
+                else if (!isNaN(newValue) && newValue <= 999) {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
+                      idx === i ? {
+                        ...section,
+                        exercise_set: String(newValue)
+                      } : section
+                    ))
+                  }));
+                }
+              }}
+            />
+          </Grid>
+          <Grid size={6}>
+            <Input
+              label={translate("rep")}
+              value={numeral(item?.exercise_rep).format("0,0")}
+              inputRef={REFS?.[i]?.exercise_rep}
+              error={ERRORS?.[i]?.exercise_rep}
+              locked={LOCKED}
+              startadornment={
+                <Img
+                  key={"exercise3_2"}
+                  src={"exercise3_2"}
+                  className={"w-16 h-16"}
+                />
+              }
+              endadornment={
+                translate("r")
+              }
+              onChange={(e: any) => {
+                const value = e.target.value.replace(/,/g, '');
+                const newValue = value === "" ? 0 : Number(value);
+                if (value === "") {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
+                      idx === i ? {
+                        ...section,
+                        exercise_rep: "0"
+                      } : section
+                    ))
+                  }));
+                }
+                else if (!isNaN(newValue) && newValue <= 999) {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
+                      idx === i ? {
+                        ...section,
+                        exercise_rep: String(newValue)
+                      } : section
+                    ))
+                  }));
+                }
+              }}
+            />
+          </Grid>
+          <Grid size={6}>
+            <Input
+              label={translate("kg")}
+              value={numeral(item?.exercise_kg).format("0,0")}
+              inputRef={REFS?.[i]?.exercise_kg}
+              error={ERRORS?.[i]?.exercise_kg}
+              locked={LOCKED}
+              startadornment={
+                <Img
+                  key={"exercise3_3"}
+                  src={"exercise3_3"}
+                  className={"w-16 h-16"}
                 />
               }
               endadornment={
                 translate("k")
               }
               onChange={(e: any) => {
-                const value = e.target.value;
-                const newValue = value.startsWith("0") ? value.slice(1) : value;
+                const value = e.target.value.replace(/,/g, '');
+                const newValue = value === "" ? 0 : Number(value);
                 if (value === "") {
                   setOBJECT((prev: any) => ({
                     ...prev,
-                    exercise_total_weight: "0"
+                    exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
+                      idx === i ? {
+                        ...section,
+                        exercise_kg: "0"
+                      } : section
+                    ))
                   }));
                 }
-                else if (newValue.match(/^\d*\.?\d{0,2}$/) && Number(newValue) <= 999) {
+                else if (!isNaN(newValue) && newValue <= 999) {
                   setOBJECT((prev: any) => ({
                     ...prev,
-                    exercise_total_weight: String(newValue)
+                    exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
+                      idx === i ? {
+                        ...section,
+                        exercise_kg: String(newValue)
+                      } : section
+                    ))
                   }));
                 }
               }}
             />
           </Grid>
-        </Grid>
-      </Card>
-    );
-    // 7-3. detail
-    const detailSection = () => {
-      const detailFragment = (item: any, i: number) => (
-        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={6} className={"d-row-left"}>
-              <Bg
-                badgeContent={i + 1}
-                bgcolor={bgColors?.[item?.exercise_part_idx]}
-              />
-            </Grid>
-            <Grid size={6} className={"d-row-right"}>
-              <Delete
-                index={i}
-                handleDelete={handleDelete}
-                LOCKED={LOCKED}
-              />
-            </Grid>
-            <Br px={1} />
-            <Grid size={6}>
-              <Select
-                label={translate("part")}
-                locked={LOCKED}
-                inputRef={REFS?.[i]?.exercise_part_idx}
-                error={ERRORS?.[i]?.exercise_part_idx}
-                value={item?.exercise_part_idx ?? 0}
-                onChange={(e: any) => {
-                  const newIndex = Number(e.target.value);
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...item,
-                        exercise_part_idx: newIndex,
-                        exercise_part_val: exerciseArray[newIndex]?.exercise_part,
-                        exercise_title_idx: 0,
-                        exercise_title_val: exerciseArray[newIndex]?.exercise_title[0],
-                      } : section
-                    ))
-                  }));
-                }}
-              >
-                {exerciseArray?.map((part: any, idx: number) => (
-                  <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
-                    {translate(part?.exercise_part)}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Grid>
-            <Grid size={6}>
-              <Select
-                label={translate("title")}
-                locked={LOCKED}
-                inputRef={REFS?.[i]?.exercise_title_idx}
-                error={ERRORS?.[i]?.exercise_title_idx}
-                value={item?.exercise_title_idx ?? 0}
-                onChange={(e: any) => {
-                  const newTitleIdx = Number(e.target.value);
-                  const newTitleVal = exerciseArray[item?.exercise_part_idx]?.exercise_title[newTitleIdx];
-                  if (newTitleIdx >= 0 && newTitleVal) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
-                        idx === i ? {
-                          ...item,
-                          exercise_title_idx: newTitleIdx,
-                          exercise_title_val: newTitleVal,
-                        } : section
-                      ))
-                    }));
-                  }
-                }}
-              >
-                {exerciseArray[item?.exercise_part_idx]?.exercise_title?.map((title: any, idx: number) => (
-                  <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
-                    {translate(title)}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Grid>
-            <Br px={1} />
-            <Grid size={6}>
-              <Input
-                label={translate("set")}
-                value={numeral(item?.exercise_set).format("0,0")}
-                inputRef={REFS?.[i]?.exercise_set}
-                error={ERRORS?.[i]?.exercise_set}
-                locked={LOCKED}
-                startadornment={
-                  <Img
-                  	key={"exercise3_1"}
-                  	src={"exercise3_1"}
-                  	className={"w-16 h-16"}
-                  />
-                }
-                endadornment={
-                  translate("s")
-                }
-                onChange={(e: any) => {
-                  const value = e.target.value.replace(/,/g, '');
-                  const newValue = value === "" ? 0 : Number(value);
-                  if (value === "") {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
-                        idx === i ? {
-                          ...item,
-                          exercise_set: "0"
-                        } : section
-                      ))
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 999) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
-                        idx === i ? {
-                          ...item,
-                          exercise_set: String(newValue)
-                        } : section
-                      ))
-                    }));
-                  }
-                }}
-              />
-            </Grid>
-            <Grid size={6}>
-              <Input
-                label={translate("rep")}
-                value={numeral(item?.exercise_rep).format("0,0")}
-                inputRef={REFS?.[i]?.exercise_rep}
-                error={ERRORS?.[i]?.exercise_rep}
-                locked={LOCKED}
-                startadornment={
-                  <Img
-                  	key={"exercise3_2"}
-                  	src={"exercise3_2"}
-                  	className={"w-16 h-16"}
-                  />
-                }
-                endadornment={
-                  translate("r")
-                }
-                onChange={(e: any) => {
-                  const value = e.target.value.replace(/,/g, '');
-                  const newValue = value === "" ? 0 : Number(value);
-                  if (value === "") {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
-                        idx === i ? {
-                          ...item,
-                          exercise_rep: "0"
-                        } : section
-                      ))
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 999) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
-                        idx === i ? {
-                          ...item,
-                          exercise_rep: String(newValue)
-                        } : section
-                      ))
-                    }));
-                  }
-                }}
-              />
-            </Grid>
-            <Br px={1} />
-            <Grid size={6}>
-              <Input
-                label={translate("kg")}
-                value={numeral(item?.exercise_kg).format("0,0")}
-                inputRef={REFS?.[i]?.exercise_kg}
-                error={ERRORS?.[i]?.exercise_kg}
-                locked={LOCKED}
-                startadornment={
-                  <Img
-                  	key={"exercise3_3"}
-                  	src={"exercise3_3"}
-                  	className={"w-16 h-16"}
-                  />
-                }
-                endadornment={
-                  translate("k")
-                }
-                onChange={(e: any) => {
-                  const value = e.target.value.replace(/,/g, '');
-                  const newValue = value === "" ? 0 : Number(value);
-                  if (value === "") {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
-                        idx === i ? {
-                          ...item,
-                          exercise_kg: "0"
-                        } : section
-                      ))
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 999) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
-                        idx === i ? {
-                          ...item,
-                          exercise_kg: String(newValue)
-                        } : section
-                      ))
-                    }));
-                  }
-                }}
-              />
-            </Grid>
-            <Grid size={6}>
-              <PickerTime
-                OBJECT={OBJECT}
-                setOBJECT={setOBJECT}
-                REFS={REFS}
-                ERRORS={ERRORS}
-                DATE={DATE}
-                LOCKED={LOCKED}
-                extra={"exercise_cardio"}
-                i={i}
-              />
-            </Grid>
+          <Grid size={6}>
+            <PickerTime
+              OBJECT={OBJECT}
+              setOBJECT={setOBJECT}
+              REFS={REFS}
+              ERRORS={ERRORS}
+              DATE={DATE}
+              LOCKED={LOCKED}
+              extra={"exercise_cardio"}
+              i={i}
+            />
           </Grid>
-        </Card>
+        </Grid>
       );
       return (
-        <Card className={"p-0"}>
-          <Grid container spacing={0} columns={12}>
-            {OBJECT?.exercise_section?.map((item: any, i: number) => (
-              <Grid size={12} key={`detail-${i}`}>
-                {COUNT?.newSectionCnt > 0 && (
-                  detailFragment(item, i)
-                )}
-              </Grid>
-            ))}
-          </Grid>
-        </Card>
+        <Grid container spacing={0} columns={12}>
+          {OBJECT?.exercise_section?.map((item: any, i: number) => (
+            <Grid size={12} key={`detail-${i}`}>
+              {COUNT?.newSectionCnt > 0 && detailFragment(item, i)}
+            </Grid>
+          ))}
+        </Grid>
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={0} columns={12}>
-          <Grid size={12} className={"d-column-center"}>
+          <Grid size={12} className={"d-col-center"}>
             {dateCountSection()}
             {totalSection()}
             {LOADING ? <Loading /> : detailSection()}

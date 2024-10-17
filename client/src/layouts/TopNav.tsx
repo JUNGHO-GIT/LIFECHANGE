@@ -6,7 +6,7 @@ import { useLanguageStore } from "@imports/ImportStores";
 import { numeral } from "@imports/ImportUtils";
 import { PopUp, Input } from "@imports/ImportContainers";
 import { Div, Img, Hr, Br } from "@imports/ImportComponents";
-import { Tabs, Tab, Paper, Grid, Card, Checkbox } from "@imports/ImportMuis";
+import { Tabs, Tab, Paper, Grid, Checkbox } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const TopNav = () => {
@@ -248,115 +248,111 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max60vw h-max70vh border-1 radius-1 p-20"}>
-            <Grid container spacing={1} columns={12}>
-              <Grid size={12} className={"d-column-center"}>
-                <Div className={"fs-1-2rem fw-600"}>
-                  {translate("monthScore")}
-                </Div>
-                <Br px={10} />
-                <Div className={"fs-0-8rem fw-500 dark"}>
-                  {`(${getMonthStartFmt()} ~ ${getMonthEndFmt()})`}
-                </Div>
-              </Grid>
-              <Hr px={10} />
-              <Grid size={4} className={"d-row-right"}>
-                <Img
-                  key={smileImage.total}
-                  src={smileImage.total}
-                  className={"w-max30 h-max30"}
-                />
-              </Grid>
-              <Grid size={4} className={"d-row-center"}>
-                <Div className={"fs-1-2rem fw-600"}>
-                  {translate("total")}
-                </Div>
-              </Grid>
-              <Grid size={4} className={"d-row-left"}>
-                <Div className={"fs-1-0rem fw-600"}>
-                  {smileScore.total}
-                </Div>
-              </Grid>
-              <Hr px={10} />
-              <Grid size={4} className={"d-row-right"}>
-                <Img
-                  key={smileImage.exercise}
-                  src={smileImage.exercise}
-                  className={"w-max25 h-max25"}
-                />
-              </Grid>
-              <Grid size={4} className={"d-row-center"}>
-                <Div className={"fs-1-1rem"}>
-                  {translate("exercise")}
-                </Div>
-              </Grid>
-              <Grid size={4} className={"d-row-left"}>
-                <Div className={"fs-0-8rem"}>
-                  {smileScore.exercise}
-                </Div>
-              </Grid>
-              <Br px={1} />
-              <Grid size={4} className={"d-row-right"}>
-                <Img
-                  key={smileImage.food}
-                  src={smileImage.food}
-                  className={"w-max25 h-max25"}
-                />
-              </Grid>
-              <Grid size={4} className={"d-row-center"}>
-                <Div className={"fs-1-1rem"}>
-                  {translate("food")}
-                </Div>
-              </Grid>
-              <Grid size={4} className={"d-row-left"}>
-                <Div className={"fs-0-8rem"}>
-                  {smileScore.food}
-                </Div>
-              </Grid>
-              <Br px={1} />
-              <Grid size={4} className={"d-row-right"}>
-                <Img
-                  key={smileImage.money}
-                  src={smileImage.money}
-                  className={"w-max25 h-max25"}
-                />
-              </Grid>
-              <Grid size={4} className={"d-row-center"}>
-                <Div className={"fs-1-1rem"}>
-                  {translate("money")}
-                </Div>
-              </Grid>
-              <Grid size={4} className={"d-row-left"}>
-                <Div className={"fs-0-8rem"}>
-                  {smileScore.money}
-                </Div>
-              </Grid>
-              <Br px={1} />
-              <Grid size={4} className={"d-row-right"}>
-                <Img
-                  key={smileImage.sleep}
-                  src={smileImage.sleep}
-                  className={"w-max25 h-max25"}
-                />
-              </Grid>
-              <Grid size={4} className={"d-row-center"}>
-                <Div className={"fs-1-1rem"}>
-                  {translate("sleep")}
-                </Div>
-              </Grid>
-              <Grid size={4} className={"d-row-left"}>
-                <Div className={"fs-0-8rem"}>
-                  {smileScore.sleep}
-                </Div>
-              </Grid>
-              <Hr px={10} />
-              <Grid size={12} className={"d-center"}>
-                <Div className={"fs-0-8rem"}>
-                  {translate("score")}
-                </Div>
-              </Grid>
+          <Grid container spacing={2} columns={12}
+          className={"w-max60vw h-max70vh border-1 radius-1 p-20"}>
+            <Grid size={12} className={"d-col-center"}>
+              <Div className={"fs-1-2rem fw-600"}>
+                {translate("monthScore")}
+              </Div>
+              <Br px={10} />
+              <Div className={"fs-0-8rem fw-500 dark"}>
+                {`(${getMonthStartFmt()} ~ ${getMonthEndFmt()})`}
+              </Div>
             </Grid>
-          </Card>
+            <Hr px={1} />
+            <Grid size={4} className={"d-row-right"}>
+              <Img
+                key={smileImage.total}
+                src={smileImage.total}
+                className={"w-max30 h-max30"}
+              />
+            </Grid>
+            <Grid size={4} className={"d-row-center"}>
+              <Div className={"fs-1-2rem fw-600"}>
+                {translate("total")}
+              </Div>
+            </Grid>
+            <Grid size={4} className={"d-row-left"}>
+              <Div className={"fs-1-0rem fw-600"}>
+                {smileScore.total}
+              </Div>
+            </Grid>
+            <Hr px={1} />
+            <Grid size={4} className={"d-row-right"}>
+              <Img
+                key={smileImage.exercise}
+                src={smileImage.exercise}
+                className={"w-max25 h-max25"}
+              />
+            </Grid>
+            <Grid size={4} className={"d-row-center"}>
+              <Div className={"fs-1-1rem"}>
+                {translate("exercise")}
+              </Div>
+            </Grid>
+            <Grid size={4} className={"d-row-left"}>
+              <Div className={"fs-0-8rem"}>
+                {smileScore.exercise}
+              </Div>
+            </Grid>
+            <Grid size={4} className={"d-row-right"}>
+              <Img
+                key={smileImage.food}
+                src={smileImage.food}
+                className={"w-max25 h-max25"}
+              />
+            </Grid>
+            <Grid size={4} className={"d-row-center"}>
+              <Div className={"fs-1-1rem"}>
+                {translate("food")}
+              </Div>
+            </Grid>
+            <Grid size={4} className={"d-row-left"}>
+              <Div className={"fs-0-8rem"}>
+                {smileScore.food}
+              </Div>
+            </Grid>
+            <Grid size={4} className={"d-row-right"}>
+              <Img
+                key={smileImage.money}
+                src={smileImage.money}
+                className={"w-max25 h-max25"}
+              />
+            </Grid>
+            <Grid size={4} className={"d-row-center"}>
+              <Div className={"fs-1-1rem"}>
+                {translate("money")}
+              </Div>
+            </Grid>
+            <Grid size={4} className={"d-row-left"}>
+              <Div className={"fs-0-8rem"}>
+                {smileScore.money}
+              </Div>
+            </Grid>
+            <Grid size={4} className={"d-row-right"}>
+              <Img
+                key={smileImage.sleep}
+                src={smileImage.sleep}
+                className={"w-max25 h-max25"}
+              />
+            </Grid>
+            <Grid size={4} className={"d-row-center"}>
+              <Div className={"fs-1-1rem"}>
+                {translate("sleep")}
+              </Div>
+            </Grid>
+            <Grid size={4} className={"d-row-left"}>
+              <Div className={"fs-0-8rem"}>
+                {smileScore.sleep}
+              </Div>
+            </Grid>
+            <Hr px={1} />
+            <Grid size={12} className={"d-center"}>
+              <Div className={"fs-0-8rem"}>
+                {translate("score")}
+              </Div>
+            </Grid>
+          </Grid>
         }
       >
         {(popTrigger: any) => (
@@ -381,115 +377,112 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max60vw h-max70vh border-1 radius-1 p-20"}>
-            <Grid container spacing={1} columns={12}>
-              <Grid size={12} className={"d-column-center"}>
-                <Div className={"fs-1-3rem fw-600"}>
-                  {translate("property")}
-                </Div>
-                <Br px={10} />
-                <Div className={"fs-0-8rem fw-500 dark"}>
-                  {`(${property?.dateStart} ~ ${property?.dateEnd})`}
-                </Div>
-                <Br px={10} />
-                <Div className={"fs-0-7rem fw-500 dark ms-10"}>
-                  {translate("includingExclusions")}
-                <Checkbox
-                  size={"small"}
-                  className={"p-0 ms-5"}
-                  checked={includingExclusions}
-                  onChange={(e: any) => {
-                    setIncludingExclusions(e.target.checked);
-                  }}
-                />
-                </Div>
-              </Grid>
-              <Hr px={10} />
-              <Grid size={12} className={"d-row-center"}>
-                <Img
-                  key={"money2"}
-                  src={"money2"}
-                	className={"w-16 h-16"}
-                />
-                <Div className={"fs-1-4rem fw-600 ms-2vw me-2vw"}>
-                  {includingExclusions ? (
-                    numeral(property.curPropertyAll).format("0,0")
-                  ) : (
-                    numeral(property.curProperty).format("0,0")
-                  )}
-                </Div>
-                <Div className={"fs-0-6rem fw-500 dark"}>
-                  {localCurrency}
-                </Div>
-              </Grid>
-              <Hr px={10} />
-              <Grid size={12} className={"d-center"}>
-                <Input
-                  label={translate("initProperty")}
-                  value={numeral(property.initProperty).format("0,0")}
-                  readOnly={true}
-                  startadornment={
-                    <Img
-                      key={"money2"}
-                      src={"money2"}
-                    	className={"w-16 h-16"}
-                    />
-                  }
-                  endadornment={
-                    localCurrency
-                  }
-                />
-              </Grid>
-              <Br px={1} />
-              <Grid size={12} className={"d-center"}>
-                <Input
-                  label={translate("sumIncome")}
-                  readOnly={true}
-                  value={
-                    includingExclusions ? (
-                      numeral(property.totalIncomeAll).format("0,0")
-                    ) : (
-                      numeral(property.totalIncome).format("0,0")
-                    )
-                  }
-                  startadornment={
-                    <Img
-                      key={"money2"}
-                      src={"money2"}
-                    	className={"w-16 h-16"}
-                    />
-                  }
-                  endadornment={
-                    localCurrency
-                  }
-                />
-              </Grid>
-              <Br px={1} />
-              <Grid size={12} className={"d-center"}>
-                <Input
-                  label={translate("sumExpense")}
-                  readOnly={true}
-                  value={
-                    includingExclusions ? (
-                      numeral(property.totalExpenseAll).format("0,0")
-                    ) : (
-                      numeral(property.totalExpense).format("0,0")
-                    )
-                  }
-                  startadornment={
-                    <Img
-                      key={"money2"}
-                      src={"money2"}
-                    	className={"w-16 h-16"}
-                    />
-                  }
-                  endadornment={
-                    localCurrency
-                  }
-                />
-              </Grid>
+          <Grid container spacing={2} columns={12}
+          className={"w-max60vw h-max70vh border-1 radius-1 p-20"}>
+            <Grid size={12} className={"d-col-center"}>
+              <Div className={"fs-1-3rem fw-600"}>
+                {translate("property")}
+              </Div>
+              <Br px={10} />
+              <Div className={"fs-0-8rem fw-500 dark"}>
+                {`(${property?.dateStart} ~ ${property?.dateEnd})`}
+              </Div>
+              <Br px={10} />
+              <Div className={"fs-0-7rem fw-500 dark ms-10"}>
+                {translate("includingExclusions")}
+              <Checkbox
+                size={"small"}
+                className={"p-0 ms-5"}
+                checked={includingExclusions}
+                onChange={(e: any) => {
+                  setIncludingExclusions(e.target.checked);
+                }}
+              />
+              </Div>
             </Grid>
-          </Card>
+            <Hr px={1} />
+            <Grid size={12} className={"d-row-center"}>
+              <Img
+                key={"money2"}
+                src={"money2"}
+                className={"w-16 h-16"}
+              />
+              <Div className={"fs-1-4rem fw-600 ms-2vw me-2vw"}>
+                {includingExclusions ? (
+                  numeral(property.curPropertyAll).format("0,0")
+                ) : (
+                  numeral(property.curProperty).format("0,0")
+                )}
+              </Div>
+              <Div className={"fs-0-6rem fw-500 dark"}>
+                {localCurrency}
+              </Div>
+            </Grid>
+            <Hr px={1} />
+            <Grid size={12} className={"d-center"}>
+              <Input
+                label={translate("initProperty")}
+                value={numeral(property.initProperty).format("0,0")}
+                readOnly={true}
+                startadornment={
+                  <Img
+                    key={"money2"}
+                    src={"money2"}
+                    className={"w-16 h-16"}
+                  />
+                }
+                endadornment={
+                  localCurrency
+                }
+              />
+            </Grid>
+            <Grid size={12} className={"d-center"}>
+              <Input
+                label={translate("sumIncome")}
+                readOnly={true}
+                value={
+                  includingExclusions ? (
+                    numeral(property.totalIncomeAll).format("0,0")
+                  ) : (
+                    numeral(property.totalIncome).format("0,0")
+                  )
+                }
+                startadornment={
+                  <Img
+                    key={"money2"}
+                    src={"money2"}
+                    className={"w-16 h-16"}
+                  />
+                }
+                endadornment={
+                  localCurrency
+                }
+              />
+            </Grid>
+            <Grid size={12} className={"d-center"}>
+              <Input
+                label={translate("sumExpense")}
+                readOnly={true}
+                value={
+                  includingExclusions ? (
+                    numeral(property.totalExpenseAll).format("0,0")
+                  ) : (
+                    numeral(property.totalExpense).format("0,0")
+                  )
+                }
+                startadornment={
+                  <Img
+                    key={"money2"}
+                    src={"money2"}
+                    className={"w-16 h-16"}
+                  />
+                }
+                endadornment={
+                  localCurrency
+                }
+              />
+            </Grid>
+          </Grid>
         }
       >
         {(popTrigger: any) => (
@@ -514,87 +507,84 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max60vw h-max70vh border-1 radius-1 p-20"}>
-            <Grid container spacing={1} columns={12}>
-              <Grid size={12} className={"d-column-center"}>
-                <Div className={"fs-1-3rem fw-600"}>
-                  {translate("weight")}
-                </Div>
-                <Br px={10} />
-                <Div className={"fs-0-8rem fw-500 dark"}>
-                  {`(${scale?.dateStart} ~ ${scale?.dateEnd})`}
-                </Div>
-              </Grid>
-              <Hr px={10} />
-              <Grid size={12} className={"d-row-center"}>
-                <Img
-                  key={"exercise5"}
-                  src={"exercise5"}
-                	className={"w-16 h-16"}
-                />
-                <Div className={"fs-1-4rem fw-600 ms-2vw me-2vw"}>
-                  {scale.curScale}
-                </Div>
-                <Div className={"fs-0-6rem fw-500 dark"}>
-                  {translate("k")}
-                </Div>
-              </Grid>
-              <Hr px={10} />
-              <Grid size={12} className={"d-center"}>
-                <Input
-                  label={translate("initScale")}
-                  value={scale.initScale}
-                  readOnly={true}
-                  startadornment={
-                    <Img
-                      key={"exercise5"}
-                      src={"exercise5"}
-                    	className={"w-16 h-16"}
-                    />
-                  }
-                  endadornment={
-                    translate("k")
-                  }
-                />
-              </Grid>
-              <Br px={1} />
-              <Grid size={12} className={"d-center"}>
-                <Input
-                  label={translate("minScale")}
-                  value={scale.minScale}
-                  readOnly={true}
-                  startadornment={
-                    <Img
-                      key={"exercise5"}
-                      src={"exercise5"}
-                    	className={"w-16 h-16"}
-                    />
-                  }
-                  endadornment={
-                    translate("k")
-                  }
-                />
-              </Grid>
-              <Br px={1} />
-              <Grid size={12} className={"d-center"}>
-                <Input
-                  label={translate("maxScale")}
-                  value={scale.maxScale}
-                  readOnly={true}
-                  startadornment={
-                    <Img
-                      key={"exercise5"}
-                      src={"exercise5"}
-                    	className={"w-16 h-16"}
-                    />
-                  }
-                  endadornment={
-                    translate("k")
-                  }
-                />
-              </Grid>
+          <Grid container spacing={2} columns={12}
+          className={"w-max60vw h-max70vh border-1 radius-1 p-20"}>
+            <Grid size={12} className={"d-col-center"}>
+              <Div className={"fs-1-3rem fw-600"}>
+                {translate("weight")}
+              </Div>
+              <Br px={10} />
+              <Div className={"fs-0-8rem fw-500 dark"}>
+                {`(${scale?.dateStart} ~ ${scale?.dateEnd})`}
+              </Div>
             </Grid>
-          </Card>
+            <Hr px={1} />
+            <Grid size={12} className={"d-row-center"}>
+              <Img
+                key={"exercise5"}
+                src={"exercise5"}
+                className={"w-16 h-16"}
+              />
+              <Div className={"fs-1-4rem fw-600 ms-2vw me-2vw"}>
+                {scale.curScale}
+              </Div>
+              <Div className={"fs-0-6rem fw-500 dark"}>
+                {translate("k")}
+              </Div>
+            </Grid>
+            <Hr px={1} />
+            <Grid size={12} className={"d-center"}>
+              <Input
+                label={translate("initScale")}
+                value={scale.initScale}
+                readOnly={true}
+                startadornment={
+                  <Img
+                    key={"exercise5"}
+                    src={"exercise5"}
+                    className={"w-16 h-16"}
+                  />
+                }
+                endadornment={
+                  translate("k")
+                }
+              />
+            </Grid>
+            <Grid size={12} className={"d-center"}>
+              <Input
+                label={translate("minScale")}
+                value={scale.minScale}
+                readOnly={true}
+                startadornment={
+                  <Img
+                    key={"exercise5"}
+                    src={"exercise5"}
+                    className={"w-16 h-16"}
+                  />
+                }
+                endadornment={
+                  translate("k")
+                }
+              />
+            </Grid>
+            <Grid size={12} className={"d-center"}>
+              <Input
+                label={translate("maxScale")}
+                value={scale.maxScale}
+                readOnly={true}
+                startadornment={
+                  <Img
+                    key={"exercise5"}
+                    src={"exercise5"}
+                    className={"w-16 h-16"}
+                  />
+                }
+                endadornment={
+                  translate("k")
+                }
+              />
+            </Grid>
+          </Grid>
         }
       >
         {(popTrigger: any) => (
@@ -678,7 +668,7 @@ export const TopNav = () => {
     // 5. return
     return (
       <Paper className={"layout-wrapper p-sticky top-8vh h-8vh border-1 radius-1 shadow-bottom-1"}>
-        <Grid container spacing={1} columns={25}>
+        <Grid container spacing={2} columns={25}>
           <Grid size={3} className={"d-center"}>
             {smileSection()}
           </Grid>

@@ -8,8 +8,8 @@ import { FoodGoal } from "@imports/ImportSchemas";
 import { axios, numeral, sync } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, Count, Delete, Input } from "@imports/ImportContainers";
-import { Img, Bg, Br } from "@imports/ImportComponents";
-import { Card, Paper, Grid } from "@imports/ImportMuis";
+import { Img, Bg } from "@imports/ImportComponents";
+import { Paper, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodGoalDetail = () => {
@@ -263,234 +263,222 @@ export const FoodGoalDetail = () => {
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Card className={"border-1 radius-1 p-20"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12}>
-            <PickerDay
-              DATE={DATE}
-              setDATE={setDATE}
-              EXIST={EXIST}
-            />
-          </Grid>
-          <Br px={1} />
-          <Grid size={12}>
-            <Count
-              COUNT={COUNT}
-              setCOUNT={setCOUNT}
-              LOCKED={LOCKED}
-              setLOCKED={setLOCKED}
-              limit={1}
-            />
-          </Grid>
+      <Grid container spacing={2} columns={12} className={"border-1 radius-1 p-20"}>
+        <Grid size={12}>
+          <PickerDay
+            DATE={DATE}
+            setDATE={setDATE}
+            EXIST={EXIST}
+          />
         </Grid>
-      </Card>
+        <Grid size={12}>
+          <Count
+            COUNT={COUNT}
+            setCOUNT={setCOUNT}
+            LOCKED={LOCKED}
+            setLOCKED={setLOCKED}
+            limit={1}
+          />
+        </Grid>
+      </Grid>
     );
     // 7-3. detail
     const detailSection = () => {
       const detailFragment = (item: any, i: number) => (
-        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={6} className={"d-row-left"}>
-              <Bg
-                badgeContent={i + 1}
-                bgcolor={"#1976d2"}
-              />
-            </Grid>
-            <Grid size={6} className={"d-row-right"}>
-              <Delete
-                index={i}
-                handleDelete={handleDelete}
-                LOCKED={LOCKED}
-              />
-            </Grid>
-            <Br px={1} />
-            <Grid size={12}>
-              <Input
-                value={numeral(item?.food_goal_kcal).format("0,0")}
-                inputRef={REFS?.[i]?.food_goal_kcal}
-                error={ERRORS?.[i]?.food_goal_kcal}
-                locked={LOCKED}
-                label={
-                  DATE.dateType === "day" ? (
-                    `${translate("goalKcal")}`
-                  ) : (
-                    `${translate("goalKcal")} (${translate("total")})`
-                  )
-                }
-                startadornment={
-                  <Img
-                  	key={"food2"}
-                  	src={"food2"}
-                  	className={"w-16 h-16"}
-                  />
-                }
-                endadornment={
-                  translate("kc")
-                }
-                onChange={(e: any) => {
-                  const value = e.target.value.replace(/,/g, '');
-                  const newValue = value === "" ? 0 : Number(value);
-                  if (value === "") {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      food_goal_kcal: "0"
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 9999999) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      food_goal_kcal: String(newValue),
-                    }));
-                  }
-                }}
-              />
-            </Grid>
-            <Br px={1} />
-            <Grid size={12}>
-              <Input
-                value={numeral(item?.food_goal_carb).format("0,0")}
-                inputRef={REFS?.[i]?.food_goal_carb}
-                error={ERRORS?.[i]?.food_goal_carb}
-                locked={LOCKED}
-                label={
-                  DATE.dateType === "day" ? (
-                    `${translate("goalCarb")}`
-                  ) : (
-                    `${translate("goalCarb")} (${translate("total")})`
-                  )
-                }
-                startadornment={
-                  <Img
-                  	key={"food3"}
-                  	src={"food3"}
-                  	className={"w-16 h-16"}
-                  />
-                }
-                endadornment={
-                  translate("g")
-                }
-                onChange={(e: any) => {
-                  const value = e.target.value.replace(/,/g, '');
-                  const newValue = value === "" ? 0 : Number(value);
-                  if (value === "") {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      food_goal_carb: "0"
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 99999) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      food_goal_carb: String(newValue),
-                    }));
-                  }
-                }}
-              />
-            </Grid>
-            <Br px={1} />
-            <Grid size={12}>
-              <Input
-                value={numeral(item?.food_goal_protein).format("0,0")}
-                inputRef={REFS?.[i]?.food_goal_protein}
-                error={ERRORS?.[i]?.food_goal_protein}
-                locked={LOCKED}
-                label={
-                  DATE.dateType === "day" ? (
-                    `${translate("goalProtein")}`
-                  ) : (
-                    `${translate("goalProtein")} (${translate("total")})`
-                  )
-                }
-                startadornment={
-                  <Img
-                  	key={"food4"}
-                  	src={"food4"}
-                  	className={"w-16 h-16"}
-                  />
-                }
-                endadornment={
-                  translate("g")
-                }
-                onChange={(e: any) => {
-                  const value = e.target.value.replace(/,/g, '');
-                  const newValue = value === "" ? 0 : Number(value);
-                  if (value === "") {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      food_goal_protein: "0"
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 99999) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      food_goal_protein: String(newValue),
-                    }));
-                  }
-                }}
-              />
-            </Grid>
-            <Br px={1} />
-            <Grid size={12}>
-              <Input
-                value={numeral(item?.food_goal_fat).format("0,0")}
-                inputRef={REFS?.[i]?.food_goal_fat}
-                error={ERRORS?.[i]?.food_goal_fat}
-                locked={LOCKED}
-                label={
-                  DATE.dateType === "day" ? (
-                    `${translate("goalFat")}`
-                  ) : (
-                    `${translate("goalFat")} (${translate("total")})`
-                  )
-                }
-                startadornment={
-                  <Img
-                  	key={"food5"}
-                  	src={"food5"}
-                  	className={"w-16 h-16"}
-                  />
-                }
-                endadornment={
-                  translate("g")
-                }
-                onChange={(e: any) => {
-                  const value = e.target.value.replace(/,/g, '');
-                  const newValue = value === "" ? 0 : Number(value);
-                  if (value === "") {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      food_goal_fat: "0"
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 99999) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      food_goal_fat: String(newValue),
-                    }));
-                  }
-                }}
-              />
-            </Grid>
+        <Grid container spacing={2} columns={12}
+        className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
+          <Grid size={6} className={"d-row-left"}>
+            <Bg
+              badgeContent={i + 1}
+              bgcolor={"#1976d2"}
+            />
           </Grid>
-        </Card>
+          <Grid size={6} className={"d-row-right"}>
+            <Delete
+              index={i}
+              handleDelete={handleDelete}
+              LOCKED={LOCKED}
+            />
+          </Grid>
+          <Grid size={12}>
+            <Input
+              value={numeral(item?.food_goal_kcal).format("0,0")}
+              inputRef={REFS?.[i]?.food_goal_kcal}
+              error={ERRORS?.[i]?.food_goal_kcal}
+              locked={LOCKED}
+              label={
+                DATE.dateType === "day" ? (
+                  `${translate("goalKcal")}`
+                ) : (
+                  `${translate("goalKcal")} (${translate("total")})`
+                )
+              }
+              startadornment={
+                <Img
+                  key={"food2"}
+                  src={"food2"}
+                  className={"w-16 h-16"}
+                />
+              }
+              endadornment={
+                translate("kc")
+              }
+              onChange={(e: any) => {
+                const value = e.target.value.replace(/,/g, '');
+                const newValue = value === "" ? 0 : Number(value);
+                if (value === "") {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    food_goal_kcal: "0"
+                  }));
+                }
+                else if (!isNaN(newValue) && newValue <= 9999999) {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    food_goal_kcal: String(newValue),
+                  }));
+                }
+              }}
+            />
+          </Grid>
+          <Grid size={12}>
+            <Input
+              value={numeral(item?.food_goal_carb).format("0,0")}
+              inputRef={REFS?.[i]?.food_goal_carb}
+              error={ERRORS?.[i]?.food_goal_carb}
+              locked={LOCKED}
+              label={
+                DATE.dateType === "day" ? (
+                  `${translate("goalCarb")}`
+                ) : (
+                  `${translate("goalCarb")} (${translate("total")})`
+                )
+              }
+              startadornment={
+                <Img
+                  key={"food3"}
+                  src={"food3"}
+                  className={"w-16 h-16"}
+                />
+              }
+              endadornment={
+                translate("g")
+              }
+              onChange={(e: any) => {
+                const value = e.target.value.replace(/,/g, '');
+                const newValue = value === "" ? 0 : Number(value);
+                if (value === "") {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    food_goal_carb: "0"
+                  }));
+                }
+                else if (!isNaN(newValue) && newValue <= 99999) {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    food_goal_carb: String(newValue),
+                  }));
+                }
+              }}
+            />
+          </Grid>
+          <Grid size={12}>
+            <Input
+              value={numeral(item?.food_goal_protein).format("0,0")}
+              inputRef={REFS?.[i]?.food_goal_protein}
+              error={ERRORS?.[i]?.food_goal_protein}
+              locked={LOCKED}
+              label={
+                DATE.dateType === "day" ? (
+                  `${translate("goalProtein")}`
+                ) : (
+                  `${translate("goalProtein")} (${translate("total")})`
+                )
+              }
+              startadornment={
+                <Img
+                  key={"food4"}
+                  src={"food4"}
+                  className={"w-16 h-16"}
+                />
+              }
+              endadornment={
+                translate("g")
+              }
+              onChange={(e: any) => {
+                const value = e.target.value.replace(/,/g, '');
+                const newValue = value === "" ? 0 : Number(value);
+                if (value === "") {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    food_goal_protein: "0"
+                  }));
+                }
+                else if (!isNaN(newValue) && newValue <= 99999) {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    food_goal_protein: String(newValue),
+                  }));
+                }
+              }}
+            />
+          </Grid>
+          <Grid size={12}>
+            <Input
+              value={numeral(item?.food_goal_fat).format("0,0")}
+              inputRef={REFS?.[i]?.food_goal_fat}
+              error={ERRORS?.[i]?.food_goal_fat}
+              locked={LOCKED}
+              label={
+                DATE.dateType === "day" ? (
+                  `${translate("goalFat")}`
+                ) : (
+                  `${translate("goalFat")} (${translate("total")})`
+                )
+              }
+              startadornment={
+                <Img
+                  key={"food5"}
+                  src={"food5"}
+                  className={"w-16 h-16"}
+                />
+              }
+              endadornment={
+                translate("g")
+              }
+              onChange={(e: any) => {
+                const value = e.target.value.replace(/,/g, '');
+                const newValue = value === "" ? 0 : Number(value);
+                if (value === "") {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    food_goal_fat: "0"
+                  }));
+                }
+                else if (!isNaN(newValue) && newValue <= 99999) {
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    food_goal_fat: String(newValue),
+                  }));
+                }
+              }}
+            />
+          </Grid>
+        </Grid>
       );
       return (
-        <Card className={"p-0"}>
-          <Grid container spacing={0} columns={12}>
-            <Grid size={12} key={`detail-${0}`}>
-              {COUNT?.newSectionCnt > 0 && (
-                detailFragment(OBJECT, 0)
-              )}
-            </Grid>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} key={`detail-${0}`}>
+            {COUNT?.newSectionCnt > 0 && detailFragment(OBJECT, 0)}
           </Grid>
-        </Card>
+        </Grid>
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={0} columns={12}>
-          <Grid size={12} className={"d-column-center"}>
+          <Grid size={12} className={"d-col-center"}>
             {dateCountSection()}
             {LOADING ? <Loading /> : detailSection()}
           </Grid>

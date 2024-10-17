@@ -4,7 +4,7 @@ import { useCommonValue } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { PopUp, Input } from "@imports/ImportContainers";
 import { Img } from "@imports/ImportComponents";
-import { TextArea, Grid, Card } from "@imports/ImportMuis";
+import { TextArea, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 declare type MemoProps = {
@@ -27,38 +27,35 @@ export const Memo = (
   // 3. memoNode -----------------------------------------------------------------------------------
   const memoNode = () => (
     <PopUp
-      key={`memo-${i}`}
       type={"innerCenter"}
       position={"center"}
       direction={"center"}
       contents={
-        <Card className={"w-max70vw p-0"}>
-          <Grid container spacing={3}>
-            <Grid size={12} className={"d-center"}>
-              <TextArea
-                style={{
-                  fontFamily: "inherit",
-                  fontSize: "inherit",
-                  fontWeight: "inherit"
-                }}
-                className={"w-86vw h-55vh border-1 p-10"}
-                value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
-                onChange={(e: any) => {
-                  const newContent = e.target.value;
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    [`${firstStr}_section`]: prev[`${firstStr}_section`]?.map((item: any, idx: number) => (
-                      idx === i ? {
-                        ...item,
-                        [`${extra}`]: newContent
-                      } : item
-                    ))
-                  }));
-                }}
-              />
-            </Grid>
+        <Grid container spacing={3} columns={12} className={"w-max70vw"}>
+          <Grid size={12} className={"d-center"}>
+            <TextArea
+              className={"w-86vw h-55vh border-1 p-10"}
+              value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
+              style={{
+                fontFamily: "inherit",
+                fontSize: "inherit",
+                fontWeight: "inherit"
+              }}
+              onChange={(e: any) => {
+                const newContent = e.target.value;
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  [`${firstStr}_section`]: prev[`${firstStr}_section`]?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      [`${extra}`]: newContent
+                    } : section
+                  ))
+                }));
+              }}
+            />
           </Grid>
-        </Card>
+        </Grid>
       }
     >
       {(popTrigger: any) => (

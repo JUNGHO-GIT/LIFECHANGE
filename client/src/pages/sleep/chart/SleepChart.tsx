@@ -5,14 +5,10 @@ import { SleepChartLine } from "./SleepChartLine";
 import { SleepChartAvg } from "./SleepChartAvg";
 
 // -------------------------------------------------------------------------------------------------
-export const SleepChart = () => {
-
-  // 10. return ------------------------------------------------------------------------------------
-  return (
-    <>
-      {SleepChartPie()}
-      {SleepChartLine()}
-      {SleepChartAvg()}
-    </>
-  );
-};
+export const SleepChart = () => (
+  <>
+    {SleepChartPie()}
+    {SleepChartLine()}
+    {SleepChartAvg()}
+  </>
+);

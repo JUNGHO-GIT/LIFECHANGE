@@ -1,14 +1,14 @@
 // SleepChartPie.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
+import { useStorageLocal, useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { SleepPie } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Select } from "@imports/ImportContainers";
 import { Div, Img, Br } from "@imports/ImportComponents";
-import { Paper, Card, MenuItem, Grid } from "@imports/ImportMuis";
+import { Paper, MenuItem, Grid } from "@imports/ImportMuis";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from 'recharts';
 
 // -------------------------------------------------------------------------------------------------
@@ -26,15 +26,22 @@ declare type PieProps = {
 export const SleepChartPie = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, chartColors, sessionId } = useCommonValue();
+  const { URL_OBJECT, TITLE, PATH, chartColors, sessionId } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
+  // 2-1. useStorageLocal --------------------------------------------------------------------------
+  const [TYPE, setTYPE] = useStorageLocal(
+    `${TITLE}_type_pie_(${PATH})`, {
+      section: "week",
+      line: "",
+    }
+  );
+
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(true);
   const [radius, setRadius] = useState<number>(120);
-  const [SECTION, setSECTION] = useState<string>("week");
   const [DATE, setDATE] = useState<any>({
     dateType: "",
     dateStart: getDayFmt(),
@@ -159,96 +166,104 @@ export const SleepChartPie = () => {
 
   // 5-2. chart ------------------------------------------------------------------------------------
   const chartWeek = () => (
-    <ResponsiveContainer width={"100%"} height={350}>
-      <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-        <Pie
-          data={OBJECT_WEEK}
-          cx={"50%"}
-          cy={"50%"}
-          label={renderWeek}
-          labelLine={false}
-          outerRadius={radius}
-          fill={"#8884d8"}
-          dataKey={"value"}
-          minAngle={15}
-        >
-          {OBJECT_WEEK?.map((entry: any, index: number) => (
-            <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
-          ))}
-        </Pie>
-        <Tooltip
-          formatter={(value: any, name: any, props: any) => {
-            const customName = translate(name);
-            return [`${Number(value).toLocaleString()}%`, customName];
-          }}
-          contentStyle={{
-            backgroundColor:"rgba(255, 255, 255, 0.8)",
-            border:"none",
-            borderRadius:"10px"
-          }}
-        />
-        <Legend
-          iconType={"circle"}
-          verticalAlign={"bottom"}
-          align={"center"}
-          formatter={(value) => {
-            return translate(value);
-          }}
-          wrapperStyle={{
-            lineHeight:"40px",
-            paddingTop:"10px",
-            fontSize:"12px"
-          }}
-        />
-      </PieChart>
-    </ResponsiveContainer>
+    <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
+      <Grid size={12} className={"d-col-center"}>
+        <ResponsiveContainer width={"100%"} height={350}>
+          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+            <Pie
+              data={OBJECT_WEEK}
+              cx={"50%"}
+              cy={"50%"}
+              label={renderWeek}
+              labelLine={false}
+              outerRadius={radius}
+              fill={"#8884d8"}
+              dataKey={"value"}
+              minAngle={15}
+            >
+              {OBJECT_WEEK?.map((__entry: any, index: number) => (
+                <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
+              ))}
+            </Pie>
+            <Tooltip
+              formatter={(value: any, name: any) => {
+                const customName = translate(name);
+                return [`${Number(value).toLocaleString()}%`, customName];
+              }}
+              contentStyle={{
+                backgroundColor:"rgba(255, 255, 255, 0.8)",
+                border:"none",
+                borderRadius:"10px"
+              }}
+            />
+            <Legend
+              iconType={"circle"}
+              verticalAlign={"bottom"}
+              align={"center"}
+              formatter={(value) => {
+                return translate(value);
+              }}
+              wrapperStyle={{
+                lineHeight:"40px",
+                paddingTop:"10px",
+                fontSize:"12px"
+              }}
+            />
+          </PieChart>
+        </ResponsiveContainer>
+      </Grid>
+    </Grid>
   );
 
   // 5-3. chart ------------------------------------------------------------------------------------
   const chartMonth = () => (
-    <ResponsiveContainer width={"100%"} height={350}>
-      <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-        <Pie
-          data={OBJECT_MONTH}
-          cx={"50%"}
-          cy={"50%"}
-          label={renderMonth}
-          labelLine={false}
-          outerRadius={radius}
-          fill={"#8884d8"}
-          dataKey={"value"}
-          minAngle={15}
-        >
-          {OBJECT_MONTH?.map((entry: any, index: number) => (
-            <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
-          ))}
-        </Pie>
-        <Tooltip
-          formatter={(value: any, name: any, props: any) => {
-            const customName = translate(name);
-            return [`${Number(value).toLocaleString()}%`, customName];
-          }}
-          contentStyle={{
-            backgroundColor:"rgba(255, 255, 255, 0.8)",
-            border:"none",
-            borderRadius:"10px"
-          }}
-        />
-        <Legend
-          iconType={"circle"}
-          verticalAlign={"bottom"}
-          align={"center"}
-          formatter={(value) => {
-            return translate(value);
-          }}
-          wrapperStyle={{
-            lineHeight:"40px",
-            paddingTop:"10px",
-            fontSize:"12px"
-          }}
-        />
-      </PieChart>
-    </ResponsiveContainer>
+    <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
+      <Grid size={12} className={"d-col-center"}>
+        <ResponsiveContainer width={"100%"} height={350}>
+          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+            <Pie
+              data={OBJECT_MONTH}
+              cx={"50%"}
+              cy={"50%"}
+              label={renderMonth}
+              labelLine={false}
+              outerRadius={radius}
+              fill={"#8884d8"}
+              dataKey={"value"}
+              minAngle={15}
+            >
+              {OBJECT_MONTH?.map((__entry: any, index: number) => (
+                <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
+              ))}
+            </Pie>
+            <Tooltip
+              formatter={(value: any, name: any) => {
+                const customName = translate(name);
+                return [`${Number(value).toLocaleString()}%`, customName];
+              }}
+              contentStyle={{
+                backgroundColor:"rgba(255, 255, 255, 0.8)",
+                border:"none",
+                borderRadius:"10px"
+              }}
+            />
+            <Legend
+              iconType={"circle"}
+              verticalAlign={"bottom"}
+              align={"center"}
+              formatter={(value) => {
+                return translate(value);
+              }}
+              wrapperStyle={{
+                lineHeight:"40px",
+                paddingTop:"10px",
+                fontSize:"12px"
+              }}
+            />
+          </PieChart>
+        </ResponsiveContainer>
+      </Grid>
+    </Grid>
   );
 
   // 7. chart --------------------------------------------------------------------------------------
@@ -256,70 +271,75 @@ export const SleepChartPie = () => {
     // 7-1. head
     const headSection = () => {
       const titleFragment = () => (
-        <Div className={"d-center"}>
-          <Div className={"fs-1-0rem fw-600"}>
-            {translate("chartPie")}
-          </Div>
-        </Div>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-row-center"}>
+            <Div className={"fs-1-0rem fw-600"}>
+              {translate("chartPie")}
+            </Div>
+          </Grid>
+        </Grid>
       );
       const selectFragment1 = () => (
-        <Select
-          value={SECTION}
-          onChange={(e: any) => {
-            setSECTION(e.target.value)
-          }}
-        >
-          <MenuItem value={"week"}>{translate("week")}</MenuItem>
-          <MenuItem value={"month"}>{translate("month")}</MenuItem>
-        </Select>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-row-center"}>
+            <Select
+              value={TYPE.section}
+              onChange={(e: any) => {
+                setTYPE((prev: any) => ({
+                  ...prev,
+                  section: e.target.value,
+                }));
+              }}
+            >
+              <MenuItem value={"week"}>{translate("week")}</MenuItem>
+              <MenuItem value={"month"}>{translate("month")}</MenuItem>
+            </Select>
+          </Grid>
+        </Grid>
       );
       const selectFragment2 = () => (
-        <Img
-        	key={"common3_2"}
-        	src={"common3_2"}
-        	className={"w-24 h-24 me-10"}
-        />
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-row-right"}>
+            <Img
+              key={"common3_2"}
+              src={"common3_2"}
+              className={"w-24 h-24 me-10"}
+            />
+          </Grid>
+        </Grid>
       );
       return (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={3} className={"d-row-left"}>
-              {selectFragment1()}
-            </Grid>
-            <Grid size={6} className={"d-row-center"}>
-              {titleFragment()}
-            </Grid>
-            <Grid size={3} className={"d-row-right"}>
-              {selectFragment2()}
-            </Grid>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={3} className={"d-row-left"}>
+            {selectFragment1()}
           </Grid>
-        </Card>
+          <Grid size={6} className={"d-row-center"}>
+            {titleFragment()}
+          </Grid>
+          <Grid size={3} className={"d-row-right"}>
+            {selectFragment2()}
+          </Grid>
+        </Grid>
       );
     };
     // 7-2. chart
-    const chartSection = () => {
-      const chartFragment1 = (i: number) => (
-        <Card className={"border-1 radius-1 p-20"} key={i}>
-          {chartWeek()}
-        </Card>
-      );
-      const chartFragment2 = (i: number) => (
-        <Card className={"border-1 radius-1 p-20"} key={i}>
-          {chartMonth()}
-        </Card>
-      );
-      if (SECTION === "week") {
-        return LOADING ? <Loading /> : chartFragment1(0);
-      }
-      else if (SECTION === "month") {
-        return LOADING ? <Loading /> : chartFragment2(0);
-      }
-    }
+    const chartSection = () => (
+      <Grid container spacing={0} columns={12}>
+        <Grid size={12} className={"d-row-center"}>
+          {LOADING ? <Loading /> : (
+            <>
+              {TYPE.section === "week" && chartWeek()}
+              {TYPE.section === "month" && chartMonth()}
+            </>
+          )}
+        </Grid>
+      </Grid>
+    );
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min40vh"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12}>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} className={"d-col-center"}>
             {headSection()}
             <Br px={20} />
             {chartSection()}

@@ -136,7 +136,7 @@ export const Dummy = (
         <Grid size={3} className={"d-center"}>
           {partSection()}
         </Grid>
-        <Grid size={3} className={"d-column-center"}>
+        <Grid size={3} className={"d-col-center"}>
           {countSection()}
         </Grid>
         <Grid size={6} className={"d-row-center"}>

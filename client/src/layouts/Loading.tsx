@@ -12,12 +12,12 @@ export const Loading = () => {
   // 7.loading -------------------------------------------------------------------------------------
   const loadingNode = () => {
     const wrapperSection = () => (
-      <Div className={"loader-wrapper d-column-center"}>
+      <Div className={"loader-wrapper d-col-center"}>
         <Div className={"loader"} />
       </Div>
     );
     const nonWrapperSection = () => (
-      <Div className={"h-min50vh d-column-center"}>
+      <Div className={"h-min50vh d-col-center"}>
         <Div className={"loader"} />
       </Div>
     );

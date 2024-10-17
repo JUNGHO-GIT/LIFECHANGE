@@ -195,7 +195,7 @@ export const BottomNav = () => {
     return (
       <Paper className={"layout-wrapper p-sticky bottom-0vh h-8vh border-1 radius-1 shadow-bottom-1"}>
         <Grid container spacing={0} columns={12}>
-          <Grid size={12} className={"d-center"}>
+          <Grid size={12} className={"d-col-center"}>
             {tabsSection()}
           </Grid>
         </Grid>

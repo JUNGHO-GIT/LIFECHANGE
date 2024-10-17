@@ -33,7 +33,7 @@ export const Input = (props: any) => (
     sx={{
       ...props?.sx,
       "& .MuiSelect-icon": {
-        display: props?.readOnly && "none"
+        display: props?.disabled && "none"
       },
     }}
     slotProps={{
@@ -41,13 +41,16 @@ export const Input = (props: any) => (
       input: {
         ...props?.slotProps?.input,
         readOnly: (
-          props?.readOnly || props?.locked === "locked" || false
+          (props?.readOnly || props?.className?.includes("pointer")) ? true : false
+        ),
+        disabled: (
+          props?.disabled || props?.locked === "locked" || false
         ),
         className: (
           props?.inputclass?.includes("fs-") ? (
-            `text-left ${props?.inputclass || ""}`
+            `text-left ${props?.inputclass}`
           ) : (
-            `fs-1-0rem text-left ${props?.inputclass || ""}`
+            `fs-1-0rem text-left ${props?.inputclass}`
           )
         ),
         startAdornment: (
@@ -77,9 +80,13 @@ export const Input = (props: any) => (
           ) : null
         ),
       },
+      htmlInput: {
+        ...props?.slotProps?.htmlInput,
+        className: props?.inputclass?.includes("pointer") ? "pointer" : "",
+      },
       inputLabel: {
         ...props?.slotProps?.inputLabel,
-        shrink: (props?.shrink === "shrink" ? true : undefined),
+        shrink: ((props?.shrink === "shrink" || props?.disabled) ? true : undefined),
       }
     }}
   />

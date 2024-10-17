@@ -8,8 +8,8 @@ import { SleepGoal } from "@imports/ImportSchemas";
 import { axios, sync } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, PickerTime, Count, Delete } from "@imports/ImportContainers";
-import { Bg, Br } from "@imports/ImportComponents";
-import { Card, Paper, Grid } from "@imports/ImportMuis";
+import { Bg } from "@imports/ImportComponents";
+import { Paper, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const SleepGoalDetail = () => {
@@ -269,105 +269,94 @@ export const SleepGoalDetail = () => {
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Card className={"border-1 radius-1 p-20"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12}>
-            <PickerDay
-              DATE={DATE}
-              setDATE={setDATE}
-              EXIST={EXIST}
-            />
-          </Grid>
-          <Br px={1} />
-          <Grid size={12}>
-            <Count
-              COUNT={COUNT}
-              setCOUNT={setCOUNT}
-              LOCKED={LOCKED}
-              setLOCKED={setLOCKED}
-              limit={1}
-            />
-          </Grid>
+      <Grid container spacing={2} columns={12} className={"border-1 radius-1 p-20"}>
+        <Grid size={12}>
+          <PickerDay
+            DATE={DATE}
+            setDATE={setDATE}
+            EXIST={EXIST}
+          />
         </Grid>
-      </Card>
+        <Grid size={12}>
+          <Count
+            COUNT={COUNT}
+            setCOUNT={setCOUNT}
+            LOCKED={LOCKED}
+            setLOCKED={setLOCKED}
+            limit={1}
+          />
+        </Grid>
+      </Grid>
     );
     // 7-3. detail
     const detailSection = () => {
-      const detailFragment = (item: any, i: number) => (
-        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={6} className={"d-row-left"}>
-              <Bg
-                badgeContent={i + 1}
-                bgcolor={"#1976d2"}
-              />
-            </Grid>
-            <Grid size={6} className={"d-row-right"}>
-              <Delete
-                index={i}
-                handleDelete={handleDelete}
-                LOCKED={LOCKED}
-              />
-            </Grid>
-            <Br px={1} />
-            <Grid size={12}>
-              <PickerTime
-                OBJECT={OBJECT}
-                setOBJECT={setOBJECT}
-                REFS={REFS}
-                ERRORS={ERRORS}
-                DATE={DATE}
-                LOCKED={LOCKED}
-                extra={"sleep_goal_bedTime"}
-                i={i}
-              />
-            </Grid>
-            <Br px={1} />
-            <Grid size={12}>
-              <PickerTime
-                OBJECT={OBJECT}
-                setOBJECT={setOBJECT}
-                REFS={REFS}
-                ERRORS={ERRORS}
-                DATE={DATE}
-                LOCKED={LOCKED}
-                extra={"sleep_goal_wakeTime"}
-                i={i}
-              />
-            </Grid>
-            <Br px={1} />
-            <Grid size={12}>
-              <PickerTime
-                OBJECT={OBJECT}
-                setOBJECT={setOBJECT}
-                REFS={REFS}
-                ERRORS={ERRORS}
-                DATE={DATE}
-                LOCKED={LOCKED}
-                extra={"sleep_goal_sleepTime"}
-                i={i}
-              />
-            </Grid>
+      const detailFragment = (_item: any, i: number) => (
+        <Grid container spacing={2} columns={12}
+        className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
+          <Grid size={6} className={"d-row-left"}>
+            <Bg
+              badgeContent={i + 1}
+              bgcolor={"#1976d2"}
+            />
           </Grid>
-        </Card>
+          <Grid size={6} className={"d-row-right"}>
+            <Delete
+              index={i}
+              handleDelete={handleDelete}
+              LOCKED={LOCKED}
+            />
+          </Grid>
+          <Grid size={12}>
+            <PickerTime
+              OBJECT={OBJECT}
+              setOBJECT={setOBJECT}
+              REFS={REFS}
+              ERRORS={ERRORS}
+              DATE={DATE}
+              LOCKED={LOCKED}
+              extra={"sleep_goal_bedTime"}
+              i={i}
+            />
+          </Grid>
+          <Grid size={12}>
+            <PickerTime
+              OBJECT={OBJECT}
+              setOBJECT={setOBJECT}
+              REFS={REFS}
+              ERRORS={ERRORS}
+              DATE={DATE}
+              LOCKED={LOCKED}
+              extra={"sleep_goal_wakeTime"}
+              i={i}
+            />
+          </Grid>
+          <Grid size={12}>
+            <PickerTime
+              OBJECT={OBJECT}
+              setOBJECT={setOBJECT}
+              REFS={REFS}
+              ERRORS={ERRORS}
+              DATE={DATE}
+              LOCKED={LOCKED}
+              extra={"sleep_goal_sleepTime"}
+              i={i}
+            />
+          </Grid>
+        </Grid>
       );
       return (
-        <Card className={"p-0"}>
-          <Grid container spacing={0} columns={12}>
-            <Grid size={12} key={`detail-${0}`}>
-              {COUNT?.newSectionCnt > 0 && (
-                detailFragment(OBJECT, 0)
-              )}
-            </Grid>
+        <Grid container spacing={0} columns={12}>
+          <Grid size={12} key={`detail-${0}`}>
+            {COUNT?.newSectionCnt > 0 && detailFragment(OBJECT, 0)}
           </Grid>
-        </Card>
+        </Grid>
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={0} columns={12}>
-          <Grid size={12} className={"d-column-center"}>
+          <Grid size={12} className={"d-col-center"}>
             {dateCountSection()}
             {LOADING ? <Loading /> : detailSection()}
           </Grid>

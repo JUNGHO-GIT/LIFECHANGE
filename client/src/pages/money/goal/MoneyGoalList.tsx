@@ -8,7 +8,7 @@ import { axios, numeral } from "@imports/ImportUtils";
 import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
 import { Div, Img, Hr, Br, Icons } from "@imports/ImportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
-import { Paper, Card, Grid } from "@imports/ImportMuis";
+import { Paper, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const MoneyGoalList = () => {
@@ -132,222 +132,222 @@ export const MoneyGoalList = () => {
   const listNode = () => {
     const listSection = () => {
       const listFragment = (item: any, i: number) => (
-        <Card className={"border-1 radius-1"}>
-          <Accordion className={"shadow-0"} expanded={isExpanded[i].expanded}>
-            <AccordionSummary className={"me-n10"} expandIcon={
-              <Icons
-                key={"ChevronDown"}
-                name={"ChevronDown"}
-                className={"w-18 h-18"}
-                onClick={() => {
-                  setIsExpanded(isExpanded.map((el: any, index: number) => (
-                    i === index ? {
-                      expanded: !el.expanded
-                    } : el
-                  )));
-                }}
-              />
-            }>
-              <Grid container spacing={1} columns={12} onClick={(e: any) => {
-                e.stopPropagation();
-                navigate(toDetail, {
-                  state: {
-                    id: item._id,
-                    dateType: item.money_goal_dateType,
-                    dateStart: item.money_goal_dateStart,
-                    dateEnd: item.money_goal_dateEnd,
-                  }
-                });
-              }}>
-                <Grid size={2} className={"d-row-center"}>
+        <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
+          <Grid size={12} className={"p-2"}>
+            <Accordion expanded={isExpanded[i].expanded}>
+              <AccordionSummary
+                className={"me-n10"}
+                expandIcon={
                   <Icons
-                    key={"Search"}
-                    name={"Search"}
+                    key={"ChevronDown"}
+                    name={"ChevronDown"}
                     className={"w-18 h-18"}
+                    onClick={(e: any) => {
+                      e.stopPropagation();
+                      setIsExpanded(isExpanded.map((el: any, index: number) => (
+                        i === index ? {
+                          expanded: !el.expanded
+                        } : el
+                      )));
+                    }}
                   />
+                }
+                onClick={() => {
+                  navigate(toDetail, {
+                    state: {
+                      id: item._id,
+                      dateType: item.money_goal_dateType,
+                      dateStart: item.money_goal_dateStart,
+                      dateEnd: item.money_goal_dateEnd,
+                    }
+                  });
+                }}
+              >
+                <Grid container spacing={2} columns={12}>
+                  <Grid size={2} className={"d-row-center"}>
+                    <Icons
+                      key={"Search"}
+                      name={"Search"}
+                      className={"w-18 h-18"}
+                    />
+                  </Grid>
+                  <Grid size={10} className={"d-row-left"}>
+                    <Div className={"fs-1-1rem fw-600 black me-5"}>
+                      {item.money_goal_dateStart?.substring(5, 10)}
+                    </Div>
+                    <Div className={"fs-0-9rem fw-500 dark ms-5"}>
+                      {translate(getDayNotFmt(item.money_goal_dateStart).format("ddd"))}
+                    </Div>
+                    <Div className={"fs-1-0rem fw-500 dark ms-10 me-10"}>
+                      ~
+                    </Div>
+                    <Div className={"fs-1-1rem fw-600 black me-5"}>
+                      {item.money_goal_dateEnd?.substring(5, 10)}
+                    </Div>
+                    <Div className={"fs-0-9rem fw-500 dark ms-5"}>
+                      {translate(getDayNotFmt(item.money_goal_dateEnd).format("ddd"))}
+                    </Div>
+                  </Grid>
                 </Grid>
-                <Grid size={10} className={"d-row-left"}>
-                  <Div className={"fs-1-1rem fw-600 black me-5"}>
-                    {item.money_goal_dateStart?.substring(5, 10)}
-                  </Div>
-                  <Div className={"fs-0-9rem fw-500 dark ms-5"}>
-                    {translate(getDayNotFmt(item.money_goal_dateStart).format("ddd"))}
-                  </Div>
-                  <Div className={"fs-1-0rem fw-500 dark ms-10 me-10"}>
-                    ~
-                  </Div>
-                  <Div className={"fs-1-1rem fw-600 black me-5"}>
-                    {item.money_goal_dateEnd?.substring(5, 10)}
-                  </Div>
-                  <Div className={"fs-0-9rem fw-500 dark ms-5"}>
-                    {translate(getDayNotFmt(item.money_goal_dateEnd).format("ddd"))}
-                  </Div>
-                </Grid>
-              </Grid>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Grid container spacing={1} columns={12}>
-                {/** row 1 **/}
-                <Grid size={2} className={"d-row-center"}>
-                  <Img
-                    key={"money2"}
-                    src={"money2"}
-                    className={"w-15 h-15"}
-                  />
-                </Grid>
-                <Grid size={3} className={"d-row-left"}>
-                  <Div className={"fs-0-9rem fw-600 dark"}>
-                    {translate("income")}
-                  </Div>
-                </Grid>
-                <Grid size={7}>
-                  <Grid container spacing={1} columns={12}>
-                    {/** goal **/}
-                    <Grid size={3} className={"d-row-right"}>
-                      <Div className={"fs-0-7rem fw-500 dark"}>
-                        {translate("goal")}
-                      </Div>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container spacing={2} columns={12}>
+                  {/** row 1 **/}
+                  <Grid size={2} className={"d-row-center"}>
+                    <Img
+                      key={"money2"}
+                      src={"money2"}
+                      className={"w-15 h-15"}
+                    />
+                  </Grid>
+                  <Grid size={3} className={"d-row-left"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
+                      {translate("income")}
+                    </Div>
+                  </Grid>
+                  <Grid size={7}>
+                    <Grid container spacing={2} columns={12}>
+                      {/** goal **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("goal")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.money_goal_income_color}`}>
+                          {numeral(item.money_goal_income).format("0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate(localCurrency)}
+                        </Div>
+                      </Grid>
+                      {/** real **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("real")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.money_total_income_color}`}>
+                          {numeral(item.money_total_income).format("0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate(localCurrency)}
+                        </Div>
+                      </Grid>
+                      {/** diff **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("diff")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.money_diff_income_color}`}>
+                          {numeral(item.money_diff_income).format("+0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate(localCurrency)}
+                        </Div>
+                      </Grid>
                     </Grid>
-                    <Grid size={7} className={"d-row-right"}>
-                      <Div className={`${item.money_goal_income_color}`}>
-                        {numeral(item.money_goal_income).format("0,0")}
-                      </Div>
-                    </Grid>
-                    <Grid size={2} className={"d-row-right"}>
-                      <Div className={"fs-0-6rem"}>
-                        {translate(localCurrency)}
-                      </Div>
-                    </Grid>
-                    <Br px={1} />
-                    {/** real **/}
-                    <Grid size={3} className={"d-row-right"}>
-                      <Div className={"fs-0-7rem fw-500 dark"}>
-                        {translate("real")}
-                      </Div>
-                    </Grid>
-                    <Grid size={7} className={"d-row-right"}>
-                      <Div className={`${item.money_total_income_color}`}>
-                        {numeral(item.money_total_income).format("0,0")}
-                      </Div>
-                    </Grid>
-                    <Grid size={2} className={"d-row-right"}>
-                      <Div className={"fs-0-6rem"}>
-                        {translate(localCurrency)}
-                      </Div>
-                    </Grid>
-                    <Br px={1} />
-                    {/** diff **/}
-                    <Grid size={3} className={"d-row-right"}>
-                      <Div className={"fs-0-7rem fw-500 dark"}>
-                        {translate("diff")}
-                      </Div>
-                    </Grid>
-                    <Grid size={7} className={"d-row-right"}>
-                      <Div className={`${item.money_diff_income_color}`}>
-                        {numeral(item.money_diff_income).format("+0,0")}
-                      </Div>
-                    </Grid>
-                    <Grid size={2} className={"d-row-right"}>
-                      <Div className={"fs-0-6rem"}>
-                        {translate(localCurrency)}
-                      </Div>
+                  </Grid>
+                  <Hr px={1} />
+                  {/** row 2 **/}
+                  <Grid size={2} className={"d-row-center"}>
+                    <Img
+                      key={"money2"}
+                      src={"money2"}
+                      className={"w-15 h-15"}
+                    />
+                  </Grid>
+                  <Grid size={3} className={"d-row-left"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
+                      {translate("expense")}
+                    </Div>
+                  </Grid>
+                  <Grid size={7}>
+                    <Grid container spacing={2} columns={12}>
+                      {/** goal **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("goal")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.money_goal_expense_color}`}>
+                          {numeral(item.money_goal_expense).format("0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate(localCurrency)}
+                        </Div>
+                      </Grid>
+                      {/** real **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("real")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.money_total_expense_color}`}>
+                          {numeral(item.money_total_expense).format("0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate(localCurrency)}
+                        </Div>
+                      </Grid>
+                      {/** diff **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("diff")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.money_diff_expense_color}`}>
+                          {numeral(item.money_diff_expense).format("+0,0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate(localCurrency)}
+                        </Div>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
-                <Hr px={10} />
-                {/** row 2 **/}
-                <Grid size={2} className={"d-row-center"}>
-                  <Img
-                    key={"money2"}
-                    src={"money2"}
-                    className={"w-15 h-15"}
-                  />
-                </Grid>
-                <Grid size={3} className={"d-row-left"}>
-                  <Div className={"fs-0-9rem fw-600 dark"}>
-                    {translate("expense")}
-                  </Div>
-                </Grid>
-                <Grid size={7}>
-                  <Grid container spacing={1} columns={12}>
-                    {/** goal **/}
-                    <Grid size={3} className={"d-row-right"}>
-                      <Div className={"fs-0-7rem fw-500 dark"}>
-                        {translate("goal")}
-                      </Div>
-                    </Grid>
-                    <Grid size={7} className={"d-row-right"}>
-                      <Div className={`${item.money_goal_expense_color}`}>
-                        {numeral(item.money_goal_expense).format("0,0")}
-                      </Div>
-                    </Grid>
-                    <Grid size={2} className={"d-row-right"}>
-                      <Div className={"fs-0-6rem"}>
-                        {translate(localCurrency)}
-                      </Div>
-                    </Grid>
-                    <Br px={1} />
-                    {/** real **/}
-                    <Grid size={3} className={"d-row-right"}>
-                      <Div className={"fs-0-7rem fw-500 dark"}>
-                        {translate("real")}
-                      </Div>
-                    </Grid>
-                    <Grid size={7} className={"d-row-right"}>
-                      <Div className={`${item.money_total_expense_color}`}>
-                        {numeral(item.money_total_expense).format("0,0")}
-                      </Div>
-                    </Grid>
-                    <Grid size={2} className={"d-row-right"}>
-                      <Div className={"fs-0-6rem"}>
-                        {translate(localCurrency)}
-                      </Div>
-                    </Grid>
-                    <Br px={1} />
-                    {/** diff **/}
-                    <Grid size={3} className={"d-row-right"}>
-                      <Div className={"fs-0-7rem fw-500 dark"}>
-                        {translate("diff")}
-                      </Div>
-                    </Grid>
-                    <Grid size={7} className={"d-row-right"}>
-                      <Div className={`${item.money_diff_expense_color}`}>
-                        {numeral(item.money_diff_expense).format("+0,0")}
-                      </Div>
-                    </Grid>
-                    <Grid size={2} className={"d-row-right"}>
-                      <Div className={"fs-0-6rem"}>
-                        {translate(localCurrency)}
-                      </Div>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </AccordionDetails>
-          </Accordion>
-        </Card>
+              </AccordionDetails>
+            </Accordion>
+          </Grid>
+        </Grid>
       );
       return (
-        <Card className={"p-0"}>
-          <Grid container spacing={1} columns={12}>
-            {OBJECT?.map((item: any, i: number) => (
-              <Grid size={12} key={`list-${i}`}>
-                {COUNT.totalCnt === 0 ? (
-                  <Empty DATE={DATE} extra={"money"} />
-                ) : (
-                  listFragment(item, i)
-                )}
-              </Grid>
-            ))}
-          </Grid>
-        </Card>
+        <Grid container spacing={0} columns={12}>
+          {OBJECT?.map((item: any, i: number) => (
+            <Grid size={12} key={`list-${i}`}>
+              {COUNT.totalCnt === 0 ? (
+                <Empty DATE={DATE} extra={"money"} />
+              ) : (
+                listFragment(item, i)
+              )}
+            </Grid>
+          ))}
+        </Grid>
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={0} columns={12}>
-          <Grid size={12} className={"d-column-center"}>
+          <Grid size={12} className={"d-col-center"}>
             {LOADING ? <Loading /> : listSection()}
           </Grid>
         </Grid>

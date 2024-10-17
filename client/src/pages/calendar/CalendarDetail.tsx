@@ -8,8 +8,8 @@ import { Calendar } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, Memo, Count, Delete, Input, Select } from "@imports/ImportContainers";
-import { Img, Bg, Br } from "@imports/ImportComponents";
-import { Card, Paper, MenuItem, Grid } from "@imports/ImportMuis";
+import { Img, Bg } from "@imports/ImportComponents";
+import { Paper, MenuItem, Grid } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const CalendarDetail = () => {
@@ -281,164 +281,153 @@ export const CalendarDetail = () => {
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Card className={"border-1 radius-1 p-20"}>
-        <Grid container spacing={1} columns={12}>
-          <Grid size={12}>
-            <PickerDay
-              DATE={DATE}
-              setDATE={setDATE}
-              EXIST={EXIST}
-            />
-          </Grid>
-          <Br px={1} />
-          <Grid size={12}>
-            <Count
-              COUNT={COUNT}
-              setCOUNT={setCOUNT}
-              LOCKED={LOCKED}
-              setLOCKED={setLOCKED}
-              limit={10}
-            />
-          </Grid>
+      <Grid container spacing={2} columns={12} className={"border-1 radius-1 p-20"}>
+        <Grid size={12}>
+          <PickerDay
+            DATE={DATE}
+            setDATE={setDATE}
+            EXIST={EXIST}
+          />
         </Grid>
-      </Card>
+        <Grid size={12}>
+          <Count
+            COUNT={COUNT}
+            setCOUNT={setCOUNT}
+            LOCKED={LOCKED}
+            setLOCKED={setLOCKED}
+            limit={10}
+          />
+        </Grid>
+      </Grid>
     );
     // 7-3. detail
     const detailSection = () => {
       const detailFragment = (item: any, i: number) => (
-        <Card className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
-          <Grid container spacing={1} columns={12}>
-            <Grid size={6} className={"d-row-left"}>
-              <Bg
-                badgeContent={i + 1}
-                bgcolor={bgColors?.[item?.calendar_part_idx]}
-              />
-            </Grid>
-            <Grid size={6} className={"d-row-right"}>
-              <Delete
-                index={i}
-                handleDelete={handleDelete}
-                LOCKED={LOCKED}
-              />
-            </Grid>
-            <Br px={1} />
-            <Grid size={6}>
-              <Select
-                label={translate("part")}
-                locked={LOCKED}
-                inputRef={REFS?.[i]?.calendar_part_idx}
-                error={ERRORS?.[i]?.calendar_part_idx}
-                value={item?.calendar_part_idx ?? 0}
-                onChange={(e: any) => {
-                  const newIndex = Number(e.target.value);
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    calendar_section: prev.calendar_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...item,
-                        calendar_part_idx: newIndex,
-                        calendar_part_val: calendarArray[newIndex]?.calendar_part
-                      } : section
-                    ))
-                  }));
-                }}
-              >
-                {calendarArray?.map((part: any, idx: number) => (
-                  <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
-                    {translate(part?.calendar_part)}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Grid>
-            <Grid size={6}>
-              <Select
-                label={translate("color")}
-                value={item?.calendar_color}
-                inputRef={REFS?.[i]?.calendar_color}
-                error={ERRORS?.[i]?.calendar_color}
-                locked={LOCKED}
-                onChange={(e: any) => {
-                  const newColor = e.target.value;
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    calendar_section: prev.calendar_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...item,
-                        calendar_color: newColor
-                      } : section
-                    ))
-                  }));
-                }}
-              >
-                {calendarColors.map((color: any, idx: number) => (
-                  <MenuItem key={idx} value={color} className={"fs-0-8rem"}>
-                    <span className={color}>●</span>
-                    <span className={"ms-10"}>{color}</span>
-                  </MenuItem>
-                ))}
-              </Select>
-            </Grid>
-            <Br px={1} />
-            <Grid size={12}>
-              <Input
-                label={translate("calendarTitle")}
-                value={item?.calendar_title}
-                inputRef={REFS?.[i]?.calendar_title}
-                error={ERRORS?.[i]?.calendar_title}
-                locked={LOCKED}
-                startadornment={
-                  <Img
-                  	key={"calendar2"}
-                  	src={"calendar2"}
-                  	className={"w-16 h-16"}
-                  />
-                }
-                onChange={(e: any) => {
-                  const newTitle = e.target.value;
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    calendar_section: prev.calendar_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...item,
-                        calendar_title: newTitle
-                      } : section
-                    ))
-                  }));
-                }}
-              />
-            </Grid>
-            <Br px={1} />
-            <Grid size={12}>
-              <Memo
-                OBJECT={OBJECT}
-                setOBJECT={setOBJECT}
-                LOCKED={LOCKED}
-                extra={"calendar_content"}
-                i={i}
-              />
-            </Grid>
+        <Grid container spacing={2} columns={12}
+        className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
+          <Grid size={6} className={"d-row-left"}>
+            <Bg
+              badgeContent={i + 1}
+              bgcolor={bgColors?.[item?.calendar_part_idx]}
+            />
           </Grid>
-        </Card>
+          <Grid size={6} className={"d-row-right"}>
+            <Delete
+              index={i}
+              handleDelete={handleDelete}
+              LOCKED={LOCKED}
+            />
+          </Grid>
+          <Grid size={6}>
+            <Select
+              label={translate("part")}
+              locked={LOCKED}
+              inputRef={REFS?.[i]?.calendar_part_idx}
+              error={ERRORS?.[i]?.calendar_part_idx}
+              value={item?.calendar_part_idx ?? 0}
+              onChange={(e: any) => {
+                const newIndex = Number(e.target.value);
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  calendar_section: prev.calendar_section?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      calendar_part_idx: newIndex,
+                      calendar_part_val: calendarArray[newIndex]?.calendar_part
+                    } : section
+                  ))
+                }));
+              }}
+            >
+              {calendarArray?.map((part: any, idx: number) => (
+                <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
+                  {translate(part?.calendar_part)}
+                </MenuItem>
+              ))}
+            </Select>
+          </Grid>
+          <Grid size={6}>
+            <Select
+              label={translate("color")}
+              value={item?.calendar_color}
+              inputRef={REFS?.[i]?.calendar_color}
+              error={ERRORS?.[i]?.calendar_color}
+              locked={LOCKED}
+              onChange={(e: any) => {
+                const newColor = e.target.value;
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  calendar_section: prev.calendar_section?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      calendar_color: newColor
+                    } : section
+                  ))
+                }));
+              }}
+            >
+              {calendarColors.map((color: any, idx: number) => (
+                <MenuItem key={idx} value={color} className={"fs-0-8rem"}>
+                  <span className={color}>●</span>
+                  <span className={"ms-10"}>{color}</span>
+                </MenuItem>
+              ))}
+            </Select>
+          </Grid>
+          <Grid size={12}>
+            <Input
+              label={translate("calendarTitle")}
+              value={item?.calendar_title}
+              inputRef={REFS?.[i]?.calendar_title}
+              error={ERRORS?.[i]?.calendar_title}
+              locked={LOCKED}
+              startadornment={
+                <Img
+                  key={"calendar2"}
+                  src={"calendar2"}
+                  className={"w-16 h-16"}
+                />
+              }
+              onChange={(e: any) => {
+                const newTitle = e.target.value;
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  calendar_section: prev.calendar_section?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      calendar_title: newTitle
+                    } : section
+                  ))
+                }));
+              }}
+            />
+          </Grid>
+          <Grid size={12}>
+            <Memo
+              OBJECT={OBJECT}
+              setOBJECT={setOBJECT}
+              LOCKED={LOCKED}
+              extra={"calendar_content"}
+              i={i}
+            />
+          </Grid>
+        </Grid>
       );
       return (
-        <Card className={"p-0"}>
-          <Grid container spacing={0} columns={12}>
-            {OBJECT?.calendar_section?.map((item: any, i: number) => (
-              <Grid size={12} key={`detail-${i}`}>
-                {COUNT?.newSectionCnt > 0 && (
-                  detailFragment(item, i)
-                )}
-              </Grid>
-            ))}
-          </Grid>
-        </Card>
+        <Grid container spacing={0} columns={12}>
+          {OBJECT?.calendar_section?.map((item: any, i: number) => (
+            <Grid size={12} key={`detail-${i}`}>
+              {COUNT?.newSectionCnt > 0 && detailFragment(item, i)}
+            </Grid>
+          ))}
+        </Grid>
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         <Grid container spacing={0} columns={12}>
-          <Grid size={12} className={"d-column-center"}>
+          <Grid size={12} className={"d-col-center"}>
             {dateCountSection()}
             {LOADING ? <Loading /> : detailSection()}
           </Grid>
