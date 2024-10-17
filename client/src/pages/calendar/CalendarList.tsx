@@ -182,7 +182,7 @@ export const CalendarList = () => {
 
     // 7-5. calendar
     const calendarSection = () => (
-      <Grid container spacing={0} columns={12} className={"radius-1 border-1"}>
+      <Grid container spacing={0} columns={12}>
         <Grid size={12} className={"d-row-center"}>
           <CalendarReact
             view={"month"}
