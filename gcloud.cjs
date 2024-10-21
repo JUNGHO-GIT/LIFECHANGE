@@ -1,4 +1,4 @@
-// gcloud.ts (server)
+// gcloud.js
 
 const { execSync } = require('child_process');
 const { readFileSync, writeFileSync } = require('fs');
