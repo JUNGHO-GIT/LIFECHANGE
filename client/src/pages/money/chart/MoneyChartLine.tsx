@@ -24,7 +24,7 @@ export const MoneyChartLine = () => {
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [TYPE, setTYPE] = useStorageLocal(
-    `${TITLE}_type_line_(${PATH})`, {
+    TITLE, PATH, "type_line", {
       section: "week",
       line: moneyChartArray,
     }

@@ -7,8 +7,7 @@ import { FoodGoal } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportUtils";
 import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
 import { Div, Img, Hr, Br, Icons } from "@imports/ImportComponents";
-import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
-import { Paper, Grid } from "@imports/ImportMuis";
+import { Paper, Grid, Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodGoalList = () => {
@@ -22,20 +21,20 @@ export const FoodGoalList = () => {
 
   // 2-1. useStorageLocal ------------------------------------------------------------------------
   const [DATE, setDATE] = useStorageLocal(
-    `${TITLE}_date_(${PATH})`, {
+    TITLE, PATH, "date", {
       dateType: location_dateType || "",
       dateStart: location_dateStart || getDayFmt(),
       dateEnd: location_dateEnd || getDayFmt(),
     }
   );
   const [PAGING, setPAGING] = useStorageLocal(
-    `${TITLE}_paging_(${PATH})`, {
+    TITLE, PATH, "paging", {
       sort: "asc",
       page: 1,
     }
   );
   const [isExpanded, setIsExpanded] = useStorageLocal(
-    `${TITLE}_isExpanded_(${PATH})`, [{
+    TITLE, PATH, "isExpanded", [{
       expanded: true
     }]
   );

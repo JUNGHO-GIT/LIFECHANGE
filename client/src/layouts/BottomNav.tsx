@@ -1,7 +1,8 @@
 // BottomNav.tsx
 
-import { useState, useEffect } from "@imports/ImportReacts";
+import { useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
+import { useStorageTest } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { Img } from "@imports/ImportComponents";
 import { BottomNavigation, BottomNavigationAction, Paper, Grid } from "@imports/ImportMuis";
@@ -14,8 +15,12 @@ export const BottomNav = () => {
   const { getDayFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const [selectedTab, setSelectedTab] = useState<string>("today");
+  // 2-1. useStorageTest --------------------------------------------------------------------------
+  const [selectedTab, setSelectedTab] = useStorageTest(
+    TITLE, "tabs", "bottom", (
+      "today"
+    )
+  );
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -44,48 +49,18 @@ export const BottomNav = () => {
     setSelectedTab(value);
 
     // localStorage 에서 값 가져오기
-    let localStorageData = null;
-    const pattern = new RegExp(`^${TITLE}_tabs_\\(${value}\\)$`);
+    const item = localStorage.getItem(TITLE);
+    const tabsItem = item ? JSON.parse(item) : {};
+    const valueToStore = {
+      ...tabsItem,
+      tabs: {
+        bottom: value
+      }
+    };
 
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i) || "";
+    localStorage.setItem(TITLE, JSON.stringify(valueToStore));
 
-      // 값이 있는 경우
-      if (pattern.test(key)) {
-        localStorageData = localStorage.getItem(key);
-        // 큰따옴표 제거
-        if (localStorageData) {
-          localStorageData = localStorageData.replace(/"/g, "");
-        }
-        break;
-      }
-
-      // 값이 없는 경우
-      else {
-        localStorageData = "";
-      }
-    }
-
-    let url = "";
-    if (localStorageData) {
-      if (localStorageData === "real" || localStorageData === "schedule") {
-        url = `${value}/list`;
-      }
-      else if (localStorageData === "find") {
-        url = `${value}/find/list`;
-      }
-      else if (localStorageData === "favorite") {
-        url = `${value}/favorite/list`;
-      }
-      else {
-        url = `${value}/${localStorageData}/list`;
-      }
-    }
-    else {
-      url = `${value}/list`;
-    }
-
-    navigate(url, {
+    navigate(`/${value}/list`, {
       state: {
         dateType: "",
         dateStart: getDayFmt(),

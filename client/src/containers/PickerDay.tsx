@@ -52,7 +52,9 @@ export const PickerDay = (
 
   // 2-1. useStorageLocal ------------------------------------------------------------------------
   const [listType, setListType] = useStorageLocal(
-    `${TITLE}_listType_(${PATH})`, "month"
+    TITLE, PATH, "listType", (
+      "month"
+    )
   );
   const [saveType, setSaveType] = useState<string>("");
 

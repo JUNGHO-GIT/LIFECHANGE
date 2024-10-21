@@ -22,14 +22,14 @@ export const FoodFavoriteList = () => {
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [PAGING, setPAGING] = useStorageLocal(
-    `${TITLE}_paging_(${PATH})`, {
+    TITLE, PATH, "paging", {
       sort: "asc",
       query: "favorite",
       page: 0,
     }
   );
   const [isExpanded, setIsExpanded] = useStorageLocal(
-    `${TITLE}_isExpanded_(${PATH})`, [{
+    TITLE, PATH, "isExpanded", [{
       expanded: true
     }]
   );

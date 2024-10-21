@@ -7,8 +7,7 @@ import { Exercise, Food, Money, Sleep } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportUtils";
 import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
 import { Div, Hr, Br, Img, Icons } from "@imports/ImportComponents";
-import { Paper, Grid } from "@imports/ImportMuis";
-import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
+import { Paper, Grid, Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const TodayList = () => {
@@ -21,20 +20,20 @@ export const TodayList = () => {
 
   // 2-1. useStorageLocal ------------------------------------------------------------------------
   const [DATE, setDATE] = useStorageLocal(
-    `${TITLE}_date_(${PATH})`, {
+    TITLE, PATH, "date", {
       dateType: "day",
       dateStart: getDayFmt(),
       dateEnd: getDayFmt(),
     }
   );
   const [PAGING, setPAGING] = useStorageLocal(
-    `${TITLE}_paging_(${PATH})`, {
+    TITLE, PATH, "paging", {
       sort: "asc",
       page: 1,
     }
   );
   const [isExpanded, setIsExpanded] = useStorageLocal(
-    `${TITLE}_isExpanded_(${PATH})`, {
+    TITLE, PATH, "isExpanded", {
       exercise: [{
         expended: true,
       }],

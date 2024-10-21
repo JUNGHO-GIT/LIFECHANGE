@@ -1,13 +1,13 @@
-// useStorageSession.tsx
+// useStorageTest.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
 
 // -------------------------------------------------------------------------------------------------
-export const useStorageSession = (title: string, key1: string, key2: string, initialVal: any) => {
+export const useStorageTest = (title: string, key1: string, key2: string, initialVal: any) => {
 
   // -----------------------------------------------------------------------------------------------
   const getInitialValue = () => {
-    const item = sessionStorage.getItem(title);
+    const item = localStorage.getItem(title);
     const key1Item = item && JSON.parse(item);
     const key2Item = key1Item && key1Item[key1];
     const value = key2Item && key2Item[key2];
@@ -20,7 +20,7 @@ export const useStorageSession = (title: string, key1: string, key2: string, ini
 
   // -----------------------------------------------------------------------------------------------
   useEffect(() => {
-    const item = sessionStorage.getItem(title);
+    const item = localStorage.getItem(title);
     const key1Item = item && JSON.parse(item);
     const key2Item = key1Item && key1Item[key1];
     const valueToStore = {
@@ -31,7 +31,7 @@ export const useStorageSession = (title: string, key1: string, key2: string, ini
       }
     };
 
-    sessionStorage.setItem(title, JSON.stringify(valueToStore));
+    localStorage.setItem(title, JSON.stringify(valueToStore));
 
   }, [title, key1, key2, storedVal]);
 

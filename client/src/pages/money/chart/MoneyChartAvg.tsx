@@ -24,7 +24,7 @@ export const MoneyChartAvg = () => {
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [TYPE, setTYPE] = useStorageLocal(
-    `${TITLE}_type_avg_(${PATH})`, {
+    TITLE, PATH, "type_avg", {
       section: "week",
       line: moneyChartArray,
     }

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
+import { useStorageTest } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { numeral } from "@imports/ImportUtils";
 import { PopUp, Input } from "@imports/ImportContainers";
@@ -16,6 +17,13 @@ export const TopNav = () => {
   const { navigate, sessionPercent, sessionProperty, sessionScale } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
+
+  // 2-1. useStorageTest --------------------------------------------------------------------------
+  const [selectedTab, setSelectedTab] = useStorageTest(
+    TITLE, "tabs", "top", {
+      [firstStr]: "chart",
+    }
+  );
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [percent, setPercent] = useState<any>({
@@ -60,7 +68,6 @@ export const TopNav = () => {
   });
   const [includingExclusions, setIncludingExclusions] = useState<boolean>(false);
   const [mainSmileImage, setMainSmileImage] = useState<any>("smile3");
-  const [selectedTab, setSelectedTab] = useState<string>("chart");
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 스마일 지수 계산
@@ -165,56 +172,81 @@ export const TopNav = () => {
     // 1. calendar
     if (firstStr === "calendar") {
       if (secondStr === "list" || secondStr === "detail") {
-        setSelectedTab("schedule");
+        setSelectedTab({
+          [firstStr]: "schedule",
+        });
       }
     }
     // 2. today
     else if (firstStr === "today") {
       if (secondStr === "goal") {
-        setSelectedTab("goal");
+        setSelectedTab({
+          [firstStr]: "goal",
+        });
       }
       else if (secondStr === "list" || secondStr === "detail") {
-        setSelectedTab("real");
+        setSelectedTab({
+          [firstStr]: "real",
+        });
       }
     }
     // 3. food
     else if (firstStr === "food") {
       if (secondStr === "chart") {
-        setSelectedTab("chart");
+        setSelectedTab([
+          firstStr, "chart"
+        ]);
       }
       else if (secondStr === "goal") {
-        setSelectedTab("goal");
+        setSelectedTab({
+          [firstStr]: "goal",
+        });
       }
       else if (secondStr === "list" || secondStr === "detail") {
-        setSelectedTab("real");
+        setSelectedTab({
+          [firstStr]: "real",
+        });
       }
       else if (secondStr === "find") {
-        setSelectedTab("find");
+        setSelectedTab({
+          [firstStr]: "find",
+        });
       }
       else if (secondStr === "favorite") {
-        setSelectedTab("favorite");
+        setSelectedTab({
+          [firstStr]: "favorite",
+        });
       }
     }
-    // 3. exercise, money, sleep
+    // 4. exercise, money, sleep
     else if (firstStr === "exercise" || firstStr === "money" || firstStr === "sleep") {
       if (secondStr === "chart") {
-        setSelectedTab("chart");
+        setSelectedTab([
+          firstStr, "chart"
+        ]);
       }
       else if (secondStr === "goal") {
-        setSelectedTab("goal");
+        setSelectedTab({
+          [firstStr]: "goal",
+        });
       }
       else if (secondStr === "list" || secondStr === "detail") {
-        setSelectedTab("real");
+        setSelectedTab({
+          [firstStr]: "real",
+        });
       }
     }
-  }, [PATH]);
+  }, [firstStr, secondStr]);
 
   // 4. handle------------------------------------------------------------------------------------
   const handleClickTobNav = (value: string) => {
-    setSelectedTab(value);
-
-    // localStorage 에 저장
-    localStorage.setItem(`${TITLE}_tabs_(${firstStr})`, JSON.stringify(value));
+    setSelectedTab((prev: any) => ({
+      ...prev,
+      tabs: {
+        ...prev.tabs,
+        top: value
+      }
+    }));
 
     let url = "";
     if (value === "real" || value === "schedule") {
@@ -604,7 +636,7 @@ export const TopNav = () => {
     // 4. tabs
     const tabsSection = () => (
       <Tabs
-        value={selectedTab || "chart" || "goal" || "real" || "schedule" || "find" || "favorite"}
+        value={selectedTab[firstStr]}
         variant={"scrollable"}
         selectionFollowsFocus={true}
         scrollButtons={false}

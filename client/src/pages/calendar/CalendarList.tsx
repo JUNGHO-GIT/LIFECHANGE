@@ -24,14 +24,14 @@ export const CalendarList = () => {
 
   // 2-1. useStorageLocal ------------------------------------------------------------------------
   const [DATE, setDATE] = useStorageLocal(
-    `${TITLE}_date_(${PATH})`, {
+    TITLE, PATH, "date", {
       dateType: "",
       dateStart: getMonthStartFmt(),
       dateEnd: getMonthEndFmt(),
     }
   );
   const [PAGING, _setPAGING] = useStorageLocal(
-    `${TITLE}_paging_(${PATH})`, {
+    TITLE, PATH, "paging", {
       sort: "asc",
       page: 1,
     }

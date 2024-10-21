@@ -24,7 +24,7 @@ export const SleepChartLine = () => {
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [TYPE, setTYPE] = useStorageLocal(
-    `${TITLE}_type_(${PATH})`, {
+    TITLE, PATH, "type_line", {
       section: "week",
       line: sleepChartArray,
     }

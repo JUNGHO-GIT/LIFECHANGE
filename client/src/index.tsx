@@ -11,7 +11,7 @@ import "@styles/Jstyle.css";
 import "./index.css";
 
 import {
-  useLocation, BrowserRouter, Routes, Route, StrictMode, createRoot
+  useLocation, BrowserRouter, Routes, Route, createRoot
 } from "@imports/ImportReacts";
 
 import {
@@ -193,12 +193,10 @@ const theme = createTheme({
 
 const root = createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <StrictMode>
-    <BrowserRouter basename={"/JPAGE"}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <App />
-      </ThemeProvider>
-    </BrowserRouter>
-  </StrictMode>
+  <BrowserRouter basename={"/JPAGE"}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <App />
+    </ThemeProvider>
+  </BrowserRouter>
 );

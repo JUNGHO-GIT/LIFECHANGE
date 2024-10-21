@@ -23,7 +23,7 @@ export const FoodChartBar = () => {
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [TYPE, setTYPE] = useStorageLocal(
-    `${TITLE}_type_bar_(${PATH})`, {
+    TITLE, PATH, "type_bar", {
       section: "today",
       line: "kcal",
     }

@@ -33,7 +33,7 @@ export const SleepChartPie = () => {
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [TYPE, setTYPE] = useStorageLocal(
-    `${TITLE}_type_pie_(${PATH})`, {
+    TITLE, PATH, "type_pie", {
       section: "week",
       line: "",
     }

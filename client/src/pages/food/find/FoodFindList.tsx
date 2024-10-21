@@ -23,7 +23,7 @@ export const FoodFindList = () => {
 
   // 2-1. useStorageSession ------------------------------------------------------------------------
   const [PAGING, setPAGING] = useStorageSession(
-    `${TITLE}_paging_(${PATH})`, {
+    TITLE, PATH, "paging", {
       sort: "asc",
       query: "",
       page: 0,
@@ -32,7 +32,7 @@ export const FoodFindList = () => {
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [isExpanded, setIsExpanded] = useStorageLocal(
-    `${TITLE}_isExpanded_(${PATH})`, [{
+    TITLE, PATH, "isExpanded", [{
       expanded: true
     }]
   );

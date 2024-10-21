@@ -8,6 +8,7 @@ import { useScrollTop } from "@hooks/useScrollTop";
 import { useFoodSection } from "@hooks/useFoodSection";
 import { useStorageSession } from "@hooks/useStorageSession";
 import { useStorageLocal } from "@hooks/useStorageLocal";
+import { useStorageTest } from "@hooks/useStorageTest";
 import { useTime } from "@hooks/useTime";
 import { useLocaleSetting } from "@hooks/useLocaleSetting";
 
@@ -21,6 +22,7 @@ export {
   useFoodSection,
   useStorageSession,
   useStorageLocal,
+  useStorageTest,
   useTime,
   useLocaleSetting,
 };

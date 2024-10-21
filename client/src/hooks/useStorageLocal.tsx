@@ -1,66 +1,43 @@
 // useStorageLocal.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { parseISO, formatISO } from "@imports/ImportUtils";
 
 // -------------------------------------------------------------------------------------------------
-export const useStorageLocal = (key: string, initialVal: any) => {
-
-  // -----------------------------------------------------------------------------------------------
-  const datePattern = new RegExp("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}");
+export const useStorageLocal = (title: string, key1: string, key2: string, initialVal: any) => {
 
   // -----------------------------------------------------------------------------------------------
   const getInitialValue = () => {
-    if (typeof localStorage === "undefined") {
-      return initialVal;
-    }
+    const item = localStorage.getItem(title);
+    const key1Item = item && JSON.parse(item);
+    const key2Item = key1Item && key1Item[key1];
+    const value = key2Item && key2Item[key2];
 
-    const item = localStorage.getItem(key);
+    return value || initialVal;
+  }
 
-    if (item === null) {
-      return initialVal;
-    }
-
-    if (datePattern.test(item.trim())) {
-      const parsedDate = parseISO(item);
-      return isNaN(parsedDate.getTime()) ? initialVal : parsedDate;
-    }
-
-    try {
-      const parsed = JSON.parse(item);
-      return parsed !== undefined ? parsed : initialVal;
-    }
-    catch (err: any) {
-      console.error("Failed to parse localStorage item:", err);
-      return initialVal;
-    }
-  };
-
+  // -----------------------------------------------------------------------------------------------
   const [storedVal, setStoredVal] = useState<any>(getInitialValue);
 
   // -----------------------------------------------------------------------------------------------
   useEffect(() => {
-    const saveToSessionStorage = () => {
-      if (typeof localStorage === "undefined") {
-        console.warn("localStorage is not available.");
-        return;
-      }
-
-      try {
-        const valueToStore = storedVal instanceof Date && !isNaN(storedVal.getTime())
-        ? formatISO(storedVal)
-        : JSON.stringify(storedVal);
-
-        localStorage.setItem(key, valueToStore);
-      }
-      catch (err: any) {
-        console.error("Failed to save to localStorage:", err);
+    const item = localStorage.getItem(title);
+    const key1Item = item && JSON.parse(item);
+    const key2Item = key1Item && key1Item[key1];
+    const valueToStore = {
+      ...key1Item,
+      [key1]: {
+        ...key2Item,
+        [key2]: storedVal
       }
     };
 
-    saveToSessionStorage();
-  }, [key, storedVal]);
+    localStorage.setItem(title, JSON.stringify(valueToStore));
+
+  }, [title, key1, key2, storedVal]);
 
   // -----------------------------------------------------------------------------------------------
-  return [storedVal, setStoredVal];
+  return [
+    storedVal,
+    setStoredVal
+  ];
 };
