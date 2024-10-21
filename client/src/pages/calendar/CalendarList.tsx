@@ -279,8 +279,8 @@ export const CalendarList = () => {
               ));
               const content = (
                 calendarForDates.length > 0
-                  ? activeLine(calendarForDates)
-                  : unActiveLine(calendarForDates)
+                ? activeLine(calendarForDates)
+                : unActiveLine(calendarForDates)
               );
               return content;
             }}

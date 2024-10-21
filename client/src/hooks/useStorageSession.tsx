@@ -61,5 +61,6 @@ export const useStorageSession = (key: string, initialVal: any) => {
     saveToSessionStorage();
   }, [key, storedVal]);
 
+  // -----------------------------------------------------------------------------------------------
   return [storedVal, setStoredVal];
 };

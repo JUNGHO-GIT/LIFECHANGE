@@ -1,7 +1,8 @@
 // TodayGoalList.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useStorageLocal } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
+import { useStorageSession, useStorageLocal } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { ExerciseGoal, FoodGoal, MoneyGoal, SleepGoal } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportUtils";
@@ -19,14 +20,16 @@ export const TodayGoalList = () => {
   const { getDayFmt, getDayNotFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
-  // 2-1. useStorageLocal ------------------------------------------------------------------------
-  const [DATE, setDATE] = useStorageLocal(
+  // 2-1. useStorageSession ------------------------------------------------------------------------
+  const [DATE, setDATE] = useStorageSession(
     `${TITLE}_date_(${PATH})`, {
       dateType: "",
       dateStart: getDayFmt(),
       dateEnd: getDayFmt(),
     }
   );
+
+  // 2-2. useStorageLocal --------------------------------------------------------------------------
   const [PAGING, setPAGING] = useStorageLocal(
     `${TITLE}_paging_(${PATH})`, {
       sort: "asc",
