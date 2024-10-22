@@ -21,7 +21,7 @@ export const Count = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { PATH, localLocale } = useCommonValue();
+  const { PATH, localLang } = useCommonValue();
   const { translate } = useLanguageStore();
   const { ALERT, setALERT } = useAlertStore();
 
@@ -100,7 +100,7 @@ export const Count = (
                         open: !ALERT.open,
                         severity: "error",
                         msg: (
-                          localLocale === "ko"
+                          localLang === "ko"
                           ? `${COUNT.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
                           : `Please enter ${COUNT.sectionCnt} or more and ${limit} or less.`
                         ),
@@ -134,7 +134,7 @@ export const Count = (
                         open: !ALERT.open,
                         severity: "error",
                         msg: (
-                          localLocale === "ko"
+                          localLang === "ko"
                           ? `${COUNT.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
                           : `Please enter ${COUNT.sectionCnt} or more and ${limit} or less.`
                         ),

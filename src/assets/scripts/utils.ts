@@ -1,9 +1,9 @@
 // utils.ts
 
-import dotenv from "dotenv";
-dotenv.config();
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
+import dotenv from "dotenv";
+dotenv.config();
 
 // 1-1. number -------------------------------------------------------------------------------------
 export const randomNumber = (data: number) => {

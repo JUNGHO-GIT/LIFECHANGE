@@ -2,7 +2,7 @@
 
 import { useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
-import { useStorageTest } from "@imports/ImportHooks";
+import { useStorageLocal } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { Img } from "@imports/ImportComponents";
 import { BottomNavigation, BottomNavigationAction, Paper, Grid } from "@imports/ImportMuis";
@@ -15,52 +15,53 @@ export const BottomNav = () => {
   const { getDayFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
-  // 2-1. useStorageTest --------------------------------------------------------------------------
-  const [selectedTab, setSelectedTab] = useStorageTest(
-    TITLE, "tabs", "bottom", (
-      "today"
-    )
+  // 2-1. useStorageLocal --------------------------------------------------------------------------
+  const [selectedTab, setSelectedTab] = useStorageLocal(
+    TITLE, "tabs", "bottom", {
+      exercise: false,
+      food: false,
+      today: false,
+      calendar: false,
+      money: false,
+      sleep: false,
+    }
   );
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (firstStr === "calendar") {
-      setSelectedTab("calendar");
-    }
-    else if (firstStr === "today") {
-      setSelectedTab("today");
-    }
-    else if (firstStr === "exercise") {
-      setSelectedTab("exercise");
-    }
-    else if (firstStr === "food") {
-      setSelectedTab("food");
-    }
-    else if (firstStr === "money") {
-      setSelectedTab("money");
-    }
-    else if (firstStr === "sleep") {
-      setSelectedTab("sleep");
-    }
+    setSelectedTab((prev: any) => ({
+      ...Object.keys(prev).reduce((acc: any, key: string) => {
+        acc[key] = key === firstStr;
+        return acc;
+      }, {})
+    }));
   }, [firstStr]);
 
   // 4. handle------------------------------------------------------------------------------------
   const handleClickBottomNav = (value: string) => {
-    setSelectedTab(value);
 
-    // localStorage 에서 값 가져오기
+    // value 만 true 로 설정하고 나머지 다 false 로 설정
+    setSelectedTab((prev: any) => ({
+      ...Object.keys(prev).reduce((acc: any, key: string) => {
+        acc[key] = key === value;
+        return acc;
+      }, {})
+    }));
+
+    // top selected 값 가져오기
     const item = localStorage.getItem(TITLE);
     const tabsItem = item ? JSON.parse(item) : {};
-    const valueToStore = {
-      ...tabsItem,
-      tabs: {
-        bottom: value
-      }
-    };
+    const selectedTop = tabsItem?.tabs?.top?.[value];
 
-    localStorage.setItem(TITLE, JSON.stringify(valueToStore));
+    let url = "";
+    if (selectedTop === "real" || selectedTop === "schedule") {
+      url = `/${value}/list`;
+    }
+    else {
+      url = `/${value}/${selectedTop}/list`;
+    }
 
-    navigate(`/${value}/list`, {
+    navigate(url, {
       state: {
         dateType: "",
         dateStart: getDayFmt(),
@@ -72,11 +73,11 @@ export const BottomNav = () => {
   // 7. bottomNav ----------------------------------------------------------------------------------
   const bottomNavNode = () => {
 
-    // 1. tabsSection
+    // 7-1. tabsSection
     const tabsSection = () => (
       <BottomNavigation
         showLabels={true}
-        value={selectedTab}
+        value={firstStr}
         className={"w-100p"}
       >
         <BottomNavigationAction
@@ -166,7 +167,7 @@ export const BottomNav = () => {
       </BottomNavigation>
     );
 
-    // 2. return
+    // 7-2. return
     return (
       <Paper className={"layout-wrapper p-sticky bottom-0vh h-8vh border-1 radius-1 shadow-bottom-1"}>
         <Grid container spacing={0} columns={12}>

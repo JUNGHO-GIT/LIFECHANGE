@@ -24,7 +24,7 @@ export const UserCategory = () => {
 
   // 2-1. useStorageLocal ------------------------------------------------------------------------
   const [DATE, setDATE] = useStorageLocal(
-    TITLE, PATH, "date", {
+    TITLE, "date", PATH, {
       dateType: location_dateType || "day",
       dateStart: location_dateStart || getDayFmt(),
       dateEnd: location_dateEnd || getDayFmt(),

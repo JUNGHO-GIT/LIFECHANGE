@@ -1,7 +1,6 @@
 // googleRepository.ts
 
 import mongoose from "mongoose";
-import { newDate } from "@scripts/date";
 import { User } from "@schemas/user/User";
 
 // 1. find -----------------------------------------------------------------------------------------
@@ -34,7 +33,7 @@ export const createUser = async (
     user_initProperty: "0",
     user_curPropertyExclude: "",
     user_image: "",
-    user_regDt: newDate,
+    user_regDt: new Date(),
     user_updateDt: "",
   });
 

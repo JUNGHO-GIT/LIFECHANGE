@@ -24,7 +24,7 @@ export const SleepChartAvg = () => {
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [TYPE, setTYPE] = useStorageLocal(
-    TITLE, PATH, "type_avg", {
+    TITLE, "typeAvg", PATH, {
       section: "week",
       line: sleepChartArray,
     }

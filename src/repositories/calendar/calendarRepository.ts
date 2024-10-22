@@ -2,7 +2,6 @@
 
 import mongoose from "mongoose";
 import { Calendar } from "@schemas/calendar/Calendar";
-import { newDate } from "@scripts/date";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
@@ -151,7 +150,7 @@ export const create = async (
       calendar_dateStart: dateStart_param,
       calendar_dateEnd: dateEnd_param,
       calendar_section: OBJECT_param.calendar_section,
-      calendar_regDt: newDate,
+      calendar_regDt: new Date(),
       calendar_updateDt: "",
     }
   );
@@ -212,7 +211,7 @@ export const update = {
       },
       {
         $set: {
-          calendar_updateDt: newDate,
+          calendar_updateDt: new Date(),
         },
         $push: {
           calendar_section: OBJECT_param.calendar_section
@@ -279,7 +278,7 @@ export const insert = async (
     },
     {
       $set: {
-        calendar_updateDt: newDate,
+        calendar_updateDt: new Date(),
       },
       $push: {
         calendar_section: OBJECT_param.calendar_section

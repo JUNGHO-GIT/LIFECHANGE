@@ -1,7 +1,8 @@
 // TodayList.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useStorageLocal } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
+import { useStorageSession, useStorageLocal } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { Exercise, Food, Money, Sleep } from "@imports/ImportSchemas";
 import { axios, numeral } from "@imports/ImportUtils";
@@ -18,22 +19,24 @@ export const TodayList = () => {
   const { getDayFmt, getDayNotFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
-  // 2-1. useStorageLocal ------------------------------------------------------------------------
-  const [DATE, setDATE] = useStorageLocal(
-    TITLE, PATH, "date", {
+  // 2-1. useStorageSession ------------------------------------------------------------------------
+  const [DATE, setDATE] = useStorageSession(
+    TITLE, "date", PATH, {
       dateType: "day",
       dateStart: getDayFmt(),
       dateEnd: getDayFmt(),
     }
   );
-  const [PAGING, setPAGING] = useStorageLocal(
-    TITLE, PATH, "paging", {
+
+  // 2-2. useStorageLocal --------------------------------------------------------------------------
+  const [PAGING, _setPAGING] = useStorageLocal(
+    TITLE, "paging", PATH, {
       sort: "asc",
       page: 1,
     }
   );
   const [isExpanded, setIsExpanded] = useStorageLocal(
-    TITLE, PATH, "isExpanded", {
+    TITLE, "isExpanded", PATH, {
       exercise: [{
         expended: true,
       }],

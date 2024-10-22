@@ -16,6 +16,7 @@ export const UserLogin = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, URL_GOOGLE, ADMIN_ID, ADMIN_PW, TITLE, navigate } = useCommonValue();
+  const { sessionTitle, localTitle } = useCommonValue();
   const { translate } = useLanguageStore();
   const { ALERT, setALERT } = useAlertStore();
   const { ERRORS, REFS, validate } = useValidateUser();
@@ -23,7 +24,7 @@ export const UserLogin = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [loginTrigger, setLoginTrigger] = useState<boolean>(false);
-  const [clickCount, setClickCount] = useState<number>(0);
+  const [_clickCount, setClickCount] = useState<number>(0);
   const [checkedSaveId, setCheckedSaveId] = useState<boolean>(false);
   const [checkedAutoLogin, setCheckedAutoLogin] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>(User);
@@ -40,30 +41,44 @@ export const UserLogin = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 자동로그인 활성화된 경우
   useEffect(() => {
-    if (checkedAutoLogin) {
-      localStorage.setItem(`${TITLE}_autoLogin`, "true");
-      localStorage.setItem(`${TITLE}_autoLoginId`, OBJECT.user_id);
-      localStorage.setItem(`${TITLE}_autoLoginPw`, OBJECT.user_pw);
-    }
+    localStorage.setItem(TITLE, JSON.stringify({
+      ...localTitle,
+      setting: {
+        ...localTitle?.setting,
+        id: {
+          ...localTitle?.setting?.id,
+          autoLogin: checkedAutoLogin ? "true" : "false",
+          autoLoginId: OBJECT.user_id,
+          autoLoginPw: OBJECT.user_pw,
+        },
+      },
+    }));
   }, [checkedAutoLogin, OBJECT.user_id, OBJECT.user_pw]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 아이디 저장 활성화된 경우
   useEffect(() => {
-    if (checkedSaveId) {
-      localStorage.setItem(`${TITLE}_isLocalSaved`, "true");
-      localStorage.setItem(`${TITLE}_localId`, OBJECT.user_id);
-    }
+    localStorage.setItem(TITLE, JSON.stringify({
+      ...localTitle,
+      setting: {
+        ...localTitle?.setting,
+        id: {
+          ...localTitle?.setting?.id,
+          idSaved: checkedSaveId ? "true" : "false",
+          localId: OBJECT.user_id,
+        },
+      },
+    }));
   }, [checkedSaveId, OBJECT.user_id]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 초기 로드 시 로컬 저장소에서 사용자 정보 가져오기
   useEffect(() => {
-    const autoLogin = localStorage.getItem(`${TITLE}_autoLogin`);
-    const autoLoginId = localStorage.getItem(`${TITLE}_autoLoginId`);
-    const autoLoginPw = localStorage.getItem(`${TITLE}_autoLoginPw`);
-    const isLocalSaved = localStorage.getItem(`${TITLE}_isLocalSaved`);
-    const localId = localStorage.getItem(`${TITLE}_localId`);
+    const autoLogin = localTitle?.setting?.id?.autoLogin;
+    const autoLoginId = localTitle?.setting?.id?.autoLoginId;
+    const autoLoginPw = localTitle?.setting?.id?.autoLoginPw;
+    const idSaved = localTitle?.setting?.id?.idSaved;
+    const localId = localTitle?.setting?.id?.localId;
 
     // 자동로그인인 경우
     if (autoLogin === "true") {
@@ -79,7 +94,7 @@ export const UserLogin = () => {
     }
 
     // 아이디 저장한 경우
-    if (isLocalSaved === "true") {
+    if (idSaved === "true") {
       setCheckedSaveId(true);
       if (localId) {
         setOBJECT((prev: any) => ({
@@ -104,21 +119,31 @@ export const UserLogin = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
+
         // localStorage
-        if (checkedSaveId) {
-          localStorage.setItem(`${TITLE}_localId`, OBJECT.user_id);
-        }
-        localStorage.setItem(`${TITLE}_isGoogle`, "false");
+        localStorage.setItem(TITLE, JSON.stringify({
+          ...localTitle,
+          setting: {
+            ...localTitle?.setting,
+            id: {
+              ...localTitle?.setting?.id,
+              localId: checkedSaveId ? OBJECT.user_id : ""
+            },
+          },
+        }));
 
         // sessionStorage
-        if (res.data.admin === "admin") {
-          sessionStorage.setItem(`${TITLE}_admin`, "true");
-        }
-        else {
-          sessionStorage.setItem(`${TITLE}_admin`, "false");
-        }
-        sessionStorage.setItem(`${TITLE}_sessionId`, res.data.result.user_id);
-        sessionStorage.setItem(`${TITLE}_category`, JSON.stringify(res.data.result.user_dataCategory));
+        sessionStorage.setItem(TITLE, JSON.stringify({
+          ...sessionTitle,
+          setting: {
+            ...sessionTitle?.setting,
+            id: {
+              ...sessionTitle?.setting?.id,
+              sessionId: res.data.result.user_id,
+              admin: res.data.result.admin === "admin" ? "true" : "false",
+            },
+          },
+        }));
         sync();
         navigate("/today/list");
       }
@@ -128,7 +153,16 @@ export const UserLogin = () => {
           msg: translate(res.data.msg),
           severity: "error",
         });
-        sessionStorage.setItem(`${TITLE}_sessionId`, "");
+        sessionStorage.setItem(TITLE, JSON.stringify({
+          ...sessionTitle,
+          setting: {
+            ...sessionTitle?.setting,
+            id: {
+              ...sessionTitle?.setting?.id,
+              sessionId: "",
+            },
+          },
+        }));
       }
       else {
         setALERT({
@@ -136,7 +170,16 @@ export const UserLogin = () => {
           msg: translate(res.data.msg),
           severity: "error",
         });
-        sessionStorage.setItem(`${TITLE}_sessionId`, "");
+        sessionStorage.setItem(TITLE, JSON.stringify({
+          ...sessionTitle,
+          setting: {
+            ...sessionTitle?.setting,
+            id: {
+              ...sessionTitle?.setting?.id,
+              sessionId: "",
+            },
+          },
+        }));
       }
     })
     .catch((err: any) => {

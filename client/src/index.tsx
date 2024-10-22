@@ -19,7 +19,7 @@ import {
 } from "@imports/ImportMuis";
 
 import {
-  useRoot, useScrollTop, useFoodSection, useLocaleSetting, useInitializeLanguage
+  useRoot, useScrollTop, useFoodSection, useLanguageSetting, useLanguageInitialize
 } from "@imports/ImportHooks";
 
 import {
@@ -141,10 +141,10 @@ const Auth = () => (
 const App = () => {
 
   useRoot();
-  useLocaleSetting();
   useScrollTop();
   useFoodSection();
-  useInitializeLanguage();
+  useLanguageInitialize();
+  useLanguageSetting();
 
   const location = useLocation();
   const noneHeader = (

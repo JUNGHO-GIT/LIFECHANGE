@@ -33,7 +33,7 @@ export const UserDummy = () => {
   const [OBJECT_SLEEP_GOAL, setOBJECT_SLEEP_GOAL] = useState<any>([SleepGoal]);
   const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState<any>([Sleep]);
   const [PAGING, setPAGING] = useStorageLocal(
-    TITLE, PATH, "paging", {
+    TITLE, "paging", PATH, {
       sort: "asc",
       page: 1,
     }

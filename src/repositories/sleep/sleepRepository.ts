@@ -2,7 +2,6 @@
 
 import mongoose from "mongoose";
 import { Sleep } from "@schemas/sleep/Sleep";
-import { newDate } from "@scripts/date";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
@@ -163,7 +162,7 @@ export const create = async (
       sleep_dateStart: dateStart_param,
       sleep_dateEnd: dateEnd_param,
       sleep_section: OBJECT_param.sleep_section,
-      sleep_regDt: newDate,
+      sleep_regDt: new Date(),
       sleep_updateDt: "",
     }
   );
@@ -193,7 +192,7 @@ export const update = {
       {
         $set: {
           sleep_section: OBJECT_param.sleep_section,
-          sleep_updateDt: newDate,
+          sleep_updateDt: new Date(),
         },
       },
       {
@@ -225,7 +224,7 @@ export const update = {
       {
         $set: {
           sleep_section: OBJECT_param.sleep_section,
-          sleep_updateDt: newDate,
+          sleep_updateDt: new Date(),
         },
       },
       {
@@ -257,7 +256,7 @@ export const update = {
       {
         $set: {
           sleep_section: OBJECT_param.sleep_section,
-          sleep_updateDt: newDate,
+          sleep_updateDt: new Date(),
         },
       },
       {

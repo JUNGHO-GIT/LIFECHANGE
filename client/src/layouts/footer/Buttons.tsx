@@ -18,17 +18,19 @@ export const Buttons = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { PATH, toFind, toFavorite, navigate } = useCommonValue();
+  const { TITLE, PATH, toFind, toFavorite, sessionTitle, navigate } = useCommonValue();
   const { translate } = useLanguageStore();
 
-  // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = async (type: string) => {
+  // 3. handler ------------------------------------------------------------------------------------
+  const handleSave = (type: string) => {
     flow?.flowSave(type);
-    Object.keys(sessionStorage).forEach((key) => {
-      if (key.includes("foodSection") || key.includes("paging")) {
-        sessionStorage.removeItem(key);
+    sessionStorage.setItem(TITLE, JSON.stringify({
+      ...sessionTitle,
+      section: {
+        ...sessionTitle?.section,
+        food: []
       }
-    });
+    }));
   };
 
   // 7. btn ----------------------------------------------------------------------------------------
@@ -97,7 +99,7 @@ export const Buttons = (
                 variant={"text"}
                 className={"fs-1-2rem fw-600 ms-1vw me-1vw"}
                 onClick={() => {
-                  flowSave("replace");
+                  handleSave("replace");
                 }}
               >
                 {translate("replace")}
@@ -113,7 +115,7 @@ export const Buttons = (
                 variant={"text"}
                 className={"fs-1-2rem fw-600 ms-1vw me-1vw"}
                 onClick={() => {
-                  flowSave("insert");
+                  handleSave("insert");
                 }}
               >
                 {translate("insert")}
@@ -129,14 +131,14 @@ export const Buttons = (
             onClick={(e: any) => {
               if (state.FLOW?.exist) {
                 if (state.FLOW?.itsMe) {
-                  flowSave("update");
+                  handleSave("update");
                 }
                 else {
                   popTrigger.openPopup(e.currentTarget);
                 }
               }
               else {
-                flowSave("create");
+                handleSave("create");
               }
             }}
           >

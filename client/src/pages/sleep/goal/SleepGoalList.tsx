@@ -21,20 +21,20 @@ export const SleepGoalList = () => {
 
   // 2-1. useStorageLocal ------------------------------------------------------------------------
   const [DATE, setDATE] = useStorageLocal(
-    TITLE, PATH, "date", {
+    TITLE, "date", PATH, {
       dateType: location_dateType || "",
       dateStart: location_dateStart || getDayFmt(),
       dateEnd: location_dateEnd || getDayFmt(),
     }
   );
   const [PAGING, setPAGING] = useStorageLocal(
-    TITLE, PATH, "paging", {
+    TITLE, "paging", PATH, {
       sort: "asc",
       page: 1,
     }
   );
   const [isExpanded, setIsExpanded] = useStorageLocal(
-    TITLE, PATH, "isExpanded", [{
+    TITLE, "isExpanded", PATH, [{
       expanded: true
     }]
   );

@@ -1,7 +1,6 @@
 // userRepository.ts
 
 import mongoose from "mongoose";
-import { newDate } from "@scripts/date";
 import { ExerciseGoal } from "@schemas/exercise/ExerciseGoal";
 import { Exercise } from "@schemas/exercise/Exercise";
 import { FoodGoal } from "@schemas/food/FoodGoal";
@@ -109,7 +108,7 @@ export const userSignup = async (
       user_curPropertyInclude: "",
       user_curPropertyExclude: "",
       user_image: OBJECT_param.user_image,
-      user_regDt: newDate,
+      user_regDt: new Date(),
       user_updateDt: "",
     }
   );

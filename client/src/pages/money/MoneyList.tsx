@@ -22,20 +22,20 @@ export const MoneyList = () => {
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [DATE, setDATE] = useStorageLocal(
-    TITLE, PATH, "date", {
+    TITLE, "date", PATH, {
       dateType: location_dateType || "",
       dateStart: location_dateStart || getMonthStartFmt(),
       dateEnd: location_dateEnd || getMonthEndFmt(),
     }
   );
   const [PAGING, setPAGING] = useStorageLocal(
-    TITLE, PATH, "paging", {
+    TITLE, "paging", PATH, {
       sort: "asc",
       page: 1,
     }
   );
   const [isExpanded, setIsExpanded] = useStorageLocal(
-    TITLE, PATH, "isExpanded", [{
+    TITLE, "isExpanded", PATH, [{
       expanded: true
     }]
   );

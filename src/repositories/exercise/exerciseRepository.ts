@@ -2,7 +2,6 @@
 
 import mongoose from "mongoose";
 import { Exercise } from "@schemas/exercise/Exercise";
-import { newDate } from "@scripts/date";
 import { timeToDecimal, decimalToTime } from "@scripts/utils";
 
 // 0. exist ----------------------------------------------------------------------------------------
@@ -161,7 +160,7 @@ export const create = async (
       exercise_total_cardio: OBJECT_param.exercise_total_cardio,
       exercise_total_weight: OBJECT_param.exercise_total_weight,
       exercise_section: OBJECT_param.exercise_section,
-      exercise_regDt: newDate,
+      exercise_regDt: new Date(),
       exercise_updateDt: "",
     }
   );
@@ -194,7 +193,7 @@ export const update = {
           exercise_total_cardio: OBJECT_param.exercise_total_cardio,
           exercise_total_weight: OBJECT_param.exercise_total_weight,
           exercise_section: OBJECT_param.exercise_section,
-          exercise_updateDt: newDate,
+          exercise_updateDt: new Date(),
         }
       },
       {
@@ -253,7 +252,7 @@ export const update = {
           exercise_total_volume: newVolume,
           exercise_total_cardio: newCardio,
           exercise_total_weight: newWeight,
-          exercise_updateDt: newDate,
+          exercise_updateDt: new Date(),
         },
         $push: {
           exercise_section: OBJECT_param.exercise_section
@@ -291,7 +290,7 @@ export const update = {
           exercise_total_cardio: OBJECT_param.exercise_total_cardio,
           exercise_total_weight: OBJECT_param.exercise_total_weight,
           exercise_section: OBJECT_param.exercise_section,
-          exercise_updateDt: newDate,
+          exercise_updateDt: new Date(),
         }
       },
       {

@@ -16,20 +16,21 @@ export const FoodFavoriteList = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, TITLE, sessionId } = useCommonValue();
   const { location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
+  const { sessionFoodSection, sessionTitle } = useCommonValue();
   const { getDayFmt } = useCommonDate();
   const { translate } = useLanguageStore();
   const { ALERT, setALERT } = useAlertStore();
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [PAGING, setPAGING] = useStorageLocal(
-    TITLE, PATH, "paging", {
+    TITLE, "paging", PATH, {
       sort: "asc",
       query: "favorite",
       page: 0,
     }
   );
   const [isExpanded, setIsExpanded] = useStorageLocal(
-    TITLE, PATH, "isExpanded", [{
+    TITLE, "isExpanded", PATH, [{
       expanded: true
     }]
   );
@@ -68,11 +69,11 @@ export const FoodFavoriteList = () => {
   // 페이지 로드 시 체크박스 상태 초기화
   useEffect(() => {
     let sectionArray = [];
-    let section = sessionStorage.getItem(`${TITLE}_foodSection`);
+    let section = sessionFoodSection;
 
     // sectionArray 초기화
     if (section) {
-      sectionArray = JSON.parse(section);
+      sectionArray = section;
     }
 
     const queryKey = `${PAGING.query}_${PAGING.page}`;
@@ -164,13 +165,8 @@ export const FoodFavoriteList = () => {
       [queryKey]: updatedChecked,
     }));
 
-    // sessionStorage 업데이트
-    let sectionArray = [];
-    const section = sessionStorage.getItem(`${TITLE}_foodSection`);
-
-    if (section) {
-      sectionArray = JSON.parse(section);
-    }
+    // 스토리지 데이터 가져오기
+    let sectionArray = sessionFoodSection.length > 0 ? sessionFoodSection : [];
 
     const item = OBJECT[index];
     const newItem = {
@@ -201,7 +197,14 @@ export const FoodFavoriteList = () => {
       ));
     }
 
-    sessionStorage.setItem(`${TITLE}_foodSection`, JSON.stringify(sectionArray));
+    // 스토리지 데이터 설정
+    sessionStorage.setItem(TITLE, JSON.stringify({
+      ...sessionTitle,
+      section: {
+        ...sessionTitle?.section,
+        food: sectionArray
+      }
+    }));
   };
 
   // 7. find ---------------------------------------------------------------------------------------

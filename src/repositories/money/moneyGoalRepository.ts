@@ -3,7 +3,6 @@
 import mongoose from "mongoose";
 import { MoneyGoal } from "@schemas/money/MoneyGoal";
 import { Money } from "@schemas/money/Money";
-import { newDate } from "@scripts/date";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
@@ -197,7 +196,7 @@ export const create = async (
       money_goal_dateEnd: dateEnd_param,
       money_goal_income: OBJECT_param.money_goal_income,
       money_goal_expense: OBJECT_param.money_goal_expense,
-      money_goal_regDt: newDate,
+      money_goal_regDt: new Date(),
       money_goal_updateDt: "",
     }
   );

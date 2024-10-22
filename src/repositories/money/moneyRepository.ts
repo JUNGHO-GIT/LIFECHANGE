@@ -2,7 +2,6 @@
 
 import mongoose from "mongoose";
 import { Money } from "@schemas/money/Money";
-import { newDate } from "@scripts/date";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
@@ -158,7 +157,7 @@ export const create = async (
       money_total_income: OBJECT_param.money_total_income,
       money_total_expense: OBJECT_param.money_total_expense,
       money_section: OBJECT_param.money_section,
-      money_regDt: newDate,
+      money_regDt: new Date(),
       money_updateDt: "",
     }
   );
@@ -190,7 +189,7 @@ export const update = {
           money_total_income: OBJECT_param.money_total_income,
           money_total_expense: OBJECT_param.money_total_expense,
           money_section: OBJECT_param.money_section,
-          money_updateDt: newDate,
+          money_updateDt: new Date(),
         },
       },
       {
@@ -242,7 +241,7 @@ export const update = {
         $set: {
           money_total_income: newIncome,
           money_total_expense: newExpense,
-          money_updateDt: newDate,
+          money_updateDt: new Date(),
         },
         $push: {
           money_section: OBJECT_param.money_section
@@ -279,7 +278,7 @@ export const update = {
           money_total_income: OBJECT_param.money_total_income,
           money_total_expense: OBJECT_param.money_total_expense,
           money_section: OBJECT_param.money_section,
-          money_updateDt: newDate,
+          money_updateDt: new Date(),
         },
       },
       {

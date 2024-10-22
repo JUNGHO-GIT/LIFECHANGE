@@ -7,7 +7,7 @@ import { useCommonValue } from "@imports/ImportHooks";
 export const useFoodSection = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { TITLE, PATH, sessionId } = useCommonValue();
+  const { TITLE, PATH, sessionId, sessionTitle } = useCommonValue();
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -19,12 +19,13 @@ export const useFoodSection = () => {
       !PATH.includes("food/detail")
     ) {
 
-      const section = sessionStorage.getItem(`${TITLE}_foodSection`);
-
-      if (section) {
-        sessionStorage.removeItem(`${TITLE}_foodSection`);
-      }
+      sessionStorage.setItem(TITLE, JSON.stringify({
+        ...sessionTitle,
+        section: {
+          ...sessionTitle?.section,
+          food: []
+        }
+      }));
     }
   }, [PATH, sessionId]);
-
 };

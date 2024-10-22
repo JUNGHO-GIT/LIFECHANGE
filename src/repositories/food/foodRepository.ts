@@ -3,7 +3,6 @@
 import mongoose from "mongoose";
 import { Food } from "@schemas/food/Food";
 import { User } from "@schemas/user/User";
-import { newDate } from "@scripts/date";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
@@ -182,7 +181,7 @@ export const create = async (
       food_total_protein: OBJECT_param.food_total_protein,
       food_total_fat: OBJECT_param.food_total_fat,
       food_section: OBJECT_param.food_section,
-      food_regDt: newDate,
+      food_regDt: new Date(),
       food_updateDt: "",
     }
   );
@@ -216,7 +215,7 @@ export const update = {
           food_total_protein: OBJECT_param.food_total_protein,
           food_total_fat: OBJECT_param.food_total_fat,
           food_section: OBJECT_param.food_section,
-          food_updateDt: newDate,
+          food_updateDt: new Date(),
         }
       },
       {
@@ -278,7 +277,7 @@ export const update = {
           food_total_carb: newCarb,
           food_total_protein: newProtein,
           food_total_fat: newFat,
-          food_updateDt: newDate,
+          food_updateDt: new Date(),
         },
         $push: {
           food_section: OBJECT_param.food_section
@@ -317,7 +316,7 @@ export const update = {
           food_total_protein: OBJECT_param.food_total_protein,
           food_total_fat: OBJECT_param.food_total_fat,
           food_section: OBJECT_param.food_section,
-          food_updateDt: newDate,
+          food_updateDt: new Date(),
         }
       },
       {

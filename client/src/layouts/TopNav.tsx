@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
-import { useStorageTest } from "@imports/ImportHooks";
+import { useStorageLocal } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { numeral } from "@imports/ImportUtils";
 import { PopUp, Input } from "@imports/ImportContainers";
@@ -13,19 +13,26 @@ import { Tabs, Tab, Paper, Grid, Checkbox } from "@imports/ImportMuis";
 export const TopNav = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { PATH, TITLE, firstStr, secondStr, localCurrency } = useCommonValue();
-  const { navigate, sessionPercent, sessionProperty, sessionScale } = useCommonValue();
+  const { TITLE, firstStr, secondStr, localCurrency, navigate } = useCommonValue();
+  const { sessionTitle, sessionPercent, sessionScale, sessionProperty } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
-  // 2-1. useStorageTest --------------------------------------------------------------------------
-  const [selectedTab, setSelectedTab] = useStorageTest(
+  // 2-1. useStorageLocal --------------------------------------------------------------------------
+  const [selectedTab, setSelectedTab] = useStorageLocal(
     TITLE, "tabs", "top", {
-      [firstStr]: "chart",
+      exercise: "real",
+      food: "real",
+      today: "real",
+      calendar: "schedule",
+      money: "real",
+      sleep: "real",
     }
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
+  const [includingExclusions, setIncludingExclusions] = useState<boolean>(false);
+  const [mainSmileImage, setMainSmileImage] = useState<any>("smile3");
   const [percent, setPercent] = useState<any>({
     total: {},
     exercise : {},
@@ -66,8 +73,6 @@ export const TopNav = () => {
     dateStart: "",
     dateEnd: "",
   });
-  const [includingExclusions, setIncludingExclusions] = useState<boolean>(false);
-  const [mainSmileImage, setMainSmileImage] = useState<any>("smile3");
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 스마일 지수 계산
@@ -141,30 +146,35 @@ export const TopNav = () => {
     else {
       setMainSmileImage(smileImage.total);
     }
-  }, [sessionPercent, sessionProperty, sessionScale, PATH, selectedTab]);
+  }, [firstStr, smileImage]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 퍼센트, 자산, 체중 설정
   useEffect(() => {
-    const handleStorageChange = () => {
-      if (sessionPercent) {
-        setPercent(JSON.parse(sessionPercent));
-      }
-      if (sessionProperty) {
-        setProperty(JSON.parse(sessionProperty));
-      }
-      if (sessionScale) {
-        setScale(JSON.parse(sessionScale));
-      }
-    };
+    if (sessionTitle?.setting?.sync) {
+      const { percent, property, scale } = sessionTitle.setting.sync;
 
-    window.addEventListener('storage', handleStorageChange);
-    handleStorageChange();
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, [sessionPercent, sessionProperty, sessionScale]);
+      // 상태가 실제로 변경될 때만 업데이트
+      setPercent((prev: any) => {
+        if (JSON.stringify(prev) !== JSON.stringify(percent)) {
+          return percent;
+        }
+        return prev;
+      });
+      setProperty((prev: any) => {
+        if (JSON.stringify(prev) !== JSON.stringify(property)) {
+          return property;
+        }
+        return prev;
+      });
+      setScale((prev: any) => {
+        if (JSON.stringify(prev) !== JSON.stringify(scale)) {
+          return scale;
+        }
+        return prev;
+      });
+    }
+  }, [sessionTitle]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 페이지 변경시 초기화
@@ -172,68 +182,79 @@ export const TopNav = () => {
     // 1. calendar
     if (firstStr === "calendar") {
       if (secondStr === "list" || secondStr === "detail") {
-        setSelectedTab({
-          [firstStr]: "schedule",
-        });
+        setSelectedTab((prev: any) => ({
+          ...prev,
+          calendar: "schedule",
+        }));
       }
     }
     // 2. today
     else if (firstStr === "today") {
       if (secondStr === "goal") {
-        setSelectedTab({
-          [firstStr]: "goal",
-        });
+        setSelectedTab((prev: any) => ({
+          ...prev,
+          today: "goal",
+        }));
       }
       else if (secondStr === "list" || secondStr === "detail") {
-        setSelectedTab({
-          [firstStr]: "real",
-        });
+        setSelectedTab((prev: any) => ({
+          ...prev,
+          today: "real",
+        }));
       }
     }
     // 3. food
     else if (firstStr === "food") {
       if (secondStr === "chart") {
-        setSelectedTab([
-          firstStr, "chart"
-        ]);
+        setSelectedTab((prev: any) => ({
+          ...prev,
+          food: "chart",
+        }));
       }
       else if (secondStr === "goal") {
-        setSelectedTab({
-          [firstStr]: "goal",
-        });
-      }
-      else if (secondStr === "list" || secondStr === "detail") {
-        setSelectedTab({
-          [firstStr]: "real",
-        });
+        setSelectedTab((prev: any) => ({
+          ...prev,
+          food: "goal",
+        }));
       }
       else if (secondStr === "find") {
-        setSelectedTab({
-          [firstStr]: "find",
-        });
+        setSelectedTab((prev: any) => ({
+          ...prev,
+          food: "find",
+        }));
       }
       else if (secondStr === "favorite") {
-        setSelectedTab({
-          [firstStr]: "favorite",
-        });
+        setSelectedTab((prev: any) => ({
+          ...prev,
+          food: "favorite",
+        }));
+      }
+      else if (secondStr === "list" || secondStr === "detail") {
+        setSelectedTab((prev: any) => ({
+          ...prev,
+          food: "real",
+        }));
       }
     }
     // 4. exercise, money, sleep
     else if (firstStr === "exercise" || firstStr === "money" || firstStr === "sleep") {
       if (secondStr === "chart") {
-        setSelectedTab([
-          firstStr, "chart"
-        ]);
+        setSelectedTab((prev: any) => ({
+          ...prev,
+          [firstStr]: "chart",
+        }));
       }
       else if (secondStr === "goal") {
-        setSelectedTab({
+        setSelectedTab((prev: any) => ({
+          ...prev,
           [firstStr]: "goal",
-        });
+        }));
       }
       else if (secondStr === "list" || secondStr === "detail") {
-        setSelectedTab({
+        setSelectedTab((prev: any) => ({
+          ...prev,
           [firstStr]: "real",
-        });
+        }));
       }
     }
   }, [firstStr, secondStr]);
@@ -242,21 +263,12 @@ export const TopNav = () => {
   const handleClickTobNav = (value: string) => {
     setSelectedTab((prev: any) => ({
       ...prev,
-      tabs: {
-        ...prev.tabs,
-        top: value
-      }
+      [firstStr]: value,
     }));
 
     let url = "";
     if (value === "real" || value === "schedule") {
       url = `/${firstStr}/list`;
-    }
-    else if (value === "find") {
-      url = `/${firstStr}/find/list`;
-    }
-    else if (value === "favorite") {
-      url = `/${firstStr}/favorite/list`;
     }
     else {
       url = `/${firstStr}/${value}/list`;
@@ -388,17 +400,15 @@ export const TopNav = () => {
         }
       >
         {(popTrigger: any) => (
-          <Div className={"d-center pointer"} onClick={(e: any) => {
-            popTrigger.openPopup(e.currentTarget)
-            const event = new Event('storage');
-            window.dispatchEvent(event);
-          }}>
-            <Img
-              key={mainSmileImage}
-            	src={mainSmileImage}
-            	className={"w-max25 h-max25"}
-            />
-          </Div>
+          <Img
+            key={mainSmileImage}
+            src={mainSmileImage}
+            className={"w-max25 h-max25"}
+            onClick={(e: any) => {
+              setPercent(sessionPercent);
+              popTrigger.openPopup(e.currentTarget)
+            }}
+          />
         )}
       </PopUp>
     );
@@ -518,17 +528,15 @@ export const TopNav = () => {
         }
       >
         {(popTrigger: any) => (
-          <Div className={"d-center pointer"} onClick={(e: any) => {
-            popTrigger.openPopup(e.currentTarget)
-            const event = new Event('storage');
-            window.dispatchEvent(event);
-          }}>
-            <Img
-              key={"money4"}
-            	src={"money4"}
-            	className={"w-max25 h-max25"}
-            />
-          </Div>
+          <Img
+            key={"money4"}
+            src={"money4"}
+            className={"w-max25 h-max25"}
+            onClick={(e: any) => {
+              setProperty(sessionProperty);
+              popTrigger.openPopup(e.currentTarget)
+            }}
+          />
         )}
       </PopUp>
     );
@@ -619,17 +627,15 @@ export const TopNav = () => {
         }
       >
         {(popTrigger: any) => (
-          <Div className={"d-center pointer"} onClick={(e: any) => {
-            popTrigger.openPopup(e.currentTarget)
-            const event = new Event('storage');
-            window.dispatchEvent(event);
-          }}>
-            <Img
-              key={"exercise6"}
-            	src={"exercise6"}
-            	className={"w-max25 h-max25"}
-            />
-          </Div>
+          <Img
+            key={"exercise6"}
+            src={"exercise6"}
+            className={"w-max25 h-max25"}
+            onClick={(e: any) => {
+              setScale(sessionScale);
+              popTrigger.openPopup(e.currentTarget)
+            }}
+          />
         )}
       </PopUp>
     );

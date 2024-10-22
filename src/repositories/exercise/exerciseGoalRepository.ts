@@ -3,7 +3,6 @@
 import mongoose from "mongoose";
 import { ExerciseGoal } from "@schemas/exercise/ExerciseGoal";
 import { Exercise } from "@schemas/exercise/Exercise";
-import { newDate } from "@scripts/date";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
@@ -218,7 +217,7 @@ export const create = async (
       exercise_goal_volume: OBJECT_param.exercise_goal_volume,
       exercise_goal_cardio: OBJECT_param.exercise_goal_cardio,
       exercise_goal_weight: OBJECT_param.exercise_goal_weight,
-      exercise_goal_regDt: newDate,
+      exercise_goal_regDt: new Date(),
       exercise_goal_updateDt: "",
     }
   );

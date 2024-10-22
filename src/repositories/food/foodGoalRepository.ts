@@ -3,7 +3,6 @@
 import mongoose from "mongoose";
 import { FoodGoal } from "@schemas/food/FoodGoal";
 import { Food } from "@schemas/food/Food";
-import { newDate } from "@scripts/date";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
@@ -201,7 +200,7 @@ export const create = async (
       food_goal_carb: OBJECT_param.food_goal_carb,
       food_goal_protein: OBJECT_param.food_goal_protein,
       food_goal_fat: OBJECT_param.food_goal_fat,
-      food_goal_regDt: newDate,
+      food_goal_regDt: new Date(),
       food_goal_updateDt: "",
     }
   );
@@ -234,7 +233,7 @@ export const update = {
           food_goal_carb: OBJECT_param.food_goal_carb,
           food_goal_protein: OBJECT_param.food_goal_protein,
           food_goal_fat: OBJECT_param.food_goal_fat,
-          food_goal_updateDt: newDate,
+          food_goal_updateDt: new Date(),
         }
       },
       {
@@ -271,7 +270,7 @@ export const update = {
           food_goal_carb: OBJECT_param.food_goal_carb,
           food_goal_protein: OBJECT_param.food_goal_protein,
           food_goal_fat: OBJECT_param.food_goal_fat,
-          food_goal_updateDt: newDate,
+          food_goal_updateDt: new Date(),
         }
       },
       {

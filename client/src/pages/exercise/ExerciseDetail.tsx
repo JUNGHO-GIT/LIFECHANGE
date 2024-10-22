@@ -58,11 +58,6 @@ export const ExerciseDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
 
-  useEffect(() => {
-    console.log("===================================");
-    console.log("OBJECT", JSON.stringify(OBJECT, null, 2));
-  }, []);
-
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (EXIST?.[DATE.dateType]?.length > 0) {

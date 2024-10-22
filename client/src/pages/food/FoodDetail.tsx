@@ -15,7 +15,8 @@ import { Paper, MenuItem, Grid } from "@imports/ImportMuis";
 export const FoodDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, TITLE, sessionId, toList, foodArray, bgColors } = useCommonValue();
+  const { URL_OBJECT, TITLE, sessionId, toList } = useCommonValue();
+  const { foodArray, bgColors, sessionFoodSection, sessionTitle } = useCommonValue();
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt,getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -175,16 +176,7 @@ export const FoodDetail = () => {
       }));
 
       // 스토리지 데이터 가져오기
-      let sectionArray = [];
-      let section = sessionStorage.getItem(`${TITLE}_foodSection`);
-
-      // sectionArray 설정
-      if (section) {
-        sectionArray = JSON.parse(section);
-      }
-      else {
-        sectionArray = [];
-      }
+      let sectionArray = sessionFoodSection.length > 0 ? sessionFoodSection : [];
 
       // 기존 food_section 데이터와 병합하여 OBJECT 재설정
       setOBJECT((prev: any) => ({
@@ -192,9 +184,7 @@ export const FoodDetail = () => {
         // 기존의 food_section만 정렬
         food_section: prev?.food_section ? (
           [...prev.food_section].sort((a, b) => a.food_part_idx - b.food_part_idx).concat(sectionArray)
-        ) : (
-          [...sectionArray]
-        ),
+        ) : [...sectionArray]
       }));
 
       // 병합된 데이터를 바탕으로 COUNT 재설정
@@ -404,11 +394,11 @@ export const FoodDetail = () => {
 
     // 스토리지 데이터 가져오기
     let sectionArray = [];
-    let section = sessionStorage.getItem(`${TITLE}_foodSection`);
+    let section = sessionFoodSection;
 
     // sectionArray 초기화
     if (section) {
-      sectionArray = JSON.parse(section);
+      sectionArray = section;
     }
     else {
       sectionArray = [];
@@ -418,7 +408,13 @@ export const FoodDetail = () => {
     sectionArray.splice(index, 1);
 
     // 스토리지 데이터 설정
-    sessionStorage.setItem(`${TITLE}_foodSection`, JSON.stringify(sectionArray));
+    sessionStorage.setItem(TITLE, JSON.stringify({
+      ...sessionTitle,
+      section: {
+        ...sessionTitle?.section,
+        food: sectionArray
+      }
+    }));
 
     // OBJECT 설정
     setOBJECT((prev: any) => ({

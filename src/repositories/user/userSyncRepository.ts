@@ -9,7 +9,6 @@ import { MoneyGoal } from "@schemas/money/MoneyGoal";
 import { Sleep } from "@schemas/sleep/Sleep";
 import { SleepGoal } from "@schemas/sleep/SleepGoal";
 import { User } from "@schemas/user/User";
-import { newDate } from "@scripts/date";
 
 // 0. category -------------------------------------------------------------------------------------
 export const listCategory = async (
@@ -466,7 +465,7 @@ export const scale = {
       {
         $set: {
           user_curScale: curScale_param,
-          user_updateDt: newDate,
+          user_updateDt: new Date(),
         }
       },
       {
@@ -740,7 +739,7 @@ export const property = {
         $set: {
           user_curPropertyInclude: curPropertyAll_param,
           user_curPropertyExclude: curProperty_param,
-          user_updateDt: newDate,
+          user_updateDt: new Date(),
         }
       },
       {

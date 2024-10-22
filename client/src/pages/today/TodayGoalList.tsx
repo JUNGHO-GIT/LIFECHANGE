@@ -21,7 +21,7 @@ export const TodayGoalList = () => {
 
   // 2-1. useStorageSession ------------------------------------------------------------------------
   const [DATE, setDATE] = useStorageSession(
-    TITLE, PATH, "date", {
+    TITLE, "date", PATH, {
       dateType: "",
       dateStart: getDayFmt(),
       dateEnd: getDayFmt(),
@@ -29,14 +29,14 @@ export const TodayGoalList = () => {
   );
 
   // 2-2. useStorageLocal --------------------------------------------------------------------------
-  const [PAGING, setPAGING] = useStorageLocal(
-    TITLE, PATH, "paging", {
+  const [PAGING, _setPAGING] = useStorageLocal(
+    TITLE, "paging", PATH, {
       sort: "asc",
       page: 1,
     }
   );
   const [isExpanded, setIsExpanded] = useStorageLocal(
-    TITLE, PATH, "isExpanded", {
+    TITLE, "isExpanded", PATH, {
       exercise: [{
         expended: true,
       }],

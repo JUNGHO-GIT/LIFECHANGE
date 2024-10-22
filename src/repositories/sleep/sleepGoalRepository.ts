@@ -3,7 +3,6 @@
 import mongoose from "mongoose";
 import { SleepGoal } from "@schemas/sleep/SleepGoal";
 import { Sleep } from "@schemas/sleep/Sleep";
-import { newDate } from "@scripts/date";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
@@ -203,7 +202,7 @@ export const create = async (
       sleep_goal_bedTime: OBJECT_param.sleep_goal_bedTime,
       sleep_goal_wakeTime: OBJECT_param.sleep_goal_wakeTime,
       sleep_goal_sleepTime: OBJECT_param.sleep_goal_sleepTime,
-      sleep_goal_regDt: newDate,
+      sleep_goal_regDt: new Date(),
       sleep_goal_updateDt: "",
     }
   );

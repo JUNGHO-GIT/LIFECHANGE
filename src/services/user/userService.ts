@@ -9,10 +9,10 @@ import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import { fileURLToPath } from "url";
 import * as repository from "@repositories/user/userRepository";
-import { randomNumber, randomTime, calcDate } from '@scripts/utils.js';
-import { exerciseArray } from '@arrays/exerciseArray.js';
-import { foodArray } from '@arrays/foodArray.js';
-import { moneyArray } from '@arrays/moneyArray.js';
+import { randomNumber, randomTime, calcDate } from '@scripts/utils';
+import { exerciseArray } from '@arrays/exerciseArray';
+import { foodArray } from '@arrays/foodArray';
+import { moneyArray } from '@arrays/moneyArray';
 import { emailSending } from "@scripts/email";
 dotenv.config();
 

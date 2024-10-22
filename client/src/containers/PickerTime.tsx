@@ -25,7 +25,7 @@ export const PickerTime = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { firstStr, secondStr, localLocale, localTimeZone } = useCommonValue();
+  const { firstStr, secondStr, localLang, localTimeZone } = useCommonValue();
   const { translate } = useLanguageStore();
 
   // displayed image, label
@@ -108,7 +108,7 @@ export const PickerTime = (
         contents={({closePopup}: any) => (
           <Grid container spacing={2} columns={12} className={"w-max40vw h-max40vh"}>
             <Grid size={12} className={"d-center"}>
-              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLocale}>
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLang}>
                 <DigitalClock
                   timeStep={10}
                   ampm={false}
@@ -165,7 +165,7 @@ export const PickerTime = (
         contents={({closePopup}: any) => (
           <Grid container spacing={2} columns={12} className={"w-max40vw h-max40vh"}>
             <Grid size={12} className={"d-center"}>
-              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLocale}>
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLang}>
                 <DigitalClock
                   timeStep={10}
                   ampm={false}

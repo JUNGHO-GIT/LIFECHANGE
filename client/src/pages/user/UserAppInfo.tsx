@@ -14,19 +14,15 @@ import { TableContainer, Table, TableBody, TableRow, TableCell } from "@imports/
 export const UserAppInfo = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, TITLE, sessionId } = useCommonValue();
+  const { URL_OBJECT, sessionId } = useCommonValue();
+  const { localTimeZone, localZoneName, localLang } = useCommonValue();
+  const { localIsoCode, localCurrency } = useCommonValue();
   const { translate } = useLanguageStore();
   const { ALERT, setALERT } = useAlertStore();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>(AppInfo);
-  const localeSetting:any = localStorage.getItem(`${TITLE}_localeSetting`) || "{}";
-  const timeZone: string = JSON.parse(localeSetting)?.timeZone || "";
-  const zoneName: string = JSON.parse(localeSetting)?.zoneName || "";
-  const locale: string = JSON.parse(localeSetting)?.locale || "";
-  const isoCode: string = JSON.parse(localeSetting)?.isoCode || "";
-  const currency: string = JSON.parse(localeSetting)?.currency || "";
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -109,9 +105,9 @@ export const UserAppInfo = () => {
                     <TableCell className={"w-40vw fs-1-0rem p-15"}>
                       timezone
                     </TableCell>
-                    <TableCell className={"w-55vw fs-0-7rem p-15"}>
-                      {timeZone} | &nbsp; {zoneName} | &nbsp;
-                      {locale} | &nbsp; {isoCode} | &nbsp; {currency}
+                    <TableCell className={"w-55vw fs-0-8rem p-15"}>
+                      {localTimeZone} | &nbsp; {localZoneName} | &nbsp;
+                      {localLang} | &nbsp; {localIsoCode} | &nbsp; {localCurrency}
                     </TableCell>
                   </TableRow>
                 </TableBody>

@@ -24,7 +24,7 @@ export const ExerciseChartLine = () => {
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [TYPE, setTYPE] = useStorageLocal(
-    TITLE, PATH, "type_line", {
+    TITLE, "typeLine", PATH, {
       section: "week",
       line: "volume"
     }

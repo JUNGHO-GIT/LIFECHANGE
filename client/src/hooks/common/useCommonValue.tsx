@@ -35,9 +35,12 @@ export const useCommonValue = () => {
   const toDetail: string = isGoal ? `/${firstStr}/goal/detail` : `/${firstStr}/detail`;
   const toDelete: string = isGoal ? `/${firstStr}/goal/delete` : `/${firstStr}/delete`;
 
+  // env
   const TITLE: any = process.env.REACT_APP_TITLE || "";
   const URL: string = process.env.REACT_APP_SERVER_URL || "";
   const GCLOUD_URL: string = process.env.REACT_APP_GCLOUD_URL || "";
+  const ADMIN_ID: string = process.env.REACT_APP_ADMIN_ID || "";
+  const ADMIN_PW: string = process.env.REACT_APP_ADMIN_PW || "";
   const SUBFIX : string= process.env[`REACT_APP_${firstStr.toUpperCase()}`] || "";
   const SUBFIX_GOOGLE: string = process.env[`REACT_APP_GOOGLE`] || "";
   const SUBFIX_ADMOB: string = process.env[`REACT_APP_ADMOB`] || "";
@@ -45,6 +48,8 @@ export const useCommonValue = () => {
   const SUBFIX_FOOD: string = process.env[`REACT_APP_FOOD`] || "";
   const SUBFIX_MONEY: string = process.env[`REACT_APP_MONEY`] || "";
   const SUBFIX_SLEEP: string = process.env[`REACT_APP_SLEEP`] || "";
+
+  // URL
   const URL_OBJECT: string = URL + SUBFIX;
   const URL_GOOGLE: string = URL + SUBFIX_GOOGLE;
   const URL_ADMOB: string = URL + SUBFIX_ADMOB;
@@ -52,31 +57,39 @@ export const useCommonValue = () => {
   const URL_FOOD: string = URL + SUBFIX_FOOD;
   const URL_MONEY: string = URL + SUBFIX_MONEY;
   const URL_SLEEP: string = URL + SUBFIX_SLEEP;
-  const ADMIN_ID: string = process.env.REACT_APP_ADMIN_ID || "";
-  const ADMIN_PW: string = process.env.REACT_APP_ADMIN_PW || "";
 
-  // object 타입
-  const sessionPercent: any = sessionStorage.getItem(`${TITLE}_percent`) || "{}";
-  const sessionCategory: any = sessionStorage.getItem(`${TITLE}_category`)|| "{}";
-  const sessionScale: string = sessionStorage.getItem(`${TITLE}_scale`) || "{}";
-  const sessionFavorite: any = sessionStorage.getItem(`${TITLE}_favorite`) || "{}";
-  const sessionProperty: any = sessionStorage.getItem(`${TITLE}_property`) || "{}";
-  const calendarArray: any[] = JSON.parse(sessionCategory)?.calendar || [];
-  const exerciseArray: any[] = JSON.parse(sessionCategory)?.exercise || [];
-  const foodArray: any[] = JSON.parse(sessionCategory)?.food || [];
-  const moneyArray: any[] = JSON.parse(sessionCategory)?.money || [];
-  const sleepArray: any[] = JSON.parse(sessionCategory)?.sleep || [];
+  // session storage (object 타입)
+  const sessionTitle: any = JSON.parse(sessionStorage.getItem(TITLE) || "{}");
+  const sessionSetting: any = sessionTitle?.setting || {};
 
-  // string 타입
-  const isAdmin: string = sessionStorage.getItem(`${TITLE}_admin`) || "";
-  const sessionId: string = sessionStorage.getItem(`${TITLE}_sessionId`) || "";
-  const localeSetting: any = localStorage.getItem(`${TITLE}_localeSetting`) || "{}";
+  const sessionPercent: any = sessionTitle?.setting?.sync?.percent || {};
+  const sessionScale: any = sessionTitle?.setting?.sync?.scale || {};
+  const sessionFavorite: any = sessionTitle?.setting?.sync?.favorite || {};
+  const sessionProperty: any = sessionTitle?.setting?.sync?.property || {};
+  const sessionCategory: any = sessionTitle?.setting?.sync?.category || {};
 
-  const localTimeZone: string = JSON.parse(localeSetting)?.timeZone || "UTC";
-  const localZoneName: string = JSON.parse(localeSetting)?.zoneName || "UTC";
-  const localLocale: string = JSON.parse(localeSetting)?.locale || "en";
-  const localIsoCode: string = JSON.parse(localeSetting)?.isoCode || "US";
-  const localCurrency: string = JSON.parse(localeSetting)?.currency || "USD";
+  const sessionFoodSection: any[] = sessionTitle?.section?.food || [];
+
+  const calendarArray: any[] = sessionTitle?.setting?.sync?.category?.calendar || [];
+  const exerciseArray: any[] = sessionTitle?.setting?.sync?.category?.exercise || [];
+  const foodArray: any[] = sessionTitle?.setting?.sync?.category?.food || [];
+  const moneyArray: any[] = sessionTitle?.setting?.sync?.category?.money || [];
+  const sleepArray: any[] = sessionTitle?.setting?.sync?.category?.sleep || [];
+
+  // session storage (string 타입)
+  const isAdmin: string = sessionTitle?.setting?.id?.admin || "";
+  const sessionId: string = sessionTitle?.setting?.id?.sessionId || "";
+
+  // local storage (object 타입)
+  const localTitle: any = JSON.parse(localStorage.getItem(TITLE) || "{}");
+  const localSetting: any = localTitle?.setting || {};
+
+  // local storage (string 타입)
+  const localTimeZone: string = localTitle?.setting?.locale?.timeZone;
+  const localZoneName: string = localTitle?.setting?.locale?.zoneName;
+  const localLang: string = localTitle?.setting?.locale?.lang;
+  const localIsoCode: string = localTitle?.setting?.locale?.isoCode;
+  const localCurrency: string = localTitle?.setting?.locale?.currency;
 
   const exerciseChartArray: any[] = [
     "volume", "cardio"
@@ -151,10 +164,10 @@ export const useCommonValue = () => {
     ADMIN_PW,
     isAdmin,
     sessionId,
-    localeSetting,
+    localSetting,
     localTimeZone,
     localZoneName,
-    localLocale,
+    localLang,
     localIsoCode,
     localCurrency,
     sessionPercent,
@@ -175,5 +188,9 @@ export const useCommonValue = () => {
     calendarColors,
     bgColors,
     chartColors,
+    sessionTitle,
+    localTitle,
+    sessionSetting,
+    sessionFoodSection,
   };
 };

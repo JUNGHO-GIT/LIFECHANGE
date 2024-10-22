@@ -14,7 +14,7 @@ export const CalendarList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, TITLE } = useCommonValue();
-  const { sessionId, navigate, toDetail, localLocale } = useCommonValue();
+  const { sessionId, navigate, toDetail, localLang } = useCommonValue();
   const { getMoment, getDayFmt, getDayStartFmt, getDayEndFmt, getDayNotFmt } = useCommonDate();
   const { getPrevMonthStartFmt, getPrevMonthEndFmt } = useCommonDate();
   const { getNextMonthStartFmt, getNextMonthEndFmt } = useCommonDate();
@@ -24,14 +24,14 @@ export const CalendarList = () => {
 
   // 2-1. useStorageLocal ------------------------------------------------------------------------
   const [DATE, setDATE] = useStorageLocal(
-    TITLE, PATH, "date", {
+    TITLE, "date", PATH, {
       dateType: "",
       dateStart: getMonthStartFmt(),
       dateEnd: getMonthEndFmt(),
     }
   );
   const [PAGING, _setPAGING] = useStorageLocal(
-    TITLE, PATH, "paging", {
+    TITLE, "paging", PATH, {
       sort: "asc",
       page: 1,
     }
@@ -186,7 +186,7 @@ export const CalendarList = () => {
         <Grid size={12} className={"d-row-center"}>
           <CalendarReact
             view={"month"}
-            locale={localLocale}
+            locale={localLang}
             calendarType={"gregory"}
             value={new Date(DATE.dateStart)}
             showNavigation={false}
