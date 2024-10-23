@@ -24,29 +24,10 @@ export const UserLogin = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [loginTrigger, setLoginTrigger] = useState<boolean>(false);
-  const [_clickCount, setClickCount] = useState<number>(0);
+  const [clickCount, setClickCount] = useState<number>(0);
   const [checkedSaveId, setCheckedSaveId] = useState<boolean>(false);
   const [checkedAutoLogin, setCheckedAutoLogin] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>(User);
-  
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  // 트리거가 활성화된 경우
-  /**useEffect(() => {
-    const autoLogin = localTitle?.setting?.id?.autoLogin;
-    const autoLoginId = localTitle?.setting?.id?.autoLoginId;
-    const autoLoginPw = localTitle?.setting?.id?.autoLoginPw;
-    const idSaved = localTitle?.setting?.id?.idSaved;
-    const localId = localTitle?.setting?.id?.localId;
-
-    alert(`
-        autoLogin: ${autoLogin}
-        autoLoginId: ${autoLoginId}
-        autoLoginPw: ${autoLoginPw}
-        idSaved: ${idSaved}
-        localId: ${localId}
-    `);
-}, [localTitle]);*/
-
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 초기 로드 시 로컬 저장소에서 사용자 정보 가져오기
@@ -83,18 +64,7 @@ export const UserLogin = () => {
   }, []);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  // 트리거가 활성화된 경우
-  useEffect(() => {
-    if (loginTrigger) {
-      (async () => {
-        await flowSave();
-        setLoginTrigger(false);
-      })();
-    }
-  }, [loginTrigger]);
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  // 자동로그인 활성화된 경우
+  // 자동로그인 및 아이디 저장 활성화된 경우
   useEffect(() => {
     localStorage.setItem(TITLE, JSON.stringify({
       ...localTitle,
@@ -103,29 +73,23 @@ export const UserLogin = () => {
         id: {
           ...localTitle?.setting?.id,
           autoLogin: checkedAutoLogin ? "true" : "false",
-          autoLoginId: OBJECT.user_id,
-          autoLoginPw: OBJECT.user_pw,
+          autoLoginId: checkedAutoLogin ? OBJECT.user_id : localTitle?.setting?.id?.autoLoginId,
+          autoLoginPw: checkedAutoLogin ? OBJECT.user_pw : localTitle?.setting?.id?.autoLoginPw,
+          idSaved: checkedSaveId ? "true" : "false",
+          localId: checkedSaveId ? OBJECT.user_id : localTitle?.setting?.id?.localId,
         },
       },
     }));
-  }, [checkedAutoLogin, OBJECT.user_id, OBJECT.user_pw]);
+  }, [checkedAutoLogin, checkedSaveId, OBJECT.user_id, OBJECT.user_pw]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  // 아이디 저장 활성화된 경우
+  // 트리거가 활성화된 경우
   useEffect(() => {
-    localStorage.setItem(TITLE, JSON.stringify({
-      ...localTitle,
-      setting: {
-        ...localTitle?.setting,
-        id: {
-          ...localTitle?.setting?.id,
-          idSaved: checkedSaveId ? "true" : "false",
-          localId: OBJECT.user_id,
-        },
-      },
-    }));
-  }, [checkedSaveId, OBJECT.user_id]);
-
+    if (loginTrigger) {
+      flowSave();
+      setLoginTrigger(false);
+    }
+  }, [loginTrigger]);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
@@ -149,6 +113,9 @@ export const UserLogin = () => {
             ...localTitle?.setting,
             id: {
               ...localTitle?.setting?.id,
+              autoLogin: checkedAutoLogin ? "true" : "false",
+              autoLoginId: checkedAutoLogin ? OBJECT.user_id : "",
+              autoLoginPw: checkedAutoLogin ? OBJECT.user_pw : "",
               localId: checkedSaveId ? OBJECT.user_id : ""
             },
           },
@@ -162,7 +129,7 @@ export const UserLogin = () => {
             id: {
               ...sessionTitle?.setting?.id,
               sessionId: res.data.result.user_id,
-              admin: res.data.result.admin === "admin" ? "true" : "false",
+              admin: res.data.admin === "admin" ? "true" : "false",
             },
           },
         }));
