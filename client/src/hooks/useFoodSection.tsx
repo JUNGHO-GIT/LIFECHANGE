@@ -2,12 +2,13 @@
 
 import { useEffect } from "@imports/ImportReacts";
 import { useCommonValue } from "@imports/ImportHooks";
+import { setSession } from "@imports/ImportUtils";
 
 // -------------------------------------------------------------------------------------------------
 export const useFoodSection = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { TITLE, PATH, sessionId, sessionTitle } = useCommonValue();
+  const { PATH, sessionId } = useCommonValue();
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -18,14 +19,7 @@ export const useFoodSection = () => {
       !PATH.includes("food/favorite/list") &&
       !PATH.includes("food/detail")
     ) {
-
-      sessionStorage.setItem(TITLE, JSON.stringify({
-        ...sessionTitle,
-        section: {
-          ...sessionTitle?.section,
-          food: []
-        }
-      }));
+      setSession("section", "food", "", []);
     }
   }, [PATH, sessionId]);
 };

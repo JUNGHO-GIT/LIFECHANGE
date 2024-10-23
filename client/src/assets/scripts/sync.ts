@@ -1,6 +1,6 @@
 // sync.js
 
-import { moment, axios } from "@imports/ImportUtils";
+import { moment, axios, setSession } from "@imports/ImportUtils";
 
 // -------------------------------------------------------------------------------------------------
 export const sync = async (extra?: string) => {
@@ -13,7 +13,6 @@ export const sync = async (extra?: string) => {
 
   const sessionTitle = JSON.parse(sessionStorage.getItem(TITLE) || "{}");
   const sessionId = sessionTitle?.setting?.id?.sessionId;
-
   const localTitle = JSON.parse(localStorage.getItem(TITLE) || "{}");
   const localTimeZone = localTitle?.setting?.locale?.timeZone || "UTC";
 
@@ -30,23 +29,15 @@ export const sync = async (extra?: string) => {
     DATE: DATE,
   };
 
-  // 2-2. axios ------------------------------------------------------------------------------------
   if (extra) {
     const [resExtra] = await Promise.all([
       axios.get(`${URL_OBJECT}/sync/${extra}`, {
         params: params,
       }),
     ]);
-    sessionStorage.setItem(TITLE, JSON.stringify({
-      ...sessionTitle,
-      setting: {
-        ...sessionTitle?.setting,
-        sync: {
-          ...sessionTitle?.setting?.sync,
-          [extra]: resExtra.data.result,
-        }
-      },
-    }));
+    setSession("setting", "sync", "", {
+      [extra]: resExtra.data.result,
+    });
   }
   else {
     const [resCategory, resPercent, resScale, resFavorite, resProperty] = await Promise.all([
@@ -66,19 +57,12 @@ export const sync = async (extra?: string) => {
         params: params,
       }),
     ]);
-    sessionStorage.setItem(TITLE, JSON.stringify({
-      ...sessionTitle,
-      setting: {
-        ...sessionTitle?.setting,
-        sync: {
-          ...sessionTitle?.setting?.sync,
-          category: resCategory.data.result,
-          percent: resPercent.data.result,
-          scale: resScale.data.result,
-          favorite: resFavorite.data.result,
-          property: resProperty.data.result,
-        },
-      },
-    }));
+    setSession("setting", "sync", "", {
+      category: resCategory.data.result,
+      percent: resPercent.data.result,
+      scale: resScale.data.result,
+      favorite: resFavorite.data.result,
+      property: resProperty.data.result,
+    });
   }
 }

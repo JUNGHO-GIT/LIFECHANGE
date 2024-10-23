@@ -142,6 +142,6 @@
     /** watch *************************************************************************************/
     "watch": true,
     "watchFile": "useFsEvents",
-    "watchDirectory": "useFsEvents",
+    "watchDirectory": "useFsEvents"
   }
 }

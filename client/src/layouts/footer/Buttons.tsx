@@ -2,6 +2,7 @@
 
 import { useCommonValue } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
+import { setSession } from "@imports/ImportUtils";
 import { PopUp } from "@imports/ImportContainers";
 import { Btn, Div } from "@imports/ImportComponents";
 import { Grid } from "@imports/ImportMuis";
@@ -18,19 +19,13 @@ export const Buttons = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { TITLE, PATH, toFind, toFavorite, sessionTitle, navigate } = useCommonValue();
+  const { PATH, toFind, toFavorite, navigate } = useCommonValue();
   const { translate } = useLanguageStore();
 
   // 3. handler ------------------------------------------------------------------------------------
   const handleSave = (type: string) => {
     flow?.flowSave(type);
-    sessionStorage.setItem(TITLE, JSON.stringify({
-      ...sessionTitle,
-      section: {
-        ...sessionTitle?.section,
-        food: []
-      }
-    }));
+    setSession("section", "food", "", []);
   };
 
   // 7. btn ----------------------------------------------------------------------------------------

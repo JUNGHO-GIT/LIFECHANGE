@@ -2,13 +2,13 @@
 
 import { useEffect } from "@imports/ImportReacts";
 import { useCommonValue } from "@imports/ImportHooks";
-import { axios, sync } from "@imports/ImportUtils";
+import { axios, sync, setLocal, setSession } from "@imports/ImportUtils";
 
 // -------------------------------------------------------------------------------------------------
 export const AuthGoogle = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_GOOGLE, TITLE, navigate, localTitle } = useCommonValue();
+  const { URL_GOOGLE, navigate } = useCommonValue();
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -17,26 +17,18 @@ export const AuthGoogle = () => {
       if (res.data.status === "success") {
 
         // localStorage
-        localStorage.setItem(TITLE, JSON.stringify({
-          ...localTitle,
-          setting: {
-            ...localTitle?.setting,
-            autoLogin: "true",
-            autoLoginId: res.data.googleId,
-            autoLoginPw: res.data.googlePw,
-            isGoogle: "true",
-          },
-        }));
+        setLocal("setting", "id", "", {
+          autoLogin: "true",
+          autoLoginId: res.data.googleId,
+          autoLoginPw: res.data.googlePw,
+          isGoogle: "true",
+        });
 
         // sessionStorage
-        sessionStorage.setItem(TITLE, JSON.stringify({
-          ...localTitle,
-          setting: {
-            ...localTitle?.setting,
-            sessionId: res.data.googleId,
-            admin: res.data.admin === "admin" ? "true" : "false",
-          },
-        }));
+        setSession("setting", "id", "", {
+          sessionId: res.data.googleId,
+          admin: res.data.admin === "admin" ? "true" : "false",
+        });
 
         sync();
         navigate("/today/list");

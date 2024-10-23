@@ -5,6 +5,7 @@
 import { useEffect, useState } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
+import { setSession } from "@imports/ImportUtils";
 import { PopUp, Input, Select } from "@imports/ImportContainers";
 import { Btn, Img, Div, Icons } from "@imports/ImportComponents";
 import { MenuItem, PickersDay, Grid, Badge } from "@imports/ImportMuis";
@@ -255,13 +256,7 @@ export const PickerDay = (
                                 dateStart: getDayFmt(day),
                                 dateEnd: getDayFmt(day),
                               }));
-                              sessionStorage.setItem(TITLE, JSON.stringify({
-                                ...sessionTitle,
-                                section: {
-                                  ...sessionTitle?.section,
-                                  food: []
-                                }
-                              }));
+                              setSession("section", "food", "", []);
                             }}
                           />
                         </Badge>
@@ -331,13 +326,7 @@ export const PickerDay = (
                         dateStart: getPrevDayStartFmt(prev.dateStart),
                         dateEnd: getPrevDayEndFmt(prev.dateStart),
                       }));
-                      sessionStorage.setItem(TITLE, JSON.stringify({
-                        ...sessionTitle,
-                        section: {
-                          ...sessionTitle?.section,
-                          food: []
-                        }
-                      }));
+                      setSession("section", "food", "", []);
                     }}
                   />
                 </Div>
@@ -353,13 +342,7 @@ export const PickerDay = (
                         dateStart: getNextDayStartFmt(prev.dateStart),
                         dateEnd: getNextDayEndFmt(prev.dateStart),
                       }));
-                      sessionStorage.setItem(TITLE, JSON.stringify({
-                        ...sessionTitle,
-                        section: {
-                          ...sessionTitle?.section,
-                          food: []
-                        }
-                      }));
+                      setSession("section", "food", "", []);
                     }}
                   />
                 </Div>

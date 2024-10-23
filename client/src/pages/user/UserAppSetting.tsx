@@ -3,6 +3,7 @@
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
+import { setLocal } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { PopUp } from "@imports/ImportContainers";
 import { Icons, Img, Div, Br } from "@imports/ImportComponents";
@@ -13,7 +14,7 @@ import { TableContainer, Table, TableBody, TableRow, TableCell } from "@imports/
 export const UserAppSetting = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { TITLE, navigate, isAdmin, localLang, localTitle } = useCommonValue();
+  const { navigate, isAdmin, localLang } = useCommonValue();
   const { translate } = useLanguageStore();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -29,18 +30,20 @@ export const UserAppSetting = () => {
   }, []);
 
   // 4. handle -------------------------------------------------------------------------------------
+  const handleLogout = () => {
+    setLocal("setting", "id", "", {
+      autoLogin: "false",
+      autoLoginId: "",
+      autoLoginPw: "",
+    });
+    sessionStorage.clear();
+    navigate("/");
+  };
+
+  // 4. handle -------------------------------------------------------------------------------------
   const handleChangeLanguage = (lang: string) => {
     setLang(lang);
-    localStorage.setItem(TITLE, JSON.stringify({
-      ...localTitle,
-      setting: {
-        ...localTitle?.setting,
-        locale: {
-          ...localTitle?.setting?.locale,
-          lang: lang,
-        }
-      }
-    }));
+    setLocal("setting", "locale", "lang", lang);
     navigate(0);
   };
 
@@ -196,20 +199,7 @@ export const UserAppSetting = () => {
                 <TableRow
                   className={"pointer"}
                   onClick={() => {
-                    localStorage.setItem(TITLE, JSON.stringify({
-                      ...localTitle,
-                      setting: {
-                        ...localTitle?.setting,
-                        id: {
-                          ...localTitle?.setting?.id,
-                          autoLogin: "false",
-                          autoLoginId: "",
-                          autoLoginPw: "",
-                        }
-                      }
-                    }));
-                    sessionStorage.clear()
-                    navigate("/")
+                    handleLogout();
                   }}
                 >
                   <TableCell className={"w-90vw p-15"}>

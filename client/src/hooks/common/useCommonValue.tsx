@@ -67,7 +67,6 @@ export const useCommonValue = () => {
   const sessionFavorite: any = sessionTitle?.setting?.sync?.favorite || {};
   const sessionProperty: any = sessionTitle?.setting?.sync?.property || {};
   const sessionCategory: any = sessionTitle?.setting?.sync?.category || {};
-
   const sessionFoodSection: any[] = sessionTitle?.section?.food || [];
 
   const calendarArray: any[] = sessionTitle?.setting?.sync?.category?.calendar || [];

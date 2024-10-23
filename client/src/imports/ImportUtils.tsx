@@ -2,7 +2,7 @@
 
 import { handleY } from "@scripts/chartFmt";
 import { sync } from "@scripts/sync";
-
+import { getLocal, setLocal, getSession, setSession } from "@scripts/storage";
 import axios from "axios";
 import numeral from 'numeral';
 import { create } from 'zustand';
@@ -17,7 +17,10 @@ import { randomNumber, randomTime, calcDate, strToDecimal, decimalToStr } from "
 export {
   handleY,
   sync,
-
+  getLocal,
+  setLocal,
+  getSession,
+  setSession,
   create,
   axios,
   parseISO,

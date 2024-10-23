@@ -4,7 +4,7 @@ import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { FoodFind } from "@imports/ImportSchemas";
-import { axios, numeral, sync } from "@imports/ImportUtils";
+import { axios, numeral, sync, setSession } from "@imports/ImportUtils";
 import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
 import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
 import { Paper, Checkbox, Grid } from "@imports/ImportMuis";
@@ -16,7 +16,7 @@ export const FoodFavoriteList = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, TITLE, sessionId } = useCommonValue();
   const { location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
-  const { sessionFoodSection, sessionTitle } = useCommonValue();
+  const { sessionFoodSection } = useCommonValue();
   const { getDayFmt } = useCommonDate();
   const { translate } = useLanguageStore();
   const { ALERT, setALERT } = useAlertStore();
@@ -198,13 +198,7 @@ export const FoodFavoriteList = () => {
     }
 
     // 스토리지 데이터 설정
-    sessionStorage.setItem(TITLE, JSON.stringify({
-      ...sessionTitle,
-      section: {
-        ...sessionTitle?.section,
-        food: sectionArray
-      }
-    }));
+    setSession("section", "food", "", sectionArray);
   };
 
   // 7. find ---------------------------------------------------------------------------------------

@@ -2,13 +2,13 @@
 
 import { useEffect } from "@imports/ImportReacts";
 import { useCommonValue } from "@imports/ImportHooks";
-import { moment, getCountryForTimezone, getAllInfoByISO } from "@imports/ImportUtils";
+import { moment, setLocal, getCountryForTimezone, getAllInfoByISO } from "@imports/ImportUtils";
 
 // -------------------------------------------------------------------------------------------------
 export const useLanguageSetting = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { PATH, TITLE, localLang, localTitle } = useCommonValue();
+  const { PATH, TITLE, localLang } = useCommonValue();
 
   // 2. declare ------------------------------------------------------------------------------------
   let timeZone: string = "";
@@ -41,19 +41,13 @@ export const useLanguageSetting = () => {
       }
 
       // Save to local storage
-      localStorage.setItem(TITLE, JSON.stringify({
-        ...localTitle,
-        setting: {
-          ...localTitle?.setting,
-          locale: {
-            timeZone: timeZone,
-            lang: lang,
-            zoneName: zoneName,
-            isoCode: isoCode,
-            currency: currency,
-          }
-        }
-      }));
+      setLocal("setting", "locale", "", {
+        timeZone: timeZone,
+        lang: lang,
+        zoneName: zoneName,
+        isoCode: isoCode,
+        currency: currency,
+      });
     }
     catch (err: any) {
       console.error(err);

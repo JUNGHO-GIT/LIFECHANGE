@@ -36,4 +36,9 @@ export const useRoot = () => {
       }
     }
   }, [navigate, sessionId]);
+
+  useEffect(() => {
+    console.log("===================================");
+    console.log("sessionId", sessionId);
+  }, []);
 };

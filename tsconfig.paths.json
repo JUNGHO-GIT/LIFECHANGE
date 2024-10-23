@@ -11,7 +11,7 @@
       "@scripts/*": ["src/assets/scripts/*"],
       "@styles/*": ["src/assets/styles/*"],
       "@images/*": ["src/assets/images/*"],
-      "@arrays/*": ["src/assets/arrays/*"],
+      "@arrays/*": ["src/assets/arrays/*"]
     },
     "typeRoots": [
       "./node_modules/@types",
@@ -20,8 +20,8 @@
     "types": [
       "node",
       "alias",
-      "extension",
-    ],
+      "extension"
+    ]
   },
   "include": [
     "index.ts",
@@ -30,10 +30,10 @@
     "**/*.tsx",
     "**/*.d.ts",
     "**/*.js",
-    "**/*.jsx",
+    "**/*.jsx"
   ],
   "exclude": [
     "node_modules",
-    "**/*.spec.ts",
-  ],
+    "**/*.spec.ts"
+  ]
 }

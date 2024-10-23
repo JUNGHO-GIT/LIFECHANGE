@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { useValidateFood } from "@imports/ImportValidates";
 import { Food } from "@imports/ImportSchemas";
-import { axios, numeral, sync } from "@imports/ImportUtils";
+import { axios, numeral, sync, setSession } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, Count, Delete, Input, Select } from "@imports/ImportContainers";
 import { Img, Bg, Icons, Div } from "@imports/ImportComponents";
@@ -15,8 +15,8 @@ import { Paper, MenuItem, Grid } from "@imports/ImportMuis";
 export const FoodDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, TITLE, sessionId, toList } = useCommonValue();
-  const { foodArray, bgColors, sessionFoodSection, sessionTitle } = useCommonValue();
+  const { URL_OBJECT, sessionId, toList } = useCommonValue();
+  const { foodArray, bgColors, sessionFoodSection } = useCommonValue();
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt,getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -408,13 +408,7 @@ export const FoodDetail = () => {
     sectionArray.splice(index, 1);
 
     // 스토리지 데이터 설정
-    sessionStorage.setItem(TITLE, JSON.stringify({
-      ...sessionTitle,
-      section: {
-        ...sessionTitle?.section,
-        food: sectionArray
-      }
-    }));
+    setSession("section", "food", "", sectionArray);
 
     // OBJECT 설정
     setOBJECT((prev: any) => ({
