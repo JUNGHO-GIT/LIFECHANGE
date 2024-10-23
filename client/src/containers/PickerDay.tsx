@@ -24,7 +24,7 @@ export const PickerDay = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { PATH, TITLE, localLang, localTimeZone, sessionTitle } = useCommonValue();
+  const { PATH, localLang, localTimeZone, sessionTitle } = useCommonValue();
   const { isTodayList, isGoalTodayList, isGoalList, isGoalDetail } = useCommonValue();
   const { isRealList, isRealDetail, isCalendarDetail } = useCommonValue();
   const { getDayFmt, getDayNotFmt, getDayStartFmt, getDayEndFmt } = useCommonDate();
@@ -54,9 +54,9 @@ export const PickerDay = (
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [typeSave, setTypeSave] = useState<string>("");
   const [typeList, setTypeList] = useStorageLocal(
-    TITLE, "typeList", PATH, (
+    "type", "list", PATH, (
       "month"
-    ),
+    )
   );
 
   // 2-3. useEffect --------------------------------------------------------------------------------

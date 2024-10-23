@@ -14,7 +14,7 @@ import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMu
 export const FoodFavoriteList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, PATH, TITLE, sessionId } = useCommonValue();
+  const { URL_OBJECT, PATH, sessionId } = useCommonValue();
   const { location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { sessionFoodSection } = useCommonValue();
   const { getDayFmt } = useCommonDate();
@@ -23,14 +23,14 @@ export const FoodFavoriteList = () => {
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [PAGING, setPAGING] = useStorageLocal(
-    TITLE, "paging", PATH, {
+    "paging", PATH, "", {
       sort: "asc",
       query: "favorite",
       page: 0,
     }
   );
   const [isExpanded, setIsExpanded] = useStorageLocal(
-    TITLE, "isExpanded", PATH, [{
+    "isExpanded", PATH, "", [{
       expanded: true
     }]
   );

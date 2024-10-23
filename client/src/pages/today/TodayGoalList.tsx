@@ -15,13 +15,13 @@ export const TodayGoalList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP } = useCommonValue();
-  const { PATH, TITLE, navigate, sessionId, localCurrency } = useCommonValue();
+  const { PATH, navigate, sessionId, localCurrency } = useCommonValue();
   const { getDayFmt, getDayNotFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
   // 2-1. useStorageSession ------------------------------------------------------------------------
   const [DATE, setDATE] = useStorageSession(
-    TITLE, "date", PATH, {
+    "date", PATH, "", {
       dateType: "",
       dateStart: getDayFmt(),
       dateEnd: getDayFmt(),
@@ -30,13 +30,13 @@ export const TodayGoalList = () => {
 
   // 2-2. useStorageLocal --------------------------------------------------------------------------
   const [PAGING, _setPAGING] = useStorageLocal(
-    TITLE, "paging", PATH, {
+    "paging", PATH, "", {
       sort: "asc",
       page: 1,
     }
   );
   const [isExpanded, setIsExpanded] = useStorageLocal(
-    TITLE, "isExpanded", PATH, {
+    "isExpanded", PATH, "", {
       exercise: [{
         expended: true,
       }],

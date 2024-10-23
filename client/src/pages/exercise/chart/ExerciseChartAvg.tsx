@@ -17,14 +17,14 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } fro
 export const ExerciseChartAvg = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, TITLE, PATH, sessionId, chartColors, exerciseChartArray } = useCommonValue();
+  const { URL_OBJECT, PATH, sessionId, chartColors, exerciseChartArray } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [TYPE, setTYPE] = useStorageLocal(
-    TITLE, "typeAvg", PATH, {
+    "type", "avg", PATH, {
       section: "week",
       line: "volume"
     }

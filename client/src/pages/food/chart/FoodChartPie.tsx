@@ -27,7 +27,7 @@ declare type PieProps = {
 export const FoodChartPie = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, TITLE, PATH, chartColors, sessionId } = useCommonValue();
+  const { URL_OBJECT, PATH, chartColors, sessionId } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -35,7 +35,7 @@ export const FoodChartPie = () => {
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [TYPE, setTYPE] = useStorageLocal(
 
-    TITLE, "typePie", PATH, {
+    "type", "pie", PATH, {
       section: "week",
       line: "kcal",
     }

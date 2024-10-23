@@ -13,7 +13,7 @@ import { Paper, Grid, Accordion, AccordionSummary, AccordionDetails } from "@imp
 export const ExerciseList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, PATH, TITLE, sessionId, toDetail } = useCommonValue();
+  const { URL_OBJECT, PATH, sessionId, toDetail } = useCommonValue();
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt,getDayNotFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -21,20 +21,20 @@ export const ExerciseList = () => {
 
   // 2-1. useStorageLocal ------------------------------------------------------------------------
   const [DATE, setDATE] = useStorageLocal(
-    TITLE, "date", PATH, {
+    "date", PATH, "", {
       dateType: location_dateType || "",
       dateStart: location_dateStart || getDayFmt(),
       dateEnd: location_dateEnd || getDayFmt(),
     }
   );
   const [PAGING, setPAGING] = useStorageLocal(
-    TITLE, "paging", PATH, {
+    "paging", PATH, "", {
       sort: "asc",
       page: 1,
     }
   );
   const [isExpanded, setIsExpanded] = useStorageLocal(
-    TITLE, "isExpanded", PATH, [{
+    "isExpanded", PATH, "", [{
       expanded: true
     }]
   );

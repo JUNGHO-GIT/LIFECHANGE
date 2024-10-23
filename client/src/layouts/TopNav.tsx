@@ -20,7 +20,7 @@ export const TopNav = () => {
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [selectedTab, setSelectedTab] = useStorageLocal(
-    TITLE, "tabs", "top", {
+    "tabs", "top", "", {
       exercise: "real",
       food: "real",
       today: "real",

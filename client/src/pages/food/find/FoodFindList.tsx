@@ -15,7 +15,7 @@ import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMu
 export const FoodFindList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, PATH, TITLE, localIsoCode } = useCommonValue();
+  const { URL_OBJECT, PATH, localIsoCode } = useCommonValue();
   const { location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { sessionFoodSection } = useCommonValue();
   const { getDayFmt } = useCommonDate();
@@ -24,7 +24,7 @@ export const FoodFindList = () => {
 
   // 2-1. useStorageSession ------------------------------------------------------------------------
   const [PAGING, setPAGING] = useStorageSession(
-    TITLE, "paging", PATH, {
+    "paging", PATH, "", {
       sort: "asc",
       query: "",
       page: 0,
@@ -33,7 +33,7 @@ export const FoodFindList = () => {
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [isExpanded, setIsExpanded] = useStorageLocal(
-    TITLE, "isExpanded", PATH, [{
+    "isExpanded", PATH, "", [{
       expanded: true
     }]
   );

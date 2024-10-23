@@ -44,7 +44,7 @@ export const UserLogin = () => {
   useEffect(() => {
     const {
       autoLogin, autoLoginId, autoLoginPw, isSaved, isSavedId
-    } = getLocal("setting", "id", "");
+    } = getLocal("setting", "id", "") || {};
 
     // 자동로그인 o
     if (autoLogin === "true") {

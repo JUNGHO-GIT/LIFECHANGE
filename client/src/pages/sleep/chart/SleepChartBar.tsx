@@ -16,14 +16,14 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } fro
 export const SleepChartBar = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, TITLE, PATH, sessionId, chartColors, barChartArray } = useCommonValue();
+  const { URL_OBJECT, PATH, sessionId, chartColors, barChartArray } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [TYPE, setTYPE] = useStorageLocal(
-    TITLE, "typeBar", PATH, {
+    "type", "bar", PATH, {
       section: "today",
       line: "",
     }

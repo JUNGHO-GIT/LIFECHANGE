@@ -8,7 +8,7 @@ import { moment, setLocal, getCountryForTimezone, getAllInfoByISO } from "@impor
 export const useLanguageSetting = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { PATH, TITLE, localLang } = useCommonValue();
+  const { PATH, localLang } = useCommonValue();
 
   // 2. declare ------------------------------------------------------------------------------------
   let timeZone: string = "";
@@ -54,5 +54,5 @@ export const useLanguageSetting = () => {
     }
 
     // 종속성에 locale은 추가하지 않음
-  }, [PATH, TITLE, timeZone, zoneName, isoCode, currency]);
+  }, [PATH, timeZone, zoneName, isoCode, currency]);
 };

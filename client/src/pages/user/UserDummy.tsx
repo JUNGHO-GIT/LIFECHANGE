@@ -17,7 +17,7 @@ import { TableHead, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
 export const UserDummy = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, PATH, TITLE, navigate, sessionId } = useCommonValue();
+  const { URL_OBJECT, PATH, navigate, sessionId } = useCommonValue();
   const { ALERT, setALERT } = useAlertStore();
   const { translate } = useLanguageStore();
 
@@ -33,7 +33,7 @@ export const UserDummy = () => {
   const [OBJECT_SLEEP_GOAL, setOBJECT_SLEEP_GOAL] = useState<any>([SleepGoal]);
   const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState<any>([Sleep]);
   const [PAGING, setPAGING] = useStorageLocal(
-    TITLE, "paging", PATH, {
+    "paging", PATH, "", {
       sort: "asc",
       page: 1,
     }

@@ -16,7 +16,7 @@ import { TableHead, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
 export const UserCategory = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, PATH, TITLE, sessionId } = useCommonValue();
+  const { URL_OBJECT, PATH, sessionId } = useCommonValue();
   const { location_dateStart, location_dateEnd, location_dateType } = useCommonValue();
   const { getDayFmt } = useCommonDate();
   const { ALERT, setALERT } = useAlertStore();
@@ -24,7 +24,7 @@ export const UserCategory = () => {
 
   // 2-1. useStorageLocal ------------------------------------------------------------------------
   const [DATE, setDATE] = useStorageLocal(
-    TITLE, "date", PATH, {
+    "date", PATH, "", {
       dateType: location_dateType || "day",
       dateStart: location_dateStart || getDayFmt(),
       dateEnd: location_dateEnd || getDayFmt(),

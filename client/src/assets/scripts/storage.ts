@@ -34,10 +34,10 @@ export const setLocal = (key1: string, key2: string, key3: string, value: any) =
   if (key1 && !key2 && !key3) {
     localStorage.setItem(TITLE, JSON.stringify({
       ...localTitle,
-      [key1]: {
+      [key1]: typeof value === "object" && !Array.isArray(value) ? {
         ...(localTitle[key1] || {}),
-        ...value,
-      },
+        ...value
+      } : value
     }));
   }
 
@@ -47,10 +47,10 @@ export const setLocal = (key1: string, key2: string, key3: string, value: any) =
       ...localTitle,
       [key1]: {
         ...(localTitle?.[key1] || {}),
-        [key2]: {
+        [key2]: typeof value === "object" && !Array.isArray(value) ? {
           ...(localTitle?.[key1]?.[key2] || {}),
-          ...value,
-        }
+          ...value
+        } : value
       }
     }));
   }
@@ -63,10 +63,10 @@ export const setLocal = (key1: string, key2: string, key3: string, value: any) =
         ...(localTitle?.[key1] || {}),
         [key2]: {
           ...(localTitle?.[key1]?.[key2] || {}),
-          [key3]: {
+          [key3]: typeof value === "object" && !Array.isArray(value) ? {
             ...(localTitle?.[key1]?.[key2]?.[key3] || {}),
-            ...value,
-          }
+            ...value
+          } : value
         }
       }
     }));
@@ -107,10 +107,10 @@ export const setSession = (key1: string, key2: string, key3: string, value: any)
   if (key1 && !key2 && !key3) {
     sessionStorage.setItem(TITLE, JSON.stringify({
       ...sessionTitle,
-      [key1]: {
+      [key1]: typeof value === "object" && !Array.isArray(value) ? {
         ...(sessionTitle[key1] || {}),
-        ...value,
-      },
+        ...value
+      } : value
     }));
   }
 
@@ -120,10 +120,10 @@ export const setSession = (key1: string, key2: string, key3: string, value: any)
       ...sessionTitle,
       [key1]: {
         ...(sessionTitle?.[key1] || {}),
-        [key2]: {
+        [key2]: typeof value === "object" && !Array.isArray(value) ? {
           ...(sessionTitle?.[key1]?.[key2] || {}),
-          ...value,
-        }
+          ...value
+        } : value
       }
     }));
   }
@@ -136,10 +136,10 @@ export const setSession = (key1: string, key2: string, key3: string, value: any)
         ...(sessionTitle?.[key1] || {}),
         [key2]: {
           ...(sessionTitle?.[key1]?.[key2] || {}),
-          [key3]: {
+          [key3]: typeof value === "object" && !Array.isArray(value) ? {
             ...(sessionTitle?.[key1]?.[key2]?.[key3] || {}),
-            ...value,
-          }
+            ...value
+          } : value
         }
       }
     }));

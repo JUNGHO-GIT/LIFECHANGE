@@ -1,6 +1,6 @@
 // sync.js
 
-import { moment, axios, setSession } from "@imports/ImportUtils";
+import { moment, axios, getLocal, getSession, setSession } from "@imports/ImportUtils";
 
 // -------------------------------------------------------------------------------------------------
 export const sync = async (extra?: string) => {
@@ -9,12 +9,8 @@ export const sync = async (extra?: string) => {
   const URL = process.env.REACT_APP_SERVER_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL + SUBFIX;
-  const TITLE = process.env.REACT_APP_TITLE || "";
-
-  const sessionTitle = JSON.parse(sessionStorage.getItem(TITLE) || "{}");
-  const sessionId = sessionTitle?.setting?.id?.sessionId;
-  const localTitle = JSON.parse(localStorage.getItem(TITLE) || "{}");
-  const localTimeZone = localTitle?.setting?.locale?.timeZone || "UTC";
+  const sessionId = getSession("setting", "id", "sessionId");
+  const localTimeZone = getLocal("setting", "locale", "timeZone");
 
   // 2-1. useState ---------------------------------------------------------------------------------
   const DATE = {

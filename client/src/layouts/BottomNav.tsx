@@ -4,6 +4,7 @@ import { useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { useStorageLocal } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
+import { getLocal } from "@imports/ImportUtils";
 import { Img } from "@imports/ImportComponents";
 import { BottomNavigation, BottomNavigationAction, Paper, Grid } from "@imports/ImportMuis";
 
@@ -11,13 +12,13 @@ import { BottomNavigation, BottomNavigationAction, Paper, Grid } from "@imports/
 export const BottomNav = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { TITLE, navigate, firstStr } = useCommonValue();
+  const { navigate, firstStr } = useCommonValue();
   const { getDayFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
-  const [selectedTab, setSelectedTab] = useStorageLocal(
-    TITLE, "tabs", "bottom", {
+ const [selectedTab, setSelectedTab] = useStorageLocal(
+    "tabs", "bottom", "", {
       exercise: false,
       food: false,
       today: false,
@@ -49,9 +50,8 @@ export const BottomNav = () => {
     }));
 
     // top selected 값 가져오기
-    const item = localStorage.getItem(TITLE);
-    const tabsItem = item ? JSON.parse(item) : {};
-    const selectedTop = tabsItem?.tabs?.top?.[value];
+    const getItem = getLocal("tabs", "top", "");
+    const selectedTop = getItem[value];
 
     let url = "";
     if (selectedTop === "real" || selectedTop === "schedule") {
@@ -77,7 +77,7 @@ export const BottomNav = () => {
     const tabsSection = () => (
       <BottomNavigation
         showLabels={true}
-        value={firstStr}
+        value={Object.keys(selectedTab).find((key: string) => selectedTab[key])}
         className={"w-100p"}
       >
         <BottomNavigationAction

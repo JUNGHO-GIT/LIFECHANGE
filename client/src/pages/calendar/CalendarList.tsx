@@ -13,7 +13,7 @@ import { Paper, Grid } from "@imports/ImportMuis";
 export const CalendarList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, PATH, TITLE } = useCommonValue();
+  const { URL_OBJECT, PATH } = useCommonValue();
   const { sessionId, navigate, toDetail, localLang } = useCommonValue();
   const { getMoment, getDayFmt, getDayStartFmt, getDayEndFmt, getDayNotFmt } = useCommonDate();
   const { getPrevMonthStartFmt, getPrevMonthEndFmt } = useCommonDate();
@@ -24,14 +24,14 @@ export const CalendarList = () => {
 
   // 2-1. useStorageLocal ------------------------------------------------------------------------
   const [DATE, setDATE] = useStorageLocal(
-    TITLE, "date", PATH, {
+    "date", PATH, "", {
       dateType: "",
       dateStart: getMonthStartFmt(),
       dateEnd: getMonthEndFmt(),
     }
   );
   const [PAGING, _setPAGING] = useStorageLocal(
-    TITLE, "paging", PATH, {
+    "paging", PATH, "", {
       sort: "asc",
       page: 1,
     }
