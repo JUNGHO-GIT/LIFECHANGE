@@ -180,7 +180,7 @@ export const update = {
       {
         $set: {
           calendar_section: OBJECT_param.calendar_section,
-          calendar_updateDt: newDate
+          calendar_updateDt: new Date(),
         },
       },
       {
@@ -246,7 +246,7 @@ export const update = {
       {
         $set: {
           calendar_section: OBJECT_param.calendar_section,
-          calendar_updateDt: newDate
+          calendar_updateDt: new Date(),
         },
       },
       {
@@ -313,7 +313,7 @@ export const replace = async (
     {
       $set: {
         calendar_section: OBJECT_param.calendar_section,
-        calendar_updateDt: newDate
+        calendar_updateDt: new Date(),
       },
     },
     {

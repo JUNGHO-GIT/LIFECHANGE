@@ -52,6 +52,22 @@ const schema = new mongoose.Schema({
     required: false
   },
 
+  user_initProperty: {
+    type: String,
+    default: "",
+    required: false
+  },
+  user_curPropertyInclude: {
+    type: String,
+    default: "",
+    required: false
+  },
+  user_curPropertyExclude: {
+    type: String,
+    default: "",
+    required: false
+  },
+
   user_foodFavorite: [{
     food_key : {
       type: String,
@@ -104,22 +120,6 @@ const schema = new mongoose.Schema({
       required: false
     },
   }],
-
-  user_initProperty: {
-    type: String,
-    default: "",
-    required: false
-  },
-  user_curPropertyInclude: {
-    type: String,
-    default: "",
-    required: false
-  },
-  user_curPropertyExclude: {
-    type: String,
-    default: "",
-    required: false
-  },
 
   user_dataCategory: {
     calendar: {

@@ -250,7 +250,7 @@ export const update = {
           exercise_goal_volume: OBJECT_param.exercise_goal_volume,
           exercise_goal_cardio: OBJECT_param.exercise_goal_cardio,
           exercise_goal_weight: OBJECT_param.exercise_goal_weight,
-          exercise_goal_updateDt: newDate
+          exercise_goal_updateDt: new Date(),
         },
       },
       {
@@ -287,7 +287,7 @@ export const update = {
           exercise_goal_volume: OBJECT_param.exercise_goal_volume,
           exercise_goal_cardio: OBJECT_param.exercise_goal_cardio,
           exercise_goal_weight: OBJECT_param.exercise_goal_weight,
-          exercise_goal_updateDt: newDate
+          exercise_goal_updateDt: new Date(),
         },
       },
       {

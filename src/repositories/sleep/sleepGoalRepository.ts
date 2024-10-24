@@ -234,7 +234,7 @@ export const update = {
           sleep_goal_bedTime: OBJECT_param.sleep_goal_bedTime,
           sleep_goal_wakeTime: OBJECT_param.sleep_goal_wakeTime,
           sleep_goal_sleepTime: OBJECT_param.sleep_goal_sleepTime,
-          sleep_goal_updateDt: newDate
+          sleep_goal_updateDt: new Date(),
         }
       },
       {
@@ -270,7 +270,7 @@ export const update = {
           sleep_goal_bedTime: OBJECT_param.sleep_goal_bedTime,
           sleep_goal_wakeTime: OBJECT_param.sleep_goal_wakeTime,
           sleep_goal_sleepTime: OBJECT_param.sleep_goal_sleepTime,
-          sleep_goal_updateDt: newDate
+          sleep_goal_updateDt: new Date(),
         }
       },
       {

@@ -227,7 +227,7 @@ export const update = {
         $set: {
           money_goal_income: OBJECT_param.money_goal_income,
           money_goal_expense: OBJECT_param.money_goal_expense,
-          money_goal_updateDt: newDate
+          money_goal_updateDt: new Date(),
         }
       },
       {
@@ -262,7 +262,7 @@ export const update = {
         $set: {
           money_goal_income: OBJECT_param.money_goal_income,
           money_goal_expense: OBJECT_param.money_goal_expense,
-          money_goal_updateDt: newDate
+          money_goal_updateDt: new Date(),
         }
       },
       {

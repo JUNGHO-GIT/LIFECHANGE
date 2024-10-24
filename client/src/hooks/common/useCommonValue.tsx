@@ -58,6 +58,17 @@ export const useCommonValue = () => {
   const URL_MONEY: string = URL + SUBFIX_MONEY;
   const URL_SLEEP: string = URL + SUBFIX_SLEEP;
 
+  // local storage (object 타입)
+  const localTitle: any = JSON.parse(localStorage.getItem(TITLE) || "{}");
+  const localSetting: any = localTitle?.setting || {};
+
+  // local storage (string 타입)
+  const localTimeZone: string = localTitle?.setting?.locale?.timeZone;
+  const localZoneName: string = localTitle?.setting?.locale?.zoneName;
+  const localLang: string = localTitle?.setting?.locale?.lang;
+  const localIsoCode: string = localTitle?.setting?.locale?.isoCode;
+  const localCurrency: string = localTitle?.setting?.locale?.currency;
+
   // session storage (object 타입)
   const sessionTitle: any = JSON.parse(sessionStorage.getItem(TITLE) || "{}");
   const sessionSetting: any = sessionTitle?.setting || {};
@@ -78,18 +89,6 @@ export const useCommonValue = () => {
   // session storage (string 타입)
   const isAdmin: string = sessionTitle?.setting?.id?.admin || "";
   const sessionId: string = sessionTitle?.setting?.id?.sessionId || "";
-
-  // local storage (object 타입)
-  const localTitle: any = JSON.parse(localStorage.getItem(TITLE) || "{}");
-  const localSetting: any = localTitle?.setting || {};
-
-  // local storage (string 타입)
-  const localTimeZone: string = localTitle?.setting?.locale?.timeZone;
-  const localZoneName: string = localTitle?.setting?.locale?.zoneName;
-  const localLang: string = localTitle?.setting?.locale?.lang;
-  const localIsoCode: string = localTitle?.setting?.locale?.isoCode;
-  const localCurrency: string = localTitle?.setting?.locale?.currency;
-
   const exerciseChartArray: any[] = [
     "volume", "cardio"
   ];

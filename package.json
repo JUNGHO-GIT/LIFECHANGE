@@ -28,7 +28,7 @@
     "jsonwebtoken": "^9.0.2",
     "module-alias": "^2.2.3",
     "moment-timezone": "^0.5.46",
-    "mongodb": "^6.9.0",
+    "mongodb": "^6.10.0",
     "mongoose": "^8.7.2",
     "nodemailer": "^6.9.15",
     "oauth-signature": "^1.5.0",

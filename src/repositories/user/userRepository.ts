@@ -52,7 +52,7 @@ export const emailSendEmail = async (
     {
       verify_id: user_id_param,
       verify_code: code_param,
-      verify_regDt: newDate
+      verify_regDt: new Date(),
     }
   );
 
@@ -302,7 +302,7 @@ export const categoryUpdate = async (
           money: OBJECT_param.money,
           sleep: OBJECT_param.sleep,
         },
-        user_updateDt: newDate
+        user_updateDt: new Date(),
       }
     },
     {
