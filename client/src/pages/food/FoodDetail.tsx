@@ -234,7 +234,7 @@ export const FoodDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     const defaultSection = {
-      food_part_idx: 1,
+      food_part_idx: 0,
       food_part_val: "breakfast",
       food_key: "",
       food_name: "",
@@ -596,7 +596,7 @@ export const FoodDetail = () => {
               locked={LOCKED}
               inputRef={REFS?.[i]?.food_part_idx}
               error={ERRORS?.[i]?.food_part_idx}
-              value={item?.food_part_idx ?? 0}
+              value={item?.food_part_idx || 0}
               onChange={(e: any) => {
                 const newIndex = Number(e.target.value);
                 setOBJECT((prev: any) => ({
@@ -612,7 +612,11 @@ export const FoodDetail = () => {
               }}
             >
               {foodArray?.map((part: any, idx: number) => (
-                <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
+                <MenuItem
+                  key={idx}
+                  value={idx}
+                  className={"fs-0-8rem"}
+                >
                   {translate(part.food_part)}
                 </MenuItem>
               ))}

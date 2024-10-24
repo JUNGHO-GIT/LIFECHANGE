@@ -208,9 +208,9 @@ export const ExerciseDetail = () => {
   useEffect(() => {
     const defaultSection = {
       exercise_part_idx: 0,
-      exercise_part_val: "all",
+      exercise_part_val: "",
       exercise_title_idx: 0,
-      exercise_title_val: "all",
+      exercise_title_val: "",
       exercise_set: "0",
       exercise_rep: "0",
       exercise_kg: "0",
@@ -463,7 +463,7 @@ export const ExerciseDetail = () => {
               locked={LOCKED}
               inputRef={REFS?.[i]?.exercise_part_idx}
               error={ERRORS?.[i]?.exercise_part_idx}
-              value={item?.exercise_part_idx ?? 0}
+              value={item?.exercise_part_idx || 0}
               onChange={(e: any) => {
                 const newIndex = Number(e.target.value);
                 setOBJECT((prev: any) => ({
@@ -481,7 +481,11 @@ export const ExerciseDetail = () => {
               }}
             >
               {exerciseArray?.map((part: any, idx: number) => (
-                <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
+                <MenuItem
+                  key={idx}
+                  value={idx}
+                  className={"fs-0-8rem"}
+                >
                   {translate(part?.exercise_part)}
                 </MenuItem>
               ))}
@@ -493,7 +497,7 @@ export const ExerciseDetail = () => {
               locked={LOCKED}
               inputRef={REFS?.[i]?.exercise_title_idx}
               error={ERRORS?.[i]?.exercise_title_idx}
-              value={item?.exercise_title_idx ?? 0}
+              value={item?.exercise_title_idx || 0}
               onChange={(e: any) => {
                 const newTitleIdx = Number(e.target.value);
                 const newTitleVal = exerciseArray[item?.exercise_part_idx]?.exercise_title[newTitleIdx];
@@ -512,7 +516,11 @@ export const ExerciseDetail = () => {
               }}
             >
               {exerciseArray[item?.exercise_part_idx]?.exercise_title?.map((title: any, idx: number) => (
-                <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
+                <MenuItem
+                  key={idx}
+                  value={idx}
+                  className={"fs-0-8rem"}
+                >
                   {translate(title)}
                 </MenuItem>
               ))}
@@ -521,10 +529,10 @@ export const ExerciseDetail = () => {
           <Grid size={6}>
             <Input
               label={translate("set")}
-              value={numeral(item?.exercise_set).format("0,0")}
+              locked={LOCKED}
               inputRef={REFS?.[i]?.exercise_set}
               error={ERRORS?.[i]?.exercise_set}
-              locked={LOCKED}
+              value={numeral(item?.exercise_set).format("0,0")}
               startadornment={
                 <Img
                   key={"exercise3_1"}
@@ -566,10 +574,10 @@ export const ExerciseDetail = () => {
           <Grid size={6}>
             <Input
               label={translate("rep")}
-              value={numeral(item?.exercise_rep).format("0,0")}
+              locked={LOCKED}
               inputRef={REFS?.[i]?.exercise_rep}
               error={ERRORS?.[i]?.exercise_rep}
-              locked={LOCKED}
+              value={numeral(item?.exercise_rep).format("0,0")}
               startadornment={
                 <Img
                   key={"exercise3_2"}
@@ -611,10 +619,10 @@ export const ExerciseDetail = () => {
           <Grid size={6}>
             <Input
               label={translate("kg")}
-              value={numeral(item?.exercise_kg).format("0,0")}
+              locked={LOCKED}
               inputRef={REFS?.[i]?.exercise_kg}
               error={ERRORS?.[i]?.exercise_kg}
-              locked={LOCKED}
+              value={numeral(item?.exercise_kg).format("0,0")}
               startadornment={
                 <Img
                   key={"exercise3_3"}

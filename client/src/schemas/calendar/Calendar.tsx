@@ -12,8 +12,8 @@ export const Calendar: any = {
   calendar_dateEnd: "0000-00-00",
   calendar_section: [{
     calendar_part_idx: 0,
-    calendar_part_val: "all",
-    calendar_color: "black",
+    calendar_part_val: "",
+    calendar_color: "",
     calendar_title : "",
     calendar_content: ""
   }],

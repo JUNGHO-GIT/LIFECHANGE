@@ -288,7 +288,7 @@ export const list = async (
         finalResult.push({
           food_query: query,
           food_perNumber: page * 10 + tableIndex * rows.length + rowIndex + 1,
-          food_part_idx: 1,
+          food_part_idx: 0,
           food_part_val: "breakfast",
           food_name: titleElement || "",
           food_brand: brandElement || "",
@@ -347,7 +347,7 @@ export const listFavorite = async (
     ...item,
     food_query: "favorite",
     food_perNumber: index + 1,
-    food_part_idx: 1,
+    food_part_idx: 0,
     food_part_val: "breakfast",
   }));
 

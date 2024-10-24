@@ -16,9 +16,9 @@ export const Money: any = {
   money_total_expense_color: "",
   money_section: [{
     money_part_idx: 0,
-    money_part_val: "all",
+    money_part_val: "",
     money_title_idx: 0,
-    money_title_val: "all",
+    money_title_val: "",
     money_amount: "0",
     money_content: "",
     money_include: "Y",

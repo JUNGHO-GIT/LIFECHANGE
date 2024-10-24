@@ -2,7 +2,7 @@
 export const exerciseArray = [
   // 0
   {
-    exercise_part: "all",
+    exercise_part: "",
     exercise_title: [
       "all"
     ]

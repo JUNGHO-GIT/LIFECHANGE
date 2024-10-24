@@ -18,9 +18,9 @@ export const Exercise: Record<string, any> = {
   exercise_total_weight_color: "",
   exercise_section: [{
     exercise_part_idx: 0,
-    exercise_part_val: "all",
+    exercise_part_val: "",
     exercise_title_idx: 0,
-    exercise_title_val: "all",
+    exercise_title_val: "",
     exercise_set: "0",
     exercise_rep: "0",
     exercise_kg: "0",

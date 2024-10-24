@@ -148,9 +148,9 @@ export const CalendarDetail = () => {
   useEffect(() => {
     const defaultSection = {
       calendar_part_idx: 0,
-      calendar_part_val: "all",
+      calendar_part_val: "",
       calendar_title: "",
-      calendar_color: "black",
+      calendar_color: "",
       calendar_content: ""
     };
     let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) =>
@@ -324,7 +324,7 @@ export const CalendarDetail = () => {
               locked={LOCKED}
               inputRef={REFS?.[i]?.calendar_part_idx}
               error={ERRORS?.[i]?.calendar_part_idx}
-              value={item?.calendar_part_idx ?? 0}
+              value={item?.calendar_part_idx || 0}
               onChange={(e: any) => {
                 const newIndex = Number(e.target.value);
                 setOBJECT((prev: any) => ({
@@ -340,7 +340,11 @@ export const CalendarDetail = () => {
               }}
             >
               {calendarArray?.map((part: any, idx: number) => (
-                <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
+                <MenuItem
+                  key={idx}
+                  value={idx}
+                  className={"fs-0-8rem"}
+                >
                   {translate(part?.calendar_part)}
                 </MenuItem>
               ))}
@@ -349,9 +353,9 @@ export const CalendarDetail = () => {
           <Grid size={6}>
             <Select
               label={translate("color")}
-              value={item?.calendar_color}
               inputRef={REFS?.[i]?.calendar_color}
               error={ERRORS?.[i]?.calendar_color}
+              value={item?.calendar_color || "black"}
               locked={LOCKED}
               onChange={(e: any) => {
                 const newColor = e.target.value;
@@ -367,7 +371,11 @@ export const CalendarDetail = () => {
               }}
             >
               {calendarColors.map((color: any, idx: number) => (
-                <MenuItem key={idx} value={color} className={"fs-0-8rem"}>
+                <MenuItem
+                  key={idx}
+                  value={color}
+                  className={"fs-0-8rem"}
+                >
                   <span className={color}>●</span>
                   <span className={"ms-10"}>{color}</span>
                 </MenuItem>
@@ -377,9 +385,9 @@ export const CalendarDetail = () => {
           <Grid size={12}>
             <Input
               label={translate("calendarTitle")}
-              value={item?.calendar_title}
               inputRef={REFS?.[i]?.calendar_title}
               error={ERRORS?.[i]?.calendar_title}
+              value={item?.calendar_title || ""}
               locked={LOCKED}
               startadornment={
                 <Img

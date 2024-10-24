@@ -195,9 +195,9 @@ export const MoneyDetail = () => {
   useEffect(() => {
     const defaultSection = {
       money_part_idx: 0,
-      money_part_val: "all",
+      money_part_val: "",
       money_title_idx: 0,
-      money_title_val: "all",
+      money_title_val: "",
       money_amount: "0",
       money_content: "",
       money_include: "Y",
@@ -414,7 +414,7 @@ export const MoneyDetail = () => {
               locked={LOCKED}
               inputRef={REFS?.[i]?.money_part_idx}
               error={ERRORS?.[i]?.money_part_idx}
-              value={item?.money_part_idx ?? 0}
+              value={item?.money_part_idx || 0}
               onChange={(e: any) => {
                 const newIndex = Number(e.target.value);
                 setOBJECT((prev: any) => ({
@@ -432,7 +432,11 @@ export const MoneyDetail = () => {
               }}
             >
               {moneyArray?.map((part: any, idx: number) => (
-                <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
+                <MenuItem
+                  key={idx}
+                  value={idx}
+                  className={"fs-0-8rem"}
+                >
                   {translate(part?.money_part)}
                 </MenuItem>
               ))}
@@ -444,7 +448,7 @@ export const MoneyDetail = () => {
               locked={LOCKED}
               inputRef={REFS?.[i]?.money_title_idx}
               error={ERRORS?.[i]?.money_title_idx}
-              value={item?.money_title_idx ?? 0}
+              value={item?.money_title_idx || 0}
               onChange={(e: any) => {
                 const newTitleIdx = Number(e.target.value);
                 const newTitleVal = moneyArray[item?.money_part_idx]?.money_title[newTitleIdx];
@@ -463,7 +467,11 @@ export const MoneyDetail = () => {
               }}
             >
               {moneyArray[item?.money_part_idx]?.money_title?.map((title: any, idx: number) => (
-                <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
+                <MenuItem
+                  key={idx}
+                  value={idx}
+                  className={"fs-0-8rem"}
+                >
                   {translate(title)}
                 </MenuItem>
               ))}

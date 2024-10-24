@@ -2,7 +2,7 @@
 export const moneyArray = [
   // 0
   {
-    money_part: "all",
+    money_part: "",
     money_title: [
       "all"
     ]
