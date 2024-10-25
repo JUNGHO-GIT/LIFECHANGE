@@ -14,7 +14,7 @@ export const TopNav = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { firstStr, secondStr, localCurrency, navigate } = useCommonValue();
-  const { sessionTitle, sessionPercent, sessionScale, sessionProperty } = useCommonValue();
+  const { sessionTitle, sessionPercent, sessionScale, sessionKcal, sessionProperty } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
@@ -54,22 +54,35 @@ export const TopNav = () => {
     money: "smile3",
     sleep: "smile3",
   });
-  const [property, setProperty] = useState<any>({
-    totalIncomeAll: "0",
-    totalExpenseAll: "0",
-    totalIncome: "0",
-    totalExpense: "0",
-    initProperty: "0",
-    curPropertyAll: "0",
-    curProperty: "0",
+  const [scale, setScale] = useState<any>({
+    initScale: "0",
+    minScale: "0",
+    maxScale: "0",
+    curScale: "0",
     dateStart: "",
     dateEnd: "",
   });
-  const [scale, setScale] = useState<any>({
-    minScale: "0",
-    maxScale: "0",
-    initScale: "0",
-    curScale: "0",
+  const [kcal, setKcal] = useState<any>({
+    initAvgKcal: "0",
+    totalKcal: "0",
+    totalCarb: "0",
+    totalProtein: "0",
+    totalFat: "0",
+    curAvgKcal: "0",
+    curAvgCarb: "0",
+    curAvgProtein: "0",
+    curAvgFat: "0",
+    dateStart: "",
+    dateEnd: "",
+  });
+  const [property, setProperty] = useState<any>({
+    initProperty: "0",
+    totalIncomeInclude: "0",
+    totalExpenseInclude: "0",
+    totalIncomeExclude: "0",
+    totalExpenseExclude: "0",
+    curPropertyInclude: "0",
+    curPropertyExclude: "0",
     dateStart: "",
     dateEnd: "",
   });
@@ -152,7 +165,7 @@ export const TopNav = () => {
   // 퍼센트, 자산, 체중 설정
   useEffect(() => {
     if (sessionTitle?.setting?.sync) {
-      const { percent, property, scale } = sessionTitle.setting.sync;
+      const { percent, property, kcal, scale } = sessionTitle.setting.sync;
 
       // 상태가 실제로 변경될 때만 업데이트
       setPercent((prev: any) => {
@@ -164,6 +177,12 @@ export const TopNav = () => {
       setProperty((prev: any) => {
         if (JSON.stringify(prev) !== JSON.stringify(property)) {
           return property;
+        }
+        return prev;
+      });
+      setKcal((prev: any) => {
+        if (JSON.stringify(prev) !== JSON.stringify(kcal)) {
+          return kcal;
         }
         return prev;
       });
@@ -285,7 +304,8 @@ export const TopNav = () => {
 
   // 7. topNav -------------------------------------------------------------------------------------
   const topNavNode = () => {
-    // 1. smile
+
+    // 1. smile ------------------------------------------------------------------------------------
     const smileSection = () => (
       <PopUp
         type={"innerCenter"}
@@ -412,135 +432,7 @@ export const TopNav = () => {
         )}
       </PopUp>
     );
-    // 2. property
-    const propertySection = () => (
-      <PopUp
-        type={"innerCenter"}
-        position={"center"}
-        direction={"center"}
-        contents={
-          <Grid container spacing={2} columns={12}
-          className={"w-max60vw h-max70vh border-1 radius-1 p-20"}>
-            <Grid size={12} className={"d-col-center"}>
-              <Div className={"fs-1-3rem fw-600"}>
-                {translate("property")}
-              </Div>
-              <Br px={10} />
-              <Div className={"fs-0-8rem fw-500 dark"}>
-                {`[${property?.dateStart} ~ ${property?.dateEnd}]`}
-              </Div>
-              <Br px={10} />
-              <Div className={"fs-0-7rem fw-500 dark ms-10"}>
-                {translate("includingExclusions")}
-              <Checkbox
-                size={"small"}
-                className={"p-0 ms-5"}
-                checked={includingExclusions}
-                onChange={(e: any) => {
-                  setIncludingExclusions(e.target.checked);
-                }}
-              />
-              </Div>
-            </Grid>
-            <Hr px={1} />
-            <Grid size={12} className={"d-row-center"}>
-              <Img
-                key={"money2"}
-                src={"money2"}
-                className={"w-16 h-16"}
-              />
-              <Div className={"fs-1-4rem fw-600 ms-2vw me-2vw"}>
-                {includingExclusions ? (
-                  insertComma(property.curPropertyAll || "0")
-                ) : (
-                  insertComma(property.curProperty || "0")
-                )}
-              </Div>
-              <Div className={"fs-0-6rem fw-500 dark"}>
-                {localCurrency}
-              </Div>
-            </Grid>
-            <Hr px={1} />
-            <Grid size={12} className={"d-center"}>
-              <Input
-                readOnly={true}
-                label={translate("initProperty")}
-                value={insertComma(property.initProperty || "0")}
-                startadornment={
-                  <Img
-                    key={"money2"}
-                    src={"money2"}
-                    className={"w-16 h-16"}
-                  />
-                }
-                endadornment={
-                  localCurrency
-                }
-              />
-            </Grid>
-            <Grid size={12} className={"d-center"}>
-              <Input
-                readOnly={true}
-                label={translate("sumIncome")}
-                value={
-                  includingExclusions ? (
-                    insertComma(property.totalIncomeAll || "0")
-                  ) : (
-                    insertComma(property.totalIncome || "0")
-                  )
-                }
-                startadornment={
-                  <Img
-                    key={"money2"}
-                    src={"money2"}
-                    className={"w-16 h-16"}
-                  />
-                }
-                endadornment={
-                  localCurrency
-                }
-              />
-            </Grid>
-            <Grid size={12} className={"d-center"}>
-              <Input
-                readOnly={true}
-                label={translate("sumExpense")}
-                value={
-                  includingExclusions ? (
-                    insertComma(property.totalExpenseAll || "0")
-                  ) : (
-                    insertComma(property.totalExpense || "0")
-                  )
-                }
-                startadornment={
-                  <Img
-                    key={"money2"}
-                    src={"money2"}
-                    className={"w-16 h-16"}
-                  />
-                }
-                endadornment={
-                  localCurrency
-                }
-              />
-            </Grid>
-          </Grid>
-        }
-      >
-        {(popTrigger: any) => (
-          <Img
-            key={"money4"}
-            src={"money4"}
-            className={"w-max25 h-max25"}
-            onClick={(e: any) => {
-              setProperty(sessionProperty);
-              popTrigger.openPopup(e.currentTarget)
-            }}
-          />
-        )}
-      </PopUp>
-    );
-    // 3. scale
+    // 2. scale ------------------------------------------------------------------------------------
     const scaleSection = () => (
       <PopUp
         type={"innerCenter"}
@@ -550,7 +442,7 @@ export const TopNav = () => {
           <Grid container spacing={2} columns={12} className={"w-max60vw h-max70vh border-1 radius-1 p-20"}>
             <Grid size={12} className={"d-col-center"}>
               <Div className={"fs-1-3rem fw-600"}>
-                {translate("weight")}
+                {`${translate("cur")} ${translate("scale")}`}
               </Div>
               <Br px={10} />
               <Div className={"fs-0-8rem fw-500 dark"}>
@@ -639,7 +531,252 @@ export const TopNav = () => {
         )}
       </PopUp>
     );
-    // 4. tabs
+    // 3. kcal -------------------------------------------------------------------------------------
+    const kcalSection = () => (
+      <PopUp
+        type={"innerCenter"}
+        position={"center"}
+        direction={"center"}
+        contents={
+          <Grid container spacing={2} columns={12}
+          className={"w-max60vw h-max70vh border-1 radius-1 p-20"}>
+            <Grid size={12} className={"d-col-center"}>
+              <Div className={"fs-1-3rem fw-600"}>
+                {`${translate("average")} ${translate("kcal")}`}
+              </Div>
+              <Br px={10} />
+              <Div className={"fs-0-8rem fw-500 dark"}>
+                {`[${kcal?.dateStart} ~ ${kcal?.dateEnd}]`}
+              </Div>
+            </Grid>
+            <Hr px={1} />
+            <Grid size={12} className={"d-row-center"}>
+              <Img
+                key={"food2"}
+                src={"food2"}
+                className={"w-16 h-16"}
+              />
+              <Div className={"fs-1-4rem fw-600 ms-2vw me-2vw"}>
+                {insertComma(kcal.totalKcal || "0")}
+              </Div>
+              <Div className={"fs-0-6rem fw-500 dark"}>
+                {translate("kc")}
+              </Div>
+            </Grid>
+            <Hr px={1} />
+            <Grid size={12} className={"d-center"}>
+              <Input
+                readOnly={true}
+                label={translate("initAvgKcal")}
+                value={insertComma(kcal.initAvgKcal || "0")}
+                startadornment={
+                  <Img
+                    key={"food2"}
+                    src={"food2"}
+                    className={"w-16 h-16"}
+                  />
+                }
+                endadornment={
+                  translate("kc")
+                }
+              />
+            </Grid>
+            <Grid size={12} className={"d-center"}>
+              <Input
+                readOnly={true}
+                label={translate("totalCarb")}
+                value={insertComma(kcal.totalCarb || "0")}
+                startadornment={
+                  <Img
+                    key={"food3"}
+                    src={"food3"}
+                    className={"w-16 h-16"}
+                  />
+                }
+                endadornment={
+                  translate("g")
+                }
+              />
+            </Grid>
+            <Grid size={12} className={"d-center"}>
+              <Input
+                readOnly={true}
+                label={translate("totalProtein")}
+                value={insertComma(kcal.totalProtein || "0")}
+                startadornment={
+                  <Img
+                    key={"food4"}
+                    src={"food4"}
+                    className={"w-16 h-16"}
+                  />
+                }
+                endadornment={
+                  translate("g")
+                }
+              />
+            </Grid>
+            <Grid size={12} className={"d-center"}>
+              <Input
+                readOnly={true}
+                label={translate("totalFat")}
+                value={insertComma(kcal.totalFat || "0")}
+                startadornment={
+                  <Img
+                    key={"food5"}
+                    src={"food5"}
+                    className={"w-16 h-16"}
+                  />
+                }
+                endadornment={
+                  translate("g")
+                }
+              />
+            </Grid>
+          </Grid>
+        }
+      >
+        {(popTrigger: any) => (
+          <Img
+            key={"food6"}
+            src={"food6"}
+            className={"w-max25 h-max25"}
+            onClick={(e: any) => {
+              setKcal(sessionKcal);
+              popTrigger.openPopup(e.currentTarget)
+            }}
+          />
+        )}
+      </PopUp>
+    );
+    // 4. property ---------------------------------------------------------------------------------
+    const propertySection = () => (
+      <PopUp
+        type={"innerCenter"}
+        position={"center"}
+        direction={"center"}
+        contents={
+          <Grid container spacing={2} columns={12}
+          className={"w-max60vw h-max70vh border-1 radius-1 p-20"}>
+            <Grid size={12} className={"d-col-center"}>
+              <Div className={"fs-1-3rem fw-600"}>
+                {`${translate("cur")} ${translate("property")}`}
+              </Div>
+              <Br px={10} />
+              <Div className={"fs-0-8rem fw-500 dark"}>
+                {`[${property?.dateStart} ~ ${property?.dateEnd}]`}
+              </Div>
+              <Br px={10} />
+              <Div className={"fs-0-7rem fw-500 dark ms-10"}>
+                {translate("includingExclusions")}
+              <Checkbox
+                size={"small"}
+                className={"p-0 ms-5"}
+                checked={includingExclusions}
+                onChange={(e: any) => {
+                  setIncludingExclusions(e.target.checked);
+                }}
+              />
+              </Div>
+            </Grid>
+            <Hr px={1} />
+            <Grid size={12} className={"d-row-center"}>
+              <Img
+                key={"money2"}
+                src={"money2"}
+                className={"w-16 h-16"}
+              />
+              <Div className={"fs-1-4rem fw-600 ms-2vw me-2vw"}>
+                {includingExclusions ? (
+                  insertComma(property.curPropertyInclude || "0")
+                ) : (
+                  insertComma(property.curPropertyExclude || "0")
+                )}
+              </Div>
+              <Div className={"fs-0-6rem fw-500 dark"}>
+                {localCurrency}
+              </Div>
+            </Grid>
+            <Hr px={1} />
+            <Grid size={12} className={"d-center"}>
+              <Input
+                readOnly={true}
+                label={translate("initProperty")}
+                value={insertComma(property.initProperty || "0")}
+                startadornment={
+                  <Img
+                    key={"money2"}
+                    src={"money2"}
+                    className={"w-16 h-16"}
+                  />
+                }
+                endadornment={
+                  localCurrency
+                }
+              />
+            </Grid>
+            <Grid size={12} className={"d-center"}>
+              <Input
+                readOnly={true}
+                label={translate("sumIncome")}
+                value={
+                  includingExclusions ? (
+                    insertComma(property.totalIncomeInclude || "0")
+                  ) : (
+                    insertComma(property.totalIncomeExclude || "0")
+                  )
+                }
+                startadornment={
+                  <Img
+                    key={"money2"}
+                    src={"money2"}
+                    className={"w-16 h-16"}
+                  />
+                }
+                endadornment={
+                  localCurrency
+                }
+              />
+            </Grid>
+            <Grid size={12} className={"d-center"}>
+              <Input
+                readOnly={true}
+                label={translate("sumExpense")}
+                value={
+                  includingExclusions ? (
+                    insertComma(property.totalExpenseInclude || "0")
+                  ) : (
+                    insertComma(property.totalExpenseExclude || "0")
+                  )
+                }
+                startadornment={
+                  <Img
+                    key={"money2"}
+                    src={"money2"}
+                    className={"w-16 h-16"}
+                  />
+                }
+                endadornment={
+                  localCurrency
+                }
+              />
+            </Grid>
+          </Grid>
+        }
+      >
+        {(popTrigger: any) => (
+          <Img
+            key={"money4"}
+            src={"money4"}
+            className={"w-max25 h-max25"}
+            onClick={(e: any) => {
+              setProperty(sessionProperty);
+              popTrigger.openPopup(e.currentTarget)
+            }}
+          />
+        )}
+      </PopUp>
+    );
+    // 5. tabs -------------------------------------------------------------------------------------
     const tabsSection = () => (
       <Tabs
         value={selectedTab[firstStr]}
@@ -702,18 +839,21 @@ export const TopNav = () => {
         />
       </Tabs>
     );
-    // 5. return
+    // 5. return -----------------------------------------------------------------------------------
     return (
       <Paper className={"layout-wrapper p-sticky top-8vh h-8vh border-1 radius-1 shadow-bottom-3"}>
-        <Grid container spacing={2} columns={25}>
+        <Grid container spacing={2} columns={28}>
           <Grid size={3} className={"d-center"}>
             {smileSection()}
           </Grid>
           <Grid size={3} className={"d-center"}>
-            {propertySection()}
+            {scaleSection()}
           </Grid>
           <Grid size={3} className={"d-center"}>
-            {scaleSection()}
+            {kcalSection()}
+          </Grid>
+          <Grid size={3} className={"d-center"}>
+            {propertySection()}
           </Grid>
           <Grid size={16} className={"d-center"}>
             {tabsSection()}

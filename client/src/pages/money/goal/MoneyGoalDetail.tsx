@@ -159,7 +159,7 @@ export const MoneyGoalDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        sync();
+        sync("property");
         setALERT({
           open: !ALERT.open,
           msg: translate(res.data.msg),
@@ -209,7 +209,7 @@ export const MoneyGoalDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        sync();
+        sync("property");
         setALERT({
           open: !ALERT.open,
           msg: translate(res.data.msg),

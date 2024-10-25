@@ -187,6 +187,61 @@ export const UserDetail = () => {
             />
           </Grid>
           <Hr px={1} />
+          {/** 초기 목표 칼로리 **/}
+          <Grid size={12}>
+            <Input
+              label={translate("initAvgKcal")}
+              value={insertComma(item.user_initAvgKcal || "0")}
+              inputRef={REFS?.[i]?.user_initAvgKcal}
+              error={ERRORS?.[i]?.user_initAvgKcal}
+              startadornment={
+                <Img
+                  key={"food2"}
+                  src={"food2"}
+                  className={"w-16 h-16"}
+                />
+              }
+              endadornment={
+                translate("kc")
+              }
+              onChange={(e: any) => {
+                // 빈값 처리
+                let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                // 9999 제한 + 정수
+                if (Number(value) > 9999 || !/^\d+$/.test(value)) {
+                  return;
+                }
+                // 01, 05 같은 숫자는 1, 5로 변경
+                if (/^0(?!\.)/.test(value)) {
+                  value = value.replace(/^0+/, '');
+                }
+                // object 설정
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  user_initAvgKcal: value,
+                }));
+              }}
+            />
+          </Grid>
+          {/** 현재 목표 칼로리 **/}
+          <Grid size={12}>
+            <Input
+              disabled={true}
+              label={translate("curAvgKcal")}
+              value={insertComma(item.user_curAvgKcal || "0")}
+              startadornment={
+                <Img
+                  key={"food2"}
+                  src={"food2"}
+                  className={"w-16 h-16"}
+                />
+              }
+              endadornment={
+                translate("kc")
+              }
+            />
+          </Grid>
+          <Hr px={1} />
           {/** 초기 자산 **/}
           <Grid size={12}>
             <Input
@@ -227,7 +282,7 @@ export const UserDetail = () => {
           <Grid size={12}>
             <Input
               disabled={true}
-              label={translate("curProperty")}
+              label={translate("curPropertyExclude")}
               value={
                 includingExclusions ? (
                   insertComma(item.user_curPropertyInclude || "0")

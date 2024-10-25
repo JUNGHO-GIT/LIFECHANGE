@@ -41,34 +41,116 @@ const schema = new mongoose.Schema({
     required: false
   },
 
-  user_initScale: {
-    type: String,
-    default: "",
-    required: false
-  },
-  user_curScale: {
-    type: String,
-    default: "",
-    required: false
-  },
-
-  user_initProperty: {
-    type: String,
-    default: "",
-    required: false
-  },
-  user_curPropertyInclude: {
-    type: String,
-    default: "",
-    required: false
-  },
-  user_curPropertyExclude: {
-    type: String,
-    default: "",
-    required: false
+  user_exercise: {
+    user_initScale: {
+      type: String,
+      default: "",
+      required: false
+    },
+    user_minScale: {
+      type: String,
+      default: "",
+      required: false
+    },
+    user_maxScale: {
+      type: String,
+      default: "",
+      required: false
+    },
+    user_curScale: {
+      type: String,
+      default: "",
+      required: false
+    },
   },
 
-  user_foodFavorite: [{
+  user_food: {
+    user_initAvgKcal: {
+      type: String,
+      default: "",
+      required: false
+    },
+    user_totalKcal: {
+      type: String,
+      default: "",
+      required: false
+    },
+    user_totalCarb: {
+      type: String,
+      default: "",
+      required: false
+    },
+    user_totalProtein: {
+      type: String,
+      default: "",
+      required: false
+    },
+    user_totalFat: {
+      type: String,
+      default: "",
+      required: false
+    },
+    user_curAvgKcal: {
+      type: String,
+      default: "",
+      required: false
+    },
+    user_curAvgCarb: {
+      type: String,
+      default: "",
+      required: false
+    },
+    user_curAvgProtein: {
+      type: String,
+      default: "",
+      required: false
+    },
+    user_curAvgFat: {
+      type: String,
+      default: "",
+      required: false
+    },
+  },
+
+  user_money: {
+    user_initProperty: {
+      type: String,
+      default: "",
+      required: false
+    },
+    user_totalIncomeInclude: {
+      type: String,
+      default: "",
+      required: false
+    },
+    user_totalIncomeExclude: {
+      type: String,
+      default: "",
+      required: false
+    },
+    user_totalExpenseInclude: {
+      type: String,
+      default: "",
+      required: false
+    },
+    user_totalExpenseExclude: {
+      type: String,
+      default: "",
+      required: false
+    },
+    user_curPropertyInclude: {
+      type: String,
+      default: "",
+      required: false
+    },
+    user_curPropertyExclude: {
+      type: String,
+      default: "",
+      required: false
+    },
+  },
+
+  user_favorite: [{
     food_key : {
       type: String,
       default: "",

@@ -169,24 +169,24 @@ export const MoneyDetail = () => {
     const totals = OBJECT?.money_section.reduce((acc: any, cur: any) => {
       return {
         // money_part_val 가 income인경우
-        totalIncome: (
-          acc.totalIncome + (cur.money_part_val === "income" ? Number(cur.money_amount) : 0)
+        totalIncomeExclude: (
+          acc.totalIncomeExclude + (cur.money_part_val === "income" ? Number(cur.money_amount) : 0)
         ),
 
         // money_part_val 가 expense인경우
-        totalExpense: (
-          acc.totalExpense + (cur.money_part_val === "expense" ? Number(cur.money_amount) : 0)
+        totalExpenseExclude: (
+          acc.totalExpenseExclude + (cur.money_part_val === "expense" ? Number(cur.money_amount) : 0)
         ),
       };
     }, {
-      totalIncome: 0,
-      totalExpense: 0
+      totalIncomeExclude: 0,
+      totalExpenseExclude: 0
     });
 
     setOBJECT((prev: any) => ({
       ...prev,
-      money_total_income: Math.round(totals.totalIncome).toString(),
-      money_total_expense: Math.round(totals.totalExpense).toString(),
+      money_total_income: Math.round(totals.totalIncomeExclude).toString(),
+      money_total_expense: Math.round(totals.totalExpenseExclude).toString(),
     }));
 
   }, [OBJECT?.money_section]);
@@ -231,7 +231,7 @@ export const MoneyDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        sync();
+        sync("property");
         setALERT({
           open: !ALERT.open,
           msg: translate(res.data.msg),
@@ -281,6 +281,7 @@ export const MoneyDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
+        sync("property");
         setALERT({
           open: !ALERT.open,
           msg: translate(res.data.msg),
@@ -356,7 +357,7 @@ export const MoneyDetail = () => {
         <Grid size={12}>
           <Input
             locked={LOCKED}
-            label={translate("totalIncome")}
+            label={translate("totalIncomeExclude")}
             value={insertComma(OBJECT?.money_total_income || "0")}
             startadornment={
               <Img
@@ -373,7 +374,7 @@ export const MoneyDetail = () => {
         <Grid size={12}>
           <Input
             locked={LOCKED}
-            label={translate("totalExpense")}
+            label={translate("totalExpenseExclude")}
             value={insertComma(OBJECT?.money_total_expense || "0")}
             startadornment={
               <Img

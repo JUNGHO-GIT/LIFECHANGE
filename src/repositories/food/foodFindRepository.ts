@@ -16,12 +16,12 @@ export const listFavorite = async (
     {
       $project: {
         _id: 0,
-        "user_foodFavorite._id": 0,
+        "user_favorite._id": 0,
       },
     },
   ]);
 
-  return finalResult[0].user_foodFavorite;
+  return finalResult[0]?.user_favorite;
 };
 
 // 4-2. updateFavorite -----------------------------------------------------------------------------
@@ -36,7 +36,7 @@ export const updateFavorite = async (
     },
     {
       $set: {
-        user_foodFavorite: foodFavorite_param
+        user_favorite: foodFavorite_param
       }
     },
     {
@@ -46,5 +46,5 @@ export const updateFavorite = async (
   )
   .lean();
 
-  return finalResult.user_foodFavorite;
+  return finalResult.user_favorite;
 };

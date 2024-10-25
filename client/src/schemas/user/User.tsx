@@ -12,10 +12,36 @@ export const User: any = {
   user_pw_verified: "",
   user_image: "",
 
-  user_initScale: "",
-  user_curScale: "",
+  user_exercise: {
+    user_initScale: "",
+    user_minScale: "",
+    user_maxScale: "",
+    user_curScale: "",
+  },
 
-  user_foodFavorite: [{
+  user_food: {
+    user_initAvgKcal: "",
+    user_totalKcal: "",
+    user_totalCarb: "",
+    user_totalProtein: "",
+    user_totalFat: "",
+    user_curAvgKcal: "",
+    user_curAvgCarb: "",
+    user_curAvgProtein: "",
+    user_curAvgFat: "",
+  },
+
+  user_money: {
+    user_initProperty: "",
+    user_totalIncomeInclude: "",
+    user_totalIncomeExclude: "",
+    user_totalExpenseInclude: "",
+    user_totalExpenseExclude: "",
+    user_curPropertyInclude: "",
+    user_curPropertyExclude: "",
+  },
+
+  user_favorite: [{
     food_key: "",
     food_name: "",
     food_brand: "",
@@ -25,9 +51,13 @@ export const User: any = {
     food_fat: "",
   }],
 
-  user_initProperty: "",
-  user_curPropertyInclude: "",
-  user_curPropertyExclude: "",
+  user_dataCategory: {
+    calendar: [],
+    exercise: [],
+    food: [],
+    money: [],
+    sleep: [],
+  },
 
   user_regDt: "",
   user_updateDt: "",

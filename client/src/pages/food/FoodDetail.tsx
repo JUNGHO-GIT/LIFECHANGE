@@ -276,7 +276,7 @@ export const FoodDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        sync();
+        sync("kcal");
         setALERT({
           open: !ALERT.open,
           msg: translate(res.data.msg),
@@ -326,6 +326,7 @@ export const FoodDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
+        sync("kcal");
         setALERT({
           open: !ALERT.open,
           msg: translate(res.data.msg),

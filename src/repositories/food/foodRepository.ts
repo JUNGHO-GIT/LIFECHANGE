@@ -130,12 +130,12 @@ export const listFavorite = async (
     },
     {
       _id: 0,
-      user_foodFavorite: 1
+      user_favorite: 1
     }
   )
   .lean();
 
-  return finalResult.user_foodFavorite;
+  return finalResult.user_favorite;
 };
 
 // 2. detail ---------------------------------------------------------------------------------------
@@ -341,7 +341,7 @@ export const update = {
       },
       {
         $set: {
-          user_foodFavorite: foodFavorite_param
+          user_favorite: foodFavorite_param
         }
       },
       {
@@ -351,7 +351,7 @@ export const update = {
     )
     .lean();
 
-    return finalResult.user_foodFavorite;
+    return finalResult.user_favorite;
   },
 };
 

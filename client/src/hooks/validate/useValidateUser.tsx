@@ -97,6 +97,7 @@ export const useValidateUser = () => {
         "user_pw",
         "user_pw_verified",
         "user_initScale",
+        "user_initKcal",
         "user_initProperty",
       ];
       REFS.current = (
@@ -154,6 +155,9 @@ export const useValidateUser = () => {
         else if (!OBJECT.user_initScale) {
           return showAlertAndFocus("user_initScale", "errorUserInitScale", 0);
         }
+        else if (!OBJECT.user_initKcal) {
+          return showAlertAndFocus("user_initKcal", "errorUserInitKcal", 0);
+        }
         else if (!OBJECT.user_initProperty) {
           return showAlertAndFocus("user_initProperty", "errorUserInitProperty", 0);
         }
@@ -165,6 +169,7 @@ export const useValidateUser = () => {
     else if (extra === "detail") {
       const target = [
         "user_initScale",
+        "user_initKcal",
         "user_initProperty",
       ];
       REFS.current = (
@@ -186,6 +191,9 @@ export const useValidateUser = () => {
 
       if (!OBJECT.user_initScale) {
         return showAlertAndFocus("user_initScale", "errorUserInitScale", 0);
+      }
+      else if (!OBJECT.user_initKcal) {
+        return showAlertAndFocus("user_initKcal", "errorUserInitKcal", 0);
       }
       else if (!OBJECT.user_initProperty) {
         return showAlertAndFocus("user_initProperty", "errorUserInitProperty", 0);

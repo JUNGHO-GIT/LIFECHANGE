@@ -11,6 +11,11 @@ import { SleepGoal } from "@schemas/sleep/SleepGoal";
 import { Sleep } from "@schemas/sleep/Sleep";
 import { User } from "@schemas/user/User";
 import { Verify } from "@schemas/Verify";
+import { calendarArray } from "@assets/arrays/calendarArray";
+import { exerciseArray } from "@assets/arrays/exerciseArray";
+import { moneyArray } from "@assets/arrays/moneyArray";
+import { foodArray } from "@assets/arrays/foodArray";
+import { sleepArray } from "@assets/arrays/sleepArray";
 
 // 1-1. email - findId -----------------------------------------------------------------------------
 export const emailFindId = async (
@@ -102,12 +107,49 @@ export const userSignup = async (
       user_google: "N",
       user_token: OBJECT_param.user_token,
       user_pw: OBJECT_param.user_pw,
-      user_initScale: OBJECT_param.user_initScale,
-      user_curScale: "",
-      user_initProperty: OBJECT_param.user_initProperty,
-      user_curPropertyInclude: "",
-      user_curPropertyExclude: "",
       user_image: OBJECT_param.user_image,
+      user_exercise: {
+        user_initScale: OBJECT_param.user_initScale,
+        user_minScale: "",
+        user_maxScale: "",
+        user_curScale: "",
+      },
+      user_food: {
+        user_initAvgKcal: OBJECT_param.user_initAvgKcal,
+        user_totalKcal: "",
+        user_totalCarb: "",
+        user_totalProtein: "",
+        user_totalFat: "",
+        user_curAvgKcal: "",
+        user_curAvgCarb: "",
+        user_curAvgProtein: "",
+        user_curAvgFat: "",
+      },
+      user_money: {
+        user_initProperty: OBJECT_param.user_initProperty,
+        user_totalIncomeInclude: "",
+        user_totalIncomeExclude: "",
+        user_totalExpenseInclude: "",
+        user_totalExpenseExclude: "",
+        user_curPropertyInclude: "",
+        user_curPropertyExclude: "",
+      },
+      user_favorite: [{
+        food_key: "",
+        food_name: "",
+        food_brand: "",
+        food_kcal: "",
+        food_carb: "",
+        food_protein: "",
+        food_fat: "",
+      }],
+      user_dataCategory: {
+        calendar: calendarArray,
+        exercise: exerciseArray,
+        food: foodArray,
+        money: moneyArray,
+        sleep: sleepArray,
+      },
       user_regDt: new Date(),
       user_updateDt: "",
     }
@@ -185,12 +227,17 @@ export const userUpdate = async (
     },
     {
       $set: {
+        user_image: OBJECT_param.user_image,
         user_initScale: OBJECT_param.user_initScale,
         user_curScale: OBJECT_param.user_curScale,
+        user_initAvgKcal: OBJECT_param.user_initAvgKcal,
+        user_curAvgKcal: OBJECT_param.user_curAvgKcal,
+        user_curCarb: OBJECT_param.user_curCarb,
+        user_curProtein: OBJECT_param.user_curProtein,
+        user_curFat: OBJECT_param.user_curFat,
         user_initProperty: OBJECT_param.user_initProperty,
         user_curPropertyInclude: OBJECT_param.user_curPropertyInclude,
         user_curPropertyExclude: OBJECT_param.user_curPropertyExclude,
-        user_image: OBJECT_param.user_image,
       },
     },
     {

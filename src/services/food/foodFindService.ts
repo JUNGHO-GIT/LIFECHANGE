@@ -334,7 +334,7 @@ export const listFavorite = async (
   );
   totalCntResult = findResult.length;
 
-  if (!findResult || findResult.length <= 0) {
+  if (!findResult) {
     finalResult = [];
     statusResult = "fail";
   }

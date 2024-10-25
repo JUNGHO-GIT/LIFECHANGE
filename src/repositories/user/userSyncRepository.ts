@@ -358,8 +358,8 @@ export const scale = {
       {
         $project: {
           _id: 0,
-          user_initScale: 1,
-          user_regDt: 1,
+          user_initScale: "$user_exercise.user_initScale",
+          user_regDt: "$user_regDt",
         }
       }
     ]);
@@ -367,8 +367,8 @@ export const scale = {
     return finalResult[0];
   },
 
-  // 2-3. scale (minMax)
-  findScaleMinMax: async (
+  // 2-3. scale (min)
+  findMinScale: async (
     user_id_param: string,
     dateStart_param: string,
     dateEnd_param: string,
@@ -400,6 +400,49 @@ export const scale = {
           scale_min: {
             $min: "$exercise_total_weight"
           },
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          scale_min: 1,
+        }
+      }
+    ]);
+
+    return finalResult[0];
+  },
+
+  // 2-4. scale (max)
+  findMaxScale: async (
+    user_id_param: string,
+    dateStart_param: string,
+    dateEnd_param: string,
+  ) => {
+    const finalResult:any = await Exercise.aggregate([
+      {
+        $match: {
+          user_id: user_id_param,
+          exercise_dateStart: {
+            $gte: dateStart_param,
+            $lte: dateEnd_param,
+          },
+          exercise_dateEnd: {
+            $gte: dateStart_param,
+            $lte: dateEnd_param,
+          }
+        }
+      },
+      {
+        $addFields: {
+          exercise_total_weight: {
+            $toDouble: "$exercise_total_weight"
+          }
+        }
+      },
+      {
+        $group: {
+          _id: null,
           scale_max: {
             $max: "$exercise_total_weight"
           },
@@ -408,7 +451,6 @@ export const scale = {
       {
         $project: {
           _id: 0,
-          scale_min: 1,
           scale_max: 1,
         }
       }
@@ -417,8 +459,8 @@ export const scale = {
     return finalResult[0];
   },
 
-  // 2-4. scale (cur)
-  findScaleCur: async (
+  // 2-5. scale (cur)
+  findCurScale: async (
     user_id_param: string,
     dateStart_param: string,
     dateEnd_param: string,
@@ -464,7 +506,9 @@ export const scale = {
       },
       {
         $set: {
-          user_curScale: curScale_param,
+          user_exercise: {
+            user_curScale: curScale_param,
+          },
           user_updateDt: new Date(),
         }
       },
@@ -478,7 +522,184 @@ export const scale = {
   }
 };
 
-// 3. favorite -------------------------------------------------------------------------------------
+// 3-1. kcal ---------------------------------------------------------------------------------------
+export const kcal = {
+
+  // 3-1. kcal (regDt)
+  findKcalRegDt: async (
+    user_id_param: string,
+  ) => {
+    const finalResult:any = await User.aggregate([
+      {
+        $match: {
+          user_id: user_id_param
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          user_regDt: "$user_regDt",
+        }
+      }
+    ]);
+
+    return finalResult[0];
+  },
+
+  // 3-2. totalCnt
+  findTotalCnt: async (
+    user_id_param: string,
+    dateStart_param: string,
+    dateEnd_param: string,
+  ) => {
+    // 데이터중 값이 있는 것만 카운트
+    const finalResult:any = await Food.countDocuments(
+      {
+        user_id: user_id_param,
+        food_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+        food_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+        "food_section.food_kcal": {
+          $ne: ""
+        }
+      }
+    );
+
+    return finalResult;
+  },
+
+
+  // 3-3. kcal (init)
+  findKcalInit: async (
+    user_id_param: string,
+  ) => {
+    const finalResult:any = await User.aggregate([
+      {
+        $match: {
+          user_id: user_id_param
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          user_initAvgKcal: "$user_food.user_initAvgKcal",
+          user_regDt: "$user_regDt",
+        }
+      }
+    ]);
+
+    return finalResult[0];
+  },
+
+  // 3-4. nutrition
+  findNutrition: async (
+    user_id_param: string,
+    dateStart_param: string,
+    dateEnd_param: string,
+  ) => {
+    const finalResult:any = await Food.aggregate([
+      {
+        $match: {
+          user_id: user_id_param,
+          food_dateStart: {
+            $gte: dateStart_param,
+            $lte: dateEnd_param,
+          },
+          food_dateEnd: {
+            $gte: dateStart_param,
+            $lte: dateEnd_param,
+          }
+        }
+      },
+      {
+        $unwind: "$food_section"
+      },
+      {
+        $group: {
+          _id: null,
+          food_total_kcal: {
+            $sum: {
+              $toDouble: "$food_section.food_kcal"
+            }
+          },
+          food_total_carb: {
+            $sum: {
+              $toDouble: "$food_section.food_carb"
+            }
+          },
+          food_total_protein: {
+            $sum: {
+              $toDouble: "$food_section.food_protein"
+            }
+          },
+          food_total_fat: {
+            $sum: {
+              $toDouble: "$food_section.food_fat"
+            }
+          }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          food_total_kcal: 1,
+          food_total_carb: 1,
+          food_total_protein: 1,
+          food_total_fat: 1,
+        }
+      }
+    ]);
+
+    return finalResult[0];
+  },
+
+  // 3-5. kcal (update)
+  updateKcal: async (
+    user_id_param: string,
+    totalKcal_param: string,
+    totalCarb_param: string,
+    totalProtein_param: string,
+    totalFat_param: string,
+    curAvgKcal_param: string,
+    curAvgCarb_param: string,
+    curAvgProtein_param: string,
+    curAvgFat_param: string,
+  ) => {
+    const finalResult:any = await User.findOneAndUpdate(
+      {
+        user_id: user_id_param,
+      },
+      {
+        $set: {
+          user_food: {
+            user_totalKcal: totalKcal_param,
+            user_totalCarb: totalCarb_param,
+            user_totalProtein: totalProtein_param,
+            user_totalFat: totalFat_param,
+            user_curAvgKcal: curAvgKcal_param,
+            user_curAvgCarb: curAvgCarb_param,
+            user_curAvgProtein: curAvgProtein_param,
+            user_curAvgFat: curAvgFat_param,
+          },
+          user_updateDt: new Date(),
+        }
+      },
+      {
+        upsert: true,
+        new: true
+      }
+    );
+
+    return finalResult;
+  }
+};
+
+// 3-2. favorite -----------------------------------------------------------------------------------
 export const favorite = {
 
   // 3-1. favorite (regDt)
@@ -516,12 +737,12 @@ export const favorite = {
       {
         $project: {
           _id: 0,
-          "user_foodFavorite._id": 0,
+          "user_favorite._id": 0,
         },
       },
     ]);
 
-    return finalResult[0].user_foodFavorite;
+    return finalResult[0].user_favorite;
   }
 };
 
@@ -562,7 +783,7 @@ export const property = {
       {
         $project: {
           _id: 0,
-          user_initProperty: "$user_initProperty",
+          user_initProperty: "$user_money.user_initProperty",
           user_regDt: "$user_regDt",
         }
       }
@@ -577,8 +798,7 @@ export const property = {
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
-    // 전체 데이터를 위한 aggregation
-    const curPropertyAllResult:any = await Money.aggregate([
+    const incomeOrExpenseIncludeResult:any = await Money.aggregate([
       {
         $match: {
           user_id: user_id_param,
@@ -596,10 +816,10 @@ export const property = {
         $unwind: "$money_section"
       },
       {
-        // money_include가 null이 아닌 경우만 필터링
+        // money_include가 "Y"인 경우만 필터링
         $match: {
           "money_section.money_include": {
-            $ne: null
+            $eq: "Y"
           }
         }
       },
@@ -649,8 +869,7 @@ export const property = {
       }
     ]);
 
-    // include가 "Y"인 경우만을 위한 aggregation
-    const curPropertyResult:any = await Money.aggregate([
+    const incomeOrExpenseExcludeResult:any = await Money.aggregate([
       {
         $match: {
           user_id: user_id_param,
@@ -668,9 +887,11 @@ export const property = {
         $unwind: "$money_section"
       },
       {
-        // money_include가 "Y"인 경우만 필터링
+        // money_include가 "N"인 경우만 필터링
         $match: {
-          "money_section.money_include": "Y"
+          "money_section.money_include": {
+            $eq: "N"
+          }
         }
       },
       {
@@ -720,16 +941,20 @@ export const property = {
     ]);
 
     return {
-      curPropertyAllResult: curPropertyAllResult[0],
-      curPropertyResult: curPropertyResult[0],
+      includeResult: incomeOrExpenseIncludeResult[0],
+      excludeResult: incomeOrExpenseExcludeResult[0],
     };
   },
 
   // 4-4. property (update)
   updateProperty: async (
     user_id_param: string,
-    curPropertyAll_param: string,
-    curProperty_param: string,
+    totalIncomeInclude_param: string,
+    totalIncomeExclude_param: string,
+    totalExpenseInclude_param: string,
+    totalExpenseExclude_param: string,
+    curPropertyInclude_param: string,
+    curPropertyExclude_param: string,
   ) => {
     const finalResult:any = await User.findOneAndUpdate(
       {
@@ -737,8 +962,14 @@ export const property = {
       },
       {
         $set: {
-          user_curPropertyInclude: curPropertyAll_param,
-          user_curPropertyExclude: curProperty_param,
+          user_money: {
+            user_totalIncomeInclude: totalIncomeInclude_param,
+            user_totalIncomeExclude: totalIncomeExclude_param,
+            user_totalExpenseInclude: totalExpenseInclude_param,
+            user_totalExpenseExclude: totalExpenseExclude_param,
+            user_curPropertyInclude: curPropertyInclude_param,
+            user_curPropertyExclude: curPropertyExclude_param,
+          },
           user_updateDt: new Date(),
         }
       },

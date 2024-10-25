@@ -36,7 +36,7 @@ export const sync = async (extra?: string) => {
     });
   }
   else {
-    const [resCategory, resPercent, resScale, resFavorite, resProperty] = await Promise.all([
+    const [resCategory, resPercent, resScale, resKcal, resFavorite, resProperty] = await Promise.all([
       axios.get(`${URL_OBJECT}/sync/category`, {
         params: params,
       }),
@@ -44,6 +44,9 @@ export const sync = async (extra?: string) => {
         params: params,
       }),
       axios.get(`${URL_OBJECT}/sync/scale`, {
+        params: params,
+      }),
+      axios.get(`${URL_OBJECT}/sync/kcal`, {
         params: params,
       }),
       axios.get(`${URL_OBJECT}/sync/favorite`, {
@@ -57,6 +60,7 @@ export const sync = async (extra?: string) => {
       category: resCategory.data.result,
       percent: resPercent.data.result,
       scale: resScale.data.result,
+      kcal: resKcal.data.result,
       favorite: resFavorite.data.result,
       property: resProperty.data.result,
     });

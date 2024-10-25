@@ -963,11 +963,11 @@ export const dummySave = async (
         };
       });
 
-      const totalIncome = sections
+      const totalIncomeExclude = sections
         .filter((section) => (section.money_part_val === "income"))
         .reduce((sum, section) => (sum + section.money_amount), 0);
 
-      const totalExpense = sections
+      const totalExpenseExclude = sections
         .filter((section) => (section.money_part_val === "expense"))
         .reduce((sum, section) => (sum + section.money_amount), 0);
 
@@ -979,8 +979,8 @@ export const dummySave = async (
         money_dateType: "day",
         money_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         money_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        money_total_income: totalIncome,
-        money_total_expense: totalExpense,
+        money_total_income: totalIncomeExclude,
+        money_total_expense: totalExpenseExclude,
         money_section: sections,
         money_regDt: Date.now(),
         money_updateDt: Date.now(),

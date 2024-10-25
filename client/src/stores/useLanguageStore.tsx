@@ -60,6 +60,10 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "앱 정보",
         en: "App Info"
       },
+      average: {
+        ko: "평균",
+        en: "Average"
+      },
 
       // -------------------------------------------------------------------------------------------
       // b
@@ -146,7 +150,27 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "평균",
         en: "Average"
       },
-      curProperty: {
+      curScale: {
+        ko: "현재 체중",
+        en: "Current Weight"
+      },
+      curAvgKcal: {
+        ko: "현재 칼로리 평균",
+        en: "Current Kcal Goal"
+      },
+      curCarb: {
+        ko: "현재 탄수화물 평균",
+        en: "Current Carb Goal"
+      },
+      curProtein: {
+        ko: "현재 단백질 평균",
+        en: "Current Protein Goal"
+      },
+      curFat: {
+        ko: "현재 지방 평균",
+        en: "Current Fat Goal"
+      },
+      curPropertyExclude: {
         ko: "현재 자산",
         en: "Current Property"
       },
@@ -154,13 +178,13 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "닫기",
         en: "Close"
       },
-      curScale: {
-        ko: "현재 체중",
-        en: "Current Weight"
-      },
       confirm: {
         ko: "확인",
         en: "Confirm"
+      },
+      cur: {
+        ko: "현재",
+        en: "Current"
       },
 
       // -------------------------------------------------------------------------------------------
@@ -604,13 +628,17 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "인증 실패",
         en: "Not Verified"
       },
-      initProperty: {
-        ko: "초기 자산",
-        en: "Initial Property"
-      },
       initScale: {
         ko: "초기 체중",
         en: "Initial Weight"
+      },
+      initAvgKcal: {
+        ko: "초기 칼로리 목표",
+        en: "Initial Kcal Goal"
+      },
+      initProperty: {
+        ko: "초기 자산",
+        en: "Initial Property"
       },
       insert: {
         ko: "추가",
@@ -1113,7 +1141,7 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "총 지방",
         en: "Total Fat"
       },
-      totalIncome: {
+      totalIncomeExclude: {
         ko: "총 수입",
         en: "Total Income"
       },
@@ -1121,7 +1149,7 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "총 칼로리",
         en: "Total Kcal"
       },
-      totalExpense: {
+      totalExpenseExclude: {
         ko: "총 지출",
         en: "Total Expense"
       },
