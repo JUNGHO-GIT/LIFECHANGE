@@ -4,7 +4,7 @@ import { useState, useEffect } from "@imports/ImportReacts";
 import { useStorageLocal, useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { MoneyPie } from "@imports/ImportSchemas";
-import { axios } from "@imports/ImportUtils";
+import { axios, insertComma } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { PopUp, Select } from "@imports/ImportContainers";
 import { Div, Img, Br } from "@imports/ImportComponents";

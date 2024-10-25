@@ -2,7 +2,6 @@
   "name": "JPAGE-server",
   "version": "1.0.0",
   "main": "index.ts",
-  "date": "2024-05-30",
   "git": "www.github.com/JUNGHO-GIT",
   "license": "MIT",
   "type": "module",

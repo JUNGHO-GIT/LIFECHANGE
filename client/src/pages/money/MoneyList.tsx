@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { useStorageLocal } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { Money } from "@imports/ImportSchemas";
-import { axios, numeral } from "@imports/ImportUtils";
+import { axios, insertComma } from "@imports/ImportUtils";
 import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
 import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
 import { Paper, Grid, Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
@@ -182,7 +182,8 @@ export const MoneyList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
+
                   {/** row 1 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -197,20 +198,23 @@ export const MoneyList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.money_total_income_color}`}>
-                          {numeral(item.money_total_income).format("0,0")}
+                          {insertComma(item.money_total_income || "0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate(localCurrency)}
                         </Div>
                       </Grid>
                     </Grid>
                   </Grid>
+                  {/** /.row 1 **/}
+
                   <Hr px={1} />
+
                   {/** row 2 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -225,19 +229,21 @@ export const MoneyList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.money_total_expense_color}`}>
-                          {numeral(item.money_total_expense).format("0,0")}
+                          {insertComma(item.money_total_expense || "0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate(localCurrency)}
                         </Div>
                       </Grid>
                     </Grid>
                   </Grid>
+                  {/** /.row 2 **/}
+
                 </Grid>
               </AccordionDetails>
             </Accordion>

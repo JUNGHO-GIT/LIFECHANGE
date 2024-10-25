@@ -4,7 +4,7 @@ import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { Exercise } from "@imports/ImportSchemas";
-import { axios, numeral } from "@imports/ImportUtils";
+import { axios, insertComma } from "@imports/ImportUtils";
 import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
 import { Div, Hr, Icons, Img } from "@imports/ImportComponents";
 import { Paper, Grid, Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
@@ -181,7 +181,8 @@ export const ExerciseList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
+
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
@@ -196,23 +197,24 @@ export const ExerciseList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.exercise_total_volume_color}`}>
-                          {numeral(item.exercise_total_volume).format("0,0")}
+                          {insertComma(item.exercise_total_volume)}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("vol")}
                         </Div>
                       </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-                <Hr px={30} />
-                {/** row 2 **/}
-                <Grid container spacing={2} columns={12}>
+                  {/** /.row 1 **/}
+
+                  <Hr px={1} />
+
+                  {/** row 2 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
                       key={"exercise4"}
@@ -226,23 +228,24 @@ export const ExerciseList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.exercise_total_cardio_color}`}>
                           {item.exercise_total_cardio}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
                       </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-                <Hr px={30} />
-                {/** row 3 **/}
-                <Grid container spacing={2} columns={12}>
+                  {/** /.row 2 **/}
+
+                  <Hr px={1} />
+
+                  {/** row 3 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
                       key={"exercise5"}
@@ -256,19 +259,23 @@ export const ExerciseList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.exercise_total_weight_color}`}>
-                          {item.exercise_total_weight}
+                          {insertComma(item.exercise_total_weight)}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("k")}
                         </Div>
                       </Grid>
                     </Grid>
                   </Grid>
+                  {/** /.row 3 **/}
+
+                  {/** /.row 3 **/}
+
                 </Grid>
               </AccordionDetails>
             </Accordion>

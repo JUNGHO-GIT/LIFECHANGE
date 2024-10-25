@@ -42,13 +42,14 @@ export const Memo = (
                 fontWeight: "inherit"
               }}
               onChange={(e: any) => {
-                const newContent = e.target.value;
+                // 빈값 처리
+                let value = e.target.value === "" ? "" : e.target.value;
                 setOBJECT((prev: any) => ({
                   ...prev,
                   [`${firstStr}_section`]: prev[`${firstStr}_section`]?.map((section: any, idx: number) => (
                     idx === i ? {
                       ...section,
-                      [`${extra}`]: newContent
+                      [`${extra}`]: value
                     } : section
                   ))
                 }));

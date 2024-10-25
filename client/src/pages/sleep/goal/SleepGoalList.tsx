@@ -190,7 +190,8 @@ export const SleepGoalList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
+
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
@@ -205,7 +206,7 @@ export const SleepGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -217,7 +218,7 @@ export const SleepGoalList = () => {
                           {item.sleep_goal_bedTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
@@ -233,7 +234,7 @@ export const SleepGoalList = () => {
                           {item.sleep_bedTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
@@ -249,14 +250,17 @@ export const SleepGoalList = () => {
                           {item.sleep_diff_bedTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
                       </Grid>
                     </Grid>
                   </Grid>
+                  {/** /.row 1 **/}
+
                   <Hr px={1} />
+
                   {/** row 2 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -271,7 +275,7 @@ export const SleepGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -283,7 +287,7 @@ export const SleepGoalList = () => {
                           {item.sleep_goal_wakeTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
@@ -299,7 +303,7 @@ export const SleepGoalList = () => {
                           {item.sleep_wakeTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
@@ -315,14 +319,17 @@ export const SleepGoalList = () => {
                           {item.sleep_diff_wakeTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
                       </Grid>
                     </Grid>
                   </Grid>
+                  {/** /.row 2 **/}
+
                   <Hr px={1} />
+
                   {/** row 3 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
@@ -337,7 +344,7 @@ export const SleepGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -349,7 +356,7 @@ export const SleepGoalList = () => {
                           {item.sleep_goal_sleepTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
@@ -365,7 +372,7 @@ export const SleepGoalList = () => {
                           {item.sleep_sleepTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
@@ -381,13 +388,15 @@ export const SleepGoalList = () => {
                           {item.sleep_diff_sleepTime}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("hm")}
                         </Div>
                       </Grid>
                     </Grid>
                   </Grid>
+                  {/** /.row 3 **/}
+
                 </Grid>
               </AccordionDetails>
             </Accordion>

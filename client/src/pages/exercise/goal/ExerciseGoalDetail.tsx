@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate, useTime } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { useValidateExercise } from "@imports/ImportValidates";
 import { ExerciseGoal } from "@imports/ImportSchemas";
-import { axios, numeral, sync } from "@imports/ImportUtils";
+import { axios, sync, insertComma } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, PickerTime, Count, Delete, Input } from "@imports/ImportContainers";
 import { Img, Bg } from "@imports/ImportComponents";
@@ -305,10 +305,10 @@ export const ExerciseGoalDetail = () => {
           </Grid>
           <Grid size={12}>
             <Input
-              value={numeral(item?.exercise_goal_count).format("0,0")}
+              locked={LOCKED}
+              value={insertComma(item?.exercise_goal_count || "0")}
               inputRef={REFS?.[i]?.exercise_goal_count}
               error={ERRORS?.[i]?.exercise_goal_count}
-              locked={LOCKED}
               label={
                 DATE.dateType === "day" ? (
                   `${translate("goalCount")}`
@@ -327,29 +327,30 @@ export const ExerciseGoalDetail = () => {
                 translate("c")
               }
               onChange={(e: any) => {
-                const value = e.target.value.replace(/,/g, '');
-                const newValue = value === "" ? 0 : Number(value);
-                if (value === "") {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    exercise_goal_count: "0"
-                  }));
+                // 빈값 처리
+                let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                // 9999 제한 + 정수
+                if (Number(value) > 9999 || !/^\d+$/.test(value)) {
+                  return;
                 }
-                else if (!isNaN(newValue) && newValue <= 999) {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    exercise_goal_count: String(newValue)
-                  }));
+                // 01, 05 같은 숫자는 1, 5로 변경
+                if (/^0(?!\.)/.test(value)) {
+                  value = value.replace(/^0+/, '');
                 }
+                // object 설정
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  exercise_goal_count: value
+                }));
               }}
             />
           </Grid>
           <Grid size={12}>
             <Input
-              value={numeral(item?.exercise_goal_volume).format("0,0")}
+              locked={LOCKED}
+              value={insertComma(item?.exercise_goal_volume || "0")}
               inputRef={REFS?.[i]?.exercise_goal_volume}
               error={ERRORS?.[i]?.exercise_goal_volume}
-              locked={LOCKED}
               label={
                 DATE.dateType === "day" ? (
                   `${translate("goalVolume")}`
@@ -368,20 +369,21 @@ export const ExerciseGoalDetail = () => {
                 translate("vol")
               }
               onChange={(e: any) => {
-                const value = e.target.value.replace(/,/g, '');
-                const newValue = value === "" ? 0 : Number(value);
-                if (value === "") {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    exercise_goal_volume: "0"
-                  }));
+                // 빈값 처리
+                let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                // 9999999 제한 + 정수
+                if (Number(value) > 9999999 || !/^\d+$/.test(value)) {
+                  return;
                 }
-                else if (!isNaN(newValue) && newValue <= 9999999) {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    exercise_goal_volume: String(newValue)
-                  }));
+                // 01, 05 같은 숫자는 1, 5로 변경
+                if (/^0(?!\.)/.test(value)) {
+                  value = value.replace(/^0+/, '');
                 }
+                // object 설정
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  exercise_goal_volume: value
+                }));
               }}
             />
           </Grid>
@@ -399,11 +401,11 @@ export const ExerciseGoalDetail = () => {
           </Grid>
           <Grid size={12}>
             <Input
+              locked={LOCKED}
               label={translate("goalWeight")}
-              value={item?.exercise_goal_weight}
+              value={insertComma(item?.exercise_goal_weight || "0")}
               inputRef={REFS?.[i]?.exercise_goal_weight}
               error={ERRORS?.[i]?.exercise_goal_weight}
-              locked={LOCKED}
               startadornment={
                 <Img
                   key={"exercise5"}
@@ -415,20 +417,21 @@ export const ExerciseGoalDetail = () => {
                 translate("k")
               }
               onChange={(e: any) => {
-                const value = e.target.value;
-                const newValue = value.startsWith("0") ? value.slice(1) : value;
-                if (value === "") {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    exercise_goal_weight: "0"
-                  }));
+                // 빈값 처리
+                let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                // 999 제한 + 소수점 둘째 자리
+                if (Number(value) > 999 || !/^\d*\.?\d{0,2}$/.test(value)) {
+                  return;
                 }
-                else if (newValue.match(/^\d*\.?\d{0,2}$/) && Number(newValue) <= 999) {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    exercise_goal_weight: String(newValue)
-                  }));
+                // 01, 05 같은 숫자는 1, 5로 변경
+                if (/^0(?!\.)/.test(value)) {
+                  value = value.replace(/^0+/, '');
                 }
+                // object 설정
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  exercise_goal_weight: value
+                }));
               }}
             />
           </Grid>

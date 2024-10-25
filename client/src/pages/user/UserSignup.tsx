@@ -5,7 +5,7 @@ import { useCommonValue } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { useValidateUser } from "@imports/ImportValidates";
 import { User } from "@imports/ImportSchemas";
-import { axios } from "@imports/ImportUtils";
+import { axios, insertComma } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Input } from "@imports/ImportContainers";
 import { Div, Btn, Img, Hr, Br } from "@imports/ImportComponents";
@@ -342,7 +342,7 @@ export const UserSignup = () => {
           <Grid size={12}>
             <Input
               label={translate("scale")}
-              value={item.user_initScale}
+              value={insertComma(item.user_initScale || "0")}
               inputRef={REFS?.[i]?.user_initScale}
               error={ERRORS?.[i]?.user_initScale}
               disabled={item.user_id_verified === false}
@@ -351,20 +351,21 @@ export const UserSignup = () => {
                 translate("cm")
               }
               onChange={(e: any) => {
-                const value = e.target.value;
-                const newValue = value.startsWith("0") ? value.slice(1) : value;
-                if (value === "") {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    user_initScale: "0",
-                  }));
+                // 빈값 처리
+                let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                // 999 제한 + 소수점 둘째 자리
+                if (Number(value) > 999 || !/^\d*\.?\d{0,2}$/.test(value)) {
+                  return;
                 }
-                else if (newValue.match(/^\d*\.?\d{0,2}$/) && Number(newValue) <= 999) {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    user_initScale: String(newValue),
-                  }));
+                // 01, 05 같은 숫자는 1, 5로 변경
+                if (/^0(?!\.)/.test(value)) {
+                  value = value.replace(/^0+/, '');
                 }
+                // object 설정
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  user_initScale: value,
+                }));
               }}
             />
           </Grid>
@@ -372,30 +373,31 @@ export const UserSignup = () => {
           <Grid size={12}>
             <Input
               label={translate("property")}
-              value={item.user_initProperty}
+              value={insertComma(item.user_initProperty || "0")}
               inputRef={REFS?.[i]?.user_initProperty}
               error={ERRORS?.[i]?.user_initProperty}
               disabled={item.user_id_verified === false}
               helperText={`* ${translate("helperProperty")}`}
-              onChange={(e: any) => {
-                const value = e.target.value.replace(/,/g, '');
-                const newValue = value === "" ? 0 : Number(value);
-                if (value === "") {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    user_initProperty: "0",
-                  }));
-                }
-                else if (!isNaN(newValue) && newValue <= 9999999999) {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    user_initProperty: String(newValue),
-                  }));
-                }
-              }}
               endadornment={
                 localCurrency
               }
+              onChange={(e: any) => {
+                // 빈값 처리
+                let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                // 9999999999 제한 + 정수
+                if (Number(value) > 9999999999 || !/^\d+$/.test(value)) {
+                  return;
+                }
+                // 01, 05 같은 숫자는 1, 5로 변경
+                if (/^0(?!\.)/.test(value)) {
+                  value = value.replace(/^0+/, '');
+                }
+                // object 설정
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  user_initProperty: value,
+                }));
+              }}
             />
           </Grid>
         </Grid>

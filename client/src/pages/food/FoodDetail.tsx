@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { useValidateFood } from "@imports/ImportValidates";
 import { Food } from "@imports/ImportSchemas";
-import { axios, numeral, sync, setSession } from "@imports/ImportUtils";
+import { axios, sync, setSession, insertComma } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, Count, Delete, Input, Select } from "@imports/ImportContainers";
 import { Img, Bg, Icons, Div } from "@imports/ImportComponents";
@@ -423,7 +423,7 @@ export const FoodDetail = () => {
     }));
   };
 
-  // 4-4. handle(favorite 추가) ------------------------------------------------------------------
+  // 4-5. handle (favorite 추가) -------------------------------------------------------------------
   const handleFoodFavorite = (index: number) => {
 
     const food_name = OBJECT?.food_section[index]?.food_name;
@@ -431,6 +431,7 @@ export const FoodDetail = () => {
     const food_gram = OBJECT?.food_section[index]?.food_gram;
     const food_serv = OBJECT?.food_section[index]?.food_serv;
     const food_count = OBJECT?.food_section[index]?.food_count || 1;
+
     const food_kcal = (
       parseFloat(OBJECT?.food_section[index]?.food_kcal) / parseInt(food_count)
     ).toFixed(0);
@@ -443,7 +444,9 @@ export const FoodDetail = () => {
     const food_fat = (
       parseFloat(OBJECT?.food_section[index]?.food_fat) / parseInt(food_count)
     ).toFixed(1);
-    const food_key = `${food_name}_${food_brand}_${food_kcal}_${food_carb}_${food_protein}_${food_fat}`;
+    const food_key = (
+      `${food_name}_${food_brand}_${food_kcal}_${food_carb}_${food_protein}_${food_fat}`
+    );
 
     return {
       food_key: food_key,
@@ -487,9 +490,9 @@ export const FoodDetail = () => {
       <Grid container spacing={2} columns={12} className={"border-1 radius-1 p-20"}>
         <Grid size={6}>
           <Input
-            label={translate("totalKcal")}
-            value={numeral(OBJECT?.food_total_kcal).format('0,0')}
             readOnly={true}
+            label={translate("totalKcal")}
+            value={insertComma(OBJECT?.food_total_kcal || "0")}
             startadornment={
               <Img
                 key={"food2"}
@@ -504,9 +507,9 @@ export const FoodDetail = () => {
         </Grid>
         <Grid size={6}>
           <Input
-            label={translate("totalCarb")}
-            value={numeral(OBJECT?.food_total_carb).format('0,0.0')}
             readOnly={true}
+            label={translate("totalCarb")}
+            value={insertComma(OBJECT?.food_total_carb || "0")}
             startadornment={
               <Img
                 key={"food3"}
@@ -521,9 +524,9 @@ export const FoodDetail = () => {
         </Grid>
         <Grid size={6}>
           <Input
-            label={translate("totalProtein")}
-            value={numeral(OBJECT?.food_total_protein).format('0,0.0')}
             readOnly={true}
+            label={translate("totalProtein")}
+            value={insertComma(OBJECT?.food_total_protein || "0")}
             startadornment={
               <Img
                 key={"food4"}
@@ -538,9 +541,9 @@ export const FoodDetail = () => {
         </Grid>
         <Grid size={6}>
           <Input
-            label={translate("totalFat")}
-            value={numeral(OBJECT?.food_total_fat).format('0,0.0')}
             readOnly={true}
+            label={translate("totalFat")}
+            value={insertComma(OBJECT?.food_total_fat || "0")}
             startadornment={
               <Img
                 key={"food5"}
@@ -592,20 +595,22 @@ export const FoodDetail = () => {
           </Grid>
           <Grid size={6}>
             <Select
-              label={translate("part")}
               locked={LOCKED}
+              label={translate("part")}
+              value={item?.food_part_idx || 0}
               inputRef={REFS?.[i]?.food_part_idx}
               error={ERRORS?.[i]?.food_part_idx}
-              value={item?.food_part_idx || 0}
               onChange={(e: any) => {
-                const newIndex = Number(e.target.value);
+                // 빈값 처리
+                let value = e.target.value === "" ? 0 : Number(e.target.value);
+                // object 설정
                 setOBJECT((prev: any) => ({
                   ...prev,
-                  food_section: prev?.food_section?.map((section: any, idx: number) => (
+                  food_section: prev.food_section?.map((section: any, idx: number) => (
                     idx === i ? {
                       ...section,
-                      food_part_idx: newIndex,
-                      food_part_val: foodArray[newIndex]?.food_part,
+                      food_part_idx: value,
+                      food_part_val: foodArray[value]?.food_part,
                     } : section
                   ))
                 }));
@@ -623,92 +628,87 @@ export const FoodDetail = () => {
             </Select>
           </Grid>
           <Grid size={3}>
-            <Select
-              label={translate("foodCount")}
+            <Input
               locked={LOCKED}
-              value={Math.min(Number(item?.food_count), 100) || 1}
+              label={translate("foodCount")}
+              value={insertComma(item?.food_count || "0")}
+              inputRef={REFS?.[i]?.food_count}
+              error={ERRORS?.[i]?.food_count}
               onChange={(e: any) => {
-                const newCount = Number(e.target.value);
-                const newValue = (value: any) => (
-                  Number(((newCount * value) / Number(item?.food_count)).toFixed(2)).toString()
-                );
-                if (newCount > 100) {
+                // 빈값 처리
+                let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                // 99 제한 + 소수점 첫째 자리
+                if (Number(value) > 99 || !/^\d*\.?\d{0,1}$/.test(value)) {
                   return;
                 }
-                else if (isNaN(newCount) || newCount <= 0) {
-                  return;
+                // 01, 05 같은 숫자는 1, 5로 변경
+                if (/^0(?!\.)/.test(value)) {
+                  value = value.replace(/^0+/, '');
                 }
+                // object 설정
                 setOBJECT((prev: any) => ({
                   ...prev,
-                  food_section: prev?.food_section?.map((section: any, idx: number) => (
+                  food_section: prev.food_section?.map((section: any, idx: number) => (
                     idx === i ? {
                       ...section,
-                      food_count: newCount.toString(),
-                      food_kcal: newValue(item.food_kcal),
-                      food_fat: newValue(item.food_fat),
-                      food_carb: newValue(item.food_carb),
-                      food_protein: newValue(item.food_protein),
+                      food_count: value,
                     } : section
                   ))
                 }));
               }}
-            >
-              {Array.from({ length: 100 }, (_, index) => (
-                <MenuItem key={index + 1} value={index + 1}>
-                  {index + 1}
-                </MenuItem>
-              ))}
-            </Select>
+            />
           </Grid>
           <Grid size={3}>
             <Input
-              label={translate("gram")}
               locked={LOCKED}
-              value={numeral(item?.food_gram).format("0,0")}
+              label={translate("gram")}
+              value={insertComma(item?.food_gram || "0")}
               onChange={(e: any) => {
-                const value = e.target.value.replace(/,/g, '');
-                const newValue = value === "" ? 0 : Number(value);
-                if (value === "") {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    food_section: prev.food_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...section,
-                        food_gram: "0"
-                      } : section
-                    ))
-                  }));
+                // 빈값 처리
+                let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                // 999 제한 + 정수
+                if (Number(value) > 999 || !/^\d+$/.test(value)) {
+                  return;
                 }
-                else if (!isNaN(newValue) && newValue <= 999) {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    food_section: prev.food_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...section,
-                        food_gram: String(newValue)
-                      } : section
-                    ))
-                  }));
+                // 01, 05 같은 숫자는 1, 5로 변경
+                if (/^0(?!\.)/.test(value)) {
+                  value = value.replace(/^0+/, '');
                 }
+                // object 설정
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  food_section: prev.food_section?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      food_gram: value,
+                    } : section
+                  ))
+                }));
               }}
             />
           </Grid>
           <Grid size={6}>
             <Input
+              locked={LOCKED}
+              shrink={"shrink"}
               label={translate("foodName")}
-              value={item?.food_name}
+              value={item?.food_name || ""}
               inputRef={REFS?.[i]?.food_name}
               error={ERRORS?.[i]?.food_name}
-              locked={LOCKED}
-              shrink={"shrink"}
               onChange={(e: any) => {
-                const newValue = e.target.value;
+                // 빈값 처리
+                let value = e.target.value === "" ? "" : e.target.value;
+                // 30 제한
+                if (value.length > 30) {
+                  return;
+                }
+                // object 설정
                 setOBJECT((prev: any) => ({
                   ...prev,
-                  food_section: prev?.food_section?.map((section: any, idx: number) => (
+                  food_section: prev.food_section?.map((section: any, idx: number) => (
                     idx === i ? {
                       ...section,
-                      food_name: newValue,
+                      food_name: value,
                     } : section
                   ))
                 }));
@@ -717,18 +717,24 @@ export const FoodDetail = () => {
           </Grid>
           <Grid size={6}>
             <Input
+              locked={LOCKED}
+              shrink={"shrink"}
               label={translate("brand")}
-              value={item?.food_brand}
-              locked={LOCKED}
-              shrink={"shrink"}
+              value={item?.food_brand || ""}
               onChange={(e: any) => {
-                const newValue = e.target.value;
+                // 빈값 처리
+                let value = e.target.value === "" ? "" : e.target.value;
+                // 30 제한
+                if (value.length > 30) {
+                  return;
+                }
+                // object 설정
                 setOBJECT((prev: any) => ({
                   ...prev,
-                  food_section: prev?.food_section?.map((section: any, idx: number) => (
+                  food_section: prev.food_section?.map((section: any, idx: number) => (
                     idx === i ? {
                       ...section,
-                      food_brand: newValue,
+                      food_brand: value,
                     } : section
                   ))
                 }));
@@ -737,11 +743,11 @@ export const FoodDetail = () => {
           </Grid>
           <Grid size={6}>
             <Input
+              locked={LOCKED}
               label={translate("kcal")}
-              value={numeral(item?.food_kcal).format("0,0")}
+              value={insertComma(item?.food_kcal || "0")}
               inputRef={REFS?.[i]?.food_kcal}
               error={ERRORS?.[i]?.food_kcal}
-              locked={LOCKED}
               startadornment={
                 <Img
                   key={"food2"}
@@ -753,40 +759,36 @@ export const FoodDetail = () => {
                 translate("kc")
               }
               onChange={(e: any) => {
-                const value = e.target.value.replace(/,/g, '');
-                const newValue = value === "" ? 0 : Number(value);
-                if (value === "") {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    food_section: prev.food_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...section,
-                        food_kcal: "0"
-                      } : section
-                    ))
-                  }));
+                // 빈값 처리
+                let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                // 9999 제한 + 정수
+                if (Number(value) > 9999 || !/^\d+$/.test(value)) {
+                  return;
                 }
-                else if (!isNaN(newValue) && newValue <= 99999) {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    food_section: prev.food_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...section,
-                        food_kcal: String(newValue)
-                      } : section
-                    ))
-                  }));
+                // 01, 05 같은 숫자는 1, 5로 변경
+                if (/^0(?!\.)/.test(value)) {
+                  value = value.replace(/^0+/, '');
                 }
+                // object 설정
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  food_section: prev.food_section?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      food_kcal: value,
+                    } : section
+                  ))
+                }));
               }}
             />
           </Grid>
           <Grid size={6}>
             <Input
+              locked={LOCKED}
               label={translate("carb")}
-              value={numeral(item?.food_carb).format("0,0.0")}
+              value={insertComma(item?.food_carb || "0")}
               inputRef={REFS?.[i]?.food_carb}
               error={ERRORS?.[i]?.food_carb}
-              locked={LOCKED}
               startadornment={
                 <Img
                   key={"food3"}
@@ -798,40 +800,36 @@ export const FoodDetail = () => {
                 translate("g")
               }
               onChange={(e: any) => {
-                const value = e.target.value.replace(/,/g, '');
-                const newValue = value === "" ? 0 : Number(value);
-                if (value === "") {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    food_section: prev.food_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...section,
-                        food_carb: "0"
-                      } : section
-                    ))
-                  }));
+                // 빈값 처리
+                let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                // 999 제한 + 소수점 첫째 자리
+                if (Number(value) > 999 || !/^\d*\.?\d{0,1}$/.test(value)) {
+                  return;
                 }
-                else if (!isNaN(newValue) && newValue <= 99999) {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    food_section: prev.food_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...section,
-                        food_carb: String(newValue)
-                      } : section
-                    ))
-                  }));
+                // 01, 05 같은 숫자는 1, 5로 변경
+                if (/^0(?!\.)/.test(value)) {
+                  value = value.replace(/^0+/, '');
                 }
+                // object 설정
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  food_section: prev.food_section?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      food_carb: value,
+                    } : section
+                  ))
+                }));
               }}
             />
           </Grid>
           <Grid size={6}>
             <Input
+              locked={LOCKED}
               label={translate("protein")}
-              value={numeral(item?.food_protein).format("0,0.0")}
+              value={insertComma(item?.food_protein || "0")}
               inputRef={REFS?.[i]?.food_protein}
               error={ERRORS?.[i]?.food_protein}
-              locked={LOCKED}
               startadornment={
                 <Img
                   key={"food4"}
@@ -843,40 +841,36 @@ export const FoodDetail = () => {
                 translate("g")
               }
               onChange={(e: any) => {
-                const value = e.target.value.replace(/,/g, '');
-                const newValue = value === "" ? 0 : Number(value);
-                if (value === "") {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    food_section: prev.food_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...section,
-                        food_protein: "0"
-                      } : section
-                    ))
-                  }));
+                // 빈값 처리
+                let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                // 999 제한 + 소수점 첫째 자리
+                if (Number(value) > 999 || !/^\d*\.?\d{0,1}$/.test(value)) {
+                  return;
                 }
-                else if (!isNaN(newValue) && newValue <= 99999) {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    food_section: prev.food_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...section,
-                        food_protein: String(newValue)
-                      } : section
-                    ))
-                  }));
+                // 01, 05 같은 숫자는 1, 5로 변경
+                if (/^0(?!\.)/.test(value)) {
+                  value = value.replace(/^0+/, '');
                 }
+                // object 설정
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  food_section: prev.food_section?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      food_protein: value,
+                    } : section
+                  ))
+                }));
               }}
             />
           </Grid>
           <Grid size={6}>
             <Input
+              locked={LOCKED}
               label={translate("fat")}
-              value={numeral(item?.food_fat).format("0,0.0")}
+              value={insertComma(item?.food_fat || "0")}
               inputRef={REFS?.[i]?.food_fat}
               error={ERRORS?.[i]?.food_fat}
-              locked={LOCKED}
               startadornment={
                 <Img
                   key={"food5"}
@@ -888,30 +882,26 @@ export const FoodDetail = () => {
                 translate("g")
               }
               onChange={(e: any) => {
-                const value = e.target.value.replace(/,/g, '');
-                const newValue = value === "" ? 0 : Number(value);
-                if (value === "") {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    food_section: prev.food_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...section,
-                        food_fat: "0"
-                      } : section
-                    ))
-                  }));
+                // 빈값 처리
+                let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                // 999 제한 + 소수점 첫째 자리
+                if (Number(value) > 999 || !/^\d*\.?\d{0,1}$/.test(value)) {
+                  return;
                 }
-                else if (!isNaN(newValue) && newValue <= 99999) {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    food_section: prev.food_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...section,
-                        food_fat: String(newValue)
-                      } : section
-                    ))
-                  }));
+                // 01, 05 같은 숫자는 1, 5로 변경
+                if (/^0(?!\.)/.test(value)) {
+                  value = value.replace(/^0+/, '');
                 }
+                // object 설정
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  food_section: prev.food_section?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      food_fat: value,
+                    } : section
+                  ))
+                }));
               }}
             />
           </Grid>

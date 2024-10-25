@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { useValidateFood } from "@imports/ImportValidates";
 import { FoodGoal } from "@imports/ImportSchemas";
-import { axios, numeral, sync } from "@imports/ImportUtils";
+import { axios, sync, insertComma } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, Count, Delete, Input } from "@imports/ImportContainers";
 import { Img, Bg } from "@imports/ImportComponents";
@@ -302,10 +302,10 @@ export const FoodGoalDetail = () => {
           </Grid>
           <Grid size={12}>
             <Input
-              value={numeral(item?.food_goal_kcal).format("0,0")}
+              locked={LOCKED}
+              value={insertComma(item?.food_goal_kcal || "0")}
               inputRef={REFS?.[i]?.food_goal_kcal}
               error={ERRORS?.[i]?.food_goal_kcal}
-              locked={LOCKED}
               label={
                 DATE.dateType === "day" ? (
                   `${translate("goalKcal")}`
@@ -324,29 +324,30 @@ export const FoodGoalDetail = () => {
                 translate("kc")
               }
               onChange={(e: any) => {
-                const value = e.target.value.replace(/,/g, '');
-                const newValue = value === "" ? 0 : Number(value);
-                if (value === "") {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    food_goal_kcal: "0"
-                  }));
+                // 빈값 처리
+                let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                // 999999 제한 + 정수
+                if (Number(value) > 999999 || !/^\d+$/.test(value)) {
+                  return;
                 }
-                else if (!isNaN(newValue) && newValue <= 9999999) {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    food_goal_kcal: String(newValue),
-                  }));
+                // 01, 05 같은 숫자는 1, 5로 변경
+                if (/^0(?!\.)/.test(value)) {
+                  value = value.replace(/^0+/, '');
                 }
+                // object 설정
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  food_goal_kcal: value,
+                }));
               }}
             />
           </Grid>
           <Grid size={12}>
             <Input
-              value={numeral(item?.food_goal_carb).format("0,0")}
+              locked={LOCKED}
+              value={insertComma(item?.food_goal_carb || "0")}
               inputRef={REFS?.[i]?.food_goal_carb}
               error={ERRORS?.[i]?.food_goal_carb}
-              locked={LOCKED}
               label={
                 DATE.dateType === "day" ? (
                   `${translate("goalCarb")}`
@@ -365,29 +366,30 @@ export const FoodGoalDetail = () => {
                 translate("g")
               }
               onChange={(e: any) => {
-                const value = e.target.value.replace(/,/g, '');
-                const newValue = value === "" ? 0 : Number(value);
-                if (value === "") {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    food_goal_carb: "0"
-                  }));
+                // 빈값 처리
+                let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                // 999999 제한 + 정수
+                if (Number(value) > 999999 || !/^\d+$/.test(value)) {
+                  return;
                 }
-                else if (!isNaN(newValue) && newValue <= 99999) {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    food_goal_carb: String(newValue),
-                  }));
+                // 01, 05 같은 숫자는 1, 5로 변경
+                if (/^0(?!\.)/.test(value)) {
+                  value = value.replace(/^0+/, '');
                 }
+                // object 설정
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  food_goal_carb: value,
+                }));
               }}
             />
           </Grid>
           <Grid size={12}>
             <Input
-              value={numeral(item?.food_goal_protein).format("0,0")}
+              locked={LOCKED}
+              value={insertComma(item?.food_goal_protein || "0")}
               inputRef={REFS?.[i]?.food_goal_protein}
               error={ERRORS?.[i]?.food_goal_protein}
-              locked={LOCKED}
               label={
                 DATE.dateType === "day" ? (
                   `${translate("goalProtein")}`
@@ -406,29 +408,30 @@ export const FoodGoalDetail = () => {
                 translate("g")
               }
               onChange={(e: any) => {
-                const value = e.target.value.replace(/,/g, '');
-                const newValue = value === "" ? 0 : Number(value);
-                if (value === "") {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    food_goal_protein: "0"
-                  }));
+                // 빈값 처리
+                let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                // 999999 제한 + 정수
+                if (Number(value) > 999999 || !/^\d+$/.test(value)) {
+                  return;
                 }
-                else if (!isNaN(newValue) && newValue <= 99999) {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    food_goal_protein: String(newValue),
-                  }));
+                // 01, 05 같은 숫자는 1, 5로 변경
+                if (/^0(?!\.)/.test(value)) {
+                  value = value.replace(/^0+/, '');
                 }
+                // object 설정
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  food_goal_protein: value,
+                }));
               }}
             />
           </Grid>
           <Grid size={12}>
             <Input
-              value={numeral(item?.food_goal_fat).format("0,0")}
+              locked={LOCKED}
+              value={insertComma(item?.food_goal_fat || "0")}
               inputRef={REFS?.[i]?.food_goal_fat}
               error={ERRORS?.[i]?.food_goal_fat}
-              locked={LOCKED}
               label={
                 DATE.dateType === "day" ? (
                   `${translate("goalFat")}`
@@ -447,20 +450,21 @@ export const FoodGoalDetail = () => {
                 translate("g")
               }
               onChange={(e: any) => {
-                const value = e.target.value.replace(/,/g, '');
-                const newValue = value === "" ? 0 : Number(value);
-                if (value === "") {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    food_goal_fat: "0"
-                  }));
+                // 빈값 처리
+                let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                // 999999 제한 + 정수
+                if (Number(value) > 999999 || !/^\d+$/.test(value)) {
+                  return;
                 }
-                else if (!isNaN(newValue) && newValue <= 99999) {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    food_goal_fat: String(newValue),
-                  }));
+                // 01, 05 같은 숫자는 1, 5로 변경
+                if (/^0(?!\.)/.test(value)) {
+                  value = value.replace(/^0+/, '');
                 }
+                // object 설정
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  food_goal_fat: value,
+                }));
               }}
             />
           </Grid>

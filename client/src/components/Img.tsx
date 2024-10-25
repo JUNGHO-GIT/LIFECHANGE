@@ -71,6 +71,7 @@ export const Img = (
       onError={(e) => {
         e.currentTarget.src = `${GCLOUD_URL}/main/empty.webp`;
         e.currentTarget.alt = "empty";
+        e.currentTarget.className = "w-20 h-20";
       }}
     />
   );

@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { useValidateCalendar } from "@imports/ImportValidates";
 import { Calendar } from "@imports/ImportSchemas";
-import { axios } from "@imports/ImportUtils";
+import { axios, insertComma } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, Memo, Count, Delete, Input, Select } from "@imports/ImportContainers";
 import { Img, Bg } from "@imports/ImportComponents";
@@ -320,20 +320,22 @@ export const CalendarDetail = () => {
           </Grid>
           <Grid size={6}>
             <Select
-              label={translate("part")}
               locked={LOCKED}
+              label={translate("part")}
+              value={item?.calendar_part_idx || 0}
               inputRef={REFS?.[i]?.calendar_part_idx}
               error={ERRORS?.[i]?.calendar_part_idx}
-              value={item?.calendar_part_idx || 0}
               onChange={(e: any) => {
-                const newIndex = Number(e.target.value);
+                // 빈값 처리
+                let value = e.target.value === "" ? 0 : Number(e.target.value);
+                // object 설정
                 setOBJECT((prev: any) => ({
                   ...prev,
                   calendar_section: prev.calendar_section?.map((section: any, idx: number) => (
                     idx === i ? {
                       ...section,
-                      calendar_part_idx: newIndex,
-                      calendar_part_val: calendarArray[newIndex]?.calendar_part
+                      calendar_part_idx: value,
+                      calendar_part_val: calendarArray[value]?.calendar_part
                     } : section
                   ))
                 }));
@@ -353,18 +355,20 @@ export const CalendarDetail = () => {
           <Grid size={6}>
             <Select
               label={translate("color")}
+              value={item?.calendar_color || "black"}
               inputRef={REFS?.[i]?.calendar_color}
               error={ERRORS?.[i]?.calendar_color}
-              value={item?.calendar_color || "black"}
               locked={LOCKED}
               onChange={(e: any) => {
-                const newColor = e.target.value;
+                // 빈값 처리
+                let value = e.target.value === "" ? "black" : e.target.value;
+                // object 설정
                 setOBJECT((prev: any) => ({
                   ...prev,
                   calendar_section: prev.calendar_section?.map((section: any, idx: number) => (
                     idx === i ? {
                       ...section,
-                      calendar_color: newColor
+                      calendar_color: value
                     } : section
                   ))
                 }));
@@ -385,9 +389,9 @@ export const CalendarDetail = () => {
           <Grid size={12}>
             <Input
               label={translate("calendarTitle")}
+              value={item?.calendar_title || ""}
               inputRef={REFS?.[i]?.calendar_title}
               error={ERRORS?.[i]?.calendar_title}
-              value={item?.calendar_title || ""}
               locked={LOCKED}
               startadornment={
                 <Img
@@ -397,13 +401,15 @@ export const CalendarDetail = () => {
                 />
               }
               onChange={(e: any) => {
-                const newTitle = e.target.value;
+                // 빈값 처리
+                let value = e.target.value === "" ? "" : e.target.value;
+                // object 설정
                 setOBJECT((prev: any) => ({
                   ...prev,
                   calendar_section: prev.calendar_section?.map((section: any, idx: number) => (
                     idx === i ? {
                       ...section,
-                      calendar_title: newTitle
+                      calendar_title: value
                     } : section
                   ))
                 }));

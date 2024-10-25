@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { useValidateMoney } from "@imports/ImportValidates";
 import { Money } from "@imports/ImportSchemas";
-import { axios, numeral, sync } from "@imports/ImportUtils";
+import { axios, sync, insertComma } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, Memo, Count, Delete, Select, Input } from "@imports/ImportContainers";
 import { Img, Bg, Div } from "@imports/ImportComponents";
@@ -355,10 +355,9 @@ export const MoneyDetail = () => {
       <Grid container spacing={2} columns={12} className={"border-1 radius-1 p-20"}>
         <Grid size={12}>
           <Input
-            label={translate("totalIncome")}
-            value={numeral(OBJECT?.money_total_income).format("0,0")}
             locked={LOCKED}
-            className={"pointer"}
+            label={translate("totalIncome")}
+            value={insertComma(OBJECT?.money_total_income || "0")}
             startadornment={
               <Img
                 key={"money2"}
@@ -373,9 +372,9 @@ export const MoneyDetail = () => {
         </Grid>
         <Grid size={12}>
           <Input
-            label={translate("totalExpense")}
-            value={numeral(OBJECT?.money_total_expense).format("0,0")}
             locked={LOCKED}
+            label={translate("totalExpense")}
+            value={insertComma(OBJECT?.money_total_expense || "0")}
             startadornment={
               <Img
                 key={"money2"}
@@ -410,22 +409,24 @@ export const MoneyDetail = () => {
           </Grid>
           <Grid size={6}>
             <Select
-              label={translate("part")}
               locked={LOCKED}
+              label={translate("part")}
+              value={item?.money_part_idx || 0}
               inputRef={REFS?.[i]?.money_part_idx}
               error={ERRORS?.[i]?.money_part_idx}
-              value={item?.money_part_idx || 0}
               onChange={(e: any) => {
-                const newIndex = Number(e.target.value);
+                // 빈값 처리
+                let value = e.target.value === "" ? 0 : Number(e.target.value);
+                // object 설정
                 setOBJECT((prev: any) => ({
                   ...prev,
                   money_section: prev.money_section?.map((section: any, idx: number) => (
                     idx === i ? {
                       ...section,
-                      money_part_idx: newIndex,
-                      money_part_val: moneyArray[newIndex]?.money_part,
+                      money_part_idx: value,
+                      money_part_val: moneyArray[value]?.money_part,
                       money_title_idx: 0,
-                      money_title_val: moneyArray[newIndex]?.money_title[0],
+                      money_title_val: moneyArray[value]?.money_title[0],
                     } : section
                   ))
                 }));
@@ -444,26 +445,25 @@ export const MoneyDetail = () => {
           </Grid>
           <Grid size={6}>
             <Select
-              label={translate("title")}
               locked={LOCKED}
+              label={translate("title")}
+              value={item?.money_title_idx || 0}
               inputRef={REFS?.[i]?.money_title_idx}
               error={ERRORS?.[i]?.money_title_idx}
-              value={item?.money_title_idx || 0}
               onChange={(e: any) => {
-                const newTitleIdx = Number(e.target.value);
-                const newTitleVal = moneyArray[item?.money_part_idx]?.money_title[newTitleIdx];
-                if (newTitleIdx >= 0 && newTitleVal) {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    money_section: prev.money_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...section,
-                        money_title_idx: newTitleIdx,
-                        money_title_val: newTitleVal,
-                      } : section
-                    )),
-                  }));
-                }
+                // 빈값 처리
+                let value = e.target.value === "" ? 0 : Number(e.target.value);
+                // object 설정
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  money_section: prev.money_section?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      money_title_idx: value,
+                      money_title_val: moneyArray[section?.money_part_idx]?.money_title[value],
+                    } : section
+                  ))
+                }));
               }}
             >
               {moneyArray[item?.money_part_idx]?.money_title?.map((title: any, idx: number) => (
@@ -479,11 +479,11 @@ export const MoneyDetail = () => {
           </Grid>
           <Grid size={12}>
             <Input
+              locked={LOCKED}
               label={translate("amount")}
-              value={numeral(item?.money_amount).format("0,0")}
+              value={insertComma(item?.money_amount || "0")}
               inputRef={REFS?.[i]?.money_amount}
               error={ERRORS?.[i]?.money_amount}
-              locked={LOCKED}
               startadornment={
                 <Img
                   key={"money2"}
@@ -495,30 +495,26 @@ export const MoneyDetail = () => {
                 localCurrency
               }
               onChange={(e: any) => {
-                const value = e.target.value.replace(/,/g, '');
-                const newValue = value === "" ? 0 : Number(value);
-                if (value === "") {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...section,
-                        exercise_set: "0"
-                      } : section
-                    ))
-                  }));
+                // 빈값 처리
+                let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                // 999999999 제한 + 정수
+                if (Number(value) > 999999999 || !/^\d+$/.test(value)) {
+                  return;
                 }
-                else if (!isNaN(newValue) && newValue <= 999999999) {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    money_section: prev.money_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...section,
-                        money_amount: String(newValue)
-                      } : section
-                    ))
-                  }));
+                // 01, 05 같은 숫자는 1, 5로 변경
+                if (/^0(?!\.)/.test(value)) {
+                  value = value.replace(/^0+/, '');
                 }
+                // object 설정
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  money_section: prev.money_section?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      money_amount: value,
+                    } : section
+                  ))
+                }));
               }}
             />
           </Grid>

@@ -40,11 +40,9 @@ export const UserLogin = () => {
   }, [loginTrigger]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  // 초기 로드 시 로컬 저장소에서 사용자 정보 가져오기
+  // 초기 로드 시 자동로그인 설정 가져오기
   useEffect(() => {
-    const {
-      autoLogin, autoLoginId, autoLoginPw, isSaved, isSavedId
-    } = getLocal("setting", "id", "") || {};
+    const { autoLogin, autoLoginId, autoLoginPw } = getLocal("setting", "id", "") || {};
 
     // 자동로그인 o
     if (autoLogin === "true") {
@@ -66,7 +64,12 @@ export const UserLogin = () => {
       }));
       setLoginTrigger(false);
     }
+  }, []);
 
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  // 초기 로드 시 아이디 저장 설정 가져오기
+  useEffect(() => {
+    const { isSaved, isSavedId } = getLocal("setting", "id", "") || {};
     // 아이디 저장 o
     if (isSaved === "true") {
       setCheckedSaveId(true);
@@ -92,10 +95,17 @@ export const UserLogin = () => {
       autoLogin: checkedAutoLogin ? "true" : "false",
       autoLoginId: checkedAutoLogin ? OBJECT.user_id : "",
       autoLoginPw: checkedAutoLogin ? OBJECT.user_pw : "",
+    });
+  }, [checkedAutoLogin]);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  // 아이디 저장 활성화된 경우
+  useEffect(() => {
+    setLocal("setting", "id", "", {
       isSaved: checkedSaveId ? "true" : "false",
       isSavedId: checkedSaveId ? OBJECT.user_id : "",
     });
-  }, [checkedAutoLogin, checkedSaveId]);
+  }, [checkedSaveId]);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {

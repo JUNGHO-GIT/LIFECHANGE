@@ -7,7 +7,7 @@ import { ExerciseGoal, Exercise } from "@imports/ImportSchemas";
 import { FoodGoal, Food } from "@imports/ImportSchemas";
 import { MoneyGoal, Money } from "@imports/ImportSchemas";
 import { SleepGoal, Sleep } from "@imports/ImportSchemas";
-import { axios, numeral } from "@imports/ImportUtils";
+import { axios, insertComma } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div } from "@imports/ImportComponents";
 import { Paper, TableContainer, Table, Grid } from "@imports/ImportMuis";
@@ -241,10 +241,10 @@ export const UserDummy = () => {
                         )}
                       </TableCell>
                       <TableCell>
-                        {numeral(item.exercise_goal_count).format("0,0")}
+                        {item.exercise_goal_count}
                       </TableCell>
                       <TableCell>
-                        {numeral(item.exercise_goal_volume).format("0,0")}
+                        {item.exercise_goal_volume}
                       </TableCell>
                       <TableCell>
                         {item.exercise_goal_cardio}
@@ -300,13 +300,13 @@ export const UserDummy = () => {
                         )}
                       </TableCell>
                       <TableCell>
-                        {numeral(item.exercise_total_volume).format("0,0")}
+                        {insertComma(item.exercise_total_volume)}
                       </TableCell>
                       <TableCell>
                         {item.exercise_total_cardio}
                       </TableCell>
                       <TableCell>
-                        {item.exercise_total_weight}
+                        {insertComma(item.exercise_total_weight)}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -357,16 +357,16 @@ export const UserDummy = () => {
                         )}
                       </TableCell>
                       <TableCell>
-                        {numeral(item.food_goal_kcal).format("0,0")}
+                        {item.food_goal_kcal}
                       </TableCell>
                       <TableCell>
-                        {numeral(item.food_goal_carb).format("0,0")}
+                        {item.food_goal_carb}
                       </TableCell>
                       <TableCell>
-                        {numeral(item.food_goal_protein).format("0,0")}
+                        {item.food_goal_protein}
                       </TableCell>
                       <TableCell>
-                        {numeral(item.food_goal_fat).format("0,0")}
+                        {item.food_goal_fat}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -417,16 +417,16 @@ export const UserDummy = () => {
                         )}
                       </TableCell>
                       <TableCell>
-                        {numeral(item.food_total_kcal).format("0,0")}
+                        {insertComma(item.food_total_kcal || "0")}
                       </TableCell>
                       <TableCell>
-                        {numeral(item.food_total_carb).format("0,0")}
+                        {insertComma(item.food_total_carb || "0")}
                       </TableCell>
                       <TableCell>
-                        {numeral(item.food_total_protein).format("0,0")}
+                        {insertComma(item.food_total_carb || "0")}
                       </TableCell>
                       <TableCell>
-                        {numeral(item.food_total_fat).format("0,0")}
+                        {insertComma(item.food_total_fat || "0")}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -475,10 +475,10 @@ export const UserDummy = () => {
                         )}
                       </TableCell>
                       <TableCell>
-                        {numeral(item.money_goal_income).format("0,0")}
+                        {insertComma(item.money_goal_income || "0")}
                       </TableCell>
                       <TableCell>
-                        {numeral(item.money_goal_expense).format("0,0")}
+                        {insertComma(item.money_goal_expense || "0")}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -527,10 +527,10 @@ export const UserDummy = () => {
                         )}
                       </TableCell>
                       <TableCell>
-                        {numeral(item.money_total_income).format("0,0")}
+                        {insertComma(item.money_total_income || "0")}
                       </TableCell>
                       <TableCell>
-                        {numeral(item.money_total_expense).format("0,0")}
+                        {insertComma(item.money_total_expense || "0")}
                       </TableCell>
                     </TableRow>
                   ))}

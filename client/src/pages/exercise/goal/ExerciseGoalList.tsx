@@ -4,7 +4,7 @@ import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { ExerciseGoal } from "@imports/ImportSchemas";
-import { axios, numeral } from "@imports/ImportUtils";
+import { axios, insertComma } from "@imports/ImportUtils";
 import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
 import { Div, Img, Hr, Icons } from "@imports/ImportComponents";
 import { Paper, Grid, Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
@@ -190,7 +190,8 @@ export const ExerciseGoalList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
+
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
@@ -205,7 +206,7 @@ export const ExerciseGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -214,10 +215,10 @@ export const ExerciseGoalList = () => {
                       </Grid>
                       <Grid size={7} className={"d-row-right"}>
                         <Div className={`${item.exercise_goal_count_color}`}>
-                          {numeral(item.exercise_goal_count).format("0,0")}
+                          {insertComma(item.exercise_goal_count || "0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("c")}
                         </Div>
@@ -230,10 +231,10 @@ export const ExerciseGoalList = () => {
                       </Grid>
                       <Grid size={7} className={"d-row-right"}>
                         <Div className={`${item.exercise_total_count_color}`}>
-                          {numeral(item.exercise_total_count).format("0,0")}
+                          {insertComma(item.exercise_total_count || "0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("c")}
                         </Div>
@@ -246,17 +247,20 @@ export const ExerciseGoalList = () => {
                       </Grid>
                       <Grid size={7} className={"d-row-right"}>
                         <Div className={`${item.exercise_diff_count_color}`}>
-                          {numeral(item.exercise_diff_count).format("+0,0")}
+                          {insertComma(item.exercise_diff_count || "0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("c")}
                         </Div>
                       </Grid>
                     </Grid>
                   </Grid>
+                  {/** /.row 1 **/}
+
                   <Hr px={1} />
+
                   {/** row 2 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
@@ -271,7 +275,7 @@ export const ExerciseGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -280,10 +284,10 @@ export const ExerciseGoalList = () => {
                       </Grid>
                       <Grid size={7} className={"d-row-right"}>
                         <Div className={`${item.exercise_goal_volume_color}`}>
-                          {numeral(item.exercise_goal_volume).format("0,0")}
+                          {insertComma(item.exercise_goal_volume || "0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("vol")}
                         </Div>
@@ -296,10 +300,10 @@ export const ExerciseGoalList = () => {
                       </Grid>
                       <Grid size={7} className={"d-row-right"}>
                         <Div className={`${item.exercise_total_volume_color}`}>
-                          {numeral(item.exercise_total_volume).format("0,0")}
+                          {insertComma(item.exercise_total_volume || "0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("vol")}
                         </Div>
@@ -312,152 +316,156 @@ export const ExerciseGoalList = () => {
                       </Grid>
                       <Grid size={7} className={"d-row-right"}>
                         <Div className={`${item.exercise_diff_volume_color}`}>
-                          {numeral(item.exercise_diff_volume).format("+0,0")}
+                          {insertComma(item.exercise_diff_volume || "0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate("vol")}
                         </Div>
                       </Grid>
                     </Grid>
                   </Grid>
+                  {/** /.row 2 **/}
+
                   <Hr px={1} />
+
                   {/** row 3 **/}
-                  <Grid container spacing={2} columns={12}>
-                    <Grid size={2} className={"d-center"}>
-                      <Img
-                        key={"exercise4"}
-                        src={"exercise4"}
-                        className={"w-15 h-15"}
-                      />
-                    </Grid>
-                    <Grid size={3} className={"d-row-left"}>
-                      <Div className={"fs-0-9rem fw-600 dark"}>
-                        {translate("cardio")}
-                      </Div>
-                    </Grid>
-                    <Grid size={7}>
-                      <Grid container spacing={2} columns={12}>
-                        {/** goal **/}
-                        <Grid size={3} className={"d-row-right"}>
-                          <Div className={"fs-0-7rem fw-500 dark"}>
-                            {translate("goal")}
-                          </Div>
-                        </Grid>
-                        <Grid size={7} className={"d-row-right"}>
-                          <Div className={`${item.exercise_goal_cardio_color}`}>
-                            {item.exercise_goal_cardio}
-                          </Div>
-                        </Grid>
-                        <Grid size={2} className={"d-row-right"}>
-                          <Div className={"fs-0-6rem"}>
-                            {translate("min")}
-                          </Div>
-                        </Grid>
-                        {/** real **/}
-                        <Grid size={3} className={"d-row-right"}>
-                          <Div className={"fs-0-7rem fw-500 dark"}>
-                            {translate("real")}
-                          </Div>
-                        </Grid>
-                        <Grid size={7} className={"d-row-right"}>
-                          <Div className={`${item.exercise_total_cardio_color}`}>
-                            {item.exercise_total_cardio}
-                          </Div>
-                        </Grid>
-                        <Grid size={2} className={"d-row-right"}>
-                          <Div className={"fs-0-6rem"}>
-                            {translate("min")}
-                          </Div>
-                        </Grid>
-                        {/** diff **/}
-                        <Grid size={3} className={"d-row-right"}>
-                          <Div className={"fs-0-7rem fw-500 dark"}>
-                            {translate("diff")}
-                          </Div>
-                        </Grid>
-                        <Grid size={7} className={"d-row-right"}>
-                          <Div className={`${item.exercise_diff_cardio_color}`}>
-                            {item.exercise_diff_cardio}
-                          </Div>
-                        </Grid>
-                        <Grid size={2} className={"d-row-right"}>
-                          <Div className={"fs-0-6rem"}>
-                            {translate("min")}
-                          </Div>
-                        </Grid>
+                  <Grid size={2} className={"d-center"}>
+                    <Img
+                      key={"exercise4"}
+                      src={"exercise4"}
+                      className={"w-15 h-15"}
+                    />
+                  </Grid>
+                  <Grid size={3} className={"d-row-left"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
+                      {translate("cardio")}
+                    </Div>
+                  </Grid>
+                  <Grid size={7}>
+                    <Grid container spacing={1} columns={12}>
+                      {/** goal **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("goal")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.exercise_goal_cardio_color}`}>
+                          {item.exercise_goal_cardio}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-center"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("min")}
+                        </Div>
+                      </Grid>
+                      {/** real **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("real")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.exercise_total_cardio_color}`}>
+                          {item.exercise_total_cardio}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-center"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("min")}
+                        </Div>
+                      </Grid>
+                      {/** diff **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("diff")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.exercise_diff_cardio_color}`}>
+                          {item.exercise_diff_cardio}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-center"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("min")}
+                        </Div>
                       </Grid>
                     </Grid>
                   </Grid>
+                  {/** /.row 3 **/}
+
                   <Hr px={1} />
+
                   {/** row 4 **/}
-                  <Grid container spacing={2} columns={12}>
-                    <Grid size={2} className={"d-center"}>
-                      <Img
-                        key={"exercise5"}
-                        src={"exercise5"}
-                        className={"w-15 h-15"}
-                      />
-                    </Grid>
-                    <Grid size={3} className={"d-row-left"}>
-                      <Div className={"fs-0-9rem fw-600 dark"}>
-                        {translate("weight")}
-                      </Div>
-                    </Grid>
-                    <Grid size={7}>
-                      <Grid container spacing={2} columns={12}>
-                        {/** goal **/}
-                        <Grid size={3} className={"d-row-right"}>
-                          <Div className={"fs-0-7rem fw-500 dark"}>
-                            {translate("goal")}
-                          </Div>
-                        </Grid>
-                        <Grid size={7} className={"d-row-right"}>
-                          <Div className={`${item.exercise_goal_weight_color}`}>
-                            {item.exercise_goal_weight}
-                          </Div>
-                        </Grid>
-                        <Grid size={2} className={"d-row-right"}>
-                          <Div className={"fs-0-6rem"}>
-                            {translate("k")}
-                          </Div>
-                        </Grid>
-                        {/** real **/}
-                        <Grid size={3} className={"d-row-right"}>
-                          <Div className={"fs-0-7rem fw-500 dark"}>
-                            {translate("real")}
-                          </Div>
-                        </Grid>
-                        <Grid size={7} className={"d-row-right"}>
-                          <Div className={`${item.exercise_total_weight_color}`}>
-                            {item.exercise_total_weight}
-                          </Div>
-                        </Grid>
-                        <Grid size={2} className={"d-row-right"}>
-                          <Div className={"fs-0-6rem"}>
-                            {translate("k")}
-                          </Div>
-                        </Grid>
-                        {/** diff **/}
-                        <Grid size={3} className={"d-row-right"}>
-                          <Div className={"fs-0-7rem fw-500 dark"}>
-                            {translate("diff")}
-                          </Div>
-                        </Grid>
-                        <Grid size={7} className={"d-row-right"}>
-                          <Div className={`${item.exercise_diff_weight_color}`}>
-                            {item.exercise_diff_weight}
-                          </Div>
-                        </Grid>
-                        <Grid size={2} className={"d-row-right"}>
-                          <Div className={"fs-0-6rem"}>
-                            {translate("k")}
-                          </Div>
-                        </Grid>
+                  <Grid size={2} className={"d-center"}>
+                    <Img
+                      key={"exercise5"}
+                      src={"exercise5"}
+                      className={"w-15 h-15"}
+                    />
+                  </Grid>
+                  <Grid size={3} className={"d-row-left"}>
+                    <Div className={"fs-0-9rem fw-600 dark"}>
+                      {translate("weight")}
+                    </Div>
+                  </Grid>
+                  <Grid size={7}>
+                    <Grid container spacing={1} columns={12}>
+                      {/** goal **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("goal")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.exercise_goal_weight_color}`}>
+                          {insertComma(item.exercise_goal_weight || "0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-center"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("k")}
+                        </Div>
+                      </Grid>
+                      {/** real **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("real")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.exercise_total_weight_color}`}>
+                          {insertComma(item.exercise_total_weight || "0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-center"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("k")}
+                        </Div>
+                      </Grid>
+                      {/** diff **/}
+                      <Grid size={3} className={"d-row-right"}>
+                        <Div className={"fs-0-7rem fw-500 dark"}>
+                          {translate("diff")}
+                        </Div>
+                      </Grid>
+                      <Grid size={7} className={"d-row-right"}>
+                        <Div className={`${item.exercise_diff_weight_color}`}>
+                          {insertComma(item.exercise_diff_weight || "0")}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-row-center"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("k")}
+                        </Div>
                       </Grid>
                     </Grid>
                   </Grid>
+                  {/** /.row 4 **/}
+
                 </Grid>
               </AccordionDetails>
             </Accordion>

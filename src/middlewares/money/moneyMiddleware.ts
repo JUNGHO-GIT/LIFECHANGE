@@ -11,10 +11,11 @@ export const list = async (object: any) => {
     if (!param) {
       return
     }
-    else if (param.length > 12) {
+
+    if (param.length > 12) {
       finalResult = "fs-0-8rem fw-600";
     }
-    else if (param.length > 6) {
+    else if (6 < param.length && param.length <= 12) {
       finalResult = "fs-0-9rem fw-600";
     }
     else {

@@ -4,7 +4,7 @@ import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { useStorageLocal } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
-import { numeral } from "@imports/ImportUtils";
+import { insertComma } from "@imports/ImportUtils";
 import { PopUp, Input } from "@imports/ImportContainers";
 import { Div, Img, Hr, Br } from "@imports/ImportComponents";
 import { Tabs, Tab, Paper, Grid, Checkbox } from "@imports/ImportMuis";
@@ -13,7 +13,7 @@ import { Tabs, Tab, Paper, Grid, Checkbox } from "@imports/ImportMuis";
 export const TopNav = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { TITLE, firstStr, secondStr, localCurrency, navigate } = useCommonValue();
+  const { firstStr, secondStr, localCurrency, navigate } = useCommonValue();
   const { sessionTitle, sessionPercent, sessionScale, sessionProperty } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -451,9 +451,9 @@ export const TopNav = () => {
               />
               <Div className={"fs-1-4rem fw-600 ms-2vw me-2vw"}>
                 {includingExclusions ? (
-                  numeral(property.curPropertyAll).format("0,0")
+                  insertComma(property.curPropertyAll || "0")
                 ) : (
-                  numeral(property.curProperty).format("0,0")
+                  insertComma(property.curProperty || "0")
                 )}
               </Div>
               <Div className={"fs-0-6rem fw-500 dark"}>
@@ -463,9 +463,9 @@ export const TopNav = () => {
             <Hr px={1} />
             <Grid size={12} className={"d-center"}>
               <Input
-                label={translate("initProperty")}
-                value={numeral(property.initProperty).format("0,0")}
                 readOnly={true}
+                label={translate("initProperty")}
+                value={insertComma(property.initProperty || "0")}
                 startadornment={
                   <Img
                     key={"money2"}
@@ -480,13 +480,13 @@ export const TopNav = () => {
             </Grid>
             <Grid size={12} className={"d-center"}>
               <Input
-                label={translate("sumIncome")}
                 readOnly={true}
+                label={translate("sumIncome")}
                 value={
                   includingExclusions ? (
-                    numeral(property.totalIncomeAll).format("0,0")
+                    insertComma(property.totalIncomeAll || "0")
                   ) : (
-                    numeral(property.totalIncome).format("0,0")
+                    insertComma(property.totalIncome || "0")
                   )
                 }
                 startadornment={
@@ -503,13 +503,13 @@ export const TopNav = () => {
             </Grid>
             <Grid size={12} className={"d-center"}>
               <Input
-                label={translate("sumExpense")}
                 readOnly={true}
+                label={translate("sumExpense")}
                 value={
                   includingExclusions ? (
-                    numeral(property.totalExpenseAll).format("0,0")
+                    insertComma(property.totalExpenseAll || "0")
                   ) : (
-                    numeral(property.totalExpense).format("0,0")
+                    insertComma(property.totalExpense || "0")
                   )
                 }
                 startadornment={
@@ -565,7 +565,7 @@ export const TopNav = () => {
                 className={"w-16 h-16"}
               />
               <Div className={"fs-1-4rem fw-600 ms-2vw me-2vw"}>
-                {scale.curScale}
+                {insertComma(scale.curScale || "0")}
               </Div>
               <Div className={"fs-0-6rem fw-500 dark"}>
                 {translate("k")}
@@ -574,9 +574,9 @@ export const TopNav = () => {
             <Hr px={1} />
             <Grid size={12} className={"d-center"}>
               <Input
+                readOnly={true}
                 label={translate("initScale")}
-                value={scale.initScale}
-                readOnly={true}
+                value={insertComma(scale.initScale || "0")}
                 startadornment={
                   <Img
                     key={"exercise5"}
@@ -591,9 +591,9 @@ export const TopNav = () => {
             </Grid>
             <Grid size={12} className={"d-center"}>
               <Input
+                readOnly={true}
                 label={translate("minScale")}
-                value={scale.minScale}
-                readOnly={true}
+                value={insertComma(scale.minScale || "0")}
                 startadornment={
                   <Img
                     key={"exercise5"}
@@ -608,9 +608,9 @@ export const TopNav = () => {
             </Grid>
             <Grid size={12} className={"d-center"}>
               <Input
-                label={translate("maxScale")}
-                value={scale.maxScale}
                 readOnly={true}
+                label={translate("maxScale")}
+                value={insertComma(scale.maxScale || "0")}
                 startadornment={
                   <Img
                     key={"exercise5"}

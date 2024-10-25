@@ -341,7 +341,7 @@ export const UserDelete = () => {
         <Grid container spacing={0} columns={12}>
           <Grid size={12} className={"d-col-center"}>
             {titleSection()}
-            <Hr px={30} />
+            <Hr px={20} />
             {deleteSection()}
             <Hr px={20} />
             {buttonSection()}

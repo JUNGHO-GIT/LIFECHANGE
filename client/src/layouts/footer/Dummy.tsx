@@ -1,7 +1,6 @@
 // Dummy.tsx
 
 import { useLanguageStore } from "@imports/ImportStores";
-import { numeral } from "@imports/ImportUtils";
 import { Input, Select } from "@imports/ImportContainers";
 import { Btn } from "@imports/ImportComponents";
 import { MenuItem, Grid } from "@imports/ImportMuis";
@@ -30,8 +29,8 @@ export const Dummy = (
         defaultValue={"exerciseGoal"}
         inputclass={"h-min0 h-30 fs-0-7rem"}
         onChange={(e: any) => {
-          const newPartVal = e.target.value;
-          setState?.setPART(newPartVal);
+          let value = e.target.value;
+          setState?.setPART(value);
           setState?.setPAGING((prev: any) => ({
             ...prev,
             page: 1
@@ -67,23 +66,24 @@ export const Dummy = (
     // 2. count
     const countSection = () => (
       <Input
-        value={numeral(state?.COUNT?.inputCnt).format("0")}
+        value={state?.COUNT?.inputCnt}
         inputclass={"h-min0 h-30 fs-0-8rem"}
         onChange={(e: any) => {
-          const value = e.target.value.replace(/,/g, '');
-          const newValue = value === "" ? 0 : Number(value);
-          if (value === "") {
-            setState?.setCOUNT((prev: any) => ({
-              ...prev,
-              inputCnt: "0",
-            }));
+          // 빈값 처리
+          let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+          // 99 제한 + 정수
+          if (Number(value) > 99 || !/^\d+$/.test(value)) {
+            return;
           }
-          else if (!isNaN(newValue) && newValue <= 999) {
-            setState?.setCOUNT((prev: any) => ({
-              ...prev,
-              inputCnt: String(newValue),
-            }));
+          // 01, 05 같은 숫자는 1, 5로 변경
+          if (/^0(?!\.)/.test(value)) {
+            value = value.replace(/^0+/, '');
           }
+          // object 설정
+          setState?.setCOUNT((prev: any) => ({
+            ...prev,
+            inputCnt: value,
+          }));
         }}
       />
     );

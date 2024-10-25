@@ -7,10 +7,12 @@ export const Input = (props: any) => (
   <TextField
     {...props}
     select={false}
+    id={props?.id || `id-${Math.random().toString(36).slice(2, 11)}`}
+    name={props?.name || `name-${Math.random().toString(36).slice(2, 11)}`}
+    size={props?.size || "small"}
     type={props?.type || "text"}
     variant={props?.variant || "outlined"}
     className={props?.className || ""}
-    size={props?.size || "small"}
     fullWidth={props?.fullWidth || true}
     inputRef={props?.inputRef || null}
     error={props?.error || false}

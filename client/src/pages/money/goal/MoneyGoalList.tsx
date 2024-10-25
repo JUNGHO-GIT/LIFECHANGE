@@ -4,7 +4,7 @@ import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { MoneyGoal } from "@imports/ImportSchemas";
-import { axios, numeral } from "@imports/ImportUtils";
+import { axios, insertComma } from "@imports/ImportUtils";
 import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
 import { Div, Img, Hr, Icons } from "@imports/ImportComponents";
 import { Paper, Grid, Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
@@ -190,7 +190,8 @@ export const MoneyGoalList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container spacing={1} columns={12}>
+
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
@@ -205,7 +206,7 @@ export const MoneyGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -214,10 +215,10 @@ export const MoneyGoalList = () => {
                       </Grid>
                       <Grid size={7} className={"d-row-right"}>
                         <Div className={`${item.money_goal_income_color}`}>
-                          {numeral(item.money_goal_income).format("0,0")}
+                          {insertComma(item.money_goal_income || "0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate(localCurrency)}
                         </Div>
@@ -230,10 +231,10 @@ export const MoneyGoalList = () => {
                       </Grid>
                       <Grid size={7} className={"d-row-right"}>
                         <Div className={`${item.money_total_income_color}`}>
-                          {numeral(item.money_total_income).format("0,0")}
+                          {insertComma(item.money_total_income || "0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate(localCurrency)}
                         </Div>
@@ -246,17 +247,20 @@ export const MoneyGoalList = () => {
                       </Grid>
                       <Grid size={7} className={"d-row-right"}>
                         <Div className={`${item.money_diff_income_color}`}>
-                          {numeral(item.money_diff_income).format("+0,0")}
+                          {insertComma(item.money_diff_income || "0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate(localCurrency)}
                         </Div>
                       </Grid>
                     </Grid>
                   </Grid>
+                  {/** /.row 1 **/}
+
                   <Hr px={1} />
+
                   {/** row 2 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
@@ -271,7 +275,7 @@ export const MoneyGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={2} columns={12}>
+                    <Grid container spacing={1} columns={12}>
                       {/** goal **/}
                       <Grid size={3} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -280,10 +284,10 @@ export const MoneyGoalList = () => {
                       </Grid>
                       <Grid size={7} className={"d-row-right"}>
                         <Div className={`${item.money_goal_expense_color}`}>
-                          {numeral(item.money_goal_expense).format("0,0")}
+                          {insertComma(item.money_goal_expense || "0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate(localCurrency)}
                         </Div>
@@ -296,10 +300,10 @@ export const MoneyGoalList = () => {
                       </Grid>
                       <Grid size={7} className={"d-row-right"}>
                         <Div className={`${item.money_total_expense_color}`}>
-                          {numeral(item.money_total_expense).format("0,0")}
+                          {insertComma(item.money_total_expense || "0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate(localCurrency)}
                         </Div>
@@ -312,16 +316,18 @@ export const MoneyGoalList = () => {
                       </Grid>
                       <Grid size={7} className={"d-row-right"}>
                         <Div className={`${item.money_diff_expense_color}`}>
-                          {numeral(item.money_diff_expense).format("+0,0")}
+                          {insertComma(item.money_diff_expense || "0")}
                         </Div>
                       </Grid>
-                      <Grid size={2} className={"d-row-right"}>
+                      <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
                           {translate(localCurrency)}
                         </Div>
                       </Grid>
                     </Grid>
                   </Grid>
+                  {/** /.row 2 **/}
+
                 </Grid>
               </AccordionDetails>
             </Accordion>

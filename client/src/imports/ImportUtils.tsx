@@ -2,9 +2,9 @@
 
 import { handleY } from "@scripts/chartFmt";
 import { sync } from "@scripts/sync";
+import { insertComma } from "@scripts/utils";
 import { getLocal, setLocal, getSession, setSession } from "@scripts/storage";
 import axios from "axios";
-import numeral from 'numeral';
 import { create } from 'zustand';
 import moment, { Moment } from "moment-timezone";
 import { Calendar as CalendarReact } from "react-calendar";
@@ -17,6 +17,7 @@ import { randomNumber, randomTime, calcDate, strToDecimal, decimalToStr } from "
 export {
   handleY,
   sync,
+  insertComma,
   getLocal,
   setLocal,
   getSession,
@@ -25,7 +26,6 @@ export {
   axios,
   parseISO,
   formatISO,
-  numeral,
   moment,
   Moment,
   CalendarReact,

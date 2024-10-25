@@ -28,10 +28,11 @@ export const list = async (object: any) => {
     if (!param) {
       return
     }
-    else if (param.length > 12) {
+
+    if (param.length > 12) {
       finalResult = "fs-0-8rem fw-600";
     }
-    else if (param.length > 6) {
+    else if (6 < param.length && param.length <= 12) {
       finalResult = "fs-0-9rem fw-600";
     }
     else {
@@ -56,10 +57,10 @@ export const list = async (object: any) => {
     let percent: number = 0;
     let finalResult: string = "";
 
-    if (goalParam.length > 12 || realParam.length > 12) {
+    if (String(Math.abs(goal - real)).length > 12) {
       finalResult = "fs-0-8rem fw-600";
     }
-    else if (goalParam.length > 6 || realParam.length > 6) {
+    else if (6 < String(Math.abs(goal - real)).length && String(Math.abs(goal - real)).length <= 12) {
       finalResult = "fs-0-9rem fw-600";
     }
     else {
