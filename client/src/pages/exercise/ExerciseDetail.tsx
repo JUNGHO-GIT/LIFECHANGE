@@ -15,7 +15,7 @@ import { Paper, MenuItem, Grid } from "@imports/ImportMuis";
 export const ExerciseDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, PATH, sessionId, toList, exerciseArray, bgColors } = useCommonValue();
+  const { URL_OBJECT, PATH, sessionId, toList,exerciseArray, bgColors, localUnit}=useCommonValue();
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt,getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -178,8 +178,8 @@ export const ExerciseDetail = () => {
     let totalTime = 0;
 
     const updatedSections = OBJECT?.exercise_section?.map((section: any) => {
-      const {exercise_set, exercise_rep, exercise_kg} = section;
-      const sectionVolume = Number(exercise_set) * Number(exercise_rep) * Number(exercise_kg);
+      const {exercise_set, exercise_rep, exercise_weight} = section;
+      const sectionVolume = Number(exercise_set) * Number(exercise_rep) * Number(exercise_weight);
 
       totalVolume += sectionVolume;
 
@@ -213,7 +213,7 @@ export const ExerciseDetail = () => {
       exercise_title_val: "",
       exercise_set: "0",
       exercise_rep: "0",
-      exercise_kg: "0",
+      exercise_weight: "0",
       exercise_volume: "0",
       exercise_cardio: "00:00",
     };
@@ -410,8 +410,8 @@ export const ExerciseDetail = () => {
         <Grid size={12}>
           <Input
             readOnly={true}
-            label={translate("weight")}
-            value={insertComma(OBJECT?.exercise_total_weight || "0")}
+            label={translate("scale")}
+            value={insertComma(OBJECT?.exercise_total_scale || "0")}
             startadornment={
               <Img
                 max={15}
@@ -422,7 +422,7 @@ export const ExerciseDetail = () => {
               />
             }
             endadornment={
-              translate("k")
+              localUnit
             }
             onChange={(e: any) => {
               // 빈값 처리
@@ -438,7 +438,7 @@ export const ExerciseDetail = () => {
               // object 설정
               setOBJECT((prev: any) => ({
                 ...prev,
-                exercise_total_weight: value
+                exercise_total_scale: value
               }));
             }}
           />
@@ -622,10 +622,10 @@ export const ExerciseDetail = () => {
           <Grid size={6}>
             <Input
               locked={LOCKED}
-              label={translate("kg")}
-              value={insertComma(item?.exercise_kg || "0")}
-              inputRef={REFS?.[i]?.exercise_kg}
-              error={ERRORS?.[i]?.exercise_kg}
+              label={translate("weight")}
+              value={insertComma(item?.exercise_weight || "0")}
+              inputRef={REFS?.[i]?.exercise_weight}
+              error={ERRORS?.[i]?.exercise_weight}
               startadornment={
                 <Img
                   max={15}
@@ -636,7 +636,7 @@ export const ExerciseDetail = () => {
                 />
               }
               endadornment={
-                translate("k")
+                localUnit
               }
               onChange={(e: any) => {
                 // 빈값 처리
@@ -655,7 +655,7 @@ export const ExerciseDetail = () => {
                   exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
                     idx === i ? {
                       ...section,
-                      exercise_kg: value
+                      exercise_weight: value
                     } : section
                   ))
                 }));

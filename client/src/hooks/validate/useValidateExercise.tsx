@@ -48,7 +48,7 @@ export const useValidateExercise = () => {
         "exercise_goal_count",
         "exercise_goal_volume",
         "exercise_goal_cardio",
-        "exercise_goal_weight",
+        "exercise_goal_scale",
       ];
       REFS.current = (
         Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
@@ -80,8 +80,8 @@ export const useValidateExercise = () => {
       else if (!OBJECT.exercise_goal_cardio || OBJECT.exercise_goal_cardio === "00:00") {
         return showAlertAndFocus('exercise_goal_cardio', "errorExerciseGoalCardio", 0);
       }
-      else if (!OBJECT.exercise_goal_weight || OBJECT.exercise_goal_weight === "0") {
-        return showAlertAndFocus('exercise_goal_weight', "errorExerciseGoalWeight", 0);
+      else if (!OBJECT.exercise_goal_scale || OBJECT.exercise_goal_scale === "0") {
+        return showAlertAndFocus('exercise_goal_scale', "errorExerciseGoalScale", 0);
       }
       return true;
     }
@@ -93,7 +93,7 @@ export const useValidateExercise = () => {
         "exercise_title_idx",
         "exercise_set",
         "exercise_rep",
-        "exercise_kg",
+        "exercise_weight",
       ];
       REFS.current = (
         Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
@@ -129,8 +129,8 @@ export const useValidateExercise = () => {
         else if (!section[i].exercise_rep) {
           return showAlertAndFocus('exercise_rep', "errorExerciseRep", i);
         }
-        else if (!section[i].exercise_kg) {
-          return showAlertAndFocus('exercise_kg', "errorExerciseKg", i);
+        else if (!section[i].exercise_weight) {
+          return showAlertAndFocus('exercise_weight', "errorExerciseKg", i);
         }
       }
       return true;

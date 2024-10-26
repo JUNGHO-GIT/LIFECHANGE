@@ -15,7 +15,7 @@ export const TodayList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP } = useCommonValue();
-  const { PATH, navigate, sessionId, localCurrency } = useCommonValue();
+  const { PATH, navigate, sessionId, localCurrency, localUnit } = useCommonValue();
   const { getDayFmt, getDayNotFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
@@ -289,19 +289,19 @@ export const TodayList = () => {
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-0-9rem fw-600 dark"}>
-                      {translate("weight")}
+                      {translate("scale")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.exercise_total_weight_color}`}>
-                          {insertComma(item.exercise_total_weight)}
+                        <Div className={`${item.exercise_total_scale_color}`}>
+                          {insertComma(item.exercise_total_scale)}
                         </Div>
                       </Grid>
                       <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
-                          {translate("k")}
+                          {localUnit}
                         </Div>
                       </Grid>
                     </Grid>

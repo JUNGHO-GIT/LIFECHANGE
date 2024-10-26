@@ -33,10 +33,10 @@ export const barToday = async (
 
     // findResult 배열을 순회하며 결과 저장
     finalResult = findResultGoal?.map((item: any) => ({
-      name: String("weight"),
+      name: String("scale"),
       date: String(dateStart),
-      goal: String(item.exercise_goal_weight|| "0"),
-      real: String(findResultReal[0]?.exercise_total_weight || "0")
+      goal: String(item.exercise_goal_scale|| "0"),
+      real: String(findResultReal[0]?.exercise_total_scale || "0")
     }));
     statusResult = "success";
   }
@@ -105,11 +105,11 @@ export const barWeek = async (
         date: String(date[index]),
         goal:
           findIndexGoal !== -1
-          ? String(findResultGoal[findIndexGoal]?.exercise_goal_weight)
+          ? String(findResultGoal[findIndexGoal]?.exercise_goal_scale)
           : "0",
         real:
           findIndexReal !== -1
-          ? String(findResultReal[findIndexReal]?.exercise_total_weight)
+          ? String(findResultReal[findIndexReal]?.exercise_total_scale)
           : "0"
       });
     });
@@ -181,11 +181,11 @@ export const barMonth = async (
         date: String(date[index]),
         goal:
           findIndexGoal !== -1
-          ? String(findResultGoal[findIndexGoal]?.exercise_goal_weight)
+          ? String(findResultGoal[findIndexGoal]?.exercise_goal_scale)
           : "0",
         real:
           findIndexReal !== -1
-          ? String(findResultReal[findIndexReal]?.exercise_total_weight)
+          ? String(findResultReal[findIndexReal]?.exercise_total_scale)
           : "0"
       });
     });

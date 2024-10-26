@@ -35,7 +35,7 @@ export const percent = async (object: any) => {
         score = 5;
       }
     }
-    else if (extra === "weight") {
+    else if (extra === "scale") {
       percent = Number(((real - goal) / goal) * 100);
       // 1. - 1%
       if (percent <= 1) {
@@ -368,7 +368,7 @@ export const percent = async (object: any) => {
         score: "1.00",
         percent: "0.00",
       },
-      diff_weight: {
+      diff_scale: {
         score: "1.00",
         percent: "0.00",
       },
@@ -391,10 +391,10 @@ export const percent = async (object: any) => {
         object?.result?.exercise?.exercise_total_cardio,
         "cardio"
       ),
-      diff_weight:diffExercise(
-        object?.result?.exerciseGoal?.exercise_goal_weight,
-        object?.result?.exercise?.exercise_total_weight,
-        "weight"
+      diff_scale:diffExercise(
+        object?.result?.exerciseGoal?.exercise_goal_scale,
+        object?.result?.exercise?.exercise_total_scale,
+        "scale"
       ),
     };
   }

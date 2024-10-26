@@ -99,7 +99,7 @@ export const listGoal = async (
         exercise_goal_count: 1,
         exercise_goal_volume: 1,
         exercise_goal_cardio: 1,
-        exercise_goal_weight: 1,
+        exercise_goal_scale: 1,
       }
     },
     {
@@ -146,7 +146,7 @@ export const listReal = async (
         exercise_dateEnd: 1,
         exercise_total_volume: 1,
         exercise_total_cardio: 1,
-        exercise_total_weight: 1,
+        exercise_total_scale: 1,
         exercise_total_count: {
           $cond: {
             if: {
@@ -216,7 +216,7 @@ export const create = async (
       exercise_goal_count: OBJECT_param.exercise_goal_count,
       exercise_goal_volume: OBJECT_param.exercise_goal_volume,
       exercise_goal_cardio: OBJECT_param.exercise_goal_cardio,
-      exercise_goal_weight: OBJECT_param.exercise_goal_weight,
+      exercise_goal_scale: OBJECT_param.exercise_goal_scale,
       exercise_goal_regDt: new Date(),
       exercise_goal_updateDt: "",
     }
@@ -249,7 +249,7 @@ export const update = {
           exercise_goal_count: OBJECT_param.exercise_goal_count,
           exercise_goal_volume: OBJECT_param.exercise_goal_volume,
           exercise_goal_cardio: OBJECT_param.exercise_goal_cardio,
-          exercise_goal_weight: OBJECT_param.exercise_goal_weight,
+          exercise_goal_scale: OBJECT_param.exercise_goal_scale,
           exercise_goal_updateDt: new Date(),
         },
       },
@@ -286,7 +286,7 @@ export const update = {
           exercise_goal_count: OBJECT_param.exercise_goal_count,
           exercise_goal_volume: OBJECT_param.exercise_goal_volume,
           exercise_goal_cardio: OBJECT_param.exercise_goal_cardio,
-          exercise_goal_weight: OBJECT_param.exercise_goal_weight,
+          exercise_goal_scale: OBJECT_param.exercise_goal_scale,
           exercise_goal_updateDt: new Date(),
         },
       },

@@ -102,7 +102,7 @@ export const list = async (
         exercise_dateEnd: 1,
         exercise_total_volume: 1,
         exercise_total_cardio: 1,
-        exercise_total_weight: 1,
+        exercise_total_scale: 1,
       }
     },
     {
@@ -158,7 +158,7 @@ export const create = async (
       exercise_dateEnd: dateEnd_param,
       exercise_total_volume: OBJECT_param.exercise_total_volume,
       exercise_total_cardio: OBJECT_param.exercise_total_cardio,
-      exercise_total_weight: OBJECT_param.exercise_total_weight,
+      exercise_total_scale: OBJECT_param.exercise_total_scale,
       exercise_section: OBJECT_param.exercise_section,
       exercise_regDt: new Date(),
       exercise_updateDt: "",
@@ -191,7 +191,7 @@ export const update = {
         $set: {
           exercise_total_volume: OBJECT_param.exercise_total_volume,
           exercise_total_cardio: OBJECT_param.exercise_total_cardio,
-          exercise_total_weight: OBJECT_param.exercise_total_weight,
+          exercise_total_scale: OBJECT_param.exercise_total_scale,
           exercise_section: OBJECT_param.exercise_section,
           exercise_updateDt: new Date(),
         }
@@ -231,13 +231,13 @@ export const update = {
     );
     const newCardio = String (
       decimalToTime(
-        parseFloat(timeToDecimal(findResult.exercise_total_cardio)) +
-        parseFloat(timeToDecimal(OBJECT_param.exercise_total_cardio))
+        parseFloat(String(timeToDecimal(findResult.exercise_total_cardio))) +
+        parseFloat(String(timeToDecimal(OBJECT_param.exercise_total_cardio)))
       )
     );
-    const newWeight = String (
-      parseFloat(findResult.exercise_total_weight) +
-      parseFloat(OBJECT_param.exercise_total_weight)
+    const newScale = String (
+      parseFloat(findResult.exercise_total_scale) +
+      parseFloat(OBJECT_param.exercise_total_scale)
     );
 
     const finalResult:any = await Exercise.updateOne(
@@ -251,7 +251,7 @@ export const update = {
         $set: {
           exercise_total_volume: newVolume,
           exercise_total_cardio: newCardio,
-          exercise_total_weight: newWeight,
+          exercise_total_scale: newScale,
           exercise_updateDt: new Date(),
         },
         $push: {
@@ -288,7 +288,7 @@ export const update = {
         $set: {
           exercise_total_volume: OBJECT_param.exercise_total_volume,
           exercise_total_cardio: OBJECT_param.exercise_total_cardio,
-          exercise_total_weight: OBJECT_param.exercise_total_weight,
+          exercise_total_scale: OBJECT_param.exercise_total_scale,
           exercise_section: OBJECT_param.exercise_section,
           exercise_updateDt: new Date(),
         }

@@ -28,8 +28,8 @@ export const barGoal = async (
         _id: 0,
         exercise_goal_dateStart: 1,
         exercise_goal_dateEnd: 1,
-        exercise_goal_weight: {
-          $ifNull: ["$exercise_goal_weight", 0]
+        exercise_goal_scale: {
+          $ifNull: ["$exercise_goal_scale", 0]
         }
       }
     },
@@ -68,8 +68,8 @@ export const barReal = async (
         _id: 0,
         exercise_dateStart: 1,
         exercise_dateEnd: 1,
-        exercise_total_weight: {
-          $ifNull: ["$exercise_total_weight", 0]
+        exercise_total_scale: {
+          $ifNull: ["$exercise_total_scale", 0]
         }
       }
     },

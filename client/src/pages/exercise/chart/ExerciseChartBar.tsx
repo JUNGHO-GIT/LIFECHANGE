@@ -269,7 +269,7 @@ export const ExerciseChartBar = () => {
               {translate("chartBar")}
             </Div>
             <Div className={"fs-1-0rem fw-500 grey ms-10"}>
-              {`[${translate("weight")}]`}
+              {`[${translate("scale")}]`}
             </Div>
           </Grid>
         </Grid>

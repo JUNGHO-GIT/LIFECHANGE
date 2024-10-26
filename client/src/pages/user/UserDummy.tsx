@@ -221,7 +221,7 @@ export const UserDummy = () => {
                     <TableCell>{translate("exerciseCount")}</TableCell>
                     <TableCell>{translate("volume")}</TableCell>
                     <TableCell>{translate("cardio")}</TableCell>
-                    <TableCell>{translate("weight")}</TableCell>
+                    <TableCell>{translate("scale")}</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody className={"table-tbody"}>
@@ -250,7 +250,7 @@ export const UserDummy = () => {
                         {item.exercise_goal_cardio}
                       </TableCell>
                       <TableCell>
-                        {item.exercise_goal_weight}
+                        {item.exercise_goal_scale}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -280,7 +280,7 @@ export const UserDummy = () => {
                     <TableCell>{translate("date")}</TableCell>
                     <TableCell>{translate("volume")}</TableCell>
                     <TableCell>{translate("cardio")}</TableCell>
-                    <TableCell>{translate("weight")}</TableCell>
+                    <TableCell>{translate("scale")}</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody className={"table-tbody"}>
@@ -306,7 +306,7 @@ export const UserDummy = () => {
                         {item.exercise_total_cardio}
                       </TableCell>
                       <TableCell>
-                        {insertComma(item.exercise_total_weight)}
+                        {insertComma(item.exercise_total_scale)}
                       </TableCell>
                     </TableRow>
                   ))}

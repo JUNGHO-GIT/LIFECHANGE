@@ -120,9 +120,9 @@ export const list = async (
       const exerciseTotalCardio = listReal.reduce((acc: any, curr: any) => (
         acc + strToDecimal(curr?.exercise_total_cardio ?? "00:00")
       ), 0);
-      const exerciseCurBodyWeight = listReal.reduce((latest: any, curr: any) => {
-        if (curr?.exercise_total_weight) {
-          return curr.exercise_total_weight;
+      const exerciseCurScale = listReal.reduce((latest: any, curr: any) => {
+        if (curr?.exercise_total_scale) {
+          return curr.exercise_total_scale;
         }
         return latest;
       }, "0");
@@ -132,7 +132,7 @@ export const list = async (
         exercise_total_count: String(exerciseTotalCount),
         exercise_total_volume: String(exerciseTotalVolume.toFixed(0)),
         exercise_total_cardio: decimalToStr(exerciseTotalCardio),
-        exercise_total_weight: String(exerciseCurBodyWeight),
+        exercise_total_scale: String(exerciseCurScale),
       };
     }));
     statusResult = "success";

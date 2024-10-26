@@ -15,7 +15,7 @@ import { Paper, Grid } from "@imports/ImportMuis";
 export const ExerciseGoalDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, PATH, sessionId, toList } = useCommonValue();
+  const { URL_OBJECT, PATH, sessionId, toList, localUnit } = useCommonValue();
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { getWeekStartFmt, getWeekEndFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -254,7 +254,7 @@ export const ExerciseGoalDetail = () => {
       exercise_goal_count: "0",
       exercise_goal_volume: "0",
       exercise_goal_cardio: "00:00",
-      exercise_goal_weight: "0",
+      exercise_goal_scale: "0",
     }));
     setCOUNT((prev: any) => ({
       ...prev,
@@ -406,10 +406,10 @@ export const ExerciseGoalDetail = () => {
           <Grid size={12}>
             <Input
               locked={LOCKED}
-              label={translate("goalWeight")}
-              value={insertComma(item?.exercise_goal_weight || "0")}
-              inputRef={REFS?.[i]?.exercise_goal_weight}
-              error={ERRORS?.[i]?.exercise_goal_weight}
+              label={translate("goalScale")}
+              value={insertComma(item?.exercise_goal_scale || "0")}
+              inputRef={REFS?.[i]?.exercise_goal_scale}
+              error={ERRORS?.[i]?.exercise_goal_scale}
               startadornment={
                 <Img
                   max={15}
@@ -420,7 +420,7 @@ export const ExerciseGoalDetail = () => {
                 />
               }
               endadornment={
-                translate("k")
+                localUnit
               }
               onChange={(e: any) => {
                 // 빈값 처리
@@ -436,7 +436,7 @@ export const ExerciseGoalDetail = () => {
                 // object 설정
                 setOBJECT((prev: any) => ({
                   ...prev,
-                  exercise_goal_weight: value
+                  exercise_goal_scale: value
                 }));
               }}
             />

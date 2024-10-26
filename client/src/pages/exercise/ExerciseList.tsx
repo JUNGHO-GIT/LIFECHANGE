@@ -13,7 +13,7 @@ import { Paper, Grid, Accordion, AccordionSummary, AccordionDetails } from "@imp
 export const ExerciseList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, PATH, sessionId, toDetail } = useCommonValue();
+  const { URL_OBJECT, PATH, sessionId, toDetail, localUnit } = useCommonValue();
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt,getDayNotFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -260,20 +260,20 @@ export const ExerciseList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
-                      {translate("weight")}
+                    <Div className={"fs-0-8rem fw-600 dark"}>
+                      {translate("scale")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.exercise_total_weight_color}`}>
-                          {insertComma(item.exercise_total_weight)}
+                        <Div className={`${item.exercise_total_scale_color}`}>
+                          {insertComma(item.exercise_total_scale)}
                         </Div>
                       </Grid>
                       <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
-                          {translate("k")}
+                          {localUnit}
                         </Div>
                       </Grid>
                     </Grid>

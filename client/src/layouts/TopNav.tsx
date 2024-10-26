@@ -13,7 +13,7 @@ import { Tabs, Tab, Paper, Grid, Checkbox } from "@imports/ImportMuis";
 export const TopNav = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { firstStr, secondStr, localCurrency, navigate } = useCommonValue();
+  const { firstStr, secondStr, localCurrency, localUnit, navigate } = useCommonValue();
   const { sessionTitle, sessionPercent } = useCommonValue();
   const { sessionScale, sessionNutrition, sessionProperty } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
@@ -475,7 +475,7 @@ export const TopNav = () => {
                 {insertComma(scale.curScale || "0")}
               </Div>
               <Div className={"fs-0-6rem fw-500 dark"}>
-                {translate("k")}
+                {localUnit}
               </Div>
             </Grid>
             <Hr px={1} />
@@ -494,7 +494,7 @@ export const TopNav = () => {
                   />
                 }
                 endadornment={
-                  translate("k")
+                  localUnit
                 }
               />
             </Grid>
@@ -513,7 +513,7 @@ export const TopNav = () => {
                   />
                 }
                 endadornment={
-                  translate("k")
+                  localUnit
                 }
               />
             </Grid>
@@ -532,7 +532,7 @@ export const TopNav = () => {
                   />
                 }
                 endadornment={
-                  translate("k")
+                  localUnit
                 }
               />
             </Grid>

@@ -134,10 +134,6 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "문화",
         en: "Culture"
       },
-      currency: {
-        ko: "₩",
-        en: "$"
-      },
       calendarTitle: {
         ko: "제목",
         en: "Title"
@@ -168,7 +164,7 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
       },
       curScale: {
         ko: "현재 체중",
-        en: "Current Weight"
+        en: "Current Body Weight"
       },
       curAvgKcalIntake: {
         ko: "현재 칼로리 섭취량",
@@ -554,9 +550,9 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "볼륨 목표",
         en: "Volume Goals"
       },
-      goalWeight: {
+      goalScale: {
         ko: "체중 목표",
-        en: "Weight Goals"
+        en: "Body Weight Goals"
       },
       gram: {
         ko: "그램",
@@ -607,7 +603,7 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
       },
       helperScale: {
         ko: "현재 체중을 입력해주세요",
-        en: "Please enter your current weight"
+        en: "Please enter your current body weight"
       },
       helperAvgKcalIntake: {
         ko: "목표 칼로리 섭취량을 입력해주세요",
@@ -650,7 +646,7 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
       },
       initScale: {
         ko: "초기 체중",
-        en: "Initial Weight"
+        en: "Initial Body Weight"
       },
       initAvgKcalIntake: {
         ko: "목표 칼로리 섭취량",
@@ -697,14 +693,6 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
       kcalNut: {
         ko: "칼로리-영양소",
         en: "Kcal-Nutrition"
-      },
-      k: {
-        ko: "kg",
-        en: "kg"
-      },
-      kg: {
-        ko: "무게",
-        en: "Kg"
       },
 
       // -------------------------------------------------------------------------------------------
@@ -770,11 +758,11 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
       },
       minScale: {
         ko: "최저 체중",
-        en: "Min Weight"
+        en: "Min Body Weight"
       },
       maxScale: {
         ko: "최고 체중",
-        en: "Max Weight"
+        en: "Max Body Weight"
       },
       memo: {
         ko: "메모",
@@ -1084,7 +1072,7 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
       },
       scale: {
         ko: "체중",
-        en: "Weight"
+        en: "Body Weight"
       },
       sumIncome: {
         ko: "총 수입",
@@ -1250,8 +1238,12 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "주별",
         en: "Week"
       },
+      wei: {
+        ko: "kg",
+        en: "lbs"
+      },
       weight: {
-        ko: "체중",
+        ko: "무게",
         en: "Weight"
       },
       wakeTime: {
@@ -1831,9 +1823,9 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "볼륨 목표를 입력해주세요",
         en: "Please enter Goal Volume"
       },
-      errorExerciseGoalWeight: {
+      errorExerciseGoalScale: {
         ko: "체중 목표를 입력해주세요",
-        en: "Please enter Goal Weight"
+        en: "Please enter Goal Body Weight"
       },
       errorExercisePartIdx: {
         ko: "운동 부위를 선택해주세요",
@@ -2017,11 +2009,11 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
       },
       errorUserInitScale: {
         ko: "체중을 입력해주세요",
-        en: "Please enter Weight"
+        en: "Please enter Body Weight"
       },
       errorUserCurScale: {
         ko: "현재 체중을 입력해주세요",
-        en: "Please enter Weight"
+        en: "Please enter Current Body Weight"
       },
       errorUserInitAvgKcalIntake: {
         ko: "목표 칼로리 섭취량을 입력해주세요",
@@ -2043,9 +2035,9 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "목표 자산을 입력해주세요",
         en: "Please enter Goal Property"
       },
-      errorUserGoalWeight: {
+      errorUserGoalScale: {
         ko: "목표 체중을 입력해주세요",
-        en: "Please enter Goal Weight"
+        en: "Please enter Goal Body Weight"
       },
     };
 

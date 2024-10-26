@@ -15,7 +15,7 @@ import { Paper, Avatar, Grid, Checkbox } from "@imports/ImportMuis";
 export const UserDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, navigate, sessionId, localCurrency } = useCommonValue();
+  const { URL_OBJECT, navigate, sessionId, localCurrency, localUnit } = useCommonValue();
   const { translate } = useLanguageStore();
   const { ALERT, setALERT } = useAlertStore();
   const { ERRORS, REFS, validate } = useValidateUser();
@@ -149,7 +149,7 @@ export const UserDetail = () => {
                 />
               }
               endadornment={
-                translate("k")
+                localUnit
               }
               onChange={(e: any) => {
                 // 빈값 처리
@@ -186,7 +186,7 @@ export const UserDetail = () => {
                 />
               }
               endadornment={
-                translate("k")
+                localUnit
               }
             />
           </Grid>

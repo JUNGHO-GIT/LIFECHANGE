@@ -76,14 +76,14 @@ export const percent = async (
     const exerciseTotalCardio = (
       timeToDecimal(acc?.exercise_total_cardio) + timeToDecimal(curr?.exercise_total_cardio)
     );
-    const exerciseTotalWeight = (
-      curr?.exercise_total_weight !== '0' ? curr?.exercise_total_weight : acc?.exercise_total_weight
+    const exerciseTotalScale = (
+      curr?.exercise_total_scale !== '0' ? curr?.exercise_total_scale : acc?.exercise_total_scale
     );
     return {
       exercise_total_count: String(exerciseTotalCount),
       exercise_total_volume: String(exerciseTotalVolume),
       exercise_total_cardio: String(decimalToTime(exerciseTotalCardio)),
-      exercise_total_weight: String(exerciseTotalWeight),
+      exercise_total_scale: String(exerciseTotalScale),
     };
   });
 
@@ -251,7 +251,7 @@ export const scale = async (
       initScale: String (parseFloat(findInitScale?.user_initScale || "0")),
       minScale: String (parseFloat(minScale?.minScale || "0")),
       maxScale: String (parseFloat(maxScale?.maxScale || "0")),
-      curScale: String (parseFloat(curScale?.exercise_total_weight || "0")),
+      curScale: String (parseFloat(curScale?.exercise_total_scale || "0")),
       dateStart: String (regDt),
       dateEnd: String (todayDt),
     };
@@ -260,7 +260,7 @@ export const scale = async (
 
   // 현재 체중 업데이트
   await repository.scale.updateScale(
-    user_id_param, curScale?.exercise_total_weight
+    user_id_param, curScale?.exercise_total_scale
   );
 
   return {

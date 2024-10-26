@@ -184,8 +184,8 @@ export const list = async (object: any) => {
       }
     }
 
-    // 4. weight
-    else if (extra === "weight") {
+    // 4. scale
+    else if (extra === "scale") {
       percent = Math.abs(((goal - real) / goal) * 100);
 
       // 1. - 1%
@@ -224,8 +224,8 @@ export const list = async (object: any) => {
     item.exercise_total_cardio_color = (
       calcNonValueColor(item?.exercise_total_cardio)
     );
-    item.exercise_total_weight_color = (
-      calcNonValueColor(item?.exercise_total_weight)
+    item.exercise_total_scale_color = (
+      calcNonValueColor(item?.exercise_total_scale)
     );
     item.exercise_goal_count_color = (
       calcNonValueColor(item?.exercise_goal_count)
@@ -236,8 +236,8 @@ export const list = async (object: any) => {
     item.exercise_goal_cardio_color = (
       calcNonValueColor(item?.exercise_goal_cardio)
     );
-    item.exercise_goal_weight_color = (
-      calcNonValueColor(item?.exercise_goal_weight)
+    item.exercise_goal_scale_color = (
+      calcNonValueColor(item?.exercise_goal_scale)
     );
     item.exercise_diff_count = (
       compareValue(item?.exercise_goal_count, item?.exercise_total_count)
@@ -248,8 +248,8 @@ export const list = async (object: any) => {
     item.exercise_diff_cardio = (
       compareTime(item?.exercise_goal_cardio, item?.exercise_total_cardio)
     );
-    item.exercise_diff_weight = (
-      compareValue(item?.exercise_goal_weight, item?.exercise_total_weight)
+    item.exercise_diff_scale = (
+      compareValue(item?.exercise_goal_scale, item?.exercise_total_scale)
     );
     item.exercise_diff_count_color = (
       calcDiffColor(item?.exercise_goal_count, item?.exercise_total_count, "count")
@@ -260,8 +260,8 @@ export const list = async (object: any) => {
     item.exercise_diff_cardio_color = (
       calcDiffColor(item?.exercise_goal_cardio, item?.exercise_total_cardio, "cardio")
     );
-    item.exercise_diff_weight_color = (
-      calcDiffColor(item?.exercise_goal_weight, item?.exercise_total_weight, "weight")
+    item.exercise_diff_scale_color = (
+      calcDiffColor(item?.exercise_goal_scale, item?.exercise_total_scale, "scale")
     );
   });
 

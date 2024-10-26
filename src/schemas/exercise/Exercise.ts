@@ -47,7 +47,7 @@ const schema = new mongoose.Schema({
     default: "00:00",
     required: false,
   },
-  exercise_total_weight: {
+  exercise_total_scale: {
     type: String,
     default: "",
     required: false
@@ -74,7 +74,7 @@ const schema = new mongoose.Schema({
       default: "",
       required: false,
     },
-    exercise_kg: {
+    exercise_weight: {
       type: String,
       default: "",
       required: false,

@@ -68,6 +68,7 @@ export const useCommonValue = () => {
   const localLang: string = localTitle?.setting?.locale?.lang;
   const localIsoCode: string = localTitle?.setting?.locale?.isoCode;
   const localCurrency: string = localTitle?.setting?.locale?.currency;
+  const localUnit: string = localTitle?.setting?.locale?.unit;
 
   // session storage (object 타입)
   const sessionTitle: any = JSON.parse(sessionStorage.getItem(TITLE) || "{}");
@@ -169,6 +170,7 @@ export const useCommonValue = () => {
     localLang,
     localIsoCode,
     localCurrency,
+    localUnit,
     sessionPercent,
     sessionCategory,
     sessionScale,

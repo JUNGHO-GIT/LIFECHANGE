@@ -52,7 +52,7 @@ const schema = new mongoose.Schema({
     default: "00:00",
     required: false
   },
-  exercise_goal_weight: {
+  exercise_goal_scale: {
     type: String,
     default: "",
     required: false

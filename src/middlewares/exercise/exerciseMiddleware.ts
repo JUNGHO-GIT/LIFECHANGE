@@ -40,8 +40,8 @@ export const list = async (object: any) => {
     item.exercise_total_cardio_color = calcNonValueColor(
       item?.exercise_total_cardio
     );
-    item.exercise_total_weight_color = calcNonValueColor(
-      item?.exercise_total_weight
+    item.exercise_total_scale_color = calcNonValueColor(
+      item?.exercise_total_scale
     );
   });
 

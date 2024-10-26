@@ -13,7 +13,7 @@ import { Paper, Grid, Accordion, AccordionSummary, AccordionDetails } from "@imp
 export const ExerciseGoalList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, PATH, sessionId, toDetail } = useCommonValue();
+  const { URL_OBJECT, PATH, sessionId, toDetail, localUnit } = useCommonValue();
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt,getDayNotFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -417,7 +417,7 @@ export const ExerciseGoalList = () => {
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
                     <Div className={"fs-0-9rem fw-600 dark"}>
-                      {translate("weight")}
+                      {translate("scale")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
@@ -429,13 +429,13 @@ export const ExerciseGoalList = () => {
                         </Div>
                       </Grid>
                       <Grid size={7} className={"d-row-right"}>
-                        <Div className={`${item.exercise_goal_weight_color}`}>
-                          {insertComma(item.exercise_goal_weight || "0")}
+                        <Div className={`${item.exercise_goal_scale_color}`}>
+                          {insertComma(item.exercise_goal_scale || "0")}
                         </Div>
                       </Grid>
                       <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
-                          {translate("k")}
+                          {localUnit}
                         </Div>
                       </Grid>
                       {/** real **/}
@@ -445,13 +445,13 @@ export const ExerciseGoalList = () => {
                         </Div>
                       </Grid>
                       <Grid size={7} className={"d-row-right"}>
-                        <Div className={`${item.exercise_total_weight_color}`}>
-                          {insertComma(item.exercise_total_weight || "0")}
+                        <Div className={`${item.exercise_total_scale_color}`}>
+                          {insertComma(item.exercise_total_scale || "0")}
                         </Div>
                       </Grid>
                       <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
-                          {translate("k")}
+                          {localUnit}
                         </Div>
                       </Grid>
                       {/** diff **/}
@@ -461,13 +461,13 @@ export const ExerciseGoalList = () => {
                         </Div>
                       </Grid>
                       <Grid size={7} className={"d-row-right"}>
-                        <Div className={`${item.exercise_diff_weight_color}`}>
-                          {insertComma(item.exercise_diff_weight || "0")}
+                        <Div className={`${item.exercise_diff_scale_color}`}>
+                          {insertComma(item.exercise_diff_scale || "0")}
                         </Div>
                       </Grid>
                       <Grid size={2} className={"d-row-center"}>
                         <Div className={"fs-0-6rem"}>
-                          {translate("k")}
+                          {localUnit}
                         </Div>
                       </Grid>
                     </Grid>

@@ -65,7 +65,7 @@ export const percent = {
           exercise_goal_count: 1,
           exercise_goal_volume: 1,
           exercise_goal_cardio: 1,
-          exercise_goal_weight: 1,
+          exercise_goal_scale: 1,
         }
       }
     ]);
@@ -98,7 +98,7 @@ export const percent = {
           _id: 0,
           exercise_total_volume: 1,
           exercise_total_cardio: 1,
-          exercise_total_weight: 1,
+          exercise_total_scale: 1,
           exercise_total_count: {
             $cond: {
               if: {
@@ -389,8 +389,8 @@ export const scale = {
       },
       {
         $addFields: {
-          exercise_total_weight: {
-            $toDouble: "$exercise_total_weight"
+          exercise_total_scale: {
+            $toDouble: "$exercise_total_scale"
           }
         }
       },
@@ -398,7 +398,7 @@ export const scale = {
         $group: {
           _id: null,
           minScale: {
-            $min: "$exercise_total_weight"
+            $min: "$exercise_total_scale"
           },
         }
       },
@@ -435,8 +435,8 @@ export const scale = {
       },
       {
         $addFields: {
-          exercise_total_weight: {
-            $toDouble: "$exercise_total_weight"
+          exercise_total_scale: {
+            $toDouble: "$exercise_total_scale"
           }
         }
       },
@@ -444,7 +444,7 @@ export const scale = {
         $group: {
           _id: null,
           maxScale: {
-            $max: "$exercise_total_weight"
+            $max: "$exercise_total_scale"
           },
         }
       },
@@ -487,7 +487,7 @@ export const scale = {
       {
         $project: {
           _id: 0,
-          exercise_total_weight: "$exercise_total_weight",
+          exercise_total_scale: "$exercise_total_scale",
         }
       }
     ]);

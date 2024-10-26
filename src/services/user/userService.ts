@@ -704,7 +704,7 @@ export const dummySave = async (
         exercise_goal_count: randomNumber(100),
         exercise_goal_volume: randomNumber(1000),
         exercise_goal_cardio: randomTime(),
-        exercise_goal_weight: randomNumber(1000),
+        exercise_goal_scale: randomNumber(1000),
         exercise_goal_regDt: Date.now(),
         exercise_goal_updateDt: Date.now(),
       };
@@ -743,7 +743,7 @@ export const dummySave = async (
           exercise_title_val: part.exercise_title[titleIndex],
           exercise_set: randomNumber(10),
           exercise_rep: randomNumber(10),
-          exercise_kg: randomNumber(100),
+          exercise_weight: randomNumber(100),
           exercise_volume: randomNumber(1000),
           exercise_cardio: randomTime(),
         };
@@ -767,7 +767,7 @@ export const dummySave = async (
         exercise_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         exercise_total_volume: totalVolume,
         exercise_total_cardio: moment.utc(totalCardio * 60000).format("HH:mm"),
-        exercise_total_weight: randomNumber(100),
+        exercise_total_scale: randomNumber(100),
         exercise_section: sections,
         exercise_regDt: Date.now(),
         exercise_updateDt: Date.now(),
