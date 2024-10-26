@@ -204,7 +204,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
           <Div className={"d-row-center"} key={index}>
             <Img
               max={25}
-              hover={false}
+              hover={true}
               shadow={true}
               radius={false}
               group={"new"}
@@ -252,7 +252,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
           <Div className={"d-row-center"} key={index}>
             <Img
               max={25}
-              hover={false}
+              hover={true}
               shadow={true}
               radius={false}
               group={props?.group}

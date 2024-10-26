@@ -54,7 +54,9 @@ export const UserAppInfo = () => {
       <Grid container spacing={2} columns={12}>
         <Grid size={12} className={"d-center"}>
           <Img
-            key={"logo1"}
+            hover={true}
+            shadow={false}
+            radius={false}
             src={"logo1"}
             className={"w-240 h-200"}
           />

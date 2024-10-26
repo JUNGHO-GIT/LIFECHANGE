@@ -141,9 +141,11 @@ export const UserDetail = () => {
               error={ERRORS?.[i]?.user_initScale}
               startadornment={
                 <Img
-                  key={"exercise5"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"exercise5"}
-                  className={"w-16 h-16"}
                 />
               }
               endadornment={
@@ -176,9 +178,11 @@ export const UserDetail = () => {
               value={insertComma(item.user_curScale || "0")}
               startadornment={
                 <Img
-                  key={"exercise5"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"exercise5"}
-                  className={"w-16 h-16"}
                 />
               }
               endadornment={
@@ -196,9 +200,11 @@ export const UserDetail = () => {
               error={ERRORS?.[i]?.user_initAvgKcalIntake}
               startadornment={
                 <Img
-                  key={"food2"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"food2"}
-                  className={"w-16 h-16"}
                 />
               }
               endadornment={
@@ -231,9 +237,11 @@ export const UserDetail = () => {
               value={insertComma(item.user_curAvgKcalIntake || "0")}
               startadornment={
                 <Img
-                  key={"food2"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"food2"}
-                  className={"w-16 h-16"}
                 />
               }
               endadornment={
@@ -251,9 +259,11 @@ export const UserDetail = () => {
               error={ERRORS?.[i]?.user_initProperty}
               startadornment={
                 <Img
-                  key={"money2"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"money2"}
-                  className={"w-16 h-16"}
                 />
               }
               endadornment={
@@ -292,9 +302,11 @@ export const UserDetail = () => {
               }
               startadornment={
                 <Img
-                  key={"money2"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"money2"}
-                  className={"w-16 h-16"}
                 />
               }
               endadornment={

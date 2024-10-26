@@ -361,9 +361,11 @@ export const MoneyDetail = () => {
             value={insertComma(OBJECT?.money_total_income || "0")}
             startadornment={
               <Img
-                key={"money2"}
+                max={15}
+                hover={true}
+                shadow={false}
+                radius={false}
                 src={"money2"}
-                className={"w-16 h-16"}
               />
             }
             endadornment={
@@ -378,9 +380,11 @@ export const MoneyDetail = () => {
             value={insertComma(OBJECT?.money_total_expense || "0")}
             startadornment={
               <Img
-                key={"money2"}
+                max={15}
+                hover={true}
+                shadow={false}
+                radius={false}
                 src={"money2"}
-                className={"w-16 h-16"}
               />
             }
             endadornment={
@@ -487,9 +491,11 @@ export const MoneyDetail = () => {
               error={ERRORS?.[i]?.money_amount}
               startadornment={
                 <Img
-                  key={"money2"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"money2"}
-                  className={"w-16 h-16"}
                 />
               }
               endadornment={

@@ -327,9 +327,11 @@ export const TopNav = () => {
             <Hr px={1} />
             <Grid size={4} className={"d-row-right"}>
               <Img
-                key={smileImage.total}
+                max={30}
+                hover={true}
+                shadow={false}
+                radius={false}
                 src={smileImage.total}
-                className={"w-max30 h-max30"}
               />
             </Grid>
             <Grid size={4} className={"d-row-center"}>
@@ -345,9 +347,11 @@ export const TopNav = () => {
             <Hr px={1} />
             <Grid size={4} className={"d-row-right"}>
               <Img
-                key={smileImage.exercise}
+                max={30}
+                hover={true}
+                shadow={false}
+                radius={false}
                 src={smileImage.exercise}
-                className={"w-max25 h-max25"}
               />
             </Grid>
             <Grid size={4} className={"d-row-center"}>
@@ -362,9 +366,11 @@ export const TopNav = () => {
             </Grid>
             <Grid size={4} className={"d-row-right"}>
               <Img
-                key={smileImage.food}
+                max={30}
+                hover={true}
+                shadow={false}
+                radius={false}
                 src={smileImage.food}
-                className={"w-max25 h-max25"}
               />
             </Grid>
             <Grid size={4} className={"d-row-center"}>
@@ -379,9 +385,11 @@ export const TopNav = () => {
             </Grid>
             <Grid size={4} className={"d-row-right"}>
               <Img
-                key={smileImage.money}
+                max={30}
+                hover={true}
+                shadow={false}
+                radius={false}
                 src={smileImage.money}
-                className={"w-max25 h-max25"}
               />
             </Grid>
             <Grid size={4} className={"d-row-center"}>
@@ -396,9 +404,11 @@ export const TopNav = () => {
             </Grid>
             <Grid size={4} className={"d-row-right"}>
               <Img
-                key={smileImage.sleep}
+                max={30}
+                hover={true}
+                shadow={false}
+                radius={false}
                 src={smileImage.sleep}
-                className={"w-max25 h-max25"}
               />
             </Grid>
             <Grid size={4} className={"d-row-center"}>
@@ -422,9 +432,11 @@ export const TopNav = () => {
       >
         {(popTrigger: any) => (
           <Img
-            key={mainSmileImage}
+            max={25}
+            hover={true}
+            shadow={false}
+            radius={false}
             src={mainSmileImage}
-            className={"w-max25 h-max25"}
             onClick={(e: any) => {
               setPercent(sessionPercent);
               popTrigger.openPopup(e.currentTarget)
@@ -453,9 +465,11 @@ export const TopNav = () => {
             <Hr px={1} />
             <Grid size={12} className={"d-row-center"}>
               <Img
-                key={"exercise5"}
+                max={15}
+                hover={true}
+                shadow={false}
+                radius={false}
                 src={"exercise5"}
-                className={"w-16 h-16"}
               />
               <Div className={"fs-1-4rem fw-600 ms-2vw me-2vw"}>
                 {insertComma(scale.curScale || "0")}
@@ -472,9 +486,11 @@ export const TopNav = () => {
                 value={insertComma(scale.initScale || "0")}
                 startadornment={
                   <Img
-                    key={"exercise5"}
+                    max={15}
+                    hover={true}
+                    shadow={false}
+                    radius={false}
                     src={"exercise5"}
-                    className={"w-16 h-16"}
                   />
                 }
                 endadornment={
@@ -489,9 +505,11 @@ export const TopNav = () => {
                 value={insertComma(scale.minScale || "0")}
                 startadornment={
                   <Img
-                    key={"exercise5"}
+                    max={15}
+                    hover={true}
+                    shadow={false}
+                    radius={false}
                     src={"exercise5"}
-                    className={"w-16 h-16"}
                   />
                 }
                 endadornment={
@@ -506,9 +524,11 @@ export const TopNav = () => {
                 value={insertComma(scale.maxScale || "0")}
                 startadornment={
                   <Img
-                    key={"exercise5"}
+                    max={15}
+                    hover={true}
+                    shadow={false}
+                    radius={false}
                     src={"exercise5"}
-                    className={"w-16 h-16"}
                   />
                 }
                 endadornment={
@@ -521,9 +541,11 @@ export const TopNav = () => {
       >
         {(popTrigger: any) => (
           <Img
-            key={"exercise6"}
+            max={25}
+            hover={true}
+            shadow={false}
+            radius={false}
             src={"exercise6"}
-            className={"w-max25 h-max25"}
             onClick={(e: any) => {
               setScale(sessionScale);
               popTrigger.openPopup(e.currentTarget)
@@ -553,9 +575,11 @@ export const TopNav = () => {
             <Hr px={1} />
             <Grid size={12} className={"d-row-center"}>
               <Img
-                key={"food2"}
+                max={15}
+                hover={true}
+                shadow={false}
+                radius={false}
                 src={"food2"}
-                className={"w-16 h-16"}
               />
               <Div className={"fs-1-4rem fw-600 ms-2vw me-2vw"}>
                 {insertComma(nutrition.curAvgKcalIntake || "0")}
@@ -572,9 +596,11 @@ export const TopNav = () => {
                 value={insertComma(nutrition.initAvgKcalIntake || "0")}
                 startadornment={
                   <Img
-                    key={"food2"}
+                    max={15}
+                    hover={true}
+                    shadow={false}
+                    radius={false}
                     src={"food2"}
-                    className={"w-16 h-16"}
                   />
                 }
                 endadornment={
@@ -589,9 +615,11 @@ export const TopNav = () => {
                 value={insertComma(nutrition.totalCarbIntake || "0")}
                 startadornment={
                   <Img
-                    key={"food3"}
+                    max={15}
+                    hover={true}
+                    shadow={false}
+                    radius={false}
                     src={"food3"}
-                    className={"w-16 h-16"}
                   />
                 }
                 endadornment={
@@ -606,9 +634,11 @@ export const TopNav = () => {
                 value={insertComma(nutrition.totalProteinIntake || "0")}
                 startadornment={
                   <Img
-                    key={"food4"}
+                    max={15}
+                    hover={true}
+                    shadow={false}
+                    radius={false}
                     src={"food4"}
-                    className={"w-16 h-16"}
                   />
                 }
                 endadornment={
@@ -623,9 +653,11 @@ export const TopNav = () => {
                 value={insertComma(nutrition.totalFatIntake || "0")}
                 startadornment={
                   <Img
-                    key={"food5"}
+                    max={15}
+                    hover={true}
+                    shadow={false}
+                    radius={false}
                     src={"food5"}
-                    className={"w-16 h-16"}
                   />
                 }
                 endadornment={
@@ -638,9 +670,11 @@ export const TopNav = () => {
       >
         {(popTrigger: any) => (
           <Img
-            key={"food6"}
+            max={25}
+            hover={true}
+            shadow={false}
+            radius={false}
             src={"food6"}
-            className={"w-max25 h-max25"}
             onClick={(e: any) => {
               setNutrition(sessionNutrition);
               popTrigger.openPopup(e.currentTarget)
@@ -682,9 +716,11 @@ export const TopNav = () => {
             <Hr px={1} />
             <Grid size={12} className={"d-row-center"}>
               <Img
-                key={"money2"}
+                max={15}
+                hover={true}
+                shadow={false}
+                radius={false}
                 src={"money2"}
-                className={"w-16 h-16"}
               />
               <Div className={"fs-1-4rem fw-600 ms-2vw me-2vw"}>
                 {includingExclusions ? (
@@ -705,9 +741,11 @@ export const TopNav = () => {
                 value={insertComma(property.initProperty || "0")}
                 startadornment={
                   <Img
-                    key={"money2"}
+                    max={15}
+                    hover={true}
+                    shadow={false}
+                    radius={false}
                     src={"money2"}
-                    className={"w-16 h-16"}
                   />
                 }
                 endadornment={
@@ -728,9 +766,11 @@ export const TopNav = () => {
                 }
                 startadornment={
                   <Img
-                    key={"money2"}
+                    max={15}
+                    hover={true}
+                    shadow={false}
+                    radius={false}
                     src={"money2"}
-                    className={"w-16 h-16"}
                   />
                 }
                 endadornment={
@@ -751,9 +791,11 @@ export const TopNav = () => {
                 }
                 startadornment={
                   <Img
-                    key={"money2"}
+                    max={15}
+                    hover={true}
+                    shadow={false}
+                    radius={false}
                     src={"money2"}
-                    className={"w-16 h-16"}
                   />
                 }
                 endadornment={
@@ -766,9 +808,11 @@ export const TopNav = () => {
       >
         {(popTrigger: any) => (
           <Img
-            key={"money4"}
+            max={25}
+            hover={true}
+            shadow={false}
+            radius={false}
             src={"money4"}
-            className={"w-max25 h-max25"}
             onClick={(e: any) => {
               setProperty(sessionProperty);
               popTrigger.openPopup(e.currentTarget)
@@ -843,8 +887,8 @@ export const TopNav = () => {
     // 5. return -----------------------------------------------------------------------------------
     return (
       <Paper className={"layout-wrapper p-sticky top-8vh h-8vh border-1 radius-1 shadow-bottom-3"}>
-        <Grid container spacing={2} columns={28}>
-          <Grid size={3} className={"d-center"}>
+        <Grid container spacing={2} columns={29}>
+          <Grid size={3} className={"d-center ms-5"}>
             {smileSection()}
           </Grid>
           <Grid size={3} className={"d-center"}>

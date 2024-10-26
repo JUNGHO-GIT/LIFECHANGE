@@ -195,9 +195,11 @@ export const ExerciseGoalList = () => {
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
-                      key={"exercise2"}
+                      max={15}
+                      hover={true}
+                      shadow={false}
+                      radius={false}
                       src={"exercise2"}
-                      className={"w-15 h-15"}
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
@@ -264,9 +266,11 @@ export const ExerciseGoalList = () => {
                   {/** row 2 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
-                      key={"exercise3_1"}
+                      max={15}
+                      hover={true}
+                      shadow={false}
+                      radius={false}
                       src={"exercise3_1"}
-                      className={"w-15 h-15"}
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
@@ -333,9 +337,11 @@ export const ExerciseGoalList = () => {
                   {/** row 3 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
-                      key={"exercise4"}
+                      max={15}
+                      hover={true}
+                      shadow={false}
+                      radius={false}
                       src={"exercise4"}
-                      className={"w-15 h-15"}
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
@@ -402,9 +408,11 @@ export const ExerciseGoalList = () => {
                   {/** row 4 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
-                      key={"exercise5"}
+                      max={15}
+                      hover={true}
+                      shadow={false}
+                      radius={false}
                       src={"exercise5"}
-                      className={"w-15 h-15"}
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>

@@ -349,9 +349,11 @@ export const UserSignup = () => {
               helperText={`* ${translate("helperScale")}`}
               startadornment={
                 <Img
-                  key={"exercise5"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"exercise5"}
-                  className={"w-16 h-16"}
                 />
               }
               endadornment={
@@ -387,9 +389,11 @@ export const UserSignup = () => {
               helperText={`* ${translate("helperAvgKcalIntake")}`}
               startadornment={
                 <Img
-                  key={"food2"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"food2"}
-                  className={"w-16 h-16"}
                 />
               }
               endadornment={
@@ -425,9 +429,11 @@ export const UserSignup = () => {
               helperText={`* ${translate("helperProperty")}`}
               startadornment={
                 <Img
-                  key={"money2"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"money2"}
-                  className={"w-16 h-16"}
                 />
               }
               endadornment={
@@ -491,11 +497,13 @@ export const UserSignup = () => {
             >
               <Div className={"d-row-center"}>
                 <Img
-                  key={"user1"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"user1"}
-                  className={"w-15 h-15 me-10"}
                 />
-                <Div className={"fs-1-0rem black"}>
+                <Div className={"fs-1-0rem black ms-10"}>
                   {translate("googleLogin")}
                 </Div>
               </Div>

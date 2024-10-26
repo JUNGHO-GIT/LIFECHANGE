@@ -15,7 +15,7 @@ export const Header = () => {
   const headerNode = () => {
     const iconSection = () => (
       <Div
-        className={"d-center pointer ms-10"}
+        className={"d-center pointer ms-5"}
         onClick={() => {
           navigate("/today/list", {
             state: {
@@ -27,12 +27,16 @@ export const Header = () => {
         }}
       >
         <Img
-          key={"logo2"}
+          hover={true}
+          shadow={false}
+          radius={false}
           src={"logo2"}
           className={"h-max30 me-2vw"}
         />
         <Img
-          key={"logo3"}
+          hover={true}
+          shadow={false}
+          radius={false}
           src={"logo3"}
           className={"h-max30"}
         />

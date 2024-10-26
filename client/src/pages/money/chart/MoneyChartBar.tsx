@@ -197,9 +197,11 @@ export const MoneyChartBar = () => {
         <Grid container spacing={0} columns={12}>
           <Grid size={12} className={"d-row-right"}>
             <Img
-              key={"common3_2"}
-              src={"common3_2"}
-              className={"w-24 h-24 me-10"}
+              max={24}
+              hover={true}
+              shadow={false}
+              radius={false}
+              src={"common3_1"}
             />
           </Grid>
         </Grid>

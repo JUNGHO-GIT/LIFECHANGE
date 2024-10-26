@@ -195,9 +195,11 @@ export const SleepGoalList = () => {
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
-                      key={"sleep2"}
+                      max={15}
+                      hover={true}
+                      shadow={false}
+                      radius={false}
                       src={"sleep2"}
-                      className={"w-15 h-15"}
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
@@ -264,9 +266,11 @@ export const SleepGoalList = () => {
                   {/** row 2 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
-                      key={"sleep3"}
+                      max={15}
+                      hover={true}
+                      shadow={false}
+                      radius={false}
                       src={"sleep3"}
-                      className={"w-15 h-15"}
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
@@ -333,9 +337,11 @@ export const SleepGoalList = () => {
                   {/** row 3 **/}
                   <Grid size={2} className={"d-center"}>
                     <Img
-                      key={"sleep4"}
+                      max={15}
+                      hover={true}
+                      shadow={false}
+                      radius={false}
                       src={"sleep4"}
-                      className={"w-15 h-15"}
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>

@@ -85,9 +85,11 @@ export const BottomNav = () => {
           value={"exercise"}
           icon={
             <Img
-              key={"exercise1"}
+              max={15}
+              hover={true}
+              shadow={false}
+              radius={false}
               src={"exercise1"}
-              className={"w-16 h-16 m-0"}
             />
           }
           onClick={() => {
@@ -99,9 +101,11 @@ export const BottomNav = () => {
           value={"food"}
           icon={
             <Img
-              key={"food1"}
+              max={15}
+              hover={true}
+              shadow={false}
+              radius={false}
               src={"food1"}
-              className={"w-16 h-16 m-0"}
             />
           }
           onClick={() => {
@@ -113,9 +117,11 @@ export const BottomNav = () => {
           value={"today"}
           icon={
             <Img
-              key={"today1"}
+              max={15}
+              hover={true}
+              shadow={false}
+              radius={false}
               src={"today1"}
-              className={"w-16 h-16 m-0"}
             />
           }
           onClick={() => {
@@ -127,9 +133,11 @@ export const BottomNav = () => {
           value={"calendar"}
           icon={
             <Img
-              key={"calendar1"}
+              max={15}
+              hover={true}
+              shadow={false}
+              radius={false}
               src={"calendar1"}
-              className={"w-16 h-16 m-0"}
             />
           }
           onClick={() => {
@@ -141,9 +149,11 @@ export const BottomNav = () => {
           value={"money"}
           icon={
             <Img
-              key={"money1"}
+              max={15}
+              hover={true}
+              shadow={false}
+              radius={false}
               src={"money1"}
-              className={"w-16 h-16 m-0"}
             />
           }
           onClick={() => {
@@ -155,9 +165,11 @@ export const BottomNav = () => {
           value={"sleep"}
           icon={
             <Img
-              key={"sleep1"}
+              max={15}
+              hover={true}
+              shadow={false}
+              radius={false}
               src={"sleep1"}
-              className={"w-16 h-16 m-0"}
             />
           }
           onClick={() => {

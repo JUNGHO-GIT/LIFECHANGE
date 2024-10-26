@@ -68,9 +68,11 @@ export const Memo = (
           locked={LOCKED}
           startadornment={
             <Img
-            	key={"calendar3"}
+              max={15}
+              hover={true}
+              shadow={false}
+              radius={false}
             	src={"calendar3"}
-            	className={"w-16 h-16"}
             />
           }
           onClick={(e: any) => {

@@ -313,9 +313,11 @@ export const MoneyGoalDetail = () => {
               }
               startadornment={
                 <Img
-                  key={"money2"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"money2"}
-                  className={"w-16 h-16"}
                 />
               }
               endadornment={
@@ -355,9 +357,11 @@ export const MoneyGoalDetail = () => {
               }
               startadornment={
                 <Img
-                  key={"money2"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"money2"}
-                  className={"w-16 h-16"}
                 />
               }
               endadornment={

@@ -496,9 +496,11 @@ export const FoodDetail = () => {
             value={insertComma(OBJECT?.food_total_kcal || "0")}
             startadornment={
               <Img
-                key={"food2"}
+                max={15}
+                hover={true}
+                shadow={false}
+                radius={false}
                 src={"food2"}
-                className={"w-16 h-16"}
               />
             }
             endadornment={
@@ -513,9 +515,11 @@ export const FoodDetail = () => {
             value={insertComma(OBJECT?.food_total_carb || "0")}
             startadornment={
               <Img
-                key={"food3"}
+                max={15}
+                hover={true}
+                shadow={false}
+                radius={false}
                 src={"food3"}
-                className={"w-16 h-16"}
               />
             }
             endadornment={
@@ -530,9 +534,11 @@ export const FoodDetail = () => {
             value={insertComma(OBJECT?.food_total_protein || "0")}
             startadornment={
               <Img
-                key={"food4"}
+                max={15}
+                hover={true}
+                shadow={false}
+                radius={false}
                 src={"food4"}
-                className={"w-16 h-16"}
               />
             }
             endadornment={
@@ -547,9 +553,11 @@ export const FoodDetail = () => {
             value={insertComma(OBJECT?.food_total_fat || "0")}
             startadornment={
               <Img
-                key={"food5"}
+                max={15}
+                hover={true}
+                shadow={false}
+                radius={false}
                 src={"food5"}
-                className={"w-16 h-16"}
               />
             }
             endadornment={
@@ -772,9 +780,11 @@ export const FoodDetail = () => {
               error={ERRORS?.[i]?.food_kcal}
               startadornment={
                 <Img
-                  key={"food2"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"food2"}
-                  className={"w-16 h-16"}
                 />
               }
               endadornment={
@@ -813,9 +823,11 @@ export const FoodDetail = () => {
               error={ERRORS?.[i]?.food_carb}
               startadornment={
                 <Img
-                  key={"food3"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"food3"}
-                  className={"w-16 h-16"}
                 />
               }
               endadornment={
@@ -854,9 +866,11 @@ export const FoodDetail = () => {
               error={ERRORS?.[i]?.food_protein}
               startadornment={
                 <Img
-                  key={"food4"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"food4"}
-                  className={"w-16 h-16"}
                 />
               }
               endadornment={
@@ -895,9 +909,11 @@ export const FoodDetail = () => {
               error={ERRORS?.[i]?.food_fat}
               startadornment={
                 <Img
-                  key={"food5"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"food5"}
-                  className={"w-16 h-16"}
                 />
               }
               endadornment={

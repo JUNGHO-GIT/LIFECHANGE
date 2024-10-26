@@ -376,9 +376,11 @@ export const ExerciseDetail = () => {
             value={insertComma(OBJECT?.exercise_total_volume || "0")}
             startadornment={
               <Img
-                key={"exercise3_1"}
+                max={15}
+                hover={true}
+                shadow={false}
+                radius={false}
                 src={"exercise3_1"}
-                className={"w-16 h-16"}
               />
             }
             endadornment={
@@ -393,9 +395,11 @@ export const ExerciseDetail = () => {
             value={OBJECT?.exercise_total_cardio}
             startadornment={
               <Img
-                key={"exercise4"}
+                max={15}
+                hover={true}
+                shadow={false}
+                radius={false}
                 src={"exercise4"}
-                className={"w-16 h-16"}
               />
             }
             endadornment={
@@ -410,9 +414,11 @@ export const ExerciseDetail = () => {
             value={insertComma(OBJECT?.exercise_total_weight || "0")}
             startadornment={
               <Img
-                key={"exercise5"}
+                max={15}
+                hover={true}
+                shadow={false}
+                radius={false}
                 src={"exercise5"}
-                className={"w-16 h-16"}
               />
             }
             endadornment={
@@ -536,9 +542,11 @@ export const ExerciseDetail = () => {
               error={ERRORS?.[i]?.exercise_set}
               startadornment={
                 <Img
-                  key={"exercise3_1"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"exercise3_1"}
-                  className={"w-16 h-16"}
                 />
               }
               endadornment={
@@ -577,9 +585,11 @@ export const ExerciseDetail = () => {
               error={ERRORS?.[i]?.exercise_rep}
               startadornment={
                 <Img
-                  key={"exercise3_2"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"exercise3_2"}
-                  className={"w-16 h-16"}
                 />
               }
               endadornment={
@@ -618,9 +628,11 @@ export const ExerciseDetail = () => {
               error={ERRORS?.[i]?.exercise_kg}
               startadornment={
                 <Img
-                  key={"exercise3_3"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"exercise3_3"}
-                  className={"w-16 h-16"}
                 />
               }
               endadornment={

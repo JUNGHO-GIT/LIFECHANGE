@@ -494,9 +494,11 @@ export const MoneyChartPie = () => {
         >
           {(popTrigger: any) => (
             <Img
-              key={"common3_1"}
+              max={24}
+              hover={true}
+              shadow={false}
+              radius={false}
               src={"common3_1"}
-              className={"w-24 h-24 pointer me-10"}
               onClick={(e: any) => {
                 popTrigger.openPopup(e.currentTarget)
               }}

@@ -395,9 +395,11 @@ export const CalendarDetail = () => {
               locked={LOCKED}
               startadornment={
                 <Img
-                  key={"calendar2"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"calendar2"}
-                  className={"w-16 h-16"}
                 />
               }
               onChange={(e: any) => {

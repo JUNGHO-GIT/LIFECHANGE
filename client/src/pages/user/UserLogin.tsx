@@ -330,11 +330,13 @@ export const UserLogin = () => {
             >
               <Div className={"d-row-center"}>
                 <Img
-                  key={"user1"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"user1"}
-                  className={"w-15 h-15 me-10"}
                 />
-                <Div className={"fs-1-0rem black"}>
+                <Div className={"fs-1-0rem black ms-10"}>
                   {translate("googleLogin")}
                 </Div>
               </Div>

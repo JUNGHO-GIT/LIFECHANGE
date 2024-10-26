@@ -307,9 +307,11 @@ export const PickerDay = (
             inputclass={typeListStr}
             startadornment={
               <Img
-              	key={"common1"}
+                max={15}
+                hover={true}
+                shadow={false}
+                radius={false}
               	src={"common1"}
-              	className={"w-16 h-16"}
               />
             }
             endadornment={
@@ -517,9 +519,11 @@ export const PickerDay = (
             readOnly={true}
             startadornment={
               <Img
-              	key={"common1"}
+                max={15}
+                hover={true}
+                shadow={false}
+                radius={false}
               	src={"common1"}
-              	className={"w-16 h-16"}
               />
             }
             endadornment={
@@ -708,9 +712,11 @@ export const PickerDay = (
             readOnly={true}
             startadornment={
               <Img
-              	key={"common1"}
+                max={15}
+                hover={true}
+                shadow={false}
+                radius={false}
               	src={"common1"}
-              	className={"w-16 h-16"}
               />
             }
             endadornment={
@@ -900,9 +906,11 @@ export const PickerDay = (
             readOnly={true}
             startadornment={
               <Img
-              	key={"common1"}
+                max={15}
+                hover={true}
+                shadow={false}
+                radius={false}
               	src={"common1"}
-              	className={"w-16 h-16"}
               />
             }
             endadornment={
@@ -1091,9 +1099,11 @@ export const PickerDay = (
             inputclass={`${typeListStr}`}
             startadornment={
               <Img
-              	key={"common1"}
+                max={15}
+                hover={true}
+                shadow={false}
+                radius={false}
               	src={"common1"}
-              	className={"w-16 h-16"}
               />
             }
             onClick={(e: any) => {

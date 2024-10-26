@@ -318,9 +318,11 @@ export const ExerciseGoalDetail = () => {
               }
               startadornment={
                 <Img
-                  key={"exercise2"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"exercise2"}
-                  className={"w-16 h-16"}
                 />
               }
               endadornment={
@@ -360,9 +362,11 @@ export const ExerciseGoalDetail = () => {
               }
               startadornment={
                 <Img
-                  key={"exercise3_1"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"exercise3_1"}
-                  className={"w-16 h-16"}
                 />
               }
               endadornment={
@@ -408,9 +412,11 @@ export const ExerciseGoalDetail = () => {
               error={ERRORS?.[i]?.exercise_goal_weight}
               startadornment={
                 <Img
-                  key={"exercise5"}
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
                   src={"exercise5"}
-                  className={"w-16 h-16"}
                 />
               }
               endadornment={

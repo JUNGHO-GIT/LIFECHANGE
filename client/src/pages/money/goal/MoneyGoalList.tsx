@@ -195,9 +195,11 @@ export const MoneyGoalList = () => {
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
-                      key={"money2"}
+                      max={15}
+                      hover={true}
+                      shadow={false}
+                      radius={false}
                       src={"money2"}
-                      className={"w-15 h-15"}
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
@@ -264,9 +266,11 @@ export const MoneyGoalList = () => {
                   {/** row 2 **/}
                   <Grid size={2} className={"d-row-center"}>
                     <Img
-                      key={"money2"}
+                      max={15}
+                      hover={true}
+                      shadow={false}
+                      radius={false}
                       src={"money2"}
-                      className={"w-15 h-15"}
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>

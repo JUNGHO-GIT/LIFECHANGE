@@ -121,9 +121,11 @@ export const UserAppSetting = () => {
                         }}
                       >
                         <Img
-                          key={"flag2"}
+                          max={24}
+                          hover={true}
+                          shadow={false}
+                          radius={false}
                           src={"flag2"}
-                          className={"w-24 h-24 me-15"}
                         />
                         <Div className={`me-15 ${lang === "en" ? "fw-700" : ""}`}>
                           English
@@ -142,9 +144,11 @@ export const UserAppSetting = () => {
                         }}
                       >
                         <Img
-                          key={"flag1"}
+                          max={24}
+                          hover={true}
+                          shadow={false}
+                          radius={false}
                           src={"flag1"}
-                          className={"w-24 h-24 me-15"}
                         />
                         <Div className={`me-15 ${lang === "ko" ? "fw-700" : ""}`}>
                           한국어
