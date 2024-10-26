@@ -5,12 +5,51 @@ import { differenceInMinutes } from "date-fns";
 // 1. list -----------------------------------------------------------------------------------------
 export const list = async (object: any) => {
 
+  // 0. calcOverTenMillion -------------------------------------------------------------------------
+  const calcOverTenMillion = (param: string) => {
+
+    let finalResult: string = "fs-0-9rem fw-600";
+
+    if (!param || param === "0" || param === "00:00") {
+      finalResult = param;
+    }
+
+    // 12300000 -> 1.23M / 10000000 -> 10M
+    if (Number(param) >= 10_000_000) {
+      finalResult = `${(parseFloat((Number(param) / 1_000_000).toFixed(2)).toString())}M`;
+    }
+    else {
+      finalResult = param;
+    }
+
+    return finalResult;
+  };
+
+  // 0. calcNonValueColor --------------------------------------------------------------------------
+  const calcNonValueColor = (param: string) => {
+
+    let finalResult: string = "fs-0-9rem fw-600";
+
+    if (!param) {
+      finalResult = param;
+    }
+
+    if (param === "0" || param === "00:00") {
+      finalResult += " grey";
+    }
+    else {
+      finalResult += " light-black";
+    }
+
+    return finalResult;
+  };
+
   // 1. compareValue -------------------------------------------------------------------------------
   const compareValue = (goalParam: string, realParam: string) => {
 
     let goal: number = parseFloat(goalParam);
     let real: number = parseFloat(realParam);
-    let finalResult: string = "";
+    let finalResult: string = "fs-0-9rem fw-600";
 
     if (goal > real) {
       finalResult = `-${(parseFloat(Math.abs(goal - real).toFixed(2)).toString())}`;
@@ -27,7 +66,7 @@ export const list = async (object: any) => {
 
     let goal: string = goalParam;
     let real: string = realParam;
-    let finalResult: string = "";
+    let finalResult: string = "fs-0-9rem fw-600";
 
     const goalDate = new Date(`1970-01-01T${goal}:00Z`);
     const realDate = new Date(`1970-01-01T${real}:00Z`);
@@ -52,52 +91,13 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 3. calcNonValueColor --------------------------------------------------------------------------
-  const calcNonValueColor = (param: string) => {
-
-    let finalResult: string = "";
-
-    if (!param) {
-      return
-    }
-
-    if (param.length > 12) {
-      finalResult = "fs-0-7rem fw-600";
-    }
-    else if (6 < param.length && param.length <= 12) {
-      finalResult = "fs-0-8rem fw-600";
-    }
-    else {
-      finalResult = "fs-0-9rem fw-600";
-    }
-
-    if (param === "0" || param === "00:00") {
-      finalResult += " grey";
-    }
-    else {
-      finalResult += " light-black";
-    }
-
-    return finalResult;
-  };
-
   // 4. calcDiffColor ------------------------------------------------------------------------------
   const calcDiffColor = (goalParam: string, realParam: string, extra: string) => {
 
     let goal: number = parseFloat(goalParam);
     let real: number = parseFloat(realParam);
     let percent: number = 0;
-    let finalResult: string = "";
-
-    if (String(Math.abs(goal - real)).length > 12) {
-      finalResult = "fs-0-7rem fw-600";
-    }
-    else if (6 < String(Math.abs(goal - real)).length && String(Math.abs(goal - real)).length <= 12) {
-      finalResult = "fs-0-8rem fw-600";
-    }
-    else {
-      finalResult = "fs-0-9rem fw-600";
-    }
+    let finalResult: string = "fs-0-9rem fw-600";
 
     // 1. count
     if (extra === "count") {
@@ -215,53 +215,82 @@ export const list = async (object: any) => {
 
   // 10. result ------------------------------------------------------------------------------------
   object?.result?.forEach((item: any) => {
-    item.exercise_total_count_color = (
-      calcNonValueColor(item?.exercise_total_count)
+    item.exercise_total_count = calcOverTenMillion(
+      item?.exercise_total_count
     );
-    item.exercise_total_volume_color = (
-      calcNonValueColor(item?.exercise_total_volume)
+    item.exercise_total_volume = calcOverTenMillion(
+      item?.exercise_total_volume
     );
-    item.exercise_total_cardio_color = (
-      calcNonValueColor(item?.exercise_total_cardio)
+    item.exercise_total_cardio = calcOverTenMillion(
+      item?.exercise_total_cardio
     );
-    item.exercise_total_scale_color = (
-      calcNonValueColor(item?.exercise_total_scale)
+    item.exercise_total_scale = calcOverTenMillion(
+      item?.exercise_total_scale
     );
-    item.exercise_goal_count_color = (
-      calcNonValueColor(item?.exercise_goal_count)
+
+    item.exercise_goal_count = calcOverTenMillion(
+      item?.exercise_goal_count
     );
-    item.exercise_goal_volume_color = (
-      calcNonValueColor(item?.exercise_goal_volume)
+    item.exercise_goal_volume = calcOverTenMillion(
+      item?.exercise_goal_volume
     );
-    item.exercise_goal_cardio_color = (
-      calcNonValueColor(item?.exercise_goal_cardio)
+    item.exercise_goal_cardio = calcOverTenMillion(
+      item?.exercise_goal_cardio
     );
-    item.exercise_goal_scale_color = (
-      calcNonValueColor(item?.exercise_goal_scale)
+    item.exercise_goal_scale = calcOverTenMillion(
+      item?.exercise_goal_scale
     );
-    item.exercise_diff_count = (
-      compareValue(item?.exercise_goal_count, item?.exercise_total_count)
+
+    item.exercise_total_count_color = calcNonValueColor(
+      item?.exercise_total_count
     );
-    item.exercise_diff_volume = (
-      compareValue(item?.exercise_goal_volume, item?.exercise_total_volume)
+    item.exercise_total_volume_color = calcNonValueColor(
+      item?.exercise_total_volume
     );
-    item.exercise_diff_cardio = (
-      compareTime(item?.exercise_goal_cardio, item?.exercise_total_cardio)
+    item.exercise_total_cardio_color = calcNonValueColor(
+      item?.exercise_total_cardio
     );
-    item.exercise_diff_scale = (
-      compareValue(item?.exercise_goal_scale, item?.exercise_total_scale)
+    item.exercise_total_scale_color = calcNonValueColor(
+      item?.exercise_total_scale
     );
-    item.exercise_diff_count_color = (
-      calcDiffColor(item?.exercise_goal_count, item?.exercise_total_count, "count")
+
+    item.exercise_goal_count_color = calcNonValueColor(
+      item?.exercise_goal_count
     );
-    item.exercise_diff_volume_color = (
-      calcDiffColor(item?.exercise_goal_volume, item?.exercise_total_volume, "volume")
+    item.exercise_goal_volume_color = calcNonValueColor(
+      item?.exercise_goal_volume
     );
-    item.exercise_diff_cardio_color = (
-      calcDiffColor(item?.exercise_goal_cardio, item?.exercise_total_cardio, "cardio")
+    item.exercise_goal_cardio_color = calcNonValueColor(
+      item?.exercise_goal_cardio
     );
-    item.exercise_diff_scale_color = (
-      calcDiffColor(item?.exercise_goal_scale, item?.exercise_total_scale, "scale")
+    item.exercise_goal_scale_color = calcNonValueColor(
+      item?.exercise_goal_scale
+    );
+
+    item.exercise_diff_count = calcOverTenMillion(compareValue(
+      item?.exercise_goal_count, item?.exercise_total_count
+    ));
+    item.exercise_diff_volume = calcOverTenMillion(compareValue(
+      item?.exercise_goal_volume, item?.exercise_total_volume
+    ));
+    item.exercise_diff_cardio = calcOverTenMillion(compareTime(
+      item?.exercise_goal_cardio, item?.exercise_total_cardio
+    ));
+    item.exercise_diff_scale = calcOverTenMillion(compareValue(
+      item?.exercise_goal_scale, item?.exercise_total_scale
+    ));
+
+    item.exercise_diff_count_color = calcDiffColor(
+      item?.exercise_goal_count, item?.exercise_total_count, "count"
+    );
+    item.exercise_diff_volume_color = calcDiffColor(
+      item?.exercise_goal_volume, item?.exercise_total_volume, "volume"
+    );
+    item.exercise_diff_cardio_color = calcDiffColor(
+      item?.exercise_goal_cardio, item?.exercise_total_cardio, "cardio"
+    );
+    item.exercise_diff_scale_color = calcDiffColor(
+      item?.exercise_goal_scale, item?.exercise_total_scale, "scale"
     );
   });
 

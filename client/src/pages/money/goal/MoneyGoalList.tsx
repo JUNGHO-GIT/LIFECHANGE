@@ -210,12 +210,12 @@ export const MoneyGoalList = () => {
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       {/** goal **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.money_goal_income_color}`}>
                           {insertComma(item.money_goal_income || "0")}
                         </Div>
@@ -226,12 +226,12 @@ export const MoneyGoalList = () => {
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.money_total_income_color}`}>
                           {insertComma(item.money_total_income || "0")}
                         </Div>
@@ -242,12 +242,12 @@ export const MoneyGoalList = () => {
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.money_diff_income_color}`}>
                           {insertComma(item.money_diff_income || "0")}
                         </Div>
@@ -281,12 +281,12 @@ export const MoneyGoalList = () => {
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       {/** goal **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.money_goal_expense_color}`}>
                           {insertComma(item.money_goal_expense || "0")}
                         </Div>
@@ -297,12 +297,12 @@ export const MoneyGoalList = () => {
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.money_total_expense_color}`}>
                           {insertComma(item.money_total_expense || "0")}
                         </Div>
@@ -313,12 +313,12 @@ export const MoneyGoalList = () => {
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.money_diff_expense_color}`}>
                           {insertComma(item.money_diff_expense || "0")}
                         </Div>

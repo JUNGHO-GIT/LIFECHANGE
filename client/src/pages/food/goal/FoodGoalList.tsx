@@ -210,12 +210,12 @@ export const FoodGoalList = () => {
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       {/** goal **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_goal_kcal_color}`}>
                           {insertComma(item.food_goal_kcal || "0")}
                         </Div>
@@ -226,12 +226,12 @@ export const FoodGoalList = () => {
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_total_kcal_color}`}>
                           {insertComma(item.food_total_kcal || "0")}
                         </Div>
@@ -242,12 +242,12 @@ export const FoodGoalList = () => {
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_diff_kcal_color}`}>
                           {insertComma(item.food_diff_kcal || "0")}
                         </Div>
@@ -281,12 +281,12 @@ export const FoodGoalList = () => {
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       {/** goal **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_goal_carb_color}`}>
                           {insertComma(item.food_goal_carb || "0")}
                         </Div>
@@ -297,12 +297,12 @@ export const FoodGoalList = () => {
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_total_carb_color}`}>
                           {insertComma(item.food_total_carb || "0")}
                         </Div>
@@ -313,12 +313,12 @@ export const FoodGoalList = () => {
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_diff_carb_color}`}>
                           {insertComma(item.food_diff_carb || "0")}
                         </Div>
@@ -352,12 +352,12 @@ export const FoodGoalList = () => {
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       {/** goal **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_goal_protein_color}`}>
                           {insertComma(item.food_goal_carb || "0")}
                         </Div>
@@ -368,12 +368,12 @@ export const FoodGoalList = () => {
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_total_protein_color}`}>
                           {insertComma(item.food_total_carb || "0")}
                         </Div>
@@ -384,12 +384,12 @@ export const FoodGoalList = () => {
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_diff_protein_color}`}>
                           {insertComma(item.food_diff_carb || "0")}
                         </Div>
@@ -423,12 +423,12 @@ export const FoodGoalList = () => {
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       {/** goal **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_goal_fat_color}`}>
                           {insertComma(item.food_goal_fat || "0")}
                         </Div>
@@ -439,12 +439,12 @@ export const FoodGoalList = () => {
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_total_fat_color}`}>
                           {insertComma(item.food_total_fat || "0")}
                         </Div>
@@ -455,12 +455,12 @@ export const FoodGoalList = () => {
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_diff_fat_color}`}>
                           {insertComma(item.food_diff_fat || "0")}
                         </Div>

@@ -238,12 +238,12 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       {/** goal **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.exercise_goal_count_color}`}>
                           {insertComma(item.exercise_goal_count || "0")}
                         </Div>
@@ -254,12 +254,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.exercise_total_count_color}`}>
                           {insertComma(item.exercise_total_count || "0")}
                         </Div>
@@ -270,12 +270,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.exercise_diff_count_color}`}>
                           {insertComma(item.exercise_diff_count || "0")}
                         </Div>
@@ -309,12 +309,12 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       {/** goal **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.exercise_goal_volume_color}`}>
                           {insertComma(item.exercise_goal_volume || "0")}
                         </Div>
@@ -325,12 +325,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.exercise_total_volume_color}`}>
                           {insertComma(item.exercise_total_volume || "0")}
                         </Div>
@@ -341,12 +341,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.exercise_diff_volume_color}`}>
                           {insertComma(item.exercise_diff_volume || "0")}
                         </Div>
@@ -380,12 +380,12 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       {/** goal **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.exercise_goal_cardio_color}`}>
                           {item.exercise_goal_cardio}
                         </Div>
@@ -396,12 +396,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.exercise_total_cardio_color}`}>
                           {item.exercise_total_cardio}
                         </Div>
@@ -412,12 +412,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.exercise_diff_cardio_color}`}>
                           {item.exercise_diff_cardio}
                         </Div>
@@ -451,12 +451,12 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       {/** goal **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.exercise_goal_scale_color}`}>
                           {insertComma(item.exercise_goal_scale || "0")}
                         </Div>
@@ -467,12 +467,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.exercise_total_scale_color}`}>
                           {insertComma(item.exercise_total_scale || "0")}
                         </Div>
@@ -483,12 +483,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.exercise_diff_scale_color}`}>
                           {insertComma(item.exercise_diff_scale || "0")}
                         </Div>
@@ -608,12 +608,12 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       {/** goal **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_goal_kcal_color}`}>
                           {insertComma(item.food_goal_kcal || "0")}
                         </Div>
@@ -624,12 +624,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_total_kcal_color}`}>
                           {insertComma(item.food_total_kcal || "0")}
                         </Div>
@@ -640,12 +640,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_diff_kcal_color}`}>
                           {insertComma(item.food_diff_kcal || "0")}
                         </Div>
@@ -679,12 +679,12 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       {/** goal **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_goal_carb_color}`}>
                           {insertComma(item.food_goal_carb || "0")}
                         </Div>
@@ -695,12 +695,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_total_carb_color}`}>
                           {insertComma(item.food_total_carb || "0")}
                         </Div>
@@ -711,12 +711,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_diff_carb_color}`}>
                           {insertComma(item.food_diff_carb || "0")}
                         </Div>
@@ -750,12 +750,12 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       {/** goal **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_goal_protein_color}`}>
                           {insertComma(item.food_goal_protein || "0")}
                         </Div>
@@ -766,12 +766,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_total_protein_color}`}>
                           {insertComma(item.food_total_protein || "0")}
                         </Div>
@@ -782,12 +782,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_diff_protein_color}`}>
                           {insertComma(item.food_diff_protein || "0")}
                         </Div>
@@ -821,12 +821,12 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       {/** goal **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_goal_fat_color}`}>
                           {insertComma(item.food_goal_fat || "0")}
                         </Div>
@@ -837,12 +837,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_total_fat_color}`}>
                           {insertComma(item.food_total_fat || "0")}
                         </Div>
@@ -853,12 +853,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.food_diff_fat_color}`}>
                           {insertComma(item.food_diff_fat || "0")}
                         </Div>
@@ -978,12 +978,12 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       {/** goal **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.money_goal_income_color}`}>
                           {insertComma(item.money_goal_income || "0")}
                         </Div>
@@ -994,12 +994,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.money_total_income_color}`}>
                           {insertComma(item.money_total_income || "0")}
                         </Div>
@@ -1010,12 +1010,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.money_diff_income_color}`}>
                           {insertComma(item.money_diff_income || "0")}
                         </Div>
@@ -1049,12 +1049,12 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       {/** goal **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.money_goal_expense_color}`}>
                           {insertComma(item.money_goal_expense || "0")}
                         </Div>
@@ -1065,12 +1065,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.money_total_expense_color}`}>
                           {insertComma(item.money_total_expense || "0")}
                         </Div>
@@ -1081,12 +1081,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.money_diff_expense_color}`}>
                           {insertComma(item.money_diff_expense || "0")}
                         </Div>
@@ -1206,12 +1206,12 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       {/** goal **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.sleep_goal_bedTime_color}`}>
                           {item.sleep_goal_bedTime}
                         </Div>
@@ -1222,12 +1222,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.sleep_bedTime_color}`}>
                           {item.sleep_bedTime}
                         </Div>
@@ -1238,12 +1238,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.sleep_diff_bedTime_color}`}>
                           {item.sleep_diff_bedTime}
                         </Div>
@@ -1277,12 +1277,12 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       {/** goal **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.sleep_goal_wakeTime_color}`}>
                           {item.sleep_goal_wakeTime}
                         </Div>
@@ -1293,12 +1293,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.sleep_wakeTime_color}`}>
                           {item.sleep_wakeTime}
                         </Div>
@@ -1309,12 +1309,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.sleep_diff_wakeTime_color}`}>
                           {item.sleep_diff_wakeTime}
                         </Div>
@@ -1348,12 +1348,12 @@ export const TodayGoalList = () => {
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       {/** goal **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.sleep_goal_sleepTime_color}`}>
                           {item.sleep_goal_sleepTime}
                         </Div>
@@ -1364,12 +1364,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.sleep_sleepTime_color}`}>
                           {item.sleep_sleepTime}
                         </Div>
@@ -1380,12 +1380,12 @@ export const TodayGoalList = () => {
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={3} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-right"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
                       </Grid>
-                      <Grid size={7} className={"d-row-right"}>
+                      <Grid size={6} className={"d-row-right"}>
                         <Div className={`${item.sleep_diff_sleepTime_color}`}>
                           {item.sleep_diff_sleepTime}
                         </Div>

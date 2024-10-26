@@ -3,40 +3,33 @@
 // 1. list -----------------------------------------------------------------------------------------
 export const list = async (object: any) => {
 
-  // 1. compareValue -------------------------------------------------------------------------------
-  const compareValue = (goalParam: string, realParam: string) => {
+  // 0. calcOverTenMillion -------------------------------------------------------------------------
+  const calcOverTenMillion = (param: string) => {
 
-    let goal: number = parseFloat(goalParam);
-    let real: number = parseFloat(realParam);
-    let finalResult: string = "";
+    let finalResult: string = "fs-0-9rem fw-600";
 
-    if (goal > real) {
-      finalResult = `-${(parseFloat(Math.abs(goal - real).toFixed(2)).toString())}`;
+    if (!param || param === "0" || param === "00:00") {
+      finalResult = param;
+    }
+
+    // 12300000 -> 1.23M / 10000000 -> 10M
+    if (Number(param) >= 10_000_000) {
+      finalResult = `${(parseFloat((Number(param) / 1_000_000).toFixed(2)).toString())}M`;
     }
     else {
-      finalResult = `+${(parseFloat(Math.abs(real - goal).toFixed(2)).toString())}`;
+      finalResult = param;
     }
 
     return finalResult;
   };
 
-  // 3. calcNonValueColor --------------------------------------------------------------------------
+  // 0. calcNonValueColor --------------------------------------------------------------------------
   const calcNonValueColor = (param: string) => {
 
-    let finalResult: string = "";
+    let finalResult: string = "fs-0-9rem fw-600";
 
     if (!param) {
-      return
-    }
-
-    if (param.length > 12) {
-      finalResult = "fs-0-7rem fw-600";
-    }
-    else if (6 < param.length && param.length <= 12) {
-      finalResult = "fs-0-8rem fw-600";
-    }
-    else {
-      finalResult = "fs-0-9rem fw-600";
+      finalResult = param;
     }
 
     if (param === "0" || param === "00:00") {
@@ -49,23 +42,30 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
+  // 1. compareValue -------------------------------------------------------------------------------
+  const compareValue = (goalParam: string, realParam: string) => {
+
+    let goal: number = parseFloat(goalParam);
+    let real: number = parseFloat(realParam);
+    let finalResult: string = "fs-0-9rem fw-600";
+
+    if (goal > real) {
+      finalResult = `-${(parseFloat(Math.abs(goal - real).toFixed(2)).toString())}`;
+    }
+    else {
+      finalResult = `+${(parseFloat(Math.abs(real - goal).toFixed(2)).toString())}`;
+    }
+
+    return finalResult;
+  };
+
   // 4. calcDiffColor ------------------------------------------------------------------------------
   const calcDiffColor = (goalParam: string, realParam: string, extra: string) => {
 
     let goal: number = parseFloat(goalParam);
     let real: number = parseFloat(realParam);
     let percent: number = 0;
-    let finalResult: string = "";
-
-    if (String(Math.abs(goal - real)).length > 12) {
-      finalResult = "fs-0-7rem fw-600";
-    }
-    else if (6 < String(Math.abs(goal - real)).length && String(Math.abs(goal - real)).length <= 12) {
-      finalResult = "fs-0-8rem fw-600";
-    }
-    else {
-      finalResult = "fs-0-9rem fw-600";
-    }
+    let finalResult: string = "fs-0-9rem fw-600";
 
     // 1. kcal, carb, protein, fat
     if (extra === "kcal" || extra === "carb" || extra === "protein" || extra === "fat") {
@@ -98,6 +98,32 @@ export const list = async (object: any) => {
 
   // 10. return ------------------------------------------------------------------------------------
   object?.result?.forEach((item: any) => {
+    item.food_total_kcal = calcOverTenMillion(
+      item?.food_total_kcal
+    );
+    item.food_total_carb = calcOverTenMillion(
+      item?.food_total_carb
+    );
+    item.food_total_protein = calcOverTenMillion(
+      item?.food_total_protein
+    );
+    item.food_total_fat = calcOverTenMillion(
+      item?.food_total_fat
+    );
+
+    item.food_goal_kcal = calcOverTenMillion(
+      item?.food_goal_kcal
+    );
+    item.food_goal_carb = calcOverTenMillion(
+      item?.food_goal_carb
+    );
+    item.food_goal_protein = calcOverTenMillion(
+      item?.food_goal_protein
+    );
+    item.food_goal_fat = calcOverTenMillion(
+      item?.food_goal_fat
+    );
+
     item.food_total_kcal_color = calcNonValueColor(
       item?.food_total_kcal
     );
@@ -110,6 +136,7 @@ export const list = async (object: any) => {
     item.food_total_fat_color = calcNonValueColor(
       item?.food_total_fat
     );
+
     item.food_goal_kcal_color = calcNonValueColor(
       item?.food_goal_kcal
     );
@@ -122,18 +149,20 @@ export const list = async (object: any) => {
     item.food_goal_fat_color = calcNonValueColor(
       item?.food_goal_fat
     );
-    item.food_diff_kcal = compareValue(
+
+    item.food_diff_kcal = calcOverTenMillion(compareValue(
       item?.food_goal_kcal, item?.food_total_kcal
-    );
-    item.food_diff_carb = compareValue(
+    ));
+    item.food_diff_carb = calcOverTenMillion(compareValue(
       item?.food_goal_carb, item?.food_total_carb
-    );
-    item.food_diff_protein = compareValue(
+    ));
+    item.food_diff_protein = calcOverTenMillion(compareValue(
       item?.food_goal_protein, item?.food_total_protein
-    );
-    item.food_diff_fat = compareValue(
+    ));
+    item.food_diff_fat = calcOverTenMillion(compareValue(
       item?.food_goal_fat, item?.food_total_fat
-    );
+    ));
+
     item.food_diff_kcal_color = calcDiffColor(
       item?.food_goal_kcal, item?.food_total_kcal, "kcal"
     );

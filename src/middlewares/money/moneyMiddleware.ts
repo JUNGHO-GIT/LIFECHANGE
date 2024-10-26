@@ -3,23 +3,33 @@
 // 1. list -----------------------------------------------------------------------------------------
 export const list = async (object: any) => {
 
-  // 3. calcNonValueColor --------------------------------------------------------------------------
-  const calcNonValueColor = (param: string) => {
+  // 0. calcOverTenMillion -------------------------------------------------------------------------
+  const calcOverTenMillion = (param: string) => {
 
-    let finalResult: string = "";
+    let finalResult: string = "fs-0-9rem fw-600";
 
-    if (!param) {
-      return
+    if (!param || param === "0" || param === "00:00") {
+      finalResult = param;
     }
 
-    if (param.length > 12) {
-      finalResult = "fs-0-7rem fw-600";
-    }
-    else if (6 < param.length && param.length <= 12) {
-      finalResult = "fs-0-8rem fw-600";
+    // 12300000 -> 1.23M / 10000000 -> 10M
+    if (Number(param) >= 10_000_000) {
+      finalResult = `${(parseFloat((Number(param) / 1_000_000).toFixed(2)).toString())}M`;
     }
     else {
-      finalResult = "fs-0-9rem fw-600";
+      finalResult = param;
+    }
+
+    return finalResult;
+  };
+
+  // 0. calcNonValueColor --------------------------------------------------------------------------
+  const calcNonValueColor = (param: string) => {
+
+    let finalResult: string = "fs-0-9rem fw-600";
+
+    if (!param) {
+      finalResult = param;
     }
 
     if (param === "0" || param === "00:00") {
@@ -34,6 +44,13 @@ export const list = async (object: any) => {
 
   // 10. return ------------------------------------------------------------------------------------
   object?.result?.forEach((item: any) => {
+    item.money_total_income = calcOverTenMillion(
+      item?.money_total_income
+    );
+    item.money_total_expense = calcOverTenMillion(
+      item?.money_total_expense
+    );
+
     item.money_total_income_color = calcNonValueColor(
       item?.money_total_income
     );

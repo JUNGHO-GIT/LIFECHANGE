@@ -5,13 +5,52 @@ import { differenceInMinutes } from "date-fns";
 // 1. list -----------------------------------------------------------------------------------------
 export const list = async (object: any) => {
 
+  // 0. calcOverTenMillion -------------------------------------------------------------------------
+  const calcOverTenMillion = (param: string) => {
+
+    let finalResult: string = "fs-0-9rem fw-600";
+
+    if (!param || param === "0" || param === "00:00") {
+      finalResult = param;
+    }
+
+    // 12300000 -> 1.23M / 10000000 -> 10M
+    if (Number(param) >= 10_000_000) {
+      finalResult = `${(parseFloat((Number(param) / 1_000_000).toFixed(2)).toString())}M`;
+    }
+    else {
+      finalResult = param;
+    }
+
+    return finalResult;
+  };
+
+  // 0. calcNonValueColor --------------------------------------------------------------------------
+  const calcNonValueColor = (param: string) => {
+
+    let finalResult: string = "fs-0-9rem fw-600";
+
+    if (!param) {
+      finalResult = param;
+    }
+
+    if (param === "0" || param === "00:00") {
+      finalResult += " grey";
+    }
+    else {
+      finalResult += " light-black";
+    }
+
+    return finalResult;
+  };
+
   // 1. compareTime --------------------------------------------------------------------------------
   const compareTime = (goalParam: string, realParam: string, extra: string) => {
 
     let goal: string = goalParam;
     let real: string = realParam;
     let diffVal: number = 0;
-    let finalResult: string = "";
+    let finalResult: string = "fs-0-9rem fw-600";
 
     // 1. bedTime, wakeTime
     if (extra === "bedTime" || extra === "wakeTime") {
@@ -62,42 +101,13 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 3. calcNonValueColor --------------------------------------------------------------------------
-  const calcNonValueColor = (param: string) => {
-
-    let finalResult: string = "";
-
-    if (!param) {
-      return
-    }
-
-    if (param.length > 12) {
-      finalResult = "fs-0-7rem fw-600";
-    }
-    else if (6 < param.length && param.length <= 12) {
-      finalResult = "fs-0-8rem fw-600";
-    }
-    else {
-      finalResult = "fs-0-9rem fw-600";
-    }
-
-    if (param === "0" || param === "00:00") {
-      finalResult += " grey";
-    }
-    else {
-      finalResult += " light-black";
-    }
-
-    return finalResult;
-  };
-
   // 4. calcDiffColor ------------------------------------------------------------------------------
   const calcDiffColor = (goalParam: string, realParam: string, extra: string) => {
 
     let goal: string = goalParam;
     let real: string = realParam;
     let diffVal: number = 0;
-    let finalResult: string = "fs-1-0rem fw-600";
+    let finalResult: string = "fs-0-9rem fw-600";
 
     // 1. bedTime, wakeTime
     if (extra === "bedTime" || extra === "wakeTime") {
@@ -170,6 +180,26 @@ export const list = async (object: any) => {
 
   // 10. return ------------------------------------------------------------------------------------
   object?.result?.forEach((item: any) => {
+    item.sleep_bedTime = calcOverTenMillion(
+      item?.sleep_bedTime
+    );
+    item.sleep_wakeTime = calcOverTenMillion(
+      item?.sleep_wakeTime
+    );
+    item.sleep_sleepTime = calcOverTenMillion(
+      item?.sleep_sleepTime
+    );
+
+    item.sleep_goal_bedTime = calcOverTenMillion(
+      item?.sleep_goal_bedTime
+    );
+    item.sleep_goal_wakeTime = calcOverTenMillion(
+      item?.sleep_goal_wakeTime
+    );
+    item.sleep_goal_sleepTime = calcOverTenMillion(
+      item?.sleep_goal_sleepTime
+    );
+
     item.sleep_bedTime_color = calcNonValueColor(
       item?.sleep_bedTime
     );
@@ -179,6 +209,7 @@ export const list = async (object: any) => {
     item.sleep_sleepTime_color = calcNonValueColor(
       item?.sleep_sleepTime
     );
+
     item.sleep_goal_bedTime_color = calcNonValueColor(
       item?.sleep_goal_bedTime
     );
@@ -188,15 +219,17 @@ export const list = async (object: any) => {
     item.sleep_goal_sleepTime_color = calcNonValueColor(
       item?.sleep_goal_sleepTime
     );
-    item.sleep_diff_bedTime = compareTime(
+
+    item.sleep_diff_bedTime = calcOverTenMillion(compareTime(
       item?.sleep_goal_bedTime, item?.sleep_bedTime, "bedTime"
-    );
-    item.sleep_diff_wakeTime = compareTime(
+    ));
+    item.sleep_diff_wakeTime = calcOverTenMillion(compareTime(
       item?.sleep_goal_wakeTime, item?.sleep_wakeTime, "wakeTime"
-    );
-    item.sleep_diff_sleepTime = compareTime(
+    ));
+    item.sleep_diff_sleepTime = calcOverTenMillion(compareTime(
       item?.sleep_goal_sleepTime, item?.sleep_sleepTime, "sleepTime"
-    );
+    ));
+
     item.sleep_diff_bedTime_color = calcDiffColor(
       item?.sleep_goal_bedTime, item?.sleep_bedTime, "bedTime"
     );

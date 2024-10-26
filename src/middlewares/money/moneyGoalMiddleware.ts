@@ -3,12 +3,51 @@
 // 1. list -----------------------------------------------------------------------------------------
 export const list = async (object: any) => {
 
+  // 0. calcOverTenMillion -------------------------------------------------------------------------
+  const calcOverTenMillion = (param: string) => {
+
+    let finalResult: string = "fs-0-9rem fw-600";
+
+    if (!param || param === "0" || param === "00:00") {
+      finalResult = param;
+    }
+
+    // 12300000 -> 1.23M / 10000000 -> 10M
+    if (Number(param) >= 10_000_000) {
+      finalResult = `${(parseFloat((Number(param) / 1_000_000).toFixed(2)).toString())}M`;
+    }
+    else {
+      finalResult = param;
+    }
+
+    return finalResult;
+  };
+
+  // 0. calcNonValueColor --------------------------------------------------------------------------
+  const calcNonValueColor = (param: string) => {
+
+    let finalResult: string = "fs-0-9rem fw-600";
+
+    if (!param) {
+      finalResult = param;
+    }
+
+    if (param === "0" || param === "00:00") {
+      finalResult += " grey";
+    }
+    else {
+      finalResult += " light-black";
+    }
+
+    return finalResult;
+  };
+
   // 1. compareValue -------------------------------------------------------------------------------
   const compareValue = (goalParam: string, realParam: string, extra: string) => {
 
     let goal: number = parseFloat(goalParam);
     let real: number = parseFloat(realParam);
-    let finalResult: string = "";
+    let finalResult: string = "fs-0-9rem fw-600";
 
     if (extra === "income") {
       if (goal > real) {
@@ -28,35 +67,6 @@ export const list = async (object: any) => {
     }
 
     return finalResult;
-  }
-
-  // 3. calcNonValueColor --------------------------------------------------------------------------
-  const calcNonValueColor = (param: string) => {
-
-    let finalResult: string = "";
-
-    if (!param) {
-      return
-    }
-
-    if (param.length > 12) {
-      finalResult = "fs-0-7rem fw-600";
-    }
-    else if (6 < param.length && param.length <= 12) {
-      finalResult = "fs-0-8rem fw-600";
-    }
-    else {
-      finalResult = "fs-0-9rem fw-600";
-    }
-
-    if (param === "0" || param === "00:00") {
-      finalResult += " grey";
-    }
-    else {
-      finalResult += " light-black";
-    }
-
-    return finalResult;
   };
 
   // 4. calcDiffColor ------------------------------------------------------------------------------
@@ -65,17 +75,7 @@ export const list = async (object: any) => {
     let goal: number = parseFloat(goalParam);
     let real: number = parseFloat(realParam);
     let percent: number = 0;
-    let finalResult: string = "";
-
-    if (String(Math.abs(goal - real)).length > 12) {
-      finalResult = "fs-0-7rem fw-600";
-    }
-    else if (6 < String(Math.abs(goal - real)).length && String(Math.abs(goal - real)).length <= 12) {
-      finalResult = "fs-0-8rem fw-600";
-    }
-    else {
-      finalResult = "fs-0-9rem fw-600";
-    }
+    let finalResult: string = "fs-0-9rem fw-600";
 
     // 1. income
     if (extra === "income") {
@@ -159,24 +159,38 @@ export const list = async (object: any) => {
 
   // 10. return ------------------------------------------------------------------------------------
   object?.result?.forEach((item: any) => {
-    item.money_goal_income_color = calcNonValueColor(
+    item.money_total_income = calcOverTenMillion(
+      item?.money_total_income
+    );
+    item.money_total_expense = calcOverTenMillion(
+      item?.money_total_expense
+    );
+    item.money_goal_income = calcOverTenMillion(
       item?.money_goal_income
     );
-    item.money_goal_expense_color = calcNonValueColor(
+    item.money_goal_expense = calcOverTenMillion(
       item?.money_goal_expense
     );
+
     item.money_total_income_color = calcNonValueColor(
       item?.money_total_income
     );
     item.money_total_expense_color = calcNonValueColor(
       item?.money_total_expense
     );
-    item.money_diff_income = compareValue(
+    item.money_goal_income_color = calcNonValueColor(
+      item?.money_goal_income
+    );
+    item.money_goal_expense_color = calcNonValueColor(
+      item?.money_goal_expense
+    );
+
+    item.money_diff_income = calcOverTenMillion(compareValue(
       item?.money_goal_income, item?.money_total_income, "income"
-    );
-    item.money_diff_expense = compareValue(
+    ));
+    item.money_diff_expense = calcOverTenMillion(compareValue(
       item?.money_goal_expense, item?.money_total_expense, "expense"
-    );
+    ));
     item.money_diff_income_color = calcDiffColor(
       item?.money_goal_income, item?.money_total_income, "income"
     );

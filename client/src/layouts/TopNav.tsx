@@ -432,7 +432,7 @@ export const TopNav = () => {
       >
         {(popTrigger: any) => (
           <Img
-            max={25}
+            max={22}
             hover={true}
             shadow={false}
             radius={false}
@@ -541,7 +541,7 @@ export const TopNav = () => {
       >
         {(popTrigger: any) => (
           <Img
-            max={25}
+            max={22}
             hover={true}
             shadow={false}
             radius={false}
@@ -670,7 +670,7 @@ export const TopNav = () => {
       >
         {(popTrigger: any) => (
           <Img
-            max={25}
+            max={22}
             hover={true}
             shadow={false}
             radius={false}
@@ -808,7 +808,7 @@ export const TopNav = () => {
       >
         {(popTrigger: any) => (
           <Img
-            max={25}
+            max={22}
             hover={true}
             shadow={false}
             radius={false}
