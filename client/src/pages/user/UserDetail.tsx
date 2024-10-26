@@ -227,7 +227,7 @@ export const UserDetail = () => {
           <Grid size={12}>
             <Input
               disabled={true}
-              label={translate("curAvgKcal")}
+              label={translate("curAvgKcalIntake")}
               value={insertComma(item.user_curAvgKcalIntake || "0")}
               startadornment={
                 <Img

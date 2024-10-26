@@ -170,21 +170,21 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "현재 체중",
         en: "Current Weight"
       },
-      curAvgKcal: {
-        ko: "현재 칼로리 평균",
-        en: "Current Kcal Goal"
+      curAvgKcalIntake: {
+        ko: "현재 칼로리 섭취량",
+        en: "Current Kcal Intake"
       },
-      curCarb: {
-        ko: "현재 탄수화물 평균",
-        en: "Current Carb Goal"
+      curAvgCarbIntake: {
+        ko: "현재 탄수화물 섭취량",
+        en: "Current Carb Intake"
       },
-      curProtein: {
-        ko: "현재 단백질 평균",
-        en: "Current Protein Goal"
+      curAvgProteinIntake: {
+        ko: "현재 단백질 섭취량",
+        en: "Current Protein Intake"
       },
-      curFat: {
-        ko: "현재 지방 평균",
-        en: "Current Fat Goal"
+      curAvgFatIntake: {
+        ko: "현재 지방 섭취량",
+        en: "Current Fat Intake"
       },
       curPropertyExclusion: {
         ko: "현재 자산",
@@ -611,7 +611,7 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
       },
       helperAvgKcalIntake: {
         ko: "목표 칼로리 섭취량을 입력해주세요",
-        en: "Please enter your Kcal intake goal"
+        en: "Please enter your target calorie intake"
       },
       helperProperty: {
         ko: "현재 자산을 입력해주세요",
@@ -653,8 +653,8 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         en: "Initial Weight"
       },
       initAvgKcalIntake: {
-        ko: "초기 평균 칼로리 섭취량 목표",
-        en: "Initial Avg Kcal Intake Goal"
+        ko: "목표 칼로리 섭취량",
+        en: "Kcal Intake Goal"
       },
       initProperty: {
         ko: "초기 자산",
@@ -2024,8 +2024,8 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         en: "Please enter Weight"
       },
       errorUserInitAvgKcalIntake: {
-        ko: "평균 칼로리 섭취량을 입력해주세요",
-        en: "Please enter Initial Average Kcal Intake"
+        ko: "목표 칼로리 섭취량을 입력해주세요",
+        en: "Please enter Goal Average Kcal Intake"
       },
       errorUserCurAvgKcalIntake: {
         ko: "현재 칼로리 섭취량을 입력해주세요",

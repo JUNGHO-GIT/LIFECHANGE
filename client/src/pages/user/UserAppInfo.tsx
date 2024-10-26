@@ -70,44 +70,43 @@ export const UserAppInfo = () => {
               <Table>
                 <TableBody className={"table-tbody"}>
                   <TableRow>
-                    <TableCell className={"w-40vw fs-1-0rem p-15"}>
+                    <TableCell className={"w-40vw fs-0-9rem p-15"}>
                       version
                     </TableCell>
-                    <TableCell className={"w-55vw fs-0-8rem p-15"}>
+                    <TableCell className={"w-55vw fs-0-7rem p-15"}>
                       {item.version}
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell className={"w-40vw fs-1-0rem p-15"}>
+                    <TableCell className={"w-40vw fs-0-9rem p-15"}>
                       date
                     </TableCell>
-                    <TableCell className={"w-55vw fs-0-8rem p-15"}>
+                    <TableCell className={"w-55vw fs-0-7rem p-15"}>
                       {item.date}
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell className={"w-40vw fs-1-0rem p-15"}>
+                    <TableCell className={"w-40vw fs-0-9rem p-15"}>
                       github
                     </TableCell>
-                    <TableCell className={"w-55vw fs-0-8rem p-15"}>
+                    <TableCell className={"w-55vw fs-0-7rem p-15"}>
                       {item.git}
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell className={"w-40vw fs-1-0rem p-15"}>
+                    <TableCell className={"w-40vw fs-0-9rem p-15"}>
                       license
                     </TableCell>
-                    <TableCell className={"w-55vw fs-0-8rem p-15"}>
+                    <TableCell className={"w-55vw fs-0-7rem p-15"}>
                       {item.license}
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell className={"w-40vw fs-1-0rem p-15"}>
+                    <TableCell className={"w-40vw fs-0-9rem p-15"}>
                       timezone
                     </TableCell>
-                    <TableCell className={"w-55vw fs-0-8rem p-15"}>
-                      {localTimeZone} | &nbsp; {localZoneName} | &nbsp;
-                      {localLang} | &nbsp; {localIsoCode} | &nbsp; {localCurrency}
+                    <TableCell className={"w-55vw fs-0-7rem p-15"}>
+                      {localTimeZone} | {localZoneName} | {localLang} | {localIsoCode} | {localCurrency}
                     </TableCell>
                   </TableRow>
                 </TableBody>

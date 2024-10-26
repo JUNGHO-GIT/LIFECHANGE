@@ -376,7 +376,7 @@ export const UserSignup = () => {
               }}
             />
           </Grid>
-          {/** 초기 칼로리 섭취량 목표 **/}
+          {/** 목표 칼로리 섭취량 **/}
           <Grid size={12}>
             <Input
               label={translate("avgKcalIntake")}

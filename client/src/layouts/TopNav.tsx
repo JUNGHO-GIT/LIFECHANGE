@@ -316,7 +316,7 @@ export const TopNav = () => {
           <Grid container spacing={2} columns={12}
           className={"w-max60vw h-max70vh border-1 radius-1 p-20"}>
             <Grid size={12} className={"d-col-center"}>
-              <Div className={"fs-1-2rem fw-600"}>
+              <Div className={"fs-1-0rem fw-600"}>
                 {translate("monthScore")}
               </Div>
               <Br px={10} />
