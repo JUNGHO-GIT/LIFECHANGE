@@ -114,24 +114,24 @@ export const userSignup = async (
       user_maxScale: "",
       user_curScale: "",
 
-        user_initAvgKcalIntake: OBJECT_param.user_initAvgKcalIntake,
-        user_totalKcalIntake: "",
-        user_totalCarbIntake: "",
-        user_totalProteinIntake: "",
-        user_totalFatIntake: "",
-        user_curAvgKcalIntake: "",
-        user_curAvgCarbIntake: "",
-        user_curAvgProteinIntake: "",
-        user_curAvgFatIntake: "",
-      user_money: {
-        user_initProperty: OBJECT_param.user_initProperty,
-        user_totalIncomeAll: "",
-        user_totalIncomeExclusion: "",
-        user_totalExpenseAll: "",
-        user_totalExpenseExclusion: "",
-        user_curPropertyAll: "",
-        user_curPropertyExclusion: "",
-      },
+      user_initAvgKcalIntake: OBJECT_param.user_initAvgKcalIntake,
+      user_totalKcalIntake: "",
+      user_totalCarbIntake: "",
+      user_totalProteinIntake: "",
+      user_totalFatIntake: "",
+      user_curAvgKcalIntake: "",
+      user_curAvgCarbIntake: "",
+      user_curAvgProteinIntake: "",
+      user_curAvgFatIntake: "",
+
+      user_initProperty: OBJECT_param.user_initProperty,
+      user_totalIncomeAll: "",
+      user_totalIncomeExclusion: "",
+      user_totalExpenseAll: "",
+      user_totalExpenseExclusion: "",
+      user_curPropertyAll: "",
+      user_curPropertyExclusion: "",
+
       user_favorite: [{
         food_key: "",
         food_name: "",
@@ -227,15 +227,8 @@ export const userUpdate = async (
       $set: {
         user_image: OBJECT_param.user_image,
         user_initScale: OBJECT_param.user_initScale,
-        user_curScale: OBJECT_param.user_curScale,
         user_initAvgKcalIntake: OBJECT_param.user_initAvgKcalIntake,
-        user_curAvgKcalIntake: OBJECT_param.user_curAvgKcalIntake,
-        user_curCarb: OBJECT_param.user_curCarb,
-        user_curProtein: OBJECT_param.user_curProtein,
-        user_curFat: OBJECT_param.user_curFat,
         user_initProperty: OBJECT_param.user_initProperty,
-        user_curPropertyAll: OBJECT_param.user_curPropertyAll,
-        user_curPropertyExclusion: OBJECT_param.user_curPropertyExclusion,
       },
     },
     {
@@ -651,35 +644,75 @@ export const dummySave = async (
 ) => {
 
   if (type_param === "exerciseGoal") {
-    const finalResult:any = await ExerciseGoal.insertMany(OBJECT_param);
+    const finalResult:any = await ExerciseGoal.insertMany(
+      {
+        user_id: user_id_param,
+        ...OBJECT_param,
+      }
+    );
     return finalResult;
   }
   else if (type_param === "exercise") {
-    const finalResult:any = await Exercise.insertMany(OBJECT_param);
+    const finalResult:any = await Exercise.insertMany(
+      {
+        user_id: user_id_param,
+        ...OBJECT_param,
+      }
+    );
     return finalResult;
   }
   else if (type_param === "foodGoal") {
-    const finalResult:any = await FoodGoal.insertMany(OBJECT_param);
+    const finalResult:any = await FoodGoal.insertMany(
+      {
+        user_id: user_id_param,
+        ...OBJECT_param,
+      }
+    );
     return finalResult;
   }
   else if (type_param === "food") {
-    const finalResult:any = await Food.insertMany(OBJECT_param);
+    const finalResult:any = await Food.insertMany(
+      {
+        user_id: user_id_param,
+        ...OBJECT_param,
+      }
+    );
     return finalResult;
   }
   else if (type_param === "moneyGoal") {
-    const finalResult:any = await MoneyGoal.insertMany(OBJECT_param);
+    const finalResult:any = await MoneyGoal.insertMany(
+      {
+        user_id: user_id_param,
+        ...OBJECT_param,
+      }
+    );
     return finalResult;
   }
   else if (type_param === "money") {
-    const finalResult:any = await Money.insertMany(OBJECT_param);
+    const finalResult:any = await Money.insertMany(
+      {
+        user_id: user_id_param,
+        ...OBJECT_param,
+      }
+    );
     return finalResult;
   }
   else if (type_param === "sleepGoal") {
-    const finalResult:any = await SleepGoal.insertMany(OBJECT_param);
+    const finalResult:any = await SleepGoal.insertMany(
+      {
+        user_id: user_id_param,
+        ...OBJECT_param,
+      }
+    );
     return finalResult;
   }
   else if (type_param === "sleep") {
-    const finalResult:any = await Sleep.insertMany(OBJECT_param);
+    const finalResult:any = await Sleep.insertMany(
+      {
+        user_id: user_id_param,
+        ...OBJECT_param,
+      }
+    );
     return finalResult;
   }
 }

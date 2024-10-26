@@ -609,6 +609,10 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "현재 체중을 입력해주세요",
         en: "Please enter your current weight"
       },
+      helperAvgKcalIntake: {
+        ko: "목표 칼로리 섭취량을 입력해주세요",
+        en: "Please enter your Kcal intake goal"
+      },
       helperProperty: {
         ko: "현재 자산을 입력해주세요",
         en: "Please enter your current property"
@@ -2018,6 +2022,14 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
       errorUserCurScale: {
         ko: "현재 체중을 입력해주세요",
         en: "Please enter Weight"
+      },
+      errorUserInitAvgKcalIntake: {
+        ko: "평균 칼로리 섭취량을 입력해주세요",
+        en: "Please enter Initial Average Kcal Intake"
+      },
+      errorUserCurAvgKcalIntake: {
+        ko: "현재 칼로리 섭취량을 입력해주세요",
+        en: "Please enter Current Average Kcal Intake"
       },
       errorUserInitProperty: {
         ko: "초기 자산을 입력해주세요",

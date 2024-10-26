@@ -347,6 +347,13 @@ export const UserSignup = () => {
               error={ERRORS?.[i]?.user_initScale}
               disabled={item.user_id_verified === false}
               helperText={`* ${translate("helperScale")}`}
+              startadornment={
+                <Img
+                  key={"exercise5"}
+                  src={"exercise5"}
+                  className={"w-16 h-16"}
+                />
+              }
               endadornment={
                 translate("cm")
               }
@@ -369,13 +376,15 @@ export const UserSignup = () => {
               }}
             />
           </Grid>
-          {/** 초기 평균 칼로리 섭취량 목표 **/}
+          {/** 초기 칼로리 섭취량 목표 **/}
           <Grid size={12}>
             <Input
-              label={translate("initAvgKcalIntake")}
+              label={translate("avgKcalIntake")}
               value={insertComma(item.user_initAvgKcalIntake || "0")}
               inputRef={REFS?.[i]?.user_initAvgKcalIntake}
               error={ERRORS?.[i]?.user_initAvgKcalIntake}
+              disabled={item.user_id_verified === false}
+              helperText={`* ${translate("helperAvgKcalIntake")}`}
               startadornment={
                 <Img
                   key={"food2"}
@@ -405,7 +414,6 @@ export const UserSignup = () => {
               }}
             />
           </Grid>
-          <Hr px={1} />
           {/** 초기 자산 **/}
           <Grid size={12}>
             <Input
@@ -415,6 +423,13 @@ export const UserSignup = () => {
               error={ERRORS?.[i]?.user_initProperty}
               disabled={item.user_id_verified === false}
               helperText={`* ${translate("helperProperty")}`}
+              startadornment={
+                <Img
+                  key={"money2"}
+                  src={"money2"}
+                  className={"w-16 h-16"}
+                />
+              }
               endadornment={
                 localCurrency
               }
