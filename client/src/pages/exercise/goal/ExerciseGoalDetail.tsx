@@ -15,8 +15,9 @@ import { Paper, Grid } from "@imports/ImportMuis";
 export const ExerciseGoalDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, PATH, sessionId, toList, localUnit } = useCommonValue();
-  const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
+  const { URL_OBJECT, PATH, sessionId, toList, toToday, navigate, localUnit } = useCommonValue();
+  const { location_from, location_dateType } = useCommonValue();
+  const { location_dateStart, location_dateEnd } = useCommonValue();
   const { getWeekStartFmt, getWeekEndFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
   const { ALERT, setALERT } = useAlertStore();
@@ -167,7 +168,7 @@ export const ExerciseGoalDetail = () => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(toList, {
+        navigate(location_from === "today" ? toToday : toList, {
           state: {
             dateType: "",
             dateStart: DATE.dateStart,
@@ -217,7 +218,7 @@ export const ExerciseGoalDetail = () => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(toList, {
+        navigate(location_from === "today" ? toToday : toList, {
           state: {
             dateType: "",
             dateStart: DATE.dateStart,

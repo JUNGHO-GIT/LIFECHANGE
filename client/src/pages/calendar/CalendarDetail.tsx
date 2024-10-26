@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { useValidateCalendar } from "@imports/ImportValidates";
 import { Calendar } from "@imports/ImportSchemas";
-import { axios, insertComma } from "@imports/ImportUtils";
+import { axios } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, Memo, Count, Delete, Input, Select } from "@imports/ImportContainers";
 import { Img, Bg } from "@imports/ImportComponents";
@@ -15,8 +15,10 @@ import { Paper, MenuItem, Grid } from "@imports/ImportMuis";
 export const CalendarDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, sessionId, toList, calendarArray,calendarColors, bgColors} = useCommonValue();
-  const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
+  const { URL_OBJECT, navigate, toList, toToday, sessionId } = useCommonValue();
+  const { calendarArray, calendarColors, bgColors } = useCommonValue();
+  const { location_from, location_dateType } = useCommonValue();
+  const { location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt,getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
   const { ALERT, setALERT } = useAlertStore();
@@ -187,7 +189,7 @@ export const CalendarDetail = () => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(toList, {
+        navigate(location_from === "today" ? toToday : toList, {
           state: {
             dateType: "",
             dateStart: DATE.dateStart,
@@ -236,7 +238,7 @@ export const CalendarDetail = () => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(toList, {
+        navigate(location_from === "today" ? toToday : toList, {
           state: {
             dateType: "",
             dateStart: DATE.dateStart,

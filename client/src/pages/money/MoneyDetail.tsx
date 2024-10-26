@@ -15,8 +15,10 @@ import { Paper, MenuItem, Grid, Checkbox } from "@imports/ImportMuis";
 export const MoneyDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, sessionId, localCurrency, moneyArray, toList, bgColors } = useCommonValue();
-  const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
+  const { URL_OBJECT, navigate, sessionId, localCurrency, moneyArray } = useCommonValue();
+  const { toList, toToday, bgColors } = useCommonValue();
+  const { location_from, location_dateType } = useCommonValue();
+  const { location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt,getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
   const { ALERT, setALERT } = useAlertStore();
@@ -236,7 +238,7 @@ export const MoneyDetail = () => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(toList, {
+        navigate(location_from === "today" ? toToday : toList, {
           state: {
             dateType: "",
             dateStart: DATE.dateStart,
@@ -286,7 +288,7 @@ export const MoneyDetail = () => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(toList, {
+        navigate(location_from === "today" ? toToday : toList, {
           state: {
             dateType: "",
             dateStart: DATE.dateStart,

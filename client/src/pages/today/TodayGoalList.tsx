@@ -56,6 +56,7 @@ export const TodayGoalList = () => {
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [SEND, setSEND] = useState<any>({
     id: "",
+    from: "today",
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
@@ -183,6 +184,7 @@ export const TodayGoalList = () => {
                   navigate(SEND.toExerciseGoal, {
                     state: {
                       id: item._id,
+                      from: "today",
                       dateType: item.exercise_goal_dateType,
                       dateStart: item.exercise_goal_dateStart,
                       dateEnd: item.exercise_goal_dateEnd,
@@ -553,6 +555,7 @@ export const TodayGoalList = () => {
                   navigate(SEND.toFoodGoal, {
                     state: {
                       id: item._id,
+                      from: "today",
                       dateType: item.food_goal_dateType,
                       dateStart: item.food_goal_dateStart,
                       dateEnd: item.food_goal_dateEnd,
@@ -923,6 +926,7 @@ export const TodayGoalList = () => {
                   navigate(SEND.toMoneyGoal, {
                     state: {
                       id: item._id,
+                      from: "today",
                       dateType: item.money_goal_dateType,
                       dateStart: item.money_goal_dateStart,
                       dateEnd: item.money_goal_dateEnd,
@@ -1151,6 +1155,7 @@ export const TodayGoalList = () => {
                   navigate(SEND.toSleepGoal, {
                     state: {
                       id: item._id,
+                      from: "today",
                       dateType: item.sleep_goal_dateType,
                       dateStart: item.sleep_goal_dateStart,
                       dateEnd: item.sleep_goal_dateEnd,

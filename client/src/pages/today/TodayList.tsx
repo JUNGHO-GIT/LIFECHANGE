@@ -56,6 +56,7 @@ export const TodayList = () => {
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [SEND, setSEND] = useState<any>({
     id: "",
+    from: "today",
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
@@ -183,6 +184,7 @@ export const TodayList = () => {
                   navigate(SEND.toExercise, {
                     state: {
                       id: item._id,
+                      from: "today",
                       dateType: item.exercise_dateType,
                       dateStart: item.exercise_dateStart,
                       dateEnd: item.exercise_dateEnd,
@@ -359,6 +361,7 @@ export const TodayList = () => {
                   navigate(SEND.toFood, {
                     state: {
                       id: item._id,
+                      from: "today",
                       dateType: item.food_dateType,
                       dateStart: item.food_dateStart,
                       dateEnd: item.food_dateEnd,
@@ -568,6 +571,7 @@ export const TodayList = () => {
                   navigate(SEND.toMoney, {
                     state: {
                       id: item._id,
+                      from: "today",
                       dateType: item.money_dateType,
                       dateStart: item.money_dateStart,
                       dateEnd: item.money_dateEnd,
@@ -711,6 +715,7 @@ export const TodayList = () => {
                   navigate(SEND.toSleep, {
                     state: {
                       id: item._id,
+                      from: "today",
                       dateType: item.sleep_dateType,
                       dateStart: item.sleep_dateStart,
                       dateEnd: item.sleep_dateEnd,

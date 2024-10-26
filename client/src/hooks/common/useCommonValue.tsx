@@ -9,6 +9,7 @@ export const useCommonValue = () => {
   const location: any = useLocation();
 
   const location_id: string = location?.state?.id;
+  const location_from: string = location?.state?.from;
   const location_dateType: string = location?.state?.dateType;
   const location_dateStart: string = location?.state?.dateStart;
   const location_dateEnd: string = location?.state?.dateEnd;
@@ -34,6 +35,7 @@ export const useCommonValue = () => {
   const toList: string = isGoal ? `/${firstStr}/goal/list` : `/${firstStr}/list`;
   const toDetail: string = isGoal ? `/${firstStr}/goal/detail` : `/${firstStr}/detail`;
   const toDelete: string = isGoal ? `/${firstStr}/goal/delete` : `/${firstStr}/delete`;
+  const toToday: string = isGoal ? `/today/goal/list` : `/today/list`;
 
   // env
   const TITLE: any = process.env.REACT_APP_TITLE || "";
@@ -124,6 +126,7 @@ export const useCommonValue = () => {
     navigate,
     location,
     location_id,
+    location_from,
     location_dateType,
     location_dateStart,
     location_dateEnd,
@@ -142,6 +145,7 @@ export const useCommonValue = () => {
     toFind,
     toFavorite,
     toList,
+    toToday,
     toDetail,
     toDelete,
     TITLE,
