@@ -409,7 +409,6 @@ export const ExerciseDetail = () => {
         </Grid>
         <Grid size={12}>
           <Input
-            readOnly={true}
             label={translate("scale")}
             value={insertComma(OBJECT?.exercise_total_scale || "0")}
             startadornment={
