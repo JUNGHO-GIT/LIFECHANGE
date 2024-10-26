@@ -91,6 +91,9 @@ export const useValidateFood = () => {
       const target = [
         "food_part_idx",
         "food_name",
+        "food_brand",
+        "food_count",
+        "food_gram",
         "food_kcal",
         "food_carb",
         "food_protein",
@@ -125,6 +128,9 @@ export const useValidateFood = () => {
         }
         else if (!section[i].food_name || section[i].food_name === "") {
           return showAlertAndFocus('food_name', "errorFoodName", i);
+        }
+        else if (!section[i].food_count || section[i].food_count === "0") {
+          return showAlertAndFocus('food_count', "errorFoodCount", i);
         }
         else if (!section[i].food_kcal) {
           return showAlertAndFocus('food_kcal', "errorFoodKcal", i);

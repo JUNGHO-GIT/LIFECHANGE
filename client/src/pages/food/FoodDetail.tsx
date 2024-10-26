@@ -61,8 +61,8 @@ export const FoodDetail = () => {
   useEffect(() => {
     if (EXIST?.[DATE.dateType]?.length > 0) {
 
-      const dateRange = `${DATE.dateStart.trim()} ~ ${DATE.dateEnd.trim()}`;
-      const objectRange = `${OBJECT.food_dateStart.trim()} ~ ${OBJECT.food_dateEnd.trim()}`;
+      const dateRange = `${DATE.dateStart.trim()} - ${DATE.dateEnd.trim()}`;
+      const objectRange = `${OBJECT.food_dateStart.trim()} - ${OBJECT.food_dateEnd.trim()}`;
 
       const isExist = (
         EXIST[DATE.dateType].includes(dateRange)
@@ -276,7 +276,6 @@ export const FoodDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        sync("kcal");
         setALERT({
           open: !ALERT.open,
           msg: translate(res.data.msg),
@@ -289,6 +288,7 @@ export const FoodDetail = () => {
             dateEnd: DATE.dateEnd
           }
         });
+        sync("nutrition");
       }
       else {
         setALERT({
@@ -326,7 +326,6 @@ export const FoodDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        sync("kcal");
         setALERT({
           open: !ALERT.open,
           msg: translate(res.data.msg),
@@ -339,6 +338,7 @@ export const FoodDetail = () => {
             dateEnd: DATE.dateEnd
           }
         });
+        sync("nutrition");
       }
       else {
         setALERT({
@@ -434,16 +434,16 @@ export const FoodDetail = () => {
     const food_count = OBJECT?.food_section[index]?.food_count || 1;
 
     const food_kcal = (
-      parseFloat(OBJECT?.food_section[index]?.food_kcal) / parseInt(food_count)
+      parseFloat(OBJECT?.food_section[index]?.food_kcal) / parseFloat(food_count)
     ).toFixed(0);
     const food_carb = (
-      parseFloat(OBJECT?.food_section[index]?.food_carb) / parseInt(food_count)
+      parseFloat(OBJECT?.food_section[index]?.food_carb) / parseFloat(food_count)
     ).toFixed(1);
     const food_protein = (
-      parseFloat(OBJECT?.food_section[index]?.food_protein) / parseInt(food_count)
+      parseFloat(OBJECT?.food_section[index]?.food_protein) / parseFloat(food_count)
     ).toFixed(1);
     const food_fat = (
-      parseFloat(OBJECT?.food_section[index]?.food_fat) / parseInt(food_count)
+      parseFloat(OBJECT?.food_section[index]?.food_fat) / parseFloat(food_count)
     ).toFixed(1);
     const food_key = (
       `${food_name}_${food_brand}_${food_kcal}_${food_carb}_${food_protein}_${food_fat}`
@@ -646,6 +646,19 @@ export const FoodDetail = () => {
                 if (/^0(?!\.)/.test(value)) {
                   value = value.replace(/^0+/, '');
                 }
+                // 영양소 설정 함수
+                const setNutrient = (nut: string | number, extra: string) => {
+                  const numericValue = Number(value) || 1;
+                  const foodCount = Number(item?.food_count) || 1;
+                  if (!isNaN(numericValue) && !isNaN(foodCount)) {
+                    return (
+                      extra === "kcal"
+                      ? (numericValue * Number(nut) / foodCount).toFixed(0)
+                      : (numericValue * Number(nut) / foodCount).toFixed(1)
+                    );
+                  }
+                  return nut;
+                };
                 // object 설정
                 setOBJECT((prev: any) => ({
                   ...prev,
@@ -653,6 +666,10 @@ export const FoodDetail = () => {
                     idx === i ? {
                       ...section,
                       food_count: value,
+                      food_kcal: setNutrient(item?.food_kcal, "kcal"),
+                      food_fat: setNutrient(item?.food_fat, "fat"),
+                      food_carb: setNutrient(item?.food_carb, "carb"),
+                      food_protein: setNutrient(item?.food_protein, "protein"),
                     } : section
                   ))
                 }));
@@ -664,6 +681,8 @@ export const FoodDetail = () => {
               locked={LOCKED}
               label={translate("gram")}
               value={insertComma(item?.food_gram || "0")}
+              inputRef={REFS?.[i]?.food_gram}
+              error={ERRORS?.[i]?.food_gram}
               onChange={(e: any) => {
                 // 빈값 처리
                 let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
@@ -722,6 +741,8 @@ export const FoodDetail = () => {
               shrink={"shrink"}
               label={translate("brand")}
               value={item?.food_brand || ""}
+              inputRef={REFS?.[i]?.food_brand}
+              error={ERRORS?.[i]?.food_brand}
               onChange={(e: any) => {
                 // 빈값 처리
                 let value = e.target.value === "" ? "" : e.target.value;

@@ -171,7 +171,7 @@ export const SleepList = () => {
                     />
                   </Grid>
                   <Grid size={10} className={"d-row-left"}>
-                    <Div className={"fs-1-1rem fw-600 black me-5"}>
+                    <Div className={"fs-1-0rem fw-600 black me-5"}>
                       {item.sleep_dateStart?.substring(5, 10)}
                     </Div>
                     <Div className={"fs-0-9rem fw-500 dark ms-5"}>

@@ -121,12 +121,12 @@ export const UserLogin = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        sync();
         setSession("setting", "id", "", {
           sessionId: res.data.result.user_id,
           admin: res.data.admin === "admin" ? "true" : "false",
         });
         navigate("/today/list");
+        sync();
       }
       else if (res.data.status === "isGoogleUser") {
         setSession("setting", "id", "", {

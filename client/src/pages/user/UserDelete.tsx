@@ -328,7 +328,7 @@ export const UserDelete = () => {
               flowSave();
             }}
           >
-            {translate("userDelete")}
+            {translate("letsDelete")}
           </Btn>
         </Grid>
       </Grid>
@@ -341,7 +341,7 @@ export const UserDelete = () => {
         <Grid container spacing={0} columns={12}>
           <Grid size={12} className={"d-col-center"}>
             {titleSection()}
-            <Hr px={20} />
+            <Hr px={40} />
             {deleteSection()}
             <Hr px={20} />
             {buttonSection()}

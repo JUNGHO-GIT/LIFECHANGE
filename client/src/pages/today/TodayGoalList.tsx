@@ -199,16 +199,16 @@ export const TodayGoalList = () => {
                     />
                   </Grid>
                   <Grid size={10} className={"d-row-left"}>
-                    <Div className={"fs-1-1rem fw-600 black me-5"}>
+                    <Div className={"fs-1-0rem fw-600 black"}>
                       {item.exercise_goal_dateStart?.substring(5, 10)}
                     </Div>
                     <Div className={"fs-0-9rem fw-500 dark ms-5"}>
                       {translate(getDayNotFmt(item.exercise_goal_dateStart).format("ddd"))}
                     </Div>
-                    <Div className={"fs-1-0rem fw-500 dark ms-10 me-10"}>
-                      ~
+                    <Div className={"fs-0-8rem fw-500 dark ms-5 me-5"}>
+                      -
                     </Div>
-                    <Div className={"fs-1-1rem fw-600 black me-5"}>
+                    <Div className={"fs-1-0rem fw-600 black"}>
                       {item.exercise_goal_dateEnd?.substring(5, 10)}
                     </Div>
                     <Div className={"fs-0-9rem fw-500 dark ms-5"}>
@@ -561,16 +561,16 @@ export const TodayGoalList = () => {
                     />
                   </Grid>
                   <Grid size={10} className={"d-row-left"}>
-                    <Div className={"fs-1-1rem fw-600 black me-5"}>
+                    <Div className={"fs-1-0rem fw-600 black"}>
                       {item.food_goal_dateStart?.substring(5, 10)}
                     </Div>
                     <Div className={"fs-0-9rem fw-500 dark ms-5"}>
                       {translate(getDayNotFmt(item.food_goal_dateStart).format("ddd"))}
                     </Div>
-                    <Div className={"fs-1-0rem fw-500 dark ms-10 me-10"}>
-                      ~
+                    <Div className={"fs-0-8rem fw-500 dark ms-5 me-5"}>
+                      -
                     </Div>
-                    <Div className={"fs-1-1rem fw-600 black me-5"}>
+                    <Div className={"fs-1-0rem fw-600 black"}>
                       {item.food_goal_dateEnd?.substring(5, 10)}
                     </Div>
                     <Div className={"fs-0-9rem fw-500 dark ms-5"}>
@@ -923,16 +923,16 @@ export const TodayGoalList = () => {
                     />
                   </Grid>
                   <Grid size={10} className={"d-row-left"}>
-                    <Div className={"fs-1-1rem fw-600 black me-5"}>
+                    <Div className={"fs-1-0rem fw-600 black"}>
                       {item.money_goal_dateStart?.substring(5, 10)}
                     </Div>
                     <Div className={"fs-0-9rem fw-500 dark ms-5"}>
                       {translate(getDayNotFmt(item.money_goal_dateStart).format("ddd"))}
                     </Div>
-                    <Div className={"fs-1-0rem fw-500 dark ms-10 me-10"}>
-                      ~
+                    <Div className={"fs-0-8rem fw-500 dark ms-5 me-5"}>
+                      -
                     </Div>
-                    <Div className={"fs-1-1rem fw-600 black me-5"}>
+                    <Div className={"fs-1-0rem fw-600 black"}>
                       {item.money_goal_dateEnd?.substring(5, 10)}
                     </Div>
                     <Div className={"fs-0-9rem fw-500 dark ms-5"}>
@@ -1147,16 +1147,16 @@ export const TodayGoalList = () => {
                     />
                   </Grid>
                   <Grid size={10} className={"d-row-left"}>
-                    <Div className={"fs-1-1rem fw-600 black me-5"}>
+                    <Div className={"fs-1-0rem fw-600 black"}>
                       {item.sleep_goal_dateStart?.substring(5, 10)}
                     </Div>
                     <Div className={"fs-0-9rem fw-500 dark ms-5"}>
                       {translate(getDayNotFmt(item.sleep_goal_dateStart).format("ddd"))}
                     </Div>
-                    <Div className={"fs-1-0rem fw-500 dark ms-10 me-10"}>
-                      ~
+                    <Div className={"fs-0-8rem fw-500 dark ms-5 me-5"}>
+                      -
                     </Div>
-                    <Div className={"fs-1-1rem fw-600 black me-5"}>
+                    <Div className={"fs-1-0rem fw-600 black"}>
                       {item.sleep_goal_dateEnd?.substring(5, 10)}
                     </Div>
                     <Div className={"fs-0-9rem fw-500 dark ms-5"}>

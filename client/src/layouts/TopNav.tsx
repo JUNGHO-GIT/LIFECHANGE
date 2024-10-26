@@ -14,7 +14,8 @@ export const TopNav = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { firstStr, secondStr, localCurrency, navigate } = useCommonValue();
-  const { sessionTitle, sessionPercent, sessionScale, sessionKcal, sessionProperty } = useCommonValue();
+  const { sessionTitle, sessionPercent } = useCommonValue();
+  const { sessionScale, sessionNutrition, sessionProperty } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
@@ -62,27 +63,27 @@ export const TopNav = () => {
     dateStart: "",
     dateEnd: "",
   });
-  const [kcal, setKcal] = useState<any>({
-    initAvgKcal: "0",
-    totalKcal: "0",
-    totalCarb: "0",
-    totalProtein: "0",
-    totalFat: "0",
-    curAvgKcal: "0",
-    curAvgCarb: "0",
-    curAvgProtein: "0",
-    curAvgFat: "0",
+  const [nutrition, setNutrition] = useState<any>({
+    initAvgKcalIntake: "0",
+    totalKcalIntake: "0",
+    totalCarbIntake: "0",
+    totalProteinIntake: "0",
+    totalFatIntake: "0",
+    curAvgKcalIntake: "0",
+    curAvgCarbIntake: "0",
+    curAvgProteinIntake: "0",
+    curAvgFatIntake: "0",
     dateStart: "",
     dateEnd: "",
   });
   const [property, setProperty] = useState<any>({
     initProperty: "0",
-    totalIncomeInclude: "0",
-    totalExpenseInclude: "0",
-    totalIncomeExclude: "0",
-    totalExpenseExclude: "0",
-    curPropertyInclude: "0",
-    curPropertyExclude: "0",
+    totalIncomeAll: "0",
+    totalIncomeExclusion: "0",
+    totalExpenseAll: "0",
+    totalExpenseExclusion: "0",
+    curPropertyAll: "0",
+    curPropertyExclusion: "0",
     dateStart: "",
     dateEnd: "",
   });
@@ -165,7 +166,7 @@ export const TopNav = () => {
   // 퍼센트, 자산, 체중 설정
   useEffect(() => {
     if (sessionTitle?.setting?.sync) {
-      const { percent, property, kcal, scale } = sessionTitle.setting.sync;
+      const { percent, property, nutrition, scale } = sessionTitle.setting.sync;
 
       // 상태가 실제로 변경될 때만 업데이트
       setPercent((prev: any) => {
@@ -180,9 +181,9 @@ export const TopNav = () => {
         }
         return prev;
       });
-      setKcal((prev: any) => {
-        if (JSON.stringify(prev) !== JSON.stringify(kcal)) {
-          return kcal;
+      setNutrition((prev: any) => {
+        if (JSON.stringify(prev) !== JSON.stringify(nutrition)) {
+          return nutrition;
         }
         return prev;
       });
@@ -320,7 +321,7 @@ export const TopNav = () => {
               </Div>
               <Br px={10} />
               <Div className={"fs-0-8rem fw-500 dark"}>
-                {`[${getMonthStartFmt()} ~ ${getMonthEndFmt()}]`}
+                {`[${getMonthStartFmt()} - ${getMonthEndFmt()}]`}
               </Div>
             </Grid>
             <Hr px={1} />
@@ -446,7 +447,7 @@ export const TopNav = () => {
               </Div>
               <Br px={10} />
               <Div className={"fs-0-8rem fw-500 dark"}>
-                {`[${scale?.dateStart} ~ ${scale?.dateEnd}]`}
+                {`[${scale?.dateStart} - ${scale?.dateEnd}]`}
               </Div>
             </Grid>
             <Hr px={1} />
@@ -531,8 +532,8 @@ export const TopNav = () => {
         )}
       </PopUp>
     );
-    // 3. kcal -------------------------------------------------------------------------------------
-    const kcalSection = () => (
+    // 3. nutrition --------------------------------------------------------------------------------
+    const nutritionSection = () => (
       <PopUp
         type={"innerCenter"}
         position={"center"}
@@ -542,11 +543,11 @@ export const TopNav = () => {
           className={"w-max60vw h-max70vh border-1 radius-1 p-20"}>
             <Grid size={12} className={"d-col-center"}>
               <Div className={"fs-1-3rem fw-600"}>
-                {`${translate("average")} ${translate("kcal")}`}
+                {`${translate("avgKcalIntake")}`}
               </Div>
               <Br px={10} />
               <Div className={"fs-0-8rem fw-500 dark"}>
-                {`[${kcal?.dateStart} ~ ${kcal?.dateEnd}]`}
+                {`[${nutrition?.dateStart} - ${nutrition?.dateEnd}]`}
               </Div>
             </Grid>
             <Hr px={1} />
@@ -557,7 +558,7 @@ export const TopNav = () => {
                 className={"w-16 h-16"}
               />
               <Div className={"fs-1-4rem fw-600 ms-2vw me-2vw"}>
-                {insertComma(kcal.totalKcal || "0")}
+                {insertComma(nutrition.curAvgKcalIntake || "0")}
               </Div>
               <Div className={"fs-0-6rem fw-500 dark"}>
                 {translate("kc")}
@@ -567,8 +568,8 @@ export const TopNav = () => {
             <Grid size={12} className={"d-center"}>
               <Input
                 readOnly={true}
-                label={translate("initAvgKcal")}
-                value={insertComma(kcal.initAvgKcal || "0")}
+                label={translate("initAvgKcalIntake")}
+                value={insertComma(nutrition.initAvgKcalIntake || "0")}
                 startadornment={
                   <Img
                     key={"food2"}
@@ -584,8 +585,8 @@ export const TopNav = () => {
             <Grid size={12} className={"d-center"}>
               <Input
                 readOnly={true}
-                label={translate("totalCarb")}
-                value={insertComma(kcal.totalCarb || "0")}
+                label={translate("totalCarbIntake")}
+                value={insertComma(nutrition.totalCarbIntake || "0")}
                 startadornment={
                   <Img
                     key={"food3"}
@@ -601,8 +602,8 @@ export const TopNav = () => {
             <Grid size={12} className={"d-center"}>
               <Input
                 readOnly={true}
-                label={translate("totalProtein")}
-                value={insertComma(kcal.totalProtein || "0")}
+                label={translate("totalProteinIntake")}
+                value={insertComma(nutrition.totalProteinIntake || "0")}
                 startadornment={
                   <Img
                     key={"food4"}
@@ -618,8 +619,8 @@ export const TopNav = () => {
             <Grid size={12} className={"d-center"}>
               <Input
                 readOnly={true}
-                label={translate("totalFat")}
-                value={insertComma(kcal.totalFat || "0")}
+                label={translate("totalFatIntake")}
+                value={insertComma(nutrition.totalFatIntake || "0")}
                 startadornment={
                   <Img
                     key={"food5"}
@@ -641,7 +642,7 @@ export const TopNav = () => {
             src={"food6"}
             className={"w-max25 h-max25"}
             onClick={(e: any) => {
-              setKcal(sessionKcal);
+              setNutrition(sessionNutrition);
               popTrigger.openPopup(e.currentTarget)
             }}
           />
@@ -663,7 +664,7 @@ export const TopNav = () => {
               </Div>
               <Br px={10} />
               <Div className={"fs-0-8rem fw-500 dark"}>
-                {`[${property?.dateStart} ~ ${property?.dateEnd}]`}
+                {`[${property?.dateStart} - ${property?.dateEnd}]`}
               </Div>
               <Br px={10} />
               <Div className={"fs-0-7rem fw-500 dark ms-10"}>
@@ -687,9 +688,9 @@ export const TopNav = () => {
               />
               <Div className={"fs-1-4rem fw-600 ms-2vw me-2vw"}>
                 {includingExclusions ? (
-                  insertComma(property.curPropertyInclude || "0")
+                  insertComma(property.curPropertyAll || "0")
                 ) : (
-                  insertComma(property.curPropertyExclude || "0")
+                  insertComma(property.curPropertyExclusion || "0")
                 )}
               </Div>
               <Div className={"fs-0-6rem fw-500 dark"}>
@@ -720,9 +721,9 @@ export const TopNav = () => {
                 label={translate("sumIncome")}
                 value={
                   includingExclusions ? (
-                    insertComma(property.totalIncomeInclude || "0")
+                    insertComma(property.totalIncomeAll || "0")
                   ) : (
-                    insertComma(property.totalIncomeExclude || "0")
+                    insertComma(property.totalIncomeExclusion || "0")
                   )
                 }
                 startadornment={
@@ -743,9 +744,9 @@ export const TopNav = () => {
                 label={translate("sumExpense")}
                 value={
                   includingExclusions ? (
-                    insertComma(property.totalExpenseInclude || "0")
+                    insertComma(property.totalExpenseAll || "0")
                   ) : (
-                    insertComma(property.totalExpenseExclude || "0")
+                    insertComma(property.totalExpenseExclusion || "0")
                   )
                 }
                 startadornment={
@@ -850,7 +851,7 @@ export const TopNav = () => {
             {scaleSection()}
           </Grid>
           <Grid size={3} className={"d-center"}>
-            {kcalSection()}
+            {nutritionSection()}
           </Grid>
           <Grid size={3} className={"d-center"}>
             {propertySection()}

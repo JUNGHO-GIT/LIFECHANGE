@@ -30,20 +30,20 @@ export const list = async (object: any) => {
     }
 
     if (param.length > 12) {
-      finalResult = "fs-0-8rem fw-600";
+      finalResult = "fs-0-7rem fw-600";
     }
     else if (6 < param.length && param.length <= 12) {
-      finalResult = "fs-0-9rem fw-600";
+      finalResult = "fs-0-8rem fw-600";
     }
     else {
-      finalResult = "fs-1-0rem fw-600";
+      finalResult = "fs-0-9rem fw-600";
     }
 
     if (param === "0" || param === "00:00") {
       finalResult += " grey";
     }
     else {
-      finalResult += " black";
+      finalResult += " light-black";
     }
 
     return finalResult;
@@ -58,36 +58,36 @@ export const list = async (object: any) => {
     let finalResult: string = "";
 
     if (String(Math.abs(goal - real)).length > 12) {
-      finalResult = "fs-0-8rem fw-600";
+      finalResult = "fs-0-7rem fw-600";
     }
     else if (6 < String(Math.abs(goal - real)).length && String(Math.abs(goal - real)).length <= 12) {
-      finalResult = "fs-0-9rem fw-600";
+      finalResult = "fs-0-8rem fw-600";
     }
     else {
-      finalResult = "fs-1-0rem fw-600";
+      finalResult = "fs-0-9rem fw-600";
     }
 
     // 1. kcal, carb, protein, fat
     if (extra === "kcal" || extra === "carb" || extra === "protein" || extra === "fat") {
       percent = Math.abs(((goal - real) / goal) * 100);
 
-      // 1. ~ 1%
+      // 1. - 1%
       if (percent > 0 && percent <= 1) {
         finalResult += " firstScore";
       }
-      // 2. 1% ~ 10%
+      // 2. 1% - 10%
       else if (percent > 1 && percent <= 10) {
         finalResult += " secondScore";
       }
-      // 3. 10% ~ 30%
+      // 3. 10% - 30%
       else if (percent > 10 && percent <= 30) {
         finalResult += " thirdScore";
       }
-      // 4. 30% ~ 50%
+      // 4. 30% - 50%
       else if (percent > 30 && percent <= 50) {
         finalResult += " fourthScore";
       }
-      // 5. 50% ~
+      // 5. 50% -
       else {
         finalResult += " fifthScore";
       }

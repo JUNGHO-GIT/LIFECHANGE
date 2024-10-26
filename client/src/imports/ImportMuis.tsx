@@ -21,16 +21,16 @@ import {
   // g
   Grid2 as Grid,
 
-  // h ~ k
+  // h - k
   InputAdornment, InputBase, InputLabel, IconButton,
 
   // l
   Link, List, ListItem,
 
-  // m ~ o
+  // m - o
   Menu, MenuItem, MenuList, Modal,
 
-  // p ~ r
+  // p - r
   Pagination, Paper, Popover, Popper,
 
   // s
@@ -97,16 +97,16 @@ export {
   // g
   Grid,
 
-  // h ~ k
+  // h - k
   InputAdornment, InputBase, InputLabel, IconButton,
 
   // l
   Link, List, ListItem,
 
-  // m ~ o
+  // m - o
   Menu, MenuItem, MenuList, Modal,
 
-  // p ~ r
+  // p - r
   Pagination, Paper, Popover, Popper,
 
   // s

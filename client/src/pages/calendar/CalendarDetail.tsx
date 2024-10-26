@@ -59,8 +59,8 @@ export const CalendarDetail = () => {
   useEffect(() => {
     if (EXIST?.[DATE.dateType]?.length > 0) {
 
-      const dateRange = `${DATE.dateStart.trim()} ~ ${DATE.dateEnd.trim()}`;
-      const objectRange = `${OBJECT.calendar_dateStart.trim()} ~ ${OBJECT.calendar_dateEnd.trim()}`;
+      const dateRange = `${DATE.dateStart.trim()} - ${DATE.dateEnd.trim()}`;
+      const objectRange = `${OBJECT.calendar_dateStart.trim()} - ${OBJECT.calendar_dateEnd.trim()}`;
 
       const isExist = (
         EXIST[DATE.dateType].includes(dateRange)

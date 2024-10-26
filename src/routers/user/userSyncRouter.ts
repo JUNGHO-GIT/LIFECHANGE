@@ -6,7 +6,7 @@ import * as service from "@services/user/userSyncService";
 import * as middleware from "@middlewares/user/userSyncMiddleware";
 export const router = express.Router();
 
-// 0. category -------------------------------------------------------------------------------------
+// 0. category (카테고리 조회) ---------------------------------------------------------------------
 router.get("/category", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.category(
@@ -44,7 +44,7 @@ router.get("/category", async (req: Request, res: Response) => {
   }
 });
 
-// 1. percent --------------------------------------------------------------------------------------
+// 1. percent (퍼센트 조회) ------------------------------------------------------------------------
 router.get("/percent", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.percent(
@@ -84,7 +84,7 @@ router.get("/percent", async (req: Request, res: Response) => {
   }
 });
 
-// 2. scale ----------------------------------------------------------------------------------------
+// 2. scale (체중 조회) ----------------------------------------------------------------------------
 router.get("/scale", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.scale (
@@ -123,10 +123,10 @@ router.get("/scale", async (req: Request, res: Response) => {
   }
 });
 
-// 3-1. kcal ---------------------------------------------------------------------------------------
-router.get("/kcal", async (req: Request, res: Response) => {
+// 3-1. nutrition (영양정보 조회) ------------------------------------------------------------------
+router.get("/nutrition", async (req: Request, res: Response) => {
   try {
-    let finalResult = await service.kcal (
+    let finalResult = await service.nutrition (
       req.query.user_id as string,
       req.query.DATE as any,
     );
@@ -162,7 +162,7 @@ router.get("/kcal", async (req: Request, res: Response) => {
   }
 });
 
-// 3-2. favorite -----------------------------------------------------------------------------------
+// 3-2. favorite (즐겨찾기 조회) -------------------------------------------------------------------
 router.get("/favorite", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.favorite (
@@ -201,7 +201,7 @@ router.get("/favorite", async (req: Request, res: Response) => {
   }
 });
 
-// 4. property -------------------------------------------------------------------------------------
+// 4. property (자산 조회) -------------------------------------------------------------------------
 router.get("/property", async (req: Request, res: Response) => {
   try {
     let finalResult = await service.property (

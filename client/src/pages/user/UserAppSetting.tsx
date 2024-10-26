@@ -37,7 +37,7 @@ export const UserAppSetting = () => {
       autoLoginPw: "",
     });
     sessionStorage.clear();
-    navigate("/");
+    navigate("/user/login");
   };
 
   // 4. handle -------------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ export const UserAppSetting = () => {
                   }}
                 >
                   <TableCell className={"w-90vw p-15"}>
-                    {translate("dataDetail")}
+                    {translate("userInformation")}
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
                     <Icons

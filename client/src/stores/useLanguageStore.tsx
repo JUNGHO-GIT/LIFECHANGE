@@ -58,11 +58,27 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
       },
       appInfo: {
         ko: "앱 정보",
-        en: "App Info"
+        en: "App Information"
       },
       average: {
         ko: "평균",
-        en: "Average"
+        en: "Avg"
+      },
+      avgKcalIntake: {
+        ko: "평균 칼로리 섭취량",
+        en: "Avg Kcal Intake"
+      },
+      avgCarbIntake: {
+        ko: "평균 탄수화물 섭취량",
+        en: "Avg Carb Intake"
+      },
+      avgProteinIntake: {
+        ko: "평균 단백질 섭취량",
+        en: "Avg Protein Intake"
+      },
+      avgFatIntake: {
+        ko: "평균 지방 섭취량",
+        en: "Avg Fat Intake"
       },
 
       // -------------------------------------------------------------------------------------------
@@ -148,7 +164,7 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
       },
       chartAvg: {
         ko: "평균",
-        en: "Average"
+        en: "Avg"
       },
       curScale: {
         ko: "현재 체중",
@@ -170,7 +186,7 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "현재 지방 평균",
         en: "Current Fat Goal"
       },
-      curPropertyExclude: {
+      curPropertyExclusion: {
         ko: "현재 자산",
         en: "Current Property"
       },
@@ -221,9 +237,9 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "분류 3",
         en: "Category 3"
       },
-      dataDetail: {
+      userInformation: {
         ko: "회원정보",
-        en: "Information"
+        en: "User Information"
       },
       dataList: {
         ko: "데이터 리스트",
@@ -632,9 +648,9 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "초기 체중",
         en: "Initial Weight"
       },
-      initAvgKcal: {
-        ko: "초기 칼로리 목표",
-        en: "Initial Kcal Goal"
+      initAvgKcalIntake: {
+        ko: "초기 평균 칼로리 섭취량 목표",
+        en: "Initial Avg Kcal Intake Goal"
       },
       initProperty: {
         ko: "초기 자산",
@@ -736,6 +752,10 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
       unlocked: {
         ko: "열림",
         en: "Unlocked"
+      },
+      letsDelete: {
+        ko: "탈퇴하기",
+        en: "Withdrawal"
       },
 
       // -------------------------------------------------------------------------------------------
@@ -999,8 +1019,8 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         en: "Save All"
       },
       score: {
-        ko: "* 평균점수 : 1.00 ~ 5.00",
-        en: "* Average score : 1.00 ~ 5.00"
+        ko: "* 평균점수 : 1.00 - 5.00",
+        en: "* Average score : 1.00 - 5.00"
       },
       select: {
         ko: "선택별",
@@ -1073,6 +1093,10 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
 
       // -------------------------------------------------------------------------------------------
       // t
+      transportation: {
+        ko: "교통",
+        en: "Transportation"
+      },
       toSave: {
         ko: "저장하기",
         en: "To Save"
@@ -1125,6 +1149,10 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "총합",
         en: "total"
       },
+      totalVolume: {
+        ko: "총 볼륨",
+        en: "Total Volume"
+      },
       totalCount: {
         ko: "총 횟수",
         en: "Total Count"
@@ -1133,37 +1161,29 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "총 유산소",
         en: "Total Cardio"
       },
-      totalCarb: {
-        ko: "총 탄수화물",
-        en: "Total Carb"
-      },
-      totalFat: {
-        ko: "총 지방",
-        en: "Total Fat"
-      },
-      totalIncomeExclude: {
+      totalIncome: {
         ko: "총 수입",
         en: "Total Income"
       },
-      totalKcal: {
-        ko: "총 칼로리",
-        en: "Total Kcal"
-      },
-      totalExpenseExclude: {
+      totalExpense: {
         ko: "총 지출",
         en: "Total Expense"
       },
-      totalProtein: {
-        ko: "총 단백질",
-        en: "Total Protein"
+      totalKcalIntake: {
+        ko: "총 칼로리 섭취량",
+        en: "Total Kcal Intake"
       },
-      totalVolume: {
-        ko: "총 볼륨",
-        en: "Total Volume"
+      totalProteinIntake: {
+        ko: "총 단백질 섭취량",
+        en: "Total Protein Intake"
       },
-      transportation: {
-        ko: "교통",
-        en: "Transportation"
+      totalCarbIntake: {
+        ko: "총 탄수화물 섭취량",
+        en: "Total Carb Intake"
+      },
+      totalFatIntake: {
+        ko: "총 지방 섭취량",
+        en: "Total Fat Intake"
       },
 
       // -------------------------------------------------------------------------------------------
@@ -1178,7 +1198,7 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
       },
       userDelete: {
         ko: "회원탈퇴",
-        en: "Withdrawal"
+        en: "Cancel Membership"
       },
 
       // -------------------------------------------------------------------------------------------

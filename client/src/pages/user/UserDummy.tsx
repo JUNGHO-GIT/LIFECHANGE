@@ -235,7 +235,7 @@ export const UserDummy = () => {
                         ) : (
                           <>
                             <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
-                            <Div className={"ms-3vw me-3vw"}> ~ </Div>
+                            <Div className={"ms-3vw me-3vw"}> - </Div>
                             <Div>{item.exercise_goal_dateEnd?.substring(5, 10)}</Div>
                           </>
                         )}
@@ -294,7 +294,7 @@ export const UserDummy = () => {
                         ) : (
                           <>
                             <Div>{item.exercise_dateStart?.substring(5, 10)}</Div>
-                            <Div className={"ms-3vw me-3vw"}> ~ </Div>
+                            <Div className={"ms-3vw me-3vw"}> - </Div>
                             <Div>{item.exercise_dateEnd?.substring(5, 10)}</Div>
                           </>
                         )}
@@ -351,7 +351,7 @@ export const UserDummy = () => {
                         ) : (
                           <>
                             <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
-                            <Div className={"ms-3vw me-3vw"}> ~ </Div>
+                            <Div className={"ms-3vw me-3vw"}> - </Div>
                             <Div>{item.food_goal_dateEnd?.substring(5, 10)}</Div>
                           </>
                         )}
@@ -411,7 +411,7 @@ export const UserDummy = () => {
                         ) : (
                           <>
                             <Div>{item.food_dateStart?.substring(5, 10)}</Div>
-                            <Div className={"ms-3vw me-3vw"}> ~ </Div>
+                            <Div className={"ms-3vw me-3vw"}> - </Div>
                             <Div>{item.food_dateEnd?.substring(5, 10)}</Div>
                           </>
                         )}
@@ -469,7 +469,7 @@ export const UserDummy = () => {
                         ) : (
                           <>
                             <Div>{item.money_goal_dateStart?.substring(5, 10)}</Div>
-                            <Div className={"ms-3vw me-3vw"}> ~ </Div>
+                            <Div className={"ms-3vw me-3vw"}> - </Div>
                             <Div>{item.money_goal_dateEnd?.substring(5, 10)}</Div>
                           </>
                         )}
@@ -521,7 +521,7 @@ export const UserDummy = () => {
                         ) : (
                           <>
                             <Div>{item.money_dateStart?.substring(5, 10)}</Div>
-                            <Div className={"ms-3vw me-3vw"}> ~ </Div>
+                            <Div className={"ms-3vw me-3vw"}> - </Div>
                             <Div>{item.money_dateEnd?.substring(5, 10)}</Div>
                           </>
                         )}
@@ -574,7 +574,7 @@ export const UserDummy = () => {
                         ) : (
                           <>
                             <Div>{item.sleep_goal_dateStart?.substring(5, 10)}</Div>
-                            <Div className={"ms-3vw me-3vw"}> ~ </Div>
+                            <Div className={"ms-3vw me-3vw"}> - </Div>
                             <Div>{item.sleep_goal_dateEnd?.substring(5, 10)}</Div>
                           </>
                         )}
@@ -630,7 +630,7 @@ export const UserDummy = () => {
                         ) : (
                           <>
                             <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
-                            <Div className={"ms-3vw me-3vw"}> ~ </Div>
+                            <Div className={"ms-3vw me-3vw"}> - </Div>
                             <Div>{item.sleep_dateEnd?.substring(5, 10)}</Div>
                           </>
                         )}

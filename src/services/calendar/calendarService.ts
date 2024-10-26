@@ -34,7 +34,7 @@ export const exist = async (
       const curDateStart = curr.calendar_dateStart;
       const curDateEnd = curr.calendar_dateEnd;
 
-      acc[curDateType].push(`${curDateStart} ~ ${curDateEnd}`);
+      acc[curDateType].push(`${curDateStart} - ${curDateEnd}`);
 
       return acc;
     }, {

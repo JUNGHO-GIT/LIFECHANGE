@@ -34,7 +34,7 @@ export const exist = async (
       const curDateStart = curr.exercise_goal_dateStart;
       const curDateEnd = curr.exercise_goal_dateEnd;
 
-      acc[curDateType].push(`${curDateStart} ~ ${curDateEnd}`);
+      acc[curDateType].push(`${curDateStart} - ${curDateEnd}`);
 
       return acc;
     }, {

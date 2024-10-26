@@ -59,8 +59,8 @@ export const MoneyDetail = () => {
   useEffect(() => {
     if (EXIST?.[DATE.dateType]?.length > 0) {
 
-      const dateRange = `${DATE.dateStart.trim()} ~ ${DATE.dateEnd.trim()}`;
-      const objectRange = `${OBJECT.money_dateStart.trim()} ~ ${OBJECT.money_dateEnd.trim()}`;
+      const dateRange = `${DATE.dateStart.trim()} - ${DATE.dateEnd.trim()}`;
+      const objectRange = `${OBJECT.money_dateStart.trim()} - ${OBJECT.money_dateEnd.trim()}`;
 
       const isExist = (
         EXIST[DATE.dateType].includes(dateRange)
@@ -169,24 +169,24 @@ export const MoneyDetail = () => {
     const totals = OBJECT?.money_section.reduce((acc: any, cur: any) => {
       return {
         // money_part_val 가 income인경우
-        totalIncomeExclude: (
-          acc.totalIncomeExclude + (cur.money_part_val === "income" ? Number(cur.money_amount) : 0)
+        totalIncomeExclusion: (
+          acc.totalIncomeExclusion + (cur.money_part_val === "income" ? Number(cur.money_amount) : 0)
         ),
 
         // money_part_val 가 expense인경우
-        totalExpenseExclude: (
-          acc.totalExpenseExclude + (cur.money_part_val === "expense" ? Number(cur.money_amount) : 0)
+        totalExpenseExclusion: (
+          acc.totalExpenseExclusion + (cur.money_part_val === "expense" ? Number(cur.money_amount) : 0)
         ),
       };
     }, {
-      totalIncomeExclude: 0,
-      totalExpenseExclude: 0
+      totalIncomeExclusion: 0,
+      totalExpenseExclusion: 0
     });
 
     setOBJECT((prev: any) => ({
       ...prev,
-      money_total_income: Math.round(totals.totalIncomeExclude).toString(),
-      money_total_expense: Math.round(totals.totalExpenseExclude).toString(),
+      money_total_income: Math.round(totals.totalIncomeExclusion).toString(),
+      money_total_expense: Math.round(totals.totalExpenseExclusion).toString(),
     }));
 
   }, [OBJECT?.money_section]);
@@ -231,7 +231,6 @@ export const MoneyDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        sync("property");
         setALERT({
           open: !ALERT.open,
           msg: translate(res.data.msg),
@@ -244,6 +243,7 @@ export const MoneyDetail = () => {
             dateEnd: DATE.dateEnd
           }
         });
+        sync("property");
       }
       else {
         setALERT({
@@ -281,7 +281,6 @@ export const MoneyDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        sync("property");
         setALERT({
           open: !ALERT.open,
           msg: translate(res.data.msg),
@@ -294,6 +293,7 @@ export const MoneyDetail = () => {
             dateEnd: DATE.dateEnd
           }
         });
+        sync("property");
       }
       else {
         setALERT({
@@ -357,7 +357,7 @@ export const MoneyDetail = () => {
         <Grid size={12}>
           <Input
             locked={LOCKED}
-            label={translate("totalIncomeExclude")}
+            label={translate("totalIncome")}
             value={insertComma(OBJECT?.money_total_income || "0")}
             startadornment={
               <Img
@@ -374,7 +374,7 @@ export const MoneyDetail = () => {
         <Grid size={12}>
           <Input
             locked={LOCKED}
-            label={translate("totalExpenseExclude")}
+            label={translate("totalExpense")}
             value={insertComma(OBJECT?.money_total_expense || "0")}
             startadornment={
               <Img

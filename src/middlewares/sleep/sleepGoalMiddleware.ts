@@ -72,20 +72,20 @@ export const list = async (object: any) => {
     }
 
     if (param.length > 12) {
-      finalResult = "fs-0-8rem fw-600";
+      finalResult = "fs-0-7rem fw-600";
     }
     else if (6 < param.length && param.length <= 12) {
-      finalResult = "fs-0-9rem fw-600";
+      finalResult = "fs-0-8rem fw-600";
     }
     else {
-      finalResult = "fs-1-0rem fw-600";
+      finalResult = "fs-0-9rem fw-600";
     }
 
     if (param === "0" || param === "00:00") {
       finalResult += " grey";
     }
     else {
-      finalResult += " black";
+      finalResult += " light-black";
     }
 
     return finalResult;
@@ -111,23 +111,23 @@ export const list = async (object: any) => {
         diffVal = realDate.getTime() - goalDate.getTime();
       }
 
-      // 1. ~ 10분
+      // 1. - 10분
       if (0 <= diffVal && diffVal <= 600000) {
         finalResult += " firstScore";
       }
-      // 2. 10분 ~ 20분
+      // 2. 10분 - 20분
       else if (600000 < diffVal && diffVal <= 1200000) {
         finalResult += " secondScore";
       }
-      // 3. 20분 ~ 40분
+      // 3. 20분 - 40분
       else if (1200000 < diffVal && diffVal <= 2400000) {
         finalResult += " thirdScore";
       }
-      // 4. 40분 ~ 60분
+      // 4. 40분 - 60분
       else if (2400000 < diffVal && diffVal <= 3600000) {
         finalResult += " fourthScore";
       }
-      // 5. 60분 ~
+      // 5. 60분 -
       else {
         finalResult += " fifthScore";
       }
@@ -143,23 +143,23 @@ export const list = async (object: any) => {
 
       diffVal = (hours * 60) + minutes;
 
-      // 1. ~ 10분
+      // 1. - 10분
       if (0 <= diffVal && diffVal <= 10) {
         finalResult += " firstScore";
       }
-      // 2. 10분 ~ 20분
+      // 2. 10분 - 20분
       else if (10 < diffVal && diffVal <= 20) {
         finalResult += " secondScore";
       }
-      // 3. 20분 ~ 40분
+      // 3. 20분 - 40분
       else if (20 < diffVal && diffVal <= 40) {
         finalResult += " thirdScore";
       }
-      // 4. 40분 ~ 60분
+      // 4. 40분 - 60분
       else if (40 < diffVal && diffVal <= 60) {
         finalResult += " fourthScore";
       }
-      // 5. 60분 ~
+      // 5. 60분 -
       else {
         finalResult += " fifthScore";
       }

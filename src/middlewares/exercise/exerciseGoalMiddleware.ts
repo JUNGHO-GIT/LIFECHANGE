@@ -62,20 +62,20 @@ export const list = async (object: any) => {
     }
 
     if (param.length > 12) {
-      finalResult = "fs-0-8rem fw-600";
+      finalResult = "fs-0-7rem fw-600";
     }
     else if (6 < param.length && param.length <= 12) {
-      finalResult = "fs-0-9rem fw-600";
+      finalResult = "fs-0-8rem fw-600";
     }
     else {
-      finalResult = "fs-1-0rem fw-600";
+      finalResult = "fs-0-9rem fw-600";
     }
 
     if (param === "0" || param === "00:00") {
       finalResult += " grey";
     }
     else {
-      finalResult += " black";
+      finalResult += " light-black";
     }
 
     return finalResult;
@@ -90,36 +90,36 @@ export const list = async (object: any) => {
     let finalResult: string = "";
 
     if (String(Math.abs(goal - real)).length > 12) {
-      finalResult = "fs-0-8rem fw-600";
+      finalResult = "fs-0-7rem fw-600";
     }
     else if (6 < String(Math.abs(goal - real)).length && String(Math.abs(goal - real)).length <= 12) {
-      finalResult = "fs-0-9rem fw-600";
+      finalResult = "fs-0-8rem fw-600";
     }
     else {
-      finalResult = "fs-1-0rem fw-600";
+      finalResult = "fs-0-9rem fw-600";
     }
 
     // 1. count
     if (extra === "count") {
       percent = Math.abs(((goal - real) / goal) * 100);
 
-      // 1. ~ 1%
+      // 1. - 1%
       if (percent > 0 && percent <= 1) {
         finalResult += " firstScore";
       }
-      // 2. 1% ~ 10%
+      // 2. 1% - 10%
       else if (percent > 1 && percent <= 10) {
         finalResult += " secondScore";
       }
-      // 3. 10% ~ 30%
+      // 3. 10% - 30%
       else if (percent > 10 && percent <= 30) {
         finalResult += " thirdScore";
       }
-      // 4. 30% ~ 50%
+      // 4. 30% - 50%
       else if (percent > 30 && percent <= 50) {
         finalResult += " fourthScore";
       }
-      // 5. 50% ~
+      // 5. 50% -
       else {
         finalResult += " fifthScore";
       }
@@ -129,23 +129,23 @@ export const list = async (object: any) => {
     else if (extra === "volume") {
       percent = Math.abs(((goal - real) / goal) * 100);
 
-      // 1. ~ 1%
+      // 1. - 1%
       if (percent > 0 && percent <= 1) {
         finalResult += " firstScore";
       }
-      // 2. 1% ~ 10%
+      // 2. 1% - 10%
       else if (percent > 1 && percent <= 10) {
         finalResult += " secondScore";
       }
-      // 3. 10% ~ 30%
+      // 3. 10% - 30%
       else if (percent > 10 && percent <= 30) {
         finalResult += " thirdScore";
       }
-      // 4. 30% ~ 50%
+      // 4. 30% - 50%
       else if (percent > 30 && percent <= 50) {
         finalResult += " fourthScore";
       }
-      // 5. 50% ~
+      // 5. 50% -
       else {
         finalResult += " fifthScore";
       }
@@ -162,23 +162,23 @@ export const list = async (object: any) => {
 
       const diffVal = (hours * 60) + minutes;
 
-      // 1. ~ 10분
+      // 1. - 10분
       if (0 <= diffVal && diffVal <= 10) {
         finalResult += " firstScore";
       }
-      // 2. 10분 ~ 20분
+      // 2. 10분 - 20분
       else if (10 < diffVal && diffVal <= 20) {
         finalResult += " secondScore";
       }
-      // 3. 20분 ~ 40분
+      // 3. 20분 - 40분
       else if (20 < diffVal && diffVal <= 40) {
         finalResult += " thirdScore";
       }
-      // 4. 40분 ~ 60분
+      // 4. 40분 - 60분
       else if (40 < diffVal && diffVal <= 60) {
         finalResult += " fourthScore";
       }
-      // 5. 60분 ~
+      // 5. 60분 -
       else {
         finalResult += " fifthScore";
       }
@@ -188,23 +188,23 @@ export const list = async (object: any) => {
     else if (extra === "weight") {
       percent = Math.abs(((goal - real) / goal) * 100);
 
-      // 1. ~ 1%
+      // 1. - 1%
       if (percent > 0 && percent <= 1) {
         finalResult += " firstScore";
       }
-      // 2. 1% ~ 10%
+      // 2. 1% - 10%
       else if (percent > 1 && percent <= 10) {
         finalResult += " secondScore";
       }
-      // 3. 10% ~ 30%
+      // 3. 10% - 30%
       else if (percent > 10 && percent <= 30) {
         finalResult += " thirdScore";
       }
-      // 4. 30% ~ 50%
+      // 4. 30% - 50%
       else if (percent > 30 && percent <= 50) {
         finalResult += " fourthScore";
       }
-      // 5. 50% ~
+      // 5. 50% -
       else {
         finalResult += " fifthScore";
       }

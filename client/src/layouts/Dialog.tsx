@@ -322,34 +322,40 @@ export const Dialog = (
             setOpen(!open);
           }}
         >
-          <SpeedDialAction
-            key={translate("favorite")}
-            tooltipTitle={translate("favorite")}
-            className={open ? "" : "d-none"}
-            icon={
-              PATH.includes("/favorite/list") ? (
+          {PATH.includes("/favorite/list") ? (
+            <SpeedDialAction
+              key={translate("search")}
+              tooltipTitle={translate("search")}
+              className={open ? "" : "d-none"}
+              icon={
                 <Icons
                   key={"Search"}
                   name={"Search"}
                   className={"w-23 h-23"}
                 />
-              ) : (
+              }
+              onClick={() => {
+                navigate("/food/find/list");
+              }}
+            />
+          ) : (
+            <SpeedDialAction
+              key={translate("favorite")}
+              tooltipTitle={translate("favorite")}
+              className={open ? "" : "d-none"}
+              icon={
                 <Icons
                   key={"Star"}
                   name={"Star"}
                   fill={"gold"}
                   className={"w-23 h-23"}
                 />
-              )
-            }
-            onClick={() => {
-              PATH.includes("/favorite/list") ? (
-                navigate("/food/find/list")
-              ) : (
-                navigate("/food/favorite/list")
-              );
-            }}
-          />
+              }
+              onClick={() => {
+                navigate("/food/favorite/list");
+              }}
+            />
+          )}
           <SpeedDialAction
             key={translate("save")}
             tooltipTitle={translate("save")}

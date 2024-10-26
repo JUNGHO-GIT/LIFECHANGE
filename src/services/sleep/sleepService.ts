@@ -33,7 +33,7 @@ export const exist = async (
       const curDateStart = curr.sleep_dateStart;
       const curDateEnd = curr.sleep_dateEnd;
 
-      acc[curDateType].push(`${curDateStart} ~ ${curDateEnd}`);
+      acc[curDateType].push(`${curDateStart} - ${curDateEnd}`);
 
       return acc;
     }, {

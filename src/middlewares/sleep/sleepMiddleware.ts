@@ -13,20 +13,20 @@ export const list = async (object: any) => {
     }
 
     if (param.length > 12) {
-      finalResult = "fs-0-8rem fw-600";
+      finalResult = "fs-0-7rem fw-600";
     }
     else if (6 < param.length && param.length <= 12) {
-      finalResult = "fs-0-9rem fw-600";
+      finalResult = "fs-0-8rem fw-600";
     }
     else {
-      finalResult = "fs-1-0rem fw-600";
+      finalResult = "fs-0-9rem fw-600";
     }
 
     if (param === "0" || param === "00:00") {
       finalResult += " grey";
     }
     else {
-      finalResult += " black";
+      finalResult += " light-black";
     }
 
     return finalResult;

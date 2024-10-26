@@ -33,7 +33,7 @@ export const exist = async (
       const curDateStart = curr.money_goal_dateStart;
       const curDateEnd = curr.money_goal_dateEnd;
 
-      acc[curDateType].push(`${curDateStart} ~ ${curDateEnd}`);
+      acc[curDateType].push(`${curDateStart} - ${curDateEnd}`);
 
       return acc;
     }, {

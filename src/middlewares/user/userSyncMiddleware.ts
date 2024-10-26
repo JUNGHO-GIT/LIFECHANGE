@@ -1,6 +1,6 @@
 // userSyncMiddleware.ts
 
-// 1. percent --------------------------------------------------------------------------------------
+// 1. percent (퍼센트 조회) ------------------------------------------------------------------------
 export const percent = async (object: any) => {
 
   // 1. exercise
@@ -14,46 +14,46 @@ export const percent = async (object: any) => {
     if (extra === "count" || extra === "volume") {
       percent = Number(((real - goal) / goal) * 100);
 
-      // 1. ~ 1%
+      // 1. - 1%
       if (percent <= 1) {
         score = 1;
       }
-      // 2. 1% ~ 10%
+      // 2. 1% - 10%
       else if (percent > 1 && percent <= 10) {
         score = 2;
       }
-      // 3. 10% ~ 30%
+      // 3. 10% - 30%
       else if (percent > 10 && percent <= 30) {
         score = 3;
       }
-      // 4. 30% ~ 50%
+      // 4. 30% - 50%
       else if (percent > 30 && percent <= 50) {
         score = 4;
       }
-      // 5. 50% ~
+      // 5. 50% -
       else {
         score = 5;
       }
     }
     else if (extra === "weight") {
       percent = Number(((real - goal) / goal) * 100);
-      // 1. ~ 1%
+      // 1. - 1%
       if (percent <= 1) {
         score = 5;
       }
-      // 2. 1% ~ 10%
+      // 2. 1% - 10%
       else if (percent > 1 && percent <= 10) {
         score = 4;
       }
-      // 3. 10% ~ 30%
+      // 3. 10% - 30%
       else if (percent > 10 && percent <= 30) {
         score = 3;
       }
-      // 4. 30% ~ 50%
+      // 4. 30% - 50%
       else if (percent > 30 && percent <= 50) {
         score = 2;
       }
-      // 5. 50% ~
+      // 5. 50% -
       else {
         score = 1;
       }
@@ -67,23 +67,23 @@ export const percent = async (object: any) => {
       const minutes = Math.abs(minutesGoal - minutesReal);
       const diffVal = (hours * 60) + minutes;
       percent = Number(((diffVal - goal) / goal) * 100);
-      // 1. ~ 10분
+      // 1. - 10분
       if (0 <= diffVal && diffVal <= 10) {
         score = 1;
       }
-      // 2. 10분 ~ 20분
+      // 2. 10분 - 20분
       else if (10 < diffVal && diffVal <= 20) {
         score = 2;
       }
-      // 3. 20분 ~ 30분
+      // 3. 20분 - 30분
       else if (20 < diffVal && diffVal <= 30) {
         score = 3;
       }
-      // 4. 30분 ~ 50분
+      // 4. 30분 - 50분
       else if (30 < diffVal && diffVal <= 50) {
         score = 4;
       }
-      // 5. 50분 ~
+      // 5. 50분 -
       else {
         score = 5;
       }
@@ -113,23 +113,23 @@ export const percent = async (object: any) => {
     if (extra === "kcal" || extra === "carb" || extra === "protein" || extra === "fat") {
       percent = Number(((real - goal) / goal) * 100);
 
-      // 1. ~ 1%
+      // 1. - 1%
       if (percent <= 1) {
         score = 5;
       }
-      // 2. 1% ~ 10%
+      // 2. 1% - 10%
       else if (percent > 1 && percent <= 10) {
         score = 4;
       }
-      // 3. 10% ~ 30%
+      // 3. 10% - 30%
       else if (percent > 10 && percent <= 30) {
         score = 3;
       }
-      // 4. 30% ~ 50%
+      // 4. 30% - 50%
       else if (percent > 30 && percent <= 50) {
         score = 2;
       }
-      // 5. 50% ~
+      // 5. 50% -
       else {
         score = 1;
       }
@@ -162,41 +162,41 @@ export const percent = async (object: any) => {
         if (percent > 0 && percent <= 1) {
           score = 5;
         }
-        // 2. 1% ~ 10%
+        // 2. 1% - 10%
         else if (percent > 1 && percent <= 10) {
           score = 4;
         }
-        // 3. 10% ~ 30%
+        // 3. 10% - 30%
         else if (percent > 10 && percent <= 30) {
           score = 3;
         }
-        // 4. 30% ~ 50%
+        // 4. 30% - 50%
         else if (percent > 30 && percent <= 50) {
           score = 2;
         }
-        // 5. 50% ~
+        // 5. 50% -
         else {
           score = 1;
         }
       }
       else {
-        // 1. 0% ~ 1%
+        // 1. 0% - 1%
         if (percent > 0 && percent <= 1) {
           score = 1;
         }
-        // 2. 1% ~ 10%
+        // 2. 1% - 10%
         else if (percent > 1 && percent <= 10) {
           score = 2;
         }
-        // 3. 10% ~ 30%
+        // 3. 10% - 30%
         else if (percent > 10 && percent <= 30) {
           score = 3;
         }
-        // 4. 30% ~ 50%
+        // 4. 30% - 50%
         else if (percent > 30 && percent <= 50) {
           score = 4;
         }
-        // 5. 50% ~
+        // 5. 50% -
         else {
           score = 5;
         }
@@ -205,45 +205,45 @@ export const percent = async (object: any) => {
     else if (extra === "expense") {
       percent = Number((Math.abs(goal - real) / goal) * 100);
       if (goal > real) {
-        // 1. 0% ~ 1%
+        // 1. 0% - 1%
         if (percent > 0 && percent <= 1) {
           score = 1;
         }
-        // 2. 1% ~ 10%
+        // 2. 1% - 10%
         else if (percent > 1 && percent <= 10) {
           score = 2;
         }
-        // 3. 10% ~ 30%
+        // 3. 10% - 30%
         else if (percent > 10 && percent <= 30) {
           score = 3;
         }
-        // 4. 30% ~ 50%
+        // 4. 30% - 50%
         else if (percent > 30 && percent <= 50) {
           score = 4;
         }
-        // 5. 50% ~
+        // 5. 50% -
         else {
           score = 5;
         }
       }
       else {
-        // 1. 0% ~ 1%
+        // 1. 0% - 1%
         if (percent > 0 && percent <= 1) {
           score = 5;
         }
-        // 2. 1% ~ 10%
+        // 2. 1% - 10%
         else if (percent > 1 && percent <= 10) {
           score = 4;
         }
-        // 3. 10% ~ 30%
+        // 3. 10% - 30%
         else if (percent > 10 && percent <= 30) {
           score = 3;
         }
-        // 4. 30% ~ 50%
+        // 4. 30% - 50%
         else if (percent > 30 && percent <= 50) {
           score = 2;
         }
-        // 5. 50% ~
+        // 5. 50% -
         else {
           score = 1;
         }
@@ -287,19 +287,19 @@ export const percent = async (object: any) => {
       if (0 <= diffVal && diffVal <= 600000) {
         score = 5;
       }
-      // 2. 10분 ~ 20분
+      // 2. 10분 - 20분
       else if (600000 < diffVal && diffVal <= 1200000) {
         score = 4;
       }
-      // 3. 20분 ~ 30분
+      // 3. 20분 - 30분
       else if (1200000 < diffVal && diffVal <= 1800000) {
         score = 3;
       }
-      // 4. 30분 ~ 50분
+      // 4. 30분 - 50분
       else if (1800000 < diffVal && diffVal <= 3000000) {
         score = 2;
       }
-      // 5. 50분 ~
+      // 5. 50분 -
       else {
         score = 1;
       }
@@ -316,23 +316,23 @@ export const percent = async (object: any) => {
       const totalGoalMinutes = (hoursGoal * 60) + minutesGoal;
       percent = Number((diffVal / totalGoalMinutes) * 100);
 
-      // 1. ~ 10분
+      // 1. - 10분
       if (0 <= diffVal && diffVal <= 10) {
         score = 5;
       }
-      // 2. 10분 ~ 20분
+      // 2. 10분 - 20분
       else if (10 < diffVal && diffVal <= 20) {
         score = 4;
       }
-      // 3. 20분 ~ 30분
+      // 3. 20분 - 30분
       else if (20 < diffVal && diffVal <= 30) {
         score = 3;
       }
-      // 4. 30분 ~ 50분
+      // 4. 30분 - 50분
       else if (30 < diffVal && diffVal <= 50) {
         score = 2;
       }
-      // 5. 50분 ~
+      // 5. 50분 -
       else {
         score = 1;
       }

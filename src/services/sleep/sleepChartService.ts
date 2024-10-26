@@ -385,11 +385,11 @@ export const avgWeek = async (
     `week${i + 1}`
   ));
 
-  // ex. 00-00 ~ 00-00
+  // ex. 00-00 - 00-00
   const date = Array.from({ length: 5 }, (_, i) => {
     const startOfWeek = moment(monthStartFmt).add(i, 'weeks').startOf('isoWeek').format("MM-DD");
     const endOfWeek = moment(monthStartFmt).add(i, 'weeks').endOf('isoWeek').format("MM-DD");
-    return `${startOfWeek} ~ ${endOfWeek}`;
+    return `${startOfWeek} - ${endOfWeek}`;
   });
 
   try {
@@ -485,11 +485,11 @@ export const avgMonth = async (
     `month${i + 1}`
   ));
 
-  // ex. 00-00 ~ 00-00
+  // ex. 00-00 - 00-00
   const date = Array.from({ length: 12 }, (_, i) => {
     const startOfMonth = moment(yearStartFmt).add(i, 'months').startOf('month').format("MM-DD");
     const endOfMonth = moment(yearStartFmt).add(i, 'months').endOf('month').format("MM-DD");
-    return `${startOfMonth} ~ ${endOfMonth}`;
+    return `${startOfMonth} - ${endOfMonth}`;
   });
 
   try {

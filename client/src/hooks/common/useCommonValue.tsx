@@ -75,7 +75,7 @@ export const useCommonValue = () => {
 
   const sessionPercent: any = sessionTitle?.setting?.sync?.percent || {};
   const sessionScale: any = sessionTitle?.setting?.sync?.scale || {};
-  const sessionKcal: any = sessionTitle?.setting?.sync?.kcal || {};
+  const sessionNutrition: any = sessionTitle?.setting?.sync?.nutrition || {};
   const sessionFavorite: any = sessionTitle?.setting?.sync?.favorite || {};
   const sessionProperty: any = sessionTitle?.setting?.sync?.property || {};
   const sessionCategory: any = sessionTitle?.setting?.sync?.category || {};
@@ -191,6 +191,6 @@ export const useCommonValue = () => {
     localTitle,
     sessionSetting,
     sessionFoodSection,
-    sessionKcal,
+    sessionNutrition,
   };
 };

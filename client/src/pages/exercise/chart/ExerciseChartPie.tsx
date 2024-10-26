@@ -4,7 +4,7 @@ import { useState, useEffect } from "@imports/ImportReacts";
 import { useStorageLocal, useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { ExercisePie } from "@imports/ImportSchemas";
-import { axios, insertComma } from "@imports/ImportUtils";
+import { axios } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Select, PopUp } from "@imports/ImportContainers";
 import { Div, Img, Br } from "@imports/ImportComponents";
@@ -138,8 +138,14 @@ export const ExerciseChartPie = () => {
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
     return (
-      <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
-      className={"fs-0-6rem"}>
+      <text
+        x={x}
+        y={y}
+        fill={"white"}
+        textAnchor={"middle"}
+        dominantBaseline={"central"}
+        className={"fs-0-6rem"}
+      >
         {`${translate(OBJECT_PART_WEEK[index]?.name).substring(0, 5)} ${Number(value).toLocaleString()} %`}
       </text>
     );
@@ -155,8 +161,14 @@ export const ExerciseChartPie = () => {
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
     return (
-      <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
-      className={"fs-0-6rem"}>
+      <text
+        x={x}
+        y={y}
+        fill={"white"}
+        textAnchor={"middle"}
+        dominantBaseline={"central"}
+        className={"fs-0-6rem"}
+      >
         {`${translate(OBJECT_TITLE_WEEK[index]?.name).substring(0, 5)} ${Number(value).toLocaleString()} %`}
       </text>
     );
@@ -172,8 +184,14 @@ export const ExerciseChartPie = () => {
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
     return (
-      <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
-      className={"fs-0-6rem"}>
+      <text
+        x={x}
+        y={y}
+        fill={"white"}
+        textAnchor={"middle"}
+        dominantBaseline={"central"}
+        className={"fs-0-6rem"}
+      >
         {`${translate(OBJECT_PART_MONTH[index]?.name).substring(0, 5)} ${Number(value).toLocaleString()} %`}
       </text>
     );
@@ -189,8 +207,14 @@ export const ExerciseChartPie = () => {
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
     return (
-      <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
-      className={"fs-0-6rem"}>
+      <text
+        x={x}
+        y={y}
+        fill={"white"}
+        textAnchor={"middle"}
+        dominantBaseline={"central"}
+        className={"fs-0-6rem"}
+      >
         {`${translate(OBJECT_TITLE_MONTH[index]?.name).substring(0, 5)} ${Number(value).toLocaleString()} %`}
       </text>
     );
@@ -486,10 +510,10 @@ export const ExerciseChartPie = () => {
           <Grid size={3} className={"d-row-left"}>
             {selectFragment1()}
           </Grid>
-          <Grid size={6} className={"d-row-center"}>
+          <Grid size={7} className={"d-row-center"}>
             {titleFragment()}
           </Grid>
-          <Grid size={3} className={"d-row-right"}>
+          <Grid size={2} className={"d-row-right"}>
             {selectFragment2()}
           </Grid>
         </Grid>

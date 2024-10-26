@@ -369,13 +369,13 @@ export const UserSignup = () => {
               }}
             />
           </Grid>
-          {/** 초기 목표 칼로리 **/}
+          {/** 초기 평균 칼로리 섭취량 목표 **/}
           <Grid size={12}>
             <Input
-              label={translate("initAvgKcal")}
-              value={insertComma(item.user_initAvgKcal || "0")}
-              inputRef={REFS?.[i]?.user_initAvgKcal}
-              error={ERRORS?.[i]?.user_initAvgKcal}
+              label={translate("initAvgKcalIntake")}
+              value={insertComma(item.user_initAvgKcalIntake || "0")}
+              inputRef={REFS?.[i]?.user_initAvgKcalIntake}
+              error={ERRORS?.[i]?.user_initAvgKcalIntake}
               startadornment={
                 <Img
                   key={"food2"}
@@ -400,7 +400,7 @@ export const UserSignup = () => {
                 // object 설정
                 setOBJECT((prev: any) => ({
                   ...prev,
-                  user_initAvgKcal: value,
+                  user_initAvgKcalIntake: value,
                 }));
               }}
             />

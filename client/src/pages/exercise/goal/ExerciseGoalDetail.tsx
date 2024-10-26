@@ -62,8 +62,8 @@ export const ExerciseGoalDetail = () => {
   useEffect(() => {
     if (EXIST?.[DATE.dateType]?.length > 0) {
 
-      const dateRange = `${DATE.dateStart.trim()} ~ ${DATE.dateEnd.trim()}`;
-      const objectRange = `${OBJECT.exercise_goal_dateStart.trim()} ~ ${OBJECT.exercise_goal_dateEnd.trim()}`;
+      const dateRange = `${DATE.dateStart.trim()} - ${DATE.dateEnd.trim()}`;
+      const objectRange = `${OBJECT.exercise_goal_dateStart.trim()} - ${OBJECT.exercise_goal_dateEnd.trim()}`;
 
       const isExist = (
         EXIST[DATE.dateType].includes(dateRange)
@@ -162,7 +162,6 @@ export const ExerciseGoalDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        sync("scale");
         setALERT({
           open: !ALERT.open,
           msg: translate(res.data.msg),
@@ -175,6 +174,7 @@ export const ExerciseGoalDetail = () => {
             dateEnd: DATE.dateEnd
           }
         });
+        sync("scale");
       }
       else {
         setALERT({
@@ -212,7 +212,6 @@ export const ExerciseGoalDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        sync("scale");
         setALERT({
           open: !ALERT.open,
           msg: translate(res.data.msg),
@@ -225,6 +224,7 @@ export const ExerciseGoalDetail = () => {
             dateEnd: DATE.dateEnd
           }
         });
+        sync("scale");
       }
       else {
         setALERT({

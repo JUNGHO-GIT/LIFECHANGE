@@ -94,12 +94,12 @@ export const UserCategory = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        sync("category");
         setALERT({
           open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
+        sync("category");
       }
       else {
         setALERT({

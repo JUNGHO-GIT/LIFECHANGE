@@ -132,8 +132,8 @@ export const FoodFavoriteList = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setOBJECT(res.data.result.length > 0 ? res.data.result : []);
-        sync("favorite");
         flowFind();
+        sync("favorite");
       }
       else {
         setALERT({

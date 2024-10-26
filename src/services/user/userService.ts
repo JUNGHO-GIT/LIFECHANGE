@@ -83,10 +83,6 @@ export const sendEmail = async (
     user_id_param
   );
 
-  console.log("user_id_param", user_id_param);
-  console.log("type_param", type_param);
-  console.log("findResult", findResult);
-
   if (type_param === "signup" && findResult) {
     finalResult = null;
     statusResult = "duplicate";
@@ -963,11 +959,11 @@ export const dummySave = async (
         };
       });
 
-      const totalIncomeExclude = sections
+      const totalIncomeExclusion = sections
         .filter((section) => (section.money_part_val === "income"))
         .reduce((sum, section) => (sum + section.money_amount), 0);
 
-      const totalExpenseExclude = sections
+      const totalExpenseExclusion = sections
         .filter((section) => (section.money_part_val === "expense"))
         .reduce((sum, section) => (sum + section.money_amount), 0);
 
@@ -979,8 +975,8 @@ export const dummySave = async (
         money_dateType: "day",
         money_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         money_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        money_total_income: totalIncomeExclude,
-        money_total_expense: totalExpenseExclude,
+        money_total_income: totalIncomeExclusion,
+        money_total_expense: totalExpenseExclusion,
         money_section: sections,
         money_regDt: Date.now(),
         money_updateDt: Date.now(),

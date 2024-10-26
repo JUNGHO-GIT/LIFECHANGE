@@ -62,8 +62,8 @@ export const SleepDetail = () => {
   useEffect(() => {
     if (EXIST?.[DATE.dateType]?.length > 0) {
 
-      const dateRange = `${DATE.dateStart.trim()} ~ ${DATE.dateEnd.trim()}`;
-      const objectRange = `${OBJECT.sleep_dateStart.trim()} ~ ${OBJECT.sleep_dateEnd.trim()}`;
+      const dateRange = `${DATE.dateStart.trim()} - ${DATE.dateEnd.trim()}`;
+      const objectRange = `${OBJECT.sleep_dateStart.trim()} - ${OBJECT.sleep_dateEnd.trim()}`;
 
       const isExist = (
         EXIST[DATE.dateType].includes(dateRange)
@@ -203,7 +203,6 @@ export const SleepDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        sync();
         setALERT({
           open: !ALERT.open,
           msg: translate(res.data.msg),
@@ -216,6 +215,7 @@ export const SleepDetail = () => {
             dateEnd: DATE.dateEnd
           }
         });
+        sync();
       }
       else {
         setALERT({
@@ -253,7 +253,6 @@ export const SleepDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        sync();
         setALERT({
           open: !ALERT.open,
           msg: translate(res.data.msg),
@@ -266,6 +265,7 @@ export const SleepDetail = () => {
             dateEnd: DATE.dateEnd
           }
         });
+        sync();
       }
       else {
         setALERT({

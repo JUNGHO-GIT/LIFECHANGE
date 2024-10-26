@@ -30,8 +30,9 @@ export const AuthGoogle = () => {
           admin: res.data.admin === "admin" ? "true" : "false",
         });
 
-        sync();
         navigate("/today/list");
+
+        sync();
       }
     })
     .catch((err: any) => {

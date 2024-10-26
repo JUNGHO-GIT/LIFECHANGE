@@ -171,16 +171,16 @@ export const ExerciseGoalList = () => {
                     />
                   </Grid>
                   <Grid size={10} className={"d-row-left"}>
-                    <Div className={"fs-1-1rem fw-600 black me-5"}>
+                    <Div className={"fs-1-0rem fw-600 black"}>
                       {item.exercise_goal_dateStart?.substring(5, 10)}
                     </Div>
                     <Div className={"fs-0-9rem fw-500 dark ms-5"}>
                       {translate(getDayNotFmt(item.exercise_goal_dateStart).format("ddd"))}
                     </Div>
-                    <Div className={"fs-1-0rem fw-500 dark ms-10 me-10"}>
-                      ~
+                    <Div className={"fs-0-8rem fw-500 dark ms-5 me-5"}>
+                      -
                     </Div>
-                    <Div className={"fs-1-1rem fw-600 black me-5"}>
+                    <Div className={"fs-1-0rem fw-600 black"}>
                       {item.exercise_goal_dateEnd?.substring(5, 10)}
                     </Div>
                     <Div className={"fs-0-9rem fw-500 dark ms-5"}>

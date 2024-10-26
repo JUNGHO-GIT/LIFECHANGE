@@ -41,9 +41,9 @@ export const PickerDay = (
   const { getNextYearStartFmt, getNextYearEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
 
-  // ex. 2024-11-12 ~ 12-15
+  // ex. 2024-11-12 - 12-15
   const durStr = (
-    `${DATE.dateStart.split("-")[1] || "" }-${DATE.dateStart.split("-")[2] || "" } ~ ` +
+    `${DATE.dateStart.split("-")[1] || "" }-${DATE.dateStart.split("-")[2] || "" } - ` +
     `${DATE.dateEnd.split("-")[1] || "" }-${DATE.dateEnd.split("-")[2] || "" }`
   );
 
@@ -208,10 +208,10 @@ export const PickerDay = (
                       if (EXIST?.day) {
                         EXIST?.day.forEach((item: any) => {
                           if (
-                            item.split(" ~ ") &&
-                            item.split(" ~ ").length === 2 &&
-                            getDayFmt(day) >= item.split(" ~ ")[0] &&
-                            getDayFmt(day) <= item.split(" ~ ")[1]
+                            item.split(" - ") &&
+                            item.split(" - ").length === 2 &&
+                            getDayFmt(day) >= item.split(" - ")[0] &&
+                            getDayFmt(day) <= item.split(" - ")[1]
                           ) {
                             isBadged = true;
                           }
@@ -369,7 +369,7 @@ export const PickerDay = (
                 {translate("viewWeek")}
               </Div>
               <Div className={"fs-0-8rem fw-500 dark"}>
-                {`[${getWeekStartFmt(DATE.dateStart)} ~ ${getWeekEndFmt(DATE.dateEnd)}]`}
+                {`[${getWeekStartFmt(DATE.dateStart)} - ${getWeekEndFmt(DATE.dateEnd)}]`}
               </Div>
             </Grid>
             <Grid size={12} className={"d-center"}>
@@ -405,10 +405,10 @@ export const PickerDay = (
                       if (EXIST?.week) {
                         EXIST?.week.forEach((item: any) => {
                           if (
-                            item.split(" ~ ") &&
-                            item.split(" ~ ").length === 2 &&
-                            getDayFmt(day) >= item.split(" ~ ")[0] &&
-                            getDayFmt(day) <= item.split(" ~ ")[1]
+                            item.split(" - ") &&
+                            item.split(" - ").length === 2 &&
+                            getDayFmt(day) >= item.split(" - ")[0] &&
+                            getDayFmt(day) <= item.split(" - ")[1]
                           ) {
                             isBadged = true;
                           }
@@ -577,7 +577,7 @@ export const PickerDay = (
                 {translate("viewMonth")}
               </Div>
               <Div className={"fs-0-8rem fw-500 dark"}>
-                {`[${getMonthStartFmt(DATE.dateStart)} ~ ${getMonthEndFmt(DATE.dateEnd)}]`}
+                {`[${getMonthStartFmt(DATE.dateStart)} - ${getMonthEndFmt(DATE.dateEnd)}]`}
               </Div>
             </Grid>
             <Grid size={12} className={"d-center"}>
@@ -609,10 +609,10 @@ export const PickerDay = (
                       if (EXIST?.month) {
                         EXIST?.month.forEach((item: any) => {
                           if (
-                            item.split(" ~ ") &&
-                            item.split(" ~ ").length === 2 &&
-                            getDayFmt(day) >= item.split(" ~ ")[0] &&
-                            getDayFmt(day) <= item.split(" ~ ")[1]
+                            item.split(" - ") &&
+                            item.split(" - ").length === 2 &&
+                            getDayFmt(day) >= item.split(" - ")[0] &&
+                            getDayFmt(day) <= item.split(" - ")[1]
                           ) {
                             isBadged = true;
                           }
@@ -768,7 +768,7 @@ export const PickerDay = (
                 {translate("viewYear")}
               </Div>
               <Div className={"fs-0-8rem fw-500 dark"}>
-                {`[${getYearStartFmt(DATE.dateStart)} ~ ${getYearEndFmt(DATE.dateEnd)}]`}
+                {`[${getYearStartFmt(DATE.dateStart)} - ${getYearEndFmt(DATE.dateEnd)}]`}
               </Div>
             </Grid>
             <Grid size={12} className={"d-center"}>
@@ -801,7 +801,7 @@ export const PickerDay = (
                       // year 는 해당 년도 1월 달만 배지 표시
                       if (EXIST?.year) {
                         EXIST?.year.forEach((item: any) => {
-                          const startYear = item.split(" ~ ")[0].split("-")[0];
+                          const startYear = item.split(" - ")[0].split("-")[0];
                           const currentYear = getDayFmt(day).split("-")[0];
                           const isJanuary = day.month() === 0;
 
@@ -960,7 +960,7 @@ export const PickerDay = (
                 {translate("viewSelect")}
               </Div>
               <Div className={"fs-0-8rem fw-500 dark"}>
-                {`[${DATE?.dateStart} ~ ${DATE?.dateEnd}]`}
+                {`[${DATE?.dateStart} - ${DATE?.dateEnd}]`}
               </Div>
             </Grid>
             <Grid size={12} className={"d-center"}>
@@ -996,10 +996,10 @@ export const PickerDay = (
                       if (EXIST?.select) {
                         EXIST?.select.forEach((item: any) => {
                           if (
-                            item.split(" ~ ") &&
-                            item.split(" ~ ").length === 2 &&
-                            getDayFmt(day) >= item.split(" ~ ")[0] &&
-                            getDayFmt(day) <= item.split(" ~ ")[1]
+                            item.split(" - ") &&
+                            item.split(" - ").length === 2 &&
+                            getDayFmt(day) >= item.split(" - ")[0] &&
+                            getDayFmt(day) <= item.split(" - ")[1]
                           ) {
                             isBadged = true;
                           }

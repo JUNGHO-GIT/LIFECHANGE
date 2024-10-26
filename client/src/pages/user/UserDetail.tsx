@@ -68,13 +68,13 @@ export const UserDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        sync();
         setALERT({
           open: !ALERT.open,
           msg: translate(res.data.msg),
           severity: "success",
         });
         navigate("/user/detail");
+        sync();
       }
       else {
         setALERT({
@@ -187,13 +187,13 @@ export const UserDetail = () => {
             />
           </Grid>
           <Hr px={1} />
-          {/** 초기 목표 칼로리 **/}
+          {/** 초기 평균 칼로리 섭취량 목표 **/}
           <Grid size={12}>
             <Input
-              label={translate("initAvgKcal")}
-              value={insertComma(item.user_initAvgKcal || "0")}
-              inputRef={REFS?.[i]?.user_initAvgKcal}
-              error={ERRORS?.[i]?.user_initAvgKcal}
+              label={translate("initAvgKcalIntake")}
+              value={insertComma(item.user_initAvgKcalIntake || "0")}
+              inputRef={REFS?.[i]?.user_initAvgKcalIntake}
+              error={ERRORS?.[i]?.user_initAvgKcalIntake}
               startadornment={
                 <Img
                   key={"food2"}
@@ -218,7 +218,7 @@ export const UserDetail = () => {
                 // object 설정
                 setOBJECT((prev: any) => ({
                   ...prev,
-                  user_initAvgKcal: value,
+                  user_initAvgKcalIntake: value,
                 }));
               }}
             />
@@ -228,7 +228,7 @@ export const UserDetail = () => {
             <Input
               disabled={true}
               label={translate("curAvgKcal")}
-              value={insertComma(item.user_curAvgKcal || "0")}
+              value={insertComma(item.user_curAvgKcalIntake || "0")}
               startadornment={
                 <Img
                   key={"food2"}
@@ -282,12 +282,12 @@ export const UserDetail = () => {
           <Grid size={12}>
             <Input
               disabled={true}
-              label={translate("curPropertyExclude")}
+              label={translate("curPropertyExclusion")}
               value={
                 includingExclusions ? (
-                  insertComma(item.user_curPropertyInclude || "0")
+                  insertComma(item.user_curPropertyAll || "0")
                 ) : (
-                  insertComma(item.user_curPropertyExclude || "0")
+                  insertComma(item.user_curPropertyExclusion || "0")
                 )
               }
               startadornment={

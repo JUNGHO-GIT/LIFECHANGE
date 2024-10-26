@@ -537,10 +537,10 @@ export const FoodChartAvg = () => {
           <Grid size={3} className={"d-row-left"}>
             {selectFragment1()}
           </Grid>
-          <Grid size={6} className={"d-row-center"}>
+          <Grid size={7} className={"d-row-center"}>
             {titleFragment()}
           </Grid>
-          <Grid size={3} className={"d-row-right"}>
+          <Grid size={2} className={"d-row-right"}>
             {selectFragment2()}
           </Grid>
         </Grid>

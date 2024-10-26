@@ -59,8 +59,8 @@ export const MoneyGoalDetail = () => {
   useEffect(() => {
     if (EXIST?.[DATE.dateType]?.length > 0) {
 
-      const dateRange = `${DATE.dateStart.trim()} ~ ${DATE.dateEnd.trim()}`;
-      const objectRange = `${OBJECT.money_goal_dateStart.trim()} ~ ${OBJECT.money_goal_dateEnd.trim()}`;
+      const dateRange = `${DATE.dateStart.trim()} - ${DATE.dateEnd.trim()}`;
+      const objectRange = `${OBJECT.money_goal_dateStart.trim()} - ${OBJECT.money_goal_dateEnd.trim()}`;
 
       const isExist = (
         EXIST[DATE.dateType].includes(dateRange)
@@ -159,7 +159,6 @@ export const MoneyGoalDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        sync("property");
         setALERT({
           open: !ALERT.open,
           msg: translate(res.data.msg),
@@ -172,6 +171,7 @@ export const MoneyGoalDetail = () => {
             dateEnd: DATE.dateEnd
           }
         });
+        sync("property");
       }
       else {
         setALERT({
@@ -209,7 +209,6 @@ export const MoneyGoalDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
-        sync("property");
         setALERT({
           open: !ALERT.open,
           msg: translate(res.data.msg),
@@ -222,6 +221,7 @@ export const MoneyGoalDetail = () => {
             dateEnd: DATE.dateEnd
           }
         });
+        sync("property");
       }
       else {
         setALERT({

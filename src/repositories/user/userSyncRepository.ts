@@ -10,7 +10,7 @@ import { Sleep } from "@schemas/sleep/Sleep";
 import { SleepGoal } from "@schemas/sleep/SleepGoal";
 import { User } from "@schemas/user/User";
 
-// 0. category -------------------------------------------------------------------------------------
+// 0. category (카테고리 조회) ---------------------------------------------------------------------
 export const listCategory = async (
   user_id_param: string
 ) => {
@@ -36,7 +36,7 @@ export const listCategory = async (
   return finalResult[0];
 };
 
-// 1. percent --------------------------------------------------------------------------------------
+// 1. percent (퍼센트 조회) ------------------------------------------------------------------------
 export const percent = {
 
   // 1-1. exercise (goal)
@@ -321,11 +321,11 @@ export const percent = {
   },
 };
 
-// 2. scale ----------------------------------------------------------------------------------------
+// 2. scale (체중 조회) ----------------------------------------------------------------------------
 export const scale = {
 
-  // 2-1. scale (regDt)
-  findScaleRegDt: async (
+  // 2-1. 등록일 조회
+  findRegDt: async (
     user_id_param: string,
   ) => {
     const finalResult:any = await User.aggregate([
@@ -337,7 +337,7 @@ export const scale = {
       {
         $project: {
           _id: 0,
-          user_regDt: "$user_regDt",
+          user_regDt: 1,
         }
       }
     ]);
@@ -345,8 +345,8 @@ export const scale = {
     return finalResult[0];
   },
 
-  // 2-2. scale (init)
-  findScaleInit: async (
+  // 2-2. 최초 체중 조회
+  findInitScale: async (
     user_id_param: string,
   ) => {
     const finalResult:any = await User.aggregate([
@@ -358,8 +358,8 @@ export const scale = {
       {
         $project: {
           _id: 0,
-          user_initScale: "$user_exercise.user_initScale",
-          user_regDt: "$user_regDt",
+          user_initScale: 1,
+          user_regDt: 1,
         }
       }
     ]);
@@ -367,7 +367,7 @@ export const scale = {
     return finalResult[0];
   },
 
-  // 2-3. scale (min)
+  // 2-3. 최소 체중 조회
   findMinScale: async (
     user_id_param: string,
     dateStart_param: string,
@@ -397,7 +397,7 @@ export const scale = {
       {
         $group: {
           _id: null,
-          scale_min: {
+          minScale: {
             $min: "$exercise_total_weight"
           },
         }
@@ -405,7 +405,7 @@ export const scale = {
       {
         $project: {
           _id: 0,
-          scale_min: 1,
+          minScale: 1,
         }
       }
     ]);
@@ -413,7 +413,7 @@ export const scale = {
     return finalResult[0];
   },
 
-  // 2-4. scale (max)
+  // 2-4. 최대 체중 조회
   findMaxScale: async (
     user_id_param: string,
     dateStart_param: string,
@@ -443,7 +443,7 @@ export const scale = {
       {
         $group: {
           _id: null,
-          scale_max: {
+          maxScale: {
             $max: "$exercise_total_weight"
           },
         }
@@ -451,7 +451,7 @@ export const scale = {
       {
         $project: {
           _id: 0,
-          scale_max: 1,
+          maxScale: 1,
         }
       }
     ]);
@@ -459,7 +459,7 @@ export const scale = {
     return finalResult[0];
   },
 
-  // 2-5. scale (cur)
+  // 2-5. 현재 체중 조회
   findCurScale: async (
     user_id_param: string,
     dateStart_param: string,
@@ -495,7 +495,7 @@ export const scale = {
     return finalResult[0];
   },
 
-  // 2-5. scale (update)
+  // 2-5. 현재 체중 업데이트
   updateScale: async (
     user_id_param: string,
     curScale_param: string,
@@ -506,9 +506,7 @@ export const scale = {
       },
       {
         $set: {
-          user_exercise: {
-            user_curScale: curScale_param,
-          },
+          user_curScale: curScale_param,
           user_updateDt: new Date(),
         }
       },
@@ -522,11 +520,11 @@ export const scale = {
   }
 };
 
-// 3-1. kcal ---------------------------------------------------------------------------------------
-export const kcal = {
+// 3-1. nutrition ----------------------------------------------------------------------------------
+export const nutrition = {
 
-  // 3-1. kcal (regDt)
-  findKcalRegDt: async (
+  // 3-1. 등록일 조회
+  findRegDt: async (
     user_id_param: string,
   ) => {
     const finalResult:any = await User.aggregate([
@@ -538,7 +536,7 @@ export const kcal = {
       {
         $project: {
           _id: 0,
-          user_regDt: "$user_regDt",
+          user_regDt: 1,
         }
       }
     ]);
@@ -546,7 +544,7 @@ export const kcal = {
     return finalResult[0];
   },
 
-  // 3-2. totalCnt
+  // 3-2. 전체 정보 갯수 조회
   findTotalCnt: async (
     user_id_param: string,
     dateStart_param: string,
@@ -574,8 +572,8 @@ export const kcal = {
   },
 
 
-  // 3-3. kcal (init)
-  findKcalInit: async (
+  // 3-3. 최초 영양정보 조회
+  findInitNutrition: async (
     user_id_param: string,
   ) => {
     const finalResult:any = await User.aggregate([
@@ -587,8 +585,8 @@ export const kcal = {
       {
         $project: {
           _id: 0,
-          user_initAvgKcal: "$user_food.user_initAvgKcal",
-          user_regDt: "$user_regDt",
+          user_initAvgKcalIntake: 1,
+          user_regDt: 1,
         }
       }
     ]);
@@ -596,8 +594,8 @@ export const kcal = {
     return finalResult[0];
   },
 
-  // 3-4. nutrition
-  findNutrition: async (
+  // 3-4. 전체 영양정보 조회
+  findAllInformation: async (
     user_id_param: string,
     dateStart_param: string,
     dateEnd_param: string,
@@ -658,8 +656,8 @@ export const kcal = {
     return finalResult[0];
   },
 
-  // 3-5. kcal (update)
-  updateKcal: async (
+  // 3-5. 현재 영양정보 업데이트
+  updateNutrition: async (
     user_id_param: string,
     totalKcal_param: string,
     totalCarb_param: string,
@@ -676,16 +674,14 @@ export const kcal = {
       },
       {
         $set: {
-          user_food: {
-            user_totalKcal: totalKcal_param,
-            user_totalCarb: totalCarb_param,
-            user_totalProtein: totalProtein_param,
-            user_totalFat: totalFat_param,
-            user_curAvgKcal: curAvgKcal_param,
-            user_curAvgCarb: curAvgCarb_param,
-            user_curAvgProtein: curAvgProtein_param,
-            user_curAvgFat: curAvgFat_param,
-          },
+          user_totalKcalIntake: totalKcal_param,
+          user_totalCarbIntake: totalCarb_param,
+          user_totalProteinIntake: totalProtein_param,
+          user_totalFatIntake: totalFat_param,
+          user_curAvgKcalIntake: curAvgKcal_param,
+          user_curAvgCarbIntake: curAvgCarb_param,
+          user_curAvgProteinIntake: curAvgProtein_param,
+          user_curAvgFatIntake: curAvgFat_param,
           user_updateDt: new Date(),
         }
       },
@@ -699,11 +695,11 @@ export const kcal = {
   }
 };
 
-// 3-2. favorite -----------------------------------------------------------------------------------
+// 3-2. favorite (즐겨찾기 조회) -------------------------------------------------------------------
 export const favorite = {
 
-  // 3-1. favorite (regDt)
-  findFavoriteRegDt: async (
+  // 3-1. 등록일 조회
+  findRegDt: async (
     user_id_param: string,
   ) => {
     const finalResult:any = await User.aggregate([
@@ -715,7 +711,7 @@ export const favorite = {
       {
         $project: {
           _id: 0,
-          user_regDt: "$user_regDt",
+          user_regDt: 1,
         }
       }
     ]);
@@ -723,7 +719,7 @@ export const favorite = {
     return finalResult[0];
   },
 
-  // 3-2. favorite
+  // 3-2. 즐겨찾기 조회
   findFavorite: async (
     user_id_param: string,
   ) => {
@@ -746,11 +742,11 @@ export const favorite = {
   }
 };
 
-// 4. property -------------------------------------------------------------------------------------
+// 4. property (자산 조회) -------------------------------------------------------------------------
 export const property = {
 
-  // 4-1. property (regDt)
-  findPropertyRegDt: async (
+  // 4-1. 등록일 조회
+  findRegDt: async (
     user_id_param: string,
   ) => {
     const finalResult:any = await User.aggregate([
@@ -762,7 +758,7 @@ export const property = {
       {
         $project: {
           _id: 0,
-          user_regDt: "$user_regDt",
+          user_regDt: 1,
         }
       }
     ]);
@@ -770,8 +766,8 @@ export const property = {
     return finalResult[0];
   },
 
-  // 4-2. property (init)
-  findPropertyInit: async (
+  // 4-2. 최초 자산 조회
+  findInitProperty: async (
     user_id_param: string,
   ) => {
     const finalResult:any = await User.aggregate([
@@ -783,8 +779,8 @@ export const property = {
       {
         $project: {
           _id: 0,
-          user_initProperty: "$user_money.user_initProperty",
-          user_regDt: "$user_regDt",
+          user_initProperty: 1,
+          user_regDt: 1,
         }
       }
     ]);
@@ -792,13 +788,84 @@ export const property = {
     return finalResult[0];
   },
 
-  // 4-3. property (money)
-  findPropertyMoney: async (
+  // 4-3. 전체 자산 정보 조회
+  findAllInformation: async (
     user_id_param: string,
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
-    const incomeOrExpenseIncludeResult:any = await Money.aggregate([
+    const allResult:any = await Money.aggregate([
+      {
+        $match: {
+          user_id: user_id_param,
+          money_dateStart: {
+            $gte: dateStart_param,
+            $lte: dateEnd_param,
+          },
+          money_dateEnd: {
+            $gte: dateStart_param,
+            $lte: dateEnd_param,
+          }
+        }
+      },
+      {
+        $unwind: "$money_section"
+      },
+      {
+        // money_include 상관없이 모두 필터링
+        $match: {
+          "money_section.money_include": {
+            $ne: null
+          }
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          // money_part_idx가 1인 경우의 수입 합산
+          money_total_income: {
+            $sum: {
+              $cond: [
+                {
+                  $eq: [
+                    "$money_section.money_part_idx", 1
+                  ]
+                },
+                {
+                  $toDouble: "$money_section.money_amount"
+                },
+                0
+              ]
+            }
+          },
+          // money_part_idx가 2인 경우의 지출 합산
+          money_total_expense: {
+            $sum: {
+              $cond: [
+                {
+                  $eq: [
+                    "$money_section.money_part_idx", 2
+                  ]
+                },
+                {
+                  $toDouble: "$money_section.money_amount"
+                },
+                0
+              ]
+            }
+          }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          money_total_income: 1,
+          money_total_expense: 1,
+        }
+      }
+    ]);
+
+    const exclusionResult:any = await Money.aggregate([
       {
         $match: {
           user_id: user_id_param,
@@ -869,92 +936,21 @@ export const property = {
       }
     ]);
 
-    const incomeOrExpenseExcludeResult:any = await Money.aggregate([
-      {
-        $match: {
-          user_id: user_id_param,
-          money_dateStart: {
-            $gte: dateStart_param,
-            $lte: dateEnd_param,
-          },
-          money_dateEnd: {
-            $gte: dateStart_param,
-            $lte: dateEnd_param,
-          }
-        }
-      },
-      {
-        $unwind: "$money_section"
-      },
-      {
-        // money_include가 "N"인 경우만 필터링
-        $match: {
-          "money_section.money_include": {
-            $eq: "N"
-          }
-        }
-      },
-      {
-        $group: {
-          _id: null,
-          // money_part_idx가 1인 경우의 수입 합산
-          money_total_income: {
-            $sum: {
-              $cond: [
-                {
-                  $eq: [
-                    "$money_section.money_part_idx", 1
-                  ]
-                },
-                {
-                  $toDouble: "$money_section.money_amount"
-                },
-                0
-              ]
-            }
-          },
-          // money_part_idx가 2인 경우의 지출 합산
-          money_total_expense: {
-            $sum: {
-              $cond: [
-                {
-                  $eq: [
-                    "$money_section.money_part_idx", 2
-                  ]
-                },
-                {
-                  $toDouble: "$money_section.money_amount"
-                },
-                0
-              ]
-            }
-          }
-        }
-      },
-      {
-        $project: {
-          _id: 0,
-          money_total_income: 1,
-          money_total_expense: 1,
-        }
-      }
-    ]);
-
     return {
-      includeResult: incomeOrExpenseIncludeResult[0],
-      excludeResult: incomeOrExpenseExcludeResult[0],
+      allResult: allResult[0],
+      exclusionResult: exclusionResult[0],
     };
   },
 
-  // 4-4. property (update)
+  // 4-4. 현재 자산 업데이트
   updateProperty: async (
     user_id_param: string,
-    totalIncomeInclude_param: string,
-    totalIncomeExclude_param: string,
-    totalExpenseInclude_param: string,
-    totalExpenseExclude_param: string,
-    curPropertyInclude_param: string,
-    curPropertyExclude_param: string,
+    totalIncomeAll_param: string,
+    totalIncomeExclusion_param: string,
+    totalExpenseAll_param: string,
+    totalExpenseExclusion_param: string,
+    curPropertyAll_param: string,
+    curPropertyExclusion_param: string,
   ) => {
     const finalResult:any = await User.findOneAndUpdate(
       {
@@ -962,14 +958,12 @@ export const property = {
       },
       {
         $set: {
-          user_money: {
-            user_totalIncomeInclude: totalIncomeInclude_param,
-            user_totalIncomeExclude: totalIncomeExclude_param,
-            user_totalExpenseInclude: totalExpenseInclude_param,
-            user_totalExpenseExclude: totalExpenseExclude_param,
-            user_curPropertyInclude: curPropertyInclude_param,
-            user_curPropertyExclude: curPropertyExclude_param,
-          },
+          user_totalIncomeAll: totalIncomeAll_param,
+          user_totalIncomeExclusion: totalIncomeExclusion_param,
+          user_totalExpenseAll: totalExpenseAll_param,
+          user_totalExpenseExclusion: totalExpenseExclusion_param,
+          user_curPropertyAll: curPropertyAll_param,
+          user_curPropertyExclusion: curPropertyExclusion_param,
           user_updateDt: new Date(),
         }
       },

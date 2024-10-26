@@ -4,7 +4,7 @@ import { useState, useEffect } from "@imports/ImportReacts";
 import { useStorageLocal, useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { SleepPie } from "@imports/ImportSchemas";
-import { axios, insertComma } from "@imports/ImportUtils";
+import { axios } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Select } from "@imports/ImportContainers";
 import { Div, Img, Br } from "@imports/ImportComponents";
@@ -139,8 +139,14 @@ export const SleepChartPie = () => {
 
     // ex. wakeTime -> wake , bedTime -> bed
     return (
-      <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
-      className={"fs-0-6rem"}>
+      <text
+        x={x}
+        y={y}
+        fill={"white"}
+        textAnchor={"middle"}
+        dominantBaseline={"central"}
+        className={"fs-0-6rem"}
+      >
         {`${translate(OBJECT_WEEK[index]?.name)} ${Number(value).toLocaleString()} %`}
       </text>
     );
@@ -157,8 +163,14 @@ export const SleepChartPie = () => {
 
     // ex. wakeTime -> wake , bedTime -> bed
     return (
-      <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
-      className={"fs-0-6rem"}>
+      <text
+        x={x}
+        y={y}
+        fill={"white"}
+        textAnchor={"middle"}
+        dominantBaseline={"central"}
+        className={"fs-0-6rem"}
+      >
         {`${translate(OBJECT_MONTH[index]?.name)} ${Number(value).toLocaleString()} %`}
       </text>
     );
@@ -313,10 +325,10 @@ export const SleepChartPie = () => {
           <Grid size={3} className={"d-row-left"}>
             {selectFragment1()}
           </Grid>
-          <Grid size={6} className={"d-row-center"}>
+          <Grid size={7} className={"d-row-center"}>
             {titleFragment()}
           </Grid>
-          <Grid size={3} className={"d-row-right"}>
+          <Grid size={2} className={"d-row-right"}>
             {selectFragment2()}
           </Grid>
         </Grid>
