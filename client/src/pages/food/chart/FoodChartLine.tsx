@@ -116,7 +116,7 @@ export const FoodChartLine = () => {
           <ResponsiveContainer width={"100%"} height={350}>
             <LineChart
               data={object}
-              margin={{top: 30, right: 20, bottom: 20, left: 30}}
+              margin={{top: 30, right: 30, bottom: 20, left: 20}}
               barGap={20}
               barCategoryGap={"20%"}
             >

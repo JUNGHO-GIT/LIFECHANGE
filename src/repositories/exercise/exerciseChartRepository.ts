@@ -189,7 +189,45 @@ export const pieTitle = async (
   return finalResult;
 };
 
-// 3-1. chart (line - volume) ----------------------------------------------------------------------
+// 3-1. chart (line - scale) -----------------------------------------------------------------------
+export const lineScale = async (
+  user_id_param: string,
+  dateStart_param: string,
+  dateEnd_param: string,
+) => {
+  const finalResult:any = await Exercise.aggregate([
+    {
+      $match: {
+        user_id: user_id_param,
+        exercise_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+        exercise_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+      }
+    },
+    {
+      $project: {
+        _id: 0,
+        exercise_dateStart: 1,
+        exercise_dateEnd: 1,
+        exercise_total_scale: 1
+      }
+    },
+    {
+      $sort: {
+        exercise_dateStart:-1
+      }
+    }
+  ]);
+
+  return finalResult;
+};
+
+// 3-2. chart (line - volume) ----------------------------------------------------------------------
 export const lineVolume = async (
   user_id_param: string,
   dateStart_param: string,
@@ -227,7 +265,7 @@ export const lineVolume = async (
   return finalResult;
 };
 
-// 3-2. chart (line - cardio) ----------------------------------------------------------------------
+// 3-3. chart (line - cardio) ----------------------------------------------------------------------
 export const lineCardio = async (
   user_id_param: string,
   dateStart_param: string,

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useStorageLocal, useCommonValue, useCommonDate } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
-import { ExerciseLineVolume, ExerciseLineCardio } from "@imports/ImportSchemas";
+import { ExerciseLineVolume, ExerciseLineCardio, ExerciseLineScale } from "@imports/ImportSchemas";
 import { axios, handleY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Select, PopUp } from "@imports/ImportContainers";
@@ -17,7 +17,8 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } fro
 export const ExerciseChartLine = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, PATH, sessionId, chartColors, exerciseChartArray } = useCommonValue();
+  const { URL_OBJECT, PATH, sessionId, chartColors } = useCommonValue();
+  const { localUnit, exerciseChartArray } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
   const { translate } = useLanguageStore();
@@ -45,8 +46,11 @@ export const ExerciseChartLine = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
+  const [OBJECT_SCALE_WEEK, setOBJECT_SCALE_WEEK] = useState<any>([ExerciseLineScale]);
   const [OBJECT_VOLUME_WEEK, setOBJECT_VOLUME_WEEK] = useState<any>([ExerciseLineVolume]);
   const [OBJECT_CARDIO_WEEK, setOBJECT_CARDIO_WEEK] = useState<any>([ExerciseLineCardio]);
+
+  const [OBJECT_SCALE_MONTH, setOBJECT_SCALE_MONTH] = useState<any>([ExerciseLineScale]);
   const [OBJECT_VOLUME_MONTH, setOBJECT_VOLUME_MONTH] = useState<any>([ExerciseLineVolume]);
   const [OBJECT_CARDIO_MONTH, setOBJECT_CARDIO_MONTH] = useState<any>([ExerciseLineCardio]);
 
@@ -66,11 +70,17 @@ export const ExerciseChartLine = () => {
           params: params,
         }),
       ]);
+      setOBJECT_SCALE_WEEK(
+        resWeek.data.result.scale.length > 0 ? resWeek.data.result.scale : [ExerciseLineScale]
+      );
       setOBJECT_VOLUME_WEEK(
         resWeek.data.result.volume.length > 0 ? resWeek.data.result.volume : [ExerciseLineVolume]
       );
       setOBJECT_CARDIO_WEEK(
         resWeek.data.result.cardio.length > 0 ? resWeek.data.result.cardio : [ExerciseLineCardio]
+      );
+      setOBJECT_SCALE_MONTH(
+        resMonth.data.result.scale.length > 0 ? resMonth.data.result.scale : [ExerciseLineScale]
       );
       setOBJECT_VOLUME_MONTH(
         resMonth.data.result.volume.length > 0 ? resMonth.data.result.volume : [ExerciseLineVolume]
@@ -92,13 +102,21 @@ export const ExerciseChartLine = () => {
 
     let object = null;
     let endStr = "";
-    if (TYPE.section === "week" && TYPE.line === "volume") {
+    if (TYPE.section === "week" && TYPE.line === "scale") {
+      object = OBJECT_SCALE_WEEK;
+      endStr = localUnit;
+    }
+    else if (TYPE.section === "week" && TYPE.line === "volume") {
       object = OBJECT_VOLUME_WEEK;
       endStr = "vol";
     }
     else if (TYPE.section === "week" && TYPE.line === "cardio") {
       object = OBJECT_CARDIO_WEEK;
       endStr = "hr";
+    }
+    else if (TYPE.section === "month" && TYPE.line === "scale") {
+      object = OBJECT_SCALE_MONTH;
+      endStr = localUnit;
     }
     else if (TYPE.section === "month" && TYPE.line === "volume") {
       object = OBJECT_VOLUME_MONTH;
@@ -116,7 +134,7 @@ export const ExerciseChartLine = () => {
           <ResponsiveContainer width={"100%"} height={350}>
             <LineChart
               data={object}
-              margin={{top: 30, right: 20, bottom: 20, left: 30}}
+              margin={{top: 30, right: 30, bottom: 20, left: 20}}
               barGap={20}
               barCategoryGap={"20%"}
             >
@@ -144,6 +162,22 @@ export const ExerciseChartLine = () => {
                 tick={{fill: "#666", fontSize: 14}}
                 tickFormatter={formatterY}
               />
+              {TYPE.line === ("scale") && (
+                <>
+                  <Line
+                    dataKey={"scale"}
+                    type={"monotone"}
+                    stroke={chartColors[5]}
+                    strokeWidth={2}
+                    activeDot={{r:4}}
+                    dot={false}
+                    isAnimationActive={true}
+                    animationBegin={0}
+                    animationDuration={400}
+                    animationEasing={"linear"}
+                  />
+                </>
+              )}
               {TYPE.line === ("volume") && (
                 <>
                   <Line
@@ -259,7 +293,7 @@ export const ExerciseChartLine = () => {
           position={"bottom"}
           direction={"center"}
           contents={
-            ["volume", "cardio"]?.map((key: string, index: number) => (
+            ["scale", "volume", "cardio"].map((key, index) => (
               <FormGroup
                 key={index}
                 children={
