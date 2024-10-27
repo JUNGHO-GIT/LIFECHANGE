@@ -287,7 +287,7 @@ export const FoodFavoriteList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
                       {translate("kcal")}
                     </Div>
                   </Grid>
@@ -320,7 +320,7 @@ export const FoodFavoriteList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
                       {translate("carb")}
                     </Div>
                   </Grid>
@@ -353,7 +353,7 @@ export const FoodFavoriteList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
                       {translate("protein")}
                     </Div>
                   </Grid>
@@ -386,7 +386,7 @@ export const FoodFavoriteList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
                       {translate("fat")}
                     </Div>
                   </Grid>

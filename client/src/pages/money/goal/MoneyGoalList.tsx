@@ -203,14 +203,14 @@ export const MoneyGoalList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
                       {translate("income")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       {/** goal **/}
-                      <Grid size={4} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
@@ -226,7 +226,7 @@ export const MoneyGoalList = () => {
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={4} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
@@ -242,7 +242,7 @@ export const MoneyGoalList = () => {
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={4} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>
@@ -274,14 +274,14 @@ export const MoneyGoalList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
                       {translate("expense")}
                     </Div>
                   </Grid>
                   <Grid size={7}>
                     <Grid container spacing={1} columns={12}>
                       {/** goal **/}
-                      <Grid size={4} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("goal")}
                         </Div>
@@ -297,7 +297,7 @@ export const MoneyGoalList = () => {
                         </Div>
                       </Grid>
                       {/** real **/}
-                      <Grid size={4} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("real")}
                         </Div>
@@ -313,7 +313,7 @@ export const MoneyGoalList = () => {
                         </Div>
                       </Grid>
                       {/** diff **/}
-                      <Grid size={4} className={"d-row-right"}>
+                      <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
                           {translate("diff")}
                         </Div>

@@ -224,7 +224,7 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
                       {translate("volume")}
                     </Div>
                   </Grid>
@@ -257,7 +257,7 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
                       {translate("cardio")}
                     </Div>
                   </Grid>
@@ -290,7 +290,7 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
                       {translate("scale")}
                     </Div>
                   </Grid>
@@ -401,7 +401,7 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
                       {translate("kcal")}
                     </Div>
                   </Grid>
@@ -434,7 +434,7 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
                       {translate("carb")}
                     </Div>
                   </Grid>
@@ -467,7 +467,7 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
                       {translate("protein")}
                     </Div>
                   </Grid>
@@ -500,7 +500,7 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
                       {translate("fat")}
                     </Div>
                   </Grid>
@@ -611,7 +611,7 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
                       {translate("income")}
                     </Div>
                   </Grid>
@@ -644,7 +644,7 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
                       {translate("expense")}
                     </Div>
                   </Grid>
@@ -755,7 +755,7 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
                       {translate("bedTime")}
                     </Div>
                   </Grid>
@@ -788,7 +788,7 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
                       {translate("wakeTime")}
                     </Div>
                   </Grid>
@@ -821,7 +821,7 @@ export const TodayList = () => {
                     />
                   </Grid>
                   <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark"}>
+                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
                       {translate("sleepTime")}
                     </Div>
                   </Grid>
