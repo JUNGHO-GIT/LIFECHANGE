@@ -34,7 +34,6 @@ export const ExerciseChartPie = () => {
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [TYPE, setTYPE] = useStorageLocal(
-
     "type", "pie", PATH, {
       section: "week",
       line: "part",
@@ -43,8 +42,7 @@ export const ExerciseChartPie = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(true);
-  const [radius, setRadius] = useState<number>(120);
-  const [DATE, setDATE] = useState<any>({
+  const [DATE, _setDATE] = useState<any>({
     dateType: "",
     dateStart: getDayFmt(),
     dateEnd: getDayFmt(),
@@ -61,6 +59,8 @@ export const ExerciseChartPie = () => {
   const [OBJECT_TITLE_WEEK, setOBJECT_TITLE_WEEK] = useState<any>([ExercisePie]);
   const [OBJECT_PART_MONTH, setOBJECT_PART_MONTH] = useState<any>([ExercisePie]);
   const [OBJECT_TITLE_MONTH, setOBJECT_TITLE_MONTH] = useState<any>([ExercisePie]);
+  const [OBJECT_PART_YEAR, setOBJECT_PART_YEAR] = useState<any>([ExercisePie]);
+  const [OBJECT_TITLE_YEAR, setOBJECT_TITLE_YEAR] = useState<any>([ExercisePie]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -70,11 +70,14 @@ export const ExerciseChartPie = () => {
         user_id: sessionId,
         DATE: DATE,
       };
-      const [resWeek, resMonth] = await Promise.all([
+      const [resWeek, resMonth, resYear] = await Promise.all([
         axios.get(`${URL_OBJECT}/chart/pie/week`, {
           params: params,
         }),
         axios.get(`${URL_OBJECT}/chart/pie/month`, {
+          params: params,
+        }),
+        axios.get(`${URL_OBJECT}/chart/pie/year`, {
           params: params,
         }),
       ]);
@@ -90,6 +93,12 @@ export const ExerciseChartPie = () => {
       setOBJECT_TITLE_MONTH(
         resMonth.data.result.title.length > 0 ? resMonth.data.result.title : [ExercisePie]
       );
+      setOBJECT_PART_YEAR(
+        resYear.data.result.part.length > 0 ? resYear.data.result.part : [ExercisePie]
+      );
+      setOBJECT_TITLE_YEAR(
+        resYear.data.result.title.length > 0 ? resYear.data.result.title : [ExercisePie]
+      );
     }
     catch (err: any) {
       console.error(err);
@@ -99,39 +108,38 @@ export const ExerciseChartPie = () => {
     }
   })()}, [URL_OBJECT, DATE, sessionId]);
 
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
-    const updateRadius = () => {
-      // lg
-      if (window.innerWidth >= 1200) {
-        setRadius(120);
-      }
-      // md
-      else if (window.innerWidth >= 992) {
-        setRadius(110);
-      }
-      // sm
-      else if (window.innerWidth >= 768) {
-        setRadius(100);
-      }
-      // xs
-      else {
-        setRadius(90);
-      }
-    };
-
-    window.addEventListener('resize', updateRadius);
-    updateRadius();
-
-    return () => {
-      window.removeEventListener('resize', updateRadius);
-    }
-  }, []);
-
   // 4-1. render -----------------------------------------------------------------------------------
-  const renderPartWeek = (
+  const renderPie = (
     { cx, cy, midAngle, innerRadius, outerRadius, value, index }: PieProps
   ) => {
+
+    let object = null;
+    let endStr = "";
+    if (TYPE.section === "week" && TYPE.line === "part") {
+      object = OBJECT_PART_WEEK;
+      endStr = "%";
+    }
+    else if (TYPE.section === "week" && TYPE.line === "title") {
+      object = OBJECT_TITLE_WEEK;
+      endStr = "%";
+    }
+    else if (TYPE.section === "month" && TYPE.line === "part") {
+      object = OBJECT_PART_MONTH;
+      endStr = "%";
+    }
+    else if (TYPE.section === "month" && TYPE.line === "title") {
+      object = OBJECT_TITLE_MONTH;
+      endStr = "%";
+    }
+    else if (TYPE.section === "year" && TYPE.line === "part") {
+      object = OBJECT_PART_YEAR;
+      endStr = "%";
+    }
+    else if (TYPE.section === "year" && TYPE.line === "title") {
+      object = OBJECT_TITLE_YEAR;
+      endStr = "%";
+    }
+
     const RADIAN = Math.PI / 180;
     const radius = innerRadius + (outerRadius - innerRadius) / 2;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -146,283 +154,99 @@ export const ExerciseChartPie = () => {
         dominantBaseline={"central"}
         className={"fs-0-6rem"}
       >
-        {`${translate(OBJECT_PART_WEEK[index]?.name).substring(0, 5)} ${Number(value).toLocaleString()} %`}
-      </text>
-    );
-  };
-
-  // 4-2. render -----------------------------------------------------------------------------------
-  const renderTitleWeek = (
-    { cx, cy, midAngle, innerRadius, outerRadius, value, index }: PieProps
-  ) => {
-    const RADIAN = Math.PI / 180;
-    const radius = innerRadius + (outerRadius - innerRadius) / 2;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-    return (
-      <text
-        x={x}
-        y={y}
-        fill={"white"}
-        textAnchor={"middle"}
-        dominantBaseline={"central"}
-        className={"fs-0-6rem"}
-      >
-        {`${translate(OBJECT_TITLE_WEEK[index]?.name).substring(0, 5)} ${Number(value).toLocaleString()} %`}
-      </text>
-    );
-  }
-
-  // 4-3. render -----------------------------------------------------------------------------------
-  const renderPartMonth = (
-    { cx, cy, midAngle, innerRadius, outerRadius, value, index }: PieProps
-  ) => {
-    const RADIAN = Math.PI / 180;
-    const radius = innerRadius + (outerRadius - innerRadius) / 2;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-    return (
-      <text
-        x={x}
-        y={y}
-        fill={"white"}
-        textAnchor={"middle"}
-        dominantBaseline={"central"}
-        className={"fs-0-6rem"}
-      >
-        {`${translate(OBJECT_PART_MONTH[index]?.name).substring(0, 5)} ${Number(value).toLocaleString()} %`}
-      </text>
-    );
-  }
-
-  // 4-4. render -----------------------------------------------------------------------------------
-  const renderTitleMonth = (
-    { cx, cy, midAngle, innerRadius, outerRadius, value, index }: PieProps
-  ) => {
-    const RADIAN = Math.PI / 180;
-    const radius = innerRadius + (outerRadius - innerRadius) / 2;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-    return (
-      <text
-        x={x}
-        y={y}
-        fill={"white"}
-        textAnchor={"middle"}
-        dominantBaseline={"central"}
-        className={"fs-0-6rem"}
-      >
-        {`${translate(OBJECT_TITLE_MONTH[index]?.name).substring(0, 5)} ${Number(value).toLocaleString()} %`}
+        <tspan x={x} dy={"-0.5em"} dx={"0.4em"}>
+          {translate(object[index]?.name)}
+        </tspan>
+        <tspan x={x} dy={"1.4em"} dx={"0.4em"}>
+          {`${Number(value).toLocaleString()} ${endStr}`}
+        </tspan>
       </text>
     );
   };
 
   // 5-1. chart ------------------------------------------------------------------------------------
-  const chartPartWeek = () => (
-    <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
-      <Grid size={12} className={"d-col-center"}>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-            <Pie
-              data={OBJECT_PART_WEEK}
-              cx={"50%"}
-              cy={"50%"}
-              label={renderPartWeek}
-              labelLine={false}
-              outerRadius={radius}
-              fill={"#8884d8"}
-              dataKey={"value"}
-              minAngle={15}
-            >
-              {OBJECT_PART_WEEK?.map((_entry: any, index: number) => (
-                <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value: any, name: any) => {
-                const customName = translate(name);
-                return [`${Number(value).toLocaleString()}%`, customName];
-              }}
-              contentStyle={{
-                backgroundColor:"rgba(255, 255, 255, 0.8)",
-                border:"none",
-                borderRadius:"10px"
-              }}
-            />
-            <Legend
-              iconType={"circle"}
-              verticalAlign={"bottom"}
-              align={"center"}
-              formatter={(value) => {
-                return translate(value);
-              }}
-              wrapperStyle={{
-                lineHeight:"40px",
-                paddingTop:"10px",
-                fontSize:"12px"
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </Grid>
-    </Grid>
-  );
+  const chartPie = () => {
 
-  // 5-2. chart ------------------------------------------------------------------------------------
-  const chartTitleWeek = () => (
-    <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
-      <Grid size={12} className={"d-col-center"}>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-            <Pie
-              data={OBJECT_TITLE_WEEK}
-              cx={"50%"}
-              cy={"50%"}
-              label={renderTitleWeek}
-              labelLine={false}
-              outerRadius={radius}
-              fill={"#8884d8"}
-              dataKey={"value"}
-              minAngle={15}
-            >
-              {OBJECT_TITLE_WEEK?.map((_entry: any, index: number) => (
-                <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value: any, name: any) => {
-                const customName = translate(name);
-                return [`${Number(value).toLocaleString()}%`, customName];
-              }}
-              contentStyle={{
-                backgroundColor:"rgba(255, 255, 255, 0.8)",
-                border:"none",
-                borderRadius:"10px"
-              }}
-            />
-            <Legend
-              iconType={"circle"}
-              verticalAlign={"bottom"}
-              align={"center"}
-              formatter={(value) => {
-                return translate(value);
-              }}
-              wrapperStyle={{
-                lineHeight:"40px",
-                paddingTop:"10px",
-                fontSize:"12px"
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </Grid>
-    </Grid>
-  );
+    let object = null;
+    let endStr = "";
+    if (TYPE.section === "week" && TYPE.line === "part") {
+      object = OBJECT_PART_WEEK;
+      endStr = "%";
+    }
+    else if (TYPE.section === "week" && TYPE.line === "title") {
+      object = OBJECT_TITLE_WEEK;
+      endStr = "%";
+    }
+    else if (TYPE.section === "month" && TYPE.line === "part") {
+      object = OBJECT_PART_MONTH;
+      endStr = "%";
+    }
+    else if (TYPE.section === "month" && TYPE.line === "title") {
+      object = OBJECT_TITLE_MONTH;
+      endStr = "%";
+    }
+    else if (TYPE.section === "year" && TYPE.line === "part") {
+      object = OBJECT_PART_YEAR;
+      endStr = "%";
+    }
+    else if (TYPE.section === "year" && TYPE.line === "title") {
+      object = OBJECT_TITLE_YEAR;
+      endStr = "%";
+    }
 
-  // 5-3. chart ------------------------------------------------------------------------------------
-  const chartPartMonth = () => (
-    <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
-      <Grid size={12} className={"d-col-center"}>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-            <Pie
-              data={OBJECT_PART_MONTH}
-              cx={"50%"}
-              cy={"50%"}
-              label={renderPartMonth}
-              labelLine={false}
-              outerRadius={radius}
-              fill={"#8884d8"}
-              dataKey={"value"}
-              minAngle={15}
-            >
-              {OBJECT_PART_MONTH?.map((_entry: any, index: number) => (
-                <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value: any, name: any) => {
-                const customName = translate(name);
-                return [`${Number(value).toLocaleString()}%`, customName];
-              }}
-              contentStyle={{
-                backgroundColor:"rgba(255, 255, 255, 0.8)",
-                border:"none",
-                borderRadius:"10px"
-              }}
-            />
-            <Legend
-              iconType={"circle"}
-              verticalAlign={"bottom"}
-              align={"center"}
-              formatter={(value) => {
-                return translate(value);
-              }}
-              wrapperStyle={{
-                lineHeight:"40px",
-                paddingTop:"10px",
-                fontSize:"12px"
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
+    return (
+      <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
+        <Grid size={12} className={"d-col-center"}>
+          <ResponsiveContainer width={"100%"} height={350}>
+            <PieChart margin={{top: 40, right: 20, bottom: 20, left: 20}}>
+              <Pie
+                data={object}
+                cx={"50%"}
+                cy={"50%"}
+                label={renderPie}
+                labelLine={false}
+                outerRadius={110}
+                fill={"#8884d8"}
+                dataKey={"value"}
+                isAnimationActive={true}
+                animationBegin={0}
+                animationDuration={400}
+                animationEasing={"linear"}
+              >
+                {object?.map((_entry: any, index: number) => (
+                  <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
+                ))}
+              </Pie>
+              <Tooltip
+                formatter={(value: any, name: any) => {
+                  const customName = translate(name);
+                  return [`${Number(value).toLocaleString()} ${endStr}`, customName];
+                }}
+                contentStyle={{
+                  backgroundColor:"rgba(255, 255, 255, 0.8)",
+                  border:"none",
+                  borderRadius:"10px"
+                }}
+              />
+              <Legend
+                iconType={"circle"}
+                verticalAlign={"bottom"}
+                align={"center"}
+                formatter={(value) => {
+                  return translate(value);
+                }}
+                wrapperStyle={{
+                  lineHeight:"40px",
+                  paddingTop:"40px",
+                  fontSize:"12px"
+                }}
+              />
+            </PieChart>
+          </ResponsiveContainer>
+        </Grid>
       </Grid>
-    </Grid>
-  );
-
-  // 5-4. chart ------------------------------------------------------------------------------------
-  const chartTitleMonth = () => (
-    <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
-      <Grid size={12} className={"d-col-center"}>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-            <Pie
-              data={OBJECT_TITLE_MONTH}
-              cx={"50%"}
-              cy={"50%"}
-              label={renderTitleMonth}
-              labelLine={false}
-              outerRadius={radius}
-              fill={"#8884d8"}
-              dataKey={"value"}
-              minAngle={15}
-            >
-              {OBJECT_TITLE_MONTH?.map((_entry: any, index: number) => (
-                <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value: any, name: any) => {
-                const customName = translate(name);
-                return [`${Number(value).toLocaleString()}%`, customName];
-              }}
-              contentStyle={{
-                backgroundColor:"rgba(255, 255, 255, 0.8)",
-                border:"none",
-                borderRadius:"10px"
-              }}
-            />
-            <Legend
-              iconType={"circle"}
-              verticalAlign={"bottom"}
-              align={"center"}
-              formatter={(value) => {
-                return translate(value);
-              }}
-              wrapperStyle={{
-                lineHeight:"40px",
-                paddingTop:"10px",
-                fontSize:"12px"
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </Grid>
-    </Grid>
-  );
+    );
+  };
 
   // 7. chart --------------------------------------------------------------------------------------
   const chartNode = () => {
@@ -454,6 +278,7 @@ export const ExerciseChartPie = () => {
             >
               <MenuItem value={"week"}>{translate("week")}</MenuItem>
               <MenuItem value={"month"}>{translate("month")}</MenuItem>
+              <MenuItem value={"year"}>{translate("year")}</MenuItem>
             </Select>
           </Grid>
         </Grid>
@@ -525,14 +350,7 @@ export const ExerciseChartPie = () => {
     const chartSection = () => (
       <Grid container spacing={0} columns={12}>
         <Grid size={12} className={"d-row-center"}>
-          {LOADING ? <Loading /> : (
-            <>
-              {TYPE.section === "week" && TYPE.line === "part" && chartPartWeek()}
-              {TYPE.section === "week" && TYPE.line === "title" && chartTitleWeek()}
-              {TYPE.section === "month" && TYPE.line === "part" && chartPartMonth()}
-              {TYPE.section === "month" && TYPE.line === "title" && chartTitleMonth()}
-            </>
-          )}
+          {LOADING ? <Loading /> : chartPie()}
         </Grid>
       </Grid>
     );

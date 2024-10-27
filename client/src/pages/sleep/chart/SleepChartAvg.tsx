@@ -32,7 +32,7 @@ export const SleepChartAvg = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(true);
-  const [DATE, setDATE] = useState<any>({
+  const [DATE, _setDATE] = useState<any>({
     dateType: "",
     dateStart: getDayFmt(),
     dateEnd: getDayFmt(),
@@ -45,8 +45,8 @@ export const SleepChartAvg = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
+  const [OBJECT_WEEK, setOBJECT_WEEK] = useState<any>([SleepAvg]);
   const [OBJECT_MONTH, setOBJECT_MONTH] = useState<any>([SleepAvg]);
-  const [OBJECT_YEAR, setOBJECT_YEAR] = useState<any>([SleepAvg]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -64,10 +64,10 @@ export const SleepChartAvg = () => {
           params: params,
         }),
       ]);
-      setOBJECT_MONTH(
+      setOBJECT_WEEK(
         resWeek.data.result.length > 0 ? resWeek.data.result : [SleepAvg]
       );
-      setOBJECT_YEAR(
+      setOBJECT_MONTH(
         resMonth.data.result.length > 0 ? resMonth.data.result : [SleepAvg]
       );
     }
@@ -80,14 +80,26 @@ export const SleepChartAvg = () => {
   })()}, [URL_OBJECT, DATE, sessionId]);
 
   // 5-1. chart ------------------------------------------------------------------------------------
-  const chartWeek = () => {
-    const {domain, ticks, formatterY} = handleY(OBJECT_MONTH, sleepChartArray, "sleep");
+  const chartAvg = () => {
+
+    let object = null;
+    let endStr = "";
+    if (TYPE.section === "week") {
+      object = OBJECT_WEEK;
+      endStr = "hm";
+    }
+    else if (TYPE.section === "month") {
+      object = OBJECT_MONTH;
+      endStr = "hm";
+    }
+
+    const {domain, ticks, formatterY} = handleY(object, sleepChartArray, "sleep");
     return (
       <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
         <Grid size={12} className={"d-col-center"}>
           <ResponsiveContainer width={"100%"} height={350}>
             <ComposedChart
-              data={OBJECT_MONTH}
+              data={object}
               margin={{top: 20, right: 20, bottom: 20, left: 20}}
               barGap={8}
               barCategoryGap={"20%"}
@@ -122,6 +134,10 @@ export const SleepChartAvg = () => {
                   fill={chartColors[4]}
                   radius={[10, 10, 0, 0]}
                   minPointSize={1}
+                  isAnimationActive={true}
+                  animationBegin={0}
+                  animationDuration={400}
+                  animationEasing={"linear"}
                 />
               )}
               {TYPE.line.includes("wakeTime") && (
@@ -130,6 +146,10 @@ export const SleepChartAvg = () => {
                   fill={chartColors[1]}
                   radius={[10, 10, 0, 0]}
                   minPointSize={1}
+                  isAnimationActive={true}
+                  animationBegin={0}
+                  animationDuration={400}
+                  animationEasing={"linear"}
                 />
               )}
               {TYPE.line.includes("sleepTime") && (
@@ -138,6 +158,10 @@ export const SleepChartAvg = () => {
                   fill={chartColors[2]}
                   radius={[10, 10, 0, 0]}
                   minPointSize={1}
+                  isAnimationActive={true}
+                  animationBegin={0}
+                  animationDuration={400}
+                  animationEasing={"linear"}
                 />
               )}
               <Tooltip
@@ -147,7 +171,7 @@ export const SleepChartAvg = () => {
                 }}
                 formatter={(value: any, name: any) => {
                   const customName = translate(name);
-                  return [`${Number(value).toLocaleString()}`, customName];
+                  return [`${Number(value).toLocaleString()} ${endStr}`, customName];
                 }}
                 cursor={{
                   fill:"rgba(0, 0, 0, 0.1)"
@@ -174,110 +198,6 @@ export const SleepChartAvg = () => {
                   justifyContent:"center",
                   alignItems:"center",
                   fontSize: "0.8rem",
-                }}
-              />
-            </ComposedChart>
-          </ResponsiveContainer>
-        </Grid>
-      </Grid>
-    );
-  };
-
-  // 5-2. chart ------------------------------------------------------------------------------------
-  const chartMonth = () => {
-    const {domain, ticks, formatterY} = handleY(OBJECT_YEAR, sleepChartArray, "sleep");
-    return (
-      <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
-        <Grid size={12} className={"d-col-center"}>
-          <ResponsiveContainer width={"100%"} height={350}>
-            <ComposedChart
-              data={OBJECT_YEAR}
-              margin={{top: 20, right: 20, bottom: 20, left: 20}}
-              barGap={8}
-              barCategoryGap={"20%"}
-            >
-              <CartesianGrid
-                strokeDasharray={"3 3"}
-                stroke={"#f5f5f5"}
-              />
-              <XAxis
-                type={"category"}
-                dataKey={"name"}
-                tickLine={false}
-                axisLine={false}
-                tick={{fill:"#666", fontSize:14}}
-                tickFormatter={(value) => (
-                  translate(value)
-                )}
-              />
-              <YAxis
-                width={30}
-                type={"number"}
-                domain={domain}
-                tickLine={false}
-                axisLine={false}
-                ticks={ticks}
-                tick={{fill: "#666", fontSize: 14}}
-                tickFormatter={formatterY}
-              />
-              {TYPE.line.includes("bedTime") && (
-                <Bar
-                  dataKey={"bedTime"}
-                  fill={chartColors[4]}
-                  radius={[10, 10, 0, 0]}
-                  minPointSize={1}
-                />
-              )}
-              {TYPE.line.includes("wakeTime") && (
-                <Bar
-                  dataKey={"wakeTime"}
-                  fill={chartColors[1]}
-                  radius={[10, 10, 0, 0]}
-                  minPointSize={1}
-                />
-              )}
-              {TYPE.line.includes("sleepTime") && (
-                <Bar
-                  dataKey={"sleepTime"}
-                  fill={chartColors[2]}
-                  radius={[10, 10, 0, 0]}
-                  minPointSize={1}
-                />
-              )}
-              <Tooltip
-                labelFormatter={(_label: any, payload: any) => {
-                  const date = payload.length > 0 ? payload[0]?.payload.date : '';
-                  return `${date}`;
-                }}
-                formatter={(value: any, name: any) => {
-                  const customName = translate(name);
-                  return [`${Number(value).toLocaleString()}`, customName];
-                }}
-                cursor={{
-                  fill:"rgba(0, 0, 0, 0.1)"
-                }}
-                contentStyle={{
-                  borderRadius:"10px",
-                  boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-                  padding:"10px",
-                  border:"none",
-                  background:"#fff",
-                  color:"#666"
-                }}
-              />
-              <Legend
-                iconType={"circle"}
-                verticalAlign={"bottom"}
-                align={"center"}
-                formatter={(value) => {
-                  return translate(value);
-                }}
-                wrapperStyle={{
-                  width:"95%",
-                  display:"flex",
-                  justifyContent:"center",
-                  alignItems:"center",
-                  fontSize: "0.8rem"
                 }}
               />
             </ComposedChart>
@@ -393,12 +313,7 @@ export const SleepChartAvg = () => {
     const chartSection = () => (
       <Grid container spacing={0} columns={12}>
         <Grid size={12} className={"d-row-center"}>
-          {LOADING ? <Loading /> : (
-            <>
-              {TYPE.section === "week" && chartWeek()}
-              {TYPE.section === "month" && chartMonth()}
-            </>
-          )}
+          {LOADING ? <Loading /> : chartAvg()}
         </Grid>
       </Grid>
     );

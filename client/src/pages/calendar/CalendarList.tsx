@@ -56,13 +56,6 @@ export const CalendarList = () => {
     dateEnd: "0000-00-00",
   });
 
-  useEffect(() => {
-    console.log("===================================");
-    console.log("OBJECT", JSON.stringify(OBJECT, null, 2));
-    console.log("===================================");
-    console.log("DATE", JSON.stringify(DATE, null, 2));
-  }, [OBJECT, DATE]);
-
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     axios.get(`${URL_OBJECT}/list`, {

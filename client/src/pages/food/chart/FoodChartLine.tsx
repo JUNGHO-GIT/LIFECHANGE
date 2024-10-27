@@ -32,7 +32,7 @@ export const FoodChartLine = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(true);
-  const [DATE, setDATE] = useState<any>({
+  const [DATE, _setDATE] = useState<any>({
     dateType: "",
     dateStart: getDayFmt(),
     dateEnd: getDayFmt(),
@@ -88,14 +88,34 @@ export const FoodChartLine = () => {
   })()}, [URL_OBJECT, DATE, sessionId]);
 
   // 5-1. chart ------------------------------------------------------------------------------------
-  const chartKcalWeek = () => {
-    const {domain, ticks, formatterY} = handleY(OBJECT_KCAL_WEEK, foodChartArray, "food");
+  const chartLine = () => {
+
+    let object = null;
+    let endStr = "";
+    if (TYPE.section === "week" && TYPE.line === "kcal") {
+      object = OBJECT_KCAL_WEEK;
+      endStr = "kcal";
+    }
+    else if (TYPE.section === "week" && TYPE.line === "nut") {
+      object = OBJECT_NUT_WEEK;
+      endStr = "g";
+    }
+    else if (TYPE.section === "month" && TYPE.line === "kcal") {
+      object = OBJECT_KCAL_MONTH;
+      endStr = "kcal";
+    }
+    else if (TYPE.section === "month" && TYPE.line === "nut") {
+      object = OBJECT_NUT_MONTH;
+      endStr = "g";
+    }
+
+    const {domain, ticks, formatterY} = handleY(object, foodChartArray, "food");
     return (
       <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
         <Grid size={12} className={"d-col-center"}>
           <ResponsiveContainer width={"100%"} height={350}>
             <LineChart
-              data={OBJECT_KCAL_WEEK}
+              data={object}
               margin={{top: 20, right: 20, bottom: 20, left: 20}}
               barGap={20}
               barCategoryGap={"20%"}
@@ -124,12 +144,58 @@ export const FoodChartLine = () => {
                 tick={{fill: "#666", fontSize: 14}}
                 tickFormatter={formatterY}
               />
-              <Line
-                dataKey={"kcal"}
-                type={"monotone"}
-                stroke={chartColors[3]}
-                strokeWidth={2}
-              activeDot={{r: 6}}/>
+              {TYPE.line === "kcal" && (
+                <>
+                  <Line
+                    dataKey={"kcal"}
+                    type={"monotone"}
+                    stroke={chartColors[3]}
+                    activeDot={{r:6}}
+                    strokeWidth={2}
+                    isAnimationActive={true}
+                    animationBegin={0}
+                    animationDuration={400}
+                    animationEasing={"linear"}
+                  />
+                </>
+              )}
+              {TYPE.line === "nut" && (
+                <>
+                  <Line
+                    dataKey={"carb"}
+                    type={"monotone"}
+                    stroke={chartColors[1]}
+                    activeDot={{r:6}}
+                    strokeWidth={2}
+                    isAnimationActive={true}
+                    animationBegin={0}
+                    animationDuration={400}
+                    animationEasing={"linear"}
+                  />
+                  <Line
+                    dataKey={"protein"}
+                    type={"monotone"}
+                    stroke={chartColors[4]}
+                    activeDot={{r:6}}
+                    strokeWidth={2}
+                    isAnimationActive={true}
+                    animationBegin={0}
+                    animationDuration={400}
+                    animationEasing={"linear"}
+                  />
+                  <Line
+                    dataKey={"fat"}
+                    type={"monotone"}
+                    stroke={chartColors[2]}
+                    activeDot={{r:6}}
+                    strokeWidth={2}
+                    isAnimationActive={true}
+                    animationBegin={0}
+                    animationDuration={400}
+                    animationEasing={"linear"}
+                  />
+                </>
+              )}
               <Tooltip
                 labelFormatter={(_label: any, payload: any) => {
                   const date = payload.length > 0 ? payload[0]?.payload.date : '';
@@ -137,7 +203,7 @@ export const FoodChartLine = () => {
                 }}
                 formatter={(value: any, name: any) => {
                   const customName = translate(name);
-                  return [`${Number(value).toLocaleString()} kcal`, customName];
+                  return [`${Number(value).toLocaleString()} ${endStr}`, customName];
                 }}
                 cursor={{
                   fill:"rgba(0, 0, 0, 0.1)"
@@ -161,296 +227,7 @@ export const FoodChartLine = () => {
                 wrapperStyle={{
                   width:"95%",
                   display:"flex",
-                  justifyContent:"center",
-                  alignItems:"center",
-                  fontSize: "0.8rem",
-                }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </Grid>
-      </Grid>
-    );
-  };
-
-  // 5-2. chart ------------------------------------------------------------------------------------
-  const chartNutWeek = () => {
-    const {domain, ticks, formatterY} = handleY(OBJECT_NUT_WEEK, foodChartArray, "food");
-    return (
-      <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
-        <Grid size={12} className={"d-col-center"}>
-          <ResponsiveContainer width={"100%"} height={350}>
-            <LineChart
-              data={OBJECT_NUT_WEEK}
-              margin={{top: 20, right: 20, bottom: 20, left: 20}}
-              barGap={8}
-              barCategoryGap={"20%"}
-            >
-              <CartesianGrid
-                strokeDasharray={"3 3"}
-                stroke={"#f5f5f5"}
-              />
-              <XAxis
-                type={"category"}
-                dataKey={"name"}
-                tickLine={false}
-                axisLine={false}
-                tick={{fill:"#666", fontSize:14}}
-                tickFormatter={(value) => (
-                  translate(value)
-                )}
-              />
-              <YAxis
-                width={30}
-                type={"number"}
-                domain={domain}
-                tickLine={false}
-                axisLine={false}
-                ticks={ticks}
-                tick={{fill: "#666", fontSize: 14}}
-                tickFormatter={formatterY}
-              />
-              <Line
-                dataKey={"carb"}
-                type={"monotone"}
-                stroke={chartColors[1]}
-                strokeWidth={2}
-                activeDot={{r: 6}}
-              />
-              <Line
-                dataKey={"protein"}
-                type={"monotone"}
-                stroke={chartColors[4]}
-                strokeWidth={2}
-                activeDot={{r: 6}}
-              />
-              <Line
-                dataKey={"fat"}
-                type={"monotone"}
-                stroke={chartColors[2]}
-                strokeWidth={2}
-                activeDot={{r: 6}}
-              />
-              <Tooltip
-                labelFormatter={(_label: any, payload: any) => {
-                  const date = payload.length > 0 ? payload[0]?.payload.date : '';
-                  return `${date}`;
-                }}
-                formatter={(value: any, name: any) => {
-                  const customName = translate(name);
-                  return [`${Number(value).toLocaleString()} g`, customName];
-                }}
-                cursor={{
-                  fill:"rgba(0, 0, 0, 0.1)"
-                }}
-                contentStyle={{
-                  borderRadius:"10px",
-                  boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-                  padding:"10px",
-                  border:"none",
-                  background:"#fff",
-                  color:"#666"
-                }}
-              />
-              <Legend
-                iconType={"circle"}
-                verticalAlign={"bottom"}
-                align={"center"}
-                formatter={(value) => {
-                  return translate(value);
-                }}
-                wrapperStyle={{
-                  width:"95%",
-                  display:"flex",
-                  justifyContent:"center",
-                  alignItems:"center",
-                  fontSize: "0.8rem",
-                }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </Grid>
-      </Grid>
-    );
-  };
-
-  // 5-3. chart ------------------------------------------------------------------------------------
-  const chartKcalMonth = () => {
-    const {domain, ticks, formatterY} = handleY(OBJECT_KCAL_MONTH, foodChartArray, "food");
-    return (
-      <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
-        <Grid size={12} className={"d-col-center"}>
-          <ResponsiveContainer width={"100%"} height={350}>
-            <LineChart
-              data={OBJECT_KCAL_MONTH}
-              margin={{top: 20, right: 20, bottom: 20, left: 20}}
-              barGap={8}
-              barCategoryGap={"20%"}
-            >
-              <CartesianGrid
-                strokeDasharray={"3 3"}
-                stroke={"#f5f5f5"}
-              />
-              <XAxis
-                type={"category"}
-                dataKey={"name"}
-                tickLine={false}
-                axisLine={false}
-                tick={{fill:"#666", fontSize:14}}
-                tickFormatter={(value) => (
-                  translate(value)
-                )}
-              />
-              <YAxis
-                width={30}
-                type={"number"}
-                domain={domain}
-                tickLine={false}
-                axisLine={false}
-                ticks={ticks}
-                tick={{fill: "#666", fontSize: 14}}
-                tickFormatter={formatterY}
-              />
-              <Line
-                dataKey={"kcal"}
-                type={"monotone"}
-                stroke={chartColors[3]}
-                strokeWidth={2}
-                activeDot={{r: 6}}
-              />
-              <Tooltip
-                labelFormatter={(_label: any, payload: any) => {
-                  const date = payload.length > 0 ? payload[0]?.payload.date : '';
-                  return `${date}`;
-                }}
-                formatter={(value: any, name: any) => {
-                  const customName = translate(name);
-                  return [`${Number(value).toLocaleString()} kcal`, customName];
-                }}
-                cursor={{
-                  fill:"rgba(0, 0, 0, 0.1)"
-                }}
-                contentStyle={{
-                  borderRadius:"10px",
-                  boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-                  padding:"10px",
-                  border:"none",
-                  background:"#fff",
-                  color:"#666"
-                }}
-              />
-              <Legend
-                iconType={"circle"}
-                verticalAlign={"bottom"}
-                align={"center"}
-                formatter={(value) => {
-                  return translate(value);
-                }}
-                wrapperStyle={{
-                  width:"95%",
-                  display:"flex",
-                  justifyContent:"center",
-                  alignItems:"center",
-                  fontSize: "0.8rem",
-                }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </Grid>
-      </Grid>
-    );
-  };
-
-  // 5-4. chart ------------------------------------------------------------------------------------
-  const chartNutMonth = () => {
-    const {domain, ticks, formatterY} = handleY(OBJECT_NUT_MONTH, foodChartArray, "food");
-    return (
-      <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
-        <Grid size={12} className={"d-col-center"}>
-          <ResponsiveContainer width={"100%"} height={350}>
-            <LineChart
-              data={OBJECT_NUT_MONTH}
-              margin={{top: 20, right: 20, bottom: 20, left: 20}}
-              barGap={8}
-              barCategoryGap={"20%"}
-            >
-              <CartesianGrid
-                strokeDasharray={"3 3"}
-                stroke={"#f5f5f5"}
-              />
-              <XAxis
-                type={"category"}
-                dataKey={"name"}
-                tickLine={false}
-                axisLine={false}
-                tick={{fill:"#666", fontSize:14}}
-                tickFormatter={(value) => (
-                  translate(value)
-                )}
-              />
-              <YAxis
-                width={30}
-                type={"number"}
-                domain={domain}
-                tickLine={false}
-                axisLine={false}
-                ticks={ticks}
-                tick={{fill: "#666", fontSize: 14}}
-                tickFormatter={formatterY}
-              />
-              <Line
-                dataKey={"carb"}
-                type={"monotone"}
-                stroke={chartColors[1]}
-                strokeWidth={2}
-                activeDot={{r: 6}}
-              />
-              <Line
-                dataKey={"protein"}
-                type={"monotone"}
-                stroke={chartColors[4]}
-                strokeWidth={2}
-                activeDot={{r: 6}}
-              />
-              <Line
-                dataKey={"fat"}
-                type={"monotone"}
-                stroke={chartColors[2]}
-                strokeWidth={2}
-                activeDot={{r: 6}}
-              />
-              <Tooltip
-                labelFormatter={(_label: any, payload: any) => {
-                  const date = payload.length > 0 ? payload[0]?.payload.date : '';
-                  return `${date}`;
-                }}
-                formatter={(value: any, name: any) => {
-                  const customName = translate(name);
-                  return [`${Number(value).toLocaleString()} g`, customName];
-                }}
-                cursor={{
-                  fill:"rgba(0, 0, 0, 0.1)"
-                }}
-                contentStyle={{
-                  borderRadius:"10px",
-                  boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-                  padding:"10px",
-                  border:"none",
-                  background:"#fff",
-                  color:"#666"
-                }}
-              />
-              <Legend
-                iconType={"circle"}
-                verticalAlign={"bottom"}
-                align={"center"}
-                formatter={(value) => {
-                  return translate(value);
-                }}
-                wrapperStyle={{
-                  width:"95%",
-                  display:"flex",
-                  justifyContent:"center",
+                  justifyContent :"center",
                   alignItems:"center",
                   fontSize: "0.8rem",
                 }}
@@ -563,14 +340,7 @@ export const FoodChartLine = () => {
     const chartSection = () => (
       <Grid container spacing={0} columns={12}>
         <Grid size={12} className={"d-row-center"}>
-          {LOADING ? <Loading /> : (
-            <>
-              {TYPE.section === "week" && TYPE.line === "kcal" && chartKcalWeek()}
-              {TYPE.section === "week" && TYPE.line === "nut" && chartNutWeek()}
-              {TYPE.section === "month" && TYPE.line === "kcal" && chartKcalMonth()}
-              {TYPE.section === "month" && TYPE.line === "nut" && chartNutMonth()}
-            </>
-          )}
+          {LOADING ? <Loading /> : chartLine()}
         </Grid>
       </Grid>
     );

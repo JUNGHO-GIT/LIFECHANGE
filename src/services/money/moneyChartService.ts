@@ -180,6 +180,66 @@ export const pieMonth = async (
   };
 };
 
+// 2-4. chart (pie - year) -------------------------------------------------------------------------
+// pie 차트는 무조건 int 리턴
+export const pieYear = async (
+  user_id_param: string,
+  DATE_param: any,
+) => {
+
+  // result 변수 선언
+  let findResultInCome: any[] = [];
+  let findResultExpense: any[] = [];
+  let finalResultInCome: any[] = [];
+  let finalResultExpense: any[] = [];
+  let finalResult: any = [];
+  let statusResult: string = "";
+
+  // date 변수 정의
+  const dateStart = DATE_param.yearStartFmt;
+  const dateEnd = DATE_param.yearEndFmt;
+
+  try {
+    // promise 사용하여 병렬 처리
+    [findResultInCome, findResultExpense] = await Promise.all([
+      repository.pieIncome(
+        user_id_param, dateStart, dateEnd
+      ),
+      repository.pieExpense(
+        user_id_param, dateStart, dateEnd
+      ),
+    ]);
+
+    // findResultInCome 배열을 순회하며 결과 저장
+    finalResultInCome = findResultInCome?.map((item: any) => ({
+      name: String(item._id),
+      value: Number(item.value) || 0
+    }));
+
+    // findResultExpense 배열을 순회하며 결과 저장
+    finalResultExpense = findResultExpense?.map((item: any) => ({
+      name: String(item._id),
+      value: Number(item.value) || 0
+    }));
+
+    finalResult = {
+      income: finalResultInCome,
+      expense: finalResultExpense,
+    };
+    statusResult = "success";
+  }
+  catch (err: any) {
+    finalResult = [];
+    statusResult = "fail";
+  }
+
+  return {
+    status: statusResult,
+    result: finalResult,
+    date: `${dateStart} - ${dateEnd}`
+  };
+};
+
 // 3-1. chart (line - week) ------------------------------------------------------------------------
 export const lineWeek = async (
   user_id_param: string,

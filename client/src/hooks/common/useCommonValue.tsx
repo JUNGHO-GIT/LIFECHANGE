@@ -65,12 +65,12 @@ export const useCommonValue = () => {
   const localSetting: any = localTitle?.setting || {};
 
   // local storage (string 타입)
-  const localTimeZone: string = localTitle?.setting?.locale?.timeZone;
-  const localZoneName: string = localTitle?.setting?.locale?.zoneName;
-  const localLang: string = localTitle?.setting?.locale?.lang;
-  const localIsoCode: string = localTitle?.setting?.locale?.isoCode;
-  const localCurrency: string = localTitle?.setting?.locale?.currency;
-  const localUnit: string = localTitle?.setting?.locale?.unit;
+  const localTimeZone: string = localTitle?.setting?.locale?.timeZone || "UTC";
+  const localZoneName: string = localTitle?.setting?.locale?.zoneName || "UTC";
+  const localLang: string = localTitle?.setting?.locale?.lang || "en";
+  const localIsoCode: string = localTitle?.setting?.locale?.isoCode || "US";
+  const localCurrency: string = localTitle?.setting?.locale?.currency || "USD";
+  const localUnit: string = localTitle?.setting?.locale?.unit || "lbs";
 
   // session storage (object 타입)
   const sessionTitle: any = JSON.parse(sessionStorage.getItem(TITLE) || "{}");

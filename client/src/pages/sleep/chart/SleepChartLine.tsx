@@ -32,7 +32,7 @@ export const SleepChartLine = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(true);
-  const [DATE, setDATE] = useState<any>({
+  const [DATE, _setDATE] = useState<any>({
     dateType: "",
     dateStart: getDayFmt(),
     dateEnd: getDayFmt(),
@@ -80,121 +80,24 @@ export const SleepChartLine = () => {
   })()}, [URL_OBJECT, DATE, sessionId]);
 
   // 5-1. chart ------------------------------------------------------------------------------------
-  const chartWeek = () => {
-    const {domain, ticks, formatterY} = handleY(OBJECT_WEEK, sleepChartArray, "sleep");
-    return (
-      <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
-        <Grid size={12} className={"d-col-center"}>
-          <ResponsiveContainer width={"100%"} height={350}>
-            <LineChart
-              data={OBJECT_WEEK}
-              margin={{top: 20, right: 20, bottom: 20, left: 20}}
-              barGap={20}
-              barCategoryGap={"20%"}
-            >
-              <CartesianGrid
-                strokeDasharray={"3 3"}
-                stroke={"#f5f5f5"}
-              />
-              <XAxis
-                type={"category"}
-                dataKey={"name"}
-                tickLine={false}
-                axisLine={false}
-                tick={{fill:"#666", fontSize:14}}
-                tickFormatter={(value) => (
-                  translate(value)
-                )}
-              />
-              <YAxis
-                width={30}
-                type={"number"}
-                domain={domain}
-                tickLine={false}
-                axisLine={false}
-                ticks={ticks}
-                tick={{fill: "#666", fontSize: 14}}
-                tickFormatter={formatterY}
-              />
-              {TYPE.line.includes("bedTime") && (
-                <Line
-                  dataKey={"bedTime"}
-                  type={"monotone"}
-                  stroke={chartColors[4]}
-                  activeDot={{r:8}}
-                  strokeWidth={2}
-                />
-              )}
-              {TYPE.line.includes("wakeTime") && (
-                <Line
-                  dataKey={"wakeTime"}
-                  type={"monotone"}
-                  stroke={chartColors[1]}
-                  activeDot={{r:8}}
-                  strokeWidth={2}
-                />
-              )}
-              {TYPE.line.includes("sleepTime") && (
-                <Line
-                  dataKey={"sleepTime"}
-                  type={"monotone"}
-                  stroke={chartColors[2]}
-                  activeDot={{r:8}}
-                  strokeWidth={2}
-                />
-              )}
-              <Tooltip
-                labelFormatter={(_label: any, payload: any) => {
-                  const date = payload.length > 0 ? payload[0]?.payload.date : '';
-                  return `${date}`;
-                }}
-                formatter={(value: any, name: any) => {
-                  const customName = translate(name);
-                  return [`${Number(value).toLocaleString()}`, customName];
-                }}
-                cursor={{
-                  fill:"rgba(0, 0, 0, 0.1)"
-                }}
-                contentStyle={{
-                  borderRadius:"10px",
-                  boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-                  padding:"10px",
-                  border:"none",
-                  background:"#fff",
-                  color:"#666"
-                }}
-              />
-              <Legend
-                iconType={"circle"}
-                verticalAlign={"bottom"}
-                align={"center"}
-                formatter={(value) => {
-                  return translate(value);
-                }}
-                wrapperStyle={{
-                  width:"95%",
-                  display:"flex",
-                  justifyContent:"center",
-                  alignItems:"center",
-                  fontSize: "0.8rem",
-                }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </Grid>
-      </Grid>
-    );
-  };
+  const chartLine = () => {
 
-  // 5-2. chart ------------------------------------------------------------------------------------
-  const chartMonth = () => {
-    const {domain, ticks, formatterY} = handleY(OBJECT_MONTH, sleepChartArray, "sleep");
+    let object = null;
+    let endStr = "";
+    if (TYPE.section === "week") {
+      object = OBJECT_WEEK;
+    }
+    else if (TYPE.section === "month") {
+      object = OBJECT_MONTH;
+    }
+
+    const {domain, ticks, formatterY} = handleY(object, sleepChartArray, "sleep");
     return (
       <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
         <Grid size={12} className={"d-col-center"}>
           <ResponsiveContainer width={"100%"} height={350}>
             <LineChart
-              data={OBJECT_MONTH}
+              data={object}
               margin={{top: 20, right: 20, bottom: 20, left: 20}}
               barGap={20}
               barCategoryGap={"20%"}
@@ -228,8 +131,12 @@ export const SleepChartLine = () => {
                   dataKey={"bedTime"}
                   type={"monotone"}
                   stroke={chartColors[4]}
-                  activeDot={{r:8}}
                   strokeWidth={2}
+                  activeDot={{r:6}}
+                  isAnimationActive={true}
+                  animationBegin={0}
+                  animationDuration={400}
+                  animationEasing={"linear"}
                 />
               )}
               {TYPE.line.includes("wakeTime") && (
@@ -237,8 +144,12 @@ export const SleepChartLine = () => {
                   dataKey={"wakeTime"}
                   type={"monotone"}
                   stroke={chartColors[1]}
-                  activeDot={{r:8}}
                   strokeWidth={2}
+                  activeDot={{r:6}}
+                  isAnimationActive={true}
+                  animationBegin={0}
+                  animationDuration={400}
+                  animationEasing={"linear"}
                 />
               )}
               {TYPE.line.includes("sleepTime") && (
@@ -246,8 +157,12 @@ export const SleepChartLine = () => {
                   dataKey={"sleepTime"}
                   type={"monotone"}
                   stroke={chartColors[2]}
-                  activeDot={{r:8}}
                   strokeWidth={2}
+                  activeDot={{r:6}}
+                  isAnimationActive={true}
+                  animationBegin={0}
+                  animationDuration={400}
+                  animationEasing={"linear"}
                 />
               )}
               <Tooltip
@@ -257,7 +172,7 @@ export const SleepChartLine = () => {
                 }}
                 formatter={(value: any, name: any) => {
                   const customName = translate(name);
-                  return [`${Number(value).toLocaleString()}`, customName];
+                  return [`${Number(value).toLocaleString()} ${endStr}`, customName];
                 }}
                 cursor={{
                   fill:"rgba(0, 0, 0, 0.1)"
@@ -281,7 +196,7 @@ export const SleepChartLine = () => {
                 wrapperStyle={{
                   width:"95%",
                   display:"flex",
-                  justifyContent:"center",
+                  justifyContent :"center",
                   alignItems:"center",
                   fontSize: "0.8rem",
                 }}
@@ -399,12 +314,7 @@ export const SleepChartLine = () => {
     const chartSection = () => (
       <Grid container spacing={0} columns={12}>
         <Grid size={12} className={"d-row-center"}>
-          {LOADING ? <Loading /> : (
-            <>
-              {TYPE.section === "week" && chartWeek()}
-              {TYPE.section === "month" && chartMonth()}
-            </>
-          )}
+          {LOADING ? <Loading /> : chartLine()}
         </Grid>
       </Grid>
     );

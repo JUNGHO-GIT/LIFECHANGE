@@ -125,7 +125,7 @@ export const pieIncome = async (
       }
     },
     {
-      $limit: 10
+      $limit: 5
     }
   ]);
 
@@ -176,7 +176,7 @@ export const pieExpense = async (
       }
     },
     {
-      $limit: 10
+      $limit: 5
     }
   ]);
 
