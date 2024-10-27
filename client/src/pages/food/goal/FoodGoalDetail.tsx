@@ -1,9 +1,8 @@
 // FoodGoalDetail.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useValidateFood } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
-import { useValidateFood } from "@imports/ImportValidates";
 import { FoodGoal } from "@imports/ImportSchemas";
 import { axios, sync, insertComma } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";

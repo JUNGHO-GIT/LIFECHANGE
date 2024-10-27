@@ -56,6 +56,13 @@ export const CalendarList = () => {
     dateEnd: "0000-00-00",
   });
 
+  useEffect(() => {
+    console.log("===================================");
+    console.log("OBJECT", JSON.stringify(OBJECT, null, 2));
+    console.log("===================================");
+    console.log("DATE", JSON.stringify(DATE, null, 2));
+  }, [OBJECT, DATE]);
+
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     axios.get(`${URL_OBJECT}/list`, {
@@ -131,7 +138,6 @@ export const CalendarList = () => {
         ))
       )
     );
-
     // 7-4. title
     const titleSection = () => (
       <Grid container spacing={2} columns={12}>
@@ -188,7 +194,7 @@ export const CalendarList = () => {
             view={"month"}
             locale={localLang}
             calendarType={"gregory"}
-            value={new Date(DATE.dateStart)}
+            value={getMoment(DATE.dateStart).toDate()}
             showNavigation={false}
             showDoubleView={false}
             showNeighboringMonth={true}

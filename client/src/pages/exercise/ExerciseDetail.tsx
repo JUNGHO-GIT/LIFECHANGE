@@ -1,9 +1,8 @@
 // ExerciseDetail.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTime } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useTime, useValidateExercise } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
-import { useValidateExercise } from "@imports/ImportValidates";
 import { Exercise } from "@imports/ImportSchemas";
 import { axios, sync, insertComma } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";

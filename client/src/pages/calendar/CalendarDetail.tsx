@@ -1,9 +1,8 @@
 // CalendarDetail.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useValidateCalendar } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
-import { useValidateCalendar } from "@imports/ImportValidates";
 import { Calendar } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";

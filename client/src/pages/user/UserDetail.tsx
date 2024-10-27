@@ -1,9 +1,8 @@
 // UserDetail.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue } from "@imports/ImportHooks";
+import { useCommonValue, useValidateUser } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
-import { useValidateUser } from "@imports/ImportValidates";
 import { User } from "@imports/ImportSchemas";
 import { axios, sync, insertComma } from "@imports/ImportUtils";
 import { Footer, Loading } from "@imports/ImportLayouts";

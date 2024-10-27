@@ -1,9 +1,8 @@
 // SleepGoalDetail.tsx
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTime } from "@imports/ImportHooks";
+import { useCommonValue, useCommonDate, useTime, useValidateSleep } from "@imports/ImportHooks";
 import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
-import { useValidateSleep } from "@imports/ImportValidates";
 import { SleepGoal } from "@imports/ImportSchemas";
 import { axios, sync } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";

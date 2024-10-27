@@ -1,6 +1,7 @@
 // index.tsx
 
 import "react-calendar/dist/Calendar.css";
+
 import "@styles/Calendar.css";
 import "@styles/Chart.css";
 import "@styles/Mui.css";
