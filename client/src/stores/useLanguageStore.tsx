@@ -1161,6 +1161,22 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "총 지출",
         en: "Total Expense"
       },
+      totalKcal: {
+        ko: "총 칼로리",
+        en: "Total Kcal"
+      },
+      totalProtein: {
+        ko: "총 단백질",
+        en: "Total Protein"
+      },
+      totalCarb: {
+        ko: "총 탄수화물",
+        en: "Total Carb"
+      },
+      totalFat: {
+        ko: "총 지방",
+        en: "Total Fat"
+      },
       totalKcalIntake: {
         ko: "총 칼로리 섭취량",
         en: "Total Kcal Intake"

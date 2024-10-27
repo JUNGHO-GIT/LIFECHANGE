@@ -45,28 +45,6 @@ export const decimalToStr = (time: number) => {
   return `${String(adjustedHours).padStart(2, "0")}:${String(adjustedMinutes).padStart(2, "0")}`;
 };
 
-// 2-1. log ----------------------------------------------------------------------------------------
-export const log = (name: string, data: any) => {
-  const cache = new Set();
-
-  // 순환 참조 발견
-  const jsonString = JSON.stringify(data, (_, value) => {
-    if (typeof value === "object" && value !== null) {
-      if (cache.has(value)) {
-        return "[Circular]";
-      }
-      cache.add(value);
-    }
-    return value;
-  }, 2);
-
-  // 로그 출력
-  console.log(`${name} : ${jsonString}`);
-
-  // 캐시 클리어
-  cache.clear();
-};
-
 // -------------------------------------------------------------------------------------------------
 export const insertComma = (str: string) => {
   try {

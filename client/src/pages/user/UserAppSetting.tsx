@@ -113,9 +113,9 @@ export const UserAppSetting = () => {
                   position={"center"}
                   direction={"center"}
                   contents={
-                    <Div className={"d-col-center"}>
+                    <Div className={"d-col-center p-5"}>
                       <Div
-                        className={"d-center m-auto"}
+                        className={"d-center"}
                         onClick={() => {
                           handleChangeLanguage("en")
                         }}
@@ -126,8 +126,9 @@ export const UserAppSetting = () => {
                           shadow={false}
                           radius={false}
                           src={"flag2"}
+                          className={"me-15"}
                         />
-                        <Div className={`me-15 ${lang === "en" ? "fw-700" : ""}`}>
+                        <Div className={`${lang === "en" ? "fw-700" : ""}`}>
                           English
                         </Div>
                         <Icons
@@ -138,7 +139,7 @@ export const UserAppSetting = () => {
                       </Div>
                       <Br px={20} />
                       <Div
-                        className={"d-center m-auto"}
+                        className={"d-center"}
                         onClick={() => {
                           handleChangeLanguage("ko")
                         }}
@@ -149,8 +150,9 @@ export const UserAppSetting = () => {
                           shadow={false}
                           radius={false}
                           src={"flag1"}
+                          className={"me-15"}
                         />
-                        <Div className={`me-15 ${lang === "ko" ? "fw-700" : ""}`}>
+                        <Div className={`${lang === "ko" ? "fw-700" : ""}`}>
                           한국어
                         </Div>
                         <Icons
