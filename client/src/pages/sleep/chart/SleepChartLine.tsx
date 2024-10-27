@@ -98,7 +98,7 @@ export const SleepChartLine = () => {
           <ResponsiveContainer width={"100%"} height={350}>
             <LineChart
               data={object}
-              margin={{top: 20, right: 20, bottom: 20, left: 20}}
+              margin={{top: 30, right: 20, bottom: 20, left: 30}}
               barGap={20}
               barCategoryGap={"20%"}
             >
@@ -127,43 +127,52 @@ export const SleepChartLine = () => {
                 tickFormatter={formatterY}
               />
               {TYPE.line.includes("bedTime") && (
-                <Line
-                  dataKey={"bedTime"}
-                  type={"monotone"}
-                  stroke={chartColors[4]}
-                  strokeWidth={2}
-                  activeDot={{r:6}}
-                  isAnimationActive={true}
-                  animationBegin={0}
-                  animationDuration={400}
-                  animationEasing={"linear"}
-                />
+                <>
+                  <Line
+                    dataKey={"bedTime"}
+                    type={"monotone"}
+                    stroke={chartColors[4]}
+                    strokeWidth={2}
+                    activeDot={{r:4}}
+                    dot={false}
+                    isAnimationActive={true}
+                    animationBegin={0}
+                    animationDuration={400}
+                    animationEasing={"linear"}
+                  />
+                </>
               )}
               {TYPE.line.includes("wakeTime") && (
-                <Line
-                  dataKey={"wakeTime"}
-                  type={"monotone"}
-                  stroke={chartColors[1]}
-                  strokeWidth={2}
-                  activeDot={{r:6}}
-                  isAnimationActive={true}
-                  animationBegin={0}
-                  animationDuration={400}
-                  animationEasing={"linear"}
-                />
+                <>
+                  <Line
+                    dataKey={"wakeTime"}
+                    type={"monotone"}
+                    stroke={chartColors[1]}
+                    strokeWidth={2}
+                    activeDot={{r:4}}
+                    dot={false}
+                    isAnimationActive={true}
+                    animationBegin={0}
+                    animationDuration={400}
+                    animationEasing={"linear"}
+                  />
+                </>
               )}
               {TYPE.line.includes("sleepTime") && (
-                <Line
-                  dataKey={"sleepTime"}
-                  type={"monotone"}
-                  stroke={chartColors[2]}
-                  strokeWidth={2}
-                  activeDot={{r:6}}
-                  isAnimationActive={true}
-                  animationBegin={0}
-                  animationDuration={400}
-                  animationEasing={"linear"}
-                />
+                <>
+                  <Line
+                    dataKey={"sleepTime"}
+                    type={"monotone"}
+                    stroke={chartColors[2]}
+                    strokeWidth={2}
+                    activeDot={{r:4}}
+                    dot={false}
+                    isAnimationActive={true}
+                    animationBegin={0}
+                    animationDuration={400}
+                    animationEasing={"linear"}
+                  />
+                </>
               )}
               <Tooltip
                 labelFormatter={(_label: any, payload: any) => {

@@ -98,7 +98,7 @@ export const MoneyChartLine = () => {
           <ResponsiveContainer width={"100%"} height={350}>
             <LineChart
               data={object}
-              margin={{top: 20, right: 20, bottom: 20, left: 20}}
+              margin={{top: 30, right: 20, bottom: 20, left: 30}}
               barGap={20}
               barCategoryGap={"20%"}
             >
@@ -127,30 +127,36 @@ export const MoneyChartLine = () => {
                 tickFormatter={formatterY}
               />
               {TYPE.line.includes("income") && (
-                <Line
-                  dataKey={"income"}
-                  type={"monotone"}
-                  stroke={chartColors[0]}
-                  strokeWidth={2}
-                  activeDot={{r:6}}
-                  isAnimationActive={true}
-                  animationBegin={0}
-                  animationDuration={400}
-                  animationEasing={"linear"}
-                />
+                <>
+                  <Line
+                    dataKey={"income"}
+                    type={"monotone"}
+                    stroke={chartColors[0]}
+                    strokeWidth={2}
+                    activeDot={{r:4}}
+                    dot={false}
+                    isAnimationActive={true}
+                    animationBegin={0}
+                    animationDuration={400}
+                    animationEasing={"linear"}
+                  />
+                </>
               )}
               {TYPE.line.includes("expense") && (
-                <Line
-                  dataKey={"expense"}
-                  type={"monotone"}
-                  stroke={chartColors[3]}
-                  strokeWidth={2}
-                  activeDot={{r:6}}
-                  isAnimationActive={true}
-                  animationBegin={0}
-                  animationDuration={400}
-                  animationEasing={"linear"}
-                />
+                <>
+                  <Line
+                    dataKey={"expense"}
+                    type={"monotone"}
+                    stroke={chartColors[3]}
+                    strokeWidth={2}
+                    activeDot={{r:4}}
+                    dot={false}
+                    isAnimationActive={true}
+                    animationBegin={0}
+                    animationDuration={400}
+                    animationEasing={"linear"}
+                  />
+                </>
               )}
               <Tooltip
                 labelFormatter={(_label: any, payload: any) => {

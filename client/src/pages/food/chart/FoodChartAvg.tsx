@@ -116,7 +116,7 @@ export const FoodChartAvg = () => {
           <ResponsiveContainer width={"100%"} height={350}>
             <ComposedChart
               data={object}
-              margin={{top: 20, right: 20, bottom: 20, left: 20}}
+              margin={{top: 30, right: 20, bottom: 20, left: 30}}
               barGap={8}
               barCategoryGap={"20%"}
             >
@@ -144,7 +144,7 @@ export const FoodChartAvg = () => {
                 tick={{fill: "#666", fontSize: 14}}
                 tickFormatter={formatterY}
               />
-              {TYPE.line === "kcal" && (
+              {TYPE.line === ("kcal") && (
                 <>
                   <Bar
                     dataKey={"kcal"}
@@ -158,7 +158,7 @@ export const FoodChartAvg = () => {
                   />
                 </>
               )}
-              {TYPE.line === "nut" && (
+              {TYPE.line === ("nut") && (
                 <>
                   <Bar
                     dataKey={"carb"}

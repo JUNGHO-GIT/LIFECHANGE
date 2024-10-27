@@ -100,7 +100,7 @@ export const SleepChartAvg = () => {
           <ResponsiveContainer width={"100%"} height={350}>
             <ComposedChart
               data={object}
-              margin={{top: 20, right: 20, bottom: 20, left: 20}}
+              margin={{top: 30, right: 20, bottom: 20, left: 30}}
               barGap={8}
               barCategoryGap={"20%"}
             >
@@ -129,40 +129,46 @@ export const SleepChartAvg = () => {
                 tickFormatter={formatterY}
               />
               {TYPE.line.includes("bedTime") && (
-                <Bar
-                  dataKey={"bedTime"}
-                  fill={chartColors[4]}
-                  radius={[10, 10, 0, 0]}
-                  minPointSize={1}
-                  isAnimationActive={true}
-                  animationBegin={0}
-                  animationDuration={400}
-                  animationEasing={"linear"}
-                />
+                <>
+                  <Bar
+                    dataKey={"bedTime"}
+                    fill={chartColors[4]}
+                    radius={[10, 10, 0, 0]}
+                    minPointSize={1}
+                    isAnimationActive={true}
+                    animationBegin={0}
+                    animationDuration={400}
+                    animationEasing={"linear"}
+                  />
+                </>
               )}
               {TYPE.line.includes("wakeTime") && (
-                <Bar
-                  dataKey={"wakeTime"}
-                  fill={chartColors[1]}
-                  radius={[10, 10, 0, 0]}
-                  minPointSize={1}
-                  isAnimationActive={true}
-                  animationBegin={0}
-                  animationDuration={400}
-                  animationEasing={"linear"}
-                />
+                <>
+                  <Bar
+                    dataKey={"wakeTime"}
+                    fill={chartColors[1]}
+                    radius={[10, 10, 0, 0]}
+                    minPointSize={1}
+                    isAnimationActive={true}
+                    animationBegin={0}
+                    animationDuration={400}
+                    animationEasing={"linear"}
+                  />
+                </>
               )}
               {TYPE.line.includes("sleepTime") && (
-                <Bar
-                  dataKey={"sleepTime"}
-                  fill={chartColors[2]}
-                  radius={[10, 10, 0, 0]}
-                  minPointSize={1}
-                  isAnimationActive={true}
-                  animationBegin={0}
-                  animationDuration={400}
-                  animationEasing={"linear"}
-                />
+                <>
+                  <Bar
+                    dataKey={"sleepTime"}
+                    fill={chartColors[2]}
+                    radius={[10, 10, 0, 0]}
+                    minPointSize={1}
+                    isAnimationActive={true}
+                    animationBegin={0}
+                    animationDuration={400}
+                    animationEasing={"linear"}
+                  />
+                </>
               )}
               <Tooltip
                 labelFormatter={(_label: any, payload: any) => {

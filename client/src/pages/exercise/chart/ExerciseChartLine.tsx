@@ -116,7 +116,7 @@ export const ExerciseChartLine = () => {
           <ResponsiveContainer width={"100%"} height={350}>
             <LineChart
               data={object}
-              margin={{top: 20, right: 20, bottom: 20, left: 20}}
+              margin={{top: 30, right: 20, bottom: 20, left: 30}}
               barGap={20}
               barCategoryGap={"20%"}
             >
@@ -144,31 +144,37 @@ export const ExerciseChartLine = () => {
                 tick={{fill: "#666", fontSize: 14}}
                 tickFormatter={formatterY}
               />
-              {TYPE.line === "volume" && (
-                <Line
-                  dataKey={"volume"}
-                  type={"monotone"}
-                  stroke={chartColors[1]}
-                  activeDot={{r:6}}
-                  strokeWidth={2}
-                  isAnimationActive={true}
-                  animationBegin={0}
-                  animationDuration={400}
-                  animationEasing={"linear"}
-                />
+              {TYPE.line === ("volume") && (
+                <>
+                  <Line
+                    dataKey={"volume"}
+                    type={"monotone"}
+                    stroke={chartColors[1]}
+                    strokeWidth={2}
+                    activeDot={{r:4}}
+                    dot={false}
+                    isAnimationActive={true}
+                    animationBegin={0}
+                    animationDuration={400}
+                    animationEasing={"linear"}
+                  />
+                </>
               )}
-              {TYPE.line === "cardio" && (
-                <Line
-                  dataKey={"cardio"}
-                  type={"monotone"}
-                  stroke={chartColors[3]}
-                  activeDot={{r:6}}
-                  strokeWidth={2}
-                  isAnimationActive={true}
-                  animationBegin={0}
-                  animationDuration={400}
-                  animationEasing={"linear"}
-                />
+              {TYPE.line === ("cardio") && (
+                <>
+                  <Line
+                    dataKey={"cardio"}
+                    type={"monotone"}
+                    stroke={chartColors[3]}
+                    strokeWidth={2}
+                    activeDot={{r:4}}
+                    dot={false}
+                    isAnimationActive={true}
+                    animationBegin={0}
+                    animationDuration={400}
+                    animationEasing={"linear"}
+                  />
+                </>
               )}
               <Tooltip
                 labelFormatter={(_label: any, payload: any) => {

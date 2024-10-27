@@ -100,7 +100,7 @@ export const MoneyChartAvg = () => {
           <ResponsiveContainer width={"100%"} height={350}>
             <ComposedChart
               data={object}
-              margin={{top: 20, right: 20, bottom: 20, left: 20}}
+              margin={{top: 30, right: 20, bottom: 20, left: 30}}
               barGap={8}
               barCategoryGap={"20%"}
             >
@@ -129,28 +129,32 @@ export const MoneyChartAvg = () => {
                 tickFormatter={formatterY}
               />
               {TYPE.line.includes("income") && (
-                <Bar
-                  dataKey={"income"}
-                  fill={chartColors[0]}
-                  radius={[10, 10, 0, 0]}
-                  minPointSize={1}
-                  isAnimationActive={true}
-                  animationBegin={0}
-                  animationDuration={400}
-                  animationEasing={"linear"}
-                />
+                <>
+                  <Bar
+                    dataKey={"income"}
+                    fill={chartColors[0]}
+                    radius={[10, 10, 0, 0]}
+                    minPointSize={1}
+                    isAnimationActive={true}
+                    animationBegin={0}
+                    animationDuration={400}
+                    animationEasing={"linear"}
+                  />
+                </>
               )}
               {TYPE.line.includes("expense") && (
-                <Bar
-                  dataKey={"expense"}
-                  fill={chartColors[3]}
-                  radius={[10, 10, 0, 0]}
-                  minPointSize={1}
-                  isAnimationActive={true}
-                  animationBegin={0}
-                  animationDuration={400}
-                  animationEasing={"linear"}
-                />
+                <>
+                  <Bar
+                    dataKey={"expense"}
+                    fill={chartColors[3]}
+                    radius={[10, 10, 0, 0]}
+                    minPointSize={1}
+                    isAnimationActive={true}
+                    animationBegin={0}
+                    animationDuration={400}
+                    animationEasing={"linear"}
+                  />
+                </>
               )}
               <Tooltip
                 labelFormatter={(_label: any, payload: any) => {

@@ -116,7 +116,7 @@ export const ExerciseChartAvg = () => {
           <ResponsiveContainer width={"100%"} height={350}>
             <ComposedChart
               data={object}
-              margin={{top: 20, right: 20, bottom: 20, left: 20}}
+              margin={{top: 30, right: 20, bottom: 20, left: 30}}
               barGap={8}
               barCategoryGap={"20%"}
             >
@@ -144,29 +144,33 @@ export const ExerciseChartAvg = () => {
                 tick={{fill: "#666", fontSize: 14}}
                 tickFormatter={formatterY}
               />
-              {TYPE.line === "volume" && (
-                <Bar
-                  dataKey={"volume"}
-                  fill={chartColors[1]}
-                  radius={[10, 10, 0, 0]}
-                  minPointSize={1}
-                  isAnimationActive={true}
-                  animationBegin={0}
-                  animationDuration={400}
-                  animationEasing={"linear"}
-                />
+              {TYPE.line === ("volume") && (
+                <>
+                  <Bar
+                    dataKey={"volume"}
+                    fill={chartColors[1]}
+                    radius={[10, 10, 0, 0]}
+                    minPointSize={1}
+                    isAnimationActive={true}
+                    animationBegin={0}
+                    animationDuration={400}
+                    animationEasing={"linear"}
+                  />
+                </>
               )}
-              {TYPE.line === "cardio" && (
-                <Bar
-                  dataKey={"cardio"}
-                  fill={chartColors[3]}
-                  radius={[10, 10, 0, 0]}
-                  minPointSize={1}
-                  isAnimationActive={true}
-                  animationBegin={0}
-                  animationDuration={400}
-                  animationEasing={"linear"}
-                />
+              {TYPE.line === ("cardio") && (
+                <>
+                  <Bar
+                    dataKey={"cardio"}
+                    fill={chartColors[3]}
+                    radius={[10, 10, 0, 0]}
+                    minPointSize={1}
+                    isAnimationActive={true}
+                    animationBegin={0}
+                    animationDuration={400}
+                    animationEasing={"linear"}
+                  />
+                </>
               )}
               <Tooltip
                 labelFormatter={(_label: any, payload: any) => {
