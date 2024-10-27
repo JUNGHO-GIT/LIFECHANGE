@@ -58,6 +58,7 @@ export const Empty = (
               onClick={() => {
                 navigate(toDetail, {
                   state: {
+                    from: PATH.includes("today") ? "today" : "list",
                     dateType: DATE?.dateType,
                     dateStart: DATE?.dateStart,
                     dateEnd: DATE?.dateEnd
