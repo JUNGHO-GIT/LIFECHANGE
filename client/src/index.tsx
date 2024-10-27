@@ -27,50 +27,70 @@ import {
   Header, TopNav, BottomNav, Alert, Confirm
 } from "@imports/ImportLayouts";
 
+// admin
 import {
-  CalendarList, CalendarDetail,
+  AdminDashboard,
 } from "@imports/ImportPages";
 
-import {
-  TodayGoalList, TodayList,
-} from "@imports/ImportPages";
-
-import {
-  ExerciseChart, ExerciseGoalList, ExerciseGoalDetail, ExerciseList, ExerciseDetail,
-} from "@imports/ImportPages";
-
-import {
-  FoodChart, FoodGoalList, FoodGoalDetail, FoodFindList, FoodFavoriteList, FoodList, FoodDetail,
-} from "@imports/ImportPages";
-
-import {
-  MoneyChart, MoneyGoalList, MoneyGoalDetail, MoneyList, MoneyDetail,
-} from "@imports/ImportPages";
-
-import {
-  SleepChart, SleepGoalList, SleepGoalDetail, SleepList, SleepDetail,
-} from "@imports/ImportPages";
-
-import {
-  UserAppInfo, UserAppSetting, UserCategory, UserDelete, UserDetail, UserDummy, UserLogin, UserResetPw, UserSignup,
-} from "@imports/ImportPages";
-
+// auth
 import {
   AuthError, AuthGoogle, AuthPrivacy,
 } from "@imports/ImportPages";
 
+// calendar
+import {
+  CalendarList, CalendarDetail,
+} from "@imports/ImportPages";
+
+// exercise
+import {
+  ExerciseChart, ExerciseGoalList, ExerciseGoalDetail, ExerciseList, ExerciseDetail,
+} from "@imports/ImportPages";
+
+// food
+import {
+  FoodChart, FoodGoalList, FoodGoalDetail, FoodFindList, FoodFavoriteList, FoodList, FoodDetail,
+} from "@imports/ImportPages";
+
+// today
+import {
+  TodayGoalList, TodayList,
+} from "@imports/ImportPages";
+
+// money
+import {
+  MoneyChart, MoneyGoalList, MoneyGoalDetail, MoneyList, MoneyDetail,
+} from "@imports/ImportPages";
+
+// sleep
+import {
+  SleepChart, SleepGoalList, SleepGoalDetail, SleepList, SleepDetail,
+} from "@imports/ImportPages";
+
+// user
+import {
+  UserAppInfo, UserAppSetting, UserCategory, UserDelete, UserDetail, UserDummy, UserLogin, UserResetPw, UserSignup,
+} from "@imports/ImportPages";
+
+// -------------------------------------------------------------------------------------------------
+const Admin = () => (
+  <Routes>
+    <Route path="/dashboard" element={<AdminDashboard />} />
+  </Routes>
+);
+// -------------------------------------------------------------------------------------------------
+const Auth = () => (
+  <Routes>
+    <Route path="/privacy" element={<AuthPrivacy />} />
+    <Route path="/google" element={<AuthGoogle />} />
+    <Route path="/error" element={<AuthError />} />
+  </Routes>
+);
 // -------------------------------------------------------------------------------------------------
 const Calendar = () => (
   <Routes>
     <Route path="/list" element={<CalendarList />} />
     <Route path="/detail" element={<CalendarDetail />} />
-  </Routes>
-);
-// -------------------------------------------------------------------------------------------------
-const Today = () => (
-  <Routes>
-    <Route path="/goal/list" element={<TodayGoalList />} />
-    <Route path="/list" element={<TodayList />} />
   </Routes>
 );
 // -------------------------------------------------------------------------------------------------
@@ -93,6 +113,13 @@ const Food = () => (
     <Route path="/favorite/list" element={<FoodFavoriteList />} />
     <Route path="/list" element={<FoodList />} />
     <Route path="/detail" element={<FoodDetail />} />
+  </Routes>
+);
+// -------------------------------------------------------------------------------------------------
+const Today = () => (
+  <Routes>
+    <Route path="/goal/list" element={<TodayGoalList />} />
+    <Route path="/list" element={<TodayList />} />
   </Routes>
 );
 // -------------------------------------------------------------------------------------------------
@@ -129,14 +156,6 @@ const User = () => (
     <Route path="/dummy" element={<UserDummy />} />
   </Routes>
 );
-// -------------------------------------------------------------------------------------------------
-const Auth = () => (
-  <Routes>
-    <Route path="/privacy" element={<AuthPrivacy />} />
-    <Route path="/google" element={<AuthGoogle />} />
-    <Route path="/error" element={<AuthError />} />
-  </Routes>
-);
 
 // -------------------------------------------------------------------------------------------------
 const App = () => {
@@ -169,14 +188,15 @@ const App = () => {
       {!noneTop && <TopNav />}
       <Routes>
         <Route path="/*" element={<User />} />
-        <Route path="/calendar/*" element={<Calendar />} />
-        <Route path="/today/*" element={<Today />} />
+        <Route path="/admin/*" element={<Admin />} />
+        <Route path="/auth/*" element={<Auth />} />
         <Route path="/exercise/*" element={<Exercise />} />
         <Route path="/food/*" element={<Food />} />
+        <Route path="/calendar/*" element={<Calendar />} />
+        <Route path="/today/*" element={<Today />} />
         <Route path="/money/*" element={<Money />} />
         <Route path="/sleep/*" element={<Sleep />} />
         <Route path="/user/*" element={<User />} />
-        <Route path="/auth/*" element={<Auth />} />
       </Routes>
       <Alert />
       <Confirm />

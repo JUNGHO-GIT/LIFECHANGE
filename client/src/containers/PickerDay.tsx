@@ -24,7 +24,7 @@ export const PickerDay = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { PATH, localLang, localTimeZone, sessionTitle } = useCommonValue();
+  const { PATH, localLang, localTimeZone } = useCommonValue();
   const { isTodayList, isGoalTodayList, isGoalList, isGoalDetail } = useCommonValue();
   const { isRealList, isRealDetail, isCalendarDetail } = useCommonValue();
   const { getDayFmt, getDayNotFmt, getDayStartFmt, getDayEndFmt } = useCommonDate();

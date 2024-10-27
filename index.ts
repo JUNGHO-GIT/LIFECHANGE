@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import { Request, Response, NextFunction } from "express";
 
+import { router as adminRouter } from "@routers/admin/adminRouter";
 import { router as calendarRouter } from "@routers/calendar/calendarRouter";
 import { router as exerciseChartRouter } from "@routers/exercise/exerciseChartRouter";
 import { router as exerciseRouter } from "@routers/exercise/exerciseRouter";
@@ -99,6 +100,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 });
 
 // 라우터 설정 -------------------------------------------------------------------------------------
+app.use(`${preFix}/admin`, adminRouter);
 app.use(`${preFix}/calendar`, calendarRouter);
 app.use(`${preFix}/exercise/chart`, exerciseChartRouter);
 app.use(`${preFix}/exercise/goal`, exerciseGoalRouter);

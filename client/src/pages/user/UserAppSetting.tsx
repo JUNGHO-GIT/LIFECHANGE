@@ -90,6 +90,23 @@ export const UserAppSetting = () => {
                     />
                   </TableCell>
                 </TableRow>
+                {/** dashboard **/}
+                <TableRow
+                  className={`${isAdmin !== "true" ? "d-none" : ""} pointer`}
+                  onClick={() => {
+                    navigate("/admin/dashboard")
+                  }}
+                >
+                  <TableCell className={"w-90vw p-15"}>
+                    {translate("dashboard")}
+                  </TableCell>
+                  <TableCell className={"w-10vw p-15"}>
+                    <Icons
+                      name={"ChevronRight"}
+                      className={"w-16 h-16"}
+                    />
+                  </TableCell>
+                </TableRow>
                 {/** dummy **/}
                 <TableRow
                   className={`${isAdmin !== "true" ? "d-none" : ""} pointer`}

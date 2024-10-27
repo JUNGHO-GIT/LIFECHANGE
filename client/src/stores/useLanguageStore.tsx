@@ -209,6 +209,10 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "삭제",
         en: "Delete"
       },
+      dashboard: {
+        ko: "대시보드",
+        en: "Dashboard"
+      },
       deleteAll: {
         ko: "전체삭제",
         en: "Delete All"
@@ -1207,6 +1211,10 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
       userDelete: {
         ko: "회원탈퇴",
         en: "Cancel Membership"
+      },
+      userCount: {
+        ko: "회원수",
+        en: "User Count"
       },
 
       // -------------------------------------------------------------------------------------------

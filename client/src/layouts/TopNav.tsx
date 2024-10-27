@@ -28,6 +28,7 @@ export const TopNav = () => {
       calendar: "schedule",
       money: "real",
       sleep: "real",
+      admin: "dashboard",
     }
   );
 
@@ -277,6 +278,15 @@ export const TopNav = () => {
         }));
       }
     }
+    // 5. admin
+    else if (firstStr === "admin") {
+      if (secondStr === "dashboard") {
+        setSelectedTab((prev: any) => ({
+          ...prev,
+          admin: "dashboard",
+        }));
+      }
+    }
   }, [firstStr, secondStr]);
 
   // 4. handle------------------------------------------------------------------------------------
@@ -289,6 +299,9 @@ export const TopNav = () => {
     let url = "";
     if (value === "real" || value === "schedule") {
       url = `/${firstStr}/list`;
+    }
+    else if (value === "dashboard") {
+      url = `/${firstStr}/dashboard`;
     }
     else {
       url = `/${firstStr}/${value}/list`;
@@ -823,66 +836,170 @@ export const TopNav = () => {
     );
     // 5. tabs -------------------------------------------------------------------------------------
     const tabsSection = () => (
-      <Tabs
-        value={selectedTab[firstStr]}
-        variant={"scrollable"}
-        selectionFollowsFocus={true}
-        scrollButtons={false}
-        sx={{
-          [`& .MuiTabs-scrollButtons`]: {
-            "&.Mui-disabled": { opacity: 0.3 },
-          },
-        }}
-      >
-        <Tab
-          label={translate("chart")}
-          value={"chart"}
-          className={(firstStr === "calendar" || firstStr === "today") ? "d-none" : ""}
-          onClick={() => {
-            handleClickTobNav("chart");
+
+      // 1. calendar
+      firstStr === "calendar" ? (
+        <Tabs
+          value={selectedTab[firstStr]}
+          variant={"scrollable"}
+          selectionFollowsFocus={true}
+          scrollButtons={false}
+          sx={{
+            [`& .MuiTabs-scrollButtons`]: {
+              "&.Mui-disabled": { opacity: 0.3 },
+            },
           }}
-        />
-        <Tab
-          label={translate("goal")}
-          value={"goal"}
-          className={firstStr === "calendar" ? "d-none" : ""}
-          onClick={() => {
-            handleClickTobNav("goal");
+        >
+          <Tab
+            label={translate("schedule")}
+            value={"schedule"}
+            onClick={() => {
+              handleClickTobNav("schedule");
+            }}
+          />
+        </Tabs>
+      )
+
+      // 2. today
+      : firstStr === "today" ? (
+        <Tabs
+          value={selectedTab[firstStr]}
+          variant={"scrollable"}
+          selectionFollowsFocus={true}
+          scrollButtons={false}
+          sx={{
+            [`& .MuiTabs-scrollButtons`]: {
+              "&.Mui-disabled": { opacity: 0.3 },
+            },
           }}
-        />
-        <Tab
-          label={translate("real")}
-          value={"real"}
-          className={firstStr === "calendar" ? "d-none" : ""}
-          onClick={() => {
-            handleClickTobNav("real");
+        >
+          <Tab
+            label={translate("goal")}
+            value={"goal"}
+            onClick={() => {
+              handleClickTobNav("goal");
+            }}
+          />
+          <Tab
+            label={translate("real")}
+            value={"real"}
+            onClick={() => {
+              handleClickTobNav("real");
+            }}
+          />
+        </Tabs>
+      )
+
+      // 3. food
+      : firstStr === "food" ? (
+        <Tabs
+          value={selectedTab[firstStr]}
+          variant={"scrollable"}
+          selectionFollowsFocus={true}
+          scrollButtons={false}
+          sx={{
+            [`& .MuiTabs-scrollButtons`]: {
+              "&.Mui-disabled": { opacity: 0.3 },
+            },
           }}
-        />
-        <Tab
-          label={translate("schedule")}
-          value={"schedule"}
-          className={firstStr === "calendar" ? "" : "d-none"}
-          onClick={() => {
-            handleClickTobNav("schedule");
+        >
+          <Tab
+            label={translate("chart")}
+            value={"chart"}
+            onClick={() => {
+              handleClickTobNav("chart");
+            }}
+          />
+          <Tab
+            label={translate("goal")}
+            value={"goal"}
+            onClick={() => {
+              handleClickTobNav("goal");
+            }}
+          />
+          <Tab
+            label={translate("real")}
+            value={"real"}
+            onClick={() => {
+              handleClickTobNav("real");
+            }}
+          />
+          <Tab
+            label={translate("find")}
+            value={"find"}
+            onClick={() => {
+              handleClickTobNav("find");
+            }}
+          />
+          <Tab
+            label={translate("favorite")}
+            value={"favorite"}
+            onClick={() => {
+              handleClickTobNav("favorite");
+            }}
+          />
+        </Tabs>
+      )
+
+      // 4. exercise, money, sleep
+      : firstStr === "exercise" || firstStr === "money" || firstStr === "sleep" ? (
+        <Tabs
+          value={selectedTab[firstStr]}
+          variant={"scrollable"}
+          selectionFollowsFocus={true}
+          scrollButtons={false}
+          sx={{
+            [`& .MuiTabs-scrollButtons`]: {
+              "&.Mui-disabled": { opacity: 0.3 },
+            },
           }}
-        />
-        <Tab
-          label={translate("find")}
-          value={"find"}
-          className={firstStr === "food" ? "" : "d-none"}
-          onClick={() => {
-            handleClickTobNav("find");
+        >
+          <Tab
+            label={translate("chart")}
+            value={"chart"}
+            onClick={() => {
+              handleClickTobNav("chart");
+            }}
+          />
+          <Tab
+            label={translate("goal")}
+            value={"goal"}
+            onClick={() => {
+              handleClickTobNav("goal");
+            }}
+          />
+          <Tab
+            label={translate("real")}
+            value={"real"}
+            onClick={() => {
+              handleClickTobNav("real");
+            }}
+          />
+        </Tabs>
+      )
+
+      // 5. admin
+      : firstStr === "admin" ? (
+        <Tabs
+          value={selectedTab[firstStr]}
+          variant={"scrollable"}
+          selectionFollowsFocus={true}
+          scrollButtons={false}
+          sx={{
+            [`& .MuiTabs-scrollButtons`]: {
+              "&.Mui-disabled": { opacity: 0.3 },
+            },
           }}
-        />
-        <Tab
-          label={translate("favorite")}
-          value={"favorite"}
-          className={firstStr === "food" ? "" : "d-none"}
-          onClick={() => {
-            handleClickTobNav("favorite");
-          }}
-        />
-      </Tabs>
+        >
+          <Tab
+            label={translate("dashboard")}
+            value={"dashboard"}
+            onClick={() => {
+              handleClickTobNav("dashboard");
+            }}
+          />
+        </Tabs>
+      ) : null
     );
     // 5. return -----------------------------------------------------------------------------------
     return (
