@@ -24,7 +24,7 @@ export const ExerciseGoalDetail = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [LOCK, setLOCK] = useState<string>("Y");
+  const [LOCK, setLOCK] = useState<string>("unlocked");
   const [OBJECT, setOBJECT] = useState<any>(ExerciseGoal);
   const [EXIST, setEXIST] = useState<any>({
     day: [""],
@@ -288,8 +288,7 @@ export const ExerciseGoalDetail = () => {
     // 7-3. detail
     const detailSection = () => {
       const detailFragment = (item: any, i: number) => (
-        <Grid container spacing={2} columns={12}
-        className={`${LOCK === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
+        <Grid container spacing={2} className={`${LOCK === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={`detail-${i}`}>
           <Grid size={6} className={"d-row-left"}>
             <Bg
               badgeContent={i + 1}

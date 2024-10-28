@@ -25,7 +25,7 @@ export const ExerciseDetail = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [LOCK, setLOCK] = useState<string>("Y");
+  const [LOCK, setLOCK] = useState<string>("unlocked");
   const [OBJECT, setOBJECT] = useState<any>(Exercise);
   const [EXIST, setEXIST] = useState<any>({
     day: [""],
@@ -370,176 +370,13 @@ export const ExerciseDetail = () => {
     // 7-2. total
     const totalSection = () => (
       <Grid container={true} spacing={2} className={"border-1 radius-1 p-20"}>
-        <Grid size={12}>
-          <Input
-            readOnly={true}
-            label={translate("totalVolume")}
-            value={insertComma(OBJECT?.exercise_total_volume || "0")}
-            startadornment={
-              <Img
-                max={15}
-                hover={true}
-                shadow={false}
-                radius={false}
-                src={"exercise3_1"}
-              />
-            }
-            endadornment={
-              translate("vol")
-            }
-          />
-        </Grid>
-        <Grid size={12}>
-          <Input
-            readOnly={true}
-            label={translate("totalCardio")}
-            value={OBJECT?.exercise_total_cardio}
-            startadornment={
-              <Img
-                max={15}
-                hover={true}
-                shadow={false}
-                radius={false}
-                src={"exercise4"}
-              />
-            }
-            endadornment={
-              translate("hm")
-            }
-          />
-        </Grid>
-        <Grid size={12}>
-          <Input
-            label={translate("scale")}
-            value={insertComma(OBJECT?.exercise_total_scale || "0")}
-            startadornment={
-              <Img
-                max={15}
-                hover={true}
-                shadow={false}
-                radius={false}
-                src={"exercise5"}
-              />
-            }
-            endadornment={
-              localUnit
-            }
-            onChange={(e: any) => {
-              // 빈값 처리
-              let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-              // 999 제한 + 소수점 둘째 자리
-              if (Number(value) > 999 || !/^\d*\.?\d{0,2}$/.test(value)) {
-                return;
-              }
-              // 01, 05 같은 숫자는 1, 5로 변경
-              if (/^0(?!\.)/.test(value)) {
-                value = value.replace(/^0+/, '');
-              }
-              // object 설정
-              setOBJECT((prev: any) => ({
-                ...prev,
-                exercise_total_scale: value
-              }));
-            }}
-          />
-        </Grid>
-      </Grid>
-    );
-    // 7-3. detail
-    const detailSection = () => {
-      const detailFragment = (item: any, i: number) => (
-        <Grid container spacing={2} columns={12}
-        className={`${LOCK === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
-          <Grid size={6} className={"d-row-left"}>
-            <Bg
-              badgeContent={i + 1}
-              bgcolor={bgColors?.[item?.exercise_part_idx]}
-            />
-          </Grid>
-          <Grid size={6} className={"d-row-right"}>
-            <Delete
-              index={i}
-              handleDelete={handleDelete}
-              LOCK={LOCK}
-            />
-          </Grid>
-          <Grid size={6}>
-            <Select
-              locked={LOCK}
-              label={translate("part")}
-              value={item?.exercise_part_idx || 0}
-              inputRef={REFS?.[i]?.exercise_part_idx}
-              error={ERRORS?.[i]?.exercise_part_idx}
-              onChange={(e: any) => {
-                // 빈값 처리
-                let value = e.target.value === "" ? 0 : Number(e.target.value);
-                // object 설정
-                setOBJECT((prev: any) => ({
-                  ...prev,
-                  exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
-                    idx === i ? {
-                      ...section,
-                      exercise_part_idx: value,
-                      exercise_part_val: exerciseArray[value]?.exercise_part,
-                      exercise_title_idx: 0,
-                      exercise_title_val: exerciseArray[value]?.exercise_title[0],
-                    } : section
-                  ))
-                }));
-              }}
-            >
-              {exerciseArray?.map((part: any, idx: number) => (
-                <MenuItem
-                  key={idx}
-                  value={idx}
-                  className={"fs-0-8rem"}
-                >
-                  {translate(part?.exercise_part)}
-                </MenuItem>
-              ))}
-            </Select>
-          </Grid>
-          <Grid size={6}>
-            <Select
-              locked={LOCK}
-              label={translate("title")}
-              value={item?.exercise_title_idx || 0}
-              inputRef={REFS?.[i]?.exercise_title_idx}
-              error={ERRORS?.[i]?.exercise_title_idx}
-              onChange={(e: any) => {
-                // 빈값 처리
-                let value = e.target.value === "" ? 0 : Number(e.target.value);
-                // object 설정
-                setOBJECT((prev: any) => ({
-                  ...prev,
-                  exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
-                    idx === i ? {
-                      ...section,
-                      exercise_title_idx: value,
-                      exercise_title_val: exerciseArray[item?.exercise_part_idx]?.exercise_title[value],
-                    } : section
-                  ))
-                }));
-              }}
-            >
-              {exerciseArray[item?.exercise_part_idx]?.exercise_title?.map((title: any, idx: number) => (
-                <MenuItem
-                  key={idx}
-                  value={idx}
-                  className={"fs-0-8rem"}
-                >
-                  {translate(title)}
-                </MenuItem>
-              ))}
-            </Select>
-          </Grid>
-          <Grid size={6}>
+        {/** row 1 **/}
+        <Grid container={true} spacing={2}>
+          <Grid size={12}>
             <Input
-              locked={LOCK}
-              label={translate("set")}
-              value={insertComma(item?.exercise_set || "0")}
-              inputRef={REFS?.[i]?.exercise_set}
-              error={ERRORS?.[i]?.exercise_set}
+              readOnly={true}
+              label={translate("totalVolume")}
+              value={insertComma(OBJECT?.exercise_total_volume || "0")}
               startadornment={
                 <Img
                   max={15}
@@ -550,89 +387,50 @@ export const ExerciseDetail = () => {
                 />
               }
               endadornment={
-                translate("s")
+                translate("vol")
               }
-              onChange={(e: any) => {
-                // 빈값 처리
-                let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-                // 999 제한 + 정수
-                if (Number(value) > 999 || !/^\d+$/.test(value)) {
-                  return;
-                }
-                // 01, 05 같은 숫자는 1, 5로 변경
-                if (/^0(?!\.)/.test(value)) {
-                  value = value.replace(/^0+/, '');
-                }
-                // object 설정
-                setOBJECT((prev: any) => ({
-                  ...prev,
-                  exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
-                    idx === i ? {
-                      ...section,
-                      exercise_set: value
-                    } : section
-                  ))
-                }));
-              }}
             />
           </Grid>
-          <Grid size={6}>
+        </Grid>
+        {/** /.row 1 **/}
+
+        {/** row 2 **/}
+        <Grid container={true} spacing={2}>
+          <Grid size={12}>
             <Input
-              locked={LOCK}
-              label={translate("rep")}
-              value={insertComma(item?.exercise_rep || "0")}
-              inputRef={REFS?.[i]?.exercise_rep}
-              error={ERRORS?.[i]?.exercise_rep}
+              readOnly={true}
+              label={translate("totalCardio")}
+              value={OBJECT?.exercise_total_cardio}
               startadornment={
                 <Img
                   max={15}
                   hover={true}
                   shadow={false}
                   radius={false}
-                  src={"exercise3_2"}
+                  src={"exercise4"}
                 />
               }
               endadornment={
-                translate("r")
+                translate("hm")
               }
-              onChange={(e: any) => {
-                // 빈값 처리
-                let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-                // 999 제한 + 정수
-                if (Number(value) > 999 || !/^\d+$/.test(value)) {
-                  return;
-                }
-                // 01, 05 같은 숫자는 1, 5로 변경
-                if (/^0(?!\.)/.test(value)) {
-                  value = value.replace(/^0+/, '');
-                }
-                // object 설정
-                setOBJECT((prev: any) => ({
-                  ...prev,
-                  exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
-                    idx === i ? {
-                      ...section,
-                      exercise_rep: value
-                    } : section
-                  ))
-                }));
-              }}
             />
           </Grid>
-          <Grid size={6}>
+        </Grid>
+        {/** /.row 2 **/}
+
+        {/** row 3 **/}
+        <Grid container={true} spacing={2}>
+          <Grid size={12}>
             <Input
-              locked={LOCK}
-              label={translate("weight")}
-              value={insertComma(item?.exercise_weight || "0")}
-              inputRef={REFS?.[i]?.exercise_weight}
-              error={ERRORS?.[i]?.exercise_weight}
+              label={translate("scale")}
+              value={insertComma(OBJECT?.exercise_total_scale || "0")}
               startadornment={
                 <Img
                   max={15}
                   hover={true}
                   shadow={false}
                   radius={false}
-                  src={"exercise3_3"}
+                  src={"exercise5"}
                 />
               }
               endadornment={
@@ -641,8 +439,8 @@ export const ExerciseDetail = () => {
               onChange={(e: any) => {
                 // 빈값 처리
                 let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-                // 999 제한 + 정수
-                if (Number(value) > 999 || !/^\d+$/.test(value)) {
+                // 999 제한 + 소수점 둘째 자리
+                if (Number(value) > 999 || !/^\d*\.?\d{0,2}$/.test(value)) {
                   return;
                 }
                 // 01, 05 같은 숫자는 1, 5로 변경
@@ -652,28 +450,262 @@ export const ExerciseDetail = () => {
                 // object 설정
                 setOBJECT((prev: any) => ({
                   ...prev,
-                  exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
-                    idx === i ? {
-                      ...section,
-                      exercise_weight: value
-                    } : section
-                  ))
+                  exercise_total_scale: value
                 }));
               }}
             />
           </Grid>
-          <Grid size={6}>
-            <PickerTime
-              OBJECT={OBJECT}
-              setOBJECT={setOBJECT}
-              REFS={REFS}
-              ERRORS={ERRORS}
-              DATE={DATE}
-              LOCK={LOCK}
-              extra={"exercise_cardio"}
-              i={i}
-            />
+          {/** /.row 3 **/}
+        </Grid>
+      </Grid>
+    );
+    // 7-3. detail
+    const detailSection = () => {
+      const detailFragment = (item: any, i: number) => (
+        <Grid container spacing={2} className={`${LOCK === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={`detail-${i}`}>
+          {/** row 1 **/}
+          <Grid container={true} spacing={2}>
+            <Grid size={6} className={"d-row-left"}>
+              <Bg
+                badgeContent={i + 1}
+                bgcolor={bgColors?.[item?.exercise_part_idx]}
+              />
+            </Grid>
+            <Grid size={6} className={"d-row-right"}>
+              <Delete
+                index={i}
+                handleDelete={handleDelete}
+                LOCK={LOCK}
+              />
+            </Grid>
           </Grid>
+          {/** /.row 1 **/}
+
+          {/** row 2 **/}
+          <Grid container={true} spacing={2}>
+            <Grid size={6}>
+              <Select
+                locked={LOCK}
+                label={translate("part")}
+                value={item?.exercise_part_idx || 0}
+                inputRef={REFS?.[i]?.exercise_part_idx}
+                error={ERRORS?.[i]?.exercise_part_idx}
+                onChange={(e: any) => {
+                  // 빈값 처리
+                  let value = e.target.value === "" ? 0 : Number(e.target.value);
+                  // object 설정
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
+                      idx === i ? {
+                        ...section,
+                        exercise_part_idx: value,
+                        exercise_part_val: exerciseArray[value]?.exercise_part,
+                        exercise_title_idx: 0,
+                        exercise_title_val: exerciseArray[value]?.exercise_title[0],
+                      } : section
+                    ))
+                  }));
+                }}
+              >
+                {exerciseArray?.map((part: any, idx: number) => (
+                  <MenuItem
+                    key={idx}
+                    value={idx}
+                    className={"fs-0-8rem"}
+                  >
+                    {translate(part?.exercise_part)}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+            <Grid size={6}>
+              <Select
+                locked={LOCK}
+                label={translate("title")}
+                value={item?.exercise_title_idx || 0}
+                inputRef={REFS?.[i]?.exercise_title_idx}
+                error={ERRORS?.[i]?.exercise_title_idx}
+                onChange={(e: any) => {
+                  // 빈값 처리
+                  let value = e.target.value === "" ? 0 : Number(e.target.value);
+                  // object 설정
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
+                      idx === i ? {
+                        ...section,
+                        exercise_title_idx: value,
+                        exercise_title_val: exerciseArray[item?.exercise_part_idx]?.exercise_title[value],
+                      } : section
+                    ))
+                  }));
+                }}
+              >
+                {exerciseArray[item?.exercise_part_idx]?.exercise_title?.map((title: any, idx: number) => (
+                  <MenuItem
+                    key={idx}
+                    value={idx}
+                    className={"fs-0-8rem"}
+                  >
+                    {translate(title)}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+          </Grid>
+          {/** /.row 2 **/}
+
+          {/** row 3 **/}
+          <Grid container={true} spacing={2}>
+            <Grid size={6}>
+              <Input
+                locked={LOCK}
+                label={translate("set")}
+                value={insertComma(item?.exercise_set || "0")}
+                inputRef={REFS?.[i]?.exercise_set}
+                error={ERRORS?.[i]?.exercise_set}
+                startadornment={
+                  <Img
+                    max={15}
+                    hover={true}
+                    shadow={false}
+                    radius={false}
+                    src={"exercise3_1"}
+                  />
+                }
+                endadornment={
+                  translate("s")
+                }
+                onChange={(e: any) => {
+                  // 빈값 처리
+                  let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                  // 999 제한 + 정수
+                  if (Number(value) > 999 || !/^\d+$/.test(value)) {
+                    return;
+                  }
+                  // 01, 05 같은 숫자는 1, 5로 변경
+                  if (/^0(?!\.)/.test(value)) {
+                    value = value.replace(/^0+/, '');
+                  }
+                  // object 설정
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
+                      idx === i ? {
+                        ...section,
+                        exercise_set: value
+                      } : section
+                    ))
+                  }));
+                }}
+              />
+            </Grid>
+            <Grid size={6}>
+              <Input
+                locked={LOCK}
+                label={translate("rep")}
+                value={insertComma(item?.exercise_rep || "0")}
+                inputRef={REFS?.[i]?.exercise_rep}
+                error={ERRORS?.[i]?.exercise_rep}
+                startadornment={
+                  <Img
+                    max={15}
+                    hover={true}
+                    shadow={false}
+                    radius={false}
+                    src={"exercise3_2"}
+                  />
+                }
+                endadornment={
+                  translate("r")
+                }
+                onChange={(e: any) => {
+                  // 빈값 처리
+                  let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                  // 999 제한 + 정수
+                  if (Number(value) > 999 || !/^\d+$/.test(value)) {
+                    return;
+                  }
+                  // 01, 05 같은 숫자는 1, 5로 변경
+                  if (/^0(?!\.)/.test(value)) {
+                    value = value.replace(/^0+/, '');
+                  }
+                  // object 설정
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
+                      idx === i ? {
+                        ...section,
+                        exercise_rep: value
+                      } : section
+                    ))
+                  }));
+                }}
+              />
+            </Grid>
+          </Grid>
+          {/** /.row 3 **/}
+
+          {/** row 4 **/}
+          <Grid container={true} spacing={2}>
+            <Grid size={6}>
+              <Input
+                locked={LOCK}
+                label={translate("weight")}
+                value={insertComma(item?.exercise_weight || "0")}
+                inputRef={REFS?.[i]?.exercise_weight}
+                error={ERRORS?.[i]?.exercise_weight}
+                startadornment={
+                  <Img
+                    max={15}
+                    hover={true}
+                    shadow={false}
+                    radius={false}
+                    src={"exercise3_3"}
+                  />
+                }
+                endadornment={
+                  localUnit
+                }
+                onChange={(e: any) => {
+                  // 빈값 처리
+                  let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                  // 999 제한 + 정수
+                  if (Number(value) > 999 || !/^\d+$/.test(value)) {
+                    return;
+                  }
+                  // 01, 05 같은 숫자는 1, 5로 변경
+                  if (/^0(?!\.)/.test(value)) {
+                    value = value.replace(/^0+/, '');
+                  }
+                  // object 설정
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
+                      idx === i ? {
+                        ...section,
+                        exercise_weight: value
+                      } : section
+                    ))
+                  }));
+                }}
+              />
+            </Grid>
+            <Grid size={6}>
+              <PickerTime
+                OBJECT={OBJECT}
+                setOBJECT={setOBJECT}
+                REFS={REFS}
+                ERRORS={ERRORS}
+                DATE={DATE}
+                LOCK={LOCK}
+                extra={"exercise_cardio"}
+                i={i}
+              />
+            </Grid>
+          </Grid>
+          {/** /.row 4 **/}
         </Grid>
       );
       return (
@@ -689,13 +721,9 @@ export const ExerciseDetail = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        <Grid container={true} spacing={0}>
-          <Grid size={12} className={"d-col-center"}>
-            {dateCountSection()}
-            {totalSection()}
-            {LOADING ? <Loading /> : detailSection()}
-          </Grid>
-        </Grid>
+        {dateCountSection()}
+        {totalSection()}
+        {LOADING ? <Loading /> : detailSection()}
       </Paper>
     );
   };

@@ -417,27 +417,19 @@ export const SleepGoalList = () => {
         </Grid>
       );
       return (
-        <Grid container={true} spacing={0}>
+        <Card className={"d-col-center"}>
           {COUNT.totalCnt === 0 ? (
             <Empty DATE={DATE} extra={"sleep"} />
           ) : (
-            OBJECT?.map((item: any, i: number) => (
-              <Grid size={12} key={`list-${i}`}>
-                {listFragment(item, i)}
-              </Grid>
-            ))
+            OBJECT?.map((item: any, i: number) => listFragment(item, i))
           )}
-        </Grid>
+        </Card>
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        <Grid container={true} spacing={0}>
-          <Grid size={12} className={"d-col-center"}>
-            {LOADING ? <Loading /> : listSection()}
-          </Grid>
-        </Grid>
+        {LOADING ? <Loading /> : listSection()}
       </Paper>
     );
   };

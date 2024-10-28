@@ -24,7 +24,7 @@ export const FoodGoalDetail = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [LOCK, setLOCK] = useState<string>("Y");
+  const [LOCK, setLOCK] = useState<string>("unlocked");
   const [OBJECT, setOBJECT] = useState<any>(FoodGoal);
   const [EXIST, setEXIST] = useState<any>({
     day: [""],
@@ -285,8 +285,7 @@ export const FoodGoalDetail = () => {
     // 7-3. detail
     const detailSection = () => {
       const detailFragment = (item: any, i: number) => (
-        <Grid container spacing={2} columns={12}
-        className={`${LOCK === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
+        <Grid container spacing={2} className={`${LOCK === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={`detail-${i}`}>
           {/** row 1 **/}
           <Grid container={true} spacing={2}>
             <Grid size={6} className={"d-row-left"}>

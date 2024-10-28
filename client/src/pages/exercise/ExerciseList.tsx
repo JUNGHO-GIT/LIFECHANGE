@@ -189,33 +189,34 @@ export const ExerciseList = () => {
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container={true} spacing={2}>
-
                   {/** row 1 **/}
-                  <Grid size={2} className={"d-row-center"}>
-                    <Img
-                      max={15}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={"exercise3_1"}
-                    />
-                  </Grid>
-                  <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
-                      {translate("volume")}
-                    </Div>
-                  </Grid>
-                  <Grid size={7}>
-                    <Grid container={true} spacing={1}>
-                      <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.exercise_total_volume_color}`}>
-                          {insertComma(item.exercise_total_volume)}
-                        </Div>
-                      </Grid>
-                      <Grid size={2} className={"d-row-center"}>
-                        <Div className={"fs-0-6rem"}>
-                          {translate("vol")}
-                        </Div>
+                  <Grid container={true} spacing={2}>
+                    <Grid size={2} className={"d-row-center"}>
+                      <Img
+                        max={15}
+                        hover={true}
+                        shadow={false}
+                        radius={false}
+                        src={"exercise3_1"}
+                      />
+                    </Grid>
+                    <Grid size={3} className={"d-row-left"}>
+                      <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
+                        {translate("volume")}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        <Grid size={10} className={"d-row-right"}>
+                          <Div className={`${item.exercise_total_volume_color}`}>
+                            {insertComma(item.exercise_total_volume)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={"d-row-center"}>
+                          <Div className={"fs-0-6rem"}>
+                            {translate("vol")}
+                          </Div>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -224,31 +225,33 @@ export const ExerciseList = () => {
                   <Hr px={1} />
 
                   {/** row 2 **/}
-                  <Grid size={2} className={"d-center"}>
-                    <Img
-                      max={15}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={"exercise4"}
-                    />
-                  </Grid>
-                  <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
-                      {translate("cardio")}
-                    </Div>
-                  </Grid>
-                  <Grid size={7}>
-                    <Grid container={true} spacing={1}>
-                      <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.exercise_total_cardio_color}`}>
-                          {item.exercise_total_cardio}
-                        </Div>
-                      </Grid>
-                      <Grid size={2} className={"d-row-center"}>
-                        <Div className={"fs-0-6rem"}>
-                          {translate("hm")}
-                        </Div>
+                  <Grid container={true} spacing={2}>
+                    <Grid size={2} className={"d-center"}>
+                      <Img
+                        max={15}
+                        hover={true}
+                        shadow={false}
+                        radius={false}
+                        src={"exercise4"}
+                      />
+                    </Grid>
+                    <Grid size={3} className={"d-row-left"}>
+                      <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
+                        {translate("cardio")}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        <Grid size={10} className={"d-row-right"}>
+                          <Div className={`${item.exercise_total_cardio_color}`}>
+                            {item.exercise_total_cardio}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={"d-row-center"}>
+                          <Div className={"fs-0-6rem"}>
+                            {translate("hm")}
+                          </Div>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -257,38 +260,37 @@ export const ExerciseList = () => {
                   <Hr px={1} />
 
                   {/** row 3 **/}
-                  <Grid size={2} className={"d-center"}>
-                    <Img
-                      max={15}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={"exercise5"}
-                    />
-                  </Grid>
-                  <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
-                      {translate("scale")}
-                    </Div>
-                  </Grid>
-                  <Grid size={7}>
-                    <Grid container={true} spacing={1}>
-                      <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.exercise_total_scale_color}`}>
-                          {insertComma(item.exercise_total_scale)}
-                        </Div>
-                      </Grid>
-                      <Grid size={2} className={"d-row-center"}>
-                        <Div className={"fs-0-6rem"}>
-                          {localUnit}
-                        </Div>
+                  <Grid container={true} spacing={2}>
+                    <Grid size={2} className={"d-center"}>
+                      <Img
+                        max={15}
+                        hover={true}
+                        shadow={false}
+                        radius={false}
+                        src={"exercise5"}
+                      />
+                    </Grid>
+                    <Grid size={3} className={"d-row-left"}>
+                      <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
+                        {translate("scale")}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        <Grid size={10} className={"d-row-right"}>
+                          <Div className={`${item.exercise_total_scale_color}`}>
+                            {insertComma(item.exercise_total_scale)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={"d-row-center"}>
+                          <Div className={"fs-0-6rem"}>
+                            {localUnit}
+                          </Div>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
                   {/** /.row 3 **/}
-
-                  {/** /.row 3 **/}
-
                 </Grid>
               </AccordionDetails>
             </Accordion>
@@ -296,27 +298,19 @@ export const ExerciseList = () => {
         </Grid>
       );
       return (
-        <Grid container={true} spacing={0}>
+        <Card className={"d-col-center"}>
           {COUNT.totalCnt === 0 ? (
             <Empty DATE={DATE} extra={"exercise"} />
           ) : (
-            OBJECT?.map((item: any, i: number) => (
-              <Grid size={12} key={`list-${i}`}>
-                {listFragment(item, i)}
-              </Grid>
-            ))
+            OBJECT?.map((item: any, i: number) => listFragment(item, i))
           )}
-        </Grid>
+        </Card>
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        <Grid container={true} spacing={0}>
-          <Grid size={12} className={"d-col-center"}>
-            {LOADING ? <Loading /> : listSection()}
-          </Grid>
-        </Grid>
+        {LOADING ? <Loading /> : listSection()}
       </Paper>
     );
   };

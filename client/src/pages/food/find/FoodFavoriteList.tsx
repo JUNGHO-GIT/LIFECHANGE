@@ -439,11 +439,7 @@ export const FoodFavoriteList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        <Grid container={true} spacing={0}>
-          <Grid size={12} className={"d-col-center"}>
-            {LOADING ? <Loading /> : listSection()}
-          </Grid>
-        </Grid>
+        {LOADING ? <Loading /> : listSection()}
       </Paper>
     );
   };
