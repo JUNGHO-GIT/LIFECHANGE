@@ -282,7 +282,7 @@ export const CalendarDetail = () => {
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Grid container spacing={2} columns={12} className={"border-1 radius-1 p-20"}>
+      <Grid container={true} spacing={2} className={"border-1 radius-1 p-20"}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}
@@ -431,7 +431,7 @@ export const CalendarDetail = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           {OBJECT?.calendar_section?.map((item: any, i: number) => (
             <Grid size={12} key={`detail-${i}`}>
               {COUNT?.newSectionCnt > 0 && detailFragment(item, i)}

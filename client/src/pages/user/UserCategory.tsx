@@ -555,7 +555,7 @@ export const UserCategory = () => {
         </TableContainer>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} key={`detail-${0}`}>
             {detailFragment(OBJECT)}
           </Grid>
@@ -565,7 +565,7 @@ export const UserCategory = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min90vh"}>
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {LOADING ? <Loading /> : detailSection()}
           </Grid>

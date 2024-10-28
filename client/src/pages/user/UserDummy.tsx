@@ -202,7 +202,7 @@ export const UserDummy = () => {
   const userDummyNode = () => {
     // 7-0. empty
     const emptySection = () => (
-      <Grid container spacing={2} columns={12} className={"border-1 radius-1 p-10"}>
+      <Grid container={true} spacing={2} className={"border-1 radius-1 p-10"}>
         <Grid size={12}>
           {translate("empty")}
         </Grid>
@@ -211,7 +211,7 @@ export const UserDummy = () => {
     // 7-1. exerciseGoal
     const exerciseGoalSection = () => {
       const dummyFragment = () => (
-        <Grid container spacing={2} columns={12}>
+        <Grid container={true} spacing={2}>
           <Grid size={12}>
             <TableContainer className={"border-1 radius-1"}>
               <Table>
@@ -261,7 +261,7 @@ export const UserDummy = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {COUNT.totalCnt === 0 ? emptySection() : dummyFragment()}
           </Grid>
@@ -271,7 +271,7 @@ export const UserDummy = () => {
     // 7-2. exercise
     const exerciseSection = () => {
       const dummyFragment = () => (
-        <Grid container spacing={2} columns={12}>
+        <Grid container={true} spacing={2}>
           <Grid size={12}>
             <TableContainer className={"border-1 radius-1"}>
               <Table>
@@ -317,7 +317,7 @@ export const UserDummy = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {COUNT.totalCnt === 0 ? emptySection() : dummyFragment()}
           </Grid>
@@ -327,7 +327,7 @@ export const UserDummy = () => {
     // 7-3. foodGoal
     const foodGoalSection = () => {
       const dummyFragment = () => (
-        <Grid container spacing={2} columns={12}>
+        <Grid container={true} spacing={2}>
           <Grid size={12}>
             <TableContainer className={"border-1 radius-1"}>
               <Table>
@@ -377,7 +377,7 @@ export const UserDummy = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {COUNT.totalCnt === 0 ? emptySection() : dummyFragment()}
           </Grid>
@@ -387,7 +387,7 @@ export const UserDummy = () => {
     // 7-4. food
     const foodSection = () => {
       const dummyFragment = () => (
-        <Grid container spacing={2} columns={12}>
+        <Grid container={true} spacing={2}>
           <Grid size={12}>
             <TableContainer className={"border-1 radius-1"}>
               <Table>
@@ -437,7 +437,7 @@ export const UserDummy = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {COUNT.totalCnt === 0 ? emptySection() : dummyFragment()}
           </Grid>
@@ -447,7 +447,7 @@ export const UserDummy = () => {
     // 7-5. moneyGoal
     const moneyGoalSection = () => {
       const dummyFragment = () => (
-        <Grid container spacing={2} columns={12}>
+        <Grid container={true} spacing={2}>
           <Grid size={12}>
             <TableContainer className={"border-1 radius-1"}>
               <Table>
@@ -489,7 +489,7 @@ export const UserDummy = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {COUNT.totalCnt === 0 ? emptySection() : dummyFragment()}
           </Grid>
@@ -499,7 +499,7 @@ export const UserDummy = () => {
     // 7-6. money
     const moneySection = () => {
       const dummyFragment = () => (
-        <Grid container spacing={2} columns={12}>
+        <Grid container={true} spacing={2}>
           <Grid size={12}>
             <TableContainer className={"border-1 radius-1"}>
               <Table>
@@ -541,7 +541,7 @@ export const UserDummy = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {COUNT.totalCnt === 0 ? emptySection() : dummyFragment()}
           </Grid>
@@ -551,7 +551,7 @@ export const UserDummy = () => {
     // 7-7. sleepGoal
     const sleepGoalSection = () => {
       const dummyFragment = () => (
-        <Grid container spacing={2} columns={12}>
+        <Grid container={true} spacing={2}>
           <Grid size={12}>
             <TableContainer className={"border-1 radius-1"}>
               <Table>
@@ -597,7 +597,7 @@ export const UserDummy = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {COUNT.totalCnt === 0 ? emptySection() : dummyFragment()}
           </Grid>
@@ -607,7 +607,7 @@ export const UserDummy = () => {
     // 7-8. sleep
     const sleepSection = () => {
       const dummyFragment = () => (
-        <Grid container spacing={2} columns={12}>
+        <Grid container={true} spacing={2}>
           <Grid size={12}>
             <TableContainer className={"border-1 radius-1"}>
               <Table>
@@ -653,7 +653,7 @@ export const UserDummy = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {COUNT.totalCnt === 0 ? emptySection() : dummyFragment()}
           </Grid>
@@ -663,7 +663,7 @@ export const UserDummy = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 shadow-1 h-min84vh"}>
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {LOADING ? <Loading /> : (
               <>

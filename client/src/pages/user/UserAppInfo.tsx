@@ -51,7 +51,7 @@ export const UserAppInfo = () => {
   const userAppInfoNode = () => {
     // 7-1. image
     const imageSection = () => (
-      <Grid container spacing={2} columns={12}>
+      <Grid container={true} spacing={2}>
         <Grid size={12} className={"d-center"}>
           <Img
             hover={true}
@@ -66,7 +66,7 @@ export const UserAppInfo = () => {
     // 7-2. detail
     const detailSection = () => {
       const detailFragment = (item: any) => (
-        <Grid container spacing={2} columns={12}>
+        <Grid container={true} spacing={2}>
           <Grid size={12} className={"border-1 radius-1 shadow-0"}>
             <TableContainer className={"over-hidden"}>
               <Table>
@@ -118,7 +118,7 @@ export const UserAppInfo = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} key={`detail-${0}`}>
             {detailFragment(OBJECT)}
           </Grid>
@@ -128,7 +128,7 @@ export const UserAppInfo = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper d-center border-1 radius-1 h-min90vh"}>
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {imageSection()}
             <Br px={40} />

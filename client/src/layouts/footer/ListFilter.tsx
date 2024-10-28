@@ -61,14 +61,14 @@ export const ListFilter = (
     // 10. return
     return (
       PATH.includes("/today") ? (
-        <Grid container spacing={1} columns={12}>
+        <Grid container={true} spacing={1}>
           <Grid size={12}>
             {pickerSection()}
           </Grid>
         </Grid>
       )
       : (
-        <Grid container spacing={1} columns={12}>
+        <Grid container={true} spacing={1}>
           <Grid size={3}>
             {sortSection()}
           </Grid>

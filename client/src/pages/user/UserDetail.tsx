@@ -100,7 +100,7 @@ export const UserDetail = () => {
   const userDetailNode = () => {
     // 7-1. image
     const imageSection = () => (
-      <Grid container spacing={2} columns={12}>
+      <Grid container={true} spacing={2}>
         <Grid size={12} className={"d-center"}>
           <Avatar
             src={OBJECT?.user_image}
@@ -113,7 +113,7 @@ export const UserDetail = () => {
     // 7-2. detail
     const detailSection = () => {
       const detailFragment = (item: any, i: number) => (
-        <Grid container spacing={2} columns={12} className={"p-10"}>
+        <Grid container={true} spacing={2} className={"p-10"}>
           {/** 아이디 **/}
           <Grid size={12}>
             <Input
@@ -330,7 +330,7 @@ export const UserDetail = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} key={`detail-${0}`}>
             {detailFragment(OBJECT, 0)}
           </Grid>
@@ -340,7 +340,7 @@ export const UserDetail = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {imageSection()}
             <Hr px={40} />

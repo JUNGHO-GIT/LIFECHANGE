@@ -132,7 +132,7 @@ export const FoodGoalList = () => {
   const listNode = () => {
     const listSection = () => {
       const listFragment = (item: any, i: number) => (
-        <Grid container spacing={0} columns={12} className={"border-1 radius-1"} key={`list-${i}`}>
+        <Grid container={true} spacing={0} className={"border-1 radius-1"} key={`list-${i}`}>
           <Grid size={12} className={"p-2"}>
             <Accordion
               expanded={isExpanded[i].expanded}
@@ -169,7 +169,7 @@ export const FoodGoalList = () => {
                   });
                 }}
               >
-                <Grid container spacing={2} columns={12}>
+                <Grid container={true} spacing={2}>
                   <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
@@ -197,9 +197,9 @@ export const FoodGoalList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container={true} spacing={2}>
                   {/** row 1 **/}
-                  <Grid container spacing={2} columns={12}>
+                  <Grid container={true} spacing={2}>
                     <Grid size={2} className={"d-row-center"}>
                       <Img
                         max={15}
@@ -215,7 +215,7 @@ export const FoodGoalList = () => {
                       </Div>
                     </Grid>
                     <Grid size={7}>
-                      <Grid container spacing={1} columns={12}>
+                      <Grid container={true} spacing={1}>
                         {/** goal **/}
                         <Grid size={4} className={"d-row-center"}>
                           <Div className={"fs-0-7rem fw-500 dark"}>
@@ -272,7 +272,7 @@ export const FoodGoalList = () => {
                   <Hr px={1} />
 
                   {/** row 2 **/}
-                  <Grid container spacing={2} columns={12}>
+                  <Grid container={true} spacing={2}>
                     <Grid size={2} className={"d-row-center"}>
                       <Img
                         max={15}
@@ -288,7 +288,7 @@ export const FoodGoalList = () => {
                       </Div>
                     </Grid>
                     <Grid size={7}>
-                      <Grid container spacing={1} columns={12}>
+                      <Grid container={true} spacing={1}>
                         {/** goal **/}
                         <Grid size={4} className={"d-row-center"}>
                           <Div className={"fs-0-7rem fw-500 dark"}>
@@ -345,7 +345,7 @@ export const FoodGoalList = () => {
                   <Hr px={1} />
 
                   {/** row 3 **/}
-                  <Grid container spacing={2} columns={12}>
+                  <Grid container={true} spacing={2}>
                     <Grid size={2} className={"d-center"}>
                       <Img
                         max={15}
@@ -361,7 +361,7 @@ export const FoodGoalList = () => {
                       </Div>
                     </Grid>
                     <Grid size={7}>
-                      <Grid container spacing={1} columns={12}>
+                      <Grid container={true} spacing={1}>
                         {/** goal **/}
                         <Grid size={4} className={"d-row-center"}>
                           <Div className={"fs-0-7rem fw-500 dark"}>
@@ -418,7 +418,7 @@ export const FoodGoalList = () => {
                   <Hr px={1} />
 
                   {/** row 4 **/}
-                  <Grid container spacing={2} columns={12}>
+                  <Grid container={true} spacing={2}>
                     <Grid size={2} className={"d-center"}>
                       <Img
                         max={15}
@@ -434,7 +434,7 @@ export const FoodGoalList = () => {
                       </Div>
                     </Grid>
                     <Grid size={7}>
-                      <Grid container spacing={1} columns={12}>
+                      <Grid container={true} spacing={1}>
                         {/** goal **/}
                         <Grid size={4} className={"d-row-center"}>
                           <Div className={"fs-0-7rem fw-500 dark"}>

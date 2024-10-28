@@ -111,7 +111,7 @@ export const FoodChartAvg = () => {
 
     const {domain, ticks, formatterY} = handleY(object, foodChartArray, "food");
     return (
-      <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
+      <Grid container={true} spacing={2} className={"border-1 radius-1"}>
         <Grid size={12} className={"d-col-center"}>
           <ResponsiveContainer width={"100%"} height={350}>
             <ComposedChart
@@ -240,7 +240,7 @@ export const FoodChartAvg = () => {
     // 7-1. head
     const headSection = () => {
       const headFragment = () => (
-        <Grid container spacing={2} columns={12}>
+        <Grid container={true} spacing={2}>
           <Grid size={3} className={"d-row-center"}>
             <Select
               value={TYPE.section}
@@ -255,7 +255,7 @@ export const FoodChartAvg = () => {
               <MenuItem value={"month"}>{translate("month")}</MenuItem>
             </Select>
           </Grid>
-          <Grid size={7} className={"d-row-center"}>
+          <Grid size={6} className={"d-row-center"}>
             <Div className={"fs-1-0rem fw-600"}>
               {translate("chartAvg")}
             </Div>
@@ -270,31 +270,21 @@ export const FoodChartAvg = () => {
               direction={"center"}
               contents={
                 ["kcal", "nut"]?.map((key: string, index: number) => (
-                  <FormGroup
-                    key={index}
-                    children={
-                      <FormControlLabel
-                        label={translate(key)}
-                        labelPlacement={"start"}
-                        control={
-                          <Switch
-                            checked={TYPE.line === key}
-                            onChange={() => {
-                              if (TYPE.line === key) {
-                                return;
-                              }
-                              else {
-                                setTYPE((prev: any) => ({
-                                  ...prev,
-                                  line: key,
-                                }));
-                              }
-                            }}
-                          />
+                  <FormGroup key={index} children={
+                    <FormControlLabel label={translate(key)} labelPlacement={"start"} control={
+                      <Switch checked={TYPE.line === key} onChange={() => {
+                        if (TYPE.line === key) {
+                          return;
                         }
-                      />
-                    }
-                  />
+                        else {
+                          setTYPE((prev: any) => ({
+                            ...prev,
+                            line: key,
+                          }));
+                        }
+                      }}/>
+                    }/>
+                  }/>
                 ))
               }
               children={(popTrigger: any) => (
@@ -319,12 +309,18 @@ export const FoodChartAvg = () => {
         </Card>
       );
     };
+    // 2. chart
+    const chartSection = () => (
+      <Card className={"d-col-center"}>
+        {chartAvg()}
+      </Card>
+    );
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min40vh"}>
         {headSection()}
         <Br px={20} />
-        {LOADING ? <Loading /> : chartAvg()}
+        {LOADING ? <Loading /> : chartSection()}
       </Paper>
     );
   };

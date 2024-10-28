@@ -348,7 +348,7 @@ export const ExerciseDetail = () => {
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Grid container spacing={2} columns={12} className={"border-1 radius-1 p-20"}>
+      <Grid container={true} spacing={2} className={"border-1 radius-1 p-20"}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}
@@ -369,7 +369,7 @@ export const ExerciseDetail = () => {
     );
     // 7-2. total
     const totalSection = () => (
-      <Grid container spacing={2} columns={12} className={"border-1 radius-1 p-20"}>
+      <Grid container={true} spacing={2} className={"border-1 radius-1 p-20"}>
         <Grid size={12}>
           <Input
             readOnly={true}
@@ -677,7 +677,7 @@ export const ExerciseDetail = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           {OBJECT?.exercise_section?.map((item: any, i: number) => (
             <Grid size={12} key={`detail-${i}`}>
               {COUNT?.newSectionCnt > 0 && detailFragment(item, i)}
@@ -689,7 +689,7 @@ export const ExerciseDetail = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {dateCountSection()}
             {totalSection()}

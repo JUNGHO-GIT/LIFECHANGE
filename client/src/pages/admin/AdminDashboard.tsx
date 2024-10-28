@@ -52,7 +52,7 @@ export const AdminDashboard = () => {
   const detailNode = () => {
     // 7-1. date
     const dateCountSection = () => (
-      <Grid container spacing={2} columns={12} className={"border-1 radius-1 p-20"}>
+      <Grid container={true} spacing={2} className={"border-1 radius-1 p-20"}>
         <Grid size={12}>
           <Div className={"fs-1-5rem fw-600"}>
             {`${DATE.dateStart}`}
@@ -62,7 +62,7 @@ export const AdminDashboard = () => {
     );
     // 7-2. detail
     const detailSection = () => (
-      <Grid container spacing={2} columns={12} className={"border-1 radius-1 p-20"}>
+      <Grid container={true} spacing={2} className={"border-1 radius-1 p-20"}>
         <Grid size={12}>
           <Input
             readOnly={true}

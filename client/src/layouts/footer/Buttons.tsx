@@ -78,7 +78,7 @@ export const Buttons = (
         direction={"center"}
         padding={"6px"}
         contents={
-          <Grid container spacing={2} columns={12} className={"h-max30vh d-row-center"}>
+          <Grid container={true} spacing={2} className={"h-max30vh d-row-center"}>
             <Grid size={12}>
               <Div className={"fs-1-0rem fw-600 pre-line dark-grey"}>
                 {translate("replaceOrInsert")}
@@ -158,14 +158,14 @@ export const Buttons = (
     // 10. return
     return (
       PATH.includes("/user/category") || PATH.includes("/user/detail") ? (
-        <Grid container spacing={2} columns={12}>
+        <Grid container={true} spacing={2}>
           <Grid size={10} className={"d-center"}>
             {saveSection()}
           </Grid>
         </Grid>
       )
       : PATH.includes("/detail") ? (
-        <Grid container spacing={2} columns={12}>
+        <Grid container={true} spacing={2}>
           <Grid size={10} className={"d-center"}>
             {PATH.includes("/food/detail") && toFindSection()}
             {PATH.includes("/food/detail") && favoriteSection()}

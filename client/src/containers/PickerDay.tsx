@@ -171,7 +171,7 @@ export const PickerDay = (
         position={"center"}
         direction={"center"}
         contents={
-          <Grid container spacing={2} columns={12} className={"w-min70vw"}>
+          <Grid container={true} spacing={2} className={"w-min70vw"}>
             <Grid size={12} className={"d-row-center"}>
               <Div className={"fs-1-2rem fw-600 me-10"}>
                 {translate("viewDay")}
@@ -364,7 +364,7 @@ export const PickerDay = (
         position={"center"}
         direction={"center"}
         contents={
-          <Grid container spacing={2} columns={12} className={"w-min70vw"}>
+          <Grid container={true} spacing={2} className={"w-min70vw"}>
             <Grid size={12} className={"d-row-center"}>
               <Div className={"fs-1-2rem fw-600 me-10"}>
                 {translate("viewWeek")}
@@ -573,7 +573,7 @@ export const PickerDay = (
         position={"center"}
         direction={"center"}
         contents={
-          <Grid container spacing={2} columns={12} className={"w-min70vw"}>
+          <Grid container={true} spacing={2} className={"w-min70vw"}>
             <Grid size={12} className={"d-row-center"}>
               <Div className={"fs-1-2rem fw-600 me-10"}>
                 {translate("viewMonth")}
@@ -765,7 +765,7 @@ export const PickerDay = (
         position={"center"}
         direction={"center"}
         contents={
-          <Grid container spacing={2} columns={12} className={"w-min70vw"}>
+          <Grid container={true} spacing={2} className={"w-min70vw"}>
             <Grid size={12} className={"d-row-center"}>
               <Div className={"fs-1-2rem fw-600 me-10"}>
                 {translate("viewYear")}
@@ -958,7 +958,7 @@ export const PickerDay = (
         position={"center"}
         direction={"center"}
         contents={
-          <Grid container spacing={2} columns={12} className={"w-min70vw"}>
+          <Grid container={true} spacing={2} className={"w-min70vw"}>
             <Grid size={12} className={"d-row-center"}>
               <Div className={"fs-1-2rem fw-600 me-10"}>
                 {translate("viewSelect")}
@@ -1200,7 +1200,7 @@ export const PickerDay = (
 
       // 1-1. 리스트 (목표 - 오늘)
       isGoalTodayList ? (
-        <Grid container spacing={1} columns={12}>
+        <Grid container={true} spacing={1}>
           <Grid size={3} className={"d-center"}>
             {typeListSection()}
           </Grid>
@@ -1212,7 +1212,7 @@ export const PickerDay = (
 
       // 1-2. 리스트 (목표)
       : isGoalList ? (
-        <Grid container spacing={1} columns={12}>
+        <Grid container={true} spacing={1}>
           <Grid size={3} className={"d-center"}>
             {typeListSection()}
           </Grid>
@@ -1228,7 +1228,7 @@ export const PickerDay = (
 
       // 1-3. 리스트 (실제 - 오늘)
       : isTodayList ? (
-        <Grid container spacing={1} columns={12}>
+        <Grid container={true} spacing={1}>
           <Grid size={3} className={"d-center"}>
             {typeListSection()}
           </Grid>
@@ -1240,7 +1240,7 @@ export const PickerDay = (
 
       // 1-4. 리스트 (실제)
       : isRealList ? (
-        <Grid container spacing={1} columns={12}>
+        <Grid container={true} spacing={1}>
           <Grid size={3} className={"d-center"}>
             {typeListSection()}
           </Grid>
@@ -1256,7 +1256,7 @@ export const PickerDay = (
 
       // 2-1. 세이브 (일정)
       : isCalendarDetail ? (
-        <Grid container spacing={1} columns={12}>
+        <Grid container={true} spacing={1}>
           <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
             {typeSaveSection()}
           </Grid>
@@ -1272,7 +1272,7 @@ export const PickerDay = (
 
       // 2-2. 세이브 (목표)
       : isGoalDetail ? (
-        <Grid container spacing={1} columns={12}>
+        <Grid container={true} spacing={1}>
           <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
             {typeSaveSection()}
           </Grid>
@@ -1286,7 +1286,7 @@ export const PickerDay = (
 
       // 2-3. 세이브 (실제)
       : isRealDetail ? (
-        <Grid container spacing={1} columns={12}>
+        <Grid container={true} spacing={1}>
           <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
             {typeSaveSection()}
           </Grid>

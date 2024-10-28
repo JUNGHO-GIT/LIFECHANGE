@@ -192,7 +192,7 @@ export const UserLogin = () => {
   const userLoginNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <Grid container spacing={2} columns={12}>
+      <Grid container={true} spacing={2}>
         <Grid size={12}>
           <Div className={"fs-1-8rem fw-500"} onClick={() => {
             setClickCount((prevCount) => {
@@ -219,7 +219,7 @@ export const UserLogin = () => {
     // 7-2. login
     const loginSection = () => {
       const detailFragment = (item: any, i: number) => (
-        <Grid container spacing={2} columns={12} className={"p-10"}>
+        <Grid container={true} spacing={2} className={"p-10"}>
           <Grid size={12}>
             <Input
               label={translate("id")}
@@ -262,7 +262,7 @@ export const UserLogin = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} key={`detail-${0}`}>
             {detailFragment(OBJECT, 0)}
           </Grid>
@@ -271,7 +271,7 @@ export const UserLogin = () => {
     };
     // 7-3. check
     const checkSection = () => (
-      <Grid container spacing={2} columns={12}>
+      <Grid container={true} spacing={2}>
         <Grid size={6} className={"d-row-right"}>
           <Div className={"d-center fs-0-8rem"}>
             {translate("autoLogin")}
@@ -303,7 +303,7 @@ export const UserLogin = () => {
     // 7-4. button
     const buttonSection = () => {
       const loginFragment = () => (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             <Btn
               color={"primary"}
@@ -318,7 +318,7 @@ export const UserLogin = () => {
         </Grid>
       );
       const googleFragment = () => (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             <Btn
               color={"primary"}
@@ -344,7 +344,7 @@ export const UserLogin = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {loginFragment()}
             <Br px={10} />
@@ -356,7 +356,7 @@ export const UserLogin = () => {
     // 7-5. link
     const linkSection = () => {
       const toSignupFragment = () => (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-row-center"}>
             <Div className={"fs-0-8rem black me-10"}>
               {translate("notId")}
@@ -370,7 +370,7 @@ export const UserLogin = () => {
         </Grid>
       );
       const toResetPwFragment = () => (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-row-center"}>
             <Div className={"fs-0-8rem black me-10"}>
               {translate("forgotPw")}
@@ -384,7 +384,7 @@ export const UserLogin = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {toSignupFragment()}
             <Br px={10} />
@@ -398,7 +398,7 @@ export const UserLogin = () => {
       <>
       {LOADING && <Loading />}
       <Paper className={"content-wrapper d-center border-1 radius-1 shadow-1 h-min100vh"}>
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {titleSection()}
             <Hr px={20} />

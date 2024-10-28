@@ -132,7 +132,7 @@ export const SleepList = () => {
   const listNode = () => {
     const listSection = () => {
       const listFragment = (item: any, i: number) => (
-        <Grid container spacing={0} columns={12} className={"border-1 radius-1"} key={`list-${i}`}>
+        <Grid container={true} spacing={0} className={"border-1 radius-1"} key={`list-${i}`}>
           <Grid size={12} className={"p-2"}>
             <Accordion
               expanded={isExpanded[i].expanded}
@@ -169,7 +169,7 @@ export const SleepList = () => {
                   });
                 }}
               >
-                <Grid container spacing={2} columns={12}>
+                <Grid container={true} spacing={2}>
                   <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
@@ -188,7 +188,7 @@ export const SleepList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container={true} spacing={2}>
 
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
@@ -206,7 +206,7 @@ export const SleepList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.sleep_section[0]?.sleep_bedTime_color}`}>
                           {item.sleep_section[0]?.sleep_bedTime}
@@ -239,7 +239,7 @@ export const SleepList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.sleep_section[0]?.sleep_wakeTime_color}`}>
                           {item.sleep_section[0]?.sleep_wakeTime}
@@ -272,7 +272,7 @@ export const SleepList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.sleep_section[0]?.sleep_sleepTime_color}`}>
                           {item.sleep_section[0]?.sleep_sleepTime}
@@ -294,7 +294,7 @@ export const SleepList = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           {COUNT.totalCnt === 0 ? (
             <Empty DATE={DATE} extra={"sleep"} />
           ) : (
@@ -310,7 +310,7 @@ export const SleepList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {LOADING ? <Loading /> : listSection()}
           </Grid>

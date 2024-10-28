@@ -123,7 +123,7 @@ export const FindFilter = (
       />
     );
     return (
-      <Grid container spacing={1} columns={12}>
+      <Grid container={true} spacing={1}>
         <Grid size={4} className={"d-center"}>
           {querySection()}
         </Grid>

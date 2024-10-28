@@ -133,7 +133,7 @@ export const CalendarList = () => {
     );
     // 7-4. title
     const titleSection = () => (
-      <Grid container spacing={2} columns={12}>
+      <Grid container={true} spacing={2}>
         <Grid size={3} className={"d-row-left"}>
           <Icons
             key={"ArrowLeft"}
@@ -181,7 +181,7 @@ export const CalendarList = () => {
 
     // 7-5. calendar
     const calendarSection = () => (
-      <Grid container spacing={0} columns={12}>
+      <Grid container={true} spacing={0}>
         <Grid size={12} className={"d-row-center"}>
           <CalendarReact
             view={"month"}
@@ -290,7 +290,7 @@ export const CalendarList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {titleSection()}
             <Br px={20} />

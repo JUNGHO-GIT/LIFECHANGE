@@ -32,7 +32,7 @@ export const Empty = (
       <Card className={"border-1 radius-1"}>
         <Accordion expanded={false}>
           <AccordionSummary>
-            <Grid container spacing={2} columns={12}>
+            <Grid container={true} spacing={2}>
               <Grid size={4} className={"d-row-left"}>
                 <Div className={"fs-1-0rem fw-600 dark"}>
                   {translate("search")}
@@ -64,7 +64,7 @@ export const Empty = (
               });
             }}
           >
-            <Grid container spacing={2} columns={12}>
+            <Grid container={true} spacing={2}>
               <Grid size={2} className={"d-row-center"}>
                 <Icons
                   key={"Search"}

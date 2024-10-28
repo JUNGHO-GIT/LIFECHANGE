@@ -211,7 +211,7 @@ export const UserResetPw = () => {
   const userResetPwNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <Grid container spacing={2} columns={12}>
+      <Grid container={true} spacing={2}>
         <Grid size={12}>
           <Div className={"fs-1-8rem fw-500"}>
             {translate("resetPw")}
@@ -222,7 +222,7 @@ export const UserResetPw = () => {
     // 7-2. reset
     const resetSection = () => {
       const detailFragment = (item: any, i: number) => (
-        <Grid container spacing={2} columns={12} className={"p-10"}>
+        <Grid container={true} spacing={2} className={"p-10"}>
           {/** 이메일 **/}
           <Grid size={10}>
             <Input
@@ -332,7 +332,7 @@ export const UserResetPw = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} key={`detail-${0}`}>
             {detailFragment(OBJECT, 0)}
           </Grid>
@@ -342,7 +342,7 @@ export const UserResetPw = () => {
     // 7-4. button
     const buttonSection = () => {
       const resetFragment = () => (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             <Btn
               color={"primary"}
@@ -357,7 +357,7 @@ export const UserResetPw = () => {
         </Grid>
       );
       const googleFragment = () => (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             <Btn
               color={"primary"}
@@ -383,7 +383,7 @@ export const UserResetPw = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {resetFragment()}
             <Br px={10} />
@@ -395,7 +395,7 @@ export const UserResetPw = () => {
     // 7-5. link
     const linkSection = () => {
       const toLoginFragment = () => (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-row-center"}>
             <Div className={"fs-0-8rem black me-10"}>
               {translate("alreadyId")}
@@ -409,7 +409,7 @@ export const UserResetPw = () => {
         </Grid>
       );
       const toSignupFragment = () => (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-row-center"}>
             <Div className={"fs-0-8rem black me-10"}>
               {translate("notId")}
@@ -423,7 +423,7 @@ export const UserResetPw = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {toLoginFragment()}
             <Br px={10} />
@@ -437,7 +437,7 @@ export const UserResetPw = () => {
       <>
       {LOADING && <Loading />}
       <Paper className={"content-wrapper d-center border-1 radius-1 shadow-1 h-min100vh"}>
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {titleSection()}
             <Hr px={20} />

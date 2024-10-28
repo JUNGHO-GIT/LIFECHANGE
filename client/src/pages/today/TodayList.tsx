@@ -157,7 +157,7 @@ export const TodayList = () => {
     // 7-1. exercise
     const exerciseSection = () => {
       const listFragment = (item: any, i: number) => (
-        <Grid container spacing={0} columns={12} className={"border-1 radius-1"} key={`list-${i}`}>
+        <Grid container={true} spacing={0} className={"border-1 radius-1"} key={`list-${i}`}>
           <Grid size={12} className={"p-2"}>
             <Accordion expanded={isExpanded.exercise[i].expanded}>
               <AccordionSummary
@@ -193,7 +193,7 @@ export const TodayList = () => {
                   });
                 }}
               >
-                <Grid container spacing={2} columns={12}>
+                <Grid container={true} spacing={2}>
                   <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
@@ -212,7 +212,7 @@ export const TodayList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container={true} spacing={2}>
 
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
@@ -230,7 +230,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.exercise_total_volume_color}`}>
                           {insertComma(item.exercise_total_volume)}
@@ -263,7 +263,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.exercise_total_cardio_color}`}>
                           {item.exercise_total_cardio}
@@ -296,7 +296,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.exercise_total_scale_color}`}>
                           {insertComma(item.exercise_total_scale)}
@@ -318,7 +318,7 @@ export const TodayList = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           {OBJECT_EXERCISE?.map((item: any, i: number) => (
             <Grid size={12} key={`list-${i}`}>
               {COUNT.exercise === 0 ? (
@@ -334,7 +334,7 @@ export const TodayList = () => {
     // 7-2. food
     const foodSection = () => {
       const listFragment = (item: any, i: number) => (
-        <Grid container spacing={0} columns={12} className={"border-1 radius-1"} key={`list-${i}`}>
+        <Grid container={true} spacing={0} className={"border-1 radius-1"} key={`list-${i}`}>
           <Grid size={12} className={"p-2"}>
             <Accordion expanded={isExpanded.food[i].expanded}>
               <AccordionSummary
@@ -370,7 +370,7 @@ export const TodayList = () => {
                   });
                 }}
               >
-                <Grid container spacing={2} columns={12}>
+                <Grid container={true} spacing={2}>
                   <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
@@ -389,7 +389,7 @@ export const TodayList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container={true} spacing={2}>
 
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
@@ -407,7 +407,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.food_total_kcal_color}`}>
                           {insertComma(item.food_total_kcal || "0")}
@@ -440,7 +440,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.food_total_carb_color}`}>
                           {insertComma(item.food_total_carb || "0")}
@@ -473,7 +473,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.food_total_protein_color}`}>
                           {insertComma(item.food_total_carb || "0")}
@@ -506,7 +506,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.food_total_fat_color}`}>
                           {insertComma(item.food_total_fat || "0")}
@@ -528,7 +528,7 @@ export const TodayList = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           {OBJECT_FOOD?.map((item: any, i: number) => (
             <Grid size={12} key={`list-${i}`}>
               {COUNT.food === 0 ? (
@@ -544,7 +544,7 @@ export const TodayList = () => {
     // 7-3. money
     const moneySection = () => {
       const listFragment = (item: any, i: number) => (
-        <Grid container spacing={0} columns={12} className={"border-1 radius-1"} key={`list-${i}`}>
+        <Grid container={true} spacing={0} className={"border-1 radius-1"} key={`list-${i}`}>
           <Grid size={12} className={"p-2"}>
             <Accordion expanded={isExpanded.money[i].expanded}>
               <AccordionSummary
@@ -580,7 +580,7 @@ export const TodayList = () => {
                   });
                 }}
               >
-                <Grid container spacing={2} columns={12}>
+                <Grid container={true} spacing={2}>
                   <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
@@ -599,7 +599,7 @@ export const TodayList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container={true} spacing={2}>
 
                   {/** row 1 **/}
                   <Grid size={2} className={"d-center"}>
@@ -617,7 +617,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.money_total_income_color}`}>
                           {insertComma(item.money_total_income || "0")}
@@ -650,7 +650,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.money_total_expense_color}`}>
                           {insertComma(item.money_total_expense || "0")}
@@ -672,7 +672,7 @@ export const TodayList = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           {OBJECT_MONEY?.map((item: any, i: number) => (
             <Grid size={12} key={`list-${i}`}>
               {COUNT.money === 0 ? (
@@ -688,7 +688,7 @@ export const TodayList = () => {
     // 7-4. sleep
     const sleepSection = () => {
       const listFragment = (item: any, i: number) => (
-        <Grid container spacing={0} columns={12} className={"border-1 radius-1"} key={`list-${i}`}>
+        <Grid container={true} spacing={0} className={"border-1 radius-1"} key={`list-${i}`}>
           <Grid size={12} className={"p-2"}>
             <Accordion expanded={isExpanded.sleep[i].expanded}>
               <AccordionSummary
@@ -724,7 +724,7 @@ export const TodayList = () => {
                   });
                 }}
               >
-                <Grid container spacing={2} columns={12}>
+                <Grid container={true} spacing={2}>
                   <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
@@ -743,7 +743,7 @@ export const TodayList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container={true} spacing={2}>
 
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
@@ -761,7 +761,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.sleep_section[0]?.sleep_bedTime_color}`}>
                           {item.sleep_section[0]?.sleep_bedTime}
@@ -794,7 +794,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.sleep_section[0]?.sleep_wakeTime_color}`}>
                           {item.sleep_section[0]?.sleep_wakeTime}
@@ -827,7 +827,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       <Grid size={10} className={"d-row-right"}>
                         <Div className={`${item.sleep_section[0]?.sleep_sleepTime_color}`}>
                           {item.sleep_section[0]?.sleep_sleepTime}
@@ -849,7 +849,7 @@ export const TodayList = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           {OBJECT_SLEEP?.map((item: any, i: number) => (
             <Grid size={12} key={`list-${i}`}>
               {COUNT.sleep === 0 ? (
@@ -865,7 +865,7 @@ export const TodayList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {LOADING ? <Loading /> : (
               <>

@@ -467,7 +467,7 @@ export const FoodDetail = () => {
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Grid container spacing={2} columns={12} className={"border-1 radius-1 p-20"}>
+      <Grid container={true} spacing={2} className={"border-1 radius-1 p-20"}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}
@@ -488,9 +488,9 @@ export const FoodDetail = () => {
     );
     // 7-2. total
     const totalSection = () => (
-      <Grid container spacing={2} columns={12} className={"border-1 radius-1 p-20"}>
+      <Grid container={true} spacing={2} className={"border-1 radius-1 p-20"}>
         {/** row 1 **/}
-        <Grid container spacing={2} columns={12}>
+        <Grid container={true} spacing={2}>
           <Grid size={6}>
             <Input
               readOnly={true}
@@ -533,7 +533,7 @@ export const FoodDetail = () => {
         {/** /.row 1 **/}
 
         {/** row 2 **/}
-        <Grid container spacing={2} columns={12}>
+        <Grid container={true} spacing={2}>
           <Grid size={6}>
             <Input
               readOnly={true}
@@ -579,10 +579,9 @@ export const FoodDetail = () => {
     // 7-3. detail
     const detailSection = () => {
       const detailFragment = (item: any, i: number) => (
-        <Grid container spacing={2} columns={12}
-        className={`${LOCK === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
+        <Grid container spacing={2} className={`${LOCK === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
           {/** row 1 **/}
-          <Grid container spacing={2} columns={12}>
+          <Grid container={true} spacing={2}>
             <Grid size={6} className={"d-row-left"}>
               <Bg
                 badgeContent={i + 1}
@@ -617,7 +616,7 @@ export const FoodDetail = () => {
           {/** /.row 1 **/}
 
           {/** row 2 **/}
-          <Grid container spacing={2} columns={12}>
+          <Grid container={true} spacing={2}>
             <Grid size={6}>
               <Select
                 locked={LOCK}
@@ -735,7 +734,7 @@ export const FoodDetail = () => {
           {/** /.row 2 **/}
 
           {/** row 3 **/}
-          <Grid container spacing={2} columns={12}>
+          <Grid container={true} spacing={2}>
             <Grid size={6}>
               <Input
                 locked={LOCK}
@@ -796,7 +795,7 @@ export const FoodDetail = () => {
           {/** /.row 3 **/}
 
           {/** row 4 **/}
-          <Grid container spacing={2} columns={12}>
+          <Grid container={true} spacing={2}>
             <Grid size={6}>
               <Input
                 locked={LOCK}
@@ -887,7 +886,7 @@ export const FoodDetail = () => {
           {/** /.row 4 **/}
 
           {/** row 5 **/}
-          <Grid container spacing={2} columns={12}>
+          <Grid container={true} spacing={2}>
             <Grid size={6}>
               <Input
                 locked={LOCK}

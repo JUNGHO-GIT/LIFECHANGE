@@ -51,7 +51,7 @@ export const UserAppSetting = () => {
   const userAppSettingNode = () => {
     // 7-1. card
     const detailSection = () => (
-      <Grid container spacing={0} columns={12} className={"border-1 radius-1 shadow-0"}>
+      <Grid container={true} spacing={0} className={"border-1 radius-1 shadow-0"}>
         <Grid size={12}>
           <TableContainer>
             <Table>
@@ -260,7 +260,7 @@ export const UserAppSetting = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper d-center border-1 radius-1 h-min90vh"}>
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {LOADING ? <Loading /> : detailSection()}
           </Grid>

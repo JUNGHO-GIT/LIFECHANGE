@@ -132,7 +132,7 @@ export const ExerciseGoalList = () => {
   const listNode = () => {
     const listSection = () => {
       const listFragment = (item: any, i: number) => (
-        <Grid container spacing={0} columns={12} className={"border-1 radius-1"} key={`list-${i}`}>
+        <Grid container={true} spacing={0} className={"border-1 radius-1"} key={`list-${i}`}>
           <Grid size={12} className={"p-2"}>
             <Accordion
               expanded={isExpanded[i].expanded}
@@ -169,7 +169,7 @@ export const ExerciseGoalList = () => {
                   });
                 }}
               >
-                <Grid container spacing={2} columns={12}>
+                <Grid container={true} spacing={2}>
                   <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
@@ -197,7 +197,7 @@ export const ExerciseGoalList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container={true} spacing={2}>
 
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
@@ -215,7 +215,7 @@ export const ExerciseGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       {/** goal **/}
                       <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -286,7 +286,7 @@ export const ExerciseGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       {/** goal **/}
                       <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -357,7 +357,7 @@ export const ExerciseGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       {/** goal **/}
                       <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -428,7 +428,7 @@ export const ExerciseGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       {/** goal **/}
                       <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -488,7 +488,7 @@ export const ExerciseGoalList = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           {COUNT.totalCnt === 0 ? (
             <Empty DATE={DATE} extra={"exercise"} />
           ) : (
@@ -504,7 +504,7 @@ export const ExerciseGoalList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {LOADING ? <Loading /> : listSection()}
           </Grid>

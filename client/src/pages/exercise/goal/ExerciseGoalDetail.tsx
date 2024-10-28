@@ -266,7 +266,7 @@ export const ExerciseGoalDetail = () => {
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Grid container spacing={2} columns={12} className={"border-1 radius-1 p-20"}>
+      <Grid container={true} spacing={2} className={"border-1 radius-1 p-20"}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}

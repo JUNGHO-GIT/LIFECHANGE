@@ -157,7 +157,7 @@ export const TodayGoalList = () => {
     // 7-1. exercise
     const exerciseSection = () => {
       const listFragment = (item: any, i: number) => (
-        <Grid container spacing={0} columns={12} className={"border-1 radius-1"} key={`list-${i}`}>
+        <Grid container={true} spacing={0} className={"border-1 radius-1"} key={`list-${i}`}>
           <Grid size={12} className={"p-2"}>
             <Accordion expanded={isExpanded.exercise[i].expanded}>
               <AccordionSummary
@@ -193,7 +193,7 @@ export const TodayGoalList = () => {
                   });
                 }}
               >
-                <Grid container spacing={2} columns={12}>
+                <Grid container={true} spacing={2}>
                   <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
@@ -221,7 +221,7 @@ export const TodayGoalList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container={true} spacing={2}>
 
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
@@ -239,7 +239,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       {/** goal **/}
                       <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -310,7 +310,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       {/** goal **/}
                       <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -381,7 +381,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       {/** goal **/}
                       <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -452,7 +452,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       {/** goal **/}
                       <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -512,7 +512,7 @@ export const TodayGoalList = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           {OBJECT_EXERCISE?.map((item: any, i: number) => (
             <Grid size={12} key={`list-${i}`}>
               {COUNT.exercise === 0 ? (
@@ -528,7 +528,7 @@ export const TodayGoalList = () => {
     // 7-2. food
     const foodSection = () => {
       const listFragment = (item: any, i: number) => (
-        <Grid container spacing={0} columns={12} className={"border-1 radius-1"} key={`list-${i}`}>
+        <Grid container={true} spacing={0} className={"border-1 radius-1"} key={`list-${i}`}>
           <Grid size={12} className={"p-2"}>
             <Accordion expanded={isExpanded.food[i].expanded}>
               <AccordionSummary
@@ -564,7 +564,7 @@ export const TodayGoalList = () => {
                   });
                 }}
               >
-                <Grid container spacing={2} columns={12}>
+                <Grid container={true} spacing={2}>
                   <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
@@ -592,7 +592,7 @@ export const TodayGoalList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container={true} spacing={2}>
 
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
@@ -610,7 +610,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       {/** goal **/}
                       <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -681,7 +681,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       {/** goal **/}
                       <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -752,7 +752,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       {/** goal **/}
                       <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -823,7 +823,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       {/** goal **/}
                       <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -883,7 +883,7 @@ export const TodayGoalList = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           {OBJECT_FOOD?.map((item: any, i: number) => (
             <Grid size={12} key={`list-${i}`}>
               {COUNT.food === 0 ? (
@@ -899,7 +899,7 @@ export const TodayGoalList = () => {
     // 7-3. money
     const moneySection = () => {
       const listFragment = (item: any, i: number) => (
-        <Grid container spacing={0} columns={12} className={"border-1 radius-1"} key={`list-${i}`}>
+        <Grid container={true} spacing={0} className={"border-1 radius-1"} key={`list-${i}`}>
           <Grid size={12} className={"p-2"}>
             <Accordion expanded={isExpanded.money[i].expanded}>
               <AccordionSummary
@@ -935,7 +935,7 @@ export const TodayGoalList = () => {
                   });
                 }}
               >
-                <Grid container spacing={2} columns={12}>
+                <Grid container={true} spacing={2}>
                   <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
@@ -963,7 +963,7 @@ export const TodayGoalList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container={true} spacing={2}>
 
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
@@ -981,7 +981,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       {/** goal **/}
                       <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -1052,7 +1052,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       {/** goal **/}
                       <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -1112,7 +1112,7 @@ export const TodayGoalList = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           {OBJECT_MONEY?.map((item: any, i: number) => (
             <Grid size={12} key={`list-${i}`}>
               {COUNT.money === 0 ? (
@@ -1128,7 +1128,7 @@ export const TodayGoalList = () => {
     // 7-4. sleep
     const sleepSection = () => {
       const listFragment = (item: any, i: number) => (
-        <Grid container spacing={0} columns={12} className={"border-1 radius-1"} key={`list-${i}`}>
+        <Grid container={true} spacing={0} className={"border-1 radius-1"} key={`list-${i}`}>
           <Grid size={12} className={"p-2"}>
             <Accordion expanded={isExpanded.sleep[i].expanded}>
               <AccordionSummary
@@ -1164,7 +1164,7 @@ export const TodayGoalList = () => {
                   });
                 }}
               >
-                <Grid container spacing={2} columns={12}>
+                <Grid container={true} spacing={2}>
                   <Grid size={2} className={"d-row-center"}>
                     <Icons
                       key={"Search"}
@@ -1192,7 +1192,7 @@ export const TodayGoalList = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container spacing={2} columns={12}>
+                <Grid container={true} spacing={2}>
 
                   {/** row 1 **/}
                   <Grid size={2} className={"d-row-center"}>
@@ -1210,7 +1210,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       {/** goal **/}
                       <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -1281,7 +1281,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       {/** goal **/}
                       <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -1352,7 +1352,7 @@ export const TodayGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
+                    <Grid container={true} spacing={1}>
                       {/** goal **/}
                       <Grid size={4} className={"d-row-center"}>
                         <Div className={"fs-0-7rem fw-500 dark"}>
@@ -1412,7 +1412,7 @@ export const TodayGoalList = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           {OBJECT_SLEEP?.map((item: any, i: number) => (
             <Grid size={12} key={`list-${i}`}>
               {COUNT.sleep === 0 ? (
@@ -1428,7 +1428,7 @@ export const TodayGoalList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {LOADING ? <Loading /> : (
               <>

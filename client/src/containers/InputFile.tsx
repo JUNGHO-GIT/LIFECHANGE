@@ -198,7 +198,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
 
   // 7. node ---------------------------------------------------------------------------------------
   const adornmentNode = (
-    <Grid container spacing={0} columns={12}>
+    <Grid container={true} spacing={0}>
       <Grid size={8} className={"d-col-left"}>
         {fileList && fileList.length > 0 && fileList.map((file: any, index: number) => (
           <Div className={"d-row-center"} key={index}>
@@ -246,7 +246,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
 
   // 7. node ---------------------------------------------------------------------------------------
   const existingNode = () => (
-    <Grid container spacing={0} columns={12}>
+    <Grid container={true} spacing={0}>
       <Grid size={12} className={"d-col-left"}>
         {fileExisting.map((file: any, index: number) => (
           <Div className={"d-row-center"} key={index}>

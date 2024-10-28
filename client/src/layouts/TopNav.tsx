@@ -329,7 +329,7 @@ export const TopNav = () => {
         direction={"center"}
         contents={
           <Card className={"w-max70vw h-max70vh border-1 radius-1 px-10 py-20"}>
-            <Grid container spacing={0} columns={12}>
+            <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-col-center"}>
                 <Div className={"fs-1-0rem fw-600"}>
                   {translate("monthScore")}
@@ -456,7 +456,7 @@ export const TopNav = () => {
               </Grid>
             </Grid>
             <Hr px={30} />
-            <Grid container spacing={0} columns={12}>
+            <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-0-8rem"}>
                   {translate("score")}
@@ -489,7 +489,7 @@ export const TopNav = () => {
         direction={"center"}
         contents={
           <Card className={"w-max70vw h-max70vh border-1 radius-1 px-10 py-20"}>
-            <Grid container spacing={0} columns={12}>
+            <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-col-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
                   {`${translate("scale")}`}
@@ -557,7 +557,7 @@ export const TopNav = () => {
               </Grid>
             </Grid>
             <Hr px={30} />
-            <Grid container spacing={0} columns={12}>
+            <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-center"}>
                 <Input
                   readOnly={true}
@@ -579,7 +579,7 @@ export const TopNav = () => {
               </Grid>
             </Grid>
             <Br px={20} />
-            <Grid container spacing={0} columns={12}>
+            <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-center"}>
                 <Input
                   readOnly={true}
@@ -626,7 +626,7 @@ export const TopNav = () => {
         direction={"center"}
         contents={
           <Card className={"w-max70vw h-max70vh border-1 radius-1 px-10 py-20"}>
-            <Grid container spacing={0} columns={12}>
+            <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-col-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
                   {`${translate("intakeNutrition")}`}
@@ -723,7 +723,7 @@ export const TopNav = () => {
               </Grid>
             </Grid>
             <Hr px={30} />
-            <Grid container spacing={0} columns={12}>
+            <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-row-center"}>
                 <Input
                   readOnly={true}
@@ -757,7 +757,7 @@ export const TopNav = () => {
               </Grid>
             </Grid>
             <Br px={20} />
-            <Grid container spacing={0} columns={12}>
+            <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-row-center"}>
                 <Input
                   readOnly={true}
@@ -791,7 +791,7 @@ export const TopNav = () => {
               </Grid>
             </Grid>
             <Br px={20} />
-            <Grid container spacing={0} columns={12}>
+            <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-row-center"}>
                 <Input
                   readOnly={true}
@@ -850,7 +850,7 @@ export const TopNav = () => {
         direction={"center"}
         contents={
           <Card className={"w-max70vw h-max70vh border-1 radius-1 px-10 py-20"}>
-            <Grid container spacing={0} columns={12}>
+            <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-col-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
                   {`${translate("property")}`}
@@ -933,7 +933,7 @@ export const TopNav = () => {
               </Grid>
             </Grid>
             <Hr px={30} />
-            <Grid container spacing={0} columns={12}>
+            <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-row-center"}>
                 <Input
                   readOnly={true}
@@ -961,7 +961,7 @@ export const TopNav = () => {
               </Grid>
             </Grid>
             <Br px={20} />
-            <Grid container spacing={0} columns={12}>
+            <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-row-center"}>
                 <Input
                   readOnly={true}

@@ -188,7 +188,7 @@ export const UserDelete = () => {
   const userResetPwNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <Grid container spacing={2} columns={12}>
+      <Grid container={true} spacing={2}>
         <Grid size={12}>
           <Div className={"fs-1-8rem fw-500"}>
             {translate("userDelete")}
@@ -199,7 +199,7 @@ export const UserDelete = () => {
     // 7-2. delete
     const deleteSection = () => {
       const detailFragment = (item: any, i: number) => (
-        <Grid container spacing={2} columns={12} className={"p-10"}>
+        <Grid container={true} spacing={2} className={"p-10"}>
           {/** 이메일 **/}
           <Grid size={10}>
             <Input
@@ -309,7 +309,7 @@ export const UserDelete = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} key={`detail-${0}`}>
             {detailFragment(OBJECT, 0)}
           </Grid>
@@ -318,7 +318,7 @@ export const UserDelete = () => {
     };
     // 7-4. button
     const buttonSection = () => (
-      <Grid container spacing={2} columns={12}>
+      <Grid container={true} spacing={2}>
         <Grid size={12}>
           <Btn
             color={"error"}
@@ -337,7 +337,7 @@ export const UserDelete = () => {
       <>
       {LOADING && <Loading />}
       <Paper className={"content-wrapper d-center border-1 radius-1 shadow-1 h-min100vh"}>
-        <Grid container spacing={0} columns={12}>
+        <Grid container={true} spacing={0}>
           <Grid size={12} className={"d-col-center"}>
             {titleSection()}
             <Hr px={40} />
