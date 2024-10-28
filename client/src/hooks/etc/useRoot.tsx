@@ -15,14 +15,15 @@ export const useRoot = () => {
     // 1. 리디렉트 처리
     if (
       !PATH.includes("user/login") && !PATH.includes("user/signup") &&
-      !PATH.includes("user/resetPw") && !PATH.includes("user/delete") &&  !PATH.includes("auth")
+      !PATH.includes("user/resetPw") && !PATH.includes("user/delete") &&
+      !PATH.includes("auth")
     ) {
       if (PATH === "/") {
-        navigate("/today/list");
-      }
-      else {
         if (!sessionId) {
           navigate("/user/login");
+        }
+        else {
+          navigate("/today/list");
         }
       }
     }

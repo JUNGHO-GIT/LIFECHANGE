@@ -80,6 +80,10 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "평균 지방 섭취량",
         en: "Avg Fat Intake"
       },
+      avgValue: {
+        ko: "평균값",
+        en: "Avg"
+      },
 
       // -------------------------------------------------------------------------------------------
       // b
@@ -105,6 +109,18 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
       cm: {
         ko: "cm",
         en: "cm"
+      },
+      close: {
+        ko: "닫기",
+        en: "Close"
+      },
+      confirm: {
+        ko: "확인",
+        en: "Confirm"
+      },
+      cur: {
+        ko: "현재",
+        en: "Current"
       },
       carb: {
         ko: "탄수화물",
@@ -186,17 +202,33 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "현재 자산",
         en: "Current Property"
       },
-      close: {
-        ko: "닫기",
-        en: "Close"
+      curIntake: {
+        ko: "현재 섭취량",
+        en: "Current Intake"
       },
-      confirm: {
-        ko: "확인",
-        en: "Confirm"
+      curAvgIntake: {
+        ko: "현재 평균 섭취량",
+        en: "Current Average Intake"
       },
-      cur: {
-        ko: "현재",
-        en: "Current"
+      curTotalIntake: {
+        ko: "현재 총 섭취량",
+        en: "Current Total Intake"
+      },
+      curProperty: {
+        ko: "현재 자산",
+        en: "Current Property"
+      },
+      curAvg: {
+        ko: "현재 평균값",
+        en: "Current Avg"
+      },
+      curTotal: {
+        ko: "현재 총합",
+        en: "Current Total"
+      },
+      curValue: {
+        ko: "현재값",
+        en: "Current Value"
       },
 
       // -------------------------------------------------------------------------------------------
@@ -628,9 +660,21 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "아이디",
         en: "ID"
       },
+      init: {
+        ko: "초기값",
+        en: "Initial"
+      },
+      initAvg: {
+        ko: "초기 평균값",
+        en: "Initial Avg"
+      },
       income: {
         ko: "수입",
         en: "Income"
+      },
+      intakeNutrition: {
+        ko: "영양소 섭취량",
+        en: "Nutrition Intake"
       },
       incomeExpense: {
         ko: "수입-지출",
@@ -656,6 +700,14 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "목표 칼로리 섭취량",
         en: "Kcal Intake Goal"
       },
+      initIntake: {
+        ko: "목표 섭취량",
+        en: "Intake Goal"
+      },
+      initAvgIntake: {
+        ko: "목표 평균 섭취량",
+        en: "Average Intake Goal"
+      },
       initProperty: {
         ko: "초기 자산",
         en: "Initial Property"
@@ -671,6 +723,10 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
       includeProperty: {
         ko: "자산에 포함",
         en: "Include in Property"
+      },
+      initValue: {
+        ko: "초기값",
+        en: "Initial Value"
       },
 
       // -------------------------------------------------------------------------------------------
@@ -758,7 +814,7 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
       // m
       monthScore: {
         ko: "월간 목표 달성 점수",
-        en: "Monthly Goal Achievement Score"
+        en: "Monthly Achievement Score"
       },
       minScale: {
         ko: "최저 체중",
@@ -1196,6 +1252,14 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
       totalFatIntake: {
         ko: "총 지방 섭취량",
         en: "Total Fat Intake"
+      },
+      totalValue: {
+        ko: "총합",
+        en: "Total"
+      },
+      totalIntake: {
+        ko: "총 섭취량",
+        en: "Total Intake"
       },
 
       // -------------------------------------------------------------------------------------------

@@ -7,7 +7,7 @@ import { useLanguageStore } from "@imports/ImportStores";
 import { insertComma } from "@imports/ImportUtils";
 import { PopUp, Input } from "@imports/ImportContainers";
 import { Div, Img, Hr, Br } from "@imports/ImportComponents";
-import { Tabs, Tab, Paper, Grid, Checkbox } from "@imports/ImportMuis";
+import { Tabs, Tab, Paper, Grid, Checkbox, Container } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const TopNav = () => {
@@ -31,10 +31,12 @@ export const TopNav = () => {
       admin: "dashboard",
     }
   );
+  // 2-2. useState ---------------------------------------------------------------------------------
+  const [mainSmileImage, setMainSmileImage] = useState<any>("smile3");
+  const [includingExclusions, setIncludingExclusions] = useState<boolean>(false);
+  const [nutritionType, setNutritionType] = useState<string>("avg");
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [includingExclusions, setIncludingExclusions] = useState<boolean>(false);
-  const [mainSmileImage, setMainSmileImage] = useState<any>("smile3");
   const [percent, setPercent] = useState<any>({
     total: {},
     exercise : {},
@@ -326,121 +328,142 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Grid container spacing={2} columns={12}
-          className={"w-max60vw h-max70vh border-1 radius-1 p-20"}>
-            <Grid size={12} className={"d-col-center"}>
-              <Div className={"fs-1-0rem fw-600"}>
-                {translate("monthScore")}
-              </Div>
-              <Br px={10} />
-              <Div className={"fs-0-8rem fw-500 dark"}>
-                {`[${getMonthStartFmt()} - ${getMonthEndFmt()}]`}
-              </Div>
+          <Container className={"w-max70vh h-max70vh border-1 radius-1 px-10 py-20"}>
+            <Grid container spacing={0} columns={12}>
+              <Grid size={12} className={"d-col-center"}>
+                <Div className={"fs-1-0rem fw-600"}>
+                  {translate("monthScore")}
+                </Div>
+                <Br px={10} />
+                <Div className={"fs-0-8rem fw-500 dark"}>
+                  {`[${getMonthStartFmt()} - ${getMonthEndFmt()}]`}
+                </Div>
+              </Grid>
             </Grid>
-            <Hr px={1} />
-            <Grid size={4} className={"d-row-right"}>
-              <Img
-                max={30}
-                hover={true}
-                shadow={false}
-                radius={false}
-                src={smileImage.total}
-              />
+            <Hr px={30} />
+            <Grid container spacing={0} columns={20}>
+              <Grid size={6} className={"d-row-center"}>
+                <Img
+                  max={30}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
+                  src={smileImage.total}
+                  className={"me-5"}
+                />
+              </Grid>
+              <Grid size={8} className={"d-row-left"}>
+                <Div className={"fs-1-3rem fw-500 dark"}>
+                  {`${translate("total")} : `}
+                </Div>
+              </Grid>
+              <Grid size={6} className={"d-row-left"}>
+                <Div className={"fs-1-2rem fw-600 light-black"}>
+                  {smileScore.total}
+                </Div>
+              </Grid>
             </Grid>
-            <Grid size={4} className={"d-row-center"}>
-              <Div className={"fs-1-2rem fw-600"}>
-                {translate("total")}
-              </Div>
+            <Hr px={30} />
+            <Grid container spacing={0} columns={20}>
+              <Grid size={6} className={"d-row-center"}>
+                <Img
+                  max={25}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
+                  src={smileImage.exercise}
+                  className={"me-5"}
+                />
+              </Grid>
+              <Grid size={8} className={"d-row-left"}>
+                <Div className={"fs-1-1rem fw-500 dark"}>
+                  {`${translate("exercise")} : `}
+                </Div>
+              </Grid>
+              <Grid size={6} className={"d-row-left"}>
+                <Div className={"fs-1-0rem fw-600 light-black"}>
+                  {smileScore.exercise}
+                </Div>
+              </Grid>
             </Grid>
-            <Grid size={4} className={"d-row-left"}>
-              <Div className={"fs-1-0rem fw-600"}>
-                {smileScore.total}
-              </Div>
+            <Br px={10} />
+            <Grid container spacing={0} columns={20}>
+              <Grid size={6} className={"d-row-center"}>
+                <Img
+                  max={25}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
+                  src={smileImage.food}
+                  className={"me-5"}
+                />
+              </Grid>
+              <Grid size={8} className={"d-row-left"}>
+                <Div className={"fs-1-1rem fw-500 dark"}>
+                  {`${translate("food")} : `}
+                </Div>
+              </Grid>
+              <Grid size={6} className={"d-row-left"}>
+                <Div className={"fs-1-0rem fw-600 light-black"}>
+                  {smileScore.food}
+                </Div>
+              </Grid>
             </Grid>
-            <Hr px={1} />
-            <Grid size={4} className={"d-row-right"}>
-              <Img
-                max={30}
-                hover={true}
-                shadow={false}
-                radius={false}
-                src={smileImage.exercise}
-              />
+            <Br px={10} />
+            <Grid container spacing={0} columns={20}>
+              <Grid size={6} className={"d-row-center"}>
+                <Img
+                  max={25}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
+                  src={smileImage.money}
+                  className={"me-5"}
+                />
+              </Grid>
+              <Grid size={8} className={"d-row-left"}>
+                <Div className={"fs-1-1rem fw-500 dark"}>
+                  {`${translate("money")} : `}
+                </Div>
+              </Grid>
+              <Grid size={6} className={"d-row-left"}>
+                <Div className={"fs-1-0rem fw-600 light-black"}>
+                  {smileScore.money}
+                </Div>
+              </Grid>
             </Grid>
-            <Grid size={4} className={"d-row-center"}>
-              <Div className={"fs-1-1rem"}>
-                {translate("exercise")}
-              </Div>
+            <Br px={10} />
+            <Grid container spacing={0} columns={20}>
+              <Grid size={6} className={"d-row-center"}>
+                <Img
+                  max={25}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
+                  src={smileImage.sleep}
+                  className={"me-5"}
+                />
+              </Grid>
+              <Grid size={8} className={"d-row-left"}>
+                <Div className={"fs-1-1rem fw-500 dark"}>
+                  {`${translate("sleep")} : `}
+                </Div>
+              </Grid>
+              <Grid size={6} className={"d-row-left"}>
+                <Div className={"fs-1-0rem fw-600 light-black"}>
+                  {smileScore.sleep}
+                </Div>
+              </Grid>
             </Grid>
-            <Grid size={4} className={"d-row-left"}>
-              <Div className={"fs-0-8rem"}>
-                {smileScore.exercise}
-              </Div>
+            <Hr px={30} />
+            <Grid container spacing={0} columns={12}>
+              <Grid size={12} className={"d-center"}>
+                <Div className={"fs-0-8rem"}>
+                  {translate("score")}
+                </Div>
+              </Grid>
             </Grid>
-            <Grid size={4} className={"d-row-right"}>
-              <Img
-                max={30}
-                hover={true}
-                shadow={false}
-                radius={false}
-                src={smileImage.food}
-              />
-            </Grid>
-            <Grid size={4} className={"d-row-center"}>
-              <Div className={"fs-1-1rem"}>
-                {translate("food")}
-              </Div>
-            </Grid>
-            <Grid size={4} className={"d-row-left"}>
-              <Div className={"fs-0-8rem"}>
-                {smileScore.food}
-              </Div>
-            </Grid>
-            <Grid size={4} className={"d-row-right"}>
-              <Img
-                max={30}
-                hover={true}
-                shadow={false}
-                radius={false}
-                src={smileImage.money}
-              />
-            </Grid>
-            <Grid size={4} className={"d-row-center"}>
-              <Div className={"fs-1-1rem"}>
-                {translate("money")}
-              </Div>
-            </Grid>
-            <Grid size={4} className={"d-row-left"}>
-              <Div className={"fs-0-8rem"}>
-                {smileScore.money}
-              </Div>
-            </Grid>
-            <Grid size={4} className={"d-row-right"}>
-              <Img
-                max={30}
-                hover={true}
-                shadow={false}
-                radius={false}
-                src={smileImage.sleep}
-              />
-            </Grid>
-            <Grid size={4} className={"d-row-center"}>
-              <Div className={"fs-1-1rem"}>
-                {translate("sleep")}
-              </Div>
-            </Grid>
-            <Grid size={4} className={"d-row-left"}>
-              <Div className={"fs-0-8rem"}>
-                {smileScore.sleep}
-              </Div>
-            </Grid>
-            <Hr px={1} />
-            <Grid size={12} className={"d-center"}>
-              <Div className={"fs-0-8rem"}>
-                {translate("score")}
-              </Div>
-            </Grid>
-          </Grid>
+          </Container>
         }
       >
         {(popTrigger: any) => (
@@ -458,6 +481,7 @@ export const TopNav = () => {
         )}
       </PopUp>
     );
+
     // 2. scale ------------------------------------------------------------------------------------
     const scaleSection = () => (
       <PopUp
@@ -465,91 +489,119 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Grid container spacing={2} columns={12} className={"w-max60vw h-max70vh border-1 radius-1 p-20"}>
-            <Grid size={12} className={"d-col-center"}>
-              <Div className={"fs-1-3rem fw-600"}>
-                {`${translate("cur")} ${translate("scale")}`}
-              </Div>
-              <Br px={10} />
-              <Div className={"fs-0-8rem fw-500 dark"}>
-                {`[${scale?.dateStart} - ${scale?.dateEnd}]`}
-              </Div>
+          <Container className={"w-max70vh h-max70vh border-1 radius-1 px-10 py-20"}>
+            <Grid container spacing={0} columns={12}>
+              <Grid size={12} className={"d-col-center"}>
+                <Div className={"fs-1-3rem fw-600"}>
+                  {`${translate("scale")}`}
+                </Div>
+                <Br px={10} />
+                <Div className={"fs-0-8rem fw-500 dark"}>
+                  {`[${scale?.dateStart} - ${scale?.dateEnd}]`}
+                </Div>
+              </Grid>
             </Grid>
-            <Hr px={1} />
-            <Grid size={12} className={"d-row-center"}>
-              <Img
-                max={15}
-                hover={true}
-                shadow={false}
-                radius={false}
-                src={"exercise5"}
-              />
-              <Div className={"fs-1-4rem fw-600 ms-2vw me-2vw"}>
-                {insertComma(scale.curScale || "0")}
-              </Div>
-              <Div className={"fs-0-6rem fw-500 dark"}>
-                {localUnit}
-              </Div>
+            <Hr px={30} />
+            <Grid container spacing={0} columns={20}>
+              <Grid size={3} className={"d-row-center"}>
+                <Img
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
+                  src={"exercise5"}
+                  className={"me-5"}
+                />
+              </Grid>
+              <Grid size={8} className={"d-row-left"}>
+                <Div className={"fs-0-8rem fw-500 dark"}>
+                  {`${translate("initValue")} : `}
+                </Div>
+              </Grid>
+              <Grid size={7} className={"d-row-right"}>
+                <Div className={"fs-1-1rem fw-600 black me-5"}>
+                  {insertComma(scale.initScale || "0")}
+                </Div>
+              </Grid>
+              <Grid size={2} className={"d-row-center"}>
+                <Div className={"fs-0-6rem fw-500 dark"}>
+                  {localUnit}
+                </Div>
+              </Grid>
             </Grid>
-            <Hr px={1} />
-            <Grid size={12} className={"d-center"}>
-              <Input
-                readOnly={true}
-                label={translate("initScale")}
-                value={insertComma(scale.initScale || "0")}
-                startadornment={
-                  <Img
-                    max={15}
-                    hover={true}
-                    shadow={false}
-                    radius={false}
-                    src={"exercise5"}
-                  />
-                }
-                endadornment={
-                  localUnit
-                }
-              />
+            <Br px={10} />
+            <Grid container spacing={0} columns={20}>
+              <Grid size={3} className={"d-row-center"}>
+                <Img
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
+                  src={"exercise5"}
+                  className={"me-5"}
+                />
+              </Grid>
+              <Grid size={8} className={"d-row-left"}>
+                <Div className={"fs-0-8rem fw-500 dark"}>
+                  {`${translate("curValue")} : `}
+                </Div>
+              </Grid>
+              <Grid size={7} className={"d-row-right"}>
+                <Div className={"fs-1-1rem fw-600 black me-5"}>
+                  {insertComma(scale.curScale || "0")}
+                </Div>
+              </Grid>
+              <Grid size={2} className={"d-row-center"}>
+                <Div className={"fs-0-6rem fw-500 dark"}>
+                  {localUnit}
+                </Div>
+              </Grid>
             </Grid>
-            <Grid size={12} className={"d-center"}>
-              <Input
-                readOnly={true}
-                label={translate("minScale")}
-                value={insertComma(scale.minScale || "0")}
-                startadornment={
-                  <Img
-                    max={15}
-                    hover={true}
-                    shadow={false}
-                    radius={false}
-                    src={"exercise5"}
-                  />
-                }
-                endadornment={
-                  localUnit
-                }
-              />
+            <Hr px={30} />
+            <Grid container spacing={0} columns={12}>
+              <Grid size={12} className={"d-center"}>
+                <Input
+                  readOnly={true}
+                  label={translate("minScale")}
+                  value={insertComma(scale.minScale || "0")}
+                  startadornment={
+                    <Img
+                      max={15}
+                      hover={true}
+                      shadow={false}
+                      radius={false}
+                      src={"exercise5"}
+                    />
+                  }
+                  endadornment={
+                    localUnit
+                  }
+                />
+              </Grid>
             </Grid>
-            <Grid size={12} className={"d-center"}>
-              <Input
-                readOnly={true}
-                label={translate("maxScale")}
-                value={insertComma(scale.maxScale || "0")}
-                startadornment={
-                  <Img
-                    max={15}
-                    hover={true}
-                    shadow={false}
-                    radius={false}
-                    src={"exercise5"}
-                  />
-                }
-                endadornment={
-                  localUnit
-                }
-              />
+            <Br px={20} />
+            <Grid container spacing={0} columns={12}>
+              <Grid size={12} className={"d-center"}>
+                <Input
+                  readOnly={true}
+                  label={translate("maxScale")}
+                  value={insertComma(scale.maxScale || "0")}
+                  startadornment={
+                    <Img
+                      max={15}
+                      hover={true}
+                      shadow={false}
+                      radius={false}
+                      src={"exercise5"}
+                    />
+                  }
+                  endadornment={
+                    localUnit
+                  }
+                />
+              </Grid>
             </Grid>
-          </Grid>
+          </Container>
         }
       >
         {(popTrigger: any) => (
@@ -567,6 +619,7 @@ export const TopNav = () => {
         )}
       </PopUp>
     );
+
     // 3. nutrition --------------------------------------------------------------------------------
     const nutritionSection = () => (
       <PopUp
@@ -574,111 +627,206 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Grid container spacing={2} columns={12}
-          className={"w-max60vw h-max70vh border-1 radius-1 p-20"}>
-            <Grid size={12} className={"d-col-center"}>
-              <Div className={"fs-1-3rem fw-600"}>
-                {`${translate("avgKcalIntake")}`}
-              </Div>
-              <Br px={10} />
-              <Div className={"fs-0-8rem fw-500 dark"}>
-                {`[${nutrition?.dateStart} - ${nutrition?.dateEnd}]`}
-              </Div>
-            </Grid>
-            <Hr px={1} />
-            <Grid size={12} className={"d-row-center"}>
-              <Img
-                max={15}
-                hover={true}
-                shadow={false}
-                radius={false}
-                src={"food2"}
-              />
-              <Div className={"fs-1-4rem fw-600 ms-2vw me-2vw"}>
-                {insertComma(nutrition.curAvgKcalIntake || "0")}
-              </Div>
-              <Div className={"fs-0-6rem fw-500 dark"}>
-                {translate("kc")}
-              </Div>
-            </Grid>
-            <Hr px={1} />
-            <Grid size={12} className={"d-center"}>
-              <Input
-                readOnly={true}
-                label={translate("initAvgKcalIntake")}
-                value={insertComma(nutrition.initAvgKcalIntake || "0")}
-                startadornment={
-                  <Img
-                    max={15}
-                    hover={true}
-                    shadow={false}
-                    radius={false}
-                    src={"food2"}
+          <Container className={"w-max70vh h-max70vh border-1 radius-1 px-10 py-20"}>
+            <Grid container spacing={0} columns={12}>
+              <Grid size={12} className={"d-col-center"}>
+                <Div className={"fs-1-3rem fw-600"}>
+                  {`${translate("intakeNutrition")}`}
+                </Div>
+                <Br px={10} />
+                <Div className={"fs-0-8rem fw-500 dark"}>
+                  {`[${nutrition?.dateStart} - ${nutrition?.dateEnd}]`}
+                </Div>
+                <Br px={10} />
+                <Div className={"d-row-center"}>
+                  <Div className={"fs-0-7rem fw-500 dark"}>
+                    {translate("avgValue")}
+                  </Div>
+                  <Checkbox
+                    size={"small"}
+                    checked={nutritionType === "avg"}
+                    onChange={(e: any) => {
+                      setNutritionType(e.target.checked ? "avg" : "total");
+                    }}
                   />
-                }
-                endadornment={
-                  translate("kc")
-                }
-              />
-            </Grid>
-            <Grid size={12} className={"d-center"}>
-              <Input
-                readOnly={true}
-                label={translate("totalCarbIntake")}
-                value={insertComma(nutrition.totalCarbIntake || "0")}
-                startadornment={
-                  <Img
-                    max={15}
-                    hover={true}
-                    shadow={false}
-                    radius={false}
-                    src={"food3"}
+                  <Div className={"fs-0-7rem fw-500 dark ms-10"}>
+                    {translate("totalValue")}
+                  </Div>
+                  <Checkbox
+                    size={"small"}
+                    checked={nutritionType === "total"}
+                    onChange={(e: any) => {
+                      setNutritionType(e.target.checked ? "total" : "avg");
+                    }}
                   />
-                }
-                endadornment={
-                  translate("g")
-                }
-              />
+                </Div>
+              </Grid>
             </Grid>
-            <Grid size={12} className={"d-center"}>
-              <Input
-                readOnly={true}
-                label={translate("totalProteinIntake")}
-                value={insertComma(nutrition.totalProteinIntake || "0")}
-                startadornment={
-                  <Img
-                    max={15}
-                    hover={true}
-                    shadow={false}
-                    radius={false}
-                    src={"food4"}
-                  />
-                }
-                endadornment={
-                  translate("g")
-                }
-              />
+            <Hr px={30} />
+            <Grid container spacing={0} columns={20}>
+              <Grid size={3} className={"d-row-center"}>
+                <Img
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
+                  src={"food2"}
+                />
+              </Grid>
+              <Grid size={8} className={"d-row-left"}>
+                <Div className={"fs-0-8rem fw-500 dark"}>
+                  {`${translate("initAvg")} : `}
+                </Div>
+              </Grid>
+              <Grid size={7} className={"d-row-right"}>
+                <Div className={"fs-1-1rem fw-600 black me-5"}>
+                  {insertComma(nutrition.initAvgKcalIntake || "0")}
+                </Div>
+              </Grid>
+              <Grid size={2} className={"d-row-center"}>
+                <Div className={"fs-0-6rem fw-500 dark"}>
+                  {translate("kc")}
+                </Div>
+              </Grid>
             </Grid>
-            <Grid size={12} className={"d-center"}>
-              <Input
-                readOnly={true}
-                label={translate("totalFatIntake")}
-                value={insertComma(nutrition.totalFatIntake || "0")}
-                startadornment={
-                  <Img
-                    max={15}
-                    hover={true}
-                    shadow={false}
-                    radius={false}
-                    src={"food5"}
-                  />
-                }
-                endadornment={
-                  translate("g")
-                }
-              />
+            <Br px={10} />
+            <Grid container spacing={0} columns={20}>
+              <Grid size={3} className={"d-row-center"}>
+                <Img
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
+                  src={"food2"}
+                />
+              </Grid>
+              <Grid size={8} className={"d-row-left"}>
+                <Div className={"fs-0-8rem fw-500 dark"}>
+                  {nutritionType === "avg" ? (
+                    (`${translate("curAvg")} : `)
+                  ) : (
+                    (`${translate("curTotal")} : `)
+                  )}
+                </Div>
+              </Grid>
+              <Grid size={7} className={"d-row-right"}>
+                <Div className={"fs-1-1rem fw-600 black me-5"}>
+                  {nutritionType === "avg" ? (
+                    insertComma(nutrition.curAvgKcalIntake || "0")
+                  ) : (
+                    insertComma(nutrition.totalKcalIntake || "0")
+                  )}
+                </Div>
+              </Grid>
+              <Grid size={2} className={"d-row-center"}>
+                <Div className={"fs-0-6rem fw-500 dark"}>
+                  {translate("kc")}
+                </Div>
+              </Grid>
             </Grid>
-          </Grid>
+            <Hr px={30} />
+            <Grid container spacing={0} columns={12}>
+              <Grid size={12} className={"d-row-center"}>
+                <Input
+                  readOnly={true}
+                  label={
+                    nutritionType === "avg" ? (
+                      translate("avgCarbIntake")
+                    ) : (
+                      translate("totalCarbIntake")
+                    )
+                  }
+                  value={
+                    nutritionType === "avg" ? (
+                      insertComma(nutrition.curAvgCarbIntake || "0")
+                    ) : (
+                      insertComma(nutrition.totalCarbIntake || "0")
+                    )
+                  }
+                  startadornment={
+                    <Img
+                      max={15}
+                      hover={true}
+                      shadow={false}
+                      radius={false}
+                      src={"food3"}
+                    />
+                  }
+                  endadornment={
+                    translate("g")
+                  }
+                />
+              </Grid>
+            </Grid>
+            <Br px={20} />
+            <Grid container spacing={0} columns={12}>
+              <Grid size={12} className={"d-row-center"}>
+                <Input
+                  readOnly={true}
+                  label={
+                    nutritionType === "avg" ? (
+                      translate("avgProteinIntake")
+                    ) : (
+                      translate("totalProteinIntake")
+                    )
+                  }
+                  value={
+                    nutritionType === "avg" ? (
+                      insertComma(nutrition.curAvgProteinIntake || "0")
+                    ) : (
+                      insertComma(nutrition.totalProteinIntake || "0")
+                    )
+                  }
+                  startadornment={
+                    <Img
+                      max={15}
+                      hover={true}
+                      shadow={false}
+                      radius={false}
+                      src={"food4"}
+                    />
+                  }
+                  endadornment={
+                    translate("g")
+                  }
+                />
+              </Grid>
+            </Grid>
+            <Br px={20} />
+            <Grid container spacing={0} columns={12}>
+              <Grid size={12} className={"d-row-center"}>
+                <Input
+                  readOnly={true}
+                  label={
+                    nutritionType === "avg" ? (
+                      translate("avgFatIntake")
+                    ) : (
+                      translate("totalFatIntake")
+                    )
+                  }
+                  value={
+                    nutritionType === "avg" ? (
+                      insertComma(nutrition.curAvgFatIntake || "0")
+                    ) : (
+                      insertComma(nutrition.totalFatIntake || "0")
+                    )
+                  }
+                  startadornment={
+                    <Img
+                      max={15}
+                      hover={true}
+                      shadow={false}
+                      radius={false}
+                      src={"food5"}
+                    />
+                  }
+                  endadornment={
+                    translate("g")
+                  }
+                />
+              </Grid>
+            </Grid>
+          </Container>
         }
       >
         {(popTrigger: any) => (
@@ -696,6 +844,7 @@ export const TopNav = () => {
         )}
       </PopUp>
     );
+
     // 4. property ---------------------------------------------------------------------------------
     const propertySection = () => (
       <PopUp
@@ -703,120 +852,146 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Grid container spacing={2} columns={12}
-          className={"w-max60vw h-max70vh border-1 radius-1 p-20"}>
-            <Grid size={12} className={"d-col-center"}>
-              <Div className={"fs-1-3rem fw-600"}>
-                {`${translate("cur")} ${translate("property")}`}
-              </Div>
-              <Br px={10} />
-              <Div className={"fs-0-8rem fw-500 dark"}>
-                {`[${property?.dateStart} - ${property?.dateEnd}]`}
-              </Div>
-              <Br px={10} />
-              <Div className={"fs-0-7rem fw-500 dark ms-10"}>
-                {translate("includingExclusions")}
-              <Checkbox
-                size={"small"}
-                className={"p-0 ms-5"}
-                checked={includingExclusions}
-                onChange={(e: any) => {
-                  setIncludingExclusions(e.target.checked);
-                }}
-              />
-              </Div>
-            </Grid>
-            <Hr px={1} />
-            <Grid size={12} className={"d-row-center"}>
-              <Img
-                max={15}
-                hover={true}
-                shadow={false}
-                radius={false}
-                src={"money2"}
-              />
-              <Div className={"fs-1-4rem fw-600 ms-2vw me-2vw"}>
-                {includingExclusions ? (
-                  insertComma(property.curPropertyAll || "0")
-                ) : (
-                  insertComma(property.curPropertyExclusion || "0")
-                )}
-              </Div>
-              <Div className={"fs-0-6rem fw-500 dark"}>
-                {localCurrency}
-              </Div>
-            </Grid>
-            <Hr px={1} />
-            <Grid size={12} className={"d-center"}>
-              <Input
-                readOnly={true}
-                label={translate("initProperty")}
-                value={insertComma(property.initProperty || "0")}
-                startadornment={
-                  <Img
-                    max={15}
-                    hover={true}
-                    shadow={false}
-                    radius={false}
-                    src={"money2"}
+          <Container className={"w-max70vh h-max70vh border-1 radius-1 px-10 py-20"}>
+            <Grid container spacing={0} columns={12}>
+              <Grid size={12} className={"d-col-center"}>
+                <Div className={"fs-1-3rem fw-600"}>
+                  {`${translate("property")}`}
+                </Div>
+                <Br px={10} />
+                <Div className={"fs-0-8rem fw-500 dark"}>
+                  {`[${property?.dateStart} - ${property?.dateEnd}]`}
+                </Div>
+                <Br px={10} />
+                <Div className={"d-row-center"}>
+                  <Div className={"fs-0-7rem fw-500 dark"}>
+                    {translate("includingExclusions")}
+                  </Div>
+                  <Checkbox
+                    size={"small"}
+                    checked={includingExclusions}
+                    onChange={(e: any) => {
+                      setIncludingExclusions(e.target.checked);
+                    }}
                   />
-                }
-                endadornment={
-                  localCurrency
-                }
-              />
+                </Div>
+              </Grid>
             </Grid>
-            <Grid size={12} className={"d-center"}>
-              <Input
-                readOnly={true}
-                label={translate("sumIncome")}
-                value={
-                  includingExclusions ? (
-                    insertComma(property.totalIncomeAll || "0")
+            <Hr px={30} />
+            <Grid container spacing={0} columns={20}>
+              <Grid size={3} className={"d-row-center"}>
+                <Img
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
+                  src={"money2"}
+                />
+              </Grid>
+              <Grid size={8} className={"d-row-left"}>
+                <Div className={"fs-0-8rem fw-500 dark"}>
+                  {`${translate("initValue")} : `}
+                </Div>
+              </Grid>
+              <Grid size={7} className={"d-row-right"}>
+                <Div className={"fs-1-1rem fw-600 black me-5"}>
+                  {insertComma(property.initProperty || "0")}
+                </Div>
+              </Grid>
+              <Grid size={2} className={"d-row-center"}>
+                <Div className={"fs-0-6rem fw-500 dark"}>
+                  {localCurrency}
+                </Div>
+              </Grid>
+            </Grid>
+            <Br px={10} />
+            <Grid container spacing={0} columns={20}>
+              <Grid size={3} className={"d-row-center"}>
+                <Img
+                  max={15}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
+                  src={"money2"}
+                />
+              </Grid>
+              <Grid size={8} className={"d-row-left"}>
+                <Div className={"fs-0-8rem fw-500 dark"}>
+                  {`${translate("curValue")} : `}
+                </Div>
+              </Grid>
+              <Grid size={7} className={"d-row-right"}>
+                <Div className={"fs-1-1rem fw-600 black me-5"}>
+                  {includingExclusions ? (
+                    insertComma(property.curPropertyAll || "0")
                   ) : (
-                    insertComma(property.totalIncomeExclusion || "0")
-                  )
-                }
-                startadornment={
-                  <Img
-                    max={15}
-                    hover={true}
-                    shadow={false}
-                    radius={false}
-                    src={"money2"}
-                  />
-                }
-                endadornment={
-                  localCurrency
-                }
-              />
+                    insertComma(property.curPropertyExclusion || "0")
+                  )}
+                </Div>
+              </Grid>
+              <Grid size={2} className={"d-row-center"}>
+                <Div className={"fs-0-6rem fw-500 dark"}>
+                  {localCurrency}
+                </Div>
+              </Grid>
             </Grid>
-            <Grid size={12} className={"d-center"}>
-              <Input
-                readOnly={true}
-                label={translate("sumExpense")}
-                value={
-                  includingExclusions ? (
-                    insertComma(property.totalExpenseAll || "0")
-                  ) : (
-                    insertComma(property.totalExpenseExclusion || "0")
-                  )
-                }
-                startadornment={
-                  <Img
-                    max={15}
-                    hover={true}
-                    shadow={false}
-                    radius={false}
-                    src={"money2"}
-                  />
-                }
-                endadornment={
-                  localCurrency
-                }
-              />
+            <Hr px={30} />
+            <Grid container spacing={0} columns={12}>
+              <Grid size={12} className={"d-row-center"}>
+                <Input
+                  readOnly={true}
+                  label={translate("sumIncome")}
+                  value={
+                    includingExclusions ? (
+                      insertComma(property.totalIncomeAll || "0")
+                    ) : (
+                      insertComma(property.totalIncomeExclusion || "0")
+                    )
+                  }
+                  startadornment={
+                    <Img
+                      max={15}
+                      hover={true}
+                      shadow={false}
+                      radius={false}
+                      src={"money2"}
+                    />
+                  }
+                  endadornment={
+                    localCurrency
+                  }
+                />
+              </Grid>
             </Grid>
-          </Grid>
+            <Br px={20} />
+            <Grid container spacing={0} columns={12}>
+              <Grid size={12} className={"d-row-center"}>
+                <Input
+                  readOnly={true}
+                  label={translate("sumExpense")}
+                  value={
+                    includingExclusions ? (
+                      insertComma(property.totalExpenseAll || "0")
+                    ) : (
+                      insertComma(property.totalExpenseExclusion || "0")
+                    )
+                  }
+                  startadornment={
+                    <Img
+                      max={15}
+                      hover={true}
+                      shadow={false}
+                      radius={false}
+                      src={"money2"}
+                    />
+                  }
+                  endadornment={
+                    localCurrency
+                  }
+                />
+              </Grid>
+            </Grid>
+          </Container>
         }
       >
         {(popTrigger: any) => (
@@ -834,6 +1009,7 @@ export const TopNav = () => {
         )}
       </PopUp>
     );
+
     // 5. tabs -------------------------------------------------------------------------------------
     const tabsSection = () => (
 
@@ -1001,6 +1177,7 @@ export const TopNav = () => {
         </Tabs>
       ) : null
     );
+
     // 5. return -----------------------------------------------------------------------------------
     return (
       <Paper className={"layout-wrapper p-sticky top-8vh h-8vh border-1 radius-1 shadow-bottom-3"}>
