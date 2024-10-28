@@ -50,16 +50,6 @@ export const AdminDashboard = () => {
 
   // 7. detail -------------------------------------------------------------------------------------
   const detailNode = () => {
-    // 7-1. date
-    const dateCountSection = () => (
-      <Grid container={true} spacing={2} className={"border-1 radius-1 p-20"}>
-        <Grid size={12}>
-          <Div className={"fs-1-5rem fw-600"}>
-            {`${DATE.dateStart}`}
-          </Div>
-        </Grid>
-      </Grid>
-    );
     // 7-2. detail
     const detailSection = () => {
       const detailFragment = () => (
@@ -94,7 +84,6 @@ export const AdminDashboard = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        {dateCountSection()}
         {LOADING ? <Loading /> : detailSection()}
       </Paper>
     );
