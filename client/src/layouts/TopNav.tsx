@@ -328,7 +328,7 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max70vh h-max70vh border-1 radius-1 px-10 py-20"}>
+          <Card className={"w-max70vw h-max70vh border-1 radius-1 px-10 py-20"}>
             <Grid container spacing={0} columns={12}>
               <Grid size={12} className={"d-col-center"}>
                 <Div className={"fs-1-0rem fw-600"}>
@@ -488,7 +488,7 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max70vh h-max70vh border-1 radius-1 px-10 py-20"}>
+          <Card className={"w-max70vw h-max70vh border-1 radius-1 px-10 py-20"}>
             <Grid container spacing={0} columns={12}>
               <Grid size={12} className={"d-col-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
@@ -625,7 +625,7 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max70vh h-max70vh border-1 radius-1 px-10 py-20"}>
+          <Card className={"w-max70vw h-max70vh border-1 radius-1 px-10 py-20"}>
             <Grid container spacing={0} columns={12}>
               <Grid size={12} className={"d-col-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
@@ -849,7 +849,7 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max70vh h-max70vh border-1 radius-1 px-10 py-20"}>
+          <Card className={"w-max70vw h-max70vh border-1 radius-1 px-10 py-20"}>
             <Grid container spacing={0} columns={12}>
               <Grid size={12} className={"d-col-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
