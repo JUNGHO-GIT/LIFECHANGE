@@ -1289,23 +1289,23 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
       },
       viewDay: {
         ko: "일별",
-        en: "Day View"
+        en: "Day"
       },
       viewMonth: {
         ko: "월별",
-        en: "Month View"
+        en: "Month"
       },
       viewSelect: {
         ko: "날짜선택",
-        en: "Select View"
+        en: "Select"
       },
       viewWeek: {
         ko: "주별",
-        en: "Week View"
+        en: "Week"
       },
       viewYear: {
         ko: "년별",
-        en: "Year View"
+        en: "Year"
       },
       volume: {
         ko: "볼륨",

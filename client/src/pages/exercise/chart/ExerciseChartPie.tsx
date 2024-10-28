@@ -317,8 +317,7 @@ export const ExerciseChartPie = () => {
               />
             ))
           }
-        >
-          {(popTrigger: any) => (
+          children={(popTrigger: any) => (
             <Img
               max={24}
               hover={true}
@@ -330,7 +329,7 @@ export const ExerciseChartPie = () => {
               }}
             />
           )}
-        </PopUp>
+        />
       );
       return (
         <Grid container spacing={0} columns={12}>

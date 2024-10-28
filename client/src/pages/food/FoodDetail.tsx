@@ -725,7 +725,7 @@ export const FoodDetail = () => {
               error={ERRORS?.[i]?.food_name}
               onChange={(e: any) => {
                 // 빈값 처리
-                let value = e.target.value === "" ? "" : e.target.value;
+                let value = e.target.value || "";
                 // 30 제한
                 if (value.length > 30) {
                   return;
@@ -753,7 +753,7 @@ export const FoodDetail = () => {
               error={ERRORS?.[i]?.food_brand}
               onChange={(e: any) => {
                 // 빈값 처리
-                let value = e.target.value === "" ? "" : e.target.value;
+                let value = e.target.value || "";
                 // 30 제한
                 if (value.length > 30) {
                   return;

@@ -303,8 +303,7 @@ export const FoodChartAvg = () => {
               />
             ))
           }
-        >
-          {(popTrigger: any) => (
+          children={(popTrigger: any) => (
             <Img
               max={24}
               hover={true}
@@ -316,7 +315,7 @@ export const FoodChartAvg = () => {
               }}
             />
           )}
-        </PopUp>
+        />
       );
       return (
         <Grid container spacing={0} columns={12}>

@@ -55,8 +55,7 @@ export const insertComma = (str: string) => {
 
     // 맨 앞에 + 또는 - 기호가 있는 경우 제거하고 부호를 기억
     const isNegative = str.charAt(0) === "-";
-    const isPositive = str.charAt(0) === "+";
-    if (isNegative || isPositive) {
+    if (isNegative) {
       str = str.slice(1);
     }
 
@@ -66,9 +65,7 @@ export const insertComma = (str: string) => {
 
     // 최종 반환 문자열 구성 (소수점 이하가 있는 경우 포함)
     return (
-      (isNegative ? "-" : "") + (isPositive ? "+" : "") +
-      formattedNum +
-      (decimalPart !== undefined ? "." + decimalPart : "")
+      (isNegative ? "-" : "") + formattedNum + (decimalPart ? `.${decimalPart}`: "")
     );
   }
   catch (error) {

@@ -283,8 +283,7 @@ export const ExerciseChartAvg = () => {
               />
             ))
           }
-        >
-          {(popTrigger: any) => (
+          children={(popTrigger: any) => (
             <Img
               max={24}
               hover={true}
@@ -296,7 +295,7 @@ export const ExerciseChartAvg = () => {
               }}
             />
           )}
-        </PopUp>
+        />
       );
       return (
         <Grid container spacing={0} columns={12}>

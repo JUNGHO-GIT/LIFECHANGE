@@ -218,7 +218,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
               className={"black fs-0-9rem fw-500 pointer-burgundy ms-15"}
               onClick={() => handleFileDelete(index, "single")}
             >
-              {!file?.name ? "" : "x"}
+              {file?.name ? "x" : ""}
             </Div>
           </Div>
         ))}
@@ -268,7 +268,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
                 handleExistingFileDelete(index);
               }}
             >
-              {!file ? "" : "x"}
+              {file?.name ? "x" : ""}
             </Div>
           </Div>
         ))}

@@ -527,8 +527,7 @@ export const UserCategory = () => {
                         contents={
                           popupSection()
                         }
-                      >
-                        {(popTrigger: any) => (
+                        children={(popTrigger: any) => (
                           <Icons
                             key={"Search"}
                             name={"Search"}
@@ -545,7 +544,7 @@ export const UserCategory = () => {
                             }}
                           />
                         )}
-                        </PopUp>
+                      />
                       </Div>
                     </Div>
                   </TableCell>

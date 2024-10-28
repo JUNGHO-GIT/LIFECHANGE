@@ -286,8 +286,7 @@ export const SleepChartAvg = () => {
               />
             ))
           }
-        >
-          {(popTrigger: any) => (
+          children={(popTrigger: any) => (
             <Img
               max={24}
               hover={true}
@@ -299,7 +298,7 @@ export const SleepChartAvg = () => {
               }}
             />
           )}
-        </PopUp>
+        />
       );
       return (
         <Grid container spacing={0} columns={12}>

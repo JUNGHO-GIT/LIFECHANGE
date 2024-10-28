@@ -358,7 +358,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
               <Grid size={6} className={"d-row-left"}>
-                <Div className={"fs-1-2rem fw-600 light-black"}>
+                <Div className={"fs-1-2rem fw-600 black"}>
                   {smileScore.total}
                 </Div>
               </Grid>
@@ -381,7 +381,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
               <Grid size={6} className={"d-row-left"}>
-                <Div className={"fs-1-0rem fw-600 light-black"}>
+                <Div className={"fs-1-0rem fw-600 black"}>
                   {smileScore.exercise}
                 </Div>
               </Grid>
@@ -404,7 +404,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
               <Grid size={6} className={"d-row-left"}>
-                <Div className={"fs-1-0rem fw-600 light-black"}>
+                <Div className={"fs-1-0rem fw-600 black"}>
                   {smileScore.food}
                 </Div>
               </Grid>
@@ -427,7 +427,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
               <Grid size={6} className={"d-row-left"}>
-                <Div className={"fs-1-0rem fw-600 light-black"}>
+                <Div className={"fs-1-0rem fw-600 black"}>
                   {smileScore.money}
                 </Div>
               </Grid>
@@ -450,7 +450,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
               <Grid size={6} className={"d-row-left"}>
-                <Div className={"fs-1-0rem fw-600 light-black"}>
+                <Div className={"fs-1-0rem fw-600 black"}>
                   {smileScore.sleep}
                 </Div>
               </Grid>
@@ -465,8 +465,7 @@ export const TopNav = () => {
             </Grid>
           </Container>
         }
-      >
-        {(popTrigger: any) => (
+        children={(popTrigger: any) => (
           <Img
             max={25}
             hover={true}
@@ -479,7 +478,7 @@ export const TopNav = () => {
             }}
           />
         )}
-      </PopUp>
+      />
     );
 
     // 2. scale ------------------------------------------------------------------------------------
@@ -603,8 +602,7 @@ export const TopNav = () => {
             </Grid>
           </Container>
         }
-      >
-        {(popTrigger: any) => (
+        children={(popTrigger: any) => (
           <Img
             max={25}
             hover={true}
@@ -617,7 +615,7 @@ export const TopNav = () => {
             }}
           />
         )}
-      </PopUp>
+      />
     );
 
     // 3. nutrition --------------------------------------------------------------------------------
@@ -828,8 +826,7 @@ export const TopNav = () => {
             </Grid>
           </Container>
         }
-      >
-        {(popTrigger: any) => (
+        children={(popTrigger: any) => (
           <Img
             max={25}
             hover={true}
@@ -842,7 +839,7 @@ export const TopNav = () => {
             }}
           />
         )}
-      </PopUp>
+      />
     );
 
     // 4. property ---------------------------------------------------------------------------------
@@ -993,8 +990,7 @@ export const TopNav = () => {
             </Grid>
           </Container>
         }
-      >
-        {(popTrigger: any) => (
+        children={(popTrigger: any) => (
           <Img
             max={25}
             hover={true}
@@ -1007,7 +1003,7 @@ export const TopNav = () => {
             }}
           />
         )}
-      </PopUp>
+      />
     );
 
     // 5. tabs -------------------------------------------------------------------------------------

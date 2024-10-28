@@ -180,8 +180,7 @@ export const UserAppSetting = () => {
                       </Div>
                     </Div>
                   }
-                >
-                  {(popTrigger: any) => (
+                  children={(popTrigger: any) => (
                     <TableRow
                       className={"pointer"}
                       onClick={(e: any) => {
@@ -200,7 +199,7 @@ export const UserAppSetting = () => {
                       </TableCell>
                     </TableRow>
                   )}
-                </PopUp>
+                />
                 {/** app info **/}
                 <TableRow
                   className={"pointer"}

@@ -130,8 +130,7 @@ export const PickerTime = (
             </Grid>
           </Grid>
         )}
-      >
-        {(popTrigger: any) => (
+        children={(popTrigger: any) => (
           <Input
             label={translateStr}
             value={OBJECT?.[`${extra}`]}
@@ -156,7 +155,7 @@ export const PickerTime = (
             }}
           />
         )}
-      </PopUp>
+      />
     );
     const realSection = () => (
       <PopUp
@@ -194,8 +193,7 @@ export const PickerTime = (
             </Grid>
           </Grid>
         )}
-      >
-        {(popTrigger: any) => (
+        children={(popTrigger: any) => (
           <Input
             label={translate(translateStr)}
             value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
@@ -222,7 +220,7 @@ export const PickerTime = (
             }}
           />
         )}
-      </PopUp>
+      />
     );
     return (
       secondStr === "goal" ? goalSection() : realSection()

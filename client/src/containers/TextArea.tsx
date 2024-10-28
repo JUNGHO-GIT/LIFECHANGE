@@ -22,7 +22,7 @@ export const TextArea = (props: any) => (
       input: {
         ...props?.slotProps?.input,
         readOnly: (
-          props?.readOnly || false
+          (props?.readOnly || props?.locked === "locked") ? true : false
         ),
         className: (
           props?.inputclass?.includes("fs-") ? (

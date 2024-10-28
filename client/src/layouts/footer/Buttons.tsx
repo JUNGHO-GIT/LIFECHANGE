@@ -118,8 +118,7 @@ export const Buttons = (
             </Grid>
           </Grid>
         }
-      >
-        {(popTrigger: any) => (
+        children={(popTrigger: any) => (
           <Btn
             color={"primary"}
             className={"ms-1vw me-1vw"}
@@ -140,7 +139,7 @@ export const Buttons = (
             {translate("save")}
           </Btn>
         )}
-      </PopUp>
+      />
     );
 
     // 4. delete

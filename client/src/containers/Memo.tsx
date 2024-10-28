@@ -43,7 +43,7 @@ export const Memo = (
               }}
               onChange={(e: any) => {
                 // 빈값 처리
-                let value = e.target.value === "" ? "" : e.target.value;
+                let value = e.target.value || "";
                 setOBJECT((prev: any) => ({
                   ...prev,
                   [`${firstStr}_section`]: prev[`${firstStr}_section`]?.map((section: any, idx: number) => (
@@ -58,8 +58,7 @@ export const Memo = (
           </Grid>
         </Grid>
       }
-    >
-      {(popTrigger: any) => (
+      children={(popTrigger: any) => (
         <Input
           label={translate("memo")}
           className={"pointer"}
@@ -80,7 +79,7 @@ export const Memo = (
           }}
         />
       )}
-    </PopUp>
+    />
   );
 
   // 15. return ------------------------------------------------------------------------------------

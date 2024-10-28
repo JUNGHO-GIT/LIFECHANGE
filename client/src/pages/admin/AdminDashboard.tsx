@@ -65,7 +65,7 @@ export const AdminDashboard = () => {
       <Grid container spacing={2} columns={12} className={"border-1 radius-1 p-20"}>
         <Grid size={12}>
           <Input
-            disabled={true}
+            readOnly={true}
             label={translate("userCount")}
             value={`${OBJECT}`}
           />

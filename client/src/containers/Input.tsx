@@ -43,10 +43,7 @@ export const Input = (props: any) => (
       input: {
         ...props?.slotProps?.input,
         readOnly: (
-          (props?.readOnly || props?.className?.includes("pointer")) ? true : false
-        ),
-        disabled: (
-          props?.disabled || props?.locked === "locked" || false
+          (props?.readOnly || props?.locked === "locked") ? true : false
         ),
         className: (
           props?.inputclass?.includes("fs-") ? (

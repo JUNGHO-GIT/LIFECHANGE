@@ -117,7 +117,7 @@ export const UserDetail = () => {
           {/** 아이디 **/}
           <Grid size={12}>
             <Input
-              disabled={true}
+              readOnly={true}
               label={translate("id")}
               value={item?.user_id}
             />
@@ -125,7 +125,7 @@ export const UserDetail = () => {
           {/** 등록일 **/}
           <Grid size={12}>
             <Input
-              disabled={true}
+              readOnly={true}
               label={translate("regDt")}
               value={item?.user_regDt.split("T")[0]}
             />
@@ -172,7 +172,7 @@ export const UserDetail = () => {
           {/** 현재 몸무게 **/}
           <Grid size={12}>
             <Input
-              disabled={true}
+              readOnly={true}
               label={translate("curScale")}
               value={insertComma(item.user_curScale || "0")}
               startadornment={
@@ -231,7 +231,7 @@ export const UserDetail = () => {
           {/** 현재 목표 칼로리 **/}
           <Grid size={12}>
             <Input
-              disabled={true}
+              readOnly={true}
               label={translate("curAvgKcalIntake")}
               value={insertComma(item.user_curAvgKcalIntake || "0")}
               startadornment={
@@ -290,7 +290,7 @@ export const UserDetail = () => {
           {/** 현재 자산 **/}
           <Grid size={12}>
             <Input
-              disabled={true}
+              readOnly={true}
               label={translate("curPropertyExclusion")}
               value={
                 includingExclusions ? (

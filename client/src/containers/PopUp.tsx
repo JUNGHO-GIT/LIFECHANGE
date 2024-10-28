@@ -6,8 +6,8 @@ import { Popover, bindPopover, usePopupState } from "@imports/ImportMuis";
 export const PopUp = (props: any) => {
 
   const popupState = usePopupState({
-    variant: 'popover',
-    popupId: 'popover',
+    variant: "popover",
+    popupId: "popup",
   });
 
   let popupStyle: any = {
@@ -58,8 +58,11 @@ export const PopUp = (props: any) => {
       id={"popover"}
       open={popupState.isOpen}
       anchorEl={popupState.anchorEl}
-      // @ts-ignore
-      onClose={popupState.close}
+      onClose={(_event, reason) => {
+        if (reason === "backdropClick") {
+          popupState.close();
+        }
+      }}
       anchorOrigin={{
         vertical: props?.position === "center" ? "center" : (
           props?.position === "top" ? "top" : "bottom"
@@ -110,8 +113,11 @@ export const PopUp = (props: any) => {
       id={"popover"}
       open={popupState.isOpen}
       anchorEl={null}
-      // @ts-ignore
-      onClose={popupState.close}
+      onClose={(_event, reason) => {
+        if (reason === "backdropClick") {
+          popupState.close();
+        }
+      }}
       anchorReference={"anchorPosition"}
       anchorPosition={{
         top: window.innerHeight / 2,

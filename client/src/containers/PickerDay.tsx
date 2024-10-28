@@ -298,8 +298,7 @@ export const PickerDay = (
             </Grid>
           </Grid>
         }
-      >
-        {(popTrigger: any) => (
+        children={(popTrigger: any) => (
           <Input
             label={translate("date")}
             value={`${DATE.dateStart}`}
@@ -355,7 +354,7 @@ export const PickerDay = (
             }}
           />
         )}
-      </PopUp>
+      />
     );
 
     // 2. week -------------------------------------------------------------------------------------
@@ -510,8 +509,7 @@ export const PickerDay = (
             </Grid>
           </Grid>
         }
-      >
-        {(popTrigger: any) => (
+        children={(popTrigger: any) => (
           <Input
             label={translate("duration")}
             value={durStr}
@@ -565,7 +563,7 @@ export const PickerDay = (
             }}
           />
         )}
-      </PopUp>
+      />
     );
 
     // 3. month ------------------------------------------------------------------------------------
@@ -703,8 +701,7 @@ export const PickerDay = (
             </Grid>
           </Grid>
         }
-      >
-        {(popTrigger: any) => (
+        children={(popTrigger: any) => (
           <Input
             label={translate("duration")}
             value={durStr}
@@ -758,7 +755,7 @@ export const PickerDay = (
             }}
           />
         )}
-      </PopUp>
+      />
     );
 
     // 4. year -------------------------------------------------------------------------------------
@@ -897,8 +894,7 @@ export const PickerDay = (
             </Grid>
           </Grid>
         }
-      >
-        {(popTrigger: any) => (
+        children={(popTrigger: any) => (
           <Input
             label={translate("duration")}
             value={durStr}
@@ -952,7 +948,7 @@ export const PickerDay = (
             }}
           />
         )}
-      </PopUp>
+      />
     );
 
     // 5. select -----------------------------------------------------------------------------------
@@ -1090,8 +1086,7 @@ export const PickerDay = (
             </Grid>
           </Grid>
         }
-      >
-        {(popTrigger: any) => (
+        children={(popTrigger: any) => (
           <Input
             label={translate("duration")}
             value={durStr}
@@ -1111,7 +1106,7 @@ export const PickerDay = (
             }}
           />
         )}
-      </PopUp>
+      />
     );
 
     // 6. typeList ---------------------------------------------------------------------------------

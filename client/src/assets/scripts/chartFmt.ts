@@ -8,46 +8,54 @@ export const handleY = (
 ) => {
 
   let ticks = [];
-  let maxValue = 0;
   let topValue = 0;
   let tickInterval = 0;
+  let maxValue = 0;
 
   // 숫자 변환 및 NaN 처리
   OBJECT = OBJECT.map((item: any) => {
     let newItem: any = {};
     for (let key in item) {
-      newItem[key] = isNaN(Number(item[key])) ? 0 : Number(item[key]);
+      newItem[key] = Number(item[key] || 0);
     }
     return newItem;
   });
 
   if (type === "sleep") {
-    maxValue = Math.max(...OBJECT.map((item: any) => (
-      Math.max(...array.map((key: any) => item[key] !== undefined ? item[key] : 0))
-    )));
     topValue = 24;
     tickInterval = 1;
+    maxValue = Math.max(...OBJECT.map((item: any) => (
+      Math.max(...array.map((key: any) => (
+        Number(item[key] || 0)
+      )))
+    )));
   }
   else if (type === "money") {
-    maxValue = Math.max(...OBJECT.map((item: any) => (
-      Math.max(...array.map((key: any) => item[key] !== undefined ? item[key] : 0))
-    )));
     topValue = Math.ceil(maxValue / 100) * 100;
     tickInterval = 100;
+    maxValue = Math.max(...OBJECT.map((item: any) => (
+      Math.max(...array.map((key: any) => (
+        Number(item[key] || 0)
+      )))
+    )));
   }
   else if (type === "food") {
-    maxValue = Math.max(...OBJECT.map((item: any) => (
-      Math.max(...array.map((key: any) => item[key] !== undefined ? item[key] : 0))
-    )));
     topValue = Math.ceil(maxValue / 100) * 100;
     tickInterval = 10;
+    maxValue = Math.max(...OBJECT.map((item: any) => (
+      Math.max(...array.map((key: any) => (
+        Number(item[key] || 0)
+      )))
+    )));
   }
   else if (type === "exercise") {
-    maxValue = Math.max(...OBJECT.map((item: any) => (
-      Math.max(...array.map((key: any) => item[key] !== undefined ? item[key] : 0))
-    )));
     topValue = Math.ceil(maxValue / 100) * 100;
     tickInterval = 10;
+    maxValue = Math.max(...OBJECT.map((item: any) => (
+      Math.max(...array.map((key: any) => (
+        Number(item[key] || 0)
+      )))
+    )));
   }
   else {
     throw new Error("handleY: type error");

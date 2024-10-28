@@ -405,7 +405,7 @@ export const CalendarDetail = () => {
               }
               onChange={(e: any) => {
                 // 빈값 처리
-                let value = e.target.value === "" ? "" : e.target.value;
+                let value = e.target.value || "";
                 // object 설정
                 setOBJECT((prev: any) => ({
                   ...prev,
