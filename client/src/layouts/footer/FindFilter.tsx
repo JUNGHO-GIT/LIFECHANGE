@@ -111,12 +111,14 @@ export const FindFilter = (
             ...prev,
             page: newPage
           }));
+          window.scrollTo(0, 0);
         }}
         onRowsPerPageChange={(event) => {
           setState?.setPAGING((prev: any) => ({
             ...prev,
             limit: parseFloat(event.target.value)
           }));
+          window.scrollTo(0, 0);
         }}
       />
     );

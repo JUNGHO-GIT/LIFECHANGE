@@ -6,12 +6,12 @@ import { Icons, Div } from "@imports/ImportComponents";
 declare type DeleteProps = {
   index: number;
   handleDelete: any;
-  LOCKED: string;
+  LOCK: string;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const Delete = (
-  { index, handleDelete, LOCKED }: DeleteProps
+  { index, handleDelete, LOCK }: DeleteProps
 ) => {
 
   // 1. deleteNode --------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ export const Delete = (
       <Icons
         key={"X"}
         name={"X"}
-        locked={LOCKED}
+        locked={LOCK}
         className={"w-20 h-20"}
         onClick={() => {
           handleDelete(index);

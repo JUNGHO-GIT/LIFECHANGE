@@ -7,7 +7,7 @@ import { Calendar } from "@imports/ImportSchemas";
 import { axios, CalendarReact } from "@imports/ImportUtils";
 import { Footer } from "@imports/ImportLayouts";
 import { Icons, Div, Br } from "@imports/ImportComponents";
-import { Paper, Grid } from "@imports/ImportMuis";
+import { Paper, Grid, Card } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const CalendarList = () => {

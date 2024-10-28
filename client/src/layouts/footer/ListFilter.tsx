@@ -66,7 +66,8 @@ export const ListFilter = (
             {pickerSection()}
           </Grid>
         </Grid>
-      ) : (
+      )
+      : (
         <Grid container spacing={1} columns={12}>
           <Grid size={3}>
             {sortSection()}

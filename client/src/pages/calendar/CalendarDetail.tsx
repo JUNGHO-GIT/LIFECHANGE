@@ -8,7 +8,7 @@ import { axios } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, Memo, Count, Delete, Input, Select } from "@imports/ImportContainers";
 import { Img, Bg } from "@imports/ImportComponents";
-import { Paper, MenuItem, Grid } from "@imports/ImportMuis";
+import { Paper, MenuItem, Grid, Card } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const CalendarDetail = () => {
@@ -25,7 +25,7 @@ export const CalendarDetail = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [LOCKED, setLOCKED] = useState<string>("unlocked");
+  const [LOCK, setLOCK] = useState<string>("Y");
   const [OBJECT, setOBJECT] = useState<any>(Calendar);
   const [EXIST, setEXIST] = useState<any>({
     day: [""],
@@ -113,7 +113,7 @@ export const CalendarDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
-    if (LOCKED === "locked") {
+    if (LOCK === "locked") {
       setLOADING(false);
       return;
     }
@@ -294,8 +294,8 @@ export const CalendarDetail = () => {
           <Count
             COUNT={COUNT}
             setCOUNT={setCOUNT}
-            LOCKED={LOCKED}
-            setLOCKED={setLOCKED}
+            LOCK={LOCK}
+            setLOCK={setLOCK}
             limit={10}
           />
         </Grid>
@@ -305,7 +305,7 @@ export const CalendarDetail = () => {
     const detailSection = () => {
       const detailFragment = (item: any, i: number) => (
         <Grid container spacing={2} columns={12}
-        className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
+        className={`${LOCK === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
           <Grid size={6} className={"d-row-left"}>
             <Bg
               badgeContent={i + 1}
@@ -316,12 +316,12 @@ export const CalendarDetail = () => {
             <Delete
               index={i}
               handleDelete={handleDelete}
-              LOCKED={LOCKED}
+              LOCK={LOCK}
             />
           </Grid>
           <Grid size={6}>
             <Select
-              locked={LOCKED}
+              locked={LOCK}
               label={translate("part")}
               value={item?.calendar_part_idx || 0}
               inputRef={REFS?.[i]?.calendar_part_idx}
@@ -359,7 +359,7 @@ export const CalendarDetail = () => {
               value={item?.calendar_color || "black"}
               inputRef={REFS?.[i]?.calendar_color}
               error={ERRORS?.[i]?.calendar_color}
-              locked={LOCKED}
+              locked={LOCK}
               onChange={(e: any) => {
                 // 빈값 처리
                 let value = e.target.value === "" ? "black" : e.target.value;
@@ -393,7 +393,7 @@ export const CalendarDetail = () => {
               value={item?.calendar_title || ""}
               inputRef={REFS?.[i]?.calendar_title}
               error={ERRORS?.[i]?.calendar_title}
-              locked={LOCKED}
+              locked={LOCK}
               startadornment={
                 <Img
                   max={15}
@@ -423,7 +423,7 @@ export const CalendarDetail = () => {
             <Memo
               OBJECT={OBJECT}
               setOBJECT={setOBJECT}
-              LOCKED={LOCKED}
+              LOCK={LOCK}
               extra={"calendar_content"}
               i={i}
             />
@@ -443,12 +443,8 @@ export const CalendarDetail = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        <Grid container spacing={0} columns={12}>
-          <Grid size={12} className={"d-col-center"}>
-            {dateCountSection()}
-            {LOADING ? <Loading /> : detailSection()}
-          </Grid>
-        </Grid>
+        {dateCountSection()}
+        {LOADING ? <Loading /> : detailSection()}
       </Paper>
     );
   };
@@ -458,8 +454,8 @@ export const CalendarDetail = () => {
     <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
-      LOCKED={LOCKED}
-      setLOCKED={setLOCKED}
+      LOCK={LOCK}
+      setLOCK={setLOCK}
     />
   );
 

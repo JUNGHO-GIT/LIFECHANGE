@@ -8,7 +8,7 @@ import { axios } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Select, PopUp } from "@imports/ImportContainers";
 import { Div, Img, Br } from "@imports/ImportComponents";
-import { Paper, MenuItem, Grid } from "@imports/ImportMuis";
+import { Paper, MenuItem, Grid, Card } from "@imports/ImportMuis";
 import { FormGroup, FormControlLabel, Switch } from "@imports/ImportMuis";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recharts";
 
@@ -346,23 +346,19 @@ export const ExerciseChartPie = () => {
       );
     };
     // 7-2. chart
-    const chartSection = () => (
-      <Grid container spacing={0} columns={12}>
-        <Grid size={12} className={"d-row-center"}>
+    const chartSection = () => {
+      return (
+        <Card className={"d-col-center"}>
           {LOADING ? <Loading /> : chartPie()}
-        </Grid>
-      </Grid>
-    );
+        </Card>
+      );
+    };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min40vh"}>
-        <Grid container spacing={0} columns={12}>
-          <Grid size={12} className={"d-col-center"}>
-            {headSection()}
-            <Br px={20} />
-            {chartSection()}
-          </Grid>
-        </Grid>
+        {headSection()}
+        <Br px={20} />
+        {chartSection()}
       </Paper>
     );
   };

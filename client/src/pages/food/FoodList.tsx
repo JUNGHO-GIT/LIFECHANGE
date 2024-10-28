@@ -7,7 +7,8 @@ import { Food } from "@imports/ImportSchemas";
 import { axios, insertComma } from "@imports/ImportUtils";
 import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
 import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
-import { Paper, Grid, Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
+import { Paper, Grid, Card } from "@imports/ImportMuis";
+import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodList = () => {
@@ -131,9 +132,15 @@ export const FoodList = () => {
   const listNode = () => {
     const listSection = () => {
       const listFragment = (item: any, i: number) => (
-        <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
+        <Grid container spacing={0} columns={12} className={"border-1 radius-1"} key={`list-${i}`}>
           <Grid size={12} className={"p-2"}>
-            <Accordion expanded={isExpanded[i].expanded}>
+            <Accordion
+              expanded={isExpanded[i].expanded}
+              TransitionProps={{
+                mountOnEnter: true,
+                unmountOnExit: true,
+              }}
+            >
               <AccordionSummary
                 className={"me-n10"}
                 expandIcon={
@@ -182,33 +189,34 @@ export const FoodList = () => {
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container spacing={2} columns={12}>
-
                   {/** row 1 **/}
-                  <Grid size={2} className={"d-row-center"}>
-                    <Img
-                      max={15}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={"food2"}
-                    />
-                  </Grid>
-                  <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
-                      {translate("kcal")}
-                    </Div>
-                  </Grid>
-                  <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
-                      <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.food_total_kcal_color}`}>
-                          {insertComma(item.food_total_kcal || "0")}
-                        </Div>
-                      </Grid>
-                      <Grid size={2} className={"d-row-center"}>
-                        <Div className={"fs-0-6rem"}>
-                          {translate("kc")}
-                        </Div>
+                  <Grid container spacing={2} columns={12}>
+                    <Grid size={2} className={"d-row-center"}>
+                      <Img
+                        max={15}
+                        hover={true}
+                        shadow={false}
+                        radius={false}
+                        src={"food2"}
+                      />
+                    </Grid>
+                    <Grid size={3} className={"d-row-left"}>
+                      <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
+                        {translate("kcal")}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container spacing={1} columns={12}>
+                        <Grid size={10} className={"d-row-right"}>
+                          <Div className={`${item.food_total_kcal_color}`}>
+                            {insertComma(item.food_total_kcal || "0")}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={"d-row-center"}>
+                          <Div className={"fs-0-6rem"}>
+                            {translate("kc")}
+                          </Div>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -217,31 +225,33 @@ export const FoodList = () => {
                   <Hr px={1} />
 
                   {/** row 2 **/}
-                  <Grid size={2} className={"d-center"}>
-                    <Img
-                      max={15}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={"food3"}
-                    />
-                  </Grid>
-                  <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
-                      {translate("carb")}
-                    </Div>
-                  </Grid>
-                  <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
-                      <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.food_total_carb_color}`}>
-                          {insertComma(item.food_total_carb || "0")}
-                        </Div>
-                      </Grid>
-                      <Grid size={2} className={"d-row-center"}>
-                        <Div className={"fs-0-6rem"}>
-                          {translate("g")}
-                        </Div>
+                  <Grid container spacing={2} columns={12}>
+                    <Grid size={2} className={"d-center"}>
+                      <Img
+                        max={15}
+                        hover={true}
+                        shadow={false}
+                        radius={false}
+                        src={"food3"}
+                      />
+                    </Grid>
+                    <Grid size={3} className={"d-row-left"}>
+                      <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
+                        {translate("carb")}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container spacing={1} columns={12}>
+                        <Grid size={10} className={"d-row-right"}>
+                          <Div className={`${item.food_total_carb_color}`}>
+                            {insertComma(item.food_total_carb || "0")}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={"d-row-center"}>
+                          <Div className={"fs-0-6rem"}>
+                            {translate("g")}
+                          </Div>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -250,31 +260,33 @@ export const FoodList = () => {
                   <Hr px={1} />
 
                   {/** row 3 **/}
-                  <Grid size={2} className={"d-center"}>
-                    <Img
-                      max={15}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={"food4"}
-                    />
-                  </Grid>
-                  <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
-                      {translate("protein")}
-                    </Div>
-                  </Grid>
-                  <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
-                      <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.food_total_protein_color}`}>
-                          {insertComma(item.food_total_carb || "0")}
-                        </Div>
-                      </Grid>
-                      <Grid size={2} className={"d-row-center"}>
-                        <Div className={"fs-0-6rem"}>
-                          {translate("g")}
-                        </Div>
+                  <Grid container spacing={2} columns={12}>
+                    <Grid size={2} className={"d-center"}>
+                      <Img
+                        max={15}
+                        hover={true}
+                        shadow={false}
+                        radius={false}
+                        src={"food4"}
+                      />
+                    </Grid>
+                    <Grid size={3} className={"d-row-left"}>
+                      <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
+                        {translate("protein")}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container spacing={1} columns={12}>
+                        <Grid size={10} className={"d-row-right"}>
+                          <Div className={`${item.food_total_protein_color}`}>
+                            {insertComma(item.food_total_carb || "0")}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={"d-row-center"}>
+                          <Div className={"fs-0-6rem"}>
+                            {translate("g")}
+                          </Div>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -283,36 +295,37 @@ export const FoodList = () => {
                   <Hr px={1} />
 
                   {/** row 4 **/}
-                  <Grid size={2} className={"d-center"}>
-                    <Img
-                      max={15}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={"food5"}
-                    />
-                  </Grid>
-                  <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
-                      {translate("fat")}
-                    </Div>
-                  </Grid>
-                  <Grid size={7}>
-                    <Grid container spacing={1} columns={12}>
-                      <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.food_total_fat_color}`}>
-                          {insertComma(item.food_total_fat || "0")}
-                        </Div>
-                      </Grid>
-                      <Grid size={2} className={"d-row-center"}>
-                        <Div className={"fs-0-6rem"}>
-                          {translate("g")}
-                        </Div>
+                  <Grid container spacing={2} columns={12}>
+                    <Grid size={2} className={"d-center"}>
+                      <Img
+                        max={15}
+                        hover={true}
+                        shadow={false}
+                        radius={false}
+                        src={"food5"}
+                      />
+                    </Grid>
+                    <Grid size={3} className={"d-row-left"}>
+                      <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
+                        {translate("fat")}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container spacing={1} columns={12}>
+                        <Grid size={10} className={"d-row-right"}>
+                          <Div className={`${item.food_total_fat_color}`}>
+                            {insertComma(item.food_total_fat || "0")}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={"d-row-center"}>
+                          <Div className={"fs-0-6rem"}>
+                            {translate("g")}
+                          </Div>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
-                  {/** /.row 3 **/}
-
+                  {/** /.row 4 **/}
                 </Grid>
               </AccordionDetails>
             </Accordion>
@@ -320,27 +333,19 @@ export const FoodList = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
-          {OBJECT?.map((item: any, i: number) => (
-            <Grid size={12} key={`list-${i}`}>
-              {COUNT.totalCnt === 0 ? (
-                <Empty DATE={DATE} extra={"food"} />
-              ) : (
-                listFragment(item, i)
-              )}
-            </Grid>
-          ))}
-        </Grid>
+        <Card className={"d-col-center"}>
+          {COUNT.totalCnt === 0 ? (
+            <Empty DATE={DATE} extra={"food"} />
+          ) : (
+            OBJECT?.map((item: any, i: number) => listFragment(item, i))
+          )}
+        </Card>
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        <Grid container spacing={0} columns={12}>
-          <Grid size={12} className={"d-col-center"}>
-            {LOADING ? <Loading /> : listSection()}
-          </Grid>
-        </Grid>
+        {LOADING ? <Loading /> : listSection()}
       </Paper>
     );
   };

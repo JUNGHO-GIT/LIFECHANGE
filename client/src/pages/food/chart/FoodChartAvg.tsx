@@ -8,7 +8,7 @@ import { axios, handleY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Select, PopUp } from "@imports/ImportContainers";
 import { Div, Img, Br } from "@imports/ImportComponents";
-import { Paper, MenuItem, Grid } from "@imports/ImportMuis";
+import { Paper, MenuItem, Grid, Card } from "@imports/ImportMuis";
 import { FormGroup, FormControlLabel, Switch } from "@imports/ImportMuis";
 import { ComposedChart, Bar } from "recharts";
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
@@ -239,21 +239,9 @@ export const FoodChartAvg = () => {
   const chartNode = () => {
     // 7-1. head
     const headSection = () => {
-      const titleFragment = () => (
-        <Grid container spacing={0} columns={12}>
-          <Grid size={12} className={"d-row-center"}>
-            <Div className={"fs-1-0rem fw-600"}>
-              {translate("chartAvg")}
-            </Div>
-            <Div className={"fs-1-0rem fw-500 grey ms-10"}>
-              {`[${translate(TYPE.line)}]`}
-            </Div>
-          </Grid>
-        </Grid>
-      );
-      const selectFragment1 = () => (
-        <Grid container spacing={0} columns={12}>
-          <Grid size={12} className={"d-row-center"}>
+      const headFragment = () => (
+        <Grid container spacing={2} columns={12}>
+          <Grid size={3} className={"d-row-center"}>
             <Select
               value={TYPE.section}
               onChange={(e: any) => {
@@ -267,88 +255,76 @@ export const FoodChartAvg = () => {
               <MenuItem value={"month"}>{translate("month")}</MenuItem>
             </Select>
           </Grid>
-        </Grid>
-      );
-      const selectFragment2 = () => (
-        <PopUp
-          type={"chart"}
-          position={"bottom"}
-          direction={"center"}
-          contents={
-            ["kcal", "nut"]?.map((key: string, index: number) => (
-              <FormGroup
-                key={index}
-                children={
-                  <FormControlLabel
-                    label={translate(key)}
-                    labelPlacement={"start"}
-                    control={
-                      <Switch
-                        checked={TYPE.line === key}
-                        onChange={() => {
-                          if (TYPE.line === key) {
-                            return;
-                          }
-                          else {
-                            setTYPE((prev: any) => ({
-                              ...prev,
-                              line: key,
-                            }));
-                          }
-                        }}
+          <Grid size={7} className={"d-row-center"}>
+            <Div className={"fs-1-0rem fw-600"}>
+              {translate("chartAvg")}
+            </Div>
+            <Div className={"fs-1-0rem fw-500 grey ms-10"}>
+              {`[${translate(TYPE.line)}]`}
+            </Div>
+          </Grid>
+          <Grid size={2} className={"d-row-center"}>
+            <PopUp
+              type={"chart"}
+              position={"bottom"}
+              direction={"center"}
+              contents={
+                ["kcal", "nut"]?.map((key: string, index: number) => (
+                  <FormGroup
+                    key={index}
+                    children={
+                      <FormControlLabel
+                        label={translate(key)}
+                        labelPlacement={"start"}
+                        control={
+                          <Switch
+                            checked={TYPE.line === key}
+                            onChange={() => {
+                              if (TYPE.line === key) {
+                                return;
+                              }
+                              else {
+                                setTYPE((prev: any) => ({
+                                  ...prev,
+                                  line: key,
+                                }));
+                              }
+                            }}
+                          />
+                        }
                       />
                     }
                   />
-                }
-              />
-            ))
-          }
-          children={(popTrigger: any) => (
-            <Img
-              max={24}
-              hover={true}
-              shadow={false}
-              radius={false}
-              src={"common3_1"}
-              onClick={(e: any) => {
-                popTrigger.openPopup(e.currentTarget)
-              }}
+                ))
+              }
+              children={(popTrigger: any) => (
+                <Img
+                  max={24}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
+                  src={"common3_1"}
+                  onClick={(e: any) => {
+                    popTrigger.openPopup(e.currentTarget)
+                  }}
+                />
+              )}
             />
-          )}
-        />
+          </Grid>
+        </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
-          <Grid size={3} className={"d-row-left"}>
-            {selectFragment1()}
-          </Grid>
-          <Grid size={7} className={"d-row-center"}>
-            {titleFragment()}
-          </Grid>
-          <Grid size={2} className={"d-row-right"}>
-            {selectFragment2()}
-          </Grid>
-        </Grid>
+        <Card className={"d-col-center"}>
+          {headFragment()}
+        </Card>
       );
     };
-    // 7-2. chart
-    const chartSection = () => (
-      <Grid container spacing={0} columns={12}>
-        <Grid size={12} className={"d-row-center"}>
-          {LOADING ? <Loading /> : chartAvg()}
-        </Grid>
-      </Grid>
-    );
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min40vh"}>
-        <Grid container spacing={0} columns={12}>
-          <Grid size={12} className={"d-col-center"}>
-            {headSection()}
-            <Br px={20} />
-            {chartSection()}
-          </Grid>
-        </Grid>
+        {headSection()}
+        <Br px={20} />
+        {LOADING ? <Loading /> : chartAvg()}
       </Paper>
     );
   };

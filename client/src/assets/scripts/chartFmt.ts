@@ -8,9 +8,9 @@ export const handleY = (
 ) => {
 
   let ticks = [];
+  let maxValue = 0;
   let topValue = 0;
   let tickInterval = 0;
-  let maxValue = 0;
 
   // 숫자 변환 및 NaN 처리
   OBJECT = OBJECT.map((item: any) => {
@@ -22,40 +22,40 @@ export const handleY = (
   });
 
   if (type === "sleep") {
-    topValue = 24;
-    tickInterval = 1;
     maxValue = Math.max(...OBJECT.map((item: any) => (
       Math.max(...array.map((key: any) => (
-        Number(item[key] || 0)
+        item[key] || 0
       )))
     )));
+    tickInterval = 1;
+    topValue = 24;
   }
   else if (type === "money") {
-    topValue = Math.ceil(maxValue / 100) * 100;
-    tickInterval = 100;
     maxValue = Math.max(...OBJECT.map((item: any) => (
       Math.max(...array.map((key: any) => (
-        Number(item[key] || 0)
+        item[key] || 0
       )))
     )));
+    tickInterval = 100;
+    topValue = Math.ceil(maxValue / 100) * 100;
   }
   else if (type === "food") {
-    topValue = Math.ceil(maxValue / 100) * 100;
-    tickInterval = 10;
     maxValue = Math.max(...OBJECT.map((item: any) => (
       Math.max(...array.map((key: any) => (
-        Number(item[key] || 0)
+        item[key] || 0
       )))
     )));
+    tickInterval = 10;
+    topValue = Math.ceil(maxValue / 100) * 100;
   }
   else if (type === "exercise") {
-    topValue = Math.ceil(maxValue / 100) * 100;
-    tickInterval = 10;
     maxValue = Math.max(...OBJECT.map((item: any) => (
       Math.max(...array.map((key: any) => (
-        Number(item[key] || 0)
+        item[key] || 0
       )))
     )));
+    tickInterval = 10;
+    topValue = Math.ceil(maxValue / 100) * 100;
   }
   else {
     throw new Error("handleY: type error");

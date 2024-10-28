@@ -8,7 +8,8 @@ import { ExerciseGoal, FoodGoal, MoneyGoal, SleepGoal } from "@imports/ImportSch
 import { axios, insertComma } from "@imports/ImportUtils";
 import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
 import { Div, Hr, Br, Img, Icons } from "@imports/ImportComponents";
-import { Paper, Grid, Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
+import { Paper, Grid, Card } from "@imports/ImportMuis";
+import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const TodayGoalList = () => {
@@ -156,7 +157,7 @@ export const TodayGoalList = () => {
     // 7-1. exercise
     const exerciseSection = () => {
       const listFragment = (item: any, i: number) => (
-        <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
+        <Grid container spacing={0} columns={12} className={"border-1 radius-1"} key={`list-${i}`}>
           <Grid size={12} className={"p-2"}>
             <Accordion expanded={isExpanded.exercise[i].expanded}>
               <AccordionSummary
@@ -527,7 +528,7 @@ export const TodayGoalList = () => {
     // 7-2. food
     const foodSection = () => {
       const listFragment = (item: any, i: number) => (
-        <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
+        <Grid container spacing={0} columns={12} className={"border-1 radius-1"} key={`list-${i}`}>
           <Grid size={12} className={"p-2"}>
             <Accordion expanded={isExpanded.food[i].expanded}>
               <AccordionSummary
@@ -898,7 +899,7 @@ export const TodayGoalList = () => {
     // 7-3. money
     const moneySection = () => {
       const listFragment = (item: any, i: number) => (
-        <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
+        <Grid container spacing={0} columns={12} className={"border-1 radius-1"} key={`list-${i}`}>
           <Grid size={12} className={"p-2"}>
             <Accordion expanded={isExpanded.money[i].expanded}>
               <AccordionSummary
@@ -1127,7 +1128,7 @@ export const TodayGoalList = () => {
     // 7-4. sleep
     const sleepSection = () => {
       const listFragment = (item: any, i: number) => (
-        <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
+        <Grid container spacing={0} columns={12} className={"border-1 radius-1"} key={`list-${i}`}>
           <Grid size={12} className={"p-2"}>
             <Accordion expanded={isExpanded.sleep[i].expanded}>
               <AccordionSummary

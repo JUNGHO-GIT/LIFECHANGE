@@ -8,7 +8,7 @@ import { axios, handleY } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Select, PopUp } from "@imports/ImportContainers";
 import { Div, Img, Br } from "@imports/ImportComponents";
-import { Paper, Grid, MenuItem } from "@imports/ImportMuis";
+import { Paper, Grid, MenuItem, Card } from "@imports/ImportMuis";
 import { FormGroup, FormControlLabel, Switch } from "@imports/ImportMuis";
 import { ComposedChart, Bar } from "recharts";
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
@@ -315,23 +315,19 @@ export const SleepChartAvg = () => {
       );
     };
     // 7-2. chart
-    const chartSection = () => (
-      <Grid container spacing={0} columns={12}>
-        <Grid size={12} className={"d-row-center"}>
+    const chartSection = () => {
+      return (
+        <Card className={"d-col-center"}>
           {LOADING ? <Loading /> : chartAvg()}
-        </Grid>
-      </Grid>
-    );
+        </Card>
+      );
+    };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min40vh"}>
-        <Grid container spacing={0} columns={12}>
-          <Grid size={12} className={"d-col-center"}>
-            {headSection()}
-            <Br px={20} />
-            {chartSection()}
-          </Grid>
-        </Grid>
+        {headSection()}
+        <Br px={20} />
+        {chartSection()}
       </Paper>
     );
   };

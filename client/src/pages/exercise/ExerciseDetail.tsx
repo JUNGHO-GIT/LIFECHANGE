@@ -8,7 +8,7 @@ import { axios, sync, insertComma } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, PickerTime, Count, Delete, Input, Select }from "@imports/ImportContainers";
 import { Img, Bg } from "@imports/ImportComponents";
-import { Paper, MenuItem, Grid } from "@imports/ImportMuis";
+import { Paper, MenuItem, Grid, Card } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseDetail = () => {
@@ -25,7 +25,7 @@ export const ExerciseDetail = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [LOCKED, setLOCKED] = useState<string>("unlocked");
+  const [LOCK, setLOCK] = useState<string>("Y");
   const [OBJECT, setOBJECT] = useState<any>(Exercise);
   const [EXIST, setEXIST] = useState<any>({
     day: [""],
@@ -116,7 +116,7 @@ export const ExerciseDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
-    if (LOCKED === "locked") {
+    if (LOCK === "locked") {
       setLOADING(false);
       return;
     }
@@ -360,8 +360,8 @@ export const ExerciseDetail = () => {
           <Count
             COUNT={COUNT}
             setCOUNT={setCOUNT}
-            LOCKED={LOCKED}
-            setLOCKED={setLOCKED}
+            LOCK={LOCK}
+            setLOCK={setLOCK}
             limit={10}
           />
         </Grid>
@@ -449,7 +449,7 @@ export const ExerciseDetail = () => {
     const detailSection = () => {
       const detailFragment = (item: any, i: number) => (
         <Grid container spacing={2} columns={12}
-        className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
+        className={`${LOCK === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
           <Grid size={6} className={"d-row-left"}>
             <Bg
               badgeContent={i + 1}
@@ -460,12 +460,12 @@ export const ExerciseDetail = () => {
             <Delete
               index={i}
               handleDelete={handleDelete}
-              LOCKED={LOCKED}
+              LOCK={LOCK}
             />
           </Grid>
           <Grid size={6}>
             <Select
-              locked={LOCKED}
+              locked={LOCK}
               label={translate("part")}
               value={item?.exercise_part_idx || 0}
               inputRef={REFS?.[i]?.exercise_part_idx}
@@ -501,7 +501,7 @@ export const ExerciseDetail = () => {
           </Grid>
           <Grid size={6}>
             <Select
-              locked={LOCKED}
+              locked={LOCK}
               label={translate("title")}
               value={item?.exercise_title_idx || 0}
               inputRef={REFS?.[i]?.exercise_title_idx}
@@ -535,7 +535,7 @@ export const ExerciseDetail = () => {
           </Grid>
           <Grid size={6}>
             <Input
-              locked={LOCKED}
+              locked={LOCK}
               label={translate("set")}
               value={insertComma(item?.exercise_set || "0")}
               inputRef={REFS?.[i]?.exercise_set}
@@ -578,7 +578,7 @@ export const ExerciseDetail = () => {
           </Grid>
           <Grid size={6}>
             <Input
-              locked={LOCKED}
+              locked={LOCK}
               label={translate("rep")}
               value={insertComma(item?.exercise_rep || "0")}
               inputRef={REFS?.[i]?.exercise_rep}
@@ -621,7 +621,7 @@ export const ExerciseDetail = () => {
           </Grid>
           <Grid size={6}>
             <Input
-              locked={LOCKED}
+              locked={LOCK}
               label={translate("weight")}
               value={insertComma(item?.exercise_weight || "0")}
               inputRef={REFS?.[i]?.exercise_weight}
@@ -669,7 +669,7 @@ export const ExerciseDetail = () => {
               REFS={REFS}
               ERRORS={ERRORS}
               DATE={DATE}
-              LOCKED={LOCKED}
+              LOCK={LOCK}
               extra={"exercise_cardio"}
               i={i}
             />
@@ -705,8 +705,8 @@ export const ExerciseDetail = () => {
     <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
-      LOCKED={LOCKED}
-      setLOCKED={setLOCKED}
+      LOCK={LOCK}
+      setLOCK={setLOCK}
     />
   );
 

@@ -173,4 +173,6 @@
 }
 .MuiAccordion-root {
   box-shadow: none !important;
+  margin: 0px 0px 0px 0px !important;
+  padding: 0px 0px 0px 0px !important;
 }

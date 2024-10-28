@@ -46,8 +46,12 @@ export const decimalToStr = (time: number) => {
 };
 
 // -------------------------------------------------------------------------------------------------
-export const insertComma = (str: string) => {
+export const insertComma = (str: string | number) => {
   try {
+    // 만약 number 형식이면 string 으로 변환
+    if (typeof str === "number") {
+      str = str.toString();
+    }
     // 변환이 실패하면 그대로 반환
     if (isNaN(Number(str))) {
       return str;

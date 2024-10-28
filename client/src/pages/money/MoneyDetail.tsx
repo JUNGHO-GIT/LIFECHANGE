@@ -25,7 +25,7 @@ export const MoneyDetail = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [LOCKED, setLOCKED] = useState<string>("unlocked");
+  const [LOCK, setLOCK] = useState<string>("Y");
   const [OBJECT, setOBJECT] = useState<any>(Money);
   const [EXIST, setEXIST] = useState<any>({
     day: [""],
@@ -113,7 +113,7 @@ export const MoneyDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
-    if (LOCKED === "locked") {
+    if (LOCK === "locked") {
       setLOADING(false);
       return;
     }
@@ -345,8 +345,8 @@ export const MoneyDetail = () => {
           <Count
             COUNT={COUNT}
             setCOUNT={setCOUNT}
-            LOCKED={LOCKED}
-            setLOCKED={setLOCKED}
+            LOCK={LOCK}
+            setLOCK={setLOCK}
             limit={10}
           />
         </Grid>
@@ -357,7 +357,7 @@ export const MoneyDetail = () => {
       <Grid container spacing={2} columns={12} className={"border-1 radius-1 p-20"}>
         <Grid size={12}>
           <Input
-            locked={LOCKED}
+            locked={LOCK}
             label={translate("totalIncome")}
             value={insertComma(OBJECT?.money_total_income || "0")}
             startadornment={
@@ -376,7 +376,7 @@ export const MoneyDetail = () => {
         </Grid>
         <Grid size={12}>
           <Input
-            locked={LOCKED}
+            locked={LOCK}
             label={translate("totalExpense")}
             value={insertComma(OBJECT?.money_total_expense || "0")}
             startadornment={
@@ -395,11 +395,11 @@ export const MoneyDetail = () => {
         </Grid>
       </Grid>
     );
-    // 7-3. card
+    // 7-3. detail
     const detailSection = () => {
       const detailFragment = (item: any, i: number) => (
         <Grid container spacing={2} columns={12}
-        className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
+        className={`${LOCK === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
           <Grid size={6} className={"d-row-left"}>
             <Bg
               badgeContent={i + 1}
@@ -410,12 +410,12 @@ export const MoneyDetail = () => {
             <Delete
               index={i}
               handleDelete={handleDelete}
-              LOCKED={LOCKED}
+              LOCK={LOCK}
             />
           </Grid>
           <Grid size={6}>
             <Select
-              locked={LOCKED}
+              locked={LOCK}
               label={translate("part")}
               value={item?.money_part_idx || 0}
               inputRef={REFS?.[i]?.money_part_idx}
@@ -451,7 +451,7 @@ export const MoneyDetail = () => {
           </Grid>
           <Grid size={6}>
             <Select
-              locked={LOCKED}
+              locked={LOCK}
               label={translate("title")}
               value={item?.money_title_idx || 0}
               inputRef={REFS?.[i]?.money_title_idx}
@@ -485,7 +485,7 @@ export const MoneyDetail = () => {
           </Grid>
           <Grid size={12}>
             <Input
-              locked={LOCKED}
+              locked={LOCK}
               label={translate("amount")}
               value={insertComma(item?.money_amount || "0")}
               inputRef={REFS?.[i]?.money_amount}
@@ -530,7 +530,7 @@ export const MoneyDetail = () => {
             <Memo
               OBJECT={OBJECT}
               setOBJECT={setOBJECT}
-              LOCKED={LOCKED}
+              LOCK={LOCK}
               extra={"money_content"}
               i={i}
             />
@@ -543,7 +543,7 @@ export const MoneyDetail = () => {
               size={"small"}
               className={"p-0 ms-5"}
               checked={item?.money_include === "Y"}
-              disabled={LOCKED === "locked"}
+              disabled={LOCK === "locked"}
               onChange={(e: any) => {
                 setOBJECT((prev: any) => ({
                   ...prev,
@@ -588,8 +588,8 @@ export const MoneyDetail = () => {
     <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
-      LOCKED={LOCKED}
-      setLOCKED={setLOCKED}
+      LOCK={LOCK}
+      setLOCK={setLOCK}
     />
   );
 

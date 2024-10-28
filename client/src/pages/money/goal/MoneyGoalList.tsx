@@ -7,7 +7,8 @@ import { MoneyGoal } from "@imports/ImportSchemas";
 import { axios, insertComma } from "@imports/ImportUtils";
 import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
 import { Div, Img, Hr, Icons } from "@imports/ImportComponents";
-import { Paper, Grid, Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
+import { Paper, Grid, Card } from "@imports/ImportMuis";
+import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const MoneyGoalList = () => {
@@ -131,9 +132,15 @@ export const MoneyGoalList = () => {
   const listNode = () => {
     const listSection = () => {
       const listFragment = (item: any, i: number) => (
-        <Grid container spacing={0} columns={12} className={"border-1 radius-1"}>
+        <Grid container spacing={0} columns={12} className={"border-1 radius-1"} key={`list-${i}`}>
           <Grid size={12} className={"p-2"}>
-            <Accordion expanded={isExpanded[i].expanded}>
+            <Accordion
+              expanded={isExpanded[i].expanded}
+              TransitionProps={{
+                mountOnEnter: true,
+                unmountOnExit: true,
+              }}
+            >
               <AccordionSummary
                 className={"me-n10"}
                 expandIcon={
@@ -340,15 +347,15 @@ export const MoneyGoalList = () => {
       );
       return (
         <Grid container spacing={0} columns={12}>
-          {OBJECT?.map((item: any, i: number) => (
-            <Grid size={12} key={`list-${i}`}>
-              {COUNT.totalCnt === 0 ? (
-                <Empty DATE={DATE} extra={"money"} />
-              ) : (
-                listFragment(item, i)
-              )}
-            </Grid>
-          ))}
+          {COUNT.totalCnt === 0 ? (
+            <Empty DATE={DATE} extra={"money"} />
+          ) : (
+            OBJECT?.map((item: any, i: number) => (
+              <Grid size={12} key={`list-${i}`}>
+                {listFragment(item, i)}
+              </Grid>
+            ))
+          )}
         </Grid>
       );
     };

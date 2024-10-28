@@ -8,7 +8,7 @@ import { axios, sync, insertComma } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, Count, Delete, Input } from "@imports/ImportContainers";
 import { Img, Bg } from "@imports/ImportComponents";
-import { Paper, Grid } from "@imports/ImportMuis";
+import { Paper, Grid, Card } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const MoneyGoalDetail = () => {
@@ -24,7 +24,7 @@ export const MoneyGoalDetail = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [LOCKED, setLOCKED] = useState<string>("unlocked");
+  const [LOCK, setLOCK] = useState<string>("Y");
   const [OBJECT, setOBJECT] = useState<any>(MoneyGoal);
   const [EXIST, setEXIST] = useState<any>({
     day: [""],
@@ -273,8 +273,8 @@ export const MoneyGoalDetail = () => {
           <Count
             COUNT={COUNT}
             setCOUNT={setCOUNT}
-            LOCKED={LOCKED}
-            setLOCKED={setLOCKED}
+            LOCK={LOCK}
+            setLOCK={setLOCK}
             limit={1}
           />
         </Grid>
@@ -284,7 +284,7 @@ export const MoneyGoalDetail = () => {
     const detailSection = () => {
       const detailFragment = (item: any, i: number) => (
         <Grid container spacing={2} columns={12}
-        className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
+        className={`${LOCK === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
           <Grid size={6} className={"d-row-left"}>
             <Bg
               badgeContent={i + 1}
@@ -295,12 +295,12 @@ export const MoneyGoalDetail = () => {
             <Delete
               index={i}
               handleDelete={handleDelete}
-              LOCKED={LOCKED}
+              LOCK={LOCK}
             />
           </Grid>
           <Grid size={12}>
             <Input
-              locked={LOCKED}
+              locked={LOCK}
               value={insertComma(item?.money_goal_income || "0")}
               inputRef={REFS?.[i]?.money_goal_income}
               error={ERRORS?.[i]?.money_goal_income}
@@ -344,7 +344,7 @@ export const MoneyGoalDetail = () => {
           </Grid>
           <Grid size={12}>
             <Input
-              locked={LOCKED}
+              locked={LOCK}
               value={insertComma(item?.money_goal_expense || "0")}
               inputRef={REFS?.[i]?.money_goal_expense}
               error={ERRORS?.[i]?.money_goal_expense}
@@ -389,11 +389,9 @@ export const MoneyGoalDetail = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
-          <Grid size={12} key={`detail-${0}`}>
-            {COUNT?.newSectionCnt > 0 && detailFragment(OBJECT, 0)}
-          </Grid>
-        </Grid>
+        <Card className={"d-col-center"}>
+          {COUNT?.newSectionCnt > 0 && detailFragment(OBJECT, 0)}
+        </Card>
       );
     };
     // 7-10. return
@@ -412,8 +410,8 @@ export const MoneyGoalDetail = () => {
     <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
-      LOCKED={LOCKED}
-      setLOCKED={setLOCKED}
+      LOCK={LOCK}
+      setLOCK={setLOCK}
     />
   );
 

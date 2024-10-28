@@ -14,14 +14,14 @@ declare type PickerTimeProps = {
   REFS: any;
   ERRORS: any;
   DATE: any;
-  LOCKED: string;
+  LOCK: string;
   extra: string;
   i: number;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const PickerTime = (
-  { OBJECT, setOBJECT, REFS, ERRORS, DATE, LOCKED, extra, i }: PickerTimeProps
+  { OBJECT, setOBJECT, REFS, ERRORS, DATE, LOCK, extra, i }: PickerTimeProps
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
@@ -137,7 +137,7 @@ export const PickerTime = (
             inputRef={REFS?.[i]?.[`${extra}`]}
             error={ERRORS?.[i]?.[`${extra}`]}
             readOnly={true}
-            locked={LOCKED}
+            locked={LOCK}
             startadornment={
               <Img
                 max={15}
@@ -151,7 +151,7 @@ export const PickerTime = (
               translate("hm")
             }
             onClick={(e: any) => {
-              LOCKED === "unlocked" && popTrigger.openPopup(e.currentTarget)
+              LOCK === "unlocked" && popTrigger.openPopup(e.currentTarget)
             }}
           />
         )}
@@ -200,7 +200,7 @@ export const PickerTime = (
             inputRef={REFS?.[i]?.[`${extra}`]}
             error={ERRORS?.[i]?.[`${extra}`]}
             readOnly={true}
-            locked={LOCKED}
+            locked={LOCK}
             startadornment={
               <Img
                 max={15}
@@ -215,7 +215,7 @@ export const PickerTime = (
             }
             onClick={(e: any) => {
               extra !== "sleep_sleepTime" && (
-                LOCKED === "unlocked" && popTrigger.openPopup(e.currentTarget)
+                LOCK === "unlocked" && popTrigger.openPopup(e.currentTarget)
               )
             }}
           />

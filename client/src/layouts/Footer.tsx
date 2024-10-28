@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue } from "@imports/ImportHooks";
-import { Paper, Grid } from "@imports/ImportMuis";
+import { Paper, Grid, Card } from "@imports/ImportMuis";
 import { Buttons } from "./footer/Buttons";
 import { Dummy } from "./footer/Dummy";
 import { ListFilter } from "./footer/ListFilter";
@@ -96,15 +96,11 @@ export const Footer = (
     );
     // 5. return
     return (
-      <Paper className={styleClass}>
-        <Grid container spacing={2} columns={12}>
-          <Grid size={12} className={"d-center fadeIn"}>
-            {typeName === "btn" && btnSection()}
-            {typeName === "dummy" && dummySection()}
-            {typeName === "listFilter" && listFilterSection()}
-            {typeName === "findFilter" && findFilterSection()}
-          </Grid>
-        </Grid>
+      <Paper className={`${styleClass} fadeIn`}>
+        {typeName === "btn" && btnSection()}
+        {typeName === "dummy" && dummySection()}
+        {typeName === "listFilter" && listFilterSection()}
+        {typeName === "findFilter" && findFilterSection()}
       </Paper>
     );
   };

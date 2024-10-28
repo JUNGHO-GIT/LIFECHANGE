@@ -8,7 +8,7 @@ import { axios, sync } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, PickerTime, Count, Delete } from "@imports/ImportContainers";
 import { Bg } from "@imports/ImportComponents";
-import { Paper, Grid } from "@imports/ImportMuis";
+import { Paper, Grid, Card } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const SleepDetail = () => {
@@ -24,7 +24,7 @@ export const SleepDetail = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [LOCKED, setLOCKED] = useState<string>("unlocked");
+  const [LOCK, setLOCK] = useState<string>("Y");
   const [OBJECT, setOBJECT] = useState<any>(Sleep);
   const [EXIST, setEXIST] = useState<any>({
     day: [""],
@@ -115,7 +115,7 @@ export const SleepDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
-    if (LOCKED === "locked") {
+    if (LOCK === "locked") {
       setLOADING(false);
       return;
     }
@@ -316,18 +316,18 @@ export const SleepDetail = () => {
           <Count
             COUNT={COUNT}
             setCOUNT={setCOUNT}
-            LOCKED={LOCKED}
-            setLOCKED={setLOCKED}
+            LOCK={LOCK}
+            setLOCK={setLOCK}
             limit={1}
           />
         </Grid>
       </Grid>
     );
-    // 7-3. card
+    // 7-3. detail
     const detailSection = () => {
       const detailFragment = (_item: any, i: number) => (
         <Grid container spacing={2} columns={12}
-        className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
+        className={`${LOCK === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
           <Grid size={6} className={"d-row-left"}>
             <Bg
               badgeContent={i + 1}
@@ -338,7 +338,7 @@ export const SleepDetail = () => {
             <Delete
               index={i}
               handleDelete={handleDelete}
-              LOCKED={LOCKED}
+              LOCK={LOCK}
             />
           </Grid>
           <Grid size={12}>
@@ -348,7 +348,7 @@ export const SleepDetail = () => {
               REFS={REFS}
               ERRORS={ERRORS}
               DATE={DATE}
-              LOCKED={LOCKED}
+              LOCK={LOCK}
               extra={"sleep_bedTime"}
               i={i}
             />
@@ -360,7 +360,7 @@ export const SleepDetail = () => {
               REFS={REFS}
               ERRORS={ERRORS}
               DATE={DATE}
-              LOCKED={LOCKED}
+              LOCK={LOCK}
               extra={"sleep_wakeTime"}
               i={i}
             />
@@ -372,7 +372,7 @@ export const SleepDetail = () => {
               REFS={REFS}
               ERRORS={ERRORS}
               DATE={DATE}
-              LOCKED={LOCKED}
+              LOCK={LOCK}
               extra={"sleep_sleepTime"}
               i={i}
             />
@@ -392,12 +392,8 @@ export const SleepDetail = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        <Grid container spacing={0} columns={12}>
-          <Grid size={12} className={"d-col-center"}>
-            {dateCountSection()}
-            {LOADING ? <Loading /> : detailSection()}
-          </Grid>
-        </Grid>
+        {dateCountSection()}
+        {LOADING ? <Loading /> : detailSection()}
       </Paper>
     );
   };
@@ -407,8 +403,8 @@ export const SleepDetail = () => {
     <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
-      LOCKED={LOCKED}
-      setLOCKED={setLOCKED}
+      LOCK={LOCK}
+      setLOCK={setLOCK}
     />
   );
 

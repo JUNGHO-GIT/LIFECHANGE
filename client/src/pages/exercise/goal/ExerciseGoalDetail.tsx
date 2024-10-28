@@ -8,7 +8,7 @@ import { axios, sync, insertComma } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, PickerTime, Count, Delete, Input } from "@imports/ImportContainers";
 import { Img, Bg } from "@imports/ImportComponents";
-import { Paper, Grid } from "@imports/ImportMuis";
+import { Paper, Grid, Card } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseGoalDetail = () => {
@@ -24,7 +24,7 @@ export const ExerciseGoalDetail = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [LOCKED, setLOCKED] = useState<string>("unlocked");
+  const [LOCK, setLOCK] = useState<string>("Y");
   const [OBJECT, setOBJECT] = useState<any>(ExerciseGoal);
   const [EXIST, setEXIST] = useState<any>({
     day: [""],
@@ -278,8 +278,8 @@ export const ExerciseGoalDetail = () => {
           <Count
             COUNT={COUNT}
             setCOUNT={setCOUNT}
-            LOCKED={LOCKED}
-            setLOCKED={setLOCKED}
+            LOCK={LOCK}
+            setLOCK={setLOCK}
             limit={1}
           />
         </Grid>
@@ -289,7 +289,7 @@ export const ExerciseGoalDetail = () => {
     const detailSection = () => {
       const detailFragment = (item: any, i: number) => (
         <Grid container spacing={2} columns={12}
-        className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
+        className={`${LOCK === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
           <Grid size={6} className={"d-row-left"}>
             <Bg
               badgeContent={i + 1}
@@ -300,12 +300,12 @@ export const ExerciseGoalDetail = () => {
             <Delete
               index={i}
               handleDelete={handleDelete}
-              LOCKED={LOCKED}
+              LOCK={LOCK}
             />
           </Grid>
           <Grid size={12}>
             <Input
-              locked={LOCKED}
+              locked={LOCK}
               value={insertComma(item?.exercise_goal_count || "0")}
               inputRef={REFS?.[i]?.exercise_goal_count}
               error={ERRORS?.[i]?.exercise_goal_count}
@@ -349,7 +349,7 @@ export const ExerciseGoalDetail = () => {
           </Grid>
           <Grid size={12}>
             <Input
-              locked={LOCKED}
+              locked={LOCK}
               value={insertComma(item?.exercise_goal_volume || "0")}
               inputRef={REFS?.[i]?.exercise_goal_volume}
               error={ERRORS?.[i]?.exercise_goal_volume}
@@ -398,14 +398,14 @@ export const ExerciseGoalDetail = () => {
               REFS={REFS}
               ERRORS={ERRORS}
               DATE={DATE}
-              LOCKED={LOCKED}
+              LOCK={LOCK}
               extra={"exercise_goal_cardio"}
               i={i}
             />
           </Grid>
           <Grid size={12}>
             <Input
-              locked={LOCKED}
+              locked={LOCK}
               label={translate("goalScale")}
               value={insertComma(item?.exercise_goal_scale || "0")}
               inputRef={REFS?.[i]?.exercise_goal_scale}
@@ -444,22 +444,16 @@ export const ExerciseGoalDetail = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
-          <Grid size={12} key={`detail-${0}`}>
-            {COUNT?.newSectionCnt > 0 && detailFragment(OBJECT, 0)}
-          </Grid>
-        </Grid>
+        <Card className={"d-col-center"}>
+          {COUNT?.newSectionCnt > 0 && detailFragment(OBJECT, 0)}
+        </Card>
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        <Grid container spacing={0} columns={12}>
-          <Grid size={12} className={"d-col-center"}>
-            {dateCountSection()}
-            {LOADING ? <Loading /> : detailSection()}
-          </Grid>
-        </Grid>
+        {dateCountSection()}
+        {LOADING ? <Loading /> : detailSection()}
       </Paper>
     );
   };
@@ -469,8 +463,8 @@ export const ExerciseGoalDetail = () => {
     <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
-      LOCKED={LOCKED}
-      setLOCKED={setLOCKED}
+      LOCK={LOCK}
+      setLOCK={setLOCK}
     />
   );
 

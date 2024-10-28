@@ -8,7 +8,7 @@ import { axios, sync } from "@imports/ImportUtils";
 import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
 import { PickerDay, PickerTime, Count, Delete } from "@imports/ImportContainers";
 import { Bg } from "@imports/ImportComponents";
-import { Paper, Grid } from "@imports/ImportMuis";
+import { Paper, Grid, Card } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const SleepGoalDetail = () => {
@@ -24,7 +24,7 @@ export const SleepGoalDetail = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [LOCKED, setLOCKED] = useState<string>("unlocked");
+  const [LOCK, setLOCK] = useState<string>("Y");
   const [OBJECT, setOBJECT] = useState<any>(SleepGoal);
   const [EXIST, setEXIST] = useState<any>({
     day: [""],
@@ -115,7 +115,7 @@ export const SleepGoalDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
-    if (LOCKED === "locked") {
+    if (LOCK === "locked") {
       setLOADING(false);
       return;
     }
@@ -281,8 +281,8 @@ export const SleepGoalDetail = () => {
           <Count
             COUNT={COUNT}
             setCOUNT={setCOUNT}
-            LOCKED={LOCKED}
-            setLOCKED={setLOCKED}
+            LOCK={LOCK}
+            setLOCK={setLOCK}
             limit={1}
           />
         </Grid>
@@ -292,7 +292,7 @@ export const SleepGoalDetail = () => {
     const detailSection = () => {
       const detailFragment = (_item: any, i: number) => (
         <Grid container spacing={2} columns={12}
-        className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
+        className={`${LOCK === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
           <Grid size={6} className={"d-row-left"}>
             <Bg
               badgeContent={i + 1}
@@ -303,7 +303,7 @@ export const SleepGoalDetail = () => {
             <Delete
               index={i}
               handleDelete={handleDelete}
-              LOCKED={LOCKED}
+              LOCK={LOCK}
             />
           </Grid>
           <Grid size={12}>
@@ -313,7 +313,7 @@ export const SleepGoalDetail = () => {
               REFS={REFS}
               ERRORS={ERRORS}
               DATE={DATE}
-              LOCKED={LOCKED}
+              LOCK={LOCK}
               extra={"sleep_goal_bedTime"}
               i={i}
             />
@@ -325,7 +325,7 @@ export const SleepGoalDetail = () => {
               REFS={REFS}
               ERRORS={ERRORS}
               DATE={DATE}
-              LOCKED={LOCKED}
+              LOCK={LOCK}
               extra={"sleep_goal_wakeTime"}
               i={i}
             />
@@ -337,7 +337,7 @@ export const SleepGoalDetail = () => {
               REFS={REFS}
               ERRORS={ERRORS}
               DATE={DATE}
-              LOCKED={LOCKED}
+              LOCK={LOCK}
               extra={"sleep_goal_sleepTime"}
               i={i}
             />
@@ -345,22 +345,16 @@ export const SleepGoalDetail = () => {
         </Grid>
       );
       return (
-        <Grid container spacing={0} columns={12}>
-          <Grid size={12} key={`detail-${0}`}>
-            {COUNT?.newSectionCnt > 0 && detailFragment(OBJECT, 0)}
-          </Grid>
-        </Grid>
+        <Card className={"d-col-center"}>
+          {COUNT?.newSectionCnt > 0 && detailFragment(OBJECT, 0)}
+        </Card>
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        <Grid container spacing={0} columns={12}>
-          <Grid size={12} className={"d-col-center"}>
-            {dateCountSection()}
-            {LOADING ? <Loading /> : detailSection()}
-          </Grid>
-        </Grid>
+        {dateCountSection()}
+        {LOADING ? <Loading /> : detailSection()}
       </Paper>
     );
   };
@@ -370,8 +364,8 @@ export const SleepGoalDetail = () => {
     <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
-      LOCKED={LOCKED}
-      setLOCKED={setLOCKED}
+      LOCK={LOCK}
+      setLOCK={setLOCK}
     />
   );
 

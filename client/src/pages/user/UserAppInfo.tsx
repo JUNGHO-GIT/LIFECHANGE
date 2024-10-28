@@ -7,7 +7,7 @@ import { AppInfo } from "@imports/ImportSchemas";
 import { axios } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Img, Br } from "@imports/ImportComponents";
-import { Paper, Grid } from "@imports/ImportMuis";
+import { Paper, Grid, Card } from "@imports/ImportMuis";
 import { TableContainer, Table, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
