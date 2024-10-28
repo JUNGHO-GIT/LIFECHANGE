@@ -157,7 +157,6 @@ export const create = async (
     {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      sleep_dummy: "N",
       sleep_dateType: dateType_param,
       sleep_dateStart: dateStart_param,
       sleep_dateEnd: dateEnd_param,

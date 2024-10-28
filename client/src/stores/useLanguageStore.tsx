@@ -411,22 +411,6 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "기본값",
         en: "Default"
       },
-      flowDummy: {
-        ko: "추가",
-        en: "Insert"
-      },
-      flowDummySave: {
-        ko: "추가",
-        en: "Insert"
-      },
-      flowDummyDelete: {
-        ko: "삭제",
-        en: "Delete"
-      },
-      flowDummyDeleteAll: {
-        ko: "전체삭제",
-        en: "Delete All"
-      },
       flowDelete: {
         ko: "삭제",
         en: "Delete"

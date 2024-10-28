@@ -16,11 +16,6 @@ const schema = new mongoose.Schema({
     default: 0,
     unique : true
   },
-  sleep_dummy: {
-    type: String,
-    default: "N",
-    required: false
-  },
 
   sleep_dateType: {
     type: String,

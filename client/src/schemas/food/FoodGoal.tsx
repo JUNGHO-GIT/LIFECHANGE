@@ -6,7 +6,6 @@ export const FoodGoal: Record<string, any> = {
 
   // goal
   food_goal_number: 0,
-  food_goal_dummy: "N",
   food_goal_dateType: "",
   food_goal_dateStart: "0000-00-00",
   food_goal_dateEnd: "0000-00-00",

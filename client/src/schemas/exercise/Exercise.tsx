@@ -6,7 +6,6 @@ export const Exercise: Record<string, any> = {
 
   // real
   exercise_number: 0,
-  exercise_dummy: "N",
   exercise_dateType: "",
   exercise_dateStart: "0000-00-00",
   exercise_dateEnd: "0000-00-00",

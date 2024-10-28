@@ -15,11 +15,6 @@ const schema = new mongoose.Schema({
     default: 0,
     unique : true
   },
-  food_dummy: {
-    type: String,
-    default: "N",
-    required: false
-  },
 
   food_dateType: {
     type: String,

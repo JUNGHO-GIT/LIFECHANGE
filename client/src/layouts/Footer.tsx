@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommonValue } from "@imports/ImportHooks";
-import { Paper, Grid, Card } from "@imports/ImportMuis";
+import { Paper } from "@imports/ImportMuis";
+
 import { Buttons } from "./footer/Buttons";
-import { Dummy } from "./footer/Dummy";
 import { ListFilter } from "./footer/ListFilter";
 import { FindFilter } from "./footer/FindFilter";
 
@@ -40,10 +40,6 @@ export const Footer = (
       setTypeName("btn");
       setStyleClass(`${commonStr} bottom-0vh`);
     }
-    else if (PATH.includes("/user/dummy")) {
-      setTypeName("dummy");
-      setStyleClass(`${commonStr} bottom-0vh`);
-    }
     else if (PATH.includes("/food/find/list") || PATH.includes("/favorite/list")) {
       setTypeName("findFilter");
       setStyleClass(`${commonStr} bottom-8vh`);
@@ -71,14 +67,6 @@ export const Footer = (
         flow={flow}
       />
     );
-    // 2. dummy
-    const dummySection = () => (
-      <Dummy
-        state={state}
-        setState={setState}
-        flow={flow}
-      />
-    );
     // 3. listFilter
     const listFilterSection = () => (
       <ListFilter
@@ -98,7 +86,6 @@ export const Footer = (
     return (
       <Paper className={`${styleClass} fadeIn`}>
         {typeName === "btn" && btnSection()}
-        {typeName === "dummy" && dummySection()}
         {typeName === "listFilter" && listFilterSection()}
         {typeName === "findFilter" && findFilterSection()}
       </Paper>

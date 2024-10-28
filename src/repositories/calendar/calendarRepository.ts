@@ -145,7 +145,6 @@ export const create = async (
     {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      calendar_dummy: "N",
       calendar_dateType: dateType_param,
       calendar_dateStart: dateStart_param,
       calendar_dateEnd: dateEnd_param,

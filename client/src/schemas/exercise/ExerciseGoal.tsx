@@ -6,7 +6,6 @@ export const ExerciseGoal: Record<string, any> = {
 
   // goal
   exercise_goal_number: 0,
-  exercise_goal_dummy: "N",
   exercise_goal_dateType: "",
   exercise_goal_dateStart: "0000-00-00",
   exercise_goal_dateEnd: "0000-00-00",

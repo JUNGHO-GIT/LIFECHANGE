@@ -6,7 +6,6 @@ export const Food: Record<string, any> = {
 
   // real
   food_number: 0,
-  food_dummy: "N",
   food_dateType: "",
   food_dateStart: "0000-00-00",
   food_dateEnd: "0000-00-00",

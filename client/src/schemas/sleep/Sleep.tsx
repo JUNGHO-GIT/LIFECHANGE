@@ -6,7 +6,6 @@ export const Sleep: any = {
 
   // real
   sleep_number: 0,
-  sleep_dummy: "N",
   sleep_dateType: "",
   sleep_dateStart: "0000-00-00",
   sleep_dateEnd: "0000-00-00",

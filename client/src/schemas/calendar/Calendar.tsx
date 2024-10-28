@@ -6,7 +6,6 @@ export const Calendar: any = {
 
   // real
   calendar_number: 0,
-  calendar_dummy: "N",
   calendar_dateType: "",
   calendar_dateStart: "0000-00-00",
   calendar_dateEnd: "0000-00-00",

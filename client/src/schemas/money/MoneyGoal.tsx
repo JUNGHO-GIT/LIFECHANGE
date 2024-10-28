@@ -6,7 +6,6 @@ export const MoneyGoal: Record<string, any> = {
 
   // goal
   money_goal_number: 0,
-  money_goal_dummy: "N",
   money_goal_dateType: "",
   money_goal_dateStart: "0000-00-00",
   money_goal_dateEnd: "0000-00-00",

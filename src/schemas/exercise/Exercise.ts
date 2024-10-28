@@ -15,11 +15,6 @@ const schema = new mongoose.Schema({
     default: 0,
     unique : true
   },
-  exercise_dummy: {
-    type: String,
-    default: "N",
-    required: false
-  },
 
   exercise_dateType : {
     type: String,

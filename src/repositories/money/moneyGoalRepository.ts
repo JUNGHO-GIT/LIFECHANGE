@@ -190,7 +190,6 @@ export const create = async (
     {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      money_goal_dummy: "N",
       money_goal_dateType: dateType_param,
       money_goal_dateStart: dateStart_param,
       money_goal_dateEnd: dateEnd_param,
