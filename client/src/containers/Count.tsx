@@ -10,14 +10,14 @@ import { Grid } from "@imports/ImportMuis";
 declare type CountProps = {
   COUNT: any;
   setCOUNT: any;
-  LOCK: string;
-  setLOCK: any
+  LOCKED: string;
+  setLOCKED: any
   limit: number;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const Count = (
-  { COUNT, setCOUNT, LOCK, setLOCK, limit }: CountProps
+  { COUNT, setCOUNT, LOCKED, setLOCKED, limit }: CountProps
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
@@ -31,19 +31,19 @@ export const Count = (
     const lockSection = () => (
       <Input
         label={translate("itemLock")}
-        value={translate(LOCK) || ""}
+        value={translate(LOCKED) || ""}
         inputclass={"fs-0-8rem pointer"}
         adornmentclass={"ms-n10"}
         onClick={() => {
-          if (LOCK === "locked") {
-            setLOCK("unlocked");
+          if (LOCKED === "locked") {
+            setLOCKED("unlocked");
           }
           else {
-            setLOCK("locked");
+            setLOCKED("locked");
           }
         }}
         startadornment={
-          LOCK === "locked" ? (
+          LOCKED === "locked" ? (
             <Icons
               key={"Lock"}
               name={"Lock"}
@@ -65,7 +65,7 @@ export const Count = (
         label={translate("item")}
         value={COUNT.newSectionCnt}
         error={COUNT.newSectionCnt <= 0}
-        locked={LOCK}
+        locked={LOCKED}
         inputclass={"pointer"}
         startadornment={
           <Img
@@ -83,9 +83,9 @@ export const Count = (
                 key={"Minus"}
                 name={"Minus"}
                 className={"w-16 h-16"}
-                locked={LOCK}
+                locked={LOCKED}
                 onClick={() => {
-                  if (LOCK === "locked") {
+                  if (LOCKED === "locked") {
                     return;
                   }
                   if (PATH.includes("/food/find/list")) {
@@ -117,9 +117,9 @@ export const Count = (
                 key={"Plus"}
                 name={"Plus"}
                 className={"w-16 h-16"}
-                locked={LOCK}
+                locked={LOCKED}
                 onClick={() => {
-                  if (LOCK === "locked") {
+                  if (LOCKED === "locked") {
                     return;
                   }
                   if (PATH.includes("/food/find/list")) {

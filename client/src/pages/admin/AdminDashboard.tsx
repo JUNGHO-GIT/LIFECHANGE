@@ -6,7 +6,7 @@ import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
 import { axios } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Input }from "@imports/ImportContainers";
-import { Div } from "@imports/ImportComponents";
+import { Div, Hr } from "@imports/ImportComponents";
 import { Paper, Grid, Card } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -61,17 +61,36 @@ export const AdminDashboard = () => {
       </Grid>
     );
     // 7-2. detail
-    const detailSection = () => (
-      <Grid container={true} spacing={2} className={"border-1 radius-1 p-20"}>
-        <Grid size={12}>
-          <Input
-            readOnly={true}
-            label={translate("userCount")}
-            value={`${OBJECT}`}
-          />
+    const detailSection = () => {
+      const detailFragment = () => (
+        <Grid container={true} spacing={2} className={"border-1 radius-1 p-20"}>
+          <Grid container={true} spacing={2}>
+            <Grid size={12}>
+              <Div className={"fs-1-5rem fw-600"}>
+                {`${DATE.dateStart}`}
+              </Div>
+            </Grid>
+          </Grid>
+
+          <Hr px={30} />
+
+          <Grid container={true} spacing={2}>
+            <Grid size={12}>
+              <Input
+                readOnly={true}
+                label={translate("userCount")}
+                value={`${OBJECT}`}
+              />
+            </Grid>
+          </Grid>
         </Grid>
-      </Grid>
-    );
+      );
+      return (
+        <Card className={"d-col-center"}>
+          {detailFragment()}
+        </Card>
+      );
+    };
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>

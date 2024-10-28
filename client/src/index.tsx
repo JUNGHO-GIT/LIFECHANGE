@@ -69,7 +69,7 @@ import {
 
 // user
 import {
-  UserAppInfo, UserAppSetting, UserCategory, UserDelete, UserDetail, UserDummy, UserLogin, UserResetPw, UserSignup,
+  UserAppInfo, UserAppSetting, UserCategory, UserDelete, UserDetail, UserLogin, UserResetPw, UserSignup,
 } from "@imports/ImportPages";
 
 // -------------------------------------------------------------------------------------------------
@@ -153,7 +153,6 @@ const User = () => (
     <Route path="/detail" element={<UserDetail />} />
     <Route path="/delete" element={<UserDelete />} />
     <Route path="/category" element={<UserCategory />} />
-    <Route path="/dummy" element={<UserDummy />} />
   </Routes>
 );
 
@@ -170,16 +169,13 @@ const App = () => {
   const noneHeader = (
     location.pathname.includes("/user/login") ||
     location.pathname.includes("/user/signup") ||
-    location.pathname.includes("/user/resetPw") ||
-    location.pathname.indexOf("/auth") > -1
+    location.pathname.includes("/user/resetPw")
   );
   const noneTop = (
-    location.pathname.indexOf("/user") > -1 ||
-    location.pathname.indexOf("/auth") > -1
+    location.pathname.includes("/user")
   );
   const noneBottom = (
-    location.pathname.indexOf("/user") > -1 ||
-    location.pathname.indexOf("/auth") > -1
+    location.pathname.includes("/user")
   );
 
   return (

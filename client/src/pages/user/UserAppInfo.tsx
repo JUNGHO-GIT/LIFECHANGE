@@ -118,23 +118,17 @@ export const UserAppInfo = () => {
         </Grid>
       );
       return (
-        <Grid container={true} spacing={0}>
-          <Grid size={12} key={`detail-${0}`}>
-            {detailFragment(OBJECT)}
-          </Grid>
-        </Grid>
+        <Card className={"d-col-center"}>
+          {detailFragment(OBJECT)}
+        </Card>
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper d-center border-1 radius-1 h-min90vh"}>
-        <Grid container={true} spacing={0}>
-          <Grid size={12} className={"d-col-center"}>
-            {imageSection()}
-            <Br px={40} />
-            {LOADING ? <Loading /> : detailSection()}
-          </Grid>
-        </Grid>
+        {imageSection()}
+        <Br px={40} />
+        {LOADING ? <Loading /> : detailSection()}
       </Paper>
     );
   };

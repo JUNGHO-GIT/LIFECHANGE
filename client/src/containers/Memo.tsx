@@ -10,14 +10,14 @@ import { TextArea, Grid } from "@imports/ImportMuis";
 declare type MemoProps = {
   OBJECT: any;
   setOBJECT: any;
-  LOCK: string;
+  LOCKED: string;
   extra: string;
   i: number;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const Memo = (
-  { OBJECT, setOBJECT, LOCK, extra, i }: MemoProps
+  { OBJECT, setOBJECT, LOCKED, extra, i }: MemoProps
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ export const Memo = (
           className={"pointer"}
           value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
           readOnly={true}
-          locked={LOCK}
+          locked={LOCKED}
           startadornment={
             <Img
               max={15}

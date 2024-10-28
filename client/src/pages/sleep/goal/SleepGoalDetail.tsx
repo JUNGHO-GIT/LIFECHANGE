@@ -24,7 +24,7 @@ export const SleepGoalDetail = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [LOCK, setLOCK] = useState<string>("unlocked");
+  const [LOCKED, setLOCKED] = useState<string>("unlocked");
   const [OBJECT, setOBJECT] = useState<any>(SleepGoal);
   const [EXIST, setEXIST] = useState<any>({
     day: [""],
@@ -115,7 +115,7 @@ export const SleepGoalDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
-    if (LOCK === "locked") {
+    if (LOCKED === "locked") {
       setLOADING(false);
       return;
     }
@@ -281,8 +281,8 @@ export const SleepGoalDetail = () => {
           <Count
             COUNT={COUNT}
             setCOUNT={setCOUNT}
-            LOCK={LOCK}
-            setLOCK={setLOCK}
+            LOCKED={LOCKED}
+            setLOCKED={setLOCKED}
             limit={1}
           />
         </Grid>
@@ -291,56 +291,75 @@ export const SleepGoalDetail = () => {
     // 7-3. detail
     const detailSection = () => {
       const detailFragment = (_item: any, i: number) => (
-        <Grid container spacing={2} className={`${LOCK === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={`detail-${i}`}>
-          <Grid size={6} className={"d-row-left"}>
-            <Bg
-              badgeContent={i + 1}
-              bgcolor={"#1976d2"}
-            />
+        <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={`detail-${i}`}>
+          {/** row 1 **/}
+          <Grid container={true} spacing={2}>
+            <Grid size={6} className={"d-row-left"}>
+              <Bg
+                badgeContent={i + 1}
+                bgcolor={"#1976d2"}
+              />
+            </Grid>
+            <Grid size={6} className={"d-row-right"}>
+              <Delete
+                index={i}
+                handleDelete={handleDelete}
+                LOCKED={LOCKED}
+              />
+            </Grid>
           </Grid>
-          <Grid size={6} className={"d-row-right"}>
-            <Delete
-              index={i}
-              handleDelete={handleDelete}
-              LOCK={LOCK}
-            />
+          {/** /.row 1 **/}
+
+          {/** row 2 **/}
+          <Grid container={true} spacing={2}>
+            <Grid size={12}>
+              <PickerTime
+                OBJECT={OBJECT}
+                setOBJECT={setOBJECT}
+                REFS={REFS}
+                ERRORS={ERRORS}
+                DATE={DATE}
+                LOCKED={LOCKED}
+                extra={"sleep_goal_bedTime"}
+                i={i}
+              />
+            </Grid>
           </Grid>
-          <Grid size={12}>
-            <PickerTime
-              OBJECT={OBJECT}
-              setOBJECT={setOBJECT}
-              REFS={REFS}
-              ERRORS={ERRORS}
-              DATE={DATE}
-              LOCK={LOCK}
-              extra={"sleep_goal_bedTime"}
-              i={i}
-            />
+          {/** /.row 2 **/}
+
+          {/** row 3 **/}
+          <Grid container={true} spacing={2}>
+            <Grid size={12}>
+              <PickerTime
+                OBJECT={OBJECT}
+                setOBJECT={setOBJECT}
+                REFS={REFS}
+                ERRORS={ERRORS}
+                DATE={DATE}
+                LOCKED={LOCKED}
+                extra={"sleep_goal_wakeTime"}
+                i={i}
+              />
+            </Grid>
           </Grid>
-          <Grid size={12}>
-            <PickerTime
-              OBJECT={OBJECT}
-              setOBJECT={setOBJECT}
-              REFS={REFS}
-              ERRORS={ERRORS}
-              DATE={DATE}
-              LOCK={LOCK}
-              extra={"sleep_goal_wakeTime"}
-              i={i}
-            />
+          {/** /.row 3 **/}
+
+          {/** row 4 **/}
+          <Grid container={true} spacing={2}>
+            <Grid size={12}>
+              <PickerTime
+                OBJECT={OBJECT}
+                setOBJECT={setOBJECT}
+                REFS={REFS}
+                ERRORS={ERRORS}
+                DATE={DATE}
+                LOCKED={LOCKED}
+                extra={"sleep_goal_sleepTime"}
+                i={i}
+              />
+            </Grid>
           </Grid>
-          <Grid size={12}>
-            <PickerTime
-              OBJECT={OBJECT}
-              setOBJECT={setOBJECT}
-              REFS={REFS}
-              ERRORS={ERRORS}
-              DATE={DATE}
-              LOCK={LOCK}
-              extra={"sleep_goal_sleepTime"}
-              i={i}
-            />
-          </Grid>
+          {/** /.row 4 **/}
         </Grid>
       );
       return (
@@ -363,8 +382,8 @@ export const SleepGoalDetail = () => {
     <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
-      LOCK={LOCK}
-      setLOCK={setLOCK}
+      LOCKED={LOCKED}
+      setLOCKED={setLOCKED}
     />
   );
 

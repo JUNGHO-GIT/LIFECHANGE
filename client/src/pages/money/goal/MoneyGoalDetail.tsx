@@ -24,7 +24,7 @@ export const MoneyGoalDetail = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [LOCK, setLOCK] = useState<string>("unlocked");
+  const [LOCKED, setLOCKED] = useState<string>("unlocked");
   const [OBJECT, setOBJECT] = useState<any>(MoneyGoal);
   const [EXIST, setEXIST] = useState<any>({
     day: [""],
@@ -273,8 +273,8 @@ export const MoneyGoalDetail = () => {
           <Count
             COUNT={COUNT}
             setCOUNT={setCOUNT}
-            LOCK={LOCK}
-            setLOCK={setLOCK}
+            LOCKED={LOCKED}
+            setLOCKED={setLOCKED}
             limit={1}
           />
         </Grid>
@@ -283,108 +283,122 @@ export const MoneyGoalDetail = () => {
     // 7-3. detail
     const detailSection = () => {
       const detailFragment = (item: any, i: number) => (
-        <Grid container spacing={2} className={`${LOCK === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={`detail-${i}`}>
-          <Grid size={6} className={"d-row-left"}>
-            <Bg
-              badgeContent={i + 1}
-              bgcolor={"#1976d2"}
-            />
+        <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={`detail-${i}`}>
+          {/** row 1 **/}
+          <Grid container={true} spacing={2}>
+            <Grid size={6} className={"d-row-left"}>
+              <Bg
+                badgeContent={i + 1}
+                bgcolor={"#1976d2"}
+              />
+            </Grid>
+            <Grid size={6} className={"d-row-right"}>
+              <Delete
+                index={i}
+                handleDelete={handleDelete}
+                LOCKED={LOCKED}
+              />
+            </Grid>
           </Grid>
-          <Grid size={6} className={"d-row-right"}>
-            <Delete
-              index={i}
-              handleDelete={handleDelete}
-              LOCK={LOCK}
-            />
+          {/** /.row 1 **/}
+
+          {/** row 2 **/}
+          <Grid container={true} spacing={2}>
+            <Grid size={12}>
+              <Input
+                locked={LOCKED}
+                value={insertComma(item?.money_goal_income || "0")}
+                inputRef={REFS?.[i]?.money_goal_income}
+                error={ERRORS?.[i]?.money_goal_income}
+                label={
+                  DATE.dateType === "day" ? (
+                    `${translate("goalIncome")}`
+                  ) : (
+                    `${translate("goalIncome")} (${translate("total")})`
+                  )
+                }
+                startadornment={
+                  <Img
+                    max={15}
+                    hover={true}
+                    shadow={false}
+                    radius={false}
+                    src={"money2"}
+                  />
+                }
+                endadornment={
+                  localCurrency
+                }
+                onChange={(e: any) => {
+                  // 빈값 처리
+                  let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                  // 9999999999 제한 + 정수
+                  if (Number(value) > 9999999999 || !/^\d+$/.test(value)) {
+                    return;
+                  }
+                  // 01, 05 같은 숫자는 1, 5로 변경
+                  if (/^0(?!\.)/.test(value)) {
+                    value = value.replace(/^0+/, '');
+                  }
+                  // object 설정
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    money_goal_income: value,
+                  }));
+                }}
+              />
+            </Grid>
           </Grid>
-          <Grid size={12}>
-            <Input
-              locked={LOCK}
-              value={insertComma(item?.money_goal_income || "0")}
-              inputRef={REFS?.[i]?.money_goal_income}
-              error={ERRORS?.[i]?.money_goal_income}
-              label={
-                DATE.dateType === "day" ? (
-                  `${translate("goalIncome")}`
-                ) : (
-                  `${translate("goalIncome")} (${translate("total")})`
-                )
-              }
-              startadornment={
-                <Img
-                  max={15}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={"money2"}
-                />
-              }
-              endadornment={
-                localCurrency
-              }
-              onChange={(e: any) => {
-                // 빈값 처리
-                let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-                // 9999999999 제한 + 정수
-                if (Number(value) > 9999999999 || !/^\d+$/.test(value)) {
-                  return;
+          {/** /.row 2 **/}
+
+          {/** row 3 **/}
+          <Grid container={true} spacing={2}>
+            <Grid size={12}>
+              <Input
+                locked={LOCKED}
+                value={insertComma(item?.money_goal_expense || "0")}
+                inputRef={REFS?.[i]?.money_goal_expense}
+                error={ERRORS?.[i]?.money_goal_expense}
+                label={
+                  DATE.dateType === "day" ? (
+                    `${translate("goalExpense")}`
+                  ) : (
+                    `${translate("goalExpense")} (${translate("total")})`
+                  )
                 }
-                // 01, 05 같은 숫자는 1, 5로 변경
-                if (/^0(?!\.)/.test(value)) {
-                  value = value.replace(/^0+/, '');
+                startadornment={
+                  <Img
+                    max={15}
+                    hover={true}
+                    shadow={false}
+                    radius={false}
+                    src={"money2"}
+                  />
                 }
-                // object 설정
-                setOBJECT((prev: any) => ({
-                  ...prev,
-                  money_goal_income: value,
-                }));
-              }}
-            />
+                endadornment={
+                  localCurrency
+                }
+                onChange={(e: any) => {
+                  // 빈값 처리
+                  let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                  // 9999999999 제한 + 정수
+                  if (Number(value) > 9999999999 || !/^\d+$/.test(value)) {
+                    return;
+                  }
+                  // 01, 05 같은 숫자는 1, 5로 변경
+                  if (/^0(?!\.)/.test(value)) {
+                    value = value.replace(/^0+/, '');
+                  }
+                  // object 설정
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    money_goal_expense: value,
+                  }));
+                }}
+              />
+            </Grid>
           </Grid>
-          <Grid size={12}>
-            <Input
-              locked={LOCK}
-              value={insertComma(item?.money_goal_expense || "0")}
-              inputRef={REFS?.[i]?.money_goal_expense}
-              error={ERRORS?.[i]?.money_goal_expense}
-              label={
-                DATE.dateType === "day" ? (
-                  `${translate("goalExpense")}`
-                ) : (
-                  `${translate("goalExpense")} (${translate("total")})`
-                )
-              }
-              startadornment={
-                <Img
-                  max={15}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={"money2"}
-                />
-              }
-              endadornment={
-                localCurrency
-              }
-              onChange={(e: any) => {
-                // 빈값 처리
-                let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-                // 9999999999 제한 + 정수
-                if (Number(value) > 9999999999 || !/^\d+$/.test(value)) {
-                  return;
-                }
-                // 01, 05 같은 숫자는 1, 5로 변경
-                if (/^0(?!\.)/.test(value)) {
-                  value = value.replace(/^0+/, '');
-                }
-                // object 설정
-                setOBJECT((prev: any) => ({
-                  ...prev,
-                  money_goal_expense: value,
-                }));
-              }}
-            />
-          </Grid>
+          {/** /.row 3 **/}
         </Grid>
       );
       return (
@@ -396,10 +410,8 @@ export const MoneyGoalDetail = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        <Grid size={12}>
-          {dateCountSection()}
-          {LOADING ? <Loading /> : detailSection()}
-        </Grid>
+        {dateCountSection()}
+        {LOADING ? <Loading /> : detailSection()}
       </Paper>
     );
   };
@@ -409,8 +421,8 @@ export const MoneyGoalDetail = () => {
     <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
-      LOCK={LOCK}
-      setLOCK={setLOCK}
+      LOCKED={LOCKED}
+      setLOCKED={setLOCKED}
     />
   );
 

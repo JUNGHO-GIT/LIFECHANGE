@@ -25,7 +25,7 @@ export const FoodDetail = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [LOCK, setLOCK] = useState<string>("unlocked");
+  const [LOCKED, setLOCKED] = useState<string>("unlocked");
   const [OBJECT, setOBJECT] = useState<any>(Food);
   const [FAVORITE, setFAVORITE] = useState<any>([]);
   const [EXIST, setEXIST] = useState<any>({
@@ -136,7 +136,7 @@ export const FoodDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
-    if (LOCK === "locked") {
+    if (LOCKED === "locked") {
       setLOADING(false);
       return;
     }
@@ -479,8 +479,8 @@ export const FoodDetail = () => {
           <Count
             COUNT={COUNT}
             setCOUNT={setCOUNT}
-            LOCK={LOCK}
-            setLOCK={setLOCK}
+            LOCKED={LOCKED}
+            setLOCKED={setLOCKED}
             limit={10}
           />
         </Grid>
@@ -579,7 +579,7 @@ export const FoodDetail = () => {
     // 7-3. detail
     const detailSection = () => {
       const detailFragment = (item: any, i: number) => (
-        <Grid container spacing={2} className={`${LOCK === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={`detail-${i}`}>
+        <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={`detail-${i}`}>
           {/** row 1 **/}
           <Grid container={true} spacing={2}>
             <Grid size={6} className={"d-row-left"}>
@@ -609,7 +609,7 @@ export const FoodDetail = () => {
               <Delete
                 index={i}
                 handleDelete={handleDelete}
-                LOCK={LOCK}
+                LOCKED={LOCKED}
               />
             </Grid>
           </Grid>
@@ -619,7 +619,7 @@ export const FoodDetail = () => {
           <Grid container={true} spacing={2}>
             <Grid size={6}>
               <Select
-                locked={LOCK}
+                locked={LOCKED}
                 label={translate("part")}
                 value={item?.food_part_idx || 0}
                 inputRef={REFS?.[i]?.food_part_idx}
@@ -653,7 +653,7 @@ export const FoodDetail = () => {
             </Grid>
             <Grid size={3}>
               <Input
-                locked={LOCK}
+                locked={LOCKED}
                 label={translate("foodCount")}
                 value={insertComma(item?.food_count || "0")}
                 inputRef={REFS?.[i]?.food_count}
@@ -701,7 +701,7 @@ export const FoodDetail = () => {
             </Grid>
             <Grid size={3}>
               <Input
-                locked={LOCK}
+                locked={LOCKED}
                 label={translate("gram")}
                 value={insertComma(item?.food_gram || "0")}
                 inputRef={REFS?.[i]?.food_gram}
@@ -737,7 +737,7 @@ export const FoodDetail = () => {
           <Grid container={true} spacing={2}>
             <Grid size={6}>
               <Input
-                locked={LOCK}
+                locked={LOCKED}
                 shrink={"shrink"}
                 label={translate("foodName")}
                 value={item?.food_name || ""}
@@ -765,7 +765,7 @@ export const FoodDetail = () => {
             </Grid>
             <Grid size={6}>
               <Input
-                locked={LOCK}
+                locked={LOCKED}
                 shrink={"shrink"}
                 label={translate("brand")}
                 value={item?.food_brand || ""}
@@ -798,7 +798,7 @@ export const FoodDetail = () => {
           <Grid container={true} spacing={2}>
             <Grid size={6}>
               <Input
-                locked={LOCK}
+                locked={LOCKED}
                 label={translate("kcal")}
                 value={insertComma(item?.food_kcal || "0")}
                 inputRef={REFS?.[i]?.food_kcal}
@@ -841,7 +841,7 @@ export const FoodDetail = () => {
             </Grid>
             <Grid size={6}>
               <Input
-                locked={LOCK}
+                locked={LOCKED}
                 label={translate("carb")}
                 value={insertComma(item?.food_carb || "0")}
                 inputRef={REFS?.[i]?.food_carb}
@@ -889,7 +889,7 @@ export const FoodDetail = () => {
           <Grid container={true} spacing={2}>
             <Grid size={6}>
               <Input
-                locked={LOCK}
+                locked={LOCKED}
                 label={translate("protein")}
                 value={insertComma(item?.food_protein || "0")}
                 inputRef={REFS?.[i]?.food_protein}
@@ -932,7 +932,7 @@ export const FoodDetail = () => {
             </Grid>
             <Grid size={6}>
               <Input
-                locked={LOCK}
+                locked={LOCKED}
                 label={translate("fat")}
                 value={insertComma(item?.food_fat || "0")}
                 inputRef={REFS?.[i]?.food_fat}
@@ -1000,8 +1000,8 @@ export const FoodDetail = () => {
     <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
-      LOCK={LOCK}
-      setLOCK={setLOCK}
+      LOCKED={LOCKED}
+      setLOCKED={setLOCKED}
     />
   );
 

@@ -10,14 +10,14 @@ import { SpeedDial, SpeedDialAction, SpeedDialIcon, Backdrop } from "@imports/Im
 declare type DialogProps = {
   COUNT?: any;
   setCOUNT?: any;
-  LOCK?: any;
-  setLOCK?: any;
+  LOCKED?: any;
+  setLOCKED?: any;
   setIsExpanded?: any;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const Dialog = (
-  { COUNT, setCOUNT, LOCK, setLOCK, setIsExpanded }: DialogProps
+  { COUNT, setCOUNT, LOCKED, setLOCKED, setIsExpanded }: DialogProps
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
@@ -459,7 +459,7 @@ export const Dialog = (
             tooltipTitle={translate("itemLock")}
             className={open ? "" : "d-none"}
             icon={
-              LOCK === "locked" ? (
+              LOCKED === "locked" ? (
                 <Icons
                   key={"Lock"}
                   name={"Lock"}
@@ -474,11 +474,11 @@ export const Dialog = (
               )
             }
             onClick={() => {
-              if (LOCK === "locked") {
-                setLOCK("unlocked");
+              if (LOCKED === "locked") {
+                setLOCKED("unlocked");
               }
               else {
-                setLOCK("locked");
+                setLOCKED("locked");
               }
             }}
           />
@@ -490,12 +490,12 @@ export const Dialog = (
               <Icons
                 key={"X"}
                 name={"X"}
-                locked={LOCK}
+                locked={LOCKED}
                 className={"w-25 h-25"}
               />
             }
             onClick={(e: any) => {
-              if (LOCK === "locked") {
+              if (LOCKED === "locked") {
                 e.preventDefault();
                 return;
               }

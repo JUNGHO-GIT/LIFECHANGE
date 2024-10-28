@@ -189,33 +189,34 @@ export const SleepList = () => {
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container={true} spacing={2}>
-
                   {/** row 1 **/}
-                  <Grid size={2} className={"d-row-center"}>
-                    <Img
-                      max={15}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={"sleep2"}
-                    />
-                  </Grid>
-                  <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
-                      {translate("bedTime")}
-                    </Div>
-                  </Grid>
-                  <Grid size={7}>
-                    <Grid container={true} spacing={1}>
-                      <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.sleep_section[0]?.sleep_bedTime_color}`}>
-                          {item.sleep_section[0]?.sleep_bedTime}
-                        </Div>
-                      </Grid>
-                      <Grid size={2} className={"d-row-center"}>
-                        <Div className={"fs-0-6rem"}>
-                          {translate("hm")}
-                        </Div>
+                  <Grid container={true} spacing={2}>
+                    <Grid size={2} className={"d-row-center"}>
+                      <Img
+                        max={15}
+                        hover={true}
+                        shadow={false}
+                        radius={false}
+                        src={"sleep2"}
+                      />
+                    </Grid>
+                    <Grid size={3} className={"d-row-left"}>
+                      <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
+                        {translate("bedTime")}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        <Grid size={10} className={"d-row-right"}>
+                          <Div className={`${item.sleep_section[0]?.sleep_bedTime_color}`}>
+                            {item.sleep_section[0]?.sleep_bedTime}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={"d-row-center"}>
+                          <Div className={"fs-0-6rem"}>
+                            {translate("hm")}
+                          </Div>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -224,31 +225,33 @@ export const SleepList = () => {
                   <Hr px={1} />
 
                   {/** row 2 **/}
-                  <Grid size={2} className={"d-center"}>
-                    <Img
-                      max={15}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={"sleep3"}
-                    />
-                  </Grid>
-                  <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
-                      {translate("wakeTime")}
-                    </Div>
-                  </Grid>
-                  <Grid size={7}>
-                    <Grid container={true} spacing={1}>
-                      <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.sleep_section[0]?.sleep_wakeTime_color}`}>
-                          {item.sleep_section[0]?.sleep_wakeTime}
-                        </Div>
-                      </Grid>
-                      <Grid size={2} className={"d-row-center"}>
-                        <Div className={"fs-0-6rem"}>
-                          {translate("hm")}
-                        </Div>
+                  <Grid container={true} spacing={2}>
+                    <Grid size={2} className={"d-center"}>
+                      <Img
+                        max={15}
+                        hover={true}
+                        shadow={false}
+                        radius={false}
+                        src={"sleep3"}
+                      />
+                    </Grid>
+                    <Grid size={3} className={"d-row-left"}>
+                      <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
+                        {translate("wakeTime")}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        <Grid size={10} className={"d-row-right"}>
+                          <Div className={`${item.sleep_section[0]?.sleep_wakeTime_color}`}>
+                            {item.sleep_section[0]?.sleep_wakeTime}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={"d-row-center"}>
+                          <Div className={"fs-0-6rem"}>
+                            {translate("hm")}
+                          </Div>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -257,36 +260,37 @@ export const SleepList = () => {
                   <Hr px={1} />
 
                   {/** row 3 **/}
-                  <Grid size={2} className={"d-center"}>
-                    <Img
-                      max={15}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={"sleep4"}
-                    />
-                  </Grid>
-                  <Grid size={3} className={"d-row-left"}>
-                    <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
-                      {translate("sleepTime")}
-                    </Div>
-                  </Grid>
-                  <Grid size={7}>
-                    <Grid container={true} spacing={1}>
-                      <Grid size={10} className={"d-row-right"}>
-                        <Div className={`${item.sleep_section[0]?.sleep_sleepTime_color}`}>
-                          {item.sleep_section[0]?.sleep_sleepTime}
-                        </Div>
-                      </Grid>
-                      <Grid size={2} className={"d-row-center"}>
-                        <Div className={"fs-0-6rem"}>
-                          {translate("hm")}
-                        </Div>
+                  <Grid container={true} spacing={2}>
+                    <Grid size={2} className={"d-center"}>
+                      <Img
+                        max={15}
+                        hover={true}
+                        shadow={false}
+                        radius={false}
+                        src={"sleep4"}
+                      />
+                    </Grid>
+                    <Grid size={3} className={"d-row-left"}>
+                      <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
+                        {translate("sleepTime")}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        <Grid size={10} className={"d-row-right"}>
+                          <Div className={`${item.sleep_section[0]?.sleep_sleepTime_color}`}>
+                            {item.sleep_section[0]?.sleep_sleepTime}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={"d-row-center"}>
+                          <Div className={"fs-0-6rem"}>
+                            {translate("hm")}
+                          </Div>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
                   {/** /.row 3 **/}
-
                 </Grid>
               </AccordionDetails>
             </Accordion>

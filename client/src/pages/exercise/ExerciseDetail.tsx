@@ -25,7 +25,7 @@ export const ExerciseDetail = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [LOCK, setLOCK] = useState<string>("unlocked");
+  const [LOCKED, setLOCKED] = useState<string>("unlocked");
   const [OBJECT, setOBJECT] = useState<any>(Exercise);
   const [EXIST, setEXIST] = useState<any>({
     day: [""],
@@ -116,7 +116,7 @@ export const ExerciseDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
-    if (LOCK === "locked") {
+    if (LOCKED === "locked") {
       setLOADING(false);
       return;
     }
@@ -360,8 +360,8 @@ export const ExerciseDetail = () => {
           <Count
             COUNT={COUNT}
             setCOUNT={setCOUNT}
-            LOCK={LOCK}
-            setLOCK={setLOCK}
+            LOCKED={LOCKED}
+            setLOCKED={setLOCKED}
             limit={10}
           />
         </Grid>
@@ -462,7 +462,7 @@ export const ExerciseDetail = () => {
     // 7-3. detail
     const detailSection = () => {
       const detailFragment = (item: any, i: number) => (
-        <Grid container spacing={2} className={`${LOCK === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={`detail-${i}`}>
+        <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={`detail-${i}`}>
           {/** row 1 **/}
           <Grid container={true} spacing={2}>
             <Grid size={6} className={"d-row-left"}>
@@ -475,7 +475,7 @@ export const ExerciseDetail = () => {
               <Delete
                 index={i}
                 handleDelete={handleDelete}
-                LOCK={LOCK}
+                LOCKED={LOCKED}
               />
             </Grid>
           </Grid>
@@ -485,7 +485,7 @@ export const ExerciseDetail = () => {
           <Grid container={true} spacing={2}>
             <Grid size={6}>
               <Select
-                locked={LOCK}
+                locked={LOCKED}
                 label={translate("part")}
                 value={item?.exercise_part_idx || 0}
                 inputRef={REFS?.[i]?.exercise_part_idx}
@@ -521,7 +521,7 @@ export const ExerciseDetail = () => {
             </Grid>
             <Grid size={6}>
               <Select
-                locked={LOCK}
+                locked={LOCKED}
                 label={translate("title")}
                 value={item?.exercise_title_idx || 0}
                 inputRef={REFS?.[i]?.exercise_title_idx}
@@ -560,7 +560,7 @@ export const ExerciseDetail = () => {
           <Grid container={true} spacing={2}>
             <Grid size={6}>
               <Input
-                locked={LOCK}
+                locked={LOCKED}
                 label={translate("set")}
                 value={insertComma(item?.exercise_set || "0")}
                 inputRef={REFS?.[i]?.exercise_set}
@@ -603,7 +603,7 @@ export const ExerciseDetail = () => {
             </Grid>
             <Grid size={6}>
               <Input
-                locked={LOCK}
+                locked={LOCKED}
                 label={translate("rep")}
                 value={insertComma(item?.exercise_rep || "0")}
                 inputRef={REFS?.[i]?.exercise_rep}
@@ -651,7 +651,7 @@ export const ExerciseDetail = () => {
           <Grid container={true} spacing={2}>
             <Grid size={6}>
               <Input
-                locked={LOCK}
+                locked={LOCKED}
                 label={translate("weight")}
                 value={insertComma(item?.exercise_weight || "0")}
                 inputRef={REFS?.[i]?.exercise_weight}
@@ -699,7 +699,7 @@ export const ExerciseDetail = () => {
                 REFS={REFS}
                 ERRORS={ERRORS}
                 DATE={DATE}
-                LOCK={LOCK}
+                LOCKED={LOCKED}
                 extra={"exercise_cardio"}
                 i={i}
               />
@@ -709,13 +709,11 @@ export const ExerciseDetail = () => {
         </Grid>
       );
       return (
-        <Grid container={true} spacing={0}>
+        <Card className={"d-col-center"}>
           {OBJECT?.exercise_section?.map((item: any, i: number) => (
-            <Grid size={12} key={`detail-${i}`}>
-              {COUNT?.newSectionCnt > 0 && detailFragment(item, i)}
-            </Grid>
+            COUNT?.newSectionCnt > 0 && detailFragment(item, i)
           ))}
-        </Grid>
+        </Card>
       );
     };
     // 7-10. return
@@ -733,8 +731,8 @@ export const ExerciseDetail = () => {
     <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
-      LOCK={LOCK}
-      setLOCK={setLOCK}
+      LOCKED={LOCKED}
+      setLOCKED={setLOCKED}
     />
   );
 
