@@ -27,11 +27,6 @@ export const BottomNav = () => {
       sleep: false,
     }
   );
-  
-    // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
-    alert(JSON.stringify(selectedTab, null, 2));
-  }, [selectedTab]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
