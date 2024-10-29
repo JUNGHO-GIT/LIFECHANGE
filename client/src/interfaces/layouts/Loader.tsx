@@ -27,7 +27,7 @@ export const Loader = () => {
     );
 
     const detailLoader = () => (
-      <Div className={"h-min70vh d-col-center"}>
+      <Div className={"h-min45vh d-col-center"}>
         <Div className={"loader"} />
       </Div>
     );
