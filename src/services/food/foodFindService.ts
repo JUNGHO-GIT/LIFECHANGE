@@ -117,7 +117,7 @@ export const list = async (
 
     // 99. en
     else {
-      URL_SEARCH = encodeURI(`${URL}.com/calories-nutrition/search`);
+      URL_SEARCH = encodeURI(`${URL}/calories-nutrition/search`);
       servUnit = "serving";
       servArray = [
         "serving", "scoop", "piece", "slice", "container", "packet", "strip", "stick", "bar", "box",

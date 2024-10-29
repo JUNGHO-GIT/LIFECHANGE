@@ -6,7 +6,7 @@ import { useStorageLocal } from "@imports/ImportHooks";
 import { useLanguageStore } from "@imports/ImportStores";
 import { getLocal } from "@imports/ImportUtils";
 import { Img } from "@imports/ImportComponents";
-import { BottomNavigation, BottomNavigationAction, Paper, Grid } from "@imports/ImportMuis";
+import { BottomNavigation, BottomNavigationAction, Paper } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const BottomNav = () => {
@@ -175,7 +175,7 @@ export const BottomNav = () => {
     // 7-2. return
     return (
       <Paper className={"layout-wrapper p-sticky bottom-0vh h-8vh border-1 radius-1 shadow-bottom-1"}>
-            {tabsSection()}
+        {tabsSection()}
       </Paper>
     );
   };

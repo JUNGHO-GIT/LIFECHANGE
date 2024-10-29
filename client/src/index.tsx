@@ -72,11 +72,6 @@ import {
   UserAppInfo, UserAppSetting, UserCategory, UserDelete, UserDetail, UserLogin, UserResetPw, UserSignup,
 } from "@imports/ImportPages";
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
-// React Query의 QueryClient 생성
-const queryClient = new QueryClient();
-
 // -------------------------------------------------------------------------------------------------
 const Admin = () => (
   <Routes>
