@@ -1,7 +1,7 @@
 // useCommonDate.tsx
 
-import { useCommonValue } from "@imports/ImportHooks";
-import { moment } from "@imports/ImportUtils";
+import { useCommonValue } from "@importHooks";
+import { moment } from "@importLibs";
 
 // -------------------------------------------------------------------------------------------------
 export const useCommonDate = () => {

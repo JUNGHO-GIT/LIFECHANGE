@@ -1,22 +1,23 @@
 // UserDetail.tsx
 
-import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useValidateUser } from "@imports/ImportHooks";
-import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
-import { User } from "@imports/ImportSchemas";
-import { axios, sync, insertComma } from "@imports/ImportUtils";
-import { Footer, Loading } from "@imports/ImportLayouts";
-import { Input } from "@imports/ImportContainers";
-import { Hr, Img, Div } from "@imports/ImportComponents";
-import { Paper, Avatar, Grid, Checkbox, Card } from "@imports/ImportMuis";
+import { useState, useEffect } from "@importReacts";
+import { useCommonValue, useValidateUser } from "@importHooks";
+import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { axios } from "@importLibs";
+import { sync, insertComma } from "@importScripts";
+import { User } from "@importSchemas";
+import { Footer, Loader } from "@importLayouts";
+import { Input } from "@importContainers";
+import { Hr, Img, Div } from "@importComponents";
+import { Paper, Avatar, Grid, Checkbox, Card } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const UserDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, navigate, sessionId, localCurrency, localUnit } = useCommonValue();
-  const { translate } = useLanguageStore();
-  const { ALERT, setALERT } = useAlertStore();
+  const { translate } = useStoreLanguage();
+  const { ALERT, setALERT } = useStoreAlert();
   const { ERRORS, REFS, validate } = useValidateUser();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -369,7 +370,7 @@ export const UserDetail = () => {
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         {imageSection()}
         <Hr px={40} />
-        {LOADING ? <Loading /> : detailSection()}
+        {LOADING ? <Loader /> : detailSection()}
       </Paper>
     );
   };

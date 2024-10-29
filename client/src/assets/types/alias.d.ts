@@ -4,40 +4,11 @@ declare module "@assets/*" {
   const value: any;
   export default value;
 }
-declare module "@images/*" {
-  const value: any;
-  export default value;
-}
-declare module "@scripts/*" {
-  const value: any;
-  export default value;
-}
-declare module "@styles/*" {
-  const value: any;
-  export default value;
-}
-declare module "@types/*" {
-  const value: any;
-  export default value;
-}
-
-declare module "@components/*" {
-  const value: any;
-  export default value;
-}
-declare module "@containers/*" {
+declare module "@interfaces/*" {
   const value: any;
   export default value;
 }
 declare module "@hooks/*" {
-  const value: any;
-  export default value;
-}
-declare module "@imports/*" {
-  const value: any;
-  export default value;
-}
-declare module "@layouts/*" {
   const value: any;
   export default value;
 }
@@ -49,7 +20,49 @@ declare module "@schemas/*" {
   const value: any;
   export default value;
 }
-declare module "@stores/*" {
+
+declare module "@importHooks/*" {
+  const value: any;
+  export default value;
+}
+declare module "@importLibs/*" {
+  const value: any;
+  export default value;
+}
+declare module "@importMuis/*" {
+  const value: any;
+  export default value;
+}
+declare module "@importReacts/*" {
+  const value: any;
+  export default value;
+}
+declare module "@importSchemas/*" {
+  const value: any;
+  export default value;
+}
+declare module "@importScripts/*" {
+  const value: any;
+  export default value;
+}
+declare module "@importTypes/*" {
+  const value: any;
+  export default value;
+}
+
+declare module "@importComponents/*" {
+  const value: any;
+  export default value;
+}
+declare module "@importContainers/*" {
+  const value: any;
+  export default value;
+}
+declare module "@importLayouts/*" {
+  const value: any;
+  export default value;
+}
+declare module "@importPages/*" {
   const value: any;
   export default value;
 }

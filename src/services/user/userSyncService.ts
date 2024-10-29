@@ -1,7 +1,7 @@
 // userSyncService.ts
 
 import * as repository from "@repositories/user/userSyncRepository";
-import { timeToDecimal, decimalToTime } from "@scripts/utils";
+import { timeToDecimal, decimalToTime } from "@assets/scripts/utils";
 
 // 0. category (카테고리 조회) ---------------------------------------------------------------------
 export const category = async (

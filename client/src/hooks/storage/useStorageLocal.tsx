@@ -1,7 +1,7 @@
 // useStorageLocal.tsx
 
-import { useState, useEffect } from "@imports/ImportReacts";
-import { getLocal, setLocal } from "@imports/ImportUtils";
+import { useState, useEffect } from "@importReacts";
+import { getLocal, setLocal } from "@importScripts";
 
 // -------------------------------------------------------------------------------------------------
 export const useStorageLocal = (key1: string, key2: string, key3: string, initialVal: any) => {

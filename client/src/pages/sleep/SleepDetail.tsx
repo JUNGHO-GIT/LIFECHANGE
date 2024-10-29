@@ -1,14 +1,15 @@
 // SleepDetail.tsx
 
-import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTime, useValidateSleep } from "@imports/ImportHooks";
-import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
-import { Sleep } from "@imports/ImportSchemas";
-import { axios, sync } from "@imports/ImportUtils";
-import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
-import { PickerDay, PickerTime, Count, Delete } from "@imports/ImportContainers";
-import { Bg } from "@imports/ImportComponents";
-import { Paper, Grid, Card } from "@imports/ImportMuis";
+import { useState, useEffect } from "@importReacts";
+import { useCommonValue, useCommonDate, useTime, useValidateSleep } from "@importHooks";
+import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { Sleep } from "@importSchemas";
+import { axios } from "@importLibs";
+import { sync } from "@importScripts";
+import { Loader, Footer, Dialog } from "@importLayouts";
+import { PickerDay, PickerTime, Count, Delete } from "@importContainers";
+import { Bg } from "@importComponents";
+import { Paper, Grid, Card } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const SleepDetail = () => {
@@ -18,8 +19,8 @@ export const SleepDetail = () => {
   const { location_from, location_dateType } = useCommonValue();
   const { location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-  const { translate } = useLanguageStore();
-  const { ALERT, setALERT } = useAlertStore();
+  const { translate } = useStoreLanguage();
+  const { ALERT, setALERT } = useStoreAlert();
   const { ERRORS, REFS, validate } = useValidateSleep();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -409,7 +410,7 @@ export const SleepDetail = () => {
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         {dateCountSection()}
-        {LOADING ? <Loading /> : detailSection()}
+        {LOADING ? <Loader /> : detailSection()}
       </Paper>
     );
   };

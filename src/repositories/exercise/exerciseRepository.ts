@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 import { Exercise } from "@schemas/exercise/Exercise";
-import { timeToDecimal, decimalToTime } from "@scripts/utils";
+import { timeToDecimal, decimalToTime } from "@assets/scripts/utils";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (

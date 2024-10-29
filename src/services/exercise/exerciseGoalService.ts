@@ -1,6 +1,6 @@
 // exerciseGoalService.ts
 
-import { strToDecimal, decimalToStr } from "@scripts/utils";
+import { strToDecimal, decimalToStr } from "@assets/scripts/utils";
 import * as repository from "@repositories/exercise/exerciseGoalRepository";
 
 // 0. exist ----------------------------------------------------------------------------------------
@@ -115,10 +115,10 @@ export const list = async (
         acc + (curr?.exercise_total_volume !== "0" ? 1 : 0)
       ), 0);
       const exerciseTotalVolume = listReal.reduce((acc: any, curr: any) => (
-        acc + (parseFloat(curr?.exercise_total_volume) ?? 0)
+        acc + parseFloat(curr?.exercise_total_volume || "0")
       ), 0);
       const exerciseTotalCardio = listReal.reduce((acc: any, curr: any) => (
-        acc + strToDecimal(curr?.exercise_total_cardio ?? "00:00")
+        acc + strToDecimal(curr?.exercise_total_cardio || "00:00")
       ), 0);
       const exerciseCurScale = listReal.reduce((latest: any, curr: any) => {
         if (curr?.exercise_total_scale) {

@@ -1,14 +1,15 @@
 // useLanguageSetting.tsx
 
-import { useEffect } from "@imports/ImportReacts";
-import { useCommonValue } from "@imports/ImportHooks";
-import { moment, setLocal, getCountryForTimezone, getAllInfoByISO } from "@imports/ImportUtils";
+import { useEffect } from "@importReacts";
+import { useCommonValue } from "@importHooks";
+import { moment, getCountryForTimezone, getAllInfoByISO } from "@importLibs";
+import { setLocal } from "@importScripts";
 
 // -------------------------------------------------------------------------------------------------
 export const useLanguageSetting = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { PATH, localLang } = useCommonValue();
+  const { localLang } = useCommonValue();
 
   // 2. declare ------------------------------------------------------------------------------------
   let timeZone: string = "";
@@ -59,5 +60,5 @@ export const useLanguageSetting = () => {
     }
 
     // 종속성에 lang은 추가하지 않음
-  }, [PATH, timeZone, zoneName, isoCode, currency, unit]);
+  }, [timeZone, zoneName, isoCode, currency, unit]);
 };

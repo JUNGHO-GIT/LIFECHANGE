@@ -1,14 +1,15 @@
 // ImportLayouts.tsx
 
-import { Header } from "@layouts/Header";
-import { TopNav } from "@layouts/TopNav";
-import { Footer } from "@layouts/Footer";
-import { BottomNav } from "@layouts/BottomNav";
-import { Loading } from "@layouts/Loading";
-import { Empty } from "@layouts/Empty";
-import { Alert } from "@layouts/Alert";
-import { Confirm } from "@layouts/Confirm";
-import { Dialog } from "@layouts/Dialog";
+import { Header } from "@interfaces/layouts/Header";
+import { TopNav } from "@interfaces/layouts/TopNav";
+import { Footer } from "@interfaces/layouts/Footer";
+import { BottomNav } from "@interfaces/layouts/BottomNav";
+import { Loader } from "@interfaces/layouts/Loader";
+import { FallBack } from "@interfaces/layouts/FallBack";
+import { Empty } from "@interfaces/layouts/Empty";
+import { Alert } from "@interfaces/layouts/Alert";
+import { Confirm } from "@interfaces/layouts/Confirm";
+import { Dialog } from "@interfaces/layouts/Dialog";
 
 // -------------------------------------------------------------------------------------------------
 export {
@@ -16,7 +17,8 @@ export {
   TopNav,
   Footer,
   BottomNav,
-  Loading,
+  Loader,
+  FallBack,
   Empty,
   Alert,
   Confirm,

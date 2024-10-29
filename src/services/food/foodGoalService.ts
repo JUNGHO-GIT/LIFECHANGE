@@ -112,16 +112,16 @@ export const list = async (
       );
 
       const foodTotalKcal = listReal.reduce((acc: any, curr: any) => (
-        acc + (parseFloat(curr?.food_total_kcal) ?? 0)
+        acc + (parseFloat(curr?.food_total_kcal || 0))
       ), 0);
       const foodTotalCarb = listReal.reduce((acc: any, curr: any) => (
-        acc + (parseFloat(curr?.food_total_carb) ?? 0)
+        acc + (parseFloat(curr?.food_total_carb || 0))
       ), 0);
       const foodTotalProtein = listReal.reduce((acc: any, curr: any) => (
-        acc + (parseFloat(curr?.food_total_protein) ?? 0)
+        acc + (parseFloat(curr?.food_total_protein || 0))
       ), 0);
       const foodTotalFat = listReal.reduce((acc: any, curr: any) => (
-        acc + (parseFloat(curr?.food_total_fat) ?? 0)
+        acc + (parseFloat(curr?.food_total_fat || 0))
       ), 0);
 
       return {

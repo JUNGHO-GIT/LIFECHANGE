@@ -1,14 +1,14 @@
 // UserAppInfo.tsx
 
-import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue } from "@imports/ImportHooks";
-import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
-import { AppInfo } from "@imports/ImportSchemas";
-import { axios } from "@imports/ImportUtils";
-import { Loading } from "@imports/ImportLayouts";
-import { Img, Br } from "@imports/ImportComponents";
-import { Paper, Grid, Card } from "@imports/ImportMuis";
-import { TableContainer, Table, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
+import { useState, useEffect } from "@importReacts";
+import { useCommonValue } from "@importHooks";
+import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { axios } from "@importLibs";
+import { AppInfo } from "@importSchemas";
+import { Loader } from "@importLayouts";
+import { Img, Br } from "@importComponents";
+import { Paper, Grid, Card } from "@importMuis";
+import { TableContainer, Table, TableBody, TableRow, TableCell } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const UserAppInfo = () => {
@@ -17,8 +17,8 @@ export const UserAppInfo = () => {
   const { URL_OBJECT, sessionId } = useCommonValue();
   const { localTimeZone, localZoneName, localLang } = useCommonValue();
   const { localIsoCode, localCurrency } = useCommonValue();
-  const { translate } = useLanguageStore();
-  const { ALERT, setALERT } = useAlertStore();
+  const { translate } = useStoreLanguage();
+  const { ALERT, setALERT } = useStoreAlert();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -128,7 +128,7 @@ export const UserAppInfo = () => {
       <Paper className={"content-wrapper d-center border-1 radius-1 h-min90vh"}>
         {imageSection()}
         <Br px={40} />
-        {LOADING ? <Loading /> : detailSection()}
+        {LOADING ? <Loader /> : detailSection()}
       </Paper>
     );
   };

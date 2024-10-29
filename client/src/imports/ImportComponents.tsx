@@ -1,12 +1,12 @@
 // ImportComponents.tsx
 
-import { Div } from "@components/Div";
-import { Img } from "@components/Img";
-import { Br } from "@components/Br";
-import { Hr } from "@components/Hr";
-import { Icons } from "@components/Icons";
-import { Btn } from "@components/Btn";
-import { Bg } from "@components/Bg";
+import { Div } from "@interfaces/components/Div";
+import { Img } from "@interfaces/components/Img";
+import { Br } from "@interfaces/components/Br";
+import { Hr } from "@interfaces/components/Hr";
+import { Icons } from "@interfaces/components/Icons";
+import { Btn } from "@interfaces/components/Btn";
+import { Bg } from "@interfaces/components/Bg";
 
 // -------------------------------------------------------------------------------------------------
 export {

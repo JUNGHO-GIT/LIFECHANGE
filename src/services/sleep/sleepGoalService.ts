@@ -1,6 +1,6 @@
 // sleepGoalService.ts
 
-import { strToDecimal, decimalToStr } from "@scripts/utils";
+import { strToDecimal, decimalToStr } from "@assets/scripts/utils";
 import * as repository from "@repositories/sleep/sleepGoalRepository";
 
 // 0. exist ----------------------------------------------------------------------------------------

@@ -1,15 +1,15 @@
 // TodayList.tsx
 
-import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
-import { useStorageSession, useStorageLocal } from "@imports/ImportHooks";
-import { useLanguageStore } from "@imports/ImportStores";
-import { Exercise, Food, Money, Sleep } from "@imports/ImportSchemas";
-import { axios, insertComma } from "@imports/ImportUtils";
-import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
-import { Div, Hr, Br, Img, Icons } from "@imports/ImportComponents";
-import { Paper, Grid, Card } from "@imports/ImportMuis";
-import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
+import { useState, useEffect } from "@importReacts";
+import { useCommonValue, useCommonDate } from "@importHooks";
+import { useStorageSession, useStorageLocal, useStoreLanguage } from "@importHooks";
+import { axios } from "@importLibs";
+import { insertComma } from "@importScripts";
+import { Exercise, Food, Money, Sleep } from "@importSchemas";
+import { Loader, Footer, Empty, Dialog } from "@importLayouts";
+import { Div, Hr, Br, Img, Icons } from "@importComponents";
+import { Paper, Grid, Card } from "@importMuis";
+import { Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const TodayList = () => {
@@ -18,7 +18,7 @@ export const TodayList = () => {
   const { URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP } = useCommonValue();
   const { PATH, navigate, sessionId, localCurrency, localUnit } = useCommonValue();
   const { getDayFmt, getDayNotFmt } = useCommonDate();
-  const { translate } = useLanguageStore();
+  const { translate } = useStoreLanguage();
 
   // 2-1. useStorageSession ------------------------------------------------------------------------
   const [DATE, setDATE] = useStorageSession(
@@ -128,16 +128,16 @@ export const TodayList = () => {
       // 이전 값이 있으면 유지하고 없으면 true로 설정
       setIsExpanded((prev: any) => ({
         exercise: Array(resExercise.data.result.length).fill(null).map((_, i) => ({
-          expanded: prev?.exercise?.[i]?.expanded ?? true
+          expanded: prev?.exercise?.[i]?.expanded || true
         })),
         food: Array(resFood.data.result.length).fill(null).map((_, i) => ({
-          expanded: prev?.food?.[i]?.expanded ?? true
+          expanded: prev?.food?.[i]?.expanded || true
         })),
         money: Array(resMoney.data.result.length).fill(null).map((_, i) => ({
-          expanded: prev?.money?.[i]?.expanded ?? true
+          expanded: prev?.money?.[i]?.expanded || true
         })),
         sleep: Array(resSleep.data.result.length).fill(null).map((_, i) => ({
-          expanded: prev?.sleep?.[i]?.expanded ?? true
+          expanded: prev?.sleep?.[i]?.expanded || true
         }))
       }));
     }
@@ -889,7 +889,7 @@ export const TodayList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        {LOADING ? <Loading /> : (
+        {LOADING ? <Loader /> : (
           <>
             {exerciseSection()}
             <Br px={10} />

@@ -1,15 +1,16 @@
 // MoneyList.tsx
 
-import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
-import { useStorageLocal } from "@imports/ImportHooks";
-import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
-import { Money } from "@imports/ImportSchemas";
-import { axios, insertComma } from "@imports/ImportUtils";
-import { Loading, Footer, Empty, Dialog } from "@imports/ImportLayouts";
-import { Div, Hr, Img, Icons } from "@imports/ImportComponents";
-import { Paper, Grid, Card } from "@imports/ImportMuis";
-import { Accordion, AccordionSummary, AccordionDetails } from "@imports/ImportMuis";
+import { useState, useEffect } from "@importReacts";
+import { useCommonValue, useCommonDate } from "@importHooks";
+import { useStorageLocal } from "@importHooks";
+import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { Money } from "@importSchemas";
+import { axios } from "@importLibs";
+import { insertComma } from "@importScripts";
+import { Loader, Footer, Empty, Dialog } from "@importLayouts";
+import { Div, Hr, Img, Icons } from "@importComponents";
+import { Paper, Grid, Card } from "@importMuis";
+import { Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const MoneyList = () => {
@@ -18,8 +19,8 @@ export const MoneyList = () => {
   const { URL_OBJECT, PATH, sessionId, localCurrency, toDetail } = useCommonValue();
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayNotFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-  const { translate } = useLanguageStore();
-  const { ALERT, setALERT } = useAlertStore();
+  const { translate } = useStoreLanguage();
+  const { ALERT, setALERT } = useStoreAlert();
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [DATE, setDATE] = useStorageLocal(
@@ -112,7 +113,7 @@ export const MoneyList = () => {
       // 이전 값이 있으면 유지하고 없으면 true로 설정
       setIsExpanded((prev: any) => (
         Array(res.data.result.length).fill(null).map((_, i) => ({
-          expanded: prev?.[i]?.expanded ?? true
+          expanded: prev?.[i]?.expanded || true
         }))
       ));
     })
@@ -276,7 +277,7 @@ export const MoneyList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        {LOADING ? <Loading /> : listSection()}
+        {LOADING ? <Loader /> : listSection()}
       </Paper>
     );
   };

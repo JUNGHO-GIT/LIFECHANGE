@@ -1,7 +1,7 @@
 // useTime.tsx
 
-import { useEffect } from "@imports/ImportReacts";
-import { useCommonDate } from "@imports/ImportHooks";
+import { useEffect } from "@importReacts";
+import { useCommonDate } from "@importHooks";
 
 // -------------------------------------------------------------------------------------------------
 export const useTime = (

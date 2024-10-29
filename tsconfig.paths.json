@@ -2,16 +2,12 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@routers/*": ["src/routers/*"],
-      "@services/*": ["src/services/*"],
-      "@schemas/*": ["src/schemas/*"],
-      "@repositories/*": ["src/repositories/*"],
-      "@middlewares/*": ["src/middlewares/*"],
       "@assets/*": ["src/assets/*"],
-      "@scripts/*": ["src/assets/scripts/*"],
-      "@styles/*": ["src/assets/styles/*"],
-      "@images/*": ["src/assets/images/*"],
-      "@arrays/*": ["src/assets/arrays/*"]
+      "@middlewares/*": ["src/middlewares/*"],
+      "@repositories/*": ["src/repositories/*"],
+      "@routers/*": ["src/routers/*"],
+      "@schemas/*": ["src/schemas/*"],
+      "@services/*": ["src/services/*"],
     },
     "typeRoots": [
       "./node_modules/@types",
@@ -24,8 +20,8 @@
     ]
   },
   "include": [
-    "index.ts",
     "src/**/*",
+    "index.ts",
     "**/*.ts",
     "**/*.tsx",
     "**/*.d.ts",

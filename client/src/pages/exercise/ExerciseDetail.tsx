@@ -1,14 +1,15 @@
 // ExerciseDetail.tsx
 
-import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useTime, useValidateExercise } from "@imports/ImportHooks";
-import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
-import { Exercise } from "@imports/ImportSchemas";
-import { axios, sync, insertComma } from "@imports/ImportUtils";
-import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
-import { PickerDay, PickerTime, Count, Delete, Input, Select }from "@imports/ImportContainers";
-import { Img, Bg } from "@imports/ImportComponents";
-import { Paper, MenuItem, Grid, Card } from "@imports/ImportMuis";
+import { useState, useEffect } from "@importReacts";
+import { useCommonValue, useCommonDate, useTime, useValidateExercise } from "@importHooks";
+import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { Exercise } from "@importSchemas";
+import { axios } from "@importLibs";
+import { insertComma, sync } from "@importScripts";
+import { Loader, Footer, Dialog } from "@importLayouts";
+import { PickerDay, PickerTime, Count, Delete, Input, Select }from "@importContainers";
+import { Img, Bg } from "@importComponents";
+import { Paper, MenuItem, Grid, Card } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseDetail = () => {
@@ -19,8 +20,8 @@ export const ExerciseDetail = () => {
   const { location_from, location_dateType } = useCommonValue();
   const { location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt,getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-  const { translate } = useLanguageStore();
-  const { ALERT, setALERT } = useAlertStore();
+  const { translate } = useStoreLanguage();
+  const { ALERT, setALERT } = useStoreAlert();
   const { ERRORS, REFS, validate } = useValidateExercise();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -721,7 +722,7 @@ export const ExerciseDetail = () => {
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         {dateCountSection()}
         {totalSection()}
-        {LOADING ? <Loading /> : detailSection()}
+        {LOADING ? <Loader /> : detailSection()}
       </Paper>
     );
   };

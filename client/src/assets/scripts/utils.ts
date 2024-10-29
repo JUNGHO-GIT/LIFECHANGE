@@ -78,3 +78,121 @@ export const insertComma = (str: string | number) => {
     console.error("insertComma error", error);
   }
 };
+
+// -------------------------------------------------------------------------------------------------
+export const makeForm = (
+  object: any,
+  fileList: File[] | null,
+  extra?: any
+) => {
+
+  const form = new FormData();
+
+  // object 데이터 추가
+  if (object) {
+    Object.keys(object).forEach((key: string, _index: number) => {
+      // 이미지 배열인 경우
+      if (Array.isArray(object[key])) {
+        form.append(`OBJECT[${key}]`, JSON.stringify(object[key]));
+      }
+      // 나머지 항목인 경우
+      else {
+        form.append(`OBJECT[${key}]`, object[key]);
+      }
+    });
+  }
+
+  // 파일 추가
+  if (fileList) {
+    fileList.forEach((file: File, _index: number) => {
+      const newFile = new File(
+        [file],
+        `${new Date().getTime()}_${file.name}`,
+        { type: file.type }
+      );
+      form.append("fileList", newFile);
+    });
+  }
+
+  // 추가 데이터 추가
+  if (extra) {
+    Object.keys(extra).forEach((key: string, _index: number) => {
+      form.append(key, extra[key]);
+    });
+  }
+
+  return form;
+};
+
+
+// -------------------------------------------------------------------------------------------------
+export const handleY = (
+  OBJECT: any,
+  array: any,
+  type: string,
+) => {
+
+  let ticks = [];
+  let maxValue = 0;
+  let topValue = 0;
+  let tickInterval = 0;
+
+  // 숫자 변환 및 NaN 처리
+  OBJECT = OBJECT.map((item: any) => {
+    let newItem: any = {};
+    for (let key in item) {
+      newItem[key] = Number(item[key] || 0);
+    }
+    return newItem;
+  });
+
+  if (type === "sleep") {
+    maxValue = Math.max(...OBJECT.map((item: any) => (
+      Math.max(...array.map((key: any) => (
+        item[key] || 0
+      )))
+    )));
+    tickInterval = 1;
+    topValue = 24;
+  }
+  else if (type === "money") {
+    maxValue = Math.max(...OBJECT.map((item: any) => (
+      Math.max(...array.map((key: any) => (
+        item[key] || 0
+      )))
+    )));
+    tickInterval = 100;
+    topValue = Math.ceil(maxValue / 100) * 100;
+  }
+  else if (type === "food") {
+    maxValue = Math.max(...OBJECT.map((item: any) => (
+      Math.max(...array.map((key: any) => (
+        item[key] || 0
+      )))
+    )));
+    tickInterval = 10;
+    topValue = Math.ceil(maxValue / 100) * 100;
+  }
+  else if (type === "exercise") {
+    maxValue = Math.max(...OBJECT.map((item: any) => (
+      Math.max(...array.map((key: any) => (
+        item[key] || 0
+      )))
+    )));
+    tickInterval = 10;
+    topValue = Math.ceil(maxValue / 100) * 100;
+  }
+  else {
+    throw new Error("handleY: type error");
+  }
+
+  for (let i = 0; i <= topValue; i += tickInterval) {
+    ticks.push(i);
+  }
+
+  return {
+    domain: [0, topValue],
+    ticks: ticks,
+    formatterY: (tick: any) => (`${Number(tick).toLocaleString()}`)
+  };
+};

@@ -1,7 +1,7 @@
 // useRoot.tsx
 
-import { useEffect } from "@imports/ImportReacts";
-import { useCommonValue } from "@imports/ImportHooks";
+import { useEffect } from "@importReacts";
+import { useCommonValue } from "@importHooks";
 
 // -------------------------------------------------------------------------------------------------
 export const useRoot = () => {
@@ -27,5 +27,5 @@ export const useRoot = () => {
         }
       }
     }
-  }, [navigate, sessionId]);
+  }, [PATH]);
 };

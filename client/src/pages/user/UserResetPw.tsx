@@ -1,22 +1,22 @@
 // UserResetPw.tsx
 
-import { useState } from "@imports/ImportReacts";
-import { useCommonValue, useValidateUser } from "@imports/ImportHooks";
-import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
-import { User } from "@imports/ImportSchemas";
-import { axios } from "@imports/ImportUtils";
-import { Loading } from "@imports/ImportLayouts";
-import { Input } from "@imports/ImportContainers";
-import { Div, Btn, Img, Hr } from "@imports/ImportComponents";
-import { Paper, Grid, Card } from "@imports/ImportMuis";
+import { useState } from "@importReacts";
+import { useCommonValue, useValidateUser } from "@importHooks";
+import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { axios } from "@importLibs";
+import { User } from "@importSchemas";
+import { Loader } from "@importLayouts";
+import { Input } from "@importContainers";
+import { Div, Btn, Img, Hr } from "@importComponents";
+import { Paper, Grid, Card } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const UserResetPw = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, URL_GOOGLE, navigate } = useCommonValue();
-  const { translate } = useLanguageStore();
-  const { ALERT, setALERT } = useAlertStore();
+  const { translate } = useStoreLanguage();
+  const { ALERT, setALERT } = useStoreAlert();
   const { ERRORS, REFS, validate } = useValidateUser();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -433,7 +433,7 @@ export const UserResetPw = () => {
     // 7-10. return
     return (
       <>
-      {LOADING && <Loading />}
+      {LOADING && <Loader />}
       <Paper className={"content-wrapper d-center border-1 radius-1 shadow-1 h-min100vh"}>
         {titleSection()}
         <Hr px={20} />

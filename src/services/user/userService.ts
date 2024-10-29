@@ -3,17 +3,11 @@
 import fs from "fs";
 import path from "path";
 import dotenv from 'dotenv';
-import mongodb from 'mongodb';
-import moment from 'moment';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import { fileURLToPath } from "url";
 import * as repository from "@repositories/user/userRepository";
-import { randomNumber, randomTime, calcDate } from '@scripts/utils';
-import { exerciseArray } from '@arrays/exerciseArray';
-import { foodArray } from '@arrays/foodArray';
-import { moneyArray } from '@arrays/moneyArray';
-import { emailSending } from "@scripts/email";
+import { emailSending } from "@assets/scripts/email";
 dotenv.config();
 
 // 0-1. appInfo ------------------------------------------------------------------------------------

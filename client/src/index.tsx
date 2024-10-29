@@ -1,164 +1,65 @@
 // index.tsx
 
 import "react-calendar/dist/Calendar.css";
-
-import "@styles/Calendar.css";
-import "@styles/Chart.css";
-import "@styles/Mui.css";
-import "@styles/Components.css";
-import "@styles/Core.css";
-import "@styles/Error.css";
-import "@styles/Jstyle.css";
+import "@assets/styles/Calendar.css";
+import "@assets/styles/Chart.css";
+import "@assets/styles/Mui.css";
+import "@assets/styles/Components.css";
+import "@assets/styles/Core.css";
+import "@assets/styles/Error.css";
+import "@assets/styles/Jstyle.css";
 import "./index.css";
 
 import {
-  useLocation, BrowserRouter, Routes, Route, createRoot
-} from "@imports/ImportReacts";
+  useLocation, BrowserRouter, Routes, Route, createRoot, Suspense
+} from "@importReacts";
 
 import {
   CssBaseline, createTheme, ThemeProvider
-} from "@imports/ImportMuis";
+} from "@importMuis";
 
 import {
   useRoot, useScrollTop, useFoodSection, useLanguageSetting, useLanguageInitialize
-} from "@imports/ImportHooks";
+} from "@importHooks";
 
 import {
-  Header, TopNav, BottomNav, Alert, Confirm
-} from "@imports/ImportLayouts";
+  Header, TopNav, BottomNav, Alert, Confirm, FallBack
+} from "@importLayouts";
 
-// admin
 import {
-  AdminDashboard,
-} from "@imports/ImportPages";
+  AdminDashboard, AuthError, AuthGoogle, AuthPrivacy
+} from "@importPages";
 
-// auth
 import {
-  AuthError, AuthGoogle, AuthPrivacy,
-} from "@imports/ImportPages";
+  CalendarList, CalendarDetail
+} from "@importPages";
 
-// calendar
 import {
-  CalendarList, CalendarDetail,
-} from "@imports/ImportPages";
+  ExerciseChart, ExerciseGoalList, ExerciseGoalDetail, ExerciseList, ExerciseDetail
+} from "@importPages";
 
-// exercise
 import {
-  ExerciseChart, ExerciseGoalList, ExerciseGoalDetail, ExerciseList, ExerciseDetail,
-} from "@imports/ImportPages";
+  FoodChart, FoodGoalList, FoodGoalDetail, FoodFindList, FoodFavoriteList, FoodList, FoodDetail
+} from "@importPages";
 
-// food
 import {
-  FoodChart, FoodGoalList, FoodGoalDetail, FoodFindList, FoodFavoriteList, FoodList, FoodDetail,
-} from "@imports/ImportPages";
+  TodayGoalList, TodayList
+} from "@importPages";
 
-// today
 import {
-  TodayGoalList, TodayList,
-} from "@imports/ImportPages";
+  MoneyChart, MoneyGoalList, MoneyGoalDetail, MoneyList, MoneyDetail
+} from "@importPages";
 
-// money
 import {
-  MoneyChart, MoneyGoalList, MoneyGoalDetail, MoneyList, MoneyDetail,
-} from "@imports/ImportPages";
+  SleepChart, SleepGoalList, SleepGoalDetail, SleepList, SleepDetail
+} from "@importPages";
 
-// sleep
 import {
-  SleepChart, SleepGoalList, SleepGoalDetail, SleepList, SleepDetail,
-} from "@imports/ImportPages";
-
-// user
-import {
-  UserAppInfo, UserAppSetting, UserCategory, UserDelete, UserDetail, UserLogin, UserResetPw, UserSignup,
-} from "@imports/ImportPages";
-
-// -------------------------------------------------------------------------------------------------
-const Admin = () => (
-  <Routes>
-    <Route path="/dashboard" element={<AdminDashboard />} />
-  </Routes>
-);
-// -------------------------------------------------------------------------------------------------
-const Auth = () => (
-  <Routes>
-    <Route path="/privacy" element={<AuthPrivacy />} />
-    <Route path="/google" element={<AuthGoogle />} />
-    <Route path="/error" element={<AuthError />} />
-  </Routes>
-);
-// -------------------------------------------------------------------------------------------------
-const Calendar = () => (
-  <Routes>
-    <Route path="/list" element={<CalendarList />} />
-    <Route path="/detail" element={<CalendarDetail />} />
-  </Routes>
-);
-// -------------------------------------------------------------------------------------------------
-const Exercise = () =>  (
-  <Routes>
-    <Route path="/chart/list" element={<ExerciseChart />} />
-    <Route path="/goal/list" element={<ExerciseGoalList />} />
-    <Route path="/goal/detail" element={<ExerciseGoalDetail />} />
-    <Route path="/list" element={<ExerciseList />} />
-    <Route path="/detail" element={<ExerciseDetail />} />
-  </Routes>
-);
-// -------------------------------------------------------------------------------------------------
-const Food = () => (
-  <Routes>
-    <Route path="/chart/list" element={<FoodChart />} />
-    <Route path="/goal/list" element={<FoodGoalList />} />
-    <Route path="/goal/detail" element={<FoodGoalDetail />} />
-    <Route path="/find/list" element={<FoodFindList />} />
-    <Route path="/favorite/list" element={<FoodFavoriteList />} />
-    <Route path="/list" element={<FoodList />} />
-    <Route path="/detail" element={<FoodDetail />} />
-  </Routes>
-);
-// -------------------------------------------------------------------------------------------------
-const Today = () => (
-  <Routes>
-    <Route path="/goal/list" element={<TodayGoalList />} />
-    <Route path="/list" element={<TodayList />} />
-  </Routes>
-);
-// -------------------------------------------------------------------------------------------------
-const Money = () =>  (
-  <Routes>
-    <Route path="/chart/list" element={<MoneyChart />} />
-    <Route path="/goal/list" element={<MoneyGoalList />} />
-    <Route path="/goal/detail" element={<MoneyGoalDetail />} />
-    <Route path="/list" element={<MoneyList />} />
-    <Route path="/detail" element={<MoneyDetail />} />
-  </Routes>
-);
-// -------------------------------------------------------------------------------------------------
-const Sleep = () => (
-  <Routes>
-    <Route path="/chart/list" element={<SleepChart />} />
-    <Route path="/goal/list" element={<SleepGoalList />} />
-    <Route path="/goal/detail" element={<SleepGoalDetail />} />
-    <Route path="/list" element={<SleepList />} />
-    <Route path="/detail" element={<SleepDetail />} />
-  </Routes>
-);
-// -------------------------------------------------------------------------------------------------
-const User = () => (
-  <Routes>
-    <Route path="/app/info" element={<UserAppInfo />} />
-    <Route path="/app/setting" element={<UserAppSetting />} />
-    <Route path="/signup" element={<UserSignup />} />
-    <Route path="/login" element={<UserLogin />} />
-    <Route path="/resetPw" element={<UserResetPw />} />
-    <Route path="/detail" element={<UserDetail />} />
-    <Route path="/delete" element={<UserDelete />} />
-    <Route path="/category" element={<UserCategory />} />
-  </Routes>
-);
+  UserAppInfo, UserAppSetting, UserSignup, UserLogin, UserResetPw, UserDetail, UserDelete, UserCategory
+} from "@importPages";
 
 // -------------------------------------------------------------------------------------------------
 const App = () => {
-
   useRoot();
   useScrollTop();
   useFoodSection();
@@ -166,6 +67,7 @@ const App = () => {
   useLanguageSetting();
 
   const location = useLocation();
+
   const noneHeader = (
     location.pathname.includes("/user/login") ||
     location.pathname.includes("/user/signup") ||
@@ -179,40 +81,75 @@ const App = () => {
   );
 
   return (
-    <div className={"App"}>
+    <div className="App">
       {!noneHeader && <Header />}
       {!noneTop && <TopNav />}
-      <Routes>
-        <Route path="/*" element={<User />} />
-        <Route path="/admin/*" element={<Admin />} />
-        <Route path="/auth/*" element={<Auth />} />
-        <Route path="/exercise/*" element={<Exercise />} />
-        <Route path="/food/*" element={<Food />} />
-        <Route path="/calendar/*" element={<Calendar />} />
-        <Route path="/today/*" element={<Today />} />
-        <Route path="/money/*" element={<Money />} />
-        <Route path="/sleep/*" element={<Sleep />} />
-        <Route path="/user/*" element={<User />} />
-      </Routes>
-      <Alert />
-      <Confirm />
+      {<Alert />}
+      {<Confirm />}
+      <Suspense fallback={<FallBack />}>
+        <Routes>
+          {/** root **/}
+          <Route  path={"/*"} element={<UserLogin />} />
+          {/** admin **/}
+          <Route path={"/admin/dashboard"} element={<AdminDashboard />} />
+          {/** auth **/}
+          <Route path={"/auth/Error"} element={<AuthError />} />
+          <Route path={"/auth/Google"} element={<AuthGoogle />} />
+          <Route path={"/auth/Privacy"} element={<AuthPrivacy />} />
+          {/** calendar **/}
+          <Route path={"/calendar/list"} element={<CalendarList />} />
+          <Route path={"/calendar/detail"} element={<CalendarDetail />} />
+          {/** exercise **/}
+          <Route path={"/exercise/chart/list"} element={<ExerciseChart />} />
+          <Route path={"/exercise/goal/list"} element={<ExerciseGoalList />} />
+          <Route path={"/exercise/goal/detail"} element={<ExerciseGoalDetail />} />
+          <Route path={"/exercise/list"} element={<ExerciseList />} />
+          <Route path={"/exercise/detail"} element={<ExerciseDetail />} />
+          {/** food **/}
+          <Route path={"/food/chart/list"} element={<FoodChart />} />
+          <Route path={"/food/goal/list"} element={<FoodGoalList />} />
+          <Route path={"/food/goal/detail"} element={<FoodGoalDetail />} />
+          <Route path={"/food/find/list"} element={<FoodFindList />} />
+          <Route path={"/food/favorite/list"} element={<FoodFavoriteList />} />
+          <Route path={"/food/list"} element={<FoodList />} />
+          <Route path={"/food/detail"} element={<FoodDetail />} />
+          {/** today **/}
+          <Route path={"/today/goal/list"} element={<TodayGoalList />} />
+          <Route path={"/today/list"} element={<TodayList />} />
+          {/** money **/}
+          <Route path={"/money/chart/list"} element={<MoneyChart />} />
+          <Route path={"/money/goal/list"} element={<MoneyGoalList />} />
+          <Route path={"/money/goal/detail"} element={<MoneyGoalDetail />} />
+          <Route path={"/money/list"} element={<MoneyList />} />
+          <Route path={"/money/detail"} element={<MoneyDetail />} />
+          {/** sleep **/}
+          <Route path={"/sleep/chart/list"} element={<SleepChart />} />
+          <Route path={"/sleep/goal/list"} element={<SleepGoalList />} />
+          <Route path={"/sleep/goal/detail"} element={<SleepGoalDetail />} />
+          <Route path={"/sleep/list"} element={<SleepList />} />
+          <Route path={"/sleep/detail"} element={<SleepDetail />} />
+          {/** user **/}
+          <Route path={"/user/app/info"} element={<UserAppInfo />} />
+          <Route path={"/user/app/setting"} element={<UserAppSetting />} />
+          <Route path={"/user/signup"} element={<UserSignup />} />
+          <Route path={"/user/login"} element={<UserLogin />} />
+          <Route path={"/user/resetPw"} element={<UserResetPw />} />
+          <Route path={"/user/detail"} element={<UserDetail />} />
+          <Route path={"/user/delete"} element={<UserDelete />} />
+          <Route path={"/user/category"} element={<UserCategory />} />
+        </Routes>
+      </Suspense>
       {!noneBottom && <BottomNav />}
     </div>
   );
 };
 
 // -------------------------------------------------------------------------------------------------
-const theme = createTheme({
-  typography: {
-    fontFamily: "Pretendard, 'Noto Sans KR', sans-serif",
-  },
-});
-
-// -------------------------------------------------------------------------------------------------
-const root = createRoot(document.getElementById('root') as HTMLElement);
-root.render(
+createRoot(document.getElementById('root') as HTMLElement).render(
   <BrowserRouter basename={"/JPAGE"}>
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={
+      createTheme(({ typography: { fontFamily: "Pretendard, 'Noto Sans KR', sans-serif" }}))
+    }>
       <CssBaseline />
       <App />
     </ThemeProvider>

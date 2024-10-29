@@ -1,7 +1,7 @@
 // exerciseChartService.ts
 
 import * as repository from "@repositories/exercise/exerciseChartRepository";
-import { timeToDecimal } from "@scripts/utils";
+import { timeToDecimal } from "@assets/scripts/utils";
 import moment from "moment-timezone";
 
 // 1-1. chart (bar - today) ------------------------------------------------------------------------

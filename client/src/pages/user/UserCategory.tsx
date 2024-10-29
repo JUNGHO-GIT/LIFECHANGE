@@ -1,16 +1,16 @@
 // UserCategory.tsx
 
-import { useState, useEffect, createRef, useRef } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useStorageLocal } from "@imports/ImportHooks";
-import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
-import { Category } from "@imports/ImportSchemas";
-import { axios, sync } from "@imports/ImportUtils";
-import { Loading, Footer } from "@imports/ImportLayouts";
-import { PopUp, Input } from "@imports/ImportContainers";
-import { Div, Icons } from "@imports/ImportComponents";
-import { Paper, Grid, Card } from "@imports/ImportMuis";
-import { TableContainer, Table, TableFooter } from "@imports/ImportMuis";
-import { TableHead, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
+import { useState, useEffect, createRef, useRef } from "@importReacts";
+import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
+import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { axios } from "@importLibs";
+import { sync } from "@importScripts";
+import { Category } from "@importSchemas";
+import { Loader, Footer } from "@importLayouts";
+import { PopUp, Input } from "@importContainers";
+import { Div, Icons } from "@importComponents";
+import { Paper, Grid, Card, TableContainer, Table, TableFooter } from "@importMuis";
+import { TableHead, TableBody, TableRow, TableCell } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const UserCategory = () => {
@@ -19,8 +19,8 @@ export const UserCategory = () => {
   const { URL_OBJECT, PATH, sessionId } = useCommonValue();
   const { location_dateStart, location_dateEnd, location_dateType } = useCommonValue();
   const { getDayFmt } = useCommonDate();
-  const { ALERT, setALERT } = useAlertStore();
-  const { translate } = useLanguageStore();
+  const { ALERT, setALERT } = useStoreAlert();
+  const { translate } = useStoreLanguage();
 
   // 2-1. useStorageLocal ------------------------------------------------------------------------
   const [DATE, setDATE] = useStorageLocal(
@@ -567,7 +567,7 @@ export const UserCategory = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min90vh"}>
-        {LOADING ? <Loading /> : detailSection()}
+        {LOADING ? <Loader /> : detailSection()}
       </Paper>
     );
   };

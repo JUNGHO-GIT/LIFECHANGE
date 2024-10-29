@@ -1,7 +1,7 @@
 // AuthPrivacy.tsx
 
-import { Div, Hr } from "@imports/ImportComponents";
-import { Paper, Grid, Card } from "@imports/ImportMuis";
+import { Div, Hr } from "@importComponents";
+import { Paper, Grid, Card } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const AuthPrivacy = () => {

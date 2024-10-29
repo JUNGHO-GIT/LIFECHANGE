@@ -1,8 +1,9 @@
 // AuthGoogle.tsx
 
-import { useEffect } from "@imports/ImportReacts";
-import { useCommonValue } from "@imports/ImportHooks";
-import { axios, sync, setLocal, setSession } from "@imports/ImportUtils";
+import { useEffect } from "@importReacts";
+import { useCommonValue } from "@importHooks";
+import { axios } from "@importLibs";
+import { setLocal, setSession, sync } from "@importScripts";
 
 // -------------------------------------------------------------------------------------------------
 export const AuthGoogle = () => {

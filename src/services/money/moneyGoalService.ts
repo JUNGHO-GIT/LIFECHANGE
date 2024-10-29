@@ -110,10 +110,10 @@ export const list = async (
       );
 
       const moneyTotalIncome = listReal.reduce((acc: any, curr: any) => (
-        acc + (parseFloat(curr?.money_total_income) ?? 0)
+        acc + (parseFloat(curr?.money_total_income || 0))
       ), 0);
       const moneyTotalExpense = listReal.reduce((acc: any, curr: any) => (
-        acc + (parseFloat(curr?.money_total_expense) ?? 0)
+        acc + (parseFloat(curr?.money_total_expense || 0))
       ), 0);
 
       return {

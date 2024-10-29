@@ -2,7 +2,7 @@
 
 import * as repository from "@repositories/sleep/sleepChartRepository";
 import moment from "moment-timezone";
-import { timeToDecimal } from "@scripts/utils";
+import { timeToDecimal } from "@assets/scripts/utils";
 
 // 1-1. chart (bar - today) ------------------------------------------------------------------------
 export const barToday = async (

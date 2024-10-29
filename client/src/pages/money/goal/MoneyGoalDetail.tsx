@@ -1,14 +1,15 @@
 // MoneyGoalDetail.tsx
 
-import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useValidateMoney } from "@imports/ImportHooks";
-import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
-import { MoneyGoal } from "@imports/ImportSchemas";
-import { axios, sync, insertComma } from "@imports/ImportUtils";
-import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
-import { PickerDay, Count, Delete, Input } from "@imports/ImportContainers";
-import { Img, Bg } from "@imports/ImportComponents";
-import { Paper, Grid, Card } from "@imports/ImportMuis";
+import { useState, useEffect } from "@importReacts";
+import { useCommonValue, useCommonDate, useValidateMoney } from "@importHooks";
+import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { MoneyGoal } from "@importSchemas";
+import { axios } from "@importLibs";
+import { insertComma, sync } from "@importScripts";
+import { Loader, Footer, Dialog } from "@importLayouts";
+import { PickerDay, Count, Delete, Input } from "@importContainers";
+import { Img, Bg } from "@importComponents";
+import { Paper, Grid, Card } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const MoneyGoalDetail = () => {
@@ -18,8 +19,8 @@ export const MoneyGoalDetail = () => {
   const { location_from, location_dateType } = useCommonValue();
   const { location_dateStart, location_dateEnd } = useCommonValue();
   const { getWeekStartFmt, getWeekEndFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-  const { translate } = useLanguageStore();
-  const { ALERT, setALERT } = useAlertStore();
+  const { translate } = useStoreLanguage();
+  const { ALERT, setALERT } = useStoreAlert();
   const { ERRORS, REFS, validate } = useValidateMoney();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -411,7 +412,7 @@ export const MoneyGoalDetail = () => {
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         {dateCountSection()}
-        {LOADING ? <Loading /> : detailSection()}
+        {LOADING ? <Loader /> : detailSection()}
       </Paper>
     );
   };

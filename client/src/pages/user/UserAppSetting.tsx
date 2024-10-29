@@ -1,21 +1,20 @@
 // UserAppSetting.tsx
 
-import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue } from "@imports/ImportHooks";
-import { useLanguageStore } from "@imports/ImportStores";
-import { setLocal } from "@imports/ImportUtils";
-import { Loading } from "@imports/ImportLayouts";
-import { PopUp } from "@imports/ImportContainers";
-import { Icons, Img, Div, Br } from "@imports/ImportComponents";
-import { Paper, Grid, Card } from "@imports/ImportMuis";
-import { TableContainer, Table, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
+import { useState, useEffect } from "@importReacts";
+import { useCommonValue, useStoreLanguage } from "@importHooks";
+import { setLocal } from "@importScripts";
+import { Loader } from "@importLayouts";
+import { PopUp } from "@importContainers";
+import { Icons, Img, Div, Br } from "@importComponents";
+import { Paper, Grid, Card } from "@importMuis";
+import { TableContainer, Table, TableBody, TableRow, TableCell } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const UserAppSetting = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { navigate, isAdmin, localLang } = useCommonValue();
-  const { translate } = useLanguageStore();
+  const { translate } = useStoreLanguage();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -267,7 +266,7 @@ export const UserAppSetting = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper d-center border-1 radius-1 h-min90vh"}>
-        {LOADING ? <Loading /> : detailSection()}
+        {LOADING ? <Loader /> : detailSection()}
       </Paper>
     );
   };

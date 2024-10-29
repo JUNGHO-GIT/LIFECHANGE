@@ -1,14 +1,15 @@
 // MoneyDetail.tsx
 
-import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useValidateMoney } from "@imports/ImportHooks";
-import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
-import { Money } from "@imports/ImportSchemas";
-import { axios, sync, insertComma } from "@imports/ImportUtils";
-import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
-import { PickerDay, Memo, Count, Delete, Select, Input } from "@imports/ImportContainers";
-import { Img, Bg, Div } from "@imports/ImportComponents";
-import { Paper, MenuItem, Grid, Checkbox, Card } from "@imports/ImportMuis";
+import { useState, useEffect } from "@importReacts";
+import { useCommonValue, useCommonDate, useValidateMoney } from "@importHooks";
+import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { axios } from "@importLibs";
+import { insertComma, sync } from "@importScripts";
+import { Money } from "@importSchemas";
+import { Loader, Footer, Dialog } from "@importLayouts";
+import { PickerDay, Memo, Count, Delete, Select, Input } from "@importContainers";
+import { Img, Bg, Div } from "@importComponents";
+import { Paper, MenuItem, Grid, Checkbox, Card } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const MoneyDetail = () => {
@@ -19,8 +20,8 @@ export const MoneyDetail = () => {
   const { location_from, location_dateType } = useCommonValue();
   const { location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt,getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-  const { translate } = useLanguageStore();
-  const { ALERT, setALERT } = useAlertStore();
+  const { translate } = useStoreLanguage();
+  const { ALERT, setALERT } = useStoreAlert();
   const { ERRORS, REFS, validate } = useValidateMoney();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -598,7 +599,7 @@ export const MoneyDetail = () => {
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         {dateCountSection()}
         {totalSection()}
-        {LOADING ? <Loading /> : detailSection()}
+        {LOADING ? <Loader /> : detailSection()}
       </Paper>
     );
   };

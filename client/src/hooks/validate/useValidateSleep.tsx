@@ -1,15 +1,15 @@
 // useValidateSleep.tsx
 
-import { useState, createRef, useRef } from "@imports/ImportReacts";
-import { useLanguageStore, useAlertStore, useConfirmStore } from "@imports/ImportStores";
+import { useState, createRef, useRef } from "@importReacts";
+import { useStoreLanguage, useStoreAlert, useStoreConfirm } from "@importHooks";
 
 // -------------------------------------------------------------------------------------------------
 export const useValidateSleep = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { translate } = useLanguageStore();
-  const { ALERT, setALERT } = useAlertStore();
-  const { CONFIRM, setCONFIRM } = useConfirmStore();
+  const { translate } = useStoreLanguage();
+  const { ALERT, setALERT } = useStoreAlert();
+  const { CONFIRM, setCONFIRM } = useStoreConfirm();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const REFS = useRef<any[]>([]);

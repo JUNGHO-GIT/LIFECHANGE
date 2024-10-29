@@ -1,14 +1,14 @@
 // useFoodSection.tsx
 
-import { useEffect } from "@imports/ImportReacts";
-import { useCommonValue } from "@imports/ImportHooks";
-import { setSession } from "@imports/ImportUtils";
+import { useEffect } from "@importReacts";
+import { useCommonValue } from "@importHooks";
+import { setSession } from "@importScripts";
 
 // -------------------------------------------------------------------------------------------------
 export const useFoodSection = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { PATH, sessionId } = useCommonValue();
+  const { PATH } = useCommonValue();
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -21,5 +21,5 @@ export const useFoodSection = () => {
     ) {
       setSession("section", "food", "", []);
     }
-  }, [PATH, sessionId]);
+  }, [PATH]);
 };

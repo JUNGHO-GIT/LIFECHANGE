@@ -1,15 +1,16 @@
 // MoneyChartLine.tsx
 
-import { useState, useEffect } from "@imports/ImportReacts";
-import { useStorageLocal, useCommonValue, useCommonDate } from "@imports/ImportHooks";
-import { useLanguageStore } from "@imports/ImportStores";
-import { MoneyLine } from "@imports/ImportSchemas";
-import { axios, handleY } from "@imports/ImportUtils";
-import { Loading } from "@imports/ImportLayouts";
-import { Select, PopUp } from "@imports/ImportContainers";
-import { Div, Img, Br } from "@imports/ImportComponents";
-import { Paper, MenuItem, Grid, Card } from "@imports/ImportMuis";
-import { FormGroup, FormControlLabel, Switch } from "@imports/ImportMuis";
+import { useState, useEffect } from "@importReacts";
+import { useStorageLocal, useCommonValue, useCommonDate } from "@importHooks";
+import { useStoreLanguage } from "@importHooks";
+import { MoneyLine } from "@importSchemas";
+import { axios } from "@importLibs";
+import { handleY } from "@importScripts";
+import { Loader } from "@importLayouts";
+import { Select, PopUp } from "@importContainers";
+import { Div, Img, Br } from "@importComponents";
+import { Paper, MenuItem, Grid, Card } from "@importMuis";
+import { FormGroup, FormControlLabel, Switch } from "@importMuis";
 import { Line, LineChart } from "recharts";
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
@@ -20,7 +21,7 @@ export const MoneyChartLine = () => {
   const { URL_OBJECT, PATH, sessionId, chartColors, moneyChartArray } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
-  const { translate } = useLanguageStore();
+  const { translate } = useStoreLanguage();
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [TYPE, setTYPE] = useStorageLocal(
@@ -291,7 +292,7 @@ export const MoneyChartLine = () => {
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min40vh"}>
         {headSection()}
         <Br px={20} />
-        {LOADING ? <Loading /> : chartSection()}
+        {LOADING ? <Loader /> : chartSection()}
       </Paper>
     );
   };

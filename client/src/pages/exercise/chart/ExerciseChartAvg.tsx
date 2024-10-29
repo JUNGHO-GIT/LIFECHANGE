@@ -1,15 +1,16 @@
 // ExerciseChartAvg.tsx
 
-import { useState, useEffect } from "@imports/ImportReacts";
-import { useStorageLocal, useCommonValue, useCommonDate } from "@imports/ImportHooks";
-import { useLanguageStore } from "@imports/ImportStores";
-import { ExerciseAvgVolume, ExerciseAvgCardio } from "@imports/ImportSchemas";
-import { axios, handleY } from "@imports/ImportUtils";
-import { Loading } from "@imports/ImportLayouts";
-import { Select, PopUp } from "@imports/ImportContainers";
-import { Div, Img, Br } from "@imports/ImportComponents";
-import { Paper, MenuItem, Grid, Card } from "@imports/ImportMuis";
-import { FormGroup, FormControlLabel, Switch } from "@imports/ImportMuis";
+import { useState, useEffect } from "@importReacts";
+import { useStorageLocal, useCommonValue, useCommonDate } from "@importHooks";
+import { useStoreLanguage } from "@importHooks";
+import { ExerciseAvgVolume, ExerciseAvgCardio } from "@importSchemas";
+import { axios } from "@importLibs";
+import { handleY } from "@importScripts";
+import { Loader } from "@importLayouts";
+import { Select, PopUp } from "@importContainers";
+import { Div, Img, Br } from "@importComponents";
+import { Paper, MenuItem, Grid, Card } from "@importMuis";
+import { FormGroup, FormControlLabel, Switch } from "@importMuis";
 import { ComposedChart, Bar } from "recharts";
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
@@ -20,7 +21,7 @@ export const ExerciseChartAvg = () => {
   const { URL_OBJECT, PATH, sessionId, chartColors, exerciseChartArray } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
-  const { translate } = useLanguageStore();
+  const { translate } = useStoreLanguage();
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [TYPE, setTYPE] = useStorageLocal(
@@ -300,7 +301,7 @@ export const ExerciseChartAvg = () => {
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min40vh"}>
         {headSection()}
         <Br px={20} />
-        {LOADING ? <Loading /> : chartSection()}
+        {LOADING ? <Loader /> : chartSection()}
       </Paper>
     );
   };

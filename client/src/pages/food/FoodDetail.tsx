@@ -1,14 +1,15 @@
 // FoodDetail.tsx
 
-import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate, useValidateFood } from "@imports/ImportHooks";
-import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
-import { Food } from "@imports/ImportSchemas";
-import { axios, sync, setSession, insertComma } from "@imports/ImportUtils";
-import { Loading, Footer, Dialog } from "@imports/ImportLayouts";
-import { PickerDay, Count, Delete, Input, Select } from "@imports/ImportContainers";
-import { Img, Bg, Icons, Div } from "@imports/ImportComponents";
-import { Paper, MenuItem, Grid, Card } from "@imports/ImportMuis";
+import { useState, useEffect } from "@importReacts";
+import { useCommonValue, useCommonDate, useValidateFood } from "@importHooks";
+import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { Food } from "@importSchemas";
+import { axios } from "@importLibs";
+import { insertComma, setSession, sync } from "@importScripts";
+import { Loader, Footer, Dialog } from "@importLayouts";
+import { PickerDay, Count, Delete, Input, Select } from "@importContainers";
+import { Img, Bg, Icons, Div } from "@importComponents";
+import { Paper, MenuItem, Grid, Card } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodDetail = () => {
@@ -19,8 +20,8 @@ export const FoodDetail = () => {
   const { location_from, location_dateType } = useCommonValue();
   const { location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt,getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-  const { translate } = useLanguageStore();
-  const { ALERT, setALERT } = useAlertStore();
+  const { translate } = useStoreLanguage();
+  const { ALERT, setALERT } = useStoreAlert();
   const { ERRORS, REFS, validate } = useValidateFood();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -990,7 +991,7 @@ export const FoodDetail = () => {
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
         {dateCountSection()}
         {totalSection()}
-        {LOADING ? <Loading /> : detailSection()}
+        {LOADING ? <Loader /> : detailSection()}
       </Paper>
     );
   };

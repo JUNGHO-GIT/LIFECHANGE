@@ -1,13 +1,13 @@
 // AdminDashboard.tsx
 
-import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommonValue, useCommonDate } from "@imports/ImportHooks";
-import { useLanguageStore, useAlertStore } from "@imports/ImportStores";
-import { axios } from "@imports/ImportUtils";
-import { Loading, Footer } from "@imports/ImportLayouts";
-import { Input }from "@imports/ImportContainers";
-import { Div, Hr } from "@imports/ImportComponents";
-import { Paper, Grid, Card } from "@imports/ImportMuis";
+import { useState, useEffect } from "@importReacts";
+import { useCommonValue, useCommonDate } from "@importHooks";
+import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { axios } from "@importLibs";
+import { Loader, Footer } from "@importLayouts";
+import { Input }from "@importContainers";
+import { Div, Hr } from "@importComponents";
+import { Paper, Grid, Card } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const AdminDashboard = () => {
@@ -15,8 +15,8 @@ export const AdminDashboard = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, sessionId } = useCommonValue();
   const { getDayFmt } = useCommonDate();
-  const { translate } = useLanguageStore();
-  const { ALERT, setALERT } = useAlertStore();
+  const { translate } = useStoreLanguage();
+  const { ALERT, setALERT } = useStoreAlert();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -84,7 +84,7 @@ export const AdminDashboard = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        {LOADING ? <Loading /> : detailSection()}
+        {LOADING ? <Loader /> : detailSection()}
       </Paper>
     );
   };
