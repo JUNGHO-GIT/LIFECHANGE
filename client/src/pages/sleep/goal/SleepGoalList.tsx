@@ -210,7 +210,7 @@ export const SleepGoalList = () => {
                       />
                     </Grid>
                     <Grid size={3} className={"d-row-left"}>
-                      <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
+                      <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
                         {translate("bedTime")}
                       </Div>
                     </Grid>
@@ -283,7 +283,7 @@ export const SleepGoalList = () => {
                       />
                     </Grid>
                     <Grid size={3} className={"d-row-left"}>
-                      <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
+                      <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
                         {translate("wakeTime")}
                       </Div>
                     </Grid>
@@ -356,7 +356,7 @@ export const SleepGoalList = () => {
                       />
                     </Grid>
                     <Grid size={3} className={"d-row-left"}>
-                      <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
+                      <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
                         {translate("sleepTime")}
                       </Div>
                     </Grid>

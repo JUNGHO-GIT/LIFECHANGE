@@ -8,7 +8,7 @@ export const list = async (object: any) => {
   // 0. calcOverTenMillion -------------------------------------------------------------------------
   const calcOverTenMillion = (param: string) => {
 
-    let finalResult: string = "fs-0-9rem fw-600";
+    let finalResult: string = "fs-1-0rem fw-600";
 
     if (!param || param === "0" || param === "00:00") {
       finalResult = param;
@@ -28,7 +28,7 @@ export const list = async (object: any) => {
   // 0. calcNonValueColor --------------------------------------------------------------------------
   const calcNonValueColor = (param: string) => {
 
-    let finalResult: string = "fs-0-9rem fw-600";
+    let finalResult: string = "fs-1-0rem fw-600";
 
     if (!param) {
       finalResult = param;
@@ -49,7 +49,7 @@ export const list = async (object: any) => {
 
     let goal: number = parseFloat(goalParam);
     let real: number = parseFloat(realParam);
-    let finalResult: string = "fs-0-9rem fw-600";
+    let finalResult: string = "fs-1-0rem fw-600";
 
     if (goal > real) {
       finalResult = `-${(parseFloat(Math.abs(goal - real).toFixed(2)).toString())}`;
@@ -66,7 +66,7 @@ export const list = async (object: any) => {
 
     let goal: string = goalParam;
     let real: string = realParam;
-    let finalResult: string = "fs-0-9rem fw-600";
+    let finalResult: string = "fs-1-0rem fw-600";
 
     const goalDate = new Date(`1970-01-01T${goal}:00Z`);
     const realDate = new Date(`1970-01-01T${real}:00Z`);
@@ -97,7 +97,7 @@ export const list = async (object: any) => {
     let goal: number = parseFloat(goalParam);
     let real: number = parseFloat(realParam);
     let percent: number = 0;
-    let finalResult: string = "fs-0-9rem fw-600";
+    let finalResult: string = "fs-1-0rem fw-600";
 
     // 1. count
     if (extra === "count") {

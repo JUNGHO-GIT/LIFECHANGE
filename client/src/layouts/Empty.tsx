@@ -73,7 +73,7 @@ export const Empty = (
                 />
               </Grid>
               <Grid size={4} className={"d-row-left"}>
-                <Div className={"fs-0-9rem fw-600 dark"}>
+                <Div className={"fs-1-0rem fw-600 dark"}>
                   {translate(`${extra}`)}
                 </Div>
               </Grid>

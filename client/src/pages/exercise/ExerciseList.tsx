@@ -201,7 +201,7 @@ export const ExerciseList = () => {
                       />
                     </Grid>
                     <Grid size={3} className={"d-row-left"}>
-                      <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
+                      <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
                         {translate("volume")}
                       </Div>
                     </Grid>
@@ -236,7 +236,7 @@ export const ExerciseList = () => {
                       />
                     </Grid>
                     <Grid size={3} className={"d-row-left"}>
-                      <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
+                      <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
                         {translate("cardio")}
                       </Div>
                     </Grid>
@@ -271,7 +271,7 @@ export const ExerciseList = () => {
                       />
                     </Grid>
                     <Grid size={3} className={"d-row-left"}>
-                      <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
+                      <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
                         {translate("scale")}
                       </Div>
                     </Grid>

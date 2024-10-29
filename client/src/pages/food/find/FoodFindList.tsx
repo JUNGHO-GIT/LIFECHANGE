@@ -255,7 +255,7 @@ export const FoodFindList = () => {
                       />
                     </Grid>
                     <Grid size={3} className={"d-row-left"}>
-                      <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
+                      <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
                         {translate("kcal")}
                       </Div>
                     </Grid>
@@ -290,7 +290,7 @@ export const FoodFindList = () => {
                       />
                     </Grid>
                     <Grid size={3} className={"d-row-left"}>
-                      <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
+                      <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
                         {translate("carb")}
                       </Div>
                     </Grid>
@@ -325,7 +325,7 @@ export const FoodFindList = () => {
                       />
                     </Grid>
                     <Grid size={3} className={"d-row-left"}>
-                      <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
+                      <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
                         {translate("protein")}
                       </Div>
                     </Grid>
@@ -360,7 +360,7 @@ export const FoodFindList = () => {
                       />
                     </Grid>
                     <Grid size={3} className={"d-row-left"}>
-                      <Div className={"fs-0-9rem fw-600 dark ms-n15"}>
+                      <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
                         {translate("fat")}
                       </Div>
                     </Grid>
