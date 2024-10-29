@@ -31,6 +31,7 @@ export const TopNav = () => {
       admin: "dashboard",
     }
   );
+  
   // 2-2. useState ---------------------------------------------------------------------------------
   const [mainSmileImage, setMainSmileImage] = useState<any>("smile3");
   const [includingExclusions, setIncludingExclusions] = useState<boolean>(false);
@@ -90,7 +91,7 @@ export const TopNav = () => {
     dateStart: "",
     dateEnd: "",
   });
-
+  
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 스마일 지수 계산
   useEffect(() => {
@@ -293,11 +294,6 @@ export const TopNav = () => {
 
   // 4. handle------------------------------------------------------------------------------------
   const handleClickTobNav = (value: string) => {
-    setSelectedTab((prev: any) => ({
-      ...prev,
-      [firstStr]: value,
-    }));
-
     let url = "";
     if (value === "real" || value === "schedule") {
       url = `/${firstStr}/list`;

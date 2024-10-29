@@ -213,14 +213,13 @@ const theme = createTheme({
   },
 });
 
+// -------------------------------------------------------------------------------------------------
 const root = createRoot(document.getElementById('root') as HTMLElement);
-  root.render(
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter basename={"/JPAGE"}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <App />
-        </ThemeProvider>
-      </BrowserRouter>
-    </QueryClientProvider>
-  );
+root.render(
+  <BrowserRouter basename={"/JPAGE"}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <App />
+    </ThemeProvider>
+  </BrowserRouter>
+);

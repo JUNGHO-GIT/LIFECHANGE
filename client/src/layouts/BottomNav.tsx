@@ -27,27 +27,25 @@ export const BottomNav = () => {
       sleep: false,
     }
   );
+  
+    // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    alert(JSON.stringify(selectedTab, null, 2));
+  }, [selectedTab]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    setSelectedTab((prev: any) => ({
-      ...Object.keys(prev).reduce((acc: any, key: string) => {
+    setSelectedTab((prev: any) => {
+      const updatedTabs = Object.keys(prev).reduce((acc, key) => {
         acc[key] = key === firstStr;
         return acc;
-      }, {})
-    }));
+      }, {} as Record<string, boolean>);
+      return updatedTabs;
+    });
   }, [firstStr]);
 
   // 4. handle------------------------------------------------------------------------------------
   const handleClickBottomNav = (value: string) => {
-
-    // value 만 true 로 설정하고 나머지 다 false 로 설정
-    setSelectedTab((prev: any) => ({
-      ...Object.keys(prev).reduce((acc: any, key: string) => {
-        acc[key] = key === value;
-        return acc;
-      }, {})
-    }));
 
     // top selected 값 가져오기
     const getItem = getLocal("tabs", "top", "");
@@ -77,7 +75,7 @@ export const BottomNav = () => {
     const tabsSection = () => (
       <BottomNavigation
         showLabels={true}
-        value={Object.keys(selectedTab).find((key: string) => selectedTab[key])}
+        value={ Object.keys(selectedTab).find((key) => selectedTab[key] === true)}
         className={"w-100p"}
       >
         <BottomNavigationAction
@@ -182,11 +180,7 @@ export const BottomNav = () => {
     // 7-2. return
     return (
       <Paper className={"layout-wrapper p-sticky bottom-0vh h-8vh border-1 radius-1 shadow-bottom-1"}>
-        <Grid container={true} spacing={0}>
-          <Grid size={12} className={"d-col-center"}>
             {tabsSection()}
-          </Grid>
-        </Grid>
       </Paper>
     );
   };

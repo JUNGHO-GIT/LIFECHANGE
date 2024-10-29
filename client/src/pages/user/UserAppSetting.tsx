@@ -201,6 +201,23 @@ export const UserAppSetting = () => {
                       />
                     </TableCell>
                   </TableRow>
+                  {/** clear **/}
+                  <TableRow
+                    className={`${isAdmin !== "true" ? "d-none" : ""} pointer`}
+                    onClick={() => {
+                      localStorage.clear();
+                    }}
+                  >
+                    <TableCell className={"w-90vw p-15"}>
+                      {translate("clear")}
+                    </TableCell>
+                    <TableCell className={"w-10vw p-15"}>
+                      <Icons
+                        name={"ChevronRight"}
+                        className={"w-16 h-16"}
+                      />
+                    </TableCell>
+                  </TableRow>
                   {/** logout **/}
                   <TableRow
                     className={"pointer"}

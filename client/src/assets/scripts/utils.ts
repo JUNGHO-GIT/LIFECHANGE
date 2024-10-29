@@ -69,7 +69,9 @@ export const insertComma = (str: string | number) => {
 
     // 최종 반환 문자열 구성 (소수점 이하가 있는 경우 포함)
     return (
-      (isNegative ? "-" : "") + formattedNum + (decimalPart ? `.${decimalPart}`: "")
+      (isNegative ? "-" : "") +
+      formattedNum +
+      (decimalPart !== undefined ? "." + decimalPart : "")
     );
   }
   catch (error) {

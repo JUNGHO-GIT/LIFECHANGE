@@ -21,8 +21,6 @@ export const getLocal = (key1: string, key2: string, key3: string) => {
   else if (key1 && key2 && key3) {
     return localTitle?.[key1]?.[key2]?.[key3];
   }
-
-  return {};
 };
 
 // 2. setLocal -------------------------------------------------------------------------------------
