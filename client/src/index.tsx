@@ -72,6 +72,11 @@ import {
   UserAppInfo, UserAppSetting, UserCategory, UserDelete, UserDetail, UserLogin, UserResetPw, UserSignup,
 } from "@imports/ImportPages";
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+// React Query의 QueryClient 생성
+const queryClient = new QueryClient();
+
 // -------------------------------------------------------------------------------------------------
 const Admin = () => (
   <Routes>
@@ -209,11 +214,13 @@ const theme = createTheme({
 });
 
 const root = createRoot(document.getElementById('root') as HTMLElement);
-root.render(
-  <BrowserRouter basename={"/JPAGE"}>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <App />
-    </ThemeProvider>
-  </BrowserRouter>
-);
+  root.render(
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter basename={"/JPAGE"}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <App />
+        </ThemeProvider>
+      </BrowserRouter>
+    </QueryClientProvider>
+  );

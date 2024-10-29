@@ -7,7 +7,7 @@ import { User } from "@imports/ImportSchemas";
 import { axios, insertComma } from "@imports/ImportUtils";
 import { Loading } from "@imports/ImportLayouts";
 import { Input } from "@imports/ImportContainers";
-import { Div, Btn, Img, Hr, Br } from "@imports/ImportComponents";
+import { Div, Btn, Img, Hr } from "@imports/ImportComponents";
 import { Paper, Grid, Card } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
