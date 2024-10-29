@@ -502,9 +502,9 @@ export const UserCategory = () => {
     // 7-2. detail
     const detailSection = () => {
       const detailFragment = (item: any) => (
-        <Grid container={true} spacing={0} className={"border-1 radius-1 shadow-0"}>
+        <Grid container={true} spacing={0}>
           <Grid size={12}>
-            <TableContainer>
+            <TableContainer className={"border-1 radius-1 over-x-hidden"}>
               <Table>
                 <TableHead className={"table-thead"}>
                   <TableRow className={"table-thead-tr"}>

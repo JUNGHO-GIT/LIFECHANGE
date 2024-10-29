@@ -106,6 +106,10 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
         ko: "cnt",
         en: "cnt"
       },
+      clearStorage: {
+        ko: "스토리지 초기화",
+        en: "Clear Storage"
+      },
       cm: {
         ko: "cm",
         en: "cm"
