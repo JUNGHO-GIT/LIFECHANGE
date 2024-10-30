@@ -94,7 +94,7 @@ const App = () => {
       <Suspense fallback={<Loader />}>
         <Routes>
           {/** root **/}
-          <Route  path={"/*/*"} element={<UserLogin />} />
+          <Route  path={"/"} element={<UserLogin />} />
           {/** admin **/}
           <Route path={"/admin/dashboard/*"} element={<AdminDashboard />} />
           {/** auth **/}
@@ -143,7 +143,7 @@ const App = () => {
           <Route path={"/user/delete/*"} element={<UserDelete />} />
           <Route path={"/user/category/*"} element={<UserCategory />} />
           {/** error **/}
-          <Route path={"*/*"} element={<AuthError />} />
+          <Route path={"*"} element={<AuthError />} />
         </Routes>
       </Suspense>
       <Suspense>
@@ -156,9 +156,9 @@ const App = () => {
 // -------------------------------------------------------------------------------------------------
 createRoot(document.getElementById('root') as HTMLElement).render(
   <BrowserRouter basename={"/JPAGE"}>
-    <ThemeProvider theme={
-      createTheme(({ typography: { fontFamily: "Pretendard, 'Noto Sans KR', sans-serif" }}))
-    }>
+    <ThemeProvider theme={createTheme({
+      typography: { fontFamily: "Pretendard, 'Noto Sans KR', sans-serif" }
+    })}>
       <CssBaseline />
       <App />
     </ThemeProvider>
