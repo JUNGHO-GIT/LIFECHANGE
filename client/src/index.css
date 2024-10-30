@@ -13,37 +13,44 @@ html, body {
   background-color: #e8e8e8 !important;
 }
 
-/** 1. Small (0 - 479px) **************************************************************************/
-@media only screen and (min-width: 0px) and (max-width: 479px) {
-  body {
+/** 1. XXS (0 ~ 330px) ****************************************************************************/
+@media only screen and (min-width: 0px) and (max-width: 330px) {
+  html, body {
+    font-size: 15.5px;
+  }
+}
+
+/** 2. XS (330px ~ 630px) *************************************************************************/
+@media only screen and (min-width: 330px) and (max-width: 630px) {
+  html, body {
     font-size: 16.0px;
   }
 }
 
-/** 2. Mobile (480px - 767px) *********************************************************************/
-@media only screen and (min-width: 480px) and (max-width: 767px) {
-  body {
+/** 3. SM (630px ~ 930px) *************************************************************************/
+@media only screen and (min-width: 630px) and (max-width: 930px) {
+  html, body {
     font-size: 16.5px;
   }
 }
 
-/** 3. Pablet (768px - 991px) *********************************************************************/
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-  body {
+/** 4. MD (930px ~ 1200px) ***********************************************************************/
+@media only screen and (min-width: 930px) and (max-width: 1200px) {
+  html, body {
     font-size: 17.0px;
   }
 }
 
-/** 4. Tablet (992px - 1199px) ********************************************************************/
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
-  body {
+/** 5. LG (1200px ~ 1500px) **********************************************************************/
+@media only screen and (min-width: 1200px) and (max-width: 1500px) {
+  html, body {
     font-size: 17.5px;
   }
 }
 
-/** 5. Desktop (1200px - 10000px) *****************************************************************/
-@media only screen and (min-width: 1200px) and (max-width: 10000px) {
-  body {
+/** 6. XL (1500px ~ 10000px) *********************************************************************/
+@media only screen and (min-width: 1500px) {
+  html, body {
     font-size: 18.0px;
   }
 }
