@@ -12216,6 +12216,21 @@
     transform: rotate(360deg);
   }
 }
+.sequential-loader {
+  opacity: 1;
+  animation: fadeInOut 1.5s ease-in-out forwards;
+}
+@keyframes fadeInOut {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
 .fadeIn {
   animation: fadeIn 0.5s cubic-bezier(0.42, 0, 0.58, 1) !important;
@@ -12258,6 +12273,7 @@
     transform: translateX(4px);
   }
 }
+
 
 /** scrollbar *************************************************************************************/
 ::-webkit-scrollbar {

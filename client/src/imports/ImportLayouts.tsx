@@ -15,6 +15,9 @@ const BottomNav = lazy(() => import("@interfaces/layouts/BottomNav").then((modul
 const Loader = lazy(() => import("@interfaces/layouts/Loader").then((module) => ({
   default: module.Loader
 })));
+const FallBack = lazy(() => import("@interfaces/layouts/FallBack").then((module) => ({
+  default: module.FallBack
+})));
 const Alert = lazy(() => import("@interfaces/layouts/Alert").then((module) => ({
   default: module.Alert
 })));
@@ -37,6 +40,7 @@ export {
   TopNav,
   BottomNav,
   Loader,
+  FallBack,
   Alert,
   Confirm,
   Dialog,

@@ -3,47 +3,47 @@
 html, body {
   width: 100%;
   height: 100%;
-  margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
-  font-family: Pretendard, 'Noto Sans KR', sans-serif !important;
-  background-color: #e8e8e8 !important;
+  margin: 0;
+  padding: 0;
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important;
   -webkit-text-size-adjust: 100% !important;
   -ms-text-size-adjust: 100% !important;
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif !important;
+  background-color: #e8e8e8 !important;
 }
 
 /** 1. Small (0 - 479px) **************************************************************************/
 @media only screen and (min-width: 0px) and (max-width: 479px) {
-  html, body {
+  body {
     font-size: 16.0px;
   }
 }
 
 /** 2. Mobile (480px - 767px) *********************************************************************/
 @media only screen and (min-width: 480px) and (max-width: 767px) {
-  html, body {
+  body {
     font-size: 16.5px;
   }
 }
 
 /** 3. Pablet (768px - 991px) *********************************************************************/
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-  html, body {
+  body {
     font-size: 17.0px;
   }
 }
 
 /** 4. Tablet (992px - 1199px) ********************************************************************/
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
-  html, body {
+  body {
     font-size: 17.5px;
   }
 }
 
 /** 5. Desktop (1200px - 10000px) *****************************************************************/
 @media only screen and (min-width: 1200px) and (max-width: 10000px) {
-  html, body {
+  body {
     font-size: 18.0px;
   }
 }

@@ -23,7 +23,7 @@ import {
 } from "@importHooks";
 
 import {
-  Header, TopNav, BottomNav, Alert, Confirm, Loader
+  Header, TopNav, BottomNav, Alert, Confirm, FallBack
 } from "@importLayouts";
 
 import {
@@ -91,7 +91,7 @@ const App = () => {
         {<Alert />}
         {<Confirm />}
       </Suspense>
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<FallBack />}>
         <Routes>
           {/** root **/}
           <Route path={"/*"} element={<UserLogin />} />
@@ -155,7 +155,9 @@ const App = () => {
 createRoot(document.getElementById('root') as HTMLElement).render(
   <BrowserRouter basename={"/JPAGE"}>
     <ThemeProvider theme={createTheme({
-      typography: { fontFamily: "Pretendard, 'Noto Sans KR', sans-serif" }
+      typography: {
+        fontFamily: "Pretendard Variable, Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, Helvetica Neue, Segoe UI, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, sans-serif"
+      }
     })}>
       <CssBaseline />
       <App />
