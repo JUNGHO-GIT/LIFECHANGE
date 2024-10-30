@@ -1,5 +1,7 @@
 // ImportPages.tsx
 
+import { AdminDashboard } from "@pages/admin/adminDashboard";
+
 import { AuthError } from "@pages/auth/AuthError";
 import { AuthGoogle } from "@pages/auth/AuthGoogle";
 import { AuthPrivacy } from "@pages/auth/AuthPrivacy";
@@ -47,6 +49,7 @@ import { UserSignup } from "@pages/user/UserSignup";
 
 // -------------------------------------------------------------------------------------------------
 export {
+  AdminDashboard,
   AuthError,
   AuthGoogle,
   AuthPrivacy,
