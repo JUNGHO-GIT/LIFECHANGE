@@ -1,6 +1,6 @@
 // ImportPages.tsx
 
-import { AdminDashboard } from "@pages/admin/adminDashboard";
+import { AdminDashboard } from "@pages/admin/AdminDashboard";
 
 import { AuthError } from "@pages/auth/AuthError";
 import { AuthGoogle } from "@pages/auth/AuthGoogle";
