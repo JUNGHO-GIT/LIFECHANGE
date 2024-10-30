@@ -94,7 +94,7 @@ const App = () => {
       <Suspense fallback={<Loader />}>
         <Routes>
           {/** root **/}
-          <Route  path={"/"} element={<UserLogin />} />
+          <Route path={"/*"} element={<UserLogin />} />
           {/** admin **/}
           <Route path={"/admin/dashboard/*"} element={<AdminDashboard />} />
           {/** auth **/}
@@ -142,8 +142,6 @@ const App = () => {
           <Route path={"/user/detail/*"} element={<UserDetail />} />
           <Route path={"/user/delete/*"} element={<UserDelete />} />
           <Route path={"/user/category/*"} element={<UserCategory />} />
-          {/** error **/}
-          <Route path={"*"} element={<AuthError />} />
         </Routes>
       </Suspense>
       <Suspense>
