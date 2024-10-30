@@ -41,7 +41,6 @@ import { UserAppSetting } from "@pages/user/UserAppSetting";
 import { UserCategory } from "@pages/user/UserCategory";
 import { UserDelete } from "@pages/user/UserDelete";
 import { UserDetail } from "@pages/user/UserDetail";
-import { UserDummy } from "@pages/user/UserDummy";
 import { UserLogin } from "@pages/user/UserLogin";
 import { UserResetPw } from "@pages/user/UserResetPw";
 import { UserSignup } from "@pages/user/UserSignup";
@@ -82,7 +81,6 @@ export {
   UserCategory,
   UserDelete,
   UserDetail,
-  UserDummy,
   UserLogin,
   UserResetPw,
   UserSignup,
