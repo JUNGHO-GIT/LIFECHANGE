@@ -1,6 +1,6 @@
 // FoodDetail.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState, useEffect, Suspense } from "@importReacts";
 import { useCommonValue, useCommonDate, useValidateFood } from "@importHooks";
 import { useStoreLanguage, useStoreAlert } from "@importHooks";
 import { Food } from "@importSchemas";

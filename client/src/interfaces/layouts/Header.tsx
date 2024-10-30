@@ -31,7 +31,7 @@ export const Header = () => {
             hover={true}
             shadow={false}
             radius={false}
-            loading={"eager"}
+            loading={"lazy"}
             src={"logo2"}
             className={"h-max30 me-2vw"}
           />
@@ -39,7 +39,7 @@ export const Header = () => {
             hover={true}
             shadow={false}
             radius={false}
-            loading={"eager"}
+            loading={"lazy"}
             src={"logo3"}
             className={"h-max30"}
           />

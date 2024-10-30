@@ -91,7 +91,6 @@ export const FindFilter = (
       <TablePagination
         rowsPerPageOptions={[10]}
         labelRowsPerPage={""}
-        component={"div"}
         count={state?.COUNT.totalCnt}
         page={state?.PAGING.page}
         showFirstButton={true}

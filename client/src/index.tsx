@@ -23,7 +23,7 @@ import {
 } from "@importHooks";
 
 import {
-  Header, TopNav, BottomNav, Alert, Confirm, FallBack
+  Header, TopNav, BottomNav, Alert, Confirm, Loader
 } from "@importLayouts";
 
 import {
@@ -69,24 +69,28 @@ const App = () => {
   const location = useLocation();
 
   const noneHeader = (
-    location.pathname.includes("/user/login") ||
-    location.pathname.includes("/user/signup") ||
-    location.pathname.includes("/user/resetPw")
+    !location.pathname.includes("/user/login") &&
+    !location.pathname.includes("/user/signup") &&
+    !location.pathname.includes("/user/resetPw")
   );
   const noneTop = (
-    location.pathname.includes("/user")
+    !location.pathname.includes("/user")
   );
   const noneBottom = (
-    location.pathname.includes("/user")
+    !location.pathname.includes("/user")
   );
 
   return (
-    <div className="App">
-      {!noneHeader && <Header />}
-      {!noneTop && <TopNav />}
-      {<Alert />}
-      {<Confirm />}
-      <Suspense fallback={<FallBack />}>
+    <div className={"App"}>
+      <Suspense>
+        {noneHeader && <Header />}
+        {noneTop && <TopNav />}
+      </Suspense>
+      <Suspense>
+        {<Alert />}
+        {<Confirm />}
+      </Suspense>
+      <Suspense fallback={<Loader />}>
         <Routes>
           {/** root **/}
           <Route  path={"/*"} element={<UserLogin />} />
@@ -139,7 +143,9 @@ const App = () => {
           <Route path={"/user/category"} element={<UserCategory />} />
         </Routes>
       </Suspense>
-      {!noneBottom && <BottomNav />}
+      <Suspense>
+        {noneBottom && <BottomNav />}
+      </Suspense>
     </div>
   );
 };

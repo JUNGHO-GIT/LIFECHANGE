@@ -1,17 +1,37 @@
 // ImportComponents.tsx
 
-import { Div } from "@interfaces/components/Div";
-import { Img } from "@interfaces/components/Img";
-import { Br } from "@interfaces/components/Br";
-import { Hr } from "@interfaces/components/Hr";
-import { Icons } from "@interfaces/components/Icons";
-import { Btn } from "@interfaces/components/Btn";
-import { Bg } from "@interfaces/components/Bg";
+import { lazy } from "@importReacts";
+
+// -------------------------------------------------------------------------------------------------
+const Div = lazy(() => import("@interfaces/components/Div").then((module) => ({
+  default: module.Div
+})));
+const Img = lazy(() => import("@interfaces/components/Img").then((module) => ({
+  default: module.Img
+})));
+const Br = lazy(() => import("@interfaces/components/Br").then((module) => ({
+  default: module.Br
+})));
+const Hr = lazy(() => import("@interfaces/components/Hr").then((module) => ({
+  default: module.Hr
+})));
+const Icons = lazy(() => import("@interfaces/components/Icons").then((module) => ({
+  default: module.Icons
+})));
+const Btn = lazy(() => import("@interfaces/components/Btn").then((module) => ({
+  default: module.Btn
+})));
+const Bg = lazy(() => import("@interfaces/components/Bg").then((module) => ({
+  default: module.Bg
+})));
 
 // -------------------------------------------------------------------------------------------------
 export {
-  Div, Img,
-  Br, Hr,
+  Div,
+  Img,
+  Br,
+  Hr,
   Icons,
-  Btn, Bg
+  Btn,
+  Bg
 };

@@ -81,7 +81,7 @@ export const BottomNav = () => {
               hover={true}
               shadow={false}
               radius={false}
-              loading={"eager"}
+              loading={"lazy"}
               src={"exercise1"}
             />
           }
@@ -98,7 +98,7 @@ export const BottomNav = () => {
               hover={true}
               shadow={false}
               radius={false}
-              loading={"eager"}
+              loading={"lazy"}
               src={"food1"}
             />
           }
@@ -115,7 +115,7 @@ export const BottomNav = () => {
               hover={true}
               shadow={false}
               radius={false}
-              loading={"eager"}
+              loading={"lazy"}
               src={"today1"}
             />
           }
@@ -132,7 +132,7 @@ export const BottomNav = () => {
               hover={true}
               shadow={false}
               radius={false}
-              loading={"eager"}
+              loading={"lazy"}
               src={"calendar1"}
             />
           }
@@ -149,7 +149,7 @@ export const BottomNav = () => {
               hover={true}
               shadow={false}
               radius={false}
-              loading={"eager"}
+              loading={"lazy"}
               src={"money1"}
             />
           }
@@ -166,7 +166,7 @@ export const BottomNav = () => {
               hover={true}
               shadow={false}
               radius={false}
-              loading={"eager"}
+              loading={"lazy"}
               src={"sleep1"}
             />
           }
