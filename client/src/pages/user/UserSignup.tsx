@@ -90,7 +90,9 @@ export const UserSignup = () => {
       console.error(err);
     })
     .finally(() => {
-      setLOADING(false);
+      setTimeout(() => {
+        setLOADING(false);
+      }, 300);
     });
   };
 
@@ -138,7 +140,9 @@ export const UserSignup = () => {
       console.error(err);
     })
     .finally(() => {
-      setLOADING(false);
+      setTimeout(() => {
+        setLOADING(false);
+      }, 300);
     });
   };
 
@@ -186,7 +190,9 @@ export const UserSignup = () => {
       console.error(err);
     })
     .finally(() => {
-      setLOADING(false);
+      setTimeout(() => {
+        setLOADING(false);
+      }, 300);
     });
   };
 
@@ -229,262 +235,268 @@ export const UserSignup = () => {
     );
     // 7-2. signup
     const signupSection = () => {
-      const detailFragment = (item: any, i: number) => (
-        <Grid container={true} spacing={2} className={"p-10"} key={`signup-${i}`}>
-          {/** 이메일 **/}
-          <Grid container={true} spacing={1}>
-            <Grid size={9}>
-              <Input
-                label={translate("id")}
-                helperText={`* ${translate("helperId")}`}
-                value={item.user_id}
-                inputRef={REFS?.[i]?.user_id}
-                error={ERRORS?.[i]?.user_id}
-                disabled={item.user_id_verified === true}
-                placeholder={"abcd@naver.com"}
-                onChange={(e: any) => {
-                  const value = e.target.value;
-                  if (value.length > 30) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      user_id: prev.user_id,
-                    }));
-                  }
-                  else {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      user_id: value,
-                    }));
-                  }
-                }}
-              />
-            </Grid>
-            <Grid size={3}>
-              <Btn
-                color={"primary"}
-                className={"mt-n25"}
-                disabled={item.user_id_verified === true}
-                onClick={() => {
-                  flowSendEmail();
-                }}
-              >
-                {translate("send")}
-              </Btn>
-            </Grid>
-          </Grid>
+      const detailFragment = () => (
+        <Grid container={true} spacing={0}>
+          {[OBJECT].filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
+            <Grid size={12} key={`detail-${i}`}>
+              <Grid container spacing={2} className={"p-10"}>
+                {/** 이메일 **/}
+                <Grid container={true} spacing={1}>
+                  <Grid size={9}>
+                    <Input
+                      label={translate("id")}
+                      helperText={`* ${translate("helperId")}`}
+                      value={item.user_id}
+                      inputRef={REFS?.[i]?.user_id}
+                      error={ERRORS?.[i]?.user_id}
+                      disabled={item.user_id_verified === true}
+                      placeholder={"abcd@naver.com"}
+                      onChange={(e: any) => {
+                        const value = e.target.value;
+                        if (value.length > 30) {
+                          setOBJECT((prev: any) => ({
+                            ...prev,
+                            user_id: prev.user_id,
+                          }));
+                        }
+                        else {
+                          setOBJECT((prev: any) => ({
+                            ...prev,
+                            user_id: value,
+                          }));
+                        }
+                      }}
+                    />
+                  </Grid>
+                  <Grid size={3}>
+                    <Btn
+                      color={"primary"}
+                      className={"mt-n25"}
+                      disabled={item.user_id_verified === true}
+                      onClick={() => {
+                        flowSendEmail();
+                      }}
+                    >
+                      {translate("send")}
+                    </Btn>
+                  </Grid>
+                </Grid>
 
-          {/** 이메일 인증 **/}
-          <Grid container={true} spacing={1}>
-            <Grid size={9}>
-              <Input
-                label={translate("verify")}
-                helperText={`* ${translate("helperIdVerified")}`}
-                value={item.user_verify_code}
-                inputRef={REFS?.[i]?.user_id_verified}
-                error={ERRORS?.[i]?.user_id_verified}
-                disabled={item.user_id_verified === true}
-                placeholder={"123456"}
-                onChange={(e: any) => {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    user_verify_code: e.target.value
-                  }))
-                }}
-              />
-            </Grid>
-            <Grid size={3}>
-              <Btn
-                color={"primary"}
-                className={"mt-n25"}
-                disabled={!item.user_id_sended || item.user_id_verified === true}
-                onClick={() => {
-                  flowVerifyEmail();
-                }}
-              >
-                {translate("verify")}
-              </Btn>
-            </Grid>
-          </Grid>
+                {/** 이메일 인증 **/}
+                <Grid container={true} spacing={1}>
+                  <Grid size={9}>
+                    <Input
+                      label={translate("verify")}
+                      helperText={`* ${translate("helperIdVerified")}`}
+                      value={item.user_verify_code}
+                      inputRef={REFS?.[i]?.user_id_verified}
+                      error={ERRORS?.[i]?.user_id_verified}
+                      disabled={item.user_id_verified === true}
+                      placeholder={"123456"}
+                      onChange={(e: any) => {
+                        setOBJECT((prev: any) => ({
+                          ...prev,
+                          user_verify_code: e.target.value
+                        }))
+                      }}
+                    />
+                  </Grid>
+                  <Grid size={3}>
+                    <Btn
+                      color={"primary"}
+                      className={"mt-n25"}
+                      disabled={!item.user_id_sended || item.user_id_verified === true}
+                      onClick={() => {
+                        flowVerifyEmail();
+                      }}
+                    >
+                      {translate("verify")}
+                    </Btn>
+                  </Grid>
+                </Grid>
 
-          <Hr px={1} />
+                <Hr px={1} />
 
-          {/** 비밀번호 **/}
-          <Grid container={true} spacing={1}>
-            <Grid size={12}>
-              <Input
-                type={"password"}
-                label={translate("pw")}
-                helperText={`* ${translate("helperPw")}`}
-                value={item.user_pw}
-                inputRef={REFS?.[i]?.user_pw}
-                error={ERRORS?.[i]?.user_pw}
-                disabled={item.user_id_verified === false}
-                onChange={(e: any) => {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    user_pw: e.target.value
-                  }))
-                }}
-              />
+                {/** 비밀번호 **/}
+                <Grid container={true} spacing={1}>
+                  <Grid size={12}>
+                    <Input
+                      type={"password"}
+                      label={translate("pw")}
+                      helperText={`* ${translate("helperPw")}`}
+                      value={item.user_pw}
+                      inputRef={REFS?.[i]?.user_pw}
+                      error={ERRORS?.[i]?.user_pw}
+                      disabled={item.user_id_verified === false}
+                      onChange={(e: any) => {
+                        setOBJECT((prev: any) => ({
+                          ...prev,
+                          user_pw: e.target.value
+                        }))
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+
+                {/** 비밀번호 확인 **/}
+                <Grid container={true} spacing={1}>
+                  <Grid size={12}>
+                    <Input
+                      type={"password"}
+                      label={translate("pwVerified")}
+                      helperText={`* ${translate("helperPwVerified")}`}
+                      value={item.user_pw_verified}
+                      inputRef={REFS?.[i]?.user_pw_verified}
+                      error={ERRORS?.[i]?.user_pw_verified}
+                      disabled={item.user_id_verified === false}
+                      onChange={(e: any) => {
+                        setOBJECT((prev: any) => ({
+                          ...prev,
+                          user_pw_verified: e.target.value
+                        }))
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+
+                <Hr px={1} />
+
+                {/** 초기 체중 **/}
+                <Grid container={true} spacing={1}>
+                  <Grid size={12}>
+                    <Input
+                      label={translate("scale")}
+                      value={insertComma(item.user_initScale || "0")}
+                      inputRef={REFS?.[i]?.user_initScale}
+                      error={ERRORS?.[i]?.user_initScale}
+                      disabled={item.user_id_verified === false}
+                      helperText={`* ${translate("helperScale")}`}
+                      startadornment={
+                        <Img
+                          max={15}
+                          hover={true}
+                          shadow={false}
+                          radius={false}
+                          src={"exercise5"}
+                        />
+                      }
+                      endadornment={
+                        translate("cm")
+                      }
+                      onChange={(e: any) => {
+                        // 빈값 처리
+                        let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                        // 999 제한 + 소수점 둘째 자리
+                        if (Number(value) > 999 || !/^\d*\.?\d{0,2}$/.test(value)) {
+                          return;
+                        }
+                        // 01, 05 같은 숫자는 1, 5로 변경
+                        if (/^0(?!\.)/.test(value)) {
+                          value = value.replace(/^0+/, '');
+                        }
+                        // object 설정
+                        setOBJECT((prev: any) => ({
+                          ...prev,
+                          user_initScale: value,
+                        }));
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+
+                {/** 목표 칼로리 섭취량 **/}
+                <Grid container={true} spacing={1}>
+                  <Grid size={12}>
+                    <Input
+                      label={translate("avgKcalIntake")}
+                      value={insertComma(item.user_initAvgKcalIntake || "0")}
+                      inputRef={REFS?.[i]?.user_initAvgKcalIntake}
+                      error={ERRORS?.[i]?.user_initAvgKcalIntake}
+                      disabled={item.user_id_verified === false}
+                      helperText={`* ${translate("helperAvgKcalIntake")}`}
+                      startadornment={
+                        <Img
+                          max={15}
+                          hover={true}
+                          shadow={false}
+                          radius={false}
+                          src={"food2"}
+                        />
+                      }
+                      endadornment={
+                        translate("kc")
+                      }
+                      onChange={(e: any) => {
+                        // 빈값 처리
+                        let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                        // 9999 제한 + 정수
+                        if (Number(value) > 9999 || !/^\d+$/.test(value)) {
+                          return;
+                        }
+                        // 01, 05 같은 숫자는 1, 5로 변경
+                        if (/^0(?!\.)/.test(value)) {
+                          value = value.replace(/^0+/, '');
+                        }
+                        // object 설정
+                        setOBJECT((prev: any) => ({
+                          ...prev,
+                          user_initAvgKcalIntake: value,
+                        }));
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+
+                {/** 초기 자산 **/}
+                <Grid container={true} spacing={1}>
+                  <Grid size={12}>
+                    <Input
+                      label={translate("property")}
+                      value={insertComma(item.user_initProperty || "0")}
+                      inputRef={REFS?.[i]?.user_initProperty}
+                      error={ERRORS?.[i]?.user_initProperty}
+                      disabled={item.user_id_verified === false}
+                      helperText={`* ${translate("helperProperty")}`}
+                      startadornment={
+                        <Img
+                          max={15}
+                          hover={true}
+                          shadow={false}
+                          radius={false}
+                          src={"money2"}
+                        />
+                      }
+                      endadornment={
+                        localCurrency
+                      }
+                      onChange={(e: any) => {
+                        // 빈값 처리
+                        let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                        // 9999999999 제한 + 정수
+                        if (Number(value) > 9999999999 || !/^\d+$/.test(value)) {
+                          return;
+                        }
+                        // 01, 05 같은 숫자는 1, 5로 변경
+                        if (/^0(?!\.)/.test(value)) {
+                          value = value.replace(/^0+/, '');
+                        }
+                        // object 설정
+                        setOBJECT((prev: any) => ({
+                          ...prev,
+                          user_initProperty: value,
+                        }));
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
             </Grid>
-          </Grid>
-
-          {/** 비밀번호 확인 **/}
-          <Grid container={true} spacing={1}>
-            <Grid size={12}>
-              <Input
-                type={"password"}
-                label={translate("pwVerified")}
-                helperText={`* ${translate("helperPwVerified")}`}
-                value={item.user_pw_verified}
-                inputRef={REFS?.[i]?.user_pw_verified}
-                error={ERRORS?.[i]?.user_pw_verified}
-                disabled={item.user_id_verified === false}
-                onChange={(e: any) => {
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    user_pw_verified: e.target.value
-                  }))
-                }}
-              />
-            </Grid>
-          </Grid>
-
-          <Hr px={1} />
-
-          {/** 초기 체중 **/}
-          <Grid container={true} spacing={1}>
-            <Grid size={12}>
-              <Input
-                label={translate("scale")}
-                value={insertComma(item.user_initScale || "0")}
-                inputRef={REFS?.[i]?.user_initScale}
-                error={ERRORS?.[i]?.user_initScale}
-                disabled={item.user_id_verified === false}
-                helperText={`* ${translate("helperScale")}`}
-                startadornment={
-                  <Img
-                    max={15}
-                    hover={true}
-                    shadow={false}
-                    radius={false}
-                    src={"exercise5"}
-                  />
-                }
-                endadornment={
-                  translate("cm")
-                }
-                onChange={(e: any) => {
-                  // 빈값 처리
-                  let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-                  // 999 제한 + 소수점 둘째 자리
-                  if (Number(value) > 999 || !/^\d*\.?\d{0,2}$/.test(value)) {
-                    return;
-                  }
-                  // 01, 05 같은 숫자는 1, 5로 변경
-                  if (/^0(?!\.)/.test(value)) {
-                    value = value.replace(/^0+/, '');
-                  }
-                  // object 설정
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    user_initScale: value,
-                  }));
-                }}
-              />
-            </Grid>
-          </Grid>
-
-          {/** 목표 칼로리 섭취량 **/}
-          <Grid container={true} spacing={1}>
-            <Grid size={12}>
-              <Input
-                label={translate("avgKcalIntake")}
-                value={insertComma(item.user_initAvgKcalIntake || "0")}
-                inputRef={REFS?.[i]?.user_initAvgKcalIntake}
-                error={ERRORS?.[i]?.user_initAvgKcalIntake}
-                disabled={item.user_id_verified === false}
-                helperText={`* ${translate("helperAvgKcalIntake")}`}
-                startadornment={
-                  <Img
-                    max={15}
-                    hover={true}
-                    shadow={false}
-                    radius={false}
-                    src={"food2"}
-                  />
-                }
-                endadornment={
-                  translate("kc")
-                }
-                onChange={(e: any) => {
-                  // 빈값 처리
-                  let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-                  // 9999 제한 + 정수
-                  if (Number(value) > 9999 || !/^\d+$/.test(value)) {
-                    return;
-                  }
-                  // 01, 05 같은 숫자는 1, 5로 변경
-                  if (/^0(?!\.)/.test(value)) {
-                    value = value.replace(/^0+/, '');
-                  }
-                  // object 설정
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    user_initAvgKcalIntake: value,
-                  }));
-                }}
-              />
-            </Grid>
-          </Grid>
-
-          {/** 초기 자산 **/}
-          <Grid container={true} spacing={1}>
-            <Grid size={12}>
-              <Input
-                label={translate("property")}
-                value={insertComma(item.user_initProperty || "0")}
-                inputRef={REFS?.[i]?.user_initProperty}
-                error={ERRORS?.[i]?.user_initProperty}
-                disabled={item.user_id_verified === false}
-                helperText={`* ${translate("helperProperty")}`}
-                startadornment={
-                  <Img
-                    max={15}
-                    hover={true}
-                    shadow={false}
-                    radius={false}
-                    src={"money2"}
-                  />
-                }
-                endadornment={
-                  localCurrency
-                }
-                onChange={(e: any) => {
-                  // 빈값 처리
-                  let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-                  // 9999999999 제한 + 정수
-                  if (Number(value) > 9999999999 || !/^\d+$/.test(value)) {
-                    return;
-                  }
-                  // 01, 05 같은 숫자는 1, 5로 변경
-                  if (/^0(?!\.)/.test(value)) {
-                    value = value.replace(/^0+/, '');
-                  }
-                  // object 설정
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    user_initProperty: value,
-                  }));
-                }}
-              />
-            </Grid>
-          </Grid>
+          ))}
         </Grid>
       );
       return (
         <Card className={"d-col-center"}>
-          {detailFragment(OBJECT, 0)}
+          {detailFragment()}
         </Card>
       );
     };

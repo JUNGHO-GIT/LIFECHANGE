@@ -127,7 +127,7 @@ export const FoodList = () => {
     .finally(() => {
       setTimeout(() => {
         setLOADING(false);
-      }, 500);
+      }, 300);
     });
   }, [URL_OBJECT, sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
 
@@ -136,7 +136,7 @@ export const FoodList = () => {
     const listSection = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
-          {OBJECT.filter((filter: any) => filter._id).map((item: any, i: number) => (
+          {OBJECT.filter((f: any) => f._id).map((item: any, i: number) => (
             <Grid size={12} key={`list-${i}`}>
               <Grid container={true} spacing={0} className={"border-1 radius-1"}>
                 <Grid size={12} className={"p-2"}>
@@ -214,7 +214,7 @@ export const FoodList = () => {
                           <Grid size={7}>
                             <Grid container={true} spacing={1}>
                               <Grid size={10} className={"d-row-right"}>
-                                <Div className={`${item.food_total_kcal_color}`}>
+                                <Div className={`fs-1-0rem fw-600 ${item.food_total_kcal_color}`}>
                                   {insertComma(item.food_total_kcal || "0")}
                                 </Div>
                               </Grid>
@@ -249,7 +249,7 @@ export const FoodList = () => {
                           <Grid size={7}>
                             <Grid container={true} spacing={1}>
                               <Grid size={10} className={"d-row-right"}>
-                                <Div className={`${item.food_total_carb_color}`}>
+                                <Div className={`fs-1-0rem fw-600 ${item.food_total_carb_color}`}>
                                   {insertComma(item.food_total_carb || "0")}
                                 </Div>
                               </Grid>
@@ -284,7 +284,7 @@ export const FoodList = () => {
                           <Grid size={7}>
                             <Grid container={true} spacing={1}>
                               <Grid size={10} className={"d-row-right"}>
-                                <Div className={`${item.food_total_protein_color}`}>
+                                <Div className={`fs-1-0rem fw-600 ${item.food_total_protein_color}`}>
                                   {insertComma(item.food_total_carb || "0")}
                                 </Div>
                               </Grid>
@@ -319,7 +319,7 @@ export const FoodList = () => {
                           <Grid size={7}>
                             <Grid container={true} spacing={1}>
                               <Grid size={10} className={"d-row-right"}>
-                                <Div className={`${item.food_total_fat_color}`}>
+                                <Div className={`fs-1-0rem fw-600 ${item.food_total_fat_color}`}>
                                   {insertComma(item.food_total_fat || "0")}
                                 </Div>
                               </Grid>

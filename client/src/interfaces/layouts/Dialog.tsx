@@ -460,14 +460,14 @@ export const Dialog = (
             icon={
               LOCKED === "locked" ? (
                 <Icons
-                  key={"Lock"}
-                  name={"Lock"}
+                  key={"UnLock"}
+                  name={"UnLock"}
                   className={"w-25 h-25"}
                 />
               ) : (
                 <Icons
-                  key={"UnLock"}
-                  name={"UnLock"}
+                  key={"Lock"}
+                  name={"Lock"}
                   className={"w-25 h-25"}
                 />
               )

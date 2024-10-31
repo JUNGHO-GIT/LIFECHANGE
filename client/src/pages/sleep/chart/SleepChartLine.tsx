@@ -305,10 +305,13 @@ export const SleepChartLine = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min40vh"}>
-        {headSection()}
-        <Br px={20} />
-        {LOADING ? <Loader /> : chartSection()}
+      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min40vh"}>{LOADING ? <Loader /> : (
+          <>
+            {headSection()}
+            <Br px={20} />
+            {chartSection()}
+          </>
+        )}
       </Paper>
     );
   };

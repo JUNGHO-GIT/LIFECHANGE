@@ -144,7 +144,9 @@ export const SleepGoalDetail = () => {
       console.error(err);
     })
     .finally(() => {
-      setLOADING(false);
+      setTimeout(() => {
+        setLOADING(false);
+      }, 300);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
@@ -198,7 +200,9 @@ export const SleepGoalDetail = () => {
       console.error(err);
     })
     .finally(() => {
-      setLOADING(false);
+      setTimeout(() => {
+        setLOADING(false);
+      }, 300);
     });
   };
 
@@ -248,7 +252,9 @@ export const SleepGoalDetail = () => {
       console.error(err);
     })
     .finally(() => {
-      setLOADING(false);
+      setTimeout(() => {
+        setLOADING(false);
+      }, 300);
     });
   };
 
@@ -291,81 +297,87 @@ export const SleepGoalDetail = () => {
     );
     // 7-3. detail
     const detailSection = () => {
-      const detailFragment = (_item: any, i: number) => (
-        <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={`detail-${i}`}>
-          {/** row 1 **/}
-          <Grid container={true} spacing={2}>
-            <Grid size={6} className={"d-row-left"}>
-              <Bg
-                badgeContent={i + 1}
-                bgcolor={"#1976d2"}
-              />
-            </Grid>
-            <Grid size={6} className={"d-row-right"}>
-              <Delete
-                index={i}
-                handleDelete={handleDelete}
-                LOCKED={LOCKED}
-              />
-            </Grid>
-          </Grid>
-          {/** /.row 1 **/}
+      const detailFragment = () => (
+        <Grid container={true} spacing={0}>
+          {[OBJECT].filter((_: any, idx: number) => idx === 0).map((_: any, i: number) => (
+            <Grid size={12} key={`detail-${i}`}>
+              <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
+                {/** row 1 **/}
+                <Grid container={true} spacing={2}>
+                  <Grid size={6} className={"d-row-left"}>
+                    <Bg
+                      badgeContent={i + 1}
+                      bgcolor={"#1976d2"}
+                    />
+                  </Grid>
+                  <Grid size={6} className={"d-row-right"}>
+                    <Delete
+                      index={i}
+                      handleDelete={handleDelete}
+                      LOCKED={LOCKED}
+                    />
+                  </Grid>
+                </Grid>
+                {/** /.row 1 **/}
 
-          {/** row 2 **/}
-          <Grid container={true} spacing={2}>
-            <Grid size={12}>
-              <PickerTime
-                OBJECT={OBJECT}
-                setOBJECT={setOBJECT}
-                REFS={REFS}
-                ERRORS={ERRORS}
-                DATE={DATE}
-                LOCKED={LOCKED}
-                extra={"sleep_goal_bedTime"}
-                i={i}
-              />
-            </Grid>
-          </Grid>
-          {/** /.row 2 **/}
+                {/** row 2 **/}
+                <Grid container={true} spacing={2}>
+                  <Grid size={12}>
+                    <PickerTime
+                      OBJECT={OBJECT}
+                      setOBJECT={setOBJECT}
+                      REFS={REFS}
+                      ERRORS={ERRORS}
+                      DATE={DATE}
+                      LOCKED={LOCKED}
+                      extra={"sleep_goal_bedTime"}
+                      i={i}
+                    />
+                  </Grid>
+                </Grid>
+                {/** /.row 2 **/}
 
-          {/** row 3 **/}
-          <Grid container={true} spacing={2}>
-            <Grid size={12}>
-              <PickerTime
-                OBJECT={OBJECT}
-                setOBJECT={setOBJECT}
-                REFS={REFS}
-                ERRORS={ERRORS}
-                DATE={DATE}
-                LOCKED={LOCKED}
-                extra={"sleep_goal_wakeTime"}
-                i={i}
-              />
-            </Grid>
-          </Grid>
-          {/** /.row 3 **/}
+                {/** row 3 **/}
+                <Grid container={true} spacing={2}>
+                  <Grid size={12}>
+                    <PickerTime
+                      OBJECT={OBJECT}
+                      setOBJECT={setOBJECT}
+                      REFS={REFS}
+                      ERRORS={ERRORS}
+                      DATE={DATE}
+                      LOCKED={LOCKED}
+                      extra={"sleep_goal_wakeTime"}
+                      i={i}
+                    />
+                  </Grid>
+                </Grid>
+                {/** /.row 3 **/}
 
-          {/** row 4 **/}
-          <Grid container={true} spacing={2}>
-            <Grid size={12}>
-              <PickerTime
-                OBJECT={OBJECT}
-                setOBJECT={setOBJECT}
-                REFS={REFS}
-                ERRORS={ERRORS}
-                DATE={DATE}
-                LOCKED={LOCKED}
-                extra={"sleep_goal_sleepTime"}
-                i={i}
-              />
+                {/** row 4 **/}
+                <Grid container={true} spacing={2}>
+                  <Grid size={12}>
+                    <PickerTime
+                      OBJECT={OBJECT}
+                      setOBJECT={setOBJECT}
+                      REFS={REFS}
+                      ERRORS={ERRORS}
+                      DATE={DATE}
+                      LOCKED={LOCKED}
+                      extra={"sleep_goal_sleepTime"}
+                      i={i}
+                    />
+                  </Grid>
+                </Grid>
+                {/** /.row 4 **/}
+              </Grid>
             </Grid>
-          </Grid>
-          {/** /.row 4 **/}
+          ))}
         </Grid>
       );
       return (
         <Card className={"d-col-center"}>
-          {COUNT?.newSectionCnt > 0 && detailFragment(OBJECT, 0)}
+          {COUNT?.newSectionCnt > 0 && detailFragment()}
         </Card>
       );
     };

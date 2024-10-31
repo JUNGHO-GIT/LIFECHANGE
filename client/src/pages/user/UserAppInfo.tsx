@@ -43,7 +43,9 @@ export const UserAppInfo = () => {
       console.error(err);
     })
     .finally(() => {
-      setLOADING(false);
+      setTimeout(() => {
+        setLOADING(false);
+      }, 300);
     });
   }, [URL_OBJECT, sessionId]);
 
@@ -65,70 +67,78 @@ export const UserAppInfo = () => {
     );
     // 7-2. detail
     const detailSection = () => {
-      const detailFragment = (item: any) => (
-        <Grid container={true} spacing={2}>
-          <Grid size={12} className={"border-1 radius-1 shadow-0"}>
-            <TableContainer className={"over-hidden"}>
-              <Table>
-                <TableBody className={"table-tbody"}>
-                  <TableRow>
-                    <TableCell className={"w-40vw fs-0-9rem p-15"}>
-                      version
-                    </TableCell>
-                    <TableCell className={"w-55vw fs-0-7rem p-15"}>
-                      {item.version}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className={"w-40vw fs-0-9rem p-15"}>
-                      date
-                    </TableCell>
-                    <TableCell className={"w-55vw fs-0-7rem p-15"}>
-                      {item.date}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className={"w-40vw fs-0-9rem p-15"}>
-                      github
-                    </TableCell>
-                    <TableCell className={"w-55vw fs-0-7rem p-15"}>
-                      {item.git}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className={"w-40vw fs-0-9rem p-15"}>
-                      license
-                    </TableCell>
-                    <TableCell className={"w-55vw fs-0-7rem p-15"}>
-                      {item.license}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className={"w-40vw fs-0-9rem p-15"}>
-                      timezone
-                    </TableCell>
-                    <TableCell className={"w-55vw fs-0-7rem p-15"}>
-                      {localTimeZone} | {localZoneName} | {localLang} | {localIsoCode} | {localCurrency}
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Grid>
+      const detailFragment = () => (
+        <Grid container={true} spacing={0}>
+          {[OBJECT].filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
+            <Grid size={12} key={`detail-${i}`}>
+              <Grid container spacing={2} className={"border-1 radius-1 shadow-0"}>
+                <TableContainer className={"over-hidden"}>
+                  <Table>
+                    <TableBody className={"table-tbody"}>
+                      <TableRow>
+                        <TableCell className={"w-40vw fs-0-9rem p-15"}>
+                          version
+                        </TableCell>
+                        <TableCell className={"w-55vw fs-0-7rem p-15"}>
+                          {item.version}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className={"w-40vw fs-0-9rem p-15"}>
+                          date
+                        </TableCell>
+                        <TableCell className={"w-55vw fs-0-7rem p-15"}>
+                          {item.date}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className={"w-40vw fs-0-9rem p-15"}>
+                          github
+                        </TableCell>
+                        <TableCell className={"w-55vw fs-0-7rem p-15"}>
+                          {item.git}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className={"w-40vw fs-0-9rem p-15"}>
+                          license
+                        </TableCell>
+                        <TableCell className={"w-55vw fs-0-7rem p-15"}>
+                          {item.license}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className={"w-40vw fs-0-9rem p-15"}>
+                          timezone
+                        </TableCell>
+                        <TableCell className={"w-55vw fs-0-7rem p-15"}>
+                          {localTimeZone} | {localZoneName} | {localLang} | {localIsoCode} | {localCurrency}
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Grid>
+            </Grid>
+          ))}
         </Grid>
       );
       return (
         <Card className={"d-col-center"}>
-          {detailFragment(OBJECT)}
+          {detailFragment()}
         </Card>
       );
     };
     // 7-10. return
     return (
       <Paper className={"content-wrapper d-center border-1 radius-1 h-min90vh"}>
-        {imageSection()}
-        <Br px={40} />
-        {LOADING ? <Loader /> : detailSection()}
+        {LOADING ? <Loader /> : (
+          <>
+            {imageSection()}
+            <Br px={40} />
+            {detailSection()}
+          </>
+        )}
       </Paper>
     );
   };

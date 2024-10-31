@@ -1,7 +1,7 @@
 // UserAppSetting.tsx
 
 import { useState, useEffect } from "@importReacts";
-import { useCommonValue, useStoreLanguage } from "@importHooks";
+import { useCommonValue, useStoreLanguage, useStoreConfirm } from "@importHooks";
 import { setLocal } from "@importScripts";
 import { Loader } from "@importLayouts";
 import { PopUp } from "@importContainers";
@@ -15,6 +15,7 @@ export const UserAppSetting = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { navigate, isAdmin, localLang } = useCommonValue();
   const { translate } = useStoreLanguage();
+  const { CONFIRM, setCONFIRM } = useStoreConfirm();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -44,6 +45,21 @@ export const UserAppSetting = () => {
     setLang(lang);
     setLocal("setting", "locale", "lang", lang);
     navigate(0);
+  };
+
+  // 4. handle -------------------------------------------------------------------------------------
+  const handleClearStorage = async () => {
+    const confirmResult = new Promise((resolve) => {
+      setCONFIRM({
+        open: !CONFIRM.open,
+        msg: "clearStorage",
+      }, (confirmed: boolean) => {
+        resolve(confirmed);
+      });
+    });
+    if (await confirmResult) {
+      localStorage.clear();
+    }
   };
 
   // 7. userAppSetting ----------------------------------------------------------------------------
@@ -204,7 +220,7 @@ export const UserAppSetting = () => {
                   <TableRow
                     className={`${isAdmin !== "true" ? "d-none" : ""} pointer`}
                     onClick={() => {
-                      localStorage.clear();
+                      handleClearStorage();
                     }}
                   >
                     <TableCell className={"w-90vw p-15"}>

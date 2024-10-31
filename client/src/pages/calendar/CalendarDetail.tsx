@@ -141,7 +141,9 @@ export const CalendarDetail = () => {
       console.error(err);
     })
     .finally(() => {
-      setLOADING(false);
+      setTimeout(() => {
+        setLOADING(false);
+      }, 300);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
@@ -213,7 +215,9 @@ export const CalendarDetail = () => {
       console.error(err);
     })
     .finally(() => {
-      setLOADING(false);
+      setTimeout(() => {
+        setLOADING(false);
+      }, 300);
     });
   };
 
@@ -262,7 +266,9 @@ export const CalendarDetail = () => {
       console.error(err);
     })
     .finally(() => {
-      setLOADING(false);
+      setTimeout(() => {
+        setLOADING(false);
+      }, 300);
     });
   };
 
@@ -303,156 +309,160 @@ export const CalendarDetail = () => {
     );
     // 7-3. detail
     const detailSection = () => {
-      const detailFragment = (item: any, i: number) => (
-        <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`} key={`detail-${i}`}>
-          {/** row 1 **/}
-          <Grid container={true} spacing={2}>
-            <Grid size={6} className={"d-row-left"}>
-              <Bg
-                badgeContent={i + 1}
-                bgcolor={bgColors?.[item?.calendar_part_idx]}
-              />
-            </Grid>
-            <Grid size={6} className={"d-row-right"}>
-              <Delete
-                index={i}
-                handleDelete={handleDelete}
-                LOCKED={LOCKED}
-              />
-            </Grid>
-          </Grid>
-          {/** /.row 1 **/}
+      const detailFragment = () => (
+        <Grid container={true} spacing={0}>
+          {OBJECT.calendar_section?.filter((f: any) => f).map((item: any, i: number) => (
+            <Grid size={12} key={`detail-${i}`}>
+              <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
+                {/** row 1 **/}
+                <Grid container={true} spacing={2}>
+                  <Grid size={6} className={"d-row-left"}>
+                    <Bg
+                      badgeContent={i + 1}
+                      bgcolor={bgColors?.[item?.calendar_part_idx]}
+                    />
+                  </Grid>
+                  <Grid size={6} className={"d-row-right"}>
+                    <Delete
+                      index={i}
+                      handleDelete={handleDelete}
+                      LOCKED={LOCKED}
+                    />
+                  </Grid>
+                </Grid>
+                {/** /.row 1 **/}
 
-          {/** row 2 **/}
-          <Grid container={true} spacing={2}>
-            <Grid size={6}>
-              <Select
-                locked={LOCKED}
-                label={translate("part")}
-                value={item?.calendar_part_idx || 0}
-                inputRef={REFS?.[i]?.calendar_part_idx}
-                error={ERRORS?.[i]?.calendar_part_idx}
-                onChange={(e: any) => {
-                  // 빈값 처리
-                  let value = e.target.value === "" ? 0 : Number(e.target.value);
-                  // object 설정
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    calendar_section: prev.calendar_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...section,
-                        calendar_part_idx: value,
-                        calendar_part_val: calendarArray[value]?.calendar_part
-                      } : section
-                    ))
-                  }));
-                }}
-              >
-                {calendarArray?.map((part: any, idx: number) => (
-                  <MenuItem
-                    key={idx}
-                    value={idx}
-                    className={"fs-0-8rem"}
-                  >
-                    {translate(part?.calendar_part)}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Grid>
-            <Grid size={6}>
-              <Select
-                label={translate("color")}
-                value={item?.calendar_color || "black"}
-                inputRef={REFS?.[i]?.calendar_color}
-                error={ERRORS?.[i]?.calendar_color}
-                locked={LOCKED}
-                onChange={(e: any) => {
-                  // 빈값 처리
-                  let value = e.target.value === "" ? "black" : e.target.value;
-                  // object 설정
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    calendar_section: prev.calendar_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...section,
-                        calendar_color: value
-                      } : section
-                    ))
-                  }));
-                }}
-              >
-                {calendarColors.map((color: any, idx: number) => (
-                  <MenuItem
-                    key={idx}
-                    value={color}
-                    className={"fs-0-8rem"}
-                  >
-                    <span className={color}>●</span>
-                    <span className={"ms-10"}>{color}</span>
-                  </MenuItem>
-                ))}
-              </Select>
-            </Grid>
-          </Grid>
-          {/** /.row 2 **/}
+                {/** row 2 **/}
+                <Grid container={true} spacing={2}>
+                  <Grid size={6}>
+                    <Select
+                      locked={LOCKED}
+                      label={translate("part")}
+                      value={item?.calendar_part_idx || 0}
+                      inputRef={REFS?.[i]?.calendar_part_idx}
+                      error={ERRORS?.[i]?.calendar_part_idx}
+                      onChange={(e: any) => {
+                        // 빈값 처리
+                        let value = e.target.value === "" ? 0 : Number(e.target.value);
+                        // object 설정
+                        setOBJECT((prev: any) => ({
+                          ...prev,
+                          calendar_section: prev.calendar_section?.map((section: any, idx: number) => (
+                            idx === i ? {
+                              ...section,
+                              calendar_part_idx: value,
+                              calendar_part_val: calendarArray[value]?.calendar_part
+                            } : section
+                          ))
+                        }));
+                      }}
+                    >
+                      {calendarArray?.map((part: any, idx: number) => (
+                        <MenuItem
+                          key={idx}
+                          value={idx}
+                          className={"fs-0-8rem"}
+                        >
+                          {translate(part?.calendar_part)}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </Grid>
+                  <Grid size={6}>
+                    <Select
+                      label={translate("color")}
+                      value={item?.calendar_color || "black"}
+                      inputRef={REFS?.[i]?.calendar_color}
+                      error={ERRORS?.[i]?.calendar_color}
+                      locked={LOCKED}
+                      onChange={(e: any) => {
+                        // 빈값 처리
+                        let value = e.target.value === "" ? "black" : e.target.value;
+                        // object 설정
+                        setOBJECT((prev: any) => ({
+                          ...prev,
+                          calendar_section: prev.calendar_section?.map((section: any, idx: number) => (
+                            idx === i ? {
+                              ...section,
+                              calendar_color: value
+                            } : section
+                          ))
+                        }));
+                      }}
+                    >
+                      {calendarColors.map((color: any, idx: number) => (
+                        <MenuItem
+                          key={idx}
+                          value={color}
+                          className={"fs-0-8rem"}
+                        >
+                          <span className={color}>●</span>
+                          <span className={"ms-10"}>{color}</span>
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </Grid>
+                </Grid>
+                {/** /.row 2 **/}
 
-          {/** row 3 **/}
-          <Grid container={true} spacing={2}>
-            <Grid size={12}>
-              <Input
-                label={translate("calendarTitle")}
-                value={item?.calendar_title || ""}
-                inputRef={REFS?.[i]?.calendar_title}
-                error={ERRORS?.[i]?.calendar_title}
-                locked={LOCKED}
-                startadornment={
-                  <Img
-                    max={15}
-                    hover={true}
-                    shadow={false}
-                    radius={false}
-                    src={"calendar2"}
-                  />
-                }
-                onChange={(e: any) => {
-                  // 빈값 처리
-                  let value = e.target.value || "";
-                  // object 설정
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    calendar_section: prev.calendar_section?.map((section: any, idx: number) => (
-                      idx === i ? {
-                        ...section,
-                        calendar_title: value
-                      } : section
-                    ))
-                  }));
-                }}
-              />
-            </Grid>
-          </Grid>
-          {/** /.row 3 **/}
+                {/** row 3 **/}
+                <Grid container={true} spacing={2}>
+                  <Grid size={12}>
+                    <Input
+                      label={translate("calendarTitle")}
+                      value={item?.calendar_title || ""}
+                      inputRef={REFS?.[i]?.calendar_title}
+                      error={ERRORS?.[i]?.calendar_title}
+                      locked={LOCKED}
+                      startadornment={
+                        <Img
+                          max={15}
+                          hover={true}
+                          shadow={false}
+                          radius={false}
+                          src={"calendar2"}
+                        />
+                      }
+                      onChange={(e: any) => {
+                        // 빈값 처리
+                        let value = e.target.value || "";
+                        // object 설정
+                        setOBJECT((prev: any) => ({
+                          ...prev,
+                          calendar_section: prev.calendar_section?.map((section: any, idx: number) => (
+                            idx === i ? {
+                              ...section,
+                              calendar_title: value
+                            } : section
+                          ))
+                        }));
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+                {/** /.row 3 **/}
 
-          {/** row 4 **/}
-          <Grid container={true} spacing={2}>
-            <Grid size={12}>
-              <Memo
-                OBJECT={OBJECT}
-                setOBJECT={setOBJECT}
-                LOCKED={LOCKED}
-                extra={"calendar_content"}
-                i={i}
-              />
+                {/** row 4 **/}
+                <Grid container={true} spacing={2}>
+                  <Grid size={12}>
+                    <Memo
+                      OBJECT={OBJECT}
+                      setOBJECT={setOBJECT}
+                      LOCKED={LOCKED}
+                      extra={"calendar_content"}
+                      i={i}
+                    />
+                  </Grid>
+                </Grid>
+                {/** /.row 4 **/}
+              </Grid>
             </Grid>
-          </Grid>
-          {/** /.row 4 **/}
+          ))}
         </Grid>
       );
       return (
         <Card className={"d-col-center"}>
-          {OBJECT?.calendar_section?.map((item: any, i: number) => (
-            COUNT?.newSectionCnt > 0 && detailFragment(item, i)
-          ))}
+          {COUNT?.newSectionCnt > 0 && detailFragment()}
         </Card>
       );
     };

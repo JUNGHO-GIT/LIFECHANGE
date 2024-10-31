@@ -81,7 +81,9 @@ export const UserCategory = () => {
       console.error(err);
     })
     .finally(() => {
-      setLOADING(false);
+      setTimeout(() => {
+        setLOADING(false);
+      }, 300);
     });
   }, [URL_OBJECT, sessionId]);
 
@@ -118,7 +120,9 @@ export const UserCategory = () => {
       console.error(err);
     })
     .finally(() => {
-      setLOADING(false);
+      setTimeout(() => {
+        setLOADING(false);
+      }, 300);
     });
   };
 
@@ -501,66 +505,70 @@ export const UserCategory = () => {
     );
     // 7-2. detail
     const detailSection = () => {
-      const detailFragment = (item: any) => (
+      const detailFragment = () => (
         <Grid container={true} spacing={0}>
-          <Grid size={12}>
-            <TableContainer className={"border-1 radius-1 over-x-hidden"}>
-              <Table>
-                <TableHead className={"table-thead"}>
-                  <TableRow className={"table-thead-tr"}>
-                    <TableCell className={"fs-1-0rem"}>
-                      {translate("dataCategory1")}
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody className={"table-tbody"}>
-                  {Object.keys(item).map((item: any, idx: number) => (
-                    <TableRow className={"table-tbody-tr border-top-1"} key={idx}>
-                      <TableCell className={`${dataType === item ? "bg-light" : ""}`}>
-                        <Div className={"d-center"}>
-                          <Div className={"fs-1-0rem ms-0"}>
-                            {translate(item)}
-                          </Div>
-                          <Div className={"fs-1-0rem ms-auto"}>
-                          <PopUp
-                            type={"innerCenter"}
-                            position={"center"}
-                            direction={"center"}
-                            contents={
-                              popupSection()
-                            }
-                            children={(popTrigger: any) => (
-                              <Icons
-                                key={"Search"}
-                                name={"Search"}
-                                className={"w-18 h-18 black ms-auto"}
-                                onClick={(e: any) => {
-                                  setDataType(item);
-                                  setSelectedIdx((prev: any) => ({
-                                    ...prev,
-                                    category1Idx: idx,
-                                    category2Idx: 1,
-                                    category3Idx: 1
-                                  }));
-                                  popTrigger.openPopup(e.currentTarget)
-                                }}
+          {[OBJECT].filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
+            <Grid size={12} key={`detail-${i}`}>
+              <Grid container={true} spacing={2}>
+                <TableContainer className={"border-1 radius-1 over-x-hidden"}>
+                  <Table>
+                    <TableHead className={"table-thead"}>
+                      <TableRow className={"table-thead-tr"}>
+                        <TableCell className={"fs-1-0rem"}>
+                          {translate("dataCategory1")}
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody className={"table-tbody"}>
+                      {Object.keys(item).map((item: any, idx: number) => (
+                        <TableRow className={"table-tbody-tr border-top-1"} key={idx}>
+                          <TableCell className={`${dataType === item ? "bg-light" : ""}`}>
+                            <Div className={"d-center"}>
+                              <Div className={"fs-1-0rem ms-0"}>
+                                {translate(item)}
+                              </Div>
+                              <Div className={"fs-1-0rem ms-auto"}>
+                              <PopUp
+                                type={"innerCenter"}
+                                position={"center"}
+                                direction={"center"}
+                                contents={
+                                  popupSection()
+                                }
+                                children={(popTrigger: any) => (
+                                  <Icons
+                                    key={"Search"}
+                                    name={"Search"}
+                                    className={"w-18 h-18 black ms-auto"}
+                                    onClick={(e: any) => {
+                                      setDataType(item);
+                                      setSelectedIdx((prev: any) => ({
+                                        ...prev,
+                                        category1Idx: idx,
+                                        category2Idx: 1,
+                                        category3Idx: 1
+                                      }));
+                                      popTrigger.openPopup(e.currentTarget)
+                                    }}
+                                  />
+                                )}
                               />
-                            )}
-                          />
-                          </Div>
-                        </Div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Grid>
+                              </Div>
+                            </Div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Grid>
+            </Grid>
+          ))}
         </Grid>
       );
       return (
         <Card className={"d-col-center"}>
-          {detailFragment(OBJECT)}
+          {detailFragment()}
         </Card>
       );
     };

@@ -95,6 +95,7 @@ export const FindFilter = (
         page={state?.PAGING.page}
         showFirstButton={true}
         showLastButton={true}
+        component={"div"}
         disabled={PATH.includes("/favorite/list") ? true : false}
         style={{
           width: "40vw",

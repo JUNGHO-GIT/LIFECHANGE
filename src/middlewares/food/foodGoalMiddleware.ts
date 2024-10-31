@@ -6,18 +6,17 @@ export const list = async (object: any) => {
   // 0. calcOverTenMillion -------------------------------------------------------------------------
   const calcOverTenMillion = (param: string) => {
 
-    let finalResult: string = "fs-1-0rem fw-600";
+    let finalResult: string = "";
 
-    if (!param || param === "0" || param === "00:00") {
+    if (!param || param === "0" || param === "00:00" || param.includes(":")) {
       finalResult = param;
     }
-
     // 12300000 -> 1.23M / 10000000 -> 10M
-    if (Number(param) >= 10_000_000) {
+    else if (Number(param) >= 10_000_000) {
       finalResult = `${(parseFloat((Number(param) / 1_000_000).toFixed(2)).toString())}M`;
     }
     else {
-      finalResult = param;
+      finalResult = parseFloat(Number(param).toFixed(2)).toString();
     }
 
     return finalResult;
@@ -26,13 +25,12 @@ export const list = async (object: any) => {
   // 0. calcNonValueColor --------------------------------------------------------------------------
   const calcNonValueColor = (param: string) => {
 
-    let finalResult: string = "fs-1-0rem fw-600";
+    let finalResult: string = "";
 
     if (!param) {
       finalResult = param;
     }
-
-    if (param === "0" || param === "00:00") {
+    else if (param === "0" || param === "00:00") {
       finalResult += " grey";
     }
     else {
@@ -47,7 +45,7 @@ export const list = async (object: any) => {
 
     let goal: number = parseFloat(goalParam);
     let real: number = parseFloat(realParam);
-    let finalResult: string = "fs-1-0rem fw-600";
+    let finalResult: string = "";
 
     if (goal > real) {
       finalResult = `-${(parseFloat(Math.abs(goal - real).toFixed(2)).toString())}`;
@@ -65,7 +63,7 @@ export const list = async (object: any) => {
     let goal: number = parseFloat(goalParam);
     let real: number = parseFloat(realParam);
     let percent: number = 0;
-    let finalResult: string = "fs-1-0rem fw-600";
+    let finalResult: string = "";
 
     // 1. kcal, carb, protein, fat
     if (extra === "kcal" || extra === "carb" || extra === "protein" || extra === "fat") {

@@ -6,13 +6,12 @@ export const list = async (object: any) => {
   // 0. calcNonValueColor --------------------------------------------------------------------------
   const calcNonValueColor = (param: string) => {
 
-    let finalResult: string = "fs-1-0rem fw-600";
+    let finalResult: string = "";
 
     if (!param) {
       finalResult = param;
     }
-
-    if (param === "0" || param === "00:00") {
+    else if (param === "0" || param === "00:00") {
       finalResult += " grey";
     }
     else {
