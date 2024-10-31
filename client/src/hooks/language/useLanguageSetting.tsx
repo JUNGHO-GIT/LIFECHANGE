@@ -38,7 +38,9 @@ export const useLanguageSetting = () => {
       unit = isoCode === "US" ? "lbs" : "kg";
 
       // ex. en
-      lang = localLang || (navigator.language && navigator.language.split("-")[0]);
+      lang = localLang ? localLang : (
+        navigator.language.includes("-") ? navigator.language.split("-")[0] : navigator.language
+      );
 
       // Load lang for moment if necessary
       if (lang && lang !== "en") {
@@ -59,6 +61,5 @@ export const useLanguageSetting = () => {
       console.error(err);
     }
 
-    // 종속성에 lang은 추가하지 않음
   }, [timeZone, zoneName, isoCode, currency, unit]);
 };

@@ -67,7 +67,7 @@ export const useCommonValue = () => {
   // local storage (string 타입)
   const localTimeZone: string = localTitle?.setting?.locale?.timeZone || "UTC";
   const localZoneName: string = localTitle?.setting?.locale?.zoneName || "UTC";
-  const localLang: string = localTitle?.setting?.locale?.lang || "en";
+  const localLang: string = localTitle?.setting?.locale?.lang;
   const localIsoCode: string = localTitle?.setting?.locale?.isoCode || "US";
   const localCurrency: string = localTitle?.setting?.locale?.currency || "USD";
   const localUnit: string = localTitle?.setting?.locale?.unit || "lbs";

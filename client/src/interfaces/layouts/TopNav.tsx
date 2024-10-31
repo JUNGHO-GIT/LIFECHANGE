@@ -466,7 +466,6 @@ export const TopNav = () => {
             hover={true}
             shadow={false}
             radius={false}
-            loading={"lazy"}
             src={mainSmileImage}
             onClick={(e: any) => {
               setPercent(sessionPercent);
@@ -604,7 +603,6 @@ export const TopNav = () => {
             hover={true}
             shadow={false}
             radius={false}
-            loading={"lazy"}
             src={"exercise6"}
             onClick={(e: any) => {
               setScale(sessionScale);
@@ -829,7 +827,6 @@ export const TopNav = () => {
             hover={true}
             shadow={false}
             radius={false}
-            loading={"lazy"}
             src={"food6"}
             onClick={(e: any) => {
               setNutrition(sessionNutrition);
@@ -994,7 +991,6 @@ export const TopNav = () => {
             hover={true}
             shadow={false}
             radius={false}
-            loading={"lazy"}
             src={"money4"}
             onClick={(e: any) => {
               setProperty(sessionProperty);
