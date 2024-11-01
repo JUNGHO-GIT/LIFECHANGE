@@ -32,7 +32,17 @@ module.exports = {
       // module 설정
       webpackConfig.module.rules.unshift({
         test: /\.(js|mjs|jsx|ts|tsx)$/,
-        use: ['thread-loader', 'babel-loader'],
+        use: [
+          { loader: 'thread-loader' },
+          {
+            loader: 'babel-loader',
+            options: {
+              plugins: [
+                env === 'development' && require.resolve('react-refresh/babel'),
+              ].filter(Boolean),
+            },
+          },
+        ],
         exclude: /node_modules/,
       });
 
@@ -44,6 +54,7 @@ module.exports = {
             minimizerOptions: {
               preset: ['default', {
                 discardComments: { removeAll: true },
+                zindex: false,
               }],
             },
           }),

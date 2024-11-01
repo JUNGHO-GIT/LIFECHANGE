@@ -8,7 +8,6 @@ console.log(`Activated OS is : ${winOrLinux}`);
 
 // 프로젝트 빌드 -----------------------------------------------------------------------------------
 const buildProject = () => {
-  console.log('1. Build Project');
   try {
     const commandBuild = 'npm run build';
     execSync(commandBuild, { stdio: 'inherit' });
@@ -21,7 +20,6 @@ const buildProject = () => {
 
 // build 폴더 압축 ---------------------------------------------------------------------------------
 const compressBuild = () => {
-  console.log('2. Compress Build Folder');
   try {
     const command = 'tar -zcvf build.tar.gz build';
     execSync(command, { stdio: 'inherit' });
@@ -34,7 +32,6 @@ const compressBuild = () => {
 
 // gcloud에 업로드 ---------------------------------------------------------------------------------
 const uploadToGCS = () => {
-  console.log('3. Upload to GCS');
   try {
     const command = 'gcloud storage cp build.tar.gz gs://jungho-bucket/JPAGE/SERVER/build.tar.gz';
     execSync(command, { stdio: 'inherit' });
@@ -47,7 +44,6 @@ const uploadToGCS = () => {
 
 // 기존 build.tar.gz 삭제 --------------------------------------------------------------------------
 const deleteBuildTar = () => {
-  console.log('4. Delete build.tar.gz');
   try {
     const del = winOrLinux === "win" ? "del" : "rm -rf";
     const command = `${del} build.tar.gz`
@@ -61,7 +57,6 @@ const deleteBuildTar = () => {
 
 // 원격 서버에서 스크립트 실행 ---------------------------------------------------------------------
 const runRemoteScript = () => {
-  console.log('5. Run Remote Script');
   try {
     const keyPath = (
       winOrLinux === "win"

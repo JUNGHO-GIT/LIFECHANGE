@@ -11,7 +11,6 @@ console.log(`Activated OS is : ${winOrLinux}`);
 
 // env 파일 수정 -----------------------------------------------------------------------------------
 const modifyEnv = () => {
-
   try {
     // 파일을 줄 단위로 나눔
     const envFile = readFileSync('.env', 'utf8');
@@ -79,7 +78,6 @@ const modifyChangelog = () => {
 
 // git push ----------------------------------------------------------------------------------------
 const gitPush = () => {
-
   try {
     const gitAdd = (
       'git add .'
