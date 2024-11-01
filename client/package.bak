@@ -15,6 +15,93 @@
       "react-hooks/exhaustive-deps": "off",
       "react-hooks/rules-of-hooks": "warn",
       "@typescript-eslint/no-unused-vars": [
+        "error", {
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_"
+        }
+      ],
+      "no-unused-vars": [
+        "error", {
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_"
+        }
+      ]
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "npm-reset": "powershell -Command \"Remove-Item -Recurse -Force package-lock.json, node_modules; npm install\"",
+    "gcloud": "node gcloud.cjs"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.6",
+    "@mui/x-date-pickers": "^7.22.1",
+    "@react-hooks-library/core": "^0.6.2",
+    "ajv": "^8.17.1",
+    "ajv-keywords": "^5.1.0",
+    "axios": "^1.7.7",
+    "countries-and-timezones": "^3.7.2",
+    "date-fns": "^4.1.0",
+    "iso-country-currency": "^0.7.2",
+    "material-ui-popup-state": "^5.3.1",
+    "moment-timezone": "^0.5.46",
+    "mui-file-input": "^6.0.0",
+    "react": "^18.3.1",
+    "react-calendar": "^5.1.0",
+    "react-dom": "^18.3.1",
+    "react-query": "^3.39.3",
+    "react-router-dom": "^6.27.0",
+    "react-scripts": "^5.0.1",
+    "recharts": "^2.13.2",
+    "zustand": "^5.0.1"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@craco/craco": "^7.1.0",
+    "@testing-library/react": "^16.0.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "cra-bundle-analyzer": "^0.1.1",
+    "react-app-alias": "^2.2.2",
+    "tslib": "^2.8.1",
+    "typescript": "^5.6.3"
+  }
+}
+
+----------------------------------------------------------------------------------------------------
+
+{
+  "name": "JPAGE-client",
+  "version": "1.0.0",
+  "homepage": "/JPAGE",
+  "main": "index.tsx",
+  "type": "module",
+  "license": "MIT",
+  "private": true,
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "rules": {
+      "react-hooks/exhaustive-deps": "off",
+      "react-hooks/rules-of-hooks": "warn",
+      "@typescript-eslint/no-unused-vars": [
         "error",
         {
           "argsIgnorePattern": "^_",

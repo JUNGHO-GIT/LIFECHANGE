@@ -1,20 +1,35 @@
+// craco.config.cjs
+
+const { CracoAliasPlugin } = require('react-app-alias');
+module.exports = {
+  plugins: [
+    {
+      plugin: CracoAliasPlugin,
+      options: {}
+    }
+  ]
+};
+
+----------------------------------------------------------------------------------------------------
+
+// craco.config.cjs
+
 const { CracoAliasPlugin } = require('react-app-alias');
 const CompressionPlugin = require('compression-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 const { SwcMinifyWebpackPlugin } = require('swc-minify-webpack-plugin');
+const { BundleAnalyzerPlugin }  = require('webpack-bundle-analyzer');
 const webpack = require('webpack');
 
 module.exports = {
+
+  // 1. plugins
   plugins: [
     { plugin: CracoAliasPlugin },
   ],
 
-  devServer: {
-    compress: true,
-    hot: true,
-  },
-
+  // 2. babel
   babel: {
     plugins: [
       ['@babel/plugin-syntax-dynamic-import'],
@@ -26,63 +41,84 @@ module.exports = {
     ]
   },
 
+  // 3. webpack
   webpack: {
     configure: (webpackConfig, { env }) => {
-      if (env === 'production') {
-        webpackConfig.optimization = {
-          minimize: true,
-          minimizer: [
-            new SwcMinifyWebpackPlugin({
-              compress: {
-                drop_console: true,
-                drop_debugger: true,
-              },
-              mangle: {
-                properties: {
-                  regex: '^_',
-                },
-              },
-            }),
-            new CssMinimizerPlugin(),
-          ],
-          splitChunks: {
-            chunks: 'all',
-          },
-          runtimeChunk: 'single',
-        };
 
-        webpackConfig.plugins.push(
-          new CompressionPlugin({
-            test: /\.(js|css|html|svg)$/,
-            algorithm: 'gzip',
-            threshold: 8192,
+      // optimization 설정
+      webpackConfig.optimization = {
+        minimize: true,
+        minimizer: [
+          new CssMinimizerPlugin(),
+          new SwcMinifyWebpackPlugin({
+            compress: {
+              drop_console: true,
+              drop_debugger: true,
+            }
           }),
-          new ImageMinimizerPlugin({
-            minimizer: {
-              implementation: ImageMinimizerPlugin.imageminMinify,
-              options: {
-                plugins: [
-                  ['gifsicle', { interlaced: true }],
-                  ['mozjpeg', { progressive: true, quality: 75 }],
-                  ['optipng', { optimizationLevel: 5 }],
-                  ['pngquant', { quality: [0.65, 0.9], speed: 4 }],
-                  ['svgo', { plugins: [{ removeViewBox: false }] }],
-                ],
-              },
+        ],
+        splitChunks: {
+          chunks: 'all',
+          maxInitialRequests: 20,
+          maxAsyncRequests: 30,
+          minSize: 20000,
+        },
+        runtimeChunk: 'single',
+      };
+
+      // plugin 설정
+      webpackConfig.plugins.push(
+        new CssMinimizerPlugin(),
+        new CompressionPlugin({
+          test: /\.(js|css|html|svg)$/,
+          algorithm: 'gzip',
+          threshold: 8192,
+          minRatio: 0.8,
+        }),
+        new ImageMinimizerPlugin({
+          minimizer: {
+            implementation: ImageMinimizerPlugin.imageminMinify,
+            options: {
+              plugins: [
+                ['gifsicle', { interlaced: true }],
+                ['mozjpeg', { progressive: true, quality: 75 }],
+                ['optipng', { optimizationLevel: 5 }],
+                ['pngquant', { quality: [0.65, 0.9], speed: 4 }],
+                ['svgo', { plugins: [{ removeViewBox: false }] }],
+              ],
             },
-          }),
-          new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify(env),
-          })
-        );
+          },
+        }),
+        new webpack.optimize.AggressiveMergingPlugin(),
+        new webpack.DefinePlugin({
+          'process.env.NODE_ENV': JSON.stringify(env),
+        }),
+        new BundleAnalyzerPlugin({
+          analyzerMode: 'static',
+          openAnalyzer: true,
+          reportFilename: 'bundle-report.html',
+        })
+      );
 
-        webpackConfig.output = {
-          path: `${__dirname}/build`,
-          filename: 'static/js/[name].[contenthash:8].js',
-          chunkFilename: 'static/js/[name].[contenthash:8].chunk.js',
-          clean: true,
-        };
-      }
+      // devServer 설정
+      webpackConfig.devServer = {
+        ...webpackConfig.devServer,
+        compress: true,
+        hot: true,
+        historyApiFallback: true,
+        client: {
+          overlay: true,
+        },
+      };
+
+      // output 설정
+      webpackConfig.output = {
+        path: `${__dirname}/build`,
+        publicPath: `${process.env.PUBLIC_URL}`,
+        filename: 'static/js/[name].[contenthash:8].js',
+        chunkFilename: 'static/js/[name].[contenthash:8].chunk.js',
+        clean: true,
+      };
 
       return webpackConfig;
     },
