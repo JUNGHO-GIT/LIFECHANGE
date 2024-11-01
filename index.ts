@@ -2,10 +2,8 @@
 
 import cors from "cors";
 import mongoose from "mongoose";
-import express from "express";
-import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import { Request, Response, NextFunction } from "express";
+import express, { Request, Response } from "express";
 
 import { router as adminRouter } from "@routers/admin/adminRouter";
 import { router as calendarRouter } from "@routers/calendar/calendarRouter";
@@ -73,13 +71,7 @@ startServer(httpPort, httpsPort);
 
 // 미들웨어 설정 -----------------------------------------------------------------------------------
 app.use(express.json());
-app.use(express.urlencoded({
-  extended: true
-}));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(express.urlencoded({ extended: true }));
 app.use(cors({
   origin: "*",
   methods: ["GET", "POST", "DELETE", "PUT"],
@@ -90,14 +82,6 @@ app.use(cors({
   optionsSuccessStatus: 204,
   preflightContinue: false,
 }));
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack);
-  res.status(500).send({
-    status: 500,
-    message: err.message,
-  });
-  next();
-});
 
 // 라우터 설정 -------------------------------------------------------------------------------------
 app.use(`${preFix}/admin`, adminRouter);
@@ -118,3 +102,12 @@ app.use(`${preFix}/sleep`, sleepRouter);
 app.use(`${preFix}/user/sync`, userSyncRouter);
 app.use(`${preFix}/user`, userRouter);
 app.use(`${preFix}/auth/google`, googleRouter);
+
+// 에러 처리 미들웨어 ------------------------------------------------------------------------------
+app.use((err: Error, req: Request, res: Response) => {
+  console.error(err.stack);
+  res.status(500).send({
+    status: 500,
+    message: err.message,
+  });
+});

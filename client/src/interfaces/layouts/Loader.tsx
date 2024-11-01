@@ -14,6 +14,12 @@ export const Loader = () => {
   // 7.loader --------------------------------------------------------------------------------------
   const loaderNode = () => {
 
+    const initLoader = () => (
+      <Div className={"h-min100vh d-col-center"}>
+        <Div className={"loader"} />
+      </Div>
+    );
+
     const wrapperLoader = () => (
       <Div className={"loader-wrapper d-col-center"}>
         <Div className={"loader"} />
@@ -43,7 +49,7 @@ export const Loader = () => {
         detailLoader()
       )
       : (
-        listLoader()
+        initLoader()
       )
     );
   };

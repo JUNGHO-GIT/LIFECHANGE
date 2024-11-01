@@ -33,10 +33,10 @@ export const list = async (object: any) => {
       finalResult = param;
     }
     else if (param === "0" || param === "00:00") {
-      finalResult += " grey";
+      finalResult = "grey";
     }
     else {
-      finalResult += " light-black";
+      finalResult = "light-black";
     }
 
     return finalResult;

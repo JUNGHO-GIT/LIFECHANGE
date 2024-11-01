@@ -45,7 +45,7 @@ export const UserAppInfo = () => {
     .finally(() => {
       setTimeout(() => {
         setLOADING(false);
-      }, 300);
+      }, 100);
     });
   }, [URL_OBJECT, sessionId]);
 

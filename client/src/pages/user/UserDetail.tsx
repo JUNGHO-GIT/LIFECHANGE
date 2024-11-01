@@ -53,7 +53,7 @@ export const UserDetail = () => {
     .finally(() => {
       setTimeout(() => {
         setLOADING(false);
-      }, 300);
+      }, 100);
     });
   }, [URL_OBJECT, sessionId]);
 
@@ -97,7 +97,7 @@ export const UserDetail = () => {
     .finally(() => {
       setTimeout(() => {
         setLOADING(false);
-      }, 300);
+      }, 100);
     });
   };
 
