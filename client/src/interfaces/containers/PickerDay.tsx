@@ -76,7 +76,7 @@ export const PickerDay = (
     if (isGoalTodayList || isTodayList) {
       setTypeList("day");
       setDATE({
-        dateType: "",
+        dateType: "day",
         dateStart: DATE.dateStart || getDayFmt(),
         dateEnd: DATE.dateEnd || getDayFmt(),
       });
@@ -84,28 +84,28 @@ export const PickerDay = (
     else if (isGoalList || isRealList) {
       if (typeList === "day") {
         setDATE({
-          dateType: "",
+          dateType: "day",
           dateStart: DATE.dateStart || getDayFmt(),
           dateEnd: DATE.dateEnd || getDayFmt(),
         });
       }
       else if (typeList === "week") {
         setDATE({
-          dateType: "",
+          dateType: "week",
           dateStart: getWeekStartFmt(),
           dateEnd: getWeekEndFmt(),
         });
       }
       else if (typeList === "month") {
         setDATE({
-          dateType: "",
+          dateType: "month",
           dateStart: getMonthStartFmt(),
           dateEnd: getMonthEndFmt(),
         });
       }
       else if (typeList === "year") {
         setDATE({
-          dateType: "",
+          dateType: "year",
           dateStart: getYearStartFmt(),
           dateEnd: getYearEndFmt(),
         });

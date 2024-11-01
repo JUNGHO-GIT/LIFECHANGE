@@ -17,8 +17,7 @@ export const MoneyDetail = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, navigate, sessionId, localCurrency, moneyArray } = useCommonValue();
   const { toList, toToday, bgColors } = useCommonValue();
-  const { location_from, location_dateType } = useCommonValue();
-  const { location_dateStart, location_dateEnd } = useCommonValue();
+  const { location_from, location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt,getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
   const { ALERT, setALERT } = useStoreAlert();
@@ -52,7 +51,7 @@ export const MoneyDetail = () => {
     newSectionCnt: 0
   });
   const [DATE, setDATE] = useState<any>({
-    dateType: location_dateType || "day",
+    dateType: "day",
     dateStart: location_dateStart || getDayFmt(),
     dateEnd: location_dateEnd || getDayFmt(),
   });

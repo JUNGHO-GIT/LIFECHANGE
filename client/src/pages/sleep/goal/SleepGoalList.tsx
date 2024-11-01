@@ -96,7 +96,11 @@ export const SleepGoalList = () => {
       params: {
         user_id: sessionId,
         PAGING: PAGING,
-        DATE: DATE,
+        DATE: {
+          dateType: "",
+          dateStart: DATE.dateStart,
+          dateEnd: DATE.dateEnd,
+        },
       },
     })
     .then((res: any) => {

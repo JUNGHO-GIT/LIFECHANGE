@@ -114,30 +114,23 @@ export const MoneyChartPie = () => {
   ) => {
 
     let object = null;
-    let endStr = "";
     if (TYPE.section === "week" && TYPE.line === "income") {
       object = OBJECT_INCOME_WEEK;
-      endStr = "";
     }
     else if (TYPE.section === "week" && TYPE.line === "expense") {
       object = OBJECT_EXPENSE_WEEK;
-      endStr = "";
     }
     else if (TYPE.section === "month" && TYPE.line === "income") {
       object = OBJECT_INCOME_MONTH;
-      endStr = "";
     }
     else if (TYPE.section === "month" && TYPE.line === "expense") {
       object = OBJECT_EXPENSE_MONTH;
-      endStr = "";
     }
     else if (TYPE.section === "year" && TYPE.line === "income") {
       object = OBJECT_INCOME_YEAR;
-      endStr = "";
     }
     else if (TYPE.section === "year" && TYPE.line === "expense") {
       object = OBJECT_EXPENSE_YEAR;
-      endStr = "";
     }
 
     const RADIAN = Math.PI / 180;

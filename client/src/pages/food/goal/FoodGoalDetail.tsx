@@ -18,7 +18,7 @@ export const FoodGoalDetail = () => {
   const { URL_OBJECT, navigate, sessionId, toList, toToday } = useCommonValue();
   const { location_from, location_dateType } = useCommonValue();
   const { location_dateStart, location_dateEnd } = useCommonValue();
-  const { getWeekStartFmt, getWeekEndFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
+  const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
   const { ALERT, setALERT } = useStoreAlert();
   const { ERRORS, REFS, validate } = useValidateFood();
@@ -51,9 +51,9 @@ export const FoodGoalDetail = () => {
     newSectionCnt: 0
   });
   const [DATE, setDATE] = useState<any>({
-    dateType: location_dateType || "week",
-    dateStart: location_dateStart || getWeekStartFmt(),
-    dateEnd: location_dateEnd || getWeekEndFmt(),
+    dateType: location_dateType || "month",
+    dateStart: location_dateStart || getMonthStartFmt(),
+    dateEnd: location_dateEnd || getMonthEndFmt(),
   });
 
   // 2-3. useEffect --------------------------------------------------------------------------------

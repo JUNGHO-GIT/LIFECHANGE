@@ -28,7 +28,7 @@
     "module-alias": "^2.2.3",
     "moment-timezone": "^0.5.46",
     "mongodb": "^6.10.0",
-    "mongoose": "^8.7.3",
+    "mongoose": "^8.8.0",
     "nodemailer": "^6.9.16",
     "oauth-signature": "^1.5.0",
     "passport": "^0.7.0",
@@ -46,7 +46,7 @@
     "@types/passport": "^1.0.17",
     "@types/passport-google-oauth20": "^2.0.16",
     "jsdom": "^25.0.1",
-    "tslib": "^2.8.0",
+    "tslib": "^2.8.1",
     "tsx": "^4.19.2",
     "typescript": "^5.6.3"
   }
