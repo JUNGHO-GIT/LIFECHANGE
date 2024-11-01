@@ -1,12 +1,16 @@
+// craco.config.cjs
+
 const { CracoAliasPlugin } = require('react-app-alias');
+const ThreadLoader = require('thread-loader');
 const CompressionPlugin = require('compression-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const { SwcMinifyWebpackPlugin } = require('swc-minify-webpack-plugin');
 const webpack = require('webpack');
 
+// -------------------------------------------------------------------------------------------------
 module.exports = {
-
   // 1. plugins
   plugins: [
     {
@@ -22,13 +26,21 @@ module.exports = {
       ['@babel/plugin-transform-react-constant-elements'],
       ['@babel/plugin-proposal-optional-chaining'],
       ['@babel/plugin-proposal-nullish-coalescing-operator'],
-      ['babel-plugin-transform-remove-console', { exclude: ['error', 'warn'] }],
+      ['babel-plugin-transform-remove-console', { exclude: ['error', 'warn'] }]
     ]
   },
 
   // 3. webpack
   webpack: {
     configure: (webpackConfig, { env }) => {
+
+      // thread-loader 설정 (CSS는 제외)
+      ThreadLoader.warmup({}, ['babel-loader']);
+      webpackConfig.module.rules.unshift({
+        test: /\.(js|mjs|jsx|ts|tsx)$/,
+        use: ['thread-loader', 'babel-loader'],
+        exclude: /node_modules/,
+      });
 
       // optimization 설정
       webpackConfig.optimization = {
@@ -55,18 +67,16 @@ module.exports = {
       webpackConfig.plugins.push(
         new CssMinimizerPlugin({
           minimizerOptions: {
-            preset: ['default',
-              {
-                discardComments: { removeAll: true },
-              }
-            ],
+            preset: ['default', {
+              discardComments: { removeAll: true },
+            }],
           },
         }),
         new CompressionPlugin({
           test: /\.(js|css|html|svg)$/,
           algorithm: 'gzip',
           threshold: 8192,
-          minRatio: 0.8,
+          minRatio: 0.5,
         }),
         new ImageMinimizerPlugin({
           minimizer: {
@@ -83,11 +93,12 @@ module.exports = {
           },
         }),
         new webpack.optimize.AggressiveMergingPlugin({
-          minSizeReduce: 1.5
+          minSizeReduce: 0.5,
         }),
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': JSON.stringify(env),
-        })
+        }),
+        env === 'development' && new ReactRefreshWebpackPlugin()
       );
 
       // devServer 설정
@@ -96,7 +107,6 @@ module.exports = {
         open: true,
         compress: true,
         hot: true,
-        historyApiFallback: true,
         client: {
           overlay: true,
         },
@@ -109,6 +119,14 @@ module.exports = {
         filename: 'static/js/[name].[contenthash:8].js',
         chunkFilename: 'static/js/[name].[contenthash:8].chunk.js',
         clean: true,
+      };
+
+      // 캐시 설정
+      webpackConfig.cache = {
+        type: 'filesystem',
+        buildDependencies: {
+          config: [__filename],
+        },
       };
 
       return webpackConfig;

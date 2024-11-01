@@ -32,6 +32,7 @@ export const Header = () => {
             shadow={false}
             radius={false}
             src={"logo2"}
+            loading={"eager"}
             className={"h-max30 me-2vw"}
           />
           <Img
@@ -39,6 +40,7 @@ export const Header = () => {
             shadow={false}
             radius={false}
             src={"logo3"}
+            loading={"eager"}
             className={"h-max30"}
           />
         </Div>
