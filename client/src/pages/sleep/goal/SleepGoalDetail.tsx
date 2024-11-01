@@ -300,77 +300,75 @@ export const SleepGoalDetail = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
           {[OBJECT].filter((_: any, idx: number) => idx === 0).map((_: any, i: number) => (
-            <Grid size={12} key={`detail-${i}`}>
-              <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
-                {/** row 1 **/}
-                <Grid container={true} spacing={2}>
-                  <Grid size={6} className={"d-row-left"}>
-                    <Bg
-                      badgeContent={i + 1}
-                      bgcolor={"#1976d2"}
-                    />
-                  </Grid>
-                  <Grid size={6} className={"d-row-right"}>
-                    <Delete
-                      index={i}
-                      handleDelete={handleDelete}
-                      LOCKED={LOCKED}
-                    />
-                  </Grid>
+            <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}  key={`detail-${i}`}>
+              {/** row 1 **/}
+              <Grid container={true} spacing={2}>
+                <Grid size={6} className={"d-row-left"}>
+                  <Bg
+                    badgeContent={i + 1}
+                    bgcolor={"#1976d2"}
+                  />
                 </Grid>
-                {/** /.row 1 **/}
-
-                {/** row 2 **/}
-                <Grid container={true} spacing={2}>
-                  <Grid size={12}>
-                    <PickerTime
-                      OBJECT={OBJECT}
-                      setOBJECT={setOBJECT}
-                      REFS={REFS}
-                      ERRORS={ERRORS}
-                      DATE={DATE}
-                      LOCKED={LOCKED}
-                      extra={"sleep_goal_bedTime"}
-                      i={i}
-                    />
-                  </Grid>
+                <Grid size={6} className={"d-row-right"}>
+                  <Delete
+                    index={i}
+                    handleDelete={handleDelete}
+                    LOCKED={LOCKED}
+                  />
                 </Grid>
-                {/** /.row 2 **/}
-
-                {/** row 3 **/}
-                <Grid container={true} spacing={2}>
-                  <Grid size={12}>
-                    <PickerTime
-                      OBJECT={OBJECT}
-                      setOBJECT={setOBJECT}
-                      REFS={REFS}
-                      ERRORS={ERRORS}
-                      DATE={DATE}
-                      LOCKED={LOCKED}
-                      extra={"sleep_goal_wakeTime"}
-                      i={i}
-                    />
-                  </Grid>
-                </Grid>
-                {/** /.row 3 **/}
-
-                {/** row 4 **/}
-                <Grid container={true} spacing={2}>
-                  <Grid size={12}>
-                    <PickerTime
-                      OBJECT={OBJECT}
-                      setOBJECT={setOBJECT}
-                      REFS={REFS}
-                      ERRORS={ERRORS}
-                      DATE={DATE}
-                      LOCKED={LOCKED}
-                      extra={"sleep_goal_sleepTime"}
-                      i={i}
-                    />
-                  </Grid>
-                </Grid>
-                {/** /.row 4 **/}
               </Grid>
+              {/** /.row 1 **/}
+
+              {/** row 2 **/}
+              <Grid container={true} spacing={2}>
+                <Grid size={12}>
+                  <PickerTime
+                    OBJECT={OBJECT}
+                    setOBJECT={setOBJECT}
+                    REFS={REFS}
+                    ERRORS={ERRORS}
+                    DATE={DATE}
+                    LOCKED={LOCKED}
+                    extra={"sleep_goal_bedTime"}
+                    i={i}
+                  />
+                </Grid>
+              </Grid>
+              {/** /.row 2 **/}
+
+              {/** row 3 **/}
+              <Grid container={true} spacing={2}>
+                <Grid size={12}>
+                  <PickerTime
+                    OBJECT={OBJECT}
+                    setOBJECT={setOBJECT}
+                    REFS={REFS}
+                    ERRORS={ERRORS}
+                    DATE={DATE}
+                    LOCKED={LOCKED}
+                    extra={"sleep_goal_wakeTime"}
+                    i={i}
+                  />
+                </Grid>
+              </Grid>
+              {/** /.row 3 **/}
+
+              {/** row 4 **/}
+              <Grid container={true} spacing={2}>
+                <Grid size={12}>
+                  <PickerTime
+                    OBJECT={OBJECT}
+                    setOBJECT={setOBJECT}
+                    REFS={REFS}
+                    ERRORS={ERRORS}
+                    DATE={DATE}
+                    LOCKED={LOCKED}
+                    extra={"sleep_goal_sleepTime"}
+                    i={i}
+                  />
+                </Grid>
+              </Grid>
+              {/** /.row 4 **/}
             </Grid>
           ))}
         </Grid>

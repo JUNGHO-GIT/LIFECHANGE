@@ -113,6 +113,10 @@ export const FoodGoalDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
+    if (LOCKED === "locked") {
+      setLOADING(false);
+      return;
+    }
     axios.get(`${URL_OBJECT}/goal/detail`, {
       params: {
         user_id: sessionId,
@@ -294,222 +298,220 @@ export const FoodGoalDetail = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
           {[OBJECT].filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
-            <Grid size={12} key={`detail-${i}`}>
-              <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}>
-                {/** row 1 **/}
-                <Grid container={true} spacing={2}>
-                  <Grid size={6} className={"d-row-left"}>
-                    <Bg
-                      badgeContent={i + 1}
-                      bgcolor={"#1976d2"}
-                    />
-                  </Grid>
-                  <Grid size={6} className={"d-row-right"}>
-                    <Delete
-                      index={i}
-                      handleDelete={handleDelete}
-                      LOCKED={LOCKED}
-                    />
-                  </Grid>
+            <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}  key={`detail-${i}`}>
+              {/** row 1 **/}
+              <Grid container={true} spacing={2}>
+                <Grid size={6} className={"d-row-left"}>
+                  <Bg
+                    badgeContent={i + 1}
+                    bgcolor={"#1976d2"}
+                  />
                 </Grid>
-                {/** /.row 1 **/}
-
-                {/** row 2 **/}
-                <Grid container={true} spacing={2}>
-                  <Grid size={12}>
-                    <Input
-                      locked={LOCKED}
-                      value={insertComma(item?.food_goal_kcal || "0")}
-                      inputRef={REFS?.[i]?.food_goal_kcal}
-                      error={ERRORS?.[i]?.food_goal_kcal}
-                      label={
-                        DATE.dateType === "day" ? (
-                          `${translate("goalKcal")}`
-                        ) : (
-                          `${translate("goalKcal")} (${translate("total")})`
-                        )
-                      }
-                      startadornment={
-                        <Img
-                          max={15}
-                          hover={true}
-                          shadow={false}
-                          radius={false}
-                          src={"food2"}
-                        />
-                      }
-                      endadornment={
-                        translate("kc")
-                      }
-                      onChange={(e: any) => {
-                        // 빈값 처리
-                        let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-                        // 999999 제한 + 정수
-                        if (Number(value) > 999999 || !/^\d+$/.test(value)) {
-                          return;
-                        }
-                        // 01, 05 같은 숫자는 1, 5로 변경
-                        if (/^0(?!\.)/.test(value)) {
-                          value = value.replace(/^0+/, '');
-                        }
-                        // object 설정
-                        setOBJECT((prev: any) => ({
-                          ...prev,
-                          food_goal_kcal: value,
-                        }));
-                      }}
-                    />
-                  </Grid>
+                <Grid size={6} className={"d-row-right"}>
+                  <Delete
+                    index={i}
+                    handleDelete={handleDelete}
+                    LOCKED={LOCKED}
+                  />
                 </Grid>
-                {/** /.row 2 **/}
-
-                {/** row 3 **/}
-                <Grid container={true} spacing={2}>
-                  <Grid size={12}>
-                    <Input
-                      locked={LOCKED}
-                      value={insertComma(item?.food_goal_carb || "0")}
-                      inputRef={REFS?.[i]?.food_goal_carb}
-                      error={ERRORS?.[i]?.food_goal_carb}
-                      label={
-                        DATE.dateType === "day" ? (
-                          `${translate("goalCarb")}`
-                        ) : (
-                          `${translate("goalCarb")} (${translate("total")})`
-                        )
-                      }
-                      startadornment={
-                        <Img
-                          max={15}
-                          hover={true}
-                          shadow={false}
-                          radius={false}
-                          src={"food3"}
-                        />
-                      }
-                      endadornment={
-                        translate("g")
-                      }
-                      onChange={(e: any) => {
-                        // 빈값 처리
-                        let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-                        // 999999 제한 + 정수
-                        if (Number(value) > 999999 || !/^\d+$/.test(value)) {
-                          return;
-                        }
-                        // 01, 05 같은 숫자는 1, 5로 변경
-                        if (/^0(?!\.)/.test(value)) {
-                          value = value.replace(/^0+/, '');
-                        }
-                        // object 설정
-                        setOBJECT((prev: any) => ({
-                          ...prev,
-                          food_goal_carb: value,
-                        }));
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-                {/** /.row 3 **/}
-
-                {/** row 4 **/}
-                <Grid container={true} spacing={2}>
-                  <Grid size={12}>
-                    <Input
-                      locked={LOCKED}
-                      value={insertComma(item?.food_goal_protein || "0")}
-                      inputRef={REFS?.[i]?.food_goal_protein}
-                      error={ERRORS?.[i]?.food_goal_protein}
-                      label={
-                        DATE.dateType === "day" ? (
-                          `${translate("goalProtein")}`
-                        ) : (
-                          `${translate("goalProtein")} (${translate("total")})`
-                        )
-                      }
-                      startadornment={
-                        <Img
-                          max={15}
-                          hover={true}
-                          shadow={false}
-                          radius={false}
-                          src={"food4"}
-                        />
-                      }
-                      endadornment={
-                        translate("g")
-                      }
-                      onChange={(e: any) => {
-                        // 빈값 처리
-                        let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-                        // 999999 제한 + 정수
-                        if (Number(value) > 999999 || !/^\d+$/.test(value)) {
-                          return;
-                        }
-                        // 01, 05 같은 숫자는 1, 5로 변경
-                        if (/^0(?!\.)/.test(value)) {
-                          value = value.replace(/^0+/, '');
-                        }
-                        // object 설정
-                        setOBJECT((prev: any) => ({
-                          ...prev,
-                          food_goal_protein: value,
-                        }));
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-                {/** /.row 4 **/}
-
-                {/** row 5 **/}
-                <Grid container={true} spacing={2}>
-                  <Grid size={12}>
-                    <Input
-                      locked={LOCKED}
-                      value={insertComma(item?.food_goal_fat || "0")}
-                      inputRef={REFS?.[i]?.food_goal_fat}
-                      error={ERRORS?.[i]?.food_goal_fat}
-                      label={
-                        DATE.dateType === "day" ? (
-                          `${translate("goalFat")}`
-                        ) : (
-                          `${translate("goalFat")} (${translate("total")})`
-                        )
-                      }
-                      startadornment={
-                        <Img
-                          max={15}
-                          hover={true}
-                          shadow={false}
-                          radius={false}
-                          src={"food5"}
-                        />
-                      }
-                      endadornment={
-                        translate("g")
-                      }
-                      onChange={(e: any) => {
-                        // 빈값 처리
-                        let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-                        // 999999 제한 + 정수
-                        if (Number(value) > 999999 || !/^\d+$/.test(value)) {
-                          return;
-                        }
-                        // 01, 05 같은 숫자는 1, 5로 변경
-                        if (/^0(?!\.)/.test(value)) {
-                          value = value.replace(/^0+/, '');
-                        }
-                        // object 설정
-                        setOBJECT((prev: any) => ({
-                          ...prev,
-                          food_goal_fat: value,
-                        }));
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-                {/** /.row 5 **/}
               </Grid>
+              {/** /.row 1 **/}
+
+              {/** row 2 **/}
+              <Grid container={true} spacing={2}>
+                <Grid size={12}>
+                  <Input
+                    locked={LOCKED}
+                    value={insertComma(item?.food_goal_kcal || "0")}
+                    inputRef={REFS?.[i]?.food_goal_kcal}
+                    error={ERRORS?.[i]?.food_goal_kcal}
+                    label={
+                      DATE.dateType === "day" ? (
+                        `${translate("goalKcal")}`
+                      ) : (
+                        `${translate("goalKcal")} (${translate("total")})`
+                      )
+                    }
+                    startadornment={
+                      <Img
+                        max={15}
+                        hover={true}
+                        shadow={false}
+                        radius={false}
+                        src={"food2"}
+                      />
+                    }
+                    endadornment={
+                      translate("kc")
+                    }
+                    onChange={(e: any) => {
+                      // 빈값 처리
+                      let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                      // 999999 제한 + 정수
+                      if (Number(value) > 999999 || !/^\d+$/.test(value)) {
+                        return;
+                      }
+                      // 01, 05 같은 숫자는 1, 5로 변경
+                      if (/^0(?!\.)/.test(value)) {
+                        value = value.replace(/^0+/, '');
+                      }
+                      // object 설정
+                      setOBJECT((prev: any) => ({
+                        ...prev,
+                        food_goal_kcal: value,
+                      }));
+                    }}
+                  />
+                </Grid>
+              </Grid>
+              {/** /.row 2 **/}
+
+              {/** row 3 **/}
+              <Grid container={true} spacing={2}>
+                <Grid size={12}>
+                  <Input
+                    locked={LOCKED}
+                    value={insertComma(item?.food_goal_carb || "0")}
+                    inputRef={REFS?.[i]?.food_goal_carb}
+                    error={ERRORS?.[i]?.food_goal_carb}
+                    label={
+                      DATE.dateType === "day" ? (
+                        `${translate("goalCarb")}`
+                      ) : (
+                        `${translate("goalCarb")} (${translate("total")})`
+                      )
+                    }
+                    startadornment={
+                      <Img
+                        max={15}
+                        hover={true}
+                        shadow={false}
+                        radius={false}
+                        src={"food3"}
+                      />
+                    }
+                    endadornment={
+                      translate("g")
+                    }
+                    onChange={(e: any) => {
+                      // 빈값 처리
+                      let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                      // 999999 제한 + 정수
+                      if (Number(value) > 999999 || !/^\d+$/.test(value)) {
+                        return;
+                      }
+                      // 01, 05 같은 숫자는 1, 5로 변경
+                      if (/^0(?!\.)/.test(value)) {
+                        value = value.replace(/^0+/, '');
+                      }
+                      // object 설정
+                      setOBJECT((prev: any) => ({
+                        ...prev,
+                        food_goal_carb: value,
+                      }));
+                    }}
+                  />
+                </Grid>
+              </Grid>
+              {/** /.row 3 **/}
+
+              {/** row 4 **/}
+              <Grid container={true} spacing={2}>
+                <Grid size={12}>
+                  <Input
+                    locked={LOCKED}
+                    value={insertComma(item?.food_goal_protein || "0")}
+                    inputRef={REFS?.[i]?.food_goal_protein}
+                    error={ERRORS?.[i]?.food_goal_protein}
+                    label={
+                      DATE.dateType === "day" ? (
+                        `${translate("goalProtein")}`
+                      ) : (
+                        `${translate("goalProtein")} (${translate("total")})`
+                      )
+                    }
+                    startadornment={
+                      <Img
+                        max={15}
+                        hover={true}
+                        shadow={false}
+                        radius={false}
+                        src={"food4"}
+                      />
+                    }
+                    endadornment={
+                      translate("g")
+                    }
+                    onChange={(e: any) => {
+                      // 빈값 처리
+                      let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                      // 999999 제한 + 정수
+                      if (Number(value) > 999999 || !/^\d+$/.test(value)) {
+                        return;
+                      }
+                      // 01, 05 같은 숫자는 1, 5로 변경
+                      if (/^0(?!\.)/.test(value)) {
+                        value = value.replace(/^0+/, '');
+                      }
+                      // object 설정
+                      setOBJECT((prev: any) => ({
+                        ...prev,
+                        food_goal_protein: value,
+                      }));
+                    }}
+                  />
+                </Grid>
+              </Grid>
+              {/** /.row 4 **/}
+
+              {/** row 5 **/}
+              <Grid container={true} spacing={2}>
+                <Grid size={12}>
+                  <Input
+                    locked={LOCKED}
+                    value={insertComma(item?.food_goal_fat || "0")}
+                    inputRef={REFS?.[i]?.food_goal_fat}
+                    error={ERRORS?.[i]?.food_goal_fat}
+                    label={
+                      DATE.dateType === "day" ? (
+                        `${translate("goalFat")}`
+                      ) : (
+                        `${translate("goalFat")} (${translate("total")})`
+                      )
+                    }
+                    startadornment={
+                      <Img
+                        max={15}
+                        hover={true}
+                        shadow={false}
+                        radius={false}
+                        src={"food5"}
+                      />
+                    }
+                    endadornment={
+                      translate("g")
+                    }
+                    onChange={(e: any) => {
+                      // 빈값 처리
+                      let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
+                      // 999999 제한 + 정수
+                      if (Number(value) > 999999 || !/^\d+$/.test(value)) {
+                        return;
+                      }
+                      // 01, 05 같은 숫자는 1, 5로 변경
+                      if (/^0(?!\.)/.test(value)) {
+                        value = value.replace(/^0+/, '');
+                      }
+                      // object 설정
+                      setOBJECT((prev: any) => ({
+                        ...prev,
+                        food_goal_fat: value,
+                      }));
+                    }}
+                  />
+                </Grid>
+              </Grid>
+              {/** /.row 5 **/}
             </Grid>
           ))}
         </Grid>
