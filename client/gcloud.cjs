@@ -8,60 +8,94 @@ console.log(`Activated OS is : ${winOrLinux}`);
 
 // 프로젝트 빌드 -----------------------------------------------------------------------------------
 const buildProject = () => {
-  const commandBuild = 'npm run build';
-  execSync(commandBuild, { stdio: 'inherit' });
+  console.log('1. Build Project');
+  try {
+    const commandBuild = 'npm run build';
+    execSync(commandBuild, { stdio: 'inherit' });
+  }
+  catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
 };
 
 // build 폴더 압축 ---------------------------------------------------------------------------------
 const compressBuild = () => {
-  const command = 'tar -zcvf build.tar.gz build';
-  execSync(command, { stdio: 'inherit' });
+  console.log('2. Compress Build Folder');
+  try {
+    const command = 'tar -zcvf build.tar.gz build';
+    execSync(command, { stdio: 'inherit' });
+  }
+  catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
 };
 
 // gcloud에 업로드 ---------------------------------------------------------------------------------
 const uploadToGCS = () => {
-  const command = 'gcloud storage cp build.tar.gz gs://jungho-bucket/JPAGE/SERVER/build.tar.gz';
-  execSync(command, { stdio: 'inherit' });
+  console.log('3. Upload to GCS');
+  try {
+    const command = 'gcloud storage cp build.tar.gz gs://jungho-bucket/JPAGE/SERVER/build.tar.gz';
+    execSync(command, { stdio: 'inherit' });
+  }
+  catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
 };
 
 // 기존 build.tar.gz 삭제 --------------------------------------------------------------------------
 const deleteBuildTar = () => {
-  const del = winOrLinux === "win" ? "del" : "rm -rf";
-  const command = `${del} build.tar.gz`
-  execSync(command, { stdio: 'inherit' });
+  console.log('4. Delete build.tar.gz');
+  try {
+    const del = winOrLinux === "win" ? "del" : "rm -rf";
+    const command = `${del} build.tar.gz`
+    execSync(command, { stdio: 'inherit' });
+  }
+  catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
 };
 
 // 원격 서버에서 스크립트 실행 ---------------------------------------------------------------------
 const runRemoteScript = () => {
+  console.log('5. Run Remote Script');
+  try {
+    const keyPath = (
+      winOrLinux === "win"
+      ? "C:\\Users\\jungh\\.ssh\\JKEY"
+      : "~/ssh/JKEY"
+    );
 
-  const keyPath = (
-    winOrLinux === "win"
-    ? "C:\\Users\\jungh\\.ssh\\JKEY"
-    : "~/ssh/JKEY"
-  );
+    const serviceId = (
+      winOrLinux === "win"
+      ? 'junghomun00'
+      : 'junghomun1234'
+    );
 
-  const serviceId = (
-    winOrLinux === "win"
-    ? 'junghomun00'
-    : 'junghomun1234'
-  );
+    const ipAddr = "34.23.233.23";
+    const cmdCd = 'cd /var/www/junghomun.com/JPAGE/client';
+    const cmdGs = 'sudo gcloud storage cp gs://jungho-bucket/JPAGE/SERVER/build.tar.gz .';
+    const cmdTar = 'sudo tar -zvxf build.tar.gz --strip-components=1';
+    const cmdRm = 'sudo rm build.tar.gz';
+    const cmdCh = 'sudo chmod -R 755 /var/www/junghomun.com/JPAGE/client'
+    const cmdRestart = 'sudo systemctl restart nginx';
 
-  const ipAddr = "34.23.233.23";
-  const cmdCd = 'cd /var/www/junghomun.com/JPAGE/client';
-  const cmdGs = 'sudo gcloud storage cp gs://jungho-bucket/JPAGE/SERVER/build.tar.gz .';
-  const cmdTar = 'sudo tar -zvxf build.tar.gz --strip-components=1';
-  const cmdRm = 'sudo rm build.tar.gz';
-  const cmdCh = 'sudo chmod -R 755 /var/www/junghomun.com/JPAGE/client'
-  const cmdRestart = 'sudo systemctl restart nginx';
+    const winCommand = `powershell -Command "ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGs} && ${cmdTar} && ${cmdRm} && ${cmdCh} && ${cmdRestart}\'"
+    `;
 
-  const winCommand = `powershell -Command "ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGs} && ${cmdTar} && ${cmdRm} && ${cmdCh} && ${cmdRestart}\'"
-  `;
+    const linuxCommand = `ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGs} && ${cmdTar} && ${cmdRm} && ${cmdCh} && ${cmdRestart}\'`;
 
-  const linuxCommand = `ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGs} && ${cmdTar} && ${cmdRm} && ${cmdCh} && ${cmdRestart}\'`;
+    const sshCommand = winOrLinux === "win" ? winCommand : linuxCommand;
 
-  const sshCommand = winOrLinux === "win" ? winCommand : linuxCommand;
-
-  execSync(sshCommand, { stdio: 'inherit' });
+    execSync(sshCommand, { stdio: 'inherit' });
+  }
+  catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -70,3 +104,4 @@ compressBuild();
 uploadToGCS();
 deleteBuildTar();
 runRemoteScript();
+process.exit(0);

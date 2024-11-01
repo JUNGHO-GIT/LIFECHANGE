@@ -1,7 +1,6 @@
 // craco.config.cjs
 
 const { CracoAliasPlugin } = require('react-app-alias');
-const ThreadLoader = require('thread-loader');
 const CompressionPlugin = require('compression-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
@@ -10,48 +9,30 @@ const { SwcMinifyWebpackPlugin } = require('swc-minify-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = {
-  // 1. plugins
   plugins: [
     {
       plugin: CracoAliasPlugin
     }
   ],
 
-  // 2. babel
   babel: {
     plugins: [
       ['@babel/plugin-syntax-dynamic-import'],
-      ['@babel/plugin-transform-react-inline-elements'],
-      ['@babel/plugin-transform-react-constant-elements'],
       ['@babel/plugin-proposal-optional-chaining'],
       ['@babel/plugin-proposal-nullish-coalescing-operator'],
+      ['@babel/plugin-transform-react-inline-elements'],
+      ['@babel/plugin-transform-react-constant-elements'],
       ['babel-plugin-transform-remove-console', { exclude: ['error', 'warn'] }]
     ]
   },
 
-  // 3. webpack
   webpack: {
     configure: (webpackConfig, { env }) => {
 
-      // thread-loader 설정 (CSS는 제외)
-      ThreadLoader.warmup(
-        { poolTimeout: 2000, workerParallelJobs: 50 },
-        ['babel-loader']
-      );
-
+      // module 설정
       webpackConfig.module.rules.unshift({
         test: /\.(js|mjs|jsx|ts|tsx)$/,
-        use: [
-          { loader: 'thread-loader' },
-          {
-            loader: 'babel-loader',
-            options: {
-              plugins: [
-                env === 'development' && require.resolve('react-refresh/babel'),
-              ].filter(Boolean),
-            },
-          },
-        ],
+        use: ['thread-loader', 'babel-loader'],
         exclude: /node_modules/,
       });
 
@@ -63,7 +44,6 @@ module.exports = {
             minimizerOptions: {
               preset: ['default', {
                 discardComments: { removeAll: true },
-                zindex: false,
               }],
             },
           }),
@@ -76,9 +56,19 @@ module.exports = {
         ],
         splitChunks: {
           chunks: 'all',
-          maxInitialRequests: 20,
-          maxAsyncRequests: 30,
-          minSize: 20000,
+          name: false,
+          cacheGroups: {
+            vendors: {
+              test: /[\\/]node_modules[\\/]/,
+              name: 'vendors',
+              chunks: 'all',
+            },
+            default: {
+              minChunks: 2,
+              priority: -20,
+              reuseExistingChunk: true,
+            },
+          },
         },
         runtimeChunk: 'single',
       };
@@ -86,6 +76,7 @@ module.exports = {
       // plugin 설정
       webpackConfig.plugins.push(
         new CompressionPlugin({
+          filename: '[path][base].gz',
           test: /\.(js|css|html|svg)$/,
           algorithm: 'gzip',
           threshold: 10240,
@@ -97,23 +88,23 @@ module.exports = {
             options: {
               plugins: [
                 ['gifsicle', { interlaced: true }],
-                ['mozjpeg', { progressive: true, quality: 80 }],
-                ['optipng', { optimizationLevel: 5 }],
-                ['pngquant', { quality: [0.75, 0.85], speed: 3 }],
+                ['mozjpeg', { progressive: true, quality: 70 }],
+                ['optipng', { optimizationLevel: 3 }],
+                ['pngquant', { quality: [0.65, 0.8], speed: 4 }],
                 ['svgo', { plugins: [{ removeViewBox: false }, { cleanupIDs: true }] }],
-                ['imagemin-webp', { quality: 75 }],
+                ['imagemin-webp', { quality: 70 }],
               ],
             },
           },
         }),
         new webpack.optimize.AggressiveMergingPlugin({
-          minSizeReduce: 0.5,
+          minSizeReduce: 1.5
         }),
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': JSON.stringify(env),
-          'process.env.PUBLIC_URL': JSON.stringify(process.env.PUBLIC_URL || ''),
+          'process.env.PUBLIC_URL': JSON.stringify(process.env.PUBLIC_URL),
         }),
-        ...(env === 'development' ? [new ReactRefreshWebpackPlugin()] : [])
+        env === 'development' && new ReactRefreshWebpackPlugin(),
       );
 
       // devServer 설정
@@ -122,26 +113,27 @@ module.exports = {
         open: true,
         compress: true,
         hot: true,
-        client: {
-          overlay: true,
-        },
+        historyApiFallback: true,
+        overlay: true,
       };
 
       // output 설정
       webpackConfig.output = {
         path: `${__dirname}/build`,
         publicPath: `${process.env.PUBLIC_URL}`,
-        filename: 'static/js/[name].[contenthash:8].js',
-        chunkFilename: 'static/js/[name].[contenthash:8].chunk.js',
+        filename: `static/js/[name].[contenthash:8].js`,
+        chunkFilename: `static/js/[name].[contenthash:8].chunk.js`,
+        assetModuleFilename: 'static/media/[name].[hash][ext]',
         clean: true,
       };
 
-      // 캐시 설정
+      // 캐시 초기화
       webpackConfig.cache = {
         type: 'filesystem',
         buildDependencies: {
           config: [__filename],
         },
+        name: 'webpack-cache'
       };
 
       return webpackConfig;
