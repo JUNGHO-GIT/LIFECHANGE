@@ -197,8 +197,8 @@ export const MoneyDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     const defaultSection = {
-      money_part_idx: 0,
-      money_part_val: "",
+      money_part_idx: 1,
+      money_part_val: moneyArray[1]?.money_part,
       money_title_idx: 0,
       money_title_val: "",
       money_amount: "0",

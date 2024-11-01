@@ -76,7 +76,7 @@ export const PickerDay = (
     if (isGoalTodayList || isTodayList) {
       setTypeList("day");
       setDATE({
-        dateType: "day",
+        dateType: "",
         dateStart: DATE.dateStart || getDayFmt(),
         dateEnd: DATE.dateEnd || getDayFmt(),
       });
@@ -112,7 +112,7 @@ export const PickerDay = (
       }
       else if (typeList === "select") {
         setDATE({
-          dateType: "",
+          dateType: "select",
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd,
         });

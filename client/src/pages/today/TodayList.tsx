@@ -145,7 +145,9 @@ export const TodayList = () => {
       console.error(err);
     }
     finally {
-      setLOADING(false);
+      setTimeout(() => {
+        setLOADING(false);
+      }, 200);
     }
   })()}, [
     URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP,

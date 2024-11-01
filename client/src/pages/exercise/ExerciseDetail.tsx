@@ -210,8 +210,8 @@ export const ExerciseDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     const defaultSection = {
-      exercise_part_idx: 0,
-      exercise_part_val: "",
+      exercise_part_idx: 1,
+      exercise_part_val: exerciseArray[1]?.exercise_part,
       exercise_title_idx: 0,
       exercise_title_val: "",
       exercise_set: "0",

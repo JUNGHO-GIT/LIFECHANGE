@@ -104,7 +104,9 @@ export const FoodChartPie = () => {
       console.error(err);
     }
     finally {
-      setLOADING(false);
+      setTimeout(() => {
+        setLOADING(false);
+      }, 200);
     }
   })()}, [URL_OBJECT, DATE, sessionId]);
 

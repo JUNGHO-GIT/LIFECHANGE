@@ -150,8 +150,8 @@ export const CalendarDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     const defaultSection = {
-      calendar_part_idx: 0,
-      calendar_part_val: "",
+      calendar_part_idx: 1,
+      calendar_part_val: calendarArray[1]?.calendar_part,
       calendar_title: "",
       calendar_color: "",
       calendar_content: ""
@@ -163,7 +163,6 @@ export const CalendarDetail = () => {
       ...prev,
       calendar_section: updatedSection
     }));
-
   },[COUNT?.newSectionCnt]);
 
   // 3. flow ---------------------------------------------------------------------------------------

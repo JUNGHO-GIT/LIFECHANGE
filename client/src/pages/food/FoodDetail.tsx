@@ -236,7 +236,7 @@ export const FoodDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     const defaultSection = {
-      food_part_idx: 0,
+      food_part_idx: 1,
       food_part_val: "breakfast",
       food_key: "",
       food_name: "",

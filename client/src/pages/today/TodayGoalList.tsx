@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate } from "@importHooks";
-import { useStorageSession, useStorageLocal } from "@importHooks";
-import { useStoreLanguage } from "@importHooks";
+import { useStorageSession, useStorageLocal, useStoreLanguage } from "@importHooks";
 import { axios } from "@importLibs";
 import { insertComma } from "@importScripts";
 import { ExerciseGoal, FoodGoal, MoneyGoal, SleepGoal } from "@importSchemas";
@@ -146,7 +145,9 @@ export const TodayGoalList = () => {
       console.error(err);
     }
     finally {
-      setLOADING(false);
+      setTimeout(() => {
+        setLOADING(false);
+      }, 200);
     }
   })()}, [
     URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP,

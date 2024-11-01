@@ -85,10 +85,7 @@ export const Count = (
                 className={"w-16 h-16"}
                 locked={LOCKED}
                 onClick={() => {
-                  if (LOCKED === "locked") {
-                    return;
-                  }
-                  if (PATH.includes("/food/find/list")) {
+                  if (LOCKED === "locked" || PATH.includes("/food/find/list")) {
                     return;
                   }
                   else {
@@ -119,10 +116,7 @@ export const Count = (
                 className={"w-16 h-16"}
                 locked={LOCKED}
                 onClick={() => {
-                  if (LOCKED === "locked") {
-                    return;
-                  }
-                  if (PATH.includes("/food/find/list")) {
+                  if (LOCKED === "locked" || PATH.includes("/food/find/list")) {
                     return;
                   }
                   else {
