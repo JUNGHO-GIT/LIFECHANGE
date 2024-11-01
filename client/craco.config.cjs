@@ -3,7 +3,6 @@
 const { CracoAliasPlugin } = require('react-app-alias');
 const CompressionPlugin = require('compression-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const { SwcMinifyWebpackPlugin } = require('swc-minify-webpack-plugin');
 const webpack = require('webpack');
@@ -33,13 +32,10 @@ module.exports = {
       webpackConfig.module.rules.unshift({
         test: /\.(js|mjs|jsx|ts|tsx)$/,
         use: [
-          { loader: 'thread-loader' },
           {
             loader: 'babel-loader',
             options: {
-              plugins: [
-                env === 'development' && require.resolve('react-refresh/babel'),
-              ].filter(Boolean),
+              plugins: [env === 'development' && require.resolve('react-refresh/babel')].filter(Boolean),
             },
           },
         ],
@@ -93,21 +89,6 @@ module.exports = {
           threshold: 10240,
           minRatio: 0.8,
         }),
-        new ImageMinimizerPlugin({
-          minimizer: {
-            implementation: ImageMinimizerPlugin.imageminMinify,
-            options: {
-              plugins: [
-                ['gifsicle', { interlaced: true }],
-                ['mozjpeg', { progressive: true, quality: 70 }],
-                ['optipng', { optimizationLevel: 3 }],
-                ['pngquant', { quality: [0.65, 0.8], speed: 4 }],
-                ['svgo', { plugins: [{ removeViewBox: false }, { cleanupIDs: true }] }],
-                ['imagemin-webp', { quality: 70 }],
-              ],
-            },
-          },
-        }),
         new webpack.optimize.AggressiveMergingPlugin({
           minSizeReduce: 1.5
         }),
@@ -138,13 +119,9 @@ module.exports = {
         clean: true,
       };
 
-      // 캐시 초기화
+      // 캐시 설정
       webpackConfig.cache = {
-        type: 'filesystem',
-        buildDependencies: {
-          config: [__filename],
-        },
-        name: 'webpack-cache'
+        type: 'memory',
       };
 
       return webpackConfig;
