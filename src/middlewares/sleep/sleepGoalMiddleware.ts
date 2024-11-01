@@ -10,7 +10,7 @@ export const list = async (object: any) => {
 
     let finalResult: string = "";
 
-    if (!param || param === "0" || param === "00:00" || param.includes(":")) {
+    if (!param || param === "0" || param === "00:00" || String(param).includes(":")) {
       finalResult = param;
     }
     // 12300000 -> 1.23M / 10000000 -> 10M

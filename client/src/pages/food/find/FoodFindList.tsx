@@ -184,211 +184,209 @@ export const FoodFindList = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
           {OBJECT.filter((f: any) => f.food_key).map((item: any, i: number) => (
-            <Grid size={12} key={`list-${i}`}>
-              <Grid container={true} spacing={0} className={"border-1 radius-1"}>
-                <Grid size={12} className={"p-2"}>
-                  <Accordion
-                    expanded={isExpanded[i].expanded}
-                    TransitionProps={{
-                      mountOnEnter: true,
-                      unmountOnExit: true,
+            <Grid container={true} spacing={0} className={"border-1 radius-1"} key={`list-${i}`}>
+              <Grid size={12} className={"p-2"}>
+                <Accordion
+                  expanded={isExpanded[i].expanded}
+                  TransitionProps={{
+                    mountOnEnter: true,
+                    unmountOnExit: true,
+                  }}
+                >
+                  <AccordionSummary
+                    className={"me-n10"}
+                    expandIcon={
+                      <Icons
+                        key={"ChevronDown"}
+                        name={"ChevronDown"}
+                        className={"w-18 h-18"}
+                        onClick={(e: any) => {
+                          e.stopPropagation();
+                          setIsExpanded(isExpanded.map((el: any, index: number) => (
+                            i === index ? {
+                              expanded: !el.expanded
+                            } : el
+                          )));
+                        }}
+                      />
+                    }
+                    onClick={() => {
+                      handleCheckboxChange(i);
                     }}
                   >
-                    <AccordionSummary
-                      className={"me-n10"}
-                      expandIcon={
-                        <Icons
-                          key={"ChevronDown"}
-                          name={"ChevronDown"}
-                          className={"w-18 h-18"}
-                          onClick={(e: any) => {
-                            e.stopPropagation();
-                            setIsExpanded(isExpanded.map((el: any, index: number) => (
-                              i === index ? {
-                                expanded: !el.expanded
-                              } : el
-                            )));
+                    <Grid container={true} spacing={2}>
+                      <Grid size={2} className={"d-row-center"}>
+                        <Checkbox
+                          key={`check-${i}`}
+                          color={"primary"}
+                          size={"small"}
+                          checked={
+                            !! (
+                              checkedQueries[`${item.food_query}_${PAGING.page}`] &&
+                              checkedQueries[`${item.food_query}_${PAGING.page}`][i]
+                            )
+                          }
+                          onChange={() => {
+                            handleCheckboxChange(i);
                           }}
                         />
-                      }
-                      onClick={() => {
-                        handleCheckboxChange(i);
-                      }}
-                    >
+                      </Grid>
+                      <Grid size={6} className={"d-row-left"}>
+                        <Div className={`fs-1-0rem fw-600 ${item.food_name_color}`}>
+                          {item.food_name}
+                        </Div>
+                      </Grid>
+                      <Grid size={4} className={"d-row-right"}>
+                        <Div className={`fs-1-0rem fw-600 ${item.food_count_color}`}>
+                          <Div className={`fs-0-8rem fw-500 dark me-10`}>
+                            {item.food_brand}
+                          </Div>
+                        </Div>
+                      </Grid>
+                    </Grid>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Grid container={true} spacing={2}>
+                      {/** row 1 **/}
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-row-center"}>
-                          <Checkbox
-                            key={`check-${i}`}
-                            color={"primary"}
-                            size={"small"}
-                            checked={
-                              !! (
-                                checkedQueries[`${item.food_query}_${PAGING.page}`] &&
-                                checkedQueries[`${item.food_query}_${PAGING.page}`][i]
-                              )
-                            }
-                            onChange={() => {
-                              handleCheckboxChange(i);
-                            }}
+                          <Img
+                            max={15}
+                            hover={true}
+                            shadow={false}
+                            radius={false}
+                            src={"food2"}
                           />
                         </Grid>
-                        <Grid size={6} className={"d-row-left"}>
-                          <Div className={`fs-1-0rem fw-600 ${item.food_name_color}`}>
-                            {item.food_name}
+                        <Grid size={3} className={"d-row-left"}>
+                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                            {translate("kcal")}
                           </Div>
                         </Grid>
-                        <Grid size={4} className={"d-row-right"}>
-                          <Div className={`fs-1-0rem fw-600 ${item.food_count_color}`}>
-                            <Div className={`fs-0-8rem fw-500 dark me-10`}>
-                              {item.food_brand}
-                            </Div>
-                          </Div>
+                        <Grid size={7}>
+                          <Grid container={true} spacing={1}>
+                            <Grid size={10} className={"d-row-right"}>
+                              <Div className={`fs-1-0rem fw-600 ${item.food_kcal_color}`}>
+                                {insertComma(item.food_kcal || "0")}
+                              </Div>
+                            </Grid>
+                            <Grid size={2} className={"d-row-center"}>
+                              <Div className={"fs-0-6rem"}>
+                                {translate("kc")}
+                              </Div>
+                            </Grid>
+                          </Grid>
                         </Grid>
                       </Grid>
-                    </AccordionSummary>
-                    <AccordionDetails>
+                      {/** /.row 1 **/}
+
+                      <Hr px={1} />
+
+                      {/** row 2 **/}
                       <Grid container={true} spacing={2}>
-                        {/** row 1 **/}
-                        <Grid container={true} spacing={2}>
-                          <Grid size={2} className={"d-row-center"}>
-                            <Img
-                              max={15}
-                              hover={true}
-                              shadow={false}
-                              radius={false}
-                              src={"food2"}
-                            />
-                          </Grid>
-                          <Grid size={3} className={"d-row-left"}>
-                            <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
-                              {translate("kcal")}
-                            </Div>
-                          </Grid>
-                          <Grid size={7}>
-                            <Grid container={true} spacing={1}>
-                              <Grid size={10} className={"d-row-right"}>
-                                <Div className={`fs-1-0rem fw-600 ${item.food_kcal_color}`}>
-                                  {insertComma(item.food_kcal || "0")}
-                                </Div>
-                              </Grid>
-                              <Grid size={2} className={"d-row-center"}>
-                                <Div className={"fs-0-6rem"}>
-                                  {translate("kc")}
-                                </Div>
-                              </Grid>
+                        <Grid size={2} className={"d-center"}>
+                          <Img
+                            max={15}
+                            hover={true}
+                            shadow={false}
+                            radius={false}
+                            src={"food3"}
+                          />
+                        </Grid>
+                        <Grid size={3} className={"d-row-left"}>
+                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                            {translate("carb")}
+                          </Div>
+                        </Grid>
+                        <Grid size={7}>
+                          <Grid container={true} spacing={1}>
+                            <Grid size={10} className={"d-row-right"}>
+                              <Div className={`fs-1-0rem fw-600 ${item.food_carb_color}`}>
+                                {insertComma(item.food_carb || "0")}
+                              </Div>
+                            </Grid>
+                            <Grid size={2} className={"d-row-center"}>
+                              <Div className={"fs-0-6rem"}>
+                                {translate("g")}
+                              </Div>
                             </Grid>
                           </Grid>
                         </Grid>
-                        {/** /.row 1 **/}
-
-                        <Hr px={1} />
-
-                        {/** row 2 **/}
-                        <Grid container={true} spacing={2}>
-                          <Grid size={2} className={"d-center"}>
-                            <Img
-                              max={15}
-                              hover={true}
-                              shadow={false}
-                              radius={false}
-                              src={"food3"}
-                            />
-                          </Grid>
-                          <Grid size={3} className={"d-row-left"}>
-                            <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
-                              {translate("carb")}
-                            </Div>
-                          </Grid>
-                          <Grid size={7}>
-                            <Grid container={true} spacing={1}>
-                              <Grid size={10} className={"d-row-right"}>
-                                <Div className={`fs-1-0rem fw-600 ${item.food_carb_color}`}>
-                                  {insertComma(item.food_carb || "0")}
-                                </Div>
-                              </Grid>
-                              <Grid size={2} className={"d-row-center"}>
-                                <Div className={"fs-0-6rem"}>
-                                  {translate("g")}
-                                </Div>
-                              </Grid>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                        {/** /.row 2 **/}
-
-                        <Hr px={1} />
-
-                        {/** row 3 **/}
-                        <Grid container={true} spacing={2}>
-                          <Grid size={2} className={"d-center"}>
-                            <Img
-                              max={15}
-                              hover={true}
-                              shadow={false}
-                              radius={false}
-                              src={"food4"}
-                            />
-                          </Grid>
-                          <Grid size={3} className={"d-row-left"}>
-                            <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
-                              {translate("protein")}
-                            </Div>
-                          </Grid>
-                          <Grid size={7}>
-                            <Grid container={true} spacing={1}>
-                              <Grid size={10} className={"d-row-right"}>
-                                <Div className={`fs-1-0rem fw-600 ${item.food_protein_color}`}>
-                                  {insertComma(item.food_carb || "0")}
-                                </Div>
-                              </Grid>
-                              <Grid size={2} className={"d-row-center"}>
-                                <Div className={"fs-0-6rem"}>
-                                  {translate("g")}
-                                </Div>
-                              </Grid>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                        {/** /.row 2 **/}
-
-                        <Hr px={1} />
-
-                        {/** row 3 **/}
-                        <Grid container={true} spacing={2}>
-                          <Grid size={2} className={"d-center"}>
-                            <Img
-                              max={15}
-                              hover={true}
-                              shadow={false}
-                              radius={false}
-                              src={"food5"}
-                            />
-                          </Grid>
-                          <Grid size={3} className={"d-row-left"}>
-                            <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
-                              {translate("fat")}
-                            </Div>
-                          </Grid>
-                          <Grid size={7}>
-                            <Grid container={true} spacing={1}>
-                              <Grid size={10} className={"d-row-right"}>
-                                <Div className={`fs-1-0rem fw-600 ${item.food_fat_color}`}>
-                                  {insertComma(item.food_fat || "0")}
-                                </Div>
-                              </Grid>
-                              <Grid size={2} className={"d-row-center"}>
-                                <Div className={"fs-0-6rem"}>
-                                  {translate("g")}
-                                </Div>
-                              </Grid>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                        {/** /.row 3 **/}
                       </Grid>
-                    </AccordionDetails>
-                  </Accordion>
-                </Grid>
+                      {/** /.row 2 **/}
+
+                      <Hr px={1} />
+
+                      {/** row 3 **/}
+                      <Grid container={true} spacing={2}>
+                        <Grid size={2} className={"d-center"}>
+                          <Img
+                            max={15}
+                            hover={true}
+                            shadow={false}
+                            radius={false}
+                            src={"food4"}
+                          />
+                        </Grid>
+                        <Grid size={3} className={"d-row-left"}>
+                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                            {translate("protein")}
+                          </Div>
+                        </Grid>
+                        <Grid size={7}>
+                          <Grid container={true} spacing={1}>
+                            <Grid size={10} className={"d-row-right"}>
+                              <Div className={`fs-1-0rem fw-600 ${item.food_protein_color}`}>
+                                {insertComma(item.food_carb || "0")}
+                              </Div>
+                            </Grid>
+                            <Grid size={2} className={"d-row-center"}>
+                              <Div className={"fs-0-6rem"}>
+                                {translate("g")}
+                              </Div>
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                      {/** /.row 2 **/}
+
+                      <Hr px={1} />
+
+                      {/** row 3 **/}
+                      <Grid container={true} spacing={2}>
+                        <Grid size={2} className={"d-center"}>
+                          <Img
+                            max={15}
+                            hover={true}
+                            shadow={false}
+                            radius={false}
+                            src={"food5"}
+                          />
+                        </Grid>
+                        <Grid size={3} className={"d-row-left"}>
+                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                            {translate("fat")}
+                          </Div>
+                        </Grid>
+                        <Grid size={7}>
+                          <Grid container={true} spacing={1}>
+                            <Grid size={10} className={"d-row-right"}>
+                              <Div className={`fs-1-0rem fw-600 ${item.food_fat_color}`}>
+                                {insertComma(item.food_fat || "0")}
+                              </Div>
+                            </Grid>
+                            <Grid size={2} className={"d-row-center"}>
+                              <Div className={"fs-0-6rem"}>
+                                {translate("g")}
+                              </Div>
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                      {/** /.row 3 **/}
+                    </Grid>
+                  </AccordionDetails>
+                </Accordion>
               </Grid>
             </Grid>
           ))}

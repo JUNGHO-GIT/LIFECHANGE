@@ -224,57 +224,55 @@ export const UserLogin = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
           {[OBJECT].filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
-            <Grid size={12} key={`detail-${i}`}>
-              <Grid container spacing={2} className={"p-10"}>
-                {/* row 1 */}
-                <Grid container={true} spacing={2}>
-                  <Grid size={12}>
-                    <Input
-                      label={translate("id")}
-                      value={item.user_id}
-                      inputRef={REFS?.[i]?.user_id}
-                      error={ERRORS?.[i]?.user_id}
-                      placeholder={"abcd@naver.com"}
-                      onChange={(e: any) => {
-                        const value = e.target.value;
-                        if (value.length > 30) {
-                          setOBJECT((prev: any) => ({
-                            ...prev,
-                            user_id: prev.user_id,
-                          }));
-                        }
-                        else {
-                          setOBJECT((prev: any) => ({
-                            ...prev,
-                            user_id: value,
-                          }));
-                        }
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-                {/** /.row 1 **/}
-
-                {/** row 2 **/}
-                <Grid container={true} spacing={2}>
-                  <Grid size={12}>
-                    <Input
-                      type={"password"}
-                      label={translate("pw")}
-                      value={item.user_pw}
-                      inputRef={REFS?.[i]?.user_pw}
-                      error={ERRORS?.[i]?.user_pw}
-                      onChange={(e: any) => {
+            <Grid container={true} spacing={2} className={"p-10"} key={`detail-${i}`}>
+              {/* row 1 */}
+              <Grid container={true} spacing={0}>
+                <Grid size={12}>
+                  <Input
+                    label={translate("id")}
+                    value={item.user_id}
+                    inputRef={REFS?.[i]?.user_id}
+                    error={ERRORS?.[i]?.user_id}
+                    placeholder={"abcd@naver.com"}
+                    onChange={(e: any) => {
+                      const value = e.target.value;
+                      if (value.length > 30) {
                         setOBJECT((prev: any) => ({
                           ...prev,
-                          user_pw: e.target.value,
+                          user_id: prev.user_id,
                         }));
-                      }}
-                    />
-                  </Grid>
+                      }
+                      else {
+                        setOBJECT((prev: any) => ({
+                          ...prev,
+                          user_id: value,
+                        }));
+                      }
+                    }}
+                  />
                 </Grid>
-                {/** /.row 2 **/}
               </Grid>
+              {/** /.row 1 **/}
+
+              {/** row 2 **/}
+              <Grid container={true} spacing={0}>
+                <Grid size={12}>
+                  <Input
+                    type={"password"}
+                    label={translate("pw")}
+                    value={item.user_pw}
+                    inputRef={REFS?.[i]?.user_pw}
+                    error={ERRORS?.[i]?.user_pw}
+                    onChange={(e: any) => {
+                      setOBJECT((prev: any) => ({
+                        ...prev,
+                        user_pw: e.target.value,
+                      }));
+                    }}
+                  />
+                </Grid>
+              </Grid>
+              {/** /.row 2 **/}
             </Grid>
           ))}
         </Grid>

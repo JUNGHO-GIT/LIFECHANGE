@@ -207,125 +207,123 @@ export const UserDelete = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
           {[OBJECT].filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
-            <Grid size={12} key={`detail-${i}`}>
-              <Grid container spacing={2} className={"p-10"}>
-                {/** 이메일 **/}
-                <Grid container={true} spacing={1}>
-                  <Grid size={9}>
-                    <Input
-                      label={`${translate("id")}`}
-                      helperText={`* ${translate("helperId")}`}
-                      value={item.user_id}
-                      inputRef={REFS?.[i]?.user_id}
-                      error={ERRORS?.[i]?.user_id}
-                      disabled={item.user_id_verified === true}
-                      placeholder={"abcd@naver.com"}
-                      onChange={(e: any) => {
-                        const value = e.target.value;
-                        if (value.length > 30) {
-                          setOBJECT((prev: any) => ({
-                            ...prev,
-                            user_id: prev.user_id,
-                          }));
-                        }
-                        else {
-                          setOBJECT((prev: any) => ({
-                            ...prev,
-                            user_id: value,
-                          }));
-                        }
-                      }}
-                    />
-                  </Grid>
-                  <Grid size={3}>
-                    <Btn
-                      color={"primary"}
-                      className={"mt-n25"}
-                      disabled={item.user_id_verified === true}
-                      onClick={() => {
-                        flowSendEmail();
-                      }}
-                    >
-                      {translate("send")}
-                    </Btn>
-                  </Grid>
-                </Grid>
-
-                {/** 이메일 인증 **/}
-                <Grid container={true} spacing={1}>
-                  <Grid size={9}>
-                    <Input
-                      label={translate("verify")}
-                      helperText={`* ${translate("helperIdVerified")}`}
-                      value={item.user_verify_code}
-                      inputRef={REFS?.[i]?.user_id_verified}
-                      error={ERRORS?.[i]?.user_id_verified}
-                      disabled={item.user_id_verified === true}
-                      placeholder={"123456"}
-                      onChange={(e: any) => {
+            <Grid container={true} spacing={2} className={"p-10"} key={`detail-${i}`}>
+              {/** 이메일 **/}
+              <Grid container={true} spacing={1}>
+                <Grid size={9}>
+                  <Input
+                    label={`${translate("id")}`}
+                    helperText={`* ${translate("helperId")}`}
+                    value={item.user_id}
+                    inputRef={REFS?.[i]?.user_id}
+                    error={ERRORS?.[i]?.user_id}
+                    disabled={item.user_id_verified === true}
+                    placeholder={"abcd@naver.com"}
+                    onChange={(e: any) => {
+                      const value = e.target.value;
+                      if (value.length > 30) {
                         setOBJECT((prev: any) => ({
                           ...prev,
-                          user_verify_code: e.target.value
-                        }))
-                      }}
-                    />
-                  </Grid>
-                  <Grid size={3}>
-                    <Btn
-                      color={"primary"}
-                      className={"mt-n25"}
-                      disabled={!item.user_id_sended || item.user_id_verified === true}
-                      onClick={() => {
-                        flowVerifyEmail();
-                      }}
-                    >
-                      {translate("verify")}
-                    </Btn>
-                  </Grid>
-                </Grid>
-
-                <Hr px={1} />
-
-                {/** 비밀번호 **/}
-                <Grid container={true} spacing={1}>
-                  <Grid size={12}>
-                    <Input
-                      type={"password"}
-                      label={translate("pw")}
-                      helperText={`* ${translate("helperPw")}`}
-                      value={item.user_pw}
-                      inputRef={REFS?.[i]?.user_pw}
-                      error={ERRORS?.[i]?.user_pw}
-                      disabled={item.user_id_verified === false}
-                      onChange={(e: any) => {
+                          user_id: prev.user_id,
+                        }));
+                      }
+                      else {
                         setOBJECT((prev: any) => ({
                           ...prev,
-                          user_pw: e.target.value
-                        }))
-                      }}
-                    />
-                  </Grid>
+                          user_id: value,
+                        }));
+                      }
+                    }}
+                  />
                 </Grid>
+                <Grid size={3}>
+                  <Btn
+                    color={"primary"}
+                    className={"mt-n25"}
+                    disabled={item.user_id_verified === true}
+                    onClick={() => {
+                      flowSendEmail();
+                    }}
+                  >
+                    {translate("send")}
+                  </Btn>
+                </Grid>
+              </Grid>
 
-                {/** 비밀번호 확인 **/}
-                <Grid container={true} spacing={1}>
-                  <Grid size={12}>
-                    <Input
-                      type={"password"}
-                      label={translate("pwVerified")}
-                      helperText={`* ${translate("helperPwVerified")}`}
-                      value={item.user_pw_verified}
-                      inputRef={REFS?.[i]?.user_pw_verified}
-                      error={ERRORS?.[i]?.user_pw_verified}
-                      disabled={item.user_id_verified === false}
-                      onChange={(e: any) => {
-                        setOBJECT((prev: any) => ({
-                          ...prev,
-                          user_pw_verified: e.target.value
-                        }))
-                      }}
-                    />
-                  </Grid>
+              {/** 이메일 인증 **/}
+              <Grid container={true} spacing={1}>
+                <Grid size={9}>
+                  <Input
+                    label={translate("verify")}
+                    helperText={`* ${translate("helperIdVerified")}`}
+                    value={item.user_verify_code}
+                    inputRef={REFS?.[i]?.user_id_verified}
+                    error={ERRORS?.[i]?.user_id_verified}
+                    disabled={item.user_id_verified === true}
+                    placeholder={"123456"}
+                    onChange={(e: any) => {
+                      setOBJECT((prev: any) => ({
+                        ...prev,
+                        user_verify_code: e.target.value
+                      }))
+                    }}
+                  />
+                </Grid>
+                <Grid size={3}>
+                  <Btn
+                    color={"primary"}
+                    className={"mt-n25"}
+                    disabled={!item.user_id_sended || item.user_id_verified === true}
+                    onClick={() => {
+                      flowVerifyEmail();
+                    }}
+                  >
+                    {translate("verify")}
+                  </Btn>
+                </Grid>
+              </Grid>
+
+              <Hr px={1} />
+
+              {/** 비밀번호 **/}
+              <Grid container={true} spacing={1}>
+                <Grid size={12}>
+                  <Input
+                    type={"password"}
+                    label={translate("pw")}
+                    helperText={`* ${translate("helperPw")}`}
+                    value={item.user_pw}
+                    inputRef={REFS?.[i]?.user_pw}
+                    error={ERRORS?.[i]?.user_pw}
+                    disabled={item.user_id_verified === false}
+                    onChange={(e: any) => {
+                      setOBJECT((prev: any) => ({
+                        ...prev,
+                        user_pw: e.target.value
+                      }))
+                    }}
+                  />
+                </Grid>
+              </Grid>
+
+              {/** 비밀번호 확인 **/}
+              <Grid container={true} spacing={1}>
+                <Grid size={12}>
+                  <Input
+                    type={"password"}
+                    label={translate("pwVerified")}
+                    helperText={`* ${translate("helperPwVerified")}`}
+                    value={item.user_pw_verified}
+                    inputRef={REFS?.[i]?.user_pw_verified}
+                    error={ERRORS?.[i]?.user_pw_verified}
+                    disabled={item.user_id_verified === false}
+                    onChange={(e: any) => {
+                      setOBJECT((prev: any) => ({
+                        ...prev,
+                        user_pw_verified: e.target.value
+                      }))
+                    }}
+                  />
                 </Grid>
               </Grid>
             </Grid>

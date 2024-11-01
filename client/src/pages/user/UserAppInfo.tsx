@@ -70,8 +70,8 @@ export const UserAppInfo = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
           {[OBJECT].filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
-            <Grid size={12} key={`detail-${i}`}>
-              <Grid container spacing={2} className={"border-1 radius-1 shadow-0"}>
+            <Grid container={true} spacing={2} className={"border-1 radius-1 shadow-0"} key={`detail-${i}`}>
+              <Grid size={12} className={"d-center"}>
                 <TableContainer className={"over-hidden"}>
                   <Table>
                     <TableBody className={"table-tbody"}>

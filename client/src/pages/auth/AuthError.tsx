@@ -1,5 +1,6 @@
 // AuthError.tsx
 
+import { useEffect } from "@importReacts";
 import { useCommonValue } from "@importHooks";
 import { Div, Btn } from "@importComponents";
 import { Grid, Paper, Card } from "@importMuis";
@@ -9,6 +10,11 @@ export const AuthError = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { navigate } = useCommonValue();
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    navigate("/auth/error");
+  }, [navigate]);
 
   // 7. errorNode ----------------------------------------------------------------------------------
   const errorNode = () => {

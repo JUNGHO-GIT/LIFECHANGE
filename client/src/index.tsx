@@ -70,14 +70,17 @@ const App = () => {
   const location = useLocation();
 
   const noneHeader = (
+    !location.pathname.includes("/error") &&
     !location.pathname.includes("/user/login") &&
     !location.pathname.includes("/user/signup") &&
     !location.pathname.includes("/user/resetPw")
   );
   const noneTop = (
+    !location.pathname.includes("/error") &&
     !location.pathname.includes("/user")
   );
   const noneBottom = (
+    !location.pathname.includes("/error") &&
     !location.pathname.includes("/user")
   );
 
@@ -88,8 +91,6 @@ const App = () => {
       {<Alert />}
       {<Confirm />}
       <Routes>
-        {/** root **/}
-        <Route path={"/*"} element={<UserLogin />} />
         {/** admin **/}
         <Route path={"/admin/dashboard/*"} element={<AdminDashboard />} />
         {/** auth **/}
@@ -137,6 +138,8 @@ const App = () => {
         <Route path={"/user/detail/*"} element={<UserDetail />} />
         <Route path={"/user/delete/*"} element={<UserDelete />} />
         <Route path={"/user/category/*"} element={<UserCategory />} />
+        {/** error **/}
+        <Route path={"*"} element={<AuthError />} />
       </Routes>
       {noneBottom && <BottomNav />}
     </div>
@@ -146,11 +149,13 @@ const App = () => {
 // -------------------------------------------------------------------------------------------------
 createRoot(document.getElementById('root') as HTMLElement).render(
   <BrowserRouter basename={"/JPAGE"}>
-    <ThemeProvider theme={createTheme({
-      typography: {
-        fontFamily: "Pretendard Variable, Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, Helvetica Neue, Segoe UI, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, sans-serif"
-      }
-    })}>
+    <ThemeProvider theme={
+      createTheme({
+        typography: {
+          fontFamily: "Pretendard Variable, Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, Helvetica Neue, Segoe UI, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, sans-serif"
+        }
+      })
+    }>
       <CssBaseline />
       <App />
     </ThemeProvider>
