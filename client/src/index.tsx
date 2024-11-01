@@ -11,7 +11,7 @@ import "@assets/styles/Jstyle.css";
 import "./index.css";
 
 import {
-  useLocation, BrowserRouter, Routes, Route, createRoot
+  BrowserRouter, Routes, Route, createRoot
 } from "@importReacts";
 
 import {
@@ -19,7 +19,8 @@ import {
 } from "@importMuis";
 
 import {
-  useRoot, useScrollTop, useFoodSection, useLanguageSetting, useLanguageInitialize
+  useRoot, useScrollTop, useFoodSection, useLanguageSetting, useLanguageInitialize,
+  useCommonValue
 } from "@importHooks";
 
 import {
@@ -67,21 +68,21 @@ const App = () => {
   useLanguageInitialize();
   useLanguageSetting();
 
-  const location = useLocation();
+  const { PATH } = useCommonValue();
 
   const noneHeader = (
-    !location.pathname.includes("/error") &&
-    !location.pathname.includes("/user/login") &&
-    !location.pathname.includes("/user/signup") &&
-    !location.pathname.includes("/user/resetPw")
+    !PATH.includes("/error") &&
+    !PATH.includes("/user/login") &&
+    !PATH.includes("/user/signup") &&
+    !PATH.includes("/user/resetPw")
   );
   const noneTop = (
-    !location.pathname.includes("/error") &&
-    !location.pathname.includes("/user")
+    !PATH.includes("/error") &&
+    !PATH.includes("/user")
   );
   const noneBottom = (
-    !location.pathname.includes("/error") &&
-    !location.pathname.includes("/user")
+    !PATH.includes("/error") &&
+    !PATH.includes("/user")
   );
 
   return (
@@ -91,6 +92,8 @@ const App = () => {
       {<Alert />}
       {<Confirm />}
       <Routes>
+        {/** home **/}
+        <Route path={"/"} element={<div />} />
         {/** admin **/}
         <Route path={"/admin/dashboard/*"} element={<AdminDashboard />} />
         {/** auth **/}

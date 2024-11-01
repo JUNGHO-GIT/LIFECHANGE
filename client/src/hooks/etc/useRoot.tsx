@@ -27,10 +27,5 @@ export const useRoot = () => {
         }
       }
     }
-
-    // 2. 오프라인 상태 체크
-    if (!navigator.onLine) {
-      navigate("/auth/error"); // 오프라인 에러 페이지로 리디렉션
-    }
   }, [PATH, sessionId, navigate]);
 };

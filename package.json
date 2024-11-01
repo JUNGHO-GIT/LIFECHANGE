@@ -2,9 +2,30 @@
   "name": "JPAGE-server",
   "version": "1.0.0",
   "main": "index.ts",
-  "git": "www.github.com/JUNGHO-GIT",
-  "license": "MIT",
   "type": "module",
+  "license": "MIT",
+  "private": true,
+  "eslintConfig": {
+    "extends": [
+      "airbnb-base",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:prettier/recommended"
+    ],
+    "rules": {
+      "import/extensions": "off",
+      "import/prefer-default-export": "off",
+      "no-console": "off",
+      "no-underscore-dangle": "off",
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_"
+        }
+      ]
+    }
+  },
   "scripts": {
     "start": "tsx watch --clear-screen=false --ignore node_modules index.ts",
     "fetch": "git fetch --all && git reset --hard origin/master",

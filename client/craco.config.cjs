@@ -9,7 +9,6 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const { SwcMinifyWebpackPlugin } = require('swc-minify-webpack-plugin');
 const webpack = require('webpack');
 
-// -------------------------------------------------------------------------------------------------
 module.exports = {
   // 1. plugins
   plugins: [
@@ -35,10 +34,24 @@ module.exports = {
     configure: (webpackConfig, { env }) => {
 
       // thread-loader 설정 (CSS는 제외)
-      ThreadLoader.warmup({}, ['babel-loader']);
+      ThreadLoader.warmup(
+        { poolTimeout: 2000, workerParallelJobs: 50 },
+        ['babel-loader']
+      );
+
       webpackConfig.module.rules.unshift({
         test: /\.(js|mjs|jsx|ts|tsx)$/,
-        use: ['thread-loader', 'babel-loader'],
+        use: [
+          { loader: 'thread-loader' },
+          {
+            loader: 'babel-loader',
+            options: {
+              plugins: [
+                env === 'development' && require.resolve('react-refresh/babel'),
+              ].filter(Boolean),
+            },
+          },
+        ],
         exclude: /node_modules/,
       });
 
@@ -46,7 +59,14 @@ module.exports = {
       webpackConfig.optimization = {
         minimize: true,
         minimizer: [
-          new CssMinimizerPlugin(),
+          new CssMinimizerPlugin({
+            minimizerOptions: {
+              preset: ['default', {
+                discardComments: { removeAll: true },
+                zindex: false,
+              }],
+            },
+          }),
           new SwcMinifyWebpackPlugin({
             compress: {
               drop_console: true,
@@ -65,18 +85,11 @@ module.exports = {
 
       // plugin 설정
       webpackConfig.plugins.push(
-        new CssMinimizerPlugin({
-          minimizerOptions: {
-            preset: ['default', {
-              discardComments: { removeAll: true },
-            }],
-          },
-        }),
         new CompressionPlugin({
           test: /\.(js|css|html|svg)$/,
           algorithm: 'gzip',
-          threshold: 8192,
-          minRatio: 0.5,
+          threshold: 10240,
+          minRatio: 0.8,
         }),
         new ImageMinimizerPlugin({
           minimizer: {
@@ -84,10 +97,11 @@ module.exports = {
             options: {
               plugins: [
                 ['gifsicle', { interlaced: true }],
-                ['mozjpeg', { progressive: true, quality: 75 }],
+                ['mozjpeg', { progressive: true, quality: 80 }],
                 ['optipng', { optimizationLevel: 5 }],
-                ['pngquant', { quality: [0.65, 0.9], speed: 4 }],
-                ['svgo', { plugins: [{ removeViewBox: false }] }],
+                ['pngquant', { quality: [0.75, 0.85], speed: 3 }],
+                ['svgo', { plugins: [{ removeViewBox: false }, { cleanupIDs: true }] }],
+                ['imagemin-webp', { quality: 75 }],
               ],
             },
           },
@@ -97,8 +111,9 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': JSON.stringify(env),
+          'process.env.PUBLIC_URL': JSON.stringify(process.env.PUBLIC_URL || ''),
         }),
-        env === 'development' && new ReactRefreshWebpackPlugin()
+        ...(env === 'development' ? [new ReactRefreshWebpackPlugin()] : [])
       );
 
       // devServer 설정

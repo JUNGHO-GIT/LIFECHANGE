@@ -8,8 +8,6 @@ export const TextArea = (props: any) => (
     {...props}
     select={false}
     multiline={true}
-    id={props?.id || `id-${Math.random().toString(36).slice(2, 11)}`}
-    name={props?.name || `name-${Math.random().toString(36).slice(2, 11)}`}
     size={props?.size || "small"}
     type={props?.type || "text"}
     variant={props?.variant || "outlined"}
