@@ -91,21 +91,38 @@ export const UserLogin = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 자동로그인 활성화된 경우
   useEffect(() => {
-    setLocal("setting", "id", "", {
-      autoLogin: checkedAutoLogin ? "true" : "false",
-      autoLoginId: checkedAutoLogin ? OBJECT.user_id : "",
-      autoLoginPw: checkedAutoLogin ? OBJECT.user_pw : "",
-    });
-  }, [checkedAutoLogin]);
+    if (checkedAutoLogin) {
+      setLocal("setting", "id", "", {
+        autoLogin: "true",
+        autoLoginId: OBJECT.user_id,
+        autoLoginPw: OBJECT.user_pw,
+      });
+    }
+    else {
+      setLocal("setting", "id", "", {
+        autoLogin: "false",
+        autoLoginId: "",
+        autoLoginPw: "",
+      });
+    }
+  }, [checkedAutoLogin, OBJECT.user_id]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 아이디 저장 활성화된 경우
   useEffect(() => {
-    setLocal("setting", "id", "", {
-      isSaved: checkedSaveId ? "true" : "false",
-      isSavedId: checkedSaveId ? OBJECT.user_id : "",
-    });
-  }, [checkedSaveId]);
+    if (checkedSaveId) {
+      setLocal("setting", "id", "", {
+        isSaved: "true",
+        isSavedId: OBJECT.user_id,
+      });
+    }
+    else {
+      setLocal("setting", "id", "", {
+        isSaved: "false",
+        isSavedId: "",
+      });
+    }
+  }, [checkedSaveId, OBJECT.user_id]);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
