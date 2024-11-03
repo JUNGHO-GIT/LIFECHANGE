@@ -1,18 +1,27 @@
 const fs = require('fs');
 
-// 파일을 실시간으로 감시하고 변경사항을 출력하는 함수
-const watchFileAndDisplay = (filePath) => {
+(function watchFileAndDisplay() {
+  const filePath = 'index.ts';
+  let debounceTimeout;
+
   fs.watch(filePath, (eventType) => {
     if (eventType === 'change') {
-      const updatedContent = fs.readFileSync(filePath, 'utf8');
-      console.clear(); // 이전 내용을 지워서 깔끔하게 출력
-      console.log(`\n\n===== ${filePath} Updated =====`);
-      console.log(updatedContent);
+      clearTimeout(debounceTimeout);
+      debounceTimeout = setTimeout(() => {
+        const updatedContent = fs.readFileSync(filePath, 'utf8');
+        console.clear();
+
+        const separator = '='.repeat(process.stdout.columns);
+        const title = ` ${filePath} Updated `;
+        const paddedTitle = title.padStart((separator.length + title.length) / 2, '=').padEnd(separator.length, '=');
+
+        console.log(separator);
+        console.log(paddedTitle);
+        console.log(separator);
+        console.log(updatedContent);
+      }, 100);
     }
   });
-  console.log(`Watching ${filePath} for changes...`);
-};
 
-// 감시할 파일 경로
-watchFileAndDisplay('.env');
-watchFileAndDisplay('index.ts');
+  console.log(`Watching ${filePath} for changes...`);
+})();
