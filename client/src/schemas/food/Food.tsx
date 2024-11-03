@@ -18,8 +18,7 @@ export const Food: Record<string, any> = {
   food_total_fat: "0",
   food_total_fat_color: "",
   food_section: [{
-    food_part_idx: 0,
-    food_part_val: "",
+    food_part: "",
     food_name: "",
     food_brand: "",
     food_count: "0",

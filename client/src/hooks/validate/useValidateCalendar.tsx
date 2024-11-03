@@ -45,7 +45,7 @@ export const useValidateCalendar = () => {
     // 2. real -----------------------------------------------------------------------------------
     if (extra === "real") {
       const target = [
-        "calendar_part_idx",
+        "calendar_part",
         "calendar_color",
         "calendar_title",
       ];
@@ -73,8 +73,8 @@ export const useValidateCalendar = () => {
       }
 
       for (let i = 0; i < section.length; i++) {
-        if (!section[i].calendar_part_idx || section[i].calendar_part_idx === 0) {
-          return showAlertAndFocus('calendar_part_idx', "errorCalendarPartIdx", i);
+        if (!section[i].calendar_part || section[i].calendar_part === "") {
+          return showAlertAndFocus('calendar_part', "errorCalendarPart", i);
         }
         else if (!section[i].calendar_title) {
           return showAlertAndFocus('calendar_title', "errorCalendarTitle", i);

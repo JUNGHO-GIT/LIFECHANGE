@@ -137,13 +137,14 @@ export const ExerciseDetail = () => {
           exercise_section: []
         }));
       }
-      // sectionCnt가 0이 아니면 section 내부 part_idx 값에 따라 재정렬
+      // sectionCnt가 0이 아니면 section 내부 재정렬
       else {
         setOBJECT((prev: any) => ({
           ...prev,
           exercise_section: prev.exercise_section.sort((a: any, b: any) => (
-            a.exercise_part_idx - b.exercise_part_idx
-          ))
+            exerciseArray.findIndex((item: any) => item.exercise_part === a.exercise_part) -
+            exerciseArray.findIndex((item: any) => item.exercise_part === b.exercise_part)
+          )),
         }));
       }
 
@@ -210,10 +211,8 @@ export const ExerciseDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     const defaultSection = {
-      exercise_part_idx: 1,
-      exercise_part_val: exerciseArray[1]?.exercise_part,
-      exercise_title_idx: 0,
-      exercise_title_val: "",
+      exercise_part: exerciseArray[1]?.exercise_part || "",
+      exercise_title: exerciseArray[0]?.exercise_title[0] || "",
       exercise_set: "0",
       exercise_rep: "0",
       exercise_weight: "0",
@@ -476,7 +475,7 @@ export const ExerciseDetail = () => {
                 <Grid size={6} className={"d-row-left"}>
                   <Bg
                     badgeContent={i + 1}
-                    bgcolor={bgColors?.[item?.exercise_part_idx]}
+                    bgcolor={bgColors?.[exerciseArray.findIndex((f: any) => f.exercise_part === item?.exercise_part)]}
                   />
                 </Grid>
                 <Grid size={6} className={"d-row-right"}>
@@ -495,34 +494,30 @@ export const ExerciseDetail = () => {
                   <Select
                     locked={LOCKED}
                     label={translate("part")}
-                    value={item?.exercise_part_idx || 0}
-                    inputRef={REFS?.[i]?.exercise_part_idx}
-                    error={ERRORS?.[i]?.exercise_part_idx}
+                    value={item?.exercise_part || ""}
+                    inputRef={REFS?.[i]?.exercise_part}
+                    error={ERRORS?.[i]?.exercise_part}
                     onChange={(e: any) => {
-                      // 빈값 처리
-                      let value = e.target.value === "" ? 0 : Number(e.target.value);
-                      // object 설정
+                      let value = String(e.target.value || "");
                       setOBJECT((prev: any) => ({
                         ...prev,
                         exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
                           idx === i ? {
                             ...section,
-                            exercise_part_idx: value,
-                            exercise_part_val: exerciseArray[value]?.exercise_part,
-                            exercise_title_idx: 0,
-                            exercise_title_val: exerciseArray[value]?.exercise_title[0],
+                            exercise_part: value,
+                            exercise_title: exerciseArray[exerciseArray.findIndex((f: any) => f.exercise_part === value)]?.exercise_title[0],
                           } : section
                         ))
                       }));
-                    }}
-                  >
-                    {exerciseArray?.map((part: any, idx: number) => (
+                    }
+                  }>
+                    {exerciseArray.map((part: any, idx: number) => (
                       <MenuItem
                         key={idx}
-                        value={idx}
+                        value={part.exercise_part}
                         className={"fs-0-8rem"}
                       >
-                        {translate(part?.exercise_part)}
+                        {translate(part.exercise_part)}
                       </MenuItem>
                     ))}
                   </Select>
@@ -531,29 +526,26 @@ export const ExerciseDetail = () => {
                   <Select
                     locked={LOCKED}
                     label={translate("title")}
-                    value={item?.exercise_title_idx || 0}
-                    inputRef={REFS?.[i]?.exercise_title_idx}
-                    error={ERRORS?.[i]?.exercise_title_idx}
+                    value={item?.exercise_title || ""}
+                    inputRef={REFS?.[i]?.exercise_title}
+                    error={ERRORS?.[i]?.exercise_title}
                     onChange={(e: any) => {
-                      // 빈값 처리
-                      let value = e.target.value === "" ? 0 : Number(e.target.value);
-                      // object 설정
+                      let value = String(e.target.value || "");
                       setOBJECT((prev: any) => ({
                         ...prev,
                         exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
                           idx === i ? {
                             ...section,
-                            exercise_title_idx: value,
-                            exercise_title_val: exerciseArray[item?.exercise_part_idx]?.exercise_title[value],
+                            exercise_title: value,
                           } : section
                         ))
                       }));
                     }}
                   >
-                    {exerciseArray[item?.exercise_part_idx]?.exercise_title?.map((title: any, idx: number) => (
+                    {exerciseArray[exerciseArray.findIndex((f: any) => f.exercise_part === item?.exercise_part)]?.exercise_title.map((title: any, idx: number) => (
                       <MenuItem
                         key={idx}
-                        value={idx}
+                        value={title}
                         className={"fs-0-8rem"}
                       >
                         {translate(title)}

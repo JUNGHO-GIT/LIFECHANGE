@@ -4,8 +4,7 @@
 export const FoodFind: Record<string, any> = {
   food_query: "",
   food_perNumber: 1,
-  food_part_idx: 0,
-  food_part_val: "breakfast",
+  food_part: "breakfast",
 
   food_key: "",
   food_name: "",

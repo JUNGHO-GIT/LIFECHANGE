@@ -822,13 +822,13 @@ export const property = {
       {
         $group: {
           _id: null,
-          // money_part_idx가 1인 경우의 수입 합산
+          // money_part이 "income"인 경우의 수입 합산
           money_total_income: {
             $sum: {
               $cond: [
                 {
                   $eq: [
-                    "$money_section.money_part_idx", 1
+                    "$money_section.money_part", "income"
                   ]
                 },
                 {
@@ -838,13 +838,13 @@ export const property = {
               ]
             }
           },
-          // money_part_idx가 2인 경우의 지출 합산
+          // money_part이 "expense"인 경우의 지출 합산
           money_total_expense: {
             $sum: {
               $cond: [
                 {
                   $eq: [
-                    "$money_section.money_part_idx", 2
+                    "$money_section.money_part", "expense"
                   ]
                 },
                 {
@@ -893,13 +893,13 @@ export const property = {
       {
         $group: {
           _id: null,
-          // money_part_idx가 1인 경우의 수입 합산
+          // money_part이 "income"인 경우의 수입 합산
           money_total_income: {
             $sum: {
               $cond: [
                 {
                   $eq: [
-                    "$money_section.money_part_idx", 1
+                    "$money_section.money_part", "income"
                   ]
                 },
                 {
@@ -909,13 +909,13 @@ export const property = {
               ]
             }
           },
-          // money_part_idx가 2인 경우의 지출 합산
+          // money_part이 "expense"인 경우의 지출 합산
           money_total_expense: {
             $sum: {
               $cond: [
                 {
                   $eq: [
-                    "$money_section.money_part_idx", 2
+                    "$money_section.money_part", "expense"
                   ]
                 },
                 {

@@ -134,12 +134,13 @@ export const MoneyDetail = () => {
           money_section: []
         }));
       }
-      // sectionCnt가 0이 아니면 section 내부 part_idx 값에 따라 재정렬
+      // sectionCnt가 0이 아니면 section 내부 재정렬
       else {
         setOBJECT((prev: any) => ({
           ...prev,
           money_section: prev.money_section.sort((a: any, b: any) => (
-            a.money_part_idx - b.money_part_idx
+            moneyArray.findIndex((item: any) => item.money_part === a.money_part) -
+            moneyArray.findIndex((item: any) => item.money_part === b.money_part)
           )),
         }));
       }
@@ -171,14 +172,14 @@ export const MoneyDetail = () => {
   useEffect(() => {
     const totals = OBJECT?.money_section.reduce((acc: any, cur: any) => {
       return {
-        // money_part_val 가 income인경우
+        // money_part 가 income인경우
         totalIncomeExclusion: (
-          acc.totalIncomeExclusion + (cur.money_part_val === "income" ? Number(cur.money_amount) : 0)
+          acc.totalIncomeExclusion + (cur.money_part === "income" ? Number(cur.money_amount) : 0)
         ),
 
-        // money_part_val 가 expense인경우
+        // money_part 가 expense인경우
         totalExpenseExclusion: (
-          acc.totalExpenseExclusion + (cur.money_part_val === "expense" ? Number(cur.money_amount) : 0)
+          acc.totalExpenseExclusion + (cur.money_part === "expense" ? Number(cur.money_amount) : 0)
         ),
       };
     }, {
@@ -197,10 +198,8 @@ export const MoneyDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     const defaultSection = {
-      money_part_idx: 1,
-      money_part_val: moneyArray[1]?.money_part,
-      money_title_idx: 0,
-      money_title_val: "",
+      money_part: moneyArray[1]?.money_part || "",
+      money_title: moneyArray[0]?.money_title[0] || "",
       money_amount: "0",
       money_content: "",
       money_include: "Y",
@@ -420,7 +419,7 @@ export const MoneyDetail = () => {
                 <Grid size={6} className={"d-row-left"}>
                   <Bg
                     badgeContent={i + 1}
-                    bgcolor={bgColors?.[item?.money_part_idx]}
+                    bgcolor={bgColors?.[moneyArray.findIndex((f: any) => f.money_part === item?.money_part)]}
                   />
                 </Grid>
                 <Grid size={6} className={"d-row-right"}>
@@ -439,34 +438,30 @@ export const MoneyDetail = () => {
                   <Select
                     locked={LOCKED}
                     label={translate("part")}
-                    value={item?.money_part_idx || 0}
-                    inputRef={REFS?.[i]?.money_part_idx}
-                    error={ERRORS?.[i]?.money_part_idx}
+                    value={item?.money_part || ""}
+                    inputRef={REFS?.[i]?.money_part}
+                    error={ERRORS?.[i]?.money_part}
                     onChange={(e: any) => {
-                      // 빈값 처리
-                      let value = e.target.value === "" ? 0 : Number(e.target.value);
-                      // object 설정
+                      let value = String(e.target.value || "");
                       setOBJECT((prev: any) => ({
                         ...prev,
                         money_section: prev.money_section?.map((section: any, idx: number) => (
                           idx === i ? {
                             ...section,
-                            money_part_idx: value,
-                            money_part_val: moneyArray[value]?.money_part,
-                            money_title_idx: 0,
-                            money_title_val: moneyArray[value]?.money_title[0],
+                            money_part: value,
+                            money_title: moneyArray[moneyArray.findIndex((f: any) => f.money_part === value)]?.money_title[0],
                           } : section
                         ))
                       }));
-                    }}
-                  >
-                    {moneyArray?.map((part: any, idx: number) => (
+                    }
+                  }>
+                    {moneyArray.map((part: any, idx: number) => (
                       <MenuItem
                         key={idx}
-                        value={idx}
+                        value={part.money_part}
                         className={"fs-0-8rem"}
                       >
-                        {translate(part?.money_part)}
+                        {translate(part.money_part)}
                       </MenuItem>
                     ))}
                   </Select>
@@ -475,29 +470,26 @@ export const MoneyDetail = () => {
                   <Select
                     locked={LOCKED}
                     label={translate("title")}
-                    value={item?.money_title_idx || 0}
-                    inputRef={REFS?.[i]?.money_title_idx}
-                    error={ERRORS?.[i]?.money_title_idx}
+                    value={item?.money_title || ""}
+                    inputRef={REFS?.[i]?.money_title}
+                    error={ERRORS?.[i]?.money_title}
                     onChange={(e: any) => {
-                      // 빈값 처리
-                      let value = e.target.value === "" ? 0 : Number(e.target.value);
-                      // object 설정
+                      let value = String(e.target.value || "");
                       setOBJECT((prev: any) => ({
                         ...prev,
                         money_section: prev.money_section?.map((section: any, idx: number) => (
                           idx === i ? {
                             ...section,
-                            money_title_idx: value,
-                            money_title_val: moneyArray[section?.money_part_idx]?.money_title[value],
+                            money_title: value,
                           } : section
                         ))
                       }));
                     }}
                   >
-                    {moneyArray[item?.money_part_idx]?.money_title?.map((title: any, idx: number) => (
+                    {moneyArray[moneyArray.findIndex((f: any) => f.money_part === item?.money_part)]?.money_title.map((title: any, idx: number) => (
                       <MenuItem
                         key={idx}
-                        value={idx}
+                        value={title}
                         className={"fs-0-8rem"}
                       >
                         {translate(title)}

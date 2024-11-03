@@ -387,10 +387,6 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
 
       // -------------------------------------------------------------------------------------------
       // f
-      female: {
-        ko: "여성",
-        en: "Female"
-      },
       favorite: {
         ko: "즐겨찾기",
         en: "Favorite"
@@ -1366,21 +1362,6 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
       },
 
       // -------------------------------------------------------------------------------------------
-      // gender
-      M: {
-        ko: "남성",
-        en: "Male"
-      },
-      F: {
-        ko: "여성",
-        en: "Female"
-      },
-      N: {
-        ko: "선택하지 않음",
-        en: "Unknown"
-      },
-
-      // -------------------------------------------------------------------------------------------
       // day
       mon: {
         ko: "월",
@@ -1903,11 +1884,11 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
         ko: "체중 목표를 입력해주세요",
         en: "Please enter Goal BodyWeight"
       },
-      errorExercisePartIdx: {
+      errorExercisePart: {
         ko: "운동 부위를 선택해주세요",
         en: "Please select Part"
       },
-      errorExerciseTitleIdx: {
+      errorExerciseTitle: {
         ko: "운동 종목을 선택해주세요",
         en: "Please enter Exercise"
       },
@@ -1943,7 +1924,7 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
         ko: "지방 목표를 입력해주세요",
         en: "Please enter Goal Fat"
       },
-      errorFoodPartIdx: {
+      errorFoodPart: {
         ko: "대분류를 선택해주세요",
         en: "Please select Part"
       },
@@ -1979,7 +1960,7 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
         ko: "지방을 입력해주세요",
         en: "Please enter Fat"
       },
-      errorCalendarPartIdx: {
+      errorCalendarPart: {
         ko: "대분류를 선택해주세요",
         en: "Please select Part"
       },
@@ -2003,11 +1984,11 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
         ko: "지출 목표를 입력해주세요",
         en: "Please enter Goal Expense"
       },
-      errorMoneyPartIdx: {
+      errorMoneyPart: {
         ko: "대분류를 선택해주세요",
         en: "Please select Part"
       },
-      errorMoneyTitleIdx: {
+      errorMoneyTitle: {
         ko: "소분류를 선택해주세요",
         en: "Please select Title"
       },

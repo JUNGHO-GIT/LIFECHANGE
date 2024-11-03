@@ -174,8 +174,7 @@ export const FoodFavoriteList = () => {
     const item = OBJECT[index];
     const newItem = {
       food_perNumber: item.food_perNumber,
-      food_part_idx: item.food_part_idx,
-      food_part_val: item.food_part_val,
+      food_part: item.food_part,
       food_key: item.food_key,
       food_query: item.food_query,
       food_name: item.food_name,

@@ -157,12 +157,13 @@ export const FoodDetail = () => {
           food_section: []
         }));
       }
-      // sectionCnt가 0이 아니면 section 내부 part_idx 값에 따라 재정렬
+      // sectionCnt가 0이 아니면 section 내부 재정렬
       else {
         setOBJECT((prev: any) => ({
           ...prev,
-          food_section: prev?.food_section.sort((a: any, b: any) => (
-            a.food_part_idx - b.food_part_idx
+          food_section: prev.food_section.sort((a: any, b: any) => (
+            foodArray.findIndex((item: any) => item.food_part === a.food_part) -
+            foodArray.findIndex((item: any) => item.food_part === b.food_part)
           )),
         }));
       }
@@ -183,7 +184,7 @@ export const FoodDetail = () => {
         ...prev,
         // 기존의 food_section만 정렬
         food_section: prev?.food_section ? (
-          [...prev.food_section].sort((a, b) => a.food_part_idx - b.food_part_idx).concat(sectionArray)
+          [...prev.food_section].sort((a, b) => a.food_part - b.food_part).concat(sectionArray)
         ) : [...sectionArray]
       }));
 
@@ -236,8 +237,7 @@ export const FoodDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     const defaultSection = {
-      food_part_idx: 1,
-      food_part_val: "breakfast",
+      food_part: foodArray[1]?.food_part || "",
       food_key: "",
       food_name: "",
       food_brand: "",
@@ -593,7 +593,7 @@ export const FoodDetail = () => {
                 <Grid size={6} className={"d-row-left"}>
                   <Bg
                     badgeContent={i + 1}
-                    bgcolor={bgColors?.[item?.food_part_idx]}
+                    bgcolor={bgColors?.[foodArray.findIndex((f: any) => f.food_part === item?.food_part)]}
                   />
                   <Div className={"mt-n10 ms-15"}>
                     <Icons
@@ -629,29 +629,26 @@ export const FoodDetail = () => {
                   <Select
                     locked={LOCKED}
                     label={translate("part")}
-                    value={item?.food_part_idx || 0}
-                    inputRef={REFS?.[i]?.food_part_idx}
-                    error={ERRORS?.[i]?.food_part_idx}
+                    value={item?.food_part || ""}
+                    inputRef={REFS?.[i]?.food_part}
+                    error={ERRORS?.[i]?.food_part}
                     onChange={(e: any) => {
-                      // 빈값 처리
-                      let value = e.target.value === "" ? 0 : Number(e.target.value);
-                      // object 설정
+                      let value = String(e.target.value || "");
                       setOBJECT((prev: any) => ({
                         ...prev,
                         food_section: prev.food_section?.map((section: any, idx: number) => (
                           idx === i ? {
                             ...section,
-                            food_part_idx: value,
-                            food_part_val: foodArray[value]?.food_part,
+                            food_part: value
                           } : section
                         ))
                       }));
-                    }}
-                  >
-                    {foodArray?.map((part: any, idx: number) => (
+                    }
+                  }>
+                    {foodArray.map((part: any, idx: number) => (
                       <MenuItem
                         key={idx}
-                        value={idx}
+                        value={part.food_part}
                         className={"fs-0-8rem"}
                       >
                         {translate(part.food_part)}

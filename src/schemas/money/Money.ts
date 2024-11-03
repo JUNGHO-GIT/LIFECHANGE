@@ -44,22 +44,12 @@ const schema = new mongoose.Schema({
   },
 
   money_section: [{
-    money_part_idx : {
-      type: Number,
-      default: 0,
-      required: false
-    },
-    money_part_val : {
+    money_part : {
       type: String,
       default: "",
       required: false
     },
-    money_title_idx : {
-      type: Number,
-      default: 0,
-      required: false
-    },
-    money_title_val : {
+    money_title : {
       type: String,
       default: "",
       required: false

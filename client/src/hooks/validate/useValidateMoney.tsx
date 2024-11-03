@@ -81,8 +81,8 @@ export const useValidateMoney = () => {
     // 2. real -----------------------------------------------------------------------------------
     else if (extra === "real") {
       const target = [
-        "money_part_idx",
-        "money_title_idx",
+        "money_part",
+        "money_title",
         "money_amount"
       ];
       REFS.current = (
@@ -109,11 +109,11 @@ export const useValidateMoney = () => {
       }
 
       for (let i = 0; i < section.length; i++) {
-        if (!section[i]?.money_part_idx || section[i].money_part_idx === 0) {
-          return showAlertAndFocus("money_part_idx", "errorMoneyPartIdx", i);
+        if (!section[i]?.money_part || section[i].money_part === "") {
+          return showAlertAndFocus("money_part", "errorMoneyPart", i);
         }
-        else if (!section[i]?.money_title_idx || section[i].money_title_idx === 0) {
-          return showAlertAndFocus("money_title_idx", "errorMoneyTitleIdx", i);
+        else if (!section[i]?.money_title || section[i].money_title === "") {
+          return showAlertAndFocus("money_title", "errorMoneyTitle", i);
         }
         else if (!section[i]?.money_amount) {
           return showAlertAndFocus("money_amount", "errorMoneyAmount", i);

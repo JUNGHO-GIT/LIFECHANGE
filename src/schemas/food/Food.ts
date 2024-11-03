@@ -54,12 +54,7 @@ const schema = new mongoose.Schema({
   },
 
   food_section: [{
-    food_part_idx: {
-      type: Number,
-      default: 0,
-      required: false
-    },
-    food_part_val: {
+    food_part: {
       type: String,
       default: "",
       required: false,

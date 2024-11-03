@@ -89,8 +89,8 @@ export const useValidateExercise = () => {
     // 2. real -----------------------------------------------------------------------------------
     else if (extra === "real") {
       const target = [
-        "exercise_part_idx",
-        "exercise_title_idx",
+        "exercise_part",
+        "exercise_title",
         "exercise_set",
         "exercise_rep",
         "exercise_weight",
@@ -117,19 +117,19 @@ export const useValidateExercise = () => {
         return showAlertAndFocus("", "errorCount", 0);
       }
       for (let i = 0; i < section.length; i++) {
-        if (!section[i].exercise_part_idx || section[i].exercise_part_idx === 0) {
-          return showAlertAndFocus('exercise_part_idx', "errorExercisePartIdx", i);
+        if (!section[i].exercise_part || section[i].exercise_part === "") {
+          return showAlertAndFocus('exercise_part', "errorExercisePart", i);
         }
-        else if (!section[i].exercise_title_idx || section[i].exercise_title_idx === 0) {
-          return showAlertAndFocus('exercise_title_idx', "errorExerciseTitleIdx", i);
+        else if (!section[i].exercise_title || section[i].exercise_title === "") {
+          return showAlertAndFocus('exercise_title', "errorExerciseTitle", i);
         }
-        else if (!section[i].exercise_set) {
+        else if (!section[i].exercise_set || section[i].exercise_set === "0") {
           return showAlertAndFocus('exercise_set', "errorExerciseSet", i);
         }
-        else if (!section[i].exercise_rep) {
+        else if (!section[i].exercise_rep || section[i].exercise_rep === "0") {
           return showAlertAndFocus('exercise_rep', "errorExerciseRep", i);
         }
-        else if (!section[i].exercise_weight) {
+        else if (!section[i].exercise_weight || section[i].exercise_weight === "0") {
           return showAlertAndFocus('exercise_weight', "errorExerciseKg", i);
         }
       }

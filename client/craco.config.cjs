@@ -27,7 +27,9 @@ module.exports = {
       ['@babel/plugin-proposal-nullish-coalescing-operator'],
       ['@babel/plugin-transform-react-inline-elements'],
       ['@babel/plugin-transform-react-constant-elements'],
-      ['babel-plugin-transform-remove-console', { exclude: ['error', 'warn'] }],
+      ...(process.env.NODE_ENV === 'production' ? [
+        ['babel-plugin-transform-remove-console', { exclude: ['error', 'warn'] }]
+      ] : []),
     ],
   },
 

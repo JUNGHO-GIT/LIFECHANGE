@@ -106,12 +106,12 @@ export const pieIncome = async (
     },
     {
       $match: {
-        "money_section.money_part_idx": 1
+        "money_section.money_part": "income"
       }
     },
     {
       $group: {
-        _id: "$money_section.money_title_val",
+        _id: "$money_section.money_title",
         value: {
           $sum: {
             $toDouble: "$money_section.money_amount"
@@ -157,12 +157,12 @@ export const pieExpense = async (
     },
     {
       $match: {
-        "money_section.money_part_idx": 2
+        "money_section.money_part": "expense"
       }
     },
     {
       $group: {
-        _id: "$money_section.money_title_val",
+        _id: "$money_section.money_title",
         value: {
           $sum: {
             $toDouble: "$money_section.money_amount"

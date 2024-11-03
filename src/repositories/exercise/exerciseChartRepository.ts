@@ -110,14 +110,14 @@ export const piePart = async (
     },
     {
       $match: {
-        "exercise_section.exercise_part_val": {
+        "exercise_section.exercise_part": {
           $ne: ""
         }
       }
     },
     {
       $group: {
-        _id: "$exercise_section.exercise_part_val",
+        _id: "$exercise_section.exercise_part",
         value: {
           $sum: 1
         }
@@ -163,14 +163,14 @@ export const pieTitle = async (
     },
     {
       $match: {
-        "exercise_section.exercise_title_val": {
+        "exercise_section.exercise_title": {
           $ne: ""
         }
       }
     },
     {
       $group: {
-        _id: "$exercise_section.exercise_title_val",
+        _id: "$exercise_section.exercise_title",
         value: {
           $sum: 1
         }

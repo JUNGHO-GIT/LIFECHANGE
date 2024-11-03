@@ -49,22 +49,12 @@ const schema = new mongoose.Schema({
   },
 
   exercise_section: [{
-    exercise_part_idx : {
-      type: Number,
-      default: 0,
-      required: false,
-    },
-    exercise_part_val : {
+    exercise_part : {
       type: String,
       default: "",
       required: false,
     },
-    exercise_title_idx : {
-      type: Number,
-      default: 0,
-      required: false,
-    },
-    exercise_title_val : {
+    exercise_title : {
       type: String,
       default: "",
       required: false,

@@ -9,14 +9,17 @@ const fs = require('fs');
 const winOrLinux = os.platform() === 'win32' ? "win" : "linux";
 console.log(`Activated OS is : ${winOrLinux}`);
 
-// env 파일 수정 -----------------------------------------------------------------------------------
-const modifyEnv = () => {
+// env 파일 및 index 파일 수정 ---------------------------------------------------------------------
+const modifyEnvAndIndex = () => {
   try {
-    // 파일을 줄 단위로 나눔
     const envFile = readFileSync('.env', 'utf8');
-    const lines = envFile.split(/\r?\n/);
+    const indexFile = readFileSync('index.ts', 'utf8');
 
-    const updatedLines = lines.map(line => {
+    // 파일을 줄 단위로 나눔
+    const linesEnv = envFile.split(/\r?\n/);
+    const linesIndex = indexFile.split(/\r?\n/);
+
+    const updatedEnv = linesEnv.map(line => {
       if (line.startsWith('CLIENT_URL=')) {
         return 'CLIENT_URL=https://www.junghomun.com/JPAGE';
       }
@@ -27,10 +30,23 @@ const modifyEnv = () => {
       return line;
     });
 
+    const updatedIndex = linesIndex.map(line => {
+      if (line.startsWith(`// const db = process.env.DB_NAME`)) {
+        return `const db = process.env.DB_NAME`;
+      }
+      if (line.startsWith(`const db = process.env.DB_TEST`)) {
+        return `// const db = process.env.DB_TEST`;
+      }
+      // 다른 줄은 그대로 유지
+      return line;
+    });
+
     // 줄을 다시 합쳐서 저장
-    const newEnvFile = updatedLines.join(os.EOL);
+    const newEnvFile = updatedEnv.join(os.EOL);
+    const newIndexFile = updatedIndex.join(os.EOL);
 
     writeFileSync('.env', newEnvFile);
+    writeFileSync('index.ts', newIndexFile);
   }
   catch (error) {
     console.error(error);
@@ -40,7 +56,6 @@ const modifyEnv = () => {
 
 // changelog 수정 ----------------------------------------------------------------------------------
 const modifyChangelog = () => {
-
   try {
     const currentDate = moment().tz("Asia/Seoul").format('YYYY-MM-DD');
     const currentTime = moment().tz("Asia/Seoul").format('HH:mm:ss');
@@ -103,7 +118,6 @@ const gitPush = () => {
 
 // 원격 서버에서 스크립트 실행 ---------------------------------------------------------------------
 const runRemoteScript = () => {
-
   try {
     const keyPath = (
       winOrLinux === "win"
@@ -141,15 +155,17 @@ const runRemoteScript = () => {
   }
 };
 
-// env 파일 복원 -----------------------------------------------------------------------------------
-const restoreEnv = () => {
-
+// env 파일 및 index 파일 복원 --------------------------------------------------------------------
+const restoreEnvAndIndex = () => {
   try {
-    // 파일을 줄 단위로 나눔
     const envFile = readFileSync('.env', 'utf8');
-    const lines = envFile.split(/\r?\n/);
+    const indexFile = readFileSync('index.ts', 'utf8');
 
-    const updatedLines = lines.map(line => {
+    // 파일을 줄 단위로 나눔
+    const linesEnv = envFile.split(/\r?\n/);
+    const linesIndex = indexFile.split(/\r?\n/);
+
+    const updatedEnv = linesEnv.map(line => {
       if (line.startsWith('CLIENT_URL=')) {
         return 'CLIENT_URL=http://localhost:3000/JPAGE';
       }
@@ -160,10 +176,24 @@ const restoreEnv = () => {
       return line;
     });
 
+    const updatedIndex = linesIndex.map(line => {
+      if (line.startsWith(`const db = process.env.DB_NAME`)) {
+        return `// const db = process.env.DB_NAME`;
+      }
+      if (line.startsWith(`// const db = process.env.DB_TEST`)) {
+        return `const db = process.env.DB_TEST`;
+      }
+      // 다른 줄은 그대로 유지
+      return line;
+    });
+
     // 줄을 다시 합쳐서 저장
-    const newEnvFile = updatedLines.join(os.EOL);
+    const newEnvFile = updatedEnv.join(os.EOL);
+    const newIndexFile = updatedIndex.join(os.EOL);
 
     writeFileSync('.env', newEnvFile);
+    writeFileSync('index.ts', newIndexFile);
+
   }
   catch (error) {
     console.error(error);
@@ -172,9 +202,9 @@ const restoreEnv = () => {
 };
 
 // -------------------------------------------------------------------------------------------------
-modifyEnv();
+modifyEnvAndIndex();
 modifyChangelog();
 gitPush();
 runRemoteScript();
-restoreEnv();
+restoreEnvAndIndex();
 process.exit(0);

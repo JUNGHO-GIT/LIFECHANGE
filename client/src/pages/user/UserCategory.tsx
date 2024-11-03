@@ -32,9 +32,9 @@ export const UserCategory = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
+  const REFS = useRef<any>();
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>(Category);
-  const REFS = useRef<any>();
   const [dataType, setDataType] = useState<string>("exercise");
   const [isEditable, setIsEditable] = useState<string>("");
   const [SEND, setSEND] = useState<any>({

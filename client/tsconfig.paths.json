@@ -29,7 +29,7 @@
       "node",
       "alias",
       "extension",
-      "global"
+      "lib"
     ]
   },
   "include": [

@@ -33,12 +33,7 @@ const schema = new mongoose.Schema({
   },
 
   calendar_section: [{
-    calendar_part_idx : {
-      type: Number,
-      default: 0,
-      required: false
-    },
-    calendar_part_val : {
+    calendar_part: {
       type: String,
       default: "",
       required: false

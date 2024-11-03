@@ -16,8 +16,7 @@
     "types": [
       "node",
       "alias",
-      "extension",
-      "global",
+      "extension"
     ]
   },
   "include": [

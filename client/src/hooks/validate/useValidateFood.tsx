@@ -89,7 +89,7 @@ export const useValidateFood = () => {
     // 2. real -----------------------------------------------------------------------------------
     else if (extra === "real") {
       const target = [
-        "food_part_idx",
+        "food_part",
         "food_name",
         "food_brand",
         "food_count",
@@ -123,8 +123,8 @@ export const useValidateFood = () => {
       }
 
       for (let i = 0; i < section.length; i++) {
-        if (!section[i].food_part_idx || section[i].food_part_idx === 0) {
-          return showAlertAndFocus('food_part_idx', "errorFoodPartIdx", i);
+        if (!section[i].food_part || section[i].food_part === "") {
+          return showAlertAndFocus('food_part', "errorFoodPart", i);
         }
         else if (!section[i].food_name || section[i].food_name === "") {
           return showAlertAndFocus('food_name', "errorFoodName", i);

@@ -124,7 +124,28 @@ export const CalendarDetail = () => {
       },
     })
     .then((res: any) => {
+      // 기본값 설정
       setOBJECT(res.data.result || Calendar);
+
+      // sectionCnt가 0이면 section 초기화
+      if (res.data.sectionCnt <= 0) {
+        setOBJECT((prev: any) => ({
+          ...prev,
+          calendar_section: [],
+        }));
+      }
+      // sectionCnt가 0이 아니면 section 내부 재정렬
+      else {
+        setOBJECT((prev: any) => ({
+          ...prev,
+          calendar_section: prev.calendar_section.sort((a: any, b: any) => (
+            calendarArray.findIndex((item: any) => item.calendar_part === a.calendar_part) -
+            calendarArray.findIndex((item: any) => item.calendar_part === b.calendar_part)
+          )),
+        }));
+      }
+
+      // count 설정
       setCOUNT((prev: any) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
@@ -150,8 +171,7 @@ export const CalendarDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     const defaultSection = {
-      calendar_part_idx: 1,
-      calendar_part_val: calendarArray[1]?.calendar_part,
+      calendar_part: calendarArray[1]?.calendar_part || "",
       calendar_title: "",
       calendar_color: "",
       calendar_content: ""
@@ -317,7 +337,7 @@ export const CalendarDetail = () => {
                 <Grid size={6} className={"d-row-left"}>
                   <Bg
                     badgeContent={i + 1}
-                    bgcolor={bgColors?.[item?.calendar_part_idx]}
+                    bgcolor={bgColors?.[calendarArray?.findIndex((f: any) => f.calendar_part === item?.calendar_part)]}
                   />
                 </Grid>
                 <Grid size={6} className={"d-row-right"}>
@@ -336,20 +356,17 @@ export const CalendarDetail = () => {
                   <Select
                     locked={LOCKED}
                     label={translate("part")}
-                    value={item?.calendar_part_idx || 0}
-                    inputRef={REFS?.[i]?.calendar_part_idx}
-                    error={ERRORS?.[i]?.calendar_part_idx}
+                    value={item?.calendar_part || ""}
+                    inputRef={REFS?.[i]?.calendar_part}
+                    error={ERRORS?.[i]?.calendar_part}
                     onChange={(e: any) => {
-                      // 빈값 처리
-                      let value = e.target.value === "" ? 0 : Number(e.target.value);
-                      // object 설정
+                      let value = String(e.target.value || "");
                       setOBJECT((prev: any) => ({
                         ...prev,
                         calendar_section: prev.calendar_section?.map((section: any, idx: number) => (
                           idx === i ? {
                             ...section,
-                            calendar_part_idx: value,
-                            calendar_part_val: calendarArray[value]?.calendar_part
+                            calendar_part: value
                           } : section
                         ))
                       }));
@@ -358,7 +375,7 @@ export const CalendarDetail = () => {
                     {calendarArray?.map((part: any, idx: number) => (
                       <MenuItem
                         key={idx}
-                        value={idx}
+                        value={part?.calendar_part}
                         className={"fs-0-8rem"}
                       >
                         {translate(part?.calendar_part)}
@@ -369,14 +386,12 @@ export const CalendarDetail = () => {
                 <Grid size={6}>
                   <Select
                     label={translate("color")}
-                    value={item?.calendar_color || "black"}
+                    value={item?.calendar_color || ""}
                     inputRef={REFS?.[i]?.calendar_color}
                     error={ERRORS?.[i]?.calendar_color}
                     locked={LOCKED}
                     onChange={(e: any) => {
-                      // 빈값 처리
-                      let value = e.target.value === "" ? "black" : e.target.value;
-                      // object 설정
+                      let value = String(e.target.value || "");
                       setOBJECT((prev: any) => ({
                         ...prev,
                         calendar_section: prev.calendar_section?.map((section: any, idx: number) => (
@@ -388,7 +403,7 @@ export const CalendarDetail = () => {
                       }));
                     }}
                   >
-                    {calendarColors.map((color: any, idx: number) => (
+                    {calendarColors.map((color: string, idx: number) => (
                       <MenuItem
                         key={idx}
                         value={color}
@@ -422,9 +437,7 @@ export const CalendarDetail = () => {
                       />
                     }
                     onChange={(e: any) => {
-                      // 빈값 처리
-                      let value = e.target.value || "";
-                      // object 설정
+                      let value = String(e.target.value || "");
                       setOBJECT((prev: any) => ({
                         ...prev,
                         calendar_section: prev.calendar_section?.map((section: any, idx: number) => (

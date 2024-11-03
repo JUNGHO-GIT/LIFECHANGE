@@ -136,12 +136,12 @@ export const SleepDetail = () => {
           sleep_section: []
         }));
       }
-      // sectionCnt가 0이 아니면 section 내부 part_idx 값에 따라 재정렬
+      // sectionCnt가 0이 아니면 section 내부 part 값에 따라 재정렬
       else {
         setOBJECT((prev: any) => ({
           ...prev,
           sleep_section: prev.sleep_section.sort((a: any, b: any) => (
-            a.sleep_part_idx - b.sleep_part_idx
+            a.sleep_part - b.sleep_part
           ))
         }));
       }
