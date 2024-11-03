@@ -1,4 +1,4 @@
-use('LIFECHANGE_TEST');
+use('LIFECHANGE');
 
 // calendar_part_idx 삭제.
 db.getCollection('calendar').updateMany({}, { $unset: { 'calendar_section.$[].calendar_part_idx': ''} });

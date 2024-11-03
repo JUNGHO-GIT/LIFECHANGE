@@ -14,10 +14,13 @@
 ----------------------------------------------------------------------------------------------------
 @@@=== GIT ===@@@
 1. 특정단어 포함된 커밋 찾기
-git log -G "FOO" -- client/src/assets/layouts/TopNav.jsx
+	= git log -G "FOO" -- client/src/assets/layouts/TopNav.jsx
 
 2. 변경된 내용도 함께 보기
-git log -p -G "FOO" -- client/src/assets/layouts/TopNav.jsx
+	= git log -p -G "FOO" -- client/src/assets/layouts/TopNav.jsx
+
+3. 변경내역 확인하기
+	= git reflog show --date=iso
 
 
 ----------------------------------------------------------------------------------------------------
@@ -37,6 +40,12 @@ git log -p -G "FOO" -- client/src/assets/layouts/TopNav.jsx
 @@@=== CRON ===@@@
 1. cron 설정
 	= crontab -e
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+@@@=== NPM ===@@@
+1. --legacy-peer-deps 설정
+	= npm config set legacy-peer-deps true
 ----------------------------------------------------------------------------------------------------
 
 ----------------------------------------------------------------------------------------------------
@@ -341,10 +350,14 @@ git log -p -G "FOO" -- client/src/assets/layouts/TopNav.jsx
   = mongodump --host $MONGO_HOST --username $MONGO_USER --password $MONGO_PASSWORD --authenticationDatabase $MONGO_AUTH_DB --out $BACKUP_PATH
 
 16. 덮어씌우기
-	= mongorestore --drop --host 34.23.233.23 --username eric4757 --password M7m7m7m7m7m7! --authenticationDatabase admin --nsFrom 'LIFECHANGE.*' --nsTo 'LIFECHANGE_TEST.*' /backup/mongo_backup_2024-08-04-09-21
+	= mongorestore --drop --host 34.23.233.23 --username eric4757 --password M7m7m7m7m7m7! --authenticationDatabase admin --nsFrom 'LIFECHANGE_TEST.*' --nsTo 'LIFECHANGE_TEST.*' JPAGE_mongo_backup_2024-08-04-09-21
+
+	= mongorestore --drop --host 34.23.233.23 --username eric4757 --password M7m7m7m7m7m7! --authenticationDatabase admin --nsFrom 'LIFECHANGE.*' --nsTo 'LIFECHANGE.*' user.bson
+
+	= mongorestore --drop --host 34.23.233.23 --username eric4757 --password M7m7m7m7m7m7! --authenticationDatabase admin --nsFrom 'LIFECHANGE.*' --nsTo 'LIFECHANGE.*' JPAGE_mongo_backup_2024-11-01-21-00
 
 17. 몽고쉘 접속 (mongod 아님 주의 !!!!!!!!!!!!!)
-	= mongosh -u admin -p M7m7m7m7m7m7! --authenticationDatabase "admin"
+	= mongosh -u eric4757 -p M7m7m7m7m7m7! --authenticationDatabase "admin"
 
 
 18. 디비 생성
@@ -372,6 +385,28 @@ git log -p -G "FOO" -- client/src/assets/layouts/TopNav.jsx
     { role: "userAdmin", db: "LIFECHANGE" },
     { role: "readWrite", db: "LIFECHANGE" },
     { role: "dbAdmin", db: "LIFECHANGE" }
+  ]
+  })
+
+	= use LIFECHANGE_TEST
+	= db.createUser({
+    user: "eric4757",
+    pwd: "M7m7m7m7m7m7!",
+    roles: [
+    { role: "userAdmin", db: "LIFECHANGE_TEST" },
+    { role: "readWrite", db: "LIFECHANGE_TEST" },
+    { role: "dbAdmin", db: "LIFECHANGE_TEST" }
+  ]
+  })
+
+	= use PAJUKAESONG
+	= db.createUser({
+    user: "eric4757",
+    pwd: "M7m7m7m7m7m7!",
+    roles: [
+    { role: "userAdmin", db: "PAJUKAESONG" },
+    { role: "readWrite", db: "PAJUKAESONG" },
+    { role: "dbAdmin", db: "PAJUKAESONG" },
   ]
   })
 

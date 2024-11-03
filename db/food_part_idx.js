@@ -1,4 +1,4 @@
-use('LIFECHANGE_TEST');
+use('LIFECHANGE');
 
 // food_part_idx 삭제.
 db.getCollection('food').updateMany({}, { $unset: { 'food_section.$[].food_part_idx': ''} });

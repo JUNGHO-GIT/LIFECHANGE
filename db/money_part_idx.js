@@ -1,4 +1,4 @@
-use('LIFECHANGE_TEST');
+use('LIFECHANGE');
 
 // money_part_idx와 money_title_idx 삭제
 db.getCollection('money').updateMany(

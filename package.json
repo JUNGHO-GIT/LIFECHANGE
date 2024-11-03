@@ -31,6 +31,7 @@
     "fetch": "git fetch --all && git reset --hard origin/master",
     "npm-clean": "npm cache clean --force",
     "npm-reset": "powershell -Command \"Remove-Item -Recurse -Force package-lock.json, node_modules; npm install\"",
+    "watch": "node watch.cjs",
     "gcloud": "node gcloud.cjs"
   },
   "dependencies": {

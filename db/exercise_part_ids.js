@@ -1,4 +1,4 @@
-use('LIFECHANGE_TEST');
+use('LIFECHANGE');
 
 // exercise_part_idx와 exercise_title_idx 삭제
 db.getCollection('exercise').updateMany(
