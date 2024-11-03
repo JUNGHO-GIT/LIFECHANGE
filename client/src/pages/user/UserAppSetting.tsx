@@ -203,7 +203,7 @@ export const UserAppSetting = () => {
                   <TableRow
                     className={"pointer"}
                     onClick={() => {
-                      navigate("/user/app/info")
+                      navigate("/user/appInfo")
                     }}
                   >
                     <TableCell className={"w-90vw p-15"}>

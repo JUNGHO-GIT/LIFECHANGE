@@ -46,6 +46,7 @@ export const useCommonValue = () => {
   const SUBFIX : string= process.env[`REACT_APP_${firstStr.toUpperCase()}`] || "";
   const SUBFIX_GOOGLE: string = process.env[`REACT_APP_GOOGLE`] || "";
   const SUBFIX_ADMOB: string = process.env[`REACT_APP_ADMOB`] || "";
+  const SUBFIX_ADMIN: string = process.env[`REACT_APP_ADMIN`] || "";
   const SUBFIX_EXERCISE: string = process.env[`REACT_APP_EXERCISE`] || "";
   const SUBFIX_FOOD: string = process.env[`REACT_APP_FOOD`] || "";
   const SUBFIX_MONEY: string = process.env[`REACT_APP_MONEY`] || "";
@@ -55,6 +56,7 @@ export const useCommonValue = () => {
   const URL_OBJECT: string = URL + SUBFIX;
   const URL_GOOGLE: string = URL + SUBFIX_GOOGLE;
   const URL_ADMOB: string = URL + SUBFIX_ADMOB;
+  const URL_ADMIN: string = URL + SUBFIX_ADMIN;
   const URL_EXERCISE: string = URL + SUBFIX_EXERCISE;
   const URL_FOOD: string = URL + SUBFIX_FOOD;
   const URL_MONEY: string = URL + SUBFIX_MONEY;
@@ -160,6 +162,7 @@ export const useCommonValue = () => {
     URL_OBJECT,
     URL_GOOGLE,
     URL_ADMOB,
+    URL_ADMIN,
     URL_EXERCISE,
     URL_FOOD,
     URL_MONEY,

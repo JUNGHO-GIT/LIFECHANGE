@@ -1,6 +1,7 @@
 // ImportPages.tsx
 
 import { AdminDashboard } from "@pages/admin/AdminDashboard";
+import { AdminAppInfo } from "@pages/admin/AdminAppInfo";
 
 import { AuthError } from "@pages/auth/AuthError";
 import { AuthGoogle } from "@pages/auth/AuthGoogle";
@@ -38,7 +39,6 @@ import { SleepDetail } from "@pages/sleep/SleepDetail";
 import { TodayGoalList } from "@pages/today/TodayGoalList";
 import { TodayList } from "@pages/today/TodayList";
 
-import { UserAppInfo } from "@pages/user/UserAppInfo";
 import { UserAppSetting } from "@pages/user/UserAppSetting";
 import { UserCategory } from "@pages/user/UserCategory";
 import { UserDelete } from "@pages/user/UserDelete";
@@ -50,6 +50,7 @@ import { UserSignup } from "@pages/user/UserSignup";
 // -------------------------------------------------------------------------------------------------
 export {
   AdminDashboard,
+  AdminAppInfo,
   AuthError,
   AuthGoogle,
   AuthPrivacy,
@@ -79,7 +80,6 @@ export {
   SleepDetail,
   TodayGoalList,
   TodayList,
-  UserAppInfo,
   UserAppSetting,
   UserCategory,
   UserDelete,

@@ -1,4 +1,4 @@
-// UserAppInfo.tsx
+// AdminAppInfo.tsx
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue } from "@importHooks";
@@ -11,10 +11,10 @@ import { Paper, Grid, Card } from "@importMuis";
 import { TableContainer, Table, TableBody, TableRow, TableCell } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
-export const UserAppInfo = () => {
+export const AdminAppInfo = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, sessionId } = useCommonValue();
+  const { URL_ADMIN, sessionId } = useCommonValue();
   const { localTimeZone, localZoneName, localLang } = useCommonValue();
   const { localIsoCode, localCurrency } = useCommonValue();
   const { translate } = useStoreLanguage();
@@ -27,11 +27,34 @@ export const UserAppInfo = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
-    axios.get(`${URL_OBJECT}/app/info`)
+    axios.get(`${URL_ADMIN}/appInfo`)
+    .then((res: any) => {
+      setOBJECT(res.data.result || AppInfo);
+    })
+    .catch((err: any) => {
+      setALERT({
+        open: !ALERT.open,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
+      console.error(err);
+    })
+    .finally(() => {
+      setTimeout(() => {
+        setLOADING(false);
+      }, 100);
+    });
+  }, [URL_ADMIN, sessionId]);
+
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    setLOADING(true);
+    axios.get(`${URL_ADMIN}/curEnv`)
     .then((res: any) => {
       setOBJECT((prev: any) => ({
         ...prev,
-        ...res.data.result
+        env: res.data.result.env,
       }));
     })
     .catch((err: any) => {
@@ -47,7 +70,7 @@ export const UserAppInfo = () => {
         setLOADING(false);
       }, 100);
     });
-  }, [URL_OBJECT, sessionId]);
+  }, [URL_ADMIN, sessionId]);
 
   // 6. userAppInfo --------------------------------------------------------------------------------
   const userAppInfoNode = () => {
@@ -80,7 +103,7 @@ export const UserAppInfo = () => {
                           version
                         </TableCell>
                         <TableCell className={"w-55vw fs-0-7rem p-15"}>
-                          {item.version}
+                          {`${item.version}_${item.env}`}
                         </TableCell>
                       </TableRow>
                       <TableRow>

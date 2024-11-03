@@ -36,7 +36,7 @@ import { SleepDetail } from "@pages/sleep/SleepDetail";
 import { TodayGoalList } from "@pages/today/TodayGoalList";
 import { TodayList } from "@pages/today/TodayList";
 
-import { UserAppInfo } from "@pages/user/UserAppInfo";
+import { AdminAppInfo } from "@pages/user/AdminAppInfo";
 import { UserAppSetting } from "@pages/user/UserAppSetting";
 import { UserCategory } from "@pages/user/UserCategory";
 import { UserDelete } from "@pages/user/UserDelete";
@@ -77,7 +77,7 @@ export {
   SleepDetail,
   TodayGoalList,
   TodayList,
-  UserAppInfo,
+  AdminAppInfo,
   UserAppSetting,
   UserCategory,
   UserDelete,
@@ -199,8 +199,8 @@ const SleepDetail = lazy(() => import("@pages/sleep/SleepDetail").then((module) 
 })));
 
 // user --------------------------------------------------------------------------------------------
-const UserAppInfo = lazy(() => import("@pages/user/UserAppInfo").then((module) => ({
-  default: module.UserAppInfo
+const AdminAppInfo = lazy(() => import("@pages/user/AdminAppInfo").then((module) => ({
+  default: module.AdminAppInfo
 })));
 const UserAppSetting = lazy(() => import("@pages/user/UserAppSetting").then((module) => ({
   default: module.UserAppSetting
@@ -256,7 +256,7 @@ export {
   SleepGoalDetail,
   SleepList,
   SleepDetail,
-  UserAppInfo,
+  AdminAppInfo,
   UserAppSetting,
   UserSignup,
   UserLogin,

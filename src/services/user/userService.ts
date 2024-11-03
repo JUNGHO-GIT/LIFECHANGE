@@ -1,61 +1,11 @@
 // userService.ts
 
-import fs from "fs";
-import path from "path";
 import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
-import { fileURLToPath } from "url";
 import * as repository from "@repositories/user/userRepository";
 import { emailSending } from "@assets/scripts/email";
 dotenv.config();
-
-// 0-1. appInfo ------------------------------------------------------------------------------------
-export const appInfo = async () => {
-
-  let finalResult:any = null;
-  let statusResult:string = "";
-
-  const __filename = fileURLToPath(import.meta.url);
-  const __dirname = path.dirname(__filename);
-  const envData = fs.readFileSync(path.join(__dirname, '../../../.env'), 'utf8');
-  const markdownData = fs.readFileSync(path.join(__dirname, '../../../changelog.md'), 'utf8');
-
-  const versionRegex = /(\s*)(\d+\.\d+\.\d+)(\s*)/g;
-  const dateRegex = /-\s*(\d{4}-\d{2}-\d{2})\s*\((\d{2}:\d{2}:\d{2})\)/g;
-  const gitRegex = /GIT_REPO=(.*)/;
-  const licenseRegex = /LICENSE=(.*)/;
-
-  const versionMatches = [...markdownData.matchAll(versionRegex)];
-  const dateMatches = [...markdownData.matchAll(dateRegex)];
-  const gitMatch = envData.match(gitRegex);
-  const licenseMatch = envData.match(licenseRegex);
-
-  const lastVersion = versionMatches.length > 0 ? versionMatches[versionMatches.length - 1][2] : "";
-  const lastDateMatch = dateMatches.length > 0 ? dateMatches[dateMatches.length - 1] : null;
-  const lastDateTime = lastDateMatch ? `${lastDateMatch[1]}_${lastDateMatch[2]}` : "";
-  const lastGit = gitMatch ? gitMatch[1] : "";
-  const lastLicense = licenseMatch ? licenseMatch[1] : "";
-
-  finalResult = {
-    version: lastVersion,
-    date: lastDateTime,
-    git: lastGit,
-    license: lastLicense,
-  };
-
-  if (!finalResult) {
-    statusResult = "fail"
-  }
-  else {
-    statusResult = "success";
-  }
-
-  return {
-    status: statusResult,
-    result: finalResult
-  };
-};
 
 // 1-1. sendEmail ----------------------------------------------------------------------------------
 export const sendEmail = async (

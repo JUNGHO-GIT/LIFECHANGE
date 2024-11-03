@@ -56,7 +56,7 @@ import {
 } from "@importPages";
 
 import {
-  UserAppInfo, UserAppSetting, UserSignup, UserLogin, UserResetPw, UserDetail, UserDelete, UserCategory
+  AdminAppInfo, UserAppSetting, UserSignup, UserLogin, UserResetPw, UserDetail, UserDelete, UserCategory
 } from "@importPages";
 
 // -------------------------------------------------------------------------------------------------
@@ -138,8 +138,8 @@ const App = () => {
           <Route path={"/sleep/list/*"} element={<SleepList />} />
           <Route path={"/sleep/detail/*"} element={<SleepDetail />} />
           {/** user **/}
-          <Route path={"/user/app/info/*"} element={<UserAppInfo />} />
-          <Route path={"/user/app/setting/*"} element={<UserAppSetting />} />
+          <Route path={"/user/appInfo/*"} element={<AdminAppInfo />} />
+          <Route path={"/user/appSetting/*"} element={<UserAppSetting />} />
           <Route path={"/user/signup/*"} element={<UserSignup />} />
           <Route path={"/user/login/*"} element={<UserLogin />} />
           <Route path={"/user/resetPw/*"} element={<UserResetPw />} />

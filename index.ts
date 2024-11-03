@@ -33,7 +33,6 @@ const preFix = process.env.HTTP_PREFIX || "";
 const httpPort = Number(process.env.HTTP_PORT) || 4000;
 const httpsPort = Number(process.env.HTTPS_PORT) || 443;
 
-
 (function start(httpPort: number, httpsPort: number) {
   try {
     const httpServer = app.listen(httpPort, () => {

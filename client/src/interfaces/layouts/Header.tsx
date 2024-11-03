@@ -52,7 +52,7 @@ export const Header = () => {
             name={"Settings"}
             className={"w-24 h-24"}
             onClick={() => {
-              navigate("/user/app/setting");
+              navigate("/user/appSetting");
             }}
           />
         ) : (

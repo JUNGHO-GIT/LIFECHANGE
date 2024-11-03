@@ -1,5 +1,8 @@
 // ImportSchemas.tsx
 
+// admin
+import { AppInfo } from "@schemas/admin/Admin";
+
 // calendar
 import { Calendar } from "@schemas/calendar/Calendar";
 
@@ -30,10 +33,14 @@ import { SleepGoal } from "@schemas/sleep/SleepGoal";
 import { Sleep } from "@schemas/sleep/Sleep";
 
 // user
-import { User, AppInfo, Category } from "@schemas/user/User";
+import { User, Category } from "@schemas/user/User";
 
 // -------------------------------------------------------------------------------------------------
 export {
+
+  // admin
+  AppInfo,
+
   // calendar
   Calendar,
 
@@ -73,6 +80,5 @@ export {
 
   // user
   User,
-  AppInfo,
-  Category
+  Category,
 };
