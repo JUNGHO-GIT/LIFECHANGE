@@ -1,4 +1,4 @@
-// gcloud.js
+// gcloud.cjs
 
 const { execSync } = require('child_process');
 const { readFileSync, writeFileSync } = require('fs');
@@ -193,7 +193,6 @@ const restoreEnvAndIndex = () => {
 
     writeFileSync('.env', newEnvFile);
     writeFileSync('index.ts', newIndexFile);
-
   }
   catch (error) {
     console.error(error);
