@@ -1,8 +1,7 @@
 // AdminAppInfo.tsx
 
 import { useState, useEffect } from "@importReacts";
-import { useCommonValue } from "@importHooks";
-import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { useCommonValue, useStoreLanguage, useStoreAlert } from "@importHooks";
 import { axios } from "@importLibs";
 import { AppInfo } from "@importSchemas";
 import { Loader } from "@importLayouts";
@@ -45,7 +44,6 @@ export const AdminAppInfo = () => {
       }, 100);
     });
   }, [URL_ADMIN, sessionId]);
-
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -112,14 +110,6 @@ export const AdminAppInfo = () => {
                         </TableCell>
                         <TableCell className={"w-55vw fs-0-7rem p-15"}>
                           {item.date}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className={"w-40vw fs-0-9rem p-15"}>
-                          github
-                        </TableCell>
-                        <TableCell className={"w-55vw fs-0-7rem p-15"}>
-                          {item.git}
                         </TableCell>
                       </TableRow>
                       <TableRow>

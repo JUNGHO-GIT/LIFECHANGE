@@ -12,21 +12,10 @@ console.log(`Activated OS is : ${winOrLinux}`);
 // env 파일 및 index 파일 수정 ---------------------------------------------------------------------
 const modifyEnvAndIndex = () => {
   try {
-    const envFile = readFileSync('.env', 'utf8');
     const indexFile = readFileSync('index.ts', 'utf8');
 
     // 파일을 줄 단위로 나눔
-    const linesEnv = envFile.split(/\r?\n/);
     const linesIndex = indexFile.split(/\r?\n/);
-
-    /* const updatedEnv = linesEnv.map(line => {
-      if (line.startsWith('CLIENT_URL=')) {
-        return 'CLIENT_URL=https://www.junghomun.com/JPAGE';
-      }
-      // 다른 줄은 그대로 유지
-      return line;
-    }); */
-
     const updatedIndex = linesIndex.map(line => {
       if (line.startsWith(`// const db = process.env.DB_NAME`)) {
         return `const db = process.env.DB_NAME`;
@@ -39,10 +28,7 @@ const modifyEnvAndIndex = () => {
     });
 
     // 줄을 다시 합쳐서 저장
-    /* const newEnvFile = updatedEnv.join(os.EOL); */
     const newIndexFile = updatedIndex.join(os.EOL);
-
-    /* writeFileSync('.env', newEnvFile); */
     writeFileSync('index.ts', newIndexFile);
   }
   catch (error) {
@@ -155,21 +141,10 @@ const runRemoteScript = () => {
 // env 파일 및 index 파일 복원 --------------------------------------------------------------------
 const restoreEnvAndIndex = () => {
   try {
-    const envFile = readFileSync('.env', 'utf8');
     const indexFile = readFileSync('index.ts', 'utf8');
 
     // 파일을 줄 단위로 나눔
-    const linesEnv = envFile.split(/\r?\n/);
     const linesIndex = indexFile.split(/\r?\n/);
-
-    /* const updatedEnv = linesEnv.map(line => {
-      if (line.startsWith('CLIENT_URL=')) {
-        return 'CLIENT_URL=http://localhost:3000/JPAGE';
-      }
-      // 다른 줄은 그대로 유지
-      return line;
-    }); */
-
     const updatedIndex = linesIndex.map(line => {
       if (line.startsWith(`const db = process.env.DB_NAME`)) {
         return `// const db = process.env.DB_NAME`;
@@ -181,11 +156,7 @@ const restoreEnvAndIndex = () => {
       return line;
     });
 
-    // 줄을 다시 합쳐서 저장
-    /* const newEnvFile = updatedEnv.join(os.EOL); */
     const newIndexFile = updatedIndex.join(os.EOL);
-
-    /* writeFileSync('.env', newEnvFile); */
     writeFileSync('index.ts', newIndexFile);
   }
   catch (error) {

@@ -52,24 +52,20 @@ export const appInfo = async () => {
 
   const versionRegex = /(\s*)(\d+\.\d+\.\d+)(\s*)/g;
   const dateRegex = /-\s*(\d{4}-\d{2}-\d{2})\s*\((\d{2}:\d{2}:\d{2})\)/g;
-  const gitRegex = /GIT_REPO=(.*)/;
   const licenseRegex = /LICENSE=(.*)/;
 
   const versionMatches = [...markdownData.matchAll(versionRegex)];
   const dateMatches = [...markdownData.matchAll(dateRegex)];
-  const gitMatch = envData.match(gitRegex);
   const licenseMatch = envData.match(licenseRegex);
 
   const lastVersion = versionMatches.length > 0 ? versionMatches[versionMatches.length - 1][2] : "";
   const lastDateMatch = dateMatches.length > 0 ? dateMatches[dateMatches.length - 1] : null;
   const lastDateTime = lastDateMatch ? `${lastDateMatch[1]}_${lastDateMatch[2]}` : "";
-  const lastGit = gitMatch ? gitMatch[1] : "";
   const lastLicense = licenseMatch ? licenseMatch[1] : "";
 
   finalResult = {
     version: lastVersion,
     date: lastDateTime,
-    git: lastGit,
     license: lastLicense,
   };
 
