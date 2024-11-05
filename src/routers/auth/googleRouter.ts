@@ -8,7 +8,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // 1. login ----------------------------------------------------------------------------------------
-router.get("/login", async (req: Request, res: Response) => {
+router.get("/login", async (_req: Request, res: Response) => {
   try {
     let finalResult = await service.login();
 
@@ -80,7 +80,7 @@ router.get("/callback", async (req: Request, res: Response) => {
 });
 
 // 3. afterCallback --------------------------------------------------------------------------------
-router.get("/afterCallback", async (req: Request, res: Response) => {
+router.get("/afterCallback", async (_req: Request, res: Response) => {
   try {
     let finalResult = await service.afterCallback();
     if (finalResult.status === "success") {

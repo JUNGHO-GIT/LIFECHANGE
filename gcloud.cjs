@@ -19,13 +19,13 @@ const modifyEnvAndIndex = () => {
     const linesEnv = envFile.split(/\r?\n/);
     const linesIndex = indexFile.split(/\r?\n/);
 
-    const updatedEnv = linesEnv.map(line => {
+    /* const updatedEnv = linesEnv.map(line => {
       if (line.startsWith('CLIENT_URL=')) {
         return 'CLIENT_URL=https://www.junghomun.com/JPAGE';
       }
       // 다른 줄은 그대로 유지
       return line;
-    });
+    }); */
 
     const updatedIndex = linesIndex.map(line => {
       if (line.startsWith(`// const db = process.env.DB_NAME`)) {
@@ -39,10 +39,10 @@ const modifyEnvAndIndex = () => {
     });
 
     // 줄을 다시 합쳐서 저장
-    const newEnvFile = updatedEnv.join(os.EOL);
+    /* const newEnvFile = updatedEnv.join(os.EOL); */
     const newIndexFile = updatedIndex.join(os.EOL);
 
-    writeFileSync('.env', newEnvFile);
+    /* writeFileSync('.env', newEnvFile); */
     writeFileSync('index.ts', newIndexFile);
   }
   catch (error) {
@@ -162,13 +162,13 @@ const restoreEnvAndIndex = () => {
     const linesEnv = envFile.split(/\r?\n/);
     const linesIndex = indexFile.split(/\r?\n/);
 
-    const updatedEnv = linesEnv.map(line => {
+    /* const updatedEnv = linesEnv.map(line => {
       if (line.startsWith('CLIENT_URL=')) {
         return 'CLIENT_URL=http://localhost:3000/JPAGE';
       }
       // 다른 줄은 그대로 유지
       return line;
-    });
+    }); */
 
     const updatedIndex = linesIndex.map(line => {
       if (line.startsWith(`const db = process.env.DB_NAME`)) {
@@ -182,10 +182,10 @@ const restoreEnvAndIndex = () => {
     });
 
     // 줄을 다시 합쳐서 저장
-    const newEnvFile = updatedEnv.join(os.EOL);
+    /* const newEnvFile = updatedEnv.join(os.EOL); */
     const newIndexFile = updatedIndex.join(os.EOL);
 
-    writeFileSync('.env', newEnvFile);
+    /* writeFileSync('.env', newEnvFile); */
     writeFileSync('index.ts', newIndexFile);
   }
   catch (error) {
