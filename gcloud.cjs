@@ -23,9 +23,6 @@ const modifyEnvAndIndex = () => {
       if (line.startsWith('CLIENT_URL=')) {
         return 'CLIENT_URL=https://www.junghomun.com/JPAGE';
       }
-      if (line.startsWith('GOOGLE_CALLBACK_URL=')) {
-        return 'GOOGLE_CALLBACK_URL=https://www.junghomun.com/JPAGE/api/auth/google/callback';
-      }
       // 다른 줄은 그대로 유지
       return line;
     });
@@ -168,9 +165,6 @@ const restoreEnvAndIndex = () => {
     const updatedEnv = linesEnv.map(line => {
       if (line.startsWith('CLIENT_URL=')) {
         return 'CLIENT_URL=http://localhost:3000/JPAGE';
-      }
-      if (line.startsWith('GOOGLE_CALLBACK_URL=')) {
-        return 'GOOGLE_CALLBACK_URL=http://localhost:4000/JPAGE/api/auth/google/callback';
       }
       // 다른 줄은 그대로 유지
       return line;
