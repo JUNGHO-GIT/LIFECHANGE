@@ -495,9 +495,12 @@ export const scale = {
     return finalResult[0];
   },
 
-  // 2-5. 현재 체중 업데이트
+  // 2-5. 체중 업데이트
   updateScale: async (
     user_id_param: string,
+    initScale_param: string,
+    minScale_param: string,
+    maxScale_param: string,
     curScale_param: string,
   ) => {
     const finalResult:any = await User.findOneAndUpdate(
@@ -506,6 +509,9 @@ export const scale = {
       },
       {
         $set: {
+          user_initScale: initScale_param,
+          user_minScale: minScale_param,
+          user_maxScale: maxScale_param,
           user_curScale: curScale_param,
           user_updateDt: new Date(),
         }
@@ -659,6 +665,7 @@ export const nutrition = {
   // 3-5. 현재 영양정보 업데이트
   updateNutrition: async (
     user_id_param: string,
+    initAvgKcal_param: string,
     totalKcal_param: string,
     totalCarb_param: string,
     totalProtein_param: string,
@@ -674,6 +681,7 @@ export const nutrition = {
       },
       {
         $set: {
+          user_initAvgKcalIntake: initAvgKcal_param,
           user_totalKcalIntake: totalKcal_param,
           user_totalCarbIntake: totalCarb_param,
           user_totalProteinIntake: totalProtein_param,
@@ -945,6 +953,7 @@ export const property = {
   // 4-4. 현재 자산 업데이트
   updateProperty: async (
     user_id_param: string,
+    initProperty_param: string,
     totalIncomeAll_param: string,
     totalIncomeExclusion_param: string,
     totalExpenseAll_param: string,
@@ -958,6 +967,7 @@ export const property = {
       },
       {
         $set: {
+          user_initProperty: initProperty_param,
           user_totalIncomeAll: totalIncomeAll_param,
           user_totalIncomeExclusion: totalIncomeExclusion_param,
           user_totalExpenseAll: totalExpenseAll_param,

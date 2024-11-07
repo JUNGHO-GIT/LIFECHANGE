@@ -103,13 +103,6 @@ export const FoodFavoriteList = () => {
         ...prev,
         totalCnt: res.data.totalCnt || 0,
       }));
-      // Accordion 초기값 설정
-      // 이전 값이 있으면 유지하고 없으면 true로 설정
-      setIsExpanded((prev: any) => (
-        Array(res.data.result.length).fill(null).map((_, i) => ({
-          expanded: prev?.[i]?.expanded || true
-        }))
-      ));
     })
     .catch((err: any) => {
       setALERT({
@@ -212,7 +205,7 @@ export const FoodFavoriteList = () => {
             <Grid container={true} spacing={0} className={"border-1 radius-1"} key={`list-${i}`}>
               <Grid size={12} className={"p-2"}>
                 <Accordion
-                  expanded={isExpanded[i].expanded}
+                  expanded={isExpanded[i]?.expanded}
                   TransitionProps={{
                     mountOnEnter: true,
                     unmountOnExit: true,

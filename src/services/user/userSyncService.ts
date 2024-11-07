@@ -206,6 +206,7 @@ export const scale = async (
   let findRegDt: any = null;
   let findInitScale: any = null;
 
+  let initScale: any = null;
   let minScale: any = null;
   let maxScale: any = null;
   let curScale: any = null;
@@ -226,21 +227,24 @@ export const scale = async (
   findInitScale = await repository.scale.findInitScale(
     user_id_param
   );
-
   // 최소 체중 조회
   minScale = await repository.scale.findMinScale(
     user_id_param, regDt, todayDt
   );
-
   // 최대 체중 조회
   maxScale = await repository.scale.findMaxScale(
     user_id_param, regDt, todayDt
   );
-
   // 현재 체중 조회
   curScale = await repository.scale.findCurScale(
     user_id_param, regDt, todayDt
   );
+
+  // 형식 포맷
+  initScale = String (parseFloat(findInitScale?.user_initScale || "0"));
+  minScale = String (parseFloat(minScale?.minScale || "0"));
+  maxScale = String (parseFloat(maxScale?.maxScale || "0"));
+  curScale = String (parseFloat(curScale?.exercise_total_scale || "0"));
 
   if (!findInitScale && !minScale && !maxScale && !curScale) {
     finalResult = null;
@@ -248,19 +252,19 @@ export const scale = async (
   }
   else {
     finalResult = {
-      initScale: String (parseFloat(findInitScale?.user_initScale || "0")),
-      minScale: String (parseFloat(minScale?.minScale || "0")),
-      maxScale: String (parseFloat(maxScale?.maxScale || "0")),
-      curScale: String (parseFloat(curScale?.exercise_total_scale || "0")),
-      dateStart: String (regDt),
-      dateEnd: String (todayDt),
+      initScale: initScale,
+      minScale: minScale,
+      maxScale: maxScale,
+      curScale: curScale,
+      dateStart: regDt,
+      dateEnd: todayDt,
     };
     statusResult = "success";
   }
 
-  // 현재 체중 업데이트
+  // 체중 업데이트
   await repository.scale.updateScale(
-    user_id_param, curScale?.exercise_total_scale
+    user_id_param, initScale, minScale, maxScale, curScale
   );
 
   return {
@@ -281,6 +285,7 @@ export const nutrition = async (
   let findInitNutrition: any = null;
   let findAllInformation: any = null;
 
+  let initAvgKcalIntake: any = null;
   let totalKcalIntake: any = null;
   let totalCarbIntake: any = null;
   let totalProteinIntake: any = null;
@@ -307,28 +312,43 @@ export const nutrition = async (
   findTotalCnt = await repository.nutrition.findTotalCnt(
     user_id_param, regDt, todayDt
   );
-
   // 최초 칼로리 목표 조회
   findInitNutrition = await repository.nutrition.findInitNutrition(
     user_id_param
   );
-
   // 전체 영양 정보 조회
   findAllInformation = await repository.nutrition.findAllInformation(
     user_id_param, regDt, todayDt
   );
 
-  // 총 칼로리, 탄수화물, 단백질, 지방 섭취량
-  totalKcalIntake = findAllInformation?.food_total_kcal;
-  totalCarbIntake = findAllInformation?.food_total_carb;
-  totalProteinIntake = findAllInformation?.food_total_protein;
-  totalFatIntake = findAllInformation?.food_total_fat;
-
-  // 현재 평균 칼로리, 탄수화물, 단백질, 지방 섭취량
-  curAvgKcalIntake = parseFloat(totalKcalIntake) / findTotalCnt;
-  curAvgCarbIntake = parseFloat(totalCarbIntake) / findTotalCnt;
-  curAvgProteinIntake = parseFloat(totalProteinIntake) / findTotalCnt;
-  curAvgFatIntake = parseFloat(totalFatIntake) / findTotalCnt;
+  // 형식 포맷
+  initAvgKcalIntake = String (
+    parseFloat(findInitNutrition?.user_initAvgKcalIntake || "0").toFixed(0)
+  );
+  totalKcalIntake = String (
+    parseFloat(findAllInformation?.food_total_kcal || "0").toFixed(0)
+  );
+  totalCarbIntake = String (
+    parseFloat(findAllInformation?.food_total_carb || "0").toFixed(0)
+  );
+  totalProteinIntake = String (
+    parseFloat(findAllInformation?.food_total_protein || "0").toFixed(0)
+  );
+  totalFatIntake = String (
+    parseFloat(findAllInformation?.food_total_fat || "0").toFixed(0)
+  );
+  curAvgKcalIntake = String(
+    (parseFloat(totalKcalIntake || "0") / (findTotalCnt || 1)).toFixed(0)
+  );
+  curAvgCarbIntake = String(
+    (parseFloat(totalCarbIntake || "0") / (findTotalCnt || 1)).toFixed(0)
+  );
+  curAvgProteinIntake = String(
+    (parseFloat(totalProteinIntake || "0") / (findTotalCnt || 1)).toFixed(0)
+  );
+  curAvgFatIntake = String(
+    (parseFloat(totalFatIntake || "0") / (findTotalCnt || 1)).toFixed(0)
+  );
 
   if (!findInitNutrition && !findAllInformation) {
     finalResult = null;
@@ -336,20 +356,25 @@ export const nutrition = async (
   }
   else {
     finalResult = {
-      initAvgKcalIntake: String (parseFloat(findInitNutrition?.user_initAvgKcalIntake || "0")),
-      totalKcalIntake: String (parseFloat(totalKcalIntake || "0").toFixed(0)),
-      totalCarbIntake: String (parseFloat(totalCarbIntake || "0").toFixed(0)),
-      totalProteinIntake: String (parseFloat(totalProteinIntake || "0").toFixed(0)),
-      totalFatIntake: String (parseFloat(totalFatIntake || "0").toFixed(0)),
-      curAvgKcalIntake: String (parseFloat(curAvgKcalIntake || "0").toFixed(0)),
-      curAvgCarbIntake: String (parseFloat(curAvgCarbIntake || "0").toFixed(0)),
-      curAvgProteinIntake: String (parseFloat(curAvgProteinIntake || "0").toFixed(0)),
-      curAvgFatIntake: String (parseFloat(curAvgFatIntake || "0").toFixed(0)),
-      dateStart: String (regDt),
-      dateEnd: String (todayDt),
+      initAvgKcalIntake: initAvgKcalIntake,
+      totalKcalIntake: totalKcalIntake,
+      totalCarbIntake: totalCarbIntake,
+      totalProteinIntake: totalProteinIntake,
+      totalFatIntake: totalFatIntake,
+      curAvgKcalIntake: curAvgKcalIntake,
+      curAvgCarbIntake: curAvgCarbIntake,
+      curAvgProteinIntake: curAvgProteinIntake,
+      curAvgFatIntake: curAvgFatIntake,
+      dateStart: regDt,
+      dateEnd: todayDt,
     };
     statusResult = "success";
   }
+
+  // 영양소 업데이트
+  await repository.nutrition.updateNutrition(
+    user_id_param, initAvgKcalIntake, totalKcalIntake, totalCarbIntake, totalProteinIntake, totalFatIntake, curAvgKcalIntake, curAvgCarbIntake, curAvgProteinIntake, curAvgFatIntake
+  );
 
   return {
     status: statusResult,
@@ -391,8 +416,8 @@ export const favorite = async (
   else {
     finalResult = {
       foodFavorite: findFavorite,
-      dateStart: String (regDt),
-      dateEnd: String (todayDt),
+      dateStart: regDt,
+      dateEnd: todayDt,
     };
     statusResult = "success";
   }
@@ -414,6 +439,7 @@ export const property = async (
   let findInitProperty: any = null;
   let findAllInformation: any = null;
 
+  let initProperty: any = null;
   let totalIncomeAll: any = null;
   let totalExpenseAll: any = null;
   let totalIncomeExclusion: any = null;
@@ -443,30 +469,31 @@ export const property = async (
     user_id_param, regDt, todayDt
   );
 
-  // 총 수입 (포함)
-  totalIncomeAll = findAllInformation?.allResult?.money_total_income;
-
-  // 총 지출 (포함)
-  totalExpenseAll = findAllInformation?.allResult?.money_total_expense;
-
-  // 총 수입 (미포함)
-  totalIncomeExclusion = findAllInformation?.exclusionResult?.money_total_income;
-
-  // 총 지출 (미포함)
-  totalExpenseExclusion = findAllInformation?.exclusionResult?.money_total_expense;
-
-  // 현재 자산 (포함)
+  // 형식 포맷
+  initProperty = String (
+    parseFloat(findInitProperty?.user_initProperty || "0")
+  );
+  totalIncomeAll = String(
+    parseFloat(findAllInformation?.allResult?.money_total_income || "0")
+  );
+  totalExpenseAll = String(
+    parseFloat(findAllInformation?.allResult?.money_total_expense || "0")
+  );
+  totalIncomeExclusion = String(
+    parseFloat(findAllInformation?.exclusionResult?.money_total_income || "0")
+  );
+  totalExpenseExclusion = String(
+    parseFloat(findAllInformation?.exclusionResult?.money_total_expense || "0")
+  );
   curPropertyAll = String (
     parseFloat(findInitProperty?.user_initProperty || "0") +
-    parseFloat(totalIncomeAll || "0") -
-    parseFloat(totalExpenseAll || "0")
+    parseFloat(totalIncomeAll) -
+    parseFloat(totalExpenseAll)
   );
-
-  // 현재 자산 (미포함)
   curPropertyExclusion = String (
     parseFloat(findInitProperty?.user_initProperty || "0") +
-    parseFloat(totalIncomeExclusion || "0") -
-    parseFloat(totalExpenseExclusion || "0")
+    parseFloat(totalIncomeExclusion) -
+    parseFloat(totalExpenseExclusion)
   );
 
   if (!findInitProperty && !findAllInformation) {
@@ -476,21 +503,21 @@ export const property = async (
   else {
     statusResult = "success";
     finalResult = {
-      initProperty: String (parseFloat(findInitProperty?.user_initProperty || "0")),
-      totalIncomeAll: String (parseFloat(totalIncomeAll || "0")),
-      totalIncomeExclusion: String (parseFloat(totalIncomeExclusion || "0")),
-      totalExpenseAll: String (parseFloat(totalExpenseAll || "0")),
-      totalExpenseExclusion: String (parseFloat(totalExpenseExclusion || "0")),
-      curPropertyAll: String (parseFloat(curPropertyAll || "0")),
-      curPropertyExclusion: String (parseFloat(curPropertyExclusion || "0")),
-      dateStart: String (regDt),
-      dateEnd: String (todayDt),
+      initProperty: initProperty,
+      totalIncomeAll: totalIncomeAll,
+      totalIncomeExclusion: totalIncomeExclusion,
+      totalExpenseAll: totalExpenseAll,
+      totalExpenseExclusion: totalExpenseExclusion,
+      curPropertyAll: curPropertyAll,
+      curPropertyExclusion: curPropertyExclusion,
+      dateStart: regDt,
+      dateEnd: todayDt,
     };
   }
 
   // 자산 업데이트
   await repository.property.updateProperty(
-    user_id_param, totalIncomeAll, totalExpenseAll, totalIncomeExclusion, totalExpenseExclusion, curPropertyAll, curPropertyExclusion
+    user_id_param, initProperty, totalIncomeAll, totalIncomeExclusion, totalExpenseAll, totalExpenseExclusion, curPropertyAll, curPropertyExclusion
   );
 
   return {

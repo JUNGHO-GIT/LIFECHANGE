@@ -8,7 +8,8 @@ export const useStorageLocal = (key1: string, key2: string, key3: string, initia
 
   // -----------------------------------------------------------------------------------------------
   const [storedVal, setStoredVal] = useState<any>(() => {
-    return getLocal(key1, key2, key3) || initialVal;
+    const existingValue = getLocal(key1, key2, key3);
+    return existingValue !== undefined ? existingValue : initialVal;
   });
 
   // -----------------------------------------------------------------------------------------------

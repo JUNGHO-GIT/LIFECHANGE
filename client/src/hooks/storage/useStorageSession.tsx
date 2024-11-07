@@ -8,7 +8,8 @@ export const useStorageSession = (key1: string, key2: string, key3: string, init
 
   // -----------------------------------------------------------------------------------------------
   const [storedVal, setStoredVal] = useState<any>(() => {
-    return getSession(key1, key2, key3) || initialVal;
+    const existingValue = getSession(key1, key2, key3);
+    return existingValue !== undefined ? existingValue : initialVal;
   });
 
   // -----------------------------------------------------------------------------------------------

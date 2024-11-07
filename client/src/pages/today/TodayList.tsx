@@ -123,23 +123,6 @@ export const TodayList = () => {
           resSleep.data.totalCnt
         ),
       });
-
-      // Accordion 초기값 설정
-      // 이전 값이 있으면 유지하고 없으면 true로 설정
-      setIsExpanded((prev: any) => ({
-        exercise: Array(resExercise.data.result.length).fill(null).map((_, i) => ({
-          expanded: prev?.exercise?.[i]?.expanded || true
-        })),
-        food: Array(resFood.data.result.length).fill(null).map((_, i) => ({
-          expanded: prev?.food?.[i]?.expanded || true
-        })),
-        money: Array(resMoney.data.result.length).fill(null).map((_, i) => ({
-          expanded: prev?.money?.[i]?.expanded || true
-        })),
-        sleep: Array(resSleep.data.result.length).fill(null).map((_, i) => ({
-          expanded: prev?.sleep?.[i]?.expanded || true
-        }))
-      }));
     }
     catch (err: any) {
       console.error(err);

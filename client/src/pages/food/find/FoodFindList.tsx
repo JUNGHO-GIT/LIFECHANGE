@@ -107,13 +107,6 @@ export const FoodFindList = () => {
         ...prev,
         totalCnt: res.data.totalCnt || 0,
       }));
-      // Accordion 초기값 설정
-      // 이전 값이 있으면 유지하고 없으면 true로 설정
-      setIsExpanded((prev: any) => (
-        Array(res.data.result.length).fill(null).map((_, i) => ({
-          expanded: prev?.[i]?.expanded || true
-        }))
-      ));
     })
     .catch((err: any) => {
       setALERT({

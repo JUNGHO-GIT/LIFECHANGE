@@ -35,6 +35,17 @@ export const Input = (props: any) => (
       "& .MuiSelect-icon": {
         display: props?.disabled && "none"
       },
+      // readOnly 인 경우
+      "& .MuiInputBase-root": {
+        cursor: props?.readOnly && "not-allowed",
+        backgroundColor: props?.readOnly && "#f7f7f7",
+        "&:hover": {
+          backgroundColor: props?.readOnly && "#f7f7f7",
+        },
+        "&:focus": {
+          backgroundColor: props?.readOnly && "#f7f7f7",
+        }
+      },
     }}
     slotProps={{
       ...props?.slotProps,

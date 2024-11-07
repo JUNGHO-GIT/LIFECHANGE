@@ -1,0 +1,38 @@
+{
+  "_id": {
+    "$oid": "66af9e9e9de6587bbbc25566"
+  },
+  "user_id": "junghomun00@gmail.com",
+  "user_google": "Y",
+  "user_pw": "$2a$10$sKC/3/NuaowKiy3FPKSh8uwuvx3i7M/byn/TnOS7MA0RhISeQ3CD6",
+  "user_token": "b4dadcab0b32301c7e8db86126900c41fa1365f4",
+  "user_number": 26,
+  "user_image": "",
+
+
+
+  "user_initScale": "107.8",
+  "user_curScale": "107",
+
+
+  "user_initProperty": "76000",
+  "user_totalIncomeAll": "0",
+  "user_totalIncomeExclusion": "2615200",
+  "user_totalExpenseAll": "0",
+  "user_totalExpenseExclusion": "188000",
+  "user_curPropertyAll": "-2539200",
+  "user_curPropertyExclusion": "-112000",
+
+
+  "user_initAvgKcalIntake": "2000",
+
+
+  "user_age": "122",
+  "user_gender": "M",
+  "user_height": "171",
+  "user_weight": "105",
+  "user_curProperty": "-191556",
+  "user_curPropertyExclude": "-112000",
+  "user_curPropertyInclude": "-1916200",
+  "user_initKcal": "222"
+}

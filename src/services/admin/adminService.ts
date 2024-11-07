@@ -17,7 +17,7 @@ export const curEnv = async () => {
   const __dirname = path.dirname(__filename);
   const indexFile = path.join(__dirname, '../../../index.ts');
 
-  const regex = /\/\/\s*const\s*db\s*=\s*process.env.DB_NAME;/;
+  const regex = /\/\/\s*const\s*db\s*=\s*process.env.DB_NAME/;
   const data = fs.readFileSync(indexFile, 'utf8');
   const result = data.match(regex);
   const env = result ? "development" : "production";
