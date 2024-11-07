@@ -138,7 +138,7 @@ export const MoneyList = () => {
             <Grid container={true} spacing={0} className={"border-1 radius-1"} key={`list-${i}`}>
               <Grid size={12} className={"p-2"}>
                 <Accordion
-                  expanded={isExpanded[i].expanded}
+                  expanded={isExpanded?.[i]?.expanded}
                   TransitionProps={{
                     mountOnEnter: true,
                     unmountOnExit: true,
