@@ -63,6 +63,11 @@ export const FoodList = () => {
     newSectionCnt: 0
   });
 
+  useEffect(() => {
+    console.log("===================================");
+    console.log("isExpanded", JSON.stringify(isExpanded));
+  }, [isExpanded]);
+
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     axios.get(`${URL_OBJECT}/exist`, {
@@ -112,6 +117,16 @@ export const FoodList = () => {
         sectionCnt: res.data.sectionCnt || 0,
         newSectionCnt: res.data.sectionCnt || 0
       }));
+
+      // 배열 길이만큼 isExpanded 설정
+      setIsExpanded((prev: any) => {
+        if (prev.length !== res.data.result.length) {
+          return res.data.result.map((_: any, i: number) => ({
+            expanded: prev[i]?.expanded || true
+          }));
+        }
+        return prev
+      });
     })
     .catch((err: any) => {
       setALERT({
@@ -137,12 +152,7 @@ export const FoodList = () => {
             <Grid container={true} spacing={0} className={"border-1 radius-1"} key={`list-${i}`}>
               <Grid size={12} className={"p-2"}>
                 <Accordion
-                  expanded={isExpanded?.[i]?.expanded}
-                  TransitionProps={{
-                    mountOnEnter: true,
-                    unmountOnExit: true,
-                  }}
-                >
+                  expanded={isExpanded[i]?.expanded}>
                   <AccordionSummary
                     className={"me-n10"}
                     expandIcon={
