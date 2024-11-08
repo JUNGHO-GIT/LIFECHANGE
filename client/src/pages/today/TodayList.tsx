@@ -479,7 +479,7 @@ export const TodayList = () => {
                           <Grid container={true} spacing={1}>
                             <Grid size={10} className={"d-row-right"}>
                               <Div className={`fs-1-0rem fw-600 ${item.food_total_protein_color}`}>
-                                {insertComma(item.food_total_carb || "0")}
+                                {insertComma(item.food_total_protein || "0")}
                               </Div>
                             </Grid>
                             <Grid size={2} className={"d-row-center"}>

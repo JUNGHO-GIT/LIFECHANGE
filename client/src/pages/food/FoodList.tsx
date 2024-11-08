@@ -21,7 +21,7 @@ export const FoodList = () => {
   const { translate } = useStoreLanguage();
   const { ALERT, setALERT } = useStoreAlert();
 
-  // 2-2. useStorageLocal ------------------------------------------------------------------------
+  // 2-2. useStorageLocal --------------------------------------------------------------------------
   const [DATE, setDATE] = useStorageLocal(
     "date", PATH, "", {
       dateType: location_dateType || "",
@@ -281,7 +281,7 @@ export const FoodList = () => {
                           <Grid container={true} spacing={1}>
                             <Grid size={10} className={"d-row-right"}>
                               <Div className={`fs-1-0rem fw-600 ${item.food_total_protein_color}`}>
-                                {insertComma(item.food_total_carb || "0")}
+                                {insertComma(item.food_total_protein || "0")}
                               </Div>
                             </Grid>
                             <Grid size={2} className={"d-row-center"}>
