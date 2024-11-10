@@ -35,15 +35,30 @@ export const Input = (props: any) => (
       "& .MuiSelect-icon": {
         display: props?.disabled && "none"
       },
-      // readOnly 인 경우
       "& .MuiInputBase-root": {
-        cursor: props?.readOnly && "not-allowed",
-        backgroundColor: props?.readOnly && "#f7f7f7",
+        cursor : (
+          props?.readOnly && (
+            props?.onClick ? "pointer" : "not-allowed"
+          )
+        ),
+        backgroundColor: (
+          props?.readOnly && (
+            props?.onClick ? "#ffffff" : "#f7f7f7"
+          )
+        ),
         "&:hover": {
-          backgroundColor: props?.readOnly && "#f7f7f7",
+          backgroundColor: (
+            props?.readOnly && (
+              props?.onClick ? "#ffffff" : "#f7f7f7"
+            )
+          ),
         },
         "&:focus": {
-          backgroundColor: props?.readOnly && "#f7f7f7",
+          backgroundColor: (
+            props?.readOnly && (
+              props?.onClick ? "#ffffff" : "#f7f7f7"
+            )
+          ),
         }
       },
     }}
