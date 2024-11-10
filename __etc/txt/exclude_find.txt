@@ -1,0 +1,1 @@
+*.conf, *.json, *.txt, *gcloud.*, *Auth.* , *.env*

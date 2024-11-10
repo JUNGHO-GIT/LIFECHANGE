@@ -63,11 +63,6 @@ export const FoodList = () => {
     newSectionCnt: 0
   });
 
-  useEffect(() => {
-    console.log("===================================");
-    console.log("isExpanded", JSON.stringify(isExpanded));
-  }, [isExpanded]);
-
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     axios.get(`${URL_OBJECT}/exist`, {
