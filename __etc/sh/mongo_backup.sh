@@ -7,7 +7,7 @@ mongo_backup() {
 
   MONGO_USER="eric4757"
   MONGO_PASSWORD="M7m7m7m7m7m7!"
-  MONGO_HOST="34.23.233.23:27017"
+  MONGO_HOST="104.196.212.101:27017"
 
   TIMESTAMP=$(date +%F-%H-%M)
   BUCKET_NAME="jungho-bucket"

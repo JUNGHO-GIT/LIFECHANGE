@@ -131,7 +131,7 @@ const runRemoteScript = () => {
       : 'junghomun1234'
     );
 
-    const ipAddr = "34.23.233.23";
+    const ipAddr = "104.196.212.101";
     const cmdCd = 'cd /var/www/junghomun.com/JPAGE/server';
     const cmdGitFetch = 'sudo git fetch --all';
     const cmdGitReset = 'sudo git reset --hard origin/master';

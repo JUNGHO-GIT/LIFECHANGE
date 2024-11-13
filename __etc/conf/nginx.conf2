@@ -1,0 +1,82 @@
+# nginx.conf
+
+user nginx;
+worker_processes auto;
+pid /run/nginx.pid;
+include /usr/share/nginx/modules/*.conf;
+
+events {
+  worker_connections 1024;
+}
+
+http {
+  # Access log format
+  log_format main '
+    time = $time_local
+    status = $status
+    remote_addr = $remote_addr
+    referer = $http_referer
+    user_agent = $http_user_agent
+    x_forwarded_for = $http_x_forwarded_for
+  ';
+
+  # Access log file
+  access_log /var/log/nginx/access.log main;
+
+  # Error log file
+  error_log /var/log/nginx/error.log warn;
+
+  tcp_nopush on;
+  tcp_nodelay on;
+  sendfile on;
+  keepalive_timeout 65;
+  types_hash_max_size 4096;
+
+  include /etc/nginx/mime.types;
+  default_type application/octet-stream;
+
+  ##################################################################################################
+  ## www.junghomun.com  ############################################################################
+  ##################################################################################################
+
+  ## 80 포트
+  server {
+    server_name
+      junghomun.com
+      www.junghomun.com
+    ;
+    return 301 https://www.junghomun.com$request_uri;
+
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/www.junghomun.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/www.junghomun.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
+}
+
+  server {
+    if ($host = www.junghomun.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = junghomun.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    listen [::]:80;
+    server_name
+      junghomun.com
+      www.junghomun.com
+    ;
+    return 404; # managed by Certbot
+
+
+
+
+}}
