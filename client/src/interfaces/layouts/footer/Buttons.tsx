@@ -34,7 +34,7 @@ export const Buttons = (
     const toFindSection = () => (
       <Btn
         color={"success"}
-        className={"ms-1vw me-1vw"}
+        className={"ms-2vw me-2vw"}
         onClick={() => {
           navigate(toFind, {
             state: {
@@ -53,7 +53,7 @@ export const Buttons = (
     const favoriteSection = () => (
       <Btn
         color={"warning"}
-        className={"ms-1vw me-1vw"}
+        className={"ms-2vw me-2vw"}
         onClick={() => {
           navigate(toFavorite, {
             state: {
@@ -91,7 +91,7 @@ export const Buttons = (
                 size={"large"}
                 color={"primary"}
                 variant={"text"}
-                className={"fs-1-2rem fw-600 ms-1vw me-1vw"}
+                className={"fs-1-2rem fw-600 ms-2vw me-2vw"}
                 onClick={() => {
                   handleSave("replace");
                 }}
@@ -107,7 +107,7 @@ export const Buttons = (
                 size={"large"}
                 color={"primary"}
                 variant={"text"}
-                className={"fs-1-2rem fw-600 ms-1vw me-1vw"}
+                className={"fs-1-2rem fw-600 ms-2vw me-2vw"}
                 onClick={() => {
                   handleSave("insert");
                 }}
@@ -120,7 +120,7 @@ export const Buttons = (
         children={(popTrigger: any) => (
           <Btn
             color={"primary"}
-            className={"ms-1vw me-1vw"}
+            className={"ms-2vw me-2vw"}
             onClick={(e: any) => {
               if (state.FLOW?.exist) {
                 if (state.FLOW?.itsMe) {
@@ -145,7 +145,7 @@ export const Buttons = (
     const deleteSection = () => (
       <Btn
         color={"error"}
-        className={"ms-1vw me-1vw"}
+        className={"ms-2vw me-2vw"}
         onClick={() => {
           flow?.flowDelete();
         }}

@@ -1,6 +1,7 @@
 // index.tsx
 
 import "react-calendar/dist/Calendar.css";
+import "@assets/styles/Reset.css";
 import "@assets/styles/Calendar.css";
 import "@assets/styles/Chart.css";
 import "@assets/styles/Mui.css";
@@ -66,7 +67,7 @@ const App = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 300);
+    const timer = setTimeout(() => setLoading(false), 100);
     return () => clearTimeout(timer);
   }, []);
 

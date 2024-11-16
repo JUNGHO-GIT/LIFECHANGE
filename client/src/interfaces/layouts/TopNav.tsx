@@ -461,17 +461,19 @@ export const TopNav = () => {
           </Card>
         }
         children={(popTrigger: any) => (
-          <Img
-            max={25}
-            hover={true}
-            shadow={false}
-            radius={false}
-            src={mainSmileImage}
-            onClick={(e: any) => {
-              setPercent(sessionPercent);
-              popTrigger.openPopup(e.currentTarget)
-            }}
-          />
+          <Div className={"mx-auto d-center"}>
+            <Img
+              max={25}
+              hover={true}
+              shadow={false}
+              radius={false}
+              src={mainSmileImage}
+              onClick={(e: any) => {
+                setPercent(sessionPercent);
+                popTrigger.openPopup(e.currentTarget)
+              }}
+            />
+          </Div>
         )}
       />
     );
@@ -598,17 +600,19 @@ export const TopNav = () => {
           </Card>
         }
         children={(popTrigger: any) => (
-          <Img
-            max={25}
-            hover={true}
-            shadow={false}
-            radius={false}
-            src={"exercise6"}
-            onClick={(e: any) => {
-              setScale(sessionScale);
-              popTrigger.openPopup(e.currentTarget)
-            }}
-          />
+          <Div className={"mx-auto d-center"}>
+            <Img
+              max={25}
+              hover={true}
+              shadow={false}
+              radius={false}
+              src={"exercise6"}
+              onClick={(e: any) => {
+                setScale(sessionScale);
+                popTrigger.openPopup(e.currentTarget)
+              }}
+            />
+          </Div>
         )}
       />
     );
@@ -822,17 +826,19 @@ export const TopNav = () => {
           </Card>
         }
         children={(popTrigger: any) => (
-          <Img
-            max={25}
-            hover={true}
-            shadow={false}
-            radius={false}
-            src={"food6"}
-            onClick={(e: any) => {
-              setNutrition(sessionNutrition);
-              popTrigger.openPopup(e.currentTarget)
-            }}
-          />
+          <Div className={"mx-auto d-center"}>
+            <Img
+              max={25}
+              hover={true}
+              shadow={false}
+              radius={false}
+              src={"food6"}
+              onClick={(e: any) => {
+                setNutrition(sessionNutrition);
+                popTrigger.openPopup(e.currentTarget)
+              }}
+            />
+          </Div>
         )}
       />
     );
@@ -986,17 +992,19 @@ export const TopNav = () => {
           </Card>
         }
         children={(popTrigger: any) => (
-          <Img
-            max={25}
-            hover={true}
-            shadow={false}
-            radius={false}
-            src={"money4"}
-            onClick={(e: any) => {
-              setProperty(sessionProperty);
-              popTrigger.openPopup(e.currentTarget)
-            }}
-          />
+          <Div className={"mx-auto d-center"}>
+            <Img
+              max={25}
+              hover={true}
+              shadow={false}
+              radius={false}
+              src={"money4"}
+              onClick={(e: any) => {
+                setProperty(sessionProperty);
+                popTrigger.openPopup(e.currentTarget)
+              }}
+            />
+          </Div>
         )}
       />
     );
@@ -1009,10 +1017,13 @@ export const TopNav = () => {
         <Tabs
           value={selectedTab[firstStr]}
           variant={"scrollable"}
+          component={"div"}
+          scrollButtons={true}
+          allowScrollButtonsMobile={true}
           selectionFollowsFocus={true}
-          scrollButtons={false}
           sx={{
             [`& .MuiTabs-scrollButtons`]: {
+              "width": "20px",
               "&.Mui-disabled": { opacity: 0.3 },
             },
           }}
@@ -1032,10 +1043,13 @@ export const TopNav = () => {
         <Tabs
           value={selectedTab[firstStr]}
           variant={"scrollable"}
+          component={"div"}
+          scrollButtons={true}
+          allowScrollButtonsMobile={true}
           selectionFollowsFocus={true}
-          scrollButtons={false}
           sx={{
             [`& .MuiTabs-scrollButtons`]: {
+              "width": "20px",
               "&.Mui-disabled": { opacity: 0.3 },
             },
           }}
@@ -1062,10 +1076,13 @@ export const TopNav = () => {
         <Tabs
           value={selectedTab[firstStr]}
           variant={"scrollable"}
+          component={"div"}
+          scrollButtons={true}
+          allowScrollButtonsMobile={true}
           selectionFollowsFocus={true}
-          scrollButtons={false}
           sx={{
             [`& .MuiTabs-scrollButtons`]: {
+              "width": "20px",
               "&.Mui-disabled": { opacity: 0.3 },
             },
           }}
@@ -1113,10 +1130,13 @@ export const TopNav = () => {
         <Tabs
           value={selectedTab[firstStr]}
           variant={"scrollable"}
+          component={"div"}
+          scrollButtons={true}
+          allowScrollButtonsMobile={true}
           selectionFollowsFocus={true}
-          scrollButtons={false}
           sx={{
             [`& .MuiTabs-scrollButtons`]: {
+              "width": "20px",
               "&.Mui-disabled": { opacity: 0.3 },
             },
           }}
@@ -1150,10 +1170,13 @@ export const TopNav = () => {
         <Tabs
           value={selectedTab[firstStr]}
           variant={"scrollable"}
+          component={"div"}
+          scrollButtons={true}
+          allowScrollButtonsMobile={true}
           selectionFollowsFocus={true}
-          scrollButtons={false}
           sx={{
             [`& .MuiTabs-scrollButtons`]: {
+              "width": "20px",
               "&.Mui-disabled": { opacity: 0.3 },
             },
           }}
@@ -1171,21 +1194,15 @@ export const TopNav = () => {
 
     // 5. return -----------------------------------------------------------------------------------
     return (
-      <Paper className={"layout-wrapper p-sticky top-8vh h-8vh border-1 radius-1 shadow-bottom-3"}>
-        <Grid container spacing={2} columns={29}>
-          <Grid size={3} className={"d-center ms-5"}>
+      <Paper className={"layout-wrapper p-sticky top-8vh h-8vh border-1 radius-1 shadow-bottom-3 p-0"}>
+        <Grid container spacing={0}>
+          <Grid size={6} className={"d-row-center"}>
             {smileSection()}
-          </Grid>
-          <Grid size={3} className={"d-center"}>
             {scaleSection()}
-          </Grid>
-          <Grid size={3} className={"d-center"}>
             {nutritionSection()}
-          </Grid>
-          <Grid size={3} className={"d-center"}>
             {propertySection()}
           </Grid>
-          <Grid size={16} className={"d-center"}>
+          <Grid size={6} className={"d-row-center shadow-left-3"}>
             {tabsSection()}
           </Grid>
         </Grid>

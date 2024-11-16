@@ -2,7 +2,6 @@
 
 const { execSync } = require('child_process');
 const { readFileSync, writeFileSync } = require('fs');
-const moment = require('moment-timezone');
 const os = require('os');
 const fs = require('fs');
 
@@ -57,8 +56,8 @@ const modifyEnvAndIndex = () => {
 // changelog 수정 ----------------------------------------------------------------------------------
 const modifyChangelog = () => {
   try {
-    const currentDate = moment().tz("Asia/Seoul").format('YYYY-MM-DD');
-    const currentTime = moment().tz("Asia/Seoul").format('HH:mm:ss');
+    const currentDate = new Date().toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' });
+    const currentTime = new Date().toLocaleTimeString('ko-KR', { timeZone: 'Asia/Seoul' });
 
     const changelog = fs.readFileSync('changelog.md', 'utf8');
     const versionPattern = /\d+\.\d+\.\d+/g;

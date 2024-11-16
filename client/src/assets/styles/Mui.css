@@ -4,18 +4,16 @@
 .MuiTab-root {
   background-color: transparent !important;
   min-width: 0px !important;
+  padding: 5px 10px !important;
 }
 .MuiTab-root.Mui-selected {
   color: #1976d2 !important;
   font-weight: bold !important;
   text-decoration: none !important;
-  scale: 1.2 !important;
+  scale: 1.1 !important;
 }
 .MuiTabs-indicator {
   background-color: #1976d2 !important;
-}
-.MuiTabs-scroller {
-  margin: 0px 0px 5px 0px !important;
 }
 .MuiToolbar-root {
   padding: 0px 0px 0px 0px !important;
@@ -142,9 +140,6 @@
 .MuiBadge-badge {
   min-width: 0px !important;
   min-height: 0px !important;
-}
-.MuiButtonBase-root {
-  min-width: 30px !important;
 }
 .MuiBackdrop-root {
   background-color: rgba(0, 0, 0, 0.2) !important;
