@@ -77,7 +77,7 @@ export const BottomNav = () => {
           value={"exercise"}
           icon={
             <Img
-              max={15}
+              max={20}
               hover={true}
               shadow={false}
               radius={false}
@@ -93,7 +93,7 @@ export const BottomNav = () => {
           value={"food"}
           icon={
             <Img
-              max={15}
+              max={20}
               hover={true}
               shadow={false}
               radius={false}
@@ -109,7 +109,7 @@ export const BottomNav = () => {
           value={"today"}
           icon={
             <Img
-              max={15}
+              max={20}
               hover={true}
               shadow={false}
               radius={false}
@@ -125,7 +125,7 @@ export const BottomNav = () => {
           value={"calendar"}
           icon={
             <Img
-              max={15}
+              max={20}
               hover={true}
               shadow={false}
               radius={false}
@@ -141,7 +141,7 @@ export const BottomNav = () => {
           value={"money"}
           icon={
             <Img
-              max={15}
+              max={20}
               hover={true}
               shadow={false}
               radius={false}
@@ -157,7 +157,7 @@ export const BottomNav = () => {
           value={"sleep"}
           icon={
             <Img
-              max={15}
+              max={20}
               hover={true}
               shadow={false}
               radius={false}

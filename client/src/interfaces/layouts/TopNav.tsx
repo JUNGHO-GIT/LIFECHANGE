@@ -463,7 +463,7 @@ export const TopNav = () => {
         children={(popTrigger: any) => (
           <Div className={"mx-auto d-center"}>
             <Img
-              max={25}
+              max={30}
               hover={true}
               shadow={false}
               radius={false}
@@ -600,9 +600,9 @@ export const TopNav = () => {
           </Card>
         }
         children={(popTrigger: any) => (
-          <Div className={"mx-auto d-center"}>
+          <Div className={"me-auto d-center"}>
             <Img
-              max={25}
+              max={30}
               hover={true}
               shadow={false}
               radius={false}
@@ -826,9 +826,9 @@ export const TopNav = () => {
           </Card>
         }
         children={(popTrigger: any) => (
-          <Div className={"mx-auto d-center"}>
+          <Div className={"me-auto d-center"}>
             <Img
-              max={25}
+              max={30}
               hover={true}
               shadow={false}
               radius={false}
@@ -992,9 +992,9 @@ export const TopNav = () => {
           </Card>
         }
         children={(popTrigger: any) => (
-          <Div className={"mx-auto d-center"}>
+          <Div className={"me-auto d-center"}>
             <Img
-              max={25}
+              max={30}
               hover={true}
               shadow={false}
               radius={false}
@@ -1018,7 +1018,6 @@ export const TopNav = () => {
           value={selectedTab[firstStr]}
           variant={"scrollable"}
           component={"div"}
-          centered={true}
           scrollButtons={true}
           allowScrollButtonsMobile={true}
           selectionFollowsFocus={true}
@@ -1045,7 +1044,6 @@ export const TopNav = () => {
           value={selectedTab[firstStr]}
           variant={"scrollable"}
           component={"div"}
-          centered={true}
           scrollButtons={true}
           allowScrollButtonsMobile={true}
           selectionFollowsFocus={true}
@@ -1079,7 +1077,6 @@ export const TopNav = () => {
           value={selectedTab[firstStr]}
           variant={"scrollable"}
           component={"div"}
-          centered={true}
           scrollButtons={true}
           allowScrollButtonsMobile={true}
           selectionFollowsFocus={true}
@@ -1134,7 +1131,6 @@ export const TopNav = () => {
           value={selectedTab[firstStr]}
           variant={"scrollable"}
           component={"div"}
-          centered={true}
           scrollButtons={true}
           allowScrollButtonsMobile={true}
           selectionFollowsFocus={true}
@@ -1175,7 +1171,6 @@ export const TopNav = () => {
           value={selectedTab[firstStr]}
           variant={"scrollable"}
           component={"div"}
-          centered={true}
           scrollButtons={true}
           allowScrollButtonsMobile={true}
           selectionFollowsFocus={true}
