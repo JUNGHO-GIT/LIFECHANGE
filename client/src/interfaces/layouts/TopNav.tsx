@@ -1018,6 +1018,7 @@ export const TopNav = () => {
           value={selectedTab[firstStr]}
           variant={"scrollable"}
           component={"div"}
+          centered={true}
           scrollButtons={true}
           allowScrollButtonsMobile={true}
           selectionFollowsFocus={true}
@@ -1044,6 +1045,7 @@ export const TopNav = () => {
           value={selectedTab[firstStr]}
           variant={"scrollable"}
           component={"div"}
+          centered={true}
           scrollButtons={true}
           allowScrollButtonsMobile={true}
           selectionFollowsFocus={true}
@@ -1077,6 +1079,7 @@ export const TopNav = () => {
           value={selectedTab[firstStr]}
           variant={"scrollable"}
           component={"div"}
+          centered={true}
           scrollButtons={true}
           allowScrollButtonsMobile={true}
           selectionFollowsFocus={true}
@@ -1131,6 +1134,7 @@ export const TopNav = () => {
           value={selectedTab[firstStr]}
           variant={"scrollable"}
           component={"div"}
+          centered={true}
           scrollButtons={true}
           allowScrollButtonsMobile={true}
           selectionFollowsFocus={true}
@@ -1171,6 +1175,7 @@ export const TopNav = () => {
           value={selectedTab[firstStr]}
           variant={"scrollable"}
           component={"div"}
+          centered={true}
           scrollButtons={true}
           allowScrollButtonsMobile={true}
           selectionFollowsFocus={true}
@@ -1202,7 +1207,7 @@ export const TopNav = () => {
             {nutritionSection()}
             {propertySection()}
           </Grid>
-          <Grid size={6} className={"d-row-center shadow-left-3"}>
+          <Grid size={6} className={"d-row-center shadow-left-1"}>
             {tabsSection()}
           </Grid>
         </Grid>

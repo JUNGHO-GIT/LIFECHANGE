@@ -97,14 +97,10 @@ export const FindFilter = (
         showLastButton={true}
         component={"div"}
         disabled={PATH.includes("/favorite/list") ? true : false}
-        style={{
-          width: "40vw",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          marginLeft: "3vw"
-        }}
+        className={"d-center shadow-left-1 ps-5"}
         rowsPerPage={10}
+        // 숫자 숨기기 ( 1 of 10 )
+        labelDisplayedRows={() => ""}
         onPageChange={(_event, newPage) => {
           setState?.setPAGING((prev: any) => ({
             ...prev,
@@ -122,11 +118,9 @@ export const FindFilter = (
       />
     );
     return (
-      <Grid container={true} spacing={1}>
-        <Grid size={4} className={"d-center"}>
+      <Grid container={true} spacing={0}>
+        <Grid size={6} className={"d-center"}>
           {querySection()}
-        </Grid>
-        <Grid size={2} className={"d-center"}>
           {findSection()}
           {doneSection()}
         </Grid>
