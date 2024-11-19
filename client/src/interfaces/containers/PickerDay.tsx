@@ -270,7 +270,7 @@ export const PickerDay = (
                           setDATE((prev: any) => ({
                             ...prev,
                             dateStart: getPrevMonthStartFmt(prev.dateStart),
-                            dateEnd: getPrevMonthEndFmt(prev.dateStart),
+                            dateEnd: getPrevMonthStartFmt(prev.dateStart),
                           }));
                         }}
                       >
@@ -285,7 +285,7 @@ export const PickerDay = (
                           setDATE((prev: any) => ({
                             ...prev,
                             dateStart: getNextMonthStartFmt(prev.dateStart),
-                            dateEnd: getNextMonthEndFmt(prev.dateStart),
+                            dateEnd: getNextMonthStartFmt(prev.dateStart),
                           }));
                         }}
                       >
