@@ -56,9 +56,19 @@ const modifyEnvAndIndex = () => {
 // changelog 수정 ----------------------------------------------------------------------------------
 const modifyChangelog = () => {
   try {
-    const now = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
-    const [currentDate, currentTime] = now.split(' ');
-    const formattedDateTime = `${currentDate} (${currentTime})`;
+
+    // ex. 2024-11-03 (16:23:24)
+    const currentDate = new Date().toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    }).replace(/\./g, '-');
+
+    const currentTime = new Date().toLocaleTimeString('ko-KR', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
 
     const changelog = fs.readFileSync('changelog.md', 'utf8');
     const versionPattern = /\d+\.\d+\.\d+/g;
@@ -77,8 +87,9 @@ const modifyChangelog = () => {
     // 세 번째 숫자에 +1
     versionArray[2] = (parseFloat(versionArray[2]) + 1).toString();
 
-    const newVersion = `[ ${versionArray.join('.')} ]`;
-    const newEntry = `\n## ${newVersion}\n\t- ${formattedDateTime}\n\n`;
+    const newVersion = `\\[ ${versionArray.join('.')} \\]`;
+    const newDateTime = `- ${currentDate} (${currentTime})`;
+    const newEntry = `\n## ${newVersion}\n\t${newDateTime}\n\n`;
 
     const updatedChangelog = changelog + newEntry;
 
@@ -89,7 +100,6 @@ const modifyChangelog = () => {
     process.exit(1);
   }
 };
-
 
 // git push ----------------------------------------------------------------------------------------
 const gitPush = () => {
