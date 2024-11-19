@@ -62,12 +62,13 @@ const modifyChangelog = () => {
       year: 'numeric',
       month: '2-digit',
       day: '2-digit'
-    }).replace(/\./g, '-');
+    });
 
     const currentTime = new Date().toLocaleTimeString('ko-KR', {
       hour: '2-digit',
       minute: '2-digit',
-      second: '2-digit'
+      second: '2-digit',
+      hour12: false
     });
 
     const changelog = fs.readFileSync('changelog.md', 'utf8');
@@ -76,20 +77,16 @@ const modifyChangelog = () => {
     const lastMatch = matches[matches.length - 1];
     const versionArray = lastMatch[0].match(/\d+/g) || [];
 
-    if (matches.length === 0) {
-      throw new Error('버전 형식을 찾을 수 없습니다.');
-    }
-
-    if (versionArray.length < 3) {
-      throw new Error('버전 형식이 잘못되었습니다. 세 자리 숫자가 필요합니다.');
-    }
-
     // 세 번째 숫자에 +1
     versionArray[2] = (parseFloat(versionArray[2]) + 1).toString();
 
-    const newVersion = `\\[ ${versionArray.join('.')} \\]`;
-    const newDateTime = `- ${currentDate} (${currentTime})`;
-    const newEntry = `\n## ${newVersion}\n\t${newDateTime}\n\n`;
+    let newVersion = `\\[ ${versionArray.join('.')} \\]`;
+    let newDateTime = `- ${currentDate} (${currentTime})`;
+    let newEntry = `\n## ${newVersion}\n\t${newDateTime}\n\n`;
+
+    newEntry = newEntry.replace(/([.]\s*[(])/g, ' (');
+    newEntry = newEntry.replace(/([.]\s*)/g, '-');
+    newEntry = newEntry.replace(/[(](\W*)(\s*)/g, '(');
 
     const updatedChangelog = changelog + newEntry;
 
