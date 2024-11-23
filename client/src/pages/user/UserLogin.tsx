@@ -28,6 +28,11 @@ export const UserLogin = () => {
   const [OBJECT, setOBJECT] = useState<any>(User);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    setLOADING(true);
+  }, []);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
   // 트리거가 활성화된 경우
   useEffect(() => {
     if (loginTrigger) {
@@ -409,13 +414,13 @@ export const UserLogin = () => {
     return (
       <Paper className={"content-wrapper d-center border-1 radius-2 shadow-1 h-min100vh"}>
         {titleSection()}
-        <Hr m={20} />
+        <Hr m={30} className={"bg-light"} />
         {loginSection()}
-        <Hr m={20} />
+        <Hr m={30} className={"bg-light"} />
         {checkSection()}
-        <Hr m={20} />
+        <Hr m={30} className={"bg-light"} />
         {buttonSection()}
-        <Hr m={20} />
+        <Hr m={30} className={"bg-light"} />
         {linkSection()}
       </Paper>
     );

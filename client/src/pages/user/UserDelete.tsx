@@ -1,6 +1,6 @@
 // UserDelete.tsx
 
-import { useState } from "@importReacts";
+import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useValidateUser } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
 import { axios } from "@importLibs";
@@ -21,6 +21,11 @@ export const UserDelete = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [OBJECT, setOBJECT] = useState<any>(User);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    setLOADING(true);
+  }, []);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSendEmail = async () => {
@@ -191,7 +196,7 @@ export const UserDelete = () => {
             <Grid container={true} spacing={2} className={"p-10"} key={`detail-${i}`}>
               {/** 이메일 **/}
               <Grid container={true} spacing={1}>
-                <Grid size={9}>
+                <Grid size={10}>
                   <Input
                     label={`${translate("id")}`}
                     helperText={`* ${translate("helperId")}`}
@@ -217,7 +222,7 @@ export const UserDelete = () => {
                     }}
                   />
                 </Grid>
-                <Grid size={3}>
+                <Grid size={2}>
                   <Btn
                     color={"primary"}
                     className={"mt-n25"}
@@ -233,7 +238,7 @@ export const UserDelete = () => {
 
               {/** 이메일 인증 **/}
               <Grid container={true} spacing={1}>
-                <Grid size={9}>
+                <Grid size={10}>
                   <Input
                     label={translate("verify")}
                     helperText={`* ${translate("helperIdVerified")}`}
@@ -250,7 +255,7 @@ export const UserDelete = () => {
                     }}
                   />
                 </Grid>
-                <Grid size={3}>
+                <Grid size={2}>
                   <Btn
                     color={"primary"}
                     className={"mt-n25"}
@@ -339,7 +344,7 @@ export const UserDelete = () => {
         {titleSection()}
         <Hr m={40} />
         {deleteSection()}
-        <Hr m={20} />
+        <Hr m={30} className={"bg-light"} />
         {buttonSection()}
       </Paper>
     );
