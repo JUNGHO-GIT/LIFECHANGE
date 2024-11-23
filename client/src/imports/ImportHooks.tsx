@@ -24,12 +24,13 @@ import { useStorageLocal } from "@hooks/storage/useStorageLocal";
 import { useStoreAlert } from "@hooks/store/useStoreAlert";
 import { useStoreConfirm } from "@hooks/store/useStoreConfirm";
 import { useStoreLanguage } from "@hooks/store/useStoreLanguage";
+import { useStoreLoading } from "@hooks/store/useStoreLoading";
 
-// etc
-import { useRoot } from "@hooks/etc/useRoot";
-import { useScrollTop } from "@hooks/etc/useScrollTop";
-import { useFoodSection } from "@hooks/etc/useFoodSection";
-import { useTime } from "@hooks/etc/useTime";
+// util
+import { useRoot } from "@hooks/util/useRoot";
+import { useScrollTop } from "@hooks/util/useScrollTop";
+import { useFoodSection } from "@hooks/util/useFoodSection";
+import { useTime } from "@hooks/util/useTime";
 
 // -------------------------------------------------------------------------------------------------
 export {
@@ -57,8 +58,9 @@ export {
   useStoreAlert,
   useStoreConfirm,
   useStoreLanguage,
+  useStoreLoading,
 
-  // etc
+  // util
   useRoot,
   useScrollTop,
   useFoodSection,

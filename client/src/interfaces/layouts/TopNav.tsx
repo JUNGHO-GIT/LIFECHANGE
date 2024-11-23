@@ -293,24 +293,33 @@ export const TopNav = () => {
 
   // 4. handle------------------------------------------------------------------------------------
   const handleClickTobNav = (value: string) => {
-    let url = "";
     if (value === "real" || value === "schedule") {
-      url = `/${firstStr}/list`;
+      navigate(`/${firstStr}/list`, {
+        state: {
+          dateType: "",
+          dateStart: getDayFmt(),
+          dateEnd: getDayFmt(),
+        }
+      });
     }
     else if (value === "dashboard") {
-      url = `/${firstStr}/dashboard`;
+      navigate(`/${firstStr}/dashboard`, {
+        state: {
+          dateType: "",
+          dateStart: getDayFmt(),
+          dateEnd: getDayFmt(),
+        }
+      });
     }
     else {
-      url = `/${firstStr}/${value}/list`;
+      navigate(`/${firstStr}/${value}/list`, {
+        state: {
+          dateType: "",
+          dateStart: getDayFmt(),
+          dateEnd: getDayFmt(),
+        }
+      });
     }
-
-    navigate(url, {
-      state: {
-        dateType: "",
-        dateStart: getDayFmt(),
-        dateEnd: getDayFmt(),
-      }
-    });
   };
 
   // 7. topNav -------------------------------------------------------------------------------------
@@ -323,19 +332,19 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-70vw h-max70vh border-1 radius-1 px-10 py-20"}>
+          <Card className={"w-70vw h-max70vh border-1 radius-2 px-10 py-20"}>
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-col-center"}>
                 <Div className={"fs-1-0rem fw-600"}>
                   {translate("monthScore")}
                 </Div>
-                <Br px={10} />
+                <Br m={10} />
                 <Div className={"fs-0-8rem fw-500 dark"}>
                   {`[${getMonthStartFmt()} - ${getMonthEndFmt()}]`}
                 </Div>
               </Grid>
             </Grid>
-            <Hr px={30} />
+            <Hr m={30} />
             <Grid container spacing={0} columns={20}>
               <Grid size={6} className={"d-row-center"}>
                 <Img
@@ -343,7 +352,7 @@ export const TopNav = () => {
                   hover={true}
                   shadow={false}
                   radius={false}
-                  src={smileImage.total}
+                  src={`${smileImage.total}.webp`}
                   className={"me-5"}
                 />
               </Grid>
@@ -358,7 +367,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
             </Grid>
-            <Hr px={30} />
+            <Hr m={30} />
             <Grid container spacing={0} columns={20}>
               <Grid size={6} className={"d-row-center"}>
                 <Img
@@ -366,7 +375,7 @@ export const TopNav = () => {
                   hover={true}
                   shadow={false}
                   radius={false}
-                  src={smileImage.exercise}
+                  src={`${smileImage.exercise}.webp`}
                   className={"me-5"}
                 />
               </Grid>
@@ -381,7 +390,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
             </Grid>
-            <Br px={10} />
+            <Br m={10} />
             <Grid container spacing={0} columns={20}>
               <Grid size={6} className={"d-row-center"}>
                 <Img
@@ -389,7 +398,7 @@ export const TopNav = () => {
                   hover={true}
                   shadow={false}
                   radius={false}
-                  src={smileImage.food}
+                  src={`${smileImage.food}.webp`}
                   className={"me-5"}
                 />
               </Grid>
@@ -404,7 +413,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
             </Grid>
-            <Br px={10} />
+            <Br m={10} />
             <Grid container spacing={0} columns={20}>
               <Grid size={6} className={"d-row-center"}>
                 <Img
@@ -412,7 +421,7 @@ export const TopNav = () => {
                   hover={true}
                   shadow={false}
                   radius={false}
-                  src={smileImage.money}
+                  src={`${smileImage.money}.webp`}
                   className={"me-5"}
                 />
               </Grid>
@@ -427,7 +436,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
             </Grid>
-            <Br px={10} />
+            <Br m={10} />
             <Grid container spacing={0} columns={20}>
               <Grid size={6} className={"d-row-center"}>
                 <Img
@@ -435,7 +444,7 @@ export const TopNav = () => {
                   hover={true}
                   shadow={false}
                   radius={false}
-                  src={smileImage.sleep}
+                  src={`${smileImage.sleep}.webp`}
                   className={"me-5"}
                 />
               </Grid>
@@ -450,7 +459,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
             </Grid>
-            <Hr px={30} />
+            <Hr m={30} />
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-0-8rem"}>
@@ -463,11 +472,11 @@ export const TopNav = () => {
         children={(popTrigger: any) => (
           <Div className={"mx-auto d-center"}>
             <Img
-              max={30}
+              max={27}
               hover={true}
               shadow={false}
               radius={false}
-              src={mainSmileImage}
+              src={`${mainSmileImage}.webp`}
               onClick={(e: any) => {
                 setPercent(sessionPercent);
                 popTrigger.openPopup(e.currentTarget)
@@ -485,27 +494,27 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max70vw h-max70vh border-1 radius-1 px-10 py-20"}>
+          <Card className={"w-max70vw h-max70vh border-1 radius-2 px-10 py-20"}>
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-col-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
                   {`${translate("scale")}`}
                 </Div>
-                <Br px={10} />
+                <Br m={10} />
                 <Div className={"fs-0-8rem fw-500 dark"}>
                   {`[${scale?.dateStart} - ${scale?.dateEnd}]`}
                 </Div>
               </Grid>
             </Grid>
-            <Hr px={30} />
+            <Hr m={30} />
             <Grid container spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
-                  max={15}
+                  max={20}
                   hover={true}
                   shadow={false}
                   radius={false}
-                  src={"exercise5"}
+                  src={"exercise5.webp"}
                   className={"me-5"}
                 />
               </Grid>
@@ -525,15 +534,15 @@ export const TopNav = () => {
                 </Div>
               </Grid>
             </Grid>
-            <Br px={10} />
+            <Br m={10} />
             <Grid container spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
-                  max={15}
+                  max={20}
                   hover={true}
                   shadow={false}
                   radius={false}
-                  src={"exercise5"}
+                  src={"exercise5.webp"}
                   className={"me-5"}
                 />
               </Grid>
@@ -553,7 +562,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
             </Grid>
-            <Hr px={30} />
+            <Hr m={30} />
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-center"}>
                 <Input
@@ -562,11 +571,11 @@ export const TopNav = () => {
                   value={insertComma(scale.minScale || "0")}
                   startadornment={
                     <Img
-                      max={15}
+                      max={20}
                       hover={true}
                       shadow={false}
                       radius={false}
-                      src={"exercise5"}
+                      src={"exercise5.webp"}
                     />
                   }
                   endadornment={
@@ -575,7 +584,7 @@ export const TopNav = () => {
                 />
               </Grid>
             </Grid>
-            <Br px={20} />
+            <Br m={20} />
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-center"}>
                 <Input
@@ -584,11 +593,11 @@ export const TopNav = () => {
                   value={insertComma(scale.maxScale || "0")}
                   startadornment={
                     <Img
-                      max={15}
+                      max={20}
                       hover={true}
                       shadow={false}
                       radius={false}
-                      src={"exercise5"}
+                      src={"exercise5.webp"}
                     />
                   }
                   endadornment={
@@ -602,11 +611,11 @@ export const TopNav = () => {
         children={(popTrigger: any) => (
           <Div className={"me-auto d-center"}>
             <Img
-              max={30}
+              max={27}
               hover={true}
               shadow={false}
               radius={false}
-              src={"exercise6"}
+              src={"exercise6.webp"}
               onClick={(e: any) => {
                 setScale(sessionScale);
                 popTrigger.openPopup(e.currentTarget)
@@ -624,17 +633,17 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max70vw h-max70vh border-1 radius-1 px-10 py-20"}>
+          <Card className={"w-max70vw h-max70vh border-1 radius-2 px-10 py-20"}>
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-col-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
                   {`${translate("intakeNutrition")}`}
                 </Div>
-                <Br px={10} />
+                <Br m={10} />
                 <Div className={"fs-0-8rem fw-500 dark"}>
                   {`[${nutrition?.dateStart} - ${nutrition?.dateEnd}]`}
                 </Div>
-                <Br px={10} />
+                <Br m={10} />
                 <Div className={"d-row-center"}>
                   <Div className={"fs-0-7rem fw-500 dark"}>
                     {translate("avgValue")}
@@ -659,15 +668,15 @@ export const TopNav = () => {
                 </Div>
               </Grid>
             </Grid>
-            <Hr px={30} />
+            <Hr m={30} />
             <Grid container spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
-                  max={15}
+                  max={20}
                   hover={true}
                   shadow={false}
                   radius={false}
-                  src={"food2"}
+                  src={"food2.webp"}
                 />
               </Grid>
               <Grid size={8} className={"d-row-left"}>
@@ -686,15 +695,15 @@ export const TopNav = () => {
                 </Div>
               </Grid>
             </Grid>
-            <Br px={10} />
+            <Br m={10} />
             <Grid container spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
-                  max={15}
+                  max={20}
                   hover={true}
                   shadow={false}
                   radius={false}
-                  src={"food2"}
+                  src={"food2.webp"}
                 />
               </Grid>
               <Grid size={8} className={"d-row-left"}>
@@ -721,7 +730,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
             </Grid>
-            <Hr px={30} />
+            <Hr m={30} />
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-row-center"}>
                 <Input
@@ -742,11 +751,11 @@ export const TopNav = () => {
                   }
                   startadornment={
                     <Img
-                      max={15}
+                      max={20}
                       hover={true}
                       shadow={false}
                       radius={false}
-                      src={"food3"}
+                      src={"food3.webp"}
                     />
                   }
                   endadornment={
@@ -755,7 +764,7 @@ export const TopNav = () => {
                 />
               </Grid>
             </Grid>
-            <Br px={20} />
+            <Br m={20} />
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-row-center"}>
                 <Input
@@ -776,11 +785,11 @@ export const TopNav = () => {
                   }
                   startadornment={
                     <Img
-                      max={15}
+                      max={20}
                       hover={true}
                       shadow={false}
                       radius={false}
-                      src={"food4"}
+                      src={"food4.webp"}
                     />
                   }
                   endadornment={
@@ -789,7 +798,7 @@ export const TopNav = () => {
                 />
               </Grid>
             </Grid>
-            <Br px={20} />
+            <Br m={20} />
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-row-center"}>
                 <Input
@@ -810,11 +819,11 @@ export const TopNav = () => {
                   }
                   startadornment={
                     <Img
-                      max={15}
+                      max={20}
                       hover={true}
                       shadow={false}
                       radius={false}
-                      src={"food5"}
+                      src={"food5.webp"}
                     />
                   }
                   endadornment={
@@ -828,11 +837,11 @@ export const TopNav = () => {
         children={(popTrigger: any) => (
           <Div className={"me-auto d-center"}>
             <Img
-              max={30}
+              max={27}
               hover={true}
               shadow={false}
               radius={false}
-              src={"food6"}
+              src={"food6.webp"}
               onClick={(e: any) => {
                 setNutrition(sessionNutrition);
                 popTrigger.openPopup(e.currentTarget)
@@ -850,17 +859,17 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max70vw h-max70vh border-1 radius-1 px-10 py-20"}>
+          <Card className={"w-max70vw h-max70vh border-1 radius-2 px-10 py-20"}>
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-col-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
                   {`${translate("property")}`}
                 </Div>
-                <Br px={10} />
+                <Br m={10} />
                 <Div className={"fs-0-8rem fw-500 dark"}>
                   {`[${property?.dateStart} - ${property?.dateEnd}]`}
                 </Div>
-                <Br px={10} />
+                <Br m={10} />
                 <Div className={"d-row-center"}>
                   <Div className={"fs-0-7rem fw-500 dark"}>
                     {translate("includingExclusions")}
@@ -875,15 +884,15 @@ export const TopNav = () => {
                 </Div>
               </Grid>
             </Grid>
-            <Hr px={30} />
+            <Hr m={30} />
             <Grid container spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
-                  max={15}
+                  max={20}
                   hover={true}
                   shadow={false}
                   radius={false}
-                  src={"money2"}
+                  src={"money2.webp"}
                 />
               </Grid>
               <Grid size={8} className={"d-row-left"}>
@@ -902,15 +911,15 @@ export const TopNav = () => {
                 </Div>
               </Grid>
             </Grid>
-            <Br px={10} />
+            <Br m={10} />
             <Grid container spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
-                  max={15}
+                  max={20}
                   hover={true}
                   shadow={false}
                   radius={false}
-                  src={"money2"}
+                  src={"money2.webp"}
                 />
               </Grid>
               <Grid size={8} className={"d-row-left"}>
@@ -933,7 +942,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
             </Grid>
-            <Hr px={30} />
+            <Hr m={30} />
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-row-center"}>
                 <Input
@@ -948,11 +957,11 @@ export const TopNav = () => {
                   }
                   startadornment={
                     <Img
-                      max={15}
+                      max={20}
                       hover={true}
                       shadow={false}
                       radius={false}
-                      src={"money2"}
+                      src={"money2.webp"}
                     />
                   }
                   endadornment={
@@ -961,7 +970,7 @@ export const TopNav = () => {
                 />
               </Grid>
             </Grid>
-            <Br px={20} />
+            <Br m={20} />
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-row-center"}>
                 <Input
@@ -976,11 +985,11 @@ export const TopNav = () => {
                   }
                   startadornment={
                     <Img
-                      max={15}
+                      max={20}
                       hover={true}
                       shadow={false}
                       radius={false}
-                      src={"money2"}
+                      src={"money2.webp"}
                     />
                   }
                   endadornment={
@@ -994,11 +1003,11 @@ export const TopNav = () => {
         children={(popTrigger: any) => (
           <Div className={"me-auto d-center"}>
             <Img
-              max={30}
+              max={27}
               hover={true}
               shadow={false}
               radius={false}
-              src={"money4"}
+              src={"money4.webp"}
               onClick={(e: any) => {
                 setProperty(sessionProperty);
                 popTrigger.openPopup(e.currentTarget)
@@ -1125,6 +1134,46 @@ export const TopNav = () => {
         </Tabs>
       )
 
+      // 4. exercise
+      : firstStr === "exercise" ? (
+        <Tabs
+          value={selectedTab[firstStr]}
+          variant={"scrollable"}
+          component={"div"}
+          scrollButtons={true}
+          allowScrollButtonsMobile={true}
+          selectionFollowsFocus={true}
+          sx={{
+            [`& .MuiTabs-scrollButtons`]: {
+              "width": "20px",
+              "&.Mui-disabled": { opacity: 0.3 },
+            },
+          }}
+        >
+          <Tab
+            label={translate("chart")}
+            value={"chart"}
+            onClick={() => {
+              handleClickTobNav("chart");
+            }}
+          />
+          <Tab
+            label={translate("goal")}
+            value={"goal"}
+            onClick={() => {
+              handleClickTobNav("goal");
+            }}
+          />
+          <Tab
+            label={translate("real")}
+            value={"real"}
+            onClick={() => {
+              handleClickTobNav("real");
+            }}
+          />
+        </Tabs>
+      )
+
       // 4. exercise, money, sleep
       : firstStr === "exercise" || firstStr === "money" || firstStr === "sleep" ? (
         <Tabs
@@ -1194,7 +1243,7 @@ export const TopNav = () => {
 
     // 5. return -----------------------------------------------------------------------------------
     return (
-      <Paper className={"layout-wrapper p-sticky top-8vh h-8vh border-1 radius-1 shadow-bottom-3 p-0"}>
+      <Paper className={"layout-wrapper p-sticky top-8vh h-8vh border-1 radius-2 shadow-bottom-3 p-0"}>
         <Grid container spacing={0}>
           <Grid size={6} className={"d-row-center"}>
             {smileSection()}
@@ -1202,7 +1251,7 @@ export const TopNav = () => {
             {nutritionSection()}
             {propertySection()}
           </Grid>
-          <Grid size={6} className={"d-row-center shadow-left-1"}>
+          <Grid size={6} className={"d-row-center border-left-2"}>
             {tabsSection()}
           </Grid>
         </Grid>

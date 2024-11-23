@@ -1,11 +1,10 @@
 // MoneyChartPie.tsx
 
 import { useState, useEffect } from "@importReacts";
-import { useStorageLocal, useCommonValue, useCommonDate } from "@importHooks";
-import { useStoreLanguage } from "@importHooks";
+import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
+import { useStoreLanguage, useStoreLoading } from "@importHooks";
 import { MoneyPie } from "@importSchemas";
 import { axios } from "@importLibs";
-import { Loader } from "@importLayouts";
 import { PopUp, Select } from "@importContainers";
 import { Div, Img, Br } from "@importComponents";
 import { Paper, MenuItem, Grid, Card } from "@importMuis";
@@ -31,6 +30,7 @@ export const MoneyChartPie = () => {
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
+  const { setLOADING } = useStoreLoading();
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [TYPE, setTYPE] = useStorageLocal(
@@ -41,7 +41,6 @@ export const MoneyChartPie = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState<boolean>(true);
   const [DATE, _setDATE] = useState<any>({
     dateType: "",
     dateStart: getDayFmt(),
@@ -102,11 +101,6 @@ export const MoneyChartPie = () => {
     }
     catch (err: any) {
       console.error(err);
-    }
-    finally {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 200);
     }
   })()}, [URL_OBJECT, DATE, sessionId]);
 
@@ -190,7 +184,7 @@ export const MoneyChartPie = () => {
     }
 
     return (
-      <Grid container={true} spacing={2} className={"border-1 radius-1"}>
+      <Grid container={true} spacing={2} className={"border-1 radius-2"}>
         <Grid size={12} className={"d-col-center"}>
           <ResponsiveContainer width={"100%"} height={350}>
             <PieChart margin={{top: 40, right: 20, bottom: 20, left: 20}}>
@@ -302,7 +296,7 @@ export const MoneyChartPie = () => {
                   hover={true}
                   shadow={false}
                   radius={false}
-                  src={"common3_1"}
+                  src={"common3_1.webp"}
                   onClick={(e: any) => {
                     popTrigger.openPopup(e.currentTarget)
                   }}
@@ -313,26 +307,23 @@ export const MoneyChartPie = () => {
         </Grid>
       );
       return (
-        <Card className={"d-col-center"}>
+        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
           {headFragment()}
         </Card>
       );
     };
     // 7-2. chart
     const chartSection = () => (
-      <Card className={"d-col-center"}>
+      <Card className={"d-col-center border-0 shadow-0 radius-0"}>
         {chartPie()}
       </Card>
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min40vh"}>{LOADING ? <Loader /> : (
-          <>
-            {headSection()}
-            <Br px={20} />
-            {chartSection()}
-          </>
-        )}
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min40vh"}>
+        {headSection()}
+        <Br m={20} />
+        {chartSection()}
       </Paper>
     );
   };

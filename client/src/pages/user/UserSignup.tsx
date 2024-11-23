@@ -2,11 +2,10 @@
 
 import { useState } from "@importReacts";
 import { useCommonValue, useValidateUser } from "@importHooks";
-import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
 import { axios } from "@importLibs";
 import { insertComma } from "@importScripts";
 import { User } from "@importSchemas";
-import { Loader } from "@importLayouts";
 import { Input } from "@importContainers";
 import { Div, Btn, Img, Hr } from "@importComponents";
 import { Paper, Grid, Card } from "@importMuis";
@@ -17,18 +16,17 @@ export const UserSignup = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, URL_GOOGLE, navigate, localCurrency } = useCommonValue();
   const { translate } = useStoreLanguage();
-  const { ALERT, setALERT } = useStoreAlert();
+  const { setALERT } = useStoreAlert();
+  const { setLOADING } = useStoreLoading();
   const { ERRORS, REFS, validate } = useValidateUser();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>(User);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSendEmail = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "signup", "send")) {
-      setLOADING(false);
       return;
     }
     axios.post (`${URL_OBJECT}/email/send`, {
@@ -38,7 +36,7 @@ export const UserSignup = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -49,7 +47,7 @@ export const UserSignup = () => {
       }
       else if (res.data.status === "duplicate") {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -60,7 +58,7 @@ export const UserSignup = () => {
       }
       else if (res.data.status === "fail") {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -71,7 +69,7 @@ export const UserSignup = () => {
       }
       else {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -83,16 +81,11 @@ export const UserSignup = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   };
 
@@ -100,7 +93,6 @@ export const UserSignup = () => {
   const flowVerifyEmail = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "signup", "verify")) {
-      setLOADING(false);
       return;
     }
     axios.post (`${URL_OBJECT}/email/verify`, {
@@ -110,7 +102,7 @@ export const UserSignup = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -121,7 +113,7 @@ export const UserSignup = () => {
       }
       else {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -133,16 +125,11 @@ export const UserSignup = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   };
 
@@ -150,7 +137,6 @@ export const UserSignup = () => {
   const flowSave = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "signup", "save")) {
-      setLOADING(false);
       return;
     }
     axios.post (`${URL_OBJECT}/signup`, {
@@ -160,7 +146,7 @@ export const UserSignup = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -168,14 +154,14 @@ export const UserSignup = () => {
       }
       else if (res.data.status === "alreadyExist") {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
       }
       else {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -183,16 +169,11 @@ export const UserSignup = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   };
 
@@ -205,7 +186,7 @@ export const UserSignup = () => {
       }
       else {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -213,7 +194,7 @@ export const UserSignup = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
@@ -314,7 +295,7 @@ export const UserSignup = () => {
                 </Grid>
               </Grid>
 
-              <Hr px={1} />
+              <Hr m={1} className={"bg-light"} />
 
               {/** 비밀번호 **/}
               <Grid container={true} spacing={1}>
@@ -358,7 +339,7 @@ export const UserSignup = () => {
                 </Grid>
               </Grid>
 
-              <Hr px={1} />
+              <Hr m={1} className={"bg-light"} />
 
               {/** 초기 체중 **/}
               <Grid container={true} spacing={1}>
@@ -372,11 +353,11 @@ export const UserSignup = () => {
                     helperText={`* ${translate("helperScale")}`}
                     startadornment={
                       <Img
-                        max={15}
+                        max={20}
                         hover={true}
                         shadow={false}
                         radius={false}
-                        src={"exercise5"}
+                        src={"exercise5.webp"}
                       />
                     }
                     endadornment={
@@ -415,11 +396,11 @@ export const UserSignup = () => {
                     helperText={`* ${translate("helperAvgKcalIntake")}`}
                     startadornment={
                       <Img
-                        max={15}
+                        max={20}
                         hover={true}
                         shadow={false}
                         radius={false}
-                        src={"food2"}
+                        src={"food2.webp"}
                       />
                     }
                     endadornment={
@@ -458,11 +439,11 @@ export const UserSignup = () => {
                     helperText={`* ${translate("helperProperty")}`}
                     startadornment={
                       <Img
-                        max={15}
+                        max={20}
                         hover={true}
                         shadow={false}
                         radius={false}
-                        src={"money2"}
+                        src={"money2.webp"}
                       />
                     }
                     endadornment={
@@ -493,7 +474,7 @@ export const UserSignup = () => {
         </Grid>
       );
       return (
-        <Card className={"d-col-center"}>
+        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
           {detailFragment()}
         </Card>
       );
@@ -529,11 +510,11 @@ export const UserSignup = () => {
             >
               <Div className={"d-row-center"}>
                 <Img
-                  max={15}
+                  max={20}
                   hover={true}
                   shadow={false}
                   radius={false}
-                  src={"user1"}
+                  src={"user1.webp"}
                 />
                 <Div className={"fs-1-0rem black ms-10"}>
                   {translate("googleLogin")}
@@ -581,18 +562,15 @@ export const UserSignup = () => {
     );
     // 7-10. return
     return (
-      <>
-      {LOADING && <Loader />}
-      <Paper className={"content-wrapper d-center border-1 radius-1 shadow-1 h-min100vh"}>
+      <Paper className={"content-wrapper d-center border-1 radius-2 shadow-1 h-min100vh"}>
         {titleSection()}
-        <Hr px={20} />
+        <Hr m={20} />
         {signupSection()}
-        <Hr px={20} />
+        <Hr m={20} />
         {buttonSection()}
-        <Hr px={20} />
+        <Hr m={20} />
         {linkSection()}
       </Paper>
-      </>
     );
   };
 

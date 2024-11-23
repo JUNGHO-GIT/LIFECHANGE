@@ -8,8 +8,8 @@ export const useValidateSleep = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { translate } = useStoreLanguage();
-  const { ALERT, setALERT } = useStoreAlert();
-  const { CONFIRM, setCONFIRM } = useStoreConfirm();
+  const { setALERT } = useStoreAlert();
+  const { setCONFIRM } = useStoreConfirm();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const REFS = useRef<any[]>([]);
@@ -19,7 +19,7 @@ export const useValidateSleep = () => {
   // alert 표시 및 focus ---------------------------------------------------------------------------
   const showAlertAndFocus = (field: string, msg: string, idx: number) => {
     setALERT({
-      open: !ALERT.open,
+      open: true,
       msg: translate(msg),
       severity: "error",
     });
@@ -149,7 +149,7 @@ export const useValidateSleep = () => {
       );
       const confirmResult = new Promise((resolve) => {
         setCONFIRM({
-          open: !CONFIRM.open,
+          open: true,
           msg: translate("confirmDelete"),
         }, (confirmed: boolean) => {
           resolve(confirmed);

@@ -5,8 +5,8 @@ import { useLocation, useNavigate } from "@importReacts";
 // -------------------------------------------------------------------------------------------------
 export const useCommonValue = () => {
 
-  const navigate: any = useNavigate();
-  const location: any = useLocation();
+  let navigate = useNavigate();
+  let location = useLocation();
 
   const location_id: string = location?.state?.id;
   const location_from: string = location?.state?.from;

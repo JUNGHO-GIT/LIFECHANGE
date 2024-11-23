@@ -1,10 +1,10 @@
 // AdminAppInfo.tsx
 
 import { useState, useEffect } from "@importReacts";
-import { useCommonValue, useStoreLanguage, useStoreAlert } from "@importHooks";
+import { useCommonValue } from "@importHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
 import { axios } from "@importLibs";
 import { AppInfo } from "@importSchemas";
-import { Loader } from "@importLayouts";
 import { Img, Br } from "@importComponents";
 import { Paper, Grid, Card } from "@importMuis";
 import { TableContainer, Table, TableBody, TableRow, TableCell } from "@importMuis";
@@ -17,10 +17,10 @@ export const AdminAppInfo = () => {
   const { localTimeZone, localZoneName, localLang } = useCommonValue();
   const { localIsoCode, localCurrency } = useCommonValue();
   const { translate } = useStoreLanguage();
-  const { ALERT, setALERT } = useStoreAlert();
+  const { setALERT } = useStoreAlert();
+  const { setLOADING } = useStoreLoading();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>(AppInfo);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
@@ -32,16 +32,11 @@ export const AdminAppInfo = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   }, [URL_ADMIN, sessionId]);
 
@@ -57,16 +52,11 @@ export const AdminAppInfo = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   }, [URL_ADMIN, sessionId]);
 
@@ -80,7 +70,7 @@ export const AdminAppInfo = () => {
             hover={true}
             shadow={false}
             radius={false}
-            src={"logo1"}
+            src={"logo1.webp"}
             className={"w-240 h-200"}
           />
         </Grid>
@@ -91,7 +81,7 @@ export const AdminAppInfo = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
           {[OBJECT].filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
-            <Grid container={true} spacing={2} className={"border-1 radius-1 shadow-0"} key={`detail-${i}`}>
+            <Grid container={true} spacing={2} className={"border-1 radius-2 shadow-0"} key={`detail-${i}`}>
               <Grid size={12} className={"d-center"}>
                 <TableContainer className={"over-hidden"}>
                   <Table>
@@ -137,21 +127,17 @@ export const AdminAppInfo = () => {
         </Grid>
       );
       return (
-        <Card className={"d-col-center"}>
+        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
           {detailFragment()}
         </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper d-center border-1 radius-1 h-min90vh"}>
-        {LOADING ? <Loader /> : (
-          <>
-            {imageSection()}
-            <Br px={40} />
-            {detailSection()}
-          </>
-        )}
+      <Paper className={"content-wrapper d-center border-1 radius-2 h-min90vh"}>
+        {imageSection()}
+        <Br m={40} />
+        {detailSection()}
       </Paper>
     );
   };

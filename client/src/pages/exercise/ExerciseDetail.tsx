@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useTime, useValidateExercise } from "@importHooks";
-import { useStoreLanguage, useStoreAlert } from "@importHooks";
-import { Exercise } from "@importSchemas";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
 import { axios } from "@importLibs";
 import { insertComma, sync } from "@importScripts";
-import { Loader, Footer, Dialog } from "@importLayouts";
-import { PickerDay, PickerTime, Count, Delete, Input, Select }from "@importContainers";
+import { Exercise } from "@importSchemas";
+import { Footer, Dialog } from "@importLayouts";
+import { PickerDay, PickerTime, Count, Delete, Select, Input } from "@importContainers";
 import { Img, Bg } from "@importComponents";
 import { Paper, MenuItem, Grid, Card } from "@importMuis";
 
@@ -19,12 +19,12 @@ export const ExerciseDetail = () => {
   const { sessionId, localUnit, bgColors, exerciseArray } = useCommonValue();
   const { location_from, location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt,getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-  const { translate } = useStoreLanguage();
-  const { ALERT, setALERT } = useStoreAlert();
   const { ERRORS, REFS, validate } = useValidateExercise();
+  const { translate } = useStoreLanguage();
+  const { setALERT } = useStoreAlert();
+  const { setLOADING } = useStoreLoading();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState<boolean>(false);
   const [LOCKED, setLOCKED] = useState<string>("unlocked");
   const [OBJECT, setOBJECT] = useState<any>(Exercise);
   const [EXIST, setEXIST] = useState<any>({
@@ -58,6 +58,11 @@ export const ExerciseDetail = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    setLOADING(true);
+  }, []);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -105,7 +110,7 @@ export const ExerciseDetail = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
@@ -115,9 +120,7 @@ export const ExerciseDetail = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    setLOADING(true);
     if (LOCKED === "locked") {
-      setLOADING(false);
       return;
     }
     axios.get(`${URL_OBJECT}/detail`, {
@@ -158,52 +161,39 @@ export const ExerciseDetail = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-
-    if (!OBJECT?.exercise_section) {
-      return;
-    }
-
-    let totalVolume = 0;
-    let totalTime = 0;
-
-    const updatedSections = OBJECT?.exercise_section?.map((section: any) => {
-      const {exercise_set, exercise_rep, exercise_weight} = section;
-      const sectionVolume = Number(exercise_set) * Number(exercise_rep) * Number(exercise_weight);
-
-      totalVolume += sectionVolume;
-
-      const {exercise_cardio} = section;
-      if (exercise_cardio) {
-        const [hours, minutes] = exercise_cardio.split(':').map(Number);
-        totalTime += hours * 60 + minutes;
-      }
-
+    const totals = OBJECT?.exercise_section?.reduce((acc: any, cur: any) => {
       return {
-        ...section,
-        exercise_volume: sectionVolume.toString(),
+        totalVolume: (
+          acc.totalVolume +
+          Number(cur.exercise_set) *
+          Number(cur.exercise_rep) *
+          Number(cur.exercise_weight)
+        ),
+        totalCardio: (
+          acc.totalCardio +
+          Number(cur.exercise_cardio.split(':')[0]) * 60 +
+          Number(cur.exercise_cardio.split(':')[1])
+        )
       };
+    }, {
+      totalVolume: 0,
+      totalCardio: 0
     });
 
     setOBJECT((prev: any) => ({
       ...prev,
-      exercise_section: updatedSections,
-      exercise_total_volume: totalVolume.toString(),
-      exercise_total_cardio: `${Math.floor(totalTime / 60).toString().padStart(2, '0')}:${(totalTime % 60).toString().padStart(2, '0')}`
+      exercise_total_volume: totals.totalVolume.toString(),
+      exercise_total_cardio: `${Math.floor(totals.totalCardio / 60).toString().padStart(2, '0')}:${(totals.totalCardio % 60).toString().padStart(2, '0')}`
     }));
 
   }, [OBJECT?.exercise_section]);
@@ -233,7 +223,6 @@ export const ExerciseDetail = () => {
   const flowSave = async (type: string) => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "real")) {
-      setLOADING(false);
       return;
     }
     axios({
@@ -249,7 +238,7 @@ export const ExerciseDetail = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -264,7 +253,7 @@ export const ExerciseDetail = () => {
       }
       else {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -272,16 +261,11 @@ export const ExerciseDetail = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   };
 
@@ -289,7 +273,6 @@ export const ExerciseDetail = () => {
   const flowDelete = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "delete")) {
-      setLOADING(false);
       return;
     }
     axios.delete(`${URL_OBJECT}/delete`, {
@@ -301,7 +284,7 @@ export const ExerciseDetail = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -316,7 +299,7 @@ export const ExerciseDetail = () => {
       }
       else {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -324,16 +307,11 @@ export const ExerciseDetail = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   };
 
@@ -353,7 +331,7 @@ export const ExerciseDetail = () => {
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Grid container={true} spacing={2} className={"border-1 radius-1 p-20"}>
+      <Grid container={true} spacing={2} className={"border-1 radius-2 p-20"}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}
@@ -374,21 +352,22 @@ export const ExerciseDetail = () => {
     );
     // 7-2. total
     const totalSection = () => (
-      <Grid container={true} spacing={2} className={"border-1 radius-1 p-20"}>
+      <Grid container={true} spacing={2} className={"border-1 radius-2 p-20"}>
         {/** row 1 **/}
         <Grid container={true} spacing={2}>
           <Grid size={12}>
             <Input
+              locked={LOCKED}
               readOnly={true}
               label={translate("totalVolume")}
               value={insertComma(OBJECT?.exercise_total_volume || "0")}
               startadornment={
                 <Img
-                  max={15}
+                  max={20}
                   hover={true}
                   shadow={false}
                   radius={false}
-                  src={"exercise3_1"}
+                  src={"exercise3_1.webp"}
                 />
               }
               endadornment={
@@ -403,16 +382,17 @@ export const ExerciseDetail = () => {
         <Grid container={true} spacing={2}>
           <Grid size={12}>
             <Input
+              locked={LOCKED}
               readOnly={true}
               label={translate("totalCardio")}
               value={OBJECT?.exercise_total_cardio}
               startadornment={
                 <Img
-                  max={15}
+                  max={20}
                   hover={true}
                   shadow={false}
                   radius={false}
-                  src={"exercise4"}
+                  src={"exercise4.webp"}
                 />
               }
               endadornment={
@@ -431,11 +411,11 @@ export const ExerciseDetail = () => {
               value={insertComma(OBJECT?.exercise_total_scale || "0")}
               startadornment={
                 <Img
-                  max={15}
+                  max={20}
                   hover={true}
                   shadow={false}
                   radius={false}
-                  src={"exercise5"}
+                  src={"exercise5.webp"}
                 />
               }
               endadornment={
@@ -469,7 +449,7 @@ export const ExerciseDetail = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
           {OBJECT.exercise_section?.filter((f: any) => f).map((item: any, i: number) => (
-            <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}  key={`detail-${i}`}>
+            <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20`}  key={`detail-${i}`}>
               {/** row 1 **/}
               <Grid container={true} spacing={2}>
                 <Grid size={6} className={"d-row-left"}>
@@ -567,11 +547,11 @@ export const ExerciseDetail = () => {
                     error={ERRORS?.[i]?.exercise_set}
                     startadornment={
                       <Img
-                        max={15}
+                        max={20}
                         hover={true}
                         shadow={false}
                         radius={false}
-                        src={"exercise3_1"}
+                        src={"exercise3_1.webp"}
                       />
                     }
                     endadornment={
@@ -610,11 +590,11 @@ export const ExerciseDetail = () => {
                     error={ERRORS?.[i]?.exercise_rep}
                     startadornment={
                       <Img
-                        max={15}
+                        max={20}
                         hover={true}
                         shadow={false}
                         radius={false}
-                        src={"exercise3_2"}
+                        src={"exercise3_2.webp"}
                       />
                     }
                     endadornment={
@@ -658,11 +638,11 @@ export const ExerciseDetail = () => {
                     error={ERRORS?.[i]?.exercise_weight}
                     startadornment={
                       <Img
-                        max={15}
+                        max={20}
                         hover={true}
                         shadow={false}
                         radius={false}
-                        src={"exercise3_3"}
+                        src={"exercise3_3.webp"}
                       />
                     }
                     endadornment={
@@ -711,17 +691,17 @@ export const ExerciseDetail = () => {
         </Grid>
       );
       return (
-        <Card className={"d-col-center"}>
+        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
           {COUNT?.newSectionCnt > 0 && detailFragment()}
         </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min75vh"}>
         {dateCountSection()}
         {totalSection()}
-        {LOADING ? <Loader /> : detailSection()}
+        {detailSection()}
       </Paper>
     );
   };

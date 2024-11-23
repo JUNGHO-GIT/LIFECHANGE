@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useValidateUser } from "@importHooks";
-import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
 import { axios } from "@importLibs";
 import { sync, insertComma } from "@importScripts";
 import { User } from "@importSchemas";
-import { Footer, Loader } from "@importLayouts";
+import { Footer } from "@importLayouts";
 import { Input } from "@importContainers";
 import { Hr, Img, Div } from "@importComponents";
 import { Paper, Avatar, Grid, Checkbox, Card } from "@importMuis";
@@ -17,11 +17,11 @@ export const UserDetail = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, navigate, sessionId, localCurrency, localUnit } = useCommonValue();
   const { translate } = useStoreLanguage();
-  const { ALERT, setALERT } = useStoreAlert();
+  const { setALERT } = useStoreAlert();
+  const { setLOADING } = useStoreLoading();
   const { ERRORS, REFS, validate } = useValidateUser();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>(User);
   const [includingExclusions, setIncludingExclusions] = useState<boolean>(false);
   const [SEND, setSEND] = useState<any>({
@@ -34,6 +34,10 @@ export const UserDetail = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
+  }, []);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
     axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId
@@ -44,16 +48,11 @@ export const UserDetail = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   }, [URL_OBJECT, sessionId]);
 
@@ -61,7 +60,6 @@ export const UserDetail = () => {
   const flowSave = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "detail", "")) {
-      setLOADING(false);
       return;
     }
     axios.put(`${URL_OBJECT}/update`, {
@@ -71,7 +69,7 @@ export const UserDetail = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -80,7 +78,7 @@ export const UserDetail = () => {
       }
       else {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -88,16 +86,11 @@ export const UserDetail = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   };
 
@@ -143,7 +136,7 @@ export const UserDetail = () => {
                 </Grid>
               </Grid>
 
-              <Hr px={1} />
+              <Hr m={1} className={"bg-light"} />
 
               {/** 최초 몸무게 **/}
               <Grid container={true} spacing={0}>
@@ -155,11 +148,11 @@ export const UserDetail = () => {
                     error={ERRORS?.[i]?.user_initScale}
                     startadornment={
                       <Img
-                        max={15}
+                        max={20}
                         hover={true}
                         shadow={false}
                         radius={false}
-                        src={"exercise5"}
+                        src={"exercise5.webp"}
                       />
                     }
                     endadornment={
@@ -195,11 +188,11 @@ export const UserDetail = () => {
                     value={insertComma(item.user_curScale || "0")}
                     startadornment={
                       <Img
-                        max={15}
+                        max={20}
                         hover={true}
                         shadow={false}
                         radius={false}
-                        src={"exercise5"}
+                        src={"exercise5.webp"}
                       />
                     }
                     endadornment={
@@ -209,7 +202,7 @@ export const UserDetail = () => {
                 </Grid>
               </Grid>
 
-              <Hr px={1} />
+              <Hr m={1} className={"bg-light"} />
 
               {/** 초기 평균 칼로리 섭취량 목표 **/}
               <Grid container={true} spacing={0}>
@@ -221,11 +214,11 @@ export const UserDetail = () => {
                     error={ERRORS?.[i]?.user_initAvgKcalIntake}
                     startadornment={
                       <Img
-                        max={15}
+                        max={20}
                         hover={true}
                         shadow={false}
                         radius={false}
-                        src={"food2"}
+                        src={"food2.webp"}
                       />
                     }
                     endadornment={
@@ -261,11 +254,11 @@ export const UserDetail = () => {
                     value={insertComma(item.user_curAvgKcalIntake || "0")}
                     startadornment={
                       <Img
-                        max={15}
+                        max={20}
                         hover={true}
                         shadow={false}
                         radius={false}
-                        src={"food2"}
+                        src={"food2.webp"}
                       />
                     }
                     endadornment={
@@ -275,7 +268,7 @@ export const UserDetail = () => {
                 </Grid>
               </Grid>
 
-              <Hr px={1} />
+              <Hr m={1} className={"bg-light"} />
 
               {/** 초기 자산 **/}
               <Grid container={true} spacing={0}>
@@ -287,11 +280,11 @@ export const UserDetail = () => {
                     error={ERRORS?.[i]?.user_initProperty}
                     startadornment={
                       <Img
-                        max={15}
+                        max={20}
                         hover={true}
                         shadow={false}
                         radius={false}
-                        src={"money2"}
+                        src={"money2.webp"}
                       />
                     }
                     endadornment={
@@ -333,11 +326,11 @@ export const UserDetail = () => {
                     }
                     startadornment={
                       <Img
-                        max={15}
+                        max={20}
                         hover={true}
                         shadow={false}
                         radius={false}
-                        src={"money2"}
+                        src={"money2.webp"}
                       />
                     }
                     endadornment={
@@ -368,17 +361,17 @@ export const UserDetail = () => {
         </Grid>
       );
       return (
-        <Card className={"d-col-center"}>
+        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
           {detailFragment()}
         </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min75vh"}>
         {imageSection()}
-        <Hr px={40} />
-        {LOADING ? <Loader /> : detailSection()}
+        <Hr m={40} />
+        {detailSection()}
       </Paper>
     );
   };

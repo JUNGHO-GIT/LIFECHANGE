@@ -1,12 +1,11 @@
 // ExerciseChartAvg.tsx
 
 import { useState, useEffect } from "@importReacts";
-import { useStorageLocal, useCommonValue, useCommonDate } from "@importHooks";
-import { useStoreLanguage } from "@importHooks";
+import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
+import { useStoreLanguage, useStoreLoading } from "@importHooks";
 import { ExerciseAvgVolume, ExerciseAvgCardio } from "@importSchemas";
 import { axios } from "@importLibs";
 import { handleY } from "@importScripts";
-import { Loader } from "@importLayouts";
 import { Select, PopUp } from "@importContainers";
 import { Div, Img, Br } from "@importComponents";
 import { Paper, MenuItem, Grid, Card } from "@importMuis";
@@ -22,6 +21,7 @@ export const ExerciseChartAvg = () => {
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
+  const { setLOADING } = useStoreLoading();
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [TYPE, setTYPE] = useStorageLocal(
@@ -32,7 +32,6 @@ export const ExerciseChartAvg = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState<boolean>(true);
   const [DATE, _setDATE] = useState<any>({
     dateType: "",
     dateStart: getDayFmt(),
@@ -83,11 +82,6 @@ export const ExerciseChartAvg = () => {
     catch (err: any) {
       console.error(err);
     }
-    finally {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 200);
-    }
   })()}, [URL_OBJECT, DATE, sessionId]);
 
   // 5-1. chart ------------------------------------------------------------------------------------
@@ -114,7 +108,7 @@ export const ExerciseChartAvg = () => {
 
     const {domain, ticks, formatterY} = handleY(object, exerciseChartArray, "exercise");
     return (
-      <Grid container={true} spacing={2} className={"border-1 radius-1"}>
+      <Grid container={true} spacing={2} className={"border-1 radius-2"}>
         <Grid size={12} className={"d-col-center"}>
           <ResponsiveContainer width={"100%"} height={350}>
             <ComposedChart
@@ -276,7 +270,7 @@ export const ExerciseChartAvg = () => {
                   hover={true}
                   shadow={false}
                   radius={false}
-                  src={"common3_1"}
+                  src={"common3_1.webp"}
                   onClick={(e: any) => {
                     popTrigger.openPopup(e.currentTarget)
                   }}
@@ -287,26 +281,23 @@ export const ExerciseChartAvg = () => {
         </Grid>
       );
       return (
-        <Card className={"d-col-center"}>
+        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
           {headFragment()}
         </Card>
       );
     };
     // 7-2. chart
     const chartSection = () => (
-      <Card className={"d-col-center"}>
+      <Card className={"d-col-center border-0 shadow-0 radius-0"}>
         {chartAvg()}
       </Card>
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min40vh"}>{LOADING ? <Loader /> : (
-          <>
-            {headSection()}
-            <Br px={20} />
-            {chartSection()}
-          </>
-        )}
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min40vh"}>
+        {headSection()}
+        <Br m={20} />
+        {chartSection()}
       </Paper>
     );
   };

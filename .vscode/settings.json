@@ -22,7 +22,8 @@
     "**/node_modules": true,
     "**/package-lock.json": true,
     "**/**build/**": true,
-    "build.tar.gz": true
+    "build.tar.gz": true,
+    "LICENSE.md": true,
   },
   "search.exclude": {
     "**/node_modules": true,
@@ -32,7 +33,6 @@
     "**/dist": true,
     "**/build": true,
     "**/target": true,
-
     "**/*.conf": true,
     "**/*.json": true,
     "**/*.txt": true,

@@ -8,7 +8,7 @@ export const useValidateUser = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { translate } = useStoreLanguage();
-  const { ALERT, setALERT } = useStoreAlert();
+  const { setALERT } = useStoreAlert();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const REFS = useRef<any[]>([]);
@@ -18,7 +18,7 @@ export const useValidateUser = () => {
   // alert 표시 및 focus ---------------------------------------------------------------------------
   const showAlertAndFocus = (field: string, msg: string, idx: number) => {
     setALERT({
-      open: !ALERT.open,
+      open: true,
       msg: translate(msg),
       severity: "error",
     });

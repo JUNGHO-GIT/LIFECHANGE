@@ -27,7 +27,7 @@ export const Empty = (
   const emptyNode = () => {
     // 1. isFindSection
     const isFindSection = () => (
-      <Card className={"border-1 radius-1"}>
+      <Card className={"border-1 radius-2 shadow-0"}>
         <Accordion expanded={false}>
           <AccordionSummary>
             <Grid container={true} spacing={2}>
@@ -48,7 +48,7 @@ export const Empty = (
     );
     // 2. isGoalSection
     const isGoalSection = () => (
-      <Card className={"border-1 radius-1"}>
+      <Card className={"border-1 radius-2 shadow-0"}>
         <Accordion expanded={false}>
           <AccordionSummary
             onClick={() => {
@@ -87,7 +87,7 @@ export const Empty = (
     );
     // 2. isRealSection
     const isRealSection = () => (
-      <Card className={"border-1 radius-1"}>
+      <Card className={"border-1 radius-2 shadow-0"}>
         <Accordion expanded={false}>
           <AccordionSummary
             onClick={() => {

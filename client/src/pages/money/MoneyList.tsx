@@ -3,11 +3,11 @@
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate } from "@importHooks";
 import { useStorageLocal } from "@importHooks";
-import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
 import { Money } from "@importSchemas";
 import { axios } from "@importLibs";
 import { insertComma } from "@importScripts";
-import { Loader, Footer, Empty, Dialog } from "@importLayouts";
+import { Footer, Empty, Dialog } from "@importLayouts";
 import { Div, Hr, Img, Icons } from "@importComponents";
 import { Paper, Grid, Card } from "@importMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
@@ -20,7 +20,8 @@ export const MoneyList = () => {
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayNotFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
-  const { ALERT, setALERT } = useStoreAlert();
+  const { setALERT } = useStoreAlert();
+  const { setLOADING } = useStoreLoading();
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
   const [DATE, setDATE] = useStorageLocal(
@@ -43,7 +44,6 @@ export const MoneyList = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>([Money]);
   const [EXIST, setEXIST] = useState<any>({
     day: [""],
@@ -66,6 +66,11 @@ export const MoneyList = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
+    setLOADING(true);
+  }, []);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
     axios.get(`${URL_OBJECT}/exist`, {
       params: {
         user_id: sessionId,
@@ -83,7 +88,7 @@ export const MoneyList = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
@@ -93,7 +98,6 @@ export const MoneyList = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    setLOADING(true);
     axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: sessionId,
@@ -113,19 +117,18 @@ export const MoneyList = () => {
         sectionCnt: res.data.sectionCnt || 0,
         newSectionCnt: res.data.sectionCnt || 0
       }));
+      // 응답 길이만큼 expanded 초기화
+      setIsExpanded(
+        Array(res.data.result.length).fill({ expanded: false })
+      );
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   }, [URL_OBJECT, sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
 
@@ -135,13 +138,16 @@ export const MoneyList = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
           {OBJECT.filter((f: any) => f._id).map((item: any, i: number) => (
-            <Grid container={true} spacing={0} className={"border-1 radius-1"} key={`list-${i}`}>
+            <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
               <Grid size={12} className={"p-2"}>
                 <Accordion
-                  expanded={isExpanded?.[i]?.expanded}
-                  TransitionProps={{
-                    mountOnEnter: true,
-                    unmountOnExit: true,
+                  className={"border-0 shadow-0 radius-0"}
+                  expanded={isExpanded[i]?.expanded}
+                  slotProps={{
+                    transition: {
+                      mountOnEnter: true,
+                      unmountOnExit: true,
+                    }
                   }}
                 >
                   <AccordionSummary
@@ -196,11 +202,11 @@ export const MoneyList = () => {
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-row-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"money2"}
+                            src={"money2.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -225,17 +231,17 @@ export const MoneyList = () => {
                       </Grid>
                       {/** /.row 1 **/}
 
-                      <Hr px={1} />
+                      <Hr m={1} className={"bg-light"} />
 
                       {/** row 2 **/}
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"money2"}
+                            src={"money2.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -268,15 +274,15 @@ export const MoneyList = () => {
         </Grid>
       );
       return (
-        <Card className={"d-col-center"}>
+        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
           {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={"money"} /> : listFragment()}
         </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        {LOADING ? <Loader /> : listSection()}
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min75vh"}>
+        {listSection()}
       </Paper>
     );
   };

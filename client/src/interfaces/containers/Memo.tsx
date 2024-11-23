@@ -67,11 +67,11 @@ export const Memo = (
           locked={LOCKED}
           startadornment={
             <Img
-              max={15}
+              max={20}
               hover={true}
               shadow={false}
               radius={false}
-            	src={"calendar3"}
+            	src={"calendar3.webp"}
             />
           }
           onClick={(e: any) => {

@@ -1,58 +1,35 @@
 // Loader.tsx
 
-import { useCommonValue } from "@importHooks";
+import { useEffect } from "@importReacts";
+import { useStoreLoading } from "@importHooks";
 import { Div } from "@importComponents";
 
 // -------------------------------------------------------------------------------------------------
 export const Loader = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { PATH } = useCommonValue();
-  const { isGoalTodayList, isGoalList, isTodayList, isRealList } = useCommonValue();
-  const { isGoalDetail, isCalendarDetail, isRealDetail } = useCommonValue();
+  const { LOADING, setLOADING } = useStoreLoading();
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    if (LOADING) {
+      const timer = setTimeout(() => {
+        setLOADING(false);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [LOADING, setLOADING]);
 
   // 7.loader --------------------------------------------------------------------------------------
-  const loaderNode = () => {
-
-    const initLoader = () => (
-      <Div className={"h-min100vh d-col-center"}>
-        <Div className={"loader"} />
+  const loaderNode = () => (
+    (LOADING ? (
+      <Div className="loader-wrapper">
+        <Div className="loader" />
       </Div>
-    );
-
-    const wrapperLoader = () => (
-      <Div className={"loader-wrapper d-col-center"}>
-        <Div className={"loader"} />
-      </Div>
-    );
-
-    const listLoader = () => (
-      <Div className={"h-min80vh d-col-center"}>
-        <Div className={"loader"} />
-      </Div>
-    );
-
-    const detailLoader = () => (
-      <Div className={"h-min45vh d-col-center fadeIn"}>
-        <Div className={"loader"} />
-      </Div>
-    );
-
-    return (
-      ["/user/signup", "/user/login", "/user/delete", "/user/resetPw"].some((el) => PATH.includes(el)) ? (
-        wrapperLoader()
-      )
-      : isGoalTodayList || isGoalList || isTodayList || isRealList ? (
-        listLoader()
-      )
-      : isGoalDetail || isCalendarDetail || isRealDetail ? (
-        detailLoader()
-      )
-      : (
-        initLoader()
-      )
-    );
-  };
+    ) : (
+      null
+    ))
+  );
 
   // 10. return ------------------------------------------------------------------------------------
   return (

@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useTime, useValidateExercise } from "@importHooks";
-import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
 import { ExerciseGoal } from "@importSchemas";
 import { axios } from "@importLibs";
 import { insertComma, sync } from "@importScripts";
-import { Loader, Footer, Dialog } from "@importLayouts";
+import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, PickerTime, Count, Delete, Input } from "@importContainers";
 import { Img, Bg } from "@importComponents";
 import { Paper, Grid, Card } from "@importMuis";
@@ -20,11 +20,11 @@ export const ExerciseGoalDetail = () => {
   const { location_dateStart, location_dateEnd } = useCommonValue();
   const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
-  const { ALERT, setALERT } = useStoreAlert();
+  const { setALERT } = useStoreAlert();
+  const { setLOADING } = useStoreLoading();
   const { ERRORS, REFS, validate } = useValidateExercise();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState<boolean>(false);
   const [LOCKED, setLOCKED] = useState<string>("unlocked");
   const [OBJECT, setOBJECT] = useState<any>(ExerciseGoal);
   const [EXIST, setEXIST] = useState<any>({
@@ -58,6 +58,11 @@ export const ExerciseGoalDetail = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    setLOADING(true);
+  }, []);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -105,7 +110,7 @@ export const ExerciseGoalDetail = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
@@ -115,9 +120,7 @@ export const ExerciseGoalDetail = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    setLOADING(true);
     if (LOCKED === "locked") {
-      setLOADING(false);
       return;
     }
     axios.get(`${URL_OBJECT}/goal/detail`, {
@@ -137,16 +140,11 @@ export const ExerciseGoalDetail = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
@@ -154,7 +152,6 @@ export const ExerciseGoalDetail = () => {
   const flowSave = async (type: string) => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "goal")) {
-      setLOADING(false);
       return;
     }
     axios({
@@ -170,7 +167,7 @@ export const ExerciseGoalDetail = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -185,7 +182,7 @@ export const ExerciseGoalDetail = () => {
       }
       else {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -193,16 +190,11 @@ export const ExerciseGoalDetail = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   };
 
@@ -210,7 +202,6 @@ export const ExerciseGoalDetail = () => {
   const flowDelete = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "delete")) {
-      setLOADING(false);
       return;
     }
     axios.delete(`${URL_OBJECT}/goal/delete`, {
@@ -222,7 +213,7 @@ export const ExerciseGoalDetail = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -237,7 +228,7 @@ export const ExerciseGoalDetail = () => {
       }
       else {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -245,16 +236,11 @@ export const ExerciseGoalDetail = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   };
 
@@ -277,7 +263,7 @@ export const ExerciseGoalDetail = () => {
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Grid container={true} spacing={2} className={"border-1 radius-1 p-20"}>
+      <Grid container={true} spacing={2} className={"border-1 radius-2 p-20"}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}
@@ -301,7 +287,7 @@ export const ExerciseGoalDetail = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
           {[OBJECT].filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
-            <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}  key={`detail-${i}`}>
+            <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20`}  key={`detail-${i}`}>
               {/** row 1 **/}
               <Grid container={true} spacing={2}>
                 <Grid size={6} className={"d-row-left"}>
@@ -337,11 +323,11 @@ export const ExerciseGoalDetail = () => {
                     }
                     startadornment={
                       <Img
-                        max={15}
+                        max={20}
                         hover={true}
                         shadow={false}
                         radius={false}
-                        src={"exercise2"}
+                        src={"exercise2.webp"}
                       />
                     }
                     endadornment={
@@ -386,11 +372,11 @@ export const ExerciseGoalDetail = () => {
                     }
                     startadornment={
                       <Img
-                        max={15}
+                        max={20}
                         hover={true}
                         shadow={false}
                         radius={false}
-                        src={"exercise3_1"}
+                        src={"exercise3_1.webp"}
                       />
                     }
                     endadornment={
@@ -447,11 +433,11 @@ export const ExerciseGoalDetail = () => {
                     error={ERRORS?.[i]?.exercise_goal_scale}
                     startadornment={
                       <Img
-                        max={15}
+                        max={20}
                         hover={true}
                         shadow={false}
                         radius={false}
-                        src={"exercise5"}
+                        src={"exercise5.webp"}
                       />
                     }
                     endadornment={
@@ -483,16 +469,16 @@ export const ExerciseGoalDetail = () => {
         </Grid>
       );
       return (
-        <Card className={"d-col-center"}>
+        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
           {COUNT?.newSectionCnt > 0 && detailFragment()}
         </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min75vh"}>
         {dateCountSection()}
-        {LOADING ? <Loader /> : detailSection()}
+        {detailSection()}
       </Paper>
     );
   };

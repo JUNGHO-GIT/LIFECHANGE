@@ -2,11 +2,11 @@
 
 import { useState, useEffect, createRef, useRef } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
-import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
 import { axios } from "@importLibs";
 import { sync } from "@importScripts";
 import { Category } from "@importSchemas";
-import { Loader, Footer } from "@importLayouts";
+import { Footer } from "@importLayouts";
 import { PopUp, Input } from "@importContainers";
 import { Div, Icons } from "@importComponents";
 import { Paper, Grid, Card, TableContainer, Table, TableFooter } from "@importMuis";
@@ -19,7 +19,8 @@ export const UserCategory = () => {
   const { URL_OBJECT, PATH, sessionId } = useCommonValue();
   const { location_dateStart, location_dateEnd, location_dateType } = useCommonValue();
   const { getDayFmt } = useCommonDate();
-  const { ALERT, setALERT } = useStoreAlert();
+  const { setALERT } = useStoreAlert();
+  const { setLOADING } = useStoreLoading();
   const { translate } = useStoreLanguage();
 
   // 2-1. useStorageLocal ------------------------------------------------------------------------
@@ -33,7 +34,6 @@ export const UserCategory = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const REFS = useRef<any>();
-  const [LOADING, setLOADING] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>(Category);
   const [dataType, setDataType] = useState<string>("exercise");
   const [isEditable, setIsEditable] = useState<string>("");
@@ -52,6 +52,10 @@ export const UserCategory = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
+  }, []);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
     axios.get(`${URL_OBJECT}/category/detail`, {
       params: {
         user_id: sessionId
@@ -74,16 +78,11 @@ export const UserCategory = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   }, [URL_OBJECT, sessionId]);
 
@@ -97,7 +96,7 @@ export const UserCategory = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -105,7 +104,7 @@ export const UserCategory = () => {
       }
       else {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -113,16 +112,11 @@ export const UserCategory = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   };
 
@@ -209,7 +203,7 @@ export const UserCategory = () => {
     if (type === "part") {
       if (OBJECT[dataType].length <= 1) {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate("cantBeDeletedLastItem"),
           severity: "error",
         });
@@ -233,7 +227,7 @@ export const UserCategory = () => {
     else if (type === "title") {
       if (OBJECT[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`]?.length <= 2) {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate("cantBeDeletedLastItem"),
           severity: "error",
         });
@@ -273,7 +267,7 @@ export const UserCategory = () => {
     // 7-1. popup
     const popupSection = () => (
       <Card className={"w-85vw h-60vh d-row"}>
-        <TableContainer className={"border-1 radius-1 over-x-hidden"}>
+        <TableContainer className={"border-1 radius-2 over-x-hidden"}>
           <Table>
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr p-sticky top-0 z-900"}>
@@ -390,7 +384,7 @@ export const UserCategory = () => {
           </Table>
         </TableContainer>
         {(dataType === "exercise" || dataType === "money") && (
-          <TableContainer className={"border-1 radius-1 over-x-hidden"}>
+          <TableContainer className={"border-1 radius-2 over-x-hidden"}>
             <Table>
               <TableHead className={"table-thead"}>
                 <TableRow className={"table-thead-tr p-sticky top-0 z-900"}>
@@ -510,7 +504,7 @@ export const UserCategory = () => {
           {[OBJECT].filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
             <Grid size={12} key={`detail-${i}`}>
               <Grid container={true} spacing={2}>
-                <TableContainer className={"border-1 radius-1 over-x-hidden"}>
+                <TableContainer className={"border-1 radius-2 over-x-hidden"}>
                   <Table>
                     <TableHead className={"table-thead"}>
                       <TableRow className={"table-thead-tr"}>
@@ -567,15 +561,15 @@ export const UserCategory = () => {
         </Grid>
       );
       return (
-        <Card className={"d-col-center"}>
+        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
           {detailFragment()}
         </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min90vh"}>
-        {LOADING ? <Loader /> : detailSection()}
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min90vh"}>
+        {detailSection()}
       </Paper>
     );
   };

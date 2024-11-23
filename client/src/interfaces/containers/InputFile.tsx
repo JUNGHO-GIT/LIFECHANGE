@@ -9,7 +9,7 @@ import { MuiFileInput, Grid } from "@importMuis";
 export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { ALERT, setALERT } = useStoreAlert();
+  const { setALERT } = useStoreAlert();
 
   // 2-1. useState ---------------------------------------------------------------------------------
   const [fileExisting, setFileExisting] = useState<any[]>([]);
@@ -90,7 +90,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
     // 파일이 이미지가 아닌 경우
     if (newFiles && newFiles.some((file: File) => !file.type.startsWith("image/"))) {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         severity: "error",
         msg: "이미지 파일만 업로드 가능합니다.",
       });
@@ -106,7 +106,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
     // 파일이 제한 개수 이상인 경우
     else if (newFiles && newFiles.length + fileCount > fileLimit) {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         severity: "error",
         msg: `파일은 최대 ${fileLimit}개까지 업로드 가능합니다.`,
       });
@@ -122,7 +122,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
     // 파일이 3mb 이상인 경우
     else if (newFiles && newFiles.some((file: File) => (file.size > 3 * 1024 * 1024))) {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         severity: "error",
         msg: "파일은 최대 3MB까지 업로드 가능합니다.",
       });
@@ -311,7 +311,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
         startAdornment: adornmentNode,
       }}
     />
-    <Br px={20} />
+    <Br m={20} />
     {/** 기존 이미지 표시하기 **/}
     {fileExisting.length > 0 && existingNode()}
     </>

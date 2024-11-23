@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useValidateMoney } from "@importHooks";
-import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
 import { axios } from "@importLibs";
 import { insertComma, sync } from "@importScripts";
 import { Money } from "@importSchemas";
-import { Loader, Footer, Dialog } from "@importLayouts";
+import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, Memo, Count, Delete, Select, Input } from "@importContainers";
 import { Img, Bg, Div } from "@importComponents";
 import { Paper, MenuItem, Grid, Checkbox, Card } from "@importMuis";
@@ -19,12 +19,12 @@ export const MoneyDetail = () => {
   const { toList, toToday, bgColors } = useCommonValue();
   const { location_from, location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt,getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-  const { translate } = useStoreLanguage();
-  const { ALERT, setALERT } = useStoreAlert();
   const { ERRORS, REFS, validate } = useValidateMoney();
+  const { translate } = useStoreLanguage();
+  const { setALERT } = useStoreAlert();
+  const { setLOADING } = useStoreLoading();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState<boolean>(false);
   const [LOCKED, setLOCKED] = useState<string>("unlocked");
   const [OBJECT, setOBJECT] = useState<any>(Money);
   const [EXIST, setEXIST] = useState<any>({
@@ -55,6 +55,11 @@ export const MoneyDetail = () => {
     dateStart: location_dateStart || getDayFmt(),
     dateEnd: location_dateEnd || getDayFmt(),
   });
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    setLOADING(true);
+  }, []);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -102,7 +107,7 @@ export const MoneyDetail = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
@@ -112,9 +117,7 @@ export const MoneyDetail = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    setLOADING(true);
     if (LOCKED === "locked") {
-      setLOADING(false);
       return;
     }
     axios.get(`${URL_OBJECT}/detail`, {
@@ -155,16 +158,11 @@ export const MoneyDetail = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
@@ -173,24 +171,24 @@ export const MoneyDetail = () => {
     const totals = OBJECT?.money_section.reduce((acc: any, cur: any) => {
       return {
         // money_part 가 income인경우
-        totalIncomeExclusion: (
-          acc.totalIncomeExclusion + (cur.money_part === "income" ? Number(cur.money_amount) : 0)
+        totalIncome: (
+          acc.totalIncome + (cur.money_part === "income" ? Number(cur.money_amount) : 0)
         ),
 
         // money_part 가 expense인경우
-        totalExpenseExclusion: (
-          acc.totalExpenseExclusion + (cur.money_part === "expense" ? Number(cur.money_amount) : 0)
+        totalExpense: (
+          acc.totalExpense + (cur.money_part === "expense" ? Number(cur.money_amount) : 0)
         ),
       };
     }, {
-      totalIncomeExclusion: 0,
-      totalExpenseExclusion: 0
+      totalIncome: 0,
+      totalExpense: 0
     });
 
     setOBJECT((prev: any) => ({
       ...prev,
-      money_total_income: Math.round(totals.totalIncomeExclusion).toString(),
-      money_total_expense: Math.round(totals.totalExpenseExclusion).toString(),
+      money_total_income: Math.round(totals.totalIncome).toString(),
+      money_total_expense: Math.round(totals.totalExpense).toString(),
     }));
 
   }, [OBJECT?.money_section]);
@@ -218,7 +216,6 @@ export const MoneyDetail = () => {
   const flowSave = async (type: string) => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "real")) {
-      setLOADING(false);
       return;
     }
     axios({
@@ -234,7 +231,7 @@ export const MoneyDetail = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -249,7 +246,7 @@ export const MoneyDetail = () => {
       }
       else {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -257,16 +254,11 @@ export const MoneyDetail = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   };
 
@@ -274,7 +266,6 @@ export const MoneyDetail = () => {
   const flowDelete = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "delete")) {
-      setLOADING(false);
       return;
     }
     axios.delete(`${URL_OBJECT}/delete`, {
@@ -286,7 +277,7 @@ export const MoneyDetail = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -301,7 +292,7 @@ export const MoneyDetail = () => {
       }
       else {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -309,16 +300,11 @@ export const MoneyDetail = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   };
 
@@ -338,7 +324,7 @@ export const MoneyDetail = () => {
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Grid container={true} spacing={2} className={"border-1 radius-1 p-20"}>
+      <Grid container={true} spacing={2} className={"border-1 radius-2 p-20"}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}
@@ -359,21 +345,22 @@ export const MoneyDetail = () => {
     );
     // 7-2. total
     const totalSection = () => (
-      <Grid container={true} spacing={2} className={"border-1 radius-1 p-20"}>
+      <Grid container={true} spacing={2} className={"border-1 radius-2 p-20"}>
         {/** row 1 **/}
         <Grid container={true} spacing={2}>
           <Grid size={12}>
             <Input
               locked={LOCKED}
+              readOnly={true}
               label={translate("totalIncome")}
               value={insertComma(OBJECT?.money_total_income || "0")}
               startadornment={
                 <Img
-                  max={15}
+                  max={20}
                   hover={true}
                   shadow={false}
                   radius={false}
-                  src={"money2"}
+                  src={"money2.webp"}
                 />
               }
               endadornment={
@@ -389,15 +376,16 @@ export const MoneyDetail = () => {
           <Grid size={12}>
             <Input
               locked={LOCKED}
+              readOnly={true}
               label={translate("totalExpense")}
               value={insertComma(OBJECT?.money_total_expense || "0")}
               startadornment={
                 <Img
-                  max={15}
+                  max={20}
                   hover={true}
                   shadow={false}
                   radius={false}
-                  src={"money2"}
+                  src={"money2.webp"}
                 />
               }
               endadornment={
@@ -413,7 +401,7 @@ export const MoneyDetail = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
           {OBJECT.money_section?.filter((f: any) => f).map((item: any, i: number) => (
-            <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}  key={`detail-${i}`}>
+            <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20`}  key={`detail-${i}`}>
               {/** row 1 **/}
               <Grid container={true} spacing={2}>
                 <Grid size={6} className={"d-row-left"}>
@@ -511,11 +499,11 @@ export const MoneyDetail = () => {
                     error={ERRORS?.[i]?.money_amount}
                     startadornment={
                       <Img
-                        max={15}
+                        max={20}
                         hover={true}
                         shadow={false}
                         radius={false}
-                        src={"money2"}
+                        src={"money2.webp"}
                       />
                     }
                     endadornment={
@@ -588,17 +576,17 @@ export const MoneyDetail = () => {
         </Grid>
       );
       return (
-        <Card className={"d-col-center"}>
+        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
           {COUNT?.newSectionCnt > 0 && detailFragment()}
         </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min75vh"}>
         {dateCountSection()}
         {totalSection()}
-        {LOADING ? <Loader /> : detailSection()}
+        {detailSection()}
       </Paper>
     );
   };

@@ -2,10 +2,9 @@
 
 import { useState } from "@importReacts";
 import { useCommonValue, useValidateUser } from "@importHooks";
-import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
 import { axios } from "@importLibs";
 import { User } from "@importSchemas";
-import { Loader } from "@importLayouts";
 import { Input } from "@importContainers";
 import { Div, Hr, Btn } from "@importComponents";
 import { Paper, Grid, Card } from "@importMuis";
@@ -16,18 +15,17 @@ export const UserDelete = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, navigate } = useCommonValue();
   const { translate } = useStoreLanguage();
-  const { ALERT, setALERT } = useStoreAlert();
+  const { setALERT } = useStoreAlert();
+  const { setLOADING } = useStoreLoading();
   const { ERRORS, REFS, validate } = useValidateUser();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>(User);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSendEmail = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "delete", "send")) {
-      setLOADING(false);
       return;
     }
     axios.post (`${URL_OBJECT}/email/send`, {
@@ -37,7 +35,7 @@ export const UserDelete = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -48,7 +46,7 @@ export const UserDelete = () => {
       }
       else if (res.data.status === "notExist") {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -59,7 +57,7 @@ export const UserDelete = () => {
       }
       else if (res.data.status === "isGoogle") {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -70,7 +68,7 @@ export const UserDelete = () => {
       }
       else if (res.data.status === "fail") {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -82,16 +80,11 @@ export const UserDelete = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   };
 
@@ -99,7 +92,6 @@ export const UserDelete = () => {
   const flowVerifyEmail = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "delete", "verify")) {
-      setLOADING(false);
       return;
     }
     axios.post (`${URL_OBJECT}/email/verify`, {
@@ -109,7 +101,7 @@ export const UserDelete = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -120,7 +112,7 @@ export const UserDelete = () => {
       }
       else {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -132,16 +124,11 @@ export const UserDelete = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   };
 
@@ -149,7 +136,6 @@ export const UserDelete = () => {
   const flowSave = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "delete", "save")) {
-      setLOADING(false);
       return;
     }
     axios.delete(`${URL_OBJECT}/delete`,{
@@ -161,7 +147,7 @@ export const UserDelete = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -169,7 +155,7 @@ export const UserDelete = () => {
       }
       else {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -177,16 +163,11 @@ export const UserDelete = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   };
 
@@ -283,7 +264,7 @@ export const UserDelete = () => {
                 </Grid>
               </Grid>
 
-              <Hr px={1} />
+              <Hr m={1} className={"bg-light"} />
 
               {/** 비밀번호 **/}
               <Grid container={true} spacing={1}>
@@ -331,7 +312,7 @@ export const UserDelete = () => {
         </Grid>
       );
       return (
-        <Card className={"d-col-center"}>
+        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
           {detailFragment()}
         </Card>
       );
@@ -354,16 +335,13 @@ export const UserDelete = () => {
     );
     // 7-10. return
     return (
-      <>
-      {LOADING && <Loader />}
-      <Paper className={"content-wrapper d-center border-1 radius-1 shadow-1 h-min100vh"}>
+      <Paper className={"content-wrapper d-center border-1 radius-2 shadow-1 h-min100vh"}>
         {titleSection()}
-        <Hr px={40} />
+        <Hr m={40} />
         {deleteSection()}
-        <Hr px={20} />
+        <Hr m={20} />
         {buttonSection()}
       </Paper>
-      </>
     );
   };
 

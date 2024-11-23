@@ -5,7 +5,6 @@ import { TopNav } from "@interfaces/layouts/TopNav";
 import { Footer } from "@interfaces/layouts/Footer";
 import { BottomNav } from "@interfaces/layouts/BottomNav";
 import { Loader } from "@interfaces/layouts/Loader";
-import { FallBack } from "@interfaces/layouts/FallBack";
 import { Empty } from "@interfaces/layouts/Empty";
 import { Alert } from "@interfaces/layouts/Alert";
 import { Confirm } from "@interfaces/layouts/Confirm";
@@ -18,7 +17,6 @@ export {
   Footer,
   BottomNav,
   Loader,
-  FallBack,
   Empty,
   Alert,
   Confirm,

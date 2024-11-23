@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useValidateCalendar } from "@importHooks";
-import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
 import { Calendar } from "@importSchemas";
 import { axios } from "@importLibs";
-import { Loader, Footer, Dialog } from "@importLayouts";
+import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, Memo, Count, Delete, Input, Select } from "@importContainers";
 import { Img, Bg } from "@importComponents";
 import { Paper, MenuItem, Grid, Card } from "@importMuis";
@@ -20,11 +20,11 @@ export const CalendarDetail = () => {
   const { location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt,getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
-  const { ALERT, setALERT } = useStoreAlert();
+  const { setALERT } = useStoreAlert();
+  const { setLOADING } = useStoreLoading();
   const { ERRORS, REFS, validate } = useValidateCalendar();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState<boolean>(false);
   const [LOCKED, setLOCKED] = useState<string>("unlocked");
   const [OBJECT, setOBJECT] = useState<any>(Calendar);
   const [EXIST, setEXIST] = useState<any>({
@@ -55,6 +55,11 @@ export const CalendarDetail = () => {
     dateStart: location_dateStart || getDayFmt(),
     dateEnd: location_dateEnd || getDayFmt(),
   });
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    setLOADING(true);
+  }, []);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -102,7 +107,7 @@ export const CalendarDetail = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
@@ -112,9 +117,7 @@ export const CalendarDetail = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    setLOADING(true);
     if (LOCKED === "locked") {
-      setLOADING(false);
       return;
     }
     axios.get(`${URL_OBJECT}/detail`, {
@@ -155,16 +158,11 @@ export const CalendarDetail = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
@@ -189,7 +187,6 @@ export const CalendarDetail = () => {
   const flowSave = async (type: string) => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "real")) {
-      setLOADING(false);
       return;
     }
     axios({
@@ -205,7 +202,7 @@ export const CalendarDetail = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -219,7 +216,7 @@ export const CalendarDetail = () => {
       }
       else {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -227,16 +224,11 @@ export const CalendarDetail = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   };
 
@@ -244,7 +236,6 @@ export const CalendarDetail = () => {
   const flowDelete = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "delete")) {
-      setLOADING(false);
       return;
     }
     axios.delete(`${URL_OBJECT}/delete`, {
@@ -256,7 +247,7 @@ export const CalendarDetail = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "success",
         });
@@ -270,7 +261,7 @@ export const CalendarDetail = () => {
       }
       else {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -278,16 +269,11 @@ export const CalendarDetail = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   };
 
@@ -307,7 +293,7 @@ export const CalendarDetail = () => {
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Grid container={true} spacing={2} className={"border-1 radius-1 p-20"}>
+      <Grid container={true} spacing={2} className={"border-1 radius-2 p-20"}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}
@@ -331,7 +317,7 @@ export const CalendarDetail = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
           {OBJECT.calendar_section?.filter((f: any) => f).map((item: any, i: number) => (
-            <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-1 p-20`}  key={`detail-${i}`}>
+            <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20`}  key={`detail-${i}`}>
               {/** row 1 **/}
               <Grid container={true} spacing={2}>
                 <Grid size={6} className={"d-row-left"}>
@@ -429,11 +415,11 @@ export const CalendarDetail = () => {
                     locked={LOCKED}
                     startadornment={
                       <Img
-                        max={15}
+                        max={20}
                         hover={true}
                         shadow={false}
                         radius={false}
-                        src={"calendar2"}
+                        src={"calendar2.webp"}
                       />
                     }
                     onChange={(e: any) => {
@@ -471,16 +457,16 @@ export const CalendarDetail = () => {
         </Grid>
       );
       return (
-        <Card className={"d-col-center"}>
+        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
           {COUNT?.newSectionCnt > 0 && detailFragment()}
         </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min75vh"}>
         {dateCountSection()}
-        {LOADING ? <Loader /> : detailSection()}
+        {detailSection()}
       </Paper>
     );
   };

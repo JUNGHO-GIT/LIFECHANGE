@@ -1,12 +1,12 @@
 // TodayGoalList.tsx
 
 import { useState, useEffect } from "@importReacts";
-import { useCommonValue, useCommonDate } from "@importHooks";
-import { useStorageSession, useStorageLocal, useStoreLanguage } from "@importHooks";
+import { useCommonValue, useCommonDate, useStorageLocal, useStorageSession } from "@importHooks";
+import { useStoreLanguage, useStoreLoading } from "@importHooks";
 import { axios } from "@importLibs";
 import { insertComma } from "@importScripts";
 import { ExerciseGoal, FoodGoal, MoneyGoal, SleepGoal } from "@importSchemas";
-import { Loader, Footer, Empty, Dialog } from "@importLayouts";
+import { Footer, Empty, Dialog } from "@importLayouts";
 import { Div, Hr, Br, Img, Icons } from "@importComponents";
 import { Paper, Grid, Card } from "@importMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
@@ -19,6 +19,7 @@ export const TodayGoalList = () => {
   const { PATH, navigate, sessionId, localCurrency, localUnit } = useCommonValue();
   const { getDayFmt, getDayNotFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
+  const { setLOADING } = useStoreLoading();
 
   // 2-1. useStorageSession ------------------------------------------------------------------------
   const [DATE, setDATE] = useStorageSession(
@@ -54,7 +55,6 @@ export const TodayGoalList = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState<boolean>(false);
   const [SEND, setSEND] = useState<any>({
     id: "",
     from: "today",
@@ -85,9 +85,13 @@ export const TodayGoalList = () => {
   const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState<any>([SleepGoal]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    setLOADING(true);
+  }, []);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     try {
-      setLOADING(true);
       const params = {
         user_id: sessionId,
         PAGING: PAGING,
@@ -123,14 +127,16 @@ export const TodayGoalList = () => {
           resSleep.data.totalCnt
         ),
       });
+      // 응답 길이만큼 expanded 초기화
+      setIsExpanded({
+        exercise: Array(resExercise.data.result.length).fill({ expanded: false }),
+        food: Array(resFood.data.result.length).fill({ expanded: false }),
+        money: Array(resMoney.data.result.length).fill({ expanded: false }),
+        sleep: Array(resSleep.data.result.length).fill({ expanded: false }),
+      });
     }
-    catch (err) {
+    catch (err: any) {
       console.error(err);
-    }
-    finally {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 200);
     }
   })()}, [
     URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP,
@@ -144,13 +150,16 @@ export const TodayGoalList = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
           {OBJECT_EXERCISE.filter((f: any) => f._id).map((item: any, i: number) => (
-            <Grid container={true} spacing={0} className={"border-1 radius-1"} key={`list-${i}`}>
+            <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
               <Grid size={12} className={"p-2"}>
                 <Accordion
+                  className={"border-0 shadow-0 radius-0"}
                   expanded={isExpanded?.exercise[i]?.expanded}
-                  TransitionProps={{
-                    mountOnEnter: true,
-                    unmountOnExit: true,
+                  slotProps={{
+                    transition: {
+                      mountOnEnter: true,
+                      unmountOnExit: true,
+                    }
                   }}
                 >
                   <AccordionSummary
@@ -219,11 +228,11 @@ export const TodayGoalList = () => {
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-row-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"exercise2"}
+                            src={"exercise2.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -286,17 +295,17 @@ export const TodayGoalList = () => {
                       </Grid>
                       {/** /.row 1 **/}
 
-                      <Hr px={1} />
+                      <Hr m={1} className={"bg-light"} />
 
                       {/** row 2 **/}
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-row-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"exercise3_1"}
+                            src={"exercise3_1.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -359,17 +368,17 @@ export const TodayGoalList = () => {
                       </Grid>
                       {/** /.row 2 **/}
 
-                      <Hr px={1} />
+                      <Hr m={1} className={"bg-light"} />
 
                       {/** row 3 **/}
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"exercise4"}
+                            src={"exercise4.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -432,17 +441,17 @@ export const TodayGoalList = () => {
                       </Grid>
                       {/** /.row 3 **/}
 
-                      <Hr px={1} />
+                      <Hr m={1} className={"bg-light"} />
 
                       {/** row 4 **/}
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"exercise5"}
+                            src={"exercise5.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -513,7 +522,7 @@ export const TodayGoalList = () => {
         </Grid>
       );
       return (
-        <Card className={"d-col-center"}>
+        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
           {COUNT.exercise === 0 ? <Empty DATE={DATE} extra={"exercise"} /> : listFragment()}
         </Card>
       );
@@ -523,13 +532,16 @@ export const TodayGoalList = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
           {OBJECT_FOOD.filter((f: any) => f._id).map((item: any, i: number) => (
-            <Grid container={true} spacing={0} className={"border-1 radius-1"} key={`list-${i}`}>
+            <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
               <Grid size={12} className={"p-2"}>
                 <Accordion
+                  className={"border-0 shadow-0 radius-0"}
                   expanded={isExpanded?.food[i]?.expanded}
-                  TransitionProps={{
-                    mountOnEnter: true,
-                    unmountOnExit: true,
+                  slotProps={{
+                    transition: {
+                      mountOnEnter: true,
+                      unmountOnExit: true,
+                    }
                   }}
                 >
                   <AccordionSummary
@@ -598,11 +610,11 @@ export const TodayGoalList = () => {
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-row-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"food2"}
+                            src={"food2.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -665,17 +677,17 @@ export const TodayGoalList = () => {
                       </Grid>
                       {/** /.row 1 **/}
 
-                      <Hr px={1} />
+                      <Hr m={1} className={"bg-light"} />
 
                       {/** row 2 **/}
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-row-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"food3"}
+                            src={"food3.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -738,17 +750,17 @@ export const TodayGoalList = () => {
                       </Grid>
                       {/** /.row 2 **/}
 
-                      <Hr px={1} />
+                      <Hr m={1} className={"bg-light"} />
 
                       {/** row 3 **/}
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"food4"}
+                            src={"food4.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -811,17 +823,17 @@ export const TodayGoalList = () => {
                       </Grid>
                       {/** /.row 3 **/}
 
-                      <Hr px={1} />
+                      <Hr m={1} className={"bg-light"} />
 
                       {/** row 4 **/}
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"food5"}
+                            src={"food5.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -892,7 +904,7 @@ export const TodayGoalList = () => {
         </Grid>
       );
       return (
-        <Card className={"d-col-center"}>
+        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
           {COUNT.food === 0 ? <Empty DATE={DATE} extra={"food"} /> : listFragment()}
         </Card>
       );
@@ -902,13 +914,16 @@ export const TodayGoalList = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
           {OBJECT_MONEY.filter((f: any) => f._id).map((item: any, i: number) => (
-            <Grid container={true} spacing={0} className={"border-1 radius-1"} key={`list-${i}`}>
+            <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
               <Grid size={12} className={"p-2"}>
                 <Accordion
+                  className={"border-0 shadow-0 radius-0"}
                   expanded={isExpanded?.money[i]?.expanded}
-                  TransitionProps={{
-                    mountOnEnter: true,
-                    unmountOnExit: true,
+                  slotProps={{
+                    transition: {
+                      mountOnEnter: true,
+                      unmountOnExit: true,
+                    }
                   }}
                 >
                   <AccordionSummary
@@ -977,11 +992,11 @@ export const TodayGoalList = () => {
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-row-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"money2"}
+                            src={"money2.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -1044,17 +1059,17 @@ export const TodayGoalList = () => {
                       </Grid>
                       {/** /.row 1 **/}
 
-                      <Hr px={1} />
+                      <Hr m={1} className={"bg-light"} />
 
                       {/** row 2 **/}
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-row-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"money2"}
+                            src={"money2.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -1125,7 +1140,7 @@ export const TodayGoalList = () => {
         </Grid>
       );
       return (
-        <Card className={"d-col-center"}>
+        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
           {COUNT.money=== 0 ? <Empty DATE={DATE} extra={"money"} /> : listFragment()}
         </Card>
       );
@@ -1135,13 +1150,16 @@ export const TodayGoalList = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
           {OBJECT_SLEEP.filter((f: any) => f._id).map((item: any, i: number) => (
-            <Grid container={true} spacing={0} className={"border-1 radius-1"} key={`list-${i}`}>
+            <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
               <Grid size={12} className={"p-2"}>
                 <Accordion
+                  className={"border-0 shadow-0 radius-0"}
                   expanded={isExpanded?.sleep[i]?.expanded}
-                  TransitionProps={{
-                    mountOnEnter: true,
-                    unmountOnExit: true,
+                  slotProps={{
+                    transition: {
+                      mountOnEnter: true,
+                      unmountOnExit: true,
+                    }
                   }}
                 >
                   <AccordionSummary
@@ -1210,11 +1228,11 @@ export const TodayGoalList = () => {
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-row-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"sleep2"}
+                            src={"sleep2.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -1277,17 +1295,17 @@ export const TodayGoalList = () => {
                       </Grid>
                       {/** /.row 1 **/}
 
-                      <Hr px={1} />
+                      <Hr m={1} className={"bg-light"} />
 
                       {/** row 2 **/}
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"sleep3"}
+                            src={"sleep3.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -1350,17 +1368,17 @@ export const TodayGoalList = () => {
                       </Grid>
                       {/** /.row 2 **/}
 
-                      <Hr px={1} />
+                      <Hr m={1} className={"bg-light"} />
 
                       {/** row 3 **/}
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"sleep4"}
+                            src={"sleep4.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -1431,25 +1449,21 @@ export const TodayGoalList = () => {
         </Grid>
       );
       return (
-        <Card className={"d-col-center"}>
+        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
           {COUNT.sleep === 0 ? <Empty DATE={DATE} extra={"sleep"} /> : listFragment()}
         </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        {LOADING ? <Loader /> : (
-          <>
-            {exerciseSection()}
-            <Br px={10} />
-            {foodSection()}
-            <Br px={10} />
-            {moneySection()}
-            <Br px={10} />
-            {sleepSection()}
-          </>
-        )}
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min75vh"}>
+        {exerciseSection()}
+        <Br m={10} />
+        {foodSection()}
+        <Br m={10} />
+        {moneySection()}
+        <Br m={10} />
+        {sleepSection()}
       </Paper>
     );
   };

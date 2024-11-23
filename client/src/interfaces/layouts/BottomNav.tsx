@@ -81,7 +81,7 @@ export const BottomNav = () => {
               hover={true}
               shadow={false}
               radius={false}
-              src={"exercise1"}
+              src={"exercise1.webp"}
             />
           }
           onClick={() => {
@@ -97,7 +97,7 @@ export const BottomNav = () => {
               hover={true}
               shadow={false}
               radius={false}
-              src={"food1"}
+              src={"food1.webp"}
             />
           }
           onClick={() => {
@@ -113,7 +113,7 @@ export const BottomNav = () => {
               hover={true}
               shadow={false}
               radius={false}
-              src={"today1"}
+              src={"today1.webp"}
             />
           }
           onClick={() => {
@@ -129,7 +129,7 @@ export const BottomNav = () => {
               hover={true}
               shadow={false}
               radius={false}
-              src={"calendar1"}
+              src={"calendar1.webp"}
             />
           }
           onClick={() => {
@@ -145,7 +145,7 @@ export const BottomNav = () => {
               hover={true}
               shadow={false}
               radius={false}
-              src={"money1"}
+              src={"money1.webp"}
             />
           }
           onClick={() => {
@@ -161,7 +161,7 @@ export const BottomNav = () => {
               hover={true}
               shadow={false}
               radius={false}
-              src={"sleep1"}
+              src={"sleep1.webp"}
             />
           }
           onClick={() => {
@@ -173,7 +173,7 @@ export const BottomNav = () => {
 
     // 7-2. return
     return (
-      <Paper className={"layout-wrapper p-sticky bottom-0vh h-8vh border-1 radius-1 shadow-bottom-1"}>
+      <Paper className={"layout-wrapper p-sticky bottom-0vh h-8vh border-1 radius-2 shadow-bottom-1"}>
         {tabsSection()}
       </Paper>
     );

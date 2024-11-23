@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
-import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
 import { Food } from "@importSchemas";
 import { axios } from "@importLibs";
 import { insertComma } from "@importScripts";
-import { Loader, Footer, Empty, Dialog } from "@importLayouts";
+import { Footer, Empty, Dialog } from "@importLayouts";
 import { Div, Hr, Img, Icons } from "@importComponents";
 import { Paper, Grid, Card } from "@importMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
@@ -19,7 +19,8 @@ export const FoodList = () => {
   const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt,getDayNotFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
-  const { ALERT, setALERT } = useStoreAlert();
+  const { setALERT } = useStoreAlert();
+  const { setLOADING } = useStoreLoading();
 
   // 2-2. useStorageLocal --------------------------------------------------------------------------
   const [DATE, setDATE] = useStorageLocal(
@@ -42,7 +43,6 @@ export const FoodList = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>([Food]);
   const [EXIST, setEXIST] = useState<any>({
     day: [""],
@@ -65,6 +65,11 @@ export const FoodList = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
+    setLOADING(true);
+  }, []);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
     axios.get(`${URL_OBJECT}/exist`, {
       params: {
         user_id: sessionId,
@@ -82,7 +87,7 @@ export const FoodList = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
@@ -92,7 +97,6 @@ export const FoodList = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    setLOADING(true);
     axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: sessionId,
@@ -125,16 +129,11 @@ export const FoodList = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   }, [URL_OBJECT, sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
 
@@ -144,9 +143,10 @@ export const FoodList = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
           {OBJECT.filter((f: any) => f._id).map((item: any, i: number) => (
-            <Grid container={true} spacing={0} className={"border-1 radius-1"} key={`list-${i}`}>
+            <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
               <Grid size={12} className={"p-2"}>
                 <Accordion
+                  className={"border-0 shadow-0 radius-0"}
                   expanded={isExpanded[i]?.expanded}>
                   <AccordionSummary
                     className={"me-n10"}
@@ -200,11 +200,11 @@ export const FoodList = () => {
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-row-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"food2"}
+                            src={"food2.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -229,17 +229,17 @@ export const FoodList = () => {
                       </Grid>
                       {/** /.row 1 **/}
 
-                      <Hr px={1} />
+                      <Hr m={1} className={"bg-light"} />
 
                       {/** row 2 **/}
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"food3"}
+                            src={"food3.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -264,17 +264,17 @@ export const FoodList = () => {
                       </Grid>
                       {/** /.row 2 **/}
 
-                      <Hr px={1} />
+                      <Hr m={1} className={"bg-light"} />
 
                       {/** row 3 **/}
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"food4"}
+                            src={"food4.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -299,17 +299,17 @@ export const FoodList = () => {
                       </Grid>
                       {/** /.row 3 **/}
 
-                      <Hr px={1} />
+                      <Hr m={1} className={"bg-light"} />
 
                       {/** row 4 **/}
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"food5"}
+                            src={"food5.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -342,15 +342,15 @@ export const FoodList = () => {
         </Grid>
       );
       return (
-        <Card className={"d-col-center"}>
+        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
           {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={"food"} /> : listFragment()}
         </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        {LOADING ? <Loader /> : listSection()}
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min75vh"}>
+        {listSection()}
       </Paper>
     );
   };

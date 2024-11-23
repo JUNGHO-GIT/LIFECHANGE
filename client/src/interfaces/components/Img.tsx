@@ -10,13 +10,14 @@ declare type ImgProps = React.HTMLAttributes<HTMLImageElement> & {
   hover?: boolean;
   shadow?: boolean;
   radius?: boolean;
+  border?: boolean;
   max?: number;
   loading?: "eager" | "lazy";
 };
 
 // -------------------------------------------------------------------------------------------------
 export const Img = (
-  { group, src, hover, shadow, radius, max, loading, ...props }: ImgProps
+  { group, src, hover, shadow, radius, border, max, loading, ...props }: ImgProps
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
@@ -31,14 +32,14 @@ export const Img = (
   useEffect(() => {
     if (src && typeof src === "string") {
       setFileName(src.split("/").pop()?.split(".")[0] || "empty");
-      setImgSrc(group === "new" ? src : `${GCLOUD_URL}/${group || "main"}/${src}.webp`);
+      setImgSrc(group === "new" ? src : `${GCLOUD_URL}/${group || "main"}/${src}`);
     }
     else {
       setFileName("empty");
       setImgSrc(`${GCLOUD_URL}/main/empty.webp`);
     }
 
-    let newClass = "object-contain";
+    let newClass = "w-100p h-100p object-contain";
 
     if (props?.className) {
       newClass += ` ${props.className}`;
@@ -47,22 +48,21 @@ export const Img = (
       newClass += " hover";
     }
     if (shadow) {
-      newClass += " shadow-3";
+      newClass += " shadow-2";
     }
     if (radius) {
-      newClass += " radius-1";
+      newClass += " radius-3";
     }
-
+    if (border) {
+      newClass += " border-1";
+    }
     if (max) {
       newClass += ` w-max${max} h-max${max}`;
-    }
-    else {
-      newClass += " w-100p h-100p";
     }
 
     setImageClass(newClass);
 
-  }, [group, src, props.className, hover, shadow, radius, max]);
+  }, [GCLOUD_URL, group, props.className, hover, shadow, radius, max, src]);
 
   // 10. return ------------------------------------------------------------------------------------
   return (
@@ -74,9 +74,10 @@ export const Img = (
       loading={loading || "lazy"}
       className={imageClass}
       onError={(e) => {
+        e.currentTarget.style.width = "100%";
+        e.currentTarget.style.height = "100%";
         e.currentTarget.src = `${GCLOUD_URL}/main/empty.webp`;
         e.currentTarget.alt = "empty";
-        e.currentTarget.className = "w-20 h-20";
       }}
     />
   );

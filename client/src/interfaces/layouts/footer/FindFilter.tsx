@@ -97,7 +97,7 @@ export const FindFilter = (
         showLastButton={true}
         component={"div"}
         disabled={PATH.includes("/favorite/list") ? true : false}
-        className={"d-center shadow-left-1 ps-5"}
+        className={"border-left-2"}
         rowsPerPage={10}
         // 숫자 숨기기 ( 1 of 10 )
         labelDisplayedRows={() => ""}
@@ -119,12 +119,12 @@ export const FindFilter = (
     );
     return (
       <Grid container={true} spacing={0}>
-        <Grid size={6} className={"d-center"}>
+        <Grid size={6} className={"d-row-center"}>
           {querySection()}
           {findSection()}
           {doneSection()}
         </Grid>
-        <Grid size={6} className={"d-center"}>
+        <Grid size={6} className={"h-100p d-col-center"}>
           {paginationSection()}
         </Grid>
       </Grid>

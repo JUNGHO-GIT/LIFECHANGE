@@ -3,11 +3,11 @@
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate } from "@importHooks";
 import { useStorageSession, useStorageLocal } from "@importHooks";
-import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
 import { FoodFind } from "@importSchemas";
 import { axios } from "@importLibs";
 import { setSession, insertComma } from "@importScripts";
-import { Loader, Footer, Empty, Dialog } from "@importLayouts";
+import { Footer, Empty, Dialog } from "@importLayouts";
 import { Div, Hr, Img, Icons } from "@importComponents";
 import { Paper, Checkbox, Grid, Card } from "@importMuis";
 import { Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
@@ -21,7 +21,8 @@ export const FoodFindList = () => {
   const { sessionFoodSection } = useCommonValue();
   const { getDayFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
-  const { ALERT, setALERT } = useStoreAlert();
+  const { setALERT } = useStoreAlert();
+  const { setLOADING } = useStoreLoading();
 
   // 2-1. useStorageSession ------------------------------------------------------------------------
   const [PAGING, setPAGING] = useStorageSession(
@@ -40,7 +41,6 @@ export const FoodFindList = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState<boolean>(false);
   const [OBJECT, setOBJECT] = useState<any>([FoodFind]);
   const [checkedQueries, setCheckedQueries] = useState<any>({});
   const [SEND, setSEND] = useState<any>({
@@ -59,6 +59,11 @@ export const FoodFindList = () => {
     dateStart: location_dateStart || getDayFmt(),
     dateEnd: location_dateEnd || getDayFmt(),
   });
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    setLOADING(true);
+  }, []);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 페이지 번호 변경 시 flowFind 호출
@@ -110,16 +115,11 @@ export const FoodFindList = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   };
 
@@ -176,13 +176,16 @@ export const FoodFindList = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
           {OBJECT.filter((f: any) => f.food_key).map((item: any, i: number) => (
-            <Grid container={true} spacing={0} className={"border-1 radius-1"} key={`list-${i}`}>
+            <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
               <Grid size={12} className={"p-2"}>
                 <Accordion
-                  expanded={isExpanded?.[i]?.expanded}
-                  TransitionProps={{
-                    mountOnEnter: true,
-                    unmountOnExit: true,
+                  className={"border-0 shadow-0 radius-0"}
+                  expanded={isExpanded[i]?.expanded}
+                  slotProps={{
+                    transition: {
+                      mountOnEnter: true,
+                      unmountOnExit: true,
+                    }
                   }}
                 >
                   <AccordionSummary
@@ -243,11 +246,11 @@ export const FoodFindList = () => {
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-row-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"food2"}
+                            src={"food2.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -272,17 +275,17 @@ export const FoodFindList = () => {
                       </Grid>
                       {/** /.row 1 **/}
 
-                      <Hr px={1} />
+                      <Hr m={1} className={"bg-light"} />
 
                       {/** row 2 **/}
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"food3"}
+                            src={"food3.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -307,17 +310,17 @@ export const FoodFindList = () => {
                       </Grid>
                       {/** /.row 2 **/}
 
-                      <Hr px={1} />
+                      <Hr m={1} className={"bg-light"} />
 
                       {/** row 3 **/}
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"food4"}
+                            src={"food4.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -342,17 +345,17 @@ export const FoodFindList = () => {
                       </Grid>
                       {/** /.row 2 **/}
 
-                      <Hr px={1} />
+                      <Hr m={1} className={"bg-light"} />
 
                       {/** row 3 **/}
                       <Grid container={true} spacing={2}>
                         <Grid size={2} className={"d-center"}>
                           <Img
-                            max={15}
+                            max={20}
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"food5"}
+                            src={"food5.webp"}
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
@@ -385,15 +388,15 @@ export const FoodFindList = () => {
         </Grid>
       );
       return (
-        <Card className={"d-col-center"}>
+        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
           {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={"food"} /> : listFragment()}
         </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
-        {LOADING ? <Loader /> : listSection()}
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min75vh"}>
+        {listSection()}
       </Paper>
     );
   };

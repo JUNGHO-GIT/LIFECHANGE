@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
-import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
 import { Calendar } from "@importSchemas";
 import { axios, CalendarReact } from "@importLibs";
 import { Footer } from "@importLayouts";
@@ -20,7 +20,8 @@ export const CalendarList = () => {
   const { getNextMonthStartFmt, getNextMonthEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
-  const { ALERT, setALERT } = useStoreAlert();
+  const { setALERT } = useStoreAlert();
+  const { setLOADING } = useStoreLoading();
 
   // 2-1. useStorageLocal ------------------------------------------------------------------------
   const [DATE, setDATE] = useStorageLocal(
@@ -58,6 +59,11 @@ export const CalendarList = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
+    setLOADING(true);
+  }, []);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
     axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: sessionId,
@@ -74,7 +80,7 @@ export const CalendarList = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
@@ -292,16 +298,16 @@ export const CalendarList = () => {
         </Grid>
       );
       return (
-        <Card className={"d-col-center"}>
+        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
           {titleFragment()}
-          <Br px={20} />
+          <Br m={20} />
           {calendarFragment()}
         </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-1 shadow-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min75vh"}>
         {calendarSection()}
       </Paper>
     );

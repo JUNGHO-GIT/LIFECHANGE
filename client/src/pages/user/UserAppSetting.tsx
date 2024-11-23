@@ -1,9 +1,9 @@
 // UserAppSetting.tsx
 
 import { useState, useEffect } from "@importReacts";
-import { useCommonValue, useStoreLanguage, useStoreConfirm } from "@importHooks";
+import { useCommonValue } from "@importHooks";
+import { useStoreLanguage, useStoreConfirm, useStoreLoading } from "@importHooks";
 import { setLocal } from "@importScripts";
-import { Loader } from "@importLayouts";
 import { PopUp } from "@importContainers";
 import { Icons, Img, Div, Br } from "@importComponents";
 import { Paper, Grid, Card } from "@importMuis";
@@ -15,18 +15,15 @@ export const UserAppSetting = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { navigate, isAdmin, localLang } = useCommonValue();
   const { translate } = useStoreLanguage();
-  const { CONFIRM, setCONFIRM } = useStoreConfirm();
+  const { setCONFIRM } = useStoreConfirm();
+  const { setLOADING } = useStoreLoading();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState<boolean>(false);
   const [lang, setLang] = useState<string>(localLang);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
-    setTimeout(() => {
-      setLOADING(false);
-    }, 500);
   }, []);
 
   // 4. handle -------------------------------------------------------------------------------------
@@ -51,7 +48,7 @@ export const UserAppSetting = () => {
   const handleClearStorage = async () => {
     const confirmResult = new Promise((resolve) => {
       setCONFIRM({
-        open: !CONFIRM.open,
+        open: true,
         msg: "clearStorage",
       }, (confirmed: boolean) => {
         resolve(confirmed);
@@ -67,7 +64,7 @@ export const UserAppSetting = () => {
     // 7-1. detail
     const detailSection = () => {
       const detailFragment = () => (
-        <Grid container={true} spacing={0} className={"border-1 radius-1 shadow-0"}>
+        <Grid container={true} spacing={0} className={"border-1 radius-2 shadow-0"}>
           <Grid size={12}>
             <TableContainer>
               <Table>
@@ -141,7 +138,7 @@ export const UserAppSetting = () => {
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"flag2"}
+                            src={"flag2.webp"}
                             className={"me-15"}
                           />
                           <Div className={`${lang === "en" ? "fw-700" : ""}`}>
@@ -153,7 +150,7 @@ export const UserAppSetting = () => {
                             className={`w-16 h-16 black ${lang === "en" ? "" : "d-none"}`}
                           />
                         </Div>
-                        <Br px={20} />
+                        <Br m={20} />
                         <Div
                           className={"d-center"}
                           onClick={() => {
@@ -165,7 +162,7 @@ export const UserAppSetting = () => {
                             hover={true}
                             shadow={false}
                             radius={false}
-                            src={"flag1"}
+                            src={"flag1.webp"}
                             className={"me-15"}
                           />
                           <Div className={`${lang === "ko" ? "fw-700" : ""}`}>
@@ -274,15 +271,15 @@ export const UserAppSetting = () => {
         </Grid>
       );
       return (
-        <Card className={"d-col-center"}>
+        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
           {detailFragment()}
         </Card>
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper d-center border-1 radius-1 h-min90vh"}>
-        {LOADING ? <Loader /> : detailSection()}
+      <Paper className={"content-wrapper d-center border-1 radius-2 h-min90vh"}>
+        {detailSection()}
       </Paper>
     );
   };

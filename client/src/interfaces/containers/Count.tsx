@@ -23,7 +23,7 @@ export const Count = (
   // 1. common -------------------------------------------------------------------------------------
   const { PATH, localLang } = useCommonValue();
   const { translate } = useStoreLanguage();
-  const { ALERT, setALERT } = useStoreAlert();
+  const { setALERT } = useStoreAlert();
 
   // 7. countNode ----------------------------------------------------------------------------------
   const countNode = () => {
@@ -69,11 +69,11 @@ export const Count = (
         inputclass={"pointer"}
         startadornment={
           <Img
-            max={15}
+            max={25}
             hover={true}
             shadow={false}
             radius={false}
-            src={"common2"}
+            src={"common2.webp"}
           />
         }
         endadornment={
@@ -82,7 +82,7 @@ export const Count = (
               <Icons
                 key={"Minus"}
                 name={"Minus"}
-                className={"w-16 h-16"}
+                className={"w-20 h-20"}
                 locked={LOCKED}
                 onClick={() => {
                   if (LOCKED === "locked" || PATH.includes("/food/find/list")) {
@@ -96,7 +96,7 @@ export const Count = (
                       }))
                     ) : (
                       setALERT({
-                        open: !ALERT.open,
+                        open: true,
                         severity: "error",
                         msg: (
                           localLang === "ko"
@@ -113,7 +113,7 @@ export const Count = (
               <Icons
                 key={"Plus"}
                 name={"Plus"}
-                className={"w-16 h-16"}
+                className={"w-20 h-20"}
                 locked={LOCKED}
                 onClick={() => {
                   if (LOCKED === "locked" || PATH.includes("/food/find/list")) {
@@ -127,7 +127,7 @@ export const Count = (
                       }))
                     ) : (
                       setALERT({
-                        open: !ALERT.open,
+                        open: true,
                         severity: "error",
                         msg: (
                           localLang === "ko"

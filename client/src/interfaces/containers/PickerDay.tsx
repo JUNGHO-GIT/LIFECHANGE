@@ -62,8 +62,8 @@ export const PickerDay = (
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (isGoalTodayList || isGoalList || isTodayList || isRealList) {
-      setTypeSaveStr("h-min0 h-4vh fs-0-7rem pointer");
-      setTypeListStr("h-min0 h-4vh fs-0-7rem pointer");
+      setTypeSaveStr("h-min0 h-5vh fs-0-7rem pointer");
+      setTypeListStr("h-min0 h-5vh fs-0-7rem pointer");
     }
     else {
       setTypeSaveStr("h-min40 fs-0-8rem pointer");
@@ -187,7 +187,7 @@ export const PickerDay = (
                   views={["day"]}
                   readOnly={false}
                   value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
-                  className={"border-1 radius-1"}
+                  className={"border-1 radius-2"}
                   showDaysOutsideCurrentMonth={true}
                   slots={{
                     day: (props) => {
@@ -202,9 +202,7 @@ export const PickerDay = (
                       let boxShadow = "";
                       let zIndex = 0;
 
-                      if (DATE.dateStart && DATE.dateEnd) {
-                        isSelected = DATE.dateStart === getDayFmt(day);
-                      }
+                      // badge 표시는 일 단위로 표시
                       if (EXIST?.day) {
                         EXIST?.day.forEach((item: any) => {
                           if (
@@ -216,6 +214,10 @@ export const PickerDay = (
                             isBadged = true;
                           }
                         });
+                      }
+
+                      if (DATE.dateStart && DATE.dateEnd) {
+                        isSelected = DATE.dateStart === getDayFmt(day);
                       }
 
                       if (isSelected) {
@@ -306,11 +308,11 @@ export const PickerDay = (
             inputclass={typeListStr}
             startadornment={
               <Img
-                max={15}
+                max={25}
                 hover={true}
                 shadow={false}
                 radius={false}
-              	src={"common1"}
+              	src={"common1.webp"}
               />
             }
             endadornment={
@@ -319,7 +321,7 @@ export const PickerDay = (
                   <Icons
                     key={"ChevronLeft"}
                     name={"ChevronLeft"}
-                    className={"w-16 h-16"}
+                    className={"w-20 h-20"}
                     onClick={(e: any) => {
                       e.stopPropagation();
                       setDATE((prev: any) => ({
@@ -335,7 +337,7 @@ export const PickerDay = (
                   <Icons
                     key={"ChevronRight"}
                     name={"ChevronRight"}
-                    className={"w-16 h-16"}
+                    className={"w-20 h-20"}
                     onClick={(e: any) => {
                       e.stopPropagation();
                       setDATE((prev: any) => ({
@@ -380,7 +382,7 @@ export const PickerDay = (
                   views={["day"]}
                   readOnly={false}
                   value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
-                  className={"border-1 radius-1"}
+                  className={"border-1 radius-2"}
                   showDaysOutsideCurrentMonth={true}
                   slots={{
                     day: (props) => {
@@ -397,14 +399,9 @@ export const PickerDay = (
                       let boxShadow = "";
                       let zIndex = 0;
 
-                      if (DATE.dateStart && DATE.dateEnd) {
-                        isSelected = DATE.dateStart <= getDayFmt(day) && DATE.dateEnd >= getDayFmt(day);
-                        isFirst = DATE.dateStart === getDayStartFmt(day);
-                        isLast = DATE.dateEnd === getDayEndFmt(day);
-                      }
-
-                      if (EXIST?.week) {
-                        EXIST?.week.forEach((item: any) => {
+                      // badge 표시는 일 단위로 표시
+                      if (EXIST?.day) {
+                        EXIST?.day.forEach((item: any) => {
                           if (
                             item.split(" - ") &&
                             item.split(" - ").length === 2 &&
@@ -414,6 +411,12 @@ export const PickerDay = (
                             isBadged = true;
                           }
                         });
+                      }
+
+                      if (DATE.dateStart && DATE.dateEnd) {
+                        isSelected = DATE.dateStart <= getDayFmt(day) && DATE.dateEnd >= getDayFmt(day);
+                        isFirst = DATE.dateStart === getDayStartFmt(day);
+                        isLast = DATE.dateEnd === getDayEndFmt(day);
                       }
 
                       if (isSelected) {
@@ -517,11 +520,11 @@ export const PickerDay = (
             readOnly={true}
             startadornment={
               <Img
-                max={15}
+                max={25}
                 hover={true}
                 shadow={false}
                 radius={false}
-              	src={"common1"}
+              	src={"common1.webp"}
               />
             }
             endadornment={
@@ -530,7 +533,7 @@ export const PickerDay = (
                   <Icons
                     key={"ChevronLeft"}
                     name={"ChevronLeft"}
-                    className={"w-16 h-16"}
+                    className={"w-20 h-20"}
                     onClick={(e: any) => {
                       e.stopPropagation();
                       setDATE((prev: any) => ({
@@ -545,7 +548,7 @@ export const PickerDay = (
                   <Icons
                     key={"ChevronRight"}
                     name={"ChevronRight"}
-                    className={"w-16 h-16"}
+                    className={"w-20 h-20"}
                     onClick={(e: any) => {
                       e.stopPropagation();
                       setDATE((prev: any) => ({
@@ -589,7 +592,7 @@ export const PickerDay = (
                   views={["day"]}
                   readOnly={false}
                   value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
-                  className={"border-1 radius-1"}
+                  className={"border-1 radius-2"}
                   showDaysOutsideCurrentMonth={true}
                   slots={{
                     day: (props) => {
@@ -604,12 +607,9 @@ export const PickerDay = (
                       let boxShadow = "";
                       let zIndex = 0;
 
-                      if (DATE.dateStart && DATE.dateEnd) {
-                        isSelected = DATE.dateStart === getDayFmt(day) && getDayNotFmt(day).date() === 1
-                      }
-
-                      if (EXIST?.month) {
-                        EXIST?.month.forEach((item: any) => {
+                      // badge 표시는 일 단위로 표시
+                      if (EXIST?.day) {
+                        EXIST?.day.forEach((item: any) => {
                           if (
                             item.split(" - ") &&
                             item.split(" - ").length === 2 &&
@@ -619,6 +619,10 @@ export const PickerDay = (
                             isBadged = true;
                           }
                         });
+                      }
+
+                      if (DATE.dateStart && DATE.dateEnd) {
+                        isSelected = DATE.dateStart === getDayFmt(day) && getDayNotFmt(day).date() === 1
                       }
 
                       if (isSelected) {
@@ -709,11 +713,11 @@ export const PickerDay = (
             readOnly={true}
             startadornment={
               <Img
-                max={15}
+                max={25}
                 hover={true}
                 shadow={false}
                 radius={false}
-              	src={"common1"}
+              	src={"common1.webp"}
               />
             }
             endadornment={
@@ -722,7 +726,7 @@ export const PickerDay = (
                   <Icons
                     key={"ChevronLeft"}
                     name={"ChevronLeft"}
-                    className={"w-16 h-16"}
+                    className={"w-20 h-20"}
                     onClick={(e: any) => {
                       e.stopPropagation();
                       setDATE((prev: any) => ({
@@ -737,7 +741,7 @@ export const PickerDay = (
                   <Icons
                     key={"ChevronRight"}
                     name={"ChevronRight"}
-                    className={"w-16 h-16"}
+                    className={"w-20 h-20"}
                     onClick={(e: any) => {
                       e.stopPropagation();
                       setDATE((prev: any) => ({
@@ -781,7 +785,7 @@ export const PickerDay = (
                   views={["day"]}
                   readOnly={false}
                   value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
-                  className={"border-1 radius-1"}
+                  className={"border-1 radius-2"}
                   showDaysOutsideCurrentMonth={true}
                   slots={{
                     day: (props) => {
@@ -801,9 +805,10 @@ export const PickerDay = (
                         isSelected = getDayNotFmt(day).month() === 0 && getDayNotFmt(day).date() === 1
                       }
 
-                      // year 는 해당 년도 1월 달만 배지 표시
-                      if (EXIST?.year) {
-                        EXIST?.year.forEach((item: any) => {
+                      // badge 표시는 일 단위로 표시
+                      if (EXIST?.day) {
+                        EXIST?.day.forEach((item: any) => {
+
                           const startYear = item.split(" - ")[0].split("-")[0];
                           const currentYear = getDayFmt(day).split("-")[0];
                           const isJanuary = day.month() === 0;
@@ -902,11 +907,11 @@ export const PickerDay = (
             readOnly={true}
             startadornment={
               <Img
-                max={15}
+                max={25}
                 hover={true}
                 shadow={false}
                 radius={false}
-              	src={"common1"}
+              	src={"common1.webp"}
               />
             }
             endadornment={
@@ -915,7 +920,7 @@ export const PickerDay = (
                   <Icons
                     key={"ChevronLeft"}
                     name={"ChevronLeft"}
-                    className={"w-16 h-16"}
+                    className={"w-20 h-20"}
                     onClick={(e: any) => {
                       e.stopPropagation();
                       setDATE((prev: any) => ({
@@ -930,7 +935,7 @@ export const PickerDay = (
                   <Icons
                     key={"ChevronRight"}
                     name={"ChevronRight"}
-                    className={"w-16 h-16"}
+                    className={"w-20 h-20"}
                     onClick={(e: any) => {
                       e.stopPropagation();
                       setDATE((prev: any) => ({
@@ -974,7 +979,7 @@ export const PickerDay = (
                   views={["day"]}
                   readOnly={false}
                   value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
-                  className={"border-1 radius-1"}
+                  className={"border-1 radius-2"}
                   showDaysOutsideCurrentMonth={true}
                   slots={{
                     day: (props) => {
@@ -991,14 +996,9 @@ export const PickerDay = (
                       let boxShadow = "";
                       let zIndex = 0;
 
-                      if (DATE.dateStart && DATE.dateEnd) {
-                        isSelected = DATE.dateStart <= getDayFmt(day) && DATE.dateEnd >= getDayFmt(day);
-                        isFirst = DATE.dateStart === getDayStartFmt(day);
-                        isLast = DATE.dateEnd === getDayEndFmt(day);
-                      }
-
-                      if (EXIST?.select) {
-                        EXIST?.select.forEach((item: any) => {
+                      // badge 표시는 일 단위로 표시
+                      if (EXIST?.day) {
+                        EXIST?.day.forEach((item: any) => {
                           if (
                             item.split(" - ") &&
                             item.split(" - ").length === 2 &&
@@ -1008,6 +1008,12 @@ export const PickerDay = (
                             isBadged = true;
                           }
                         });
+                      }
+
+                      if (DATE.dateStart && DATE.dateEnd) {
+                        isSelected = DATE.dateStart <= getDayFmt(day) && DATE.dateEnd >= getDayFmt(day);
+                        isFirst = DATE.dateStart === getDayStartFmt(day);
+                        isLast = DATE.dateEnd === getDayEndFmt(day);
                       }
 
                       if (isSelected) {
@@ -1094,11 +1100,11 @@ export const PickerDay = (
             inputclass={`${typeListStr}`}
             startadornment={
               <Img
-                max={15}
+                max={25}
                 hover={true}
                 shadow={false}
                 radius={false}
-              	src={"common1"}
+              	src={"common1.webp"}
               />
             }
             onClick={(e: any) => {

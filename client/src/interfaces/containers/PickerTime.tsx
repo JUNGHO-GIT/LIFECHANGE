@@ -140,11 +140,11 @@ export const PickerTime = (
             locked={LOCKED}
             startadornment={
               <Img
-                max={15}
+                max={20}
                 hover={true}
                 shadow={false}
                 radius={false}
-                src={image}
+                src={`${image}.webp`}
               />
             }
             endadornment={
@@ -203,11 +203,11 @@ export const PickerTime = (
             locked={LOCKED}
             startadornment={
               <Img
-                max={15}
+                max={20}
                 hover={true}
                 shadow={false}
                 radius={false}
-                src={image}
+                src={`${image}.webp`}
               />
             }
             endadornment={

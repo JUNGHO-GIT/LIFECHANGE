@@ -31,7 +31,7 @@ export const Header = () => {
             hover={true}
             shadow={false}
             radius={false}
-            src={"logo2"}
+            src={"logo2.webp"}
             loading={"eager"}
             className={"h-max30 me-2vw"}
           />
@@ -39,7 +39,7 @@ export const Header = () => {
             hover={true}
             shadow={false}
             radius={false}
-            src={"logo3"}
+            src={"logo3.webp"}
             loading={"eager"}
             className={"h-max30"}
           />
@@ -50,7 +50,7 @@ export const Header = () => {
           <Icons
             key={"Settings"}
             name={"Settings"}
-            className={"w-24 h-24"}
+            className={"w-30 h-30"}
             onClick={() => {
               navigate("/user/appSetting");
             }}
@@ -59,7 +59,7 @@ export const Header = () => {
           <Icons
             key={"ArrowRight"}
             name={"ArrowRight"}
-            className={"w-24 h-24"}
+            className={"w-30 h-30"}
             onClick={() => {
               navigate(-1);
             }}
@@ -67,14 +67,14 @@ export const Header = () => {
         )
       );
       return (
-        <Card className={"d-row-between"}>
+        <Card className={"d-row-between border-0 shadow-0 radius-0"}>
           {iconFragment()}
           {btnFragment()}
         </Card>
       );
     };
     return (
-      <Paper className={"layout-wrapper p-sticky top-0vh h-8vh border-1 radius-1 shadow-top-1"}>
+      <Paper className={"layout-wrapper p-sticky top-0vh h-8vh border-1 radius-2 shadow-top-1"}>
         {headerSection()}
       </Paper>
     );

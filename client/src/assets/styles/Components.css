@@ -21,3 +21,11 @@
   padding: 10px !important;
   border: none !important;
 }
+
+/** loader ****************************************************************************************/
+.loader-wrapper {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+.loader {
+  border-top: 3px solid #1976D2 !important;
+}

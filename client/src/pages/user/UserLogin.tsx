@@ -2,11 +2,10 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useValidateUser } from "@importHooks";
-import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
 import { axios } from "@importLibs";
 import { sync, getLocal, setLocal, setSession } from "@importScripts";
 import { User } from "@importSchemas";
-import { Loader } from "@importLayouts";
 import { Input } from "@importContainers";
 import { Div, Btn, Img, Hr } from "@importComponents";
 import { Paper, Checkbox, Grid, Card } from "@importMuis";
@@ -17,11 +16,11 @@ export const UserLogin = () => {
   // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, URL_GOOGLE, ADMIN_ID, ADMIN_PW, navigate } = useCommonValue();
   const { translate } = useStoreLanguage();
-  const { ALERT, setALERT } = useStoreAlert();
+  const { setALERT } = useStoreAlert();
+  const { setLOADING } = useStoreLoading();
   const { ERRORS, REFS, validate } = useValidateUser();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState<boolean>(false);
   const [loginTrigger, setLoginTrigger] = useState<boolean>(false);
   const [checkedSaveId, setCheckedSaveId] = useState<boolean>(false);
   const [checkedAutoLogin, setCheckedAutoLogin] = useState<boolean>(false);
@@ -128,7 +127,6 @@ export const UserLogin = () => {
   const flowSave = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "login", "")) {
-      setLOADING(false);
       return;
     }
     axios.post(`${URL_OBJECT}/login`, {
@@ -151,7 +149,7 @@ export const UserLogin = () => {
           admin: res.data.admin === "admin" ? "true" : "false",
         });
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -162,7 +160,7 @@ export const UserLogin = () => {
           admin: "false",
         });
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -170,16 +168,11 @@ export const UserLogin = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-    })
-    .finally(() => {
-      setTimeout(() => {
-        setLOADING(false);
-      }, 100);
     });
   };
 
@@ -192,7 +185,7 @@ export const UserLogin = () => {
       }
       else {
         setALERT({
-          open: !ALERT.open,
+          open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
@@ -200,7 +193,7 @@ export const UserLogin = () => {
     })
     .catch((err: any) => {
       setALERT({
-        open: !ALERT.open,
+        open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
@@ -295,7 +288,7 @@ export const UserLogin = () => {
         </Grid>
       );
       return (
-        <Card className={"d-col-center"}>
+        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
           {detailFragment()}
         </Card>
       );
@@ -362,11 +355,11 @@ export const UserLogin = () => {
             >
               <Div className={"d-row-center"}>
                 <Img
-                  max={15}
+                  max={20}
                   hover={true}
                   shadow={false}
                   radius={false}
-                  src={"user1"}
+                  src={"user1.webp"}
                 />
                 <Div className={"fs-1-0rem black ms-10"}>
                   {translate("googleLogin")}
@@ -414,20 +407,17 @@ export const UserLogin = () => {
     );
     // 7-10. return
     return (
-      <>
-      {LOADING && <Loader />}
-      <Paper className={"content-wrapper d-center border-1 radius-1 shadow-1 h-min100vh"}>
+      <Paper className={"content-wrapper d-center border-1 radius-2 shadow-1 h-min100vh"}>
         {titleSection()}
-        <Hr px={20} />
+        <Hr m={20} />
         {loginSection()}
-        <Hr px={20} />
+        <Hr m={20} />
         {checkSection()}
-        <Hr px={20} />
+        <Hr m={20} />
         {buttonSection()}
-        <Hr px={20} />
+        <Hr m={20} />
         {linkSection()}
       </Paper>
-      </>
     );
   };
 
