@@ -274,7 +274,7 @@ export const ExerciseChartLine = () => {
             <Div className={"fs-1-0rem fw-600"}>
               {translate("chartLine")}
             </Div>
-            <Div className={"fs-1-0rem fw-500 grey ms-10"}>
+            <Div className={"fs-1-0rem fw-500 grey ml-10px"}>
               {`[${translate(TYPE.line)}]`}
             </Div>
           </Grid>
@@ -332,7 +332,7 @@ export const ExerciseChartLine = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min40vh"}>
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min-40vh"}>
         {headSection()}
         <Br m={20} />
         {chartSection()}

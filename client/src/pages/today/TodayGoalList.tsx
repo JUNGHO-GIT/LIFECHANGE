@@ -151,7 +151,7 @@ export const TodayGoalList = () => {
         <Grid container={true} spacing={0}>
           {OBJECT_EXERCISE.filter((f: any) => f._id).map((item: any, i: number) => (
             <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
-              <Grid size={12} className={"p-2"}>
+              <Grid size={12} className={"p-2px"}>
                 <Accordion
                   className={"border-0 shadow-0 radius-0"}
                   expanded={isExpanded?.exercise[i]?.expanded}
@@ -163,12 +163,12 @@ export const TodayGoalList = () => {
                   }}
                 >
                   <AccordionSummary
-                    className={"me-n10"}
+                    className={"mr-n10px"}
                     expandIcon={
                       <Icons
                         key={"ChevronDown"}
                         name={"ChevronDown"}
-                        className={"w-18 h-18"}
+                        className={"w-18px h-18px"}
                         onClick={(e: any) => {
                           e.stopPropagation();
                           setIsExpanded((prev: any) => ({
@@ -200,23 +200,23 @@ export const TodayGoalList = () => {
                         <Icons
                           key={"Search"}
                           name={"Search"}
-                          className={"w-18 h-18"}
+                          className={"w-18px h-18px"}
                         />
                       </Grid>
                       <Grid size={10} className={"d-row-left"}>
                         <Div className={"fs-1-0rem fw-600 black"}>
                           {item.exercise_goal_dateStart?.substring(5, 10)}
                         </Div>
-                        <Div className={"fs-0-9rem fw-500 dark ms-5"}>
+                        <Div className={"fs-0-9rem fw-500 dark ml-5px"}>
                           {translate(getDayNotFmt(item.exercise_goal_dateStart).format("ddd"))}
                         </Div>
-                        <Div className={"fs-0-8rem fw-500 dark ms-5 me-5"}>
+                        <Div className={"fs-0-8rem fw-500 dark ml-5px mr-5px"}>
                           -
                         </Div>
                         <Div className={"fs-1-0rem fw-600 black"}>
                           {item.exercise_goal_dateEnd?.substring(5, 10)}
                         </Div>
-                        <Div className={"fs-0-9rem fw-500 dark ms-5"}>
+                        <Div className={"fs-0-9rem fw-500 dark ml-5px"}>
                           {translate(getDayNotFmt(item.exercise_goal_dateEnd).format("ddd"))}
                         </Div>
                       </Grid>
@@ -236,7 +236,7 @@ export const TodayGoalList = () => {
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
                             {translate("exerciseCount")}
                           </Div>
                         </Grid>
@@ -309,7 +309,7 @@ export const TodayGoalList = () => {
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
                             {translate("volume")}
                           </Div>
                         </Grid>
@@ -382,7 +382,7 @@ export const TodayGoalList = () => {
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
                             {translate("cardio")}
                           </Div>
                         </Grid>
@@ -455,7 +455,7 @@ export const TodayGoalList = () => {
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
                             {translate("scale")}
                           </Div>
                         </Grid>
@@ -533,7 +533,7 @@ export const TodayGoalList = () => {
         <Grid container={true} spacing={0}>
           {OBJECT_FOOD.filter((f: any) => f._id).map((item: any, i: number) => (
             <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
-              <Grid size={12} className={"p-2"}>
+              <Grid size={12} className={"p-2px"}>
                 <Accordion
                   className={"border-0 shadow-0 radius-0"}
                   expanded={isExpanded?.food[i]?.expanded}
@@ -545,12 +545,12 @@ export const TodayGoalList = () => {
                   }}
                 >
                   <AccordionSummary
-                    className={"me-n10"}
+                    className={"mr-n10px"}
                     expandIcon={
                       <Icons
                         key={"ChevronDown"}
                         name={"ChevronDown"}
-                        className={"w-18 h-18"}
+                        className={"w-18px h-18px"}
                         onClick={(e: any) => {
                           e.stopPropagation();
                           setIsExpanded((prev: any) => ({
@@ -582,23 +582,23 @@ export const TodayGoalList = () => {
                         <Icons
                           key={"Search"}
                           name={"Search"}
-                          className={"w-18 h-18"}
+                          className={"w-18px h-18px"}
                         />
                       </Grid>
                       <Grid size={10} className={"d-row-left"}>
                         <Div className={"fs-1-0rem fw-600 black"}>
                           {item.food_goal_dateStart?.substring(5, 10)}
                         </Div>
-                        <Div className={"fs-0-9rem fw-500 dark ms-5"}>
+                        <Div className={"fs-0-9rem fw-500 dark ml-5px"}>
                           {translate(getDayNotFmt(item.food_goal_dateStart).format("ddd"))}
                         </Div>
-                        <Div className={"fs-0-8rem fw-500 dark ms-5 me-5"}>
+                        <Div className={"fs-0-8rem fw-500 dark ml-5px mr-5px"}>
                           -
                         </Div>
                         <Div className={"fs-1-0rem fw-600 black"}>
                           {item.food_goal_dateEnd?.substring(5, 10)}
                         </Div>
-                        <Div className={"fs-0-9rem fw-500 dark ms-5"}>
+                        <Div className={"fs-0-9rem fw-500 dark ml-5px"}>
                           {translate(getDayNotFmt(item.food_goal_dateEnd).format("ddd"))}
                         </Div>
                       </Grid>
@@ -618,7 +618,7 @@ export const TodayGoalList = () => {
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
                             {translate("kcal")}
                           </Div>
                         </Grid>
@@ -691,7 +691,7 @@ export const TodayGoalList = () => {
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
                             {translate("carb")}
                           </Div>
                         </Grid>
@@ -764,7 +764,7 @@ export const TodayGoalList = () => {
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
                             {translate("protein")}
                           </Div>
                         </Grid>
@@ -837,7 +837,7 @@ export const TodayGoalList = () => {
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
                             {translate("fat")}
                           </Div>
                         </Grid>
@@ -915,7 +915,7 @@ export const TodayGoalList = () => {
         <Grid container={true} spacing={0}>
           {OBJECT_MONEY.filter((f: any) => f._id).map((item: any, i: number) => (
             <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
-              <Grid size={12} className={"p-2"}>
+              <Grid size={12} className={"p-2px"}>
                 <Accordion
                   className={"border-0 shadow-0 radius-0"}
                   expanded={isExpanded?.money[i]?.expanded}
@@ -927,12 +927,12 @@ export const TodayGoalList = () => {
                   }}
                 >
                   <AccordionSummary
-                    className={"me-n10"}
+                    className={"mr-n10px"}
                     expandIcon={
                       <Icons
                         key={"ChevronDown"}
                         name={"ChevronDown"}
-                        className={"w-18 h-18"}
+                        className={"w-18px h-18px"}
                         onClick={(e: any) => {
                           e.stopPropagation();
                           setIsExpanded((prev: any) => ({
@@ -964,23 +964,23 @@ export const TodayGoalList = () => {
                         <Icons
                           key={"Search"}
                           name={"Search"}
-                          className={"w-18 h-18"}
+                          className={"w-18px h-18px"}
                         />
                       </Grid>
                       <Grid size={10} className={"d-row-left"}>
                         <Div className={"fs-1-0rem fw-600 black"}>
                           {item.money_goal_dateStart?.substring(5, 10)}
                         </Div>
-                        <Div className={"fs-0-9rem fw-500 dark ms-5"}>
+                        <Div className={"fs-0-9rem fw-500 dark ml-5px"}>
                           {translate(getDayNotFmt(item.money_goal_dateStart).format("ddd"))}
                         </Div>
-                        <Div className={"fs-0-8rem fw-500 dark ms-5 me-5"}>
+                        <Div className={"fs-0-8rem fw-500 dark ml-5px mr-5px"}>
                           -
                         </Div>
                         <Div className={"fs-1-0rem fw-600 black"}>
                           {item.money_goal_dateEnd?.substring(5, 10)}
                         </Div>
-                        <Div className={"fs-0-9rem fw-500 dark ms-5"}>
+                        <Div className={"fs-0-9rem fw-500 dark ml-5px"}>
                           {translate(getDayNotFmt(item.money_goal_dateEnd).format("ddd"))}
                         </Div>
                       </Grid>
@@ -1000,7 +1000,7 @@ export const TodayGoalList = () => {
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
                             {translate("income")}
                           </Div>
                         </Grid>
@@ -1073,7 +1073,7 @@ export const TodayGoalList = () => {
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
                             {translate("expense")}
                           </Div>
                         </Grid>
@@ -1151,7 +1151,7 @@ export const TodayGoalList = () => {
         <Grid container={true} spacing={0}>
           {OBJECT_SLEEP.filter((f: any) => f._id).map((item: any, i: number) => (
             <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
-              <Grid size={12} className={"p-2"}>
+              <Grid size={12} className={"p-2px"}>
                 <Accordion
                   className={"border-0 shadow-0 radius-0"}
                   expanded={isExpanded?.sleep[i]?.expanded}
@@ -1163,12 +1163,12 @@ export const TodayGoalList = () => {
                   }}
                 >
                   <AccordionSummary
-                    className={"me-n10"}
+                    className={"mr-n10px"}
                     expandIcon={
                       <Icons
                         key={"ChevronDown"}
                         name={"ChevronDown"}
-                        className={"w-18 h-18"}
+                        className={"w-18px h-18px"}
                         onClick={(e: any) => {
                           e.stopPropagation();
                           setIsExpanded((prev: any) => ({
@@ -1200,23 +1200,23 @@ export const TodayGoalList = () => {
                         <Icons
                           key={"Search"}
                           name={"Search"}
-                          className={"w-18 h-18"}
+                          className={"w-18px h-18px"}
                         />
                       </Grid>
                       <Grid size={10} className={"d-row-left"}>
                         <Div className={"fs-1-0rem fw-600 black"}>
                           {item.sleep_goal_dateStart?.substring(5, 10)}
                         </Div>
-                        <Div className={"fs-0-9rem fw-500 dark ms-5"}>
+                        <Div className={"fs-0-9rem fw-500 dark ml-5px"}>
                           {translate(getDayNotFmt(item.sleep_goal_dateStart).format("ddd"))}
                         </Div>
-                        <Div className={"fs-0-8rem fw-500 dark ms-5 me-5"}>
+                        <Div className={"fs-0-8rem fw-500 dark ml-5px mr-5px"}>
                           -
                         </Div>
                         <Div className={"fs-1-0rem fw-600 black"}>
                           {item.sleep_goal_dateEnd?.substring(5, 10)}
                         </Div>
-                        <Div className={"fs-0-9rem fw-500 dark ms-5"}>
+                        <Div className={"fs-0-9rem fw-500 dark ml-5px"}>
                           {translate(getDayNotFmt(item.sleep_goal_dateEnd).format("ddd"))}
                         </Div>
                       </Grid>
@@ -1236,7 +1236,7 @@ export const TodayGoalList = () => {
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
                             {translate("bedTime")}
                           </Div>
                         </Grid>
@@ -1309,7 +1309,7 @@ export const TodayGoalList = () => {
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
                             {translate("wakeTime")}
                           </Div>
                         </Grid>
@@ -1382,7 +1382,7 @@ export const TodayGoalList = () => {
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
                             {translate("sleepTime")}
                           </Div>
                         </Grid>
@@ -1456,7 +1456,7 @@ export const TodayGoalList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min-75vh"}>
         {exerciseSection()}
         <Br m={10} />
         {foodSection()}

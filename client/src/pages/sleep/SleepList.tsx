@@ -137,7 +137,7 @@ export const SleepList = () => {
         <Grid container={true} spacing={0}>
           {OBJECT.filter((f: any) => f._id).map((item: any, i: number) => (
             <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
-              <Grid size={12} className={"p-2"}>
+              <Grid size={12} className={"p-2px"}>
                 <Accordion
                   className={"border-0 shadow-0 radius-0"}
                   expanded={isExpanded[i]?.expanded}
@@ -149,12 +149,12 @@ export const SleepList = () => {
                   }}
                 >
                   <AccordionSummary
-                    className={"me-n10"}
+                    className={"mr-n10px"}
                     expandIcon={
                       <Icons
                         key={"ChevronDown"}
                         name={"ChevronDown"}
-                        className={"w-18 h-18"}
+                        className={"w-18px h-18px"}
                         onClick={(e: any) => {
                           e.stopPropagation();
                           setIsExpanded(isExpanded.map((el: any, index: number) => (
@@ -181,14 +181,14 @@ export const SleepList = () => {
                         <Icons
                           key={"Search"}
                           name={"Search"}
-                          className={"w-18 h-18"}
+                          className={"w-18px h-18px"}
                         />
                       </Grid>
                       <Grid size={10} className={"d-row-left"}>
-                        <Div className={"fs-1-0rem fw-600 black me-5"}>
+                        <Div className={"fs-1-0rem fw-600 black mr-5px"}>
                           {item.sleep_dateStart?.substring(5, 10)}
                         </Div>
-                        <Div className={"fs-0-9rem fw-500 dark ms-5"}>
+                        <Div className={"fs-0-9rem fw-500 dark ml-5px"}>
                           {translate(getDayNotFmt(item.sleep_dateStart).format("ddd"))}
                         </Div>
                       </Grid>
@@ -208,7 +208,7 @@ export const SleepList = () => {
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
                             {translate("bedTime")}
                           </Div>
                         </Grid>
@@ -243,7 +243,7 @@ export const SleepList = () => {
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
                             {translate("wakeTime")}
                           </Div>
                         </Grid>
@@ -278,7 +278,7 @@ export const SleepList = () => {
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
                             {translate("sleepTime")}
                           </Div>
                         </Grid>
@@ -314,7 +314,7 @@ export const SleepList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min-75vh"}>
         {listSection()}
       </Paper>
     );

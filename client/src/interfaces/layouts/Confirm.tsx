@@ -33,7 +33,7 @@ export const Confirm = () => {
             <Icons
               key={"Check"}
               name={"Check"}
-              className={"w-24 h-24 primary"}
+              className={"w-24px h-24px primary"}
               onClick={() => {
                 setCONFIRM({
                   open: false,
@@ -44,7 +44,7 @@ export const Confirm = () => {
             <Icons
               key={"X"}
               name={"X"}
-              className={"w-24 h-24 danger"}
+              className={"w-24px h-24px danger"}
               onClick={() => {
                 setCONFIRM({
                   open: false,

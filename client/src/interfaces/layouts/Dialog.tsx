@@ -67,7 +67,7 @@ export const Dialog = (
               <Icons
                 key={"ChevronDown"}
                 name={"ChevronDown"}
-                className={"w-25 h-25"}
+                className={"w-25px h-25px"}
               />
             }
             onClick={() => {
@@ -96,7 +96,7 @@ export const Dialog = (
               <Icons
                 key={"ChevronUp"}
                 name={"ChevronUp"}
-                className={"w-25 h-25"}
+                className={"w-25px h-25px"}
               />
             }
             onClick={() => {
@@ -152,7 +152,7 @@ export const Dialog = (
               <Icons
                 key={"Pencil"}
                 name={"Pencil"}
-                className={"w-25 h-25"}
+                className={"w-25px h-25px"}
               />
             }
             onClick={() => {
@@ -173,7 +173,7 @@ export const Dialog = (
               <Icons
                 key={"ChevronDown"}
                 name={"ChevronDown"}
-                className={"w-25 h-25"}
+                className={"w-25px h-25px"}
               />
             }
             onClick={() => {
@@ -193,7 +193,7 @@ export const Dialog = (
               <Icons
                 key={"ChevronUp"}
                 name={"ChevronUp"}
-                className={"w-25 h-25"}
+                className={"w-25px h-25px"}
               />
             }
             onClick={() => {
@@ -240,7 +240,7 @@ export const Dialog = (
               <Icons
                 key={"Pencil"}
                 name={"Pencil"}
-                className={"w-25 h-25"}
+                className={"w-25px h-25px"}
               />
             }
             onClick={() => {
@@ -261,7 +261,7 @@ export const Dialog = (
               <Icons
                 key={"ChevronDown"}
                 name={"ChevronDown"}
-                className={"w-25 h-25"}
+                className={"w-25px h-25px"}
               />
             }
             onClick={() => {
@@ -281,7 +281,7 @@ export const Dialog = (
               <Icons
                 key={"ChevronUp"}
                 name={"ChevronUp"}
-                className={"w-25 h-25"}
+                className={"w-25px h-25px"}
               />
             }
             onClick={() => {
@@ -308,7 +308,7 @@ export const Dialog = (
         <SpeedDial
           ariaLabel={"speedDial"}
           direction={"up"}
-          className={"ms-5"}
+          className={"ml-5px"}
           open={open}
           icon={
             <SpeedDialIcon />
@@ -330,7 +330,7 @@ export const Dialog = (
                 <Icons
                   key={"Search"}
                   name={"Search"}
-                  className={"w-23 h-23"}
+                  className={"w-23px h-23px"}
                 />
               }
               onClick={() => {
@@ -347,7 +347,7 @@ export const Dialog = (
                   key={"Star"}
                   name={"Star"}
                   fill={"gold"}
-                  className={"w-23 h-23"}
+                  className={"w-23px h-23px"}
                 />
               }
               onClick={() => {
@@ -363,7 +363,7 @@ export const Dialog = (
               <Icons
                 key={"Pencil"}
                 name={"Pencil"}
-                className={"w-25 h-25"}
+                className={"w-25px h-25px"}
               />
             }
             onClick={() => {
@@ -384,7 +384,7 @@ export const Dialog = (
               <Icons
                 key={"ChevronDown"}
                 name={"ChevronDown"}
-                className={"w-25 h-25"}
+                className={"w-25px h-25px"}
               />
             }
             onClick={() => {
@@ -404,7 +404,7 @@ export const Dialog = (
               <Icons
                 key={"ChevronUp"}
                 name={"ChevronUp"}
-                className={"w-25 h-25"}
+                className={"w-25px h-25px"}
               />
             }
             onClick={() => {
@@ -462,13 +462,13 @@ export const Dialog = (
                 <Icons
                   key={"UnLock"}
                   name={"UnLock"}
-                  className={"w-25 h-25"}
+                  className={"w-25px h-25px"}
                 />
               ) : (
                 <Icons
                   key={"Lock"}
                   name={"Lock"}
-                  className={"w-25 h-25"}
+                  className={"w-25px h-25px"}
                 />
               )
             }
@@ -490,7 +490,7 @@ export const Dialog = (
                 key={"X"}
                 name={"X"}
                 locked={LOCKED}
-                className={"w-25 h-25"}
+                className={"w-25px h-25px"}
               />
             }
             onClick={(e: any) => {

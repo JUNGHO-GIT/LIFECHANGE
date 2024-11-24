@@ -16,12 +16,12 @@ export const Delete = (
 
   // 1. deleteNode --------------------------------------------------------------------------------
   const deleteNode = () => (
-    <Div className={"mt-n10 me-n10"}>
+    <Div className={"mt-n10px mr-n10px"}>
       <Icons
         key={"X"}
         name={"X"}
         locked={LOCKED}
-        className={"w-20 h-20"}
+        className={"w-20px h-20px"}
         onClick={() => {
           handleDelete(index);
         }}

@@ -71,7 +71,7 @@ export const AdminAppInfo = () => {
             shadow={false}
             radius={false}
             src={"logo1.webp"}
-            className={"w-240 h-200"}
+            className={"w-240px h-200px"}
           />
         </Grid>
       </Grid>
@@ -87,34 +87,34 @@ export const AdminAppInfo = () => {
                   <Table>
                     <TableBody className={"table-tbody"}>
                       <TableRow>
-                        <TableCell className={"w-40vw fs-0-9rem p-15"}>
+                        <TableCell className={"w-40vw fs-0-9rem p-15px"}>
                           version
                         </TableCell>
-                        <TableCell className={"w-55vw fs-0-7rem p-15"}>
+                        <TableCell className={"w-55vw fs-0-7rem p-15px"}>
                           {`${item.version}_${item.env}`}
                         </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className={"w-40vw fs-0-9rem p-15"}>
+                        <TableCell className={"w-40vw fs-0-9rem p-15px"}>
                           date
                         </TableCell>
-                        <TableCell className={"w-55vw fs-0-7rem p-15"}>
+                        <TableCell className={"w-55vw fs-0-7rem p-15px"}>
                           {item.date}
                         </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className={"w-40vw fs-0-9rem p-15"}>
+                        <TableCell className={"w-40vw fs-0-9rem p-15px"}>
                           license
                         </TableCell>
-                        <TableCell className={"w-55vw fs-0-7rem p-15"}>
+                        <TableCell className={"w-55vw fs-0-7rem p-15px"}>
                           {item.license}
                         </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className={"w-40vw fs-0-9rem p-15"}>
+                        <TableCell className={"w-40vw fs-0-9rem p-15px"}>
                           timezone
                         </TableCell>
-                        <TableCell className={"w-55vw fs-0-7rem p-15"}>
+                        <TableCell className={"w-55vw fs-0-7rem p-15px"}>
                           {localTimeZone} | {localZoneName} | {localLang} | {localIsoCode} | {localCurrency}
                         </TableCell>
                       </TableRow>
@@ -134,7 +134,7 @@ export const AdminAppInfo = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper d-center border-1 radius-2 h-min90vh"}>
+      <Paper className={"content-wrapper d-center border-1 radius-2 h-min-90vh"}>
         {imageSection()}
         <Br m={40} />
         {detailSection()}

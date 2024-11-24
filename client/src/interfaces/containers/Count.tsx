@@ -33,7 +33,7 @@ export const Count = (
         label={translate("itemLock")}
         value={translate(LOCKED) || ""}
         inputclass={"fs-0-8rem pointer"}
-        adornmentclass={"ms-n10"}
+        adornmentclass={"ml-n10px"}
         onClick={() => {
           if (LOCKED === "locked") {
             setLOCKED("unlocked");
@@ -47,13 +47,13 @@ export const Count = (
             <Icons
               key={"Lock"}
               name={"Lock"}
-              className={"w-20 h-20"}
+              className={"w-20px h-20px"}
             />
           ) : (
             <Icons
               key={"UnLock"}
               name={"UnLock"}
-              className={"w-20 h-20"}
+              className={"w-20px h-20px"}
             />
           )
         }
@@ -78,11 +78,11 @@ export const Count = (
         }
         endadornment={
           <Div className={"d-row-center"}>
-            <Div className={"me-n5"}>
+            <Div className={"mr-n5px"}>
               <Icons
                 key={"Minus"}
                 name={"Minus"}
-                className={"w-20 h-20"}
+                className={"w-20px h-20px"}
                 locked={LOCKED}
                 onClick={() => {
                   if (LOCKED === "locked" || PATH.includes("/food/find/list")) {
@@ -109,11 +109,11 @@ export const Count = (
                 }}
               />
             </Div>
-            <Div className={"me-n10"}>
+            <Div className={"mr-n10px"}>
               <Icons
                 key={"Plus"}
                 name={"Plus"}
-                className={"w-20 h-20"}
+                className={"w-20px h-20px"}
                 locked={LOCKED}
                 onClick={() => {
                   if (LOCKED === "locked" || PATH.includes("/food/find/list")) {

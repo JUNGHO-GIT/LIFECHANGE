@@ -203,7 +203,7 @@ export const FoodFavoriteList = () => {
         <Grid container={true} spacing={0}>
           {OBJECT.filter((f: any) => f.food_key).map((item: any, i: number) => (
             <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
-              <Grid size={12} className={"p-2"}>
+              <Grid size={12} className={"p-2px"}>
                 <Accordion
                   className={"border-0 shadow-0 radius-0"}
                   expanded={isExpanded[i]?.expanded}
@@ -215,12 +215,12 @@ export const FoodFavoriteList = () => {
                   }}
                 >
                   <AccordionSummary
-                    className={"me-n10"}
+                    className={"mr-n10px"}
                     expandIcon={
                       <Icons
                         key={"ChevronDown"}
                         name={"ChevronDown"}
-                        className={"w-18 h-18"}
+                        className={"w-18px h-18px"}
                         onClick={(e: any) => {
                           e.stopPropagation();
                           setIsExpanded(isExpanded.map((el: any, index: number) => (
@@ -256,11 +256,11 @@ export const FoodFavoriteList = () => {
                         <Div className={`fs-1-0rem fw-600 ${item.food_name_color}`}>
                           {item.food_name}
                         </Div>
-                        <Div className={"mt-n3 ms-5"}>
+                        <Div className={"mt-n3px ml-5px"}>
                           <Icons
                             key={"Star"}
                             name={"Star"}
-                            className={"w-20 h-20"}
+                            className={"w-20px h-20px"}
                             color={"darkslategrey"}
                             fill={"gold"}
                             onClick={(e: any) => {
@@ -272,7 +272,7 @@ export const FoodFavoriteList = () => {
                       </Grid>
                       <Grid size={4} className={"d-row-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.food_count_color}`}>
-                          <Div className={`fs-0-8rem fw-500 dark me-10`}>
+                          <Div className={`fs-0-8rem fw-500 dark mr-10px`}>
                             {item.food_brand}
                           </Div>
                         </Div>
@@ -293,7 +293,7 @@ export const FoodFavoriteList = () => {
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
                             {translate("kcal")}
                           </Div>
                         </Grid>
@@ -328,7 +328,7 @@ export const FoodFavoriteList = () => {
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
                             {translate("carb")}
                           </Div>
                         </Grid>
@@ -363,7 +363,7 @@ export const FoodFavoriteList = () => {
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
                             {translate("protein")}
                           </Div>
                         </Grid>
@@ -398,7 +398,7 @@ export const FoodFavoriteList = () => {
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
                             {translate("fat")}
                           </Div>
                         </Grid>
@@ -434,7 +434,7 @@ export const FoodFavoriteList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min-75vh"}>
         {listSection()}
       </Paper>
     );

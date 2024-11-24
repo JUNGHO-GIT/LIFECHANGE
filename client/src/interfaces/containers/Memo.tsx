@@ -31,10 +31,10 @@ export const Memo = (
       position={"center"}
       direction={"center"}
       contents={
-        <Grid container spacing={3} columns={12} className={"w-max70vw"}>
+        <Grid container spacing={3} columns={12} className={"w-max-70vw"}>
           <Grid size={12} className={"d-center"}>
             <TextArea
-              className={"w-86vw h-55vh border-1 p-10"}
+              className={"w-86vw h-55vh border-1 p-10px"}
               value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
               style={{
                 fontFamily: "inherit",

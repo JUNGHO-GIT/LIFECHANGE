@@ -103,7 +103,7 @@ export const UserDetail = () => {
           <Avatar
             src={OBJECT?.user_image}
             alt={"user_image"}
-            className={"w-150 h-150"}
+            className={"w-150px h-150px"}
           />
         </Grid>
       </Grid>
@@ -113,7 +113,7 @@ export const UserDetail = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
           {[OBJECT].filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
-            <Grid container={true} spacing={2} className={"p-10"} key={`detail-${i}`}>
+            <Grid container={true} spacing={2} className={"p-10px"} key={`detail-${i}`}>
               {/** 이메일 **/}
               <Grid container={true} spacing={0}>
                 <Grid size={12}>
@@ -343,12 +343,12 @@ export const UserDetail = () => {
               {/** 포함 여부 **/}
               <Grid container={true} spacing={0}>
                 <Grid size={12} className={"d-row-left"}>
-                  <Div className={"fs-0-7rem fw-500 dark ms-10"}>
+                  <Div className={"fs-0-7rem fw-500 dark ml-10px"}>
                     {translate("includingExclusions")}
                   </Div>
                   <Checkbox
                     size={"small"}
-                    className={"p-0 ms-5"}
+                    className={"p-0px ml-5px"}
                     checked={includingExclusions}
                     onChange={(e: any) => {
                       setIncludingExclusions(e.target.checked);
@@ -368,7 +368,7 @@ export const UserDetail = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min-75vh"}>
         {imageSection()}
         <Hr m={40} />
         {detailSection()}

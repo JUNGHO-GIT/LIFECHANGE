@@ -54,7 +54,7 @@ export const AdminDashboard = () => {
     // 7-2. detail
     const detailSection = () => {
       const detailFragment = () => (
-        <Grid container={true} spacing={2} className={"border-1 radius-2 p-20"}>
+        <Grid container={true} spacing={2} className={"border-1 radius-2 p-20px"}>
           <Grid container={true} spacing={2}>
             <Grid size={12}>
               <Div className={"fs-1-5rem fw-600"}>
@@ -84,7 +84,7 @@ export const AdminDashboard = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min-75vh"}>
         {detailSection()}
       </Paper>
     );

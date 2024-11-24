@@ -150,7 +150,7 @@ export const CalendarList = () => {
             <Icons
               key={"ArrowLeft"}
               name={"ArrowLeft"}
-              className={"w-24 h-24"}
+              className={"w-24px h-24px"}
               onClick={() => {
                 setDATE((prev: any) => ({
                   ...prev,
@@ -178,7 +178,7 @@ export const CalendarList = () => {
             <Icons
               key={"ArrowRight"}
               name={"ArrowRight"}
-              className={"w-24 h-24"}
+              className={"w-24px h-24px"}
               onClick={() => {
                 setDATE((prev: any) => ({
                   ...prev,
@@ -307,7 +307,7 @@ export const CalendarList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min-75vh"}>
         {calendarSection()}
       </Paper>
     );

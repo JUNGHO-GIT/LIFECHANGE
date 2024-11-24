@@ -16,7 +16,7 @@ export const Header = () => {
     const headerSection = () => {
       const iconFragment = () => (
         <Div
-          className={"d-center pointer ms-5"}
+          className={"d-center pointer ml-5px"}
           onClick={() => {
             navigate("/today/list", {
               state: {
@@ -33,7 +33,7 @@ export const Header = () => {
             radius={false}
             src={"logo2.webp"}
             loading={"eager"}
-            className={"h-max30 me-2vw"}
+            className={"h-max-30px mr-2vw"}
           />
           <Img
             hover={true}
@@ -41,7 +41,7 @@ export const Header = () => {
             radius={false}
             src={"logo3.webp"}
             loading={"eager"}
-            className={"h-max30"}
+            className={"h-max-30px"}
           />
         </Div>
       );
@@ -50,7 +50,7 @@ export const Header = () => {
           <Icons
             key={"Settings"}
             name={"Settings"}
-            className={"w-30 h-30"}
+            className={"w-30px h-30px"}
             onClick={() => {
               navigate("/user/appSetting");
             }}
@@ -59,7 +59,7 @@ export const Header = () => {
           <Icons
             key={"ArrowRight"}
             name={"ArrowRight"}
-            className={"w-30 h-30"}
+            className={"w-30px h-30px"}
             onClick={() => {
               navigate(-1);
             }}
@@ -74,7 +74,7 @@ export const Header = () => {
       );
     };
     return (
-      <Paper className={"layout-wrapper p-sticky top-0vh h-8vh border-1 radius-2 shadow-top-1"}>
+      <Paper className={"layout-wrapper p-sticky top-0vh h-8vh border-1 radius-2 shadow-top-1px"}>
         {headerSection()}
       </Paper>
     );

@@ -67,7 +67,7 @@ export const Empty = (
                 <Icons
                   key={"Search"}
                   name={"Search"}
-                  className={"w-18 h-18"}
+                  className={"w-18px h-18px"}
                 />
               </Grid>
               <Grid size={4} className={"d-row-left"}>
@@ -106,7 +106,7 @@ export const Empty = (
                 <Icons
                   key={"Search"}
                   name={"Search"}
-                  className={"w-18 h-18"}
+                  className={"w-18px h-18px"}
                 />
               </Grid>
               <Grid size={4} className={"d-row-left"}>

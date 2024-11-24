@@ -332,7 +332,7 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-70vw h-max70vh border-1 radius-2 shadow-0 px-10 py-20"}>
+          <Card className={"w-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px"}>
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-col-center"}>
                 <Div className={"fs-1-0rem fw-600"}>
@@ -353,7 +353,7 @@ export const TopNav = () => {
                   shadow={false}
                   radius={false}
                   src={`${smileImage.total}.webp`}
-                  className={"me-5"}
+                  className={"mr-5px"}
                 />
               </Grid>
               <Grid size={8} className={"d-row-left"}>
@@ -376,7 +376,7 @@ export const TopNav = () => {
                   shadow={false}
                   radius={false}
                   src={`${smileImage.exercise}.webp`}
-                  className={"me-5"}
+                  className={"mr-5px"}
                 />
               </Grid>
               <Grid size={8} className={"d-row-left"}>
@@ -399,7 +399,7 @@ export const TopNav = () => {
                   shadow={false}
                   radius={false}
                   src={`${smileImage.food}.webp`}
-                  className={"me-5"}
+                  className={"mr-5px"}
                 />
               </Grid>
               <Grid size={8} className={"d-row-left"}>
@@ -422,7 +422,7 @@ export const TopNav = () => {
                   shadow={false}
                   radius={false}
                   src={`${smileImage.money}.webp`}
-                  className={"me-5"}
+                  className={"mr-5px"}
                 />
               </Grid>
               <Grid size={8} className={"d-row-left"}>
@@ -445,7 +445,7 @@ export const TopNav = () => {
                   shadow={false}
                   radius={false}
                   src={`${smileImage.sleep}.webp`}
-                  className={"me-5"}
+                  className={"mr-5px"}
                 />
               </Grid>
               <Grid size={8} className={"d-row-left"}>
@@ -494,7 +494,7 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max70vw h-max70vh border-1 radius-2 shadow-0 px-10 py-20"}>
+          <Card className={"w-max-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px"}>
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-col-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
@@ -515,7 +515,7 @@ export const TopNav = () => {
                   shadow={false}
                   radius={false}
                   src={"exercise5.webp"}
-                  className={"me-5"}
+                  className={"mr-5px"}
                 />
               </Grid>
               <Grid size={8} className={"d-row-left"}>
@@ -524,7 +524,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
               <Grid size={7} className={"d-row-right"}>
-                <Div className={"fs-1-1rem fw-600 black me-5"}>
+                <Div className={"fs-1-1rem fw-600 black mr-5px"}>
                   {insertComma(scale.initScale || "0")}
                 </Div>
               </Grid>
@@ -543,7 +543,7 @@ export const TopNav = () => {
                   shadow={false}
                   radius={false}
                   src={"exercise5.webp"}
-                  className={"me-5"}
+                  className={"mr-5px"}
                 />
               </Grid>
               <Grid size={8} className={"d-row-left"}>
@@ -552,7 +552,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
               <Grid size={7} className={"d-row-right"}>
-                <Div className={"fs-1-1rem fw-600 black me-5"}>
+                <Div className={"fs-1-1rem fw-600 black mr-5px"}>
                   {insertComma(scale.curScale || "0")}
                 </Div>
               </Grid>
@@ -609,7 +609,7 @@ export const TopNav = () => {
           </Card>
         }
         children={(popTrigger: any) => (
-          <Div className={"me-auto d-center"}>
+          <Div className={"mr-auto d-center"}>
             <Img
               max={27}
               hover={true}
@@ -633,7 +633,7 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max70vw h-max70vh border-1 radius-2 shadow-0 px-10 py-20"}>
+          <Card className={"w-max-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px"}>
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-col-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
@@ -655,7 +655,7 @@ export const TopNav = () => {
                       setNutritionType(e.target.checked ? "avg" : "total");
                     }}
                   />
-                  <Div className={"fs-0-7rem fw-500 dark ms-10"}>
+                  <Div className={"fs-0-7rem fw-500 dark ml-10px"}>
                     {translate("totalValue")}
                   </Div>
                   <Checkbox
@@ -685,7 +685,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
               <Grid size={7} className={"d-row-right"}>
-                <Div className={"fs-1-1rem fw-600 black me-5"}>
+                <Div className={"fs-1-1rem fw-600 black mr-5px"}>
                   {insertComma(nutrition.initAvgKcalIntake || "0")}
                 </Div>
               </Grid>
@@ -716,7 +716,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
               <Grid size={7} className={"d-row-right"}>
-                <Div className={"fs-1-1rem fw-600 black me-5"}>
+                <Div className={"fs-1-1rem fw-600 black mr-5px"}>
                   {nutritionType === "avg" ? (
                     insertComma(nutrition.curAvgKcalIntake || "0")
                   ) : (
@@ -835,7 +835,7 @@ export const TopNav = () => {
           </Card>
         }
         children={(popTrigger: any) => (
-          <Div className={"me-auto d-center"}>
+          <Div className={"mr-auto d-center"}>
             <Img
               max={27}
               hover={true}
@@ -859,7 +859,7 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max70vw h-max70vh border-1 radius-2 shadow-0 px-10 py-20"}>
+          <Card className={"w-max-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px"}>
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-col-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
@@ -901,7 +901,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
               <Grid size={7} className={"d-row-right"}>
-                <Div className={"fs-1-1rem fw-600 black me-5"}>
+                <Div className={"fs-1-1rem fw-600 black mr-5px"}>
                   {insertComma(property.initProperty || "0")}
                 </Div>
               </Grid>
@@ -928,7 +928,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
               <Grid size={7} className={"d-row-right"}>
-                <Div className={"fs-1-1rem fw-600 black me-5"}>
+                <Div className={"fs-1-1rem fw-600 black mr-5px"}>
                   {includingExclusions ? (
                     insertComma(property.curPropertyAll || "0")
                   ) : (
@@ -1001,7 +1001,7 @@ export const TopNav = () => {
           </Card>
         }
         children={(popTrigger: any) => (
-          <Div className={"me-auto d-center"}>
+          <Div className={"mr-auto d-center"}>
             <Img
               max={27}
               hover={true}
@@ -1243,7 +1243,7 @@ export const TopNav = () => {
 
     // 5. return -----------------------------------------------------------------------------------
     return (
-      <Paper className={"layout-wrapper p-sticky top-8vh h-8vh border-1 radius-2 shadow-bottom-3 p-0"}>
+      <Paper className={"layout-wrapper p-sticky top-8vh h-8vh border-1 radius-2 shadow-bottom-3px p-0px"}>
         <Grid container spacing={0}>
           <Grid size={6} className={"d-row-center"}>
             {smileSection()}

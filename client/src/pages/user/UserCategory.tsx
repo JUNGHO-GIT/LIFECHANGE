@@ -270,7 +270,7 @@ export const UserCategory = () => {
         <TableContainer className={"border-1 radius-2 over-x-hidden"}>
           <Table>
             <TableHead className={"table-thead"}>
-              <TableRow className={"table-thead-tr p-sticky top-0 z-900"}>
+              <TableRow className={"table-thead-tr p-sticky top-0px z-900"}>
                 <TableCell>
                   {translate("dataCategory2")}
                 </TableCell>
@@ -278,10 +278,10 @@ export const UserCategory = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT[dataType]?.map((item: any, index: number) => (index > 0) && (
-                <TableRow className={"table-tbody-tr border-bottom-1"} key={index}>
+                <TableRow className={"table-tbody-tr border-bottom-1px"} key={index}>
                   <TableCell className={selectedIdx.category2Idx === index ? "bg-light" : ""}>
                     <Div className={"d-center"}>
-                      <Div className={"fs-0-9rem ms-auto"}>
+                      <Div className={"fs-0-9rem ml-auto"}>
                         <Input
                           variant={"standard"}
                           value={translate(item[`${dataType}_part`]) || ""}
@@ -326,10 +326,10 @@ export const UserCategory = () => {
                           }}
                         />
                       </Div>
-                      <Div className={"fs-0-9rem ms-auto d-row-right"}>
+                      <Div className={"fs-0-9rem ml-auto d-row-right"}>
                         <Icons
                           name={"Search"}
-                          className={"w-12 h-12"}
+                          className={"w-12px h-12px"}
                           onClick={() => {
                             setSelectedIdx((prev: any) => ({
                               ...prev,
@@ -339,7 +339,7 @@ export const UserCategory = () => {
                         />
                         <Icons
                           name={"Pencil"}
-                          className={"w-12 h-12 navy"}
+                          className={"w-12px h-12px navy"}
                           onClick={() => {
                             setSelectedIdx((prev: any) => ({
                               ...prev,
@@ -350,7 +350,7 @@ export const UserCategory = () => {
                         />
                         <Icons
                           name={"Trash"}
-                          className={"w-12 h-12 burgundy"}
+                          className={"w-12px h-12px burgundy"}
                           onClick={() => {
                             setSelectedIdx((prev: any) => ({
                               ...prev,
@@ -372,7 +372,7 @@ export const UserCategory = () => {
                     <Icons
                       key={"Plus"}
                       name={"Plus"}
-                      className={"w-12 h-12"}
+                      className={"w-12px h-12px"}
                       onClick={() => {
                         handleAdd("part");
                       }}
@@ -387,7 +387,7 @@ export const UserCategory = () => {
           <TableContainer className={"border-1 radius-2 over-x-hidden"}>
             <Table>
               <TableHead className={"table-thead"}>
-                <TableRow className={"table-thead-tr p-sticky top-0 z-900"}>
+                <TableRow className={"table-thead-tr p-sticky top-0px z-900"}>
                   <TableCell>
                     {translate("dataCategory3")}
                   </TableCell>
@@ -395,10 +395,10 @@ export const UserCategory = () => {
               </TableHead>
               <TableBody className={"table-tbody"}>
                 {OBJECT[dataType]?.[selectedIdx?.category2Idx]?.[`${dataType}_title`]?.map((item: any, index: number) => (index > 0) && (
-                  <TableRow key={index} className={"table-tbody-tr border-bottom-1"}>
+                  <TableRow key={index} className={"table-tbody-tr border-bottom-1px"}>
                     <TableCell>
                       <Div className={"d-center"}>
-                        <Div className={"fs-0-9rem ms-auto"}>
+                        <Div className={"fs-0-9rem ml-auto"}>
                           <Input
                             variant={"standard"}
                             value={translate(item) || ""}
@@ -447,10 +447,10 @@ export const UserCategory = () => {
                             }}
                           />
                         </Div>
-                        <Div className={"fs-0-9rem ms-auto d-row-right"}>
+                        <Div className={"fs-0-9rem ml-auto d-row-right"}>
                           <Icons
                             name={"Pencil"}
-                            className={"w-12 h-12 navy"}
+                            className={"w-12px h-12px navy"}
                             onClick={() => {
                               setSelectedIdx((prev: any) => ({
                                 ...prev,
@@ -461,7 +461,7 @@ export const UserCategory = () => {
                           />
                           <Icons
                             name={"Trash"}
-                            className={"w-12 h-12 burgundy"}
+                            className={"w-12px h-12px burgundy"}
                             onClick={() => {
                               setSelectedIdx((prev: any) => ({
                                 ...prev,
@@ -483,7 +483,7 @@ export const UserCategory = () => {
                       <Icons
                         key={"Plus"}
                         name={"Plus"}
-                        className={"w-12 h-12"}
+                        className={"w-12px h-12px"}
                         onClick={() => {
                           handleAdd("title");
                         }}
@@ -515,13 +515,13 @@ export const UserCategory = () => {
                     </TableHead>
                     <TableBody className={"table-tbody"}>
                       {Object.keys(item).map((item: any, idx: number) => (
-                        <TableRow className={"table-tbody-tr border-top-1"} key={idx}>
+                        <TableRow className={"table-tbody-tr border-top-1px"} key={idx}>
                           <TableCell className={`${dataType === item ? "bg-light" : ""}`}>
                             <Div className={"d-center"}>
-                              <Div className={"fs-1-0rem ms-0"}>
+                              <Div className={"fs-1-0rem ml-0px"}>
                                 {translate(item)}
                               </Div>
-                              <Div className={"fs-1-0rem ms-auto"}>
+                              <Div className={"fs-1-0rem ml-auto"}>
                               <PopUp
                                 type={"innerCenter"}
                                 position={"center"}
@@ -533,7 +533,7 @@ export const UserCategory = () => {
                                   <Icons
                                     key={"Search"}
                                     name={"Search"}
-                                    className={"w-18 h-18 black ms-auto"}
+                                    className={"w-18px h-18px black ml-auto"}
                                     onClick={(e: any) => {
                                       setDataType(item);
                                       setSelectedIdx((prev: any) => ({
@@ -568,7 +568,7 @@ export const UserCategory = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min90vh"}>
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min-90vh"}>
         {detailSection()}
       </Paper>
     );

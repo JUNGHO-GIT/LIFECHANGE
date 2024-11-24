@@ -193,7 +193,7 @@ export const UserDelete = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
           {[OBJECT].filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
-            <Grid container={true} spacing={2} className={"p-10"} key={`detail-${i}`}>
+            <Grid container={true} spacing={2} className={"p-10px"} key={`detail-${i}`}>
               {/** 이메일 **/}
               <Grid container={true} spacing={1}>
                 <Grid size={10}>
@@ -225,7 +225,7 @@ export const UserDelete = () => {
                 <Grid size={2}>
                   <Btn
                     color={"primary"}
-                    className={"mt-n25"}
+                    className={"mt-n25px"}
                     disabled={item.user_id_verified === true}
                     onClick={() => {
                       flowSendEmail();
@@ -258,7 +258,7 @@ export const UserDelete = () => {
                 <Grid size={2}>
                   <Btn
                     color={"primary"}
-                    className={"mt-n25"}
+                    className={"mt-n25px"}
                     disabled={!item.user_id_sended || item.user_id_verified === true}
                     onClick={() => {
                       flowVerifyEmail();
@@ -340,7 +340,7 @@ export const UserDelete = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper d-center border-1 radius-2 shadow-1 h-min100vh"}>
+      <Paper className={"content-wrapper d-center border-1 radius-2 shadow-1 h-min-100vh"}>
         {titleSection()}
         <Hr m={40} />
         {deleteSection()}

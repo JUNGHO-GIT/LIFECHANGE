@@ -459,7 +459,7 @@ export const FoodDetail = () => {
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Grid container={true} spacing={2} className={"border-1 radius-2 p-20"}>
+      <Grid container={true} spacing={2} className={"border-1 radius-2 p-20px"}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}
@@ -480,7 +480,7 @@ export const FoodDetail = () => {
     );
     // 7-2. total
     const totalSection = () => (
-      <Grid container={true} spacing={2} className={"border-1 radius-2 p-20"}>
+      <Grid container={true} spacing={2} className={"border-1 radius-2 p-20px"}>
         {/** row 1 **/}
         <Grid container={true} spacing={2}>
           <Grid size={6}>
@@ -577,7 +577,7 @@ export const FoodDetail = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
           {OBJECT.food_section?.filter((f: any) => f).map((item: any, i: number) => (
-            <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20`} key={`detail-${i}`}>
+            <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`} key={`detail-${i}`}>
               {/** row 1 **/}
               <Grid container={true} spacing={2}>
                 <Grid size={6} className={"d-row-left"}>
@@ -585,11 +585,11 @@ export const FoodDetail = () => {
                     badgeContent={i + 1}
                     bgcolor={bgColors?.[foodArray.findIndex((f: any) => f.food_part === item?.food_part)]}
                   />
-                  <Div className={"mt-n10 ms-15"}>
+                  <Div className={"mt-n10px ml-15px"}>
                     <Icons
                       key={"Star"}
                       name={"Star"}
-                      className={"w-20 h-20"}
+                      className={"w-20px h-20px"}
                       color={"darkslategrey"}
                       fill={
                         FAVORITE.length > 0 && FAVORITE.some((item: any) => (
@@ -982,7 +982,7 @@ export const FoodDetail = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min-75vh"}>
         {dateCountSection()}
         {totalSection()}
         {detailSection()}

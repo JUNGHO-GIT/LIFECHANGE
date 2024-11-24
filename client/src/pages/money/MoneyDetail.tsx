@@ -324,7 +324,7 @@ export const MoneyDetail = () => {
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Grid container={true} spacing={2} className={"border-1 radius-2 p-20"}>
+      <Grid container={true} spacing={2} className={"border-1 radius-2 p-20px"}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}
@@ -345,7 +345,7 @@ export const MoneyDetail = () => {
     );
     // 7-2. total
     const totalSection = () => (
-      <Grid container={true} spacing={2} className={"border-1 radius-2 p-20"}>
+      <Grid container={true} spacing={2} className={"border-1 radius-2 p-20px"}>
         {/** row 1 **/}
         <Grid container={true} spacing={2}>
           <Grid size={12}>
@@ -401,7 +401,7 @@ export const MoneyDetail = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
           {OBJECT.money_section?.filter((f: any) => f).map((item: any, i: number) => (
-            <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20`}  key={`detail-${i}`}>
+            <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}  key={`detail-${i}`}>
               {/** row 1 **/}
               <Grid container={true} spacing={2}>
                 <Grid size={6} className={"d-row-left"}>
@@ -548,12 +548,12 @@ export const MoneyDetail = () => {
                   />
                 </Grid>
                 <Grid size={{ xs: 5, sm: 4 }} className={"d-center"}>
-                  <Div className={"fs-0-7rem fw-500 dark ms-10"}>
+                  <Div className={"fs-0-7rem fw-500 dark ml-10px"}>
                     {translate("includeProperty")}
                   </Div>
                   <Checkbox
                     size={"small"}
-                    className={"p-0 ms-5"}
+                    className={"p-0px ml-5px"}
                     checked={item?.money_include === "Y"}
                     disabled={LOCKED === "locked"}
                     onChange={(e: any) => {
@@ -583,7 +583,7 @@ export const MoneyDetail = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min-75vh"}>
         {dateCountSection()}
         {totalSection()}
         {detailSection()}

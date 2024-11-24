@@ -76,13 +76,13 @@ export const UserAppSetting = () => {
                       navigate("/user/detail")
                     }}
                   >
-                    <TableCell className={"w-90vw p-15"}>
+                    <TableCell className={"w-90vw p-15px"}>
                       {translate("userInformation")}
                     </TableCell>
-                    <TableCell className={"w-10vw p-15"}>
+                    <TableCell className={"w-10vw p-15px"}>
                       <Icons
                         name={"ChevronRight"}
-                        className={"w-16 h-16"}
+                        className={"w-16px h-16px"}
                       />
                     </TableCell>
                   </TableRow>
@@ -93,13 +93,13 @@ export const UserAppSetting = () => {
                       navigate("/user/category")
                     }}
                   >
-                    <TableCell className={"w-90vw p-15"}>
+                    <TableCell className={"w-90vw p-15px"}>
                       {translate("category")}
                     </TableCell>
-                    <TableCell className={"w-10vw p-15"}>
+                    <TableCell className={"w-10vw p-15px"}>
                       <Icons
                         name={"ChevronRight"}
-                        className={"w-16 h-16"}
+                        className={"w-16px h-16px"}
                       />
                     </TableCell>
                   </TableRow>
@@ -110,13 +110,13 @@ export const UserAppSetting = () => {
                       navigate("/admin/dashboard")
                     }}
                   >
-                    <TableCell className={"w-90vw p-15"}>
+                    <TableCell className={"w-90vw p-15px"}>
                       {translate("dashboard")}
                     </TableCell>
-                    <TableCell className={"w-10vw p-15"}>
+                    <TableCell className={"w-10vw p-15px"}>
                       <Icons
                         name={"ChevronRight"}
-                        className={"w-16 h-16"}
+                        className={"w-16px h-16px"}
                       />
                     </TableCell>
                   </TableRow>
@@ -126,7 +126,7 @@ export const UserAppSetting = () => {
                     position={"center"}
                     direction={"center"}
                     contents={
-                      <Div className={"d-col-center p-5"}>
+                      <Div className={"d-col-center p-5px"}>
                         <Div
                           className={"d-center"}
                           onClick={() => {
@@ -139,7 +139,7 @@ export const UserAppSetting = () => {
                             shadow={false}
                             radius={false}
                             src={"flag2.webp"}
-                            className={"me-15"}
+                            className={"mr-15px"}
                           />
                           <Div className={`${lang === "en" ? "fw-700" : ""}`}>
                             English
@@ -147,7 +147,7 @@ export const UserAppSetting = () => {
                           <Icons
                             key={"Check"}
                             name={"Check"}
-                            className={`w-16 h-16 black ${lang === "en" ? "" : "d-none"}`}
+                            className={`w-16px h-16px black ${lang === "en" ? "" : "d-none"}`}
                           />
                         </Div>
                         <Br m={20} />
@@ -163,7 +163,7 @@ export const UserAppSetting = () => {
                             shadow={false}
                             radius={false}
                             src={"flag1.webp"}
-                            className={"me-15"}
+                            className={"mr-15px"}
                           />
                           <Div className={`${lang === "ko" ? "fw-700" : ""}`}>
                             한국어
@@ -171,7 +171,7 @@ export const UserAppSetting = () => {
                           <Icons
                             key={"Check"}
                             name={"Check"}
-                            className={`w-16 h-16 black ${lang === "ko" ? "" : "d-none"}`}
+                            className={`w-16px h-16px black ${lang === "ko" ? "" : "d-none"}`}
                           />
                         </Div>
                       </Div>
@@ -183,14 +183,14 @@ export const UserAppSetting = () => {
                           popTrigger.openPopup(e.currentTarget)
                         }}
                       >
-                        <TableCell className={"w-90vw p-15"}>
+                        <TableCell className={"w-90vw p-15px"}>
                           {translate("language")}
                         </TableCell>
-                        <TableCell className={"w-10vw p-15"}>
+                        <TableCell className={"w-10vw p-15px"}>
                           <Icons
                             key={"ChevronRight"}
                             name={"ChevronRight"}
-                            className={"w-16 h-16"}
+                            className={"w-16px h-16px"}
                           />
                         </TableCell>
                       </TableRow>
@@ -203,13 +203,13 @@ export const UserAppSetting = () => {
                       navigate("/user/appInfo")
                     }}
                   >
-                    <TableCell className={"w-90vw p-15"}>
+                    <TableCell className={"w-90vw p-15px"}>
                       {translate("appInfo")}
                     </TableCell>
-                    <TableCell className={"w-10vw p-15"}>
+                    <TableCell className={"w-10vw p-15px"}>
                       <Icons
                         name={"ChevronRight"}
-                        className={"w-16 h-16"}
+                        className={"w-16px h-16px"}
                       />
                     </TableCell>
                   </TableRow>
@@ -220,13 +220,13 @@ export const UserAppSetting = () => {
                       handleClearStorage();
                     }}
                   >
-                    <TableCell className={"w-90vw p-15"}>
+                    <TableCell className={"w-90vw p-15px"}>
                       {translate("clearStorage")}
                     </TableCell>
-                    <TableCell className={"w-10vw p-15"}>
+                    <TableCell className={"w-10vw p-15px"}>
                       <Icons
                         name={"ChevronRight"}
-                        className={"w-16 h-16"}
+                        className={"w-16px h-16px"}
                       />
                     </TableCell>
                   </TableRow>
@@ -237,13 +237,13 @@ export const UserAppSetting = () => {
                       handleLogout();
                     }}
                   >
-                    <TableCell className={"w-90vw p-15"}>
+                    <TableCell className={"w-90vw p-15px"}>
                       {translate("logout")}
                     </TableCell>
-                    <TableCell className={"w-10vw p-15"}>
+                    <TableCell className={"w-10vw p-15px"}>
                       <Icons
                         name={"ChevronRight"}
-                        className={"w-16 h-16"}
+                        className={"w-16px h-16px"}
                       />
                     </TableCell>
                   </TableRow>
@@ -254,13 +254,13 @@ export const UserAppSetting = () => {
                       navigate("/user/delete")
                     }}
                   >
-                    <TableCell className={"w-90vw p-15 red"}>
+                    <TableCell className={"w-90vw p-15px red"}>
                       {translate("userDelete")}
                     </TableCell>
-                    <TableCell className={"w-10vw p-15"}>
+                    <TableCell className={"w-10vw p-15px"}>
                       <Icons
                         name={"ChevronRight"}
-                        className={"w-16 h-16"}
+                        className={"w-16px h-16px"}
                       />
                     </TableCell>
                   </TableRow>
@@ -278,7 +278,7 @@ export const UserAppSetting = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper d-center border-1 radius-2 h-min90vh"}>
+      <Paper className={"content-wrapper d-center border-1 radius-2 h-min-90vh"}>
         {detailSection()}
       </Paper>
     );

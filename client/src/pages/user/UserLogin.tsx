@@ -239,7 +239,7 @@ export const UserLogin = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
           {[OBJECT].filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
-            <Grid container={true} spacing={2} className={"p-10"} key={`detail-${i}`}>
+            <Grid container={true} spacing={2} className={"p-10px"} key={`detail-${i}`}>
               {/* row 1 */}
               <Grid container={true} spacing={0}>
                 <Grid size={12}>
@@ -366,7 +366,7 @@ export const UserLogin = () => {
                   radius={false}
                   src={"user1.webp"}
                 />
-                <Div className={"fs-1-0rem black ms-10"}>
+                <Div className={"fs-1-0rem black ml-10px"}>
                   {translate("googleLogin")}
                 </Div>
               </Div>
@@ -382,7 +382,7 @@ export const UserLogin = () => {
         {/** row 1 **/}
         <Grid container={true} spacing={2}>
           <Grid size={12} className={"d-row-center"}>
-            <Div className={"fs-0-8rem black me-10"}>
+            <Div className={"fs-0-8rem black mr-10px"}>
               {translate("notId")}
             </Div>
             <Div className={"fs-0-8rem blue pointer"} onClick={() => {
@@ -397,7 +397,7 @@ export const UserLogin = () => {
         {/** row 2 **/}
         <Grid container={true} spacing={2}>
           <Grid size={12} className={"d-row-center"}>
-            <Div className={"fs-0-8rem black me-10"}>
+            <Div className={"fs-0-8rem black mr-10px"}>
               {translate("forgotPw")}
             </Div>
             <Div className={"fs-0-8rem blue pointer"} onClick={() => {
@@ -412,7 +412,7 @@ export const UserLogin = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper d-center border-1 radius-2 shadow-1 h-min100vh"}>
+      <Paper className={"content-wrapper d-center border-1 radius-2 shadow-1 h-min-100vh"}>
         {titleSection()}
         <Hr m={30} className={"bg-light"} />
         {loginSection()}

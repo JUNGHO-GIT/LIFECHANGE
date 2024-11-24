@@ -138,7 +138,7 @@ export const MoneyGoalList = () => {
         <Grid container={true} spacing={0}>
           {OBJECT.filter((f: any) => f._id).map((item: any, i: number) => (
             <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
-              <Grid size={12} className={"p-2"}>
+              <Grid size={12} className={"p-2px"}>
                 <Accordion
                   className={"border-0 shadow-0 radius-0"}
                   expanded={isExpanded[i]?.expanded}
@@ -150,12 +150,12 @@ export const MoneyGoalList = () => {
                   }}
                 >
                   <AccordionSummary
-                    className={"me-n10"}
+                    className={"mr-n10px"}
                     expandIcon={
                       <Icons
                         key={"ChevronDown"}
                         name={"ChevronDown"}
-                        className={"w-18 h-18"}
+                        className={"w-18px h-18px"}
                         onClick={(e: any) => {
                           e.stopPropagation();
                           setIsExpanded(isExpanded.map((el: any, index: number) => (
@@ -182,23 +182,23 @@ export const MoneyGoalList = () => {
                         <Icons
                           key={"Search"}
                           name={"Search"}
-                          className={"w-18 h-18"}
+                          className={"w-18px h-18px"}
                         />
                       </Grid>
                       <Grid size={10} className={"d-row-left"}>
                         <Div className={"fs-1-0rem fw-600 black"}>
                           {item.money_goal_dateStart?.substring(5, 10)}
                         </Div>
-                        <Div className={"fs-0-9rem fw-500 dark ms-5"}>
+                        <Div className={"fs-0-9rem fw-500 dark ml-5px"}>
                           {translate(getDayNotFmt(item.money_goal_dateStart).format("ddd"))}
                         </Div>
-                        <Div className={"fs-0-8rem fw-500 dark ms-5 me-5"}>
+                        <Div className={"fs-0-8rem fw-500 dark ml-5px mr-5px"}>
                           -
                         </Div>
                         <Div className={"fs-1-0rem fw-600 black"}>
                           {item.money_goal_dateEnd?.substring(5, 10)}
                         </Div>
-                        <Div className={"fs-0-9rem fw-500 dark ms-5"}>
+                        <Div className={"fs-0-9rem fw-500 dark ml-5px"}>
                           {translate(getDayNotFmt(item.money_goal_dateEnd).format("ddd"))}
                         </Div>
                       </Grid>
@@ -218,7 +218,7 @@ export const MoneyGoalList = () => {
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
                             {translate("income")}
                           </Div>
                         </Grid>
@@ -291,7 +291,7 @@ export const MoneyGoalList = () => {
                           />
                         </Grid>
                         <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ms-n15"}>
+                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
                             {translate("expense")}
                           </Div>
                         </Grid>
@@ -365,7 +365,7 @@ export const MoneyGoalList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min75vh"}>
+      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min-75vh"}>
         {listSection()}
       </Paper>
     );

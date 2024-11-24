@@ -62,12 +62,12 @@ export const PickerDay = (
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (isGoalTodayList || isGoalList || isTodayList || isRealList) {
-      setTypeSaveStr("h-min0 h-5vh fs-0-7rem pointer");
-      setTypeListStr("h-min0 h-5vh fs-0-7rem pointer");
+      setTypeSaveStr("h-min-0px h-5vh fs-0-7rem pointer");
+      setTypeListStr("h-min-0px h-5vh fs-0-7rem pointer");
     }
     else {
-      setTypeSaveStr("h-min40 fs-0-8rem pointer");
-      setTypeListStr("h-min40 fs-0-8rem pointer");
+      setTypeSaveStr("h-min-40px fs-0-8rem pointer");
+      setTypeListStr("h-min-40px fs-0-8rem pointer");
     }
   }, [PATH]);
 
@@ -171,9 +171,9 @@ export const PickerDay = (
         position={"center"}
         direction={"center"}
         contents={
-          <Grid container={true} spacing={2} className={"w-min70vw"}>
+          <Grid container={true} spacing={2} className={"w-min-70vw"}>
             <Grid size={12} className={"d-row-center"}>
-              <Div className={"fs-1-2rem fw-600 me-10"}>
+              <Div className={"fs-1-2rem fw-600 mr-10px"}>
                 {translate("viewDay")}
               </Div>
               <Div className={"fs-0-8rem fw-500 dark"}>
@@ -317,11 +317,11 @@ export const PickerDay = (
             }
             endadornment={
               <Div className={"d-row-center"}>
-                <Div className={"me-n10"}>
+                <Div className={"mr-n10px"}>
                   <Icons
                     key={"ChevronLeft"}
                     name={"ChevronLeft"}
-                    className={"w-20 h-20"}
+                    className={"w-20px h-20px"}
                     onClick={(e: any) => {
                       e.stopPropagation();
                       setDATE((prev: any) => ({
@@ -333,11 +333,11 @@ export const PickerDay = (
                     }}
                   />
                 </Div>
-                <Div className={"me-n15"}>
+                <Div className={"mr-n15px"}>
                   <Icons
                     key={"ChevronRight"}
                     name={"ChevronRight"}
-                    className={"w-20 h-20"}
+                    className={"w-20px h-20px"}
                     onClick={(e: any) => {
                       e.stopPropagation();
                       setDATE((prev: any) => ({
@@ -366,9 +366,9 @@ export const PickerDay = (
         position={"center"}
         direction={"center"}
         contents={
-          <Grid container={true} spacing={2} className={"w-min70vw"}>
+          <Grid container={true} spacing={2} className={"w-min-70vw"}>
             <Grid size={12} className={"d-row-center"}>
-              <Div className={"fs-1-2rem fw-600 me-10"}>
+              <Div className={"fs-1-2rem fw-600 mr-10px"}>
                 {translate("viewWeek")}
               </Div>
               <Div className={"fs-0-8rem fw-500 dark"}>
@@ -529,11 +529,11 @@ export const PickerDay = (
             }
             endadornment={
               <Div className={"d-row-center"}>
-                <Div className={"me-n10"}>
+                <Div className={"mr-n10px"}>
                   <Icons
                     key={"ChevronLeft"}
                     name={"ChevronLeft"}
-                    className={"w-20 h-20"}
+                    className={"w-20px h-20px"}
                     onClick={(e: any) => {
                       e.stopPropagation();
                       setDATE((prev: any) => ({
@@ -544,11 +544,11 @@ export const PickerDay = (
                     }}
                   />
                 </Div>
-                <Div className={"me-n15"}>
+                <Div className={"mr-n15px"}>
                   <Icons
                     key={"ChevronRight"}
                     name={"ChevronRight"}
-                    className={"w-20 h-20"}
+                    className={"w-20px h-20px"}
                     onClick={(e: any) => {
                       e.stopPropagation();
                       setDATE((prev: any) => ({
@@ -576,9 +576,9 @@ export const PickerDay = (
         position={"center"}
         direction={"center"}
         contents={
-          <Grid container={true} spacing={2} className={"w-min70vw"}>
+          <Grid container={true} spacing={2} className={"w-min-70vw"}>
             <Grid size={12} className={"d-row-center"}>
-              <Div className={"fs-1-2rem fw-600 me-10"}>
+              <Div className={"fs-1-2rem fw-600 mr-10px"}>
                 {translate("viewMonth")}
               </Div>
               <Div className={"fs-0-8rem fw-500 dark"}>
@@ -722,11 +722,11 @@ export const PickerDay = (
             }
             endadornment={
               <Div className={"d-row-center"}>
-                <Div className={"me-n10"}>
+                <Div className={"mr-n10px"}>
                   <Icons
                     key={"ChevronLeft"}
                     name={"ChevronLeft"}
-                    className={"w-20 h-20"}
+                    className={"w-20px h-20px"}
                     onClick={(e: any) => {
                       e.stopPropagation();
                       setDATE((prev: any) => ({
@@ -737,11 +737,11 @@ export const PickerDay = (
                     }}
                   />
                 </Div>
-                <Div className={"me-n15"}>
+                <Div className={"mr-n15px"}>
                   <Icons
                     key={"ChevronRight"}
                     name={"ChevronRight"}
-                    className={"w-20 h-20"}
+                    className={"w-20px h-20px"}
                     onClick={(e: any) => {
                       e.stopPropagation();
                       setDATE((prev: any) => ({
@@ -769,9 +769,9 @@ export const PickerDay = (
         position={"center"}
         direction={"center"}
         contents={
-          <Grid container={true} spacing={2} className={"w-min70vw"}>
+          <Grid container={true} spacing={2} className={"w-min-70vw"}>
             <Grid size={12} className={"d-row-center"}>
-              <Div className={"fs-1-2rem fw-600 me-10"}>
+              <Div className={"fs-1-2rem fw-600 mr-10px"}>
                 {translate("viewYear")}
               </Div>
               <Div className={"fs-0-8rem fw-500 dark"}>
@@ -916,11 +916,11 @@ export const PickerDay = (
             }
             endadornment={
               <Div className={"d-row-center"}>
-                <Div className={"me-n10"}>
+                <Div className={"mr-n10px"}>
                   <Icons
                     key={"ChevronLeft"}
                     name={"ChevronLeft"}
-                    className={"w-20 h-20"}
+                    className={"w-20px h-20px"}
                     onClick={(e: any) => {
                       e.stopPropagation();
                       setDATE((prev: any) => ({
@@ -931,11 +931,11 @@ export const PickerDay = (
                     }}
                   />
                 </Div>
-                <Div className={"me-n15"}>
+                <Div className={"mr-n15px"}>
                   <Icons
                     key={"ChevronRight"}
                     name={"ChevronRight"}
-                    className={"w-20 h-20"}
+                    className={"w-20px h-20px"}
                     onClick={(e: any) => {
                       e.stopPropagation();
                       setDATE((prev: any) => ({
@@ -963,9 +963,9 @@ export const PickerDay = (
         position={"center"}
         direction={"center"}
         contents={
-          <Grid container={true} spacing={2} className={"w-min70vw"}>
+          <Grid container={true} spacing={2} className={"w-min-70vw"}>
             <Grid size={12} className={"d-row-center"}>
-              <Div className={"fs-1-2rem fw-600 me-10"}>
+              <Div className={"fs-1-2rem fw-600 mr-10px"}>
                 {translate("viewSelect")}
               </Div>
               <Div className={"fs-0-8rem fw-500 dark"}>

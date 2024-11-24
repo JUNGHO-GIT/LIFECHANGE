@@ -209,13 +209,13 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
               radius={false}
               group={"new"}
               src={URL.createObjectURL(file)}
-              className={"me-10"}
+              className={"mr-10px"}
             />
             <Div max={12} className={"black fs-0-9rem fw-500"}>
               {file?.name}
             </Div>
             <Div
-              className={"black fs-0-9rem fw-500 pointer-burgundy ms-15"}
+              className={"black fs-0-9rem fw-500 pointer-burgundy ml-15px"}
               onClick={() => handleFileDelete(index, "single")}
             >
               {file?.name ? "x" : ""}
@@ -223,11 +223,11 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
           </Div>
         ))}
       </Grid>
-      <Grid size={4} className={"d-col-right me-n20"}>
+      <Grid size={4} className={"d-col-right mr-n20px"}>
         <Icons
           key={"CirclePlus"}
           name={"CirclePlus"}
-          className={"w-22 h-22 pointer-burgundy"}
+          className={"w-22px h-22px pointer-burgundy"}
           onClick={(e: any) => {
             handleFileAdd(e);
           }}
@@ -235,7 +235,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
         <Icons
           key={"Trash"}
           name={"Trash"}
-          className={"w-22 h-22 pointer-burgundy"}
+          className={"w-22px h-22px pointer-burgundy"}
           onClick={() => {
             handleFileDelete(0, "all");
           }}
@@ -257,13 +257,13 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
               radius={false}
               group={props?.group}
               src={file}
-              className={"me-10"}
+              className={"mr-10px"}
             />
             <Div max={20} className={"black fs-0-9rem fw-500"}>
               {file}
             </Div>
             <Div
-              className={"black fs-0-9rem fw-500 pointer-burgundy ms-5"}
+              className={"black fs-0-9rem fw-500 pointer-burgundy ml-5px"}
               onClick={() => {
                 handleExistingFileDelete(index);
               }}

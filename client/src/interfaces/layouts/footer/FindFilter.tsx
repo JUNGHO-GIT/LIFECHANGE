@@ -29,7 +29,7 @@ export const FindFilter = (
         label={translate("query")}
         value={PATH.includes("/favorite/list") ? translate("favorite") : state?.PAGING.query}
         disabled={PATH.includes("/favorite/list") ? true : false}
-        inputclass={"h-30"}
+        inputclass={"h-30px"}
         shrink={"shrink"}
         onChange={(e: any) => {
           setState?.setPAGING((prev: any) => ({
@@ -51,11 +51,11 @@ export const FindFilter = (
     );
     // 2. find
     const findSection = () => (
-      <Div className={"d-center me-n3"}>
+      <Div className={"d-center mr-n3px"}>
         <Icons
           key={"Search"}
           name={"Search"}
-          className={"w-22 h-22"}
+          className={"w-22px h-22px"}
           onClick={() => {
             flow.flowFind();
             setState?.setPAGING((prev: any) => ({
@@ -69,11 +69,11 @@ export const FindFilter = (
     );
     // 3. done
     const doneSection = () => (
-      <Div className={"d-center ms-n3"}>
+      <Div className={"d-center ml-n3px"}>
         <Icons
           key={"CheckCircle"}
           name={"CheckCircle"}
-          className={"w-22 h-22"}
+          className={"w-22px h-22px"}
           onClick={() => {
             navigate(toDetail, {
               state: {
