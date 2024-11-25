@@ -3,8 +3,8 @@
 import { useCommonValue } from "@importHooks";
 import { useStoreLanguage } from "@importHooks";
 import { PopUp, Input } from "@importContainers";
-import { Img } from "@importComponents";
-import { TextArea, Grid } from "@importMuis";
+import { Img, Grid } from "@importComponents";
+import { TextArea } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 declare type MemoProps = {

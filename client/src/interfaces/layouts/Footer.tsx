@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue } from "@importHooks";
-import { Paper } from "@importMuis";
-
+import { Paper } from "@importComponents";
 import { Buttons } from "./footer/Buttons";
 import { ListFilter } from "./footer/ListFilter";
 import { FindFilter } from "./footer/FindFilter";

@@ -7,8 +7,8 @@ import { Calendar } from "@importSchemas";
 import { axios } from "@importLibs";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, Memo, Count, Delete, Input, Select } from "@importContainers";
-import { Img, Bg } from "@importComponents";
-import { Paper, MenuItem, Grid, Card } from "@importMuis";
+import { Img, Bg, Paper, Card, Grid } from "@importComponents";
+import { MenuItem } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const CalendarDetail = () => {

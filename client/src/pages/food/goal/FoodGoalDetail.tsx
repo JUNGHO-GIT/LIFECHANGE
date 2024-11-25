@@ -8,8 +8,7 @@ import { axios } from "@importLibs";
 import { insertComma, sync } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, Count, Delete, Input } from "@importContainers";
-import { Img, Bg } from "@importComponents";
-import { Paper, Grid, Card } from "@importMuis";
+import { Img, Bg, Paper, Grid, Card } from "@importComponents";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodGoalDetail = () => {

@@ -46,6 +46,11 @@ import {
 
 } from '@mui/material';
 
+// props -------------------------------------------------------------------------------------------
+import type {
+  CardProps, PaperProps, Grid2Props as GridProps
+} from '@mui/material';
+
 // datePickers -------------------------------------------------------------------------------------
 import {
   AdapterMoment
@@ -113,6 +118,9 @@ export {
   // t
   Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TableSortLabel, TabScrollButton, Toolbar, Tooltip, Tabs, Tab, tabsClasses,
   TextField, TextArea,
+
+  // props
+  CardProps, PaperProps, GridProps,
 
   // u
   useMediaQuery, useTheme,

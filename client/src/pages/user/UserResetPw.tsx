@@ -6,8 +6,7 @@ import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
 import { axios } from "@importLibs";
 import { User } from "@importSchemas";
 import { Input } from "@importContainers";
-import { Div, Btn, Img, Hr } from "@importComponents";
-import { Paper, Grid, Card } from "@importMuis";
+import { Div, Btn, Img, Hr, Paper, Grid, Card } from "@importComponents";
 
 // -------------------------------------------------------------------------------------------------
 export const UserResetPw = () => {

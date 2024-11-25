@@ -5,8 +5,7 @@ import { useCommonValue } from "@importHooks";
 import { useStoreLanguage, useStoreConfirm, useStoreLoading } from "@importHooks";
 import { setLocal } from "@importScripts";
 import { PopUp } from "@importContainers";
-import { Icons, Img, Div, Br } from "@importComponents";
-import { Paper, Grid, Card } from "@importMuis";
+import { Icons, Img, Div, Br, Paper, Grid, Card } from "@importComponents";
 import { TableContainer, Table, TableBody, TableRow, TableCell } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------

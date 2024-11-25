@@ -6,8 +6,7 @@ import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
 import { axios } from "@importLibs";
 import { User } from "@importSchemas";
 import { Input } from "@importContainers";
-import { Div, Hr, Btn } from "@importComponents";
-import { Paper, Grid, Card } from "@importMuis";
+import { Div, Hr, Btn, Paper, Grid, Card } from "@importComponents";
 
 // -------------------------------------------------------------------------------------------------
 export const UserDelete = () => {

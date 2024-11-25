@@ -7,9 +7,8 @@ import { FoodFind } from "@importSchemas";
 import { axios } from "@importLibs";
 import { sync, insertComma, setSession } from "@importScripts";
 import { Footer, Empty, Dialog } from "@importLayouts";
-import { Div, Hr, Img, Icons } from "@importComponents";
-import { Paper, Checkbox, Grid, Card } from "@importMuis";
-import { Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
+import { Div, Hr, Img, Icons, Paper, Card, Grid } from "@importComponents";
+import { Checkbox,  Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodFavoriteList = () => {

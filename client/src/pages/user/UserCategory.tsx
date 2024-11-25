@@ -8,8 +8,8 @@ import { sync } from "@importScripts";
 import { Category } from "@importSchemas";
 import { Footer } from "@importLayouts";
 import { PopUp, Input } from "@importContainers";
-import { Div, Icons } from "@importComponents";
-import { Paper, Grid, Card, TableContainer, Table, TableFooter } from "@importMuis";
+import { Div, Icons, Paper, Grid, Card } from "@importComponents";
+import { TableContainer, Table, TableFooter } from "@importMuis";
 import { TableHead, TableBody, TableRow, TableCell } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------

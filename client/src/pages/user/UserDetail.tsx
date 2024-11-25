@@ -8,8 +8,8 @@ import { sync, insertComma } from "@importScripts";
 import { User } from "@importSchemas";
 import { Footer } from "@importLayouts";
 import { Input } from "@importContainers";
-import { Hr, Img, Div } from "@importComponents";
-import { Paper, Avatar, Grid, Checkbox, Card } from "@importMuis";
+import { Hr, Img, Div, Paper, Grid, Card } from "@importComponents";
+import { Checkbox, Avatar } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const UserDetail = () => {

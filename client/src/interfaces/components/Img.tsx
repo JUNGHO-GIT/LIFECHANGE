@@ -74,8 +74,8 @@ export const Img = (
       loading={loading || "lazy"}
       className={imageClass}
       onError={(e) => {
-        e.currentTarget.style.width = "100%";
-        e.currentTarget.style.height = "100%";
+        e.currentTarget.style.width = "10px";
+        e.currentTarget.style.height = "10px";
         e.currentTarget.src = `${GCLOUD_URL}/main/empty.webp`;
         e.currentTarget.alt = "empty";
       }}

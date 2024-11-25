@@ -3,8 +3,7 @@
 import { useCommonValue, useStoreLanguage } from "@importHooks";
 import { setSession } from "@importScripts";
 import { PopUp } from "@importContainers";
-import { Btn, Div } from "@importComponents";
-import { Grid } from "@importMuis";
+import { Btn, Div, Grid } from "@importComponents";
 
 // -------------------------------------------------------------------------------------------------
 declare type ButtonsProps = {

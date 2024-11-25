@@ -8,8 +8,7 @@ import { axios } from "@importLibs";
 import { sync } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, PickerTime, Count, Delete } from "@importContainers";
-import { Bg } from "@importComponents";
-import { Paper, Grid, Card } from "@importMuis";
+import { Bg, Paper, Grid, Card } from "@importComponents";
 
 // -------------------------------------------------------------------------------------------------
 export const SleepGoalDetail = () => {

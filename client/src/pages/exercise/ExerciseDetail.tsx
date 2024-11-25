@@ -8,8 +8,8 @@ import { insertComma, sync } from "@importScripts";
 import { Exercise } from "@importSchemas";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, PickerTime, Count, Delete, Select, Input } from "@importContainers";
-import { Img, Bg } from "@importComponents";
-import { Paper, MenuItem, Grid, Card } from "@importMuis";
+import { Img, Bg, Paper, Card, Grid } from "@importComponents";
+import { MenuItem } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseDetail = () => {

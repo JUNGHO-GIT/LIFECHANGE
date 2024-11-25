@@ -15,38 +15,6 @@ export const TextArea = (props: any) => (
     fullWidth={props?.fullWidth || true}
     inputRef={props?.inputRef || null}
     error={props?.error || false}
-    sx={{
-      ...props?.sx,
-      "& .MuiSelect-icon": {
-        display: props?.disabled && "none"
-      },
-      "& .MuiInputBase-root": {
-        cursor : (
-          props?.readOnly && (
-            props?.onClick ? "pointer" : "not-allowed"
-          )
-        ),
-        backgroundColor: (
-          props?.readOnly && (
-            props?.onClick ? "transparent" : "#f7f7f7"
-          )
-        ),
-        "&:hover": {
-          backgroundColor: (
-            props?.readOnly && (
-              props?.onClick ? "transparent" : "#f7f7f7"
-            )
-          ),
-        },
-        "&:focus": {
-          backgroundColor: (
-            props?.readOnly && (
-              props?.onClick ? "transparent" : "#f7f7f7"
-            )
-          ),
-        }
-      },
-    }}
     slotProps={{
       ...props?.slotProps,
       input: {

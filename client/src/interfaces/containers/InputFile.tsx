@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useStoreAlert } from "@importHooks";
-import { Div, Br, Img, Icons } from "@importComponents";
-import { MuiFileInput, Grid } from "@importMuis";
+import { Div, Br, Img, Icons, Grid } from "@importComponents";
+import { MuiFileInput } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {

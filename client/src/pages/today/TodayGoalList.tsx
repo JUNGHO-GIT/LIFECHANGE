@@ -7,8 +7,7 @@ import { axios } from "@importLibs";
 import { insertComma } from "@importScripts";
 import { ExerciseGoal, FoodGoal, MoneyGoal, SleepGoal } from "@importSchemas";
 import { Footer, Empty, Dialog } from "@importLayouts";
-import { Div, Hr, Br, Img, Icons } from "@importComponents";
-import { Paper, Grid, Card } from "@importMuis";
+import { Div, Hr, Br, Img, Icons, Paper, Grid, Card } from "@importComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------

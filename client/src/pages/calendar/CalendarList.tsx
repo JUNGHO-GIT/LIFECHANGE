@@ -6,8 +6,7 @@ import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
 import { Calendar } from "@importSchemas";
 import { axios, CalendarReact } from "@importLibs";
 import { Footer } from "@importLayouts";
-import { Icons, Div, Br } from "@importComponents";
-import { Paper, Grid, Card } from "@importMuis";
+import { Icons, Div, Br, Paper, Grid, Card } from "@importComponents";
 
 // -------------------------------------------------------------------------------------------------
 export const CalendarList = () => {

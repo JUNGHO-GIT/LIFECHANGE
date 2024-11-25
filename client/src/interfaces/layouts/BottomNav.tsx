@@ -4,8 +4,8 @@ import { useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate } from "@importHooks";
 import { useStorageLocal, useStoreLanguage } from "@importHooks";
 import { getLocal } from "@importScripts";
-import { Img } from "@importComponents";
-import { BottomNavigation, BottomNavigationAction, Paper } from "@importMuis";
+import { Img, Paper } from "@importComponents";
+import { BottomNavigation, BottomNavigationAction } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const BottomNav = () => {
