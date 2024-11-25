@@ -157,6 +157,7 @@ const App = () => {
           <Route path={"delete"} element={<UserDelete />} />
           <Route path={"category"} element={<UserCategory />} />
         </Route>
+        <Route path={"/"} element={<UserLogin />} />
       </Routes>
       {noneBottom && <BottomNav />}
     </div>

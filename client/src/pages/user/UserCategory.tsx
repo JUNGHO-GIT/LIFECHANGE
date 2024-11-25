@@ -278,7 +278,7 @@ export const UserCategory = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT[dataType]?.map((item: any, index: number) => (index > 0) && (
-                <TableRow className={"table-tbody-tr border-bottom-1px"} key={index}>
+                <TableRow className={"table-tbody-tr border-bottom-1"} key={index}>
                   <TableCell className={selectedIdx.category2Idx === index ? "bg-light" : ""}>
                     <Div className={"d-center"}>
                       <Div className={"fs-0-9rem ml-auto"}>
@@ -395,7 +395,7 @@ export const UserCategory = () => {
               </TableHead>
               <TableBody className={"table-tbody"}>
                 {OBJECT[dataType]?.[selectedIdx?.category2Idx]?.[`${dataType}_title`]?.map((item: any, index: number) => (index > 0) && (
-                  <TableRow key={index} className={"table-tbody-tr border-bottom-1px"}>
+                  <TableRow key={index} className={"table-tbody-tr border-bottom-1"}>
                     <TableCell>
                       <Div className={"d-center"}>
                         <Div className={"fs-0-9rem ml-auto"}>
@@ -515,7 +515,7 @@ export const UserCategory = () => {
                     </TableHead>
                     <TableBody className={"table-tbody"}>
                       {Object.keys(item).map((item: any, idx: number) => (
-                        <TableRow className={"table-tbody-tr border-top-1px"} key={idx}>
+                        <TableRow className={"table-tbody-tr border-top-1"} key={idx}>
                           <TableCell className={`${dataType === item ? "bg-light" : ""}`}>
                             <Div className={"d-center"}>
                               <Div className={"fs-1-0rem ml-0px"}>
