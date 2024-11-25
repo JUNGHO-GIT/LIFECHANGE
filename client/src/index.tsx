@@ -92,72 +92,57 @@ const App = () => {
       <Alert />
       <Confirm />
       <Routes>
+        {/** home **/}
+        <Route path={"/"} element={<div />} />
         {/** admin **/}
-        <Route path={"/admin/*"}>
-          <Route path={"dashboard"} element={<AdminDashboard />} />
-        </Route>
+        <Route path={"/admin/dashboard/*"} element={<AdminDashboard />} />
         {/** auth **/}
-        <Route path={"/auth/*"}>
-          <Route path={"error"} element={<AuthError />} />
-          <Route path={"google"} element={<AuthGoogle />} />
-          <Route path={"privacy"} element={<AuthPrivacy />} />
-        </Route>
+        <Route path={"/auth/error/*"} element={<AuthError />} />
+        <Route path={"/auth/google/*"} element={<AuthGoogle />} />
+        <Route path={"/auth/privacy/*"} element={<AuthPrivacy />} />
         {/** calendar **/}
-        <Route path={"/calendar/*"}>
-          <Route path={"list"} element={<CalendarList />} />
-          <Route path={"detail"} element={<CalendarDetail />} />
-        </Route>
+        <Route path={"/calendar/list/*"} element={<CalendarList />} />
+        <Route path={"/calendar/detail/*"} element={<CalendarDetail />} />
         {/** exercise **/}
-        <Route path={"/exercise/*"}>
-          <Route path={"chart/list"} element={<ExerciseChart />} />
-          <Route path={"goal/list"} element={<ExerciseGoalList />} />
-          <Route path={"goal/detail"} element={<ExerciseGoalDetail />} />
-          <Route path={"list"} element={<ExerciseList />} />
-          <Route path={"detail"} element={<ExerciseDetail />} />
-        </Route>
+        <Route path={"/exercise/chart/list/*"} element={<ExerciseChart />} />
+        <Route path={"/exercise/goal/list/*"} element={<ExerciseGoalList />} />
+        <Route path={"/exercise/goal/detail/*"} element={<ExerciseGoalDetail />} />
+        <Route path={"/exercise/list/*"} element={<ExerciseList />} />
+        <Route path={"/exercise/detail/*"} element={<ExerciseDetail />} />
         {/** food **/}
-        <Route path={"/food/*"}>
-          <Route path={"chart/list"} element={<FoodChart />} />
-          <Route path={"goal/list"} element={<FoodGoalList />} />
-          <Route path={"goal/detail"} element={<FoodGoalDetail />} />
-          <Route path={"find/list"} element={<FoodFindList />} />
-          <Route path={"favorite/list"} element={<FoodFavoriteList />} />
-          <Route path={"list"} element={<FoodList />} />
-          <Route path={"detail"} element={<FoodDetail />} />
-        </Route>
+        <Route path={"/food/chart/list/*"} element={<FoodChart />} />
+        <Route path={"/food/goal/list/*"} element={<FoodGoalList />} />
+        <Route path={"/food/goal/detail/*"} element={<FoodGoalDetail />} />
+        <Route path={"/food/find/list/*"} element={<FoodFindList />} />
+        <Route path={"/food/favorite/list/*"} element={<FoodFavoriteList />} />
+        <Route path={"/food/list/*"} element={<FoodList />} />
+        <Route path={"/food/detail/*"} element={<FoodDetail />} />
         {/** today **/}
-        <Route path={"/today/*"}>
-          <Route path={"goal/list"} element={<TodayGoalList />} />
-          <Route path={"list"} element={<TodayList />} />
-        </Route>
+        <Route path={"/today/goal/list/*"} element={<TodayGoalList />} />
+        <Route path={"/today/list/*"} element={<TodayList />} />
         {/** money **/}
-        <Route path={"/money/*"}>
-          <Route path={"chart/list"} element={<MoneyChart />} />
-          <Route path={"goal/list"} element={<MoneyGoalList />} />
-          <Route path={"goal/detail"} element={<MoneyGoalDetail />} />
-          <Route path={"list"} element={<MoneyList />} />
-          <Route path={"detail"} element={<MoneyDetail />} />
-        </Route>
+        <Route path={"/money/chart/list/*"} element={<MoneyChart />} />
+        <Route path={"/money/goal/list/*"} element={<MoneyGoalList />} />
+        <Route path={"/money/goal/detail/*"} element={<MoneyGoalDetail />} />
+        <Route path={"/money/list/*"} element={<MoneyList />} />
+        <Route path={"/money/detail/*"} element={<MoneyDetail />} />
         {/** sleep **/}
-        <Route path={"/sleep/*"}>
-          <Route path={"chart/list"} element={<SleepChart />} />
-          <Route path={"goal/list"} element={<SleepGoalList />} />
-          <Route path={"goal/detail"} element={<SleepGoalDetail />} />
-          <Route path={"list"} element={<SleepList />} />
-          <Route path={"detail"} element={<SleepDetail />} />
-        </Route>
+        <Route path={"/sleep/chart/list/*"} element={<SleepChart />} />
+        <Route path={"/sleep/goal/list/*"} element={<SleepGoalList />} />
+        <Route path={"/sleep/goal/detail/*"} element={<SleepGoalDetail />} />
+        <Route path={"/sleep/list/*"} element={<SleepList />} />
+        <Route path={"/sleep/detail/*"} element={<SleepDetail />} />
         {/** user **/}
-        <Route path={"/user/*"}>
-          <Route path={"appInfo"} element={<AdminAppInfo />} />
-          <Route path={"appSetting"} element={<UserAppSetting />} />
-          <Route path={"signup"} element={<UserSignup />} />
-          <Route path={"login"} element={<UserLogin />} />
-          <Route path={"resetPw"} element={<UserResetPw />} />
-          <Route path={"detail"} element={<UserDetail />} />
-          <Route path={"delete"} element={<UserDelete />} />
-          <Route path={"category"} element={<UserCategory />} />
-        </Route>
-        <Route path={"/"} element={<UserLogin />} />
+        <Route path={"/user/appInfo/*"} element={<AdminAppInfo />} />
+        <Route path={"/user/appSetting/*"} element={<UserAppSetting />} />
+        <Route path={"/user/signup/*"} element={<UserSignup />} />
+        <Route path={"/user/login/*"} element={<UserLogin />} />
+        <Route path={"/user/resetPw/*"} element={<UserResetPw />} />
+        <Route path={"/user/detail/*"} element={<UserDetail />} />
+        <Route path={"/user/delete/*"} element={<UserDelete />} />
+        <Route path={"/user/category/*"} element={<UserCategory />} />
+        {/** error **/}
+        <Route path={"*"} element={<AuthError />} />
       </Routes>
       {noneBottom && <BottomNav />}
     </div>
