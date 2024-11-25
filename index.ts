@@ -30,7 +30,7 @@ const app = express();
 const preFix = process.env.HTTP_PREFIX || "";
 
 // 서버 포트 설정 ----------------------------------------------------------------------------------
-const httpPort = Number(process.env.HTTP_PORT) || 4000;
+const httpPort = Number(process.env.HTTP_PORT) || 4001;
 const httpsPort = Number(process.env.HTTPS_PORT) || 443;
 
 (function start(httpPort: number, httpsPort: number) {

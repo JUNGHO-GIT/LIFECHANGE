@@ -123,6 +123,9 @@ const gitPush = () => {
 };
 
 // 원격 서버에서 스크립트 실행 ---------------------------------------------------------------------
+
+
+// 원격 서버에서 스크립트 실행 ---------------------------------------------------------------------
 const runRemoteScript = () => {
   try {
     const keyPath = (
@@ -143,16 +146,15 @@ const runRemoteScript = () => {
     const cmdGitReset = 'sudo git reset --hard origin/master';
     const cmdRmClient = 'sudo rm -rf client';
     const cmdCh = 'sudo chmod -R 755 /var/www/junghomun.com/JPAGE/server';
+    const cmdStop = 'if pm2 describe JPAGE >/dev/null 2>&1; then sudo pm2 stop JPAGE && pm2 save --force; fi';
     const cmdNpm = 'sudo npm install';
-    const cmdRestart = 'sudo pm2 restart all';
-    const cmdSave = 'sudo pm2 save';
+    const cmdStart = 'sudo pm2 start ecosystem.config.cjs --env production && pm2 save --force';
 
-    const winCommand = `powershell -Command "ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdCh} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}\'"
-    `;
-    const linuxCommand = `ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdCh} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}\'`;
+    const winCommand = `powershell -Command "ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdCh} && ${cmdStop} && ${cmdNpm} && ${cmdStart}\'"`;
+
+    const linuxCommand = `ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdCh} && ${cmdStop} && ${cmdNpm} && ${cmdStart}\'`;
 
     const sshCommand = winOrLinux === "win" ? winCommand : linuxCommand;
-
     execSync(sshCommand, { stdio: 'inherit' });
   }
   catch (error) {
@@ -176,7 +178,7 @@ const restoreEnvAndIndex = () => {
         return 'CLIENT_URL=http://localhost:3000/JPAGE';
       }
       if (line.startsWith('GOOGLE_CALLBACK_URL=')) {
-        return 'GOOGLE_CALLBACK_URL=http://localhost:4000/JPAGE/api/auth/google/callback';
+        return 'GOOGLE_CALLBACK_URL=http://localhost:4001/JPAGE/api/auth/google/callback';
       }
       // 다른 줄은 그대로 유지
       return line;
