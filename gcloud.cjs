@@ -123,9 +123,6 @@ const gitPush = () => {
 };
 
 // 원격 서버에서 스크립트 실행 ---------------------------------------------------------------------
-
-
-// 원격 서버에서 스크립트 실행 ---------------------------------------------------------------------
 const runRemoteScript = () => {
   try {
     const keyPath = (
@@ -146,14 +143,14 @@ const runRemoteScript = () => {
     const cmdGitReset = 'sudo git reset --hard origin/master';
     const cmdRmClient = 'sudo rm -rf client';
     const cmdCh = 'sudo chmod -R 755 /var/www/junghomun.com/JPAGE/server';
-    const cmdStop = 'if pm2 describe JPAGE >/dev/null 2>&1; then sudo pm2 stop JPAGE; fi';
+    const cmdStop = 'if pm2 describe JPAGE >/dev/null 2>&1; then sudo pm2 stop JPAGE && pm2 save; fi';
     const cmdNpm = 'sudo npm install';
-    const cmdStart = 'sudo pm2 start ecosystem.config.cjs --env production';
-    const cmdSave = 'pm2 save --force';
+    const cmdStart = 'sudo pm2 start ecosystem.config.cjs --env production && pm2 save';
+    const cmdSave = 'sleep 5 && sudo pm2 save --force';
 
-    const winCommand = `powershell -Command "ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdCh} && ${cmdStop} && ${cmdSave} && ${cmdNpm} && ${cmdStart} && ${cmdSave}\'"`;
+    const winCommand = `powershell -Command "ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdCh} && ${cmdStop} && ${cmdNpm} && ${cmdStart} && ${cmdSave}\'"`;
 
-    const linuxCommand = `ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdCh} && ${cmdStop} && ${cmdSave} && ${cmdNpm} && ${cmdStart} && ${cmdSave}\'`;
+    const linuxCommand = `ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdCh} && ${cmdStop} && ${cmdNpm} && ${cmdStart} && ${cmdSave}\'`;
 
     const sshCommand = winOrLinux === "win" ? winCommand : linuxCommand;
     execSync(sshCommand, { stdio: 'inherit' });
