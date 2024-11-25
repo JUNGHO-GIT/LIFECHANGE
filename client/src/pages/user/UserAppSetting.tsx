@@ -41,7 +41,7 @@ export const UserAppSetting = () => {
   const handleChangeLanguage = (lang: string) => {
     setLang(lang);
     setLocal("setting", "locale", "lang", lang);
-    navigate(0);
+    navigate("/user/appSetting");
   };
 
   // 4. handle -------------------------------------------------------------------------------------
@@ -128,7 +128,7 @@ export const UserAppSetting = () => {
                     contents={
                       <Div className={"d-col-center p-5px"}>
                         <Div
-                          className={"d-center"}
+                          className={"d-center pointer"}
                           onClick={() => {
                             handleChangeLanguage("en")
                           }}
@@ -152,7 +152,7 @@ export const UserAppSetting = () => {
                         </Div>
                         <Br m={20} />
                         <Div
-                          className={"d-center"}
+                          className={"d-center pointer"}
                           onClick={() => {
                             handleChangeLanguage("ko")
                           }}
