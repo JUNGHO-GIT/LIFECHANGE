@@ -91,6 +91,9 @@ export const ExerciseChartLine = () => {
     catch (err: any) {
       console.error(err);
     }
+    finally {
+      setLOADING(false);
+    }
   })()}, [URL_OBJECT, DATE, sessionId]);
 
   // 5-1. chart ------------------------------------------------------------------------------------

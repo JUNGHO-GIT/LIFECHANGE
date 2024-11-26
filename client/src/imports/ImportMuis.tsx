@@ -35,7 +35,7 @@ import {
 
   // s
   Select, Switch, SpeedDial, SpeedDialAction, SpeedDialIcon, Stepper, Step, StepLabel,
-  Snackbar, SnackbarContent,
+  Snackbar, SnackbarContent, Skeleton,
 
   // t
   Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TableSortLabel, TabScrollButton,  Toolbar, Tooltip, Tabs, Tab, tabsClasses,
@@ -113,7 +113,7 @@ export {
 
   // s
   Select, Switch, SpeedDial, SpeedDialAction, SpeedDialIcon, Stepper, Step, StepLabel,
-  Snackbar, SnackbarContent,
+  Snackbar, SnackbarContent, Skeleton,
 
   // t
   Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TableSortLabel, TabScrollButton, Toolbar, Tooltip, Tabs, Tab, tabsClasses,

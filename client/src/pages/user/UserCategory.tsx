@@ -52,10 +52,6 @@ export const UserCategory = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
-  }, []);
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
     axios.get(`${URL_OBJECT}/category/detail`, {
       params: {
         user_id: sessionId
@@ -82,7 +78,9 @@ export const UserCategory = () => {
         msg: translate(err.response.data.msg),
         severity: "error",
       });
-      console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   }, [URL_OBJECT, sessionId]);
 
@@ -117,6 +115,9 @@ export const UserCategory = () => {
         severity: "error",
       });
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 

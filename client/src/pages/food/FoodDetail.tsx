@@ -59,11 +59,6 @@ export const FoodDetail = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    setLOADING(true);
-  }, []);
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
     if (EXIST?.[DATE.dateType]?.length > 0) {
 
       const dateRange = `${DATE.dateStart.trim()} - ${DATE.dateEnd.trim()}`;
@@ -112,7 +107,6 @@ export const FoodDetail = () => {
         msg: translate(err.response.data.msg),
         severity: "error",
       });
-      console.error(err);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
@@ -134,13 +128,14 @@ export const FoodDetail = () => {
         msg: translate(err.response.data.msg),
         severity: "error",
       });
-      console.error(err);
     });
   }, [URL_OBJECT, sessionId]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
+    setLOADING(true);
     if (LOCKED === "locked") {
+      setLOADING(false);
       return;
     }
     axios.get(`${URL_OBJECT}/detail`, {
@@ -203,7 +198,9 @@ export const FoodDetail = () => {
         msg: translate(err.response.data.msg),
         severity: "error",
       });
-      console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
@@ -261,6 +258,7 @@ export const FoodDetail = () => {
   const flowSave = async (type: string) => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "real")) {
+      setLOADING(false);
       return;
     }
     axios({
@@ -304,6 +302,9 @@ export const FoodDetail = () => {
         severity: "error",
       });
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 
@@ -311,6 +312,7 @@ export const FoodDetail = () => {
   const flowDelete = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "delete")) {
+      setLOADING(false);
       return;
     }
     axios.delete(`${URL_OBJECT}/delete`, {
@@ -350,6 +352,9 @@ export const FoodDetail = () => {
         severity: "error",
       });
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 
@@ -379,6 +384,9 @@ export const FoodDetail = () => {
         severity: "error",
       });
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 

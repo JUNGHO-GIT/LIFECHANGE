@@ -28,11 +28,6 @@ export const AdminDashboard = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    setLOADING(true);
-  }, []);
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
     axios.get(`${URL_OBJECT}/userCount`)
     .then((res: any) => {
       // 기본값 설정
@@ -43,8 +38,10 @@ export const AdminDashboard = () => {
         open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
-      });
-      console.error(err);
+     });
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 

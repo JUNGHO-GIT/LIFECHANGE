@@ -24,12 +24,16 @@ export const UserResetPw = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
+    setTimeout(() => {
+      setLOADING(false);
+    }, 500);
   }, []);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSendEmail = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "resetPw", "send")) {
+      setLOADING(false);
       return;
     }
     axios.post (`${URL_OBJECT}/email/send`, {
@@ -89,6 +93,9 @@ export const UserResetPw = () => {
         severity: "error",
       });
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 
@@ -96,6 +103,7 @@ export const UserResetPw = () => {
   const flowVerifyEmail = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "resetPw", "verify")) {
+      setLOADING(false);
       return;
     }
     axios.post (`${URL_OBJECT}/email/verify`, {
@@ -133,6 +141,9 @@ export const UserResetPw = () => {
         severity: "error",
       });
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 
@@ -140,6 +151,7 @@ export const UserResetPw = () => {
   const flowSave = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "resetPw", "save")) {
+      setLOADING(false);
       return;
     }
     axios.post (`${URL_OBJECT}/resetPw`, {
@@ -170,6 +182,9 @@ export const UserResetPw = () => {
         severity: "error",
       });
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 
@@ -195,6 +210,9 @@ export const UserResetPw = () => {
         severity: "error",
       });
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 

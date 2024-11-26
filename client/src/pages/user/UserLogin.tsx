@@ -28,11 +28,6 @@ export const UserLogin = () => {
   const [OBJECT, setOBJECT] = useState<any>(User);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
-    setLOADING(true);
-  }, []);
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
   // 트리거가 활성화된 경우
   useEffect(() => {
     if (loginTrigger) {
@@ -132,6 +127,7 @@ export const UserLogin = () => {
   const flowSave = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "login", "")) {
+      setLOADING(false);
       return;
     }
     axios.post(`${URL_OBJECT}/login`, {
@@ -178,6 +174,9 @@ export const UserLogin = () => {
         severity: "error",
       });
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 

@@ -25,12 +25,16 @@ export const UserSignup = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
+    setTimeout(() => {
+      setLOADING(false);
+    }, 500);
   }, []);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSendEmail = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "signup", "send")) {
+      setLOADING(false);
       return;
     }
     axios.post (`${URL_OBJECT}/email/send`, {
@@ -90,6 +94,9 @@ export const UserSignup = () => {
         severity: "error",
       });
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 
@@ -97,6 +104,7 @@ export const UserSignup = () => {
   const flowVerifyEmail = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "signup", "verify")) {
+      setLOADING(false);
       return;
     }
     axios.post (`${URL_OBJECT}/email/verify`, {
@@ -134,6 +142,9 @@ export const UserSignup = () => {
         severity: "error",
       });
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 
@@ -141,6 +152,7 @@ export const UserSignup = () => {
   const flowSave = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "signup", "save")) {
+      setLOADING(false);
       return;
     }
     axios.post (`${URL_OBJECT}/signup`, {
@@ -178,6 +190,9 @@ export const UserSignup = () => {
         severity: "error",
       });
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 

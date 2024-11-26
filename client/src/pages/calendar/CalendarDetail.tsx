@@ -58,11 +58,6 @@ export const CalendarDetail = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    setLOADING(true);
-  }, []);
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
     if (EXIST?.[DATE.dateType]?.length > 0) {
 
       const dateRange = `${DATE.dateStart.trim()} - ${DATE.dateEnd.trim()}`;
@@ -111,13 +106,14 @@ export const CalendarDetail = () => {
         msg: translate(err.response.data.msg),
         severity: "error",
       });
-      console.error(err);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
+    setLOADING(true);
     if (LOCKED === "locked") {
+      setLOADING(false);
       return;
     }
     axios.get(`${URL_OBJECT}/detail`, {
@@ -162,7 +158,9 @@ export const CalendarDetail = () => {
         msg: translate(err.response.data.msg),
         severity: "error",
       });
-      console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
@@ -187,6 +185,7 @@ export const CalendarDetail = () => {
   const flowSave = async (type: string) => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "real")) {
+      setLOADING(false);
       return;
     }
     axios({
@@ -229,6 +228,9 @@ export const CalendarDetail = () => {
         severity: "error",
       });
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 
@@ -236,6 +238,7 @@ export const CalendarDetail = () => {
   const flowDelete = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "delete")) {
+      setLOADING(false);
       return;
     }
     axios.delete(`${URL_OBJECT}/delete`, {
@@ -274,6 +277,9 @@ export const CalendarDetail = () => {
         severity: "error",
       });
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 

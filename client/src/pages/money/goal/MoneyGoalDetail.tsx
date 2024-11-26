@@ -57,11 +57,6 @@ export const MoneyGoalDetail = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    setLOADING(true);
-  }, []);
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
     if (EXIST?.[DATE.dateType]?.length > 0) {
 
       const dateRange = `${DATE.dateStart.trim()} - ${DATE.dateEnd.trim()}`;
@@ -110,13 +105,14 @@ export const MoneyGoalDetail = () => {
         msg: translate(err.response.data.msg),
         severity: "error",
       });
-      console.error(err);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
+    setLOADING(true);
     if (LOCKED === "locked") {
+      setLOADING(false);
       return;
     }
     axios.get(`${URL_OBJECT}/goal/detail`, {
@@ -140,7 +136,9 @@ export const MoneyGoalDetail = () => {
         msg: translate(err.response.data.msg),
         severity: "error",
       });
-      console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
@@ -148,6 +146,7 @@ export const MoneyGoalDetail = () => {
   const flowSave = async (type: string) => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "goal")) {
+      setLOADING(false);
       return;
     }
     axios({
@@ -191,6 +190,9 @@ export const MoneyGoalDetail = () => {
         severity: "error",
       });
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 
@@ -198,6 +200,7 @@ export const MoneyGoalDetail = () => {
   const flowDelete = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "delete")) {
+      setLOADING(false);
       return;
     }
     axios.delete(`${URL_OBJECT}/goal/delete`, {
@@ -237,6 +240,9 @@ export const MoneyGoalDetail = () => {
         severity: "error",
       });
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 

@@ -36,6 +36,9 @@ export const AdminAppInfo = () => {
         severity: "error",
       });
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   }, [URL_ADMIN, sessionId]);
 
@@ -55,7 +58,9 @@ export const AdminAppInfo = () => {
         msg: translate(err.response.data.msg),
         severity: "error",
       });
-      console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   }, [URL_ADMIN, sessionId]);
 

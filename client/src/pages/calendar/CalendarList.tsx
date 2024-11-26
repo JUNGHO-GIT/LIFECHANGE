@@ -59,10 +59,6 @@ export const CalendarList = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
-  }, []);
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
     axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: sessionId,
@@ -82,8 +78,10 @@ export const CalendarList = () => {
         open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
-      });
-      console.error(err);
+     });
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 

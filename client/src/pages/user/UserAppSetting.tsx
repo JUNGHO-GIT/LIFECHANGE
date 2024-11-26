@@ -1,8 +1,8 @@
 // UserAppSetting.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState  } from "@importReacts";
 import { useCommonValue } from "@importHooks";
-import { useStoreLanguage, useStoreConfirm, useStoreLoading } from "@importHooks";
+import { useStoreLanguage, useStoreConfirm } from "@importHooks";
 import { setLocal } from "@importScripts";
 import { PopUp } from "@importContainers";
 import { Icons, Img, Div, Br, Paper, Grid, Card } from "@importComponents";
@@ -15,15 +15,9 @@ export const UserAppSetting = () => {
   const { navigate, isAdmin, localLang } = useCommonValue();
   const { translate } = useStoreLanguage();
   const { setCONFIRM } = useStoreConfirm();
-  const { setLOADING } = useStoreLoading();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [lang, setLang] = useState<string>(localLang);
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
-    setLOADING(true);
-  }, []);
 
   // 4. handle -------------------------------------------------------------------------------------
   const handleLogout = () => {

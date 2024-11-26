@@ -57,11 +57,6 @@ export const FoodFavoriteList = () => {
   });
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
-    setLOADING(true);
-  }, []);
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
   // 페이지 번호 변경 시 flowFind 호출
   useEffect(() => {
     if (PAGING?.query === "") {
@@ -115,6 +110,9 @@ export const FoodFavoriteList = () => {
         severity: "error",
       });
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 

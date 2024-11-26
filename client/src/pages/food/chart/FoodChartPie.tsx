@@ -101,6 +101,9 @@ export const FoodChartPie = () => {
     catch (err: any) {
       console.error(err);
     }
+    finally {
+      setLOADING(false);
+    }
   })()}, [URL_OBJECT, DATE, sessionId]);
 
   // 4-1. render -----------------------------------------------------------------------------------

@@ -84,11 +84,6 @@ export const TodayGoalList = () => {
   const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState<any>([SleepGoal]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
-    setLOADING(true);
-  }, []);
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     try {
       const params = {
@@ -136,6 +131,9 @@ export const TodayGoalList = () => {
     }
     catch (err: any) {
       console.error(err);
+    }
+    finally {
+      setLOADING(false);
     }
   })()}, [
     URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP,

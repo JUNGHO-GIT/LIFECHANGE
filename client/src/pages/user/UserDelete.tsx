@@ -24,12 +24,16 @@ export const UserDelete = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
+    setTimeout(() => {
+      setLOADING(false);
+    }, 500);
   }, []);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSendEmail = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "delete", "send")) {
+      setLOADING(false);
       return;
     }
     axios.post (`${URL_OBJECT}/email/send`, {
@@ -89,6 +93,9 @@ export const UserDelete = () => {
         severity: "error",
       });
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 
@@ -96,6 +103,7 @@ export const UserDelete = () => {
   const flowVerifyEmail = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "delete", "verify")) {
+      setLOADING(false);
       return;
     }
     axios.post (`${URL_OBJECT}/email/verify`, {
@@ -133,6 +141,9 @@ export const UserDelete = () => {
         severity: "error",
       });
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 
@@ -140,6 +151,7 @@ export const UserDelete = () => {
   const flowSave = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "delete", "save")) {
+      setLOADING(false);
       return;
     }
     axios.delete(`${URL_OBJECT}/delete`,{
@@ -172,6 +184,9 @@ export const UserDelete = () => {
         severity: "error",
       });
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 
