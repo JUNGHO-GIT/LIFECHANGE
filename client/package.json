@@ -45,7 +45,7 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "npm-reset": "powershell -Command \"Remove-Item -Recurse -Force package-lock.json, node_modules; npm install --legacy-peer-deps; npm cache clean --force\"",
+    "npm-reset": "powershell -Command \"Remove-Item -Recurse -Force package-lock.json, node_modules; npm install --legacy-peer-deps;\"",
     "gcloud": "node gcloud.cjs"
   },
   "dependencies": {
@@ -56,7 +56,7 @@
     "@react-hooks-library/core": "^0.6.2",
     "ajv": "^8.17.1",
     "ajv-keywords": "^5.1.0",
-    "axios": "^1.7.7",
+    "axios": "^1.7.8",
     "countries-and-timezones": "^3.7.2",
     "date-fns": "^4.1.0",
     "iso-country-currency": "^0.7.2",

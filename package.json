@@ -28,14 +28,13 @@
   },
   "scripts": {
     "start": "tsx watch --clear-screen=false --ignore node_modules index.ts",
-    "fetch": "git fetch --all && git reset --hard origin/master",
     "npm-reset": "powershell -Command \"Remove-Item -Recurse -Force package-lock.json, node_modules; npm install --legacy-peer-deps;\"",
     "gcloud": "node gcloud.cjs"
   },
   "dependencies": {
     "ajv": "^8.17.1",
     "ajv-keywords": "^5.1.0",
-    "axios": "^1.7.7",
+    "axios": "^1.7.8",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
@@ -48,7 +47,7 @@
     "module-alias": "^2.2.3",
     "moment-timezone": "^0.5.46",
     "mongodb": "^6.11.0",
-    "mongoose": "^8.8.2",
+    "mongoose": "^8.8.3",
     "nodemailer": "^6.9.16",
     "oauth-signature": "^1.5.0",
     "passport": "^0.7.0",
@@ -60,7 +59,7 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.17",
-    "@types/express-session": "^1.18.0",
+    "@types/express-session": "^1.18.1",
     "@types/jsdom": "^21.1.7",
     "@types/mocha": "^10.0.10",
     "@types/nodemailer": "^6.4.17",
