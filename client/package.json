@@ -1,6 +1,6 @@
 {
-  "name": "JPAGE-client",
-  "homepage": "/JPAGE",
+  "name": "LIFECHANGE-client",
+  "homepage": "/LIFECHANGE",
   "version": "1.0.0",
   "main": "index.tsx",
   "type": "module",

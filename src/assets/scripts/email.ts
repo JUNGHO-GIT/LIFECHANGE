@@ -33,14 +33,14 @@ export const emailSending = async (email: string, code: string) => {
       subject: "LIFECHANGE 인증 코드",
 
       // html
-      html: /* html*/`
+      html: /* html*/ `
         <!DOCTYPE html>
-        <html>
+        <html lang="en">
           <head>
+            <title>LIFECHANGE 인증 코드</title>
             <meta charset="UTF-8" />
             <meta http-equiv="X-UA-Compatible" content="IE=edge" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <title>LIFECHANGE 인증 코드</title>
           </head>
           <body
             style="
@@ -68,7 +68,7 @@ export const emailSending = async (email: string, code: string) => {
                 "
               >
                 <img
-                  src="https://storage.googleapis.com/jungho-bucket/JPAGE/IMAGE/main/logo2.webp"
+                  src="${process.env.GCLOUD_BUCKET_PATH}/main/logo1.webp"
                   alt="logo2"
                   loading="lazy"
                   style="
@@ -78,7 +78,7 @@ export const emailSending = async (email: string, code: string) => {
                   "
                 />
                 <img
-                  src="https://storage.googleapis.com/jungho-bucket/JPAGE/IMAGE/main/logo3.webp"
+                  src="${process.env.GCLOUD_BUCKET_PATH}/main/logo3.webp"
                   alt="logo3"
                   loading="lazy"
                   style="

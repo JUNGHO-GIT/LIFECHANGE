@@ -152,7 +152,7 @@ const App = () => {
 
 // -------------------------------------------------------------------------------------------------
 createRoot(document.getElementById('root') as HTMLElement).render(
-  <BrowserRouter basename={"/JPAGE"}>
+  <BrowserRouter basename={"/LIFECHANGE"}>
     <ThemeProvider theme={
       createTheme({
         typography:{fontFamily:"Pretendard Variable, Pretendard, Noto Sans KR, Roboto, sans-serif"}
