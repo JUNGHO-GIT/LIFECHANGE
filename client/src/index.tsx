@@ -64,6 +64,9 @@ const App = () => {
 
   useEffect(() => {
     setLOADING(true);
+    setTimeout(() => {
+      setLOADING(false);
+    }, 500);
   }, []);
 
   useRoot();
@@ -141,8 +144,6 @@ const App = () => {
         <Route path={"/user/detail/*"} element={<UserDetail />} />
         <Route path={"/user/delete/*"} element={<UserDelete />} />
         <Route path={"/user/category/*"} element={<UserCategory />} />
-        {/** error **/}
-        <Route path={"*"} element={<AuthError />} />
       </Routes>
       {noneBottom && <BottomNav />}
     </div>

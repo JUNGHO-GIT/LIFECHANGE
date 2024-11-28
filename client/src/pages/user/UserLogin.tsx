@@ -32,8 +32,12 @@ export const UserLogin = () => {
   useEffect(() => {
     if (loginTrigger) {
       (async () => {
-        await flowSave();
-        setLoginTrigger(false);
+        try {
+          await flowSave();
+        }
+        finally {
+          setLoginTrigger(false);
+        }
       })();
     }
   }, [loginTrigger]);
@@ -174,6 +178,7 @@ export const UserLogin = () => {
         severity: "error",
       });
       console.error(err);
+      setLOADING(false);
     })
     .finally(() => {
       setLOADING(false);
