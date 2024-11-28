@@ -42,6 +42,7 @@ export const UserDelete = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -53,6 +54,7 @@ export const UserDelete = () => {
         }));
       }
       else if (res.data.status === "notExist") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -64,6 +66,7 @@ export const UserDelete = () => {
         }));
       }
       else if (res.data.status === "isGoogle") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -75,6 +78,7 @@ export const UserDelete = () => {
         }));
       }
       else if (res.data.status === "fail") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -113,6 +117,7 @@ export const UserDelete = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -124,6 +129,7 @@ export const UserDelete = () => {
         }));
       }
       else {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -164,6 +170,7 @@ export const UserDelete = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -172,6 +179,7 @@ export const UserDelete = () => {
         navigate("/user/login");
       }
       else {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),

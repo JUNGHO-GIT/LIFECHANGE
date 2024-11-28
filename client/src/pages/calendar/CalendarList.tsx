@@ -71,14 +71,26 @@ export const CalendarList = () => {
       },
     })
     .then((res: any) => {
-      setOBJECT(res.data.result.length > 0 ? res.data.result : [Calendar]);
+      if (res.data.status === "success") {
+        setLOADING(false);
+        setOBJECT(res.data.result.length > 0 ? res.data.result : [Calendar]);
+      }
+      else {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
+      }
     })
     .catch((err: any) => {
+      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
-     });
+      });
     })
     .finally(() => {
       setLOADING(false);

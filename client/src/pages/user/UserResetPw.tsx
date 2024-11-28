@@ -42,6 +42,7 @@ export const UserResetPw = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -53,6 +54,7 @@ export const UserResetPw = () => {
         }));
       }
       else if (res.data.status === "notExist") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -64,6 +66,7 @@ export const UserResetPw = () => {
         }));
       }
       else if (res.data.status === "isGoogle") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -75,6 +78,7 @@ export const UserResetPw = () => {
         }));
       }
       else if (res.data.status === "fail") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -113,6 +117,7 @@ export const UserResetPw = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -162,6 +167,7 @@ export const UserResetPw = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -170,6 +176,7 @@ export const UserResetPw = () => {
         navigate("/user/login");
       }
       else {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -199,6 +206,7 @@ export const UserResetPw = () => {
         window.location.href = res.data.url;
       }
       else {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),

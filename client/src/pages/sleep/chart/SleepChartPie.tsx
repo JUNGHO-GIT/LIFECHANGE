@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
-import { useStoreLanguage, useStoreLoading } from "@importStores";
+import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
 import { SleepPie } from "@importSchemas";
 import { axios } from "@importLibs";
 import { Select } from "@importContainers";
@@ -29,6 +29,7 @@ export const SleepChartPie = () => {
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
+  const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
@@ -102,6 +103,12 @@ export const SleepChartPie = () => {
       );
     }
     catch (err: any) {
+      setLOADING(false);
+      setALERT({
+        open: true,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     }
     finally {

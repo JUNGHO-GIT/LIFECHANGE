@@ -58,19 +58,30 @@ export const UserCategory = () => {
       }
     })
     .then((res: any) => {
-      setOBJECT(res.data.result || Category);
-      Object.keys(res.data.result).forEach((dataType: string) => {
-        REFS.current = {
-          ...REFS.current,
-          [dataType]: res.data.result[dataType].map((item: any) => {
-            const partRefs = {
-              [`${dataType}_part`]: createRef(),
-              [`${dataType}_title`]: item[`${dataType}_title`]?.map(() => createRef()) || []
-            };
-            return partRefs;
-          })
-        };
-      });
+      if (res.data.status === "success") {
+        setLOADING(false);
+        setOBJECT(res.data.result || Category);
+        Object.keys(res.data.result).forEach((dataType: string) => {
+          REFS.current = {
+            ...REFS.current,
+            [dataType]: res.data.result[dataType].map((item: any) => {
+              const partRefs = {
+                [`${dataType}_part`]: createRef(),
+                [`${dataType}_title`]: item[`${dataType}_title`]?.map(() => createRef()) || []
+              };
+              return partRefs;
+            })
+          };
+        });
+      }
+      else {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
+      }
     })
     .catch((err: any) => {
       setLOADING(false);
@@ -94,6 +105,7 @@ export const UserCategory = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -102,6 +114,7 @@ export const UserCategory = () => {
         sync("category");
       }
       else {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),

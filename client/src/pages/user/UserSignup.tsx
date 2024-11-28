@@ -43,6 +43,7 @@ export const UserSignup = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -54,6 +55,7 @@ export const UserSignup = () => {
         }));
       }
       else if (res.data.status === "duplicate") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -65,6 +67,7 @@ export const UserSignup = () => {
         }));
       }
       else if (res.data.status === "fail") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -76,6 +79,7 @@ export const UserSignup = () => {
         }));
       }
       else {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -114,6 +118,7 @@ export const UserSignup = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -125,6 +130,7 @@ export const UserSignup = () => {
         }));
       }
       else {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -163,6 +169,7 @@ export const UserSignup = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -171,6 +178,7 @@ export const UserSignup = () => {
         navigate("/user/login");
       }
       else if (res.data.status === "alreadyExist") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -178,6 +186,7 @@ export const UserSignup = () => {
         });
       }
       else {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -204,9 +213,11 @@ export const UserSignup = () => {
     axios.get (`${URL_GOOGLE}/login`)
     .then((res: any) => {
       if (res.data.status === "success") {
+        setLOADING(false);
         window.location.href = res.data.url;
       }
       else {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -222,6 +233,9 @@ export const UserSignup = () => {
         severity: "error",
       });
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 

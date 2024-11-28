@@ -97,11 +97,22 @@ export const FoodFavoriteList = () => {
       },
     })
     .then((res: any) => {
-      setOBJECT(res.data.result.length > 0 ? res.data.result : []);
-      setCOUNT((prev: any) => ({
-        ...prev,
-        totalCnt: res.data.totalCnt || 0,
-      }));
+      if (res.data.status === "success") {
+        setLOADING(false);
+        setOBJECT(res.data.result.length > 0 ? res.data.result : []);
+        setCOUNT((prev: any) => ({
+          ...prev,
+          totalCnt: res.data.totalCnt || 0,
+        }));
+      }
+      else {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
+      }
     })
     .catch((err: any) => {
       setLOADING(false);
@@ -125,11 +136,13 @@ export const FoodFavoriteList = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
+        setLOADING(false);
         setOBJECT(res.data.result.length > 0 ? res.data.result : []);
         flowFind();
         sync("favorite");
       }
       else {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),

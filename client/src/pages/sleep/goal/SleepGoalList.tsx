@@ -79,7 +79,6 @@ export const SleepGoalList = () => {
       );
     })
     .catch((err: any) => {
-      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),

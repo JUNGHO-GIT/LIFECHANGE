@@ -100,7 +100,6 @@ export const MoneyGoalDetail = () => {
       );
     })
     .catch((err: any) => {
-      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
@@ -123,13 +122,24 @@ export const MoneyGoalDetail = () => {
       },
     })
     .then((res: any) => {
-      setOBJECT(res.data.result || MoneyGoal);
-      setCOUNT((prev: any) => ({
-        ...prev,
-        totalCnt: res.data.totalCnt || 0,
-        sectionCnt: res.data.sectionCnt || 0,
-        newSectionCnt: res.data.sectionCnt || 0
-      }));
+      if (res.data.status === "success") {
+        setLOADING(false);
+        setOBJECT(res.data.result || MoneyGoal);
+        setCOUNT((prev: any) => ({
+          ...prev,
+          totalCnt: res.data.totalCnt || 0,
+          sectionCnt: res.data.sectionCnt || 0,
+          newSectionCnt: res.data.sectionCnt || 0
+        }));
+      }
+      else {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
+      }
     })
     .catch((err: any) => {
       setLOADING(false);
@@ -163,6 +173,7 @@ export const MoneyGoalDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -178,6 +189,7 @@ export const MoneyGoalDetail = () => {
         sync("property");
       }
       else {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -214,6 +226,7 @@ export const MoneyGoalDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -229,6 +242,7 @@ export const MoneyGoalDetail = () => {
         sync("property");
       }
       else {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),

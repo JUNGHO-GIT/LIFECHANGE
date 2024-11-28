@@ -40,7 +40,18 @@ export const UserDetail = () => {
       },
     })
     .then((res: any) => {
-      setOBJECT(res.data.result || User);
+      if (res.data.status === "success") {
+        setLOADING(false);
+        setOBJECT(res.data.result || User);
+      }
+      else {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
+      }
     })
     .catch((err: any) => {
       setLOADING(false);
@@ -67,6 +78,7 @@ export const UserDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -76,6 +88,7 @@ export const UserDetail = () => {
         sync();
       }
       else {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),

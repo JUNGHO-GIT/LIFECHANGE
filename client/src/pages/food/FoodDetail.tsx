@@ -102,7 +102,6 @@ export const FoodDetail = () => {
       );
     })
     .catch((err: any) => {
-      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
@@ -124,7 +123,6 @@ export const FoodDetail = () => {
       );
     })
     .catch((err: any) => {
-      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
@@ -147,52 +145,61 @@ export const FoodDetail = () => {
       },
     })
     .then((res: any) => {
-      // 기본값 설정
-      setOBJECT(res.data.result || Food);
+      if (res.data.status === "success") {
+        setLOADING(false);
+        setOBJECT(res.data.result || Food);
 
-      // sectionCnt가 0이면 section 초기화
-      if (res.data.sectionCnt <= 0) {
+        // sectionCnt가 0이면 section 초기화
+        if (res.data.sectionCnt <= 0) {
+          setOBJECT((prev: any) => ({
+            ...prev,
+            food_section: []
+          }));
+        }
+        // sectionCnt가 0이 아니면 section 내부 재정렬
+        else {
+          setOBJECT((prev: any) => ({
+            ...prev,
+            food_section: prev.food_section.sort((a: any, b: any) => (
+              foodArray.findIndex((item: any) => item.food_part === a.food_part) -
+              foodArray.findIndex((item: any) => item.food_part === b.food_part)
+            )),
+          }));
+        }
+        // count 설정
+        setCOUNT((prev: any) => ({
+          ...prev,
+          totalCnt: res.data.totalCnt || 0,
+          sectionCnt: res.data.sectionCnt || 0,
+          newSectionCnt: res.data.sectionCnt || 0
+        }));
+
+        // 스토리지 데이터 가져오기
+        let sectionArray = sessionFoodSection.length > 0 ? sessionFoodSection : [];
+
+        // 기존 food_section 데이터와 병합하여 OBJECT 재설정
         setOBJECT((prev: any) => ({
           ...prev,
-          food_section: []
+          // 기존의 food_section만 정렬
+          food_section: prev?.food_section ? (
+            [...prev.food_section].sort((a, b) => a.food_part - b.food_part).concat(sectionArray)
+          ) : [...sectionArray]
+        }));
+
+        // 병합된 데이터를 바탕으로 COUNT 재설정
+        setCOUNT((prev: any) => ({
+          ...prev,
+          newSectionCnt: prev?.newSectionCnt + sectionArray.length
         }));
       }
-      // sectionCnt가 0이 아니면 section 내부 재정렬
       else {
-        setOBJECT((prev: any) => ({
-          ...prev,
-          food_section: prev.food_section.sort((a: any, b: any) => (
-            foodArray.findIndex((item: any) => item.food_part === a.food_part) -
-            foodArray.findIndex((item: any) => item.food_part === b.food_part)
-          )),
-        }));
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
       }
-
-      // count 설정
-      setCOUNT((prev: any) => ({
-        ...prev,
-        totalCnt: res.data.totalCnt || 0,
-        sectionCnt: res.data.sectionCnt || 0,
-        newSectionCnt: res.data.sectionCnt || 0
-      }));
-
-      // 스토리지 데이터 가져오기
-      let sectionArray = sessionFoodSection.length > 0 ? sessionFoodSection : [];
-
-      // 기존 food_section 데이터와 병합하여 OBJECT 재설정
-      setOBJECT((prev: any) => ({
-        ...prev,
-        // 기존의 food_section만 정렬
-        food_section: prev?.food_section ? (
-          [...prev.food_section].sort((a, b) => a.food_part - b.food_part).concat(sectionArray)
-        ) : [...sectionArray]
-      }));
-
-      // 병합된 데이터를 바탕으로 COUNT 재설정
-      setCOUNT((prev: any) => ({
-        ...prev,
-        newSectionCnt: prev?.newSectionCnt + sectionArray.length
-      }));
     })
     .catch((err: any) => {
       setLOADING(false);
@@ -276,6 +283,7 @@ export const FoodDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -291,6 +299,7 @@ export const FoodDetail = () => {
         sync("nutrition");
       }
       else {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -327,6 +336,7 @@ export const FoodDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -342,6 +352,7 @@ export const FoodDetail = () => {
         sync("nutrition");
       }
       else {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -375,6 +386,7 @@ export const FoodDetail = () => {
         sync("favorite");
       }
       else {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),

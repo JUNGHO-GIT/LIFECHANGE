@@ -102,7 +102,6 @@ export const SleepDetail = () => {
       );
     })
     .catch((err: any) => {
-      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
@@ -125,33 +124,42 @@ export const SleepDetail = () => {
       },
     })
     .then((res: any) => {
-      // 기본값 설정
-      setOBJECT(res.data.result || Sleep);
+      if (res.data.status === "success") {
+        setLOADING(false);
+        setOBJECT(res.data.result || Sleep);
 
-      // sectionCnt가 0이면 section 초기화
-      if (res.data.sectionCnt <= 0) {
-        setOBJECT((prev: any) => ({
+        // sectionCnt가 0이면 section 초기화
+        if (res.data.sectionCnt <= 0) {
+          setOBJECT((prev: any) => ({
+            ...prev,
+            sleep_section: []
+          }));
+        }
+        // sectionCnt가 0이 아니면 section 내부 part 값에 따라 재정렬
+        else {
+          setOBJECT((prev: any) => ({
+            ...prev,
+            sleep_section: prev.sleep_section.sort((a: any, b: any) => (
+              a.sleep_part - b.sleep_part
+            ))
+          }));
+        }
+        // count 설정
+        setCOUNT((prev: any) => ({
           ...prev,
-          sleep_section: []
+          totalCnt: res.data.totalCnt || 0,
+          sectionCnt: res.data.sectionCnt || 0,
+          newSectionCnt: res.data.sectionCnt || 0
         }));
       }
-      // sectionCnt가 0이 아니면 section 내부 part 값에 따라 재정렬
       else {
-        setOBJECT((prev: any) => ({
-          ...prev,
-          sleep_section: prev.sleep_section.sort((a: any, b: any) => (
-            a.sleep_part - b.sleep_part
-          ))
-        }));
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
       }
-
-      // count 설정
-      setCOUNT((prev: any) => ({
-        ...prev,
-        totalCnt: res.data.totalCnt || 0,
-        sectionCnt: res.data.sectionCnt || 0,
-        newSectionCnt: res.data.sectionCnt || 0
-      }));
     })
     .catch((err: any) => {
       setLOADING(false);
@@ -202,6 +210,7 @@ export const SleepDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -217,6 +226,7 @@ export const SleepDetail = () => {
         sync();
       }
       else {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -253,6 +263,7 @@ export const SleepDetail = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
@@ -268,6 +279,7 @@ export const SleepDetail = () => {
         sync();
       }
       else {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),

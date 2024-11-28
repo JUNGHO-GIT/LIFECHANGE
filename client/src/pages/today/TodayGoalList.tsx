@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal, useStorageSession } from "@importHooks";
-import { useStoreLanguage, useStoreLoading } from "@importStores";
+import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
 import { axios } from "@importLibs";
 import { insertComma } from "@importScripts";
 import { ExerciseGoal, FoodGoal, MoneyGoal, SleepGoal } from "@importSchemas";
@@ -18,6 +18,7 @@ export const TodayGoalList = () => {
   const { PATH, navigate, sessionId, localCurrency, localUnit } = useCommonValue();
   const { getDayFmt, getDayNotFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
+  const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
   // 2-1. useStorageSession ------------------------------------------------------------------------
@@ -130,6 +131,12 @@ export const TodayGoalList = () => {
       });
     }
     catch (err: any) {
+      setLOADING(false);
+      setALERT({
+        open: true,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
       console.error(err);
     }
     finally {

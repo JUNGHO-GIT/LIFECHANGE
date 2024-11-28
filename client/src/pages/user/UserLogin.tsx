@@ -141,6 +141,7 @@ export const UserLogin = () => {
     })
     .then((res: any) => {
       if (res.data.status === "success") {
+        setLOADING(false);
         setSession("setting", "id", "", {
           sessionId: res.data.result.user_id,
           admin: res.data.admin === "admin" ? "true" : "false",
@@ -149,25 +150,27 @@ export const UserLogin = () => {
         sync();
       }
       else if (res.data.status === "isGoogleUser") {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
         setSession("setting", "id", "", {
           sessionId: res.data.result.user_id,
           admin: res.data.admin === "admin" ? "true" : "false",
         });
+      }
+      else {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
           severity: "error",
         });
-      }
-      else {
         setSession("setting", "id", "", {
           sessionId: "",
           admin: "false",
-        });
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg),
-          severity: "error",
         });
       }
     })
@@ -190,9 +193,11 @@ export const UserLogin = () => {
     axios.get (`${URL_GOOGLE}/login`)
     .then((res: any) => {
       if (res.data.status === "success") {
+        setLOADING(false);
         window.location.href = res.data.url;
       }
       else {
+        setLOADING(false);
         setALERT({
           open: true,
           msg: translate(res.data.msg),
