@@ -106,6 +106,8 @@ const App = () => {
       <Alert />
       <Confirm />
       <Routes>
+        {/** home **/}
+        <Route path={"/"} element={<div />} />
         {/** admin **/}
         <Route path={"/admin/dashboard/*"} element={<AdminDashboard />} />
         {/** auth **/}
