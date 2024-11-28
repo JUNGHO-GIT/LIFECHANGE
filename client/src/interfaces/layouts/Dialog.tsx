@@ -1,7 +1,8 @@
 // Dialog.tsx
 
 import { useState } from "@importReacts";
-import { useCommonValue, useCommonDate, useStoreLanguage } from "@importHooks";
+import { useCommonValue, useCommonDate } from "@importHooks";
+import { useStoreLanguage } from "@importStores";
 import { Div, Icons } from "@importComponents";
 import { SpeedDial, SpeedDialAction, SpeedDialIcon, Backdrop } from "@importMuis";
 

@@ -1,6 +1,6 @@
 // Confirm.tsx
 
-import { useStoreConfirm } from "@importHooks";
+import { useStoreConfirm } from "@importStores";
 import { Icons } from "@importComponents";
 import { Snackbar, Alert as MuiAlert } from "@importMuis";
 

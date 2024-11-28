@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useValidateUser } from "@importHooks";
-import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
 import { User } from "@importSchemas";
 import { Input } from "@importContainers";
@@ -87,6 +87,7 @@ export const UserResetPw = () => {
       }
     })
     .catch((err: any) => {
+      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
@@ -135,6 +136,7 @@ export const UserResetPw = () => {
       }
     })
     .catch((err: any) => {
+      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
@@ -176,6 +178,7 @@ export const UserResetPw = () => {
       }
     })
     .catch((err: any) => {
+      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
@@ -204,6 +207,7 @@ export const UserResetPw = () => {
       }
     })
     .catch((err: any) => {
+      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useTime, useValidateSleep } from "@importHooks";
-import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { Sleep } from "@importSchemas";
 import { axios } from "@importLibs";
 import { sync } from "@importScripts";
@@ -102,6 +102,7 @@ export const SleepDetail = () => {
       );
     })
     .catch((err: any) => {
+      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
@@ -153,6 +154,7 @@ export const SleepDetail = () => {
       }));
     })
     .catch((err: any) => {
+      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
@@ -223,6 +225,7 @@ export const SleepDetail = () => {
       }
     })
     .catch((err: any) => {
+      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
@@ -273,6 +276,7 @@ export const SleepDetail = () => {
       }
     })
     .catch((err: any) => {
+      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),

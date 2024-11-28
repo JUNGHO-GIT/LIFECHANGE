@@ -1,7 +1,7 @@
 // Count.tsx
 
 import { useCommonValue } from "@importHooks";
-import { useStoreLanguage, useStoreAlert } from "@importHooks";
+import { useStoreLanguage, useStoreAlert } from "@importStores";
 import { Input } from "@importContainers";
 import { Img, Div, Icons, Grid } from "@importComponents";
 

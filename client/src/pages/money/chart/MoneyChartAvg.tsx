@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
-import { useStoreLanguage, useStoreLoading } from "@importHooks";
+import { useStoreLanguage, useStoreLoading } from "@importStores";
 import { MoneyAvg } from "@importSchemas";
 import { axios } from "@importLibs";
 import { handleY } from "@importScripts";

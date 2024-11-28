@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
-import { useStoreLanguage, useStoreLoading } from "@importHooks";
+import { useStoreLanguage, useStoreLoading } from "@importStores";
 import { FoodPie } from "@importSchemas";
 import { axios } from "@importLibs";
 import { Select, PopUp } from "@importContainers";

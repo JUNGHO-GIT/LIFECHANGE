@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useTime, useValidateExercise } from "@importHooks";
-import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
 import { insertComma, sync } from "@importScripts";
 import { Exercise } from "@importSchemas";
@@ -104,6 +104,7 @@ export const ExerciseDetail = () => {
       );
     })
     .catch((err: any) => {
+      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
@@ -156,6 +157,7 @@ export const ExerciseDetail = () => {
       }));
     })
     .catch((err: any) => {
+      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
@@ -259,6 +261,7 @@ export const ExerciseDetail = () => {
       }
     })
     .catch((err: any) => {
+      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
@@ -309,6 +312,7 @@ export const ExerciseDetail = () => {
       }
     })
     .catch((err: any) => {
+      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),

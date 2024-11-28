@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useValidateMoney } from "@importHooks";
-import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { MoneyGoal } from "@importSchemas";
 import { axios } from "@importLibs";
 import { insertComma, sync } from "@importScripts";
@@ -100,6 +100,7 @@ export const MoneyGoalDetail = () => {
       );
     })
     .catch((err: any) => {
+      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
@@ -131,6 +132,7 @@ export const MoneyGoalDetail = () => {
       }));
     })
     .catch((err: any) => {
+      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
@@ -184,6 +186,7 @@ export const MoneyGoalDetail = () => {
       }
     })
     .catch((err: any) => {
+      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
@@ -234,6 +237,7 @@ export const MoneyGoalDetail = () => {
       }
     })
     .catch((err: any) => {
+      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),

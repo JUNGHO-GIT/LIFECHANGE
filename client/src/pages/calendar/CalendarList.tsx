@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
-import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { Calendar } from "@importSchemas";
 import { axios, CalendarReact } from "@importLibs";
 import { Footer } from "@importLayouts";

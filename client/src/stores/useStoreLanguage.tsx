@@ -945,6 +945,10 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
         ko: "대분류",
         en: "Part"
       },
+      privacy: {
+        ko: "개인정보 처리방침",
+        en: "Privacy Policy"
+      },
       partTitle: {
         ko: "부위-운동",
         en: "Part-Exercise"

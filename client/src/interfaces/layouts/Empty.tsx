@@ -1,6 +1,7 @@
 // Empty.tsx
 
-import { useCommonValue, useStoreLanguage } from "@importHooks";
+import { useCommonValue } from "@importHooks";
+import { useStoreLanguage } from "@importStores";
 import { Div, Icons, Grid, Card } from "@importComponents";
 import { Accordion, AccordionSummary } from "@importMuis";
 

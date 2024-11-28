@@ -17,8 +17,12 @@ import {
 
 import {
   useRoot, useScrollTop, useFoodSection, useLanguageSetting, useLanguageInitialize,
-  useCommonValue, useStoreLoading
+  useCommonValue
 } from "@importHooks";
+
+import {
+  useStoreLoading
+} from "@importStores";
 
 import {
   Header, TopNav, BottomNav, Alert, Confirm, Loader
@@ -78,13 +82,20 @@ const App = () => {
   const noneHeader = (
     !PATH.includes("/user/login") &&
     !PATH.includes("/user/signup") &&
-    !PATH.includes("/user/resetPw")
+    !PATH.includes("/user/resetPw") &&
+    !PATH.includes("/auth/error") &&
+    !PATH.includes("/auth/privacy")
   );
   const noneTop = (
-    !PATH.includes("/error") && !PATH.includes("/user")
+    !PATH.includes("/user") &&
+    !PATH.includes("/auth/error") &&
+    !PATH.includes("/auth/privacy")
+
   );
   const noneBottom = (
-    !PATH.includes("/error") && !PATH.includes("/user")
+    !PATH.includes("/user") &&
+    !PATH.includes("/auth/error") &&
+    !PATH.includes("/auth/privacy")
   );
 
   return (
@@ -95,8 +106,6 @@ const App = () => {
       <Alert />
       <Confirm />
       <Routes>
-        {/** home **/}
-        <Route path={"/"} element={<div />} />
         {/** admin **/}
         <Route path={"/admin/dashboard/*"} element={<AdminDashboard />} />
         {/** auth **/}

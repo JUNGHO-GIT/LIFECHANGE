@@ -2,7 +2,7 @@
 
 import { useState, useEffect, createRef, useRef } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
-import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
 import { sync } from "@importScripts";
 import { Category } from "@importSchemas";
@@ -73,6 +73,7 @@ export const UserCategory = () => {
       });
     })
     .catch((err: any) => {
+      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
@@ -109,6 +110,7 @@ export const UserCategory = () => {
       }
     })
     .catch((err: any) => {
+      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),

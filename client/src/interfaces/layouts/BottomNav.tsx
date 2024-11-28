@@ -1,8 +1,8 @@
 // BottomNav.tsx
 
 import { useEffect } from "@importReacts";
-import { useCommonValue, useCommonDate } from "@importHooks";
-import { useStorageLocal, useStoreLanguage } from "@importHooks";
+import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
+import { useStoreLanguage } from "@importStores";
 import { getLocal } from "@importScripts";
 import { Img, Paper } from "@importComponents";
 import { BottomNavigation, BottomNavigationAction } from "@importMuis";

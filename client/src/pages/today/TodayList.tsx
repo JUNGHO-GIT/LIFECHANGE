@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal, useStorageSession } from "@importHooks";
-import { useStoreLanguage, useStoreLoading } from "@importHooks";
+import { useStoreLanguage, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
 import { insertComma } from "@importScripts";
 import { Exercise, Food, Money, Sleep } from "@importSchemas";

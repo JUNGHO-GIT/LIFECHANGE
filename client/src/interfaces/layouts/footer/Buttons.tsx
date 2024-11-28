@@ -1,6 +1,7 @@
 // Buttons.tsx
 
-import { useCommonValue, useStoreLanguage } from "@importHooks";
+import { useCommonValue } from "@importHooks";
+import { useStoreLanguage } from "@importStores";
 import { setSession } from "@importScripts";
 import { PopUp } from "@importContainers";
 import { Btn, Div, Grid } from "@importComponents";

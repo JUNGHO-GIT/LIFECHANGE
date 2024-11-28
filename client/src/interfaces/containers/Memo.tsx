@@ -1,7 +1,7 @@
 // Memo.tsx
 
 import { useCommonValue } from "@importHooks";
-import { useStoreLanguage } from "@importHooks";
+import { useStoreLanguage } from "@importStores";
 import { PopUp, Input } from "@importContainers";
 import { Img, Grid } from "@importComponents";
 import { TextArea } from "@importMuis";

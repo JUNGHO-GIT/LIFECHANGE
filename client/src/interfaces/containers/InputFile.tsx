@@ -1,7 +1,7 @@
 // InputFile.tsx
 
 import { useState, useEffect } from "@importReacts";
-import { useStoreAlert } from "@importHooks";
+import { useStoreAlert } from "@importStores";
 import { Div, Br, Img, Icons, Grid } from "@importComponents";
 import { MuiFileInput } from "@importMuis";
 

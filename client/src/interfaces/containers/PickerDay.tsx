@@ -4,7 +4,7 @@
 
 import { useEffect, useState } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
-import { useStoreLanguage } from "@importHooks";
+import { useStoreLanguage } from "@importStores";
 import { setSession } from "@importScripts";
 import { PopUp, Input, Select } from "@importContainers";
 import { Btn, Img, Div, Icons, Grid } from "@importComponents";

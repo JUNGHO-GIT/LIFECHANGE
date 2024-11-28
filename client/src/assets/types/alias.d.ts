@@ -12,6 +12,10 @@ declare module "@hooks/*" {
   const value: any;
   export default value;
 }
+declare module "@stores/*" {
+  const value: any;
+  export default value;
+}
 declare module "@pages/*" {
   const value: any;
   export default value;
@@ -22,6 +26,10 @@ declare module "@schemas/*" {
 }
 
 declare module "@importHooks/*" {
+  const value: any;
+  export default value;
+}
+declare module "@importStores/*" {
   const value: any;
   export default value;
 }

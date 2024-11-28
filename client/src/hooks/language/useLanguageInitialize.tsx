@@ -2,7 +2,7 @@
 
 import { useEffect } from "@importReacts";
 import { useCommonValue } from "@importHooks";
-import { useStoreLanguage } from "@importHooks";
+import { useStoreLanguage } from "@importStores";
 
 // -------------------------------------------------------------------------------------------------
 export const useLanguageInitialize = () => {

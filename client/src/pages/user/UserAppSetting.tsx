@@ -2,7 +2,7 @@
 
 import { useState  } from "@importReacts";
 import { useCommonValue } from "@importHooks";
-import { useStoreLanguage, useStoreConfirm } from "@importHooks";
+import { useStoreLanguage, useStoreConfirm } from "@importStores";
 import { setLocal } from "@importScripts";
 import { PopUp } from "@importContainers";
 import { Icons, Img, Div, Br, Paper, Grid, Card } from "@importComponents";
@@ -198,6 +198,23 @@ export const UserAppSetting = () => {
                   >
                     <TableCell className={"w-90vw p-15px"}>
                       {translate("appInfo")}
+                    </TableCell>
+                    <TableCell className={"w-10vw p-15px"}>
+                      <Icons
+                        name={"ChevronRight"}
+                        className={"w-16px h-16px"}
+                      />
+                    </TableCell>
+                  </TableRow>
+                  {/** privacy **/}
+                  <TableRow
+                    className={"pointer"}
+                    onClick={() => {
+                      navigate("/auth/privacy")
+                    }}
+                  >
+                    <TableCell className={"w-90vw p-15px"}>
+                      {translate("privacy")}
                     </TableCell>
                     <TableCell className={"w-10vw p-15px"}>
                       <Icons

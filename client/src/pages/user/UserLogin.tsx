@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useValidateUser } from "@importHooks";
-import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
 import { sync, getLocal, setLocal, setSession } from "@importScripts";
 import { User } from "@importSchemas";
@@ -172,13 +172,13 @@ export const UserLogin = () => {
       }
     })
     .catch((err: any) => {
+      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
         severity: "error",
       });
       console.error(err);
-      setLOADING(false);
     })
     .finally(() => {
       setLOADING(false);
@@ -201,6 +201,7 @@ export const UserLogin = () => {
       }
     })
     .catch((err: any) => {
+      setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
