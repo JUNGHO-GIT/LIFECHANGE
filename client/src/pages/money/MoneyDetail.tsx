@@ -123,43 +123,33 @@ export const MoneyDetail = () => {
       },
     })
     .then((res: any) => {
-      if (res.data.status === "success") {
-        setLOADING(false);
-        setOBJECT(res.data.result || Money);
+      setLOADING(false);
+      setOBJECT(res.data.result || Money);
 
-        // sectionCnt가 0이면 section 초기화
-        if (res.data.sectionCnt <= 0) {
-          setOBJECT((prev: any) => ({
-            ...prev,
-            money_section: []
-          }));
-        }
-        // sectionCnt가 0이 아니면 section 내부 재정렬
-        else {
-          setOBJECT((prev: any) => ({
-            ...prev,
-            money_section: prev.money_section.sort((a: any, b: any) => (
-              moneyArray.findIndex((item: any) => item.money_part === a.money_part) -
-              moneyArray.findIndex((item: any) => item.money_part === b.money_part)
-            )),
-          }));
-        }
-        // count 설정
-        setCOUNT((prev: any) => ({
+      // sectionCnt가 0이면 section 초기화
+      if (res.data.sectionCnt <= 0) {
+        setOBJECT((prev: any) => ({
           ...prev,
-          totalCnt: res.data.totalCnt || 0,
-          sectionCnt: res.data.sectionCnt || 0,
-          newSectionCnt: res.data.sectionCnt || 0
+          money_section: []
         }));
       }
+      // sectionCnt가 0이 아니면 section 내부 재정렬
       else {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg),
-          severity: "error",
-        });
+        setOBJECT((prev: any) => ({
+          ...prev,
+          money_section: prev.money_section.sort((a: any, b: any) => (
+            moneyArray.findIndex((item: any) => item.money_part === a.money_part) -
+            moneyArray.findIndex((item: any) => item.money_part === b.money_part)
+          )),
+        }));
       }
+      // count 설정
+      setCOUNT((prev: any) => ({
+        ...prev,
+        totalCnt: res.data.totalCnt || 0,
+        sectionCnt: res.data.sectionCnt || 0,
+        newSectionCnt: res.data.sectionCnt || 0
+      }));
     })
     .catch((err: any) => {
       setLOADING(false);

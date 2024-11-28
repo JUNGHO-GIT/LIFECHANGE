@@ -124,42 +124,32 @@ export const SleepDetail = () => {
       },
     })
     .then((res: any) => {
-      if (res.data.status === "success") {
-        setLOADING(false);
-        setOBJECT(res.data.result || Sleep);
+      setLOADING(false);
+      setOBJECT(res.data.result || Sleep);
 
-        // sectionCnt가 0이면 section 초기화
-        if (res.data.sectionCnt <= 0) {
-          setOBJECT((prev: any) => ({
-            ...prev,
-            sleep_section: []
-          }));
-        }
-        // sectionCnt가 0이 아니면 section 내부 part 값에 따라 재정렬
-        else {
-          setOBJECT((prev: any) => ({
-            ...prev,
-            sleep_section: prev.sleep_section.sort((a: any, b: any) => (
-              a.sleep_part - b.sleep_part
-            ))
-          }));
-        }
-        // count 설정
-        setCOUNT((prev: any) => ({
+      // sectionCnt가 0이면 section 초기화
+      if (res.data.sectionCnt <= 0) {
+        setOBJECT((prev: any) => ({
           ...prev,
-          totalCnt: res.data.totalCnt || 0,
-          sectionCnt: res.data.sectionCnt || 0,
-          newSectionCnt: res.data.sectionCnt || 0
+          sleep_section: []
         }));
       }
+      // sectionCnt가 0이 아니면 section 내부 part 값에 따라 재정렬
       else {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg),
-          severity: "error",
-        });
+        setOBJECT((prev: any) => ({
+          ...prev,
+          sleep_section: prev.sleep_section.sort((a: any, b: any) => (
+            a.sleep_part - b.sleep_part
+          ))
+        }));
       }
+      // count 설정
+      setCOUNT((prev: any) => ({
+        ...prev,
+        totalCnt: res.data.totalCnt || 0,
+        sectionCnt: res.data.sectionCnt || 0,
+        newSectionCnt: res.data.sectionCnt || 0
+      }));
     })
     .catch((err: any) => {
       setLOADING(false);

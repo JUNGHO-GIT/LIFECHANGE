@@ -126,43 +126,33 @@ export const ExerciseDetail = () => {
       },
     })
     .then((res: any) => {
-      if (res.data.status === "success") {
-        setLOADING(false);
-        setOBJECT(res.data.result || Exercise);
+      setLOADING(false);
+      setOBJECT(res.data.result || Exercise);
 
-        // sectionCnt가 0이면 section 초기화
-        if (res.data.sectionCnt <= 0) {
-          setOBJECT((prev: any) => ({
-            ...prev,
-            exercise_section: []
-          }));
-        }
-        // sectionCnt가 0이 아니면 section 내부 재정렬
-        else {
-          setOBJECT((prev: any) => ({
-            ...prev,
-            exercise_section: prev.exercise_section.sort((a: any, b: any) => (
-              exerciseArray.findIndex((item: any) => item.exercise_part === a.exercise_part) -
-              exerciseArray.findIndex((item: any) => item.exercise_part === b.exercise_part)
-            )),
-          }));
-        }
-        // count 설정
-        setCOUNT((prev: any) => ({
+      // sectionCnt가 0이면 section 초기화
+      if (res.data.sectionCnt <= 0) {
+        setOBJECT((prev: any) => ({
           ...prev,
-          totalCnt: res.data.totalCnt || 0,
-          sectionCnt: res.data.sectionCnt || 0,
-          newSectionCnt: res.data.sectionCnt || 0
+          exercise_section: []
         }));
       }
+      // sectionCnt가 0이 아니면 section 내부 재정렬
       else {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg),
-          severity: "error",
-        });
+        setOBJECT((prev: any) => ({
+          ...prev,
+          exercise_section: prev.exercise_section.sort((a: any, b: any) => (
+            exerciseArray.findIndex((item: any) => item.exercise_part === a.exercise_part) -
+            exerciseArray.findIndex((item: any) => item.exercise_part === b.exercise_part)
+          )),
+        }));
       }
+      // count 설정
+      setCOUNT((prev: any) => ({
+        ...prev,
+        totalCnt: res.data.totalCnt || 0,
+        sectionCnt: res.data.sectionCnt || 0,
+        newSectionCnt: res.data.sectionCnt || 0
+      }));
     })
     .catch((err: any) => {
       setLOADING(false);

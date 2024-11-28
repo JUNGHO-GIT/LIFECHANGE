@@ -40,18 +40,8 @@ export const UserDetail = () => {
       },
     })
     .then((res: any) => {
-      if (res.data.status === "success") {
-        setLOADING(false);
-        setOBJECT(res.data.result || User);
-      }
-      else {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg),
-          severity: "error",
-        });
-      }
+      setLOADING(false);
+      setOBJECT(res.data.result || User);
     })
     .catch((err: any) => {
       setLOADING(false);

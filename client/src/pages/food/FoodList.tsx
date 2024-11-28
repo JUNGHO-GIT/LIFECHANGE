@@ -103,28 +103,18 @@ export const FoodList = () => {
       },
     })
     .then((res: any) => {
-      if (res.data.status === "success") {
-        setLOADING(false);
-        setOBJECT(res.data.result.length > 0 ? res.data.result : [Food]);
-        setCOUNT((prev: any) => ({
-          ...prev,
-          totalCnt: res.data.totalCnt || 0,
-          sectionCnt: res.data.sectionCnt || 0,
-          newSectionCnt: res.data.sectionCnt || 0
-        }));
-        // 응답 길이만큼 expanded 초기화
-        setIsExpanded(
-          Array(res.data.result.length).fill({ expanded: false })
-        );
-      }
-      else {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg),
-          severity: "error",
-        });
-      }
+      setLOADING(false);
+      setOBJECT(res.data.result.length > 0 ? res.data.result : [Food]);
+      setCOUNT((prev: any) => ({
+        ...prev,
+        totalCnt: res.data.totalCnt || 0,
+        sectionCnt: res.data.sectionCnt || 0,
+        newSectionCnt: res.data.sectionCnt || 0
+      }));
+      // 응답 길이만큼 expanded 초기화
+      setIsExpanded(
+        Array(res.data.result.length).fill({ expanded: false })
+      );
     })
     .catch((err: any) => {
       setLOADING(false);

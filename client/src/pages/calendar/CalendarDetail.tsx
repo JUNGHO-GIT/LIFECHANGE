@@ -123,43 +123,33 @@ export const CalendarDetail = () => {
       },
     })
     .then((res: any) => {
-      if (res.data.status === "success") {
-        setLOADING(false);
-        setOBJECT(res.data.result || Calendar);
+      setLOADING(false);
+      setOBJECT(res.data.result || Calendar);
 
-        // sectionCnt가 0이면 section 초기화
-        if (res.data.sectionCnt <= 0) {
-          setOBJECT((prev: any) => ({
-            ...prev,
-            calendar_section: [],
-          }));
-        }
-        // sectionCnt가 0이 아니면 section 내부 재정렬
-        else {
-          setOBJECT((prev: any) => ({
-            ...prev,
-            calendar_section: prev.calendar_section.sort((a: any, b: any) => (
-              calendarArray.findIndex((item: any) => item.calendar_part === a.calendar_part) -
-              calendarArray.findIndex((item: any) => item.calendar_part === b.calendar_part)
-            )),
-          }));
-        }
-        // count 설정
-        setCOUNT((prev: any) => ({
+      // sectionCnt가 0이면 section 초기화
+      if (res.data.sectionCnt <= 0) {
+        setOBJECT((prev: any) => ({
           ...prev,
-          totalCnt: res.data.totalCnt || 0,
-          sectionCnt: res.data.sectionCnt || 0,
-          newSectionCnt: res.data.sectionCnt || 0
+          calendar_section: [],
         }));
       }
+      // sectionCnt가 0이 아니면 section 내부 재정렬
       else {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg),
-          severity: "error",
-        });
+        setOBJECT((prev: any) => ({
+          ...prev,
+          calendar_section: prev.calendar_section.sort((a: any, b: any) => (
+            calendarArray.findIndex((item: any) => item.calendar_part === a.calendar_part) -
+            calendarArray.findIndex((item: any) => item.calendar_part === b.calendar_part)
+          )),
+        }));
       }
+      // count 설정
+      setCOUNT((prev: any) => ({
+        ...prev,
+        totalCnt: res.data.totalCnt || 0,
+        sectionCnt: res.data.sectionCnt || 0,
+        newSectionCnt: res.data.sectionCnt || 0
+      }));
     })
     .catch((err: any) => {
       setLOADING(false);
