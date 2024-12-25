@@ -33,7 +33,7 @@ export const UserCategory = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const REFS = useRef<any>();
+  const REFS = useRef<any>({});
   const [OBJECT, setOBJECT] = useState<any>(Category);
   const [dataType, setDataType] = useState<string>("exercise");
   const [isEditable, setIsEditable] = useState<string>("");
@@ -272,151 +272,35 @@ export const UserCategory = () => {
   const userCategoryNode = () => {
     // 7-1. popup
     const popupSection = () => (
-      <Card className={"w-85vw h-60vh d-row"}>
-        <TableContainer className={"border-1 radius-2 over-x-hidden"}>
-          <Table>
-            <TableHead className={"table-thead"}>
-              <TableRow className={"table-thead-tr p-sticky top-0px z-900"}>
-                <TableCell>
-                  {translate("dataCategory2")}
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody className={"table-tbody"}>
-              {OBJECT[dataType]?.map((item: any, index: number) => (index > 0) && (
-                <TableRow className={"table-tbody-tr border-bottom-1"} key={index}>
-                  <TableCell className={selectedIdx.category2Idx === index ? "bg-light" : ""}>
-                    <Div className={"d-center"}>
-                      <Div className={"fs-0-9rem ml-auto"}>
-                        <Input
-                          variant={"standard"}
-                          value={translate(item[`${dataType}_part`]) || ""}
-                          readOnly={isEditable !== `${dataType}_part_${index}`}
-                          inputclass={"fs-0-9rem"}
-                          inputRef={REFS?.current?.[dataType]?.[index]?.[`${dataType}_part`]}
-                          sx={{
-                            "& .MuiInput-root::before": {
-                              borderBottom: "none"
-                            },
-                            "& .MuiInput-root::after": {
-                              borderBottom: isEditable === `${dataType}_part_${index}` ? (
-                                "2px solid #1976d2"
-                              ) : (
-                                "2px solid #000000"
-                              )
-                            }
-                          }}
-                          onClick={(e: any) => {
-                            if (isEditable !== `${dataType}_part_${index}`) {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              const target = e.currentTarget;
-                              target.classList.add('shake');
-                              setTimeout(() => {
-                                target.classList.remove('shake');
-                              }, 700);
-                            }
-                          }}
-                          onChange={(e: any) => {
-                            setOBJECT((prev: any) => ({
-                              ...prev,
-                              [dataType]: [
-                                ...prev[dataType]?.slice(0, index),
-                                {
-                                  ...prev[dataType]?.[index],
-                                  [`${dataType}_part`]: e.target.value
-                                },
-                                ...prev[dataType]?.slice(index + 1)
-                              ]
-                            }));
-                          }}
-                        />
-                      </Div>
-                      <Div className={"fs-0-9rem ml-auto d-row-right"}>
-                        <Icons
-                          name={"Search"}
-                          className={"w-12px h-12px"}
-                          onClick={() => {
-                            setSelectedIdx((prev: any) => ({
-                              ...prev,
-                              category2Idx: index
-                            }));
-                          }}
-                        />
-                        <Icons
-                          name={"Pencil"}
-                          className={"w-12px h-12px navy"}
-                          onClick={() => {
-                            setSelectedIdx((prev: any) => ({
-                              ...prev,
-                              category2Idx: index
-                            }));
-                            handleRename("part", index);
-                          }}
-                        />
-                        <Icons
-                          name={"Trash"}
-                          className={"w-12px h-12px burgundy"}
-                          onClick={() => {
-                            setSelectedIdx((prev: any) => ({
-                              ...prev,
-                              category2Idx: index
-                            }));
-                            handleRemove("part", index);
-                          }}
-                        />
-                      </Div>
-                    </Div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-            <TableFooter className={"table-tfoot"}>
-              <TableRow className={"table-tfoot-tr"}>
-                <TableCell>
-                  <Div className={"d-center"}>
-                    <Icons
-                      key={"Plus"}
-                      name={"Plus"}
-                      className={"w-12px h-12px"}
-                      onClick={() => {
-                        handleAdd("part");
-                      }}
-                    />
-                  </Div>
-                </TableCell>
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </TableContainer>
-        {(dataType === "exercise" || dataType === "money") && (
-          <TableContainer className={"border-1 radius-2 over-x-hidden"}>
+      <Grid container={true} spacing={0}>
+        <Grid size={12} className={"w-85vw h-60vh d-row"}>
+          <TableContainer className={"border-1 radius-2 over-x-hidden over-y-auto"}>
             <Table>
               <TableHead className={"table-thead"}>
                 <TableRow className={"table-thead-tr p-sticky top-0px z-900"}>
                   <TableCell>
-                    {translate("dataCategory3")}
+                    {translate("dataCategory2")}
                   </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody className={"table-tbody"}>
-                {OBJECT[dataType]?.[selectedIdx?.category2Idx]?.[`${dataType}_title`]?.map((item: any, index: number) => (index > 0) && (
-                  <TableRow key={index} className={"table-tbody-tr border-bottom-1"}>
-                    <TableCell>
+                {OBJECT[dataType]?.map((item: any, index: number) => (index > 0) && (
+                  <TableRow className={"table-tbody-tr border-bottom-1"} key={index}>
+                    <TableCell className={selectedIdx.category2Idx === index ? "bg-light" : ""}>
                       <Div className={"d-center"}>
                         <Div className={"fs-0-9rem ml-auto"}>
                           <Input
                             variant={"standard"}
-                            value={translate(item) || ""}
-                            readOnly={isEditable !== `${dataType}_title_${index}`}
+                            value={translate(item[`${dataType}_part`]) || ""}
+                            readOnly={isEditable !== `${dataType}_part_${index}`}
                             inputclass={"fs-0-9rem"}
-                            inputRef={REFS?.current?.[dataType]?.[selectedIdx?.category2Idx]?.[`${dataType}_title`]?.[index]}
+                            inputRef={REFS?.current?.[dataType]?.[index]?.[`${dataType}_part`]}
                             sx={{
                               "& .MuiInput-root::before": {
                                 borderBottom: "none"
                               },
                               "& .MuiInput-root::after": {
-                                borderBottom: isEditable === `${dataType}_title_${index}` ? (
+                                borderBottom: isEditable === `${dataType}_part_${index}` ? (
                                   "2px solid #1976d2"
                                 ) : (
                                   "2px solid #000000"
@@ -424,7 +308,7 @@ export const UserCategory = () => {
                               }
                             }}
                             onClick={(e: any) => {
-                              if (isEditable !== `${dataType}_title_${index}`) {
+                              if (isEditable !== `${dataType}_part_${index}`) {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 const target = e.currentTarget;
@@ -438,16 +322,12 @@ export const UserCategory = () => {
                               setOBJECT((prev: any) => ({
                                 ...prev,
                                 [dataType]: [
-                                  ...prev[dataType]?.slice(0, selectedIdx.category2Idx),
+                                  ...prev[dataType]?.slice(0, index),
                                   {
-                                    ...prev[dataType]?.[selectedIdx.category2Idx],
-                                    [`${dataType}_title`]: [
-                                      ...prev[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`]?.slice(0, index),
-                                      e.target.value,
-                                      ...prev[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`]?.slice(index + 1)
-                                    ]
+                                    ...prev[dataType]?.[index],
+                                    [`${dataType}_part`]: e.target.value
                                   },
-                                  ...prev[dataType]?.slice(selectedIdx.category2Idx + 1)
+                                  ...prev[dataType]?.slice(index + 1)
                                 ]
                               }));
                             }}
@@ -455,14 +335,24 @@ export const UserCategory = () => {
                         </Div>
                         <Div className={"fs-0-9rem ml-auto d-row-right"}>
                           <Icons
+                            name={"Search"}
+                            className={"w-12px h-12px"}
+                            onClick={() => {
+                              setSelectedIdx((prev: any) => ({
+                                ...prev,
+                                category2Idx: index
+                              }));
+                            }}
+                          />
+                          <Icons
                             name={"Pencil"}
                             className={"w-12px h-12px navy"}
                             onClick={() => {
                               setSelectedIdx((prev: any) => ({
                                 ...prev,
-                                category3Idx: index
+                                category2Idx: index
                               }));
-                              handleRename("title", index);
+                              handleRename("part", index);
                             }}
                           />
                           <Icons
@@ -471,9 +361,9 @@ export const UserCategory = () => {
                             onClick={() => {
                               setSelectedIdx((prev: any) => ({
                                 ...prev,
-                                category3Idx: index
+                                category2Idx: index
                               }));
-                              handleRemove("title", index);
+                              handleRemove("part", index);
                             }}
                           />
                         </Div>
@@ -491,7 +381,7 @@ export const UserCategory = () => {
                         name={"Plus"}
                         className={"w-12px h-12px"}
                         onClick={() => {
-                          handleAdd("title");
+                          handleAdd("part");
                         }}
                       />
                     </Div>
@@ -500,8 +390,120 @@ export const UserCategory = () => {
               </TableFooter>
             </Table>
           </TableContainer>
-        )}
-      </Card>
+          {(dataType === "exercise" || dataType === "money") && (
+            <TableContainer className={"border-1 radius-2 over-x-hidden"}>
+              <Table>
+                <TableHead className={"table-thead"}>
+                  <TableRow className={"table-thead-tr p-sticky top-0px z-900"}>
+                    <TableCell>
+                      {translate("dataCategory3")}
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody className={"table-tbody"}>
+                  {OBJECT[dataType]?.[selectedIdx?.category2Idx]?.[`${dataType}_title`]?.map((item: any, index: number) => (index > 0) && (
+                    <TableRow key={index} className={"table-tbody-tr border-bottom-1"}>
+                      <TableCell>
+                        <Div className={"d-center"}>
+                          <Div className={"fs-0-9rem ml-auto"}>
+                            <Input
+                              variant={"standard"}
+                              value={translate(item) || ""}
+                              readOnly={isEditable !== `${dataType}_title_${index}`}
+                              inputclass={"fs-0-9rem"}
+                              inputRef={REFS?.current?.[dataType]?.[selectedIdx?.category2Idx]?.[`${dataType}_title`]?.[index]}
+                              sx={{
+                                "& .MuiInput-root::before": {
+                                  borderBottom: "none"
+                                },
+                                "& .MuiInput-root::after": {
+                                  borderBottom: isEditable === `${dataType}_title_${index}` ? (
+                                    "2px solid #1976d2"
+                                  ) : (
+                                    "2px solid #000000"
+                                  )
+                                }
+                              }}
+                              onClick={(e: any) => {
+                                if (isEditable !== `${dataType}_title_${index}`) {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  const target = e.currentTarget;
+                                  target.classList.add('shake');
+                                  setTimeout(() => {
+                                    target.classList.remove('shake');
+                                  }, 700);
+                                }
+                              }}
+                              onChange={(e: any) => {
+                                setOBJECT((prev: any) => ({
+                                  ...prev,
+                                  [dataType]: [
+                                    ...prev[dataType]?.slice(0, selectedIdx.category2Idx),
+                                    {
+                                      ...prev[dataType]?.[selectedIdx.category2Idx],
+                                      [`${dataType}_title`]: [
+                                        ...prev[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`]?.slice(0, index),
+                                        e.target.value,
+                                        ...prev[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`]?.slice(index + 1)
+                                      ]
+                                    },
+                                    ...prev[dataType]?.slice(selectedIdx.category2Idx + 1)
+                                  ]
+                                }));
+                              }}
+                            />
+                          </Div>
+                          <Div className={"fs-0-9rem ml-auto d-row-right"}>
+                            <Icons
+                              name={"Pencil"}
+                              className={"w-12px h-12px navy"}
+                              onClick={() => {
+                                setSelectedIdx((prev: any) => ({
+                                  ...prev,
+                                  category3Idx: index
+                                }));
+                                handleRename("title", index);
+                              }}
+                            />
+                            <Icons
+                              name={"Trash"}
+                              className={"w-12px h-12px burgundy"}
+                              onClick={() => {
+                                setSelectedIdx((prev: any) => ({
+                                  ...prev,
+                                  category3Idx: index
+                                }));
+                                handleRemove("title", index);
+                              }}
+                            />
+                          </Div>
+                        </Div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+                <TableFooter className={"table-tfoot"}>
+                  <TableRow className={"table-tfoot-tr"}>
+                    <TableCell>
+                      <Div className={"d-center"}>
+                        <Icons
+                          key={"Plus"}
+                          name={"Plus"}
+                          className={"w-12px h-12px"}
+                          onClick={() => {
+                            handleAdd("title");
+                          }}
+                        />
+                      </Div>
+                    </TableCell>
+                  </TableRow>
+                </TableFooter>
+              </Table>
+            </TableContainer>
+          )}
+        </Grid>
+      </Grid>
     );
     // 7-2. detail
     const detailSection = () => {

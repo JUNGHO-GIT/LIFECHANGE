@@ -49,7 +49,7 @@ export const Header = () => {
           <Icons
             key={"Settings"}
             name={"Settings"}
-            className={"w-30px h-30px"}
+            className={"w-25px h-25px"}
             onClick={() => {
               navigate("/user/appSetting");
             }}
@@ -58,7 +58,7 @@ export const Header = () => {
           <Icons
             key={"ArrowRight"}
             name={"ArrowRight"}
-            className={"w-30px h-30px"}
+            className={"w-25px h-25px"}
             onClick={() => {
               navigate(-1);
             }}

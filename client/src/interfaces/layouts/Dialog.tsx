@@ -38,9 +38,10 @@ export const Dialog = (
   const dialogNode = () => {
     // 1. today
     const todaySection = () => (
-      <Div className={`p-fixed d-row-bottom bottom-18vh z-600 right-6vw`}>
+      <Div className={"d-flex"}>
         <Backdrop
           open={open}
+          style={{ zIndex: 550 }}
           onClick={() => {
             setOpen(false);
           }}
@@ -49,6 +50,8 @@ export const Dialog = (
           ariaLabel={"speedDial"}
           direction={"up"}
           open={open}
+          style={{ zIndex: 600 }}
+          className={`p-fixed bottom-18vh right-6vw`}
           icon={
             <SpeedDialIcon />
           }
@@ -123,9 +126,10 @@ export const Dialog = (
     );
     // 2. goal
     const listGoalSection = () => (
-      <Div className={`p-fixed d-row-bottom bottom-18vh z-600 right-6vw`}>
+      <Div className={"d-flex"}>
         <Backdrop
           open={open}
+          style={{ zIndex: 550 }}
           onClick={() => {
             setOpen(false);
           }}
@@ -133,7 +137,9 @@ export const Dialog = (
         <SpeedDial
           ariaLabel={"speedDial"}
           direction={"up"}
-          open={open}
+            open={open}
+            style={{ zIndex: 600 }}
+            className={`p-fixed bottom-18vh right-6vw`}
           icon={
             <SpeedDialIcon />
           }
@@ -211,9 +217,10 @@ export const Dialog = (
     );
     // 3. real
     const listRealSection = () => (
-      <Div className={`p-fixed d-row-bottom bottom-18vh z-600 right-6vw`}>
+      <Div className={"d-flex"}>
         <Backdrop
           open={open}
+          style={{ zIndex: 550 }}
           onClick={() => {
             setOpen(false);
           }}
@@ -221,7 +228,9 @@ export const Dialog = (
         <SpeedDial
           ariaLabel={"speedDial"}
           direction={"up"}
-          open={open}
+            open={open}
+            style={{ zIndex: 600 }}
+            className={`p-fixed bottom-18vh right-6vw`}
           icon={
             <SpeedDialIcon />
           }
@@ -299,9 +308,10 @@ export const Dialog = (
     );
     // 4. find
     const findSection = () => (
-      <Div className={`p-fixed d-row-bottom bottom-18vh z-600 right-6vw`}>
+      <Div className={"d-flex"}>
         <Backdrop
           open={open}
+          style={{ zIndex: 550 }}
           onClick={() => {
             setOpen(false);
           }}
@@ -309,8 +319,8 @@ export const Dialog = (
         <SpeedDial
           ariaLabel={"speedDial"}
           direction={"up"}
-          className={"ml-5px"}
           open={open}
+          className={`p-fixed bottom-18vh z-600 right-6vw ml-5px`}
           icon={
             <SpeedDialIcon />
           }
@@ -432,9 +442,10 @@ export const Dialog = (
     );
     // 5. detail
     const detailSection = () => (
-      <Div className={`p-fixed d-row-bottom bottom-18vh z-600 right-6vw`}>
+      <Div className={"d-flex"}>
         <Backdrop
           open={open}
+          style={{ zIndex: 550 }}
           onClick={() => {
             setOpen(false);
           }}
@@ -443,6 +454,8 @@ export const Dialog = (
           ariaLabel={"speedDial"}
           direction={"up"}
           open={open}
+          style={{ zIndex: 600 }}
+          className={`p-fixed bottom-18vh right-6vw`}
           icon={
             <SpeedDialIcon />
           }

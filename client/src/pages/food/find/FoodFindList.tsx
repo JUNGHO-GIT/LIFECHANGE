@@ -101,22 +101,12 @@ export const FoodFindList = () => {
       },
     })
     .then((res: any) => {
-      if (res.data.status === "success") {
-        setLOADING(false);
-        setOBJECT(res.data.result.length > 0 ? res.data.result : []);
-        setCOUNT((prev: any) => ({
-          ...prev,
-          totalCnt: res.data.totalCnt || 0,
-        }));
-      }
-      else {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg),
-          severity: "error",
-        });
-      }
+      setLOADING(false);
+      setOBJECT(res.data.result.length > 0 ? res.data.result : []);
+      setCOUNT((prev: any) => ({
+        ...prev,
+        totalCnt: res.data.totalCnt || 0,
+      }));
     })
     .catch((err: any) => {
       setLOADING(false);
@@ -190,15 +180,9 @@ export const FoodFindList = () => {
                 <Accordion
                   className={"border-0 shadow-0 radius-0"}
                   expanded={isExpanded[i]?.expanded}
-                  slotProps={{
-                    transition: {
-                      mountOnEnter: true,
-                      unmountOnExit: true,
-                    }
-                  }}
                 >
                   <AccordionSummary
-                    className={"mr-n10px"}
+                    className={"mr-n10px z-10000"}
                     expandIcon={
                       <Icons
                         key={"ChevronDown"}

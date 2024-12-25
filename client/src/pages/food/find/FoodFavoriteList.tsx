@@ -209,12 +209,6 @@ export const FoodFavoriteList = () => {
                 <Accordion
                   className={"border-0 shadow-0 radius-0"}
                   expanded={isExpanded[i]?.expanded}
-                  slotProps={{
-                    transition: {
-                      mountOnEnter: true,
-                      unmountOnExit: true,
-                    }
-                  }}
                 >
                   <AccordionSummary
                     className={"mr-n10px"}
@@ -222,7 +216,7 @@ export const FoodFavoriteList = () => {
                       <Icons
                         key={"ChevronDown"}
                         name={"ChevronDown"}
-                        className={"w-18px h-18px"}
+                        className={"w-18px h-18px z-10000"}
                         onClick={(e: any) => {
                           e.stopPropagation();
                           setIsExpanded(isExpanded.map((el: any, index: number) => (

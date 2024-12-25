@@ -141,12 +141,6 @@ export const MoneyList = () => {
                 <Accordion
                   className={"border-0 shadow-0 radius-0"}
                   expanded={isExpanded[i]?.expanded}
-                  slotProps={{
-                    transition: {
-                      mountOnEnter: true,
-                      unmountOnExit: true,
-                    }
-                  }}
                 >
                   <AccordionSummary
                     className={"mr-n10px"}

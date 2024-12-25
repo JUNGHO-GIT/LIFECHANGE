@@ -6,19 +6,19 @@ import { PaperProps } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const Paper = (props: PaperProps) => {
-  const cardRef = useRef<HTMLDivElement | null>(null);
+  const paperRef = useRef<HTMLDivElement | null>(null);
 
   // style 속성 자체를 제거
   useEffect(() => {
-    if (cardRef.current) {
-      cardRef.current.removeAttribute("style");
+    if (paperRef.current) {
+      paperRef.current.removeAttribute("style");
     }
   }, []);
 
   return (
     <MuiPaper
       {...props}
-      ref={cardRef}
+      ref={paperRef}
       component={"div"}
       className={props?.className || ""}
     />

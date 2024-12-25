@@ -159,12 +159,6 @@ export const TodayList = () => {
                 <Accordion
                   className={"border-0 shadow-0 radius-0"}
                   expanded={isExpanded?.exercise[i]?.expanded}
-                  slotProps={{
-                    transition: {
-                      mountOnEnter: true,
-                      unmountOnExit: true,
-                    }
-                  }}
                 >
                   <AccordionSummary
                     className={"mr-n10px"}
@@ -345,12 +339,6 @@ export const TodayList = () => {
                 <Accordion
                   className={"border-0 shadow-0 radius-0"}
                   expanded={isExpanded?.food[i]?.expanded}
-                  slotProps={{
-                    transition: {
-                      mountOnEnter: true,
-                      unmountOnExit: true,
-                    }
-                  }}
                 >
                   <AccordionSummary
                     className={"mr-n10px"}
@@ -566,12 +554,6 @@ export const TodayList = () => {
                 <Accordion
                   className={"border-0 shadow-0 radius-0"}
                   expanded={isExpanded?.money[i]?.expanded}
-                  slotProps={{
-                    transition: {
-                      mountOnEnter: true,
-                      unmountOnExit: true,
-                    }
-                  }}
                 >
                   <AccordionSummary
                     className={"mr-n10px"}
@@ -717,12 +699,6 @@ export const TodayList = () => {
                 <Accordion
                   className={"border-0 shadow-0 radius-0"}
                   expanded={isExpanded?.sleep[i]?.expanded}
-                  slotProps={{
-                    transition: {
-                      mountOnEnter: true,
-                      unmountOnExit: true,
-                    }
-                  }}
                 >
                   <AccordionSummary
                     className={"mr-n10px"}

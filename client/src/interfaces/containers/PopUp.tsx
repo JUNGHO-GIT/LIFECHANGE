@@ -1,7 +1,8 @@
 // PopUp.tsx
 
 import { useState, useEffect } from "@importReacts";
-import { Popover, bindPopover, usePopupState } from "@importMuis";
+import { Popover } from "@importComponents";
+import { bindPopover, usePopupState } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const PopUp = (props: any) => {
@@ -11,7 +12,7 @@ export const PopUp = (props: any) => {
     variant: "popover",
     popupId: "popup",
   });
-  const [popupStyle, setPopupStyle] = useState<Partial<CSSStyleDeclaration>>({
+  const [popupStyle, setPopupStyle] = useState<React.CSSProperties>({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -57,103 +58,103 @@ export const PopUp = (props: any) => {
   // 1. 팝업 고정 ----------------------------------------------------------------------------------
   const chainedPopUp = () => (
     <>
-    <Popover
-      {...bindPopover(popupState)}
-      id={"popover"}
-      open={popupState.isOpen}
-      anchorEl={popupState.anchorEl}
-      onClose={(_event, reason) => {
-        if (reason === "backdropClick") {
+      <Popover
+        {...bindPopover(popupState)}
+        id={"popover"}
+        open={popupState.isOpen}
+        anchorEl={popupState.anchorEl}
+        onClose={(_event, reason) => {
+          if (reason === "backdropClick") {
+            popupState.close();
+          }
+        }}
+        anchorOrigin={{
+          vertical: props?.position === "center" ? "center" : (
+            props?.position === "top" ? "top" : "bottom"
+          ),
+          horizontal: props?.direction === "center" ? "center" : (
+            props?.direction === "right" ? "right" : "left"
+          )
+        }}
+        transformOrigin={{
+          vertical: props?.position === "center" ? "center" : (
+            props?.position === "top" ? "bottom" : "top"
+          ),
+          horizontal: props?.direction === "center" ? "center" : (
+            props?.direction === "right" ? "left" : "right"
+          )
+        }}
+        slotProps={{
+          paper: {
+            sx: popupStyle
+          }
+        }}
+      >
+        {
+          typeof props?.contents === "function"
+          ? props?.contents({ closePopup: popupState.close })
+          : props?.contents
+        }
+      </Popover>
+      {props?.children({
+        openPopup: (anchorEl: any) => {
+          popupState.setAnchorEl(anchorEl);
+          popupState.open();
+        },
+        closePopup: () => {
           popupState.close();
         }
-      }}
-      anchorOrigin={{
-        vertical: props?.position === "center" ? "center" : (
-          props?.position === "top" ? "top" : "bottom"
-        ),
-        horizontal: props?.direction === "center" ? "center" : (
-          props?.direction === "right" ? "right" : "left"
-        )
-      }}
-      transformOrigin={{
-        vertical: props?.position === "center" ? "center" : (
-          props?.position === "top" ? "bottom" : "top"
-        ),
-        horizontal: props?.direction === "center" ? "center" : (
-          props?.direction === "right" ? "left" : "right"
-        )
-      }}
-      slotProps={{
-        paper: {
-          style: popupStyle as React.CSSProperties
-        }
-      }}
-    >
-      {
-        typeof props?.contents === "function"
-        ? props?.contents({ closePopup: popupState.close })
-        : props?.contents
-      }
-    </Popover>
-    {props?.children({
-      openPopup: (anchorEl: any) => {
-        popupState.setAnchorEl(anchorEl);
-        popupState.open();
-      },
-      closePopup: () => {
-        popupState.close();
-      }
-    })}
+      })}
     </>
   );
 
   // 2. 팝업 화면 정중앙 ---------------------------------------------------------------------------
   const innerCenterPopUp = () => (
     <>
-    <Popover
-      {...bindPopover(popupState)}
-      id={"popover"}
-      open={popupState.isOpen}
-      anchorEl={null}
-      onClose={(_event, reason) => {
-        if (reason === "backdropClick") {
+      <Popover
+        {...bindPopover(popupState)}
+        id={"popover"}
+        open={popupState.isOpen}
+        anchorEl={null}
+        onClose={(_event, reason) => {
+          if (reason === "backdropClick") {
+            popupState.close();
+          }
+        }}
+        anchorReference={"anchorPosition"}
+        anchorPosition={{
+          top: window.innerHeight / 2,
+          left: window.innerWidth / 2
+        }}
+        anchorOrigin={{
+          vertical: "center",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "center",
+          horizontal: "center",
+        }}
+        slotProps={{
+          paper: {
+            sx: popupStyle
+          }
+        }}
+      >
+        {
+          typeof props?.contents === "function"
+          ? props?.contents({ closePopup: popupState.close })
+          : props?.contents
+        }
+      </Popover>
+      {props?.children({
+        openPopup: (anchorEl: any) => {
+          popupState.setAnchorEl(anchorEl);
+          popupState.open();
+        },
+        closePopup: () => {
           popupState.close();
         }
-      }}
-      anchorReference={"anchorPosition"}
-      anchorPosition={{
-        top: window.innerHeight / 2,
-        left: window.innerWidth / 2
-      }}
-      anchorOrigin={{
-        vertical: "center",
-        horizontal: "center",
-      }}
-      transformOrigin={{
-        vertical: "center",
-        horizontal: "center",
-      }}
-      slotProps={{
-        paper: {
-          style: popupStyle as React.CSSProperties
-        }
-      }}
-    >
-      {
-        typeof props?.contents === "function"
-        ? props?.contents({ closePopup: popupState.close })
-        : props?.contents
-      }
-    </Popover>
-    {props?.children({
-      openPopup: (anchorEl: any) => {
-        popupState.setAnchorEl(anchorEl);
-        popupState.open();
-      },
-      closePopup: () => {
-        popupState.close();
-      }
-    })}
+      })}
     </>
   );
 

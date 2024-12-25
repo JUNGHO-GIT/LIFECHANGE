@@ -48,7 +48,7 @@ import {
 
 // props -------------------------------------------------------------------------------------------
 import type {
-  CardProps, PaperProps, Grid2Props as GridProps
+  CardProps, PaperProps, Grid2Props as GridProps, PopoverProps
 } from '@mui/material';
 
 // datePickers -------------------------------------------------------------------------------------
@@ -120,7 +120,7 @@ export {
   TextField, TextArea,
 
   // props
-  CardProps, PaperProps, GridProps,
+  CardProps, PaperProps, GridProps, PopoverProps,
 
   // u
   useMediaQuery, useTheme,
