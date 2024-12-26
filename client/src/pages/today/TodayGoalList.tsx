@@ -161,13 +161,13 @@ export const TodayGoalList = () => {
                   expanded={isExpanded?.exercise[i]?.expanded}
                 >
                   <AccordionSummary
-                    className={"mr-n10px"}
                     expandIcon={
                       <Icons
                         key={"ChevronDown"}
                         name={"ChevronDown"}
                         className={"w-18px h-18px"}
                         onClick={(e: any) => {
+                          e.preventDefault();
                           e.stopPropagation();
                           setIsExpanded((prev: any) => ({
                             ...prev,
@@ -537,13 +537,13 @@ export const TodayGoalList = () => {
                   expanded={isExpanded?.food[i]?.expanded}
                 >
                   <AccordionSummary
-                    className={"mr-n10px"}
                     expandIcon={
                       <Icons
                         key={"ChevronDown"}
                         name={"ChevronDown"}
                         className={"w-18px h-18px"}
                         onClick={(e: any) => {
+                          e.preventDefault();
                           e.stopPropagation();
                           setIsExpanded((prev: any) => ({
                             ...prev,
@@ -913,13 +913,13 @@ export const TodayGoalList = () => {
                   expanded={isExpanded?.money[i]?.expanded}
                 >
                   <AccordionSummary
-                    className={"mr-n10px"}
                     expandIcon={
                       <Icons
                         key={"ChevronDown"}
                         name={"ChevronDown"}
                         className={"w-18px h-18px"}
                         onClick={(e: any) => {
+                          e.preventDefault();
                           e.stopPropagation();
                           setIsExpanded((prev: any) => ({
                             ...prev,
@@ -1143,13 +1143,13 @@ export const TodayGoalList = () => {
                   expanded={isExpanded?.sleep[i]?.expanded}
                 >
                   <AccordionSummary
-                    className={"mr-n10px"}
                     expandIcon={
                       <Icons
                         key={"ChevronDown"}
                         name={"ChevronDown"}
                         className={"w-18px h-18px"}
                         onClick={(e: any) => {
+                          e.preventDefault();
                           e.stopPropagation();
                           setIsExpanded((prev: any) => ({
                             ...prev,

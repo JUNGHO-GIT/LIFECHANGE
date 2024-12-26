@@ -209,16 +209,16 @@ export const FoodFavoriteList = () => {
               <Grid size={12} className={"p-2px"}>
                 <Accordion
                   className={"border-0 shadow-0 radius-0"}
-                  expanded={isExpanded[i]?.expanded}
+                  expanded={isExpanded?.[i]?.expanded}
                 >
                   <AccordionSummary
-                    className={"mr-n10px z-10000"}
                     expandIcon={
                       <Icons
                         key={"ChevronDown"}
                         name={"ChevronDown"}
                         className={"w-18px h-18px"}
                         onClick={(e: any) => {
+                          e.preventDefault();
                           e.stopPropagation();
                           setIsExpanded(isExpanded.map((el: any, index: number) => (
                             i === index ? {
@@ -228,9 +228,6 @@ export const FoodFavoriteList = () => {
                         }}
                       />
                     }
-                    onClick={() => {
-                      handleCheckboxChange(i);
-                    }}
                   >
                     <Grid container={true} spacing={2}>
                       <Grid size={2} className={"d-row-center"}>
