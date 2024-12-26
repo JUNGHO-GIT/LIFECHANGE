@@ -211,7 +211,9 @@ export const FoodFindList = () => {
                               checkedQueries[`${item.food_query}_${PAGING.page}`][i]
                             )
                           }
-                          onChange={() => {
+                          onChange={(e: any) => {
+                            e.preventDefault();
+                            e.stopPropagation();
                             handleCheckboxChange(i);
                           }}
                         />

@@ -16,7 +16,7 @@ export const Div = (props: any) => {
       {...props}
       style={{
         ...props?.style,
-        fontFamily: "Pretendard Variable, Pretendard, Noto Sans KR, Roboto, sans-serif"
+        /* fontFamily: "Pretendard Variable, Pretendard, Noto Sans KR, Roboto, sans-serif" */
       }}
     >
       {childrenEl}
