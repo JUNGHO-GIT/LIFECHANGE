@@ -1,7 +1,8 @@
 // FoodFavoriteList.tsx
 
 import { useState, useEffect } from "@importReacts";
-import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
+import { useCommonValue, useCommonDate } from "@importHooks";
+import { useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { FoodFind } from "@importSchemas";
 import { axios } from "@importLibs";
@@ -211,12 +212,12 @@ export const FoodFavoriteList = () => {
                   expanded={isExpanded[i]?.expanded}
                 >
                   <AccordionSummary
-                    className={"mr-n10px"}
+                    className={"mr-n10px z-10000"}
                     expandIcon={
                       <Icons
                         key={"ChevronDown"}
                         name={"ChevronDown"}
-                        className={"w-18px h-18px z-10000"}
+                        className={"w-18px h-18px"}
                         onClick={(e: any) => {
                           e.stopPropagation();
                           setIsExpanded(isExpanded.map((el: any, index: number) => (
@@ -453,6 +454,9 @@ export const FoodFavoriteList = () => {
       }}
       setState={{
         setDATE, setSEND, setPAGING, setCOUNT,
+      }}
+      flow={{
+        flowFind
       }}
     />
   );
