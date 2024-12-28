@@ -12,13 +12,7 @@ export const Div = (props: any) => {
   }
 
   return (
-    <div
-      {...props}
-      style={{
-        ...props?.style,
-        /* fontFamily: "Pretendard Variable, Pretendard, Noto Sans KR, Roboto, sans-serif" */
-      }}
-    >
+    <div {...props}>
       {childrenEl}
     </div>
   );

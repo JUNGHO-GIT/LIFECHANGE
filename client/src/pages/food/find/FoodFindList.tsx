@@ -212,7 +212,6 @@ export const FoodFindList = () => {
                             )
                           }
                           onChange={(e: any) => {
-                            e.preventDefault();
                             e.stopPropagation();
                             handleCheckboxChange(i);
                           }}

@@ -242,7 +242,6 @@ export const FoodFavoriteList = () => {
                             )
                           }
                           onChange={(e: any) => {
-                            e.preventDefault();
                             e.stopPropagation();
                             handleCheckboxChange(i);
                           }}

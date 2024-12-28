@@ -9,9 +9,6 @@ export const Btn = (props: any) => (
     size={props?.size || "small"}
     color={props?.color || "primary"}
     variant={props?.variant || "contained"}
-    style={{
-      ...props?.style,
-      fontFamily:"Pretendard Variable, Pretendard, Noto Sans KR, Roboto, sans-serif"
-    }}
+    style={{...props?.style}}
   />
 );
