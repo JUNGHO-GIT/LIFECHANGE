@@ -82,6 +82,7 @@
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
     "babel-loader": "^9.2.1",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
     "@types/node": "^22.10.2",
     "compression-webpack-plugin": "^11.1.0",
     "css-minimizer-webpack-plugin": "^7.0.0",

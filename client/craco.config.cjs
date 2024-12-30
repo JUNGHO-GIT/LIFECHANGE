@@ -1,23 +1,19 @@
 // craco.config.cjs
 
-const { CracoAliasPlugin } = require('react-app-alias');
+const os = require('os');
+const path = require('path');
+const webpack = require('webpack');
 const CompressionPlugin = require('compression-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const { CracoAliasPlugin } = require('react-app-alias');
 const { SwcMinifyWebpackPlugin } = require('swc-minify-webpack-plugin');
-const webpack = require('webpack');
-const path = require('path');
-const os = require('os');
 
 // -------------------------------------------------------------------------------------------------
 module.exports = {
 
   // 1. plugins ------------------------------------------------------------------------------------
-  plugins: [
-    {
-      plugin: CracoAliasPlugin,
-    },
-  ],
+  plugins: [{ plugin: CracoAliasPlugin }],
 
   // 2. babel --------------------------------------------------------------------------------------
   babel: {
@@ -33,7 +29,6 @@ module.exports = {
     configure: (webpackConfig, { env }) => {
 
       // 1. 공통 설정 ------------------------------------------------------------------------------
-      // 공통 module 설정
       webpackConfig.module.rules.unshift({
         test: /\.(js|mjs|jsx|ts|tsx)$/,
         use: [
@@ -58,16 +53,12 @@ module.exports = {
         ],
         exclude: /node_modules/,
       });
-
-      // 공통 plugin 설정
       webpackConfig.plugins.push(
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': JSON.stringify(env),
           'process.env.PUBLIC_URL': JSON.stringify(process.env.PUBLIC_URL),
         })
       );
-
-      // 공통 output 설정
       webpackConfig.output = {
         path: path.resolve(__dirname, 'build'),
         publicPath: `${process.env.PUBLIC_URL}`,
@@ -75,8 +66,6 @@ module.exports = {
         chunkFilename: 'static/js/[name].[contenthash:8].chunk.js',
         clean: true,
       };
-
-      // 공통 cache 설정
       webpackConfig.cache = {
         type: 'filesystem',
         buildDependencies: {
@@ -99,7 +88,7 @@ module.exports = {
         );
       }
 
-      // 3. production 설정 -----------------------------------------------------------------------
+      // 3. production 설정 ------------------------------------------------------------------------
       else if (env === 'production') {
         webpackConfig.optimization = {
           sideEffects: true,
@@ -109,8 +98,7 @@ module.exports = {
             new CssMinimizerPlugin({
               minimizerOptions: {
                 preset: [
-                  'default',
-                  {
+                  'default', {
                     discardComments: { removeAll: true },
                     zindex: false,
                   },
@@ -161,14 +149,17 @@ module.exports = {
           },
           runtimeChunk: 'single',
         };
-
         webpackConfig.plugins.push(
           new CompressionPlugin({
             filename: '[path][base].br',
-            test: /\.(js|css|html|svg)$/,
             algorithm: 'brotliCompress',
+            test: /\.(js|css|html|svg)$/,
+            compressionOptions: {
+              level: 11,
+            },
             threshold: 10240,
             minRatio: 0.8,
+            deleteOriginalAssets: true,
           })
         );
       }
