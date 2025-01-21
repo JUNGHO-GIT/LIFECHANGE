@@ -18,6 +18,9 @@ export const Confirm = () => {
         vertical: "top",
         horizontal: "center"
       }}
+      style={{
+        zIndex: 1000000
+      }}
       onClose={() => {
         setCONFIRM({
           open: false,

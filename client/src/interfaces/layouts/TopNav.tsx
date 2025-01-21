@@ -3,7 +3,7 @@
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage } from "@importStores";
-import { insertComma } from "@importScripts";
+import { insertComma, getLocal } from "@importScripts";
 import { PopUp, Input } from "@importContainers";
 import { Div, Img, Hr, Br, Paper, Grid, Card } from "@importComponents";
 import { Tabs, Tab, Checkbox } from "@importMuis";
@@ -293,7 +293,16 @@ export const TopNav = () => {
 
   // 4. handle------------------------------------------------------------------------------------
   const handleClickTobNav = (value: string) => {
-    if (value === "real" || value === "schedule") {
+    if (value === "find" || value === "favorite") {
+      navigate(`/${firstStr}/${value}/list`, {
+        state: {
+          dateType: "",
+          dateStart: "",
+          dateEnd: "",
+        }
+      });
+    }
+    else if (value === "real" || value === "schedule") {
       navigate(`/${firstStr}/list`, {
         state: {
           dateType: "",

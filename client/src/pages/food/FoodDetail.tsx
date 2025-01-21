@@ -318,7 +318,9 @@ export const FoodDetail = () => {
       setLOADING(false);
       return;
     }
-    axios.delete(`${URL_OBJECT}/delete`, {
+    axios({
+      method: "delete",
+      url: `${URL_OBJECT}/delete`,
       data: {
         user_id: sessionId,
         DATE: DATE,

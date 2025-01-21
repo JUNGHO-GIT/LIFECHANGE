@@ -29,6 +29,9 @@ export const Alert = () => {
         vertical: "top",
         horizontal: "center"
       }}
+      style={{
+        zIndex: 1000000
+      }}
       onClose={() => {
         setALERT({
           open: false

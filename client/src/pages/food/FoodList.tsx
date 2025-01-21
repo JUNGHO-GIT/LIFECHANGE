@@ -141,34 +141,32 @@ export const FoodList = () => {
                   className={"border-0 shadow-0 radius-0"}
                   expanded={isExpanded?.[i]?.expanded}
                 >
-                  <AccordionSummary
-                    expandIcon={
-                      <Icons
-                        key={"ChevronDown"}
-                        name={"ChevronDown"}
-                        className={"w-18px h-18px"}
-                        onClick={(e: any) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          setIsExpanded(isExpanded.map((el: any, index: number) => (
-                            i === index ? {
-                              expanded: !el.expanded
-                            } : el
-                          )));
-                        }}
-                      />
-                    }
-                    onClick={() => {
-                      navigate(toDetail, {
-                        state: {
-                          id: item._id,
-                          dateType: item.food_dateType,
-                          dateStart: item.food_dateStart,
-                          dateEnd: item.food_dateEnd,
-                        }
-                      });
-                    }}
-                  >
+                  <AccordionSummary expandIcon={
+                    <Icons
+                      key={"ChevronDown"}
+                      name={"ChevronDown"}
+                      className={"w-18px h-18px"}
+                      onClick={(e: any) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setIsExpanded(isExpanded.map((el: any, index: number) => (
+                          i === index ? {
+                            expanded: !el.expanded
+                          } : el
+                        )));
+                      }}
+                    />
+                  }
+                  onClick={() => {
+                    navigate(toDetail, {
+                      state: {
+                        id: item._id,
+                        dateType: item.food_dateType,
+                        dateStart: item.food_dateStart,
+                        dateEnd: item.food_dateEnd,
+                      }
+                    });
+                  }}>
                     <Grid container={true} spacing={2}>
                       <Grid size={2} className={"d-row-center"}>
                         <Icons
