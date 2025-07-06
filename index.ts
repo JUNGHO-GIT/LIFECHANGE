@@ -1,5 +1,6 @@
 // index.ts
 
+import qs from "qs";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -69,6 +70,9 @@ mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`)
 .catch((err: any) => {
   console.error(`[${envStr}] MongoDB 연결 실패 [${db}] ${err}`);
 });
+
+// qs 파서 적용 ------------------------------------------------------------------------------------
+app.set('query parser', (str: string) => qs.parse(str));
 
 // 미들웨어 설정 -----------------------------------------------------------------------------------
 app.use(express.json());

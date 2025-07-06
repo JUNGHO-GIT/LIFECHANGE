@@ -43,18 +43,16 @@ export const Alert = () => {
         variant={"standard"}
         className={"w-95vw h-8vh d-center border-dark radius-2 shadow-2 fs-1-0rem fw-700 snackbar z-10000"}
         action={
-          <>
-            <Icons
-              key={"Check"}
-              name={"Check"}
-              className={"w-24px h-24px black"}
-              onClick={() => {
-                setALERT({
-                  open: false
-                });
-              }}
-            />
-          </>
+          <Icons
+            key={"Check"}
+            name={"Check"}
+            className={"w-24px h-24px black"}
+            onClick={() => {
+              setALERT({
+                open: false
+              });
+            }}
+          />
         }
       >
         {ALERT.msg}
