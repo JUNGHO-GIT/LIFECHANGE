@@ -27,7 +27,7 @@ export const exist = async (
     },
     {
       $project: {
-        _id: 0,
+        _id: 1,
         food_dateType: 1,
         food_dateStart: 1,
         food_dateEnd: 1,

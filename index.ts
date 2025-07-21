@@ -33,7 +33,6 @@ const preFix = process.env.HTTP_PREFIX || "";
 // 서버 포트 설정 ----------------------------------------------------------------------------------
 const httpPort = Number(process.env.HTTP_PORT);
 const httpsPort = Number(process.env.HTTPS_PORT);
-
 (function start(httpPort: number, httpsPort: number) {
   try {
     const httpServer = app.listen(httpPort, () => {
@@ -59,8 +58,8 @@ const id = process.env.DB_USER;
 const pw = process.env.DB_PASS;
 const host = process.env.DB_HOST;
 const port = process.env.DB_PORT;
-const db = process.env.DB_NAME
-// const db = process.env.DB_TEST
+// const db = process.env.DB_NAME
+const db = process.env.DB_TEST
 const envStr = db === process.env.DB_TEST ? "DEVELOPMENT" : "PRODUCTION";
 
 mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`)
@@ -70,6 +69,107 @@ mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`)
 .catch((err: any) => {
   console.error(`[${envStr}] MongoDB 연결 실패 [${db}] ${err}`);
 });
+
+// 로그 -------------------------------------------------------------------------------------------
+if(process.env.NODE_ENV !== 'production') {
+  mongoose.set('debug', (coll, method, query, doc, options) => {
+    switch(method) {
+      case 'aggregate':
+        console.log(
+          `db.getCollection('${coll}').aggregate(`,
+          JSON.stringify(query, null, 2),
+          `)\n`
+        );
+        break;
+      case 'find':
+        console.log(
+          `db.getCollection('${coll}').find(`,
+          JSON.stringify(query, null, 2),
+          (doc ? ', ' + JSON.stringify(doc, null, 2) : ''),
+          `)\n`
+        );
+        break;
+      case 'findOne':
+        console.log(
+          `db.getCollection('${coll}').findOne(`,
+          JSON.stringify(query, null, 2),
+          (doc ? ', ' + JSON.stringify(doc, null, 2) : ''),
+          `)\n`
+        );
+        break;
+      case 'update':
+      case 'updateOne':
+      case 'updateMany':
+        console.log(
+          `db.getCollection('${coll}').${method}(`,
+          JSON.stringify(query, null, 2) + ', ' +
+          JSON.stringify(doc, null, 2) +
+          (options ? ', ' + JSON.stringify(options, null, 2) : '') +
+          `)\n`
+        );
+        break;
+      case 'replaceOne':
+        console.log(
+          `db.getCollection('${coll}').replaceOne(`,
+          JSON.stringify(query, null, 2) + ', ' +
+          JSON.stringify(doc, null, 2) +
+          (options ? ', ' + JSON.stringify(options, null, 2) : '') +
+          `)\n`
+        );
+        break;
+      case 'deleteOne':
+      case 'deleteMany':
+        console.log(
+          `db.getCollection('${coll}').${method}(`,
+          JSON.stringify(query, null, 2) +
+          (options ? ', ' + JSON.stringify(options, null, 2) : '') +
+          `)\n`
+        );
+        break;
+      case 'insertOne':
+        console.log(
+          `db.getCollection('${coll}').insertOne(`,
+          JSON.stringify(doc, null, 2) +
+          (options ? ', ' + JSON.stringify(options, null, 2) : '') +
+          `)\n`
+        );
+        break;
+      case 'insertMany':
+        console.log(
+          `db.getCollection('${coll}').insertMany(`,
+          JSON.stringify(doc, null, 2) +
+          (options ? ', ' + JSON.stringify(options, null, 2) : '') +
+          `)\n`
+        );
+        break;
+      case 'count':
+      case 'countDocuments':
+        console.log(
+          `db.getCollection('${coll}').${method}(`,
+          JSON.stringify(query, null, 2) +
+          (options ? ', ' + JSON.stringify(options, null, 2) : '') +
+          `)\n`
+        );
+        break;
+      case 'distinct':
+        console.log(
+          `db.getCollection('${coll}').distinct(`,
+          JSON.stringify(doc) + ', ' +
+          JSON.stringify(query, null, 2) +
+          (options ? ', ' + JSON.stringify(options, null, 2) : '') +
+          `)\n`
+        );
+        break;
+      default:
+        console.log(
+          `db.getCollection('${coll}').${method}(`,
+          [query, doc, options].filter(x => x !== undefined).map(x => JSON.stringify(x, null, 2)).join(', '),
+          `)\n`
+        );
+        break;
+    }
+  });
+}
 
 // qs 파서 적용 ------------------------------------------------------------------------------------
 app.set('query parser', (str: string) => qs.parse(str));

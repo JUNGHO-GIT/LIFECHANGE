@@ -26,7 +26,7 @@ export const exist = async (
     },
     {
       $project: {
-        _id: 0,
+        _id: 1,
         sleep_dateType: 1,
         sleep_dateStart: 1,
         sleep_dateEnd: 1,

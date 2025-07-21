@@ -1,6 +1,6 @@
 // CalendarDetail.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState, useEffect, useLocation } from "@importReacts";
 import { useCommonValue, useCommonDate, useValidateCalendar } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { Calendar } from "@importSchemas";
@@ -23,6 +23,8 @@ export const CalendarDetail = () => {
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
   const { ERRORS, REFS, validate } = useValidateCalendar();
+
+  const location = useLocation();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOCKED, setLOCKED] = useState<string>("unlocked");
@@ -55,6 +57,11 @@ export const CalendarDetail = () => {
     dateStart: location_dateStart || getDayFmt(),
     dateEnd: location_dateEnd || getDayFmt(),
   });
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    console.log("location", location);
+  }, [location]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {

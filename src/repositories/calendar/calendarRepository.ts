@@ -26,7 +26,7 @@ export const exist = async (
     },
     {
       $project: {
-        _id: 0,
+        _id: 1,
         calendar_dateType: 1,
         calendar_dateStart: 1,
         calendar_dateEnd: 1,
@@ -86,7 +86,123 @@ export const list = async (
         calendar_dateEnd: {
           $gte: dateStart_param,
         },
-        ...dateType_param ? { calendar_dateType: dateType_param } : {},
+        ...(dateType_param ? { calendar_dateType: dateType_param } : {}),
+      }
+    },
+    {
+      $lookup: {
+        from: "exercise",
+        let: { user_id: "$user_id" },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $and: [
+                  { $eq: ["$user_id", "$$user_id"] },
+                  { $lte: ["$exercise_dateStart", dateEnd_param] },
+                  { $gte: ["$exercise_dateEnd", dateStart_param] },
+                ]
+              }
+            }
+          },
+          {
+            $project: {
+              _id: 0,
+              exercise_dateType: 1,
+              exercise_dateStart: 1,
+              exercise_dateEnd: 1,
+              exercise_section: 1,
+            }
+          }
+        ],
+        as: "exercise"
+      }
+    },
+    {
+      $lookup: {
+        from: "food",
+        let: { user_id: "$user_id" },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $and: [
+                  { $eq: ["$user_id", "$$user_id"] },
+                  { $lte: ["$food_dateStart", dateEnd_param] },
+                  { $gte: ["$food_dateEnd", dateStart_param] },
+                ]
+              }
+            }
+          },
+          {
+            $project: {
+              _id: 0,
+              food_dateType: 1,
+              food_dateStart: 1,
+              food_dateEnd: 1,
+              food_section: 1,
+            }
+          }
+        ],
+        as: "food"
+      }
+    },
+    {
+      $lookup: {
+        from: "money",
+        let: { user_id: "$user_id" },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $and: [
+                  { $eq: ["$user_id", "$$user_id"] },
+                  { $lte: ["$money_dateStart", dateEnd_param] },
+                  { $gte: ["$money_dateEnd", dateStart_param] },
+                ]
+              }
+            }
+          },
+          {
+            $project: {
+              _id: 0,
+              money_dateType: 1,
+              money_dateStart: 1,
+              money_dateEnd: 1,
+              money_section: 1,
+            }
+          }
+        ],
+        as: "money"
+      }
+    },
+    {
+      $lookup: {
+        from: "sleep",
+        let: { user_id: "$user_id" },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $and: [
+                  { $eq: ["$user_id", "$$user_id"] },
+                  { $lte: ["$sleep_dateStart", dateEnd_param] },
+                  { $gte: ["$sleep_dateEnd", dateStart_param] },
+                ]
+              }
+            }
+          },
+          {
+            $project: {
+              _id: 0,
+              sleep_dateType: 1,
+              sleep_dateStart: 1,
+              sleep_dateEnd: 1,
+              sleep_section: 1,
+            }
+          }
+        ],
+        as: "sleep"
       }
     },
     {
@@ -96,6 +212,15 @@ export const list = async (
         calendar_dateStart: 1,
         calendar_dateEnd: 1,
         calendar_section: 1,
+        exercise_dateType: { $arrayElemAt: ["$exercise.exercise_dateType", 0] },
+        exercise_dateStart: { $arrayElemAt: ["$exercise.exercise_dateStart", 0] },
+        exercise_dateEnd: { $arrayElemAt: ["$exercise.exercise_dateEnd", 0] },
+        exercise_section: { $arrayElemAt: ["$exercise.exercise_section", 0] },
+        food_dateType: { $arrayElemAt: ["$food.food_dateType", 0] },
+        food_dateStart: { $arrayElemAt: ["$food.food_dateStart", 0] },
+        food_dateEnd: { $arrayElemAt: ["$food.food_dateEnd", 0] },
+        food_section: { $arrayElemAt: ["$food.food_section", 0] },
+        money_dateType: { $arrayElemAt: ["$money.money_dateType", 0] },
       }
     },
     {

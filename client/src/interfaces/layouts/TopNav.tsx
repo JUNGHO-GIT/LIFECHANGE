@@ -6,7 +6,7 @@ import { useStoreLanguage } from "@importStores";
 import { insertComma } from "@importScripts";
 import { PopUp, Input } from "@importContainers";
 import { Div, Img, Hr, Br, Paper, Grid, Card } from "@importComponents";
-import { Tabs, Tab, Checkbox, Select, MenuItem, Menu } from "@importMuis";
+import { Tabs, Tab, Checkbox, MenuItem, Menu } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const TopNav = () => {
@@ -30,8 +30,6 @@ export const TopNav = () => {
       admin: "dashboard",
     }
   );
-  const [selectedTabVal, setSelectedTabVal] = useState<string>("");
-  const [selectedMenuItem, setSelectedMenuItem] = useState<string>("");
   const [selectedAnchorEl, setSelectedAnchorEl] = useState<Record<string, HTMLElement | null>>({});
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -93,44 +91,15 @@ export const TopNav = () => {
     dateStart: "",
     dateEnd: "",
   });
-  const [dataArray, setDataArray] = useState<any[]>([
-    {
-      title: "calendar",
-      icon: "calendar",
-      label: translate("calendar"),
-      value: "schedule",
-    },
-    {
-      title: "today",
-      icon: "today",
-      label: translate("today"),
-      value: "real",
-    },
-    {
-      title: "exercise",
-      icon: "exercise",
-      label: translate("exercise"),
-      value: "real",
-    },
-    {
-      title: "food",
-      icon: "food",
-      label: translate("food"),
-      value: "real",
-    },
-    {
-      title: "money",
-      icon: "money",
-      label: translate("money"),
-      value: "real",
-    },
-    {
-      title: "sleep",
-      icon: "sleep",
-      label: translate("sleep"),
-      value: "real",
-    },
-  ]);
+  const [dataArray, setDataArray] = useState<any>({
+    calendar: ["schedule"],
+    today: ["goal", "real"],
+    food: ["chart", "goal", "real", "find", "favorite"],
+    exercise: ["chart", "goal", "real"],
+    money: ["chart", "goal", "real"],
+    sleep: ["chart", "goal", "real"],
+    admin: ["dashboard"]
+  });
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 스마일 지수 계산
@@ -1069,7 +1038,7 @@ export const TopNav = () => {
     );
 
     // 5. tabs -------------------------------------------------------------------------------------
-    const tabsSection = () => (
+    /* const tabsSection = () => (
 
       // 1. calendar
       firstStr === "calendar" ? (
@@ -1289,80 +1258,93 @@ export const TopNav = () => {
           />
         </Tabs>
       ) : null
-    );
-
-    // 5. tabs -------------------------------------------------------------------------------------
-    /* const tabsSection = () => (
-      // use Menu and MenuItem for better control over the tabs
-      <>
-      <Tabs
-        value={selectedTab[firstStr]}
-        variant={"scrollable"}
-        component={"div"}
-        scrollButtons={true}
-        allowScrollButtonsMobile={true}
-        selectionFollowsFocus={true}
-        sx={{
-          [`& .MuiTabs-scrollButtons`]: {
-            "width": "20px",
-            "&.Mui-disabled": { opacity: 0.3 },
-          },
-        }}
-      >
-        <Tab
-          label={translate(`${selectedTabVal}`)}
-          value={selectedTabVal}
-          onClick={(e: any) => {
-            setSelectedAnchorEl((prev) => ({
-              ...prev,
-              [selectedTab]: e.currentTarget,
-            }));
-          }}
-        />
-      </Tabs>
-      <Menu
-        anchorEl={selectedAnchorEl[selectedTab]}
-        open={Boolean(selectedAnchorEl[selectedTab])}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "center",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "center",
-        }}
-        slotProps={{
-          paper: {
-            className: "py-0px px-5px",
-          }
-        }}
-        onClose={() => {
-          setSelectedAnchorEl((prev) => ({
-            ...prev,
-            [selectedTab]: null,
-          }));
-        }}
-      >
-        <MenuItem onClick={() => {
-          handleClickTobNav("real");
-        }}>
-          {translate("real")}
-        </MenuItem>
-      </Menu>
-      </>
     ); */
+
+    // TODO: 탭 드롭다운으로 변경
+    // 5. tabs -------------------------------------------------------------------------------------
+    const tabsSection = () => {
+      return (
+        <>
+          <Tabs
+            value={selectedTab[firstStr]}
+            variant={"fullWidth"}
+            component={"div"}
+            scrollButtons={false}
+            allowScrollButtonsMobile={false}
+            selectionFollowsFocus={true}
+            sx={{
+              [`& .MuiTabs-indicator`]: {
+                "display": "none",
+              }
+            }}
+          >
+            <Tab
+              label={translate(selectedTab[firstStr])}
+              value={selectedTab[firstStr]}
+              onClick={(e) => {
+                setSelectedAnchorEl((prev) => ({
+                  ...prev,
+                  [firstStr]: e.currentTarget
+                }))
+              }}
+              className={"fs-1-2rem fw-700"}
+            />
+          </Tabs>
+          <Menu
+            anchorEl={selectedAnchorEl[firstStr]}
+            open={Boolean(selectedAnchorEl[firstStr])}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "center",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+            slotProps={{
+              paper: {
+                className: "py-0px px-10px",
+              }
+            }}
+            onClose={() => {
+              setSelectedAnchorEl((prev) => ({
+                ...prev,
+                [firstStr]: null
+              }))
+            }}
+          >
+            {dataArray?.[firstStr]?.map((tabName: string) => (
+              <MenuItem
+                key={tabName}
+                selected={selectedTab[firstStr] === tabName}
+                className={"text-center"}
+                onClick={() => {
+                  handleClickTobNav(tabName);
+                  setSelectedAnchorEl((prev) => ({
+                    ...prev,
+                    [firstStr]: null
+                  }));
+                }}
+              >
+                {translate(tabName)}
+              </MenuItem>
+            ))}
+          </Menu>
+        </>
+      );
+    };
 
     // 5. return -----------------------------------------------------------------------------------
     return (
       <Paper className={"layout-wrapper p-sticky top-8vh h-8vh border-1 radius-2 shadow-bottom-3 p-0px"}>
         <Grid container spacing={0}>
-          <Grid size={6} className={"d-row-center"}>
+          <Grid size={8} className={"d-row-center"}>
             {smileSection()}
             {scaleSection()}
             {nutritionSection()}
             {propertySection()}
           </Grid>
-          <Grid size={6} className={"d-row-center border-left-2"}>
+          <Grid size={4} className={"d-row-center border-left-2"}>
             {tabsSection()}
           </Grid>
         </Grid>

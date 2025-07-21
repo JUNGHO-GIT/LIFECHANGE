@@ -1,5 +1,27 @@
 {
-
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/CVS": true,
+    "**/bower_components": true,
+    "**/coverage": true,
+    "**/tmp": true,
+    "**/.mvn": true,
+    "**/mvnw": true,
+    "**/mvnw.cmd": true,
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/target": true,
+    "**/*.conf": true,
+    "**/*.txt": true,
+    "**/*gcloud*": true,
+    "**/*Auth*": true,
+    "**/*.env*": true
+  },
   "search.exclude": {
     "**/node_modules": true,
     "**/.git": true,
@@ -9,12 +31,9 @@
     "**/build": true,
     "**/target": true,
     "**/*.conf": true,
-    "**/*.json": true,
     "**/*.txt": true,
     "**/*gcloud*": true,
     "**/*Auth*": true,
     "**/*.env*": true,
   },
-  "typescript.tsdk": "node_modules\\typescript\\lib",
-  "explorerExclude.backup": {},
 }

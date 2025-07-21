@@ -15,7 +15,7 @@ export const listFavorite = async (
     },
     {
       $project: {
-        _id: 0,
+        _id: 1,
         "user_favorite._id": 0,
       },
     },

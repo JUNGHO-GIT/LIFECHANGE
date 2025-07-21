@@ -33,7 +33,10 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "Node",
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "lib": [
+      "DOM",
+      "ESNext"
+    ],
     "esModuleInterop": true,
     "isolatedModules": false,
     "moduleDetection": "auto",

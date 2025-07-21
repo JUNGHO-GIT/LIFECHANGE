@@ -47,8 +47,6 @@ export const CalendarList = () => {
     select: [""],
   });
   const [SEND, setSEND] = useState<any>({
-    id: "",
-    section_id: "",
     category: "",
     refresh: 0,
     dateType: "day",
@@ -92,56 +90,18 @@ export const CalendarList = () => {
 
     // 7-1. dateInRange
     const dateInRange = (date: any, dateStart: any, dateEnd: any) => {
-      const dayFmt = getDayFmt(date);
-      const dayStart = getDayStartFmt(dateStart);
-      const dayEnd = getDayEndFmt(dateEnd);
+      if (!dateStart || !dateEnd) {
+        return false
+      }
 
-      return dayFmt >= dayStart && dayFmt <= dayEnd;
-    };
-    // 7-2. activeLine
-    const activeLine = (calendarForDates: any) => (
-      calendarForDates?.map((calendar: any) =>
-        calendar.calendar_section?.map((section: any) => (
-          <Div
-            key={`filled-${calendar._id}-${section._id}`}
-            className={"calendar-filled"}
-            style={{
-              backgroundColor: section.calendar_color
-            }}
-            onClick={(e: any) => {
-              e.stopPropagation();
-              navigate(toDetail, {
-                state: {
-                  id: calendar._id,
-                  section_id: section._id,
-                  dateType: calendar.calendar_dateType,
-                  dateStart: calendar.calendar_dateStart,
-                  dateEnd: calendar.calendar_dateEnd,
-                }
-              });
-            }}
-          >
-            <span className={"calendar-category"}>
-              {section.calendar_title}
-            </span>
-          </Div>
-        ))
-      )
-    );
-    // 7-3. unActiveLine
-    const unActiveLine = (calendarForDates: any) => (
-      calendarForDates?.map((calendar: any) =>
-        calendar.calendar_section.map((section: any) => (
-          <Div key={`unfilled-${calendar._id}-${section._id}`} className={"calendar-unfilled"}>
-            <span className={"calendar-category"}>
-              {section.calendar_title}
-            </span>
-          </Div>
-        ))
-      )
-    );
+      const dayFmt = getDayFmt(date)
+      const dayStart = getDayStartFmt(dateStart)
+      const dayEnd = getDayEndFmt(dateEnd)
 
-    // 7-5. calendar
+      return dayFmt >= dayStart && dayFmt <= dayEnd
+    }
+
+    // 7-2. calendar
     const calendarSection = () => {
       const titleFragment = () => (
         <Grid container={true} spacing={2}>
@@ -216,24 +176,15 @@ export const CalendarList = () => {
                 }));
               }}
               onClickDay={(value: Date) => {
-                const calendarForDate = OBJECT.filter((calendar: any) => (
-                  dateInRange(value, calendar.calendar_dateStart, calendar.calendar_dateEnd)
-                ));
-                // 항목이 없는 경우에만 클릭 가능
-                if (calendarForDate.length === 0) {
-                  navigate(toDetail, {
-                    state: {
-                      id: "",
-                      section_id: "",
-                      dateType: "day",
-                      dateStart: getDayFmt(value),
-                      dateEnd: getDayFmt(value),
-                    }
-                  });
-                }
+                navigate(toDetail, {
+                  state: {
+                    dateType: "day",
+                    dateStart: getDayFmt(value),
+                    dateEnd: getDayFmt(value),
+                  }
+                });
               }}
               tileClassName={({ date }) => {
-
                 // 토요일
                 let isSat = getMoment(date).day() === 6;
 
@@ -285,12 +236,77 @@ export const CalendarList = () => {
                 const calendarForDates = OBJECT.filter((calendar: any) => (
                   dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
                 ));
-                const content = (
-                  calendarForDates.length > 0
-                  ? activeLine(calendarForDates)
-                  : unActiveLine(calendarForDates)
+                const exerciseForDates = OBJECT.filter((calendar: any) => (
+                  dateInRange(date, calendar.exercise_dateStart, calendar.exercise_dateEnd)
+                ));
+                const foodForDates = OBJECT.filter((calendar: any) => (
+                  dateInRange(date, calendar.food_dateStart, calendar.food_dateEnd)
+                ));
+                const moneyForDates = OBJECT.filter((calendar: any) => (
+                  dateInRange(date, calendar.money_dateStart, calendar.money_dateEnd)
+                ));
+                const sleepForDates = OBJECT.filter((calendar: any) => (
+                  dateInRange(date, calendar.sleep_dateStart, calendar.sleep_dateEnd)
+                ));
+                return (
+                  <>
+                    {calendarForDates.length > 0 && calendarForDates.map((calendar: any) => (
+                      <Div
+                        key={`calendar-${calendar._id}`}
+                        className={"calendar-filled"}
+                        style={{ backgroundColor: "blue" }}
+                      >
+                        <span className={"calendar-category"}>
+                          {"일정"}
+                        </span>
+                      </Div>
+                    ))}
+                    {exerciseForDates.length > 0 && exerciseForDates.map((exercise: any) => (
+                      <Div
+                        key={`exercise-${exercise._id}`}
+                        className={"calendar-filled"}
+                        style={{ backgroundColor: "green" }}
+                      >
+                        <span className={"calendar-category"}>
+                          {"운동"}
+                        </span>
+                      </Div>
+                    ))}
+                    {foodForDates.length > 0 && foodForDates.map((food: any) => (
+                      <Div
+                        key={`food-${food._id}`}
+                        className={"calendar-filled"}
+                        style={{ backgroundColor: "orange" }}
+                      >
+                        <span className={"calendar-category"}>
+                          {"음식"}
+                        </span>
+                      </Div>
+                    ))}
+                    {moneyForDates.length > 0 && moneyForDates.map((money: any) => (
+                      <Div
+                        key={`money-${money._id}`}
+                        className={"calendar-filled"}
+                        style={{ backgroundColor: "purple" }}
+                      >
+                        <span className={"calendar-category"}>
+                          {"가계부"}
+                        </span>
+                      </Div>
+                    ))}
+                    {sleepForDates.length > 0 && sleepForDates.map((sleep: any) => (
+                      <Div
+                        key={`sleep-${sleep._id}`}
+                        className={"calendar-filled"}
+                        style={{ backgroundColor: "grey" }}
+                      >
+                        <span className={"calendar-category"}>
+                          {"수면"}
+                        </span>
+                      </Div>
+                    ))}
+                  </>
                 );
-                return content;
               }}
             />
           </Grid>

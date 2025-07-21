@@ -57,6 +57,11 @@ export const FoodFavoriteList = () => {
     dateEnd: location_dateEnd || getDayFmt(),
   });
 
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+  }, [isExpanded]);
+
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 페이지 번호 변경 시 flowFind 호출
   useEffect(() => {

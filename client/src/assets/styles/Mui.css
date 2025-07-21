@@ -31,24 +31,6 @@
 
 
 /*************************************** IMPORTANT ************************************************/
-/** tab **/
-.MuiTab-root {
-  background-color: transparent !important;
-  min-width: 0px !important;
-}
-.MuiTab-root.Mui-selected {
-  color: #1976d2 !important;
-  font-weight: bold !important;
-  text-decoration: none !important;
-  scale: 1.2 !important;
-}
-.MuiTabs-indicator {
-  background-color: #1976d2 !important;
-}
-.MuiTabs-scroller {
-  margin: 0px 0px 5px 0px !important;
-}
-
 /** bottom **/
 .MuiBottomNavigation-root {
   background-color: transparent !important;
