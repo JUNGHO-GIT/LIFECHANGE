@@ -77,7 +77,7 @@ export const MoneyList = () => {
     })
     .then((res: any) => {
       setEXIST(
-        !res.data.result || res.data.result.length === 0 ? [""] : res.data.result
+        !res.data.result || res.data.result?.length === 0 ? [""] : res.data.result
       );
     })
     .catch((err: any) => {
@@ -105,7 +105,7 @@ export const MoneyList = () => {
     })
     .then((res: any) => {
       setLOADING(false);
-      setOBJECT(res.data.result.length > 0 ? res.data.result : [Money]);
+      setOBJECT(res.data.result?.length > 0 ? res.data.result : [Money]);
       setCOUNT((prev: any) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
@@ -114,7 +114,7 @@ export const MoneyList = () => {
       }));
       // 응답 길이만큼 expanded 초기화
       setIsExpanded(
-        Array(res.data.result.length).fill({ expanded: false })
+        Array(res.data.result?.length).fill({ expanded: false })
       );
     })
     .catch((err: any) => {
@@ -128,14 +128,14 @@ export const MoneyList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [URL_OBJECT, sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
+  }, [URL_OBJECT, sessionId, PAGING?.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
 
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
     const listSection = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
-          {OBJECT.filter((f: any) => f._id).map((item: any, i: number) => (
+          {OBJECT?.filter((f: any) => f._id).map((item: any, i: number) => (
             <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
               <Grid size={12} className={"p-2px"}>
                 <Accordion

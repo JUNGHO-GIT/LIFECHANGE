@@ -65,15 +65,15 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
     // 파일 높이 계산
     const heightPerFile = 30;
     const minHeight = 100;
-    setFileHeight(`${Math.max(minHeight, (props?.value || []).length * heightPerFile)}px`);
+    setFileHeight(`${Math.max(minHeight, (props?.value || [])?.length * heightPerFile)}px`);
 
   }, [props?.value]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (fileList) {
-      const newCount = fileList.length;
-      const existingCount = fileExisting.length;
+      const newCount = fileList?.length;
+      const existingCount = fileExisting?.length;
 
       if (newCount + existingCount > 0) {
         setFileCount(newCount + existingCount);
@@ -104,7 +104,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
     }
 
     // 파일이 제한 개수 이상인 경우
-    else if (newFiles && newFiles.length + fileCount > fileLimit) {
+    else if (newFiles && newFiles?.length + fileCount > fileLimit) {
       setALERT({
         open: true,
         severity: "error",
@@ -139,7 +139,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
       const existingFiles = fileList || [];
 
       // Filter out duplicate files
-      const nonDuplicateFiles = newFiles.filter((newFile) => (
+      const nonDuplicateFiles = newFiles?.filter((newFile) => (
         !existingFiles.some((existingFile) => existingFile.name === newFile.name)
       ));
 
@@ -176,7 +176,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
       if (!fileList) {
         return;
       }
-      const updatedFiles = fileList.filter((_file, i) => i !== index);
+      const updatedFiles = fileList?.filter((_file, i) => i !== index);
       setFileList(updatedFiles);
       props.onChange(updatedFiles);
     }
@@ -188,7 +188,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
 
   // 6. handle (파일 삭제) -------------------------------------------------------------------------
   const handleExistingFileDelete = (index: number) => {
-    const updatedExistingFile = fileExisting.filter((_file: any, i: number) => i !== index);
+    const updatedExistingFile = fileExisting?.filter((_file: any, i: number) => i !== index);
     setFileExisting(updatedExistingFile);
 
     if (handleExistingFilesChange) {
@@ -200,7 +200,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
   const adornmentNode = (
     <Grid container={true} spacing={0}>
       <Grid size={8} className={"d-col-left"}>
-        {fileList && fileList.length > 0 && fileList.map((file: any, index: number) => (
+        {fileList && fileList?.length > 0 && fileList.map((file: any, index: number) => (
           <Div className={"d-row-center"} key={index}>
             <Img
               max={25}
@@ -313,7 +313,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
     />
     <Br m={20} />
     {/** 기존 이미지 표시하기 **/}
-    {fileExisting.length > 0 && existingNode()}
+    {fileExisting?.length > 0 && existingNode()}
     </>
   );
 };

@@ -46,7 +46,8 @@
     "start": "craco start",
     "build": "craco build",
     "npm-reset": "powershell -Command \"Remove-Item -Recurse -Force package-lock.json, node_modules; npm install --legacy-peer-deps;\"",
-    "gcloud": "node gcloud.cjs"
+    "gcloud-only-git": "node gcloud.cjs --only-git",
+		"gcloud-full-deploy": "node gcloud.cjs --full-deploy"
   },
   "dependencies": {
     "@emotion/react": "^11.13.5",

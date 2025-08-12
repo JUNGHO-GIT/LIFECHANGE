@@ -65,10 +65,10 @@ export const MoneyChartLine = () => {
         }),
       ]);
       setOBJECT_WEEK (
-        resWeek.data.result.length > 0 ? resWeek.data.result : [MoneyLine]
+        resWeek.data.result?.length > 0 ? resWeek.data.result : [MoneyLine]
       );
       setOBJECT_MONTH (
-        resMonth.data.result.length > 0 ? resMonth.data.result : [MoneyLine]
+        resMonth.data.result?.length > 0 ? resMonth.data.result : [MoneyLine]
       );
     }
     catch (err: any) {
@@ -166,7 +166,7 @@ export const MoneyChartLine = () => {
               )}
               <Tooltip
                 labelFormatter={(_label: any, payload: any) => {
-                  const date = payload.length > 0 ? payload[0]?.payload.date : '';
+                  const date = payload?.length > 0 ? payload[0]?.payload.date : '';
                   return `${date}`;
                 }}
                 formatter={(value: any, name: any) => {
@@ -243,10 +243,10 @@ export const MoneyChartLine = () => {
                     <FormControlLabel label={translate(key)} labelPlacement={"start"} control={
                       <Switch checked={TYPE.line.includes(key)} onChange={() => {
                         if (TYPE.line.includes(key)) {
-                          if (TYPE.line.length > 1) {
+                          if (TYPE.line?.length > 1) {
                             setTYPE((prev: any) => ({
                               ...prev,
-                              line: TYPE.line.filter((item: any) => item !== key),
+                              line: TYPE.line?.filter((item: any) => item !== key),
                             }));
                           }
                           else {

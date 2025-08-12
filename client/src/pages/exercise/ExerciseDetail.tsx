@@ -100,7 +100,7 @@ export const ExerciseDetail = () => {
     })
     .then((res: any) => {
       setEXIST(
-        !res.data.result || res.data.result.length === 0 ? [""] : res.data.result
+        !res.data.result || res.data.result?.length === 0 ? [""] : res.data.result
       );
     })
     .catch((err: any) => {
@@ -140,7 +140,7 @@ export const ExerciseDetail = () => {
       else {
         setOBJECT((prev: any) => ({
           ...prev,
-          exercise_section: prev.exercise_section.sort((a: any, b: any) => (
+          exercise_section: prev.exercise_section?.sort((a: any, b: any) => (
             exerciseArray.findIndex((item: any) => item.exercise_part === a.exercise_part) -
             exerciseArray.findIndex((item: any) => item.exercise_part === b.exercise_part)
           )),
@@ -208,7 +208,7 @@ export const ExerciseDetail = () => {
       exercise_cardio: "00:00",
     };
     let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) =>
-      idx < OBJECT?.exercise_section.length ? OBJECT?.exercise_section[idx] : defaultSection
+      idx < OBJECT?.exercise_section?.length ? OBJECT?.exercise_section[idx] : defaultSection
     );
     setOBJECT((prev: any) => ({
       ...prev,
@@ -331,7 +331,7 @@ export const ExerciseDetail = () => {
   const handleDelete = (index: number) => {
     setOBJECT((prev: any) => ({
       ...prev,
-      exercise_section: prev.exercise_section.filter((_item: any, idx: number) => (idx !== index))
+      exercise_section: prev.exercise_section?.filter((_item: any, idx: number) => (idx !== index))
     }));
     setCOUNT((prev: any) => ({
       ...prev,

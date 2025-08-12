@@ -99,16 +99,16 @@ export const TodayList = () => {
         axios.get(`${URL_SLEEP}/list`, { params })
       ]);
       setOBJECT_EXERCISE(
-        resExercise.data.result.length > 0 ? resExercise.data.result : [Exercise]
+        resExercise.data.result?.length > 0 ? resExercise.data.result : [Exercise]
       );
       setOBJECT_FOOD(
-        resFood.data.result.length > 0 ? resFood.data.result : [Food]
+        resFood.data.result?.length > 0 ? resFood.data.result : [Food]
       );
       setOBJECT_MONEY(
-        resMoney.data.result.length > 0 ? resMoney.data.result : [Money]
+        resMoney.data.result?.length > 0 ? resMoney.data.result : [Money]
       );
       setOBJECT_SLEEP(
-        resSleep.data.result.length > 0 ? resSleep.data.result : [Sleep]
+        resSleep.data.result?.length > 0 ? resSleep.data.result : [Sleep]
       );
       setCOUNT({
         exercise: resExercise.data.totalCnt,
@@ -124,10 +124,10 @@ export const TodayList = () => {
       });
       // 응답 길이만큼 expanded 초기화
       setIsExpanded({
-        exercise: Array(resExercise.data.result.length).fill({ expanded: false }),
-        food: Array(resFood.data.result.length).fill({ expanded: false }),
-        money: Array(resMoney.data.result.length).fill({ expanded: false }),
-        sleep: Array(resSleep.data.result.length).fill({ expanded: false }),
+        exercise: Array(resExercise.data.result?.length).fill({ expanded: false }),
+        food: Array(resFood.data.result?.length).fill({ expanded: false }),
+        money: Array(resMoney.data.result?.length).fill({ expanded: false }),
+        sleep: Array(resSleep.data.result?.length).fill({ expanded: false }),
       });
     }
     catch (err: any) {
@@ -144,7 +144,7 @@ export const TodayList = () => {
     }
   })()}, [
     URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP,
-    sessionId, PAGING.sort, PAGING.page, DATE.dateEnd
+    sessionId, PAGING?.sort, PAGING.page, DATE.dateEnd
   ]);
 
   // 7. list ---------------------------------------------------------------------------------------
@@ -153,7 +153,7 @@ export const TodayList = () => {
     const exerciseSection = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
-          {OBJECT_EXERCISE.filter((f: any) => f._id).map((item: any, i: number) => (
+          {OBJECT_EXERCISE?.filter((f: any) => f._id).map((item: any, i: number) => (
             <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
               <Grid size={12} className={"p-2px"}>
                 <Accordion
@@ -333,7 +333,7 @@ export const TodayList = () => {
     const foodSection = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
-          {OBJECT_FOOD.filter((f: any) => f._id).map((item: any, i: number) => (
+          {OBJECT_FOOD?.filter((f: any) => f._id).map((item: any, i: number) => (
             <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
               <Grid size={12} className={"p-2px"}>
                 <Accordion
@@ -548,7 +548,7 @@ export const TodayList = () => {
     const moneySection = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
-          {OBJECT_MONEY.filter((f: any) => f._id).map((item: any, i: number) => (
+          {OBJECT_MONEY?.filter((f: any) => f._id).map((item: any, i: number) => (
             <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
               <Grid size={12} className={"p-2px"}>
                 <Accordion
@@ -693,7 +693,7 @@ export const TodayList = () => {
     const sleepSection = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
-          {OBJECT_SLEEP.filter((f: any) => f._id).map((item: any, i: number) => (
+          {OBJECT_SLEEP?.filter((f: any) => f._id).map((item: any, i: number) => (
             <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
               <Grid size={12} className={"p-2px"}>
                 <Accordion

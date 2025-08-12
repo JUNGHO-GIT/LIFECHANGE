@@ -207,7 +207,7 @@ export const UserCategory = () => {
   // 4-3. handle----------------------------------------------------------------------------------
   const handleRemove = (type: string, index: number) => {
     if (type === "part") {
-      if (OBJECT[dataType].length <= 1) {
+      if (OBJECT[dataType]?.length <= 1) {
         setALERT({
           open: true,
           msg: translate("cantBeDeletedLastItem"),
@@ -509,7 +509,7 @@ export const UserCategory = () => {
     const detailSection = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
-          {[OBJECT].filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
+          {[OBJECT]?.filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
             <Grid size={12} key={`detail-${i}`}>
               <Grid container={true} spacing={2}>
                 <TableContainer className={"border-1 radius-2 over-x-hidden"}>

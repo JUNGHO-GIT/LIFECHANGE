@@ -23,7 +23,7 @@ export const exist = async (
     user_id_param, dateType, dateStart, dateEnd
   );
 
-  if (!findResult || findResult.length <= 0) {
+  if (!findResult || findResult?.length <= 0) {
     finalResult = null;
     statusResult = "fail";
   }
@@ -81,7 +81,7 @@ export const list = async (
   findResult = await repository.listGoal(
     user_id_param, dateType, dateStart, dateEnd, sort, page
   );
-  findResult.sort((a: any, b: any) => {
+  findResult?.sort((a: any, b: any) => {
     const dateTypeA = a.sleep_goal_dateType;
     const dateTypeB = b.sleep_goal_dateType;
     const dateStartA = new Date(a.sleep_goal_dateStart);
@@ -97,7 +97,7 @@ export const list = async (
     return sortOrder === 1 ? dateDiff : -dateDiff;
   });
 
-  if (!findResult || findResult.length <= 0) {
+  if (!findResult || findResult?.length <= 0) {
     finalResult = [];
     statusResult = "fail";
   }
@@ -113,13 +113,13 @@ export const list = async (
       // 각 평균값 구하기
       const bedTime = listReal.reduce((acc: any, curr: any) => (
         acc + strToDecimal(curr?.sleep_bedTime)
-      ), 0) / listReal.length;
+      ), 0) / listReal?.length;
       const wakeTime = listReal.reduce((acc: any, curr: any) => (
         acc + strToDecimal(curr?.sleep_wakeTime)
-      ), 0) / listReal.length;
+      ), 0) / listReal?.length;
       const sleepTime = listReal.reduce((acc: any, curr: any) => (
         acc + strToDecimal(curr?.sleep_sleepTime)
-      ), 0) / listReal.length;
+      ), 0) / listReal?.length;
 
       return {
         ...goal,
@@ -159,7 +159,7 @@ export const detail = async (
     user_id_param, dateType, dateStart, dateEnd
   );
 
-  // real = section.length
+  // real = section?.length
   // goal = 0 or 1
   if (!findResult) {
     finalResult = null;

@@ -35,7 +35,7 @@ export const Memo = (
           <Grid size={12} className={"d-center"}>
             <TextArea
               className={"w-86vw h-55vh border-1 p-10px"}
-              value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
+              value={OBJECT?.[`${firstStr}_section`]?.[i]?.[`${extra}`]}
               style={{
                 fontFamily: "inherit",
                 fontSize: "inherit",
@@ -62,7 +62,7 @@ export const Memo = (
         <Input
           label={translate("memo")}
           className={"pointer"}
-          value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
+          value={OBJECT?.[`${firstStr}_section`]?.[i]?.[`${extra}`]}
           readOnly={true}
           locked={LOCKED}
           startadornment={

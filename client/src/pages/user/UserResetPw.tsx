@@ -244,7 +244,7 @@ export const UserResetPw = () => {
     const resetSection = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
-          {[OBJECT].filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
+          {[OBJECT]?.filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
             <Grid container={true} spacing={2} className={"p-10px"} key={`detail-${i}`}>
               {/** 이메일 **/}
               <Grid container={true} spacing={1}>
@@ -259,7 +259,7 @@ export const UserResetPw = () => {
                     placeholder={"abcd@naver.com"}
                     onChange={(e: any) => {
                       const value = e.target.value;
-                      if (value.length > 30) {
+                      if (value?.length > 30) {
                         setOBJECT((prev: any) => ({
                           ...prev,
                           user_id: prev.user_id,

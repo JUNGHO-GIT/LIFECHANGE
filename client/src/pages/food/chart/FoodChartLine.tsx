@@ -67,16 +67,16 @@ export const FoodChartLine = () => {
         }),
       ]);
       setOBJECT_KCAL_WEEK(
-        resWeek.data.result.kcal.length > 0 ? resWeek.data.result.kcal : [FoodLineKcal]
+        resWeek.data.result.kcal?.length > 0 ? resWeek.data.result.kcal : [FoodLineKcal]
       );
       setOBJECT_NUT_WEEK(
-        resWeek.data.result.nut.length > 0 ? resWeek.data.result.nut : [FoodLineNut]
+        resWeek.data.result.nut?.length > 0 ? resWeek.data.result.nut : [FoodLineNut]
       );
       setOBJECT_KCAL_MONTH(
-        resMonth.data.result.kcal.length > 0 ? resMonth.data.result.kcal : [FoodLineKcal]
+        resMonth.data.result.kcal?.length > 0 ? resMonth.data.result.kcal : [FoodLineKcal]
       );
       setOBJECT_NUT_MONTH(
-        resMonth.data.result.nut.length > 0 ? resMonth.data.result.nut : [FoodLineNut]
+        resMonth.data.result.nut?.length > 0 ? resMonth.data.result.nut : [FoodLineNut]
       );
     }
     catch (err: any) {
@@ -208,7 +208,7 @@ export const FoodChartLine = () => {
               )}
               <Tooltip
                 labelFormatter={(_label: any, payload: any) => {
-                  const date = payload.length > 0 ? payload[0]?.payload.date : '';
+                  const date = payload?.length > 0 ? payload[0]?.payload.date : '';
                   return `${date}`;
                 }}
                 formatter={(value: any, name: any) => {

@@ -122,7 +122,7 @@ export const useValidateFood = () => {
         return showAlertAndFocus("", "errorCount", 0);
       }
 
-      for (let i = 0; i < section.length; i++) {
+      for (let i = 0; i < section?.length; i++) {
         if (!section[i].food_part || section[i].food_part === "") {
           return showAlertAndFocus('food_part', "errorFoodPart", i);
         }

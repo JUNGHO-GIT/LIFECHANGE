@@ -67,16 +67,16 @@ export const FoodChartAvg = () => {
         }),
       ]);
       setOBJECT_KCAL_WEEK(
-        resWeek.data.result.kcal.length > 0 ? resWeek.data.result.kcal : [FoodAvgKcal]
+        resWeek.data.result.kcal?.length > 0 ? resWeek.data.result.kcal : [FoodAvgKcal]
       );
       setOBJECT_NUT_WEEK(
-        resWeek.data.result.nut.length > 0 ? resWeek.data.result.nut : [FoodAvgNut]
+        resWeek.data.result.nut?.length > 0 ? resWeek.data.result.nut : [FoodAvgNut]
       );
       setOBJECT_KCAL_MONTH(
-        resMonth.data.result.kcal.length > 0 ? resMonth.data.result.kcal : [FoodAvgKcal]
+        resMonth.data.result.kcal?.length > 0 ? resMonth.data.result.kcal : [FoodAvgKcal]
       );
       setOBJECT_NUT_MONTH(
-        resMonth.data.result.nut.length > 0 ? resMonth.data.result.nut : [FoodAvgNut]
+        resMonth.data.result.nut?.length > 0 ? resMonth.data.result.nut : [FoodAvgNut]
       );
     }
     catch (err: any) {
@@ -200,7 +200,7 @@ export const FoodChartAvg = () => {
               )}
               <Tooltip
                 labelFormatter={(_label: any, payload: any) => {
-                  const date = payload.length > 0 ? payload[0]?.payload.date : '';
+                  const date = payload?.length > 0 ? payload[0]?.payload.date : '';
                   return `${date}`;
                 }}
                 formatter={(value: any, name: any) => {

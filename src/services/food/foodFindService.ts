@@ -197,8 +197,8 @@ export const list = async (
       servArray.forEach((el) => {
         if (servMatch[2]?.includes(el)) {
           const idx = servMatch[2]?.indexOf(el);
-          const gramMatch = servMatch[2]?.slice(idx + el.length).trim()?.match(/(\d+)\s*(g|ml|l|kg)/);
-          serv = servMatch[2]?.slice(0, idx + el.length).replace(/(\d+)\s+(.+)/, "$1$2").trim();
+          const gramMatch = servMatch[2]?.slice(idx + el?.length).trim()?.match(/(\d+)\s*(g|ml|l|kg)/);
+          serv = servMatch[2]?.slice(0, idx + el?.length).replace(/(\d+)\s+(.+)/, "$1$2").trim();
           gram  = gramMatch && gramMatch[1];
           found = true;
         }
@@ -287,7 +287,7 @@ export const list = async (
         const nutritionElement:any = getServ(prev);
         finalResult.push({
           food_query: query,
-          food_perNumber: page * 10 + tableIndex * rows.length + rowIndex + 1,
+          food_perNumber: page * 10 + tableIndex * rows?.length + rowIndex + 1,
           food_part: "breakfast",
           food_name: titleElement || "",
           food_brand: brandElement || "",
@@ -331,7 +331,7 @@ export const listFavorite = async (
   findResult = await repository.listFavorite(
     user_id_param
   );
-  totalCntResult = findResult.length;
+  totalCntResult = findResult?.length;
 
   if (!findResult) {
     finalResult = [];
@@ -379,7 +379,7 @@ export const updateFavorite = async (
   ));
 
   if (existFavorite) {
-    foodFavorite_param = findResult.filter((item: any) => (
+    foodFavorite_param = findResult?.filter((item: any) => (
       item.food_key !== foodKey
     ));
   }

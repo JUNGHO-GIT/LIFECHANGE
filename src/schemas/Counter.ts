@@ -22,7 +22,7 @@ export const incrementSeq = async (sequenceName: string, modelName: string) => {
 
   // 시퀀스 번호 동기화 검증 로직
   const Model = mongoose.model(modelName);
-  const latestDoc = await Model.findOne().sort({ [sequenceName]: -1 }).exec();
+  const latestDoc = await Model.findOne()?.sort({ [sequenceName]: -1 }).exec();
   const latestSeq = latestDoc ? latestDoc[sequenceName] : 0;
 
   // Counter 컬렉션 업데이트

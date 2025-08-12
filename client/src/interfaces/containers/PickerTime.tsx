@@ -171,7 +171,7 @@ export const PickerTime = (
                   timeStep={10}
                   ampm={false}
                   timezone={localTimeZone}
-                  value={moment(OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`], "HH:mm")}
+                  value={moment(OBJECT?.[`${firstStr}_section`]?.[i]?.[`${extra}`], "HH:mm")}
                   sx={{
                     width: "40vw",
                     height: "40vh"
@@ -179,7 +179,7 @@ export const PickerTime = (
                   onChange={(e: any) => {
                     setOBJECT((prev: any) => ({
                       ...prev,
-                      [`${firstStr}_section`]: prev[`${firstStr}_section`]?.map((section: any, idx: number) => (
+                      [`${firstStr}_section`]: prev?.[`${firstStr}_section`]?.map((section: any, idx: number) => (
                         idx === i ? {
                           ...section,
                           [`${extra}`]: moment(e).format("HH:mm")
@@ -196,7 +196,7 @@ export const PickerTime = (
         children={(popTrigger: any) => (
           <Input
             label={translate(translateStr)}
-            value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
+            value={OBJECT?.[`${firstStr}_section`]?.[i]?.[`${extra}`]}
             inputRef={REFS?.[i]?.[`${extra}`]}
             error={ERRORS?.[i]?.[`${extra}`]}
             readOnly={true}

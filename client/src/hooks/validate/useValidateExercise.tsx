@@ -116,7 +116,7 @@ export const useValidateExercise = () => {
       if (COUNT.newSectionCnt <= 0) {
         return showAlertAndFocus("", "errorCount", 0);
       }
-      for (let i = 0; i < section.length; i++) {
+      for (let i = 0; i < section?.length; i++) {
         if (!section[i].exercise_part || section[i].exercise_part === "") {
           return showAlertAndFocus('exercise_part', "errorExercisePart", i);
         }

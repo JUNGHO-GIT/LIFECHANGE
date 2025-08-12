@@ -22,7 +22,7 @@ export const exist = async (
     user_id_param, dateType, dateStart, dateEnd
   );
 
-  if (!findResult || findResult.length <= 0) {
+  if (!findResult || findResult?.length <= 0) {
     finalResult = null;
     statusResult = "fail";
   }
@@ -82,12 +82,12 @@ export const list = async (
     user_id_param, dateType, dateStart, dateEnd, sort, page
   );
 
-  if (!findResult || findResult.length <= 0) {
+  if (!findResult || findResult?.length <= 0) {
     finalResult = [];
     statusResult = "fail";
   }
   else {
-    findResult.sort((a: any, b: any) => {
+    findResult?.sort((a: any, b: any) => {
       const dateTypeA = a.money_dateType;
       const dateTypeB = b.money_dateType;
       const dateStartA = new Date(a.money_dateStart);
@@ -134,7 +134,7 @@ export const detail = async (
     user_id_param, dateType, dateStart, dateEnd
   );
 
-  // real = section.length
+  // real = section?.length
   // goal = 0 or 1
   if (!findResult) {
     finalResult = null;
@@ -144,7 +144,7 @@ export const detail = async (
   else {
     finalResult = findResult;
     statusResult = "success";
-    sectionCntResult = findResult.money_section.length;
+    sectionCntResult = findResult.money_section?.length;
   }
 
   return {

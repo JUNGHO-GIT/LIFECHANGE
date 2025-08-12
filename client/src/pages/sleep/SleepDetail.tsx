@@ -98,7 +98,7 @@ export const SleepDetail = () => {
     })
     .then((res: any) => {
       setEXIST(
-        !res.data.result || res.data.result.length === 0 ? [""] : res.data.result
+        !res.data.result || res.data.result?.length === 0 ? [""] : res.data.result
       );
     })
     .catch((err: any) => {
@@ -138,7 +138,7 @@ export const SleepDetail = () => {
       else {
         setOBJECT((prev: any) => ({
           ...prev,
-          sleep_section: prev.sleep_section.sort((a: any, b: any) => (
+          sleep_section: prev.sleep_section?.sort((a: any, b: any) => (
             a.sleep_part - b.sleep_part
           ))
         }));
@@ -172,7 +172,7 @@ export const SleepDetail = () => {
       sleep_sleepTime: "00:00",
     };
     let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) =>
-      idx < OBJECT?.sleep_section.length ? OBJECT?.sleep_section[idx] : defaultSection
+      idx < OBJECT?.sleep_section?.length ? OBJECT?.sleep_section[idx] : defaultSection
     );
     setOBJECT((prev: any) => ({
       ...prev,
@@ -295,7 +295,7 @@ export const SleepDetail = () => {
   const handleDelete = (index: number) => {
     setOBJECT((prev: any) => ({
       ...prev,
-      sleep_section: prev.sleep_section.filter((_item: any, idx: number) => (idx !== index))
+      sleep_section: prev.sleep_section?.filter((_item: any, idx: number) => (idx !== index))
     }));
     setCOUNT((prev: any) => ({
       ...prev,

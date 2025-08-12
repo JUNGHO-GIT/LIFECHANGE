@@ -97,7 +97,7 @@ export const MoneyDetail = () => {
     })
     .then((res: any) => {
       setEXIST(
-        !res.data.result || res.data.result.length === 0 ? [""] : res.data.result
+        !res.data.result || res.data.result?.length === 0 ? [""] : res.data.result
       );
     })
     .catch((err: any) => {
@@ -137,7 +137,7 @@ export const MoneyDetail = () => {
       else {
         setOBJECT((prev: any) => ({
           ...prev,
-          money_section: prev.money_section.sort((a: any, b: any) => (
+          money_section: prev.money_section?.sort((a: any, b: any) => (
             moneyArray.findIndex((item: any) => item.money_part === a.money_part) -
             moneyArray.findIndex((item: any) => item.money_part === b.money_part)
           )),
@@ -201,7 +201,7 @@ export const MoneyDetail = () => {
       money_include: "Y",
     };
     let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) =>
-      idx < OBJECT?.money_section.length ? OBJECT?.money_section[idx] : defaultSection
+      idx < OBJECT?.money_section?.length ? OBJECT?.money_section[idx] : defaultSection
     );
     setOBJECT((prev: any) => ({
       ...prev,
@@ -324,7 +324,7 @@ export const MoneyDetail = () => {
   const handleDelete = (index: number) => {
     setOBJECT((prev: any) => ({
       ...prev,
-      money_section: prev.money_section.filter((_item: any, idx: number) => (idx !== index))
+      money_section: prev.money_section?.filter((_item: any, idx: number) => (idx !== index))
     }));
     setCOUNT((prev: any) => ({
       ...prev,

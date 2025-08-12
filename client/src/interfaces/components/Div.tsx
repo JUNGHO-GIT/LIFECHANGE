@@ -7,7 +7,7 @@ export const Div = (props: any) => {
 
   if (typeof childrenEl === "string" && props?.max) {
     childrenEl = (
-      childrenEl.length > props?.max ? childrenEl.slice(0, props?.max) + "..." : childrenEl
+      childrenEl?.length > props?.max ? childrenEl.slice(0, props?.max) + "..." : childrenEl
     );
   }
 

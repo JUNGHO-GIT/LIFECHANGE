@@ -81,22 +81,22 @@ export const FoodChartPie = () => {
         }),
       ]);
       setOBJECT_KCAL_WEEK(
-        resWeek.data.result.kcal.length > 0 ? resWeek.data.result.kcal : [FoodPie]
+        resWeek.data.result.kcal?.length > 0 ? resWeek.data.result.kcal : [FoodPie]
       );
       setOBJECT_NUT_WEEK(
-        resWeek.data.result.nut.length > 0 ? resWeek.data.result.nut : [FoodPie]
+        resWeek.data.result.nut?.length > 0 ? resWeek.data.result.nut : [FoodPie]
       );
       setOBJECT_KCAL_MONTH(
-        resMonth.data.result.kcal.length > 0 ? resMonth.data.result.kcal : [FoodPie]
+        resMonth.data.result.kcal?.length > 0 ? resMonth.data.result.kcal : [FoodPie]
       );
       setOBJECT_NUT_MONTH(
-        resMonth.data.result.nut.length > 0 ? resMonth.data.result.nut : [FoodPie]
+        resMonth.data.result.nut?.length > 0 ? resMonth.data.result.nut : [FoodPie]
       );
       setOBJECT_KCAL_YEAR(
-        resYear.data.result.kcal.length > 0 ? resYear.data.result.kcal : [FoodPie]
+        resYear.data.result.kcal?.length > 0 ? resYear.data.result.kcal : [FoodPie]
       );
       setOBJECT_NUT_YEAR(
-        resYear.data.result.nut.length > 0 ? resYear.data.result.nut : [FoodPie]
+        resYear.data.result.nut?.length > 0 ? resYear.data.result.nut : [FoodPie]
       );
     }
     catch (err: any) {
@@ -231,7 +231,7 @@ export const FoodChartPie = () => {
                 animationEasing={"linear"}
               >
                 {object?.map((_entry: any, index: number) => (
-                  <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
+                  <Cell key={`cell-${index}`} fill={chartColors[index % chartColors?.length]} />
                 ))}
               </Pie>
               <Tooltip

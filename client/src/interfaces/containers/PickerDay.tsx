@@ -207,7 +207,7 @@ export const PickerDay = (
                         EXIST?.day.forEach((item: any) => {
                           if (
                             item.split(" - ") &&
-                            item.split(" - ").length === 2 &&
+                            item.split(" - ")?.length === 2 &&
                             getDayFmt(day) >= item.split(" - ")[0] &&
                             getDayFmt(day) <= item.split(" - ")[1]
                           ) {
@@ -404,7 +404,7 @@ export const PickerDay = (
                         EXIST?.day.forEach((item: any) => {
                           if (
                             item.split(" - ") &&
-                            item.split(" - ").length === 2 &&
+                            item.split(" - ")?.length === 2 &&
                             getDayFmt(day) >= item.split(" - ")[0] &&
                             getDayFmt(day) <= item.split(" - ")[1]
                           ) {
@@ -612,7 +612,7 @@ export const PickerDay = (
                         EXIST?.day.forEach((item: any) => {
                           if (
                             item.split(" - ") &&
-                            item.split(" - ").length === 2 &&
+                            item.split(" - ")?.length === 2 &&
                             getDayFmt(day) >= item.split(" - ")[0] &&
                             getDayFmt(day) <= item.split(" - ")[1]
                           ) {
@@ -1001,7 +1001,7 @@ export const PickerDay = (
                         EXIST?.day.forEach((item: any) => {
                           if (
                             item.split(" - ") &&
-                            item.split(" - ").length === 2 &&
+                            item.split(" - ")?.length === 2 &&
                             getDayFmt(day) >= item.split(" - ")[0] &&
                             getDayFmt(day) <= item.split(" - ")[1]
                           ) {

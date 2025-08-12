@@ -71,22 +71,22 @@ export const ExerciseChartLine = () => {
         }),
       ]);
       setOBJECT_SCALE_WEEK(
-        resWeek.data.result.scale.length > 0 ? resWeek.data.result.scale : [ExerciseLineScale]
+        resWeek.data.result.scale?.length > 0 ? resWeek.data.result.scale : [ExerciseLineScale]
       );
       setOBJECT_VOLUME_WEEK(
-        resWeek.data.result.volume.length > 0 ? resWeek.data.result.volume : [ExerciseLineVolume]
+        resWeek.data.result.volume?.length > 0 ? resWeek.data.result.volume : [ExerciseLineVolume]
       );
       setOBJECT_CARDIO_WEEK(
-        resWeek.data.result.cardio.length > 0 ? resWeek.data.result.cardio : [ExerciseLineCardio]
+        resWeek.data.result.cardio?.length > 0 ? resWeek.data.result.cardio : [ExerciseLineCardio]
       );
       setOBJECT_SCALE_MONTH(
-        resMonth.data.result.scale.length > 0 ? resMonth.data.result.scale : [ExerciseLineScale]
+        resMonth.data.result.scale?.length > 0 ? resMonth.data.result.scale : [ExerciseLineScale]
       );
       setOBJECT_VOLUME_MONTH(
-        resMonth.data.result.volume.length > 0 ? resMonth.data.result.volume : [ExerciseLineVolume]
+        resMonth.data.result.volume?.length > 0 ? resMonth.data.result.volume : [ExerciseLineVolume]
       );
       setOBJECT_CARDIO_MONTH(
-        resMonth.data.result.cardio.length > 0 ? resMonth.data.result.cardio : [ExerciseLineCardio]
+        resMonth.data.result.cardio?.length > 0 ? resMonth.data.result.cardio : [ExerciseLineCardio]
       );
     }
     catch (err: any) {
@@ -218,7 +218,7 @@ export const ExerciseChartLine = () => {
               )}
               <Tooltip
                 labelFormatter={(_label: any, payload: any) => {
-                  const date = payload.length > 0 ? payload[0]?.payload.date : '';
+                  const date = payload?.length > 0 ? payload[0]?.payload.date : '';
                   return `${date}`;
                 }}
                 formatter={(value: any, name: any) => {

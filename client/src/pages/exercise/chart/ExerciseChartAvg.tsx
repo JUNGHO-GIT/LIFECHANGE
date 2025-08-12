@@ -67,16 +67,16 @@ export const ExerciseChartAvg = () => {
         }),
       ]);
       setOBJECT_VOLUME_WEEK(
-        resWeek.data.result.volume.length > 0 ? resWeek.data.result.volume : [ExerciseAvgVolume]
+        resWeek.data.result.volume?.length > 0 ? resWeek.data.result.volume : [ExerciseAvgVolume]
       );
       setOBJECT_CARDIO_WEEK(
-        resWeek.data.result.cardio.length > 0 ? resWeek.data.result.cardio : [ExerciseAvgCardio]
+        resWeek.data.result.cardio?.length > 0 ? resWeek.data.result.cardio : [ExerciseAvgCardio]
       );
       setOBJECT_VOLUME_MONTH(
-        resMonth.data.result.volume.length > 0 ? resMonth.data.result.volume : [ExerciseAvgVolume]
+        resMonth.data.result.volume?.length > 0 ? resMonth.data.result.volume : [ExerciseAvgVolume]
       );
       setOBJECT_CARDIO_MONTH(
-        resMonth.data.result.cardio.length > 0 ? resMonth.data.result.cardio : [ExerciseAvgCardio]
+        resMonth.data.result.cardio?.length > 0 ? resMonth.data.result.cardio : [ExerciseAvgCardio]
       );
     }
     catch (err: any) {
@@ -180,7 +180,7 @@ export const ExerciseChartAvg = () => {
               )}
               <Tooltip
                 labelFormatter={(_label: any, payload: any) => {
-                  const date = payload.length > 0 ? payload[0]?.payload.date : '';
+                  const date = payload?.length > 0 ? payload[0]?.payload.date : '';
                   return `${date}`;
                 }}
                 formatter={(value: any, name: any) => {

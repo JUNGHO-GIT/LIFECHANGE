@@ -99,7 +99,7 @@ export const ExerciseGoalDetail = () => {
     })
     .then((res: any) => {
       setEXIST(
-        !res.data.result || res.data.result.length === 0 ? [""] : res.data.result
+        !res.data.result || res.data.result?.length === 0 ? [""] : res.data.result
       );
     })
     .catch((err: any) => {
@@ -299,7 +299,7 @@ export const ExerciseGoalDetail = () => {
     const detailSection = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
-          {[OBJECT].filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
+          {[OBJECT]?.filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
             <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}  key={`detail-${i}`}>
               {/** row 1 **/}
               <Grid container={true} spacing={2}>

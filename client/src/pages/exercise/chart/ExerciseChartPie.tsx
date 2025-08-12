@@ -81,22 +81,22 @@ export const ExerciseChartPie = () => {
         }),
       ]);
       setOBJECT_PART_WEEK(
-        resWeek.data.result.part.length > 0 ? resWeek.data.result.part : [ExercisePie]
+        resWeek.data.result.part?.length > 0 ? resWeek.data.result.part : [ExercisePie]
       );
       setOBJECT_TITLE_WEEK(
-        resWeek.data.result.title.length > 0 ? resWeek.data.result.title : [ExercisePie]
+        resWeek.data.result.title?.length > 0 ? resWeek.data.result.title : [ExercisePie]
       );
       setOBJECT_PART_MONTH(
-        resMonth.data.result.part.length > 0 ? resMonth.data.result.part : [ExercisePie]
+        resMonth.data.result.part?.length > 0 ? resMonth.data.result.part : [ExercisePie]
       );
       setOBJECT_TITLE_MONTH(
-        resMonth.data.result.title.length > 0 ? resMonth.data.result.title : [ExercisePie]
+        resMonth.data.result.title?.length > 0 ? resMonth.data.result.title : [ExercisePie]
       );
       setOBJECT_PART_YEAR(
-        resYear.data.result.part.length > 0 ? resYear.data.result.part : [ExercisePie]
+        resYear.data.result.part?.length > 0 ? resYear.data.result.part : [ExercisePie]
       );
       setOBJECT_TITLE_YEAR(
-        resYear.data.result.title.length > 0 ? resYear.data.result.title : [ExercisePie]
+        resYear.data.result.title?.length > 0 ? resYear.data.result.title : [ExercisePie]
       );
     }
     catch (err: any) {
@@ -230,7 +230,7 @@ export const ExerciseChartPie = () => {
                 animationEasing={"linear"}
               >
                 {object?.map((_entry: any, index: number) => (
-                  <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
+                  <Cell key={`cell-${index}`} fill={chartColors[index % chartColors?.length]} />
                 ))}
               </Pie>
               <Tooltip

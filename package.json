@@ -29,7 +29,8 @@
   "scripts": {
     "start": "tsx watch --clear-screen=false --ignore node_modules index.ts",
     "npm-reset": "powershell -Command \"Remove-Item -Recurse -Force package-lock.json, node_modules; npm install --legacy-peer-deps;\"",
-    "gcloud": "node gcloud.cjs"
+    "gcloud-only-git": "node gcloud.cjs --only-git",
+		"gcloud-full-deploy": "node gcloud.cjs --full-deploy"
   },
   "dependencies": {
     "ajv": "^8.17.1",

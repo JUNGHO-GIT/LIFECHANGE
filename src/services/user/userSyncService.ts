@@ -66,7 +66,7 @@ export const percent = async (
     user_id_param, dateStart, dateEnd
   );
 
-  findExercise = findExercise.length > 0 && findExercise?.reduce((acc: any, curr: any) => {
+  findExercise = findExercise?.length > 0 && findExercise?.reduce((acc: any, curr: any) => {
     const exerciseTotalCount = (
       parseFloat(acc?.exercise_total_count) + parseFloat(curr?.exercise_total_count)
     );
@@ -96,7 +96,7 @@ export const percent = async (
   findFood = await repository.percent.listFood(
     user_id_param, dateStart, dateEnd
   );
-  findFood = findFood.length > 0 && findFood?.reduce((acc: any, curr: any) => {
+  findFood = findFood?.length > 0 && findFood?.reduce((acc: any, curr: any) => {
     const foodTotalKcal = (
       parseFloat(acc?.food_total_kcal) + parseFloat(curr?.food_total_kcal)
     );
@@ -126,7 +126,7 @@ export const percent = async (
   findMoney = await repository.percent.listMoney(
     user_id_param, dateStart, dateEnd
   );
-  findMoney = findMoney.length > 0 && findMoney?.reduce((acc: any, curr: any) => {
+  findMoney = findMoney?.length > 0 && findMoney?.reduce((acc: any, curr: any) => {
     const moneyTotalIncome = (
       parseFloat(acc?.money_total_income) + parseFloat(curr?.money_total_income)
     );
@@ -149,7 +149,7 @@ export const percent = async (
     user_id_param, dateStart, dateEnd
   );
   const findSleepLength = findSleep?.length;
-  findSleep = findSleep.length > 0 && findSleep?.reduce((acc: any, curr: any) => {
+  findSleep = findSleep?.length > 0 && findSleep?.reduce((acc: any, curr: any) => {
     const sleepBedTime = (
       timeToDecimal(acc?.sleep_bedTime) + timeToDecimal(curr?.sleep_bedTime)
     );

@@ -104,7 +104,7 @@ export const FoodFavoriteList = () => {
     })
     .then((res: any) => {
       setLOADING(false);
-      setOBJECT(res.data.result.length > 0 ? res.data.result : []);
+      setOBJECT(res.data.result?.length > 0 ? res.data.result : []);
       setCOUNT((prev: any) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
@@ -133,7 +133,7 @@ export const FoodFavoriteList = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         setLOADING(false);
-        setOBJECT(res.data.result.length > 0 ? res.data.result : []);
+        setOBJECT(res.data.result?.length > 0 ? res.data.result : []);
         flowFind();
         sync("favorite");
       }
@@ -170,7 +170,7 @@ export const FoodFavoriteList = () => {
     }));
 
     // 스토리지 데이터 가져오기
-    let sectionArray = sessionFoodSection.length > 0 ? sessionFoodSection : [];
+    let sectionArray = sessionFoodSection?.length > 0 ? sessionFoodSection : [];
 
     const item = OBJECT[index];
     const newItem = {
@@ -195,7 +195,7 @@ export const FoodFavoriteList = () => {
       }
     }
     else {
-      sectionArray = sectionArray.filter((i: any) => (
+      sectionArray = sectionArray?.filter((i: any) => (
         i.food_key !== item.food_key
       ));
     }
@@ -209,7 +209,7 @@ export const FoodFavoriteList = () => {
     const listSection = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
-          {OBJECT.filter((f: any) => f.food_key).map((item: any, i: number) => (
+          {OBJECT?.filter((f: any) => f.food_key).map((item: any, i: number) => (
             <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
               <Grid size={12} className={"p-2px"}>
                 <Accordion
@@ -243,7 +243,7 @@ export const FoodFavoriteList = () => {
                           checked={
                             !! (
                               checkedQueries[`${item.food_query}_${PAGING.page}`] &&
-                              checkedQueries[`${item.food_query}_${PAGING.page}`][i]
+                              checkedQueries[`${item.food_query}_${PAGING.page}`]?.[i]
                             )
                           }
                           onChange={(e: any) => {

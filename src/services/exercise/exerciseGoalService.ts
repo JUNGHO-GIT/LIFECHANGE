@@ -23,7 +23,7 @@ export const exist = async (
     user_id_param, dateType, dateStart, dateEnd
   );
 
-  if (!findResult || findResult.length <= 0) {
+  if (!findResult || findResult?.length <= 0) {
     finalResult = null;
     statusResult = "fail";
   }
@@ -81,7 +81,7 @@ export const list = async (
   findResult = await repository.listGoal(
     user_id_param, dateType, dateStart, dateEnd, sort, page
   );
-  findResult.sort((a: any, b: any) => {
+  findResult?.sort((a: any, b: any) => {
     const dateTypeA = a.exercise_goal_dateType;
     const dateTypeB = b.exercise_goal_dateType;
     const dateStartA = new Date(a.exercise_goal_dateStart);
@@ -97,7 +97,7 @@ export const list = async (
     return sortOrder === 1 ? dateDiff : -dateDiff;
   });
 
-  if (!findResult || findResult.length <= 0) {
+  if (!findResult || findResult?.length <= 0) {
     finalResult = [];
     statusResult = "fail";
   }
@@ -166,7 +166,7 @@ export const detail = async (
     user_id_param, dateType, dateStart, dateEnd
   );
 
-  // real = section.length
+  // real = section?.length
   // goal = 0 or 1
   if (!findResult) {
     finalResult = null;

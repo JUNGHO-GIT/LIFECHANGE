@@ -31,7 +31,7 @@ export const timeToDecimal = (data: string) => {
     return 0;
   }
   const time = data.split(":");
-  if (time.length !== 2) {
+  if (time?.length !== 2) {
     return 0;
   }
   // 10분 단위로 반올림

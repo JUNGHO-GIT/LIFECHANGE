@@ -112,7 +112,7 @@ export const useValidateSleep = () => {
         return showAlertAndFocus("", "errorCount", 0);
       }
 
-      for (let i = 0; i < section.length; i++) {
+      for (let i = 0; i < section?.length; i++) {
         if (!section[i].sleep_bedTime || section[i].sleep_bedTime === "00:00") {
           return showAlertAndFocus('sleep_bedTime', "errorSleepBedTime", i);
         }

@@ -81,22 +81,22 @@ export const MoneyChartPie = () => {
         }),
       ]);
       setOBJECT_INCOME_WEEK(
-        resWeek.data.result.income.length > 0 ? resWeek.data.result.income : [MoneyPie]
+        resWeek.data.result.income?.length > 0 ? resWeek.data.result.income : [MoneyPie]
       );
       setOBJECT_EXPENSE_WEEK(
-        resWeek.data.result.expense.length > 0 ? resWeek.data.result.expense : [MoneyPie]
+        resWeek.data.result.expense?.length > 0 ? resWeek.data.result.expense : [MoneyPie]
       );
       setOBJECT_INCOME_MONTH(
-        resMonth.data.result.income.length > 0 ? resMonth.data.result.income : [MoneyPie]
+        resMonth.data.result.income?.length > 0 ? resMonth.data.result.income : [MoneyPie]
       );
       setOBJECT_EXPENSE_MONTH(
-        resMonth.data.result.expense.length > 0 ? resMonth.data.result.expense : [MoneyPie]
+        resMonth.data.result.expense?.length > 0 ? resMonth.data.result.expense : [MoneyPie]
       );
       setOBJECT_INCOME_YEAR(
-        resYear.data.result.income.length > 0 ? resYear.data.result.income : [MoneyPie]
+        resYear.data.result.income?.length > 0 ? resYear.data.result.income : [MoneyPie]
       );
       setOBJECT_EXPENSE_YEAR(
-        resYear.data.result.expense.length > 0 ? resYear.data.result.expense : [MoneyPie]
+        resYear.data.result.expense?.length > 0 ? resYear.data.result.expense : [MoneyPie]
       );
     }
     catch (err: any) {
@@ -224,7 +224,7 @@ export const MoneyChartPie = () => {
                 animationEasing={"linear"}
               >
                 {object?.map((_entry: any, index: number) => (
-                  <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
+                  <Cell key={`cell-${index}`} fill={chartColors[index % chartColors?.length]} />
                 ))}
               </Pie>
               <Tooltip

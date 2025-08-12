@@ -78,7 +78,7 @@ export const SleepChartPie = () => {
         }),
       ]);
       setOBJECT_WEEK(
-        (resWeek.data.result.length > 0) &&
+        (resWeek.data.result?.length > 0) &&
         (resWeek.data.result[0].value !== 0) &&
         (resWeek.data.result[1].value !== 0) &&
         (resWeek.data.result[2].value !== 0)
@@ -86,7 +86,7 @@ export const SleepChartPie = () => {
         : [SleepPie]
       );
       setOBJECT_MONTH(
-        (resMonth.data.result.length > 0) &&
+        (resMonth.data.result?.length > 0) &&
         (resMonth.data.result[0].value !== 0) &&
         (resMonth.data.result[1].value !== 0) &&
         (resMonth.data.result[2].value !== 0)
@@ -94,7 +94,7 @@ export const SleepChartPie = () => {
         : [SleepPie]
       );
       setOBJECT_YEAR(
-        (resYear.data.result.length > 0) &&
+        (resYear.data.result?.length > 0) &&
         (resYear.data.result[0].value !== 0) &&
         (resYear.data.result[1].value !== 0) &&
         (resYear.data.result[2].value !== 0)
@@ -210,7 +210,7 @@ export const SleepChartPie = () => {
                 animationEasing={"linear"}
               >
                 {object?.map((_entry: any, index: number) => (
-                  <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
+                  <Cell key={`cell-${index}`} fill={chartColors[index % chartColors?.length]} />
                 ))}
               </Pie>
               <Tooltip

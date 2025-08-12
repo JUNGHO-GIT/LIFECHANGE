@@ -98,7 +98,7 @@ export const FoodDetail = () => {
     })
     .then((res: any) => {
       setEXIST(
-        !res.data.result || res.data.result.length === 0 ? [""] : res.data.result
+        !res.data.result || res.data.result?.length === 0 ? [""] : res.data.result
       );
     })
     .catch((err: any) => {
@@ -119,7 +119,7 @@ export const FoodDetail = () => {
     })
     .then((res: any) => {
       setFAVORITE(
-        !res.data.result || res.data.result.length === 0 ? [""] : res.data.result
+        !res.data.result || res.data.result?.length === 0 ? [""] : res.data.result
       );
     })
     .catch((err: any) => {
@@ -159,7 +159,7 @@ export const FoodDetail = () => {
       else {
         setOBJECT((prev: any) => ({
           ...prev,
-          food_section: prev.food_section.sort((a: any, b: any) => (
+          food_section: prev.food_section?.sort((a: any, b: any) => (
             foodArray.findIndex((item: any) => item.food_part === a.food_part) -
             foodArray.findIndex((item: any) => item.food_part === b.food_part)
           )),
@@ -174,21 +174,21 @@ export const FoodDetail = () => {
       }));
 
       // 스토리지 데이터 가져오기
-      let sectionArray = sessionFoodSection.length > 0 ? sessionFoodSection : [];
+      let sectionArray = sessionFoodSection?.length > 0 ? sessionFoodSection : [];
 
       // 기존 food_section 데이터와 병합하여 OBJECT 재설정
       setOBJECT((prev: any) => ({
         ...prev,
         // 기존의 food_section만 정렬
         food_section: prev?.food_section ? (
-          [...prev.food_section].sort((a, b) => a.food_part - b.food_part).concat(sectionArray)
+          [...prev.food_section]?.sort((a, b) => a.food_part - b.food_part).concat(sectionArray)
         ) : [...sectionArray]
       }));
 
       // 병합된 데이터를 바탕으로 COUNT 재설정
       setCOUNT((prev: any) => ({
         ...prev,
-        newSectionCnt: prev?.newSectionCnt + sectionArray.length
+        newSectionCnt: prev?.newSectionCnt + sectionArray?.length
       }));
     })
     .catch((err: any) => {
@@ -245,7 +245,7 @@ export const FoodDetail = () => {
       food_protein: "0",
     };
     let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) =>
-      idx < OBJECT?.food_section.length ? OBJECT?.food_section[idx] : defaultSection
+      idx < OBJECT?.food_section?.length ? OBJECT?.food_section[idx] : defaultSection
     );
     setOBJECT((prev: any) => ({
       ...prev,
@@ -424,7 +424,7 @@ export const FoodDetail = () => {
     // OBJECT 설정
     setOBJECT((prev: any) => ({
       ...prev,
-      food_section: prev?.food_section.filter((_item: any, idx: number) => (idx !== index))
+      food_section: prev?.food_section?.filter((_item: any, idx: number) => (idx !== index))
     }));
 
     // COUNT 설정
@@ -610,7 +610,7 @@ export const FoodDetail = () => {
                       className={"w-20px h-20px"}
                       color={"darkslategrey"}
                       fill={
-                        FAVORITE.length > 0 && FAVORITE.some((item: any) => (
+                        FAVORITE?.length > 0 && FAVORITE.some((item: any) => (
                           item.food_key === handleFoodFavorite(i).food_key
                         )) ? "gold" : "white"
                       }
@@ -760,7 +760,7 @@ export const FoodDetail = () => {
                       // 빈값 처리
                       let value = e.target.value || "";
                       // 30 제한
-                      if (value.length > 30) {
+                      if (value?.length > 30) {
                         return;
                       }
                       // object 설정
@@ -788,7 +788,7 @@ export const FoodDetail = () => {
                       // 빈값 처리
                       let value = e.target.value || "";
                       // 30 제한
-                      if (value.length > 30) {
+                      if (value?.length > 30) {
                         return;
                       }
                       // object 설정

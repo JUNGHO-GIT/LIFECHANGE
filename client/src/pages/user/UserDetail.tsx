@@ -118,7 +118,7 @@ export const UserDetail = () => {
     const detailSection = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
-          {[OBJECT].filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
+          {[OBJECT]?.filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
             <Grid container={true} spacing={2} className={"p-10px"} key={`detail-${i}`}>
               {/** 이메일 **/}
               <Grid container={true} spacing={0}>

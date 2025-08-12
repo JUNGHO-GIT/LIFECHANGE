@@ -108,7 +108,7 @@ export const useValidateMoney = () => {
         return showAlertAndFocus("", "errorCount", 0);
       }
 
-      for (let i = 0; i < section.length; i++) {
+      for (let i = 0; i < section?.length; i++) {
         if (!section[i]?.money_part || section[i].money_part === "") {
           return showAlertAndFocus("money_part", "errorMoneyPart", i);
         }
