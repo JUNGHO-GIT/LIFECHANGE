@@ -3,7 +3,7 @@
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
-import { Food } from "@importSchemas";
+import { Food, FoodType } from "@importSchemas"
 import { axios } from "@importLibs";
 import { insertComma } from "@importScripts";
 import { Footer, Empty, Dialog } from "@importLayouts";
@@ -42,21 +42,21 @@ export const FoodList = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [OBJECT, setOBJECT] = useState<any>([Food]);
-  const [EXIST, setEXIST] = useState<any>({
+  const [OBJECT, setOBJECT] = useState<[FoodType]>([Food]);
+  const [EXIST, setEXIST] = useState({
     day: [""],
     week: [""],
     month: [""],
     year: [""],
     select: [""],
   });
-  const [SEND, setSEND] = useState<any>({
+  const [SEND, setSEND] = useState({
     id: "",
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
   });
-  const [COUNT, setCOUNT] = useState<any>({
+  const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
@@ -134,7 +134,7 @@ export const FoodList = () => {
     const listSection = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
-          {OBJECT?.filter((f: any) => f._id).map((item: any, i: number) => (
+          {OBJECT?.map((item, i) => (
             <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
               <Grid size={12} className={"p-2px"}>
                 <Accordion

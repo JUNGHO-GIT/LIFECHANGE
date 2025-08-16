@@ -25,7 +25,7 @@ export const UserLogin = () => {
 	const [checkedSaveId, setCheckedSaveId] = useState<boolean>(false);
 	const [checkedAutoLogin, setCheckedAutoLogin] = useState<boolean>(false);
 	const [_clickCount, setClickCount] = useState<number>(0);
-	const [OBJECT, setOBJECT] = useState<any>(User);
+	const [OBJECT, setOBJECT] = useState(User);
 
 	// 2-3. useEffect --------------------------------------------------------------------------------
 	// 트리거가 활성화된 경우
@@ -248,7 +248,7 @@ export const UserLogin = () => {
 		const loginSection = () => {
 			const detailFragment = () => (
 				<Grid container={true} spacing={0}>
-					{[OBJECT]?.filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
+					{[OBJECT]?.map((item, i) => (
 						<Grid container={true} spacing={2} className={"p-10px"} key={`detail-${i}`}>
 							{/* row 1 */}
 							<Grid container={true} spacing={0}>

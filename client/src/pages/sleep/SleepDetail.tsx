@@ -3,7 +3,7 @@
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useTime, useValidateSleep } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
-import { Sleep } from "@importSchemas";
+import { Sleep, SleepType } from "@importSchemas";
 import { axios } from "@importLibs";
 import { sync } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
@@ -24,31 +24,31 @@ export const SleepDetail = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOCKED, setLOCKED] = useState<string>("unlocked");
-  const [OBJECT, setOBJECT] = useState<any>(Sleep);
-  const [EXIST, setEXIST] = useState<any>({
+  const [OBJECT, setOBJECT] = useState<SleepType>(Sleep);
+  const [EXIST, setEXIST] = useState({
     day: [""],
     week: [""],
     month: [""],
     year: [""],
     select: [""],
   });
-  const [FLOW, setFLOW] = useState<any>({
+  const [FLOW, setFLOW] = useState({
     exist: false,
     itsMe: false,
     itsNew: false,
   });
-  const [SEND, setSEND] = useState<any>({
+  const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
   });
-  const [COUNT, setCOUNT] = useState<any>({
+  const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
   });
-  const [DATE, setDATE] = useState<any>({
+  const [DATE, setDATE] = useState({
     dateType: "day",
     dateStart: location_dateStart || getDayFmt(),
     dateEnd: location_dateEnd || getDayFmt(),
@@ -59,13 +59,13 @@ export const SleepDetail = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (EXIST?.[DATE.dateType]?.length > 0) {
+    if (EXIST?.[DATE.dateType as keyof typeof EXIST]?.length > 0) {
 
       const dateRange = `${DATE.dateStart.trim()} - ${DATE.dateEnd.trim()}`;
       const objectRange = `${OBJECT.sleep_dateStart.trim()} - ${OBJECT.sleep_dateEnd.trim()}`;
 
       const isExist = (
-        EXIST[DATE.dateType].includes(dateRange)
+        EXIST?.[DATE.dateType as keyof typeof EXIST]?.includes(dateRange)
       );
       const itsMe = (
         dateRange === objectRange
@@ -313,6 +313,7 @@ export const SleepDetail = () => {
             DATE={DATE}
             setDATE={setDATE}
             EXIST={EXIST}
+						disabled={true}
           />
         </Grid>
         <Grid size={12}>
@@ -330,8 +331,9 @@ export const SleepDetail = () => {
     const detailSection = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
-          {OBJECT.sleep_section?.filter((f: any) => f).map((_: any, i: number) => (
-            <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}  key={`detail-${i}`}>
+          {OBJECT.sleep_section?.map((_, i) => (
+            <Grid container spacing={2} key={`detail-${i}`}
+						className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}>
               {/** row 1 **/}
               <Grid container={true} spacing={2}>
                 <Grid size={6} className={"d-row-left"}>

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
-import { MoneyLine } from "@importSchemas";
+import { MoneyLine, MoneyLineType } from "@importSchemas";
 import { axios } from "@importLibs";
 import { handleY } from "@importScripts";
 import { Select, PopUp } from "@importContainers";
@@ -32,7 +32,7 @@ export const MoneyChartLine = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [DATE, _setDATE] = useState<any>({
+  const [DATE, _setDATE] = useState({
     dateType: "",
     dateStart: getDayFmt(),
     dateEnd: getDayFmt(),
@@ -45,8 +45,8 @@ export const MoneyChartLine = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [OBJECT_WEEK, setOBJECT_WEEK] = useState<any>([MoneyLine]);
-  const [OBJECT_MONTH, setOBJECT_MONTH] = useState<any>([MoneyLine]);
+  const [OBJECT_WEEK, setOBJECT_WEEK] = useState<[MoneyLineType]>([MoneyLine]);
+  const [OBJECT_MONTH, setOBJECT_MONTH] = useState<[MoneyLineType]>([MoneyLine]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -103,7 +103,7 @@ export const MoneyChartLine = () => {
         <Grid size={12} className={"d-col-center"}>
           <ResponsiveContainer width={"100%"} height={350}>
             <LineChart
-              data={object}
+              data={object as any[]}
               margin={{top: 30, right: 30, bottom: 20, left: 20}}
               barGap={20}
               barCategoryGap={"20%"}

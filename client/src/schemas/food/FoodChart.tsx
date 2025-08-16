@@ -1,35 +1,53 @@
 // FoodChart.tsx
 
-// -------------------------------------------------------------------------------------------------
-export const FoodPie: Record<string, any> = {
-  name:"Empty",
-  value: 100
+// Types ------------------------------------------------------------------------------------------
+export type FoodPieType = {
+	name: string;
+	value: number;
+};
+export type FoodLineType = {
+	name: string;
+	date: string;
+	kcal?: string;
+	carb?: string;
+	protein?: string;
+	fat?: string;
+};
+export type FoodAvgType = {
+	name: string;
+	date: string;
+	kcal?: string;
+	carb?: string;
+	protein?: string;
+	fat?: string;
 };
 
-// -------------------------------------------------------------------------------------------------
-export const FoodLineKcal: Record<string, any> = {
-  name: "",
-  date: "",
-  kcal: "",
+// Schema -----------------------------------------------------------------------------------------
+export const FoodPie: FoodPieType = {
+	name: "Empty",
+	value: 100,
 };
-export const FoodLineNut: Record<string, any> = {
-  name: "",
-  date: "",
-  carb: "",
-  protein: "",
-  fat: "",
+export const FoodLineKcal: FoodLineType = {
+	name: "",
+	date: "",
+	kcal: "",
 };
-
-// -------------------------------------------------------------------------------------------------
-export const FoodAvgKcal: Record<string, any> = {
-  name:"",
-  date:"",
-  kcal: ""
+export const FoodLineNut: FoodLineType = {
+	name: "",
+	date: "",
+	carb: "",
+	protein: "",
+	fat: "",
 };
-export const FoodAvgNut: Record<string, any> = {
-  name:"",
-  date:"",
-  carb: "",
-  protein: "",
-  fat: ""
+export const FoodAvgKcal: FoodAvgType = {
+	name: "",
+	date: "",
+	kcal: "",
+};
+export const FoodAvgNut: FoodAvgType = {
+	name: "",
+	date: "",
+	carb: "",
+	protein: "",
+	fat: "",
 };

@@ -4,7 +4,7 @@ import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate } from "@importHooks";
 import { useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
-import { FoodFind } from "@importSchemas";
+import { FoodFind, FoodFindType } from "@importSchemas";
 import { axios } from "@importLibs";
 import { sync, insertComma, setSession } from "@importScripts";
 import { Footer, Empty, Dialog } from "@importLayouts";
@@ -38,20 +38,20 @@ export const FoodFavoriteList = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [OBJECT, setOBJECT] = useState<any>([FoodFind]);
-  const [checkedQueries, setCheckedQueries] = useState<any>({});
-  const [SEND, setSEND] = useState<any>({
+  const [OBJECT, setOBJECT] = useState<[FoodFindType]>([FoodFind]);
+  const [checkedQueries, setCheckedQueries] = useState<{ [key: string]: boolean[] }>({});
+  const [SEND, setSEND] = useState({
     id: "",
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
   });
-  const [COUNT, setCOUNT] = useState<any>({
+  const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
   });
-  const [DATE, setDATE] = useState<any>({
+  const [DATE, setDATE] = useState({
     dateType: location_dateType || "day",
     dateStart: location_dateStart || getDayFmt(),
     dateEnd: location_dateEnd || getDayFmt(),
@@ -209,7 +209,7 @@ export const FoodFavoriteList = () => {
     const listSection = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
-          {OBJECT?.filter((f: any) => f.food_key).map((item: any, i: number) => (
+          {OBJECT?.map((item, i) => (
             <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
               <Grid size={12} className={"p-2px"}>
                 <Accordion

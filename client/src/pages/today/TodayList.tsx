@@ -55,7 +55,7 @@ export const TodayList = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [SEND, setSEND] = useState<any>({
+  const [SEND, setSEND] = useState({
     id: "",
     from: "today",
     dateType: "day",
@@ -70,19 +70,19 @@ export const TodayList = () => {
     toSleepGoal: "/sleep/goal/detail",
     toSleep: "/sleep/detail",
   });
-  const [COUNT, setCOUNT] = useState<any>({
+  const [COUNT, setCOUNT] = useState({
     exercise: 0,
     food: 0,
     money: 0,
     sleep: 0,
-    all: 0,
+		totalCnt: 0,
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [OBJECT_EXERCISE, setOBJECT_EXERCISE] = useState<any>([Exercise]);
-  const [OBJECT_FOOD, setOBJECT_FOOD] = useState<any>([Food]);
-  const [OBJECT_MONEY, setOBJECT_MONEY] = useState<any>([Money]);
-  const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState<any>([Sleep]);
+  const [OBJECT_EXERCISE, setOBJECT_EXERCISE] = useState([Exercise]);
+  const [OBJECT_FOOD, setOBJECT_FOOD] = useState([Food]);
+  const [OBJECT_MONEY, setOBJECT_MONEY] = useState([Money]);
+  const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState([Sleep]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -153,7 +153,7 @@ export const TodayList = () => {
     const exerciseSection = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
-          {OBJECT_EXERCISE?.filter((f: any) => f._id).map((item: any, i: number) => (
+          {OBJECT_EXERCISE?.map((item, i) => (
             <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
               <Grid size={12} className={"p-2px"}>
                 <Accordion
@@ -333,7 +333,7 @@ export const TodayList = () => {
     const foodSection = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
-          {OBJECT_FOOD?.filter((f: any) => f._id).map((item: any, i: number) => (
+          {OBJECT_FOOD?.map((item, i) => (
             <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
               <Grid size={12} className={"p-2px"}>
                 <Accordion
@@ -548,7 +548,7 @@ export const TodayList = () => {
     const moneySection = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
-          {OBJECT_MONEY?.filter((f: any) => f._id).map((item: any, i: number) => (
+          {OBJECT_MONEY?.map((item, i) => (
             <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
               <Grid size={12} className={"p-2px"}>
                 <Accordion
@@ -693,7 +693,7 @@ export const TodayList = () => {
     const sleepSection = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
-          {OBJECT_SLEEP?.filter((f: any) => f._id).map((item: any, i: number) => (
+          {OBJECT_SLEEP?.map((item, i) => (
             <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
               <Grid size={12} className={"p-2px"}>
                 <Accordion

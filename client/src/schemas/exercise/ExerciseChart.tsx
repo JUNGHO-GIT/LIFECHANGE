@@ -1,36 +1,51 @@
 // ExerciseChart.tsx
 
-// -------------------------------------------------------------------------------------------------
-export const ExercisePie: Record<string, any> = {
-  name:"Empty",
-  value: 100
+// Types ------------------------------------------------------------------------------------------
+export type ExercisePieType = {
+	name: string;
+	value: number;
+};
+export type ExerciseLineType = {
+	name: string;
+	date: string;
+	volume?: string;
+	cardio?: string;
+	scale?: string;
+};
+export type ExerciseAvgType = {
+	name: string;
+	date: string;
+	volume?: string;
+	cardio?: string;
 };
 
-// -------------------------------------------------------------------------------------------------
-export const ExerciseLineVolume: Record<string, any> = {
-  name: "",
-  date: "",
-  volume: "",
+// Schema -----------------------------------------------------------------------------------------
+export const ExercisePie: ExercisePieType = {
+	name: "Empty",
+	value: 100,
 };
-export const ExerciseLineCardio: Record<string, any> = {
-  name: "",
-  date: "",
-  cardio: "",
+export const ExerciseLineVolume: ExerciseLineType = {
+	name: "",
+	date: "",
+	volume: "",
 };
-export const ExerciseLineScale: Record<string, any> = {
-  name: "",
-  date: "",
-  scale: "",
+export const ExerciseLineCardio: ExerciseLineType = {
+	name: "",
+	date: "",
+	cardio: "",
 };
-
-// -------------------------------------------------------------------------------------------------
-export const ExerciseAvgVolume: Record<string, any> = {
-  name:"",
-  date:"",
-  volume: ""
+export const ExerciseLineScale: ExerciseLineType = {
+	name: "",
+	date: "",
+	scale: "",
 };
-export const ExerciseAvgCardio: Record<string, any> = {
-  name:"",
-  date:"",
-  cardio: ""
+export const ExerciseAvgVolume: ExerciseAvgType = {
+	name: "",
+	date: "",
+	volume: "",
+};
+export const ExerciseAvgCardio: ExerciseAvgType = {
+	name: "",
+	date: "",
+	cardio: "",
 };

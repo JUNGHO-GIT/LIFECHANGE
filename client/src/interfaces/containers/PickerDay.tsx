@@ -13,14 +13,29 @@ import { DateCalendar, AdapterMoment, LocalizationProvider } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 declare type PickerDayProps = {
-  DATE: any;
-  setDATE: any;
-  EXIST: any;
+  DATE: {
+    dateType: string;
+    dateStart: string;
+    dateEnd: string;
+  };
+  setDATE: React.Dispatch<React.SetStateAction<{
+    dateType: string;
+    dateStart: string;
+    dateEnd: string;
+  }>>;
+  EXIST: {
+    day: string[];
+    week: string[];
+    month: string[];
+    year: string[];
+    select: string[];
+  };
+	disabled?: boolean;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const PickerDay = (
-  { DATE, setDATE, EXIST }: PickerDayProps
+  { DATE, setDATE, EXIST, disabled }: PickerDayProps
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
@@ -48,12 +63,12 @@ export const PickerDay = (
   );
 
   // 2-1. useState ---------------------------------------------------------------------------------
-  const [typeListStr, setTypeListStr] = useState<string>("");
-  const [typeSaveStr, setTypeSaveStr] = useState<string>("");
+  const [selectTypeInListStr, setSelectTypeInListStr] = useState<string>("");
+  const [selectTypeInSaveStr, setSelectTypeInSaveStr] = useState<string>("");
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
-  const [typeSave, setTypeSave] = useState<string>("");
-  const [typeList, setTypeList] = useStorageLocal(
+  const [selectTypeInSave, setSelectTypeInSave] = useState<string>("");
+  const [selectTypeInList, setSelectTypeInList] = useStorageLocal(
     "type", "list", PATH, (
       "month"
     )
@@ -62,19 +77,19 @@ export const PickerDay = (
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (isGoalTodayList || isGoalList || isTodayList || isRealList) {
-      setTypeSaveStr("h-min-0px h-5vh fs-0-7rem pointer");
-      setTypeListStr("h-min-0px h-5vh fs-0-7rem pointer");
+      setSelectTypeInSaveStr("h-min-0px h-5vh fs-0-7rem pointer");
+      setSelectTypeInListStr("h-min-0px h-5vh fs-0-7rem pointer");
     }
     else {
-      setTypeSaveStr("h-min-40px fs-0-8rem pointer");
-      setTypeListStr("h-min-40px fs-0-8rem pointer");
+      setSelectTypeInSaveStr("h-min-40px fs-0-8rem pointer");
+      setSelectTypeInListStr("h-min-40px fs-0-8rem pointer");
     }
   }, [PATH]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (isGoalTodayList || isTodayList) {
-      setTypeList("day");
+      setSelectTypeInList("day");
       setDATE({
         dateType: "",
         dateStart: DATE.dateStart || getDayFmt(),
@@ -82,35 +97,35 @@ export const PickerDay = (
       });
     }
     else if (isGoalList || isRealList) {
-      if (typeList === "day") {
+      if (selectTypeInList === "day") {
         setDATE({
           dateType: "day",
           dateStart: DATE.dateStart || getDayFmt(),
           dateEnd: DATE.dateEnd || getDayFmt(),
         });
       }
-      else if (typeList === "week") {
+      else if (selectTypeInList === "week") {
         setDATE({
           dateType: "week",
           dateStart: getWeekStartFmt(),
           dateEnd: getWeekEndFmt(),
         });
       }
-      else if (typeList === "month") {
+      else if (selectTypeInList === "month") {
         setDATE({
           dateType: "month",
           dateStart: getMonthStartFmt(),
           dateEnd: getMonthEndFmt(),
         });
       }
-      else if (typeList === "year") {
+      else if (selectTypeInList === "year") {
         setDATE({
           dateType: "year",
           dateStart: getYearStartFmt(),
           dateEnd: getYearEndFmt(),
         });
       }
-      else if (typeList === "select") {
+      else if (selectTypeInList === "select") {
         setDATE({
           dateType: "select",
           dateStart: DATE.dateStart,
@@ -118,40 +133,40 @@ export const PickerDay = (
         });
       }
     }
-  }, [typeList]);
+  }, [selectTypeInList]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (isCalendarDetail || isGoalDetail || isRealDetail) {
-      if (typeSave === "day") {
+      if (selectTypeInSave === "day") {
         setDATE({
           dateType: "day",
           dateStart: getDayFmt(),
           dateEnd: getDayFmt(),
         });
       }
-      else if (typeSave === "week") {
+      else if (selectTypeInSave === "week") {
         setDATE({
           dateType: "week",
           dateStart: getWeekStartFmt(),
           dateEnd: getWeekEndFmt(),
         });
       }
-      else if (typeSave === "month") {
+      else if (selectTypeInSave === "month") {
         setDATE({
           dateType: "month",
           dateStart: getMonthStartFmt(),
           dateEnd: getMonthEndFmt(),
         });
       }
-      else if (typeSave === "year") {
+      else if (selectTypeInSave === "year") {
         setDATE({
           dateType: "year",
           dateStart: getYearStartFmt(),
           dateEnd: getYearEndFmt(),
         });
       }
-      else if (typeSave === "select") {
+      else if (selectTypeInSave === "select") {
         setDATE({
           dateType: "select",
           dateStart: DATE.dateStart,
@@ -159,12 +174,98 @@ export const PickerDay = (
         });
       }
     }
-  }, [typeSave]);
+  }, [selectTypeInSave]);
 
   // 7. pickerNode ---------------------------------------------------------------------------------
   const pickerNode = () => {
 
-    // 1. day --------------------------------------------------------------------------------------
+    // 1. selectTypeInList ---------------------------------------------------------------------------------
+    const selectTypeInListSection = () => (
+      <Select
+        label={translate("dateType")}
+        value={selectTypeInList}
+				inputclass={`pointer ${selectTypeInListStr}`}
+        disabled={isGoalTodayList || isTodayList}
+        onChange={(e: any) => {
+          setSelectTypeInList(e.target.value);
+        }}
+      >
+        {["day", "week", "month", "year", "select"]?.map((item: any) => (
+          <MenuItem
+            key={item}
+            value={item}
+            selected={item === selectTypeInList}
+          >
+            <Div className={"fs-0-6rem"}>
+              {translate(item)}
+            </Div>
+          </MenuItem>
+        ))}
+      </Select>
+    );
+
+    // 2. selectTypeInSave ---------------------------------------------------------------------------------
+    const selectTypeInSaveSection = () => (
+      <Select
+        label={translate("dateType")}
+        value={DATE.dateType}
+				inputclass={`pointer ${selectTypeInListStr}`}
+        disabled={isRealDetail || isCalendarDetail}
+        onChange={(e: any) => {
+          if (e.target.value === "day") {
+            setSelectTypeInSave("day");
+          }
+          else if (e.target.value === "week") {
+            setSelectTypeInSave("week");
+          }
+          else if (e.target.value === "month") {
+            setSelectTypeInSave("month");
+          }
+          else if (e.target.value === "year") {
+            setSelectTypeInSave("year");
+          }
+          else if (e.target.value === "select") {
+            setSelectTypeInSave("select");
+          }
+        }}
+      >
+        {isCalendarDetail ? (
+          ["day"]?.map((item: any) => (
+            <MenuItem
+              key={item}
+              value={item}
+              selected={item === selectTypeInSave}
+            >
+              {translate(item)}
+            </MenuItem>
+          ))
+        )
+        : isGoalDetail ? (
+          ["week", "month", "year"]?.map((item: any) => (
+            <MenuItem
+              key={item}
+              value={item}
+              selected={item === selectTypeInSave}
+            >
+              {translate(item)}
+            </MenuItem>
+          ))
+        )
+        : (
+          ["day"]?.map((item: any) => (
+            <MenuItem
+              key={item}
+              value={item}
+              selected={item === selectTypeInSave}
+            >
+              {translate(item)}
+            </MenuItem>
+          ))
+        )}
+      </Select>
+    );
+
+    // 3. day --------------------------------------------------------------------------------------
     const daySection = () => (
       <PopUp
         type={"innerCenter"}
@@ -304,8 +405,9 @@ export const PickerDay = (
           <Input
             label={translate("date")}
             value={`${DATE.dateStart}`}
+            inputclass={`pointer ${selectTypeInListStr}`}
             readOnly={true}
-            inputclass={typeListStr}
+						disabled={disabled}
             startadornment={
               <Img
                 max={25}
@@ -359,7 +461,7 @@ export const PickerDay = (
       />
     );
 
-    // 2. week -------------------------------------------------------------------------------------
+    // 4. week -------------------------------------------------------------------------------------
     const weekSection = () => (
       <PopUp
         type={"innerCenter"}
@@ -516,8 +618,9 @@ export const PickerDay = (
           <Input
             label={translate("duration")}
             value={durStr}
-            inputclass={typeListStr}
+            inputclass={`pointer ${selectTypeInListStr}`}
             readOnly={true}
+						disabled={disabled}
             startadornment={
               <Img
                 max={25}
@@ -569,7 +672,7 @@ export const PickerDay = (
       />
     );
 
-    // 3. month ------------------------------------------------------------------------------------
+    // 5. month ------------------------------------------------------------------------------------
     const monthSection = () => (
       <PopUp
         type={"innerCenter"}
@@ -709,8 +812,9 @@ export const PickerDay = (
           <Input
             label={translate("duration")}
             value={durStr}
-            inputclass={typeListStr}
+            inputclass={`pointer ${selectTypeInListStr}`}
             readOnly={true}
+						disabled={disabled}
             startadornment={
               <Img
                 max={25}
@@ -762,7 +866,7 @@ export const PickerDay = (
       />
     );
 
-    // 4. year -------------------------------------------------------------------------------------
+    // 6. year -------------------------------------------------------------------------------------
     const yearSection = () => (
       <PopUp
         type={"innerCenter"}
@@ -903,8 +1007,9 @@ export const PickerDay = (
           <Input
             label={translate("duration")}
             value={durStr}
-            inputclass={typeListStr}
+            inputclass={`pointer ${selectTypeInListStr}`}
             readOnly={true}
+						disabled={disabled}
             startadornment={
               <Img
                 max={25}
@@ -956,7 +1061,7 @@ export const PickerDay = (
       />
     );
 
-    // 5. select -----------------------------------------------------------------------------------
+    // 7. select -----------------------------------------------------------------------------------
     const selectSection = () => (
       <PopUp
         type={"innerCenter"}
@@ -1096,8 +1201,9 @@ export const PickerDay = (
           <Input
             label={translate("duration")}
             value={durStr}
+            inputclass={`pointer ${selectTypeInListStr}`}
             readOnly={true}
-            inputclass={`${typeListStr}`}
+						disabled={disabled}
             startadornment={
               <Img
                 max={25}
@@ -1115,92 +1221,6 @@ export const PickerDay = (
       />
     );
 
-    // 6. typeList ---------------------------------------------------------------------------------
-    const typeListSection = () => (
-      <Select
-        label={translate("dateType")}
-        value={typeList}
-        inputclass={typeListStr}
-        disabled={isGoalTodayList || isTodayList}
-        onChange={(e: any) => {
-          setTypeList(e.target.value);
-        }}
-      >
-        {["day", "week", "month", "year", "select"]?.map((item: any) => (
-          <MenuItem
-            key={item}
-            value={item}
-            selected={item === typeList}
-          >
-            <Div className={"fs-0-6rem"}>
-              {translate(item)}
-            </Div>
-          </MenuItem>
-        ))}
-      </Select>
-    );
-
-    // 7. typeSave ---------------------------------------------------------------------------------
-    const typeSaveSection = () => (
-      <Select
-        label={translate("dateType")}
-        value={DATE.dateType}
-        inputclass={typeSaveStr}
-        disabled={isRealDetail && !isCalendarDetail}
-        onChange={(e: any) => {
-          if (e.target.value === "day") {
-            setTypeSave("day");
-          }
-          else if (e.target.value === "week") {
-            setTypeSave("week");
-          }
-          else if (e.target.value === "month") {
-            setTypeSave("month");
-          }
-          else if (e.target.value === "year") {
-            setTypeSave("year");
-          }
-          else if (e.target.value === "select") {
-            setTypeSave("select");
-          }
-        }}
-      >
-        {isCalendarDetail ? (
-          ["day", "week", "month", "year", "select"]?.map((item: any) => (
-            <MenuItem
-              key={item}
-              value={item}
-              selected={item === typeSave}
-            >
-              {translate(item)}
-            </MenuItem>
-          ))
-        )
-        : isGoalDetail ? (
-          ["week", "month", "year"]?.map((item: any) => (
-            <MenuItem
-              key={item}
-              value={item}
-              selected={item === typeSave}
-            >
-              {translate(item)}
-            </MenuItem>
-          ))
-        )
-        : (
-          ["day"]?.map((item: any) => (
-            <MenuItem
-              key={item}
-              value={item}
-              selected={item === typeSave}
-            >
-              {translate(item)}
-            </MenuItem>
-          ))
-        )}
-      </Select>
-    );
-
     // 10. return ----------------------------------------------------------------------------------
     return (
 
@@ -1208,10 +1228,10 @@ export const PickerDay = (
       isGoalTodayList ? (
         <Grid container={true} spacing={1}>
           <Grid size={3} className={"d-center"}>
-            {typeListSection()}
+            {selectTypeInListSection()}
           </Grid>
           <Grid size={9} className={"d-center"}>
-            {typeList === "day" && daySection()}
+            {selectTypeInList === "day" && daySection()}
           </Grid>
         </Grid>
       )
@@ -1220,14 +1240,14 @@ export const PickerDay = (
       : isGoalList ? (
         <Grid container={true} spacing={1}>
           <Grid size={3} className={"d-center"}>
-            {typeListSection()}
+            {selectTypeInListSection()}
           </Grid>
           <Grid size={9} className={"d-center"}>
-            {typeList === "day" && daySection()}
-            {typeList === "week" && weekSection()}
-            {typeList === "month" && monthSection()}
-            {typeList === "year" && yearSection()}
-            {typeList === "select" && selectSection()}
+            {selectTypeInList === "day" && daySection()}
+            {selectTypeInList === "week" && weekSection()}
+            {selectTypeInList === "month" && monthSection()}
+            {selectTypeInList === "year" && yearSection()}
+            {selectTypeInList === "select" && selectSection()}
           </Grid>
         </Grid>
       )
@@ -1236,10 +1256,10 @@ export const PickerDay = (
       : isTodayList ? (
         <Grid container={true} spacing={1}>
           <Grid size={3} className={"d-center"}>
-            {typeListSection()}
+            {selectTypeInListSection()}
           </Grid>
           <Grid size={9} className={"d-center"}>
-            {typeList === "day" && daySection()}
+            {selectTypeInList === "day" && daySection()}
           </Grid>
         </Grid>
       )
@@ -1248,14 +1268,14 @@ export const PickerDay = (
       : isRealList ? (
         <Grid container={true} spacing={1}>
           <Grid size={3} className={"d-center"}>
-            {typeListSection()}
+            {selectTypeInListSection()}
           </Grid>
           <Grid size={9} className={"d-center"}>
-            {typeList === "day" && daySection()}
-            {typeList === "week" && weekSection()}
-            {typeList === "month" && monthSection()}
-            {typeList === "year" && yearSection()}
-            {typeList === "select" && selectSection()}
+            {selectTypeInList === "day" && daySection()}
+            {selectTypeInList === "week" && weekSection()}
+            {selectTypeInList === "month" && monthSection()}
+            {selectTypeInList === "year" && yearSection()}
+            {selectTypeInList === "select" && selectSection()}
           </Grid>
         </Grid>
       )
@@ -1264,7 +1284,7 @@ export const PickerDay = (
       : isCalendarDetail ? (
         <Grid container={true} spacing={1}>
           <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
-            {typeSaveSection()}
+            {selectTypeInSaveSection()}
           </Grid>
           <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
             {DATE.dateType === "day" && daySection()}
@@ -1280,7 +1300,7 @@ export const PickerDay = (
       : isGoalDetail ? (
         <Grid container={true} spacing={1}>
           <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
-            {typeSaveSection()}
+            {selectTypeInSaveSection()}
           </Grid>
           <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
             {DATE.dateType === "week" && weekSection()}
@@ -1294,7 +1314,7 @@ export const PickerDay = (
       : isRealDetail ? (
         <Grid container={true} spacing={1}>
           <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
-            {typeSaveSection()}
+            {selectTypeInSaveSection()}
           </Grid>
           <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
             {DATE.dateType === "day" && daySection()}

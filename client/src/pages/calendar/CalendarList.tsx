@@ -38,15 +38,15 @@ export const CalendarList = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [OBJECT, setOBJECT] = useState<any>([Calendar]);
-  const [EXIST, setEXIST] = useState<any>({
+  const [OBJECT, setOBJECT] = useState([Calendar]);
+  const [EXIST, setEXIST] = useState({
     day: [""],
     week: [""],
     month: [""],
     year: [""],
     select: [""],
   });
-  const [SEND, setSEND] = useState<any>({
+  const [SEND, setSEND] = useState({
     category: "",
     refresh: 0,
     dateType: "day",
@@ -265,10 +265,10 @@ export const CalendarList = () => {
 											<Div
 												key={`exercise-${item._id}`}
 												className={"calendar-filled"}
-												style={{ backgroundColor: "green" }}
+												style={{ backgroundColor: "#1976d2" }}
 											>
 												<span className={"calendar-category"}>
-													{"운동"}
+													{translate("exercise")}
 												</span>
 											</Div>
 										))}
@@ -276,10 +276,10 @@ export const CalendarList = () => {
 											<Div
 												key={`food-${item._id}`}
 												className={"calendar-filled"}
-												style={{ backgroundColor: "orange" }}
+												style={{ backgroundColor: "#FF5722" }}
 											>
 												<span className={"calendar-category"}>
-													{"음식"}
+													{translate("food")}
 												</span>
 											</Div>
 										))}
@@ -287,10 +287,10 @@ export const CalendarList = () => {
 											<Div
 												key={`money-${item._id}`}
 												className={"calendar-filled"}
-												style={{ backgroundColor: "purple" }}
+												style={{ backgroundColor: "#4CAF50" }}
 											>
 												<span className={"calendar-category"}>
-													{"가계부"}
+													{translate("money")}
 												</span>
 											</Div>
 										))}
@@ -298,10 +298,10 @@ export const CalendarList = () => {
 											<Div
 												key={`sleep-${item._id}`}
 												className={"calendar-filled"}
-												style={{ backgroundColor: "grey" }}
+												style={{ backgroundColor: "#673AB7" }}
 											>
 												<span className={"calendar-category"}>
-													{"수면"}
+													{translate("sleep")}
 												</span>
 											</Div>
 										))}

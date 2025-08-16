@@ -22,9 +22,9 @@ export const UserDetail = () => {
   const { ERRORS, REFS, validate } = useValidateUser();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [OBJECT, setOBJECT] = useState<any>(User);
+  const [OBJECT, setOBJECT] = useState(User);
   const [includingExclusions, setIncludingExclusions] = useState<boolean>(false);
-  const [SEND, setSEND] = useState<any>({
+  const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
     dateStart: "0000-00-00",
@@ -118,7 +118,7 @@ export const UserDetail = () => {
     const detailSection = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
-          {[OBJECT]?.filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
+          {[OBJECT]?.map((item, i) => (
             <Grid container={true} spacing={2} className={"p-10px"} key={`detail-${i}`}>
               {/** 이메일 **/}
               <Grid container={true} spacing={0}>

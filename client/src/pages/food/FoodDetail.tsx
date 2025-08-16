@@ -3,7 +3,7 @@
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useValidateFood } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
-import { Food } from "@importSchemas";
+import { Food, FoodType } from "@importSchemas";
 import { axios } from "@importLibs";
 import { insertComma, setSession, sync } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
@@ -26,32 +26,32 @@ export const FoodDetail = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOCKED, setLOCKED] = useState<string>("unlocked");
-  const [OBJECT, setOBJECT] = useState<any>(Food);
-  const [FAVORITE, setFAVORITE] = useState<any>([]);
-  const [EXIST, setEXIST] = useState<any>({
+  const [OBJECT, setOBJECT] = useState<FoodType>(Food);
+  const [FAVORITE, setFAVORITE] = useState([]);
+  const [EXIST, setEXIST] = useState({
     day: [""],
     week: [""],
     month: [""],
     year: [""],
     select: [""],
   });
-  const [FLOW, setFLOW] = useState<any>({
+  const [FLOW, setFLOW] = useState({
     exist: false,
     itsMe: false,
     itsNew: false,
   });
-  const [SEND, setSEND] = useState<any>({
+  const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
   });
-  const [COUNT, setCOUNT] = useState<any>({
+  const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
   });
-  const [DATE, setDATE] = useState<any>({
+  const [DATE, setDATE] = useState({
     dateType: "day",
     dateStart: location_dateStart || getDayFmt(),
     dateEnd: location_dateEnd || getDayFmt(),
@@ -59,13 +59,13 @@ export const FoodDetail = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (EXIST?.[DATE.dateType]?.length > 0) {
+    if (EXIST?.[DATE.dateType as keyof typeof EXIST]?.length > 0) {
 
       const dateRange = `${DATE.dateStart.trim()} - ${DATE.dateEnd.trim()}`;
       const objectRange = `${OBJECT.food_dateStart.trim()} - ${OBJECT.food_dateEnd.trim()}`;
 
       const isExist = (
-        EXIST[DATE.dateType].includes(dateRange)
+        EXIST?.[DATE.dateType as keyof typeof EXIST]?.includes(dateRange)
       );
       const itsMe = (
         dateRange === objectRange
@@ -237,7 +237,7 @@ export const FoodDetail = () => {
       food_name: "",
       food_brand: "",
       food_count: "1",
-      food_serv: "회",
+      food_serv: "serv",
       food_gram: "0",
       food_kcal: "0",
       food_fat: "0",
@@ -441,7 +441,7 @@ export const FoodDetail = () => {
     const food_brand = OBJECT?.food_section[index]?.food_brand;
     const food_gram = OBJECT?.food_section[index]?.food_gram;
     const food_serv = OBJECT?.food_section[index]?.food_serv;
-    const food_count = OBJECT?.food_section[index]?.food_count || 1;
+    const food_count = OBJECT?.food_section[index]?.food_count || "1";
 
     const food_kcal = (
       parseFloat(OBJECT?.food_section[index]?.food_kcal) / parseFloat(food_count)
@@ -483,6 +483,7 @@ export const FoodDetail = () => {
             DATE={DATE}
             setDATE={setDATE}
             EXIST={EXIST}
+						disabled={true}
           />
         </Grid>
         <Grid size={12}>
@@ -594,8 +595,9 @@ export const FoodDetail = () => {
     const detailSection = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
-          {OBJECT.food_section?.filter((f: any) => f).map((item: any, i: number) => (
-            <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`} key={`detail-${i}`}>
+          {OBJECT.food_section?.map((item, i) => (
+            <Grid container spacing={2} key={`detail-${i}`}
+						className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}>
               {/** row 1 **/}
               <Grid container={true} spacing={2}>
                 <Grid size={6} className={"d-row-left"}>

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useTime, useValidateExercise } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
-import { ExerciseGoal } from "@importSchemas";
+import { ExerciseGoal, ExerciseGoalType } from "@importSchemas";
 import { axios } from "@importLibs";
 import { insertComma, sync } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
@@ -25,31 +25,31 @@ export const ExerciseGoalDetail = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOCKED, setLOCKED] = useState<string>("unlocked");
-  const [OBJECT, setOBJECT] = useState<any>(ExerciseGoal);
-  const [EXIST, setEXIST] = useState<any>({
+  const [OBJECT, setOBJECT] = useState<ExerciseGoalType>(ExerciseGoal);
+  const [EXIST, setEXIST] = useState({
     day: [""],
     week: [""],
     month: [""],
     year: [""],
     select: [""],
   });
-  const [FLOW, setFLOW] = useState<any>({
+  const [FLOW, setFLOW] = useState({
     exist: false,
     itsMe: false,
     itsNew: false,
   });
-  const [SEND, setSEND] = useState<any>({
+  const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
   });
-  const [COUNT, setCOUNT] = useState<any>({
+  const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
   });
-  const [DATE, setDATE] = useState<any>({
+  const [DATE, setDATE] = useState({
     dateType: location_dateType || "month",
     dateStart: location_dateStart || getMonthStartFmt(),
     dateEnd: location_dateEnd || getMonthEndFmt(),
@@ -60,13 +60,13 @@ export const ExerciseGoalDetail = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (EXIST?.[DATE.dateType]?.length > 0) {
+    if (EXIST?.[DATE.dateType as keyof typeof EXIST]?.length > 0) {
 
       const dateRange = `${DATE.dateStart.trim()} - ${DATE.dateEnd.trim()}`;
       const objectRange = `${OBJECT.exercise_goal_dateStart.trim()} - ${OBJECT.exercise_goal_dateEnd.trim()}`;
 
       const isExist = (
-        EXIST[DATE.dateType].includes(dateRange)
+        EXIST?.[DATE.dateType as keyof typeof EXIST]?.includes(dateRange)
       );
       const itsMe = (
         dateRange === objectRange
@@ -299,8 +299,9 @@ export const ExerciseGoalDetail = () => {
     const detailSection = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
-          {[OBJECT]?.filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
-            <Grid container spacing={2} className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}  key={`detail-${i}`}>
+          {[OBJECT]?.map((item, i) => (
+            <Grid container spacing={2} key={`detail-${i}`}
+						className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}>
               {/** row 1 **/}
               <Grid container={true} spacing={2}>
                 <Grid size={6} className={"d-row-left"}>

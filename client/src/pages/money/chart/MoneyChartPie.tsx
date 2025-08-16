@@ -3,7 +3,7 @@
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
-import { MoneyPie } from "@importSchemas";
+import { MoneyPie, MoneyPieType } from "@importSchemas";
 import { axios } from "@importLibs";
 import { PopUp, Select } from "@importContainers";
 import { Div, Img, Br, Paper, Card, Grid } from "@importComponents";
@@ -41,7 +41,7 @@ export const MoneyChartPie = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [DATE, _setDATE] = useState<any>({
+  const [DATE, _setDATE] = useState({
     dateType: "",
     dateStart: getDayFmt(),
     dateEnd: getDayFmt(),
@@ -54,12 +54,12 @@ export const MoneyChartPie = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [OBJECT_INCOME_WEEK, setOBJECT_INCOME_WEEK] = useState<any>([MoneyPie]);
-  const [OBJECT_EXPENSE_WEEK, setOBJECT_EXPENSE_WEEK] = useState<any>([MoneyPie]);
-  const [OBJECT_INCOME_MONTH, setOBJECT_INCOME_MONTH] = useState<any>([MoneyPie]);
-  const [OBJECT_EXPENSE_MONTH, setOBJECT_EXPENSE_MONTH] = useState<any>([MoneyPie]);
-  const [OBJECT_INCOME_YEAR, setOBJECT_INCOME_YEAR] = useState<any>([MoneyPie]);
-  const [OBJECT_EXPENSE_YEAR, setOBJECT_EXPENSE_YEAR] = useState<any>([MoneyPie]);
+  const [OBJECT_INCOME_WEEK, setOBJECT_INCOME_WEEK] = useState<[MoneyPieType]>([MoneyPie]);
+  const [OBJECT_EXPENSE_WEEK, setOBJECT_EXPENSE_WEEK] = useState<[MoneyPieType]>([MoneyPie]);
+  const [OBJECT_INCOME_MONTH, setOBJECT_INCOME_MONTH] = useState<[MoneyPieType]>([MoneyPie]);
+  const [OBJECT_EXPENSE_MONTH, setOBJECT_EXPENSE_MONTH] = useState<[MoneyPieType]>([MoneyPie]);
+  const [OBJECT_INCOME_YEAR, setOBJECT_INCOME_YEAR] = useState<[MoneyPieType]>([MoneyPie]);
+  const [OBJECT_EXPENSE_YEAR, setOBJECT_EXPENSE_YEAR] = useState<[MoneyPieType]>([MoneyPie]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -165,7 +165,7 @@ export const MoneyChartPie = () => {
         className={"fs-0-6rem"}
       >
         <tspan x={x} dy={"-0.5em"} dx={"0.4em"}>
-          {translate(object[index]?.name)}
+          {object && object[index]?.name ? translate(object[index].name) : ""}
         </tspan>
         <tspan x={x} dy={"1.4em"} dx={"0.4em"}>
           {`${Number(value).toLocaleString()}`}
@@ -210,7 +210,7 @@ export const MoneyChartPie = () => {
           <ResponsiveContainer width={"100%"} height={350}>
             <PieChart margin={{top: 40, right: 20, bottom: 20, left: 20}}>
               <Pie
-                data={object}
+                data={object as any[]}
                 cx={"50%"}
                 cy={"50%"}
                 label={renderPie}

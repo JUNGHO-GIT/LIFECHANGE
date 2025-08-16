@@ -3,7 +3,7 @@
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
-import { FoodAvgKcal, FoodAvgNut } from "@importSchemas";
+import { FoodAvgKcal, FoodAvgNut, FoodAvgType } from "@importSchemas";
 import { axios } from "@importLibs";
 import { handleY } from "@importScripts";
 import { Select, PopUp } from "@importContainers";
@@ -32,7 +32,7 @@ export const FoodChartAvg = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [DATE, _setDATE] = useState<any>({
+  const [DATE, _setDATE] = useState({
     dateType: "",
     dateStart: getDayFmt(),
     dateEnd: getDayFmt(),
@@ -45,10 +45,10 @@ export const FoodChartAvg = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState<any>([FoodAvgKcal]);
-  const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState<any>([FoodAvgNut]);
-  const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState<any>([FoodAvgKcal]);
-  const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState<any>([FoodAvgNut]);
+  const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState<[FoodAvgType]>([FoodAvgKcal]);
+  const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState<[FoodAvgType]>([FoodAvgNut]);
+  const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState<[FoodAvgType]>([FoodAvgKcal]);
+  const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState<[FoodAvgType]>([FoodAvgNut]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -121,7 +121,7 @@ export const FoodChartAvg = () => {
         <Grid size={12} className={"d-col-center"}>
           <ResponsiveContainer width={"100%"} height={350}>
             <ComposedChart
-              data={object}
+              data={object as any[]}
               margin={{top: 30, right: 30, bottom: 20, left: 20}}
               barGap={8}
               barCategoryGap={"20%"}

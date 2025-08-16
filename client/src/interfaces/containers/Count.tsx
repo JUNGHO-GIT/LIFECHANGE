@@ -7,16 +7,27 @@ import { Img, Div, Icons, Grid } from "@importComponents";
 
 // -------------------------------------------------------------------------------------------------
 declare type CountProps = {
-  COUNT: any;
-  setCOUNT: any;
+  COUNT: {
+		totalCnt: number;
+		sectionCnt: number;
+		newSectionCnt: number;
+	};
+  setCOUNT: React.Dispatch<React.SetStateAction<{
+		totalCnt: number;
+		sectionCnt: number;
+		newSectionCnt: number;
+	}>>;
   LOCKED: string;
-  setLOCKED: any
+  setLOCKED: React.Dispatch<React.SetStateAction<
+	  string
+  >>;
   limit: number;
+	disabled?: boolean;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const Count = (
-  { COUNT, setCOUNT, LOCKED, setLOCKED, limit }: CountProps
+  { COUNT, setCOUNT, LOCKED, setLOCKED, limit, disabled }: CountProps
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
@@ -31,9 +42,13 @@ export const Count = (
       <Input
         label={translate("itemLock")}
         value={translate(LOCKED) || ""}
-        inputclass={"fs-0-8rem pointer"}
+        inputclass={`fs-0-8rem pointer`}
         adornmentclass={"ml-n10px"}
+				disabled={disabled}
         onClick={() => {
+					if (disabled) {
+						return;
+					}
           if (LOCKED === "locked") {
             setLOCKED("unlocked");
           }
@@ -65,7 +80,13 @@ export const Count = (
         value={COUNT.newSectionCnt}
         error={COUNT.newSectionCnt <= 0}
         locked={LOCKED}
-        inputclass={"pointer"}
+        inputclass={`pointer`}
+				disabled={disabled}
+				sx={{
+					"& .MuiOutlinedInput-notchedOutline": {
+						borderColor: COUNT.newSectionCnt <= 0 ? "#f44336" : "rgba(0, 0, 0, 0.23)"
+					}
+				}}
         startadornment={
           <Img
             max={25}
@@ -76,70 +97,79 @@ export const Count = (
           />
         }
         endadornment={
-          <Div className={"d-row-center"}>
-            <Div className={"mr-n5px"}>
-              <Icons
-                key={"Minus"}
-                name={"Minus"}
-                className={"w-20px h-20px"}
-                locked={LOCKED}
-                onClick={() => {
-                  if (LOCKED === "locked" || PATH.includes("/food/find/list")) {
-                    return;
-                  }
-                  else {
-                    COUNT.newSectionCnt > COUNT.sectionCnt ? (
-                      setCOUNT((prev: any) => ({
-                        ...prev,
-                        newSectionCnt: prev.newSectionCnt - 1
-                      }))
-                    ) : (
-                      setALERT({
-                        open: true,
-                        severity: "error",
-                        msg: (
-                          localLang === "ko"
-                          ? `${COUNT.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
-                          : `Please enter ${COUNT.sectionCnt} or more and ${limit} or less.`
-                        ),
-                      })
-                    )
-                  }
-                }}
-              />
-            </Div>
-            <Div className={"mr-n10px"}>
-              <Icons
-                key={"Plus"}
-                name={"Plus"}
-                className={"w-20px h-20px"}
-                locked={LOCKED}
-                onClick={() => {
-                  if (LOCKED === "locked" || PATH.includes("/food/find/list")) {
-                    return;
-                  }
-                  else {
-                    COUNT.newSectionCnt < limit ? (
-                      setCOUNT((prev: any) => ({
-                        ...prev,
-                        newSectionCnt: prev.newSectionCnt + 1
-                      }))
-                    ) : (
-                      setALERT({
-                        open: true,
-                        severity: "error",
-                        msg: (
-                          localLang === "ko"
-                          ? `${COUNT.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
-                          : `Please enter ${COUNT.sectionCnt} or more and ${limit} or less.`
-                        ),
-                      })
-                    )
-                  }
-                }}
-              />
-            </Div>
-          </Div>
+					!disabled || LOCKED === "unlocked" ? (
+						<Div className={"d-row-center"}>
+							<Div className={"mr-n5px"}>
+								<Icons
+									key={"Minus"}
+									name={"Minus"}
+									className={"w-20px h-20px"}
+									locked={LOCKED}
+									onClick={() => {
+										if (disabled) {
+											return;
+										}
+										if (LOCKED === "locked" || PATH.includes("/food/find/list")) {
+											return;
+										}
+										else {
+											COUNT.newSectionCnt > COUNT.sectionCnt ? (
+												setCOUNT((prev: any) => ({
+													...prev,
+													newSectionCnt: prev.newSectionCnt - 1
+												}))
+											) : (
+												setALERT({
+													open: true,
+													severity: "error",
+													msg: (
+														localLang === "ko"
+														? `${COUNT.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
+														: `Please enter ${COUNT.sectionCnt} or more and ${limit} or less.`
+													),
+												})
+											)
+										}
+									}}
+								/>
+							</Div>
+							<Div className={"mr-n10px"}>
+								<Icons
+									key={"Plus"}
+									name={"Plus"}
+									className={"w-20px h-20px"}
+									locked={LOCKED}
+									onClick={() => {
+										if (disabled) {
+											return;
+										}
+										if (LOCKED === "locked" || PATH.includes("/food/find/list")) {
+											return;
+										}
+										else {
+											COUNT.newSectionCnt < limit ? (
+												setCOUNT((prev: any) => ({
+													...prev,
+													newSectionCnt: prev.newSectionCnt + 1
+												}))
+											) : (
+												setALERT({
+													open: true,
+													severity: "error",
+													msg: (
+														localLang === "ko"
+														? `${COUNT.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
+														: `Please enter ${COUNT.sectionCnt} or more and ${limit} or less.`
+													),
+												})
+											)
+										}
+									}}
+								/>
+							</Div>
+						</Div>
+					)
+					: null
         }
       />
     );

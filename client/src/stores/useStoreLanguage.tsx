@@ -436,7 +436,7 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
         en: "Signup"
       },
       food: {
-        ko: "식사",
+        ko: "식단",
         en: "food"
       },
       finance: {

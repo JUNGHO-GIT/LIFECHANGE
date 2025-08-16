@@ -33,33 +33,33 @@ export const TopNav = () => {
   const [selectedAnchorEl, setSelectedAnchorEl] = useState<Record<string, HTMLElement | null>>({});
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [mainSmileImage, setMainSmileImage] = useState<any>("smile3");
+  const [mainSmileImage, setMainSmileImage] = useState("smile3");
   const [includingExclusions, setIncludingExclusions] = useState<boolean>(false);
-  const [nutritionType, setNutritionType] = useState<string>("avg");
+  const [nutritionType, setNutritionType] = useState("avg");
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [percent, setPercent] = useState<any>({
-    total: {},
-    exercise : {},
-    food : {},
-    money : {},
-    sleep : {},
+  const [percent, setPercent] = useState({
+    total: { average: { score: "0" } },
+    exercise: { average: { score: "0" } },
+    food: { average: { score: "0" } },
+    money: { average: { score: "0" } },
+    sleep: { average: { score: "0" } },
   });
-  const [smileScore, setSmileScore] = useState<any>({
+  const [smileScore, setSmileScore] = useState({
     total: "0",
     exercise: "0",
     food: "0",
     money: "0",
     sleep: "0",
   });
-  const [smileImage, setSmileImage] = useState<any>({
+  const [smileImage, setSmileImage] = useState({
     total: "smile3",
     exercise: "smile3",
     food: "smile3",
     money: "smile3",
     sleep: "smile3",
   });
-  const [scale, setScale] = useState<any>({
+  const [scale, setScale] = useState({
     initScale: "0",
     minScale: "0",
     maxScale: "0",
@@ -67,7 +67,7 @@ export const TopNav = () => {
     dateStart: "",
     dateEnd: "",
   });
-  const [nutrition, setNutrition] = useState<any>({
+  const [nutrition, setNutrition] = useState({
     initAvgKcalIntake: "0",
     totalKcalIntake: "0",
     totalCarbIntake: "0",
@@ -80,7 +80,7 @@ export const TopNav = () => {
     dateStart: "",
     dateEnd: "",
   });
-  const [property, setProperty] = useState<any>({
+  const [property, setProperty] = useState({
     initProperty: "0",
     totalIncomeAll: "0",
     totalIncomeExclusion: "0",
@@ -91,7 +91,7 @@ export const TopNav = () => {
     dateStart: "",
     dateEnd: "",
   });
-  const [dataArray, setDataArray] = useState<any>({
+  const [dataArray, setDataArray] = useState({
     calendar: ["schedule"],
     today: ["goal", "real"],
     food: ["chart", "goal", "real", "find", "favorite"],
@@ -1037,229 +1037,6 @@ export const TopNav = () => {
       />
     );
 
-    // 5. tabs -------------------------------------------------------------------------------------
-    /* const tabsSection = () => (
-
-      // 1. calendar
-      firstStr === "calendar" ? (
-        <Tabs
-          value={selectedTab[firstStr]}
-          variant={"scrollable"}
-          component={"div"}
-          scrollButtons={true}
-          allowScrollButtonsMobile={true}
-          selectionFollowsFocus={true}
-          sx={{
-            [`& .MuiTabs-scrollButtons`]: {
-              "width": "20px",
-              "&.Mui-disabled": { opacity: 0.3 },
-            },
-          }}
-        >
-          <Tab
-            label={translate("schedule")}
-            value={"schedule"}
-            onClick={() => {
-              handleClickTobNav("schedule");
-            }}
-          />
-        </Tabs>
-      )
-
-      // 2. today
-      : firstStr === "today" ? (
-        <Tabs
-          value={selectedTab[firstStr]}
-          variant={"scrollable"}
-          component={"div"}
-          scrollButtons={true}
-          allowScrollButtonsMobile={true}
-          selectionFollowsFocus={true}
-          sx={{
-            [`& .MuiTabs-scrollButtons`]: {
-              "width": "20px",
-              "&.Mui-disabled": { opacity: 0.3 },
-            },
-          }}
-        >
-          <Tab
-            label={translate("goal")}
-            value={"goal"}
-            onClick={() => {
-              handleClickTobNav("goal");
-            }}
-          />
-          <Tab
-            label={translate("real")}
-            value={"real"}
-            onClick={() => {
-              handleClickTobNav("real");
-            }}
-          />
-        </Tabs>
-      )
-
-      // 3. food
-      : firstStr === "food" ? (
-        <Tabs
-          value={selectedTab[firstStr]}
-          variant={"scrollable"}
-          component={"div"}
-          scrollButtons={true}
-          allowScrollButtonsMobile={true}
-          selectionFollowsFocus={true}
-          sx={{
-            [`& .MuiTabs-scrollButtons`]: {
-              "width": "20px",
-              "&.Mui-disabled": { opacity: 0.3 },
-            },
-          }}
-        >
-          <Tab
-            label={translate("chart")}
-            value={"chart"}
-            onClick={() => {
-              handleClickTobNav("chart");
-            }}
-          />
-          <Tab
-            label={translate("goal")}
-            value={"goal"}
-            onClick={() => {
-              handleClickTobNav("goal");
-            }}
-          />
-          <Tab
-            label={translate("real")}
-            value={"real"}
-            onClick={() => {
-              handleClickTobNav("real");
-            }}
-          />
-          <Tab
-            label={translate("find")}
-            value={"find"}
-            onClick={() => {
-              handleClickTobNav("find");
-            }}
-          />
-          <Tab
-            label={translate("favorite")}
-            value={"favorite"}
-            onClick={() => {
-              handleClickTobNav("favorite");
-            }}
-          />
-        </Tabs>
-      )
-
-      // 4. exercise
-      : firstStr === "exercise" ? (
-        <Tabs
-          value={selectedTab[firstStr]}
-          variant={"scrollable"}
-          component={"div"}
-          scrollButtons={true}
-          allowScrollButtonsMobile={true}
-          selectionFollowsFocus={true}
-          sx={{
-            [`& .MuiTabs-scrollButtons`]: {
-              "width": "20px",
-              "&.Mui-disabled": { opacity: 0.3 },
-            },
-          }}
-        >
-          <Tab
-            label={translate("chart")}
-            value={"chart"}
-            onClick={() => {
-              handleClickTobNav("chart");
-            }}
-          />
-          <Tab
-            label={translate("goal")}
-            value={"goal"}
-            onClick={() => {
-              handleClickTobNav("goal");
-            }}
-          />
-          <Tab
-            label={translate("real")}
-            value={"real"}
-            onClick={() => {
-              handleClickTobNav("real");
-            }}
-          />
-        </Tabs>
-      )
-
-      // 4. exercise, money, sleep
-      : firstStr === "exercise" || firstStr === "money" || firstStr === "sleep" ? (
-        <Tabs
-          value={selectedTab[firstStr]}
-          variant={"scrollable"}
-          component={"div"}
-          scrollButtons={true}
-          allowScrollButtonsMobile={true}
-          selectionFollowsFocus={true}
-          sx={{
-            [`& .MuiTabs-scrollButtons`]: {
-              "width": "20px",
-              "&.Mui-disabled": { opacity: 0.3 },
-            },
-          }}
-        >
-          <Tab
-            label={translate("chart")}
-            value={"chart"}
-            onClick={() => {
-              handleClickTobNav("chart");
-            }}
-          />
-          <Tab
-            label={translate("goal")}
-            value={"goal"}
-            onClick={() => {
-              handleClickTobNav("goal");
-            }}
-          />
-          <Tab
-            label={translate("real")}
-            value={"real"}
-            onClick={() => {
-              handleClickTobNav("real");
-            }}
-          />
-        </Tabs>
-      )
-
-      // 5. admin
-      : firstStr === "admin" ? (
-        <Tabs
-          value={selectedTab[firstStr]}
-          variant={"scrollable"}
-          component={"div"}
-          scrollButtons={true}
-          allowScrollButtonsMobile={true}
-          selectionFollowsFocus={true}
-          sx={{
-            [`& .MuiTabs-scrollButtons`]: {
-              "width": "20px",
-              "&.Mui-disabled": { opacity: 0.3 },
-            },
-          }}
-        >
-          <Tab
-            label={translate("dashboard")}
-            value={"dashboard"}
-            onClick={() => {
-              handleClickTobNav("dashboard");
-            }}
-          />
-        </Tabs>
-      ) : null
-    ); */
-
     // TODO: 탭 드롭다운으로 변경
     // 5. tabs -------------------------------------------------------------------------------------
     const tabsSection = () => {
@@ -1313,7 +1090,7 @@ export const TopNav = () => {
               }))
             }}
           >
-            {dataArray?.[firstStr]?.map((tabName: string) => (
+            {dataArray?.[firstStr as keyof typeof dataArray]?.map((tabName: string) => (
               <MenuItem
                 key={tabName}
                 selected={selectedTab[firstStr] === tabName}
@@ -1336,7 +1113,7 @@ export const TopNav = () => {
 
     // 5. return -----------------------------------------------------------------------------------
     return (
-      <Paper className={"layout-wrapper p-sticky top-8vh h-8vh border-1 radius-2 shadow-bottom-3 p-0px"}>
+      <Paper className={"layout-wrapper p-sticky top-8vh h-8vh border-1 radius-2 shadow-1 p-0px"}>
         <Grid container spacing={0}>
           <Grid size={8} className={"d-row-center"}>
             {smileSection()}

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
-import { FoodLineKcal, FoodLineNut } from "@importSchemas";
+import { FoodLineKcal, FoodLineNut, FoodLineType } from "@importSchemas";
 import { axios } from "@importLibs";
 import { handleY } from "@importScripts";
 import { Select, PopUp } from "@importContainers";
@@ -32,7 +32,7 @@ export const FoodChartLine = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [DATE, _setDATE] = useState<any>({
+  const [DATE, _setDATE] = useState({
     dateType: "",
     dateStart: getDayFmt(),
     dateEnd: getDayFmt(),
@@ -45,10 +45,10 @@ export const FoodChartLine = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState<any>([FoodLineKcal]);
-  const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState<any>([FoodLineNut]);
-  const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState<any>([FoodLineKcal]);
-  const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState<any>([FoodLineNut]);
+  const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState<[FoodLineType]>([FoodLineKcal]);
+  const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState<[FoodLineType]>([FoodLineNut]);
+  const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState<[FoodLineType]>([FoodLineKcal]);
+  const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState<[FoodLineType]>([FoodLineNut]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -121,7 +121,7 @@ export const FoodChartLine = () => {
         <Grid size={12} className={"d-col-center"}>
           <ResponsiveContainer width={"100%"} height={350}>
             <LineChart
-              data={object}
+              data={object as any[]}
               margin={{top: 30, right: 30, bottom: 20, left: 20}}
               barGap={20}
               barCategoryGap={"20%"}

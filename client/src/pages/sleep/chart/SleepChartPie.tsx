@@ -3,7 +3,7 @@
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
-import { SleepPie } from "@importSchemas";
+import { SleepPie, SleepPieType } from "@importSchemas";
 import { axios } from "@importLibs";
 import { Select } from "@importContainers";
 import { Div, Img, Br, Paper, Card, Grid } from "@importComponents";
@@ -41,7 +41,7 @@ export const SleepChartPie = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [DATE, _setDATE] = useState<any>({
+  const [DATE, _setDATE] = useState({
     dateType: "",
     dateStart: getDayFmt(),
     dateEnd: getDayFmt(),
@@ -54,9 +54,9 @@ export const SleepChartPie = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [OBJECT_WEEK, setOBJECT_WEEK] = useState<any>([SleepPie]);
-  const [OBJECT_MONTH, setOBJECT_MONTH] = useState<any>([SleepPie]);
-  const [OBJECT_YEAR, setOBJECT_YEAR] = useState<any>([SleepPie]);
+  const [OBJECT_WEEK, setOBJECT_WEEK] = useState<[SleepPieType]>([SleepPie]);
+  const [OBJECT_MONTH, setOBJECT_MONTH] = useState<[SleepPieType]>([SleepPie]);
+  const [OBJECT_YEAR, setOBJECT_YEAR] = useState<[SleepPieType]>([SleepPie]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -163,7 +163,7 @@ export const SleepChartPie = () => {
         className={"fs-0-6rem"}
       >
         <tspan x={x} dy={"-0.5em"} dx={"0.4em"}>
-          {translate(object[index]?.name)}
+          {object && object[index]?.name ? translate(object[index].name) : ""}
         </tspan>
         <tspan x={x} dy={"1.4em"} dx={"0.4em"}>
           {`${Number(value).toLocaleString()} ${endStr}`}
@@ -196,7 +196,7 @@ export const SleepChartPie = () => {
           <ResponsiveContainer width={"100%"} height={350}>
             <PieChart margin={{top: 40, right: 20, bottom: 20, left: 20}}>
               <Pie
-                data={object}
+                data={object as any[]}
                 cx={"50%"}
                 cy={"50%"}
                 label={renderPie}

@@ -4,7 +4,7 @@ import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate } from "@importHooks";
 import { useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
-import { Money } from "@importSchemas";
+import { Money, MoneyType } from "@importSchemas";
 import { axios } from "@importLibs";
 import { insertComma } from "@importScripts";
 import { Footer, Empty, Dialog } from "@importLayouts";
@@ -43,21 +43,21 @@ export const MoneyList = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [OBJECT, setOBJECT] = useState<any>([Money]);
-  const [EXIST, setEXIST] = useState<any>({
+  const [OBJECT, setOBJECT] = useState<[MoneyType]>([Money]);
+  const [EXIST, setEXIST] = useState({
     day: [""],
     week: [""],
     month: [""],
     year: [""],
     select: [""],
   });
-  const [SEND, setSEND] = useState<any>({
+  const [SEND, setSEND] = useState({
     id: "",
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
   });
-  const [COUNT, setCOUNT] = useState<any>({
+  const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
@@ -135,7 +135,7 @@ export const MoneyList = () => {
     const listSection = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
-          {OBJECT?.filter((f: any) => f._id).map((item: any, i: number) => (
+          {OBJECT?.map((item, i) => (
             <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
               <Grid size={12} className={"p-2px"}>
                 <Accordion

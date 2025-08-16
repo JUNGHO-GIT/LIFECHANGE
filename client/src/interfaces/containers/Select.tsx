@@ -6,7 +6,7 @@ import { TextField } from "@importMuis";
 export const Select = (props: any) => (
   <TextField
     {...props}
-    select={true}
+    select={props?.children ? true : false}
     size={props?.size || "small"}
     type={props?.type || "text"}
     variant={props?.variant || "outlined"}
@@ -15,8 +15,8 @@ export const Select = (props: any) => (
     inputRef={props?.inputRef || null}
     error={props?.error || false}
     onClick={(e: React.MouseEvent) => {
-      // 1. locked 인 경우
-      if (props?.locked === "locked") {
+      // 1. locked or disabled 경우
+			if (props?.locked === "locked" || props?.disabled) {
         e.preventDefault();
         e.stopPropagation();
         const target = e.currentTarget;
@@ -25,8 +25,8 @@ export const Select = (props: any) => (
           target.classList.remove('shake');
         }, 700);
       }
-      // 2. locked 아닌 경우
-      else {
+      // 2. locked or disabled 아닌 경우
+      else if (props?.locked !== "locked" && !props?.disabled) {
         props?.onClick && props?.onClick(e);
       }
     }}
@@ -42,22 +42,28 @@ export const Select = (props: any) => (
           )
         ),
         backgroundColor: (
-          props?.readOnly && (
-            props?.onClick ? "transparent" : "#f7f7f7"
-          )
-        ),
+					props?.disabled ? "#f7f7f7" : (
+						props?.readOnly && (
+							props?.onClick ? "transparent" : "#f7f7f7"
+						)
+					)
+				),
         "&:hover": {
           backgroundColor: (
-            props?.readOnly && (
-              props?.onClick ? "transparent" : "#f7f7f7"
-            )
+						props?.disabled ? "#f7f7f7" : (
+							props?.readOnly && (
+								props?.onClick ? "transparent" : "#f7f7f7"
+							)
+						)
           ),
         },
         "&:focus": {
           backgroundColor: (
-            props?.readOnly && (
-              props?.onClick ? "transparent" : "#f7f7f7"
-            )
+						props?.disabled ? "#f7f7f7" : (
+							props?.readOnly && (
+								props?.onClick ? "transparent" : "#f7f7f7"
+							)
+						)
           ),
         }
       },

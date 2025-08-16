@@ -19,7 +19,7 @@ export const UserDelete = () => {
   const { ERRORS, REFS, validate } = useValidateUser();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [OBJECT, setOBJECT] = useState<any>(User);
+  const [OBJECT, setOBJECT] = useState(User);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -217,7 +217,7 @@ export const UserDelete = () => {
     const deleteSection = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
-          {[OBJECT]?.filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
+          {[OBJECT]?.map((item, i) => (
             <Grid container={true} spacing={2} className={"p-10px"} key={`detail-${i}`}>
               {/** 이메일 **/}
               <Grid container={true} spacing={1}>

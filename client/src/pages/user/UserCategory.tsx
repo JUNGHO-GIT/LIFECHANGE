@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
 import { sync } from "@importScripts";
-import { Category } from "@importSchemas";
+import { Category, CategoryType } from "@importSchemas";
 import { Footer } from "@importLayouts";
 import { PopUp, Input } from "@importContainers";
 import { Div, Icons, Paper, Grid, Card } from "@importComponents";
@@ -34,19 +34,19 @@ export const UserCategory = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const REFS = useRef<any>({});
-  const [OBJECT, setOBJECT] = useState<any>(Category);
-  const [dataType, setDataType] = useState<string>("exercise");
+  const [OBJECT, setOBJECT] = useState<CategoryType>(Category);
+  const [dataType, setDataType] = useState<keyof CategoryType>("calendar");
   const [isEditable, setIsEditable] = useState<string>("");
-  const [SEND, setSEND] = useState<any>({
+  const [selectedIdx, setSelectedIdx] = useState({
+    category1Idx: 0,
+    category2Idx: 1,
+    category3Idx: 1,
+  });
+  const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-  });
-  const [selectedIdx, setSelectedIdx] = useState<any>({
-    category1Idx: 0,
-    category2Idx: 1,
-    category3Idx: 1,
   });
 
   // 2-3. useEffect --------------------------------------------------------------------------------
@@ -207,7 +207,7 @@ export const UserCategory = () => {
   // 4-3. handle----------------------------------------------------------------------------------
   const handleRemove = (type: string, index: number) => {
     if (type === "part") {
-      if (OBJECT[dataType]?.length <= 1) {
+      if (OBJECT?.[dataType]?.length <= 1) {
         setALERT({
           open: true,
           msg: translate("cantBeDeletedLastItem"),
@@ -231,7 +231,8 @@ export const UserCategory = () => {
       });
     }
     else if (type === "title") {
-      if (OBJECT[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`]?.length <= 2) {
+			// @ts-ignore
+      if (OBJECT?.[dataType]?.[selectedIdx?.category2Idx]?.[`${dataType}_title`]?.length <= 2) {
         setALERT({
           open: true,
           msg: translate("cantBeDeletedLastItem"),
@@ -401,7 +402,10 @@ export const UserCategory = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody className={"table-tbody"}>
-                  {OBJECT[dataType]?.[selectedIdx?.category2Idx]?.[`${dataType}_title`]?.map((item: any, index: number) => (index > 0) && (
+                  {(dataType === "exercise"
+                    ? OBJECT?.exercise?.[selectedIdx?.category2Idx]?.exercise_title
+                    : OBJECT?.money?.[selectedIdx?.category2Idx]?.money_title
+                  )?.map((item: any, index: number) => (index > 0) && (
                     <TableRow key={index} className={"table-tbody-tr border-bottom-1"}>
                       <TableCell>
                         <Div className={"d-center"}>
@@ -509,7 +513,7 @@ export const UserCategory = () => {
     const detailSection = () => {
       const detailFragment = () => (
         <Grid container={true} spacing={0}>
-          {[OBJECT]?.filter((_: any, idx: number) => idx === 0).map((item: any, i: number) => (
+          {[OBJECT]?.map((item, i) => (
             <Grid size={12} key={`detail-${i}`}>
               <Grid container={true} spacing={2}>
                 <TableContainer className={"border-1 radius-2 over-x-hidden"}>

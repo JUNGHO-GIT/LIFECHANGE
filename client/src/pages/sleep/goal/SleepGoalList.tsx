@@ -3,7 +3,7 @@
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
-import { SleepGoal } from "@importSchemas";
+import { SleepGoal, SleepGoalType } from "@importSchemas";
 import { axios } from "@importLibs";
 import { Footer, Empty, Dialog } from "@importLayouts";
 import { Div, Img, Hr, Icons, Paper, Grid, Card } from "@importComponents";
@@ -41,21 +41,21 @@ export const SleepGoalList = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [OBJECT, setOBJECT] = useState<any>([SleepGoal]);
-  const [EXIST, setEXIST] = useState<any>({
+  const [OBJECT, setOBJECT] = useState<[SleepGoalType]>([SleepGoal]);
+  const [EXIST, setEXIST] = useState({
     day: [""],
     week: [""],
     month: [""],
     year: [""],
     select: [""],
   });
-  const [SEND, setSEND] = useState<any>({
+  const [SEND, setSEND] = useState({
     id: "",
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
   });
-  const [COUNT, setCOUNT] = useState<any>({
+  const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
@@ -132,7 +132,7 @@ export const SleepGoalList = () => {
     const listSection = () => {
       const listFragment = () => (
         <Grid container={true} spacing={0}>
-          {OBJECT?.filter((f: any) => f._id).map((item: any, i: number) => (
+          {OBJECT?.map((item, i) => (
             <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
               <Grid size={12} className={"p-2px"}>
                 <Accordion

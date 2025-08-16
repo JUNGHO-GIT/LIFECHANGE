@@ -3,7 +3,7 @@
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
-import { ExerciseAvgVolume, ExerciseAvgCardio } from "@importSchemas";
+import { ExerciseAvgVolume, ExerciseAvgCardio, ExerciseAvgType } from "@importSchemas";
 import { axios } from "@importLibs";
 import { handleY } from "@importScripts";
 import { Select, PopUp } from "@importContainers";
@@ -32,7 +32,7 @@ export const ExerciseChartAvg = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [DATE, _setDATE] = useState<any>({
+  const [DATE, _setDATE] = useState({
     dateType: "",
     dateStart: getDayFmt(),
     dateEnd: getDayFmt(),
@@ -45,10 +45,10 @@ export const ExerciseChartAvg = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [OBJECT_VOLUME_WEEK, setOBJECT_VOLUME_WEEK] = useState<any>([ExerciseAvgVolume]);
-  const [OBJECT_CARDIO_WEEK, setOBJECT_CARDIO_WEEK] = useState<any>([ExerciseAvgCardio]);
-  const [OBJECT_VOLUME_MONTH, setOBJECT_VOLUME_MONTH] = useState<any>([ExerciseAvgVolume]);
-  const [OBJECT_CARDIO_MONTH, setOBJECT_CARDIO_MONTH] = useState<any>([ExerciseAvgCardio]);
+  const [OBJECT_VOLUME_WEEK, setOBJECT_VOLUME_WEEK] = useState<[ExerciseAvgType]>([ExerciseAvgVolume]);
+  const [OBJECT_CARDIO_WEEK, setOBJECT_CARDIO_WEEK] = useState<[ExerciseAvgType]>([ExerciseAvgCardio]);
+  const [OBJECT_VOLUME_MONTH, setOBJECT_VOLUME_MONTH] = useState<[ExerciseAvgType]>([ExerciseAvgVolume]);
+  const [OBJECT_CARDIO_MONTH, setOBJECT_CARDIO_MONTH] = useState<[ExerciseAvgType]>([ExerciseAvgCardio]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -121,7 +121,7 @@ export const ExerciseChartAvg = () => {
         <Grid size={12} className={"d-col-center"}>
           <ResponsiveContainer width={"100%"} height={350}>
             <ComposedChart
-              data={object}
+              data={object as any[]}
               margin={{top: 30, right: 30, bottom: 20, left: 20}}
               barGap={8}
               barCategoryGap={"20%"}

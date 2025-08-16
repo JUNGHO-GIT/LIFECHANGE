@@ -3,7 +3,7 @@
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
-import { ExercisePie } from "@importSchemas";
+import { ExercisePie, ExercisePieType } from "@importSchemas";
 import { axios } from "@importLibs";
 import { Select, PopUp } from "@importContainers";
 import { Div, Img, Br, Paper, Card, Grid } from "@importComponents";
@@ -41,7 +41,7 @@ export const ExerciseChartPie = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [DATE, _setDATE] = useState<any>({
+  const [DATE, _setDATE] = useState({
     dateType: "",
     dateStart: getDayFmt(),
     dateEnd: getDayFmt(),
@@ -54,12 +54,12 @@ export const ExerciseChartPie = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [OBJECT_PART_WEEK, setOBJECT_PART_WEEK] = useState<any>([ExercisePie]);
-  const [OBJECT_TITLE_WEEK, setOBJECT_TITLE_WEEK] = useState<any>([ExercisePie]);
-  const [OBJECT_PART_MONTH, setOBJECT_PART_MONTH] = useState<any>([ExercisePie]);
-  const [OBJECT_TITLE_MONTH, setOBJECT_TITLE_MONTH] = useState<any>([ExercisePie]);
-  const [OBJECT_PART_YEAR, setOBJECT_PART_YEAR] = useState<any>([ExercisePie]);
-  const [OBJECT_TITLE_YEAR, setOBJECT_TITLE_YEAR] = useState<any>([ExercisePie]);
+  const [OBJECT_PART_WEEK, setOBJECT_PART_WEEK] = useState<[ExercisePieType]>([ExercisePie]);
+  const [OBJECT_TITLE_WEEK, setOBJECT_TITLE_WEEK] = useState<[ExercisePieType]>([ExercisePie]);
+  const [OBJECT_PART_MONTH, setOBJECT_PART_MONTH] = useState<[ExercisePieType]>([ExercisePie]);
+  const [OBJECT_TITLE_MONTH, setOBJECT_TITLE_MONTH] = useState<[ExercisePieType]>([ExercisePie]);
+  const [OBJECT_PART_YEAR, setOBJECT_PART_YEAR] = useState<[ExercisePieType]>([ExercisePie]);
+  const [OBJECT_TITLE_YEAR, setOBJECT_TITLE_YEAR] = useState<[ExercisePieType]>([ExercisePie]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -171,7 +171,7 @@ export const ExerciseChartPie = () => {
         className={"fs-0-6rem"}
       >
         <tspan x={x} dy={"-0.5em"} dx={"0.4em"}>
-          {translate(object[index]?.name)}
+          {object && object[index]?.name ? translate(object[index].name) : ""}
         </tspan>
         <tspan x={x} dy={"1.4em"} dx={"0.4em"}>
           {`${Number(value).toLocaleString()} ${endStr}`}
@@ -216,7 +216,7 @@ export const ExerciseChartPie = () => {
           <ResponsiveContainer width={"100%"} height={350}>
             <PieChart margin={{top: 40, right: 20, bottom: 20, left: 20}}>
               <Pie
-                data={object}
+                data={object as any[]}
                 cx={"50%"}
                 cy={"50%"}
                 label={renderPie}

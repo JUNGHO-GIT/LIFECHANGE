@@ -5,13 +5,15 @@ import { Icons, Div } from "@importComponents";
 // -------------------------------------------------------------------------------------------------
 declare type DeleteProps = {
   index: number;
-  handleDelete: any;
-  LOCKED: string;
+	section?: string;
+  handleDelete: (index: number, section?: string) => void;
+	LOCKED?: string;
+	readOnly?: boolean;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const Delete = (
-  { index, handleDelete, LOCKED }: DeleteProps
+  { index, section, handleDelete, LOCKED, readOnly }: DeleteProps
 ) => {
 
   // 1. deleteNode --------------------------------------------------------------------------------
@@ -23,7 +25,10 @@ export const Delete = (
         locked={LOCKED}
         className={"w-20px h-20px"}
         onClick={() => {
-          handleDelete(index);
+					if (readOnly) {
+						return;
+					}
+          handleDelete(index, section);
         }}
       />
     </Div>

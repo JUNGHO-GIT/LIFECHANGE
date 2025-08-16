@@ -3,7 +3,7 @@
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
-import { ExerciseLineVolume, ExerciseLineCardio, ExerciseLineScale } from "@importSchemas";
+import { ExerciseLineVolume, ExerciseLineCardio, ExerciseLineScale, ExerciseLineType } from "@importSchemas";
 import { axios } from "@importLibs";
 import { handleY } from "@importScripts";
 import { Select, PopUp } from "@importContainers";
@@ -33,7 +33,7 @@ export const ExerciseChartLine = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [DATE, _setDATE] = useState<any>({
+  const [DATE, _setDATE] = useState({
     dateType: "",
     dateStart: getDayFmt(),
     dateEnd: getDayFmt(),
@@ -46,13 +46,12 @@ export const ExerciseChartLine = () => {
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [OBJECT_SCALE_WEEK, setOBJECT_SCALE_WEEK] = useState<any>([ExerciseLineScale]);
-  const [OBJECT_VOLUME_WEEK, setOBJECT_VOLUME_WEEK] = useState<any>([ExerciseLineVolume]);
-  const [OBJECT_CARDIO_WEEK, setOBJECT_CARDIO_WEEK] = useState<any>([ExerciseLineCardio]);
-
-  const [OBJECT_SCALE_MONTH, setOBJECT_SCALE_MONTH] = useState<any>([ExerciseLineScale]);
-  const [OBJECT_VOLUME_MONTH, setOBJECT_VOLUME_MONTH] = useState<any>([ExerciseLineVolume]);
-  const [OBJECT_CARDIO_MONTH, setOBJECT_CARDIO_MONTH] = useState<any>([ExerciseLineCardio]);
+  const [OBJECT_SCALE_WEEK, setOBJECT_SCALE_WEEK] = useState<[ExerciseLineType]>([ExerciseLineScale]);
+  const [OBJECT_VOLUME_WEEK, setOBJECT_VOLUME_WEEK] = useState<[ExerciseLineType]>([ExerciseLineVolume]);
+  const [OBJECT_CARDIO_WEEK, setOBJECT_CARDIO_WEEK] = useState<[ExerciseLineType]>([ExerciseLineCardio]);
+  const [OBJECT_SCALE_MONTH, setOBJECT_SCALE_MONTH] = useState<[ExerciseLineType]>([ExerciseLineScale]);
+  const [OBJECT_VOLUME_MONTH, setOBJECT_VOLUME_MONTH] = useState<[ExerciseLineType]>([ExerciseLineVolume]);
+  const [OBJECT_CARDIO_MONTH, setOBJECT_CARDIO_MONTH] = useState<[ExerciseLineType]>([ExerciseLineCardio]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -139,7 +138,7 @@ export const ExerciseChartLine = () => {
         <Grid size={12} className={"d-col-center"}>
           <ResponsiveContainer width={"100%"} height={350}>
             <LineChart
-              data={object}
+              data={object as any[]}
               margin={{top: 30, right: 30, bottom: 20, left: 20}}
               barGap={20}
               barCategoryGap={"20%"}
