@@ -27,7 +27,7 @@ export const exist = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         food_goal_dateType: 1,
         food_goal_dateStart: 1,
         food_goal_dateEnd: 1,
@@ -91,7 +91,7 @@ export const listGoal = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         food_goal_dateType: 1,
         food_goal_dateStart: 1,
         food_goal_dateEnd: 1,
@@ -138,7 +138,7 @@ export const listReal = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         food_dateType: 1,
         food_dateStart: 1,
         food_dateEnd: 1,

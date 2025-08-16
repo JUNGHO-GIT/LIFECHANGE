@@ -69,7 +69,7 @@ export const PickerTime = (
 		else if (firstStr === `exercise`) {
 			// 1. exercise - goal 인 경우
 			if (secondStr === `goal`) {
-				if (extra.includes(`exercise_cardio`)) {
+				if (extra.includes(`exercise_goal_cardio`)) {
 					setImage(`exercise4`);
 					setTargetStr(`exercise`);
 					setTranslateStr(
@@ -96,7 +96,7 @@ export const PickerTime = (
 		else if (firstStr === `sleep`) {
 			// 1. sleep - goal 인 경우
 			if (secondStr === `goal`) {
-				if (extra.includes(`sleep_bedTime`)) {
+				if (extra.includes(`sleep_goal_bedTime`)) {
 					setImage(`sleep2`);
 					setTargetStr(`sleep`);
 					setTranslateStr(
@@ -107,7 +107,7 @@ export const PickerTime = (
 						)
 					);
 				}
-				else if (extra.includes(`sleep_wakeTime`)) {
+				else if (extra.includes(`sleep_goal_wakeTime`)) {
 					setImage(`sleep3`);
 					setTargetStr(`sleep`);
 					setTranslateStr(
@@ -118,7 +118,7 @@ export const PickerTime = (
 						)
 					);
 				}
-				else if (extra.includes(`sleep_sleepTime`)) {
+				else if (extra.includes(`sleep_goal_sleepTime`)) {
 					setImage(`sleep4`);
 					setTargetStr(`sleep`);
 					setTranslateStr(

@@ -8,7 +8,7 @@ import { sync } from "@importScripts";
 import { Category, CategoryType } from "@importSchemas";
 import { Footer } from "@importLayouts";
 import { PopUp, Input } from "@importContainers";
-import { Div, Icons, Paper, Grid, Card } from "@importComponents";
+import { Div, Icons, Paper, Grid } from "@importComponents";
 import { TableContainer, Table, TableFooter } from "@importMuis";
 import { TableHead, TableBody, TableRow, TableCell } from "@importMuis";
 
@@ -35,7 +35,7 @@ export const UserCategory = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const REFS = useRef<any>({});
   const [OBJECT, setOBJECT] = useState<CategoryType>(Category);
-  const [dataType, setDataType] = useState<keyof CategoryType>("calendar");
+  const [dataType, setDataType] = useState<keyof CategoryType>("exercise");
   const [isEditable, setIsEditable] = useState<string>("");
   const [selectedIdx, setSelectedIdx] = useState({
     category1Idx: 0,
@@ -77,7 +77,7 @@ export const UserCategory = () => {
       setLOADING(false);
       setALERT({
         open: true,
-        msg: translate(err.response.data.msg),
+        msg: translate(err?.response?.data?.msg || err.message),
         severity: "error",
       });
     })
@@ -116,7 +116,7 @@ export const UserCategory = () => {
       setLOADING(false);
       setALERT({
         open: true,
-        msg: translate(err.response.data.msg),
+        msg: translate(err?.response?.data?.msg || err.message),
         severity: "error",
       });
       console.error(err);
@@ -510,74 +510,67 @@ export const UserCategory = () => {
       </Grid>
     );
     // 7-2. detail
-    const detailSection = () => {
-      const detailFragment = () => (
-        <Grid container={true} spacing={0}>
-          {[OBJECT]?.map((item, i) => (
-            <Grid size={12} key={`detail-${i}`}>
-              <Grid container={true} spacing={2}>
-                <TableContainer className={"border-1 radius-2 over-x-hidden"}>
-                  <Table>
-                    <TableHead className={"table-thead"}>
-                      <TableRow className={"table-thead-tr"}>
-                        <TableCell className={"fs-1-0rem"}>
-                          {translate("dataCategory1")}
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody className={"table-tbody"}>
-                      {Object.keys(item).map((item: any, idx: number) => (
-                        <TableRow className={"table-tbody-tr border-top-1"} key={idx}>
-                          <TableCell className={`${dataType === item ? "bg-light" : ""}`}>
-                            <Div className={"d-center"}>
-                              <Div className={"fs-1-0rem ml-0px"}>
-                                {translate(item)}
-                              </Div>
-                              <Div className={"fs-1-0rem ml-auto"}>
-                              <PopUp
-                                type={"innerCenter"}
-                                position={"center"}
-                                direction={"center"}
-                                contents={
-                                  popupSection()
-                                }
-                                children={(popTrigger: any) => (
-                                  <Icons
-                                    key={"Search"}
-                                    name={"Search"}
-                                    className={"w-18px h-18px black ml-auto"}
-                                    onClick={(e: any) => {
-                                      setDataType(item);
-                                      setSelectedIdx((prev: any) => ({
-                                        ...prev,
-                                        category1Idx: idx,
-                                        category2Idx: 1,
-                                        category3Idx: 1
-                                      }));
-                                      popTrigger.openPopup(e.currentTarget)
-                                    }}
-                                  />
-                                )}
-                              />
-                              </Div>
-                            </Div>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Grid>
-            </Grid>
-          ))}
-        </Grid>
-      );
-      return (
-        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
-          {detailFragment()}
-        </Card>
-      );
-    };
+    const detailSection = () => (
+			<Grid container={true} spacing={2} className={`border-1 radius-2 shadow-1`}>
+				{[OBJECT]?.map((item, i) => (
+					<Grid size={12} key={`detail-${i}`}>
+						<Grid container={true} spacing={2}>
+							<TableContainer className={"border-1 radius-2 over-x-hidden"}>
+								<Table>
+									<TableHead className={"table-thead"}>
+										<TableRow className={"table-thead-tr"}>
+											<TableCell className={"fs-1-0rem"}>
+												{translate("dataCategory1")}
+											</TableCell>
+										</TableRow>
+									</TableHead>
+									<TableBody className={"table-tbody"}>
+										{Object.keys(item).map((item: any, idx: number) => (
+											<TableRow className={"table-tbody-tr border-top-1"} key={idx}>
+												<TableCell className={`${dataType === item ? "bg-light" : ""}`}>
+													<Div className={"d-center"}>
+														<Div className={"fs-1-0rem ml-0px"}>
+															{translate(item)}
+														</Div>
+														<Div className={"fs-1-0rem ml-auto"}>
+														<PopUp
+															type={"innerCenter"}
+															position={"center"}
+															direction={"center"}
+															contents={
+																popupSection()
+															}
+															children={(popTrigger: any) => (
+																<Icons
+																	key={"Search"}
+																	name={"Search"}
+																	className={"w-18px h-18px black ml-auto"}
+																	onClick={(e: any) => {
+																		setDataType(item);
+																		setSelectedIdx((prev: any) => ({
+																			...prev,
+																			category1Idx: idx,
+																			category2Idx: 1,
+																			category3Idx: 1
+																		}));
+																		popTrigger.openPopup(e.currentTarget)
+																	}}
+																/>
+															)}
+														/>
+														</Div>
+													</Div>
+												</TableCell>
+											</TableRow>
+										))}
+									</TableBody>
+								</Table>
+							</TableContainer>
+						</Grid>
+					</Grid>
+				))}
+			</Grid>
+		);
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min-90vh"}>

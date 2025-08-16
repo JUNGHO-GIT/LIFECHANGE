@@ -116,10 +116,6 @@ export const User: UserType = {
 
 // Types ------------------------------------------------------------------------------------------
 export type CategoryType = {
-  calendar: Array<{
-    calendar_part: string;
-    calendar_title?: string[];
-  }>;
   exercise: Array<{
     exercise_part: string;
     exercise_title: string[];
@@ -140,11 +136,6 @@ export type CategoryType = {
 
 // Schema -----------------------------------------------------------------------------------------
 export const Category: CategoryType = {
-  calendar: [
-    {
-      calendar_part: ""
-    }
-  ],
   exercise: [
     {
       exercise_part: "",

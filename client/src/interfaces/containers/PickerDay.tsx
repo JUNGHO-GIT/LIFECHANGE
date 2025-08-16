@@ -407,7 +407,6 @@ export const PickerDay = (
             value={`${DATE.dateStart}`}
             inputclass={`pointer ${selectTypeInListStr}`}
             readOnly={true}
-						disabled={disabled}
             startadornment={
               <Img
                 max={25}
@@ -620,7 +619,6 @@ export const PickerDay = (
             value={durStr}
             inputclass={`pointer ${selectTypeInListStr}`}
             readOnly={true}
-						disabled={disabled}
             startadornment={
               <Img
                 max={25}
@@ -814,7 +812,6 @@ export const PickerDay = (
             value={durStr}
             inputclass={`pointer ${selectTypeInListStr}`}
             readOnly={true}
-						disabled={disabled}
             startadornment={
               <Img
                 max={25}
@@ -1009,7 +1006,6 @@ export const PickerDay = (
             value={durStr}
             inputclass={`pointer ${selectTypeInListStr}`}
             readOnly={true}
-						disabled={disabled}
             startadornment={
               <Img
                 max={25}
@@ -1203,7 +1199,6 @@ export const PickerDay = (
             value={durStr}
             inputclass={`pointer ${selectTypeInListStr}`}
             readOnly={true}
-						disabled={disabled}
             startadornment={
               <Img
                 max={25}

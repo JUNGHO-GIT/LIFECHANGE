@@ -25,7 +25,7 @@ export const barGoal = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         money_goal_dateStart: 1,
         money_goal_dateEnd: 1,
         money_goal_income: 1,
@@ -64,7 +64,7 @@ export const barReal = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         money_dateStart: 1,
         money_dateEnd: 1,
         money_total_income: 1,
@@ -205,7 +205,7 @@ export const lineAll = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         money_dateStart: 1,
         money_dateEnd: 1,
         money_total_income: 1,
@@ -244,7 +244,7 @@ export const avgAll = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         money_dateStart: 1,
         money_dateEnd: 1,
         money_total_income: 1,

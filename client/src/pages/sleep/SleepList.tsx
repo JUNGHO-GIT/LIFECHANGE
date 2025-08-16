@@ -6,7 +6,7 @@ import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores"
 import { Sleep, SleepType } from "@importSchemas";
 import { axios } from "@importLibs";
 import { Footer, Empty, Dialog } from "@importLayouts";
-import { Div, Hr, Img, Icons, Paper, Grid, Card } from "@importComponents";
+import { Div, Hr, Img, Icons, Paper, Grid } from "@importComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -131,184 +131,178 @@ export const SleepList = () => {
 
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
-    const listSection = () => {
-      const listFragment = () => (
-        <Grid container={true} spacing={0}>
-          {OBJECT?.map((item, i) => (
-            <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
-              <Grid size={12} className={"p-2px"}>
-                <Accordion
-                  className={"border-0 shadow-0 radius-0"}
-                  expanded={isExpanded?.[i]?.expanded}
-                >
-                  <AccordionSummary
-                    expandIcon={
-                      <Icons
-                        key={"ChevronDown"}
-                        name={"ChevronDown"}
-                        className={"w-18px h-18px"}
-                        onClick={(e: any) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          setIsExpanded(isExpanded.map((el: any, index: number) => (
-                            i === index ? {
-                              expanded: !el.expanded
-                            } : el
-                          )));
-                        }}
-                      />
-                    }
-                    onClick={() => {
-                      navigate(toDetail, {
-                        state: {
-                          id: item._id,
-                          dateType: item.sleep_dateType,
-                          dateStart: item.sleep_dateStart,
-                          dateEnd: item.sleep_dateEnd,
-                        }
-                      });
-                    }}
-                  >
-                    <Grid container={true} spacing={2}>
-                      <Grid size={2} className={"d-row-center"}>
-                        <Icons
-                          key={"Search"}
-                          name={"Search"}
-                          className={"w-18px h-18px"}
-                        />
-                      </Grid>
-                      <Grid size={10} className={"d-row-left"}>
-                        <Div className={"fs-1-0rem fw-600 black mr-5px"}>
-                          {item.sleep_dateStart?.substring(5, 10)}
-                        </Div>
-                        <Div className={"fs-0-9rem fw-500 dark ml-5px"}>
-                          {translate(getDayNotFmt(item.sleep_dateStart).format("ddd"))}
-                        </Div>
-                      </Grid>
-                    </Grid>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Grid container={true} spacing={2}>
-                      {/** row 1 **/}
-                      <Grid container={true} spacing={2}>
-                        <Grid size={2} className={"d-row-center"}>
-                          <Img
-                            max={20}
-                            hover={true}
-                            shadow={false}
-                            radius={false}
-                            src={"sleep2.webp"}
-                          />
-                        </Grid>
-                        <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
-                            {translate("bedTime")}
-                          </Div>
-                        </Grid>
-                        <Grid size={7}>
-                          <Grid container={true} spacing={1}>
-                            <Grid size={10} className={"d-row-right"}>
-                              <Div className={`fs-1-0rem fw-600 ${item.sleep_section[0]?.sleep_bedTime_color}`}>
-                                {item.sleep_section[0]?.sleep_bedTime}
-                              </Div>
-                            </Grid>
-                            <Grid size={2} className={"d-row-center"}>
-                              <Div className={"fs-0-6rem"}>
-                                {translate("hm")}
-                              </Div>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      {/** /.row 1 **/}
+		// 7-1. list
+    const listSection = () => (
+			<Grid container={true} spacing={0}>
+				{OBJECT?.map((item, i) => (
+					<Grid container={true} spacing={0} className={"border-1 radius-2 shadow-1 mb-10px"} key={`list-${i}`}>
+						<Grid size={12} className={"p-2px"}>
+							<Accordion
+								className={"border-0 shadow-0 radius-0"}
+								expanded={isExpanded?.[i]?.expanded}
+							>
+								<AccordionSummary
+									expandIcon={
+										<Icons
+											key={"ChevronDown"}
+											name={"ChevronDown"}
+											className={"w-18px h-18px"}
+											onClick={(e: any) => {
+												e.preventDefault();
+												e.stopPropagation();
+												setIsExpanded(isExpanded.map((el: any, index: number) => (
+													i === index ? {
+														expanded: !el.expanded
+													} : el
+												)));
+											}}
+										/>
+									}
+									onClick={() => {
+										navigate(toDetail, {
+											state: {
+												id: item._id,
+												dateType: item.sleep_dateType,
+												dateStart: item.sleep_dateStart,
+												dateEnd: item.sleep_dateEnd,
+											}
+										});
+									}}
+								>
+									<Grid container={true} spacing={2}>
+										<Grid size={2} className={"d-row-center"}>
+											<Icons
+												key={"Search"}
+												name={"Search"}
+												className={"w-18px h-18px"}
+											/>
+										</Grid>
+										<Grid size={10} className={"d-row-left"}>
+											<Div className={"fs-1-0rem fw-600 black mr-5px"}>
+												{item.sleep_dateStart?.substring(5, 10)}
+											</Div>
+											<Div className={"fs-0-9rem fw-500 dark ml-5px"}>
+												{translate(getDayNotFmt(item.sleep_dateStart).format("ddd"))}
+											</Div>
+										</Grid>
+									</Grid>
+								</AccordionSummary>
+								<AccordionDetails>
+									<Grid container={true} spacing={2}>
+										{/** row 1 **/}
+										<Grid container={true} spacing={2}>
+											<Grid size={2} className={"d-row-center"}>
+												<Img
+													max={20}
+													hover={true}
+													shadow={false}
+													radius={false}
+													src={"sleep2.webp"}
+												/>
+											</Grid>
+											<Grid size={3} className={"d-row-left"}>
+												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+													{translate("bedTime")}
+												</Div>
+											</Grid>
+											<Grid size={7}>
+												<Grid container={true} spacing={1}>
+													<Grid size={10} className={"d-row-right"}>
+														<Div className={`fs-1-0rem fw-600 ${item.sleep_section[0]?.sleep_bedTime_color}`}>
+															{item.sleep_section[0]?.sleep_bedTime}
+														</Div>
+													</Grid>
+													<Grid size={2} className={"d-row-center"}>
+														<Div className={"fs-0-6rem"}>
+															{translate("hm")}
+														</Div>
+													</Grid>
+												</Grid>
+											</Grid>
+										</Grid>
+										{/** /.row 1 **/}
 
-                      <Hr m={1} className={"bg-light"} />
+										<Hr m={1} className={"bg-light"} />
 
-                      {/** row 2 **/}
-                      <Grid container={true} spacing={2}>
-                        <Grid size={2} className={"d-center"}>
-                          <Img
-                            max={20}
-                            hover={true}
-                            shadow={false}
-                            radius={false}
-                            src={"sleep3.webp"}
-                          />
-                        </Grid>
-                        <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
-                            {translate("wakeTime")}
-                          </Div>
-                        </Grid>
-                        <Grid size={7}>
-                          <Grid container={true} spacing={1}>
-                            <Grid size={10} className={"d-row-right"}>
-                              <Div className={`fs-1-0rem fw-600 ${item.sleep_section[0]?.sleep_wakeTime_color}`}>
-                                {item.sleep_section[0]?.sleep_wakeTime}
-                              </Div>
-                            </Grid>
-                            <Grid size={2} className={"d-row-center"}>
-                              <Div className={"fs-0-6rem"}>
-                                {translate("hm")}
-                              </Div>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      {/** /.row 2 **/}
+										{/** row 2 **/}
+										<Grid container={true} spacing={2}>
+											<Grid size={2} className={"d-center"}>
+												<Img
+													max={20}
+													hover={true}
+													shadow={false}
+													radius={false}
+													src={"sleep3.webp"}
+												/>
+											</Grid>
+											<Grid size={3} className={"d-row-left"}>
+												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+													{translate("wakeTime")}
+												</Div>
+											</Grid>
+											<Grid size={7}>
+												<Grid container={true} spacing={1}>
+													<Grid size={10} className={"d-row-right"}>
+														<Div className={`fs-1-0rem fw-600 ${item.sleep_section[0]?.sleep_wakeTime_color}`}>
+															{item.sleep_section[0]?.sleep_wakeTime}
+														</Div>
+													</Grid>
+													<Grid size={2} className={"d-row-center"}>
+														<Div className={"fs-0-6rem"}>
+															{translate("hm")}
+														</Div>
+													</Grid>
+												</Grid>
+											</Grid>
+										</Grid>
+										{/** /.row 2 **/}
 
-                      <Hr m={1} className={"bg-light"} />
+										<Hr m={1} className={"bg-light"} />
 
-                      {/** row 3 **/}
-                      <Grid container={true} spacing={2}>
-                        <Grid size={2} className={"d-center"}>
-                          <Img
-                            max={20}
-                            hover={true}
-                            shadow={false}
-                            radius={false}
-                            src={"sleep4.webp"}
-                          />
-                        </Grid>
-                        <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
-                            {translate("sleepTime")}
-                          </Div>
-                        </Grid>
-                        <Grid size={7}>
-                          <Grid container={true} spacing={1}>
-                            <Grid size={10} className={"d-row-right"}>
-                              <Div className={`fs-1-0rem fw-600 ${item.sleep_section[0]?.sleep_sleepTime_color}`}>
-                                {item.sleep_section[0]?.sleep_sleepTime}
-                              </Div>
-                            </Grid>
-                            <Grid size={2} className={"d-row-center"}>
-                              <Div className={"fs-0-6rem"}>
-                                {translate("hm")}
-                              </Div>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      {/** /.row 3 **/}
-                    </Grid>
-                  </AccordionDetails>
-                </Accordion>
-              </Grid>
-            </Grid>
-          ))}
-        </Grid>
-      );
-      return (
-        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
-          {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={"sleep"} /> : listFragment()}
-        </Card>
-      );
-    };
+										{/** row 3 **/}
+										<Grid container={true} spacing={2}>
+											<Grid size={2} className={"d-center"}>
+												<Img
+													max={20}
+													hover={true}
+													shadow={false}
+													radius={false}
+													src={"sleep4.webp"}
+												/>
+											</Grid>
+											<Grid size={3} className={"d-row-left"}>
+												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+													{translate("sleepTime")}
+												</Div>
+											</Grid>
+											<Grid size={7}>
+												<Grid container={true} spacing={1}>
+													<Grid size={10} className={"d-row-right"}>
+														<Div className={`fs-1-0rem fw-600 ${item.sleep_section[0]?.sleep_sleepTime_color}`}>
+															{item.sleep_section[0]?.sleep_sleepTime}
+														</Div>
+													</Grid>
+													<Grid size={2} className={"d-row-center"}>
+														<Div className={"fs-0-6rem"}>
+															{translate("hm")}
+														</Div>
+													</Grid>
+												</Grid>
+											</Grid>
+										</Grid>
+										{/** /.row 3 **/}
+									</Grid>
+								</AccordionDetails>
+							</Accordion>
+						</Grid>
+					</Grid>
+				))}
+			</Grid>
+		);
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min-75vh"}>
-        {listSection()}
+				{COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={"sleep"} /> : listSection()}
       </Paper>
     );
   };

@@ -25,7 +25,7 @@ export const barGoal = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         sleep_goal_dateStart: 1,
         sleep_goal_dateEnd: 1,
         sleep_goal_bedTime: 1,
@@ -65,7 +65,7 @@ export const barReal = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         sleep_dateStart: 1,
         sleep_dateEnd: 1,
         sleep_section: 1,
@@ -103,7 +103,7 @@ export const pieAll = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         sleep_dateStart: 1,
         sleep_dateEnd: 1,
         sleep_section: 1,
@@ -141,7 +141,7 @@ export const lineAll = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         sleep_dateStart: 1,
         sleep_dateEnd: 1,
         sleep_section: 1,
@@ -179,7 +179,7 @@ export const avgAll = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         sleep_dateStart: 1,
         sleep_dateEnd: 1,
         sleep_section: 1,

@@ -7,7 +7,7 @@ import { Exercise, ExerciseType } from "@schemas/exercise/Exercise";
 import { axios } from "@importLibs";
 import { insertComma } from "@importScripts";
 import { Footer, Empty, Dialog } from "@importLayouts";
-import { Div, Hr, Icons, Img, Paper, Grid, Card } from "@importComponents";
+import { Div, Hr, Icons, Img, Paper, Grid } from "@importComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -131,184 +131,178 @@ export const ExerciseList = () => {
 
   // 7. list ---------------------------------------------------------------------------------------
   const listNode = () => {
-    const listSection = () => {
-      const listFragment = () => (
-        <Grid container={true} spacing={0}>
-          {OBJECT?.map((item, i) => (
-            <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
-              <Grid size={12} className={"p-2px"}>
-                <Accordion
-                  className={"border-0 shadow-0 radius-0"}
-                  expanded={isExpanded?.[i]?.expanded}
-                >
-                  <AccordionSummary
-                    expandIcon={
-                      <Icons
-                        key={"ChevronDown"}
-                        name={"ChevronDown"}
-                        className={"w-18px h-18px"}
-                        onClick={(e: any) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          setIsExpanded(isExpanded.map((el: any, index: number) => (
-                            i === index ? {
-                              expanded: !el.expanded
-                            } : el
-                          )));
-                        }}
-                      />
-                    }
-                    onClick={() => {
-                      navigate(toDetail, {
-                        state: {
-                          id: item._id,
-                          dateType: item.exercise_dateType,
-                          dateStart: item.exercise_dateStart,
-                          dateEnd: item.exercise_dateEnd,
-                        }
-                      });
-                    }}
-                  >
-                    <Grid container={true} spacing={2}>
-                      <Grid size={2} className={"d-row-center"}>
-                        <Icons
-                          key={"Search"}
-                          name={"Search"}
-                          className={"w-18px h-18px"}
-                        />
-                      </Grid>
-                      <Grid size={10} className={"d-row-left"}>
-                        <Div className={"fs-1-0rem fw-600 black mr-5px"}>
-                          {item.exercise_dateStart?.substring(5, 10)}
-                        </Div>
-                        <Div className={"fs-0-9rem fw-500 dark ml-5px"}>
-                          {translate(getDayNotFmt(item.exercise_dateStart).format("ddd"))}
-                        </Div>
-                      </Grid>
-                    </Grid>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Grid container={true} spacing={2}>
-                      {/** row 1 **/}
-                      <Grid container={true} spacing={2}>
-                        <Grid size={2} className={"d-row-center"}>
-                          <Img
-                            max={20}
-                            hover={true}
-                            shadow={false}
-                            radius={false}
-                            src={"exercise3_1.webp"}
-                          />
-                        </Grid>
-                        <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
-                            {translate("volume")}
-                          </Div>
-                        </Grid>
-                        <Grid size={7}>
-                          <Grid container={true} spacing={1}>
-                            <Grid size={10} className={"d-row-right"}>
-                              <Div className={`fs-1-0rem fw-600 ${item.exercise_total_volume_color}`}>
-                                {insertComma(item.exercise_total_volume)}
-                              </Div>
-                            </Grid>
-                            <Grid size={2} className={"d-row-center"}>
-                              <Div className={"fs-0-6rem"}>
-                                {translate("vol")}
-                              </Div>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      {/** /.row 1 **/}
+		// 7-1. list
+    const listSection = () => (
+			<Grid container={true} spacing={0}>
+				{OBJECT?.map((item, i) => (
+				<Grid container={true} spacing={0} className={"border-1 radius-2 shadow-1 mb-10px"} key={`list-${i}`}>
+						<Grid size={12} className={"p-2px"}>
+							<Accordion
+								className={"border-0 shadow-0 radius-0"}
+								expanded={isExpanded?.[i]?.expanded}
+							>
+								<AccordionSummary
+									expandIcon={
+										<Icons
+											key={"ChevronDown"}
+											name={"ChevronDown"}
+											className={"w-18px h-18px"}
+											onClick={(e: any) => {
+												e.preventDefault();
+												e.stopPropagation();
+												setIsExpanded(isExpanded.map((el: any, index: number) => (
+													i === index ? {
+														expanded: !el.expanded
+													} : el
+												)));
+											}}
+										/>
+									}
+									onClick={() => {
+										navigate(toDetail, {
+											state: {
+												id: item._id,
+												dateType: item.exercise_dateType,
+												dateStart: item.exercise_dateStart,
+												dateEnd: item.exercise_dateEnd,
+											}
+										});
+									}}
+								>
+									<Grid container={true} spacing={2}>
+										<Grid size={2} className={"d-row-center"}>
+											<Icons
+												key={"Search"}
+												name={"Search"}
+												className={"w-18px h-18px"}
+											/>
+										</Grid>
+										<Grid size={10} className={"d-row-left"}>
+											<Div className={"fs-1-0rem fw-600 black mr-5px"}>
+												{item.exercise_dateStart?.substring(5, 10)}
+											</Div>
+											<Div className={"fs-0-9rem fw-500 dark ml-5px"}>
+												{translate(getDayNotFmt(item.exercise_dateStart).format("ddd"))}
+											</Div>
+										</Grid>
+									</Grid>
+								</AccordionSummary>
+								<AccordionDetails>
+									<Grid container={true} spacing={2}>
+										{/** row 1 **/}
+										<Grid container={true} spacing={2}>
+											<Grid size={2} className={"d-row-center"}>
+												<Img
+													max={20}
+													hover={true}
+													shadow={false}
+													radius={false}
+													src={"exercise3_1.webp"}
+												/>
+											</Grid>
+											<Grid size={3} className={"d-row-left"}>
+												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+													{translate("volume")}
+												</Div>
+											</Grid>
+											<Grid size={7}>
+												<Grid container={true} spacing={1}>
+													<Grid size={10} className={"d-row-right"}>
+														<Div className={`fs-1-0rem fw-600 ${item.exercise_total_volume_color}`}>
+															{insertComma(item.exercise_total_volume)}
+														</Div>
+													</Grid>
+													<Grid size={2} className={"d-row-center"}>
+														<Div className={"fs-0-6rem"}>
+															{translate("vol")}
+														</Div>
+													</Grid>
+												</Grid>
+											</Grid>
+										</Grid>
+										{/** /.row 1 **/}
 
-                      <Hr m={1} className={"bg-light"} />
+										<Hr m={1} className={"bg-light"} />
 
-                      {/** row 2 **/}
-                      <Grid container={true} spacing={2}>
-                        <Grid size={2} className={"d-center"}>
-                          <Img
-                            max={20}
-                            hover={true}
-                            shadow={false}
-                            radius={false}
-                            src={"exercise4.webp"}
-                          />
-                        </Grid>
-                        <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
-                            {translate("cardio")}
-                          </Div>
-                        </Grid>
-                        <Grid size={7}>
-                          <Grid container={true} spacing={1}>
-                            <Grid size={10} className={"d-row-right"}>
-                              <Div className={`fs-1-0rem fw-600 ${item.exercise_total_cardio_color}`}>
-                                {item.exercise_total_cardio}
-                              </Div>
-                            </Grid>
-                            <Grid size={2} className={"d-row-center"}>
-                              <Div className={"fs-0-6rem"}>
-                                {translate("hm")}
-                              </Div>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      {/** /.row 2 **/}
+										{/** row 2 **/}
+										<Grid container={true} spacing={2}>
+											<Grid size={2} className={"d-center"}>
+												<Img
+													max={20}
+													hover={true}
+													shadow={false}
+													radius={false}
+													src={"exercise4.webp"}
+												/>
+											</Grid>
+											<Grid size={3} className={"d-row-left"}>
+												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+													{translate("cardio")}
+												</Div>
+											</Grid>
+											<Grid size={7}>
+												<Grid container={true} spacing={1}>
+													<Grid size={10} className={"d-row-right"}>
+														<Div className={`fs-1-0rem fw-600 ${item.exercise_total_cardio_color}`}>
+															{item.exercise_total_cardio}
+														</Div>
+													</Grid>
+													<Grid size={2} className={"d-row-center"}>
+														<Div className={"fs-0-6rem"}>
+															{translate("hm")}
+														</Div>
+													</Grid>
+												</Grid>
+											</Grid>
+										</Grid>
+										{/** /.row 2 **/}
 
-                      <Hr m={1} className={"bg-light"} />
+										<Hr m={1} className={"bg-light"} />
 
-                      {/** row 3 **/}
-                      <Grid container={true} spacing={2}>
-                        <Grid size={2} className={"d-center"}>
-                          <Img
-                            max={20}
-                            hover={true}
-                            shadow={false}
-                            radius={false}
-                            src={"exercise5.webp"}
-                          />
-                        </Grid>
-                        <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
-                            {translate("scale")}
-                          </Div>
-                        </Grid>
-                        <Grid size={7}>
-                          <Grid container={true} spacing={1}>
-                            <Grid size={10} className={"d-row-right"}>
-                              <Div className={`fs-1-0rem fw-600 ${item.exercise_total_scale_color}`}>
-                                {insertComma(item.exercise_total_scale)}
-                              </Div>
-                            </Grid>
-                            <Grid size={2} className={"d-row-center"}>
-                              <Div className={"fs-0-6rem"}>
-                                {localUnit}
-                              </Div>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      {/** /.row 3 **/}
-                    </Grid>
-                  </AccordionDetails>
-                </Accordion>
-              </Grid>
-            </Grid>
-          ))}
-        </Grid>
-      );
-      return (
-        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
-          {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={"exercise"} /> : listFragment()}
-        </Card>
-      );
-    };
+										{/** row 3 **/}
+										<Grid container={true} spacing={2}>
+											<Grid size={2} className={"d-center"}>
+												<Img
+													max={20}
+													hover={true}
+													shadow={false}
+													radius={false}
+													src={"exercise5.webp"}
+												/>
+											</Grid>
+											<Grid size={3} className={"d-row-left"}>
+												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+													{translate("scale")}
+												</Div>
+											</Grid>
+											<Grid size={7}>
+												<Grid container={true} spacing={1}>
+													<Grid size={10} className={"d-row-right"}>
+														<Div className={`fs-1-0rem fw-600 ${item.exercise_total_scale_color}`}>
+															{insertComma(item.exercise_total_scale)}
+														</Div>
+													</Grid>
+													<Grid size={2} className={"d-row-center"}>
+														<Div className={"fs-0-6rem"}>
+															{localUnit}
+														</Div>
+													</Grid>
+												</Grid>
+											</Grid>
+										</Grid>
+										{/** /.row 3 **/}
+									</Grid>
+								</AccordionDetails>
+							</Accordion>
+						</Grid>
+					</Grid>
+				))}
+			</Grid>
+		);
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min-75vh"}>
-        {listSection()}
+				{COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={"exercise"} /> : listSection()}
       </Paper>
     );
   };

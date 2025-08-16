@@ -8,7 +8,7 @@ import { axios } from "@importLibs";
 import { sync } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, PickerTime, Count, Delete } from "@importContainers";
-import { Bg, Paper, Grid, Card } from "@importComponents";
+import { Bg, Paper, Grid, Br } from "@importComponents";
 
 // -------------------------------------------------------------------------------------------------
 export const SleepGoalDetail = () => {
@@ -274,8 +274,8 @@ export const SleepGoalDetail = () => {
   // 7. detail -------------------------------------------------------------------------------------
   const detailNode = () => {
     // 7-1. date + count
-    const dateCountSection = () => (
-      <Grid container={true} spacing={2} className={"border-1 radius-2 p-20px"}>
+		const dateCountSection = () => (
+			<Grid container={true} spacing={2} className={`border-1 radius-2 shadow-1 p-20px`}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}
@@ -295,95 +295,89 @@ export const SleepGoalDetail = () => {
       </Grid>
     );
     // 7-3. detail
-    const detailSection = () => {
-      const detailFragment = () => (
-        <Grid container={true} spacing={0}>
-          {[OBJECT]?.filter((_: any, idx: number) => idx === 0).map((_: any, i: number) => (
-            <Grid container spacing={2} key={`detail-${i}`}
-						className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}>
-              {/** row 1 **/}
-              <Grid container={true} spacing={2}>
-                <Grid size={6} className={"d-row-left"}>
-                  <Bg
-                    badgeContent={i + 1}
-                    bgcolor={"#1976d2"}
-                  />
-                </Grid>
-                <Grid size={6} className={"d-row-right"}>
-                  <Delete
-                    index={i}
-                    handleDelete={handleDelete}
-                    LOCKED={LOCKED}
-                  />
-                </Grid>
-              </Grid>
-              {/** /.row 1 **/}
+    const detailSection = () => (
+			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-1`}>
+				{[OBJECT]?.filter((_: any, idx: number) => idx === 0).map((_: any, i: number) => (
+					<Grid container spacing={2} key={`detail-${i}`}
+					className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}>
+						{/** row 1 **/}
+						<Grid container={true} spacing={2}>
+							<Grid size={6} className={"d-row-left"}>
+								<Bg
+									badgeContent={i + 1}
+									bgcolor={"#1976d2"}
+								/>
+							</Grid>
+							<Grid size={6} className={"d-row-right"}>
+								<Delete
+									index={i}
+									handleDelete={handleDelete}
+									LOCKED={LOCKED}
+								/>
+							</Grid>
+						</Grid>
+						{/** /.row 1 **/}
 
-              {/** row 2 **/}
-              <Grid container={true} spacing={2}>
-                <Grid size={12}>
-                  <PickerTime
-                    OBJECT={OBJECT}
-                    setOBJECT={setOBJECT}
-                    REFS={REFS}
-                    ERRORS={ERRORS}
-                    DATE={DATE}
-                    LOCKED={LOCKED}
-                    extra={"sleep_goal_bedTime"}
-                    i={i}
-                  />
-                </Grid>
-              </Grid>
-              {/** /.row 2 **/}
+						{/** row 2 **/}
+						<Grid container={true} spacing={2}>
+							<Grid size={12}>
+								<PickerTime
+									OBJECT={OBJECT}
+									setOBJECT={setOBJECT}
+									REFS={REFS}
+									ERRORS={ERRORS}
+									DATE={DATE}
+									LOCKED={LOCKED}
+									extra={"sleep_goal_bedTime"}
+									i={i}
+								/>
+							</Grid>
+						</Grid>
+						{/** /.row 2 **/}
 
-              {/** row 3 **/}
-              <Grid container={true} spacing={2}>
-                <Grid size={12}>
-                  <PickerTime
-                    OBJECT={OBJECT}
-                    setOBJECT={setOBJECT}
-                    REFS={REFS}
-                    ERRORS={ERRORS}
-                    DATE={DATE}
-                    LOCKED={LOCKED}
-                    extra={"sleep_goal_wakeTime"}
-                    i={i}
-                  />
-                </Grid>
-              </Grid>
-              {/** /.row 3 **/}
+						{/** row 3 **/}
+						<Grid container={true} spacing={2}>
+							<Grid size={12}>
+								<PickerTime
+									OBJECT={OBJECT}
+									setOBJECT={setOBJECT}
+									REFS={REFS}
+									ERRORS={ERRORS}
+									DATE={DATE}
+									LOCKED={LOCKED}
+									extra={"sleep_goal_wakeTime"}
+									i={i}
+								/>
+							</Grid>
+						</Grid>
+						{/** /.row 3 **/}
 
-              {/** row 4 **/}
-              <Grid container={true} spacing={2}>
-                <Grid size={12}>
-                  <PickerTime
-                    OBJECT={OBJECT}
-                    setOBJECT={setOBJECT}
-                    REFS={REFS}
-                    ERRORS={ERRORS}
-                    DATE={DATE}
-                    LOCKED={LOCKED}
-                    extra={"sleep_goal_sleepTime"}
-                    i={i}
-                  />
-                </Grid>
-              </Grid>
-              {/** /.row 4 **/}
-            </Grid>
-          ))}
-        </Grid>
-      );
-      return (
-        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
-          {COUNT?.newSectionCnt > 0 && detailFragment()}
-        </Card>
-      );
-    };
+						{/** row 4 **/}
+						<Grid container={true} spacing={2}>
+							<Grid size={12}>
+								<PickerTime
+									OBJECT={OBJECT}
+									setOBJECT={setOBJECT}
+									REFS={REFS}
+									ERRORS={ERRORS}
+									DATE={DATE}
+									LOCKED={LOCKED}
+									extra={"sleep_goal_sleepTime"}
+									i={i}
+								/>
+							</Grid>
+						</Grid>
+						{/** /.row 4 **/}
+					</Grid>
+				))}
+			</Grid>
+		);
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min-75vh"}>
         {dateCountSection()}
-        {detailSection()}
+				<Br m={20} />
+				{COUNT?.newSectionCnt > 0 && detailSection()}
       </Paper>
     );
   };

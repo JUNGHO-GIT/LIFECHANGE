@@ -25,7 +25,7 @@ export const barGoal = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         exercise_goal_dateStart: 1,
         exercise_goal_dateEnd: 1,
         exercise_goal_scale: {
@@ -65,7 +65,7 @@ export const barReal = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         exercise_dateStart: 1,
         exercise_dateEnd: 1,
         exercise_total_scale: {
@@ -211,7 +211,7 @@ export const lineScale = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         exercise_dateStart: 1,
         exercise_dateEnd: 1,
         exercise_total_scale: 1
@@ -249,7 +249,7 @@ export const lineVolume = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         exercise_dateStart: 1,
         exercise_dateEnd: 1,
         exercise_total_volume: 1
@@ -287,7 +287,7 @@ export const lineCardio = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         exercise_dateStart: 1,
         exercise_dateEnd: 1,
         exercise_total_cardio: 1
@@ -325,7 +325,7 @@ export const avgVolume = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         exercise_dateStart: 1,
         exercise_dateEnd: 1,
         exercise_total_volume: 1
@@ -363,7 +363,7 @@ export const avgCardio = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         exercise_dateStart: 1,
         exercise_dateEnd: 1,
         exercise_total_cardio: 1

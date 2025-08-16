@@ -9,7 +9,6 @@ import { Bg } from "@interfaces/components/Bg";
 import { Icons } from "@interfaces/components/Icons";
 import { Paper } from "@interfaces/components/Paper";
 import { Grid } from "@interfaces/components/Grid";
-import { Card } from "@interfaces/components/Card";
 import { Popover } from "@interfaces/components/Popover";
 
 // -------------------------------------------------------------------------------------------------
@@ -23,6 +22,5 @@ export {
   Icons,
   Paper,
   Grid,
-  Card,
   Popover,
 };

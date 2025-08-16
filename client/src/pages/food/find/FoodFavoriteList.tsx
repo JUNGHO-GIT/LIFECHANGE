@@ -8,7 +8,7 @@ import { FoodFind, FoodFindType } from "@importSchemas";
 import { axios } from "@importLibs";
 import { sync, insertComma, setSession } from "@importScripts";
 import { Footer, Empty, Dialog } from "@importLayouts";
-import { Div, Hr, Img, Icons, Paper, Card, Grid } from "@importComponents";
+import { Div, Hr, Img, Icons, Paper, Grid } from "@importComponents";
 import { Checkbox,  Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -56,11 +56,6 @@ export const FoodFavoriteList = () => {
     dateStart: location_dateStart || getDayFmt(),
     dateEnd: location_dateEnd || getDayFmt(),
   });
-
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
-  }, [isExpanded]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 페이지 번호 변경 시 flowFind 호출
@@ -204,238 +199,231 @@ export const FoodFavoriteList = () => {
     setSession("section", "food", "", sectionArray);
   };
 
-  // 7. find ---------------------------------------------------------------------------------------
-  const findNode = () => {
-    const listSection = () => {
-      const listFragment = () => (
-        <Grid container={true} spacing={0}>
-          {OBJECT?.map((item, i) => (
-            <Grid container={true} spacing={0} className={"border-1 radius-2"} key={`list-${i}`}>
-              <Grid size={12} className={"p-2px"}>
-                <Accordion
-                  className={"border-0 shadow-0 radius-0"}
-                  expanded={isExpanded?.[i]?.expanded}
-                >
-                  <AccordionSummary
-                    expandIcon={
-                      <Icons
-                        key={"ChevronDown"}
-                        name={"ChevronDown"}
-                        className={"w-18px h-18px"}
-                        onClick={(e: any) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          setIsExpanded(isExpanded.map((el: any, index: number) => (
-                            i === index ? {
-                              expanded: !el.expanded
-                            } : el
-                          )));
-                        }}
-                      />
-                    }
-                  >
-                    <Grid container={true} spacing={2}>
-                      <Grid size={2} className={"d-row-center"}>
-                        <Checkbox
-                          key={`check-${i}`}
-                          color={"primary"}
-                          size={"small"}
-                          checked={
-                            !! (
-                              checkedQueries[`${item.food_query}_${PAGING.page}`] &&
-                              checkedQueries[`${item.food_query}_${PAGING.page}`]?.[i]
-                            )
-                          }
-                          onChange={(e: any) => {
-                            e.stopPropagation();
-                            handleCheckboxChange(i);
-                          }}
-                        />
-                      </Grid>
-                      <Grid size={6} className={"d-row-left"}>
-                        <Div className={`fs-1-0rem fw-600 ${item.food_name_color}`}>
-                          {item.food_name}
-                        </Div>
-                        <Div className={"mt-n3px ml-5px"}>
-                          <Icons
-                            key={"Star"}
-                            name={"Star"}
-                            className={"w-20px h-20px"}
-                            color={"darkslategrey"}
-                            fill={"gold"}
-                            onClick={(e: any) => {
-                              e.stopPropagation();
-                              flowUpdateFavorite(item);
-                            }}
-                          />
-                        </Div>
-                      </Grid>
-                      <Grid size={4} className={"d-row-right"}>
-                        <Div className={`fs-1-0rem fw-600 ${item.food_count_color}`}>
-                          <Div className={`fs-0-8rem fw-500 dark mr-10px`}>
-                            {item.food_brand}
-                          </Div>
-                        </Div>
-                      </Grid>
-                    </Grid>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Grid container={true} spacing={2}>
-                      {/** row 1 **/}
-                      <Grid container={true} spacing={2}>
-                        <Grid size={2} className={"d-row-center"}>
-                          <Img
-                            max={20}
-                            hover={true}
-                            shadow={false}
-                            radius={false}
-                            src={"food2.webp"}
-                          />
-                        </Grid>
-                        <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
-                            {translate("kcal")}
-                          </Div>
-                        </Grid>
-                        <Grid size={7}>
-                          <Grid container={true} spacing={1}>
-                            <Grid size={10} className={"d-row-right"}>
-                              <Div className={`fs-1-0rem fw-600 ${item.food_kcal_color}`}>
-                                {insertComma(item.food_kcal || "0")}
-                              </Div>
-                            </Grid>
-                            <Grid size={2} className={"d-row-center"}>
-                              <Div className={"fs-0-6rem"}>
-                                {translate("kc")}
-                              </Div>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      {/** /.row 1 **/}
+  // 7. favorite ---------------------------------------------------------------------------------------
+  const favoriteNode = () => {
+    const listSection = () => (
+			<Grid container={true} spacing={0}>
+				{OBJECT?.map((item, i) => (
+					<Grid container={true} spacing={0} className={"border-1 radius-2 shadow-1 mb-10px"} key={`list-${i}`}>
+						<Grid size={12} className={"p-2px"}>
+							<Accordion
+								className={"border-0 shadow-0 radius-0"}
+								expanded={isExpanded?.[i]?.expanded}
+							>
+								<AccordionSummary
+									expandIcon={
+										<Icons
+											key={"ChevronDown"}
+											name={"ChevronDown"}
+											className={"w-18px h-18px"}
+											onClick={(e: any) => {
+												e.preventDefault();
+												e.stopPropagation();
+												setIsExpanded(isExpanded.map((el: any, index: number) => (
+													i === index ? {
+														expanded: !el.expanded
+													} : el
+												)));
+											}}
+										/>
+									}
+								>
+									<Grid container={true} spacing={2}>
+										<Grid size={2} className={"d-row-center"}>
+											<Checkbox
+												key={`check-${i}`}
+												color={"primary"}
+												size={"small"}
+												checked={
+													!! (
+														checkedQueries[`${item.food_query}_${PAGING.page}`] &&
+														checkedQueries[`${item.food_query}_${PAGING.page}`]?.[i]
+													)
+												}
+												onChange={(e: any) => {
+													e.stopPropagation();
+													handleCheckboxChange(i);
+												}}
+											/>
+										</Grid>
+										<Grid size={6} className={"d-row-left"}>
+											<Div className={`fs-1-0rem fw-600 ${item.food_name_color}`}>
+												{item.food_name}
+											</Div>
+											<Div className={"mt-n3px ml-5px"}>
+												<Icons
+													key={"Star"}
+													name={"Star"}
+													className={"w-20px h-20px"}
+													color={"darkslategrey"}
+													fill={"gold"}
+													onClick={(e: any) => {
+														e.stopPropagation();
+														flowUpdateFavorite(item);
+													}}
+												/>
+											</Div>
+										</Grid>
+										<Grid size={4} className={"d-row-right"}>
+											<Div className={`fs-1-0rem fw-600 ${item.food_count_color}`}>
+												<Div className={`fs-0-8rem fw-500 dark mr-10px`}>
+													{item.food_brand}
+												</Div>
+											</Div>
+										</Grid>
+									</Grid>
+								</AccordionSummary>
+								<AccordionDetails>
+									<Grid container={true} spacing={2}>
+										{/** row 1 **/}
+										<Grid container={true} spacing={2}>
+											<Grid size={2} className={"d-row-center"}>
+												<Img
+													max={20}
+													hover={true}
+													shadow={false}
+													radius={false}
+													src={"food2.webp"}
+												/>
+											</Grid>
+											<Grid size={3} className={"d-row-left"}>
+												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+													{translate("kcal")}
+												</Div>
+											</Grid>
+											<Grid size={7}>
+												<Grid container={true} spacing={1}>
+													<Grid size={10} className={"d-row-right"}>
+														<Div className={`fs-1-0rem fw-600 ${item.food_kcal_color}`}>
+															{insertComma(item.food_kcal || "0")}
+														</Div>
+													</Grid>
+													<Grid size={2} className={"d-row-center"}>
+														<Div className={"fs-0-6rem"}>
+															{translate("kc")}
+														</Div>
+													</Grid>
+												</Grid>
+											</Grid>
+										</Grid>
+										{/** /.row 1 **/}
 
-                      <Hr m={1} className={"bg-light"} />
+										<Hr m={1} className={"bg-light"} />
 
-                      {/** row 2 **/}
-                      <Grid container={true} spacing={2}>
-                        <Grid size={2} className={"d-center"}>
-                          <Img
-                            max={20}
-                            hover={true}
-                            shadow={false}
-                            radius={false}
-                            src={"food3.webp"}
-                          />
-                        </Grid>
-                        <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
-                            {translate("carb")}
-                          </Div>
-                        </Grid>
-                        <Grid size={7}>
-                          <Grid container={true} spacing={1}>
-                            <Grid size={10} className={"d-row-right"}>
-                              <Div className={`fs-1-0rem fw-600 ${item.food_carb_color}`}>
-                                {insertComma(item.food_carb || "0")}
-                              </Div>
-                            </Grid>
-                            <Grid size={2} className={"d-row-center"}>
-                              <Div className={"fs-0-6rem"}>
-                                {translate("g")}
-                              </Div>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      {/** /.row 2 **/}
+										{/** row 2 **/}
+										<Grid container={true} spacing={2}>
+											<Grid size={2} className={"d-center"}>
+												<Img
+													max={20}
+													hover={true}
+													shadow={false}
+													radius={false}
+													src={"food3.webp"}
+												/>
+											</Grid>
+											<Grid size={3} className={"d-row-left"}>
+												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+													{translate("carb")}
+												</Div>
+											</Grid>
+											<Grid size={7}>
+												<Grid container={true} spacing={1}>
+													<Grid size={10} className={"d-row-right"}>
+														<Div className={`fs-1-0rem fw-600 ${item.food_carb_color}`}>
+															{insertComma(item.food_carb || "0")}
+														</Div>
+													</Grid>
+													<Grid size={2} className={"d-row-center"}>
+														<Div className={"fs-0-6rem"}>
+															{translate("g")}
+														</Div>
+													</Grid>
+												</Grid>
+											</Grid>
+										</Grid>
+										{/** /.row 2 **/}
 
-                      <Hr m={1} className={"bg-light"} />
+										<Hr m={1} className={"bg-light"} />
 
-                      {/** row 3 **/}
-                      <Grid container={true} spacing={2}>
-                        <Grid size={2} className={"d-center"}>
-                          <Img
-                            max={20}
-                            hover={true}
-                            shadow={false}
-                            radius={false}
-                            src={"food4.webp"}
-                          />
-                        </Grid>
-                        <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
-                            {translate("protein")}
-                          </Div>
-                        </Grid>
-                        <Grid size={7}>
-                          <Grid container={true} spacing={1}>
-                            <Grid size={10} className={"d-row-right"}>
-                              <Div className={`fs-1-0rem fw-600 ${item.food_protein_color}`}>
-                                {insertComma(item.food_carb || "0")}
-                              </Div>
-                            </Grid>
-                            <Grid size={2} className={"d-row-center"}>
-                              <Div className={"fs-0-6rem"}>
-                                {translate("g")}
-                              </Div>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      {/** /.row 2 **/}
+										{/** row 3 **/}
+										<Grid container={true} spacing={2}>
+											<Grid size={2} className={"d-center"}>
+												<Img
+													max={20}
+													hover={true}
+													shadow={false}
+													radius={false}
+													src={"food4.webp"}
+												/>
+											</Grid>
+											<Grid size={3} className={"d-row-left"}>
+												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+													{translate("protein")}
+												</Div>
+											</Grid>
+											<Grid size={7}>
+												<Grid container={true} spacing={1}>
+													<Grid size={10} className={"d-row-right"}>
+														<Div className={`fs-1-0rem fw-600 ${item.food_protein_color}`}>
+															{insertComma(item.food_carb || "0")}
+														</Div>
+													</Grid>
+													<Grid size={2} className={"d-row-center"}>
+														<Div className={"fs-0-6rem"}>
+															{translate("g")}
+														</Div>
+													</Grid>
+												</Grid>
+											</Grid>
+										</Grid>
+										{/** /.row 2 **/}
 
-                      <Hr m={1} className={"bg-light"} />
+										<Hr m={1} className={"bg-light"} />
 
-                      {/** row 3 **/}
-                      <Grid container={true} spacing={2}>
-                        <Grid size={2} className={"d-center"}>
-                          <Img
-                            max={20}
-                            hover={true}
-                            shadow={false}
-                            radius={false}
-                            src={"food5.webp"}
-                          />
-                        </Grid>
-                        <Grid size={3} className={"d-row-left"}>
-                          <Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
-                            {translate("fat")}
-                          </Div>
-                        </Grid>
-                        <Grid size={7}>
-                          <Grid container={true} spacing={1}>
-                            <Grid size={10} className={"d-row-right"}>
-                              <Div className={`fs-1-0rem fw-600 ${item.food_fat_color}`}>
-                                {insertComma(item.food_fat || "0")}
-                              </Div>
-                            </Grid>
-                            <Grid size={2} className={"d-row-center"}>
-                              <Div className={"fs-0-6rem"}>
-                                {translate("g")}
-                              </Div>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      {/** /.row 3 **/}
-                    </Grid>
-                  </AccordionDetails>
-                </Accordion>
-              </Grid>
-            </Grid>
-          ))}
-        </Grid>
-      );
-      return (
-        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
-          {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={"food"} /> : listFragment()}
-        </Card>
-      );
-    };
+										{/** row 3 **/}
+										<Grid container={true} spacing={2}>
+											<Grid size={2} className={"d-center"}>
+												<Img
+													max={20}
+													hover={true}
+													shadow={false}
+													radius={false}
+													src={"food5.webp"}
+												/>
+											</Grid>
+											<Grid size={3} className={"d-row-left"}>
+												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+													{translate("fat")}
+												</Div>
+											</Grid>
+											<Grid size={7}>
+												<Grid container={true} spacing={1}>
+													<Grid size={10} className={"d-row-right"}>
+														<Div className={`fs-1-0rem fw-600 ${item.food_fat_color}`}>
+															{insertComma(item.food_fat || "0")}
+														</Div>
+													</Grid>
+													<Grid size={2} className={"d-row-center"}>
+														<Div className={"fs-0-6rem"}>
+															{translate("g")}
+														</Div>
+													</Grid>
+												</Grid>
+											</Grid>
+										</Grid>
+										{/** /.row 3 **/}
+									</Grid>
+								</AccordionDetails>
+							</Accordion>
+						</Grid>
+					</Grid>
+				))}
+			</Grid>
+		);
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min-75vh"}>
-        {listSection()}
+      	{COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={"food"} /> : listSection()}
       </Paper>
     );
   };
@@ -467,7 +455,7 @@ export const FoodFavoriteList = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {findNode()}
+      {favoriteNode()}
       {dialogNode()}
       {footerNode()}
     </>

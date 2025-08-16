@@ -25,7 +25,7 @@ export const barGoal = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         food_goal_dateStart: 1,
         food_goal_dateEnd: 1,
         food_goal_kcal: 1,
@@ -66,7 +66,7 @@ export const barReal = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         food_dateStart: 1,
         food_dateEnd: 1,
         food_total_kcal: 1,
@@ -173,7 +173,7 @@ export const pieNut = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         food_total_carb: "$total_carb",
         food_total_protein: "$total_protein",
         food_total_fat: "$total_fat"
@@ -211,7 +211,7 @@ export const lineKcal = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         food_dateStart: 1,
         food_dateEnd: 1,
         food_total_kcal: 1
@@ -249,7 +249,7 @@ export const lineNut = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         food_dateStart: 1,
         food_dateEnd: 1,
         food_total_carb: 1,
@@ -289,7 +289,7 @@ export const avgKcal = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         food_dateStart: 1,
         food_dateEnd: 1,
         food_total_kcal: 1
@@ -327,7 +327,7 @@ export const avgNut = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         food_dateStart: 1,
         food_dateEnd: 1,
         food_total_carb: 1,

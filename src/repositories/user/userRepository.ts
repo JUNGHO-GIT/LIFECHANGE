@@ -308,8 +308,7 @@ export const categoryDetail = async (
     },
     {
       $project: {
-        _id: 1,
-        calendar: "$user_dataCategory.calendar",
+        _id: 0,
         exercise: "$user_dataCategory.exercise",
         food: "$user_dataCategory.food",
         money: "$user_dataCategory.money",

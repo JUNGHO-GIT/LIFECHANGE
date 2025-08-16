@@ -1,6 +1,6 @@
 // CalendarDetail.tsx
 
-import { useState, useEffect, useLocation, useCallback, useMemo } from "@importReacts";
+import { useState, useEffect, useLocation, useCallback } from "@importReacts";
 import { useCommonValue, useCommonDate, useValidateCalendar } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { Calendar, CalendarType } from "@importSchemas";
@@ -8,7 +8,7 @@ import { axios } from "@importLibs";
 import { insertComma } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, PickerTime, Count, Delete, Input, Select, Memo } from "@importContainers";
-import { Img, Bg, Paper, Card, Grid, Div, Icons, Br } from "@importComponents";
+import { Img, Bg, Paper, Grid, Div, Br } from "@importComponents";
 import { Checkbox, MenuItem } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -230,7 +230,7 @@ export const CalendarDetail = () => {
 
 		// 7-2. excersice
 		const exerciseSection = () => (
-			<Grid container={true} spacing={0} className={`border-1 radius-2 shadow-1`}>
+			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-1`}>
 				{OBJECT?.calendar_exercise_section?.map((item, i) => (
 					<Grid container spacing={2} key={`exercise-detail-${i}`}
 					className={`${LOCKED === `locked` ? `locked` : ``} border-1 radius-2 p-20px`}>
@@ -474,7 +474,7 @@ export const CalendarDetail = () => {
 
 		// 7-3. food
 		const foodSection = () => (
-			<Grid container={true} spacing={0} className={`border-1 radius-2 shadow-1`}>
+			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-1`}>
 				{OBJECT?.calendar_food_section?.map((item, i) => (
 					<Grid container spacing={2} key={`food-detail-${i}`}
 					className={`${LOCKED === `locked` ? `locked` : ``} border-1 radius-2 p-20px`}>
@@ -824,7 +824,7 @@ export const CalendarDetail = () => {
 
 		// 7-4. money
 		const moneySection = () => (
-			<Grid container={true} spacing={0} className={`border-1 radius-2 shadow-1`}>
+			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-1`}>
 				{OBJECT?.calendar_money_section?.map((item, i) => (
 					<Grid container spacing={2} key={`money-detail-${i}`}
 					className={`${LOCKED === `locked` ? `locked` : ``} border-1 radius-2 p-20px`}>
@@ -1017,7 +1017,7 @@ export const CalendarDetail = () => {
 
 		// 7-5. sleep
 		const sleepSection = () => (
-			<Grid container={true} spacing={0} className={`border-1 radius-2 shadow-1`}>
+			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-1`}>
 				{OBJECT?.calendar_sleep_section?.map((item, i) => (
 					<Grid container spacing={2} key={`sleep-detail-${i}`}
 					className={`${LOCKED === `locked` ? `locked` : ``} border-1 radius-2 p-20px`}>
@@ -1114,9 +1114,12 @@ export const CalendarDetail = () => {
 				))}
 			</Grid>
 		);
-		// 7-3. detail
-		const detailSection = () => (
-			<Card className={`d-col-center border-0 shadow-0 radius-0`}>
+
+		// 7-10. return
+		return (
+			<Paper className={`content-wrapper border-1 radius-2 shadow-1 h-min-75vh`}>
+				{dateCountSection()}
+				<Br m={20} />
 				{exerciseSection()}
 				<Br m={20} />
 				{foodSection()}
@@ -1124,14 +1127,6 @@ export const CalendarDetail = () => {
 				{moneySection()}
 				<Br m={20} />
 				{sleepSection()}
-			</Card>
-		);
-		// 7-10. return
-		return (
-			<Paper className={`content-wrapper border-1 radius-2 shadow-1 h-min-75vh`}>
-				{dateCountSection()}
-				<Br m={20} />
-				{detailSection()}
 			</Paper>
 		);
 	};

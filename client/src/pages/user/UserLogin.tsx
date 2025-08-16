@@ -7,7 +7,7 @@ import {axios} from "@importLibs";
 import {sync, getLocal, setLocal, setSession} from "@importScripts";
 import {User} from "@importSchemas";
 import {Input} from "@importContainers";
-import {Div, Btn, Img, Hr, Paper, Grid, Card} from "@importComponents";
+import {Div, Btn, Img, Hr, Paper, Grid } from "@importComponents";
 import {Checkbox} from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -245,69 +245,62 @@ export const UserLogin = () => {
 			</Grid>
 		);
 		// 7-2. login
-		const loginSection = () => {
-			const detailFragment = () => (
-				<Grid container={true} spacing={0}>
-					{[OBJECT]?.map((item, i) => (
-						<Grid container={true} spacing={2} className={"p-10px"} key={`detail-${i}`}>
-							{/* row 1 */}
-							<Grid container={true} spacing={0}>
-								<Grid size={12}>
-									<Input
-										label={translate("id")}
-										value={item.user_id}
-										inputRef={REFS?.[i]?.user_id}
-										error={ERRORS?.[i]?.user_id}
-										placeholder={"abcd@naver.com"}
-										onChange={(e: any) => {
-											const value = e.target.value;
-											if (value?.length > 30) {
-												setOBJECT((prev: any) => ({
-													...prev,
-													user_id: prev.user_id,
-												}));
-											}
-											else {
-												setOBJECT((prev: any) => ({
-													...prev,
-													user_id: value,
-												}));
-											}
-										}}
-									/>
-								</Grid>
-							</Grid>
-							{/** /.row 1 **/}
-
-							{/** row 2 **/}
-							<Grid container={true} spacing={0}>
-								<Grid size={12}>
-									<Input
-										type={"password"}
-										label={translate("pw")}
-										value={item.user_pw}
-										inputRef={REFS?.[i]?.user_pw}
-										error={ERRORS?.[i]?.user_pw}
-										onChange={(e: any) => {
+		const loginSection = () => (
+			<Grid container={true} spacing={0}>
+				{[OBJECT]?.map((item, i) => (
+					<Grid container={true} spacing={2} className={"p-10px"} key={`detail-${i}`}>
+						{/* row 1 */}
+						<Grid container={true} spacing={0}>
+							<Grid size={12}>
+								<Input
+									label={translate("id")}
+									value={item.user_id}
+									inputRef={REFS?.[i]?.user_id}
+									error={ERRORS?.[i]?.user_id}
+									placeholder={"abcd@naver.com"}
+									onChange={(e: any) => {
+										const value = e.target.value;
+										if (value?.length > 30) {
 											setOBJECT((prev: any) => ({
 												...prev,
-												user_pw: e.target.value,
+												user_id: prev.user_id,
 											}));
-										}}
-									/>
-								</Grid>
+										}
+										else {
+											setOBJECT((prev: any) => ({
+												...prev,
+												user_id: value,
+											}));
+										}
+									}}
+								/>
 							</Grid>
-							{/** /.row 2 **/}
 						</Grid>
-					))}
-				</Grid>
-			);
-			return (
-				<Card className={"d-col-center border-0 shadow-0 radius-0"}>
-					{detailFragment()}
-				</Card>
-			);
-		};
+						{/** /.row 1 **/}
+
+						{/** row 2 **/}
+						<Grid container={true} spacing={0}>
+							<Grid size={12}>
+								<Input
+									type={"password"}
+									label={translate("pw")}
+									value={item.user_pw}
+									inputRef={REFS?.[i]?.user_pw}
+									error={ERRORS?.[i]?.user_pw}
+									onChange={(e: any) => {
+										setOBJECT((prev: any) => ({
+											...prev,
+											user_pw: e.target.value,
+										}));
+									}}
+								/>
+							</Grid>
+						</Grid>
+						{/** /.row 2 **/}
+					</Grid>
+				))}
+			</Grid>
+		);
 		// 7-3. check
 		const checkSection = () => (
 			<Grid container={true} spacing={0}>

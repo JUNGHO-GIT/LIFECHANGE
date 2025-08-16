@@ -26,7 +26,7 @@ export const exist = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         money_dateType: 1,
         money_dateStart: 1,
         money_dateEnd: 1,
@@ -95,7 +95,7 @@ export const list = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         money_dateType: 1,
         money_dateStart: 1,
         money_dateEnd: 1,

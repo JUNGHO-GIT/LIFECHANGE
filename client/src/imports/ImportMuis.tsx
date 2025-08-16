@@ -10,7 +10,7 @@ import {
   Backdrop, BottomNavigation, BottomNavigationAction, Button, Badge,
 
   // c
-  Card, Checkbox, Collapse, CssBaseline, Container, createTheme, ThemeProvider,
+  Checkbox, Collapse, CssBaseline, Container, createTheme, ThemeProvider,
 
   // d
   Drawer, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
@@ -88,7 +88,7 @@ export {
   Backdrop, BottomNavigation, BottomNavigationAction, Button, Badge,
 
   // c
-  Card, Checkbox, Collapse, CssBaseline, Container, createTheme, ThemeProvider,
+  Checkbox, Collapse, CssBaseline, Container, createTheme, ThemeProvider,
 
   // d
   Drawer, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,

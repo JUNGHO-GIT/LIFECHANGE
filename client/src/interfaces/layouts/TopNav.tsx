@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage } from "@importStores";
 import { insertComma } from "@importScripts";
 import { PopUp, Input } from "@importContainers";
-import { Div, Img, Hr, Br, Paper, Grid, Card } from "@importComponents";
+import { Div, Img, Hr, Br, Paper, Grid } from "@importComponents";
 import { Tabs, Tab, Checkbox, MenuItem, Menu } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -351,7 +351,7 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px"}>
+          <Div className={"w-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px"}>
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-col-center"}>
                 <Div className={"fs-1-0rem fw-600"}>
@@ -364,7 +364,7 @@ export const TopNav = () => {
               </Grid>
             </Grid>
             <Hr m={30} />
-            <Grid container spacing={0} columns={20}>
+            <Grid container={true} spacing={0} columns={20}>
               <Grid size={6} className={"d-row-center"}>
                 <Img
                   max={30}
@@ -387,7 +387,7 @@ export const TopNav = () => {
               </Grid>
             </Grid>
             <Hr m={30} />
-            <Grid container spacing={0} columns={20}>
+            <Grid container={true} spacing={0} columns={20}>
               <Grid size={6} className={"d-row-center"}>
                 <Img
                   max={25}
@@ -410,7 +410,7 @@ export const TopNav = () => {
               </Grid>
             </Grid>
             <Br m={10} />
-            <Grid container spacing={0} columns={20}>
+            <Grid container={true} spacing={0} columns={20}>
               <Grid size={6} className={"d-row-center"}>
                 <Img
                   max={25}
@@ -433,7 +433,7 @@ export const TopNav = () => {
               </Grid>
             </Grid>
             <Br m={10} />
-            <Grid container spacing={0} columns={20}>
+            <Grid container={true} spacing={0} columns={20}>
               <Grid size={6} className={"d-row-center"}>
                 <Img
                   max={25}
@@ -456,7 +456,7 @@ export const TopNav = () => {
               </Grid>
             </Grid>
             <Br m={10} />
-            <Grid container spacing={0} columns={20}>
+            <Grid container={true} spacing={0} columns={20}>
               <Grid size={6} className={"d-row-center"}>
                 <Img
                   max={25}
@@ -486,7 +486,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
             </Grid>
-          </Card>
+          </Div>
         }
         children={(popTrigger: any) => (
           <Div className={"mx-auto d-center"}>
@@ -513,7 +513,7 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px"}>
+          <Div className={"w-max-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px"}>
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-col-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
@@ -526,7 +526,7 @@ export const TopNav = () => {
               </Grid>
             </Grid>
             <Hr m={30} />
-            <Grid container spacing={0} columns={20}>
+            <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
                   max={20}
@@ -554,7 +554,7 @@ export const TopNav = () => {
               </Grid>
             </Grid>
             <Br m={10} />
-            <Grid container spacing={0} columns={20}>
+            <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
                   max={20}
@@ -625,7 +625,7 @@ export const TopNav = () => {
                 />
               </Grid>
             </Grid>
-          </Card>
+          </Div>
         }
         children={(popTrigger: any) => (
           <Div className={"mr-auto d-center"}>
@@ -652,7 +652,7 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px"}>
+          <Div className={"w-max-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px"}>
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-col-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
@@ -688,7 +688,7 @@ export const TopNav = () => {
               </Grid>
             </Grid>
             <Hr m={30} />
-            <Grid container spacing={0} columns={20}>
+            <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
                   max={20}
@@ -715,7 +715,7 @@ export const TopNav = () => {
               </Grid>
             </Grid>
             <Br m={10} />
-            <Grid container spacing={0} columns={20}>
+            <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
                   max={20}
@@ -851,7 +851,7 @@ export const TopNav = () => {
                 />
               </Grid>
             </Grid>
-          </Card>
+          </Div>
         }
         children={(popTrigger: any) => (
           <Div className={"mr-auto d-center"}>
@@ -878,7 +878,7 @@ export const TopNav = () => {
         position={"center"}
         direction={"center"}
         contents={
-          <Card className={"w-max-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px"}>
+          <Div className={"w-max-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px"}>
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-col-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
@@ -904,7 +904,7 @@ export const TopNav = () => {
               </Grid>
             </Grid>
             <Hr m={30} />
-            <Grid container spacing={0} columns={20}>
+            <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
                   max={20}
@@ -931,7 +931,7 @@ export const TopNav = () => {
               </Grid>
             </Grid>
             <Br m={10} />
-            <Grid container spacing={0} columns={20}>
+            <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
                   max={20}
@@ -1017,7 +1017,7 @@ export const TopNav = () => {
                 />
               </Grid>
             </Grid>
-          </Card>
+          </Div>
         }
         children={(popTrigger: any) => (
           <Div className={"mr-auto d-center"}>

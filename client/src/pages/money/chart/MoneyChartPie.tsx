@@ -6,7 +6,7 @@ import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores"
 import { MoneyPie, MoneyPieType } from "@importSchemas";
 import { axios } from "@importLibs";
 import { PopUp, Select } from "@importContainers";
-import { Div, Img, Br, Paper, Card, Grid } from "@importComponents";
+import { Div, Img, Br, Paper, Grid } from "@importComponents";
 import { FormGroup, FormControlLabel, Switch, MenuItem } from "@importMuis";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
@@ -205,145 +205,136 @@ export const MoneyChartPie = () => {
     }
 
     return (
-      <Grid container={true} spacing={2} className={"border-1 radius-2"}>
-        <Grid size={12} className={"d-col-center"}>
-          <ResponsiveContainer width={"100%"} height={350}>
-            <PieChart margin={{top: 40, right: 20, bottom: 20, left: 20}}>
-              <Pie
-                data={object as any[]}
-                cx={"50%"}
-                cy={"50%"}
-                label={renderPie}
-                labelLine={false}
-                outerRadius={110}
-                fill={"#8884d8"}
-                dataKey={"value"}
-                isAnimationActive={true}
-                animationBegin={0}
-                animationDuration={400}
-                animationEasing={"linear"}
-              >
-                {object?.map((_entry: any, index: number) => (
-                  <Cell key={`cell-${index}`} fill={chartColors[index % chartColors?.length]} />
-                ))}
-              </Pie>
-              <Tooltip
-                formatter={(value: any, name: any) => {
-                  const customName = translate(name);
-                  return [`${Number(value).toLocaleString()} ${endStr}`, customName];
-                }}
-                contentStyle={{
-                  backgroundColor:"rgba(255, 255, 255, 0.8)",
-                  border:"none",
-                  borderRadius:"10px"
-                }}
-              />
-              <Legend
-                iconType={"circle"}
-                verticalAlign={"bottom"}
-                align={"center"}
-                formatter={(value) => {
-                  return translate(value);
-                }}
-                wrapperStyle={{
-                  lineHeight:"40px",
-                  paddingTop:"40px",
-                  fontSize:"12px"
-                }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
-        </Grid>
-      </Grid>
+			<ResponsiveContainer width={"100%"} height={350}>
+				<PieChart margin={{top: 40, right: 20, bottom: 20, left: 20}}>
+					<Pie
+						data={object as any[]}
+						cx={"50%"}
+						cy={"50%"}
+						label={renderPie}
+						labelLine={false}
+						outerRadius={110}
+						fill={"#8884d8"}
+						dataKey={"value"}
+						isAnimationActive={true}
+						animationBegin={0}
+						animationDuration={400}
+						animationEasing={"linear"}
+					>
+						{object?.map((_entry: any, index: number) => (
+							<Cell key={`cell-${index}`} fill={chartColors[index % chartColors?.length]} />
+						))}
+					</Pie>
+					<Tooltip
+						formatter={(value: any, name: any) => {
+							const customName = translate(name);
+							return [`${Number(value).toLocaleString()} ${endStr}`, customName];
+						}}
+						contentStyle={{
+							backgroundColor:"rgba(255, 255, 255, 0.8)",
+							border:"none",
+							borderRadius:"10px"
+						}}
+					/>
+					<Legend
+						iconType={"circle"}
+						verticalAlign={"bottom"}
+						align={"center"}
+						formatter={(value) => {
+							return translate(value);
+						}}
+						wrapperStyle={{
+							lineHeight:"40px",
+							paddingTop:"40px",
+							fontSize:"12px"
+						}}
+					/>
+				</PieChart>
+			</ResponsiveContainer>
     );
   };
 
   // 7. chart --------------------------------------------------------------------------------------
   const chartNode = () => {
     // 7-1. head
-    const headSection = () => {
-      const headFragment = () => (
-        <Grid container={true} spacing={2}>
-          <Grid size={3} className={"d-row-center"}>
-            <Select
-              value={TYPE.section}
-              onChange={(e: any) => {
-                setTYPE((prev: any) => ({
-                  ...prev,
-                  section: e.target.value,
-                }));
-              }}
-            >
-              <MenuItem value={"week"}>{translate("week")}</MenuItem>
-              <MenuItem value={"month"}>{translate("month")}</MenuItem>
-              <MenuItem value={"year"}>{translate("year")}</MenuItem>
-            </Select>
-          </Grid>
-          <Grid size={6} className={"d-row-center"}>
-            <Div className={"fs-1-0rem fw-600"}>
-              {translate("chartPie")}
-            </Div>
-            <Div className={"fs-1-0rem fw-500 grey ml-10px"}>
-              {`[${translate(TYPE.line)}]`}
-            </Div>
-          </Grid>
-          <Grid size={3} className={"d-row-center"}>
-            <PopUp
-              type={"chart"}
-              position={"bottom"}
-              direction={"center"}
-              contents={
-                ["income", "expense"]?.map((key: string, index: number) => (
-                  <FormGroup key={index} children={
-                    <FormControlLabel label={translate(key)} labelPlacement={"start"} control={
-                      <Switch checked={TYPE.line === key} onChange={() => {
-                        if (TYPE.line === key) {
-                          return;
-                        }
-                        else {
-                          setTYPE((prev: any) => ({
-                            ...prev,
-                            line: key,
-                          }));
-                        }
-                      }}/>
-                    }/>
-                  }/>
-                ))
-              }
-              children={(popTrigger: any) => (
-                <Img
-                  max={24}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={"common3_1.webp"}
-                  onClick={(e: any) => {
-                    popTrigger.openPopup(e.currentTarget)
-                  }}
-                />
-              )}
-            />
-          </Grid>
-        </Grid>
-      );
-      return (
-        <Card className={"d-col-center border-0 shadow-0 radius-0"}>
-          {headFragment()}
-        </Card>
-      );
-    };
+    const headSection = () => (
+			<Grid container={true} spacing={2}>
+				<Grid size={3} className={"d-row-left"}>
+					<Select
+						value={TYPE.section}
+						onChange={(e: any) => {
+							setTYPE((prev: any) => ({
+								...prev,
+								section: e.target.value,
+							}));
+						}}
+					>
+						<MenuItem value={"week"}>{translate("week")}</MenuItem>
+						<MenuItem value={"month"}>{translate("month")}</MenuItem>
+						<MenuItem value={"year"}>{translate("year")}</MenuItem>
+					</Select>
+				</Grid>
+				<Grid size={6} className={"d-row-center"}>
+					<Div className={"fs-1-0rem fw-600"}>
+						{translate("chartPie")}
+					</Div>
+					<Div className={"fs-1-0rem fw-500 grey ml-10px"}>
+						{`[${translate(TYPE.line)}]`}
+					</Div>
+				</Grid>
+				<Grid size={3} className={"d-row-right"}>
+					<PopUp
+						type={"chart"}
+						position={"bottom"}
+						direction={"center"}
+						contents={
+							["income", "expense"]?.map((key: string, index: number) => (
+								<FormGroup key={index} children={
+									<FormControlLabel label={translate(key)} labelPlacement={"start"} control={
+										<Switch checked={TYPE.line === key} onChange={() => {
+											if (TYPE.line === key) {
+												return;
+											}
+											else {
+												setTYPE((prev: any) => ({
+													...prev,
+													line: key,
+												}));
+											}
+										}}/>
+									}/>
+								}/>
+							))
+						}
+						children={(popTrigger: any) => (
+							<Img
+								max={24}
+								hover={true}
+								shadow={false}
+								radius={false}
+								src={"common3_1.webp"}
+								onClick={(e: any) => {
+									popTrigger.openPopup(e.currentTarget)
+								}}
+							/>
+						)}
+					/>
+				</Grid>
+			</Grid>
+		);
     // 7-2. chart
     const chartSection = () => (
-      <Card className={"d-col-center border-0 shadow-0 radius-0"}>
-        {chartPie()}
-      </Card>
+      <Grid container={true} spacing={2} className={"border-1 radius-2"}>
+        <Grid size={12} className={"d-col-center p-10px"}>
+					{chartPie()}
+				</Grid>
+      </Grid>
     );
     // 7-10. return
     return (
       <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min-40vh"}>
         {headSection()}
-        <Br m={20} />
+        <Br m={10} />
         {chartSection()}
       </Paper>
     );

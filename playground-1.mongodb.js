@@ -1,387 +1,121 @@
 use("LIFECHANGE_TEST");
 
 
-db.getCollection('calendar').aggregate( [
+db.sleep.insertMany([
+  // 2024년 1월 데이터
   {
-    "$lookup": {
-      "from": "exercise",
-      "let": {
-        "user_id": "junghomun00@gmail.com",
-        "dateEnd_param": "2025-09-30",
-        "dateStart_param": "2025-07-01"
-      },
-      "pipeline": [
-        {
-          "$match": {
-            "$expr": {
-              "$and": [
-                {
-                  "$eq": [
-                    "$user_id",
-                    "$$user_id"
-                  ]
-                },
-                {
-                  "$lte": [
-                    "$exercise_dateStart",
-                    "$$dateEnd_param"
-                  ]
-                },
-                {
-                  "$gte": [
-                    "$exercise_dateEnd",
-                    "$$dateStart_param"
-                  ]
-                }
-              ]
-            }
-          }
-        },
-        {
-          "$project": {
-            "_id": 0,
-            "exercise_dateType": 1,
-            "exercise_dateStart": 1,
-            "exercise_dateEnd": 1,
-            "exercise_section": 1
-          }
-        }
-      ],
-      "as": "exercise"
-    }
+    user_id: `junghomun00@gmail.com`,
+    sleep_number: 1,
+    sleep_dateType: `day`,
+    sleep_dateStart: `2024-01-01`,
+    sleep_dateEnd: `2024-01-01`,
+    sleep_section: [{
+      sleep_bedTime: `23:30`,
+      sleep_wakeTime: `07:00`,
+      sleep_sleepTime: `07:30`
+    }],
+    sleep_regDt: new Date(`2024-01-01T23:30:00`),
+    sleep_updateDt: new Date(`2024-01-01T23:30:00`)
   },
   {
-    "$lookup": {
-      "from": "food",
-      "let": {
-        "user_id": "junghomun00@gmail.com",
-        "dateEnd_param": "2025-09-30",
-        "dateStart_param": "2025-07-01"
-      },
-      "pipeline": [
-        {
-          "$match": {
-            "$expr": {
-              "$and": [
-                {
-                  "$eq": [
-                    "$user_id",
-                    "$$user_id"
-                  ]
-                },
-                {
-                  "$lte": [
-                    "$food_dateStart",
-                    "$$dateEnd_param"
-                  ]
-                },
-                {
-                  "$gte": [
-                    "$food_dateEnd",
-                    "$$dateStart_param"
-                  ]
-                }
-              ]
-            }
-          }
-        },
-        {
-          "$project": {
-            "_id": 0,
-            "food_dateType": 1,
-            "food_dateStart": 1,
-            "food_dateEnd": 1,
-            "food_section": 1
-          }
-        }
-      ],
-      "as": "food"
-    }
+    user_id: `junghomun00@gmail.com`,
+    sleep_number: 2,
+    sleep_dateType: `day`,
+    sleep_dateStart: `2024-01-02`,
+    sleep_dateEnd: `2024-01-02`,
+    sleep_section: [{
+      sleep_bedTime: `23:45`,
+      sleep_wakeTime: `07:15`,
+      sleep_sleepTime: `07:30`
+    }],
+    sleep_regDt: new Date(`2024-01-02T23:45:00`),
+    sleep_updateDt: new Date(`2024-01-02T23:45:00`)
   },
   {
-    "$lookup": {
-      "from": "money",
-      "let": {
-        "user_id": "junghomun00@gmail.com",
-        "dateEnd_param": "2025-09-30",
-        "dateStart_param": "2025-07-01"
-      },
-      "pipeline": [
-        {
-          "$match": {
-            "$expr": {
-              "$and": [
-                {
-                  "$eq": [
-                    "$user_id",
-                    "$$user_id"
-                  ]
-                },
-                {
-                  "$lte": [
-                    "$money_dateStart",
-                    "$$dateEnd_param"
-                  ]
-                },
-                {
-                  "$gte": [
-                    "$money_dateEnd",
-                    "$$dateStart_param"
-                  ]
-                }
-              ]
-            }
-          }
-        },
-        {
-          "$project": {
-            "_id": 0,
-            "money_dateType": 1,
-            "money_dateStart": 1,
-            "money_dateEnd": 1,
-            "money_section": 1
-          }
-        }
-      ],
-      "as": "money"
-    }
+    user_id: `junghomun00@gmail.com`,
+    sleep_number: 3,
+    sleep_dateType: `day`,
+    sleep_dateStart: `2024-01-03`,
+    sleep_dateEnd: `2024-01-03`,
+    sleep_section: [{
+      sleep_bedTime: `00:15`,
+      sleep_wakeTime: `07:45`,
+      sleep_sleepTime: `07:30`
+    }],
+    sleep_regDt: new Date(`2024-01-03T00:15:00`),
+    sleep_updateDt: new Date(`2024-01-03T00:15:00`)
   },
   {
-    "$lookup": {
-      "from": "sleep",
-      "let": {
-        "user_id": "junghomun00@gmail.com",
-        "dateEnd_param": "2025-09-30",
-        "dateStart_param": "2025-07-01"
-      },
-      "pipeline": [
-        {
-          "$match": {
-            "$expr": {
-              "$and": [
-                {
-                  "$eq": [
-                    "$user_id",
-                    "$$user_id"
-                  ]
-                },
-                {
-                  "$lte": [
-                    "$sleep_dateStart",
-                    "$$dateEnd_param"
-                  ]
-                },
-                {
-                  "$gte": [
-                    "$sleep_dateEnd",
-                    "$$dateStart_param"
-                  ]
-                }
-              ]
-            }
-          }
-        },
-        {
-          "$project": {
-            "_id": 0,
-            "sleep_dateType": 1,
-            "sleep_dateStart": 1,
-            "sleep_dateEnd": 1,
-            "sleep_section": 1
-          }
-        }
-      ],
-      "as": "sleep"
-    }
+    user_id: `junghomun00@gmail.com`,
+    sleep_number: 4,
+    sleep_dateType: `day`,
+    sleep_dateStart: `2024-01-04`,
+    sleep_dateEnd: `2024-01-04`,
+    sleep_section: [{
+      sleep_bedTime: `23:00`,
+      sleep_wakeTime: `06:30`,
+      sleep_sleepTime: `07:30`
+    }],
+    sleep_regDt: new Date(`2024-01-04T23:00:00`),
+    sleep_updateDt: new Date(`2024-01-04T23:00:00`)
   },
   {
-    "$project": {
-      "_id": 1,
-      "calendar_number": 1,
-      "calendar_exercise_dateType": {
-        "$ifNull": [
-          {
-            "$arrayElemAt": [
-              "$exercise.exercise_dateType",
-              0
-            ]
-          },
-          ""
-        ]
+    user_id: `junghomun00@gmail.com`,
+    sleep_number: 5,
+    sleep_dateType: `day`,
+    sleep_dateStart: `2024-01-05`,
+    sleep_dateEnd: `2024-01-05`,
+    sleep_section: [{
+      sleep_bedTime: `00:30`,
+      sleep_wakeTime: `08:30`,
+      sleep_sleepTime: `08:00`
+    }],
+    sleep_regDt: new Date(`2024-01-05T00:30:00`),
+    sleep_updateDt: new Date(`2024-01-05T00:30:00`)
+  },
+  {
+    user_id: `junghomun00@gmail.com`,
+    sleep_number: 6,
+    sleep_dateType: `week`,
+    sleep_dateStart: `2024-01-08`,
+    sleep_dateEnd: `2024-01-14`,
+    sleep_section: [
+      {
+        sleep_bedTime: `23:30`,
+        sleep_wakeTime: `07:00`,
+        sleep_sleepTime: `07:30`
       },
-      "calendar_exercise_dateStart": {
-        "$ifNull": [
-          {
-            "$arrayElemAt": [
-              "$exercise.exercise_dateStart",
-              0
-            ]
-          },
-          "0000-00-00"
-        ]
-      },
-      "calendar_exercise_dateEnd": {
-        "$ifNull": [
-          {
-            "$arrayElemAt": [
-              "$exercise.exercise_dateEnd",
-              0
-            ]
-          },
-          "0000-00-00"
-        ]
-      },
-      "calendar_exercise_section": {
-        "$ifNull": [
-          {
-            "$arrayElemAt": [
-              "$exercise.exercise_section",
-              0
-            ]
-          },
-          []
-        ]
-      },
-      "calendar_food_dateType": {
-        "$ifNull": [
-          {
-            "$arrayElemAt": [
-              "$food.food_dateType",
-              0
-            ]
-          },
-          ""
-        ]
-      },
-      "calendar_food_dateStart": {
-        "$ifNull": [
-          {
-            "$arrayElemAt": [
-              "$food.food_dateStart",
-              0
-            ]
-          },
-          "0000-00-00"
-        ]
-      },
-      "calendar_food_dateEnd": {
-        "$ifNull": [
-          {
-            "$arrayElemAt": [
-              "$food.food_dateEnd",
-              0
-            ]
-          },
-          "0000-00-00"
-        ]
-      },
-      "calendar_food_section": {
-        "$ifNull": [
-          {
-            "$arrayElemAt": [
-              "$food.food_section",
-              0
-            ]
-          },
-          []
-        ]
-      },
-      "calendar_money_dateType": {
-        "$ifNull": [
-          {
-            "$arrayElemAt": [
-              "$money.money_dateType",
-              0
-            ]
-          },
-          ""
-        ]
-      },
-      "calendar_money_dateStart": {
-        "$ifNull": [
-          {
-            "$arrayElemAt": [
-              "$money.money_dateStart",
-              0
-            ]
-          },
-          "0000-00-00"
-        ]
-      },
-      "calendar_money_dateEnd": {
-        "$ifNull": [
-          {
-            "$arrayElemAt": [
-              "$money.money_dateEnd",
-              0
-            ]
-          },
-          "0000-00-00"
-        ]
-      },
-      "calendar_money_section": {
-        "$ifNull": [
-          {
-            "$arrayElemAt": [
-              "$money.money_section",
-              0
-            ]
-          },
-          []
-        ]
-      },
-      "calendar_sleep_dateType": {
-        "$ifNull": [
-          {
-            "$arrayElemAt": [
-              "$sleep.sleep_dateType",
-              0
-            ]
-          },
-          ""
-        ]
-      },
-      "calendar_sleep_dateStart": {
-        "$ifNull": [
-          {
-            "$arrayElemAt": [
-              "$sleep.sleep_dateStart",
-              0
-            ]
-          },
-          "0000-00-00"
-        ]
-      },
-      "calendar_sleep_dateEnd": {
-        "$ifNull": [
-          {
-            "$arrayElemAt": [
-              "$sleep.sleep_dateEnd",
-              0
-            ]
-          },
-          "0000-00-00"
-        ]
-      },
-      "calendar_sleep_section": {
-        "$ifNull": [
-          {
-            "$arrayElemAt": [
-              "$sleep.sleep_section",
-              0
-            ]
-          },
-          []
-        ]
+      {
+        sleep_bedTime: `23:45`,
+        sleep_wakeTime: `07:15`,
+        sleep_sleepTime: `07:30`
       }
-    }
+    ],
+    sleep_regDt: new Date(`2024-01-08T00:00:00`),
+    sleep_updateDt: new Date(`2024-01-14T23:59:00`)
   },
-  {
-    "$sort": {
-      "calendar_number": -1
-    }
-  },
-  {
-    "$skip": 0
-  }
-], {} )
+  // 나머지 94개 데이터를 다양한 패턴으로 생성
+  ...Array.from({ length: 94 }, (_, i) => {
+    const date = new Date(2024, 0, 15 + Math.floor(i / 3));
+    const dateStr = date.toISOString().split('T')[0];
+    const bedHour = 22 + Math.floor(Math.random() * 3);
+    const bedMinute = Math.floor(Math.random() * 60);
+    const wakeHour = 6 + Math.floor(Math.random() * 3);
+    const wakeMinute = Math.floor(Math.random() * 60);
+
+    return {
+      user_id: `junghomun00@gmail.com`,
+      sleep_number: 7 + i,
+      sleep_dateType: i % 10 === 0 ? `week` : `day`,
+      sleep_dateStart: dateStr,
+      sleep_dateEnd: i % 10 === 0 ? new Date(date.getTime() + 6 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] : dateStr,
+      sleep_section: [{
+        sleep_bedTime: `${String(bedHour).padStart(2, '0')}:${String(bedMinute).padStart(2, '0')}`,
+        sleep_wakeTime: `${String(wakeHour).padStart(2, '0')}:${String(wakeMinute).padStart(2, '0')}`,
+        sleep_sleepTime: `${String(7 + Math.floor(Math.random() * 2)).padStart(2, '0')}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')}`
+      }],
+      sleep_regDt: date,
+      sleep_updateDt: date
+    };
+  })
+]);

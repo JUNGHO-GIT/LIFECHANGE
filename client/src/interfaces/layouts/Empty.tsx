@@ -2,7 +2,7 @@
 
 import { useCommonValue } from "@importHooks";
 import { useStoreLanguage } from "@importStores";
-import { Div, Icons, Grid, Card } from "@importComponents";
+import { Div, Icons, Grid } from "@importComponents";
 import { Accordion, AccordionSummary } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -19,7 +19,6 @@ export const Empty = (
   // 1. common -------------------------------------------------------------------------------------
   const { PATH, navigate } = useCommonValue();
   const { translate } = useStoreLanguage();
-
   const isFindList = PATH.includes("food/find/list");
   const isGoalList = !isFindList && PATH.includes("goal/list");
   const toDetail = isGoalList ? `/${extra}/goal/detail` : `/${extra}/detail`;
@@ -28,102 +27,117 @@ export const Empty = (
   const emptyNode = () => {
     // 1. isFindSection
     const isFindSection = () => (
-      <Card className={"border-1 radius-2 shadow-0"}>
-        <Accordion expanded={false}>
-          <AccordionSummary>
-            <Grid container={true} spacing={2}>
-              <Grid size={4} className={"d-row-left"}>
-                <Div className={"fs-1-0rem fw-600 dark"}>
-                  {translate("search")}
-                </Div>
-              </Grid>
-              <Grid size={8} className={"d-row-left"}>
-                <Div className={"fs-1-0rem fw-500"}>
-                  {translate("notFound")}
-                </Div>
-              </Grid>
-            </Grid>
-          </AccordionSummary>
-        </Accordion>
-      </Card>
+			<Grid container={true} spacing={0} className={"border-1 radius-2 shadow-1 mb-10px"}>
+				<Grid size={12} className={"p-2px"}>
+					<Accordion
+						className={"border-0 shadow-0 radius-0"}
+						expanded={false}
+					>
+						<AccordionSummary>
+							<Grid container={true} spacing={2}>
+								<Grid size={4} className={"d-row-left"}>
+									<Div className={"fs-1-0rem fw-600 dark"}>
+										{translate("search")}
+									</Div>
+								</Grid>
+								<Grid size={8} className={"d-row-left"}>
+									<Div className={"fs-1-0rem fw-500"}>
+										{translate("notFound")}
+									</Div>
+								</Grid>
+							</Grid>
+						</AccordionSummary>
+					</Accordion>
+				</Grid>
+			</Grid>
     );
     // 2. isGoalSection
     const isGoalSection = () => (
-      <Card className={"border-1 radius-2 shadow-0"}>
-        <Accordion expanded={false}>
-          <AccordionSummary
-            onClick={() => {
-              navigate(toDetail, {
-                state: {
-                  from: PATH.includes("today") ? "today" : "list",
-                  dateType: DATE?.dateType,
-                  dateStart: DATE?.dateStart,
-                  dateEnd: DATE?.dateEnd
-                }
-              });
-            }}
-          >
-            <Grid container={true} spacing={2}>
-              <Grid size={2} className={"d-row-center"}>
-                <Icons
-                  key={"Search"}
-                  name={"Search"}
-                  className={"w-18px h-18px"}
-                />
-              </Grid>
-              <Grid size={4} className={"d-row-left"}>
-                <Div className={"fs-1-0rem fw-600 dark"}>
-                  {translate(`${extra}`)}
-                </Div>
-              </Grid>
-              <Grid size={6} className={"d-row-left"}>
-                <Div className={"fs-1-0rem fw-500"}>
-                  {translate("empty")}
-                </Div>
-              </Grid>
-            </Grid>
-          </AccordionSummary>
-        </Accordion>
-      </Card>
+			<Grid container={true} spacing={0} className={"border-1 radius-2 shadow-1 mb-10px"}>
+				<Grid size={12} className={"p-2px"}>
+					<Accordion
+						className={"border-0 shadow-0 radius-0"}
+						expanded={false}
+					>
+						<AccordionSummary
+							onClick={() => {
+								navigate(toDetail, {
+									state: {
+										from: PATH.includes("today") ? "today" : "list",
+										dateType: DATE?.dateType,
+										dateStart: DATE?.dateStart,
+										dateEnd: DATE?.dateEnd
+									}
+								});
+							}}
+						>
+							<Grid container={true} spacing={2}>
+								<Grid size={2} className={"d-row-center"}>
+									<Icons
+										key={"Search"}
+										name={"Search"}
+										className={"w-18px h-18px"}
+									/>
+								</Grid>
+								<Grid size={4} className={"d-row-left"}>
+									<Div className={"fs-1-0rem fw-600 dark"}>
+										{translate(`${extra}`)}
+									</Div>
+								</Grid>
+								<Grid size={6} className={"d-row-left"}>
+									<Div className={"fs-1-0rem fw-500"}>
+										{translate("empty")}
+									</Div>
+								</Grid>
+							</Grid>
+						</AccordionSummary>
+					</Accordion>
+				</Grid>
+      </Grid>
     );
     // 2. isRealSection
     const isRealSection = () => (
-      <Card className={"border-1 radius-2 shadow-0"}>
-        <Accordion expanded={false}>
-          <AccordionSummary
-            onClick={() => {
-              navigate(toDetail, {
-                state: {
-                  from: PATH.includes("today") ? "today" : "list",
-                  dateType: "day",
-                  dateStart: DATE?.dateStart,
-                  dateEnd: DATE?.dateStart,
-                }
-              });
-            }}
-          >
-            <Grid container={true} spacing={2}>
-              <Grid size={2} className={"d-row-center"}>
-                <Icons
-                  key={"Search"}
-                  name={"Search"}
-                  className={"w-18px h-18px"}
-                />
-              </Grid>
-              <Grid size={4} className={"d-row-left"}>
-                <Div className={"fs-1-0rem fw-600 dark"}>
-                  {translate(`${extra}`)}
-                </Div>
-              </Grid>
-              <Grid size={6} className={"d-row-left"}>
-                <Div className={"fs-1-0rem fw-500"}>
-                  {translate("empty")}
-                </Div>
-              </Grid>
-            </Grid>
-          </AccordionSummary>
-        </Accordion>
-      </Card>
+			<Grid container={true} spacing={0} className={"border-1 radius-2 shadow-1 mb-10px"}>
+				<Grid size={12} className={"p-2px"}>
+					<Accordion
+						className={"border-0 shadow-0 radius-0"}
+						expanded={false}
+					>
+						<AccordionSummary
+							onClick={() => {
+								navigate(toDetail, {
+									state: {
+										from: PATH.includes("today") ? "today" : "list",
+										dateType: "day",
+										dateStart: DATE?.dateStart,
+										dateEnd: DATE?.dateStart,
+									}
+								});
+							}}
+						>
+							<Grid container={true} spacing={2}>
+								<Grid size={2} className={"d-row-center"}>
+									<Icons
+										key={"Search"}
+										name={"Search"}
+										className={"w-18px h-18px"}
+									/>
+								</Grid>
+								<Grid size={4} className={"d-row-left"}>
+									<Div className={"fs-1-0rem fw-600 dark"}>
+										{translate(`${extra}`)}
+									</Div>
+								</Grid>
+								<Grid size={6} className={"d-row-left"}>
+									<Div className={"fs-1-0rem fw-500"}>
+										{translate("empty")}
+									</Div>
+								</Grid>
+							</Grid>
+						</AccordionSummary>
+					</Accordion>
+				</Grid>
+			</Grid>
     );
     // 3. return
     return (

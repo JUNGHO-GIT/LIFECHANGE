@@ -23,7 +23,7 @@ export const listCategory = async (
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         calendar: "$user_dataCategory.calendar",
         exercise: "$user_dataCategory.exercise",
         food: "$user_dataCategory.food",
