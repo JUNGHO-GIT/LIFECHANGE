@@ -20,14 +20,26 @@ export const useCommonValue = () => {
   const secondStr: string = PATH?.split("/")[2] || "";
   const thirdStr: string = PATH?.split("/")[3] || "";
 
-  const isGoalTodayList: boolean = PATH.includes("/today/goal/list");
-  const isGoalList: boolean = !isGoalTodayList && PATH.includes("/goal/list");
-  const isTodayList: boolean = !isGoalTodayList && !isGoalList && PATH.includes("/today/list");
-  const isRealList: boolean = !isGoalList && !isTodayList && !isGoalTodayList && PATH.includes("/list");
+	// today
+	const isTodayGoalList: boolean = PATH.includes("/today/goal/list");
+	const isTodayList: boolean = PATH.includes("/today/list");
+	const isTodayDetail: boolean = PATH.includes("/today/detail");
 
-  const isGoalDetail: boolean =  PATH.includes("/goal/detail");
-  const isCalendarDetail: boolean = !isGoalDetail && PATH.includes("/calendar/detail");
-  const isRealDetail: boolean = !isGoalDetail && !isCalendarDetail && PATH.includes("/detail");
+	// calendar
+	const isCalendarList: boolean = !isTodayGoalList && !isTodayList && PATH.includes("/calendar/list");
+	const isCalendarDetail: boolean = !isTodayGoalList && !isTodayList && PATH.includes("/calendar/detail");
+
+	// find
+	const isFindList: boolean = PATH.includes("/find/list");
+	const isFavoriteList: boolean = PATH.includes("/favorite/list");
+
+	// goal
+	const isGoalList: boolean = !isTodayGoalList && !isTodayList && !isCalendarList && PATH.includes("/goal/list");
+	const isGoalDetail: boolean = !isTodayGoalList && !isTodayList && !isCalendarList && PATH.includes("/goal/detail");
+
+	// real
+	const isRealList: boolean = !isTodayGoalList && !isTodayList && !isCalendarList && !isGoalList && PATH.includes("/list");
+	const isRealDetail: boolean = !isTodayGoalList && !isTodayList && !isCalendarList && !isGoalDetail && PATH.includes("/detail");
 
   const isGoal: boolean = secondStr === "goal";
   const toFind: string = `/${firstStr}/find/list`;
@@ -137,13 +149,18 @@ export const useCommonValue = () => {
     firstStr,
     secondStr,
     thirdStr,
-    isTodayList,
-    isGoalTodayList,
-    isRealList,
-    isCalendarDetail,
-    isGoalList,
-    isGoalDetail,
-    isRealDetail,
+		isTodayGoalList,
+		isTodayList,
+		isTodayDetail,
+		isCalendarList,
+		isCalendarDetail,
+		isFindList,
+		isFavoriteList,
+		isGoalList,
+		isGoalDetail,
+		isRealList,
+		isRealDetail,
+		isGoal,
     toFind,
     toFavorite,
     toList,

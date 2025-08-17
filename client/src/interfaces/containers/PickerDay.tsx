@@ -40,7 +40,7 @@ export const PickerDay = (
 
   // 1. common -------------------------------------------------------------------------------------
   const { PATH, localLang, localTimeZone } = useCommonValue();
-  const { isTodayList, isGoalTodayList, isGoalList, isGoalDetail } = useCommonValue();
+  const { isTodayList, isTodayGoalList, isGoalList, isGoalDetail } = useCommonValue();
   const { isRealList, isRealDetail, isCalendarDetail } = useCommonValue();
   const { getDayFmt, getDayNotFmt, getDayStartFmt, getDayEndFmt } = useCommonDate();
   const { getPrevDayStartFmt, getPrevDayEndFmt } = useCommonDate();
@@ -76,7 +76,7 @@ export const PickerDay = (
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (isGoalTodayList || isGoalList || isTodayList || isRealList) {
+    if (isTodayGoalList || isGoalList || isTodayList || isRealList) {
       setSelectTypeInSaveStr("h-min-0px h-5vh fs-0-7rem pointer");
       setSelectTypeInListStr("h-min-0px h-5vh fs-0-7rem pointer");
     }
@@ -88,7 +88,7 @@ export const PickerDay = (
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (isGoalTodayList || isTodayList) {
+    if (isTodayGoalList || isTodayList) {
       setSelectTypeInList("day");
       setDATE({
         dateType: "",
@@ -185,7 +185,7 @@ export const PickerDay = (
         label={translate("dateType")}
         value={selectTypeInList}
 				inputclass={`pointer ${selectTypeInListStr}`}
-        disabled={isGoalTodayList || isTodayList}
+        disabled={isTodayGoalList || isTodayList}
         onChange={(e: any) => {
           setSelectTypeInList(e.target.value);
         }}
@@ -354,7 +354,7 @@ export const PickerDay = (
                               zIndex: zIndex,
                             }}
                             onDaySelect={(day) => {
-                              setDATE((prev: any) => ({
+                              setDATE((prev) => ({
                                 ...prev,
                                 dateStart: getDayFmt(day),
                                 dateEnd: getDayFmt(day),
@@ -370,7 +370,7 @@ export const PickerDay = (
                         {...props}
                         className={"fs-1-4rem"}
                         onClick={() => {
-                          setDATE((prev: any) => ({
+                          setDATE((prev) => ({
                             ...prev,
                             dateStart: getPrevMonthStartFmt(prev.dateStart),
                             dateEnd: getPrevMonthStartFmt(prev.dateStart),
@@ -385,7 +385,7 @@ export const PickerDay = (
                         {...props}
                         className={"fs-1-4rem"}
                         onClick={() => {
-                          setDATE((prev: any) => ({
+                          setDATE((prev) => ({
                             ...prev,
                             dateStart: getNextMonthStartFmt(prev.dateStart),
                             dateEnd: getNextMonthStartFmt(prev.dateStart),
@@ -425,7 +425,7 @@ export const PickerDay = (
                     className={"w-20px h-20px"}
                     onClick={(e: any) => {
                       e.stopPropagation();
-                      setDATE((prev: any) => ({
+                      setDATE((prev) => ({
                         ...prev,
                         dateStart: getPrevDayStartFmt(prev.dateStart),
                         dateEnd: getPrevDayEndFmt(prev.dateStart),
@@ -441,7 +441,7 @@ export const PickerDay = (
                     className={"w-20px h-20px"}
                     onClick={(e: any) => {
                       e.stopPropagation();
-                      setDATE((prev: any) => ({
+                      setDATE((prev) => ({
                         ...prev,
                         dateStart: getNextDayStartFmt(prev.dateStart),
                         dateEnd: getNextDayEndFmt(prev.dateStart),
@@ -567,7 +567,7 @@ export const PickerDay = (
                               zIndex: zIndex,
                             }}
                             onDaySelect={(day) => {
-                              setDATE((prev: any) => ({
+                              setDATE((prev) => ({
                                 ...prev,
                                 dateStart: getWeekStartFmt(day),
                                 dateEnd: getWeekEndFmt(day),
@@ -582,7 +582,7 @@ export const PickerDay = (
                         {...props}
                         className={"fs-1-4rem"}
                         onClick={() => {
-                          setDATE((prev: any) => ({
+                          setDATE((prev) => ({
                             ...prev,
                             dateStart: getPrevWeekStartFmt(prev.dateStart),
                             dateEnd: getPrevWeekEndFmt(prev.dateStart),
@@ -597,7 +597,7 @@ export const PickerDay = (
                         {...props}
                         className={"fs-1-4rem"}
                         onClick={() => {
-                          setDATE((prev: any) => ({
+                          setDATE((prev) => ({
                             ...prev,
                             dateStart: getNextWeekStartFmt(prev.dateStart),
                             dateEnd: getNextWeekEndFmt(prev.dateStart),
@@ -637,7 +637,7 @@ export const PickerDay = (
                     className={"w-20px h-20px"}
                     onClick={(e: any) => {
                       e.stopPropagation();
-                      setDATE((prev: any) => ({
+                      setDATE((prev) => ({
                         ...prev,
                         dateStart: getPrevWeekStartFmt(prev.dateStart),
                         dateEnd: getPrevWeekEndFmt(prev.dateStart),
@@ -652,7 +652,7 @@ export const PickerDay = (
                     className={"w-20px h-20px"}
                     onClick={(e: any) => {
                       e.stopPropagation();
-                      setDATE((prev: any) => ({
+                      setDATE((prev) => ({
                         ...prev,
                         dateStart: getNextWeekStartFmt(prev.dateStart),
                         dateEnd: getNextWeekEndFmt(prev.dateStart),
@@ -760,7 +760,7 @@ export const PickerDay = (
                               zIndex: zIndex,
                             }}
                             onDaySelect={(day) => {
-                              setDATE((prev: any) => ({
+                              setDATE((prev) => ({
                                 ...prev,
                                 dateStart: getMonthStartFmt(day),
                                 dateEnd: getMonthEndFmt(day),
@@ -775,7 +775,7 @@ export const PickerDay = (
                         {...props}
                         className={"fs-1-4rem"}
                         onClick={() => {
-                          setDATE((prev: any) => ({
+                          setDATE((prev) => ({
                             ...prev,
                             dateStart: getPrevMonthStartFmt(prev.dateStart),
                             dateEnd: getPrevMonthEndFmt(prev.dateStart),
@@ -790,7 +790,7 @@ export const PickerDay = (
                         {...props}
                         className={"fs-1-4rem"}
                         onClick={() => {
-                          setDATE((prev: any) => ({
+                          setDATE((prev) => ({
                             ...prev,
                             dateStart: getNextMonthStartFmt(prev.dateStart),
                             dateEnd: getNextMonthEndFmt(prev.dateStart),
@@ -830,7 +830,7 @@ export const PickerDay = (
                     className={"w-20px h-20px"}
                     onClick={(e: any) => {
                       e.stopPropagation();
-                      setDATE((prev: any) => ({
+                      setDATE((prev) => ({
                         ...prev,
                         dateStart: getPrevMonthStartFmt(prev.dateStart),
                         dateEnd: getPrevMonthEndFmt(prev.dateStart),
@@ -845,7 +845,7 @@ export const PickerDay = (
                     className={"w-20px h-20px"}
                     onClick={(e: any) => {
                       e.stopPropagation();
-                      setDATE((prev: any) => ({
+                      setDATE((prev) => ({
                         ...prev,
                         dateStart: getNextMonthStartFmt(prev.dateStart),
                         dateEnd: getNextMonthEndFmt(prev.dateStart),
@@ -954,7 +954,7 @@ export const PickerDay = (
                               zIndex: zIndex,
                             }}
                             onDaySelect={(day) => {
-                              setDATE((prev: any) => ({
+                              setDATE((prev) => ({
                                 ...prev,
                                 dateStart: getYearStartFmt(day),
                                 dateEnd: getYearEndFmt(day),
@@ -969,7 +969,7 @@ export const PickerDay = (
                         {...props}
                         className={"fs-1-4rem"}
                         onClick={() => {
-                          setDATE((prev: any) => ({
+                          setDATE((prev) => ({
                             ...prev,
                             dateStart: getPrevYearStartFmt(prev.dateStart),
                             dateEnd: getPrevYearEndFmt(prev.dateStart),
@@ -984,7 +984,7 @@ export const PickerDay = (
                         {...props}
                         className={"fs-1-4rem"}
                         onClick={() => {
-                          setDATE((prev: any) => ({
+                          setDATE((prev) => ({
                             ...prev,
                             dateStart: getNextYearStartFmt(prev.dateStart),
                             dateEnd: getNextYearEndFmt(prev.dateStart),
@@ -1024,7 +1024,7 @@ export const PickerDay = (
                     className={"w-20px h-20px"}
                     onClick={(e: any) => {
                       e.stopPropagation();
-                      setDATE((prev: any) => ({
+                      setDATE((prev) => ({
                         ...prev,
                         dateStart: getPrevYearStartFmt(prev.dateStart),
                         dateEnd: getPrevYearEndFmt(prev.dateStart),
@@ -1039,7 +1039,7 @@ export const PickerDay = (
                     className={"w-20px h-20px"}
                     onClick={(e: any) => {
                       e.stopPropagation();
-                      setDATE((prev: any) => ({
+                      setDATE((prev) => ({
                         ...prev,
                         dateStart: getNextYearStartFmt(prev.dateStart),
                         dateEnd: getNextYearEndFmt(prev.dateStart),
@@ -1169,14 +1169,14 @@ export const PickerDay = (
                                 DATE.dateEnd ||
                                 getDayNotFmt(day).isBefore(DATE.dateStart)
                               ) {
-                                setDATE((prev: any) => ({
+                                setDATE((prev) => ({
                                   ...prev,
                                   dateStart: getDayFmt(day),
                                   dateEnd: "",
                                 }));
                               }
                               else {
-                                setDATE((prev: any) => ({
+                                setDATE((prev) => ({
                                   ...prev,
                                   dateStart: getDayFmt(prev.dateStart),
                                   dateEnd: getDayFmt(day),
@@ -1220,7 +1220,7 @@ export const PickerDay = (
     return (
 
       // 1-1. 리스트 (목표 - 오늘)
-      isGoalTodayList ? (
+      isTodayGoalList ? (
         <Grid container={true} spacing={1}>
           <Grid size={3} className={"d-center"}>
             {selectTypeInListSection()}

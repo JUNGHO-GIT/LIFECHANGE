@@ -226,7 +226,7 @@ export const ExerciseChartAvg = () => {
 					<Select
 						value={TYPE.section}
 						onChange={(e: any) => {
-							setTYPE((prev: any) => ({
+							setTYPE((prev) => ({
 								...prev,
 								section: e.target.value,
 							}));
@@ -258,7 +258,7 @@ export const ExerciseChartAvg = () => {
 												return;
 											}
 											else {
-												setTYPE((prev: any) => ({
+												setTYPE((prev) => ({
 													...prev,
 													line: key,
 												}));

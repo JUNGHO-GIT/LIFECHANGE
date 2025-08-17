@@ -270,7 +270,7 @@ export const FoodChartPie = () => {
 					<Select
 						value={TYPE.section}
 						onChange={(e: any) => {
-							setTYPE((prev: any) => ({
+							setTYPE((prev) => ({
 								...prev,
 								section: e.target.value,
 							}));
@@ -303,7 +303,7 @@ export const FoodChartPie = () => {
 												return;
 											}
 											else {
-												setTYPE((prev: any) => ({
+												setTYPE((prev) => ({
 													...prev,
 													line: key,
 												}));

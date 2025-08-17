@@ -48,7 +48,7 @@ export const UserDelete = () => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        setOBJECT((prev: any) => ({
+        setOBJECT((prev) => ({
           ...prev,
           user_id_sended: true
         }));
@@ -60,7 +60,7 @@ export const UserDelete = () => {
           msg: translate(res.data.msg),
           severity: "error",
         });
-        setOBJECT((prev: any) => ({
+        setOBJECT((prev) => ({
           ...prev,
           user_id_sended: false
         }));
@@ -72,7 +72,7 @@ export const UserDelete = () => {
           msg: translate(res.data.msg),
           severity: "error",
         });
-        setOBJECT((prev: any) => ({
+        setOBJECT((prev) => ({
           ...prev,
           user_id_sended: false
         }));
@@ -84,7 +84,7 @@ export const UserDelete = () => {
           msg: translate(res.data.msg),
           severity: "error",
         });
-        setOBJECT((prev: any) => ({
+        setOBJECT((prev) => ({
           ...prev,
           user_id_sended: false
         }));
@@ -123,7 +123,7 @@ export const UserDelete = () => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        setOBJECT((prev: any) => ({
+        setOBJECT((prev) => ({
           ...prev,
           user_id_verified: true
         }));
@@ -135,7 +135,7 @@ export const UserDelete = () => {
           msg: translate(res.data.msg),
           severity: "error",
         });
-        setOBJECT((prev: any) => ({
+        setOBJECT((prev) => ({
           ...prev,
           user_id_verified: false
         }));
@@ -232,13 +232,13 @@ export const UserDelete = () => {
 									onChange={(e: any) => {
 										const value = e.target.value;
 										if (value?.length > 30) {
-											setOBJECT((prev: any) => ({
+											setOBJECT((prev) => ({
 												...prev,
 												user_id: prev.user_id,
 											}));
 										}
 										else {
-											setOBJECT((prev: any) => ({
+											setOBJECT((prev) => ({
 												...prev,
 												user_id: value,
 											}));
@@ -272,7 +272,7 @@ export const UserDelete = () => {
 									disabled={item.user_id_verified === true}
 									placeholder={"123456"}
 									onChange={(e: any) => {
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											user_verify_code: e.target.value
 										}))
@@ -307,7 +307,7 @@ export const UserDelete = () => {
 									error={ERRORS?.[i]?.user_pw}
 									disabled={item.user_id_verified === false}
 									onChange={(e: any) => {
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											user_pw: e.target.value
 										}))
@@ -328,7 +328,7 @@ export const UserDelete = () => {
 									error={ERRORS?.[i]?.user_pw_verified}
 									disabled={item.user_id_verified === false}
 									onChange={(e: any) => {
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											user_pw_verified: e.target.value
 										}))

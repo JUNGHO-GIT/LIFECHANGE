@@ -105,7 +105,7 @@ export const MoneyGoalList = () => {
     .then((res: any) => {
       setLOADING(false);
       setOBJECT(res.data.result?.length > 0 ? res.data.result : [MoneyGoal]);
-      setCOUNT((prev: any) => ({
+      setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
         sectionCnt: res.data.sectionCnt || 0,

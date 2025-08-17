@@ -76,7 +76,7 @@ export const ExerciseGoalDetail = () => {
         OBJECT.exercise_goal_dateEnd === "0000-00-00"
       );
 
-      setFLOW((prev: any) => ({
+      setFLOW((prev) => ({
         ...prev,
         exist: isExist,
         itsMe: itsMe,
@@ -127,7 +127,7 @@ export const ExerciseGoalDetail = () => {
     .then((res: any) => {
       setLOADING(false);
       setOBJECT(res.data.result || ExerciseGoal);
-      setCOUNT((prev: any) => ({
+      setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
         sectionCnt: res.data.sectionCnt || 0,
@@ -259,14 +259,14 @@ export const ExerciseGoalDetail = () => {
 
   // 4-3. handle----------------------------------------------------------------------------------
   const handleDelete = (_index: number) => {
-    setOBJECT((prev: any) => ({
+    setOBJECT((prev) => ({
       ...prev,
       exercise_goal_count: "0",
       exercise_goal_volume: "0",
       exercise_goal_cardio: "00:00",
       exercise_goal_scale: "0",
     }));
-    setCOUNT((prev: any) => ({
+    setCOUNT((prev) => ({
       ...prev,
       newSectionCnt: prev.newSectionCnt - 1
     }));
@@ -358,7 +358,7 @@ export const ExerciseGoalDetail = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											exercise_goal_count: value
 										}));
@@ -407,7 +407,7 @@ export const ExerciseGoalDetail = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											exercise_goal_volume: value
 										}));
@@ -468,7 +468,7 @@ export const ExerciseGoalDetail = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											exercise_goal_scale: value
 										}));

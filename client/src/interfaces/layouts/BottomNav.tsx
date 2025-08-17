@@ -33,7 +33,7 @@ export const BottomNav = () => {
       const updatedTabs = Object.keys(prev).reduce((acc, key) => {
         acc[key] = key === firstStr;
         return acc;
-      }, {} as Record<string, boolean>);
+      }, {} as any);
       return updatedTabs;
     });
   }, [firstStr]);
@@ -69,7 +69,7 @@ export const BottomNav = () => {
     const tabsSection = () => (
       <BottomNavigation
         showLabels={true}
-        value={ Object.keys(selectedTab).find((key) => selectedTab[key] === true)}
+        value={Object.keys(selectedTab).find(key => selectedTab[key as keyof typeof selectedTab]) || "calendar"}
         className={"w-100p"}
       >
         <BottomNavigationAction

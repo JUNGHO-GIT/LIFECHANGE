@@ -100,7 +100,7 @@ export const FoodFavoriteList = () => {
     .then((res: any) => {
       setLOADING(false);
       setOBJECT(res.data.result?.length > 0 ? res.data.result : []);
-      setCOUNT((prev: any) => ({
+      setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
       }));
@@ -159,7 +159,7 @@ export const FoodFavoriteList = () => {
     const updatedChecked = [...(checkedQueries[queryKey] || [])];
     updatedChecked[index] = !updatedChecked[index];
 
-    setCheckedQueries((prev: any) => ({
+    setCheckedQueries((prev) => ({
       ...prev,
       [queryKey]: updatedChecked,
     }));

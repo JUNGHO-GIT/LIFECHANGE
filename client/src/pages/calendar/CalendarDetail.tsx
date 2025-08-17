@@ -1,6 +1,6 @@
 // CalendarDetail.tsx
 
-import { useState, useEffect, useLocation, useCallback } from "@importReacts";
+import { useState, useEffect, useCallback } from "@importReacts";
 import { useCommonValue, useCommonDate, useValidateCalendar } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { Calendar, CalendarType } from "@importSchemas";
@@ -15,10 +15,10 @@ import { Checkbox, MenuItem } from "@importMuis";
 export const CalendarDetail = () => {
 
 	// 1. common -------------------------------------------------------------------------------------
-	const {URL_OBJECT, navigate, toList, toToday, sessionId, localCurrency} = useCommonValue();
-	const {calendarArray, calendarColors, bgColors, localUnit} = useCommonValue();
-	const {exerciseArray, foodArray, moneyArray, sleepArray} = useCommonValue();
-	const {location_from, location_dateType} = useCommonValue();
+	const {URL_OBJECT, sessionId, localCurrency} = useCommonValue();
+	const {bgColors, localUnit} = useCommonValue();
+	const {exerciseArray, foodArray, moneyArray} = useCommonValue();
+	const {location_dateType} = useCommonValue();
 	const {location_dateStart, location_dateEnd} = useCommonValue();
 	const {getDayFmt, getMonthStartFmt, getMonthEndFmt} = useCommonDate();
 	const {translate} = useStoreLanguage();
@@ -59,12 +59,6 @@ export const CalendarDetail = () => {
 	});
 
 	// 2-3. useEffect --------------------------------------------------------------------------------
-	const location = useLocation();
-	useEffect(() => {
-		console.log(`location`, location);
-	}, [location]);
-
-	// 2-3. useEffect --------------------------------------------------------------------------------
 	useEffect(() => {
 		if (EXIST?.[DATE.dateType as keyof typeof EXIST]?.length > 0) {
 
@@ -82,7 +76,7 @@ export const CalendarDetail = () => {
 				OBJECT.calendar_dateEnd === `0000-00-00`
 			);
 
-			setFLOW((prev: any) => ({
+			setFLOW((prev) => ({
 				...prev,
 				exist: isExist,
 				itsMe: itsMe,
@@ -155,7 +149,7 @@ export const CalendarDetail = () => {
 				}));
 			}
 			// count 설정
-			setCOUNT((prev: any) => ({
+			setCOUNT((prev) => ({
 				...prev,
 				totalCnt: res.data.totalCnt || 0,
 				sectionCnt: res.data.sectionCnt || 0,
@@ -187,6 +181,10 @@ export const CalendarDetail = () => {
 				[section]: target.filter((_, idx) => idx !== index)
 			};
 		});
+		setCOUNT((prev) => ({
+			...prev,
+      newSectionCnt: prev.newSectionCnt - 1,
+		}));
 	};
 
 	// 4-4. handle ----------------------------------------------------------------------------------
@@ -268,6 +266,7 @@ export const CalendarDetail = () => {
 									section={`calendar_exercise_section`}
 									handleDelete={handleDelete as any}
 									LOCKED={LOCKED}
+									disabled={true}
 								/>
 							</Grid>
 						</Grid>
@@ -362,7 +361,7 @@ export const CalendarDetail = () => {
 									endadornment={
 										translate(`s`)
 									}
-									onChange={(e: any) => {
+									onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
 										const processedValue = handleNumberInput(e.target.value, 999);
 										if (processedValue !== null) {
 											setOBJECT((prev: CalendarType) => ({
@@ -512,6 +511,7 @@ export const CalendarDetail = () => {
 									section={`calendar_food_section`}
 									handleDelete={handleDelete as any}
 									LOCKED={LOCKED}
+									disabled={true}
 								/>
 							</Grid>
 						</Grid>
@@ -862,6 +862,7 @@ export const CalendarDetail = () => {
 									section={`calendar_money_section`}
 									handleDelete={handleDelete as any}
 									LOCKED={LOCKED}
+									disabled={true}
 								/>
 							</Grid>
 						</Grid>
@@ -1055,6 +1056,7 @@ export const CalendarDetail = () => {
 									section={`calendar_sleep_section`}
 									handleDelete={handleDelete as any}
 									LOCKED={LOCKED}
+									disabled={true}
 								/>
 							</Grid>
 						</Grid>

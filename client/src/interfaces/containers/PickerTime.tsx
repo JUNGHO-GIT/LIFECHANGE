@@ -36,11 +36,6 @@ export const PickerTime = (
 
 	// 2-3. useEffect --------------------------------------------------------------------------------
 	useEffect(() => {
-		console.log(`extra: ${extra}`);
-	}, [extra]);
-
-	// 2-3. useEffect --------------------------------------------------------------------------------
-	useEffect(() => {
 		// 1. calendar
 		if (firstStr === `calendar`) {
 			if (extra.includes(`exercise_cardio`)) {

@@ -249,7 +249,7 @@ export const SleepChartPie = () => {
 					<Select
 						value={TYPE.section}
 						onChange={(e: any) => {
-							setTYPE((prev: any) => ({
+							setTYPE((prev) => ({
 								...prev,
 								section: e.target.value,
 							}));

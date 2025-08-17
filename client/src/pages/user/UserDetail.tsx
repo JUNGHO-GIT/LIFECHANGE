@@ -175,7 +175,7 @@ export const UserDetail = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											user_initScale: value,
 										}));
@@ -241,7 +241,7 @@ export const UserDetail = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											user_initAvgKcalIntake: value,
 										}));
@@ -307,7 +307,7 @@ export const UserDetail = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											user_initProperty: value,
 										}));

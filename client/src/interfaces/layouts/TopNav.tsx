@@ -215,7 +215,7 @@ export const TopNav = () => {
     // 1. calendar
     if (firstStr === "calendar") {
       if (secondStr === "list" || secondStr === "detail") {
-        setSelectedTab((prev: any) => ({
+        setSelectedTab((prev) => ({
           ...prev,
           calendar: "schedule",
         }));
@@ -224,13 +224,13 @@ export const TopNav = () => {
     // 2. today
     else if (firstStr === "today") {
       if (secondStr === "goal") {
-        setSelectedTab((prev: any) => ({
+        setSelectedTab((prev) => ({
           ...prev,
           today: "goal",
         }));
       }
       else if (secondStr === "list" || secondStr === "detail") {
-        setSelectedTab((prev: any) => ({
+        setSelectedTab((prev) => ({
           ...prev,
           today: "real",
         }));
@@ -239,31 +239,31 @@ export const TopNav = () => {
     // 3. food
     else if (firstStr === "food") {
       if (secondStr === "chart") {
-        setSelectedTab((prev: any) => ({
+        setSelectedTab((prev) => ({
           ...prev,
           food: "chart",
         }));
       }
       else if (secondStr === "goal") {
-        setSelectedTab((prev: any) => ({
+        setSelectedTab((prev) => ({
           ...prev,
           food: "goal",
         }));
       }
       else if (secondStr === "find") {
-        setSelectedTab((prev: any) => ({
+        setSelectedTab((prev) => ({
           ...prev,
           food: "find",
         }));
       }
       else if (secondStr === "favorite") {
-        setSelectedTab((prev: any) => ({
+        setSelectedTab((prev) => ({
           ...prev,
           food: "favorite",
         }));
       }
       else if (secondStr === "list" || secondStr === "detail") {
-        setSelectedTab((prev: any) => ({
+        setSelectedTab((prev) => ({
           ...prev,
           food: "real",
         }));
@@ -272,19 +272,19 @@ export const TopNav = () => {
     // 4. exercise, money, sleep
     else if (firstStr === "exercise" || firstStr === "money" || firstStr === "sleep") {
       if (secondStr === "chart") {
-        setSelectedTab((prev: any) => ({
+        setSelectedTab((prev) => ({
           ...prev,
           [firstStr]: "chart",
         }));
       }
       else if (secondStr === "goal") {
-        setSelectedTab((prev: any) => ({
+        setSelectedTab((prev) => ({
           ...prev,
           [firstStr]: "goal",
         }));
       }
       else if (secondStr === "list" || secondStr === "detail") {
-        setSelectedTab((prev: any) => ({
+        setSelectedTab((prev) => ({
           ...prev,
           [firstStr]: "real",
         }));
@@ -293,7 +293,7 @@ export const TopNav = () => {
     // 5. admin
     else if (firstStr === "admin") {
       if (secondStr === "dashboard") {
-        setSelectedTab((prev: any) => ({
+        setSelectedTab((prev) => ({
           ...prev,
           admin: "dashboard",
         }));
@@ -1043,7 +1043,7 @@ export const TopNav = () => {
       return (
         <>
           <Tabs
-            value={selectedTab[firstStr]}
+            value={selectedTab[firstStr as keyof typeof selectedTab]}
             variant={"fullWidth"}
             component={"div"}
             scrollButtons={false}
@@ -1056,8 +1056,8 @@ export const TopNav = () => {
             }}
           >
             <Tab
-              label={translate(selectedTab[firstStr])}
-              value={selectedTab[firstStr]}
+              label={translate(selectedTab[firstStr as keyof typeof selectedTab])}
+              value={selectedTab[firstStr as keyof typeof selectedTab]}
               onClick={(e) => {
                 setSelectedAnchorEl((prev) => ({
                   ...prev,
@@ -1093,7 +1093,7 @@ export const TopNav = () => {
             {dataArray?.[firstStr as keyof typeof dataArray]?.map((tabName: string) => (
               <MenuItem
                 key={tabName}
-                selected={selectedTab[firstStr] === tabName}
+                selected={selectedTab[firstStr as keyof typeof selectedTab] === tabName}
                 className={"text-center"}
                 onClick={() => {
                   handleClickTobNav(tabName);

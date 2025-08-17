@@ -114,7 +114,7 @@ export const Count = (
 										}
 										else {
 											COUNT.newSectionCnt > COUNT.sectionCnt ? (
-												setCOUNT((prev: any) => ({
+												setCOUNT((prev) => ({
 													...prev,
 													newSectionCnt: prev.newSectionCnt - 1
 												}))
@@ -148,7 +148,7 @@ export const Count = (
 										}
 										else {
 											COUNT.newSectionCnt < limit ? (
-												setCOUNT((prev: any) => ({
+												setCOUNT((prev) => ({
 													...prev,
 													newSectionCnt: prev.newSectionCnt + 1
 												}))

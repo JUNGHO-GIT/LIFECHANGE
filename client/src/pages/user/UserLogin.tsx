@@ -50,7 +50,7 @@ export const UserLogin = () => {
 		// 자동로그인 o
 		if (autoLogin === "true") {
 			setCheckedAutoLogin(true);
-			setOBJECT((prev: any) => ({
+			setOBJECT((prev) => ({
 				...prev,
 				user_id: autoLoginId,
 				user_pw: autoLoginPw,
@@ -60,7 +60,7 @@ export const UserLogin = () => {
 		// 자동로그인 x
 		else if (autoLogin === "false") {
 			setCheckedAutoLogin(false);
-			setOBJECT((prev: any) => ({
+			setOBJECT((prev) => ({
 				...prev,
 				user_id: "",
 				user_pw: "",
@@ -76,7 +76,7 @@ export const UserLogin = () => {
 		// 아이디 저장 o
 		if (isSaved === "true") {
 			setCheckedSaveId(true);
-			setOBJECT((prev: any) => ({
+			setOBJECT((prev) => ({
 				...prev,
 				user_id: isSavedId,
 			}));
@@ -84,7 +84,7 @@ export const UserLogin = () => {
 		// 아이디 저장 x
 		else if (isSaved === "false") {
 			setCheckedSaveId(false);
-			setOBJECT((prev: any) => ({
+			setOBJECT((prev) => ({
 				...prev,
 				user_id: "",
 			}));
@@ -226,7 +226,7 @@ export const UserLogin = () => {
 						setClickCount((prevCount) => {
 							const newCount = prevCount + 1;
 							if (newCount === 5) {
-								setOBJECT((prev: any) => ({
+								setOBJECT((prev) => ({
 									...prev,
 									user_id: ADMIN_ID,
 									user_pw: ADMIN_PW,
@@ -261,13 +261,13 @@ export const UserLogin = () => {
 									onChange={(e: any) => {
 										const value = e.target.value;
 										if (value?.length > 30) {
-											setOBJECT((prev: any) => ({
+											setOBJECT((prev) => ({
 												...prev,
 												user_id: prev.user_id,
 											}));
 										}
 										else {
-											setOBJECT((prev: any) => ({
+											setOBJECT((prev) => ({
 												...prev,
 												user_id: value,
 											}));
@@ -288,7 +288,7 @@ export const UserLogin = () => {
 									inputRef={REFS?.[i]?.user_pw}
 									error={ERRORS?.[i]?.user_pw}
 									onChange={(e: any) => {
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											user_pw: e.target.value,
 										}));

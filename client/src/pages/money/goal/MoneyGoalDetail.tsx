@@ -73,7 +73,7 @@ export const MoneyGoalDetail = () => {
         OBJECT.money_goal_dateEnd === "0000-00-00"
       );
 
-      setFLOW((prev: any) => ({
+      setFLOW((prev) => ({
         ...prev,
         exist: isExist,
         itsMe: itsMe,
@@ -124,7 +124,7 @@ export const MoneyGoalDetail = () => {
     .then((res: any) => {
       setLOADING(false);
       setOBJECT(res.data.result || MoneyGoal);
-      setCOUNT((prev: any) => ({
+      setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
         sectionCnt: res.data.sectionCnt || 0,
@@ -256,12 +256,12 @@ export const MoneyGoalDetail = () => {
 
   // 4-3. handle----------------------------------------------------------------------------------
   const handleDelete = (_index: number) => {
-    setOBJECT((prev: any) => ({
+    setOBJECT((prev) => ({
       ...prev,
       money_goal_income: "",
       money_goal_expense: ""
     }));
-    setCOUNT((prev: any) => ({
+    setCOUNT((prev) => ({
       ...prev,
       newSectionCnt: prev.newSectionCnt - 1
     }));
@@ -353,7 +353,7 @@ export const MoneyGoalDetail = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											money_goal_income: value,
 										}));
@@ -402,7 +402,7 @@ export const MoneyGoalDetail = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											money_goal_expense: value,
 										}));

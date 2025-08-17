@@ -73,7 +73,7 @@ export const FoodGoalDetail = () => {
         OBJECT.food_goal_dateEnd === "0000-00-00"
       );
 
-      setFLOW((prev: any) => ({
+      setFLOW((prev) => ({
         ...prev,
         exist: isExist,
         itsMe: itsMe,
@@ -124,7 +124,7 @@ export const FoodGoalDetail = () => {
     .then((res: any) => {
       setLOADING(false);
       setOBJECT(res.data.result || FoodGoal);
-      setCOUNT((prev: any) => ({
+      setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
         sectionCnt: res.data.sectionCnt || 0,
@@ -256,14 +256,14 @@ export const FoodGoalDetail = () => {
 
   // 4-3. handle----------------------------------------------------------------------------------
   const handleDelete = (_index: number) => {
-    setOBJECT((prev: any) => ({
+    setOBJECT((prev) => ({
       ...prev,
       food_goal_kcal: "",
       food_goal_carb: "",
       food_goal_protein: "",
       food_goal_fat: "",
     }));
-    setCOUNT((prev: any) => ({
+    setCOUNT((prev) => ({
       ...prev,
       newSectionCnt: prev.newSectionCnt - 1
     }));
@@ -355,7 +355,7 @@ export const FoodGoalDetail = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											food_goal_kcal: value,
 										}));
@@ -404,7 +404,7 @@ export const FoodGoalDetail = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											food_goal_carb: value,
 										}));
@@ -453,7 +453,7 @@ export const FoodGoalDetail = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											food_goal_protein: value,
 										}));
@@ -502,7 +502,7 @@ export const FoodGoalDetail = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											food_goal_fat: value,
 										}));

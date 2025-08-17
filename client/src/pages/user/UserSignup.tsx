@@ -49,7 +49,7 @@ export const UserSignup = () => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        setOBJECT((prev: any) => ({
+        setOBJECT((prev) => ({
           ...prev,
           user_id_sended: true
         }));
@@ -61,7 +61,7 @@ export const UserSignup = () => {
           msg: translate(res.data.msg),
           severity: "error",
         });
-        setOBJECT((prev: any) => ({
+        setOBJECT((prev) => ({
           ...prev,
           user_id_sended: false
         }));
@@ -73,7 +73,7 @@ export const UserSignup = () => {
           msg: translate(res.data.msg),
           severity: "error",
         });
-        setOBJECT((prev: any) => ({
+        setOBJECT((prev) => ({
           ...prev,
           user_id_sended: false
         }));
@@ -85,7 +85,7 @@ export const UserSignup = () => {
           msg: translate(res.data.msg),
           severity: "error",
         });
-        setOBJECT((prev: any) => ({
+        setOBJECT((prev) => ({
           ...prev,
           user_id_sended: false
         }));
@@ -124,7 +124,7 @@ export const UserSignup = () => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        setOBJECT((prev: any) => ({
+        setOBJECT((prev) => ({
           ...prev,
           user_id_verified: true
         }));
@@ -136,7 +136,7 @@ export const UserSignup = () => {
           msg: translate(res.data.msg),
           severity: "error",
         });
-        setOBJECT((prev: any) => ({
+        setOBJECT((prev) => ({
           ...prev,
           user_id_verified: false
         }));
@@ -270,13 +270,13 @@ export const UserSignup = () => {
 									onChange={(e: any) => {
 										const value = e.target.value;
 										if (value?.length > 30) {
-											setOBJECT((prev: any) => ({
+											setOBJECT((prev) => ({
 												...prev,
 												user_id: prev.user_id,
 											}));
 										}
 										else {
-											setOBJECT((prev: any) => ({
+											setOBJECT((prev) => ({
 												...prev,
 												user_id: value,
 											}));
@@ -310,7 +310,7 @@ export const UserSignup = () => {
 									disabled={item.user_id_verified === true}
 									placeholder={"123456"}
 									onChange={(e: any) => {
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											user_verify_code: e.target.value
 										}))
@@ -345,7 +345,7 @@ export const UserSignup = () => {
 									error={ERRORS?.[i]?.user_pw}
 									disabled={item.user_id_verified === false}
 									onChange={(e: any) => {
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											user_pw: e.target.value
 										}))
@@ -366,7 +366,7 @@ export const UserSignup = () => {
 									error={ERRORS?.[i]?.user_pw_verified}
 									disabled={item.user_id_verified === false}
 									onChange={(e: any) => {
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											user_pw_verified: e.target.value
 										}))
@@ -411,7 +411,7 @@ export const UserSignup = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											user_initScale: value,
 										}));
@@ -454,7 +454,7 @@ export const UserSignup = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											user_initAvgKcalIntake: value,
 										}));
@@ -497,7 +497,7 @@ export const UserSignup = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											user_initProperty: value,
 										}));

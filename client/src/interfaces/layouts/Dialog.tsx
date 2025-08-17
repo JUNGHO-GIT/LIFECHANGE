@@ -10,8 +10,8 @@ import { SpeedDial, SpeedDialAction, SpeedDialIcon, Backdrop } from "@importMuis
 declare type DialogProps = {
   COUNT?: any;
   setCOUNT?: any;
-  LOCKED?: any;
-  setLOCKED?: any;
+  LOCKED?: string;
+  setLOCKED?: React.Dispatch<React.SetStateAction<string>>;
   setIsExpanded?: any;
 }
 
@@ -32,7 +32,8 @@ export const Dialog = (
   const isFindList = PATH.includes("/find/list");
   const isFavoriteList = PATH.includes("/favorite/list");
   const isList = !isGoalList && !isFindList && !isFavoriteList && PATH.includes("/list");
-  const isDetail = PATH.includes("/detail");
+	const isCalendarDetail = PATH.includes("/calendar/detail");
+  const isDetail = !isCalendarDetail && PATH.includes("/detail");
 
   // 7. dialog -------------------------------------------------------------------------------------
   const dialogNode = () => {
@@ -51,7 +52,7 @@ export const Dialog = (
           direction={"up"}
           open={open}
           style={{ zIndex: 600 }}
-          className={`p-fixed bottom-18vh right-6vw`}
+					className={`p-fixed bottom-18vh right-6vw ml-5px z-600`}
           icon={
             <SpeedDialIcon />
           }
@@ -139,7 +140,7 @@ export const Dialog = (
           direction={"up"}
             open={open}
             style={{ zIndex: 600 }}
-            className={`p-fixed bottom-18vh right-6vw`}
+					className={`p-fixed bottom-18vh right-6vw ml-5px z-600`}
           icon={
             <SpeedDialIcon />
           }
@@ -227,10 +228,10 @@ export const Dialog = (
         />
         <SpeedDial
           ariaLabel={"speedDial"}
-          direction={"up"}
-            open={open}
-            style={{ zIndex: 600 }}
-            className={`p-fixed bottom-18vh right-6vw`}
+					direction={"up"}
+					open={open}
+					style={{ zIndex: 600 }}
+					className={`p-fixed bottom-18vh right-6vw ml-5px z-600`}
           icon={
             <SpeedDialIcon />
           }
@@ -320,7 +321,7 @@ export const Dialog = (
           ariaLabel={"speedDial"}
           direction={"up"}
           open={open}
-          className={`p-fixed bottom-18vh z-600 right-6vw ml-5px`}
+					className={`p-fixed bottom-18vh right-6vw ml-5px z-600`}
           icon={
             <SpeedDialIcon />
           }
@@ -455,7 +456,7 @@ export const Dialog = (
           direction={"up"}
           open={open}
           style={{ zIndex: 600 }}
-          className={`p-fixed bottom-18vh right-6vw`}
+					className={`p-fixed bottom-18vh right-6vw ml-5px z-600`}
           icon={
             <SpeedDialIcon />
           }
@@ -487,13 +488,15 @@ export const Dialog = (
               )
             }
             onClick={() => {
-              if (LOCKED === "locked") {
-                setLOCKED("unlocked");
-              }
-              else {
-                setLOCKED("locked");
-              }
-            }}
+							if (setLOCKED) {
+								if (LOCKED === "locked") {
+									setLOCKED("unlocked");
+								}
+								else {
+									setLOCKED("locked");
+								}
+							}
+						}}
           />
           <SpeedDialAction
             key={translate("closeAll")}
@@ -507,16 +510,18 @@ export const Dialog = (
                 className={"w-25px h-25px"}
               />
             }
-            onClick={(e: any) => {
+            onClick={(e) => {
               if (LOCKED === "locked") {
                 e.preventDefault();
                 return;
               }
               else {
-                setCOUNT((prev: any) => ({
-                  ...prev,
-                  newSectionCnt: 0,
-                }))
+								if (setCOUNT) {
+									setCOUNT((prev: any) => ({
+										...prev,
+										newSectionCnt: 0,
+									}));
+								}
               }
             }}
           />
@@ -540,7 +545,7 @@ export const Dialog = (
       : isDetail ? (
         detailSection()
       )
-      : null
+			: null
     );
   };
 

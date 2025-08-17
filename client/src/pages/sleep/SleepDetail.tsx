@@ -75,7 +75,7 @@ export const SleepDetail = () => {
         OBJECT.sleep_dateEnd === "0000-00-00"
       );
 
-      setFLOW((prev: any) => ({
+      setFLOW((prev) => ({
         ...prev,
         exist: isExist,
         itsMe: itsMe,
@@ -129,14 +129,14 @@ export const SleepDetail = () => {
 
       // sectionCnt가 0이면 section 초기화
       if (res.data.sectionCnt <= 0) {
-        setOBJECT((prev: any) => ({
+        setOBJECT((prev) => ({
           ...prev,
           sleep_section: []
         }));
       }
       // sectionCnt가 0이 아니면 section 내부 part 값에 따라 재정렬
       else {
-        setOBJECT((prev: any) => ({
+        setOBJECT((prev) => ({
           ...prev,
           sleep_section: prev.sleep_section?.sort((a: any, b: any) => (
             a.sleep_part - b.sleep_part
@@ -144,7 +144,7 @@ export const SleepDetail = () => {
         }));
       }
       // count 설정
-      setCOUNT((prev: any) => ({
+      setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
         sectionCnt: res.data.sectionCnt || 0,
@@ -293,11 +293,11 @@ export const SleepDetail = () => {
 
   // 4-3. handle----------------------------------------------------------------------------------
   const handleDelete = (index: number) => {
-    setOBJECT((prev: any) => ({
+    setOBJECT((prev) => ({
       ...prev,
       sleep_section: prev.sleep_section?.filter((_item: any, idx: number) => (idx !== index))
     }));
-    setCOUNT((prev: any) => ({
+    setCOUNT((prev) => ({
       ...prev,
       newSectionCnt: prev.newSectionCnt - 1
     }));

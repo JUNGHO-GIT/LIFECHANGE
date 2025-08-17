@@ -6,7 +6,7 @@ import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores"
 import { SleepGoal, SleepGoalType } from "@importSchemas";
 import { axios } from "@importLibs";
 import { Footer, Empty, Dialog } from "@importLayouts";
-import { Div, Img, Hr, Icons, Paper, Grid, Br } from "@importComponents";
+import { Div, Img, Hr, Icons, Paper, Grid } from "@importComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -103,7 +103,7 @@ export const SleepGoalList = () => {
     })
     .then((res: any) => {
       setOBJECT(res.data.result?.length > 0 ? res.data.result : [SleepGoal]);
-      setCOUNT((prev: any) => ({
+      setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
         sectionCnt: res.data.sectionCnt || 0,

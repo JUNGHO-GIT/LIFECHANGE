@@ -8,12 +8,12 @@ declare type DeleteProps = {
 	section?: string;
   handleDelete: (index: number, section?: string) => void;
 	LOCKED?: string;
-	readOnly?: boolean;
+	disabled?: boolean;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const Delete = (
-  { index, section, handleDelete, LOCKED, readOnly }: DeleteProps
+  { index, section, handleDelete, LOCKED, disabled }: DeleteProps
 ) => {
 
   // 1. deleteNode --------------------------------------------------------------------------------
@@ -24,8 +24,14 @@ export const Delete = (
         name={"X"}
         locked={LOCKED}
         className={"w-20px h-20px"}
+				sx={{
+					color: "var(--color-text-2)",
+					"&:hover": {
+						color: "var(--color-text-1)",
+					},
+				}}
         onClick={() => {
-					if (readOnly) {
+					if (disabled) {
 						return;
 					}
           handleDelete(index, section);

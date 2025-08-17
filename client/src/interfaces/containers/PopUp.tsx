@@ -22,7 +22,7 @@ export const PopUp = (props: any) => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (props?.type === "innerCenter") {
-      setPopupStyle((prev: any) => ({
+      setPopupStyle((prev) => ({
         ...prev,
         border: '0.2px solid rgba(0, 0, 0, 0.2)',
         boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
@@ -30,7 +30,7 @@ export const PopUp = (props: any) => {
       }));
     }
     else if (props?.type === "alert") {
-      setPopupStyle((prev: any) => ({
+      setPopupStyle((prev) => ({
         ...prev,
         border: '1px solid red',
         boxShadow: '0px 0px 10px rgba(255, 0, 0, 0.5)',
@@ -38,7 +38,7 @@ export const PopUp = (props: any) => {
       }));
     }
     else if (props?.type === "chart") {
-      setPopupStyle((prev: any) => ({
+      setPopupStyle((prev) => ({
         ...prev,
         border: '0.2px solid rgba(0, 0, 0, 0.2)',
         boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
@@ -46,7 +46,7 @@ export const PopUp = (props: any) => {
       }));
     }
     else if (props?.type === "modal") {
-      setPopupStyle((prev: any) => ({
+      setPopupStyle((prev) => ({
         ...prev,
         border: '0.2px solid rgba(0, 0, 0, 0.2)',
         boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',

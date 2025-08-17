@@ -7,7 +7,7 @@ import { axios } from "@importLibs";
 import { insertComma } from "@importScripts";
 import { Exercise, Food, Money, Sleep } from "@importSchemas";
 import { Footer, Empty, Dialog } from "@importLayouts";
-import { Div, Hr, Br, Img, Icons, Paper, Grid } from "@importComponents";
+import { Div, Hr, Img, Icons, Paper, Grid } from "@importComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -40,16 +40,16 @@ export const TodayList = () => {
   const [isExpanded, setIsExpanded] = useStorageLocal(
     "isExpanded", PATH, "", {
       exercise: [{
-        expended: true,
+        expanded: true,
       }],
       food: [{
-        expended: true,
+        expanded: true,
       }],
       money: [{
-        expended: true,
+        expanded: true,
       }],
       sleep: [{
-        expended: true,
+        expanded: true,
       }],
     }
   );

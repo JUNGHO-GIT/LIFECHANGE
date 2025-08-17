@@ -111,7 +111,7 @@ export const CalendarList = () => {
 						name={"ArrowLeft"}
 						className={"w-24px h-24px"}
 						onClick={() => {
-							setDATE((prev: any) => ({
+							setDATE((prev) => ({
 								...prev,
 								dateStart: getPrevMonthStartFmt(prev.dateStart),
 								dateEnd: getPrevMonthEndFmt(prev.dateStart),
@@ -123,7 +123,7 @@ export const CalendarList = () => {
 					<Div
 						className={"fs-1-4rem fw-500"}
 						onClick={() => {
-							setDATE((prev: any) => ({
+							setDATE((prev) => ({
 								...prev,
 								dateStart: getMonthStartFmt(),
 								dateEnd: getMonthEndFmt(),
@@ -139,7 +139,7 @@ export const CalendarList = () => {
 						name={"ArrowRight"}
 						className={"w-24px h-24px"}
 						onClick={() => {
-							setDATE((prev: any) => ({
+							setDATE((prev) => ({
 								...prev,
 								dateStart: getNextMonthStartFmt(prev.dateStart),
 								dateEnd: getNextMonthEndFmt(prev.dateStart),
@@ -171,7 +171,7 @@ export const CalendarList = () => {
 						formatLongDate={(_locale, date) => getDayNotFmt(date).format("YYYY-MM-DD")}
 						formatMonthYear={(_locale, date) => getDayNotFmt(date).format("YYYY-MM")}
 						onActiveStartDateChange={({ activeStartDate }) => {
-							setDATE((prev: any) => ({
+							setDATE((prev) => ({
 								...prev,
 								dateStart: getMonthStartFmt(activeStartDate),
 								dateEnd: getMonthEndFmt(activeStartDate),

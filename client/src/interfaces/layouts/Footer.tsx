@@ -35,6 +35,10 @@ export const Footer = (
       setTypeName("");
       setStyleClass("");
     }
+		else if (PATH.includes("/calendar/detail")) {
+      setTypeName("");
+      setStyleClass("");
+		}
     else if (PATH.includes("/user/category") || PATH.includes("/user/detail")) {
       setTypeName("btn");
       setStyleClass(`${commonStr} bottom-0vh`);

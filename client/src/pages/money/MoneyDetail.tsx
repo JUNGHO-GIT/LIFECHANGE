@@ -74,7 +74,7 @@ export const MoneyDetail = () => {
         OBJECT.money_dateEnd === "0000-00-00"
       );
 
-      setFLOW((prev: any) => ({
+      setFLOW((prev) => ({
         ...prev,
         exist: isExist,
         itsMe: itsMe,
@@ -128,14 +128,14 @@ export const MoneyDetail = () => {
 
       // sectionCnt가 0이면 section 초기화
       if (res.data.sectionCnt <= 0) {
-        setOBJECT((prev: any) => ({
+        setOBJECT((prev) => ({
           ...prev,
           money_section: []
         }));
       }
       // sectionCnt가 0이 아니면 section 내부 재정렬
       else {
-        setOBJECT((prev: any) => ({
+        setOBJECT((prev) => ({
           ...prev,
           money_section: prev.money_section?.sort((a: any, b: any) => (
             moneyArray.findIndex((item: any) => item.money_part === a.money_part) -
@@ -144,7 +144,7 @@ export const MoneyDetail = () => {
         }));
       }
       // count 설정
-      setCOUNT((prev: any) => ({
+      setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
         sectionCnt: res.data.sectionCnt || 0,
@@ -183,7 +183,7 @@ export const MoneyDetail = () => {
       totalExpense: 0
     });
 
-    setOBJECT((prev: any) => ({
+    setOBJECT((prev) => ({
       ...prev,
       money_total_income: Math.round(totals.totalIncome).toString(),
       money_total_expense: Math.round(totals.totalExpense).toString(),
@@ -203,7 +203,7 @@ export const MoneyDetail = () => {
     let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) =>
       idx < OBJECT?.money_section?.length ? OBJECT?.money_section[idx] : defaultSection
     );
-    setOBJECT((prev: any) => ({
+    setOBJECT((prev) => ({
       ...prev,
       money_section: updatedSection
     }));
@@ -322,11 +322,11 @@ export const MoneyDetail = () => {
 
   // 4-3. handle----------------------------------------------------------------------------------
   const handleDelete = (index: number) => {
-    setOBJECT((prev: any) => ({
+    setOBJECT((prev) => ({
       ...prev,
       money_section: prev.money_section?.filter((_item: any, idx: number) => (idx !== index))
     }));
-    setCOUNT((prev: any) => ({
+    setCOUNT((prev) => ({
       ...prev,
       newSectionCnt: prev.newSectionCnt - 1,
     }));
@@ -444,7 +444,7 @@ export const MoneyDetail = () => {
 									error={ERRORS?.[i]?.money_part}
 									onChange={(e: any) => {
 										let value = String(e.target.value || "");
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											money_section: prev.money_section?.map((section: any, idx: number) => (
 												idx === i ? {
@@ -476,7 +476,7 @@ export const MoneyDetail = () => {
 									error={ERRORS?.[i]?.money_title}
 									onChange={(e: any) => {
 										let value = String(e.target.value || "");
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											money_section: prev.money_section?.map((section: any, idx: number) => (
 												idx === i ? {
@@ -534,7 +534,7 @@ export const MoneyDetail = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											money_section: prev.money_section?.map((section: any, idx: number) => (
 												idx === i ? {
@@ -570,7 +570,7 @@ export const MoneyDetail = () => {
 									checked={item?.money_include === "Y"}
 									disabled={LOCKED === "locked"}
 									onChange={(e: any) => {
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											money_section: prev.money_section?.map((section: any, idx: number) => (
 												idx === i ? {

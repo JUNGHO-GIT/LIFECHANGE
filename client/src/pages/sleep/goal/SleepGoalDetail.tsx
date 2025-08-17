@@ -76,7 +76,7 @@ export const SleepGoalDetail = () => {
         OBJECT.sleep_goal_dateEnd === "0000-00-00"
       );
 
-      setFLOW((prev: any) => ({
+      setFLOW((prev) => ({
         ...prev,
         exist: isExist,
         itsMe: itsMe,
@@ -127,7 +127,7 @@ export const SleepGoalDetail = () => {
     .then((res: any) => {
       setLOADING(false);
       setOBJECT(res.data.result || SleepGoal);
-      setCOUNT((prev: any) => ({
+      setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
         sectionCnt: res.data.sectionCnt || 0,
@@ -259,13 +259,13 @@ export const SleepGoalDetail = () => {
 
   // 4-3. handle----------------------------------------------------------------------------------
   const handleDelete = (_index: number) => {
-    setOBJECT((prev: any) => ({
+    setOBJECT((prev) => ({
       ...prev,
       sleep_goal_bedTime: "00:00",
       sleep_goal_wakeTime: "00:00",
       sleep_goal_sleepTime: "00:00",
     }));
-    setCOUNT((prev: any) => ({
+    setCOUNT((prev) => ({
       ...prev,
       newSectionCnt: prev.newSectionCnt - 1,
     }));

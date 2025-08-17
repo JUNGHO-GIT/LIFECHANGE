@@ -77,7 +77,7 @@ export const ExerciseDetail = () => {
         OBJECT.exercise_dateEnd === "0000-00-00"
       );
 
-      setFLOW((prev: any) => ({
+      setFLOW((prev) => ({
         ...prev,
         exist: isExist,
         itsMe: itsMe,
@@ -131,14 +131,14 @@ export const ExerciseDetail = () => {
 
       // sectionCnt가 0이면 section 초기화
       if (res.data.sectionCnt <= 0) {
-        setOBJECT((prev: any) => ({
+        setOBJECT((prev) => ({
           ...prev,
           exercise_section: []
         }));
       }
       // sectionCnt가 0이 아니면 section 내부 재정렬
       else {
-        setOBJECT((prev: any) => ({
+        setOBJECT((prev) => ({
           ...prev,
           exercise_section: prev.exercise_section?.sort((a: any, b: any) => (
             exerciseArray.findIndex((item: any) => item.exercise_part === a.exercise_part) -
@@ -147,7 +147,7 @@ export const ExerciseDetail = () => {
         }));
       }
       // count 설정
-      setCOUNT((prev: any) => ({
+      setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
         sectionCnt: res.data.sectionCnt || 0,
@@ -188,7 +188,7 @@ export const ExerciseDetail = () => {
       totalCardio: 0
     });
 
-    setOBJECT((prev: any) => ({
+    setOBJECT((prev) => ({
       ...prev,
       exercise_total_volume: totals.totalVolume.toString(),
       exercise_total_cardio: `${Math.floor(totals.totalCardio / 60).toString().padStart(2, '0')}:${(totals.totalCardio % 60).toString().padStart(2, '0')}`
@@ -210,7 +210,7 @@ export const ExerciseDetail = () => {
     let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) =>
       idx < OBJECT?.exercise_section?.length ? OBJECT?.exercise_section[idx] : defaultSection
     );
-    setOBJECT((prev: any) => ({
+    setOBJECT((prev) => ({
       ...prev,
       exercise_section: updatedSection
     }));
@@ -329,11 +329,11 @@ export const ExerciseDetail = () => {
 
   // 4-3. handle----------------------------------------------------------------------------------
   const handleDelete = (index: number) => {
-    setOBJECT((prev: any) => ({
+    setOBJECT((prev) => ({
       ...prev,
       exercise_section: prev.exercise_section?.filter((_item: any, idx: number) => (idx !== index))
     }));
-    setCOUNT((prev: any) => ({
+    setCOUNT((prev) => ({
       ...prev,
       newSectionCnt: prev.newSectionCnt - 1,
     }));
@@ -446,7 +446,7 @@ export const ExerciseDetail = () => {
                   value = value.replace(/^0+/, '');
                 }
                 // object 설정
-                setOBJECT((prev: any) => ({
+                setOBJECT((prev) => ({
                   ...prev,
                   exercise_total_scale: value
                 }));
@@ -492,7 +492,7 @@ export const ExerciseDetail = () => {
 									error={ERRORS?.[i]?.exercise_part}
 									onChange={(e: any) => {
 										let value = String(e.target.value || "");
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
 												idx === i ? {
@@ -524,7 +524,7 @@ export const ExerciseDetail = () => {
 									error={ERRORS?.[i]?.exercise_title}
 									onChange={(e: any) => {
 										let value = String(e.target.value || "");
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
 												idx === i ? {
@@ -582,7 +582,7 @@ export const ExerciseDetail = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
 												idx === i ? {
@@ -625,7 +625,7 @@ export const ExerciseDetail = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
 												idx === i ? {
@@ -673,7 +673,7 @@ export const ExerciseDetail = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
 												idx === i ? {

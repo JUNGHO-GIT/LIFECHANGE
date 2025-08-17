@@ -225,7 +225,7 @@ export const SleepChartAvg = () => {
 					<Select
 						value={TYPE.section}
 						onChange={(e: any) => {
-							setTYPE((prev: any) => ({
+							setTYPE((prev) => ({
 								...prev,
 								section: e.target.value,
 							}));
@@ -252,7 +252,7 @@ export const SleepChartAvg = () => {
 										<Switch checked={TYPE.line.includes(key)} onChange={() => {
 											if (TYPE.line.includes(key)) {
 												if (TYPE.line?.length > 1) {
-													setTYPE((prev: any) => ({
+													setTYPE((prev) => ({
 														...prev,
 														line: TYPE.line?.filter((item: any) => item !== key),
 													}));
@@ -262,7 +262,7 @@ export const SleepChartAvg = () => {
 												}
 											}
 											else {
-												setTYPE((prev: any) => ({
+												setTYPE((prev) => ({
 													...prev,
 													line: [...TYPE.line, key],
 												}));

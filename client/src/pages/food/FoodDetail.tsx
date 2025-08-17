@@ -75,7 +75,7 @@ export const FoodDetail = () => {
         OBJECT.food_dateEnd === "0000-00-00"
       );
 
-      setFLOW((prev: any) => ({
+      setFLOW((prev) => ({
         ...prev,
         exist: isExist,
         itsMe: itsMe,
@@ -150,14 +150,14 @@ export const FoodDetail = () => {
 
       // sectionCnt가 0이면 section 초기화
       if (res.data.sectionCnt <= 0) {
-        setOBJECT((prev: any) => ({
+        setOBJECT((prev) => ({
           ...prev,
           food_section: []
         }));
       }
       // sectionCnt가 0이 아니면 section 내부 재정렬
       else {
-        setOBJECT((prev: any) => ({
+        setOBJECT((prev) => ({
           ...prev,
           food_section: prev.food_section?.sort((a: any, b: any) => (
             foodArray.findIndex((item: any) => item.food_part === a.food_part) -
@@ -166,7 +166,7 @@ export const FoodDetail = () => {
         }));
       }
       // count 설정
-      setCOUNT((prev: any) => ({
+      setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
         sectionCnt: res.data.sectionCnt || 0,
@@ -177,16 +177,16 @@ export const FoodDetail = () => {
       let sectionArray = sessionFoodSection?.length > 0 ? sessionFoodSection : [];
 
       // 기존 food_section 데이터와 병합하여 OBJECT 재설정
-      setOBJECT((prev: any) => ({
+      setOBJECT((prev) => ({
         ...prev,
         // 기존의 food_section만 정렬
-        food_section: prev?.food_section ? (
-          [...prev.food_section]?.sort((a, b) => a.food_part - b.food_part).concat(sectionArray)
-        ) : [...sectionArray]
+        food_section: prev?.food_section
+				? [...prev.food_section]?.sort((a, b) => parseInt(a.food_part) - parseInt(b.food_part)).concat(sectionArray)
+				: [...sectionArray]
       }));
 
       // 병합된 데이터를 바탕으로 COUNT 재설정
-      setCOUNT((prev: any) => ({
+      setCOUNT((prev) => ({
         ...prev,
         newSectionCnt: prev?.newSectionCnt + sectionArray?.length
       }));
@@ -220,7 +220,7 @@ export const FoodDetail = () => {
       totalProtein: 0
     });
 
-    setOBJECT((prev: any) => ({
+    setOBJECT((prev) => ({
       ...prev,
       food_total_kcal: Number(totals.totalKcal).toString(),
       food_total_fat: Number(totals.totalFat.toFixed(1)).toString(),
@@ -247,7 +247,7 @@ export const FoodDetail = () => {
     let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) =>
       idx < OBJECT?.food_section?.length ? OBJECT?.food_section[idx] : defaultSection
     );
-    setOBJECT((prev: any) => ({
+    setOBJECT((prev) => ({
       ...prev,
       food_section: updatedSection
     }));
@@ -422,13 +422,13 @@ export const FoodDetail = () => {
     setSession("section", "food", "", sectionArray);
 
     // OBJECT 설정
-    setOBJECT((prev: any) => ({
+    setOBJECT((prev) => ({
       ...prev,
       food_section: prev?.food_section?.filter((_item: any, idx: number) => (idx !== index))
     }));
 
     // COUNT 설정
-    setCOUNT((prev: any) => ({
+    setCOUNT((prev) => ({
       ...prev,
       newSectionCnt: prev?.newSectionCnt - 1,
     }));
@@ -643,7 +643,7 @@ export const FoodDetail = () => {
 									error={ERRORS?.[i]?.food_part}
 									onChange={(e: any) => {
 										let value = String(e.target.value || "");
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											food_section: prev.food_section?.map((section: any, idx: number) => (
 												idx === i ? {
@@ -697,7 +697,7 @@ export const FoodDetail = () => {
 											return nut;
 										};
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											food_section: prev.food_section?.map((section: any, idx: number) => (
 												idx === i ? {
@@ -732,7 +732,7 @@ export const FoodDetail = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											food_section: prev.food_section?.map((section: any, idx: number) => (
 												idx === i ? {
@@ -765,7 +765,7 @@ export const FoodDetail = () => {
 											return;
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											food_section: prev.food_section?.map((section: any, idx: number) => (
 												idx === i ? {
@@ -793,7 +793,7 @@ export const FoodDetail = () => {
 											return;
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											food_section: prev.food_section?.map((section: any, idx: number) => (
 												idx === i ? {
@@ -841,7 +841,7 @@ export const FoodDetail = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											food_section: prev.food_section?.map((section: any, idx: number) => (
 												idx === i ? {
@@ -884,7 +884,7 @@ export const FoodDetail = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											food_section: prev.food_section?.map((section: any, idx: number) => (
 												idx === i ? {
@@ -932,7 +932,7 @@ export const FoodDetail = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											food_section: prev.food_section?.map((section: any, idx: number) => (
 												idx === i ? {
@@ -975,7 +975,7 @@ export const FoodDetail = () => {
 											value = value.replace(/^0+/, '');
 										}
 										// object 설정
-										setOBJECT((prev: any) => ({
+										setOBJECT((prev) => ({
 											...prev,
 											food_section: prev.food_section?.map((section: any, idx: number) => (
 												idx === i ? {

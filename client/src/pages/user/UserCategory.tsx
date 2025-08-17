@@ -129,7 +129,7 @@ export const UserCategory = () => {
   // 4-1. handle----------------------------------------------------------------------------------
   const handleAdd = (type: string) => {
     if (type === "part") {
-      setOBJECT((prev: any) => {
+      setOBJECT((prev) => {
         const updatedObject = {
           ...prev,
           [dataType]: [
@@ -153,7 +153,7 @@ export const UserCategory = () => {
       });
     }
     else if (type === "title") {
-      setOBJECT((prev: any) => {
+      setOBJECT((prev) => {
         const updatedObject = {
           ...prev,
           [dataType]: prev[dataType].map((part: any, idx: number) => {
@@ -215,7 +215,7 @@ export const UserCategory = () => {
         });
         return;
       }
-      setOBJECT((prev: any) => {
+      setOBJECT((prev) => {
         const updatedObject = {
           ...prev,
           [dataType]: [
@@ -320,7 +320,7 @@ export const UserCategory = () => {
                               }
                             }}
                             onChange={(e: any) => {
-                              setOBJECT((prev: any) => ({
+                              setOBJECT((prev) => ({
                                 ...prev,
                                 [dataType]: [
                                   ...prev[dataType]?.slice(0, index),
@@ -339,7 +339,7 @@ export const UserCategory = () => {
                             name={"Search"}
                             className={"w-12px h-12px"}
                             onClick={() => {
-                              setSelectedIdx((prev: any) => ({
+                              setSelectedIdx((prev) => ({
                                 ...prev,
                                 category2Idx: index
                               }));
@@ -349,7 +349,7 @@ export const UserCategory = () => {
                             name={"Pencil"}
                             className={"w-12px h-12px navy"}
                             onClick={() => {
-                              setSelectedIdx((prev: any) => ({
+                              setSelectedIdx((prev) => ({
                                 ...prev,
                                 category2Idx: index
                               }));
@@ -360,7 +360,7 @@ export const UserCategory = () => {
                             name={"Trash"}
                             className={"w-12px h-12px burgundy"}
                             onClick={() => {
-                              setSelectedIdx((prev: any) => ({
+                              setSelectedIdx((prev) => ({
                                 ...prev,
                                 category2Idx: index
                               }));
@@ -463,7 +463,7 @@ export const UserCategory = () => {
                               name={"Pencil"}
                               className={"w-12px h-12px navy"}
                               onClick={() => {
-                                setSelectedIdx((prev: any) => ({
+                                setSelectedIdx((prev) => ({
                                   ...prev,
                                   category3Idx: index
                                 }));
@@ -474,7 +474,7 @@ export const UserCategory = () => {
                               name={"Trash"}
                               className={"w-12px h-12px burgundy"}
                               onClick={() => {
-                                setSelectedIdx((prev: any) => ({
+                                setSelectedIdx((prev) => ({
                                   ...prev,
                                   category3Idx: index
                                 }));
@@ -547,7 +547,7 @@ export const UserCategory = () => {
 																	className={"w-18px h-18px black ml-auto"}
 																	onClick={(e: any) => {
 																		setDataType(item);
-																		setSelectedIdx((prev: any) => ({
+																		setSelectedIdx((prev) => ({
 																			...prev,
 																			category1Idx: idx,
 																			category2Idx: 1,
