@@ -71,7 +71,7 @@ mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`)
 	});
 
 // 로그 설정 -------------------------------------------------------------------------------------------
-if (process.env.NODE_ENV !== 'production') {
+if (envStr === "DEVELOPMENT") {
 	const color = {
 		reset: "\x1b[0m",
 		coll: "\x1b[38;2;78;201;176m",
