@@ -483,7 +483,6 @@ export const FoodDetail = () => {
             DATE={DATE}
             setDATE={setDATE}
             EXIST={EXIST}
-						disabled={true}
           />
         </Grid>
         <Grid size={12}>

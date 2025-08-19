@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue, useCommonDate } from "@importHooks";
-import { useStorageLocal } from "@importHooks";
+import { useStorageLocal, useConsole } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { Money, MoneyType } from "@importSchemas";
 import { axios } from "@importLibs";
@@ -112,10 +112,13 @@ export const MoneyList = () => {
         sectionCnt: res.data.sectionCnt || 0,
         newSectionCnt: res.data.sectionCnt || 0
       }));
-      // 응답 길이만큼 expanded 초기화
-      setIsExpanded(
-        Array(res.data.result?.length).fill({ expanded: false })
-      );
+			// 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
+      setIsExpanded(() => {
+				if (res.data.result?.length !== isExpanded.length) {
+					return Array(res.data.result?.length).fill({ expanded: true });
+				}
+				return isExpanded;
+			});
     })
     .catch((err: any) => {
       setLOADING(false);

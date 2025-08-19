@@ -4,6 +4,7 @@ import { useState  } from "@importReacts";
 import { useCommonValue } from "@importHooks";
 import { useStoreLanguage, useStoreConfirm } from "@importStores";
 import { setLocal } from "@importScripts";
+import { axios } from "@importLibs";
 import { PopUp } from "@importContainers";
 import { Icons, Img, Div, Br, Paper, Grid } from "@importComponents";
 import { TableContainer, Table, TableBody, TableRow, TableCell } from "@importMuis";
@@ -19,7 +20,7 @@ export const UserAppSetting = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [lang, setLang] = useState<string>(localLang);
 
-  // 4. handle -------------------------------------------------------------------------------------
+  // 4-1. handle -------------------------------------------------------------------------------------
   const handleLogout = () => {
     setLocal("setting", "id", "", {
       autoLogin: "false",
@@ -30,19 +31,19 @@ export const UserAppSetting = () => {
     navigate("/user/login");
   };
 
-  // 4. handle -------------------------------------------------------------------------------------
+  // 4-2. handle -------------------------------------------------------------------------------------
   const handleChangeLanguage = (lang: string) => {
     setLang(lang);
     setLocal("setting", "locale", "lang", lang);
     navigate("/user/appSetting");
   };
 
-  // 4. handle -------------------------------------------------------------------------------------
+  // 4-3. handle -------------------------------------------------------------------------------------
   const handleClearStorage = async () => {
     const confirmResult = new Promise((resolve) => {
       setCONFIRM({
         open: true,
-        msg: "clearStorage",
+        msg: translate("clearStorage"),
       }, (confirmed: boolean) => {
         resolve(confirmed);
       });
@@ -51,6 +52,32 @@ export const UserAppSetting = () => {
       localStorage.clear();
     }
   };
+
+	// 4-4. handle -------------------------------------------------------------------------------------
+	function handleDeleteUserData() {
+		setCONFIRM({
+			open: true,
+			msg: translate("deleteUserData"),
+		}, async (confirmed: boolean) => {
+			if (confirmed) {
+				axios.post("/user/deleteUserData")
+				.then((res: any) => {
+					if (res.data.result) {
+						setLocal("setting", "id", "", {
+							autoLogin: "false",
+							autoLoginId: "",
+							autoLoginPw: "",
+						});
+						sessionStorage.clear();
+						navigate("/user/login");
+					}
+				})
+				.catch((err: any) => {
+					console.error(err);
+				});
+			}
+		});
+	}
 
   // 7. userAppSetting ----------------------------------------------------------------------------
   const userAppSettingNode = () => {
@@ -222,7 +249,7 @@ export const UserAppSetting = () => {
 										/>
 									</TableCell>
 								</TableRow>
-								{/** clear **/}
+								{/** clear storage **/}
 								<TableRow
 									className={`${isAdmin !== "true" ? "d-none" : ""} pointer`}
 									onClick={() => {
@@ -231,6 +258,24 @@ export const UserAppSetting = () => {
 								>
 									<TableCell className={"w-90vw p-15px"}>
 										{translate("clearStorage")}
+									</TableCell>
+									<TableCell className={"w-10vw p-15px"}>
+										<Icons
+											name={"ChevronRight"}
+											className={"w-16px h-16px"}
+										/>
+									</TableCell>
+								</TableRow>
+								{/** delete user data **/}
+								<TableRow
+									className={`${isAdmin !== "true" ? "d-none" : ""} pointer`}
+									onClick={() => {
+										// TODO: Implement delete user data functionality
+										// handleDeleteUserData();
+									}}
+								>
+									<TableCell className={"w-90vw p-15px"}>
+										{translate("deleteUserData")}
 									</TableCell>
 									<TableCell className={"w-10vw p-15px"}>
 										<Icons

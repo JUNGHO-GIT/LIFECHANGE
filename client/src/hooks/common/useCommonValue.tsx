@@ -20,9 +20,16 @@ export const useCommonValue = () => {
   const secondStr: string = PATH?.split("/")[2] || "";
   const thirdStr: string = PATH?.split("/")[3] || "";
 
+	// list
+	const isList: boolean = PATH.includes("/list");
+
+	// detail
+	const isDetail: boolean = PATH.includes("/detail");
+
 	// today
 	const isTodayGoalList: boolean = PATH.includes("/today/goal/list");
 	const isTodayList: boolean = PATH.includes("/today/list");
+	const isTodayGoalDetail: boolean = PATH.includes("/today/goal/detail");
 	const isTodayDetail: boolean = PATH.includes("/today/detail");
 
 	// calendar
@@ -149,8 +156,11 @@ export const useCommonValue = () => {
     firstStr,
     secondStr,
     thirdStr,
+		isList,
+		isDetail,
 		isTodayGoalList,
 		isTodayList,
+		isTodayGoalDetail,
 		isTodayDetail,
 		isCalendarList,
 		isCalendarDetail,

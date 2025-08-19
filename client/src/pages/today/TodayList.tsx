@@ -122,13 +122,28 @@ export const TodayList = () => {
           resSleep.data.totalCnt
         ),
       });
-      // 응답 길이만큼 expanded 초기화
-      setIsExpanded({
-        exercise: Array(resExercise.data.result?.length).fill({ expanded: false }),
-        food: Array(resFood.data.result?.length).fill({ expanded: false }),
-        money: Array(resMoney.data.result?.length).fill({ expanded: false }),
-        sleep: Array(resSleep.data.result?.length).fill({ expanded: false }),
-      });
+			// 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
+	  	setIsExpanded((prev) => {
+				let updated = { ...prev };
+				let changed = false;
+				if (resExercise.data.result?.length !== prev.exercise.length) {
+					updated.exercise = Array(resExercise.data.result?.length).fill({ expanded: true });
+					changed = true;
+				}
+				if (resFood.data.result?.length !== prev.food.length) {
+					updated.food = Array(resFood.data.result?.length).fill({ expanded: true });
+					changed = true;
+				}
+				if (resMoney.data.result?.length !== prev.money.length) {
+					updated.money = Array(resMoney.data.result?.length).fill({ expanded: true });
+					changed = true;
+				}
+				if (resSleep.data.result?.length !== prev.sleep.length) {
+					updated.sleep = Array(resSleep.data.result?.length).fill({ expanded: true });
+					changed = true;
+				}
+				return changed ? updated : prev;
+			});
     }
     catch (err: any) {
       setLOADING(false);

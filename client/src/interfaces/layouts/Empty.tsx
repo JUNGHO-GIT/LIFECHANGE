@@ -1,6 +1,6 @@
 // Empty.tsx
 
-import { useCommonValue } from "@importHooks";
+import { useCommonValue, useCommonDate } from "@importHooks";
 import { useStoreLanguage } from "@importStores";
 import { Div, Icons, Grid } from "@importComponents";
 import { Accordion, AccordionSummary } from "@importMuis";
@@ -18,6 +18,8 @@ export const Empty = (
 
   // 1. common -------------------------------------------------------------------------------------
   const { PATH, navigate } = useCommonValue();
+	const { getDayStartFmt, getDayEndFmt } = useCommonDate();
+	const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
   const isFindList = PATH.includes("food/find/list");
   const isGoalList = !isFindList && PATH.includes("goal/list");
@@ -64,9 +66,9 @@ export const Empty = (
 								navigate(toDetail, {
 									state: {
 										from: PATH.includes("today") ? "today" : "list",
-										dateType: DATE?.dateType,
-										dateStart: DATE?.dateStart,
-										dateEnd: DATE?.dateEnd
+										dateType: DATE?.dateType || "month",
+										dateStart: DATE?.dateStart || getMonthStartFmt(),
+										dateEnd: DATE?.dateEnd || getMonthEndFmt()
 									}
 								});
 							}}
@@ -108,9 +110,9 @@ export const Empty = (
 								navigate(toDetail, {
 									state: {
 										from: PATH.includes("today") ? "today" : "list",
-										dateType: "day",
-										dateStart: DATE?.dateStart,
-										dateEnd: DATE?.dateStart,
+										dateType: DATE?.dateType || "day",
+										dateStart: DATE?.dateStart || getDayStartFmt(),
+										dateEnd: DATE?.dateEnd || getDayEndFmt(),
 									}
 								});
 							}}

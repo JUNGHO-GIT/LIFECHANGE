@@ -210,7 +210,6 @@ export const CalendarDetail = () => {
 						DATE={DATE}
 						setDATE={setDATE}
 						EXIST={EXIST}
-						disabled={false}
 					/>
 				</Grid>
 				<Grid size={12}>

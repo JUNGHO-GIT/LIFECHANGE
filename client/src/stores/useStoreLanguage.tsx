@@ -253,6 +253,10 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
         ko: "전체삭제",
         en: "Delete All"
       },
+			deleteUserData: {
+        ko: "사용자 데이터 삭제",
+        en: "Delete User Data"
+      },
       deleteUser: {
         ko: "탈퇴 후에는 복구가 불가능합니다.\n정말로 탈퇴하시겠습니까?",
         en: "Withdrawal is irreversible.\nDo you really want to withdraw?"

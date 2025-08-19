@@ -14,6 +14,7 @@ export const Select = (props: any) => (
     fullWidth={props?.fullWidth || true}
     inputRef={props?.inputRef || null}
     error={props?.error || false}
+		value={props?.value || ""}
     onClick={(e: React.MouseEvent) => {
       // 1. locked or disabled 경우
 			if (props?.locked === "locked" || props?.disabled) {

@@ -3,7 +3,7 @@
 // 실제는 day
 
 import { useEffect, useState } from "@importReacts";
-import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
+import { useCommonValue, useCommonDate, useStorageLocal, useConsole } from "@importHooks";
 import { useStoreLanguage } from "@importStores";
 import { setSession } from "@importScripts";
 import { PopUp, Input, Select } from "@importContainers";
@@ -30,18 +30,18 @@ declare type PickerDayProps = {
     year: string[];
     select: string[];
   };
-	disabled?: boolean;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const PickerDay = (
-  { DATE, setDATE, EXIST, disabled }: PickerDayProps
+  { DATE, setDATE, EXIST }: PickerDayProps
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
   const { PATH, localLang, localTimeZone } = useCommonValue();
   const { isTodayList, isTodayGoalList, isGoalList, isGoalDetail } = useCommonValue();
   const { isRealList, isRealDetail, isCalendarDetail } = useCommonValue();
+	const { isList, isDetail } = useCommonValue();
   const { getDayFmt, getDayNotFmt, getDayStartFmt, getDayEndFmt } = useCommonDate();
   const { getPrevDayStartFmt, getPrevDayEndFmt } = useCommonDate();
   const { getNextDayStartFmt, getNextDayEndFmt } = useCommonDate();
@@ -56,19 +56,15 @@ export const PickerDay = (
   const { getNextYearStartFmt, getNextYearEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
 
-  // ex. 2024-11-12 - 12-15
-  const durStr = (
-    `${DATE.dateStart.split("-")[1] || "" }-${DATE.dateStart.split("-")[2] || "" } - ` +
-    `${DATE.dateEnd.split("-")[1] || "" }-${DATE.dateEnd.split("-")[2] || "" }`
-  );
-
   // 2-1. useState ---------------------------------------------------------------------------------
-  const [selectTypeInListStr, setSelectTypeInListStr] = useState<string>("");
-  const [selectTypeInSaveStr, setSelectTypeInSaveStr] = useState<string>("");
+	const [dateStrInSave, setDateStrInSave] = useState<string>("");
+	const [dateStrInList, setDateStrInList] = useState<string>("");
+  const [dateClassInSave, setDateClassInSave] = useState<string>("");
+  const [dateClassInList, setDateClassInList] = useState<string>("");
 
   // 2-1. useStorageLocal --------------------------------------------------------------------------
-  const [selectTypeInSave, setSelectTypeInSave] = useState<string>("");
-  const [selectTypeInList, setSelectTypeInList] = useStorageLocal(
+  const [dateTypeInSave, setDateTypeInSave] = useState<string>("");
+  const [dateTypeInList, setDateTypeInList] = useStorageLocal(
     "type", "list", PATH, (
       "month"
     )
@@ -76,125 +72,267 @@ export const PickerDay = (
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (isTodayGoalList || isGoalList || isTodayList || isRealList) {
-      setSelectTypeInSaveStr("h-min-0px h-5vh fs-0-7rem pointer");
-      setSelectTypeInListStr("h-min-0px h-5vh fs-0-7rem pointer");
+    if (isList) {
+      setDateClassInSave("h-min-0px h-5vh fs-0-7rem pointer");
+      setDateClassInList("h-min-0px h-5vh fs-0-7rem pointer");
     }
     else {
-      setSelectTypeInSaveStr("h-min-40px fs-0-8rem pointer");
-      setSelectTypeInListStr("h-min-40px fs-0-8rem pointer");
+      setDateClassInSave("h-min-40px fs-0-8rem pointer");
+      setDateClassInList("h-min-40px fs-0-8rem pointer");
     }
-  }, [PATH]);
+  }, [isList]);
+
+	// 2-3. useEffect --------------------------------------------------------------------------------
+
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (isTodayGoalList || isTodayList) {
-      setSelectTypeInList("day");
+		function toMnDd(str: string | undefined) {
+			if (!str) {
+				return ``;
+			}
+			return `${str.split(`-`)[1]}-${str.split(`-`)[2]}`;
+		}
+		if (!isList) {
+			return;
+		}
+    if (isTodayList || isTodayGoalList) {
       setDATE({
         dateType: "",
         dateStart: DATE.dateStart || getDayFmt(),
         dateEnd: DATE.dateEnd || getDayFmt(),
       });
+      setDateTypeInList("day");
+			setDateStrInList(
+				`${toMnDd(getDayFmt())}`
+			);
     }
-    else if (isGoalList || isRealList) {
-      if (selectTypeInList === "day") {
+    if (isGoalList || isRealList) {
+      if (dateTypeInList === "day") {
         setDATE({
-          dateType: "day",
+          dateType: "",
           dateStart: DATE.dateStart || getDayFmt(),
           dateEnd: DATE.dateEnd || getDayFmt(),
         });
+				setDateStrInList(
+					`${toMnDd(getDayFmt())}`
+				);
       }
-      else if (selectTypeInList === "week") {
+      else if (dateTypeInList === "week") {
         setDATE({
           dateType: "week",
           dateStart: getWeekStartFmt(),
           dateEnd: getWeekEndFmt(),
         });
+				setDateStrInList(
+					`${toMnDd(getWeekStartFmt())} - ${toMnDd(getWeekEndFmt())}`
+				);
       }
-      else if (selectTypeInList === "month") {
+      else if (dateTypeInList === "month") {
         setDATE({
           dateType: "month",
           dateStart: getMonthStartFmt(),
           dateEnd: getMonthEndFmt(),
         });
+				setDateStrInList(
+					`${toMnDd(getMonthStartFmt())} - ${toMnDd(getMonthEndFmt())}`
+				);
       }
-      else if (selectTypeInList === "year") {
+      else if (dateTypeInList === "year") {
         setDATE({
           dateType: "year",
           dateStart: getYearStartFmt(),
           dateEnd: getYearEndFmt(),
         });
-      }
-      else if (selectTypeInList === "select") {
-        setDATE({
-          dateType: "select",
-          dateStart: DATE.dateStart,
-          dateEnd: DATE.dateEnd,
-        });
+				setDateStrInList(
+					`${toMnDd(getYearStartFmt())} - ${toMnDd(getYearEndFmt())}`
+				);
       }
     }
-  }, [selectTypeInList]);
+	}, [dateTypeInList]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (isCalendarDetail || isGoalDetail || isRealDetail) {
-      if (selectTypeInSave === "day") {
-        setDATE({
-          dateType: "day",
-          dateStart: getDayFmt(),
-          dateEnd: getDayFmt(),
-        });
-      }
-      else if (selectTypeInSave === "week") {
-        setDATE({
-          dateType: "week",
-          dateStart: getWeekStartFmt(),
-          dateEnd: getWeekEndFmt(),
-        });
-      }
-      else if (selectTypeInSave === "month") {
-        setDATE({
-          dateType: "month",
-          dateStart: getMonthStartFmt(),
-          dateEnd: getMonthEndFmt(),
-        });
-      }
-      else if (selectTypeInSave === "year") {
-        setDATE({
-          dateType: "year",
-          dateStart: getYearStartFmt(),
-          dateEnd: getYearEndFmt(),
-        });
-      }
-      else if (selectTypeInSave === "select") {
-        setDATE({
-          dateType: "select",
-          dateStart: DATE.dateStart,
-          dateEnd: DATE.dateEnd,
-        });
-      }
-    }
-  }, [selectTypeInSave]);
+		function toMnDd(str: string | undefined) {
+			if (!str) {
+				return ``;
+			}
+			return `${str.split(`-`)[1]}-${str.split(`-`)[2]}`;
+		}
+		if (!isDetail) {
+			return;
+		}
+		if (dateTypeInSave === "day") {
+			setDATE({
+				dateType: "",
+				dateStart: getDayFmt(),
+				dateEnd: getDayFmt(),
+			});
+			setDateStrInSave(
+				`${toMnDd(getDayFmt())}`
+			);
+		}
+		else if (dateTypeInSave === "week") {
+			setDATE({
+				dateType: "week",
+				dateStart: getWeekStartFmt(),
+				dateEnd: getWeekEndFmt(),
+			});
+			setDateStrInSave(
+				`${toMnDd(getWeekStartFmt())} - ${toMnDd(getWeekEndFmt())}`
+			);
+		}
+		else if (dateTypeInSave === "month") {
+			setDATE({
+				dateType: "month",
+				dateStart: getMonthStartFmt(),
+				dateEnd: getMonthEndFmt(),
+			});
+			setDateStrInSave(
+				`${toMnDd(getMonthStartFmt())} - ${toMnDd(getMonthEndFmt())}`
+			);
+		}
+		else if (dateTypeInSave === "year") {
+			setDATE({
+				dateType: "year",
+				dateStart: getYearStartFmt(),
+				dateEnd: getYearEndFmt(),
+			});
+			setDateStrInSave(
+				`${toMnDd(getYearStartFmt())} - ${toMnDd(getYearEndFmt())}`
+			);
+		}
+	}, [dateTypeInSave]);
+
+	// 2-3. useEffect --------------------------------------------------------------------------------
+	useEffect(() => {
+		function toMnDd(str: string | undefined) {
+			if (!str) {
+				return ``;
+			}
+			return `${str.split(`-`)[1]}-${str.split(`-`)[2]}`;
+		}
+
+		if (isList) {
+			if (DATE.dateType === `day`) {
+				setDateStrInList(
+					`${toMnDd(DATE.dateStart)}`
+				);
+			}
+			else if (DATE.dateType === `week`) {
+				setDateStrInList(
+					`${toMnDd(DATE.dateStart)} - ${toMnDd(DATE.dateEnd)}`
+				);
+			}
+			else if (DATE.dateType === `month`) {
+				setDateStrInList(
+					`${toMnDd(DATE.dateStart)} - ${toMnDd(DATE.dateEnd)}`
+				);
+			}
+			else if (DATE.dateType === `year`) {
+				setDateStrInList(
+					`${toMnDd(DATE.dateStart)} - ${toMnDd(DATE.dateEnd)}`
+				);
+			}
+		}
+		else if (isDetail) {
+			if (DATE.dateType === `day`) {
+				setDateStrInSave(
+					`${toMnDd(DATE.dateStart)}`
+				);
+			}
+			else if (DATE.dateType === `week`) {
+				setDateStrInSave(
+					`${toMnDd(DATE.dateStart)} - ${toMnDd(DATE.dateEnd)}`
+				);
+			}
+			else if (DATE.dateType === `month`) {
+				setDateStrInSave(
+					`${toMnDd(DATE.dateStart)} - ${toMnDd(DATE.dateEnd)}`
+				);
+			}
+			else if (DATE.dateType === `year`) {
+				setDateStrInSave(
+					`${toMnDd(DATE.dateStart)} - ${toMnDd(DATE.dateEnd)}`
+				);
+			}
+		}
+	}, [DATE.dateType]);
+
+	// 2-3. useEffect --------------------------------------------------------------------------------
+	useEffect(() => {
+		function toMnDd(str: string | undefined) {
+			if (!str) {
+				return ``;
+			}
+			return `${str.split(`-`)[1]}-${str.split(`-`)[2]}`;
+		}
+
+		if (isList) {
+			if (DATE.dateType === `day`) {
+				setDateStrInList(
+					`${toMnDd(getDayFmt(DATE.dateStart))}`
+				);
+			}
+			else if (DATE.dateType === `week`) {
+				setDateStrInList(
+					`${toMnDd(getWeekStartFmt(DATE.dateStart))} - ${toMnDd(getWeekEndFmt(DATE.dateStart))}`
+				);
+			}
+			else if (DATE.dateType === `month`) {
+				setDateStrInList(
+					`${toMnDd(getMonthStartFmt(DATE.dateStart))} - ${toMnDd(getMonthEndFmt(DATE.dateStart))}`
+				);
+			}
+			else if (DATE.dateType === `year`) {
+				setDateStrInList(
+					`${toMnDd(getYearStartFmt(DATE.dateStart))} - ${toMnDd(getYearEndFmt(DATE.dateStart))}`
+				);
+			}
+		}
+		else if (isDetail) {
+			if (DATE.dateType === `day`) {
+				setDateStrInSave(
+					`${toMnDd(getDayFmt(DATE.dateStart))}`
+				);
+			}
+			else if (DATE.dateType === `week`) {
+				setDateStrInSave(
+					`${toMnDd(getWeekStartFmt(DATE.dateStart))} - ${toMnDd(getWeekEndFmt(DATE.dateStart))}`
+				);
+			}
+			else if (DATE.dateType === `month`) {
+				setDateStrInSave(
+					`${toMnDd(getMonthStartFmt(DATE.dateStart))} - ${toMnDd(getMonthEndFmt(DATE.dateStart))}`
+				);
+			}
+			else if (DATE.dateType === `year`) {
+				setDateStrInSave(
+					`${toMnDd(getYearStartFmt(DATE.dateStart))} - ${toMnDd(getYearEndFmt(DATE.dateStart))}`
+				);
+			}
+		}
+	}, [DATE.dateStart]);
 
   // 7. pickerNode ---------------------------------------------------------------------------------
   const pickerNode = () => {
 
-    // 1. selectTypeInList ---------------------------------------------------------------------------------
-    const selectTypeInListSection = () => (
+    // 1. dateTypeInList ---------------------------------------------------------------------------------
+    const dateTypeInListSection = () => (
       <Select
         label={translate("dateType")}
-        value={selectTypeInList}
-				inputclass={`pointer ${selectTypeInListStr}`}
+        value={DATE.dateType || dateTypeInList}
+        inputclass={`pointer ${dateClassInList}`}
         disabled={isTodayGoalList || isTodayList}
         onChange={(e: any) => {
-          setSelectTypeInList(e.target.value);
+          setDateTypeInList(e.target.value);
         }}
       >
-        {["day", "week", "month", "year", "select"]?.map((item: any) => (
+        {["day", "week", "month", "year"]?.map((item: any) => (
           <MenuItem
             key={item}
             value={item}
-            selected={item === selectTypeInList}
+            selected={item === dateTypeInList}
           >
             <Div className={"fs-0-6rem"}>
               {translate(item)}
@@ -204,28 +342,25 @@ export const PickerDay = (
       </Select>
     );
 
-    // 2. selectTypeInSave ---------------------------------------------------------------------------------
-    const selectTypeInSaveSection = () => (
+    // 2. dateTypeInSave ---------------------------------------------------------------------------------
+    const dateTypeInSaveSection = () => (
       <Select
         label={translate("dateType")}
-        value={DATE.dateType}
-				inputclass={`pointer ${selectTypeInListStr}`}
+        value={DATE.dateType || dateTypeInSave}
+				inputclass={`pointer ${dateClassInSave}`}
         disabled={isRealDetail || isCalendarDetail}
         onChange={(e: any) => {
           if (e.target.value === "day") {
-            setSelectTypeInSave("day");
+            setDateTypeInSave("day");
           }
           else if (e.target.value === "week") {
-            setSelectTypeInSave("week");
+            setDateTypeInSave("week");
           }
           else if (e.target.value === "month") {
-            setSelectTypeInSave("month");
+            setDateTypeInSave("month");
           }
           else if (e.target.value === "year") {
-            setSelectTypeInSave("year");
-          }
-          else if (e.target.value === "select") {
-            setSelectTypeInSave("select");
+            setDateTypeInSave("year");
           }
         }}
       >
@@ -234,7 +369,7 @@ export const PickerDay = (
             <MenuItem
               key={item}
               value={item}
-              selected={item === selectTypeInSave}
+              selected={item === dateTypeInSave}
             >
               {translate(item)}
             </MenuItem>
@@ -245,7 +380,7 @@ export const PickerDay = (
             <MenuItem
               key={item}
               value={item}
-              selected={item === selectTypeInSave}
+              selected={item === dateTypeInSave}
             >
               {translate(item)}
             </MenuItem>
@@ -256,7 +391,7 @@ export const PickerDay = (
             <MenuItem
               key={item}
               value={item}
-              selected={item === selectTypeInSave}
+              selected={item === dateTypeInSave}
             >
               {translate(item)}
             </MenuItem>
@@ -404,8 +539,8 @@ export const PickerDay = (
         children={(popTrigger: any) => (
           <Input
             label={translate("date")}
-            value={`${DATE.dateStart}`}
-            inputclass={`pointer ${selectTypeInListStr}`}
+            value={isList ? dateStrInList : isDetail ? dateStrInSave : ""}
+            inputclass={`pointer ${dateClassInList}`}
             readOnly={true}
             startadornment={
               <Img
@@ -616,8 +751,8 @@ export const PickerDay = (
         children={(popTrigger: any) => (
           <Input
             label={translate("duration")}
-            value={durStr}
-            inputclass={`pointer ${selectTypeInListStr}`}
+            value={isList ? dateStrInList : isDetail ? dateStrInSave : ""}
+            inputclass={`pointer ${dateClassInList}`}
             readOnly={true}
             startadornment={
               <Img
@@ -809,8 +944,8 @@ export const PickerDay = (
         children={(popTrigger: any) => (
           <Input
             label={translate("duration")}
-            value={durStr}
-            inputclass={`pointer ${selectTypeInListStr}`}
+            value={isList ? dateStrInList : isDetail ? dateStrInSave : ""}
+            inputclass={`pointer ${dateClassInList}`}
             readOnly={true}
             startadornment={
               <Img
@@ -1003,8 +1138,8 @@ export const PickerDay = (
         children={(popTrigger: any) => (
           <Input
             label={translate("duration")}
-            value={durStr}
-            inputclass={`pointer ${selectTypeInListStr}`}
+            value={isList ? dateStrInList : isDetail ? dateStrInSave : ""}
+            inputclass={`pointer ${dateClassInList}`}
             readOnly={true}
             startadornment={
               <Img
@@ -1057,165 +1192,6 @@ export const PickerDay = (
       />
     );
 
-    // 7. select -----------------------------------------------------------------------------------
-    const selectSection = () => (
-      <PopUp
-        type={"innerCenter"}
-        position={"center"}
-        direction={"center"}
-        contents={
-          <Grid container={true} spacing={2} className={"w-min-70vw"}>
-            <Grid size={12} className={"d-row-center"}>
-              <Div className={"fs-1-2rem fw-600 mr-10px"}>
-                {translate("viewSelect")}
-              </Div>
-              <Div className={"fs-0-8rem fw-500 dark"}>
-                {`[${DATE?.dateStart} - ${DATE?.dateEnd}]`}
-              </Div>
-            </Grid>
-            <Grid size={12} className={"d-center"}>
-              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLang}>
-                <DateCalendar
-                  timezone={localTimeZone}
-                  views={["day"]}
-                  readOnly={false}
-                  value={getDayNotFmt(DATE.dateStart || DATE.dateEnd)}
-                  className={"border-1 radius-2"}
-                  showDaysOutsideCurrentMonth={true}
-                  slots={{
-                    day: (props) => {
-                      const { outsideCurrentMonth, day, ...other } = props;
-
-                      let isSelected = false;
-                      let isBadged = false;
-                      let isFirst = false;
-                      let isLast = false;
-
-                      let color = "";
-                      let borderRadius = "";
-                      let backgroundColor = "";
-                      let boxShadow = "";
-                      let zIndex = 0;
-
-                      // badge 표시는 일 단위로 표시
-                      if (EXIST?.day) {
-                        EXIST?.day.forEach((item: any) => {
-                          if (
-                            item.split(" - ") &&
-                            item.split(" - ")?.length === 2 &&
-                            getDayFmt(day) >= item.split(" - ")[0] &&
-                            getDayFmt(day) <= item.split(" - ")[1]
-                          ) {
-                            isBadged = true;
-                          }
-                        });
-                      }
-
-                      if (DATE.dateStart && DATE.dateEnd) {
-                        isSelected = DATE.dateStart <= getDayFmt(day) && DATE.dateEnd >= getDayFmt(day);
-                        isFirst = DATE.dateStart === getDayStartFmt(day);
-                        isLast = DATE.dateEnd === getDayEndFmt(day);
-                      }
-
-                      if (isSelected) {
-                        if (isFirst && isLast) {
-                          boxShadow = "0 0 0 0 #1976d2";
-                          borderRadius = "50%";
-                        }
-                        else if (isFirst) {
-                          boxShadow = "5px 0 0 0 #1976d2";
-                          borderRadius = "50% 0 0 50%";
-                        }
-                        else if (isLast) {
-                          boxShadow = "-5px 0 0 0 #1976d2";
-                          borderRadius = "0 50% 50% 0";
-                        }
-                        else {
-                          boxShadow = "5px 0 0 0 #1976d2";
-                          borderRadius = "0%";
-                        }
-                        color = "#ffffff";
-                        backgroundColor = "#1976d2";
-                        zIndex = 10;
-                      }
-                      return (
-                        <Badge
-                          key={props.day.toString()}
-                          badgeContent={""}
-                          slotProps={{
-                            badge: {
-                              style: {
-                                width: 3, height: 3, padding: 0, top: 8, left: 30,
-                                backgroundColor: isBadged ? "#1976d2" : undefined,
-                              }
-                            }
-                          }}
-                        >
-                          <PickersDay
-                            {...other}
-                            day={day}
-                            selected={isSelected}
-                            outsideCurrentMonth={outsideCurrentMonth}
-                            style={{
-                              color: color,
-                              borderRadius: borderRadius,
-                              backgroundColor: backgroundColor,
-                              boxShadow: boxShadow,
-                              zIndex: zIndex,
-                            }}
-                            onDaySelect={(day) => {
-                              if (
-                                !DATE.dateStart ||
-                                DATE.dateEnd ||
-                                getDayNotFmt(day).isBefore(DATE.dateStart)
-                              ) {
-                                setDATE((prev) => ({
-                                  ...prev,
-                                  dateStart: getDayFmt(day),
-                                  dateEnd: "",
-                                }));
-                              }
-                              else {
-                                setDATE((prev) => ({
-                                  ...prev,
-                                  dateStart: getDayFmt(prev.dateStart),
-                                  dateEnd: getDayFmt(day),
-                                }));
-                              }
-                            }}
-                          />
-                        </Badge>
-                      )
-                    }
-                  }}
-                />
-              </LocalizationProvider>
-            </Grid>
-          </Grid>
-        }
-        children={(popTrigger: any) => (
-          <Input
-            label={translate("duration")}
-            value={durStr}
-            inputclass={`pointer ${selectTypeInListStr}`}
-            readOnly={true}
-            startadornment={
-              <Img
-                max={25}
-                hover={true}
-                shadow={false}
-                radius={false}
-              	src={"common1.webp"}
-              />
-            }
-            onClick={(e: any) => {
-              popTrigger.openPopup(e.currentTarget);
-            }}
-          />
-        )}
-      />
-    );
-
     // 10. return ----------------------------------------------------------------------------------
     return (
 
@@ -1223,10 +1199,10 @@ export const PickerDay = (
       isTodayGoalList ? (
         <Grid container={true} spacing={1}>
           <Grid size={3} className={"d-center"}>
-            {selectTypeInListSection()}
+            {dateTypeInListSection()}
           </Grid>
           <Grid size={9} className={"d-center"}>
-            {selectTypeInList === "day" && daySection()}
+            {dateTypeInList === "day" && daySection()}
           </Grid>
         </Grid>
       )
@@ -1235,14 +1211,13 @@ export const PickerDay = (
       : isGoalList ? (
         <Grid container={true} spacing={1}>
           <Grid size={3} className={"d-center"}>
-            {selectTypeInListSection()}
+            {dateTypeInListSection()}
           </Grid>
           <Grid size={9} className={"d-center"}>
-            {selectTypeInList === "day" && daySection()}
-            {selectTypeInList === "week" && weekSection()}
-            {selectTypeInList === "month" && monthSection()}
-            {selectTypeInList === "year" && yearSection()}
-            {selectTypeInList === "select" && selectSection()}
+            {dateTypeInList === "day" && daySection()}
+            {dateTypeInList === "week" && weekSection()}
+            {dateTypeInList === "month" && monthSection()}
+            {dateTypeInList === "year" && yearSection()}
           </Grid>
         </Grid>
       )
@@ -1251,10 +1226,10 @@ export const PickerDay = (
       : isTodayList ? (
         <Grid container={true} spacing={1}>
           <Grid size={3} className={"d-center"}>
-            {selectTypeInListSection()}
+            {dateTypeInListSection()}
           </Grid>
           <Grid size={9} className={"d-center"}>
-            {selectTypeInList === "day" && daySection()}
+            {dateTypeInList === "day" && daySection()}
           </Grid>
         </Grid>
       )
@@ -1263,14 +1238,13 @@ export const PickerDay = (
       : isRealList ? (
         <Grid container={true} spacing={1}>
           <Grid size={3} className={"d-center"}>
-            {selectTypeInListSection()}
+            {dateTypeInListSection()}
           </Grid>
           <Grid size={9} className={"d-center"}>
-            {selectTypeInList === "day" && daySection()}
-            {selectTypeInList === "week" && weekSection()}
-            {selectTypeInList === "month" && monthSection()}
-            {selectTypeInList === "year" && yearSection()}
-            {selectTypeInList === "select" && selectSection()}
+            {dateTypeInList === "day" && daySection()}
+            {dateTypeInList === "week" && weekSection()}
+            {dateTypeInList === "month" && monthSection()}
+            {dateTypeInList === "year" && yearSection()}
           </Grid>
         </Grid>
       )
@@ -1279,14 +1253,13 @@ export const PickerDay = (
       : isCalendarDetail ? (
         <Grid container={true} spacing={1}>
           <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
-            {selectTypeInSaveSection()}
+            {dateTypeInSaveSection()}
           </Grid>
           <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
             {DATE.dateType === "day" && daySection()}
             {DATE.dateType === "week" && weekSection()}
             {DATE.dateType === "month" && monthSection()}
             {DATE.dateType === "year" && yearSection()}
-            {DATE.dateType === "select" && selectSection()}
           </Grid>
         </Grid>
       )
@@ -1295,7 +1268,7 @@ export const PickerDay = (
       : isGoalDetail ? (
         <Grid container={true} spacing={1}>
           <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
-            {selectTypeInSaveSection()}
+            {dateTypeInSaveSection()}
           </Grid>
           <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
             {DATE.dateType === "week" && weekSection()}
@@ -1309,7 +1282,7 @@ export const PickerDay = (
       : isRealDetail ? (
         <Grid container={true} spacing={1}>
           <Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
-            {selectTypeInSaveSection()}
+            {dateTypeInSaveSection()}
           </Grid>
           <Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
             {DATE.dateType === "day" && daySection()}

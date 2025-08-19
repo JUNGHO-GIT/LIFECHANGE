@@ -25,6 +25,7 @@ import { useRoot } from "@hooks/util/useRoot";
 import { useScrollTop } from "@hooks/util/useScrollTop";
 import { useFoodSection } from "@hooks/util/useFoodSection";
 import { useTime } from "@hooks/util/useTime";
+import { useConsole } from "@hooks/util/useConsole";
 
 // -------------------------------------------------------------------------------------------------
 export {
@@ -53,4 +54,5 @@ export {
   useScrollTop,
   useFoodSection,
   useTime,
+	useConsole
 };

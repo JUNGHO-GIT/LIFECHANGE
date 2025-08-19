@@ -313,7 +313,6 @@ export const SleepDetail = () => {
             DATE={DATE}
             setDATE={setDATE}
             EXIST={EXIST}
-						disabled={true}
           />
         </Grid>
         <Grid size={12}>
