@@ -40,7 +40,9 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 10. return ------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 10. return
+	// --------------------------------------------------------------------------------------------
   object?.result?.forEach((item: any) => {
     item.exercise_total_volume = calcOverTenMillion(
       item?.exercise_total_volume

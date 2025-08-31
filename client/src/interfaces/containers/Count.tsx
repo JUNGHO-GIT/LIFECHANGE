@@ -30,7 +30,9 @@ export const Count = (
   { COUNT, setCOUNT, LOCKED, setLOCKED, limit, disabled }: CountProps
 ) => {
 
-  // 1. common -------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 1. common
+	// --------------------------------------------------------------------------------------------
   const { PATH, localLang } = useCommonValue();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();

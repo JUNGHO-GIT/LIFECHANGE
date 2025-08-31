@@ -24,7 +24,9 @@ declare type PieProps = {
 // -------------------------------------------------------------------------------------------------
 export const ExerciseChartPie = () => {
 
-  // 1. common -------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 1. common
+	// --------------------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, chartColors, sessionId } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
@@ -32,7 +34,9 @@ export const ExerciseChartPie = () => {
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-1. useStorageLocal --------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 2-1. useStorageLocal
+	// --------------------------------------------------------------------------------------------
   const [TYPE, setTYPE] = useStorageLocal(
     "type", "pie", PATH, {
       section: "week",
@@ -40,7 +44,9 @@ export const ExerciseChartPie = () => {
     }
   );
 
-  // 2-2. useState ---------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 2-2. useState
+	// --------------------------------------------------------------------------------------------
   const [DATE, _setDATE] = useState({
     dateType: "",
     dateStart: getDayFmt(),
@@ -53,7 +59,9 @@ export const ExerciseChartPie = () => {
     yearEndFmt: getYearEndFmt(),
   });
 
-  // 2-2. useState ---------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 2-2. useState
+	// --------------------------------------------------------------------------------------------
   const [OBJECT_PART_WEEK, setOBJECT_PART_WEEK] = useState<[ExercisePieType]>([ExercisePie]);
   const [OBJECT_TITLE_WEEK, setOBJECT_TITLE_WEEK] = useState<[ExercisePieType]>([ExercisePie]);
   const [OBJECT_PART_MONTH, setOBJECT_PART_MONTH] = useState<[ExercisePieType]>([ExercisePie]);
@@ -61,7 +69,9 @@ export const ExerciseChartPie = () => {
   const [OBJECT_PART_YEAR, setOBJECT_PART_YEAR] = useState<[ExercisePieType]>([ExercisePie]);
   const [OBJECT_TITLE_YEAR, setOBJECT_TITLE_YEAR] = useState<[ExercisePieType]>([ExercisePie]);
 
-  // 2-3. useEffect --------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 2-3. useEffect
+	// --------------------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     try {
@@ -346,7 +356,9 @@ export const ExerciseChartPie = () => {
     );
   };
 
-  // 10. return ------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 10. return
+	// --------------------------------------------------------------------------------------------
   return (
     <>
       {chartNode()}

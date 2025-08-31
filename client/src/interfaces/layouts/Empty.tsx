@@ -16,7 +16,9 @@ export const Empty = (
   { DATE, extra }: EmptyProps
 ) => {
 
-  // 1. common -------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 1. common
+	// --------------------------------------------------------------------------------------------
   const { PATH, navigate } = useCommonValue();
 	const { getDayStartFmt, getDayEndFmt } = useCommonDate();
 	const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();

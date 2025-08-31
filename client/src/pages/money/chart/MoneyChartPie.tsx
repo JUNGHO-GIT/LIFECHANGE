@@ -24,7 +24,9 @@ declare type PieProps = {
 // -------------------------------------------------------------------------------------------------
 export const MoneyChartPie = () => {
 
-  // 1. common -------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 1. common
+	// --------------------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, chartColors, sessionId } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
@@ -32,7 +34,9 @@ export const MoneyChartPie = () => {
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-1. useStorageLocal --------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 2-1. useStorageLocal
+	// --------------------------------------------------------------------------------------------
   const [TYPE, setTYPE] = useStorageLocal(
     "type", "pie", PATH, {
       section: "week",
@@ -40,7 +44,9 @@ export const MoneyChartPie = () => {
     }
   );
 
-  // 2-2. useState ---------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 2-2. useState
+	// --------------------------------------------------------------------------------------------
   const [DATE, _setDATE] = useState({
     dateType: "",
     dateStart: getDayFmt(),
@@ -53,7 +59,9 @@ export const MoneyChartPie = () => {
     yearEndFmt: getYearEndFmt(),
   });
 
-  // 2-2. useState ---------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 2-2. useState
+	// --------------------------------------------------------------------------------------------
   const [OBJECT_INCOME_WEEK, setOBJECT_INCOME_WEEK] = useState<[MoneyPieType]>([MoneyPie]);
   const [OBJECT_EXPENSE_WEEK, setOBJECT_EXPENSE_WEEK] = useState<[MoneyPieType]>([MoneyPie]);
   const [OBJECT_INCOME_MONTH, setOBJECT_INCOME_MONTH] = useState<[MoneyPieType]>([MoneyPie]);
@@ -61,7 +69,9 @@ export const MoneyChartPie = () => {
   const [OBJECT_INCOME_YEAR, setOBJECT_INCOME_YEAR] = useState<[MoneyPieType]>([MoneyPie]);
   const [OBJECT_EXPENSE_YEAR, setOBJECT_EXPENSE_YEAR] = useState<[MoneyPieType]>([MoneyPie]);
 
-  // 2-3. useEffect --------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 2-3. useEffect
+	// --------------------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     try {
@@ -340,7 +350,9 @@ export const MoneyChartPie = () => {
     );
   };
 
-  // 10. return ------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 10. return
+	// --------------------------------------------------------------------------------------------
   return (
     <>
       {chartNode()}

@@ -19,7 +19,7 @@ import {
   FormControl, FormControlLabel, FormGroup,
 
   // g
-  Grid2 as Grid,
+  Grid,
 
   // h - k
   InputAdornment, InputBase, InputLabel, IconButton,
@@ -48,13 +48,13 @@ import {
 
 // props -------------------------------------------------------------------------------------------
 import type {
-  CardProps, PaperProps, Grid2Props as GridProps, PopoverProps
+  CardProps, PaperProps, GridProps, PopoverProps
 } from '@mui/material';
 
 // datePickers -------------------------------------------------------------------------------------
 import {
   AdapterMoment
-} from '@mui/x-date-pickers/AdapterMoment/index';
+} from '@mui/x-date-pickers/AdapterMoment';
 import {
   LocalizationProvider,
   DateCalendar,

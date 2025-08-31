@@ -15,7 +15,9 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } fro
 // -------------------------------------------------------------------------------------------------
 export const ExerciseChartLine = () => {
 
-  // 1. common -------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 1. common
+	// --------------------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, sessionId, chartColors } = useCommonValue();
   const { localUnit, exerciseChartArray } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
@@ -24,7 +26,9 @@ export const ExerciseChartLine = () => {
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-1. useStorageLocal --------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 2-1. useStorageLocal
+	// --------------------------------------------------------------------------------------------
   const [TYPE, setTYPE] = useStorageLocal(
     "type", "line", PATH, {
       section: "week",
@@ -32,7 +36,9 @@ export const ExerciseChartLine = () => {
     }
   );
 
-  // 2-2. useState ---------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 2-2. useState
+	// --------------------------------------------------------------------------------------------
   const [DATE, _setDATE] = useState({
     dateType: "",
     dateStart: getDayFmt(),
@@ -45,7 +51,9 @@ export const ExerciseChartLine = () => {
     yearEndFmt: getYearEndFmt(),
   });
 
-  // 2-2. useState ---------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 2-2. useState
+	// --------------------------------------------------------------------------------------------
   const [OBJECT_SCALE_WEEK, setOBJECT_SCALE_WEEK] = useState<[ExerciseLineType]>([ExerciseLineScale]);
   const [OBJECT_VOLUME_WEEK, setOBJECT_VOLUME_WEEK] = useState<[ExerciseLineType]>([ExerciseLineVolume]);
   const [OBJECT_CARDIO_WEEK, setOBJECT_CARDIO_WEEK] = useState<[ExerciseLineType]>([ExerciseLineCardio]);
@@ -53,7 +61,9 @@ export const ExerciseChartLine = () => {
   const [OBJECT_VOLUME_MONTH, setOBJECT_VOLUME_MONTH] = useState<[ExerciseLineType]>([ExerciseLineVolume]);
   const [OBJECT_CARDIO_MONTH, setOBJECT_CARDIO_MONTH] = useState<[ExerciseLineType]>([ExerciseLineCardio]);
 
-  // 2-3. useEffect --------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 2-3. useEffect
+	// --------------------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     try {
@@ -339,7 +349,9 @@ export const ExerciseChartLine = () => {
     );
   };
 
-  // 10. return ------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 10. return
+	// --------------------------------------------------------------------------------------------
   return (
     <>
       {chartNode()}

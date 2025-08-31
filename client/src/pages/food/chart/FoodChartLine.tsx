@@ -15,7 +15,9 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } fro
 // -------------------------------------------------------------------------------------------------
 export const FoodChartLine = () => {
 
-  // 1. common -------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 1. common
+	// --------------------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, sessionId, chartColors, foodChartArray } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
@@ -23,7 +25,9 @@ export const FoodChartLine = () => {
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-1. useStorageLocal --------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 2-1. useStorageLocal
+	// --------------------------------------------------------------------------------------------
   const [TYPE, setTYPE] = useStorageLocal(
     "type", "line", PATH, {
       section: "week",
@@ -31,7 +35,9 @@ export const FoodChartLine = () => {
     }
   );
 
-  // 2-2. useState ---------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 2-2. useState
+	// --------------------------------------------------------------------------------------------
   const [DATE, _setDATE] = useState({
     dateType: "",
     dateStart: getDayFmt(),
@@ -44,13 +50,17 @@ export const FoodChartLine = () => {
     yearEndFmt: getYearEndFmt(),
   });
 
-  // 2-2. useState ---------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 2-2. useState
+	// --------------------------------------------------------------------------------------------
   const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState<[FoodLineType]>([FoodLineKcal]);
   const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState<[FoodLineType]>([FoodLineNut]);
   const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState<[FoodLineType]>([FoodLineKcal]);
   const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState<[FoodLineType]>([FoodLineNut]);
 
-  // 2-3. useEffect --------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 2-3. useEffect
+	// --------------------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     try {
@@ -330,7 +340,9 @@ export const FoodChartLine = () => {
     );
   };
 
-  // 10. return ------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 10. return
+	// --------------------------------------------------------------------------------------------
   return (
     <>
       {chartNode()}

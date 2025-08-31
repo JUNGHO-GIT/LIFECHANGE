@@ -25,7 +25,9 @@ export const PickerTime = (
   { OBJECT, setOBJECT, REFS, ERRORS, DATE, LOCKED, extra, i }: PickerTimeProps
 ) => {
 
-  // 1. common -------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 1. common
+	// --------------------------------------------------------------------------------------------
   const { firstStr, secondStr, localLang, localTimeZone } = useCommonValue();
   const { translate } = useStoreLanguage();
 
@@ -34,7 +36,9 @@ export const PickerTime = (
 	const [targetStr, setTargetStr] = useState<string>("");
 	const [translateStr, setTranslateStr] = useState<string>("");
 
-	// 2-3. useEffect --------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 2-3. useEffect
+	// --------------------------------------------------------------------------------------------
 	useEffect(() => {
 		// 1. calendar
 		if (firstStr === `calendar`) {

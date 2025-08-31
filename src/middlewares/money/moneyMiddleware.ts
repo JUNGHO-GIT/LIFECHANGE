@@ -40,7 +40,9 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 10. return ------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+	// 10. return
+	// --------------------------------------------------------------------------------------------
   object?.result?.forEach((item: any) => {
     item.money_total_income = calcOverTenMillion(
       item?.money_total_income
