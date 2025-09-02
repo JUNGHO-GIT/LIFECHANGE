@@ -75,9 +75,11 @@ export const PickerDay = (
 	);
 
 	// --------------------------------------------------------------------------------------------
-	// 2-3. useEffect
+	// 2-2. useEffect
+	// - 화면 로딩시 초기값 설정
 	// --------------------------------------------------------------------------------------------
 	useEffect(() => {
+		// 0. 클래스 설정
 		if (isList) {
 			setDateClassInSave("h-min-0px h-5vh fs-0-7rem pointer");
 			setDateClassInList("h-min-0px h-5vh fs-0-7rem pointer");
@@ -86,17 +88,7 @@ export const PickerDay = (
 			setDateClassInSave("h-min-40px fs-0-8rem pointer");
 			setDateClassInList("h-min-40px fs-0-8rem pointer");
 		}
-	}, [isList]);
-
-	// --------------------------------------------------------------------------------------------
-	// 2-3. useEffect
-	// --------------------------------------------------------------------------------------------
-	useEffect(() => {
-		if (!isList) {
-			return;
-		}
-
-		// 1. Today - Goal
+		// 1. Today - Goal - List
 		if (isTodayGoalList) {
 			setDATE({
 				dateType: "",
@@ -105,11 +97,11 @@ export const PickerDay = (
 			});
 			setDateTypeInList("day");
 			setDateStrInList(
-				`${handlerToMnDd(DATE.dateStart || getDayFmt())}`
+				`${getDayFmt(DATE.dateStart)}`
 			);
 		}
 
-		// 2. Today - Real
+		// 2. Today - Real - List
 		else if (isTodayList) {
 			setDATE({
 				dateType: "day",
@@ -118,11 +110,11 @@ export const PickerDay = (
 			});
 			setDateTypeInList("day");
 			setDateStrInList(
-				`${handlerToMnDd(DATE.dateStart || getDayFmt())}`
+				`${getDayFmt(DATE.dateStart)}`
 			);
 		}
 
-		// 3. Goal
+		// 3. Goal - List
 		else if (isGoalList) {
 			if (dateTypeInList === "day") {
 				setDATE({
@@ -131,7 +123,7 @@ export const PickerDay = (
 					dateEnd: DATE.dateEnd || getDayFmt(),
 				});
 				setDateStrInList(
-					`${handlerToMnDd(DATE.dateStart || getDayFmt())}`
+					`${getDayFmt(DATE.dateStart)}`
 				);
 			}
 			else if (dateTypeInList === "week") {
@@ -141,7 +133,7 @@ export const PickerDay = (
 					dateEnd: DATE.dateEnd || getWeekEndFmt(),
 				});
 				setDateStrInList(
-					`${handlerToMnDd(DATE.dateStart || getWeekStartFmt())} - ${handlerToMnDd(DATE.dateEnd || getWeekEndFmt())}`
+					`${getWeekStartFmt(DATE.dateStart)} - ${getWeekEndFmt(DATE.dateEnd)}`
 				);
 			}
 			else if (dateTypeInList === "month") {
@@ -151,7 +143,7 @@ export const PickerDay = (
 					dateEnd: DATE.dateEnd || getMonthEndFmt(),
 				});
 				setDateStrInList(
-					`${handlerToMnDd(DATE.dateStart || getMonthStartFmt())} - ${handlerToMnDd(DATE.dateEnd || getMonthEndFmt())}`
+					`${getMonthStartFmt(DATE.dateStart)} - ${getMonthEndFmt(DATE.dateEnd)}`
 				);
 			}
 			else if (dateTypeInList === "year") {
@@ -161,12 +153,12 @@ export const PickerDay = (
 					dateEnd: DATE.dateEnd || getYearEndFmt(),
 				});
 				setDateStrInList(
-					`${handlerToMnDd(DATE.dateStart || getYearStartFmt())} - ${handlerToMnDd(DATE.dateEnd || getYearEndFmt())}`
+					`${getYearStartFmt(DATE.dateStart)} - ${getYearEndFmt(DATE.dateEnd)}`
 				);
 			}
 		}
 
-		// 4. Real
+		// 4. Real - List
 		else if (isRealList) {
 			if (dateTypeInList === "day") {
 				setDATE({
@@ -175,7 +167,7 @@ export const PickerDay = (
 					dateEnd: DATE.dateEnd || getDayFmt(),
 				});
 				setDateStrInList(
-					`${handlerToMnDd(DATE.dateStart || getDayFmt())}`
+					`${getDayFmt(DATE.dateStart)}`
 				);
 			}
 			else if (dateTypeInList === "week") {
@@ -185,7 +177,7 @@ export const PickerDay = (
 					dateEnd: DATE.dateEnd || getWeekEndFmt(),
 				});
 				setDateStrInList(
-					`${handlerToMnDd(DATE.dateStart || getWeekStartFmt())} - ${handlerToMnDd(DATE.dateEnd || getWeekEndFmt())}`
+					`${getWeekStartFmt(DATE.dateStart)} - ${getWeekEndFmt(DATE.dateEnd)}`
 				);
 			}
 			else if (dateTypeInList === "month") {
@@ -195,7 +187,7 @@ export const PickerDay = (
 					dateEnd: DATE.dateEnd || getMonthEndFmt(),
 				});
 				setDateStrInList(
-					`${handlerToMnDd(DATE.dateStart || getMonthStartFmt())} - ${handlerToMnDd(DATE.dateEnd || getMonthEndFmt())}`
+					`${getMonthStartFmt(DATE.dateStart)} - ${getMonthEndFmt(DATE.dateEnd)}`
 				);
 			}
 			else if (dateTypeInList === "year") {
@@ -205,7 +197,171 @@ export const PickerDay = (
 					dateEnd: DATE.dateEnd || getYearEndFmt(),
 				});
 				setDateStrInList(
-					`${handlerToMnDd(DATE.dateStart || getYearStartFmt())} - ${handlerToMnDd(DATE.dateEnd || getYearEndFmt())}`
+					`${getYearStartFmt(DATE.dateStart)} - ${getYearEndFmt(DATE.dateEnd)}`
+				);
+			}
+		}
+
+		// 5. Goal & Real - Detail
+		else if (isDetail) {
+			if (dateTypeInSave === "day") {
+				setDATE({
+					dateType: "",
+					dateStart: getDayFmt(),
+					dateEnd: getDayFmt(),
+				});
+				setDateStrInSave(
+					`${getDayFmt(DATE.dateStart)}`
+				);
+			}
+			else if (dateTypeInSave === "week") {
+				setDATE({
+					dateType: "week",
+					dateStart: getWeekStartFmt(),
+					dateEnd: getWeekEndFmt(),
+				});
+				setDateStrInSave(
+					`${getWeekStartFmt(DATE.dateStart)} - ${getWeekEndFmt(DATE.dateEnd)}`
+				);
+			}
+			else if (dateTypeInSave === "month") {
+				setDATE({
+					dateType: "month",
+					dateStart: getMonthStartFmt(),
+					dateEnd: getMonthEndFmt(),
+				});
+				setDateStrInSave(
+					`${getMonthStartFmt(DATE.dateStart)} - ${getMonthEndFmt(DATE.dateEnd)}`
+				);
+			}
+			else if (dateTypeInSave === "year") {
+				setDATE({
+					dateType: "year",
+					dateStart: getYearStartFmt(),
+					dateEnd: getYearEndFmt(),
+				});
+				setDateStrInSave(
+					`${getYearStartFmt(DATE.dateStart)} - ${getYearEndFmt(DATE.dateEnd)}`
+				);
+			}
+		}
+	}, []);
+
+	// --------------------------------------------------------------------------------------------
+	// 2-3. useEffect
+	// - 리스트에서 타입 변경시 처리 (일, 주, 월, 년)
+	// --------------------------------------------------------------------------------------------
+	useEffect(() => {
+		// 1. Today - Goal - List
+		if (isTodayGoalList) {
+			setDATE({
+				dateType: "",
+				dateStart: getDayFmt(),
+				dateEnd: getDayFmt(),
+			});
+			setDateTypeInList("day");
+			setDateStrInList(
+				`${getDayFmt()}`
+			);
+		}
+
+		// 2. Today - Real - List
+		else if (isTodayList) {
+			setDATE({
+				dateType: "day",
+				dateStart: getDayFmt(),
+				dateEnd: getDayFmt(),
+			});
+			setDateTypeInList("day");
+			setDateStrInList(
+				`${getDayFmt()}`
+			);
+		}
+
+		// 3. Goal - List
+		else if (isGoalList) {
+			if (dateTypeInList === "day") {
+				setDATE({
+					dateType: "",
+					dateStart: getDayFmt(),
+					dateEnd: getDayFmt(),
+				});
+				setDateStrInList(
+					`${getDayFmt()}`
+				);
+			}
+			else if (dateTypeInList === "week") {
+				setDATE({
+					dateType: "week",
+					dateStart: getWeekStartFmt(),
+					dateEnd: getWeekEndFmt(),
+				});
+				setDateStrInList(
+					`${getWeekStartFmt()} - ${getWeekEndFmt()}`
+				);
+			}
+			else if (dateTypeInList === "month") {
+				setDATE({
+					dateType: "month",
+					dateStart: getMonthStartFmt(),
+					dateEnd: getMonthEndFmt(),
+				});
+				setDateStrInList(
+					`${getMonthStartFmt()} - ${getMonthEndFmt()}`
+				);
+			}
+			else if (dateTypeInList === "year") {
+				setDATE({
+					dateType: "year",
+					dateStart: getYearStartFmt(),
+					dateEnd: getYearEndFmt(),
+				});
+				setDateStrInList(
+					`${getYearStartFmt()} - ${getYearEndFmt()}`
+				);
+			}
+		}
+
+		// 4. Real - List
+		else if (isRealList) {
+			if (dateTypeInList === "day") {
+				setDATE({
+					dateType: "day",
+					dateStart: getDayFmt(),
+					dateEnd: getDayFmt(),
+				});
+				setDateStrInList(
+					`${getDayFmt()}`
+				);
+			}
+			else if (dateTypeInList === "week") {
+				setDATE({
+					dateType: "week",
+					dateStart: getWeekStartFmt(),
+					dateEnd: getWeekEndFmt(),
+				});
+				setDateStrInList(
+					`${getWeekStartFmt()} - ${getWeekEndFmt()}`
+				);
+			}
+			else if (dateTypeInList === "month") {
+				setDATE({
+					dateType: "month",
+					dateStart: getMonthStartFmt(),
+					dateEnd: getMonthEndFmt(),
+				});
+				setDateStrInList(
+					`${getMonthStartFmt()} - ${getMonthEndFmt()}`
+				);
+			}
+			else if (dateTypeInList === "year") {
+				setDATE({
+					dateType: "year",
+					dateStart: getYearStartFmt(),
+					dateEnd: getYearEndFmt(),
+				});
+				setDateStrInList(
+					`${getYearStartFmt()} - ${getYearEndFmt()}`
 				);
 			}
 		}
@@ -213,57 +369,102 @@ export const PickerDay = (
 
 	// --------------------------------------------------------------------------------------------
 	// 2-3. useEffect
+	// - 상세에서 타입 변경시 처리 (일, 주, 월, 년)
 	// --------------------------------------------------------------------------------------------
 	useEffect(() => {
-		if (!isDetail) {
-			return;
+		// 1. Goal - Detail
+		if (isGoalDetail) {
+			if (dateTypeInSave === "day") {
+				setDATE({
+					dateType: "",
+					dateStart: getDayFmt(),
+					dateEnd: getDayFmt(),
+				});
+				setDateStrInSave(
+					`${getDayFmt()}`
+				);
+			}
+			else if (dateTypeInSave === "week") {
+				setDATE({
+					dateType: "week",
+					dateStart: getWeekStartFmt(),
+					dateEnd: getWeekEndFmt(),
+				});
+				setDateStrInSave(
+					`${getWeekStartFmt()} - ${getWeekEndFmt()}`
+				);
+			}
+			else if (dateTypeInSave === "month") {
+				setDATE({
+					dateType: "month",
+					dateStart: getMonthStartFmt(),
+					dateEnd: getMonthEndFmt(),
+				});
+				setDateStrInSave(
+					`${getMonthStartFmt()} - ${getMonthEndFmt()}`
+				);
+			}
+			else if (dateTypeInSave === "year") {
+				setDATE({
+					dateType: "year",
+					dateStart: getYearStartFmt(),
+					dateEnd: getYearEndFmt(),
+				});
+				setDateStrInSave(
+					`${getYearStartFmt()} - ${getYearEndFmt()}`
+				);
+			}
 		}
 
-		// 1. All
-		if (dateTypeInSave === "day") {
-			setDATE({
-				dateType: "",
-				dateStart: getDayFmt(),
-				dateEnd: getDayFmt(),
-			});
-			setDateStrInSave(
-				`${handlerToMnDd(DATE.dateStart || getDayFmt())}`
-			);
-		}
-		else if (dateTypeInSave === "week") {
-			setDATE({
-				dateType: "week",
-				dateStart: getWeekStartFmt(),
-				dateEnd: getWeekEndFmt(),
-			});
-			setDateStrInSave(
-				`${handlerToMnDd(DATE.dateStart || getWeekStartFmt())} - ${handlerToMnDd(DATE.dateEnd || getWeekEndFmt())}`
-			);
-		}
-		else if (dateTypeInSave === "month") {
-			setDATE({
-				dateType: "month",
-				dateStart: getMonthStartFmt(),
-				dateEnd: getMonthEndFmt(),
-			});
-			setDateStrInSave(
-				`${handlerToMnDd(DATE.dateStart || getMonthStartFmt())} - ${handlerToMnDd(DATE.dateEnd || getMonthEndFmt())}`
-			);
-		}
-		else if (dateTypeInSave === "year") {
-			setDATE({
-				dateType: "year",
-				dateStart: getYearStartFmt(),
-				dateEnd: getYearEndFmt(),
-			});
-			setDateStrInSave(
-				`${handlerToMnDd(DATE.dateStart || getYearStartFmt())} - ${handlerToMnDd(DATE.dateEnd || getYearEndFmt())}`
-			);
+		// 2. Real - Detail
+		else if (isRealDetail) {
+			if (dateTypeInSave === "day") {
+				setDATE({
+					dateType: "",
+					dateStart: getDayFmt(),
+					dateEnd: getDayFmt(),
+				});
+				setDateStrInSave(
+					`${getDayFmt()}`
+				);
+			}
+			else if (dateTypeInSave === "week") {
+				setDATE({
+					dateType: "week",
+					dateStart: getWeekStartFmt(),
+					dateEnd: getWeekEndFmt(),
+				});
+				setDateStrInSave(
+					`${getWeekStartFmt()} - ${getWeekEndFmt()}`
+				);
+			}
+			else if (dateTypeInSave === "month") {
+				setDATE({
+					dateType: "month",
+					dateStart: getMonthStartFmt(),
+					dateEnd: getMonthEndFmt(),
+				});
+				setDateStrInSave(
+					`${getMonthStartFmt()} - ${getMonthEndFmt()}`
+				);
+			}
+			else if (dateTypeInSave === "year") {
+				setDATE({
+					dateType: "year",
+					dateStart: getYearStartFmt(),
+					dateEnd: getYearEndFmt(),
+				});
+				setDateStrInSave(
+					`${getYearStartFmt()} - ${getYearEndFmt()}`
+				);
+			}
 		}
 	}, [dateTypeInSave]);
 
 	// --------------------------------------------------------------------------------------------
 	// 2-3. useEffect
+	// - 타입 및 날짜 변경시 표시 날짜 텍스트 변경
+	// - handler 사용해서 월, 일만 표시
 	// --------------------------------------------------------------------------------------------
 	useEffect(() => {
 
@@ -319,21 +520,22 @@ export const PickerDay = (
 				);
 			}
 			else {
-				setDateStrInList(
+				setDateStrInSave(
 					`${handlerToMnDd(getDayFmt(DATE.dateStart))}`
 				);
 			}
 		}
-	}, [DATE.dateStart]);
+	}, [DATE.dateType, DATE.dateStart]);
 
 	// --------------------------------------------------------------------------------------------
 	// 4. handler
+	// - "2024/06/15" => "06/15"
 	// --------------------------------------------------------------------------------------------
 	function handlerToMnDd (str: string | undefined) {
-		if (!str) {
-			return ``;
+		if (str && str.split("/").length === 3) {
+			return `${str.split("/")[1]}/${str.split("/")[2]}`;
 		}
-		return `${str.split(`-`)[1]}-${str.split(`-`)[2]}`;
+		return "";
 	}
 
 	// --------------------------------------------------------------------------------------------
@@ -437,7 +639,7 @@ export const PickerDay = (
 								{translate("viewDay")}
 							</Div>
 							<Div className={"fs-0-8rem fw-500 dark"}>
-								{`[${getDayFmt(DATE.dateStart)}]`}
+								{`[${handlerToMnDd(getDayFmt(DATE.dateStart))}]`}
 							</Div>
 						</Grid>
 						<Grid size={12} className={"d-center"}>
@@ -632,7 +834,7 @@ export const PickerDay = (
 								{translate("viewWeek")}
 							</Div>
 							<Div className={"fs-0-8rem fw-500 dark"}>
-								{`[${getWeekStartFmt(DATE.dateStart)} - ${getWeekEndFmt(DATE.dateEnd)}]`}
+								{`[${handlerToMnDd(getWeekStartFmt(DATE.dateStart))} - ${handlerToMnDd(getWeekEndFmt(DATE.dateEnd))}]`}
 							</Div>
 						</Grid>
 						<Grid size={12} className={"d-center"}>
@@ -842,7 +1044,7 @@ export const PickerDay = (
 								{translate("viewMonth")}
 							</Div>
 							<Div className={"fs-0-8rem fw-500 dark"}>
-								{`[${getMonthStartFmt(DATE.dateStart)} - ${getMonthEndFmt(DATE.dateEnd)}]`}
+								{`[${handlerToMnDd(getMonthStartFmt(DATE.dateStart))} - ${handlerToMnDd(getMonthEndFmt(DATE.dateEnd))}]`}
 							</Div>
 						</Grid>
 						<Grid size={12} className={"d-center"}>
@@ -1035,7 +1237,7 @@ export const PickerDay = (
 								{translate("viewYear")}
 							</Div>
 							<Div className={"fs-0-8rem fw-500 dark"}>
-								{`[${getYearStartFmt(DATE.dateStart)} - ${getYearEndFmt(DATE.dateEnd)}]`}
+								{`[${handlerToMnDd(getYearStartFmt(DATE.dateStart))} - ${handlerToMnDd(getYearEndFmt(DATE.dateEnd))}]`}
 							</Div>
 						</Grid>
 						<Grid size={12} className={"d-center"}>
@@ -1231,89 +1433,89 @@ export const PickerDay = (
 				</Grid>
 			)
 
-				// 1-2. 리스트 (목표)
-				: isGoalList ? (
-					<Grid container={true} spacing={1}>
-						<Grid size={3} className={"d-center"}>
-							{dateTypeInListSection()}
-						</Grid>
-						<Grid size={9} className={"d-center"}>
-							{dateTypeInList === "day" && daySection()}
-							{dateTypeInList === "week" && weekSection()}
-							{dateTypeInList === "month" && monthSection()}
-							{dateTypeInList === "year" && yearSection()}
-						</Grid>
+			// 1-2. 리스트 (목표)
+			: isGoalList ? (
+				<Grid container={true} spacing={1}>
+					<Grid size={3} className={"d-center"}>
+						{dateTypeInListSection()}
 					</Grid>
-				)
+					<Grid size={9} className={"d-center"}>
+						{dateTypeInList === "day" && daySection()}
+						{dateTypeInList === "week" && weekSection()}
+						{dateTypeInList === "month" && monthSection()}
+						{dateTypeInList === "year" && yearSection()}
+					</Grid>
+				</Grid>
+			)
 
-					// 1-3. 리스트 (실제 - 오늘)
-					: isTodayList ? (
-						<Grid container={true} spacing={1}>
-							<Grid size={3} className={"d-center"}>
-								{dateTypeInListSection()}
-							</Grid>
-							<Grid size={9} className={"d-center"}>
-								{dateTypeInList === "day" && daySection()}
-							</Grid>
-						</Grid>
-					)
+			// 1-3. 리스트 (실제 - 오늘)
+			: isTodayList ? (
+				<Grid container={true} spacing={1}>
+					<Grid size={3} className={"d-center"}>
+						{dateTypeInListSection()}
+					</Grid>
+					<Grid size={9} className={"d-center"}>
+						{dateTypeInList === "day" && daySection()}
+					</Grid>
+				</Grid>
+			)
 
-						// 1-4. 리스트 (실제)
-						: isRealList ? (
-							<Grid container={true} spacing={1}>
-								<Grid size={3} className={"d-center"}>
-									{dateTypeInListSection()}
-								</Grid>
-								<Grid size={9} className={"d-center"}>
-									{dateTypeInList === "day" && daySection()}
-									{dateTypeInList === "week" && weekSection()}
-									{dateTypeInList === "month" && monthSection()}
-									{dateTypeInList === "year" && yearSection()}
-								</Grid>
-							</Grid>
-						)
+			// 1-4. 리스트 (실제)
+			: isRealList ? (
+				<Grid container={true} spacing={1}>
+					<Grid size={3} className={"d-center"}>
+						{dateTypeInListSection()}
+					</Grid>
+					<Grid size={9} className={"d-center"}>
+						{dateTypeInList === "day" && daySection()}
+						{dateTypeInList === "week" && weekSection()}
+						{dateTypeInList === "month" && monthSection()}
+						{dateTypeInList === "year" && yearSection()}
+					</Grid>
+				</Grid>
+			)
 
-							// 2-1. 세이브 (일정)
-							: isCalendarDetail ? (
-								<Grid container={true} spacing={1}>
-									<Grid size={{xs: 4, sm: 3}} className={"d-center"}>
-										{dateTypeInSaveSection()}
-									</Grid>
-									<Grid size={{xs: 8, sm: 9}} className={"d-center"}>
-										{DATE.dateType === "day" && daySection()}
-										{DATE.dateType === "week" && weekSection()}
-										{DATE.dateType === "month" && monthSection()}
-										{DATE.dateType === "year" && yearSection()}
-									</Grid>
-								</Grid>
-							)
+			// 2-1. 세이브 (일정)
+			: isCalendarDetail ? (
+				<Grid container={true} spacing={1}>
+					<Grid size={{xs: 4, sm: 3}} className={"d-center"}>
+						{dateTypeInSaveSection()}
+					</Grid>
+					<Grid size={{xs: 8, sm: 9}} className={"d-center"}>
+						{DATE.dateType === "day" && daySection()}
+						{DATE.dateType === "week" && weekSection()}
+						{DATE.dateType === "month" && monthSection()}
+						{DATE.dateType === "year" && yearSection()}
+					</Grid>
+				</Grid>
+			)
 
-								// 2-2. 세이브 (목표)
-								: isGoalDetail ? (
-									<Grid container={true} spacing={1}>
-										<Grid size={{xs: 4, sm: 3}} className={"d-center"}>
-											{dateTypeInSaveSection()}
-										</Grid>
-										<Grid size={{xs: 8, sm: 9}} className={"d-center"}>
-											{DATE.dateType === "week" && weekSection()}
-											{DATE.dateType === "month" && monthSection()}
-											{DATE.dateType === "year" && yearSection()}
-										</Grid>
-									</Grid>
-								)
+			// 2-2. 세이브 (목표)
+			: isGoalDetail ? (
+				<Grid container={true} spacing={1}>
+					<Grid size={{xs: 4, sm: 3}} className={"d-center"}>
+						{dateTypeInSaveSection()}
+					</Grid>
+					<Grid size={{xs: 8, sm: 9}} className={"d-center"}>
+						{DATE.dateType === "week" && weekSection()}
+						{DATE.dateType === "month" && monthSection()}
+						{DATE.dateType === "year" && yearSection()}
+					</Grid>
+				</Grid>
+			)
 
-									// 2-3. 세이브 (실제)
-									: isRealDetail ? (
-										<Grid container={true} spacing={1}>
-											<Grid size={{xs: 4, sm: 3}} className={"d-center"}>
-												{dateTypeInSaveSection()}
-											</Grid>
-											<Grid size={{xs: 8, sm: 9}} className={"d-center"}>
-												{DATE.dateType === "day" && daySection()}
-											</Grid>
-										</Grid>
-									)
-										: null
+			// 2-3. 세이브 (실제)
+			: isRealDetail ? (
+				<Grid container={true} spacing={1}>
+					<Grid size={{xs: 4, sm: 3}} className={"d-center"}>
+						{dateTypeInSaveSection()}
+					</Grid>
+					<Grid size={{xs: 8, sm: 9}} className={"d-center"}>
+						{DATE.dateType === "day" && daySection()}
+					</Grid>
+				</Grid>
+			)
+			: null
 		);
 	};
 

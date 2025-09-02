@@ -49,8 +49,8 @@ export const UserCategory = () => {
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
-    dateStart: "0000-00-00",
-    dateEnd: "0000-00-00",
+    dateStart: "0000/00/00",
+    dateEnd: "0000/00/00",
   });
 
 	// --------------------------------------------------------------------------------------------

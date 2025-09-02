@@ -56,8 +56,8 @@ export const SleepGoalList = () => {
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "day",
-    dateStart: "0000-00-00",
-    dateEnd: "0000-00-00",
+    dateStart: "0000/00/00",
+    dateEnd: "0000/00/00",
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,

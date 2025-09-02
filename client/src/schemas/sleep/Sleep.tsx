@@ -24,8 +24,8 @@ export const Sleep: SleepType = {
 	_id: "",
 	sleep_number: 0,
 	sleep_dateType: "",
-	sleep_dateStart: "0000-00-00",
-	sleep_dateEnd: "0000-00-00",
+	sleep_dateStart: "0000/00/00",
+	sleep_dateEnd: "0000/00/00",
 	sleep_section: [{
 		sleep_bedTime: "00:00",
 		sleep_bedTime_color: "",

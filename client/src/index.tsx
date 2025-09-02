@@ -17,7 +17,7 @@ import {
 
 import {
   useRoot, useScrollTop, useFoodSection, useLanguageSetting, useLanguageInitialize,
-  useCommonValue
+  useCommonValue,
 } from "@importHooks";
 
 import {
@@ -59,19 +59,6 @@ import {
 import {
   AdminAppInfo, UserAppSetting, UserSignup, UserLogin, UserResetPw, UserDetail, UserDelete, UserCategory
 } from "@importPages";
-
-// 서비스 워커 등록 -------------------------------------------------------------------------------
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register(`/LIFECHANGE/service-worker.js`)
-      .then(registration => {
-        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      })
-      .catch(error => {
-        console.error('ServiceWorker registration failed: ', error);
-      });
-  });
-}
 
 // -------------------------------------------------------------------------------------------------
 const App = () => {

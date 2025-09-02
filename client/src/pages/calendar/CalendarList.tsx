@@ -54,8 +54,8 @@ export const CalendarList = () => {
     category: "",
     refresh: 0,
     dateType: "day",
-    dateStart: "0000-00-00",
-    dateEnd: "0000-00-00",
+    dateStart: "0000/00/00",
+    dateEnd: "0000/00/00",
   });
 
 	// --------------------------------------------------------------------------------------------
@@ -98,7 +98,7 @@ export const CalendarList = () => {
 
 		// 7-1. dateInRange
 		const dateInRange = (date: any, dateStart: any, dateEnd: any) => {
-			const isValid = (d: any) => !!d && d !== "0000-00-00";
+			const isValid = (d: any) => !!d && d !== "0000/00/00";
 			if (!isValid(dateStart) || !isValid(dateEnd)) {
 				return false
 			}
@@ -176,7 +176,7 @@ export const CalendarList = () => {
 						formatWeekday={(_locale, date) => getDayNotFmt(date).format("d")}
 						formatMonth={(_locale, date) => getDayNotFmt(date).format("MM")}
 						formatYear={(_locale, date) => getDayNotFmt(date).format("YYYY")}
-						formatLongDate={(_locale, date) => getDayNotFmt(date).format("YYYY-MM-DD")}
+						formatLongDate={(_locale, date) => getDayNotFmt(date).format("YYYY/MM/DD")}
 						formatMonthYear={(_locale, date) => getDayNotFmt(date).format("YYYY-MM")}
 						onActiveStartDateChange={({ activeStartDate }) => {
 							setDATE((prev) => ({

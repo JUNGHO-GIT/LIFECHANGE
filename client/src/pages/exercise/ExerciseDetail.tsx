@@ -46,8 +46,8 @@ export const ExerciseDetail = () => {
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
-    dateStart: "0000-00-00",
-    dateEnd: "0000-00-00",
+    dateStart: "0000/00/00",
+    dateEnd: "0000/00/00",
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -81,8 +81,8 @@ export const ExerciseDetail = () => {
         dateRange === objectRange
       );
       const itsNew = (
-        OBJECT.exercise_dateStart === "0000-00-00" &&
-        OBJECT.exercise_dateEnd === "0000-00-00"
+        OBJECT.exercise_dateStart === "0000/00/00" &&
+        OBJECT.exercise_dateEnd === "0000/00/00"
       );
 
       setFLOW((prev) => ({

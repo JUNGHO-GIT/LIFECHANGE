@@ -52,7 +52,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
-    "@mui/material": "^7.3.1",
+    "@mui/material": "^7.3.2",
     "@mui/x-date-pickers": "^8.11.0",
     "@react-hooks-library/core": "^0.6.2",
     "ajv": "^8.17.1",

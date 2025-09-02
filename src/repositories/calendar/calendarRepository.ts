@@ -207,23 +207,23 @@ export const list = async (
 			calendar_dateEnd: dateStr,
 
 			calendar_exercise_dateType: exerciseItem?.exercise_dateType || "",
-			calendar_exercise_dateStart: exerciseItem?.exercise_dateStart || "0000-00-00",
-			calendar_exercise_dateEnd: exerciseItem?.exercise_dateEnd || "0000-00-00",
+			calendar_exercise_dateStart: exerciseItem?.exercise_dateStart || "0000/00/00",
+			calendar_exercise_dateEnd: exerciseItem?.exercise_dateEnd || "0000/00/00",
 			calendar_exercise_section: exerciseItem?.exercise_section || [],
 
 			calendar_food_dateType: foodItem?.food_dateType || "",
-			calendar_food_dateStart: foodItem?.food_dateStart || "0000-00-00",
-			calendar_food_dateEnd: foodItem?.food_dateEnd || "0000-00-00",
+			calendar_food_dateStart: foodItem?.food_dateStart || "0000/00/00",
+			calendar_food_dateEnd: foodItem?.food_dateEnd || "0000/00/00",
 			calendar_food_section: foodItem?.food_section || [],
 
 			calendar_money_dateType: moneyItem?.money_dateType || "",
-			calendar_money_dateStart: moneyItem?.money_dateStart || "0000-00-00",
-			calendar_money_dateEnd: moneyItem?.money_dateEnd || "0000-00-00",
+			calendar_money_dateStart: moneyItem?.money_dateStart || "0000/00/00",
+			calendar_money_dateEnd: moneyItem?.money_dateEnd || "0000/00/00",
 			calendar_money_section: moneyItem?.money_section || [],
 
 			calendar_sleep_dateType: sleepItem?.sleep_dateType || "",
-			calendar_sleep_dateStart: sleepItem?.sleep_dateStart || "0000-00-00",
-			calendar_sleep_dateEnd: sleepItem?.sleep_dateEnd || "0000-00-00",
+			calendar_sleep_dateStart: sleepItem?.sleep_dateStart || "0000/00/00",
+			calendar_sleep_dateEnd: sleepItem?.sleep_dateEnd || "0000/00/00",
 			calendar_sleep_section: sleepItem?.sleep_section || [],
 		});
 	}
@@ -367,23 +367,23 @@ export const detail = async (
 			calendar_dateEnd: dateStr,
 
 			calendar_exercise_dateType: exerciseItem?.exercise_dateType || "",
-			calendar_exercise_dateStart: exerciseItem?.exercise_dateStart || "0000-00-00",
-			calendar_exercise_dateEnd: exerciseItem?.exercise_dateEnd || "0000-00-00",
+			calendar_exercise_dateStart: exerciseItem?.exercise_dateStart || "0000/00/00",
+			calendar_exercise_dateEnd: exerciseItem?.exercise_dateEnd || "0000/00/00",
 			calendar_exercise_section: exerciseItem?.exercise_section || [],
 
 			calendar_food_dateType: foodItem?.food_dateType || "",
-			calendar_food_dateStart: foodItem?.food_dateStart || "0000-00-00",
-			calendar_food_dateEnd: foodItem?.food_dateEnd || "0000-00-00",
+			calendar_food_dateStart: foodItem?.food_dateStart || "0000/00/00",
+			calendar_food_dateEnd: foodItem?.food_dateEnd || "0000/00/00",
 			calendar_food_section: foodItem?.food_section || [],
 
 			calendar_money_dateType: moneyItem?.money_dateType || "",
-			calendar_money_dateStart: moneyItem?.money_dateStart || "0000-00-00",
-			calendar_money_dateEnd: moneyItem?.money_dateEnd || "0000-00-00",
+			calendar_money_dateStart: moneyItem?.money_dateStart || "0000/00/00",
+			calendar_money_dateEnd: moneyItem?.money_dateEnd || "0000/00/00",
 			calendar_money_section: moneyItem?.money_section || [],
 
 			calendar_sleep_dateType: sleepItem?.sleep_dateType || "",
-			calendar_sleep_dateStart: sleepItem?.sleep_dateStart || "0000-00-00",
-			calendar_sleep_dateEnd: sleepItem?.sleep_dateEnd || "0000-00-00",
+			calendar_sleep_dateStart: sleepItem?.sleep_dateStart || "0000/00/00",
+			calendar_sleep_dateEnd: sleepItem?.sleep_dateEnd || "0000/00/00",
 			calendar_sleep_section: sleepItem?.sleep_section || [],
 		});
 	}

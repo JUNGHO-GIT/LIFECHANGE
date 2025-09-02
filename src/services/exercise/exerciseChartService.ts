@@ -91,7 +91,7 @@ export const barWeek = async (
 
     // name 배열 순회하며 결과 저장
     name.forEach((data: any, index: number) => {
-      const targetDay = moment(weekStartFmt).clone().add(index, 'days').format("YYYY-MM-DD");
+      const targetDay = moment(weekStartFmt).clone().add(index, 'days').format("YYYY/MM/DD");
 
       const findIndexGoal = findResultGoal?.findIndex((item: any) => (
         item.exercise_goal_dateStart === targetDay
@@ -167,7 +167,7 @@ export const barMonth = async (
 
     // name 배열 순회하며 결과 저장
     name.forEach((data: any, index: number) => {
-      const targetDay = moment(monthStartFmt).clone().add(index, 'days').format("YYYY-MM-DD");
+      const targetDay = moment(monthStartFmt).clone().add(index, 'days').format("YYYY/MM/DD");
 
       const findIndexGoal = findResultGoal?.findIndex((item: any) => (
         item.exercise_goal_dateStart === targetDay
@@ -426,7 +426,7 @@ export const lineWeek = async (
 
     // name 배열 순회하며 결과 저장
     name.forEach((data: any, index: number) => {
-      const targetDay = moment(weekStartFmt).clone().add(index, 'days').format("YYYY-MM-DD");
+      const targetDay = moment(weekStartFmt).clone().add(index, 'days').format("YYYY/MM/DD");
 
       const findIndexScale = findResultScale?.findIndex((item: any) => (
         item.exercise_dateStart === targetDay
@@ -521,7 +521,7 @@ export const lineMonth = async (
 
     // name 배열 순회하며 결과 저장
     name.forEach((data: any, index: number) => {
-      const targetDay = moment(monthStartFmt).clone().add(index, 'days').format("YYYY-MM-DD");
+      const targetDay = moment(monthStartFmt).clone().add(index, 'days').format("YYYY/MM/DD");
 
       const findIndexScale = findResultScale?.findIndex((item: any) => (
         item.exercise_dateStart === targetDay
@@ -612,8 +612,8 @@ export const avgWeek = async (
     // promise 사용하여 병렬 처리
     const parallelResult = await Promise.all(
       weekStartDate.map(async (startDate, i) => {
-        const dateStart = startDate.clone().startOf('isoWeek').format("YYYY-MM-DD");
-        const dateEnd = startDate.clone().endOf('isoWeek').format("YYYY-MM-DD");
+        const dateStart = startDate.clone().startOf('isoWeek').format("YYYY/MM/DD");
+        const dateEnd = startDate.clone().endOf('isoWeek').format("YYYY/MM/DD");
 
         [findResultVolume, findResultCardio] = await Promise.all([
           repository.avgVolume(
@@ -725,8 +725,8 @@ export const avgMonth = async (
     // promise 사용하여 병렬 처리
     const parallelResult = await Promise.all(
       monthStartDate.map(async (startDate, i) => {
-        const dateStart = startDate.clone().startOf('month').format("YYYY-MM-DD");
-        const dateEnd = startDate.clone().endOf('month').format("YYYY-MM-DD");
+        const dateStart = startDate.clone().startOf('month').format("YYYY/MM/DD");
+        const dateEnd = startDate.clone().endOf('month').format("YYYY/MM/DD");
 
         [findResultVolume, findResultCardio] = await Promise.all([
           repository.avgVolume(

@@ -47,8 +47,8 @@ export const SleepGoal: SleepGoalType = {
 	// goal
 	sleep_goal_number: 0,
 	sleep_goal_dateType: "",
-	sleep_goal_dateStart: "0000-00-00",
-	sleep_goal_dateEnd: "0000-00-00",
+	sleep_goal_dateStart: "0000/00/00",
+	sleep_goal_dateEnd: "0000/00/00",
 	sleep_goal_bedTime: "00:00",
 	sleep_goal_bedTime_color: "",
 	sleep_goal_wakeTime: "00:00",
@@ -60,8 +60,8 @@ export const SleepGoal: SleepGoalType = {
 
 	// real
 	sleep_dateType: "",
-	sleep_dateStart: "0000-00-00",
-	sleep_dateEnd: "0000-00-00",
+	sleep_dateStart: "0000/00/00",
+	sleep_dateEnd: "0000/00/00",
 	sleep_bedTime: "00:00",
 	sleep_bedTime_color: "",
 	sleep_wakeTime: "00:00",

@@ -47,8 +47,8 @@ export const FoodDetail = () => {
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
-    dateStart: "0000-00-00",
-    dateEnd: "0000-00-00",
+    dateStart: "0000/00/00",
+    dateEnd: "0000/00/00",
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -77,8 +77,8 @@ export const FoodDetail = () => {
         dateRange === objectRange
       );
       const itsNew = (
-        OBJECT.food_dateStart === "0000-00-00" &&
-        OBJECT.food_dateEnd === "0000-00-00"
+        OBJECT.food_dateStart === "0000/00/00" &&
+        OBJECT.food_dateEnd === "0000/00/00"
       );
 
       setFLOW((prev) => ({

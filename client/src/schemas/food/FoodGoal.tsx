@@ -53,8 +53,8 @@ export const FoodGoal: FoodGoalType = {
 	// goal
 	food_goal_number: 0,
 	food_goal_dateType: "",
-	food_goal_dateStart: "0000-00-00",
-	food_goal_dateEnd: "0000-00-00",
+	food_goal_dateStart: "0000/00/00",
+	food_goal_dateEnd: "0000/00/00",
 	food_goal_kcal: "0",
 	food_goal_kcal_color: "",
 	food_goal_carb: "0",
@@ -68,8 +68,8 @@ export const FoodGoal: FoodGoalType = {
 
 	// real
 	food_dateType: "",
-	food_dateStart: "0000-00-00",
-	food_dateEnd: "0000-00-00",
+	food_dateStart: "0000/00/00",
+	food_dateEnd: "0000/00/00",
 	food_total_kcal: "0",
 	food_total_kcal_color: "",
 	food_total_carb: "0",
