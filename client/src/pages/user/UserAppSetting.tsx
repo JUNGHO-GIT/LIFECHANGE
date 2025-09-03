@@ -57,32 +57,6 @@ export const UserAppSetting = () => {
     }
   };
 
-	// 4-4. handle -------------------------------------------------------------------------------------
-	function handleDeleteUserData() {
-		setCONFIRM({
-			open: true,
-			msg: translate("deleteUserData"),
-		}, async (confirmed: boolean) => {
-			if (confirmed) {
-				axios.post("/user/deleteUserData")
-				.then((res: any) => {
-					if (res.data.result) {
-						setLocal("setting", "id", "", {
-							autoLogin: "false",
-							autoLoginId: "",
-							autoLoginPw: "",
-						});
-						sessionStorage.clear();
-						navigate("/user/login");
-					}
-				})
-				.catch((err: any) => {
-					console.error(err);
-				});
-			}
-		});
-	}
-
   // 7. userAppSetting ----------------------------------------------------------------------------
   const userAppSettingNode = () => {
     // 7-1. detail
@@ -262,24 +236,6 @@ export const UserAppSetting = () => {
 								>
 									<TableCell className={"w-90vw p-15px"}>
 										{translate("clearStorage")}
-									</TableCell>
-									<TableCell className={"w-10vw p-15px"}>
-										<Icons
-											name={"ChevronRight"}
-											className={"w-16px h-16px"}
-										/>
-									</TableCell>
-								</TableRow>
-								{/** delete user data **/}
-								<TableRow
-									className={`${isAdmin !== "true" ? "d-none" : ""} pointer`}
-									onClick={() => {
-										// TODO: Implement delete user data functionality
-										// handleDeleteUserData();
-									}}
-								>
-									<TableCell className={"w-90vw p-15px"}>
-										{translate("deleteUserData")}
 									</TableCell>
 									<TableCell className={"w-10vw p-15px"}>
 										<Icons

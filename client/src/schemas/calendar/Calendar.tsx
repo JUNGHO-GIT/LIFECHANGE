@@ -67,13 +67,13 @@ export const Calendar: CalendarType = {
   _id: "",
   calendar_number: 0,
 	calendar_dateType: "",
-	calendar_dateStart: "0000/00/00",
-	calendar_dateEnd: "0000/00/00",
+	calendar_dateStart: "0000-00-00",
+	calendar_dateEnd: "0000-00-00",
 
 	// 1. exercise
 	calendar_exercise_dateType: "",
-	calendar_exercise_dateStart: "0000/00/00",
-	calendar_exercise_dateEnd: "0000/00/00",
+	calendar_exercise_dateStart: "0000-00-00",
+	calendar_exercise_dateEnd: "0000-00-00",
 	calendar_exercise_section: [
 		{
 			exercise_part: "",
@@ -88,8 +88,8 @@ export const Calendar: CalendarType = {
 
 	// 2. food
 	calendar_food_dateType: "",
-	calendar_food_dateStart: "0000/00/00",
-	calendar_food_dateEnd: "0000/00/00",
+	calendar_food_dateStart: "0000-00-00",
+	calendar_food_dateEnd: "0000-00-00",
 	calendar_food_section: [
 		{
 			food_part: "",

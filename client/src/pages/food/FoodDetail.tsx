@@ -47,8 +47,8 @@ export const FoodDetail = () => {
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
-    dateStart: "0000/00/00",
-    dateEnd: "0000/00/00",
+    dateStart: "0000-00-00",
+    dateEnd: "0000-00-00",
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -77,8 +77,8 @@ export const FoodDetail = () => {
         dateRange === objectRange
       );
       const itsNew = (
-        OBJECT.food_dateStart === "0000/00/00" &&
-        OBJECT.food_dateEnd === "0000/00/00"
+        OBJECT.food_dateStart === "0000-00-00" &&
+        OBJECT.food_dateEnd === "0000-00-00"
       );
 
       setFLOW((prev) => ({
@@ -390,6 +390,14 @@ export const FoodDetail = () => {
 	// 3. flow
 	// --------------------------------------------------------------------------------------------
   const flowUpdateFavorite = (foodFavorite: any) => {
+		if (!foodFavorite.food_name || foodFavorite.food_name.trim() === "") {
+			setALERT({
+        open: true,
+        msg: translate("음식 이름을 입력해주세요."),
+        severity: "error",
+      });
+			return;
+		}
     axios.put(`${URL_OBJECT}/find/updateFavorite`, {
       user_id: sessionId,
       foodFavorite: foodFavorite,
@@ -422,7 +430,9 @@ export const FoodDetail = () => {
     });
   };
 
-  // 4-3. handle----------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+  // 4-3. handle
+	// --------------------------------------------------------------------------------------------
   const handleDelete = (index: number) => {
 
     // 스토리지 데이터 가져오기

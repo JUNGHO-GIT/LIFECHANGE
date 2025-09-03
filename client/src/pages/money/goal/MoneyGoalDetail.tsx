@@ -45,8 +45,8 @@ export const MoneyGoalDetail = () => {
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "day",
-    dateStart: "0000/00/00",
-    dateEnd: "0000/00/00",
+    dateStart: "0000-00-00",
+    dateEnd: "0000-00-00",
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -75,8 +75,8 @@ export const MoneyGoalDetail = () => {
         dateRange === objectRange
       );
       const itsNew = (
-        OBJECT.money_goal_dateStart === "0000/00/00" &&
-        OBJECT.money_goal_dateEnd === "0000/00/00"
+        OBJECT.money_goal_dateStart === "0000-00-00" &&
+        OBJECT.money_goal_dateEnd === "0000-00-00"
       );
 
       setFLOW((prev) => ({
@@ -268,7 +268,9 @@ export const MoneyGoalDetail = () => {
     });
   };
 
-  // 4-3. handle----------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+  // 4-3. handle
+	// --------------------------------------------------------------------------------------------
   const handleDelete = (_index: number) => {
     setOBJECT((prev) => ({
       ...prev,

@@ -68,8 +68,8 @@ export const list = async (
 
   // 플러스 마이너스 1개월
   const dateType = DATE_param?.dateType;
-  const dateStart = moment(DATE_param?.dateStart).subtract(1, "months").format("YYYY/MM/DD");
-  const dateEnd = moment(DATE_param?.dateEnd).add(1, "months").format("YYYY/MM/DD");
+  const dateStart = moment(DATE_param?.dateStart).subtract(1, "months").format("YYYY-MM-DD");
+  const dateEnd = moment(DATE_param?.dateEnd).add(1, "months").format("YYYY-MM-DD");
 
   // sort, page 변수 선언
   const sort = PAGING_param?.sort === "asc" ? 1 : -1;

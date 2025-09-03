@@ -53,8 +53,8 @@ export const ExerciseGoal: ExerciseGoalType = {
 	// goal
 	exercise_goal_number: 0,
 	exercise_goal_dateType: "",
-	exercise_goal_dateStart: "0000/00/00",
-	exercise_goal_dateEnd: "0000/00/00",
+	exercise_goal_dateStart: "0000-00-00",
+	exercise_goal_dateEnd: "0000-00-00",
 	exercise_goal_count: "0",
 	exercise_goal_count_color: "",
 	exercise_goal_volume: "0",
@@ -68,8 +68,8 @@ export const ExerciseGoal: ExerciseGoalType = {
 
 	// real
 	exercise_dateType: "",
-	exercise_dateStart: "0000/00/00",
-	exercise_dateEnd: "0000/00/00",
+	exercise_dateStart: "0000-00-00",
+	exercise_dateEnd: "0000-00-00",
 	exercise_total_count: "0",
 	exercise_total_count_color: "",
 	exercise_total_volume: "0",

@@ -49,8 +49,8 @@ export const FoodFavoriteList = () => {
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "day",
-    dateStart: "0000/00/00",
-    dateEnd: "0000/00/00",
+    dateStart: "0000-00-00",
+    dateEnd: "0000-00-00",
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -62,13 +62,6 @@ export const FoodFavoriteList = () => {
     dateStart: location_dateStart || getDayFmt(),
     dateEnd: location_dateEnd || getDayFmt(),
   });
-
-	// --------------------------------------------------------------------------------------------
-	// 2-3. useEffect
-	// --------------------------------------------------------------------------------------------
-	useEffect(() => {
-		console.log(`isExpanded`, isExpanded);
-	}, [isExpanded]);
 
 	// --------------------------------------------------------------------------------------------
 	// 2-3. useEffect

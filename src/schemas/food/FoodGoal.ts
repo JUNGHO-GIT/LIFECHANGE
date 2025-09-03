@@ -23,12 +23,12 @@ const schema = new mongoose.Schema({
   },
   food_goal_dateStart: {
     type: String,
-    default: "0000/00/00",
+    default: "0000-00-00",
     required: false
   },
   food_goal_dateEnd: {
     type: String,
-    default: "0000/00/00",
+    default: "0000-00-00",
     required: false
   },
 

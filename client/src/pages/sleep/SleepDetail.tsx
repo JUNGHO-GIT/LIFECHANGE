@@ -44,8 +44,8 @@ export const SleepDetail = () => {
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
-    dateStart: "0000/00/00",
-    dateEnd: "0000/00/00",
+    dateStart: "0000-00-00",
+    dateEnd: "0000-00-00",
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -79,8 +79,8 @@ export const SleepDetail = () => {
         dateRange === objectRange
       );
       const itsNew = (
-        OBJECT.sleep_dateStart === "0000/00/00" &&
-        OBJECT.sleep_dateEnd === "0000/00/00"
+        OBJECT.sleep_dateStart === "0000-00-00" &&
+        OBJECT.sleep_dateEnd === "0000-00-00"
       );
 
       setFLOW((prev) => ({
@@ -309,7 +309,9 @@ export const SleepDetail = () => {
     });
   };
 
-  // 4-3. handle----------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------
+  // 4-3. handle
+	// --------------------------------------------------------------------------------------------
   const handleDelete = (index: number) => {
     setOBJECT((prev) => ({
       ...prev,

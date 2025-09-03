@@ -24,12 +24,12 @@ const schema = new mongoose.Schema({
   },
   sleep_dateStart: {
     type: String,
-    default: "0000/00/00",
+    default: "0000-00-00",
     required: false
   },
   sleep_dateEnd: {
     type: String,
-    default: "0000/00/00",
+    default: "0000-00-00",
     required: false
   },
 

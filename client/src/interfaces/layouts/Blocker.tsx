@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 
-export default function Blocker({ active }: { active: boolean }) {
+export const Blocker = ({ active }: { active: boolean }) => {
   if (!active) {
     return null;
   }

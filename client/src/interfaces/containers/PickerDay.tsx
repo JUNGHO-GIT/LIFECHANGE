@@ -529,11 +529,11 @@ export const PickerDay = (
 
 	// --------------------------------------------------------------------------------------------
 	// 4. handler
-	// - "2024/06/15" => "06/15"
+	// - "2024-01-15" => "01-15"
 	// --------------------------------------------------------------------------------------------
-	function handlerToMnDd (str: string | undefined) {
-		if (str && str.split("/").length === 3) {
-			return `${str.split("/")[1]}/${str.split("/")[2]}`;
+	const handlerToMnDd = (str: string) => {
+		if (str && str.split("-").length === 3) {
+			return `${str.split("-")[1]}-${str.split("-")[2]}`;
 		}
 		return "";
 	}

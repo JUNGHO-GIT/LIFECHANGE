@@ -59,8 +59,8 @@ export const FoodList = () => {
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "day",
-    dateStart: "0000/00/00",
-    dateEnd: "0000/00/00",
+    dateStart: "0000-00-00",
+    dateEnd: "0000-00-00",
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -113,7 +113,7 @@ export const FoodList = () => {
       },
     })
     .then((res: any) => {
-      // setLOADING(false);
+    	setLOADING(false);
       setOBJECT(res.data.result?.length > 0 ? res.data.result : [Food]);
       setCOUNT((prev) => ({
         ...prev,
@@ -130,7 +130,7 @@ export const FoodList = () => {
 			});
     })
     .catch((err: any) => {
-      // setLOADING(false);
+    	setLOADING(false);
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
@@ -138,7 +138,7 @@ export const FoodList = () => {
       });
     })
     .finally(() => {
-      // setLOADING(false);
+    	setLOADING(false);
     });
   }, [URL_OBJECT, sessionId, PAGING?.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
 

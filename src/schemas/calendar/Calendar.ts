@@ -22,12 +22,12 @@ const schema = new mongoose.Schema({
 	},
 	calendar_dateStart: {
 		type: String,
-		default: "0000/00/00",
+		default: "0000-00-00",
 		required: false
 	},
 	calendar_dateEnd: {
 		type: String,
-		default: "0000/00/00",
+		default: "0000-00-00",
 		required: false
 	},
 
@@ -39,12 +39,12 @@ const schema = new mongoose.Schema({
   },
   calendar_exercise_dateStart : {
     type: String,
-    default: "0000/00/00",
+    default: "0000-00-00",
     required: false
   },
   calendar_exercise_dateEnd : {
     type: String,
-    default: "0000/00/00",
+    default: "0000-00-00",
     required: false
   },
   calendar_exercise_section: [{
@@ -93,12 +93,12 @@ const schema = new mongoose.Schema({
   },
   calendar_food_dateStart : {
     type: String,
-    default: "0000/00/00",
+    default: "0000-00-00",
     required: false
   },
   calendar_food_dateEnd : {
     type: String,
-    default: "0000/00/00",
+    default: "0000-00-00",
     required: false
   },
   calendar_food_section: [{
@@ -162,12 +162,12 @@ const schema = new mongoose.Schema({
   },
   calendar_money_dateStart : {
     type: String,
-    default: "0000/00/00",
+    default: "0000-00-00",
     required: false
   },
   calendar_money_dateEnd : {
     type: String,
-    default: "0000/00/00",
+    default: "0000-00-00",
     required: false
   },
   calendar_money_section: [{
@@ -206,12 +206,12 @@ const schema = new mongoose.Schema({
   },
   calendar_sleep_dateStart : {
     type: String,
-    default: "0000/00/00",
+    default: "0000-00-00",
     required: false
   },
   calendar_sleep_dateEnd : {
     type: String,
-    default: "0000/00/00",
+    default: "0000-00-00",
     required: false
   },
   calendar_sleep_section: [{

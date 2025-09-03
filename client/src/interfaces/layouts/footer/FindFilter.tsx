@@ -33,14 +33,14 @@ export const FindFilter = (
 			<Div className={"d-center"}>
 				<Input
 					label={translate("query")}
-					value={PATH.includes("/favorite/list") ? translate("favorite") : state?.PAGING.query}
-					disabled={PATH.includes("/favorite/list") ? true : false}
+					value={state?.PAGING.query}
+					disabled={false}
 					inputclass={"h-30px"}
 					shrink={"shrink"}
 					onChange={(e: any) => {
 						setState?.setPAGING((prev: any) => ({
 							...prev,
-							query: PATH.includes("/favorite/list") ? "favorite" : e.target.value
+							query: e.target.value
 						}));
 					}}
 					onKeyDown={(e: any) => {
@@ -59,7 +59,7 @@ export const FindFilter = (
 						key={"Search"}
 						name={"Search"}
 						className={"w-22px h-22px primary pointer-primary"}
-						disabled={PATH.includes("/favorite/list") ? true : false}
+						disabled={false}
 						onClick={() => {
 							flow.flowFind();
 							setState?.setPAGING((prev: any) => ({
@@ -75,7 +75,7 @@ export const FindFilter = (
 						key={"CheckCircle"}
 						name={"CheckCircle"}
 						className={"w-22px h-22px burgundy pointer-burgundy"}
-						disabled={PATH.includes("/favorite/list") ? true : false}
+						disabled={false}
 						onClick={() => {
 							navigate(toDetail, {
 								state: {
@@ -92,7 +92,61 @@ export const FindFilter = (
 		// 2. favorite
 		const favoriteSection = () => (
 			<Div className={"d-center"}>
-				{/*TODO: 즐겨찾기 갯수 표시 및 기타 로직 추가*/}
+				<Input
+					label={translate("query")}
+					value={translate("favorite")}
+					disabled={true}
+					inputclass={"h-30px"}
+					shrink={"shrink"}
+					onChange={(e: any) => {
+						setState?.setPAGING((prev: any) => ({
+							...prev,
+							query: "favorite"
+						}));
+					}}
+					onKeyDown={(e: any) => {
+						if (e.key === 'Enter') {
+							flow.flowFind();
+							setState?.setPAGING((prev: any) => ({
+								...prev,
+								page: 0
+							}));
+							window.scrollTo(0, 0);
+						}
+					}}
+				/>
+				<Div className={"d-center mr-n3px"}>
+					<Icons
+						key={"Search"}
+						name={"Search"}
+						className={"w-22px h-22px grey"}
+						disabled={true}
+						onClick={() => {
+							flow.flowFind();
+							setState?.setPAGING((prev: any) => ({
+								...prev,
+								page: 0
+							}));
+							window.scrollTo(0, 0);
+						}}
+					/>
+				</Div>
+				<Div className={"d-center ml-n3px"}>
+					<Icons
+						key={"CheckCircle"}
+						name={"CheckCircle"}
+						className={"w-22px h-22px burgundy pointer-burgundy"}
+						onClick={() => {
+							navigate(toDetail, {
+								state: {
+									dateType: state?.DATE.dateType,
+									dateStart: state?.DATE.dateStart,
+									dateEnd: state?.DATE.dateEnd
+								}
+							});
+						}}
+					/>
+				</Div>
 			</Div>
 		);
     // 3. pagination

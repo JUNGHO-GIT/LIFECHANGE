@@ -41,8 +41,8 @@ export const MoneyGoal: MoneyGoalType = {
 	// goal
 	money_goal_number: 0,
 	money_goal_dateType: "",
-	money_goal_dateStart: "0000/00/00",
-	money_goal_dateEnd: "0000/00/00",
+	money_goal_dateStart: "0000-00-00",
+	money_goal_dateEnd: "0000-00-00",
 	money_goal_income: "0",
 	money_goal_income_color: "",
 	money_goal_expense: "0",
@@ -52,8 +52,8 @@ export const MoneyGoal: MoneyGoalType = {
 
 	// real
 	money_dateType: "",
-	money_dateStart: "0000/00/00",
-	money_dateEnd: "0000/00/00",
+	money_dateStart: "0000-00-00",
+	money_dateEnd: "0000-00-00",
 	money_total_income: "0",
 	money_total_income_color: "",
 	money_total_expense: "0",

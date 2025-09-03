@@ -3,7 +3,7 @@
 import { useEffect } from "@importReacts";
 
 // -------------------------------------------------------------------------------------------------
-export function useConsole(title: string, target: any) {
+export const useConsole = (title: string, target: any) => {
 
 	// --------------------------------------------------------------------------------------------
 	// 2-3. useEffect
