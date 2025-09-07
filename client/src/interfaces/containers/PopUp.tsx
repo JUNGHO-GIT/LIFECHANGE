@@ -7,9 +7,7 @@ import { bindPopover, usePopupState } from "@importMuis";
 // -------------------------------------------------------------------------------------------------
 export const PopUp = (props: any) => {
 
-	// --------------------------------------------------------------------------------------------
-	// 2-1. useState
-	// --------------------------------------------------------------------------------------------
+	// 2-2. useState ---------------------------------------------------------------------------------
   const popupState = usePopupState({
     variant: "popover",
     popupId: "popup",
@@ -21,9 +19,7 @@ export const PopUp = (props: any) => {
     alignItems: "center",
   });
 
-	// --------------------------------------------------------------------------------------------
-	// 2-3. useEffect
-	// --------------------------------------------------------------------------------------------
+	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (props?.type === "innerCenter") {
       setPopupStyle((prev) => ({
@@ -64,10 +60,9 @@ export const PopUp = (props: any) => {
     <>
       <Popover
         {...bindPopover(popupState)}
-        id={"popover"}
         open={popupState.isOpen}
         anchorEl={popupState.anchorEl}
-        onClose={(_event, reason) => {
+        onClose={(_event: any, reason: string) => {
           if (reason === "backdropClick") {
             popupState.close();
           }
@@ -117,10 +112,9 @@ export const PopUp = (props: any) => {
     <>
       <Popover
         {...bindPopover(popupState)}
-        id={"popover"}
         open={popupState.isOpen}
         anchorEl={null}
-        onClose={(_event, reason) => {
+        onClose={(_event: any, reason: string) => {
           if (reason === "backdropClick") {
             popupState.close();
           }
@@ -162,7 +156,7 @@ export const PopUp = (props: any) => {
     </>
   );
 
-  // 15. return ------------------------------------------------------------------------------------
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {props?.type === "innerCenter" && innerCenterPopUp()}

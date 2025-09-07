@@ -5,15 +5,12 @@ import { useState, useEffect } from "@importReacts";
 import { getLocal, setLocal } from "@importScripts";
 
 // -------------------------------------------------------------------------------------------------
-export type UseStorageLocalType<T> = [T, Dispatch<SetStateAction<T>>];
-
-// -------------------------------------------------------------------------------------------------
 export const useStorageLocal = <T,>(
   key1: string,
   key2: string,
   key3: string,
   initialVal: T
-): UseStorageLocalType<T> => {
+): [T, Dispatch<SetStateAction<T>>] => {
 
   // -----------------------------------------------------------------------------------------------
   const [storedVal, setStoredVal] = useState<T>(() => {

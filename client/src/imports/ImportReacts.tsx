@@ -1,35 +1,29 @@
 // ImportReacts.tsx
 
-import type { JSX } from "react";
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { createRoot } from 'react-dom/client';
-import { useState, useEffect, useLayoutEffect } from "react";
-import { useCallback, useMemo, useRef, createRef } from "react";
-import { createContext, useContext } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { memo } from "react";
-
 // -------------------------------------------------------------------------------------------------
+// 1. react
+export type { JSX } from "react";
 export {
-  React,
-  ReactDOM,
-  JSX,
-  createRoot,
+  default as React,
   useState,
   useEffect,
-  useLayoutEffect,
   useCallback,
-  useMemo,
   useRef,
-  createContext,
-  useContext,
+  createRef
+} from "react";
+
+// --------------------------------------------------------------------------------------------
+// 2. react-dom
+export {
+  createRoot,
+} from "react-dom/client";
+
+// --------------------------------------------------------------------------------------------
+// 3. react-router
+export {
   useNavigate,
   useLocation,
-  createRef,
   BrowserRouter,
   Routes,
   Route,
-	memo,
-};
+} from "react-router";

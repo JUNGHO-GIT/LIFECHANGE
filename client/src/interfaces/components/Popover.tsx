@@ -6,21 +6,27 @@ import { PopoverProps } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const Popover = (props: PopoverProps) => {
-  const popoverRef = useRef<HTMLDivElement | null>(null);
+  const paperRef = useRef<HTMLDivElement | null>(null);
 
-  // style 속성 자체를 제거
   useEffect(() => {
-    if (popoverRef.current) {
-      popoverRef.current.removeAttribute("style");
+    if (paperRef.current) {
+      paperRef.current.removeAttribute("style");
     }
   }, []);
+
+  const mergedSlotProps = {
+    ...props.slotProps,
+    paper: {
+      ...(props.slotProps && props.slotProps.paper ? props.slotProps.paper : {}),
+      ref: paperRef,
+      component: "div",
+    },
+  };
 
   return (
     <MuiPopover
       {...props}
-      ref={popoverRef}
-      component={"div"}
-      className={props?.className || ""}
+      slotProps={mergedSlotProps}
     />
   );
 };

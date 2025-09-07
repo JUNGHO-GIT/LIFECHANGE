@@ -1,0 +1,102 @@
+{
+  "project": "tsconfig.json",
+  "apply": true,
+  "totalFiles": 6,
+  "modifiedFiles": 6,
+  "skippedFiles": [],
+  "details": [
+    {
+      "file": "\\src\\imports\\ImportContainers.tsx",
+      "removed": [
+        "TextArea",
+        "InputFile"
+      ],
+      "skipped": false
+    },
+    {
+      "file": "\\src\\imports\\ImportLibs.tsx",
+      "removed": [
+        "parseISO",
+        "formatISO"
+      ],
+      "skipped": false
+    },
+    {
+      "file": "\\src\\imports\\ImportMuis.tsx",
+      "removed": [
+        "AlertTitle",
+        "AppBar",
+        "Autocomplete",
+        "AvatarGroup",
+        "AccordionActions",
+        "Collapse",
+        "Container",
+        "Drawer",
+        "Dialog",
+        "DialogActions",
+        "DialogContent",
+        "DialogContentText",
+        "DialogTitle",
+        "FormControl",
+        "InputAdornment",
+        "InputBase",
+        "InputLabel",
+        "Link",
+        "List",
+        "ListItem",
+        "MenuList",
+        "Modal",
+        "Pagination",
+        "Popper",
+        "Select",
+        "Step",
+        "StepLabel",
+        "SnackbarContent",
+        "TableSortLabel",
+        "TabScrollButton",
+        "Toolbar",
+        "Tooltip",
+        "tabsClasses",
+        "useMediaQuery",
+        "CardProps",
+        "AlertProps",
+        "DayCalendarSkeleton",
+        "PopupState",
+        "bindTrigger",
+        "bindMenu"
+      ],
+      "skipped": false
+    },
+    {
+      "file": "\\src\\imports\\ImportReacts.tsx",
+      "removed": [
+        "useMemo",
+        "createContext",
+        "useContext",
+        "memo",
+        "ReactDOM"
+      ],
+      "skipped": false
+    },
+    {
+      "file": "\\src\\imports\\ImportSchemas.tsx",
+      "removed": [
+        "ExerciseType",
+        "UserType"
+      ],
+      "skipped": false
+    },
+    {
+      "file": "\\src\\imports\\ImportScripts.tsx",
+      "removed": [
+        "makeForm",
+        "randomNumber",
+        "randomTime",
+        "calcDate",
+        "strToDecimal",
+        "decimalToStr"
+      ],
+      "skipped": false
+    }
+  ]
+}

@@ -5,15 +5,12 @@ import { useState, useEffect } from "@importReacts";
 import { getSession, setSession } from "@importScripts";
 
 // -------------------------------------------------------------------------------------------------
-export type UseStorageSessionType<T> = [T, Dispatch<SetStateAction<T>>];
-
-// -------------------------------------------------------------------------------------------------
 export const useStorageSession = <T,>(
   key1: string,
   key2: string,
   key3: string,
   initialVal: T
-): UseStorageSessionType<T> => {
+): [T, Dispatch<SetStateAction<T>>] => {
 
   // -----------------------------------------------------------------------------------------------
   const [storedVal, setStoredVal] = useState(() => {

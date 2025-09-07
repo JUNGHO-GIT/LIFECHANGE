@@ -24,9 +24,7 @@ declare type PieProps = {
 // -------------------------------------------------------------------------------------------------
 export const FoodChartPie = () => {
 
-	// --------------------------------------------------------------------------------------------
-	// 1. common
-	// --------------------------------------------------------------------------------------------
+	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, chartColors, sessionId } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
@@ -34,9 +32,7 @@ export const FoodChartPie = () => {
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-	// --------------------------------------------------------------------------------------------
-	// 2-1. useStorageLocal
-	// --------------------------------------------------------------------------------------------
+	// 2-1. useStorageLocal -----------------------------------------------------------------------
   const [TYPE, setTYPE] = useStorageLocal(
     "type", "pie", PATH, {
       section: "week",
@@ -44,9 +40,7 @@ export const FoodChartPie = () => {
     }
   );
 
-	// --------------------------------------------------------------------------------------------
-	// 2-2. useState
-	// --------------------------------------------------------------------------------------------
+	// 2-2. useState -------------------------------------------------------------------------------
   const [DATE, _setDATE] = useState({
     dateType: "",
     dateStart: getDayFmt(),
@@ -59,9 +53,7 @@ export const FoodChartPie = () => {
     yearEndFmt: getYearEndFmt(),
   });
 
-	// --------------------------------------------------------------------------------------------
-	// 2-2. useState
-	// --------------------------------------------------------------------------------------------
+	// 2-2. useState -------------------------------------------------------------------------------
   const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState<[FoodPieType]>([FoodPie]);
   const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState<[FoodPieType]>([FoodPie]);
   const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState<[FoodPieType]>([FoodPie]);
@@ -69,9 +61,7 @@ export const FoodChartPie = () => {
   const [OBJECT_KCAL_YEAR, setOBJECT_KCAL_YEAR] = useState<[FoodPieType]>([FoodPie]);
   const [OBJECT_NUT_YEAR, setOBJECT_NUT_YEAR] = useState<[FoodPieType]>([FoodPie]);
 
-	// --------------------------------------------------------------------------------------------
-	// 2-3. useEffect
-	// --------------------------------------------------------------------------------------------
+	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     try {
@@ -357,9 +347,7 @@ export const FoodChartPie = () => {
     );
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 10. return
-	// --------------------------------------------------------------------------------------------
+	// 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {chartNode()}

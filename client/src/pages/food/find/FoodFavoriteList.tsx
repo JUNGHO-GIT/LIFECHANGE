@@ -14,9 +14,7 @@ import { Checkbox,  Accordion, AccordionSummary, AccordionDetails } from "@impor
 // -------------------------------------------------------------------------------------------------
 export const FoodFavoriteList = () => {
 
-	// --------------------------------------------------------------------------------------------
-	// 1. common
-	// --------------------------------------------------------------------------------------------
+	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, sessionId } = useCommonValue();
   const { location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
   const { sessionFoodSection } = useCommonValue();
@@ -25,9 +23,7 @@ export const FoodFavoriteList = () => {
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-	// --------------------------------------------------------------------------------------------
-	// 2-1. useStorageLocal
-	// --------------------------------------------------------------------------------------------
+	// 2-1. useStorageLocal -----------------------------------------------------------------------
   const [PAGING, setPAGING] = useStorageLocal(
     "paging", PATH, "", {
       sort: "asc",
@@ -41,9 +37,7 @@ export const FoodFavoriteList = () => {
     }]
   );
 
-	// --------------------------------------------------------------------------------------------
-	// 2-2. useState
-	// --------------------------------------------------------------------------------------------
+	// 2-2. useState -------------------------------------------------------------------------------
   const [OBJECT, setOBJECT] = useState<[FoodFindType]>([FoodFind]);
   const [checkedQueries, setCheckedQueries] = useState<{ [key: string]: boolean[] }>({});
   const [SEND, setSEND] = useState({
@@ -479,9 +473,7 @@ export const FoodFavoriteList = () => {
     />
   );
 
-	// --------------------------------------------------------------------------------------------
-	// 10. return
-	// --------------------------------------------------------------------------------------------
+	// 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {favoriteNode()}

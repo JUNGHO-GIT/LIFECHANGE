@@ -1,4 +1,4 @@
-// gcloud.cjs
+// _gcloud_deploy.cjs
 
 const { execSync } = require('child_process');
 const os = require('os');

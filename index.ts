@@ -4,7 +4,7 @@ import qs from "qs";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import express, {Request, Response} from "express";
+import express, { type Request, type Response } from "express";
 
 import {router as adminRouter} from "@routers/admin/adminRouter";
 import {router as calendarRouter} from "@routers/calendar/calendarRouter";
@@ -161,9 +161,12 @@ app.use(`${preFix}/user/sync`, userSyncRouter);
 app.use(`${preFix}/user`, userRouter);
 app.use(`${preFix}/auth/google`, googleRouter);
 
-// 에러 처리 미들웨어 ------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------
+// 0. 에러처리 미들웨어
+// --------------------------------------------------------------------------------------------
 app.use((err: Error, req: Request, res: Response, next: Function) => {
 	console.error(err.stack);
+	// @ts-ignore
 	res.status(500).send({
 		status: 500,
 		message: err.message,

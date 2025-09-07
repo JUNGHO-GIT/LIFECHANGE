@@ -13,9 +13,7 @@ import { Img, Bg, Paper, Grid, Br } from "@importComponents";
 // -------------------------------------------------------------------------------------------------
 export const MoneyGoalDetail = () => {
 
-	// --------------------------------------------------------------------------------------------
-	// 1. common
-	// --------------------------------------------------------------------------------------------
+	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, navigate, sessionId, toToday, toList, localCurrency } = useCommonValue();
   const { location_from, location_dateType } = useCommonValue();
   const { location_dateStart, location_dateEnd } = useCommonValue();
@@ -25,9 +23,7 @@ export const MoneyGoalDetail = () => {
   const { setLOADING } = useStoreLoading();
   const { ERRORS, REFS, validate } = useValidateMoney();
 
-	// --------------------------------------------------------------------------------------------
-	// 2-2. useState
-	// --------------------------------------------------------------------------------------------
+	// 2-2. useState -------------------------------------------------------------------------------
   const [LOCKED, setLOCKED] = useState<string>("unlocked");
   const [OBJECT, setOBJECT] = useState<MoneyGoalType>(MoneyGoal);
   const [EXIST, setEXIST] = useState({
@@ -59,9 +55,7 @@ export const MoneyGoalDetail = () => {
     dateEnd: location_dateEnd || getMonthEndFmt(),
   });
 
-	// --------------------------------------------------------------------------------------------
-	// 2-3. useEffect
-	// --------------------------------------------------------------------------------------------
+	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (EXIST?.[DATE.dateType as keyof typeof EXIST]?.length > 0) {
 
@@ -88,9 +82,7 @@ export const MoneyGoalDetail = () => {
     }
   }, [EXIST, DATE.dateEnd, OBJECT.money_goal_dateEnd]);
 
-	// --------------------------------------------------------------------------------------------
-	// 2-3. useEffect
-	// --------------------------------------------------------------------------------------------
+	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     axios.get(`${URL_OBJECT}/goal/exist`, {
       params: {
@@ -116,9 +108,7 @@ export const MoneyGoalDetail = () => {
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
-	// --------------------------------------------------------------------------------------------
-	// 2-3. useEffect
-	// --------------------------------------------------------------------------------------------
+	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
     if (LOCKED === "locked") {
@@ -472,9 +462,7 @@ export const MoneyGoalDetail = () => {
     />
   );
 
-	// --------------------------------------------------------------------------------------------
-	// 10. return
-	// --------------------------------------------------------------------------------------------
+	// 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {detailNode()}

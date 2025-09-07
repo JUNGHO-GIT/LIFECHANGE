@@ -35,9 +35,7 @@ export const PickerDay = (
 	{DATE, setDATE, EXIST}: PickerDayProps
 ) => {
 
-	// --------------------------------------------------------------------------------------------
-	// 1. common
-	// --------------------------------------------------------------------------------------------
+	// 1. common ----------------------------------------------------------------------------------
 	const {PATH, localLang, localTimeZone} = useCommonValue();
 	const {isTodayList, isTodayGoalList, isGoalList, isGoalDetail} = useCommonValue();
 	const {isRealList, isRealDetail, isCalendarDetail} = useCommonValue();
@@ -56,17 +54,13 @@ export const PickerDay = (
 	const {getNextYearStartFmt, getNextYearEndFmt} = useCommonDate();
 	const {translate} = useStoreLanguage();
 
-	// --------------------------------------------------------------------------------------------
-	// 2-1. useState
-	// --------------------------------------------------------------------------------------------
+	// 2-2. useState ---------------------------------------------------------------------------------
 	const [dateStrInSave, setDateStrInSave] = useState<string>("");
 	const [dateStrInList, setDateStrInList] = useState<string>("");
 	const [dateClassInSave, setDateClassInSave] = useState<string>("");
 	const [dateClassInList, setDateClassInList] = useState<string>("");
 
-	// --------------------------------------------------------------------------------------------
-	// 2-1. useStorageLocal
-	// --------------------------------------------------------------------------------------------
+	// 2-1. useStorageLocal -----------------------------------------------------------------------
 	const [dateTypeInSave, setDateTypeInSave] = useState<string>("");
 	const [dateTypeInList, setDateTypeInList] = useStorageLocal(
 		"type", "list", PATH, (
@@ -1519,9 +1513,7 @@ export const PickerDay = (
 		);
 	};
 
-	// --------------------------------------------------------------------------------------------
-	// 10. return
-	// --------------------------------------------------------------------------------------------
+	// 10. return ----------------------------------------------------------------------------------
 	return (
 		<>
 			{pickerNode()}

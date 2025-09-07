@@ -6,18 +6,14 @@ import { getSession, getLocal, setSession } from "@importScripts";
 // -------------------------------------------------------------------------------------------------
 export const sync = async (extra?: string) => {
 
-	// --------------------------------------------------------------------------------------------
-	// 1. common
-	// --------------------------------------------------------------------------------------------
+	// 1. common ----------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_SERVER_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL + SUBFIX;
   const sessionId = getSession("setting", "id", "sessionId");
   const localTimeZone = getLocal("setting", "locale", "timeZone");
 
-	// --------------------------------------------------------------------------------------------
-	// 2-1. useState
-	// --------------------------------------------------------------------------------------------
+	// 2-2. useState ---------------------------------------------------------------------------------
   const DATE = {
     dateType: "day",
     dateStart: moment().tz(localTimeZone).format("YYYY-MM-DD"),

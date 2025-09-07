@@ -15,9 +15,7 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } fro
 // -------------------------------------------------------------------------------------------------
 export const FoodChartAvg = () => {
 
-	// --------------------------------------------------------------------------------------------
-	// 1. common
-	// --------------------------------------------------------------------------------------------
+	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, sessionId, chartColors, foodChartArray } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
@@ -25,9 +23,7 @@ export const FoodChartAvg = () => {
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-	// --------------------------------------------------------------------------------------------
-	// 2-1. useStorageLocal
-	// --------------------------------------------------------------------------------------------
+	// 2-1. useStorageLocal -----------------------------------------------------------------------
   const [TYPE, setTYPE] = useStorageLocal(
     "type", "avg", PATH, {
       section: "week",
@@ -35,9 +31,7 @@ export const FoodChartAvg = () => {
     }
   );
 
-	// --------------------------------------------------------------------------------------------
-	// 2-2. useState
-	// --------------------------------------------------------------------------------------------
+	// 2-2. useState -------------------------------------------------------------------------------
   const [DATE, _setDATE] = useState({
     dateType: "",
     dateStart: getDayFmt(),
@@ -50,17 +44,13 @@ export const FoodChartAvg = () => {
     yearEndFmt: getYearEndFmt(),
   });
 
-	// --------------------------------------------------------------------------------------------
-	// 2-2. useState
-	// --------------------------------------------------------------------------------------------
+	// 2-2. useState -------------------------------------------------------------------------------
   const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState<[FoodAvgType]>([FoodAvgKcal]);
   const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState<[FoodAvgType]>([FoodAvgNut]);
   const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState<[FoodAvgType]>([FoodAvgKcal]);
   const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState<[FoodAvgType]>([FoodAvgNut]);
 
-	// --------------------------------------------------------------------------------------------
-	// 2-3. useEffect
-	// --------------------------------------------------------------------------------------------
+	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     try {
@@ -332,9 +322,7 @@ export const FoodChartAvg = () => {
     );
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 10. return
-	// --------------------------------------------------------------------------------------------
+	// 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {chartNode()}
