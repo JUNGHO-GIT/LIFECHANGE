@@ -573,7 +573,7 @@ export const UserCategory = () => {
 		);
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius-2 border-1 shadow-2 h-min-90vh"}>
+      <Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-90vh"}>
         {detailSection()}
       </Paper>
     );

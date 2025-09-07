@@ -169,10 +169,10 @@ export const TodayGoalList = () => {
     const exerciseSection = () => (
 			<Grid container={true} spacing={0}>
 				{OBJECT_EXERCISE?.map((item, i) => (
-				<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-1 h-min-50px mb-10px"} key={`list-${i}`}>
+				<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-0 mb-10px"} key={`list-${i}`}>
 						<Grid size={12} className={"p-2px"}>
 							<Accordion
-								className={"border-0 shadow-0 radius-0"}
+								className={"border-0 shadow-0 radius-2"}
 								expanded={isExpanded?.exercise[i]?.expanded}
 							>
 								<AccordionSummary
@@ -538,10 +538,10 @@ export const TodayGoalList = () => {
     const foodSection = () => (
 			<Grid container={true} spacing={0}>
 				{OBJECT_FOOD?.map((item, i) => (
-				<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-1 h-min-50px mb-10px"} key={`list-${i}`}>
+				<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-0 mb-10px"} key={`list-${i}`}>
 						<Grid size={12} className={"p-2px"}>
 							<Accordion
-								className={"border-0 shadow-0 radius-0"}
+								className={"border-0 shadow-0 radius-2"}
 								expanded={isExpanded?.food[i]?.expanded}
 							>
 								<AccordionSummary
@@ -907,10 +907,10 @@ export const TodayGoalList = () => {
     const moneySection = () => (
 			<Grid container={true} spacing={0}>
 				{OBJECT_MONEY?.map((item, i) => (
-				<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-1 h-min-50px mb-10px"} key={`list-${i}`}>
+				<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-0 mb-10px"} key={`list-${i}`}>
 						<Grid size={12} className={"p-2px"}>
 							<Accordion
-								className={"border-0 shadow-0 radius-0"}
+								className={"border-0 shadow-0 radius-2"}
 								expanded={isExpanded?.money[i]?.expanded}
 							>
 								<AccordionSummary
@@ -1130,10 +1130,10 @@ export const TodayGoalList = () => {
     const sleepSection = () => (
 			<Grid container={true} spacing={0}>
 				{OBJECT_SLEEP?.map((item, i) => (
-				<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-1 h-min-50px mb-10px"} key={`list-${i}`}>
+				<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-0 mb-10px"} key={`list-${i}`}>
 						<Grid size={12} className={"p-2px"}>
 							<Accordion
-								className={"border-0 shadow-0 radius-0"}
+								className={"border-0 shadow-0 radius-2"}
 								expanded={isExpanded?.sleep[i]?.expanded}
 							>
 								<AccordionSummary
@@ -1424,7 +1424,7 @@ export const TodayGoalList = () => {
 		);
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius-2 border-1 shadow-2 h-min-75vh"}>
+      <Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-75vh"}>
 				{COUNT.exercise === 0 ? <Empty DATE={DATE} extra={"exercise"} /> : exerciseSection()}
 				{COUNT.food === 0 ? <Empty DATE={DATE} extra={"food"} /> : foodSection()}
         {COUNT.money === 0 ? <Empty DATE={DATE} extra={"money"} /> : moneySection()}

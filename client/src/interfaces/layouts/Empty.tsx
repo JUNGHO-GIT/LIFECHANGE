@@ -29,10 +29,10 @@ export const Empty = (
   const emptyNode = () => {
     // 1. isFindSection
     const isFindSection = () => (
-			<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-1 h-min-50px mb-10px"}>
+			<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-0 mb-10px"}>
 				<Grid size={12} className={"p-2px"}>
 					<Accordion
-						className={"border-0 shadow-0 radius-0"}
+						className={"border-0 shadow-0 radius-2"}
 						expanded={false}
 					>
 						<AccordionSummary>
@@ -55,10 +55,10 @@ export const Empty = (
     );
     // 2. isGoalSection
     const isGoalSection = () => (
-			<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-1 h-min-50px mb-10px"}>
+			<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-0 mb-10px"}>
 				<Grid size={12} className={"p-2px"}>
 					<Accordion
-						className={"border-0 shadow-0 radius-0"}
+						className={"border-0 shadow-0 radius-2"}
 						expanded={false}
 					>
 						<AccordionSummary
@@ -99,10 +99,10 @@ export const Empty = (
     );
     // 2. isRealSection
     const isRealSection = () => (
-			<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-1 h-min-50px mb-10px"}>
+			<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-0 mb-10px"}>
 				<Grid size={12} className={"p-2px"}>
 					<Accordion
-						className={"border-0 shadow-0 radius-0"}
+						className={"border-0 shadow-0 radius-2"}
 						expanded={false}
 					>
 						<AccordionSummary

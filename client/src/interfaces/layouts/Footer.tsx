@@ -29,7 +29,7 @@ export const Footer = (
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
 
-    const commonStr = "layout-wrapper p-sticky h-8vh radius-2 border-1 shadow-2";
+    const commonStr = "layout-wrapper p-sticky h-8vh radius-2 border-1 shadow-1";
 
     if (PATH.includes("/calendar/list")) {
       setTypeName("");
