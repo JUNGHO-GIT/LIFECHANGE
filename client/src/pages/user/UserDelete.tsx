@@ -346,7 +346,7 @@ export const UserDelete = () => {
         <Grid size={12}>
           <Btn
             color={"error"}
-            className={"w-100p fs-0-75rem"}
+            className={"w-100p fs-0-8rem"}
             onClick={() => {
               flowSave();
             }}

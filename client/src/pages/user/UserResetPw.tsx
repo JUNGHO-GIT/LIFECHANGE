@@ -375,7 +375,7 @@ export const UserResetPw = () => {
           <Grid size={12} className={"d-col-center"}>
             <Btn
               color={"primary"}
-              className={"w-100p fs-0-75rem"}
+              className={"w-100p fs-0-8rem"}
               onClick={() => {
                 flowSave();
               }}
@@ -398,13 +398,13 @@ export const UserResetPw = () => {
             >
               <Div className={"d-row-center"}>
                 <Img
-                  max={12}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
                   src={"user1.webp"}
                 />
-                <Div className={"fs-0-75rem black ml-10px"}>
+                <Div className={"fs-0-8rem black ml-10px"}>
                   {translate("googleLogin")}
                 </Div>
               </Div>
@@ -420,10 +420,10 @@ export const UserResetPw = () => {
         {/** row 1 **/}
         <Grid container={true} spacing={1}>
           <Grid size={12} className={"d-row-center"}>
-            <Div className={"fs-0-75rem black mr-10px"}>
+            <Div className={"fs-0-8rem black mr-10px"}>
               {translate("alreadyId")}
             </Div>
-            <Div className={"fs-0-75rem blue pointer"} onClick={() => {
+            <Div className={"fs-0-8rem blue pointer"} onClick={() => {
               navigate("/user/login");
             }}>
               {translate("login")}
@@ -435,10 +435,10 @@ export const UserResetPw = () => {
         {/** row 2 **/}
         <Grid container={true} spacing={1}>
           <Grid size={12} className={"d-row-center"}>
-            <Div className={"fs-0-75rem black mr-10px"}>
+            <Div className={"fs-0-8rem black mr-10px"}>
               {translate("notId")}
             </Div>
-            <Div className={"fs-0-75rem blue pointer"} onClick={() => {
+            <Div className={"fs-0-8rem blue pointer"} onClick={() => {
               navigate("/user/signup");
             }}>
               {translate("signup")}

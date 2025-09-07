@@ -408,9 +408,7 @@ export const FoodDetail = () => {
     });
   };
 
-	// --------------------------------------------------------------------------------------------
-  // 4-3. handle
-	// --------------------------------------------------------------------------------------------
+  // 4-3. handle --------------------------------------------------------------------------------
   const handleDelete = (index: number) => {
 
     // 스토리지 데이터 가져오기
@@ -521,7 +519,7 @@ export const FoodDetail = () => {
               value={insertComma(OBJECT?.food_total_kcal || "0")}
               startadornment={
                 <Img
-                  max={12}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -541,7 +539,7 @@ export const FoodDetail = () => {
               value={insertComma(OBJECT?.food_total_carb || "0")}
               startadornment={
                 <Img
-                  max={12}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -566,7 +564,7 @@ export const FoodDetail = () => {
               value={insertComma(OBJECT?.food_total_protein || "0")}
               startadornment={
                 <Img
-                  max={12}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -586,7 +584,7 @@ export const FoodDetail = () => {
               value={insertComma(OBJECT?.food_total_fat || "0")}
               startadornment={
                 <Img
-                  max={12}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -669,7 +667,7 @@ export const FoodDetail = () => {
 										<MenuItem
 											key={idx}
 											value={part.food_part}
-											className={"fs-0-75rem"}
+											className={"fs-0-8rem"}
 										>
 											{translate(part.food_part)}
 										</MenuItem>
@@ -830,7 +828,7 @@ export const FoodDetail = () => {
 									error={ERRORS?.[i]?.food_kcal}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -873,7 +871,7 @@ export const FoodDetail = () => {
 									error={ERRORS?.[i]?.food_carb}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -921,7 +919,7 @@ export const FoodDetail = () => {
 									error={ERRORS?.[i]?.food_protein}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -964,7 +962,7 @@ export const FoodDetail = () => {
 									error={ERRORS?.[i]?.food_fat}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}

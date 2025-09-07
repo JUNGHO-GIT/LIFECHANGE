@@ -254,9 +254,7 @@ export const FoodGoalDetail = () => {
     });
   };
 
-	// --------------------------------------------------------------------------------------------
-  // 4-3. handle
-	// --------------------------------------------------------------------------------------------
+  // 4-3. handle --------------------------------------------------------------------------------
   const handleDelete = (_index: number) => {
     setOBJECT((prev) => ({
       ...prev,
@@ -337,7 +335,7 @@ export const FoodGoalDetail = () => {
 									}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -386,7 +384,7 @@ export const FoodGoalDetail = () => {
 									}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -435,7 +433,7 @@ export const FoodGoalDetail = () => {
 									}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -484,7 +482,7 @@ export const FoodGoalDetail = () => {
 									}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}

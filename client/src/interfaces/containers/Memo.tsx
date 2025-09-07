@@ -67,7 +67,7 @@ export const Memo = (
           locked={LOCKED}
           startadornment={
             <Img
-              max={12}
+              max={14}
               hover={true}
               shadow={false}
               radius={false}

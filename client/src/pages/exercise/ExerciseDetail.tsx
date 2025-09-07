@@ -327,9 +327,7 @@ export const ExerciseDetail = () => {
     });
   };
 
-	// --------------------------------------------------------------------------------------------
-  // 4-3. handle
-	// --------------------------------------------------------------------------------------------
+  // 4-3. handle --------------------------------------------------------------------------------
   const handleDelete = (index: number) => {
     setOBJECT((prev) => ({
       ...prev,
@@ -379,7 +377,7 @@ export const ExerciseDetail = () => {
               value={insertComma(OBJECT?.exercise_total_volume || "0")}
               startadornment={
                 <Img
-                  max={12}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -404,7 +402,7 @@ export const ExerciseDetail = () => {
               value={OBJECT?.exercise_total_cardio}
               startadornment={
                 <Img
-                  max={12}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -427,7 +425,7 @@ export const ExerciseDetail = () => {
               value={insertComma(OBJECT?.exercise_total_scale || "0")}
               startadornment={
                 <Img
-                  max={12}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -511,7 +509,7 @@ export const ExerciseDetail = () => {
 										<MenuItem
 											key={idx}
 											value={part.exercise_part}
-											className={"fs-0-75rem"}
+											className={"fs-0-8rem"}
 										>
 											{translate(part.exercise_part)}
 										</MenuItem>
@@ -542,7 +540,7 @@ export const ExerciseDetail = () => {
 										<MenuItem
 											key={idx}
 											value={title}
-											className={"fs-0-75rem"}
+											className={"fs-0-8rem"}
 										>
 											{translate(title)}
 										</MenuItem>
@@ -563,7 +561,7 @@ export const ExerciseDetail = () => {
 									error={ERRORS?.[i]?.exercise_set}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -606,7 +604,7 @@ export const ExerciseDetail = () => {
 									error={ERRORS?.[i]?.exercise_rep}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -654,7 +652,7 @@ export const ExerciseDetail = () => {
 									error={ERRORS?.[i]?.exercise_weight}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}

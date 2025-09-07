@@ -257,9 +257,7 @@ export const ExerciseGoalDetail = () => {
     });
   };
 
-	// --------------------------------------------------------------------------------------------
-  // 4-3. handle
-	// --------------------------------------------------------------------------------------------
+  // 4-3. handle --------------------------------------------------------------------------------
   const handleDelete = (_index: number) => {
     setOBJECT((prev) => ({
       ...prev,
@@ -340,7 +338,7 @@ export const ExerciseGoalDetail = () => {
 									}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -389,7 +387,7 @@ export const ExerciseGoalDetail = () => {
 									}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -450,7 +448,7 @@ export const ExerciseGoalDetail = () => {
 									error={ERRORS?.[i]?.exercise_goal_scale}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}

@@ -320,9 +320,7 @@ export const MoneyDetail = () => {
     });
   };
 
-	// --------------------------------------------------------------------------------------------
-  // 4-3. handle
-	// --------------------------------------------------------------------------------------------
+  // 4-3. handle --------------------------------------------------------------------------------
   const handleDelete = (index: number) => {
     setOBJECT((prev) => ({
       ...prev,
@@ -372,7 +370,7 @@ export const MoneyDetail = () => {
               value={insertComma(OBJECT?.money_total_income || "0")}
               startadornment={
                 <Img
-                  max={12}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -397,7 +395,7 @@ export const MoneyDetail = () => {
               value={insertComma(OBJECT?.money_total_expense || "0")}
               startadornment={
                 <Img
-                  max={12}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -463,7 +461,7 @@ export const MoneyDetail = () => {
 										<MenuItem
 											key={idx}
 											value={part.money_part}
-											className={"fs-0-75rem"}
+											className={"fs-0-8rem"}
 										>
 											{translate(part.money_part)}
 										</MenuItem>
@@ -494,7 +492,7 @@ export const MoneyDetail = () => {
 										<MenuItem
 											key={idx}
 											value={title}
-											className={"fs-0-75rem"}
+											className={"fs-0-8rem"}
 										>
 											{translate(title)}
 										</MenuItem>
@@ -515,7 +513,7 @@ export const MoneyDetail = () => {
 									error={ERRORS?.[i]?.money_amount}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}

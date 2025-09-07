@@ -204,9 +204,7 @@ export const UserCategory = () => {
     }
   };
 
-	// --------------------------------------------------------------------------------------------
-  // 4-3. handle
-	// --------------------------------------------------------------------------------------------
+  // 4-3. handle --------------------------------------------------------------------------------
   const handleRemove = (type: string, index: number) => {
     if (type === "part") {
       if (OBJECT?.[dataType]?.length <= 1) {
@@ -521,7 +519,7 @@ export const UserCategory = () => {
 								<Table>
 									<TableHead className={"table-thead"}>
 										<TableRow className={"table-thead-tr"}>
-											<TableCell className={"fs-0-75rem"}>
+											<TableCell className={"fs-0-8rem"}>
 												{translate("dataCategory1")}
 											</TableCell>
 										</TableRow>
@@ -531,10 +529,10 @@ export const UserCategory = () => {
 											<TableRow className={"table-tbody-tr border-top-1"} key={idx}>
 												<TableCell className={`${dataType === item ? "bg-light" : ""}`}>
 													<Div className={"d-center"}>
-														<Div className={"fs-0-75rem ml-0px"}>
+														<Div className={"fs-0-8rem ml-0px"}>
 															{translate(item)}
 														</Div>
-														<Div className={"fs-0-75rem ml-auto"}>
+														<Div className={"fs-0-8rem ml-auto"}>
 														<PopUp
 															type={"innerCenter"}
 															position={"center"}

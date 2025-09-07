@@ -153,7 +153,7 @@ export const UserDetail = () => {
 									error={ERRORS?.[i]?.user_initScale}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -193,7 +193,7 @@ export const UserDetail = () => {
 									value={insertComma(item.user_curScale || "0")}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -219,7 +219,7 @@ export const UserDetail = () => {
 									error={ERRORS?.[i]?.user_initAvgKcalIntake}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -259,7 +259,7 @@ export const UserDetail = () => {
 									value={insertComma(item.user_curAvgKcalIntake || "0")}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -285,7 +285,7 @@ export const UserDetail = () => {
 									error={ERRORS?.[i]?.user_initProperty}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -331,7 +331,7 @@ export const UserDetail = () => {
 									}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}

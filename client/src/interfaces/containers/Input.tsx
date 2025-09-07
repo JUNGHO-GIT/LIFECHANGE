@@ -79,7 +79,7 @@ export const Input = (props: any) => (
           props?.inputclass?.includes("fs-") ? (
             `text-left ${props?.inputclass || ""}`
           ) : (
-            `fs-0-75rem text-left ${props?.inputclass || ""}`
+            `fs-0-9rem text-left ${props?.inputclass || ""}`
           )
         ),
         startAdornment: (

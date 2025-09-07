@@ -217,16 +217,16 @@ export const TodayGoalList = () => {
 											/>
 										</Grid>
 										<Grid size={10} className={"d-row-left"}>
-											<Div className={"fs-0-75rem fw-600 black"}>
+											<Div className={"fs-0-8rem fw-600 black"}>
 												{item.exercise_goal_dateStart?.substring(5, 10)}
 											</Div>
 											<Div className={"fs-0-9rem fw-500 dark ml-5px"}>
 												{translate(getDayNotFmt(item.exercise_goal_dateStart).format("ddd"))}
 											</Div>
-											<Div className={"fs-0-75rem fw-500 dark ml-5px mr-5px"}>
+											<Div className={"fs-0-8rem fw-500 dark ml-5px mr-5px"}>
 												-
 											</Div>
-											<Div className={"fs-0-75rem fw-600 black"}>
+											<Div className={"fs-0-8rem fw-600 black"}>
 												{item.exercise_goal_dateEnd?.substring(5, 10)}
 											</Div>
 											<Div className={"fs-0-9rem fw-500 dark ml-5px"}>
@@ -241,7 +241,7 @@ export const TodayGoalList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-row-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -249,7 +249,7 @@ export const TodayGoalList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("exerciseCount")}
 												</Div>
 											</Grid>
@@ -262,7 +262,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.exercise_goal_count_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_goal_count_color}`}>
 															{insertComma(item.exercise_goal_count || "0")}
 														</Div>
 													</Grid>
@@ -278,7 +278,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.exercise_total_count_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_total_count_color}`}>
 															{insertComma(item.exercise_total_count || "0")}
 														</Div>
 													</Grid>
@@ -294,7 +294,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.exercise_diff_count_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_diff_count_color}`}>
 															{insertComma(item.exercise_diff_count || "0")}
 														</Div>
 													</Grid>
@@ -314,7 +314,7 @@ export const TodayGoalList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-row-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -322,7 +322,7 @@ export const TodayGoalList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("volume")}
 												</Div>
 											</Grid>
@@ -335,7 +335,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.exercise_goal_volume_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_goal_volume_color}`}>
 															{insertComma(item.exercise_goal_volume || "0")}
 														</Div>
 													</Grid>
@@ -351,7 +351,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.exercise_total_volume_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_total_volume_color}`}>
 															{insertComma(item.exercise_total_volume || "0")}
 														</Div>
 													</Grid>
@@ -367,7 +367,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.exercise_diff_volume_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_diff_volume_color}`}>
 															{insertComma(item.exercise_diff_volume || "0")}
 														</Div>
 													</Grid>
@@ -387,7 +387,7 @@ export const TodayGoalList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -395,7 +395,7 @@ export const TodayGoalList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("cardio")}
 												</Div>
 											</Grid>
@@ -408,7 +408,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.exercise_goal_cardio_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_goal_cardio_color}`}>
 															{item.exercise_goal_cardio}
 														</Div>
 													</Grid>
@@ -424,7 +424,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.exercise_total_cardio_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_total_cardio_color}`}>
 															{item.exercise_total_cardio}
 														</Div>
 													</Grid>
@@ -440,7 +440,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.exercise_diff_cardio_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_diff_cardio_color}`}>
 															{item.exercise_diff_cardio}
 														</Div>
 													</Grid>
@@ -460,7 +460,7 @@ export const TodayGoalList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -468,7 +468,7 @@ export const TodayGoalList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("scale")}
 												</Div>
 											</Grid>
@@ -481,7 +481,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.exercise_goal_scale_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_goal_scale_color}`}>
 															{insertComma(item.exercise_goal_scale || "0")}
 														</Div>
 													</Grid>
@@ -497,7 +497,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.exercise_total_scale_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_total_scale_color}`}>
 															{insertComma(item.exercise_total_scale || "0")}
 														</Div>
 													</Grid>
@@ -513,7 +513,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.exercise_diff_scale_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_diff_scale_color}`}>
 															{insertComma(item.exercise_diff_scale || "0")}
 														</Div>
 													</Grid>
@@ -586,16 +586,16 @@ export const TodayGoalList = () => {
 											/>
 										</Grid>
 										<Grid size={10} className={"d-row-left"}>
-											<Div className={"fs-0-75rem fw-600 black"}>
+											<Div className={"fs-0-8rem fw-600 black"}>
 												{item.food_goal_dateStart?.substring(5, 10)}
 											</Div>
 											<Div className={"fs-0-9rem fw-500 dark ml-5px"}>
 												{translate(getDayNotFmt(item.food_goal_dateStart).format("ddd"))}
 											</Div>
-											<Div className={"fs-0-75rem fw-500 dark ml-5px mr-5px"}>
+											<Div className={"fs-0-8rem fw-500 dark ml-5px mr-5px"}>
 												-
 											</Div>
-											<Div className={"fs-0-75rem fw-600 black"}>
+											<Div className={"fs-0-8rem fw-600 black"}>
 												{item.food_goal_dateEnd?.substring(5, 10)}
 											</Div>
 											<Div className={"fs-0-9rem fw-500 dark ml-5px"}>
@@ -610,7 +610,7 @@ export const TodayGoalList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-row-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -618,7 +618,7 @@ export const TodayGoalList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("kcal")}
 												</Div>
 											</Grid>
@@ -631,7 +631,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.food_goal_kcal_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.food_goal_kcal_color}`}>
 															{insertComma(item.food_goal_kcal || "0")}
 														</Div>
 													</Grid>
@@ -647,7 +647,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.food_total_kcal_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.food_total_kcal_color}`}>
 															{insertComma(item.food_total_kcal || "0")}
 														</Div>
 													</Grid>
@@ -663,7 +663,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.food_diff_kcal_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.food_diff_kcal_color}`}>
 															{insertComma(item.food_diff_kcal || "0")}
 														</Div>
 													</Grid>
@@ -683,7 +683,7 @@ export const TodayGoalList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-row-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -691,7 +691,7 @@ export const TodayGoalList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("carb")}
 												</Div>
 											</Grid>
@@ -704,7 +704,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.food_goal_carb_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.food_goal_carb_color}`}>
 															{insertComma(item.food_goal_carb || "0")}
 														</Div>
 													</Grid>
@@ -720,7 +720,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.food_total_carb_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.food_total_carb_color}`}>
 															{insertComma(item.food_total_carb || "0")}
 														</Div>
 													</Grid>
@@ -736,7 +736,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.food_diff_carb_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.food_diff_carb_color}`}>
 															{insertComma(item.food_diff_carb || "0")}
 														</Div>
 													</Grid>
@@ -756,7 +756,7 @@ export const TodayGoalList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -764,7 +764,7 @@ export const TodayGoalList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("protein")}
 												</Div>
 											</Grid>
@@ -777,7 +777,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.food_goal_protein_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.food_goal_protein_color}`}>
 															{insertComma(item.food_goal_protein || "0")}
 														</Div>
 													</Grid>
@@ -793,7 +793,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.food_total_protein_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.food_total_protein_color}`}>
 															{insertComma(item.food_total_protein || "0")}
 														</Div>
 													</Grid>
@@ -809,7 +809,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.food_diff_protein_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.food_diff_protein_color}`}>
 															{insertComma(item.food_diff_protein || "0")}
 														</Div>
 													</Grid>
@@ -829,7 +829,7 @@ export const TodayGoalList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -837,7 +837,7 @@ export const TodayGoalList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("fat")}
 												</Div>
 											</Grid>
@@ -850,7 +850,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.food_goal_fat_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.food_goal_fat_color}`}>
 															{insertComma(item.food_goal_fat || "0")}
 														</Div>
 													</Grid>
@@ -866,7 +866,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.food_total_fat_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.food_total_fat_color}`}>
 															{insertComma(item.food_total_fat || "0")}
 														</Div>
 													</Grid>
@@ -882,7 +882,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.food_diff_fat_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.food_diff_fat_color}`}>
 															{insertComma(item.food_diff_fat || "0")}
 														</Div>
 													</Grid>
@@ -955,16 +955,16 @@ export const TodayGoalList = () => {
 											/>
 										</Grid>
 										<Grid size={10} className={"d-row-left"}>
-											<Div className={"fs-0-75rem fw-600 black"}>
+											<Div className={"fs-0-8rem fw-600 black"}>
 												{item.money_goal_dateStart?.substring(5, 10)}
 											</Div>
 											<Div className={"fs-0-9rem fw-500 dark ml-5px"}>
 												{translate(getDayNotFmt(item.money_goal_dateStart).format("ddd"))}
 											</Div>
-											<Div className={"fs-0-75rem fw-500 dark ml-5px mr-5px"}>
+											<Div className={"fs-0-8rem fw-500 dark ml-5px mr-5px"}>
 												-
 											</Div>
-											<Div className={"fs-0-75rem fw-600 black"}>
+											<Div className={"fs-0-8rem fw-600 black"}>
 												{item.money_goal_dateEnd?.substring(5, 10)}
 											</Div>
 											<Div className={"fs-0-9rem fw-500 dark ml-5px"}>
@@ -979,7 +979,7 @@ export const TodayGoalList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-row-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -987,7 +987,7 @@ export const TodayGoalList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("income")}
 												</Div>
 											</Grid>
@@ -1000,7 +1000,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.money_goal_income_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.money_goal_income_color}`}>
 															{insertComma(item.money_goal_income || "0")}
 														</Div>
 													</Grid>
@@ -1016,7 +1016,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.money_total_income_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.money_total_income_color}`}>
 															{insertComma(item.money_total_income || "0")}
 														</Div>
 													</Grid>
@@ -1032,7 +1032,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.money_diff_income_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.money_diff_income_color}`}>
 															{insertComma(item.money_diff_income || "0")}
 														</Div>
 													</Grid>
@@ -1052,7 +1052,7 @@ export const TodayGoalList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-row-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -1060,7 +1060,7 @@ export const TodayGoalList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("expense")}
 												</Div>
 											</Grid>
@@ -1073,7 +1073,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.money_goal_expense_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.money_goal_expense_color}`}>
 															{insertComma(item.money_goal_expense || "0")}
 														</Div>
 													</Grid>
@@ -1089,7 +1089,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.money_total_expense_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.money_total_expense_color}`}>
 															{insertComma(item.money_total_expense || "0")}
 														</Div>
 													</Grid>
@@ -1105,7 +1105,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.money_diff_expense_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.money_diff_expense_color}`}>
 															{insertComma(item.money_diff_expense || "0")}
 														</Div>
 													</Grid>
@@ -1178,16 +1178,16 @@ export const TodayGoalList = () => {
 											/>
 										</Grid>
 										<Grid size={10} className={"d-row-left"}>
-											<Div className={"fs-0-75rem fw-600 black"}>
+											<Div className={"fs-0-8rem fw-600 black"}>
 												{item.sleep_goal_dateStart?.substring(5, 10)}
 											</Div>
 											<Div className={"fs-0-9rem fw-500 dark ml-5px"}>
 												{translate(getDayNotFmt(item.sleep_goal_dateStart).format("ddd"))}
 											</Div>
-											<Div className={"fs-0-75rem fw-500 dark ml-5px mr-5px"}>
+											<Div className={"fs-0-8rem fw-500 dark ml-5px mr-5px"}>
 												-
 											</Div>
-											<Div className={"fs-0-75rem fw-600 black"}>
+											<Div className={"fs-0-8rem fw-600 black"}>
 												{item.sleep_goal_dateEnd?.substring(5, 10)}
 											</Div>
 											<Div className={"fs-0-9rem fw-500 dark ml-5px"}>
@@ -1202,7 +1202,7 @@ export const TodayGoalList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-row-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -1210,7 +1210,7 @@ export const TodayGoalList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("bedTime")}
 												</Div>
 											</Grid>
@@ -1223,7 +1223,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.sleep_goal_bedTime_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.sleep_goal_bedTime_color}`}>
 															{item.sleep_goal_bedTime}
 														</Div>
 													</Grid>
@@ -1239,7 +1239,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.sleep_bedTime_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.sleep_bedTime_color}`}>
 															{item.sleep_bedTime}
 														</Div>
 													</Grid>
@@ -1255,7 +1255,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.sleep_diff_bedTime_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.sleep_diff_bedTime_color}`}>
 															{item.sleep_diff_bedTime}
 														</Div>
 													</Grid>
@@ -1275,7 +1275,7 @@ export const TodayGoalList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -1283,7 +1283,7 @@ export const TodayGoalList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("wakeTime")}
 												</Div>
 											</Grid>
@@ -1296,7 +1296,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.sleep_goal_wakeTime_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.sleep_goal_wakeTime_color}`}>
 															{item.sleep_goal_wakeTime}
 														</Div>
 													</Grid>
@@ -1312,7 +1312,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.sleep_wakeTime_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.sleep_wakeTime_color}`}>
 															{item.sleep_wakeTime}
 														</Div>
 													</Grid>
@@ -1328,7 +1328,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.sleep_diff_wakeTime_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.sleep_diff_wakeTime_color}`}>
 															{item.sleep_diff_wakeTime}
 														</Div>
 													</Grid>
@@ -1348,7 +1348,7 @@ export const TodayGoalList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -1356,7 +1356,7 @@ export const TodayGoalList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("sleepTime")}
 												</Div>
 											</Grid>
@@ -1369,7 +1369,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.sleep_goal_sleepTime_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.sleep_goal_sleepTime_color}`}>
 															{item.sleep_goal_sleepTime}
 														</Div>
 													</Grid>
@@ -1385,7 +1385,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.sleep_sleepTime_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.sleep_sleepTime_color}`}>
 															{item.sleep_sleepTime}
 														</Div>
 													</Grid>
@@ -1401,7 +1401,7 @@ export const TodayGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.sleep_diff_sleepTime_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.sleep_diff_sleepTime_color}`}>
 															{item.sleep_diff_sleepTime}
 														</Div>
 													</Grid>

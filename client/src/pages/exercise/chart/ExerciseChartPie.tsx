@@ -281,10 +281,10 @@ export const ExerciseChartPie = () => {
 					</Select>
 				</Grid>
 				<Grid size={6} className={"d-row-center"}>
-					<Div className={"fs-0-75rem fw-600"}>
+					<Div className={"fs-0-8rem fw-600"}>
 						{translate("chartPie")}
 					</Div>
-					<Div className={"fs-0-75rem fw-500 grey ml-10px"}>
+					<Div className={"fs-0-8rem fw-500 grey ml-10px"}>
 						{`[${translate(`exercise${TYPE.line.charAt(0).toUpperCase() + TYPE.line.slice(1)}`)}]`}
 					</Div>
 				</Grid>

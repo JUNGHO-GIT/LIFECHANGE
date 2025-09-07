@@ -217,7 +217,7 @@ export const TodayList = () => {
 											/>
 										</Grid>
 										<Grid size={10} className={"d-row-left"}>
-											<Div className={"fs-0-75rem fw-600 black mr-5px"}>
+											<Div className={"fs-0-9rem fw-600 black mr-5px"}>
 												{item.exercise_dateStart?.substring(5, 10)}
 											</Div>
 											<Div className={"fs-0-9rem fw-500 dark ml-5px"}>
@@ -232,7 +232,7 @@ export const TodayList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-row-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -240,14 +240,14 @@ export const TodayList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("volume")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.exercise_total_volume_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_total_volume_color}`}>
 															{insertComma(item.exercise_total_volume)}
 														</Div>
 													</Grid>
@@ -267,7 +267,7 @@ export const TodayList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -275,14 +275,14 @@ export const TodayList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("cardio")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.exercise_total_cardio_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_total_cardio_color}`}>
 															{item.exercise_total_cardio}
 														</Div>
 													</Grid>
@@ -302,7 +302,7 @@ export const TodayList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -310,14 +310,14 @@ export const TodayList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("scale")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.exercise_total_scale_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_total_scale_color}`}>
 															{insertComma(item.exercise_total_scale)}
 														</Div>
 													</Grid>
@@ -390,7 +390,7 @@ export const TodayList = () => {
 											/>
 										</Grid>
 										<Grid size={10} className={"d-row-left"}>
-											<Div className={"fs-0-75rem fw-600 black mr-5px"}>
+											<Div className={"fs-0-9rem fw-600 black mr-5px"}>
 												{item.food_dateStart?.substring(5, 10)}
 											</Div>
 											<Div className={"fs-0-9rem fw-500 dark ml-5px"}>
@@ -405,7 +405,7 @@ export const TodayList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-row-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -413,14 +413,14 @@ export const TodayList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("kcal")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.food_total_kcal_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.food_total_kcal_color}`}>
 															{insertComma(item.food_total_kcal || "0")}
 														</Div>
 													</Grid>
@@ -440,7 +440,7 @@ export const TodayList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -448,14 +448,14 @@ export const TodayList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("carb")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.food_total_carb_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.food_total_carb_color}`}>
 															{insertComma(item.food_total_carb || "0")}
 														</Div>
 													</Grid>
@@ -475,7 +475,7 @@ export const TodayList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -483,14 +483,14 @@ export const TodayList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("protein")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.food_total_protein_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.food_total_protein_color}`}>
 															{insertComma(item.food_total_protein || "0")}
 														</Div>
 													</Grid>
@@ -510,7 +510,7 @@ export const TodayList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -518,14 +518,14 @@ export const TodayList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("fat")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.food_total_fat_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.food_total_fat_color}`}>
 															{insertComma(item.food_total_fat || "0")}
 														</Div>
 													</Grid>
@@ -598,7 +598,7 @@ export const TodayList = () => {
 											/>
 										</Grid>
 										<Grid size={10} className={"d-row-left"}>
-											<Div className={"fs-0-75rem fw-600 black mr-5px"}>
+											<Div className={"fs-0-9rem fw-600 black mr-5px"}>
 												{item.money_dateStart?.substring(5, 10)}
 											</Div>
 											<Div className={"fs-0-9rem fw-500 dark ml-5px"}>
@@ -613,7 +613,7 @@ export const TodayList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -621,14 +621,14 @@ export const TodayList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("income")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.money_total_income_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.money_total_income_color}`}>
 															{insertComma(item.money_total_income || "0")}
 														</Div>
 													</Grid>
@@ -648,7 +648,7 @@ export const TodayList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -656,14 +656,14 @@ export const TodayList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("expense")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.money_total_expense_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.money_total_expense_color}`}>
 															{insertComma(item.money_total_expense || "0")}
 														</Div>
 													</Grid>
@@ -736,7 +736,7 @@ export const TodayList = () => {
 											/>
 										</Grid>
 										<Grid size={10} className={"d-row-left"}>
-											<Div className={"fs-0-75rem fw-600 black mr-5px"}>
+											<Div className={"fs-0-9rem fw-600 black mr-5px"}>
 												{item.sleep_dateStart?.substring(5, 10)}
 											</Div>
 											<Div className={"fs-0-9rem fw-500 dark ml-5px"}>
@@ -751,7 +751,7 @@ export const TodayList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-row-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -759,14 +759,14 @@ export const TodayList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("bedTime")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.sleep_section[0]?.sleep_bedTime_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.sleep_section[0]?.sleep_bedTime_color}`}>
 															{item.sleep_section[0]?.sleep_bedTime}
 														</Div>
 													</Grid>
@@ -786,7 +786,7 @@ export const TodayList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -794,14 +794,14 @@ export const TodayList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("wakeTime")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.sleep_section[0]?.sleep_wakeTime_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.sleep_section[0]?.sleep_wakeTime_color}`}>
 															{item.sleep_section[0]?.sleep_wakeTime}
 														</Div>
 													</Grid>
@@ -821,7 +821,7 @@ export const TodayList = () => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={12}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -829,14 +829,14 @@ export const TodayList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("sleepTime")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-75rem fw-600 ${item.sleep_section[0]?.sleep_sleepTime_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.sleep_section[0]?.sleep_sleepTime_color}`}>
 															{item.sleep_section[0]?.sleep_sleepTime}
 														</Div>
 													</Grid>

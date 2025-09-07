@@ -237,14 +237,14 @@ export const CalendarDetail = () => {
 								<Grid size={12} className={`d-row`}>
 									<Div className={`d-row-left`}>
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
 											src={"exercise1.webp"}
 											className={`ml-5px mr-10px`}
 										/>
-										<Div className={`fw-600 fs-0-75rem`}>
+										<Div className={`fs-0-9rem fw-600`}>
 											{translate(`exercise`)}
 										</Div>
 									</Div>
@@ -298,7 +298,7 @@ export const CalendarDetail = () => {
 										<MenuItem
 											key={idx}
 											value={part.exercise_part}
-											className={`fs-0-75rem`}
+											className={`fs-0-8rem`}
 										>
 											{translate(part.exercise_part)}
 										</MenuItem>
@@ -329,7 +329,7 @@ export const CalendarDetail = () => {
 										<MenuItem
 											key={idx}
 											value={title}
-											className={`fs-0-75rem`}
+											className={`fs-0-8rem`}
 										>
 											{translate(title)}
 										</MenuItem>
@@ -350,7 +350,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.exercise_set}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -385,7 +385,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.exercise_rep}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -425,7 +425,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.exercise_weight}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -482,14 +482,14 @@ export const CalendarDetail = () => {
 								<Grid size={12} className={`d-row`}>
 									<Div className={`d-row-left`}>
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
 											src={"food1.webp"}
 											className={`ml-5px mr-10px`}
 										/>
-										<Div className={`fw-600 fs-0-75rem`}>
+										<Div className={`fs-0-9rem fw-600`}>
 											{translate(`food`)}
 										</Div>
 									</Div>
@@ -542,7 +542,7 @@ export const CalendarDetail = () => {
 										<MenuItem
 											key={idx}
 											value={part.food_part}
-											className={`fs-0-75rem`}
+											className={`fs-0-8rem`}
 										>
 											{translate(part.food_part)}
 										</MenuItem>
@@ -678,7 +678,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.food_kcal}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -713,7 +713,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.food_carb}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -753,7 +753,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.food_protein}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -788,7 +788,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.food_fat}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -833,14 +833,14 @@ export const CalendarDetail = () => {
 								<Grid size={12} className={`d-row`}>
 									<Div className={`d-row-left`}>
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
 											src={"money1.webp"}
 											className={`ml-5px mr-10px`}
 										/>
-										<Div className={`fw-600 fs-0-75rem`}>
+										<Div className={`fs-0-9rem fw-600`}>
 											{translate(`money`)}
 										</Div>
 									</Div>
@@ -894,7 +894,7 @@ export const CalendarDetail = () => {
 										<MenuItem
 											key={idx}
 											value={part.money_part}
-											className={`fs-0-75rem`}
+											className={`fs-0-8rem`}
 										>
 											{translate(part.money_part)}
 										</MenuItem>
@@ -925,7 +925,7 @@ export const CalendarDetail = () => {
 										<MenuItem
 											key={idx}
 											value={title}
-											className={`fs-0-75rem`}
+											className={`fs-0-8rem`}
 										>
 											{translate(title)}
 										</MenuItem>
@@ -946,7 +946,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.money_amount}
 									startadornment={
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -1027,14 +1027,14 @@ export const CalendarDetail = () => {
 								<Grid size={12} className={`d-row`}>
 									<Div className={`d-row-left`}>
 										<Img
-											max={12}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
 											src={"sleep1.webp"}
 											className={`ml-5px mr-10px`}
 										/>
-										<Div className={`fw-600 fs-0-75rem`}>
+										<Div className={`fs-0-9rem fw-600`}>
 											{translate(`sleep`)}
 										</Div>
 									</Div>

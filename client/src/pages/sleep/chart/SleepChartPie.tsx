@@ -261,7 +261,7 @@ export const SleepChartPie = () => {
 					</Select>
 				</Grid>
 				<Grid size={6} className={"d-row-center"}>
-					<Div className={"fs-0-75rem fw-600"}>
+					<Div className={"fs-0-8rem fw-600"}>
 						{translate("chartPie")}
 					</Div>
 				</Grid>
