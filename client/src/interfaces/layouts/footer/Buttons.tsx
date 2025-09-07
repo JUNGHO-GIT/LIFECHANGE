@@ -79,7 +79,7 @@ export const Buttons = (
         contents={
           <Grid container={true} spacing={2} className={"h-max-30vh d-row-center"}>
             <Grid size={12}>
-              <Div className={"fs-1-0rem fw-600 pre-line dark-grey"}>
+              <Div className={"fs-0-8rem fw-600 pre-line dark-grey"}>
                 {translate("replaceOrInsert")}
               </Div>
             </Grid>

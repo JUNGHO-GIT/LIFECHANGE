@@ -57,10 +57,8 @@ export const FoodFavoriteList = () => {
     dateEnd: location_dateEnd || getDayFmt(),
   });
 
-	// --------------------------------------------------------------------------------------------
-	// 2-3. useEffect
+	// 2-3. useEffect ------------------------------------------------------------------------------
   // - 페이지 번호 변경 시 flowFind 호출
-	// --------------------------------------------------------------------------------------------
   useEffect(() => {
     if (PAGING?.query === "") {
       return;
@@ -68,10 +66,8 @@ export const FoodFavoriteList = () => {
     flowFind();
   }, [PAGING.page]);
 
-	// --------------------------------------------------------------------------------------------
-	// 2-3. useEffect
-	// - 페이지 로드 시 체크박스 상태 초기화
-	// --------------------------------------------------------------------------------------------
+	// 2-3. useEffect -----------------------------------------------------------------------------
+	// - 페이지 로드시 체크박스 상태 초기화
   useEffect(() => {
     let sectionArray = [];
     let section = sessionFoodSection;
@@ -93,9 +89,7 @@ export const FoodFavoriteList = () => {
     });
   }, [OBJECT]);
 
-	// --------------------------------------------------------------------------------------------
-	// 3. flow
-	// --------------------------------------------------------------------------------------------
+	// 3. flow ------------------------------------------------------------------------------------
   const flowFind = async () => {
     setLOADING(true);
     axios.get(`${URL_OBJECT}/find/listFavorite`, {
@@ -132,9 +126,7 @@ export const FoodFavoriteList = () => {
     });
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 3. flow
-	// --------------------------------------------------------------------------------------------
+	// 3. flow ------------------------------------------------------------------------------------
   const flowUpdateFavorite = (foodFavorite: any) => {
     axios.put(`${URL_OBJECT}/find/updateFavorite`, {
       user_id: sessionId,
@@ -167,10 +159,8 @@ export const FoodFavoriteList = () => {
     });
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 4. handle
+	// 4. handle ---------------------------------------------------------------------------------
 	// - 체크박스 변경 시
-	// --------------------------------------------------------------------------------------------
   const handleCheckboxChange = (index: number) => {
     const queryKey = `${PAGING.query}_${PAGING.page}`;
     const updatedChecked = [...(checkedQueries[queryKey] || [])];
@@ -264,7 +254,7 @@ export const FoodFavoriteList = () => {
 											/>
 										</Grid>
 										<Grid size={6} className={"d-row-left"}>
-											<Div className={`fs-1-0rem fw-600 ${item.food_name_color}`}>
+											<Div className={`fs-0-8rem fw-600 ${item.food_name_color}`}>
 												{item.food_name}
 											</Div>
 											<Div className={"mt-n3px ml-5px"}>
@@ -282,7 +272,7 @@ export const FoodFavoriteList = () => {
 											</Div>
 										</Grid>
 										<Grid size={4} className={"d-row-right"}>
-											<Div className={`fs-1-0rem fw-600 ${item.food_count_color}`}>
+											<Div className={`fs-0-8rem fw-600 ${item.food_count_color}`}>
 												<Div className={`fs-0-8rem fw-500 dark mr-10px`}>
 													{item.food_brand}
 												</Div>
@@ -296,7 +286,7 @@ export const FoodFavoriteList = () => {
 										<Grid container={true} spacing={2}>
 											<Grid size={2} className={"d-row-center"}>
 												<Img
-													max={20}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -304,14 +294,14 @@ export const FoodFavoriteList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("kcal")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.food_kcal_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.food_kcal_color}`}>
 															{insertComma(item.food_kcal || "0")}
 														</Div>
 													</Grid>
@@ -331,7 +321,7 @@ export const FoodFavoriteList = () => {
 										<Grid container={true} spacing={2}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={20}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -339,14 +329,14 @@ export const FoodFavoriteList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("carb")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.food_carb_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.food_carb_color}`}>
 															{insertComma(item.food_carb || "0")}
 														</Div>
 													</Grid>
@@ -366,7 +356,7 @@ export const FoodFavoriteList = () => {
 										<Grid container={true} spacing={2}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={20}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -374,14 +364,14 @@ export const FoodFavoriteList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("protein")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.food_protein_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.food_protein_color}`}>
 															{insertComma(item.food_carb || "0")}
 														</Div>
 													</Grid>
@@ -401,7 +391,7 @@ export const FoodFavoriteList = () => {
 										<Grid container={true} spacing={2}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={20}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -409,14 +399,14 @@ export const FoodFavoriteList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("fat")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.food_fat_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.food_fat_color}`}>
 															{insertComma(item.food_fat || "0")}
 														</Div>
 													</Grid>
@@ -445,9 +435,7 @@ export const FoodFavoriteList = () => {
     );
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 8. dialog
-	// --------------------------------------------------------------------------------------------
+	// 8. dialog ----------------------------------------------------------------------------------
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -456,9 +444,7 @@ export const FoodFavoriteList = () => {
     />
   );
 
-	// --------------------------------------------------------------------------------------------
-	// 9. footer
-	// --------------------------------------------------------------------------------------------
+	// 9. footer ----------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       state={{

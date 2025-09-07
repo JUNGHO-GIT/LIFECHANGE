@@ -237,14 +237,14 @@ export const CalendarDetail = () => {
 								<Grid size={12} className={`d-row`}>
 									<Div className={`d-row-left`}>
 										<Img
-											max={15}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
 											src={"exercise1.webp"}
 											className={`ml-5px mr-10px`}
 										/>
-										<Div className={`fw-600 fs-1-0rem`}>
+										<Div className={`fw-600 fs-0-8rem`}>
 											{translate(`exercise`)}
 										</Div>
 									</Div>
@@ -350,7 +350,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.exercise_set}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -385,7 +385,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.exercise_rep}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -425,7 +425,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.exercise_weight}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -482,14 +482,14 @@ export const CalendarDetail = () => {
 								<Grid size={12} className={`d-row`}>
 									<Div className={`d-row-left`}>
 										<Img
-											max={15}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
 											src={"food1.webp"}
 											className={`ml-5px mr-10px`}
 										/>
-										<Div className={`fw-600 fs-1-0rem`}>
+										<Div className={`fw-600 fs-0-8rem`}>
 											{translate(`food`)}
 										</Div>
 									</Div>
@@ -678,7 +678,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.food_kcal}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -713,7 +713,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.food_carb}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -753,7 +753,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.food_protein}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -788,7 +788,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.food_fat}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -833,14 +833,14 @@ export const CalendarDetail = () => {
 								<Grid size={12} className={`d-row`}>
 									<Div className={`d-row-left`}>
 										<Img
-											max={15}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
 											src={"money1.webp"}
 											className={`ml-5px mr-10px`}
 										/>
-										<Div className={`fw-600 fs-1-0rem`}>
+										<Div className={`fw-600 fs-0-8rem`}>
 											{translate(`money`)}
 										</Div>
 									</Div>
@@ -946,7 +946,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.money_amount}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -1027,14 +1027,14 @@ export const CalendarDetail = () => {
 								<Grid size={12} className={`d-row`}>
 									<Div className={`d-row-left`}>
 										<Img
-											max={15}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
 											src={"sleep1.webp"}
 											className={`ml-5px mr-10px`}
 										/>
-										<Div className={`fw-600 fs-1-0rem`}>
+										<Div className={`fw-600 fs-0-8rem`}>
 											{translate(`sleep`)}
 										</Div>
 									</Div>

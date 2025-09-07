@@ -22,9 +22,7 @@ export const FindFilter = (
   const { PATH, navigate , toDetail } = useCommonValue();
   const { translate } = useStoreLanguage();
 
-	// --------------------------------------------------------------------------------------------
-	// 7. find
-	// --------------------------------------------------------------------------------------------
+	// 7. find -------------------------------------------------------------------------------------
   const findFilterNode = () => {
 		// 1. find
 		const findSection = () => (
@@ -180,10 +178,10 @@ export const FindFilter = (
     );
     return (
       <Grid container={true} spacing={0}>
-        <Grid size={6} className={"d-row-center"}>
+        <Grid size={8} className={"d-row-center"}>
 					{PATH.includes("/favorite/list") ? favoriteSection() : findSection()}
         </Grid>
-        <Grid size={6} className={"h-100p d-col-center"}>
+        <Grid size={4} className={"h-100p d-col-center"}>
           {paginationSection()}
         </Grid>
       </Grid>

@@ -356,7 +356,7 @@ export const TopNav = () => {
           <Div className={"w-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px"}>
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-col-center"}>
-                <Div className={"fs-1-0rem fw-600"}>
+                <Div className={"fs-0-8rem fw-600"}>
                   {translate("monthScore")}
                 </Div>
                 <Br m={10} />
@@ -406,7 +406,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
               <Grid size={6} className={"d-row-left"}>
-                <Div className={"fs-1-0rem fw-600 black"}>
+                <Div className={"fs-0-8rem fw-600 black"}>
                   {smileScore.exercise}
                 </Div>
               </Grid>
@@ -429,7 +429,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
               <Grid size={6} className={"d-row-left"}>
-                <Div className={"fs-1-0rem fw-600 black"}>
+                <Div className={"fs-0-8rem fw-600 black"}>
                   {smileScore.food}
                 </Div>
               </Grid>
@@ -452,7 +452,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
               <Grid size={6} className={"d-row-left"}>
-                <Div className={"fs-1-0rem fw-600 black"}>
+                <Div className={"fs-0-8rem fw-600 black"}>
                   {smileScore.money}
                 </Div>
               </Grid>
@@ -475,7 +475,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
               <Grid size={6} className={"d-row-left"}>
-                <Div className={"fs-1-0rem fw-600 black"}>
+                <Div className={"fs-0-8rem fw-600 black"}>
                   {smileScore.sleep}
                 </Div>
               </Grid>
@@ -531,7 +531,7 @@ export const TopNav = () => {
             <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
-                  max={20}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -559,7 +559,7 @@ export const TopNav = () => {
             <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
-                  max={20}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -592,7 +592,7 @@ export const TopNav = () => {
                   value={insertComma(scale.minScale || "0")}
                   startadornment={
                     <Img
-                      max={20}
+                      max={14}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -614,7 +614,7 @@ export const TopNav = () => {
                   value={insertComma(scale.maxScale || "0")}
                   startadornment={
                     <Img
-                      max={20}
+                      max={14}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -693,7 +693,7 @@ export const TopNav = () => {
             <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
-                  max={20}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -720,7 +720,7 @@ export const TopNav = () => {
             <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
-                  max={20}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -772,7 +772,7 @@ export const TopNav = () => {
                   }
                   startadornment={
                     <Img
-                      max={20}
+                      max={14}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -806,7 +806,7 @@ export const TopNav = () => {
                   }
                   startadornment={
                     <Img
-                      max={20}
+                      max={14}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -840,7 +840,7 @@ export const TopNav = () => {
                   }
                   startadornment={
                     <Img
-                      max={20}
+                      max={14}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -909,7 +909,7 @@ export const TopNav = () => {
             <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
-                  max={20}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -936,7 +936,7 @@ export const TopNav = () => {
             <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
-                  max={20}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -978,7 +978,7 @@ export const TopNav = () => {
                   }
                   startadornment={
                     <Img
-                      max={20}
+                      max={14}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -1006,7 +1006,7 @@ export const TopNav = () => {
                   }
                   startadornment={
                     <Img
-                      max={20}
+                      max={14}
                       hover={true}
                       shadow={false}
                       radius={false}

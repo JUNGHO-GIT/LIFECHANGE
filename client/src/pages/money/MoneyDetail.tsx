@@ -210,9 +210,7 @@ export const MoneyDetail = () => {
 
   },[COUNT?.newSectionCnt]);
 
-	// --------------------------------------------------------------------------------------------
-	// 3. flow
-	// --------------------------------------------------------------------------------------------
+	// 3. flow ------------------------------------------------------------------------------------
   const flowSave = async (type: string) => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "real")) {
@@ -269,9 +267,7 @@ export const MoneyDetail = () => {
     });
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 3. flow
-	// --------------------------------------------------------------------------------------------
+	// 3. flow ------------------------------------------------------------------------------------
   const flowDelete = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "delete")) {
@@ -376,7 +372,7 @@ export const MoneyDetail = () => {
               value={insertComma(OBJECT?.money_total_income || "0")}
               startadornment={
                 <Img
-                  max={20}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -401,7 +397,7 @@ export const MoneyDetail = () => {
               value={insertComma(OBJECT?.money_total_expense || "0")}
               startadornment={
                 <Img
-                  max={20}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -519,7 +515,7 @@ export const MoneyDetail = () => {
 									error={ERRORS?.[i]?.money_amount}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -606,9 +602,7 @@ export const MoneyDetail = () => {
     );
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 8. dialog
-	// --------------------------------------------------------------------------------------------
+	// 8. dialog ----------------------------------------------------------------------------------
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -618,9 +612,7 @@ export const MoneyDetail = () => {
     />
   );
 
-	// --------------------------------------------------------------------------------------------
-	// 9. footer
-	// --------------------------------------------------------------------------------------------
+	// 9. footer ----------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       state={{

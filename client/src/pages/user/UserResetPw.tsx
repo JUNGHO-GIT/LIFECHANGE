@@ -29,9 +29,7 @@ export const UserResetPw = () => {
     }, 500);
   }, []);
 
-	// --------------------------------------------------------------------------------------------
-	// 3. flow
-	// --------------------------------------------------------------------------------------------
+	// 3. flow ------------------------------------------------------------------------------------
   const flowSendEmail = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "resetPw", "send")) {
@@ -106,9 +104,7 @@ export const UserResetPw = () => {
     });
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 3. flow
-	// --------------------------------------------------------------------------------------------
+	// 3. flow ------------------------------------------------------------------------------------
   const flowVerifyEmail = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "resetPw", "verify")) {
@@ -158,9 +154,7 @@ export const UserResetPw = () => {
     });
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 3. flow
-	// --------------------------------------------------------------------------------------------
+	// 3. flow ------------------------------------------------------------------------------------
   const flowSave = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "resetPw", "save")) {
@@ -204,9 +198,7 @@ export const UserResetPw = () => {
     });
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 3. flow
-	// --------------------------------------------------------------------------------------------
+	// 3. flow ------------------------------------------------------------------------------------
   const flowGoogle = () => {
     axios.get (`${URL_GOOGLE}/login`)
     .then((res: any) => {
@@ -383,7 +375,7 @@ export const UserResetPw = () => {
           <Grid size={12} className={"d-col-center"}>
             <Btn
               color={"primary"}
-              className={"w-100p fs-1-0rem"}
+              className={"w-100p fs-0-8rem"}
               onClick={() => {
                 flowSave();
               }}
@@ -406,13 +398,13 @@ export const UserResetPw = () => {
             >
               <Div className={"d-row-center"}>
                 <Img
-                  max={20}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
                   src={"user1.webp"}
                 />
-                <Div className={"fs-1-0rem black ml-10px"}>
+                <Div className={"fs-0-8rem black ml-10px"}>
                   {translate("googleLogin")}
                 </Div>
               </Div>

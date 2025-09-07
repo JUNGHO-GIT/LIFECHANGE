@@ -217,9 +217,7 @@ export const ExerciseDetail = () => {
 
   },[COUNT?.newSectionCnt]);
 
-	// --------------------------------------------------------------------------------------------
-	// 3. flow
-	// --------------------------------------------------------------------------------------------
+	// 3. flow ------------------------------------------------------------------------------------
   const flowSave = async (type: string) => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "real")) {
@@ -276,9 +274,7 @@ export const ExerciseDetail = () => {
     });
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 3. flow
-	// --------------------------------------------------------------------------------------------
+	// 3. flow ------------------------------------------------------------------------------------
   const flowDelete = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "delete")) {
@@ -383,7 +379,7 @@ export const ExerciseDetail = () => {
               value={insertComma(OBJECT?.exercise_total_volume || "0")}
               startadornment={
                 <Img
-                  max={20}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -408,7 +404,7 @@ export const ExerciseDetail = () => {
               value={OBJECT?.exercise_total_cardio}
               startadornment={
                 <Img
-                  max={20}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -431,7 +427,7 @@ export const ExerciseDetail = () => {
               value={insertComma(OBJECT?.exercise_total_scale || "0")}
               startadornment={
                 <Img
-                  max={20}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -567,7 +563,7 @@ export const ExerciseDetail = () => {
 									error={ERRORS?.[i]?.exercise_set}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -610,7 +606,7 @@ export const ExerciseDetail = () => {
 									error={ERRORS?.[i]?.exercise_rep}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -658,7 +654,7 @@ export const ExerciseDetail = () => {
 									error={ERRORS?.[i]?.exercise_weight}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -722,9 +718,7 @@ export const ExerciseDetail = () => {
     );
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 8. dialog
-	// --------------------------------------------------------------------------------------------
+	// 8. dialog ----------------------------------------------------------------------------------
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -734,9 +728,7 @@ export const ExerciseDetail = () => {
     />
   );
 
-	// --------------------------------------------------------------------------------------------
-	// 9. footer
-	// --------------------------------------------------------------------------------------------
+	// 9. footer ----------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       state={{

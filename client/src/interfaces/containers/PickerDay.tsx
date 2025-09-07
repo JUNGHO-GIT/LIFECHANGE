@@ -68,12 +68,21 @@ export const PickerDay = (
 		)
 	);
 
-	// --------------------------------------------------------------------------------------------
-	// 2-2. useEffect
-	// - 화면 로딩시 초기값 설정
-	// --------------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------------
 	useEffect(() => {
-		// 0. 클래스 설정
+		console.group("Date Debug Log");
+		console.log("dateTypeInList:", dateTypeInList);
+		console.log("dateStrInList:", dateStrInList);
+		console.log("dateTypeInSave:", dateTypeInSave);
+		console.log("dateStrInSave:", dateStrInSave);
+		console.log("DATE:",JSON.stringify(DATE, null, 2));
+		console.groupEnd();
+	}, [DATE, dateTypeInList, dateTypeInSave, dateStrInList, dateStrInSave]);
+
+	// 2-2. useEffect -----------------------------------------------------------------------------
+	// - 화면 로딩시 초기값 설정 1
+	// - 클래스 설정
+	useEffect(() => {
 		if (isList) {
 			setDateClassInSave("h-min-0px h-5vh fs-0-7rem pointer");
 			setDateClassInList("h-min-0px h-5vh fs-0-7rem pointer");
@@ -82,7 +91,13 @@ export const PickerDay = (
 			setDateClassInSave("h-min-40px fs-0-8rem pointer");
 			setDateClassInList("h-min-40px fs-0-8rem pointer");
 		}
-		// 1. Today - Goal - List
+	}, []);
+
+	// 2-2. useEffect -----------------------------------------------------------------------------
+	// - 화면 로딩시 초기값 설정 2
+	// - 리스트 설정
+	useEffect(() => {
+		// 1. Today - Goal
 		if (isTodayGoalList) {
 			setDATE({
 				dateType: "",
@@ -95,7 +110,7 @@ export const PickerDay = (
 			);
 		}
 
-		// 2. Today - Real - List
+		// 2. Today - Real
 		else if (isTodayList) {
 			setDATE({
 				dateType: "day",
@@ -108,7 +123,7 @@ export const PickerDay = (
 			);
 		}
 
-		// 3. Goal - List
+		// 3. Goal
 		else if (isGoalList) {
 			if (dateTypeInList === "day") {
 				setDATE({
@@ -127,7 +142,7 @@ export const PickerDay = (
 					dateEnd: DATE.dateEnd || getWeekEndFmt(),
 				});
 				setDateStrInList(
-					`${getWeekStartFmt(DATE.dateStart)} - ${getWeekEndFmt(DATE.dateEnd)}`
+					`${getWeekStartFmt(DATE.dateStart)} - ${getWeekEndFmt(DATE.dateStart)}`
 				);
 			}
 			else if (dateTypeInList === "month") {
@@ -137,7 +152,7 @@ export const PickerDay = (
 					dateEnd: DATE.dateEnd || getMonthEndFmt(),
 				});
 				setDateStrInList(
-					`${getMonthStartFmt(DATE.dateStart)} - ${getMonthEndFmt(DATE.dateEnd)}`
+					`${getMonthStartFmt(DATE.dateStart)} - ${getMonthEndFmt(DATE.dateStart)}`
 				);
 			}
 			else if (dateTypeInList === "year") {
@@ -147,12 +162,12 @@ export const PickerDay = (
 					dateEnd: DATE.dateEnd || getYearEndFmt(),
 				});
 				setDateStrInList(
-					`${getYearStartFmt(DATE.dateStart)} - ${getYearEndFmt(DATE.dateEnd)}`
+					`${getYearStartFmt(DATE.dateStart)} - ${getYearEndFmt(DATE.dateStart)}`
 				);
 			}
 		}
 
-		// 4. Real - List
+		// 4. Real
 		else if (isRealList) {
 			if (dateTypeInList === "day") {
 				setDATE({
@@ -171,7 +186,7 @@ export const PickerDay = (
 					dateEnd: DATE.dateEnd || getWeekEndFmt(),
 				});
 				setDateStrInList(
-					`${getWeekStartFmt(DATE.dateStart)} - ${getWeekEndFmt(DATE.dateEnd)}`
+					`${getWeekStartFmt(DATE.dateStart)} - ${getWeekEndFmt(DATE.dateStart)}`
 				);
 			}
 			else if (dateTypeInList === "month") {
@@ -181,7 +196,7 @@ export const PickerDay = (
 					dateEnd: DATE.dateEnd || getMonthEndFmt(),
 				});
 				setDateStrInList(
-					`${getMonthStartFmt(DATE.dateStart)} - ${getMonthEndFmt(DATE.dateEnd)}`
+					`${getMonthStartFmt(DATE.dateStart)} - ${getMonthEndFmt(DATE.dateStart)}`
 				);
 			}
 			else if (dateTypeInList === "year") {
@@ -191,60 +206,70 @@ export const PickerDay = (
 					dateEnd: DATE.dateEnd || getYearEndFmt(),
 				});
 				setDateStrInList(
-					`${getYearStartFmt(DATE.dateStart)} - ${getYearEndFmt(DATE.dateEnd)}`
+					`${getYearStartFmt(DATE.dateStart)} - ${getYearEndFmt(DATE.dateStart)}`
 				);
 			}
 		}
+	}, []);
 
-		// 5. Goal & Real - Detail
-		else if (isDetail) {
-			if (dateTypeInSave === "day") {
-				setDATE({
-					dateType: "",
-					dateStart: getDayFmt(),
-					dateEnd: getDayFmt(),
-				});
-				setDateStrInSave(
-					`${getDayFmt(DATE.dateStart)}`
-				);
-			}
-			else if (dateTypeInSave === "week") {
-				setDATE({
+	// 2-2. useEffect -----------------------------------------------------------------------------
+	// - 화면 로딩시 초기값 설정 3
+	// - 상세 설정
+	// - 리스트에서 디테일로 들어가기 때문에 dateTypeInList 사용
+	// - 목표는 주, 월, 년만 가능
+	// - 실제는 일 만 가능
+	useEffect(() => {
+		// 1. Goal
+		if (isGoalDetail) {
+			if (dateTypeInList === "week") {
+				setDATE((prev) => ({
+					...prev,
 					dateType: "week",
-					dateStart: getWeekStartFmt(),
-					dateEnd: getWeekEndFmt(),
-				});
+					dateStart: getWeekStartFmt(prev.dateStart),
+					dateEnd: getWeekEndFmt(prev.dateStart),
+				}));
 				setDateStrInSave(
-					`${getWeekStartFmt(DATE.dateStart)} - ${getWeekEndFmt(DATE.dateEnd)}`
+					`${getWeekStartFmt(DATE.dateStart)} - ${getWeekEndFmt(DATE.dateStart)}`
 				);
 			}
-			else if (dateTypeInSave === "month") {
+			else if (dateTypeInList === "month") {
 				setDATE({
 					dateType: "month",
 					dateStart: getMonthStartFmt(),
 					dateEnd: getMonthEndFmt(),
 				});
 				setDateStrInSave(
-					`${getMonthStartFmt(DATE.dateStart)} - ${getMonthEndFmt(DATE.dateEnd)}`
+					`${getMonthStartFmt(DATE.dateStart)} - ${getMonthEndFmt(DATE.dateStart)}`
 				);
 			}
-			else if (dateTypeInSave === "year") {
+			else if (dateTypeInList === "year") {
 				setDATE({
 					dateType: "year",
 					dateStart: getYearStartFmt(),
 					dateEnd: getYearEndFmt(),
 				});
 				setDateStrInSave(
-					`${getYearStartFmt(DATE.dateStart)} - ${getYearEndFmt(DATE.dateEnd)}`
+					`${getYearStartFmt(DATE.dateStart)} - ${getYearEndFmt(DATE.dateStart)}`
 				);
 			}
 		}
+
+		// 2. Real
+		else if (isRealDetail) {
+			setDATE((prev) => ({
+				...prev,
+				dateType: "day",
+				dateStart: getDayFmt(prev.dateStart),
+				dateEnd: getDayFmt(prev.dateStart),
+			}));
+			setDateStrInSave(
+				`${getDayFmt(DATE.dateStart)}`
+			);
+		}
 	}, []);
 
-	// --------------------------------------------------------------------------------------------
-	// 2-3. useEffect
+	// 2-3. useEffect -----------------------------------------------------------------------------
 	// - 리스트에서 타입 변경시 처리 (일, 주, 월, 년)
-	// --------------------------------------------------------------------------------------------
 	useEffect(() => {
 		// 1. Today - Goal - List
 		if (isTodayGoalList) {
@@ -361,10 +386,8 @@ export const PickerDay = (
 		}
 	}, [dateTypeInList]);
 
-	// --------------------------------------------------------------------------------------------
-	// 2-3. useEffect
+	// 2-3. useEffect -----------------------------------------------------------------------------
 	// - 상세에서 타입 변경시 처리 (일, 주, 월, 년)
-	// --------------------------------------------------------------------------------------------
 	useEffect(() => {
 		// 1. Goal - Detail
 		if (isGoalDetail) {
@@ -459,7 +482,6 @@ export const PickerDay = (
 	// 2-3. useEffect
 	// - 타입 및 날짜 변경시 표시 날짜 텍스트 변경
 	// - handler 사용해서 월, 일만 표시
-	// --------------------------------------------------------------------------------------------
 	useEffect(() => {
 
 		// 1. List
@@ -521,10 +543,8 @@ export const PickerDay = (
 		}
 	}, [DATE.dateType, DATE.dateStart]);
 
-	// --------------------------------------------------------------------------------------------
-	// 4. handler
+	// 4. handler ----------------------------------------------------------------------------
 	// - "2024-01-15" => "01-15"
-	// --------------------------------------------------------------------------------------------
 	const handlerToMnDd = (str: string) => {
 		if (str && str.split("-").length === 3) {
 			return `${str.split("-")[1]}-${str.split("-")[2]}`;
@@ -532,9 +552,7 @@ export const PickerDay = (
 		return "";
 	}
 
-	// --------------------------------------------------------------------------------------------
-	// 7. pickerNode
-	// --------------------------------------------------------------------------------------------
+	// 7. pickerNode  ----------------------------------------------------------------------------
 	const pickerNode = () => {
 
 		// 1. dateTypeInList ---------------------------------------------------------------------------------
@@ -594,29 +612,27 @@ export const PickerDay = (
 							{translate(item)}
 						</MenuItem>
 					))
-				)
-					: isGoalDetail ? (
-						["week", "month", "year"]?.map((item: any) => (
-							<MenuItem
-								key={item}
-								value={item}
-								selected={item === dateTypeInSave}
-							>
-								{translate(item)}
-							</MenuItem>
-						))
-					)
-						: (
-							["day"]?.map((item: any) => (
-								<MenuItem
-									key={item}
-									value={item}
-									selected={item === dateTypeInSave}
-								>
-									{translate(item)}
-								</MenuItem>
-							))
-						)}
+				) : isGoalDetail ? (
+					["week", "month", "year"]?.map((item: any) => (
+						<MenuItem
+							key={item}
+							value={item}
+							selected={item === dateTypeInSave}
+						>
+							{translate(item)}
+						</MenuItem>
+					))
+				) : (
+					["day"]?.map((item: any) => (
+						<MenuItem
+							key={item}
+							value={item}
+							selected={item === dateTypeInSave}
+						>
+							{translate(item)}
+						</MenuItem>
+					))
+				)}
 			</Select>
 		);
 

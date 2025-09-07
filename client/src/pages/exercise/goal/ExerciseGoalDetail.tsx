@@ -147,9 +147,7 @@ export const ExerciseGoalDetail = () => {
     });
   }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
-	// --------------------------------------------------------------------------------------------
-	// 3. flow
-	// --------------------------------------------------------------------------------------------
+	// 3. flow ------------------------------------------------------------------------------------
   const flowSave = async (type: string) => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "goal")) {
@@ -206,9 +204,7 @@ export const ExerciseGoalDetail = () => {
     });
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 3. flow
-	// --------------------------------------------------------------------------------------------
+	// 3. flow ------------------------------------------------------------------------------------
   const flowDelete = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "delete")) {
@@ -344,7 +340,7 @@ export const ExerciseGoalDetail = () => {
 									}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -393,7 +389,7 @@ export const ExerciseGoalDetail = () => {
 									}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -454,7 +450,7 @@ export const ExerciseGoalDetail = () => {
 									error={ERRORS?.[i]?.exercise_goal_scale}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -499,9 +495,7 @@ export const ExerciseGoalDetail = () => {
     );
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 8. dialog
-	// --------------------------------------------------------------------------------------------
+	// 8. dialog ----------------------------------------------------------------------------------
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -511,9 +505,7 @@ export const ExerciseGoalDetail = () => {
     />
   );
 
-	// --------------------------------------------------------------------------------------------
-	// 9. footer
-	// --------------------------------------------------------------------------------------------
+	// 9. footer ----------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       state={{

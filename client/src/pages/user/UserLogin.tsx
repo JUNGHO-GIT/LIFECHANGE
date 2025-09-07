@@ -340,7 +340,7 @@ export const UserLogin = () => {
 					<Grid size={12} className={"d-col-center"}>
 						<Btn
 							color={"primary"}
-							className={"w-100p fs-1-0rem"}
+							className={"w-100p fs-0-8rem"}
 							onClick={() => {
 								flowSave();
 							}}
@@ -363,13 +363,13 @@ export const UserLogin = () => {
 						>
 							<Div className={"d-row-center"}>
 								<Img
-									max={20}
+									max={14}
 									hover={true}
 									shadow={false}
 									radius={false}
 									src={"user1.webp"}
 								/>
-								<Div className={"fs-1-0rem black ml-10px"}>
+								<Div className={"fs-0-8rem black ml-10px"}>
 									{translate("googleLogin")}
 								</Div>
 							</Div>

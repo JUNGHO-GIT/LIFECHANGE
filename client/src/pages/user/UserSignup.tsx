@@ -30,9 +30,7 @@ export const UserSignup = () => {
     }, 500);
   }, []);
 
-	// --------------------------------------------------------------------------------------------
-	// 3. flow
-	// --------------------------------------------------------------------------------------------
+	// 3. flow ------------------------------------------------------------------------------------
   const flowSendEmail = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "signup", "send")) {
@@ -107,9 +105,7 @@ export const UserSignup = () => {
     });
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 3. flow
-	// --------------------------------------------------------------------------------------------
+	// 3. flow ------------------------------------------------------------------------------------
   const flowVerifyEmail = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "signup", "verify")) {
@@ -160,9 +156,7 @@ export const UserSignup = () => {
     });
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 3. flow
-	// --------------------------------------------------------------------------------------------
+	// 3. flow ------------------------------------------------------------------------------------
   const flowSave = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "signup", "save")) {
@@ -214,9 +208,7 @@ export const UserSignup = () => {
     });
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 3. flow
-	// --------------------------------------------------------------------------------------------
+	// 3. flow ------------------------------------------------------------------------------------
   const flowGoogle = () => {
     axios.get (`${URL_GOOGLE}/login`)
     .then((res: any) => {
@@ -397,7 +389,7 @@ export const UserSignup = () => {
 									helperText={`* ${translate("helperScale")}`}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -440,7 +432,7 @@ export const UserSignup = () => {
 									helperText={`* ${translate("helperAvgKcalIntake")}`}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -483,7 +475,7 @@ export const UserSignup = () => {
 									helperText={`* ${translate("helperProperty")}`}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -525,7 +517,7 @@ export const UserSignup = () => {
           <Grid size={12} className={"d-col-center"}>
             <Btn
               color={"primary"}
-              className={"w-100p fs-1-0rem"}
+              className={"w-100p fs-0-8rem"}
               onClick={() => {
                 flowSave();
               }}
@@ -548,13 +540,13 @@ export const UserSignup = () => {
             >
               <Div className={"d-row-center"}>
                 <Img
-                  max={20}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
                   src={"user1.webp"}
                 />
-                <Div className={"fs-1-0rem black ml-10px"}>
+                <Div className={"fs-0-8rem black ml-10px"}>
                   {translate("googleLogin")}
                 </Div>
               </Div>

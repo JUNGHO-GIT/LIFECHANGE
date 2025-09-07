@@ -86,9 +86,7 @@ export const UserCategory = () => {
     });
   }, [URL_OBJECT, sessionId]);
 
-	// --------------------------------------------------------------------------------------------
-	// 3. flow
-	// --------------------------------------------------------------------------------------------
+	// 3. flow ------------------------------------------------------------------------------------
   const flowSave = async () => {
     setLOADING(true);
     axios.post(`${URL_OBJECT}/category/update`, {
@@ -523,7 +521,7 @@ export const UserCategory = () => {
 								<Table>
 									<TableHead className={"table-thead"}>
 										<TableRow className={"table-thead-tr"}>
-											<TableCell className={"fs-1-0rem"}>
+											<TableCell className={"fs-0-8rem"}>
 												{translate("dataCategory1")}
 											</TableCell>
 										</TableRow>
@@ -533,10 +531,10 @@ export const UserCategory = () => {
 											<TableRow className={"table-tbody-tr border-top-1"} key={idx}>
 												<TableCell className={`${dataType === item ? "bg-light" : ""}`}>
 													<Div className={"d-center"}>
-														<Div className={"fs-1-0rem ml-0px"}>
+														<Div className={"fs-0-8rem ml-0px"}>
 															{translate(item)}
 														</Div>
-														<Div className={"fs-1-0rem ml-auto"}>
+														<Div className={"fs-0-8rem ml-auto"}>
 														<PopUp
 															type={"innerCenter"}
 															position={"center"}
@@ -583,9 +581,7 @@ export const UserCategory = () => {
     );
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 9. footer
-	// --------------------------------------------------------------------------------------------
+	// 9. footer ----------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       state={{

@@ -274,10 +274,10 @@ export const ExerciseChartLine = () => {
 					</Select>
 				</Grid>
 				<Grid size={6} className={"d-row-center"}>
-					<Div className={"fs-1-0rem fw-600"}>
+					<Div className={"fs-0-8rem fw-600"}>
 						{translate("chartLine")}
 					</Div>
-					<Div className={"fs-1-0rem fw-500 grey ml-10px"}>
+					<Div className={"fs-0-8rem fw-500 grey ml-10px"}>
 						{`[${translate(TYPE.line)}]`}
 					</Div>
 				</Grid>

@@ -80,7 +80,7 @@ export const Select = (props: any) => (
           props?.inputclass?.includes("fs-") ? (
             `text-left ${props?.inputclass || ""}`
           ) : (
-            `fs-1-0rem text-left ${props?.inputclass || ""}`
+            `fs-0-8rem text-left ${props?.inputclass || ""}`
           )
         ),
         startAdornment: (

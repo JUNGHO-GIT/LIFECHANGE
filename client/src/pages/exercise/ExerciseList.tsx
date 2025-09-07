@@ -132,9 +132,7 @@ export const ExerciseList = () => {
     });
   }, [URL_OBJECT, sessionId, PAGING?.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
 
-	// --------------------------------------------------------------------------------------------
-	// 7. list
-	// ----------------------------------------------------------------------------------------------
+	// 7. list -----------------------------------------------------------------------------------
   const listNode = () => {
 		// 7-1. list
     const listSection = () => (
@@ -183,7 +181,7 @@ export const ExerciseList = () => {
 											/>
 										</Grid>
 										<Grid size={10} className={"d-row-left"}>
-											<Div className={"fs-1-0rem fw-600 black mr-5px"}>
+											<Div className={"fs-0-8rem fw-600 black mr-5px"}>
 												{item.exercise_dateStart?.substring(5, 10)}
 											</Div>
 											<Div className={"fs-0-9rem fw-500 dark ml-5px"}>
@@ -198,7 +196,7 @@ export const ExerciseList = () => {
 										<Grid container={true} spacing={2}>
 											<Grid size={2} className={"d-row-center"}>
 												<Img
-													max={20}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -206,14 +204,14 @@ export const ExerciseList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("volume")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.exercise_total_volume_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_total_volume_color}`}>
 															{insertComma(item.exercise_total_volume)}
 														</Div>
 													</Grid>
@@ -233,7 +231,7 @@ export const ExerciseList = () => {
 										<Grid container={true} spacing={2}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={20}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -241,14 +239,14 @@ export const ExerciseList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("cardio")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.exercise_total_cardio_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_total_cardio_color}`}>
 															{item.exercise_total_cardio}
 														</Div>
 													</Grid>
@@ -268,7 +266,7 @@ export const ExerciseList = () => {
 										<Grid container={true} spacing={2}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={20}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -276,14 +274,14 @@ export const ExerciseList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("scale")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.exercise_total_scale_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_total_scale_color}`}>
 															{insertComma(item.exercise_total_scale)}
 														</Div>
 													</Grid>
@@ -312,9 +310,7 @@ export const ExerciseList = () => {
     );
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 8. dialog
-	// --------------------------------------------------------------------------------------------
+	// 8. dialog ----------------------------------------------------------------------------------
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -323,9 +319,7 @@ export const ExerciseList = () => {
     />
   );
 
-	// --------------------------------------------------------------------------------------------
-	// 9. footer
-	// --------------------------------------------------------------------------------------------
+	// 9. footer ----------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       state={{

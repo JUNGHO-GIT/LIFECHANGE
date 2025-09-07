@@ -2,7 +2,9 @@
 
 // -------------------------------------------------------------------------------------------------
 // 1. react
-export type { JSX } from "react";
+export type {
+	JSX
+} from "react";
 export {
   default as React,
   useState,

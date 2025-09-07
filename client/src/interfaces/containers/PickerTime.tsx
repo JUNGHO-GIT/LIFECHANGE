@@ -195,7 +195,7 @@ export const PickerTime = (
             locked={LOCKED}
             startadornment={
               <Img
-                max={20}
+                max={14}
                 hover={true}
                 shadow={false}
                 radius={false}
@@ -255,7 +255,7 @@ export const PickerTime = (
             locked={LOCKED}
             startadornment={
               <Img
-                max={20}
+                max={14}
                 hover={true}
                 shadow={false}
                 radius={false}
@@ -318,7 +318,7 @@ export const PickerTime = (
             locked={LOCKED}
             startadornment={
               <Img
-                max={20}
+                max={14}
                 hover={true}
                 shadow={false}
                 radius={false}

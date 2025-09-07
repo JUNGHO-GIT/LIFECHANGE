@@ -132,9 +132,7 @@ export const ExerciseGoalList = () => {
     });
   }, [URL_OBJECT, sessionId, PAGING?.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
 
-	// --------------------------------------------------------------------------------------------
-	// 7. list
-	// ----------------------------------------------------------------------------------------------
+	// 7. list -----------------------------------------------------------------------------------
   const listNode = () => {
 		// 7-1. list
     const listSection = () => (
@@ -183,7 +181,7 @@ export const ExerciseGoalList = () => {
 											/>
 										</Grid>
 										<Grid size={10} className={"d-row-left"}>
-											<Div className={"fs-1-0rem fw-600 black"}>
+											<Div className={"fs-0-8rem fw-600 black"}>
 												{item.exercise_goal_dateStart?.substring(5, 10)}
 											</Div>
 											<Div className={"fs-0-9rem fw-500 dark ml-5px"}>
@@ -192,7 +190,7 @@ export const ExerciseGoalList = () => {
 											<Div className={"fs-0-8rem fw-500 dark ml-5px mr-5px"}>
 												-
 											</Div>
-											<Div className={"fs-1-0rem fw-600 black"}>
+											<Div className={"fs-0-8rem fw-600 black"}>
 												{item.exercise_goal_dateEnd?.substring(5, 10)}
 											</Div>
 											<Div className={"fs-0-9rem fw-500 dark ml-5px"}>
@@ -207,7 +205,7 @@ export const ExerciseGoalList = () => {
 										<Grid container={true} spacing={2}>
 											<Grid size={2} className={"d-row-center"}>
 												<Img
-													max={20}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -215,7 +213,7 @@ export const ExerciseGoalList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("exerciseCount")}
 												</Div>
 											</Grid>
@@ -228,7 +226,7 @@ export const ExerciseGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.exercise_goal_count_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_goal_count_color}`}>
 															{insertComma(item.exercise_goal_count || "0")}
 														</Div>
 													</Grid>
@@ -244,7 +242,7 @@ export const ExerciseGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.exercise_total_count_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_total_count_color}`}>
 															{insertComma(item.exercise_total_count || "0")}
 														</Div>
 													</Grid>
@@ -260,7 +258,7 @@ export const ExerciseGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.exercise_diff_count_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_diff_count_color}`}>
 															{insertComma(item.exercise_diff_count || "0")}
 														</Div>
 													</Grid>
@@ -280,7 +278,7 @@ export const ExerciseGoalList = () => {
 										<Grid container={true} spacing={2}>
 											<Grid size={2} className={"d-row-center"}>
 												<Img
-													max={20}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -288,7 +286,7 @@ export const ExerciseGoalList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("volume")}
 												</Div>
 											</Grid>
@@ -301,7 +299,7 @@ export const ExerciseGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.exercise_goal_volume_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_goal_volume_color}`}>
 															{insertComma(item.exercise_goal_volume || "0")}
 														</Div>
 													</Grid>
@@ -317,7 +315,7 @@ export const ExerciseGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.exercise_total_volume_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_total_volume_color}`}>
 															{insertComma(item.exercise_total_volume || "0")}
 														</Div>
 													</Grid>
@@ -333,7 +331,7 @@ export const ExerciseGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.exercise_diff_volume_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_diff_volume_color}`}>
 															{insertComma(item.exercise_diff_volume || "0")}
 														</Div>
 													</Grid>
@@ -353,7 +351,7 @@ export const ExerciseGoalList = () => {
 										<Grid container={true} spacing={2}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={20}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -361,7 +359,7 @@ export const ExerciseGoalList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("cardio")}
 												</Div>
 											</Grid>
@@ -374,7 +372,7 @@ export const ExerciseGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.exercise_goal_cardio_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_goal_cardio_color}`}>
 															{item.exercise_goal_cardio}
 														</Div>
 													</Grid>
@@ -390,7 +388,7 @@ export const ExerciseGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.exercise_total_cardio_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_total_cardio_color}`}>
 															{item.exercise_total_cardio}
 														</Div>
 													</Grid>
@@ -406,7 +404,7 @@ export const ExerciseGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.exercise_diff_cardio_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_diff_cardio_color}`}>
 															{item.exercise_diff_cardio}
 														</Div>
 													</Grid>
@@ -426,7 +424,7 @@ export const ExerciseGoalList = () => {
 										<Grid container={true} spacing={2}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={20}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -434,7 +432,7 @@ export const ExerciseGoalList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("scale")}
 												</Div>
 											</Grid>
@@ -447,7 +445,7 @@ export const ExerciseGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.exercise_goal_scale_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_goal_scale_color}`}>
 															{insertComma(item.exercise_goal_scale || "0")}
 														</Div>
 													</Grid>
@@ -463,7 +461,7 @@ export const ExerciseGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.exercise_total_scale_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_total_scale_color}`}>
 															{insertComma(item.exercise_total_scale || "0")}
 														</Div>
 													</Grid>
@@ -479,7 +477,7 @@ export const ExerciseGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.exercise_diff_scale_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.exercise_diff_scale_color}`}>
 															{insertComma(item.exercise_diff_scale || "0")}
 														</Div>
 													</Grid>
@@ -508,9 +506,7 @@ export const ExerciseGoalList = () => {
     );
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 8. dialog
-	// --------------------------------------------------------------------------------------------
+	// 8. dialog ----------------------------------------------------------------------------------
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -519,9 +515,7 @@ export const ExerciseGoalList = () => {
     />
   );
 
-	// --------------------------------------------------------------------------------------------
-	// 9. footer
-	// --------------------------------------------------------------------------------------------
+	// 9. footer ----------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       state={{

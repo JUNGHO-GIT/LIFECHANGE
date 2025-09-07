@@ -259,7 +259,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
               src={file}
               className={"mr-10px"}
             />
-            <Div max={20} className={"black fs-0-9rem fw-500"}>
+            <Div max={14} className={"black fs-0-9rem fw-500"}>
               {file}
             </Div>
             <Div
@@ -305,7 +305,7 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
           props?.inputclass?.includes("fs-") ? (
             `text-left ${props?.inputclass || ""}`
           ) : (
-            `fs-1-0rem text-left ${props?.inputclass || ""}`
+            `fs-0-8rem text-left ${props?.inputclass || ""}`
           )
         ),
         startAdornment: adornmentNode,

@@ -132,9 +132,7 @@ export const MoneyGoalList = () => {
     });
   }, [URL_OBJECT, sessionId, PAGING?.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
 
-	// --------------------------------------------------------------------------------------------
-	// 7. list
-	// ----------------------------------------------------------------------------------------------
+	// 7. list -----------------------------------------------------------------------------------
   const listNode = () => {
 		// 7-1. list
     const listSection = () => (
@@ -183,7 +181,7 @@ export const MoneyGoalList = () => {
 											/>
 										</Grid>
 										<Grid size={10} className={"d-row-left"}>
-											<Div className={"fs-1-0rem fw-600 black"}>
+											<Div className={"fs-0-8rem fw-600 black"}>
 												{item.money_goal_dateStart?.substring(5, 10)}
 											</Div>
 											<Div className={"fs-0-9rem fw-500 dark ml-5px"}>
@@ -192,7 +190,7 @@ export const MoneyGoalList = () => {
 											<Div className={"fs-0-8rem fw-500 dark ml-5px mr-5px"}>
 												-
 											</Div>
-											<Div className={"fs-1-0rem fw-600 black"}>
+											<Div className={"fs-0-8rem fw-600 black"}>
 												{item.money_goal_dateEnd?.substring(5, 10)}
 											</Div>
 											<Div className={"fs-0-9rem fw-500 dark ml-5px"}>
@@ -207,7 +205,7 @@ export const MoneyGoalList = () => {
 										<Grid container={true} spacing={2}>
 											<Grid size={2} className={"d-row-center"}>
 												<Img
-													max={20}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -215,7 +213,7 @@ export const MoneyGoalList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("income")}
 												</Div>
 											</Grid>
@@ -228,7 +226,7 @@ export const MoneyGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.money_goal_income_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.money_goal_income_color}`}>
 															{insertComma(item.money_goal_income || "0")}
 														</Div>
 													</Grid>
@@ -244,7 +242,7 @@ export const MoneyGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.money_total_income_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.money_total_income_color}`}>
 															{insertComma(item.money_total_income || "0")}
 														</Div>
 													</Grid>
@@ -260,7 +258,7 @@ export const MoneyGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.money_diff_income_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.money_diff_income_color}`}>
 															{insertComma(item.money_diff_income || "0")}
 														</Div>
 													</Grid>
@@ -280,7 +278,7 @@ export const MoneyGoalList = () => {
 										<Grid container={true} spacing={2}>
 											<Grid size={2} className={"d-row-center"}>
 												<Img
-													max={20}
+													max={14}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -288,7 +286,7 @@ export const MoneyGoalList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-1-0rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
 													{translate("expense")}
 												</Div>
 											</Grid>
@@ -301,7 +299,7 @@ export const MoneyGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.money_goal_expense_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.money_goal_expense_color}`}>
 															{insertComma(item.money_goal_expense || "0")}
 														</Div>
 													</Grid>
@@ -317,7 +315,7 @@ export const MoneyGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.money_total_expense_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.money_total_expense_color}`}>
 															{insertComma(item.money_total_expense || "0")}
 														</Div>
 													</Grid>
@@ -333,7 +331,7 @@ export const MoneyGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-1-0rem fw-600 ${item.money_diff_expense_color}`}>
+														<Div className={`fs-0-8rem fw-600 ${item.money_diff_expense_color}`}>
 															{insertComma(item.money_diff_expense || "0")}
 														</Div>
 													</Grid>
@@ -362,9 +360,7 @@ export const MoneyGoalList = () => {
     );
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 8. dialog
-	// --------------------------------------------------------------------------------------------
+	// 8. dialog ----------------------------------------------------------------------------------
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -373,9 +369,7 @@ export const MoneyGoalList = () => {
     />
   );
 
-	// --------------------------------------------------------------------------------------------
-	// 9. footer
-	// --------------------------------------------------------------------------------------------
+	// 9. footer ----------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       state={{

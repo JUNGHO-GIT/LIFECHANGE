@@ -254,9 +254,7 @@ export const FoodDetail = () => {
 
   },[COUNT?.newSectionCnt]);
 
-	// --------------------------------------------------------------------------------------------
-	// 3. flow
-	// --------------------------------------------------------------------------------------------
+	// 3. flow ------------------------------------------------------------------------------------
   const flowSave = async (type: string) => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "real")) {
@@ -313,9 +311,7 @@ export const FoodDetail = () => {
     });
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 3. flow
-	// --------------------------------------------------------------------------------------------
+	// 3. flow ------------------------------------------------------------------------------------
   const flowDelete = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, COUNT, "delete")) {
@@ -370,9 +366,7 @@ export const FoodDetail = () => {
     });
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 3. flow
-	// --------------------------------------------------------------------------------------------
+	// 3. flow ------------------------------------------------------------------------------------
   const flowUpdateFavorite = (foodFavorite: any) => {
 		if (!foodFavorite.food_name || foodFavorite.food_name.trim() === "") {
 			setALERT({
@@ -527,7 +521,7 @@ export const FoodDetail = () => {
               value={insertComma(OBJECT?.food_total_kcal || "0")}
               startadornment={
                 <Img
-                  max={20}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -547,7 +541,7 @@ export const FoodDetail = () => {
               value={insertComma(OBJECT?.food_total_carb || "0")}
               startadornment={
                 <Img
-                  max={20}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -572,7 +566,7 @@ export const FoodDetail = () => {
               value={insertComma(OBJECT?.food_total_protein || "0")}
               startadornment={
                 <Img
-                  max={20}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -592,7 +586,7 @@ export const FoodDetail = () => {
               value={insertComma(OBJECT?.food_total_fat || "0")}
               startadornment={
                 <Img
-                  max={20}
+                  max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -836,7 +830,7 @@ export const FoodDetail = () => {
 									error={ERRORS?.[i]?.food_kcal}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -879,7 +873,7 @@ export const FoodDetail = () => {
 									error={ERRORS?.[i]?.food_carb}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -927,7 +921,7 @@ export const FoodDetail = () => {
 									error={ERRORS?.[i]?.food_protein}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -970,7 +964,7 @@ export const FoodDetail = () => {
 									error={ERRORS?.[i]?.food_fat}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -1022,9 +1016,7 @@ export const FoodDetail = () => {
     );
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 8. dialog
-	// --------------------------------------------------------------------------------------------
+	// 8. dialog ----------------------------------------------------------------------------------
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -1034,9 +1026,7 @@ export const FoodDetail = () => {
     />
   );
 
-	// --------------------------------------------------------------------------------------------
-	// 9. footer
-	// --------------------------------------------------------------------------------------------
+	// 9. footer ----------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       state={{

@@ -56,9 +56,7 @@ export const UserDetail = () => {
     });
   }, [URL_OBJECT, sessionId]);
 
-	// --------------------------------------------------------------------------------------------
-	// 3. flow
-	// --------------------------------------------------------------------------------------------
+	// 3. flow ------------------------------------------------------------------------------------
   const flowSave = async () => {
     setLOADING(true);
     if (!await validate(OBJECT, "detail", "")) {
@@ -155,7 +153,7 @@ export const UserDetail = () => {
 									error={ERRORS?.[i]?.user_initScale}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -195,7 +193,7 @@ export const UserDetail = () => {
 									value={insertComma(item.user_curScale || "0")}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -221,7 +219,7 @@ export const UserDetail = () => {
 									error={ERRORS?.[i]?.user_initAvgKcalIntake}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -261,7 +259,7 @@ export const UserDetail = () => {
 									value={insertComma(item.user_curAvgKcalIntake || "0")}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -287,7 +285,7 @@ export const UserDetail = () => {
 									error={ERRORS?.[i]?.user_initProperty}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -333,7 +331,7 @@ export const UserDetail = () => {
 									}
 									startadornment={
 										<Img
-											max={20}
+											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -377,9 +375,7 @@ export const UserDetail = () => {
     );
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 9. footer
-	// --------------------------------------------------------------------------------------------
+	// 9. footer ----------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       state={{
