@@ -89,7 +89,6 @@
 }
 .MuiAccordionSummary-root.Mui-expanded {
   min-height: 0px !important;
-  margin: 4px 0px 4px 0px !important;
 }
 
 /** dialog **/
@@ -122,6 +121,7 @@
 /** button **/
 .MuiButtonBase-root {
   min-width: 30px !important;
+  min-height: 0px !important;
 }
 .MuiBadge-badge {
   min-width: 0px !important;

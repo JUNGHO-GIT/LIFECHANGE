@@ -511,7 +511,7 @@ export const UserCategory = () => {
     );
     // 7-2. detail
     const detailSection = () => (
-			<Grid container={true} spacing={2} className={`border-1 radius-2 shadow-1`}>
+			<Grid container={true} spacing={2} className={`radius-2 border-0 shadow-2`}>
 				{[OBJECT]?.map((item, i) => (
 					<Grid size={12} key={`detail-${i}`}>
 						<Grid container={true} spacing={1}>
@@ -519,7 +519,7 @@ export const UserCategory = () => {
 								<Table>
 									<TableHead className={"table-thead"}>
 										<TableRow className={"table-thead-tr"}>
-											<TableCell className={"fs-0-8rem"}>
+											<TableCell className={"fs-0-95rem"}>
 												{translate("dataCategory1")}
 											</TableCell>
 										</TableRow>
@@ -529,10 +529,10 @@ export const UserCategory = () => {
 											<TableRow className={"table-tbody-tr border-top-1"} key={idx}>
 												<TableCell className={`${dataType === item ? "bg-light" : ""}`}>
 													<Div className={"d-center"}>
-														<Div className={"fs-0-8rem ml-0px"}>
+														<Div className={"fs-0-95rem ml-0px"}>
 															{translate(item)}
 														</Div>
-														<Div className={"fs-0-8rem ml-auto"}>
+														<Div className={"fs-0-95rem ml-auto"}>
 														<PopUp
 															type={"innerCenter"}
 															position={"center"}
@@ -573,7 +573,7 @@ export const UserCategory = () => {
 		);
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min-90vh"}>
+      <Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-90vh"}>
         {detailSection()}
       </Paper>
     );

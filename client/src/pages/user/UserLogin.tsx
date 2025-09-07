@@ -415,7 +415,7 @@ export const UserLogin = () => {
 		);
 		// 7-10. return
 		return (
-			<Paper className={"content-wrapper d-center border-1 radius-2 shadow-1 h-min-100vh"}>
+			<Paper className={"content-wrapper d-center radius-2 border-0 shadow-2 h-min-100vh"}>
 				{titleSection()}
 				<Hr m={30} className={"bg-light"} />
 				{loginSection()}

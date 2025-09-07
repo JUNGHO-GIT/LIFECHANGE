@@ -29,7 +29,7 @@ export const Empty = (
   const emptyNode = () => {
     // 1. isFindSection
     const isFindSection = () => (
-			<Grid container={true} spacing={0} className={"border-1 radius-2 shadow-1 mb-10px"}>
+			<Grid container={true} spacing={0} className={"radius-2 border-0 shadow-2 mb-10px"}>
 				<Grid size={12} className={"p-2px"}>
 					<Accordion
 						className={"border-0 shadow-0 radius-0"}
@@ -38,12 +38,12 @@ export const Empty = (
 						<AccordionSummary>
 							<Grid container={true} spacing={1}>
 								<Grid size={4} className={"d-row-left"}>
-									<Div className={"fs-0-8rem fw-600 dark"}>
+									<Div className={"fs-0-9rem fw-600 dark"}>
 										{translate("search")}
 									</Div>
 								</Grid>
 								<Grid size={8} className={"d-row-left"}>
-									<Div className={"fs-0-8rem fw-500"}>
+									<Div className={"fs-0-9rem fw-500"}>
 										{translate("notFound")}
 									</Div>
 								</Grid>
@@ -55,7 +55,7 @@ export const Empty = (
     );
     // 2. isGoalSection
     const isGoalSection = () => (
-			<Grid container={true} spacing={0} className={"border-1 radius-2 shadow-1 mb-10px"}>
+			<Grid container={true} spacing={0} className={"radius-2 border-0 shadow-2 mb-10px"}>
 				<Grid size={12} className={"p-2px"}>
 					<Accordion
 						className={"border-0 shadow-0 radius-0"}
@@ -74,7 +74,7 @@ export const Empty = (
 							}}
 						>
 							<Grid container={true} spacing={1}>
-								<Grid size={2} className={"d-row-center"}>
+								<Grid size={2} className={"d-row-left"}>
 									<Icons
 										key={"Search"}
 										name={"Search"}
@@ -82,12 +82,12 @@ export const Empty = (
 									/>
 								</Grid>
 								<Grid size={4} className={"d-row-left"}>
-									<Div className={"fs-0-8rem fw-600 dark"}>
+									<Div className={"fs-0-9rem fw-600 dark"}>
 										{translate(`${extra}`)}
 									</Div>
 								</Grid>
-								<Grid size={6} className={"d-row-left"}>
-									<Div className={"fs-0-8rem fw-500"}>
+								<Grid size={6} className={"d-row-center"}>
+									<Div className={"fs-0-9rem fw-500"}>
 										{translate("empty")}
 									</Div>
 								</Grid>
@@ -99,7 +99,7 @@ export const Empty = (
     );
     // 2. isRealSection
     const isRealSection = () => (
-			<Grid container={true} spacing={0} className={"border-1 radius-2 shadow-1 mb-10px"}>
+			<Grid container={true} spacing={0} className={"radius-2 border-0 shadow-2 mb-10px"}>
 				<Grid size={12} className={"p-2px"}>
 					<Accordion
 						className={"border-0 shadow-0 radius-0"}
@@ -118,7 +118,7 @@ export const Empty = (
 							}}
 						>
 							<Grid container={true} spacing={1}>
-								<Grid size={2} className={"d-row-center"}>
+								<Grid size={2} className={"d-row-left"}>
 									<Icons
 										key={"Search"}
 										name={"Search"}
@@ -126,12 +126,12 @@ export const Empty = (
 									/>
 								</Grid>
 								<Grid size={4} className={"d-row-left"}>
-									<Div className={"fs-0-8rem fw-600 dark"}>
+									<Div className={"fs-0-9rem fw-600 dark"}>
 										{translate(`${extra}`)}
 									</Div>
 								</Grid>
-								<Grid size={6} className={"d-row-left"}>
-									<Div className={"fs-0-8rem fw-500"}>
+								<Grid size={6} className={"d-row-center"}>
+									<Div className={"fs-0-9rem fw-500"}>
 										{translate("empty")}
 									</Div>
 								</Grid>

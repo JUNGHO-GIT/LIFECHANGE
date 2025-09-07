@@ -11,9 +11,7 @@ import { Tabs, Tab, Checkbox, MenuItem, Menu } from "@importMuis";
 // -------------------------------------------------------------------------------------------------
 export const TopNav = () => {
 
-	// -------------------------------------------
-	// 1. common
-	// -------------------------------------------
+	// 1. common ----------------------------------------------------------------------------------
   const { firstStr, secondStr, localCurrency, localUnit, navigate } = useCommonValue();
   const { sessionTitle, sessionPercent } = useCommonValue();
   const { sessionScale, sessionNutrition, sessionProperty } = useCommonValue();
@@ -356,7 +354,7 @@ export const TopNav = () => {
           <Div className={"w-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px"}>
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-col-center"}>
-                <Div className={"fs-0-8rem fw-600"}>
+                <Div className={"fs-1-0rem fw-600"}>
                   {translate("monthScore")}
                 </Div>
                 <Br m={10} />
@@ -1115,7 +1113,7 @@ export const TopNav = () => {
 
     // 5. return -----------------------------------------------------------------------------------
     return (
-      <Paper className={"layout-wrapper p-sticky top-8vh h-8vh border-1 radius-2 shadow-1 p-0px"}>
+      <Paper className={"layout-wrapper p-sticky top-8vh h-8vh radius-2 border-1 shadow-2 p-0px"}>
         <Grid container spacing={0}>
           <Grid size={8} className={"d-row-center"}>
             {smileSection()}

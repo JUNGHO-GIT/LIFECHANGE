@@ -298,7 +298,7 @@ export const SleepChartAvg = () => {
 		);
 		// 7-10. return
 		return (
-			<Paper className={"content-wrapper border-1 radius-2 shadow-1 h-min-40vh"}>
+			<Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-40vh"}>
 				{headSection()}
 				<Br m={10} />
 				{chartSection()}

@@ -65,7 +65,7 @@ export const Header = () => {
 			)
 		);
     return (
-      <Paper className={"layout-wrapper d-row-between p-sticky top-0vh h-8vh border-1 radius-2 shadow-1"}>
+      <Paper className={"layout-wrapper d-row-between p-sticky top-0vh h-8vh radius-2 border-1 shadow-2"}>
 				{iconSection()}
 				{btnSection()}
       </Paper>
