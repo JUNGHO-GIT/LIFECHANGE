@@ -192,7 +192,7 @@ export const FoodFindList = () => {
 										<Icons
 											key={"ChevronDown"}
 											name={"ChevronDown"}
-											className={"w-18px h-18px"}
+											className={"w-16px h-16px"}
 											onClick={(e: any) => {
 												e.preventDefault();
 												e.stopPropagation();
@@ -205,7 +205,7 @@ export const FoodFindList = () => {
 										/>
 									}
 								>
-									<Grid container={true} spacing={2}>
+									<Grid container={true} spacing={1}>
 										<Grid size={2} className={"d-row-center"}>
 											<Checkbox
 												key={`check-${i}`}
@@ -224,13 +224,13 @@ export const FoodFindList = () => {
 											/>
 										</Grid>
 										<Grid size={6} className={"d-row-left"}>
-											<Div className={`fs-0-8rem fw-600 ${item.food_name_color}`}>
+											<Div className={`fs-0-75rem fw-600 ${item.food_name_color}`}>
 												{item.food_name}
 											</Div>
 										</Grid>
 										<Grid size={4} className={"d-row-right"}>
-											<Div className={`fs-0-8rem fw-600 ${item.food_count_color}`}>
-												<Div className={`fs-0-8rem fw-500 dark mr-10px`}>
+											<Div className={`fs-0-75rem fw-600 ${item.food_count_color}`}>
+												<Div className={`fs-0-75rem fw-500 dark mr-10px`}>
 													{item.food_brand}
 												</Div>
 											</Div>
@@ -238,12 +238,12 @@ export const FoodFindList = () => {
 									</Grid>
 								</AccordionSummary>
 								<AccordionDetails>
-									<Grid container={true} spacing={2}>
+									<Grid container={true} spacing={1}>
 										{/** row 1 **/}
-										<Grid container={true} spacing={2}>
+										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-row-center"}>
 												<Img
-													max={14}
+													max={12}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -251,14 +251,14 @@ export const FoodFindList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
 													{translate("kcal")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-8rem fw-600 ${item.food_kcal_color}`}>
+														<Div className={`fs-0-75rem fw-600 ${item.food_kcal_color}`}>
 															{insertComma(item.food_kcal || "0")}
 														</Div>
 													</Grid>
@@ -275,10 +275,10 @@ export const FoodFindList = () => {
 										<Hr m={1} className={"bg-light"} />
 
 										{/** row 2 **/}
-										<Grid container={true} spacing={2}>
+										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={14}
+													max={12}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -286,14 +286,14 @@ export const FoodFindList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
 													{translate("carb")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-8rem fw-600 ${item.food_carb_color}`}>
+														<Div className={`fs-0-75rem fw-600 ${item.food_carb_color}`}>
 															{insertComma(item.food_carb || "0")}
 														</Div>
 													</Grid>
@@ -310,10 +310,10 @@ export const FoodFindList = () => {
 										<Hr m={1} className={"bg-light"} />
 
 										{/** row 3 **/}
-										<Grid container={true} spacing={2}>
+										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={14}
+													max={12}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -321,14 +321,14 @@ export const FoodFindList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
 													{translate("protein")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-8rem fw-600 ${item.food_protein_color}`}>
+														<Div className={`fs-0-75rem fw-600 ${item.food_protein_color}`}>
 															{insertComma(item.food_carb || "0")}
 														</Div>
 													</Grid>
@@ -345,10 +345,10 @@ export const FoodFindList = () => {
 										<Hr m={1} className={"bg-light"} />
 
 										{/** row 3 **/}
-										<Grid container={true} spacing={2}>
+										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={14}
+													max={12}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -356,14 +356,14 @@ export const FoodFindList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
 													{translate("fat")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-8rem fw-600 ${item.food_fat_color}`}>
+														<Div className={`fs-0-75rem fw-600 ${item.food_fat_color}`}>
 															{insertComma(item.food_fat || "0")}
 														</Div>
 													</Grid>

@@ -220,7 +220,7 @@ export const UserLogin = () => {
 	const userLoginNode = () => {
 		// 7-1. title
 		const titleSection = () => (
-			<Grid container={true} spacing={2}>
+			<Grid container={true} spacing={1}>
 				<Grid size={12}>
 					<Div className={"fs-1-8rem fw-500"} onClick={() => {
 						setClickCount((prevCount) => {
@@ -305,7 +305,7 @@ export const UserLogin = () => {
 		const checkSection = () => (
 			<Grid container={true} spacing={0}>
 				<Grid size={6} className={"d-row-right"}>
-					<Div className={"d-center fs-0-8rem"}>
+					<Div className={"d-center fs-0-75rem"}>
 						{translate("autoLogin")}
 						<Checkbox
 							color={"primary"}
@@ -318,7 +318,7 @@ export const UserLogin = () => {
 					</Div>
 				</Grid>
 				<Grid size={6} className={"d-row-left"}>
-					<Div className={"fs-0-8rem"}>
+					<Div className={"fs-0-75rem"}>
 						{translate("saveId")}
 						<Checkbox
 							color={"primary"}
@@ -334,13 +334,13 @@ export const UserLogin = () => {
 		);
 		// 7-4. button
 		const buttonSection = () => (
-			<Grid container={true} spacing={2}>
+			<Grid container={true} spacing={1}>
 				{/** row 1 **/}
-				<Grid container={true} spacing={2}>
+				<Grid container={true} spacing={1}>
 					<Grid size={12} className={"d-col-center"}>
 						<Btn
 							color={"primary"}
-							className={"w-100p fs-0-8rem"}
+							className={"w-100p fs-0-75rem"}
 							onClick={() => {
 								flowSave();
 							}}
@@ -352,7 +352,7 @@ export const UserLogin = () => {
 				{/** /.row 1 **/}
 
 				{/** row 2 **/}
-				<Grid container={true} spacing={2}>
+				<Grid container={true} spacing={1}>
 					<Grid size={12} className={"d-col-center"}>
 						<Btn
 							color={"primary"}
@@ -363,13 +363,13 @@ export const UserLogin = () => {
 						>
 							<Div className={"d-row-center"}>
 								<Img
-									max={14}
+									max={12}
 									hover={true}
 									shadow={false}
 									radius={false}
 									src={"user1.webp"}
 								/>
-								<Div className={"fs-0-8rem black ml-10px"}>
+								<Div className={"fs-0-75rem black ml-10px"}>
 									{translate("googleLogin")}
 								</Div>
 							</Div>
@@ -381,14 +381,14 @@ export const UserLogin = () => {
 		);
 		// 7-5. link
 		const linkSection = () => (
-			<Grid container={true} spacing={2}>
+			<Grid container={true} spacing={1}>
 				{/** row 1 **/}
-				<Grid container={true} spacing={2}>
+				<Grid container={true} spacing={1}>
 					<Grid size={12} className={"d-row-center"}>
-						<Div className={"fs-0-8rem black mr-10px"}>
+						<Div className={"fs-0-75rem black mr-10px"}>
 							{translate("notId")}
 						</Div>
-						<Div className={"fs-0-8rem blue pointer"} onClick={() => {
+						<Div className={"fs-0-75rem blue pointer"} onClick={() => {
 							navigate("/user/signup");
 						}}>
 							{translate("signup")}
@@ -398,12 +398,12 @@ export const UserLogin = () => {
 				{/** /.row 1 **/}
 
 				{/** row 2 **/}
-				<Grid container={true} spacing={2}>
+				<Grid container={true} spacing={1}>
 					<Grid size={12} className={"d-row-center"}>
-						<Div className={"fs-0-8rem black mr-10px"}>
+						<Div className={"fs-0-75rem black mr-10px"}>
 							{translate("forgotPw")}
 						</Div>
-						<Div className={"fs-0-8rem blue pointer"} onClick={() => {
+						<Div className={"fs-0-75rem blue pointer"} onClick={() => {
 							navigate("/user/resetPw");
 						}}>
 							{translate("resetPw")}

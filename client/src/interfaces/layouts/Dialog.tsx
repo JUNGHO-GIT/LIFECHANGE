@@ -433,7 +433,7 @@ export const Dialog = (
             tooltipTitle={translate("locale")}
             className={open ? "" : "d-none"}
             icon={
-              <Div className={"fw-800 fs-0-8rem"}>
+              <Div className={"fw-800 fs-0-75rem"}>
                 {localIsoCode}
               </Div>
             }

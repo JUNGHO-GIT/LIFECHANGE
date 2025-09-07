@@ -36,14 +36,14 @@ export const Empty = (
 						expanded={false}
 					>
 						<AccordionSummary>
-							<Grid container={true} spacing={2}>
+							<Grid container={true} spacing={1}>
 								<Grid size={4} className={"d-row-left"}>
-									<Div className={"fs-0-8rem fw-600 dark"}>
+									<Div className={"fs-0-75rem fw-600 dark"}>
 										{translate("search")}
 									</Div>
 								</Grid>
 								<Grid size={8} className={"d-row-left"}>
-									<Div className={"fs-0-8rem fw-500"}>
+									<Div className={"fs-0-75rem fw-500"}>
 										{translate("notFound")}
 									</Div>
 								</Grid>
@@ -73,21 +73,21 @@ export const Empty = (
 								});
 							}}
 						>
-							<Grid container={true} spacing={2}>
+							<Grid container={true} spacing={1}>
 								<Grid size={2} className={"d-row-center"}>
 									<Icons
 										key={"Search"}
 										name={"Search"}
-										className={"w-18px h-18px"}
+										className={"w-16px h-16px"}
 									/>
 								</Grid>
 								<Grid size={4} className={"d-row-left"}>
-									<Div className={"fs-0-8rem fw-600 dark"}>
+									<Div className={"fs-0-75rem fw-600 dark"}>
 										{translate(`${extra}`)}
 									</Div>
 								</Grid>
 								<Grid size={6} className={"d-row-left"}>
-									<Div className={"fs-0-8rem fw-500"}>
+									<Div className={"fs-0-75rem fw-500"}>
 										{translate("empty")}
 									</Div>
 								</Grid>
@@ -117,21 +117,21 @@ export const Empty = (
 								});
 							}}
 						>
-							<Grid container={true} spacing={2}>
+							<Grid container={true} spacing={1}>
 								<Grid size={2} className={"d-row-center"}>
 									<Icons
 										key={"Search"}
 										name={"Search"}
-										className={"w-18px h-18px"}
+										className={"w-16px h-16px"}
 									/>
 								</Grid>
 								<Grid size={4} className={"d-row-left"}>
-									<Div className={"fs-0-8rem fw-600 dark"}>
+									<Div className={"fs-0-75rem fw-600 dark"}>
 										{translate(`${extra}`)}
 									</Div>
 								</Grid>
 								<Grid size={6} className={"d-row-left"}>
-									<Div className={"fs-0-8rem fw-500"}>
+									<Div className={"fs-0-75rem fw-500"}>
 										{translate("empty")}
 									</Div>
 								</Grid>

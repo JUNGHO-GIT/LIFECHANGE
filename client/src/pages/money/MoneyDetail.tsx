@@ -363,7 +363,7 @@ export const MoneyDetail = () => {
     const totalSection = () => (
 			<Grid container={true} spacing={2} className={`border-1 radius-2 shadow-1 p-20px`}>
         {/** row 1 **/}
-        <Grid container={true} spacing={2}>
+        <Grid container={true} spacing={1}>
           <Grid size={12}>
             <Input
               locked={LOCKED}
@@ -372,7 +372,7 @@ export const MoneyDetail = () => {
               value={insertComma(OBJECT?.money_total_income || "0")}
               startadornment={
                 <Img
-                  max={14}
+                  max={12}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -388,7 +388,7 @@ export const MoneyDetail = () => {
         {/** /.row 1 **/}
 
         {/** row 2 **/}
-        <Grid container={true} spacing={2}>
+        <Grid container={true} spacing={1}>
           <Grid size={12}>
             <Input
               locked={LOCKED}
@@ -397,7 +397,7 @@ export const MoneyDetail = () => {
               value={insertComma(OBJECT?.money_total_expense || "0")}
               startadornment={
                 <Img
-                  max={14}
+                  max={12}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -419,7 +419,7 @@ export const MoneyDetail = () => {
 					<Grid container spacing={2} key={`detail-${i}`}
 					className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}>
 						{/** row 1 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6} className={"d-row-left"}>
 								<Bg
 									badgeContent={i + 1}
@@ -437,7 +437,7 @@ export const MoneyDetail = () => {
 						{/** /.row 1 **/}
 
 						{/** row 2 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6}>
 								<Select
 									locked={LOCKED}
@@ -463,7 +463,7 @@ export const MoneyDetail = () => {
 										<MenuItem
 											key={idx}
 											value={part.money_part}
-											className={"fs-0-8rem"}
+											className={"fs-0-75rem"}
 										>
 											{translate(part.money_part)}
 										</MenuItem>
@@ -494,7 +494,7 @@ export const MoneyDetail = () => {
 										<MenuItem
 											key={idx}
 											value={title}
-											className={"fs-0-8rem"}
+											className={"fs-0-75rem"}
 										>
 											{translate(title)}
 										</MenuItem>
@@ -505,7 +505,7 @@ export const MoneyDetail = () => {
 						{/** /.row 2 **/}
 
 						{/** row 3 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
@@ -515,7 +515,7 @@ export const MoneyDetail = () => {
 									error={ERRORS?.[i]?.money_amount}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -553,7 +553,7 @@ export const MoneyDetail = () => {
 						{/** /.row 3 **/}
 
 						{/** row 4 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={{ xs: 7, sm: 8 }} className={"d-center"}>
 								<Memo
 									OBJECT={OBJECT}

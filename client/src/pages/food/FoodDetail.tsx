@@ -512,7 +512,7 @@ export const FoodDetail = () => {
     const totalSection = () => (
 			<Grid container={true} spacing={2} className={`border-1 radius-2 shadow-1 p-20px`}>
         {/** row 1 **/}
-        <Grid container={true} spacing={2}>
+        <Grid container={true} spacing={1}>
           <Grid size={6}>
             <Input
               locked={LOCKED}
@@ -521,7 +521,7 @@ export const FoodDetail = () => {
               value={insertComma(OBJECT?.food_total_kcal || "0")}
               startadornment={
                 <Img
-                  max={14}
+                  max={12}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -541,7 +541,7 @@ export const FoodDetail = () => {
               value={insertComma(OBJECT?.food_total_carb || "0")}
               startadornment={
                 <Img
-                  max={14}
+                  max={12}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -557,7 +557,7 @@ export const FoodDetail = () => {
         {/** /.row 1 **/}
 
         {/** row 2 **/}
-        <Grid container={true} spacing={2}>
+        <Grid container={true} spacing={1}>
           <Grid size={6}>
             <Input
               locked={LOCKED}
@@ -566,7 +566,7 @@ export const FoodDetail = () => {
               value={insertComma(OBJECT?.food_total_protein || "0")}
               startadornment={
                 <Img
-                  max={14}
+                  max={12}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -586,7 +586,7 @@ export const FoodDetail = () => {
               value={insertComma(OBJECT?.food_total_fat || "0")}
               startadornment={
                 <Img
-                  max={14}
+                  max={12}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -609,7 +609,7 @@ export const FoodDetail = () => {
 					<Grid container spacing={2} key={`detail-${i}`}
 					className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}>
 						{/** row 1 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6} className={"d-row-left"}>
 								<Bg
 									badgeContent={i + 1}
@@ -644,7 +644,7 @@ export const FoodDetail = () => {
 						{/** /.row 1 **/}
 
 						{/** row 2 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6}>
 								<Select
 									locked={LOCKED}
@@ -669,7 +669,7 @@ export const FoodDetail = () => {
 										<MenuItem
 											key={idx}
 											value={part.food_part}
-											className={"fs-0-8rem"}
+											className={"fs-0-75rem"}
 										>
 											{translate(part.food_part)}
 										</MenuItem>
@@ -759,7 +759,7 @@ export const FoodDetail = () => {
 						{/** /.row 2 **/}
 
 						{/** row 3 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6}>
 								<Input
 									locked={LOCKED}
@@ -820,7 +820,7 @@ export const FoodDetail = () => {
 						{/** /.row 3 **/}
 
 						{/** row 4 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6}>
 								<Input
 									locked={LOCKED}
@@ -830,7 +830,7 @@ export const FoodDetail = () => {
 									error={ERRORS?.[i]?.food_kcal}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -873,7 +873,7 @@ export const FoodDetail = () => {
 									error={ERRORS?.[i]?.food_carb}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -911,7 +911,7 @@ export const FoodDetail = () => {
 						{/** /.row 4 **/}
 
 						{/** row 5 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6}>
 								<Input
 									locked={LOCKED}
@@ -921,7 +921,7 @@ export const FoodDetail = () => {
 									error={ERRORS?.[i]?.food_protein}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -964,7 +964,7 @@ export const FoodDetail = () => {
 									error={ERRORS?.[i]?.food_fat}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}

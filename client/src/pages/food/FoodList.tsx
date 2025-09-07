@@ -148,7 +148,7 @@ export const FoodList = () => {
 									<Icons
 										key={"ChevronDown"}
 										name={"ChevronDown"}
-										className={"w-18px h-18px"}
+										className={"w-16px h-16px"}
 										onClick={(e: any) => {
 											e.preventDefault();
 											e.stopPropagation();
@@ -170,16 +170,16 @@ export const FoodList = () => {
 										}
 									});
 								}}>
-									<Grid container={true} spacing={2}>
+									<Grid container={true} spacing={1}>
 										<Grid size={2} className={"d-row-center"}>
 											<Icons
 												key={"Search"}
 												name={"Search"}
-												className={"w-18px h-18px"}
+												className={"w-16px h-16px"}
 											/>
 										</Grid>
 										<Grid size={10} className={"d-row-left"}>
-											<Div className={"fs-0-8rem fw-600 black mr-5px"}>
+											<Div className={"fs-0-75rem fw-600 black mr-5px"}>
 												{item.food_dateStart?.substring(5, 10)}
 											</Div>
 											<Div className={"fs-0-9rem fw-500 dark ml-5px"}>
@@ -189,12 +189,12 @@ export const FoodList = () => {
 									</Grid>
 								</AccordionSummary>
 								<AccordionDetails>
-									<Grid container={true} spacing={2}>
+									<Grid container={true} spacing={1}>
 										{/** row 1 **/}
-										<Grid container={true} spacing={2}>
+										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-row-center"}>
 												<Img
-													max={14}
+													max={12}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -202,14 +202,14 @@ export const FoodList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
 													{translate("kcal")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-8rem fw-600 ${item.food_total_kcal_color}`}>
+														<Div className={`fs-0-75rem fw-600 ${item.food_total_kcal_color}`}>
 															{insertComma(item.food_total_kcal || "0")}
 														</Div>
 													</Grid>
@@ -226,10 +226,10 @@ export const FoodList = () => {
 										<Hr m={1} className={"bg-light"} />
 
 										{/** row 2 **/}
-										<Grid container={true} spacing={2}>
+										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={14}
+													max={12}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -237,14 +237,14 @@ export const FoodList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
 													{translate("carb")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-8rem fw-600 ${item.food_total_carb_color}`}>
+														<Div className={`fs-0-75rem fw-600 ${item.food_total_carb_color}`}>
 															{insertComma(item.food_total_carb || "0")}
 														</Div>
 													</Grid>
@@ -261,10 +261,10 @@ export const FoodList = () => {
 										<Hr m={1} className={"bg-light"} />
 
 										{/** row 3 **/}
-										<Grid container={true} spacing={2}>
+										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={14}
+													max={12}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -272,14 +272,14 @@ export const FoodList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
 													{translate("protein")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-8rem fw-600 ${item.food_total_protein_color}`}>
+														<Div className={`fs-0-75rem fw-600 ${item.food_total_protein_color}`}>
 															{insertComma(item.food_total_protein || "0")}
 														</Div>
 													</Grid>
@@ -296,10 +296,10 @@ export const FoodList = () => {
 										<Hr m={1} className={"bg-light"} />
 
 										{/** row 4 **/}
-										<Grid container={true} spacing={2}>
+										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={14}
+													max={12}
 													hover={true}
 													shadow={false}
 													radius={false}
@@ -307,14 +307,14 @@ export const FoodList = () => {
 												/>
 											</Grid>
 											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
+												<Div className={"fs-0-75rem fw-600 dark ml-n15px"}>
 													{translate("fat")}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-8rem fw-600 ${item.food_total_fat_color}`}>
+														<Div className={`fs-0-75rem fw-600 ${item.food_total_fat_color}`}>
 															{insertComma(item.food_total_fat || "0")}
 														</Div>
 													</Grid>

@@ -370,7 +370,7 @@ export const ExerciseDetail = () => {
     const totalSection = () => (
 			<Grid container={true} spacing={2} className={`border-1 radius-2 shadow-1 p-20px`}>
         {/** row 1 **/}
-        <Grid container={true} spacing={2}>
+        <Grid container={true} spacing={1}>
           <Grid size={12}>
             <Input
               locked={LOCKED}
@@ -379,7 +379,7 @@ export const ExerciseDetail = () => {
               value={insertComma(OBJECT?.exercise_total_volume || "0")}
               startadornment={
                 <Img
-                  max={14}
+                  max={12}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -395,7 +395,7 @@ export const ExerciseDetail = () => {
         {/** /.row 1 **/}
 
         {/** row 2 **/}
-        <Grid container={true} spacing={2}>
+        <Grid container={true} spacing={1}>
           <Grid size={12}>
             <Input
               locked={LOCKED}
@@ -404,7 +404,7 @@ export const ExerciseDetail = () => {
               value={OBJECT?.exercise_total_cardio}
               startadornment={
                 <Img
-                  max={14}
+                  max={12}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -420,14 +420,14 @@ export const ExerciseDetail = () => {
         {/** /.row 2 **/}
 
         {/** row 3 **/}
-        <Grid container={true} spacing={2}>
+        <Grid container={true} spacing={1}>
           <Grid size={12}>
             <Input
               label={translate("scale")}
               value={insertComma(OBJECT?.exercise_total_scale || "0")}
               startadornment={
                 <Img
-                  max={14}
+                  max={12}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -467,7 +467,7 @@ export const ExerciseDetail = () => {
 					<Grid container spacing={2} key={`detail-${i}`}
 					className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}>
 						{/** row 1 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6} className={"d-row-left"}>
 								<Bg
 									badgeContent={i + 1}
@@ -485,7 +485,7 @@ export const ExerciseDetail = () => {
 						{/** /.row 1 **/}
 
 						{/** row 2 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6}>
 								<Select
 									locked={LOCKED}
@@ -511,7 +511,7 @@ export const ExerciseDetail = () => {
 										<MenuItem
 											key={idx}
 											value={part.exercise_part}
-											className={"fs-0-8rem"}
+											className={"fs-0-75rem"}
 										>
 											{translate(part.exercise_part)}
 										</MenuItem>
@@ -542,7 +542,7 @@ export const ExerciseDetail = () => {
 										<MenuItem
 											key={idx}
 											value={title}
-											className={"fs-0-8rem"}
+											className={"fs-0-75rem"}
 										>
 											{translate(title)}
 										</MenuItem>
@@ -553,7 +553,7 @@ export const ExerciseDetail = () => {
 						{/** /.row 2 **/}
 
 						{/** row 3 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6}>
 								<Input
 									locked={LOCKED}
@@ -563,7 +563,7 @@ export const ExerciseDetail = () => {
 									error={ERRORS?.[i]?.exercise_set}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -606,7 +606,7 @@ export const ExerciseDetail = () => {
 									error={ERRORS?.[i]?.exercise_rep}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -644,7 +644,7 @@ export const ExerciseDetail = () => {
 						{/** /.row 3 **/}
 
 						{/** row 4 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6}>
 								<Input
 									locked={LOCKED}
@@ -654,7 +654,7 @@ export const ExerciseDetail = () => {
 									error={ERRORS?.[i]?.exercise_weight}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}

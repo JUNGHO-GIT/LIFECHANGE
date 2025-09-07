@@ -237,14 +237,14 @@ export const CalendarDetail = () => {
 								<Grid size={12} className={`d-row`}>
 									<Div className={`d-row-left`}>
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
 											src={"exercise1.webp"}
 											className={`ml-5px mr-10px`}
 										/>
-										<Div className={`fw-600 fs-0-8rem`}>
+										<Div className={`fw-600 fs-0-75rem`}>
 											{translate(`exercise`)}
 										</Div>
 									</Div>
@@ -252,7 +252,7 @@ export const CalendarDetail = () => {
 							</Grid>
 						)}
 						{/** row 1 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6} className={`d-row-left`}>
 								<Bg
 									badgeContent={i + 1}
@@ -272,7 +272,7 @@ export const CalendarDetail = () => {
 						{/** /.row 1 **/}
 
 						{/** row 2 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6}>
 								<Select
 									locked={LOCKED}
@@ -298,7 +298,7 @@ export const CalendarDetail = () => {
 										<MenuItem
 											key={idx}
 											value={part.exercise_part}
-											className={`fs-0-8rem`}
+											className={`fs-0-75rem`}
 										>
 											{translate(part.exercise_part)}
 										</MenuItem>
@@ -329,7 +329,7 @@ export const CalendarDetail = () => {
 										<MenuItem
 											key={idx}
 											value={title}
-											className={`fs-0-8rem`}
+											className={`fs-0-75rem`}
 										>
 											{translate(title)}
 										</MenuItem>
@@ -340,7 +340,7 @@ export const CalendarDetail = () => {
 						{/** /.row 2 **/}
 
 						{/** row 3 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6}>
 								<Input
 									locked={LOCKED}
@@ -350,7 +350,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.exercise_set}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -385,7 +385,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.exercise_rep}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -415,7 +415,7 @@ export const CalendarDetail = () => {
 						{/** /.row 3 **/}
 
 						{/** row 4 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6}>
 								<Input
 									locked={LOCKED}
@@ -425,7 +425,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.exercise_weight}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -482,14 +482,14 @@ export const CalendarDetail = () => {
 								<Grid size={12} className={`d-row`}>
 									<Div className={`d-row-left`}>
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
 											src={"food1.webp"}
 											className={`ml-5px mr-10px`}
 										/>
-										<Div className={`fw-600 fs-0-8rem`}>
+										<Div className={`fw-600 fs-0-75rem`}>
 											{translate(`food`)}
 										</Div>
 									</Div>
@@ -497,7 +497,7 @@ export const CalendarDetail = () => {
 							</Grid>
 						)}
 						{/** row 1 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6} className={`d-row-left`}>
 								<Bg
 									badgeContent={i + 1}
@@ -517,7 +517,7 @@ export const CalendarDetail = () => {
 						{/** /.row 1 **/}
 
 						{/** row 2 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6}>
 								<Select
 									locked={LOCKED}
@@ -542,7 +542,7 @@ export const CalendarDetail = () => {
 										<MenuItem
 											key={idx}
 											value={part.food_part}
-											className={`fs-0-8rem`}
+											className={`fs-0-75rem`}
 										>
 											{translate(part.food_part)}
 										</MenuItem>
@@ -615,7 +615,7 @@ export const CalendarDetail = () => {
 						{/** /.row 2 **/}
 
 						{/** row 3 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6}>
 								<Input
 									locked={LOCKED}
@@ -668,7 +668,7 @@ export const CalendarDetail = () => {
 						{/** /.row 3 **/}
 
 						{/** row 4 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6}>
 								<Input
 									locked={LOCKED}
@@ -678,7 +678,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.food_kcal}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -713,7 +713,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.food_carb}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -743,7 +743,7 @@ export const CalendarDetail = () => {
 						{/** /.row 4 **/}
 
 						{/** row 5 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6}>
 								<Input
 									locked={LOCKED}
@@ -753,7 +753,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.food_protein}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -788,7 +788,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.food_fat}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -833,14 +833,14 @@ export const CalendarDetail = () => {
 								<Grid size={12} className={`d-row`}>
 									<Div className={`d-row-left`}>
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
 											src={"money1.webp"}
 											className={`ml-5px mr-10px`}
 										/>
-										<Div className={`fw-600 fs-0-8rem`}>
+										<Div className={`fw-600 fs-0-75rem`}>
 											{translate(`money`)}
 										</Div>
 									</Div>
@@ -848,7 +848,7 @@ export const CalendarDetail = () => {
 							</Grid>
 						)}
 						{/** row 1 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6} className={`d-row-left`}>
 								<Bg
 									badgeContent={i + 1}
@@ -868,7 +868,7 @@ export const CalendarDetail = () => {
 						{/** /.row 1 **/}
 
 						{/** row 2 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6}>
 								<Select
 									locked={LOCKED}
@@ -894,7 +894,7 @@ export const CalendarDetail = () => {
 										<MenuItem
 											key={idx}
 											value={part.money_part}
-											className={`fs-0-8rem`}
+											className={`fs-0-75rem`}
 										>
 											{translate(part.money_part)}
 										</MenuItem>
@@ -925,7 +925,7 @@ export const CalendarDetail = () => {
 										<MenuItem
 											key={idx}
 											value={title}
-											className={`fs-0-8rem`}
+											className={`fs-0-75rem`}
 										>
 											{translate(title)}
 										</MenuItem>
@@ -936,7 +936,7 @@ export const CalendarDetail = () => {
 						{/** /.row 2 **/}
 
 						{/** row 3 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
@@ -946,7 +946,7 @@ export const CalendarDetail = () => {
 									error={ERRORS?.[i]?.money_amount}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -976,7 +976,7 @@ export const CalendarDetail = () => {
 						{/** /.row 3 **/}
 
 						{/** row 4 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={{xs: 7, sm: 8}} className={`d-center`}>
 								<Memo
 									OBJECT={OBJECT}
@@ -1027,14 +1027,14 @@ export const CalendarDetail = () => {
 								<Grid size={12} className={`d-row`}>
 									<Div className={`d-row-left`}>
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
 											src={"sleep1.webp"}
 											className={`ml-5px mr-10px`}
 										/>
-										<Div className={`fw-600 fs-0-8rem`}>
+										<Div className={`fw-600 fs-0-75rem`}>
 											{translate(`sleep`)}
 										</Div>
 									</Div>
@@ -1042,7 +1042,7 @@ export const CalendarDetail = () => {
 							</Grid>
 						)}
 						{/** row 1 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6} className={`d-row-left`}>
 								<Bg
 									badgeContent={i + 1}
@@ -1062,7 +1062,7 @@ export const CalendarDetail = () => {
 						{/** /.row 1 **/}
 
 						{/** row 2 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={12}>
 								<PickerTime
 									OBJECT={OBJECT}
@@ -1079,7 +1079,7 @@ export const CalendarDetail = () => {
 						{/** /.row 2 **/}
 
 						{/** row 3 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={12}>
 								<PickerTime
 									OBJECT={OBJECT}
@@ -1096,7 +1096,7 @@ export const CalendarDetail = () => {
 						{/** /.row 3 **/}
 
 						{/** row 4 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={12}>
 								<PickerTime
 									OBJECT={OBJECT}

@@ -88,8 +88,8 @@ export const PickerDay = (
 			setDateClassInList("h-min-0px h-5vh fs-0-7rem pointer");
 		}
 		else {
-			setDateClassInSave("h-min-40px fs-0-8rem pointer");
-			setDateClassInList("h-min-40px fs-0-8rem pointer");
+			setDateClassInSave("h-min-40px fs-0-75rem pointer");
+			setDateClassInList("h-min-40px fs-0-75rem pointer");
 		}
 	}, []);
 
@@ -648,7 +648,7 @@ export const PickerDay = (
 							<Div className={"fs-1-2rem fw-600 mr-10px"}>
 								{translate("viewDay")}
 							</Div>
-							<Div className={"fs-0-8rem fw-500 dark"}>
+							<Div className={"fs-0-75rem fw-500 dark"}>
 								{`[${handlerToMnDd(getDayFmt(DATE.dateStart))}]`}
 							</Div>
 						</Grid>
@@ -843,7 +843,7 @@ export const PickerDay = (
 							<Div className={"fs-1-2rem fw-600 mr-10px"}>
 								{translate("viewWeek")}
 							</Div>
-							<Div className={"fs-0-8rem fw-500 dark"}>
+							<Div className={"fs-0-75rem fw-500 dark"}>
 								{`[${handlerToMnDd(getWeekStartFmt(DATE.dateStart))} - ${handlerToMnDd(getWeekEndFmt(DATE.dateEnd))}]`}
 							</Div>
 						</Grid>
@@ -1053,7 +1053,7 @@ export const PickerDay = (
 							<Div className={"fs-1-2rem fw-600 mr-10px"}>
 								{translate("viewMonth")}
 							</Div>
-							<Div className={"fs-0-8rem fw-500 dark"}>
+							<Div className={"fs-0-75rem fw-500 dark"}>
 								{`[${handlerToMnDd(getMonthStartFmt(DATE.dateStart))} - ${handlerToMnDd(getMonthEndFmt(DATE.dateEnd))}]`}
 							</Div>
 						</Grid>
@@ -1246,7 +1246,7 @@ export const PickerDay = (
 							<Div className={"fs-1-2rem fw-600 mr-10px"}>
 								{translate("viewYear")}
 							</Div>
-							<Div className={"fs-0-8rem fw-500 dark"}>
+							<Div className={"fs-0-75rem fw-500 dark"}>
 								{`[${handlerToMnDd(getYearStartFmt(DATE.dateStart))} - ${handlerToMnDd(getYearEndFmt(DATE.dateEnd))}]`}
 							</Div>
 						</Grid>

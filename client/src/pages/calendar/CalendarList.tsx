@@ -104,7 +104,7 @@ export const CalendarList = () => {
 
 		// 7-2. title
 		const titleSection = () => (
-			<Grid container={true} spacing={2}>
+			<Grid container={true} spacing={1}>
 				<Grid size={3} className={"d-row-left"}>
 					<Icons
 						key={"ArrowLeft"}

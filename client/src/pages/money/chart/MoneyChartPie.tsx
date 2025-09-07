@@ -258,7 +258,7 @@ export const MoneyChartPie = () => {
   const chartNode = () => {
     // 7-1. head
     const headSection = () => (
-			<Grid container={true} spacing={2}>
+			<Grid container={true} spacing={1}>
 				<Grid size={3} className={"d-row-left"}>
 					<Select
 						value={TYPE.section}
@@ -275,10 +275,10 @@ export const MoneyChartPie = () => {
 					</Select>
 				</Grid>
 				<Grid size={6} className={"d-row-center"}>
-					<Div className={"fs-0-8rem fw-600"}>
+					<Div className={"fs-0-75rem fw-600"}>
 						{translate("chartPie")}
 					</Div>
-					<Div className={"fs-0-8rem fw-500 grey ml-10px"}>
+					<Div className={"fs-0-75rem fw-500 grey ml-10px"}>
 						{`[${translate(TYPE.line)}]`}
 					</Div>
 				</Grid>

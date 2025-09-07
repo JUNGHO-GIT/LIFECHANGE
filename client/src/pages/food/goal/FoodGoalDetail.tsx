@@ -303,7 +303,7 @@ export const FoodGoalDetail = () => {
 					<Grid container spacing={2} key={`detail-${i}`}
 					className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}>
 						{/** row 1 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={6} className={"d-row-left"}>
 								<Bg
 									badgeContent={i + 1}
@@ -321,7 +321,7 @@ export const FoodGoalDetail = () => {
 						{/** /.row 1 **/}
 
 						{/** row 2 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
@@ -337,7 +337,7 @@ export const FoodGoalDetail = () => {
 									}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -370,7 +370,7 @@ export const FoodGoalDetail = () => {
 						{/** /.row 2 **/}
 
 						{/** row 3 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
@@ -386,7 +386,7 @@ export const FoodGoalDetail = () => {
 									}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -419,7 +419,7 @@ export const FoodGoalDetail = () => {
 						{/** /.row 3 **/}
 
 						{/** row 4 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
@@ -435,7 +435,7 @@ export const FoodGoalDetail = () => {
 									}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -468,7 +468,7 @@ export const FoodGoalDetail = () => {
 						{/** /.row 4 **/}
 
 						{/** row 5 **/}
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
@@ -484,7 +484,7 @@ export const FoodGoalDetail = () => {
 									}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}

@@ -42,7 +42,7 @@ export const Count = (
       <Input
         label={translate("itemLock")}
         value={translate(LOCKED) || ""}
-        inputclass={`fs-0-8rem pointer`}
+        inputclass={`fs-0-75rem pointer`}
         adornmentclass={"ml-n10px"}
 				disabled={disabled}
         onClick={() => {

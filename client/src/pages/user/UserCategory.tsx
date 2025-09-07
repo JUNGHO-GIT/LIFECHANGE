@@ -516,12 +516,12 @@ export const UserCategory = () => {
 			<Grid container={true} spacing={2} className={`border-1 radius-2 shadow-1`}>
 				{[OBJECT]?.map((item, i) => (
 					<Grid size={12} key={`detail-${i}`}>
-						<Grid container={true} spacing={2}>
+						<Grid container={true} spacing={1}>
 							<TableContainer className={"border-1 radius-2 over-x-hidden"}>
 								<Table>
 									<TableHead className={"table-thead"}>
 										<TableRow className={"table-thead-tr"}>
-											<TableCell className={"fs-0-8rem"}>
+											<TableCell className={"fs-0-75rem"}>
 												{translate("dataCategory1")}
 											</TableCell>
 										</TableRow>
@@ -531,10 +531,10 @@ export const UserCategory = () => {
 											<TableRow className={"table-tbody-tr border-top-1"} key={idx}>
 												<TableCell className={`${dataType === item ? "bg-light" : ""}`}>
 													<Div className={"d-center"}>
-														<Div className={"fs-0-8rem ml-0px"}>
+														<Div className={"fs-0-75rem ml-0px"}>
 															{translate(item)}
 														</Div>
-														<Div className={"fs-0-8rem ml-auto"}>
+														<Div className={"fs-0-75rem ml-auto"}>
 														<PopUp
 															type={"innerCenter"}
 															position={"center"}

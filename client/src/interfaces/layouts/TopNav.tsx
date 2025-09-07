@@ -356,11 +356,11 @@ export const TopNav = () => {
           <Div className={"w-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px"}>
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-col-center"}>
-                <Div className={"fs-0-8rem fw-600"}>
+                <Div className={"fs-0-75rem fw-600"}>
                   {translate("monthScore")}
                 </Div>
                 <Br m={10} />
-                <Div className={"fs-0-8rem fw-500 dark"}>
+                <Div className={"fs-0-75rem fw-500 dark"}>
                   {`[${getMonthStartFmt()} - ${getMonthEndFmt()}]`}
                 </Div>
               </Grid>
@@ -406,7 +406,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
               <Grid size={6} className={"d-row-left"}>
-                <Div className={"fs-0-8rem fw-600 black"}>
+                <Div className={"fs-0-75rem fw-600 black"}>
                   {smileScore.exercise}
                 </Div>
               </Grid>
@@ -429,7 +429,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
               <Grid size={6} className={"d-row-left"}>
-                <Div className={"fs-0-8rem fw-600 black"}>
+                <Div className={"fs-0-75rem fw-600 black"}>
                   {smileScore.food}
                 </Div>
               </Grid>
@@ -452,7 +452,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
               <Grid size={6} className={"d-row-left"}>
-                <Div className={"fs-0-8rem fw-600 black"}>
+                <Div className={"fs-0-75rem fw-600 black"}>
                   {smileScore.money}
                 </Div>
               </Grid>
@@ -475,7 +475,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
               <Grid size={6} className={"d-row-left"}>
-                <Div className={"fs-0-8rem fw-600 black"}>
+                <Div className={"fs-0-75rem fw-600 black"}>
                   {smileScore.sleep}
                 </Div>
               </Grid>
@@ -483,7 +483,7 @@ export const TopNav = () => {
             <Hr m={30} />
             <Grid container={true} spacing={0}>
               <Grid size={12} className={"d-center"}>
-                <Div className={"fs-0-8rem"}>
+                <Div className={"fs-0-75rem"}>
                   {translate("score")}
                 </Div>
               </Grid>
@@ -522,7 +522,7 @@ export const TopNav = () => {
                   {`${translate("scale")}`}
                 </Div>
                 <Br m={10} />
-                <Div className={"fs-0-8rem fw-500 dark"}>
+                <Div className={"fs-0-75rem fw-500 dark"}>
                   {`[${scale?.dateStart} - ${scale?.dateEnd}]`}
                 </Div>
               </Grid>
@@ -531,7 +531,7 @@ export const TopNav = () => {
             <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
-                  max={14}
+                  max={12}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -540,7 +540,7 @@ export const TopNav = () => {
                 />
               </Grid>
               <Grid size={8} className={"d-row-left"}>
-                <Div className={"fs-0-8rem fw-500 dark"}>
+                <Div className={"fs-0-75rem fw-500 dark"}>
                   {`${translate("initValue")} : `}
                 </Div>
               </Grid>
@@ -559,7 +559,7 @@ export const TopNav = () => {
             <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
-                  max={14}
+                  max={12}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -568,7 +568,7 @@ export const TopNav = () => {
                 />
               </Grid>
               <Grid size={8} className={"d-row-left"}>
-                <Div className={"fs-0-8rem fw-500 dark"}>
+                <Div className={"fs-0-75rem fw-500 dark"}>
                   {`${translate("curValue")} : `}
                 </Div>
               </Grid>
@@ -592,7 +592,7 @@ export const TopNav = () => {
                   value={insertComma(scale.minScale || "0")}
                   startadornment={
                     <Img
-                      max={14}
+                      max={12}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -614,7 +614,7 @@ export const TopNav = () => {
                   value={insertComma(scale.maxScale || "0")}
                   startadornment={
                     <Img
-                      max={14}
+                      max={12}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -661,7 +661,7 @@ export const TopNav = () => {
                   {`${translate("intakeNutrition")}`}
                 </Div>
                 <Br m={10} />
-                <Div className={"fs-0-8rem fw-500 dark"}>
+                <Div className={"fs-0-75rem fw-500 dark"}>
                   {`[${nutrition?.dateStart} - ${nutrition?.dateEnd}]`}
                 </Div>
                 <Br m={10} />
@@ -693,7 +693,7 @@ export const TopNav = () => {
             <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
-                  max={14}
+                  max={12}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -701,7 +701,7 @@ export const TopNav = () => {
                 />
               </Grid>
               <Grid size={8} className={"d-row-left"}>
-                <Div className={"fs-0-8rem fw-500 dark"}>
+                <Div className={"fs-0-75rem fw-500 dark"}>
                   {`${translate("initAvg")} : `}
                 </Div>
               </Grid>
@@ -720,7 +720,7 @@ export const TopNav = () => {
             <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
-                  max={14}
+                  max={12}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -728,7 +728,7 @@ export const TopNav = () => {
                 />
               </Grid>
               <Grid size={8} className={"d-row-left"}>
-                <Div className={"fs-0-8rem fw-500 dark"}>
+                <Div className={"fs-0-75rem fw-500 dark"}>
                   {nutritionType === "avg" ? (
                     (`${translate("curAvg")} : `)
                   ) : (
@@ -772,7 +772,7 @@ export const TopNav = () => {
                   }
                   startadornment={
                     <Img
-                      max={14}
+                      max={12}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -806,7 +806,7 @@ export const TopNav = () => {
                   }
                   startadornment={
                     <Img
-                      max={14}
+                      max={12}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -840,7 +840,7 @@ export const TopNav = () => {
                   }
                   startadornment={
                     <Img
-                      max={14}
+                      max={12}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -887,7 +887,7 @@ export const TopNav = () => {
                   {`${translate("property")}`}
                 </Div>
                 <Br m={10} />
-                <Div className={"fs-0-8rem fw-500 dark"}>
+                <Div className={"fs-0-75rem fw-500 dark"}>
                   {`[${property?.dateStart} - ${property?.dateEnd}]`}
                 </Div>
                 <Br m={10} />
@@ -909,7 +909,7 @@ export const TopNav = () => {
             <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
-                  max={14}
+                  max={12}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -917,7 +917,7 @@ export const TopNav = () => {
                 />
               </Grid>
               <Grid size={8} className={"d-row-left"}>
-                <Div className={"fs-0-8rem fw-500 dark"}>
+                <Div className={"fs-0-75rem fw-500 dark"}>
                   {`${translate("initValue")} : `}
                 </Div>
               </Grid>
@@ -936,7 +936,7 @@ export const TopNav = () => {
             <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={"d-row-center"}>
                 <Img
-                  max={14}
+                  max={12}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -944,7 +944,7 @@ export const TopNav = () => {
                 />
               </Grid>
               <Grid size={8} className={"d-row-left"}>
-                <Div className={"fs-0-8rem fw-500 dark"}>
+                <Div className={"fs-0-75rem fw-500 dark"}>
                   {`${translate("curValue")} : `}
                 </Div>
               </Grid>
@@ -978,7 +978,7 @@ export const TopNav = () => {
                   }
                   startadornment={
                     <Img
-                      max={14}
+                      max={12}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -1006,7 +1006,7 @@ export const TopNav = () => {
                   }
                   startadornment={
                     <Img
-                      max={14}
+                      max={12}
                       hover={true}
                       shadow={false}
                       radius={false}

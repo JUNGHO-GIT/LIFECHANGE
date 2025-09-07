@@ -205,7 +205,7 @@ export const UserDelete = () => {
   const userResetPwNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <Grid container={true} spacing={2}>
+      <Grid container={true} spacing={1}>
         <Grid size={12}>
           <Div className={"fs-1-8rem fw-500"}>
             {translate("userDelete")}
@@ -342,11 +342,11 @@ export const UserDelete = () => {
 		);
     // 7-4. button
     const buttonSection = () => (
-      <Grid container={true} spacing={2}>
+      <Grid container={true} spacing={1}>
         <Grid size={12}>
           <Btn
             color={"error"}
-            className={"w-100p fs-0-8rem"}
+            className={"w-100p fs-0-75rem"}
             onClick={() => {
               flowSave();
             }}

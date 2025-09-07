@@ -41,7 +41,7 @@ export const Alert = () => {
       <MuiAlert
         severity={ALERT.severity === "error" ? "error" : "info"}
         variant={"standard"}
-        className={"w-95vw h-8vh d-center border-dark radius-2 shadow-2 fs-0-8rem fw-700 snackbar z-10000"}
+        className={"w-95vw h-8vh d-center border-dark radius-2 shadow-2 fs-0-75rem fw-700 snackbar z-10000"}
         action={
           <Icons
             key={"Check"}
