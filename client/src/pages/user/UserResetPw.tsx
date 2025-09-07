@@ -450,7 +450,7 @@ export const UserResetPw = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper d-center radius-2 border-0 shadow-2 h-min-100vh"}>
+      <Paper className={"content-wrapper d-center radius-2 border-1 shadow-1 h-min-100vh"}>
         {titleSection()}
         <Hr m={30} className={"bg-light"} />
         {resetSection()}

@@ -487,7 +487,7 @@ export const FoodDetail = () => {
   const detailNode = () => {
     // 7-1. date + count
 		const dateCountSection = () => (
-			<Grid container={true} spacing={2} className={`radius-2 border-0 shadow-2 p-20px`}>
+			<Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1 p-20px`}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}
@@ -508,7 +508,7 @@ export const FoodDetail = () => {
     );
     // 7-2. total
     const totalSection = () => (
-			<Grid container={true} spacing={2} className={`radius-2 border-0 shadow-2 p-20px`}>
+			<Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1 p-20px`}>
         {/** row 1 **/}
         <Grid container={true} spacing={1}>
           <Grid size={6}>
@@ -1004,7 +1004,7 @@ export const FoodDetail = () => {
 		);
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-75vh"}>
+      <Paper className={"content-wrapper radius-2 border-1 shadow-2 h-min-75vh"}>
         {dateCountSection()}
 				<Br m={20} />
         {totalSection()}

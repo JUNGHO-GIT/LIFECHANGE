@@ -138,7 +138,7 @@ export const FoodList = () => {
     const listSection = () => (
 			<Grid container={true} spacing={0}>
 				{OBJECT?.map((item, i) => (
-					<Grid container={true} spacing={0} className={"radius-2 border-0 shadow-2 mb-10px"} key={`list-${i}`}>
+					<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-1 h-min-50px mb-10px"} key={`list-${i}`}>
 						<Grid size={12} className={"p-2px"}>
 							<Accordion
 								className={"border-0 shadow-0 radius-0"}
@@ -337,7 +337,7 @@ export const FoodList = () => {
 		);
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-75vh"}>
+      <Paper className={"content-wrapper radius-2 border-1 shadow-2 h-min-75vh"}>
         {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={"food"} /> : listSection()}
       </Paper>
     );

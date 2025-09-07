@@ -84,8 +84,8 @@ export const PickerDay = (
 	// - 클래스 설정
 	useEffect(() => {
 		if (isList) {
-			setDateClassInSave("h-min-0px h-5vh fs-0-7rem pointer");
-			setDateClassInList("h-min-0px h-5vh fs-0-7rem pointer");
+			setDateClassInSave("h-min-0px h-5vh fs-0-8rem pointer");
+			setDateClassInList("h-min-0px h-5vh fs-0-8rem pointer");
 		}
 		else {
 			setDateClassInSave("h-min-40px fs-0-8rem pointer");
@@ -572,7 +572,7 @@ export const PickerDay = (
 						value={item}
 						selected={item === dateTypeInList}
 					>
-						<Div className={"fs-0-6rem"}>
+						<Div className={"fs-0-8rem"}>
 							{translate(item)}
 						</Div>
 					</MenuItem>
@@ -609,7 +609,9 @@ export const PickerDay = (
 							value={item}
 							selected={item === dateTypeInSave}
 						>
-							{translate(item)}
+							<Div className={"fs-0-8rem"}>
+								{translate(item)}
+							</Div>
 						</MenuItem>
 					))
 				) : isGoalDetail ? (
@@ -619,7 +621,9 @@ export const PickerDay = (
 							value={item}
 							selected={item === dateTypeInSave}
 						>
-							{translate(item)}
+							<Div className={"fs-0-8rem"}>
+								{translate(item)}
+							</Div>
 						</MenuItem>
 					))
 				) : (
@@ -629,7 +633,9 @@ export const PickerDay = (
 							value={item}
 							selected={item === dateTypeInSave}
 						>
-							{translate(item)}
+							<Div className={"fs-0-8rem"}>
+								{translate(item)}
+							</Div>
 						</MenuItem>
 					))
 				)}

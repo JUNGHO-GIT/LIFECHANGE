@@ -511,7 +511,7 @@ export const UserCategory = () => {
     );
     // 7-2. detail
     const detailSection = () => (
-			<Grid container={true} spacing={2} className={`radius-2 border-0 shadow-2`}>
+			<Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1`}>
 				{[OBJECT]?.map((item, i) => (
 					<Grid size={12} key={`detail-${i}`}>
 						<Grid container={true} spacing={1}>
@@ -573,7 +573,7 @@ export const UserCategory = () => {
 		);
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-90vh"}>
+      <Paper className={"content-wrapper radius-2 border-1 shadow-2 h-min-90vh"}>
         {detailSection()}
       </Paper>
     );
