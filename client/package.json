@@ -12,20 +12,14 @@
       "react-app/jest"
     ],
     "rules": {
+      "no-unused-vars": "off",
       "react-hooks/exhaustive-deps": "off",
       "react-hooks/rules-of-hooks": "warn",
       "@typescript-eslint/no-unused-vars": [
         "warn",
         {
-          "argsIgnorePattern": "^_",
-          "varsIgnorePattern": "^_"
-        }
-      ],
-      "no-unused-vars": [
-        "warn",
-        {
-          "argsIgnorePattern": "^_",
-          "varsIgnorePattern": "^_"
+          "varsIgnorePattern": "^_",
+          "argsIgnorePattern": "^_"
         }
       ]
     }

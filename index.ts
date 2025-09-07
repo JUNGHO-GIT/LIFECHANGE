@@ -163,7 +163,6 @@ app.use(`${preFix}/auth/google`, googleRouter);
 
 // --------------------------------------------------------------------------------------------
 // 0. 에러처리 미들웨어
-// --------------------------------------------------------------------------------------------
 app.use((err: Error, req: Request, res: Response, next: Function) => {
 	console.error(err.stack);
 	// @ts-ignore
