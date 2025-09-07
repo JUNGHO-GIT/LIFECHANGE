@@ -307,7 +307,7 @@ export const SleepDetail = () => {
   const detailNode = () => {
     // 7-1. date + count
 		const dateCountSection = () => (
-			<Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1 p-20px`}>
+			<Grid container={true} spacing={2} className={`radius-2 border-1 shadow-0 p-20px`}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}
@@ -328,7 +328,7 @@ export const SleepDetail = () => {
     );
     // 7-3. detail
     const detailSection = () => (
-			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-1`}>
+			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
 				{OBJECT.sleep_section?.map((item, i) => (
 					<Grid container spacing={2} key={`detail-${i}`}
 					className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}>

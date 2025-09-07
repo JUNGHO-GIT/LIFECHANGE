@@ -204,7 +204,7 @@ export const CalendarDetail = () => {
 	const detailNode = () => {
 		// 7-1. date + count
 		const dateCountSection = () => (
-			<Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1 p-20px`}>
+			<Grid container={true} spacing={2} className={`radius-2 border-1 shadow-0 p-20px`}>
 				<Grid size={12}>
 					<PickerDay
 						DATE={DATE}
@@ -227,7 +227,7 @@ export const CalendarDetail = () => {
 
 		// 7-2. excersice
 		const exerciseSection = () => (
-			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-1`}>
+			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
 				{OBJECT?.calendar_exercise_section?.map((item, i) => (
 					<Grid container spacing={2} key={`exercise-detail-${i}`}
 					className={`${LOCKED === `locked` ? `locked` : ``} border-1 radius-2 p-20px`}>
@@ -472,7 +472,7 @@ export const CalendarDetail = () => {
 
 		// 7-3. food
 		const foodSection = () => (
-			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-1`}>
+			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
 				{OBJECT?.calendar_food_section?.map((item, i) => (
 					<Grid container spacing={2} key={`food-detail-${i}`}
 					className={`${LOCKED === `locked` ? `locked` : ``} border-1 radius-2 p-20px`}>
@@ -823,7 +823,7 @@ export const CalendarDetail = () => {
 
 		// 7-4. money
 		const moneySection = () => (
-			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-1`}>
+			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
 				{OBJECT?.calendar_money_section?.map((item, i) => (
 					<Grid container spacing={2} key={`money-detail-${i}`}
 					className={`${LOCKED === `locked` ? `locked` : ``} border-1 radius-2 p-20px`}>
@@ -1017,7 +1017,7 @@ export const CalendarDetail = () => {
 
 		// 7-5. sleep
 		const sleepSection = () => (
-			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-1`}>
+			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
 				{OBJECT?.calendar_sleep_section?.map((item, i) => (
 					<Grid container spacing={2} key={`sleep-detail-${i}`}
 					className={`${LOCKED === `locked` ? `locked` : ``} border-1 radius-2 p-20px`}>

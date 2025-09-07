@@ -85,7 +85,7 @@
 /** accordion **/
 .MuiAccordionSummary-content {
   min-height: 0px !important;
-  margin: 4px 0px 4px 0px !important;
+  margin: 8px 0px 8px 0px !important;
 }
 .MuiAccordionSummary-root.Mui-expanded {
   min-height: 0px !important;
