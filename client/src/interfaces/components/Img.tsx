@@ -1,5 +1,3 @@
-// Img.tsx
-
 import { useState, useEffect } from "@importReacts";
 import { useCommonValue } from "@importHooks";
 import { Skeleton } from "@importMuis";
@@ -30,12 +28,23 @@ export const Img = (
   const [imgSrc, setImgSrc] = useState<string>("");
   const [imageClass, setImageClass] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isEmptyHandled, setIsEmptyHandled] = useState<boolean>(false);
 
   // 2-3. useEffect (src 설정) ---------------------------------------------------------------------
   useEffect(() => {
-    if (src) {
+    setIsLoading(true);
+    setIsEmptyHandled(false);
+
+    if (!src || src === "" || src === "empty") {
+      setFileName("empty");
+      setImgSrc(`${GCLOUD_URL}/main/empty.webp`);
+      setIsEmptyHandled(true);
+      setIsLoading(false);
+    }
+    else {
       setFileName(src.split("/").pop()?.split(".")[0] || "empty");
       setImgSrc(group === "new" ? src : `${GCLOUD_URL}/${group || "main"}/${src}`);
+      setIsEmptyHandled(false);
     }
   }, [GCLOUD_URL, group, src]);
 
@@ -71,25 +80,36 @@ export const Img = (
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
-    if (!imgSrc) {
-      return;
-    }
-    const img = new Image();
-    img.src = imgSrc;
-    img.onload = () => {
-      setIsLoading(false);
-    };
-    img.onerror = (e: any) => {
-      e.currentTarget.style.width = "100%";
-      e.currentTarget.style.height = "100%";
-      e.currentTarget.src = `${GCLOUD_URL}/main/empty.webp`;
-      e.currentTarget.alt = "empty";
-      setIsLoading(false);
-    }
-    return () => {
-      img.onload = null;
-    };
-  }, [imgSrc]);
+		if (!imgSrc || isEmptyHandled) {
+			return;
+		}
+
+		const img = new Image();
+		img.src = imgSrc;
+		img.onload = () => {
+			setIsLoading(false);
+		};
+		img.onerror = () => {
+
+			// empty.webp 자체가 에러난 경우 다시 호출하지 않도록 차단
+			if (!isEmptyHandled && !imgSrc.includes("empty.webp")) {
+				setFileName("empty");
+				setImgSrc(`${GCLOUD_URL}/main/empty.webp`);
+				setIsEmptyHandled(true);
+				setIsLoading(false);
+			}
+
+			// fallback 도 실패했을 때는 그냥 로딩 끄고 에러 처리 종료
+			else {
+				setIsLoading(false);
+			}
+		};
+
+		return () => {
+			img.onload = null;
+			img.onerror = null;
+		};
+	}, [imgSrc, isEmptyHandled, GCLOUD_URL]);
 
   // 7. skeletonNode -------------------------------------------------------------------------------
   const skeletonNode = () => (

@@ -218,7 +218,7 @@ export const FoodChartPie = () => {
 						data={object as any[]}
 						cx={"50%"}
 						cy={"50%"}
-						label={renderPie}
+						label={renderPie as any}
 						labelLine={false}
 						outerRadius={110}
 						fill={"#8884d8"}
