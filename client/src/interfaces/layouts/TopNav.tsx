@@ -238,136 +238,78 @@ export const TopNav = () => {
   }, [sessionTitle]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
-  // 페이지 변경시 초기화
+  // 페이지 변경시 초기화 - Optimized with lookup table
   useEffect(() => {
-    // 1. calendar
-    if (firstStr === "calendar") {
-      if (secondStr === "list" || secondStr === "detail") {
-        setSelectedTab((prev) => ({
-          ...prev,
-          calendar: "schedule",
-        }));
+    // Define page-specific tab mappings for better performance
+    const tabMappings: Record<string, Record<string, string>> = {
+      calendar: {
+        list: "schedule",
+        detail: "schedule"
+      },
+      today: {
+        goal: "goal",
+        list: "real",
+        detail: "real"
+      },
+      food: {
+        chart: "chart",
+        goal: "goal",
+        find: "find",
+        favorite: "favorite",
+        list: "real",
+        detail: "real"
+      },
+      exercise: {
+        chart: "chart",
+        goal: "goal",
+        list: "real",
+        detail: "real"
+      },
+      money: {
+        chart: "chart",
+        goal: "goal",
+        list: "real",
+        detail: "real"
+      },
+      sleep: {
+        chart: "chart",
+        goal: "goal",
+        list: "real",
+        detail: "real"
       }
-    }
-    // 2. today
-    else if (firstStr === "today") {
-      if (secondStr === "goal") {
-        setSelectedTab((prev) => ({
-          ...prev,
-          today: "goal",
-        }));
-      }
-      else if (secondStr === "list" || secondStr === "detail") {
-        setSelectedTab((prev) => ({
-          ...prev,
-          today: "real",
-        }));
-      }
-    }
-    // 3. food
-    else if (firstStr === "food") {
-      if (secondStr === "chart") {
-        setSelectedTab((prev) => ({
-          ...prev,
-          food: "chart",
-        }));
-      }
-      else if (secondStr === "goal") {
-        setSelectedTab((prev) => ({
-          ...prev,
-          food: "goal",
-        }));
-      }
-      else if (secondStr === "find") {
-        setSelectedTab((prev) => ({
-          ...prev,
-          food: "find",
-        }));
-      }
-      else if (secondStr === "favorite") {
-        setSelectedTab((prev) => ({
-          ...prev,
-          food: "favorite",
-        }));
-      }
-      else if (secondStr === "list" || secondStr === "detail") {
-        setSelectedTab((prev) => ({
-          ...prev,
-          food: "real",
-        }));
-      }
-    }
-    // 4. exercise, money, sleep
-    else if (firstStr === "exercise" || firstStr === "money" || firstStr === "sleep") {
-      if (secondStr === "chart") {
-        setSelectedTab((prev) => ({
-          ...prev,
-          [firstStr]: "chart",
-        }));
-      }
-      else if (secondStr === "goal") {
-        setSelectedTab((prev) => ({
-          ...prev,
-          [firstStr]: "goal",
-        }));
-      }
-      else if (secondStr === "list" || secondStr === "detail") {
-        setSelectedTab((prev) => ({
-          ...prev,
-          [firstStr]: "real",
-        }));
-      }
-    }
-    // 5. admin
-    else if (firstStr === "admin") {
-      if (secondStr === "dashboard") {
-        setSelectedTab((prev) => ({
-          ...prev,
-          admin: "dashboard",
-        }));
-      }
+    };
+
+    const newTabValue = tabMappings[firstStr]?.[secondStr];
+    
+    if (newTabValue) {
+      setSelectedTab((prev) => ({
+        ...prev,
+        [firstStr]: newTabValue,
+      }));
     }
   }, [firstStr, secondStr]);
 
 	// 4. handle ----------------------------------------------------------------------------------
-  const handleClickTobNav = (value: string) => {
-    if (value === "find" || value === "favorite") {
+	// 4. handle (Optimized navigation logic) ----------------------------------------------------
+  const handleClickTobNav = useCallback((value: string) => {
+    const navigationMap: Record<string, () => void> = {
+      find: () => navigate(`/${firstStr}/${value}/list`, { state: { dateType: "", dateStart: "", dateEnd: "" } }),
+      favorite: () => navigate(`/${firstStr}/${value}/list`, { state: { dateType: "", dateStart: "", dateEnd: "" } }),
+      real: () => navigate(`/${firstStr}/list`, { state: { dateType: "", dateStart: getDayFmt(), dateEnd: getDayFmt() } }),
+      schedule: () => navigate(`/${firstStr}/list`, { state: { dateType: "", dateStart: getDayFmt(), dateEnd: getDayFmt() } }),
+      dashboard: () => navigate(`/${firstStr}/dashboard`, { state: { dateType: "", dateStart: getDayFmt(), dateEnd: getDayFmt() } }),
+    };
+
+    const handler = navigationMap[value];
+    if (handler) {
+      handler();
+    } else {
+      // Default case for chart, goal, etc.
       navigate(`/${firstStr}/${value}/list`, {
-        state: {
-          dateType: "",
-          dateStart: "",
-          dateEnd: "",
-        }
+        state: { dateType: "", dateStart: getDayFmt(), dateEnd: getDayFmt() }
       });
     }
-    else if (value === "real" || value === "schedule") {
-      navigate(`/${firstStr}/list`, {
-        state: {
-          dateType: "",
-          dateStart: getDayFmt(),
-          dateEnd: getDayFmt(),
-        }
-      });
-    }
-    else if (value === "dashboard") {
-      navigate(`/${firstStr}/dashboard`, {
-        state: {
-          dateType: "",
-          dateStart: getDayFmt(),
-          dateEnd: getDayFmt(),
-        }
-      });
-    }
-    else {
-      navigate(`/${firstStr}/${value}/list`, {
-        state: {
-          dateType: "",
-          dateStart: getDayFmt(),
-          dateEnd: getDayFmt(),
-        }
-      });
-    }
-  };
+  }, [firstStr, navigate, getDayFmt]);
 
   // 7. topNav -------------------------------------------------------------------------------------
   const topNavNode = () => {
