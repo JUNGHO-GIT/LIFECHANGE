@@ -10,6 +10,7 @@ export {
   useState,
   useEffect,
   useCallback,
+  useMemo,
   useRef,
   createRef
 } from "react";

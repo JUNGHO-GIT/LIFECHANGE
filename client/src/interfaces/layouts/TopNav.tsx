@@ -1,12 +1,29 @@
 // TopNav.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState, useEffect, useMemo, useCallback } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage } from "@importStores";
 import { insertComma } from "@importScripts";
 import { PopUp, Input } from "@importContainers";
 import { Div, Img, Hr, Br, Paper, Grid } from "@importComponents";
 import { Tabs, Tab, Checkbox, MenuItem, Menu } from "@importMuis";
+
+// Utility function for shallow comparison to avoid expensive JSON.stringify
+const shallowEqual = (obj1: any, obj2: any) => {
+  if (obj1 === obj2) return true;
+  if (!obj1 || !obj2) return false;
+  
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+  
+  if (keys1.length !== keys2.length) return false;
+  
+  for (let key of keys1) {
+    if (obj1[key] !== obj2[key]) return false;
+  }
+  
+  return true;
+};
 
 // -------------------------------------------------------------------------------------------------
 export const TopNav = () => {
@@ -101,14 +118,28 @@ export const TopNav = () => {
     admin: ["dashboard"]
   });
 
-	// 2-3. useEffect -----------------------------------------------------------------------------
-  // 스마일 지수 계산
-  useEffect(() => {
+  // Memoized smile score calculation to prevent unnecessary recalculations
+  const smileScoreAndImage = useMemo(() => {
     if (!percent) {
-      return;
+      return {
+        score: {
+          total: "0",
+          exercise: "0",
+          food: "0",
+          money: "0",
+          sleep: "0",
+        },
+        image: {
+          total: "smile3",
+          exercise: "smile3",
+          food: "smile3",
+          money: "smile3",
+          sleep: "smile3",
+        }
+      };
     }
 
-    const newSmileScore: any = {
+    const newSmileScore = {
       total: percent?.total?.average?.score || "0",
       exercise: percent?.exercise?.average?.score || "0",
       food: percent?.food?.average?.score || "0",
@@ -138,70 +169,67 @@ export const TopNav = () => {
       }
     };
 
-    setSmileScore(newSmileScore);
-    setSmileImage({
-      total: getImage(newSmileScore.total),
-      exercise: getImage(newSmileScore.exercise),
-      food: getImage(newSmileScore.food),
-      money: getImage(newSmileScore.money),
-      sleep: getImage(newSmileScore.sleep),
-    });
-
+    return {
+      score: newSmileScore,
+      image: {
+        total: getImage(newSmileScore.total),
+        exercise: getImage(newSmileScore.exercise),
+        food: getImage(newSmileScore.food),
+        money: getImage(newSmileScore.money),
+        sleep: getImage(newSmileScore.sleep),
+      }
+    };
   }, [percent]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
-  // 메인 스마일 이미지
+  // Update smile score and image when memoized values change
   useEffect(() => {
-    if (firstStr === "calendar") {
-      setMainSmileImage(smileImage.total);
-    }
-    else if (firstStr === "today") {
-      setMainSmileImage(smileImage.total);
-    }
-    else if (firstStr === "exercise") {
-      setMainSmileImage(smileImage.exercise);
-    }
-    else if (firstStr === "food") {
-      setMainSmileImage(smileImage.food);
-    }
-    else if (firstStr === "money") {
-      setMainSmileImage(smileImage.money);
-    }
-    else if (firstStr === "sleep") {
-      setMainSmileImage(smileImage.sleep);
-    }
-    else {
-      setMainSmileImage(smileImage.total);
-    }
+    setSmileScore(smileScoreAndImage.score);
+    setSmileImage(smileScoreAndImage.image);
+  }, [smileScoreAndImage]);
+
+	// 2-3. useEffect -----------------------------------------------------------------------------
+  // 메인 스마일 이미지 - Optimized with memoized lookup
+  useEffect(() => {
+    const imageMap: Record<string, string> = {
+      calendar: smileImage.total,
+      today: smileImage.total,
+      exercise: smileImage.exercise,
+      food: smileImage.food,
+      money: smileImage.money,
+      sleep: smileImage.sleep,
+    };
+    
+    setMainSmileImage(imageMap[firstStr] || smileImage.total);
   }, [firstStr, smileImage]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
-  // 퍼센트, 자산, 체중 설정
+  // 퍼센트, 자산, 체중 설정 - Optimized for performance
   useEffect(() => {
     if (sessionTitle?.setting?.sync) {
       const { percent, property, nutrition, scale } = sessionTitle.setting.sync;
 
-      // 상태가 실제로 변경될 때만 업데이트
+      // Use efficient shallow comparison instead of expensive JSON.stringify
       setPercent((prev: any) => {
-        if (JSON.stringify(prev) !== JSON.stringify(percent)) {
+        if (!shallowEqual(prev, percent)) {
           return percent;
         }
         return prev;
       });
       setProperty((prev: any) => {
-        if (JSON.stringify(prev) !== JSON.stringify(property)) {
+        if (!shallowEqual(prev, property)) {
           return property;
         }
         return prev;
       });
       setNutrition((prev: any) => {
-        if (JSON.stringify(prev) !== JSON.stringify(nutrition)) {
+        if (!shallowEqual(prev, nutrition)) {
           return nutrition;
         }
         return prev;
       });
       setScale((prev: any) => {
-        if (JSON.stringify(prev) !== JSON.stringify(scale)) {
+        if (!shallowEqual(prev, scale)) {
           return scale;
         }
         return prev;

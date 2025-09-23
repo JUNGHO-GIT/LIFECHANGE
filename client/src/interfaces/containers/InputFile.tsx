@@ -1,6 +1,6 @@
 // InputFile.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState, useEffect, useRef, useMemo } from "@importReacts";
 import { useStoreAlert } from "@importStores";
 import { Div, Br, Img, Icons, Grid } from "@importComponents";
 import { MuiFileInput } from "@importMuis";
@@ -10,6 +10,9 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { setALERT } = useStoreAlert();
+  
+  // Refs to avoid DOM queries
+  const adornmentRootRef = useRef<HTMLElement | null>(null);
 
 	// 2-2. useState ---------------------------------------------------------------------------------
   const [fileExisting, setFileExisting] = useState<any[]>([]);
@@ -18,71 +21,67 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
   const [fileHeight, setFileHeight] = useState<string>("100px");
   const [fileLimit, setFileLimit] = useState<number>(1);
 
+  // Memoized calculations to prevent unnecessary recalculations
+  const calculatedHeight = useMemo(() => {
+    const heightPerFile = 30;
+    const minHeight = 100;
+    return `${Math.max(minHeight, (props?.value || [])?.length * heightPerFile)}px`;
+  }, [props?.value]);
+
+  const calculatedCount = useMemo(() => {
+    const newCount = fileList?.length || 0;
+    const existingCount = fileExisting?.length || 0;
+    return newCount + existingCount;
+  }, [fileList, fileExisting]);
+
 	// 2-3. useEffect -----------------------------------------------------------------------------
+  // Consolidated initialization and DOM cleanup - runs only once
   useEffect(() => {
-    const defaultInput = props?.inputRef?.current;
-    const existAdornment = document.querySelector(`.MuiInputAdornment-root.MuiInputAdornment-positionEnd.MuiInputAdornment-outlined.MuiInputAdornment-sizeSmall`);
-    const existLabel = existAdornment?.previousElementSibling;
-    const existSpan = document.querySelector(`.notranslate`);
-    const adornmentRoot = document.querySelector(`.MuiInputAdornment-root`);
+    // Batch DOM operations to minimize layout thrashing
+    const performDOMCleanup = () => {
+      const defaultInput = props?.inputRef?.current;
+      const existAdornment = document.querySelector(`.MuiInputAdornment-root.MuiInputAdornment-positionEnd.MuiInputAdornment-outlined.MuiInputAdornment-sizeSmall`);
+      const existLabel = existAdornment?.previousElementSibling;
+      const existSpan = document.querySelector(`.notranslate`);
+      const adornmentRoot = document.querySelector(`.MuiInputAdornment-root`);
 
-    // 기존 요소 삭제
-    if (defaultInput) {
-      defaultInput.remove();
-    }
-    if (existAdornment) {
-      existAdornment.remove();
-    }
-    if (existLabel) {
-      existLabel.remove();
-    }
-    if (existSpan) {
-      existSpan.remove();
-    }
+      // Batch removals
+      [defaultInput, existAdornment, existLabel, existSpan].forEach(element => {
+        if (element) {
+          element.remove();
+        }
+      });
 
-    // adornment 에 스타일 적용
-    if (adornmentRoot) {
-      adornmentRoot.setAttribute("style", "width: 100%;");
-    }
+      // Apply styles
+      if (adornmentRoot) {
+        adornmentRoot.setAttribute("style", "width: 100%;");
+        adornmentRootRef.current = adornmentRoot;
+      }
+    };
+
+    // Use requestAnimationFrame to ensure DOM is ready
+    requestAnimationFrame(performDOMCleanup);
   }, []);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
+  // Consolidated props updates - reduced from 4 separate useEffect hooks
   useEffect(() => {
+    // Update existing files
     setFileExisting(props?.existing || []);
-  }, [props?.existing]);
-
-	// 2-3. useEffect -----------------------------------------------------------------------------
-  useEffect(() => {
+    
+    // Update file limit
     setFileLimit(props?.limit || 1);
-  }, [props?.limit]);
-
-	// 2-3. useEffect -----------------------------------------------------------------------------
-  useEffect(() => {
-
-    // 최초 로드 시 파일 배열 초기화
+    
+    // Update file list and height
     setFileList(props?.value || []);
-
-    // 파일 높이 계산
-    const heightPerFile = 30;
-    const minHeight = 100;
-    setFileHeight(`${Math.max(minHeight, (props?.value || [])?.length * heightPerFile)}px`);
-
-  }, [props?.value]);
+    setFileHeight(calculatedHeight);
+  }, [props?.existing, props?.limit, props?.value, calculatedHeight]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
+  // Update file count when calculated count changes
   useEffect(() => {
-    if (fileList) {
-      const newCount = fileList?.length;
-      const existingCount = fileExisting?.length;
-
-      if (newCount + existingCount > 0) {
-        setFileCount(newCount + existingCount);
-      }
-      else {
-        setFileCount(0);
-      }
-    }
-  }, [fileList, fileExisting]);
+    setFileCount(calculatedCount);
+  }, [calculatedCount]);
 
   // 6. handle (파일 추가) -------------------------------------------------------------------------
   const flowFileChange = (newFiles: File[] | null) => {
