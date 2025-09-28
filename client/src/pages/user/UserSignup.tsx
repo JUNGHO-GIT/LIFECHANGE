@@ -1,16 +1,16 @@
 // UserSignup.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
 import { useCommonValue, useValidateUser } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
-import { insertComma } from "@importScripts";
+import { fnInsertComma } from "@importScripts";
 import { User } from "@importSchemas";
 import { Input } from "@importContainers";
 import { Div, Btn, Img, Hr, Paper, Grid } from "@importComponents";
 
 // -------------------------------------------------------------------------------------------------
-export const UserSignup = () => {
+export const UserSignup = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, URL_GOOGLE, navigate, localCurrency } = useCommonValue();
@@ -382,7 +382,7 @@ export const UserSignup = () => {
 							<Grid size={12}>
 								<Input
 									label={translate("scale")}
-									value={insertComma(item.user_initScale || "0")}
+									value={fnInsertComma(item.user_initScale || "0")}
 									inputRef={REFS?.[i]?.user_initScale}
 									error={ERRORS?.[i]?.user_initScale}
 									disabled={item.user_id_verified === false}
@@ -425,7 +425,7 @@ export const UserSignup = () => {
 							<Grid size={12}>
 								<Input
 									label={translate("avgKcalIntake")}
-									value={insertComma(item.user_initAvgKcalIntake || "0")}
+									value={fnInsertComma(item.user_initAvgKcalIntake || "0")}
 									inputRef={REFS?.[i]?.user_initAvgKcalIntake}
 									error={ERRORS?.[i]?.user_initAvgKcalIntake}
 									disabled={item.user_id_verified === false}
@@ -468,7 +468,7 @@ export const UserSignup = () => {
 							<Grid size={12}>
 								<Input
 									label={translate("property")}
-									value={insertComma(item.user_initProperty || "0")}
+									value={fnInsertComma(item.user_initProperty || "0")}
 									inputRef={REFS?.[i]?.user_initProperty}
 									error={ERRORS?.[i]?.user_initProperty}
 									disabled={item.user_id_verified === false}
@@ -610,4 +610,4 @@ export const UserSignup = () => {
       {userSignupNode()}
     </>
   );
-};
+});

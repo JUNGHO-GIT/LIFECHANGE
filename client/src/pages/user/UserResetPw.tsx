@@ -1,6 +1,6 @@
 // UserResetPw.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
 import { useCommonValue, useValidateUser } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
@@ -9,7 +9,7 @@ import { Input } from "@importContainers";
 import { Div, Btn, Img, Hr, Paper, Grid } from "@importComponents";
 
 // -------------------------------------------------------------------------------------------------
-export const UserResetPw = () => {
+export const UserResetPw = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, URL_GOOGLE, navigate } = useCommonValue();
@@ -468,4 +468,4 @@ export const UserResetPw = () => {
       {userResetPwNode()}
     </>
   );
-};
+});

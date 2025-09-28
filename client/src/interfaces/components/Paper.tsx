@@ -1,14 +1,12 @@
 // Paper.tsx
 
-import { useEffect, useRef } from "@importReacts";
-import { Paper as MuiPaper } from "@importMuis";
-import { PaperProps } from "@importMuis";
+import { Paper as MuiPaper, PaperProps } from "@importMuis";
+import { memo, useEffect, useRef } from "@importReacts";
 
 // -------------------------------------------------------------------------------------------------
-export const Paper = (props: PaperProps) => {
+export const Paper = memo((props: PaperProps) => {
   const paperRef = useRef<HTMLDivElement | null>(null);
 
-  // style 속성 자체를 제거
   useEffect(() => {
     if (paperRef.current) {
       paperRef.current.removeAttribute("style");
@@ -23,4 +21,4 @@ export const Paper = (props: PaperProps) => {
       className={props?.className || ""}
     />
   );
-};
+});

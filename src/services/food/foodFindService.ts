@@ -2,9 +2,8 @@
 
 import { JSDOM } from "jsdom";
 import axios from "axios";
-import * as repository from "@repositories/food/foodFindRepository";
 
-// 1-1. list ---------------------------------------------------------------------------------------
+// 1. list ---------------------------------------------------------------------------------------
 export const list = async (
   PAGING_param: any,
   isoCode_param: string,
@@ -286,18 +285,18 @@ export const list = async (
         const brandElement:any = getBrand(prev);
         const nutritionElement:any = getServ(prev);
         finalResult.push({
-          food_query: query,
-          food_perNumber: page * 10 + tableIndex * rows?.length + rowIndex + 1,
-          food_part: "breakfast",
-          food_name: titleElement || "",
-          food_brand: brandElement || "",
-          food_count: nutritionElement.count || "0",
-          food_serv: nutritionElement.serv || "",
-          food_gram: nutritionElement.gram || "0",
-          food_kcal: nutritionElement.kcal || "0",
-          food_fat: nutritionElement.fat || "0",
-          food_carb: nutritionElement.carb || "0",
-          food_protein: nutritionElement.protein || "0",
+          food_record_query: query,
+          food_record_perNumber: page * 10 + tableIndex * rows?.length + rowIndex + 1,
+          food_record_part: "breakfast",
+          food_record_name: titleElement || "",
+          food_record_brand: brandElement || "",
+          food_record_count: nutritionElement.count || "0",
+          food_record_serv: nutritionElement.serv || "",
+          food_record_gram: nutritionElement.gram || "0",
+          food_record_kcal: nutritionElement.kcal || "0",
+          food_record_fat: nutritionElement.fat || "0",
+          food_record_carb: nutritionElement.carb || "0",
+          food_record_protein: nutritionElement.protein || "0",
         });
       });
     });
@@ -307,104 +306,12 @@ export const list = async (
 
   finalResult = finalResult.map((item: any) => ({
     ...item,
-    food_key: `${item.food_name}_${item.food_brand}_${item.food_kcal}_${item.food_carb}_${item.food_protein}_${item.food_fat}`,
+    food_record_key: `${item.food_record_name}_${item.food_record_brand}_${item.food_record_kcal}_${item.food_record_carb}_${item.food_record_protein}_${item.food_record_fat}`,
   }));
 
   return {
     status: statusResult,
     totalCnt: totalCntResult,
-    result: finalResult,
-  };
-};
-
-// 1-2. listFavorite -------------------------------------------------------------------------------
-export const listFavorite = async (
-  user_id_param: string,
-) => {
-
-  // result 변수 선언
-  let findResult: any = null;
-  let finalResult: any = null;
-  let totalCntResult: any = null;
-  let statusResult: string = "";
-
-  findResult = await repository.listFavorite(
-    user_id_param
-  );
-  totalCntResult = findResult?.length;
-
-  if (!findResult) {
-    finalResult = [];
-    statusResult = "fail";
-  }
-  else {
-    finalResult = findResult;
-    statusResult = "success";
-  }
-
-  finalResult = finalResult.map((item: any, index: number) => ({
-    ...item,
-    food_query: "favorite",
-    food_perNumber: index + 1,
-    food_part: "breakfast",
-  }));
-
-  return {
-    status: statusResult,
-    totalCnt: totalCntResult,
-    result: finalResult,
-  };
-};
-
-// 4-2. updateFavorite -----------------------------------------------------------------------------
-export const updateFavorite = async (
-  user_id_param: string,
-  foodFavorite_param: any,
-) => {
-
-  // result 변수 선언
-  let findResult: any = null;
-  let updateResult: any = null;
-  let finalResult: any = null;
-  let statusResult: string = "";
-
-  const foodKey = foodFavorite_param.food_key;
-
-  findResult = await repository.listFavorite(
-    user_id_param
-  );
-
-  const existFavorite = findResult.some((item: any) => (
-    item.food_key === foodKey
-  ));
-
-  if (existFavorite) {
-    foodFavorite_param = findResult?.filter((item: any) => (
-      item.food_key !== foodKey
-    ));
-  }
-  else {
-    foodFavorite_param = [
-      ...findResult,
-      foodFavorite_param
-    ];
-  }
-
-  updateResult = await repository.updateFavorite(
-    user_id_param, foodFavorite_param
-  );
-
-  if (!updateResult) {
-    finalResult = null;
-    statusResult = "fail";
-  }
-  else {
-    finalResult = updateResult;
-    statusResult = "success";
-  }
-
-  return {
-    status: statusResult,
     result: finalResult,
   };
 };

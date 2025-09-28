@@ -2,6 +2,9 @@
 
 import { create } from "@importLibs";
 
+// 거대한 다국어 리소스 객체를 매 호출마다 재생성하지 않도록 모듈 스코프 캐시 변수 사용
+let __resourcesCache: Record<string, any> | null = null;
+
 // -------------------------------------------------------------------------------------------------
 declare type LanguageState = {
   lang: string;
@@ -14,9 +17,9 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
   lang: "en",
   setLang: (lang: string) => set({ lang }),
   translate: (key: string) => {
-
     const { lang } = get();
-    const resources: Record<string, any> = {
+    if (!__resourcesCache) {
+      __resourcesCache = {
 
       // -------------------------------------------------------------------------------------------
       // a
@@ -130,9 +133,9 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
         ko: "탄수화물",
         en: "Carb"
       },
-      calendar: {
+      schedule: {
         ko: "일정",
-        en: "calendar"
+        en: "schedule"
       },
       cardio: {
         ko: "유산소",
@@ -154,7 +157,7 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
         ko: "문화",
         en: "Culture"
       },
-      calendarTitle: {
+      scheduleTitle: {
         ko: "제목",
         en: "Title"
       },
@@ -259,7 +262,7 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
       },
       deleteUser: {
         ko: "탈퇴 후에는 복구가 불가능합니다.\n정말로 탈퇴하시겠습니까?",
-        en: "Withdrawal is irreversible.\nDo you really want to withdraw?"
+        en: "Withdrawal is irreversible.\nDo you recordly want to withdraw?"
       },
       user_dataCategory: {
         ko: "카테고리 편집",
@@ -478,13 +481,13 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
         ko: "성별",
         en: "Gender"
       },
-      getCalendar: {
-        ko: "달력",
-        en: "Calendar"
+      getSchedule: {
+        ko: "일정",
+        en: "Schedule"
       },
       getDay: {
         ko: "오늘",
-        en: "Today"
+        en: ""
       },
       goToFind: {
         ko: "더 찾기",
@@ -541,10 +544,6 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
       goalKcal: {
         ko: "칼로리 목표",
         en: "Kcal Goals"
-      },
-      goalList: {
-        ko: "리스트(목표)",
-        en: "List(Goal)"
       },
       goalExpense: {
         ko: "지출 목표",
@@ -945,6 +944,10 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
         ko: "per",
         en: "per"
       },
+			planner: {
+				ko: "일정",
+				en: "Schedule"
+			},
       part: {
         ko: "대분류",
         en: "Part"
@@ -1003,20 +1006,16 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
         ko: "rep",
         en: "rep"
       },
-      real: {
-        ko: "실제",
-        en: "Real"
+      record: {
+        ko: "기록",
+        en: "Record"
       },
-      realTabs: {
-        ko: "실제",
-        en: "Real"
+      recordTabs: {
+        ko: "기록",
+        en: "Record"
       },
-      realList: {
-        ko: "리스트(실제)",
-        en: "List"
-      },
-      realSave: {
-        ko: "저장(실제)",
+      recordSave: {
+        ko: "저장(기록)",
         en: "Save"
       },
       rep: {
@@ -1114,10 +1113,6 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
         ko: "간식",
         en: "Snack"
       },
-      schedule: {
-        ko: "일정",
-        en: "Schedule"
-      },
       selectDate: {
         ko: "날짜선택",
         en: "Select"
@@ -1167,11 +1162,19 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
       },
       today: {
         ko: "오늘",
-        en: "Today"
+        en: ""
       },
-      thisToday: {
+			goalToday: {
+				ko: "오늘(목표)",
+				en: "Today(Goal)",
+			},
+			recordToday: {
+				ko: "오늘(기록)",
+				en: "Today(Record)"
+			},
+      this: {
         ko: "오늘",
-        en: "Today"
+        en: ""
       },
       thisWeek: {
         ko: "이번주",
@@ -1968,19 +1971,19 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
         ko: "지방을 입력해주세요",
         en: "Please enter Fat"
       },
-      errorCalendarPart: {
+      errorSchedulePart: {
         ko: "대분류를 선택해주세요",
         en: "Please select Part"
       },
-      errorCalendarColor: {
+      errorScheduleColor: {
         ko: "색상을 선택해주세요",
         en: "Please select Color"
       },
-      errorCalendarTitle: {
+      errorScheduleTitle: {
         ko: "제목을 입력해주세요",
         en: "Please enter Title"
       },
-      errorCalendarContent: {
+      errorScheduleContent: {
         ko: "내용을 입력해주세요",
         en: "Please enter Content"
       },
@@ -2106,7 +2109,9 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
       },
     };
 
-    const result = resources[key];
+    }
+
+    const result = __resourcesCache[key];
     if (!result) {
       return key;
     }

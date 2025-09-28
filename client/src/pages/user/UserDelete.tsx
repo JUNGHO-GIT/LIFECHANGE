@@ -1,6 +1,6 @@
 // UserDelete.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState, useEffect, memo } from "@importReacts";
 import { useCommonValue, useValidateUser } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
@@ -9,7 +9,7 @@ import { Input } from "@importContainers";
 import { Div, Hr, Btn, Paper, Grid } from "@importComponents";
 
 // -------------------------------------------------------------------------------------------------
-export const UserDelete = () => {
+export const UserDelete = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, navigate } = useCommonValue();
@@ -162,7 +162,7 @@ export const UserDelete = () => {
       setLOADING(false);
       return;
     }
-    axios.delete(`${URL_OBJECT}/delete`,{
+    axios.delete(`${URL_OBJECT}/record/delete`,{
       data: {
         user_id: OBJECT.user_id,
         user_pw: OBJECT.user_pw,
@@ -374,4 +374,4 @@ export const UserDelete = () => {
       {userResetPwNode()}
     </>
   );
-};
+});

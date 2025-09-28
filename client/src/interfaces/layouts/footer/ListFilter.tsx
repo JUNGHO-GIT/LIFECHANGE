@@ -1,10 +1,11 @@
 // ListFilter.tsx
 
-import { useCommonValue } from "@importHooks";
-import { useStoreLanguage } from "@importStores";
-import { PickerDay, Select } from "@importContainers";
 import { Div, Grid } from "@importComponents";
+import { PickerDay, Select } from "@importContainers";
+import { useCommonValue } from "@importHooks";
 import { MenuItem } from "@importMuis";
+import { memo } from "@importReacts";
+import { useStoreLanguage } from "@importStores";
 
 // -------------------------------------------------------------------------------------------------
 declare type ListFilterProps = {
@@ -13,7 +14,7 @@ declare type ListFilterProps = {
 }
 
 // -------------------------------------------------------------------------------------------------
-export const ListFilter = (
+export const ListFilter = memo((
   { state, setState }: ListFilterProps
 ) => {
 
@@ -60,7 +61,7 @@ export const ListFilter = (
 
     // 10. return
     return (
-      PATH.includes("/today") ? (
+      PATH.includes("/schedule") ? (
         <Grid container={true} spacing={1}>
           <Grid size={12}>
             {pickerSection()}
@@ -86,4 +87,4 @@ export const ListFilter = (
       {listFilterNode()}
     </>
   );
-};
+});

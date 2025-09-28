@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 import { ExerciseGoal } from "@schemas/exercise/ExerciseGoal";
-import { Exercise } from "@schemas/exercise/Exercise";
+import { ExerciseRecord } from "@schemas/exercise/ExerciseRecord";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
@@ -115,47 +115,47 @@ export const listGoal = async (
   return finalResult;
 };
 
-// 1-2. list (real) --------------------------------------------------------------------------------
-export const listReal = async (
+// 1-2. list (record) --------------------------------------------------------------------------------
+export const listRecord = async (
   user_id_param: string,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await Exercise.aggregate([
+  const finalResult:any = await ExerciseRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
-        exercise_dateStart: {
+        exercise_record_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        exercise_dateEnd: {
+        exercise_record_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...dateType_param ? { exercise_dateType: dateType_param } : {},
+        ...dateType_param ? { exercise_record_dateType: dateType_param } : {},
       }
     },
     {
       $project: {
         _id: 0,
-        exercise_dateType: 1,
-        exercise_dateStart: 1,
-        exercise_dateEnd: 1,
-        exercise_total_volume: 1,
-        exercise_total_cardio: 1,
-        exercise_total_scale: 1,
-        exercise_total_count: {
+        exercise_record_dateType: 1,
+        exercise_record_dateStart: 1,
+        exercise_record_dateEnd: 1,
+        exercise_record_total_volume: 1,
+        exercise_record_total_cardio: 1,
+        exercise_record_total_scale: 1,
+        exercise_record_total_count: {
           $cond: {
             if: {
               $and: [
                 {
-                  $lte: ["$exercise_total_volume", 1]
+                  $lte: ["$exercise_record_total_volume", 1]
                 },
                 {
-                  $eq: ["$exercise_total_cardio", "00:00"]
+                  $eq: ["$exercise_record_total_cardio", "00:00"]
                 }
               ]
             },
@@ -167,7 +167,7 @@ export const listReal = async (
     },
     {
       $sort: {
-        exercise_dateStart: 1
+        exercise_record_dateStart: 1
       }
     }
   ]);

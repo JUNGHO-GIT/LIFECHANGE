@@ -1,8 +1,8 @@
 // useFoodSection.tsx
 
-import { useEffect } from "@importReacts";
 import { useCommonValue } from "@importHooks";
-import { setSession } from "@importScripts";
+import { useEffect } from "@importReacts";
+import { fnSetSession } from "@importScripts";
 
 // -------------------------------------------------------------------------------------------------
 export const useFoodSection = () => {
@@ -12,14 +12,12 @@ export const useFoodSection = () => {
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
-
-    // foodSection 처리
     if (
       !PATH.includes("food/find/list") &&
       !PATH.includes("food/favorite/list") &&
-      !PATH.includes("food/detail")
+      !PATH.includes("food/record/detail")
     ) {
-      setSession("section", "food", "", []);
+      fnSetSession("section", "food", "", []);
     }
   }, [PATH]);
 };

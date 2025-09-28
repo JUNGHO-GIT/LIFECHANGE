@@ -36,21 +36,21 @@ export type UserType = {
 	user_curPropertyExclusion: string;
 
 	user_favorite: Array<{
-		food_key: string,
-		food_name: string;
-		food_brand: string;
-		food_kcal: string;
-		food_carb: string;
-		food_protein: string;
-		food_fat: string;
+		food_record_key: string,
+		food_record_name: string;
+		food_record_brand: string;
+		food_record_kcal: string;
+		food_record_carb: string;
+		food_record_protein: string;
+		food_record_fat: string;
 	}>;
 
 	user_dataCategory: {
-		calendar: Array<{ calendar_part: string }>;
-		exercise: Array<{ exercise_part: string; exercise_title: Array<string> }>;
-		food: Array<{ food_part: string }>;
-		money: Array<{ money_part: string; money_title: Array<string> }>;
-		sleep: Array<{ sleep_part: string }>;
+		schedule: Array<{ schedule_record_part: string }>;
+		exercise: Array<{ exercise_record_part: string; exercise_record_title: Array<string> }>;
+		food: Array<{ food_record_part: string }>;
+		money: Array<{ money_record_part: string; money_record_title: Array<string> }>;
+		sleep: Array<{ sleep_record_part: string }>;
 	};
 
 	user_regDt: string;
@@ -93,17 +93,17 @@ export const User: UserType = {
   user_curPropertyExclusion: "",
 
   user_favorite: [{
-    food_key: "",
-    food_name: "",
-    food_brand: "",
-    food_kcal: "",
-    food_carb: "",
-    food_protein: "",
-    food_fat: "",
+    food_record_key: "",
+    food_record_name: "",
+    food_record_brand: "",
+    food_record_kcal: "",
+    food_record_carb: "",
+    food_record_protein: "",
+    food_record_fat: "",
   }],
 
   user_dataCategory: {
-    calendar: [],
+    schedule: [],
     exercise: [],
     food: [],
     money: [],
@@ -117,20 +117,20 @@ export const User: UserType = {
 // Types ------------------------------------------------------------------------------------------
 export type CategoryType = {
   exercise: Array<{
-    exercise_part: string;
-    exercise_title: string[];
+    exercise_record_part: string;
+    exercise_record_title: string[];
   }>;
   food: Array<{
-    food_part: string;
-    food_title?: string[];
+    food_record_part: string;
+    food_record_title?: string[];
   }>;
   money: Array<{
-    money_part: string;
-    money_title: string[];
+    money_record_part: string;
+    money_record_title: string[];
   }>;
   sleep: Array<{
-    sleep_part: string;
-    sleep_title?: string[];
+    sleep_record_part: string;
+    sleep_record_title?: string[];
   }>;
 };
 
@@ -138,24 +138,25 @@ export type CategoryType = {
 export const Category: CategoryType = {
   exercise: [
     {
-      exercise_part: "",
-      exercise_title: [""]
+      exercise_record_part: "",
+      exercise_record_title: [""]
     }
   ],
   food: [
     {
-      food_part: ""
+      food_record_part: "",
+			food_record_title: [""]
     }
   ],
   money: [
     {
-      money_part: "",
-      money_title: [""]
+      money_record_part: "",
+      money_record_title: [""]
     }
   ],
   sleep: [
     {
-      sleep_part: ""
+      sleep_record_part: ""
     }
   ]
 };

@@ -2,20 +2,20 @@
 export const moneyArray = [
   // 0
   {
-    money_part: "all",
-    money_title: [
+    money_record_part: "all",
+    money_record_title: [
       "all"
     ]
   },
   {
-    money_part: "income",
-    money_title: [
+    money_record_part: "income",
+    money_record_title: [
       "all", "labor", "finance", "others",
     ]
   },
   {
-    money_part: "expense",
-    money_title: [
+    money_record_part: "expense",
+    money_record_title: [
       "all", "food", "culture", "housing", "health", "transportation", "entertainment", "dignity", "savings", "finance", "others",
     ]
   }

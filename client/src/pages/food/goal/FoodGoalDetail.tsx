@@ -1,20 +1,20 @@
 // FoodGoalDetail.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useValidateFood } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { FoodGoal, FoodGoalType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { insertComma, sync } from "@importScripts";
+import { fnInsertComma, fnSync } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, Count, Delete, Input } from "@importContainers";
 import { Img, Bg, Paper, Grid, Br } from "@importComponents";
 
 // -------------------------------------------------------------------------------------------------
-export const FoodGoalDetail = () => {
+export const FoodGoalDetail = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
-  const { URL_OBJECT, navigate, sessionId, toList, toToday } = useCommonValue();
+  const { URL_OBJECT, navigate, sessionId, toList, toSchedule } = useCommonValue();
   const { location_from, location_dateType } = useCommonValue();
   const { location_dateStart, location_dateEnd } = useCommonValue();
   const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
@@ -169,14 +169,14 @@ export const FoodGoalDetail = () => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(location_from === "today" ? toToday : toList, {
+        navigate(location_from === "schedule" ? toSchedule : toList, {
           state: {
             dateType: "",
             dateStart: DATE.dateStart,
             dateEnd: DATE.dateEnd
           }
         });
-        sync("nutrition");
+        fnSync("nutrition");
       }
       else {
         setLOADING(false);
@@ -222,14 +222,14 @@ export const FoodGoalDetail = () => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(location_from === "today" ? toToday : toList, {
+        navigate(location_from === "schedule" ? toSchedule : toList, {
           state: {
             dateType: "",
             dateStart: DATE.dateStart,
             dateEnd: DATE.dateEnd
           }
         });
-        sync("nutrition");
+        fnSync("nutrition");
       }
       else {
         setLOADING(false);
@@ -269,9 +269,7 @@ export const FoodGoalDetail = () => {
     }));
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 7. detail
-	// --------------------------------------------------------------------------------------------
+	// 7. detail ----------------------------------------------------------------------------------
   const detailNode = () => {
     // 7-1. date + count
 		const dateCountSection = () => (
@@ -323,7 +321,7 @@ export const FoodGoalDetail = () => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={insertComma(item?.food_goal_kcal || "0")}
+									value={fnInsertComma(item?.food_goal_kcal || "0")}
 									inputRef={REFS?.[i]?.food_goal_kcal}
 									error={ERRORS?.[i]?.food_goal_kcal}
 									label={
@@ -372,7 +370,7 @@ export const FoodGoalDetail = () => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={insertComma(item?.food_goal_carb || "0")}
+									value={fnInsertComma(item?.food_goal_carb || "0")}
 									inputRef={REFS?.[i]?.food_goal_carb}
 									error={ERRORS?.[i]?.food_goal_carb}
 									label={
@@ -421,7 +419,7 @@ export const FoodGoalDetail = () => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={insertComma(item?.food_goal_protein || "0")}
+									value={fnInsertComma(item?.food_goal_protein || "0")}
 									inputRef={REFS?.[i]?.food_goal_protein}
 									error={ERRORS?.[i]?.food_goal_protein}
 									label={
@@ -470,7 +468,7 @@ export const FoodGoalDetail = () => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={insertComma(item?.food_goal_fat || "0")}
+									value={fnInsertComma(item?.food_goal_fat || "0")}
 									inputRef={REFS?.[i]?.food_goal_fat}
 									error={ERRORS?.[i]?.food_goal_fat}
 									label={
@@ -560,4 +558,4 @@ export const FoodGoalDetail = () => {
       {footerNode()}
     </>
   );
-};
+});

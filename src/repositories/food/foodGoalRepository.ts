@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 import { FoodGoal } from "@schemas/food/FoodGoal";
-import { Food } from "@schemas/food/Food";
+import { FoodRecord } from "@schemas/food/FoodRecord";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
@@ -114,43 +114,43 @@ export const listGoal = async (
   return finalResult;
 };
 
-// 1-2. list (real) --------------------------------------------------------------------------------
-export const listReal = async (
+// 1-2. list (record) --------------------------------------------------------------------------------
+export const listRecord = async (
   user_id_param: string,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await Food.aggregate([
+  const finalResult:any = await FoodRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
-        food_dateStart: {
+        food_record_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        food_dateEnd: {
+        food_record_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...dateType_param ? { food_dateType: dateType_param } : {},
+        ...dateType_param ? { food_record_dateType: dateType_param } : {},
       }
     },
     {
       $project: {
         _id: 0,
-        food_dateType: 1,
-        food_dateStart: 1,
-        food_dateEnd: 1,
-        food_total_kcal: 1,
-        food_total_carb: 1,
-        food_total_protein: 1,
-        food_total_fat: 1,
+        food_record_dateType: 1,
+        food_record_dateStart: 1,
+        food_record_dateEnd: 1,
+        food_record_total_kcal: 1,
+        food_record_total_carb: 1,
+        food_record_total_protein: 1,
+        food_record_total_fat: 1,
       }
     },
     {
       $sort: {
-        food_dateStart: 1
+        food_record_dateStart: 1
       }
     }
   ]);

@@ -1,10 +1,10 @@
 // UserDetail.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
 import { useCommonValue, useValidateUser } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
-import { sync, insertComma } from "@importScripts";
+import { fnSync, fnInsertComma } from "@importScripts";
 import { User } from "@importSchemas";
 import { Footer } from "@importLayouts";
 import { Input } from "@importContainers";
@@ -12,7 +12,7 @@ import { Hr, Img, Div, Paper, Grid } from "@importComponents";
 import { Checkbox, Avatar } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
-export const UserDetail = () => {
+export const UserDetail = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, navigate, sessionId, localCurrency, localUnit } = useCommonValue();
@@ -75,7 +75,7 @@ export const UserDetail = () => {
           severity: "success",
         });
         navigate("/user/detail");
-        sync();
+        fnSync();
       }
       else {
         setLOADING(false);
@@ -148,7 +148,7 @@ export const UserDetail = () => {
 							<Grid size={12}>
 								<Input
 									label={translate("initScale")}
-									value={insertComma(item.user_initScale || "0")}
+									value={fnInsertComma(item.user_initScale || "0")}
 									inputRef={REFS?.[i]?.user_initScale}
 									error={ERRORS?.[i]?.user_initScale}
 									startadornment={
@@ -190,7 +190,7 @@ export const UserDetail = () => {
 								<Input
 									readOnly={true}
 									label={translate("curScale")}
-									value={insertComma(item.user_curScale || "0")}
+									value={fnInsertComma(item.user_curScale || "0")}
 									startadornment={
 										<Img
 											max={14}
@@ -214,7 +214,7 @@ export const UserDetail = () => {
 							<Grid size={12}>
 								<Input
 									label={translate("initAvgKcalIntake")}
-									value={insertComma(item.user_initAvgKcalIntake || "0")}
+									value={fnInsertComma(item.user_initAvgKcalIntake || "0")}
 									inputRef={REFS?.[i]?.user_initAvgKcalIntake}
 									error={ERRORS?.[i]?.user_initAvgKcalIntake}
 									startadornment={
@@ -256,7 +256,7 @@ export const UserDetail = () => {
 								<Input
 									readOnly={true}
 									label={translate("curAvgKcalIntake")}
-									value={insertComma(item.user_curAvgKcalIntake || "0")}
+									value={fnInsertComma(item.user_curAvgKcalIntake || "0")}
 									startadornment={
 										<Img
 											max={14}
@@ -280,7 +280,7 @@ export const UserDetail = () => {
 							<Grid size={12}>
 								<Input
 									label={translate("initProperty")}
-									value={insertComma(item.user_initProperty || "0")}
+									value={fnInsertComma(item.user_initProperty || "0")}
 									inputRef={REFS?.[i]?.user_initProperty}
 									error={ERRORS?.[i]?.user_initProperty}
 									startadornment={
@@ -324,9 +324,9 @@ export const UserDetail = () => {
 									label={translate("curPropertyExclusion")}
 									value={
 										includingExclusions ? (
-											insertComma(item.user_curPropertyAll || "0")
+											fnInsertComma(item.user_curPropertyAll || "0")
 										) : (
-											insertComma(item.user_curPropertyExclusion || "0")
+											fnInsertComma(item.user_curPropertyExclusion || "0")
 										)
 									}
 									startadornment={
@@ -397,4 +397,4 @@ export const UserDetail = () => {
       {footerNode()}
     </>
   );
-};
+});

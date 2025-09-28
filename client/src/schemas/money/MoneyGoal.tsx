@@ -16,22 +16,22 @@ export type MoneyGoalType = {
 	money_goal_regDt: string;
 	money_goal_updateDt: string;
 
-	// real
-	money_dateType: string;
-	money_dateStart: string;
-	money_dateEnd: string;
-	money_total_income: string;
-	money_total_income_color: string;
-	money_total_expense: string;
-	money_total_expense_color: string;
-	money_regDt: string;
-	money_updateDt: string;
+	// record
+	money_record_dateType: string;
+	money_record_dateStart: string;
+	money_record_dateEnd: string;
+	money_record_total_income: string;
+	money_record_total_income_color: string;
+	money_record_total_expense: string;
+	money_record_total_expense_color: string;
+	money_record_regDt: string;
+	money_record_updateDt: string;
 
 	// diff
-	money_diff_income: string;
-	money_diff_income_color: string;
-	money_diff_expense: string;
-	money_diff_expense_color: string;
+	money_record_diff_income: string;
+	money_record_diff_income_color: string;
+	money_record_diff_expense: string;
+	money_record_diff_expense_color: string;
 };
 
 // Schema -----------------------------------------------------------------------------------------
@@ -50,20 +50,20 @@ export const MoneyGoal: MoneyGoalType = {
 	money_goal_regDt: "",
 	money_goal_updateDt: "",
 
-	// real
-	money_dateType: "",
-	money_dateStart: "0000-00-00",
-	money_dateEnd: "0000-00-00",
-	money_total_income: "0",
-	money_total_income_color: "",
-	money_total_expense: "0",
-	money_total_expense_color: "",
-	money_regDt: "",
-	money_updateDt: "",
+	// record
+	money_record_dateType: "",
+	money_record_dateStart: "0000-00-00",
+	money_record_dateEnd: "0000-00-00",
+	money_record_total_income: "0",
+	money_record_total_income_color: "",
+	money_record_total_expense: "0",
+	money_record_total_expense_color: "",
+	money_record_regDt: "",
+	money_record_updateDt: "",
 
 	// diff
-	money_diff_income: "0",
-	money_diff_income_color: "",
-	money_diff_expense: "0",
-	money_diff_expense_color: "",
+	money_record_diff_income: "0",
+	money_record_diff_income_color: "",
+	money_record_diff_expense: "0",
+	money_record_diff_expense_color: "",
 };

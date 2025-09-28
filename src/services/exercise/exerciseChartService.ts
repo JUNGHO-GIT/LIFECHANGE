@@ -1,18 +1,18 @@
 // exerciseChartService.ts
 
 import * as repository from "@repositories/exercise/exerciseChartRepository";
-import { timeToDecimal } from "@assets/scripts/utils";
+import { fnTimeToDecimal } from "@assets/scripts/utils";
 import moment from "moment-timezone";
 
 // 1-1. chart (bar - today) ------------------------------------------------------------------------
-export const barToday = async (
+export const bar = async (
   user_id_param: string,
   DATE_param: any,
 ) => {
 
   // result 변수 선언
   let findResultGoal: any[] = [];
-  let findResultReal: any[] = [];
+  let findResultRecord: any[] = [];
   let finalResult: any = [];
   let statusResult: string = "";
 
@@ -22,11 +22,11 @@ export const barToday = async (
 
   try {
     // promise 사용하여 병렬 처리
-    [findResultGoal, findResultReal] = await Promise.all([
+    [findResultGoal, findResultRecord] = await Promise.all([
       repository.barGoal(
         user_id_param, dateStart, dateEnd
       ),
-      repository.barReal(
+      repository.barRecord(
         user_id_param, dateStart, dateEnd
       )
     ]);
@@ -36,7 +36,7 @@ export const barToday = async (
       name: String("scale"),
       date: String(dateStart),
       goal: String(item.exercise_goal_scale|| "0"),
-      real: String(findResultReal[0]?.exercise_total_scale || "0")
+      record: String(findResultRecord[0]?.exercise_record_total_scale || "0")
     }));
     statusResult = "success";
   }
@@ -59,7 +59,7 @@ export const barWeek = async (
 
   // result 변수 선언
   let findResultGoal: any[] = [];
-  let findResultReal: any[] = [];
+  let findResultRecord: any[] = [];
   let finalResult: any = [];
   let statusResult: string = "";
 
@@ -80,11 +80,11 @@ export const barWeek = async (
 
   try {
     // promise 사용하여 병렬 처리
-    [findResultGoal, findResultReal] = await Promise.all([
+    [findResultGoal, findResultRecord] = await Promise.all([
       repository.barGoal(
         user_id_param, dateStart, dateEnd
       ),
-      repository.barReal(
+      repository.barRecord(
         user_id_param, dateStart, dateEnd
       )
     ]);
@@ -96,8 +96,8 @@ export const barWeek = async (
       const findIndexGoal = findResultGoal?.findIndex((item: any) => (
         item.exercise_goal_dateStart === targetDay
       ));
-      const findIndexReal = findResultReal?.findIndex((item: any) => (
-        item.exercise_dateStart === targetDay
+      const findIndexRecord = findResultRecord?.findIndex((item: any) => (
+        item.exercise_record_dateStart === targetDay
       ));
 
       finalResult.push({
@@ -107,9 +107,9 @@ export const barWeek = async (
           findIndexGoal !== -1
           ? String(findResultGoal[findIndexGoal]?.exercise_goal_scale)
           : "0",
-        real:
-          findIndexReal !== -1
-          ? String(findResultReal[findIndexReal]?.exercise_total_scale)
+        record:
+          findIndexRecord !== -1
+          ? String(findResultRecord[findIndexRecord]?.exercise_record_total_scale)
           : "0"
       });
     });
@@ -134,7 +134,7 @@ export const barMonth = async (
 
   // result 변수 선언
   let findResultGoal: any[] = [];
-  let findResultReal: any[] = [];
+  let findResultRecord: any[] = [];
   let finalResult: any = [];
   let statusResult: string = "";
 
@@ -156,11 +156,11 @@ export const barMonth = async (
 
   try {
     // promise 사용하여 병렬 처리
-    [findResultGoal, findResultReal] = await Promise.all([
+    [findResultGoal, findResultRecord] = await Promise.all([
       repository.barGoal(
         user_id_param, dateStart, dateEnd
       ),
-      repository.barReal(
+      repository.barRecord(
         user_id_param, dateStart, dateEnd
       )
     ]);
@@ -172,8 +172,8 @@ export const barMonth = async (
       const findIndexGoal = findResultGoal?.findIndex((item: any) => (
         item.exercise_goal_dateStart === targetDay
       ));
-      const findIndexReal = findResultReal?.findIndex((item: any) => (
-        item.exercise_dateStart === targetDay
+      const findIndexRecord = findResultRecord?.findIndex((item: any) => (
+        item.exercise_record_dateStart === targetDay
       ));
 
       finalResult.push({
@@ -183,9 +183,9 @@ export const barMonth = async (
           findIndexGoal !== -1
           ? String(findResultGoal[findIndexGoal]?.exercise_goal_scale)
           : "0",
-        real:
-          findIndexReal !== -1
-          ? String(findResultReal[findIndexReal]?.exercise_total_scale)
+        record:
+          findIndexRecord !== -1
+          ? String(findResultRecord[findIndexRecord]?.exercise_record_total_scale)
           : "0"
       });
     });
@@ -429,29 +429,29 @@ export const lineWeek = async (
       const targetDay = moment(weekStartFmt).clone().add(index, 'days').format("YYYY-MM-DD");
 
       const findIndexScale = findResultScale?.findIndex((item: any) => (
-        item.exercise_dateStart === targetDay
+        item.exercise_record_dateStart === targetDay
       ));
       const findIndexVolume = findResultVolume?.findIndex((item: any) => (
-        item.exercise_dateStart === targetDay
+        item.exercise_record_dateStart === targetDay
       ));
       const findIndexCardio = findResultCardio?.findIndex((item: any) => (
-        item.exercise_dateStart === targetDay
+        item.exercise_record_dateStart === targetDay
       ));
 
       finalResultScale.push({
         name: String(data),
         date: String(date[index]),
-        scale: String(findResultScale[findIndexScale]?.exercise_total_scale || "0")
+        scale: String(findResultScale[findIndexScale]?.exercise_record_total_scale || "0")
       });
       finalResultVolume.push({
         name: String(data),
         date: String(date[index]),
-        volume: String(findResultVolume[findIndexVolume]?.exercise_total_volume || "0")
+        volume: String(findResultVolume[findIndexVolume]?.exercise_record_total_volume || "0")
       });
       finalResultCardio.push({
         name: String(data),
         date: String(date[index]),
-        cardio: String(timeToDecimal(findResultCardio[findIndexCardio]?.exercise_total_cardio) || "0")
+        cardio: String(fnTimeToDecimal(findResultCardio[findIndexCardio]?.exercise_record_total_cardio) || "0")
       });
     });
 
@@ -524,29 +524,29 @@ export const lineMonth = async (
       const targetDay = moment(monthStartFmt).clone().add(index, 'days').format("YYYY-MM-DD");
 
       const findIndexScale = findResultScale?.findIndex((item: any) => (
-        item.exercise_dateStart === targetDay
+        item.exercise_record_dateStart === targetDay
       ));
       const findIndexVolume = findResultVolume?.findIndex((item: any) => (
-        item.exercise_dateStart === targetDay
+        item.exercise_record_dateStart === targetDay
       ));
       const findIndexCardio = findResultCardio?.findIndex((item: any) => (
-        item.exercise_dateStart === targetDay
+        item.exercise_record_dateStart === targetDay
       ));
 
       finalResultScale.push({
         name: String(data),
         date: String(date[index]),
-        scale: String(findResultScale[findIndexScale]?.exercise_total_scale || "0")
+        scale: String(findResultScale[findIndexScale]?.exercise_record_total_scale || "0")
       });
       finalResultVolume.push({
         name: String(data),
         date: String(date[index]),
-        volume: String(findResultVolume[findIndexVolume]?.exercise_total_volume || "0")
+        volume: String(findResultVolume[findIndexVolume]?.exercise_record_total_volume || "0")
       });
       finalResultCardio.push({
         name: String(data),
         date: String(date[index]),
-        cardio: String(timeToDecimal(findResultCardio[findIndexCardio]?.exercise_total_cardio) || "0")
+        cardio: String(fnTimeToDecimal(findResultCardio[findIndexCardio]?.exercise_record_total_cardio) || "0")
       });
     });
 
@@ -635,11 +635,11 @@ export const avgWeek = async (
     // sum, count 설정
     parallelResult.forEach(({findResultVolume, findResultCardio, index}) => {
       findResultVolume.forEach((item: any) => {
-        sumVolume[index] += Number(item.exercise_total_volume || "0");
+        sumVolume[index] += Number(item.exercise_record_total_volume || "0");
         countRecordsVolume[index]++;
       });
       findResultCardio.forEach((item: any) => {
-        sumCardio[index] += Number(timeToDecimal(item.exercise_total_cardio) || "0");
+        sumCardio[index] += Number(fnTimeToDecimal(item.exercise_record_total_cardio) || "0");
         countRecordsCardio[index]++;
       });
     });
@@ -748,11 +748,11 @@ export const avgMonth = async (
     // sum, count 설정
     parallelResult.forEach(({findResultVolume, findResultCardio, index}) => {
       findResultVolume.forEach((item: any) => {
-        sumVolume[index] += Number(item.exercise_total_volume || "0");
+        sumVolume[index] += Number(item.exercise_record_total_volume || "0");
         countRecordsVolume[index]++;
       });
       findResultCardio.forEach((item: any) => {
-        sumCardio[index] += Number(timeToDecimal(item.exercise_total_cardio) || "0");
+        sumCardio[index] += Number(fnTimeToDecimal(item.exercise_record_total_cardio) || "0");
         countRecordsCardio[index]++;
       });
     });

@@ -1,20 +1,20 @@
 // MoneyGoalDetail.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useValidateMoney } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { MoneyGoal, MoneyGoalType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { insertComma, sync } from "@importScripts";
+import { fnInsertComma, fnSync } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, Count, Delete, Input } from "@importContainers";
 import { Img, Bg, Paper, Grid, Br } from "@importComponents";
 
 // -------------------------------------------------------------------------------------------------
-export const MoneyGoalDetail = () => {
+export const MoneyGoalDetail = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
-  const { URL_OBJECT, navigate, sessionId, toToday, toList, localCurrency } = useCommonValue();
+  const { URL_OBJECT, navigate, sessionId, toSchedule, toList, localCurrency } = useCommonValue();
   const { location_from, location_dateType } = useCommonValue();
   const { location_dateStart, location_dateEnd } = useCommonValue();
   const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
@@ -169,14 +169,14 @@ export const MoneyGoalDetail = () => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(location_from === "today" ? toToday : toList, {
+        navigate(location_from === "schedule" ? toSchedule : toList, {
           state: {
             dateType: "",
             dateStart: DATE.dateStart,
             dateEnd: DATE.dateEnd
           }
         });
-        sync("property");
+        fnSync("property");
       }
       else {
         setLOADING(false);
@@ -222,14 +222,14 @@ export const MoneyGoalDetail = () => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(location_from === "today" ? toToday : toList, {
+        navigate(location_from === "schedule" ? toSchedule : toList, {
           state: {
             dateType: "",
             dateStart: DATE.dateStart,
             dateEnd: DATE.dateEnd
           }
         });
-        sync("property");
+        fnSync("property");
       }
       else {
         setLOADING(false);
@@ -267,9 +267,7 @@ export const MoneyGoalDetail = () => {
     }));
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 7. detail
-	// --------------------------------------------------------------------------------------------
+	// 7. detail ----------------------------------------------------------------------------------
   const detailNode = () => {
     // 7-1. date + count
 		const dateCountSection = () => (
@@ -321,7 +319,7 @@ export const MoneyGoalDetail = () => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={insertComma(item?.money_goal_income || "0")}
+									value={fnInsertComma(item?.money_goal_income || "0")}
 									inputRef={REFS?.[i]?.money_goal_income}
 									error={ERRORS?.[i]?.money_goal_income}
 									label={
@@ -370,7 +368,7 @@ export const MoneyGoalDetail = () => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={insertComma(item?.money_goal_expense || "0")}
+									value={fnInsertComma(item?.money_goal_expense || "0")}
 									inputRef={REFS?.[i]?.money_goal_expense}
 									error={ERRORS?.[i]?.money_goal_expense}
 									label={
@@ -460,4 +458,4 @@ export const MoneyGoalDetail = () => {
       {footerNode()}
     </>
   );
-};
+});

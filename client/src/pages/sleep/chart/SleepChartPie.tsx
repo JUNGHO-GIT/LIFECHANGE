@@ -1,6 +1,6 @@
 // SleepChartPie.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
 import { SleepPie, SleepPieType } from "@importSchemas";
@@ -22,7 +22,7 @@ declare type PieProps = {
 }
 
 // -------------------------------------------------------------------------------------------------
-export const SleepChartPie = () => {
+export const SleepChartPie = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, chartColors, sessionId } = useCommonValue();
@@ -300,4 +300,4 @@ export const SleepChartPie = () => {
       {chartNode()}
     </>
   );
-};
+});

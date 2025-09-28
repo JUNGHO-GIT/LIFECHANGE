@@ -1,12 +1,12 @@
 // InputFile.tsx
 
-import { useState, useEffect } from "@importReacts";
-import { useStoreAlert } from "@importStores";
-import { Div, Br, Img, Icons, Grid } from "@importComponents";
+import { Br, Div, Grid, Icons, Img } from "@importComponents";
 import { MuiFileInput } from "@importMuis";
+import { memo, useEffect, useState } from "@importReacts";
+import { useStoreAlert } from "@importStores";
 
 // -------------------------------------------------------------------------------------------------
-export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
+export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { setALERT } = useStoreAlert();
@@ -316,4 +316,4 @@ export const InputFile = ({ handleExistingFilesChange, ...props }: any) => {
     {fileExisting?.length > 0 && existingNode()}
     </>
   );
-};
+});

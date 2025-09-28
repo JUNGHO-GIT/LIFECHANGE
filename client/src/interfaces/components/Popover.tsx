@@ -1,11 +1,10 @@
 // Popover.tsx
 
-import { useEffect, useRef } from "@importReacts";
-import { Popover as MuiPopover } from "@importMuis";
-import { PopoverProps } from "@importMuis";
+import { Popover as MuiPopover, PopoverProps } from "@importMuis";
+import { memo, useEffect, useRef } from "@importReacts";
 
 // -------------------------------------------------------------------------------------------------
-export const Popover = (props: PopoverProps) => {
+export const Popover = memo((props: PopoverProps) => {
   const paperRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -29,4 +28,4 @@ export const Popover = (props: PopoverProps) => {
       slotProps={mergedSlotProps}
     />
   );
-};
+});

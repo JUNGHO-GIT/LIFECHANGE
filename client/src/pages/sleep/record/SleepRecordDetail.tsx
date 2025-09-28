@@ -1,0 +1,451 @@
+// SleepRecordDetail.tsx
+
+import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
+import { useCommonValue, useCommonDate, useTime, useValidateSleep } from "@importHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
+import { SleepRecord, SleepRecordType } from "@importSchemas";
+import { axios } from "@importLibs";
+import { fnSync } from "@importScripts";
+import { Footer, Dialog } from "@importLayouts";
+import { PickerDay, PickerTime, Count, Delete } from "@importContainers";
+import { Bg, Paper, Grid, Br } from "@importComponents";
+
+// -------------------------------------------------------------------------------------------------
+export const SleepRecordDetail = memo(() => {
+
+	// 1. common ----------------------------------------------------------------------------------
+  const { URL_OBJECT, PATH, sessionId, navigate } = useCommonValue();
+  const { toList, toSchedule } = useCommonValue();
+  const { location_from, location_dateStart, location_dateEnd } = useCommonValue();
+  const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
+  const { translate } = useStoreLanguage();
+  const { setALERT } = useStoreAlert();
+  const { setLOADING } = useStoreLoading();
+  const { ERRORS, REFS, validate } = useValidateSleep();
+
+	// 2-2. useState -------------------------------------------------------------------------------
+  const [LOCKED, setLOCKED] = useState<string>("unlocked");
+  const [OBJECT, setOBJECT] = useState<SleepRecordType>(SleepRecord);
+  const [EXIST, setEXIST] = useState({
+    day: [""],
+    week: [""],
+    month: [""],
+    year: [""],
+    select: [""],
+  });
+  const [FLOW, setFLOW] = useState({
+    exist: false,
+    itsMe: false,
+    itsNew: false,
+  });
+  const [SEND, setSEND] = useState({
+    id: "",
+    dateType: "",
+    dateStart: "0000-00-00",
+    dateEnd: "0000-00-00",
+  });
+  const [COUNT, setCOUNT] = useState({
+    totalCnt: 0,
+    sectionCnt: 0,
+    newSectionCnt: 0
+  });
+  const [DATE, setDATE] = useState({
+    dateType: "day",
+    dateStart: location_dateStart || getDayFmt(),
+    dateEnd: location_dateEnd || getDayFmt(),
+  });
+
+	// 2-3. useEffect -----------------------------------------------------------------------------
+  useTime(OBJECT, setOBJECT, PATH, "record");
+
+	// 2-3. useEffect -----------------------------------------------------------------------------
+  useEffect(() => {
+    if (EXIST?.[DATE.dateType as keyof typeof EXIST]?.length > 0) {
+
+      const dateRange = `${DATE.dateStart.trim()} - ${DATE.dateEnd.trim()}`;
+      const objectRange = `${OBJECT.sleep_record_dateStart.trim()} - ${OBJECT.sleep_record_dateEnd.trim()}`;
+
+      const isExist = (
+        EXIST?.[DATE.dateType as keyof typeof EXIST]?.includes(dateRange)
+      );
+      const itsMe = (
+        dateRange === objectRange
+      );
+      const itsNew = (
+        OBJECT.sleep_record_dateStart === "0000-00-00" &&
+        OBJECT.sleep_record_dateEnd === "0000-00-00"
+      );
+
+      setFLOW((prev) => ({
+        ...prev,
+        exist: isExist,
+        itsMe: itsMe,
+        itsNew: itsNew
+      }));
+    }
+  }, [EXIST, DATE.dateEnd, OBJECT.sleep_record_dateEnd]);
+
+	// 2-3. useEffect -----------------------------------------------------------------------------
+  useEffect(() => {
+    axios.get(`${URL_OBJECT}/record/exist`, {
+      params: {
+        user_id: sessionId,
+        DATE: {
+          dateType: "",
+          dateStart: getMonthStartFmt(DATE.dateStart),
+          dateEnd: getMonthEndFmt(DATE.dateEnd),
+        },
+      },
+    })
+    .then((res: any) => {
+      setEXIST(
+        !res.data.result || res.data.result?.length === 0 ? [""] : res.data.result
+      );
+    })
+    .catch((err: any) => {
+      setALERT({
+        open: true,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
+    });
+  }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
+
+	// 2-3. useEffect -----------------------------------------------------------------------------
+  useEffect(() => {
+    setLOADING(true);
+    if (LOCKED === "locked") {
+      setLOADING(false);
+      return;
+    }
+    axios.get(`${URL_OBJECT}/record/detail`, {
+      params: {
+        user_id: sessionId,
+        DATE: DATE,
+      },
+    })
+    .then((res: any) => {
+      setLOADING(false);
+      setOBJECT(res.data.result || SleepRecord);
+
+      // sectionCnt가 0이면 section 초기화
+      if (res.data.sectionCnt <= 0) {
+        setOBJECT((prev) => ({
+          ...prev,
+          sleep_section: []
+        }));
+      }
+      // sectionCnt가 0이 아니면 section 내부 part 값에 따라 재정렬
+      else {
+        setOBJECT((prev) => ({
+          ...prev,
+          sleep_section: prev.sleep_section?.sort((a: any, b: any) => (
+            a.sleep_record_part - b.sleep_record_part
+          ))
+        }));
+      }
+      // count 설정
+      setCOUNT((prev) => ({
+        ...prev,
+        totalCnt: res.data.totalCnt || 0,
+        sectionCnt: res.data.sectionCnt || 0,
+        newSectionCnt: res.data.sectionCnt || 0
+      }));
+    })
+    .catch((err: any) => {
+      setLOADING(false);
+      setALERT({
+        open: true,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
+    })
+    .finally(() => {
+      setLOADING(false);
+    });
+  }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
+
+	// 2-3. useEffect -----------------------------------------------------------------------------
+  useEffect(() => {
+    const defaultSection = {
+      sleep_record_bedTime: "00:00",
+      sleep_record_wakeTime: "00:00",
+      sleep_record_sleepTime: "00:00",
+    };
+    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) =>
+      idx < OBJECT?.sleep_section?.length ? OBJECT?.sleep_section[idx] : defaultSection
+    );
+    setOBJECT((prev: any) => ({
+      ...prev,
+      sleep_section: updatedSection
+    }));
+
+  },[COUNT?.newSectionCnt]);
+
+	// 3. flow ------------------------------------------------------------------------------------
+  const flowSave = async (type: string) => {
+    setLOADING(true);
+    if (!await validate(OBJECT, COUNT, "record")) {
+      setLOADING(false);
+      return;
+    }
+    axios({
+      method: type === "create" ? "post" : "put",
+      url: type === "create" ? `${URL_OBJECT}/record/create` : `${URL_OBJECT}/record/update`,
+      data: {
+        user_id: sessionId,
+        OBJECT: OBJECT,
+        DATE: DATE,
+        type: type,
+      }
+    })
+    .then((res: any) => {
+      if (res.data.status === "success") {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "success",
+        });
+        navigate(location_from === "schedule" ? toSchedule : toList, {
+          state: {
+            dateType: "",
+            dateStart: DATE.dateStart,
+            dateEnd: DATE.dateEnd
+          }
+        });
+        fnSync();
+      }
+      else {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
+      }
+    })
+    .catch((err: any) => {
+      setLOADING(false);
+      setALERT({
+        open: true,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
+      console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
+    });
+  };
+
+	// 3. flow ------------------------------------------------------------------------------------
+  const flowDelete = async () => {
+    setLOADING(true);
+    if (!await validate(OBJECT, COUNT, "delete")) {
+      setLOADING(false);
+      return;
+    }
+    axios.delete(`${URL_OBJECT}/record/delete`, {
+      data: {
+        user_id: sessionId,
+        DATE: DATE,
+      }
+    })
+    .then((res: any) => {
+      if (res.data.status === "success") {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "success",
+        });
+        navigate(location_from === "schedule" ? toSchedule : toList, {
+          state: {
+            dateType: "",
+            dateStart: DATE.dateStart,
+            dateEnd: DATE.dateEnd
+          }
+        });
+        fnSync();
+      }
+      else {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
+      }
+    })
+    .catch((err: any) => {
+      setLOADING(false);
+      setALERT({
+        open: true,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
+      console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
+    });
+  };
+
+  // 4-3. handle --------------------------------------------------------------------------------
+  const handleDelete = (index: number) => {
+    setOBJECT((prev) => ({
+      ...prev,
+      sleep_section: prev.sleep_section?.filter((_item: any, idx: number) => (idx !== index))
+    }));
+    setCOUNT((prev) => ({
+      ...prev,
+      newSectionCnt: prev.newSectionCnt - 1
+    }));
+  };
+
+  // 7. save --------------------------------------------------------------------------------------
+  const detailNode = () => {
+    // 7-1. date + count
+		const dateCountSection = () => (
+			<Grid container={true} spacing={2} className={`radius-2 border-1 shadow-0 p-20px`}>
+        <Grid size={12}>
+          <PickerDay
+            DATE={DATE}
+            setDATE={setDATE}
+            EXIST={EXIST}
+          />
+        </Grid>
+        <Grid size={12}>
+          <Count
+            COUNT={COUNT}
+            setCOUNT={setCOUNT}
+            LOCKED={LOCKED}
+            setLOCKED={setLOCKED}
+            limit={1}
+          />
+        </Grid>
+      </Grid>
+    );
+    // 7-3. detail
+    const detailSection = () => (
+			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
+				{OBJECT.sleep_section?.map((item, i) => (
+					<Grid container spacing={2} key={`detail-${i}`}
+					className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}>
+						{/** row 1 **/}
+						<Grid container={true} spacing={1}>
+							<Grid size={6} className={"d-row-left"}>
+								<Bg
+									badgeContent={i + 1}
+									bgcolor={"#1976d2"}
+								/>
+							</Grid>
+							<Grid size={6} className={"d-row-right"}>
+								<Delete
+									index={i}
+									handleDelete={handleDelete}
+									LOCKED={LOCKED}
+								/>
+							</Grid>
+						</Grid>
+						{/** /.row 1 **/}
+
+						{/** row 2 **/}
+						<Grid container={true} spacing={1}>
+							<Grid size={12}>
+								<PickerTime
+									OBJECT={OBJECT}
+									setOBJECT={setOBJECT}
+									REFS={REFS}
+									ERRORS={ERRORS}
+									DATE={DATE}
+									LOCKED={LOCKED}
+									extra={"sleep_record_bedTime"}
+									i={i}
+								/>
+							</Grid>
+						</Grid>
+						{/** /.row 2 **/}
+
+						{/** row 3 **/}
+						<Grid container={true} spacing={1}>
+							<Grid size={12}>
+								<PickerTime
+									OBJECT={OBJECT}
+									setOBJECT={setOBJECT}
+									REFS={REFS}
+									ERRORS={ERRORS}
+									DATE={DATE}
+									LOCKED={LOCKED}
+									extra={"sleep_record_wakeTime"}
+									i={i}
+								/>
+							</Grid>
+						</Grid>
+						{/** /.row 3 **/}
+
+						{/** row 4 **/}
+						<Grid container={true} spacing={1}>
+							<Grid size={12}>
+								<PickerTime
+									OBJECT={OBJECT}
+									setOBJECT={setOBJECT}
+									REFS={REFS}
+									ERRORS={ERRORS}
+									DATE={DATE}
+									LOCKED={LOCKED}
+									extra={"sleep_record_sleepTime"}
+									i={i}
+								/>
+							</Grid>
+						</Grid>
+						{/** /.row 4 **/}
+					</Grid>
+				))}
+			</Grid>
+		);
+    // 7-10. return
+    return (
+      <Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-75vh"}>
+				{dateCountSection()}
+				<Br m={20} />
+				{COUNT?.newSectionCnt > 0 && detailSection()}
+      </Paper>
+    );
+  };
+
+	// 8. dialog ----------------------------------------------------------------------------------
+  const dialogNode = () => (
+    <Dialog
+      COUNT={COUNT}
+      setCOUNT={setCOUNT}
+      LOCKED={LOCKED}
+      setLOCKED={setLOCKED}
+    />
+  );
+
+	// 9. footer ----------------------------------------------------------------------------------
+  const footerNode = () => (
+    <Footer
+      state={{
+        DATE, SEND, COUNT, EXIST, FLOW,
+      }}
+      setState={{
+        setDATE, setSEND, setCOUNT, setEXIST, setFLOW,
+      }}
+      flow={{
+        flowSave, flowDelete
+      }}
+    />
+  );
+
+	// 10. return ----------------------------------------------------------------------------------
+  return (
+    <>
+      {detailNode()}
+      {dialogNode()}
+      {footerNode()}
+    </>
+  );
+});

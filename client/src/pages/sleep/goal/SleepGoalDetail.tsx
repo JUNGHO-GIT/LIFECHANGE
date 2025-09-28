@@ -1,20 +1,21 @@
 // SleepGoalDetail.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useTime, useValidateSleep } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { SleepGoal, SleepGoalType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { sync } from "@importScripts";
+import { fnSync } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, PickerTime, Count, Delete } from "@importContainers";
 import { Bg, Paper, Grid, Br } from "@importComponents";
 
 // -------------------------------------------------------------------------------------------------
-export const SleepGoalDetail = () => {
+export const SleepGoalDetail = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
-  const { URL_OBJECT, PATH, sessionId, navigate, toToday, toList } = useCommonValue();
+  const { URL_OBJECT, PATH, sessionId, navigate } = useCommonValue();
+  const { toList, toSchedule } = useCommonValue();
   const { location_from, location_dateType } = useCommonValue();
   const { location_dateStart, location_dateEnd } = useCommonValue();
   const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
@@ -172,14 +173,14 @@ export const SleepGoalDetail = () => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(location_from === "today" ? toToday : toList, {
+        navigate(location_from === "schedule" ? toSchedule : toList, {
           state: {
             dateType: "",
             dateStart: DATE.dateStart,
             dateEnd: DATE.dateEnd
           }
         });
-        sync();
+        fnSync();
       }
       else {
         setLOADING(false);
@@ -225,14 +226,14 @@ export const SleepGoalDetail = () => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(location_from === "today" ? toToday : toList, {
+        navigate(location_from === "schedule" ? toSchedule : toList, {
           state: {
             dateType: "",
             dateStart: DATE.dateStart,
             dateEnd: DATE.dateEnd
           }
         });
-        sync();
+        fnSync();
       }
       else {
         setLOADING(false);
@@ -271,9 +272,7 @@ export const SleepGoalDetail = () => {
     }));
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 7. detail
-	// --------------------------------------------------------------------------------------------
+	// 7. detail ----------------------------------------------------------------------------------
   const detailNode = () => {
     // 7-1. date + count
 		const dateCountSection = () => (
@@ -417,4 +416,4 @@ export const SleepGoalDetail = () => {
       {footerNode()}
     </>
   );
-};
+});

@@ -1,17 +1,17 @@
 // MoneyGoalList.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { MoneyGoal, MoneyGoalType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { insertComma } from "@importScripts";
+import { fnInsertComma } from "@importScripts";
 import { Footer, Empty, Dialog } from "@importLayouts";
 import { Div, Img, Hr, Icons, Paper, Grid } from "@importComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
-export const MoneyGoalList = () => {
+export const MoneyGoalList = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, sessionId, localCurrency, toDetail } = useCommonValue();
@@ -227,7 +227,7 @@ export const MoneyGoalList = () => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.money_goal_income_color}`}>
-															{insertComma(item.money_goal_income || "0")}
+															{fnInsertComma(item.money_goal_income || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -235,15 +235,15 @@ export const MoneyGoalList = () => {
 															{translate(localCurrency)}
 														</Div>
 													</Grid>
-													{/** real **/}
+													{/** record **/}
 													<Grid size={4} className={"d-row-center"}>
 														<Div className={"fs-0-7rem fw-500 dark"}>
-															{translate("real")}
+															{translate("record")}
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-8rem fw-600 ${item.money_total_income_color}`}>
-															{insertComma(item.money_total_income || "0")}
+														<Div className={`fs-0-8rem fw-600 ${item.money_record_total_income_color}`}>
+															{fnInsertComma(item.money_record_total_income || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -258,8 +258,8 @@ export const MoneyGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-8rem fw-600 ${item.money_diff_income_color}`}>
-															{insertComma(item.money_diff_income || "0")}
+														<Div className={`fs-0-8rem fw-600 ${item.money_record_diff_income_color}`}>
+															{fnInsertComma(item.money_record_diff_income || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -300,7 +300,7 @@ export const MoneyGoalList = () => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.money_goal_expense_color}`}>
-															{insertComma(item.money_goal_expense || "0")}
+															{fnInsertComma(item.money_goal_expense || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -308,15 +308,15 @@ export const MoneyGoalList = () => {
 															{translate(localCurrency)}
 														</Div>
 													</Grid>
-													{/** real **/}
+													{/** record **/}
 													<Grid size={4} className={"d-row-center"}>
 														<Div className={"fs-0-7rem fw-500 dark"}>
-															{translate("real")}
+															{translate("record")}
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-8rem fw-600 ${item.money_total_expense_color}`}>
-															{insertComma(item.money_total_expense || "0")}
+														<Div className={`fs-0-8rem fw-600 ${item.money_record_total_expense_color}`}>
+															{fnInsertComma(item.money_record_total_expense || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -331,8 +331,8 @@ export const MoneyGoalList = () => {
 														</Div>
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
-														<Div className={`fs-0-8rem fw-600 ${item.money_diff_expense_color}`}>
-															{insertComma(item.money_diff_expense || "0")}
+														<Div className={`fs-0-8rem fw-600 ${item.money_record_diff_expense_color}`}>
+															{fnInsertComma(item.money_record_diff_expense || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -389,4 +389,4 @@ export const MoneyGoalList = () => {
       {footerNode()}
     </>
   );
-};
+});

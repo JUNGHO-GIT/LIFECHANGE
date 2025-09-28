@@ -1,10 +1,11 @@
 // Buttons.tsx
 
-import { useCommonValue } from "@importHooks";
-import { useStoreLanguage } from "@importStores";
-import { setSession } from "@importScripts";
-import { PopUp } from "@importContainers";
 import { Btn, Div, Grid } from "@importComponents";
+import { PopUp } from "@importContainers";
+import { useCommonValue } from "@importHooks";
+import { memo } from "@importReacts";
+import { fnSetSession } from "@importScripts";
+import { useStoreLanguage } from "@importStores";
 
 // -------------------------------------------------------------------------------------------------
 declare type ButtonsProps = {
@@ -13,7 +14,7 @@ declare type ButtonsProps = {
 }
 
 // -------------------------------------------------------------------------------------------------
-export const Buttons = (
+export const Buttons = memo((
   { state, flow }: ButtonsProps
 ) => {
 
@@ -24,7 +25,7 @@ export const Buttons = (
   // 3. handler ------------------------------------------------------------------------------------
   const handleSave = (type: string) => {
     flow?.flowSave(type);
-    setSession("section", "food", "", []);
+    fnSetSession("section", "food", "", []);
   };
 
   // 7. btn ----------------------------------------------------------------------------------------
@@ -183,4 +184,4 @@ export const Buttons = (
       {btnNode()}
     </>
   );
-};
+});

@@ -1,13 +1,12 @@
-// Picker.tsx
+// PickerDay.tsx
 
-import {useEffect, useState} from "@importReacts";
-import {useCommonValue, useCommonDate, useStorageLocal} from "@importHooks";
-import {useStoreLanguage} from "@importStores";
-import {setSession} from "@importScripts";
-import {PopUp, Input, Select} from "@importContainers";
-import {Btn, Img, Div, Icons, Grid} from "@importComponents";
-import {MenuItem, PickersDay, Badge} from "@importMuis";
-import {DateCalendar, AdapterMoment, LocalizationProvider} from "@importMuis";
+import { Btn, Div, Grid, Icons, Img } from "@importComponents";
+import { Input, PopUp, Select } from "@importContainers";
+import { useCommonDate, useCommonValue, useStorageLocal } from "@importHooks";
+import { AdapterMoment, Badge, DateCalendar, LocalizationProvider, MenuItem, PickersDay } from "@importMuis";
+import { memo, useEffect, useState } from "@importReacts";
+import { fnSetSession } from "@importScripts";
+import { useStoreLanguage } from "@importStores";
 
 // -------------------------------------------------------------------------------------------------
 declare type PickerDayProps = {
@@ -31,28 +30,30 @@ declare type PickerDayProps = {
 };
 
 // -------------------------------------------------------------------------------------------------
-export const PickerDay = (
+export const PickerDay = memo((
 	{DATE, setDATE, EXIST}: PickerDayProps
 ) => {
 
 	// 1. common ----------------------------------------------------------------------------------
-	const {PATH, localLang, localTimeZone} = useCommonValue();
-	const {isTodayList, isTodayGoalList, isGoalList, isGoalDetail} = useCommonValue();
-	const {isRealList, isRealDetail, isCalendarDetail} = useCommonValue();
-	const {isList, isDetail} = useCommonValue();
-	const {getDayFmt, getDayNotFmt, getDayStartFmt, getDayEndFmt} = useCommonDate();
-	const {getPrevDayStartFmt, getPrevDayEndFmt} = useCommonDate();
-	const {getNextDayStartFmt, getNextDayEndFmt} = useCommonDate();
-	const {getWeekStartFmt, getWeekEndFmt} = useCommonDate();
-	const {getPrevWeekStartFmt, getPrevWeekEndFmt} = useCommonDate();
-	const {getNextWeekStartFmt, getNextWeekEndFmt} = useCommonDate();
-	const {getMonthStartFmt, getMonthEndFmt} = useCommonDate();
-	const {getPrevMonthStartFmt, getPrevMonthEndFmt} = useCommonDate();
-	const {getNextMonthStartFmt, getNextMonthEndFmt} = useCommonDate();
-	const {getYearStartFmt, getYearEndFmt} = useCommonDate();
-	const {getPrevYearStartFmt, getPrevYearEndFmt} = useCommonDate();
-	const {getNextYearStartFmt, getNextYearEndFmt} = useCommonDate();
-	const {translate} = useStoreLanguage();
+	const { PATH, localLang, localTimeZone } = useCommonValue();
+	const { isGoalList, isGoalDetail } = useCommonValue();
+	const { isRecordList, isRecordDetail } = useCommonValue();
+	const { isSchedule, isScheduleRecordList, isScheduleGoalList } = useCommonValue();
+	const { isSchedulePlannerList, isSchedulePlannerDetail } = useCommonValue();
+	const { isList, isDetail } = useCommonValue();
+	const { getDayFmt, getDayNotFmt, getDayStartFmt, getDayEndFmt } = useCommonDate();
+	const { getPrevDayStartFmt, getPrevDayEndFmt } = useCommonDate();
+	const { getNextDayStartFmt, getNextDayEndFmt } = useCommonDate();
+	const { getWeekStartFmt, getWeekEndFmt } = useCommonDate();
+	const { getPrevWeekStartFmt, getPrevWeekEndFmt } = useCommonDate();
+	const { getNextWeekStartFmt, getNextWeekEndFmt } = useCommonDate();
+	const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
+	const { getPrevMonthStartFmt, getPrevMonthEndFmt } = useCommonDate();
+	const { getNextMonthStartFmt, getNextMonthEndFmt } = useCommonDate();
+	const { getYearStartFmt, getYearEndFmt } = useCommonDate();
+	const { getPrevYearStartFmt, getPrevYearEndFmt } = useCommonDate();
+	const { getNextYearStartFmt, getNextYearEndFmt } = useCommonDate();
+	const { translate } = useStoreLanguage();
 
 	// 2-2. useState ---------------------------------------------------------------------------------
 	const [dateStrInSave, setDateStrInSave] = useState<string>("");
@@ -69,15 +70,17 @@ export const PickerDay = (
 	);
 
 	// ---------------------------------------------------------------------------------------------
-	useEffect(() => {
-		console.group("Date Debug Log");
-		console.log("dateTypeInList:", dateTypeInList);
-		console.log("dateStrInList:", dateStrInList);
-		console.log("dateTypeInSave:", dateTypeInSave);
-		console.log("dateStrInSave:", dateStrInSave);
-		console.log("DATE:",JSON.stringify(DATE, null, 2));
-		console.groupEnd();
-	}, [DATE, dateTypeInList, dateTypeInSave, dateStrInList, dateStrInSave]);
+	/* useEffect(() => {
+		console.log(
+			"Date Debug Log", {
+				dateTypeInList,
+				dateStrInList,
+				dateTypeInSave,
+				dateStrInSave,
+				DATE: JSON.stringify(DATE, null, 2)
+			}
+		);
+	}, [DATE, dateTypeInList, dateTypeInSave, dateStrInList, dateStrInSave]); */
 
 	// 2-2. useEffect -----------------------------------------------------------------------------
 	// - 화면 로딩시 초기값 설정 1
@@ -97,8 +100,8 @@ export const PickerDay = (
 	// - 화면 로딩시 초기값 설정 2
 	// - 리스트 설정
 	useEffect(() => {
-		// 1. Today - Goal
-		if (isTodayGoalList) {
+		// 1. Schedule -  - Goal
+		if (isScheduleGoalList) {
 			setDATE({
 				dateType: "",
 				dateStart: DATE.dateStart || getDayFmt(),
@@ -110,8 +113,8 @@ export const PickerDay = (
 			);
 		}
 
-		// 2. Today - Real
-		else if (isTodayList) {
+		// 2. Schedule -  - Record
+		else if (isScheduleRecordList) {
 			setDATE({
 				dateType: "day",
 				dateStart: DATE.dateStart || getDayFmt(),
@@ -167,8 +170,8 @@ export const PickerDay = (
 			}
 		}
 
-		// 4. Real
-		else if (isRealList) {
+		// 4. Record
+		else if (isRecordList) {
 			if (dateTypeInList === "day") {
 				setDATE({
 					dateType: "day",
@@ -216,8 +219,8 @@ export const PickerDay = (
 	// - 화면 로딩시 초기값 설정 3
 	// - 상세 설정
 	// - 리스트에서 디테일로 들어가기 때문에 dateTypeInList 사용
-	// - 목표는 주, 월, 년만 가능
-	// - 실제는 일 만 가능
+	// - 목표 = 주, 월, 년만 가능
+	// - 기록 = 일 만 가능
 	useEffect(() => {
 		// 1. Goal
 		if (isGoalDetail) {
@@ -254,8 +257,8 @@ export const PickerDay = (
 			}
 		}
 
-		// 2. Real
-		else if (isRealDetail) {
+		// 2. Record
+		else if (isRecordDetail) {
 			setDATE((prev) => ({
 				...prev,
 				dateType: "day",
@@ -271,8 +274,8 @@ export const PickerDay = (
 	// 2-3. useEffect -----------------------------------------------------------------------------
 	// - 리스트에서 타입 변경시 처리 (일, 주, 월, 년)
 	useEffect(() => {
-		// 1. Today - Goal - List
-		if (isTodayGoalList) {
+		// 1. Schedule -  - Goal
+		if (isScheduleGoalList) {
 			setDATE({
 				dateType: "",
 				dateStart: getDayFmt(),
@@ -284,8 +287,8 @@ export const PickerDay = (
 			);
 		}
 
-		// 2. Today - Real - List
-		else if (isTodayList) {
+		// 2. Schedule -  - Record
+		else if (isScheduleRecordList) {
 			setDATE({
 				dateType: "day",
 				dateStart: getDayFmt(),
@@ -341,8 +344,8 @@ export const PickerDay = (
 			}
 		}
 
-		// 4. Real - List
-		else if (isRealList) {
+		// 4. Record - List
+		else if (isRecordList) {
 			if (dateTypeInList === "day") {
 				setDATE({
 					dateType: "day",
@@ -433,8 +436,8 @@ export const PickerDay = (
 			}
 		}
 
-		// 2. Real - Detail
-		else if (isRealDetail) {
+		// 2. Record - Detail
+		else if (isRecordDetail) {
 			if (dateTypeInSave === "day") {
 				setDATE({
 					dateType: "",
@@ -503,7 +506,7 @@ export const PickerDay = (
 			}
 			else if (DATE.dateType === `year`) {
 				setDateStrInList(
-					`${handlerToMnDd(getYearStartFmt(DATE.dateStart))} - ${handlerToMnDd(getYearEndFmt(DATE.dateStart))}`
+					`${getYearStartFmt(DATE.dateStart)} - ${getYearEndFmt(DATE.dateStart)}`
 				);
 			}
 			else {
@@ -532,7 +535,7 @@ export const PickerDay = (
 			}
 			else if (DATE.dateType === `year`) {
 				setDateStrInSave(
-					`${handlerToMnDd(getYearStartFmt(DATE.dateStart))} - ${handlerToMnDd(getYearEndFmt(DATE.dateStart))}`
+					`${getYearStartFmt(DATE.dateStart)} - ${getYearEndFmt(DATE.dateStart)}`
 				);
 			}
 			else {
@@ -561,7 +564,7 @@ export const PickerDay = (
 				label={translate("dateType")}
 				value={DATE.dateType || dateTypeInList}
 				inputclass={`pointer ${dateClassInList}`}
-				disabled={isTodayGoalList || isTodayList}
+				disabled={isSchedule}
 				onChange={(e: any) => {
 					setDateTypeInList(e.target.value);
 				}}
@@ -586,7 +589,7 @@ export const PickerDay = (
 				label={translate("dateType")}
 				value={DATE.dateType || dateTypeInSave}
 				inputclass={`pointer ${dateClassInSave}`}
-				disabled={isRealDetail || isCalendarDetail}
+				disabled={!isGoalDetail}
 				onChange={(e: any) => {
 					if (e.target.value === "day") {
 						setDateTypeInSave("day");
@@ -602,7 +605,7 @@ export const PickerDay = (
 					}
 				}}
 			>
-				{isCalendarDetail ? (
+				{isSchedulePlannerDetail ? (
 					["day"]?.map((item: any) => (
 						<MenuItem
 							key={item}
@@ -669,7 +672,7 @@ export const PickerDay = (
 									showDaysOutsideCurrentMonth={true}
 									slots={{
 										day: (props) => {
-											const {outsideCurrentMonth, day, ...other} = props;
+											const { outsideCurrentMonth, day, ...other} = props;
 
 											let isSelected = false;
 											let isBadged = false;
@@ -736,7 +739,7 @@ export const PickerDay = (
 																dateStart: getDayFmt(day),
 																dateEnd: getDayFmt(day),
 															}));
-															setSession("section", "food", "", []);
+															fnSetSession("section", "food", "", []);
 														}}
 													/>
 												</Badge>
@@ -807,7 +810,7 @@ export const PickerDay = (
 												dateStart: getPrevDayStartFmt(prev.dateStart),
 												dateEnd: getPrevDayEndFmt(prev.dateStart),
 											}));
-											setSession("section", "food", "", []);
+											fnSetSession("section", "food", "", []);
 										}}
 									/>
 								</Div>
@@ -823,7 +826,7 @@ export const PickerDay = (
 												dateStart: getNextDayStartFmt(prev.dateStart),
 												dateEnd: getNextDayEndFmt(prev.dateStart),
 											}));
-											setSession("section", "food", "", []);
+											fnSetSession("section", "food", "", []);
 										}}
 									/>
 								</Div>
@@ -864,7 +867,7 @@ export const PickerDay = (
 									showDaysOutsideCurrentMonth={true}
 									slots={{
 										day: (props) => {
-											const {outsideCurrentMonth, day, ...other} = props;
+											const { outsideCurrentMonth, day, ...other} = props;
 
 											let isSelected = false;
 											let isBadged = false;
@@ -1074,7 +1077,7 @@ export const PickerDay = (
 									showDaysOutsideCurrentMonth={true}
 									slots={{
 										day: (props) => {
-											const {outsideCurrentMonth, day, ...other} = props;
+											const { outsideCurrentMonth, day, ...other} = props;
 
 											let isSelected = false;
 											let isBadged = false;
@@ -1253,7 +1256,7 @@ export const PickerDay = (
 								{translate("viewYear")}
 							</Div>
 							<Div className={"fs-0-8rem fw-500 dark"}>
-								{`[${handlerToMnDd(getYearStartFmt(DATE.dateStart))} - ${handlerToMnDd(getYearEndFmt(DATE.dateEnd))}]`}
+								{`[${getYearStartFmt(DATE.dateStart)} - ${getYearEndFmt(DATE.dateEnd)}]`}
 							</Div>
 						</Grid>
 						<Grid size={12} className={"d-center"}>
@@ -1268,7 +1271,7 @@ export const PickerDay = (
 									slots={{
 										day: (props) => {
 
-											const {outsideCurrentMonth, day, ...other} = props;
+											const { outsideCurrentMonth, day, ...other} = props;
 
 											let isSelected = false;
 											let isBadged = false;
@@ -1437,8 +1440,8 @@ export const PickerDay = (
 		// 10. return ----------------------------------------------------------------------------------
 		return (
 
-			// 1-1. 리스트 (목표 - 오늘)
-			isTodayGoalList ? (
+			// 1-1. 리스트 (Schedule -  - Goal)
+			isScheduleGoalList ? (
 				<Grid container={true} spacing={1}>
 					<Grid size={3} className={"d-center"}>
 						{dateTypeInListSection()}
@@ -1449,7 +1452,19 @@ export const PickerDay = (
 				</Grid>
 			)
 
-			// 1-2. 리스트 (목표)
+			// 1-2. 리스트 (Schedule -  - Record)
+			: isScheduleRecordList ? (
+				<Grid container={true} spacing={1}>
+					<Grid size={3} className={"d-center"}>
+						{dateTypeInListSection()}
+					</Grid>
+					<Grid size={9} className={"d-center"}>
+						{dateTypeInList === "day" && daySection()}
+					</Grid>
+				</Grid>
+			)
+
+			// 1-3. 리스트 (Goal)
 			: isGoalList ? (
 				<Grid container={true} spacing={1}>
 					<Grid size={3} className={"d-center"}>
@@ -1464,20 +1479,8 @@ export const PickerDay = (
 				</Grid>
 			)
 
-			// 1-3. 리스트 (실제 - 오늘)
-			: isTodayList ? (
-				<Grid container={true} spacing={1}>
-					<Grid size={3} className={"d-center"}>
-						{dateTypeInListSection()}
-					</Grid>
-					<Grid size={9} className={"d-center"}>
-						{dateTypeInList === "day" && daySection()}
-					</Grid>
-				</Grid>
-			)
-
-			// 1-4. 리스트 (실제)
-			: isRealList ? (
+			// 1-4. 리스트 (Record)
+			: isRecordList ? (
 				<Grid container={true} spacing={1}>
 					<Grid size={3} className={"d-center"}>
 						{dateTypeInListSection()}
@@ -1491,8 +1494,8 @@ export const PickerDay = (
 				</Grid>
 			)
 
-			// 2-1. 세이브 (일정)
-			: isCalendarDetail ? (
+			// 2-1. 세이브 (Schedule - Planner)
+			: isSchedulePlannerDetail ? (
 				<Grid container={true} spacing={1}>
 					<Grid size={{xs: 4, sm: 3}} className={"d-center"}>
 						{dateTypeInSaveSection()}
@@ -1521,7 +1524,7 @@ export const PickerDay = (
 			)
 
 			// 2-3. 세이브 (실제)
-			: isRealDetail ? (
+			: isRecordDetail ? (
 				<Grid container={true} spacing={1}>
 					<Grid size={{xs: 4, sm: 3}} className={"d-center"}>
 						{dateTypeInSaveSection()}
@@ -1541,4 +1544,4 @@ export const PickerDay = (
 			{pickerNode()}
 		</>
 	);
-};
+});

@@ -1,15 +1,15 @@
 // TopNav.tsx
 
-import { useState, useEffect } from "@importReacts";
-import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
+import { Br, Div, Grid, Hr, Img, Paper } from "@importComponents";
+import { Input, PopUp } from "@importContainers";
+import { useCommonDate, useCommonValue, useStorageLocal } from "@importHooks";
+import { Checkbox, Menu, MenuItem, Tab, Tabs } from "@importMuis";
+import { memo, useEffect, useState } from "@importReacts";
+import { fnInsertComma } from "@importScripts";
 import { useStoreLanguage } from "@importStores";
-import { insertComma } from "@importScripts";
-import { PopUp, Input } from "@importContainers";
-import { Div, Img, Hr, Br, Paper, Grid } from "@importComponents";
-import { Tabs, Tab, Checkbox, MenuItem, Menu } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
-export const TopNav = () => {
+export const TopNav = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { firstStr, secondStr, localCurrency, localUnit, navigate } = useCommonValue();
@@ -19,18 +19,17 @@ export const TopNav = () => {
   const { translate } = useStoreLanguage();
 
 	// 2-1. useStorageLocal -----------------------------------------------------------------------
+  const [selectedAnchorEl, setSelectedAnchorEl] = useState<Record<string, HTMLElement | null>>({});
   const [selectedTab, setSelectedTab] = useStorageLocal(
     "tabs", "top", "", {
-      exercise: "real",
-      food: "real",
-      today: "real",
-      calendar: "schedule",
-      money: "real",
-      sleep: "real",
+      exercise: "record",
+      food: "record",
+      schedule: "planner",
+      money: "record",
+      sleep: "record",
       admin: "dashboard",
     }
   );
-  const [selectedAnchorEl, setSelectedAnchorEl] = useState<Record<string, HTMLElement | null>>({});
 
 	// 2-2. useState -------------------------------------------------------------------------------
   const [mainSmileImage, setMainSmileImage] = useState("smile3");
@@ -91,18 +90,17 @@ export const TopNav = () => {
     dateStart: "",
     dateEnd: "",
   });
-  const [dataArray, setDataArray] = useState({
-    calendar: ["schedule"],
-    today: ["goal", "real"],
-    food: ["chart", "goal", "real", "find", "favorite"],
-    exercise: ["chart", "goal", "real"],
-    money: ["chart", "goal", "real"],
-    sleep: ["chart", "goal", "real"],
-    admin: ["dashboard"]
+  const [dataArray, _setDataArray] = useState({
+    exercise: ["chart", "goal", "record"],
+    food: ["chart", "goal", "record", "favorite", "find"],
+    schedule: ["planner", "goalToday", "recordToday"],
+    money: ["chart", "goal", "record"],
+    sleep: ["chart", "goal", "record"],
+    admin: ["dashboard"],
   });
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
-  // 스마일 지수 계산
+  // - 스마일 지수 계산
   useEffect(() => {
     if (!percent) {
       return;
@@ -150,19 +148,16 @@ export const TopNav = () => {
   }, [percent]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
-  // 메인 스마일 이미지
+  // - 메인 스마일 이미지
   useEffect(() => {
-    if (firstStr === "calendar") {
-      setMainSmileImage(smileImage.total);
-    }
-    else if (firstStr === "today") {
-      setMainSmileImage(smileImage.total);
-    }
-    else if (firstStr === "exercise") {
+    if (firstStr === "exercise") {
       setMainSmileImage(smileImage.exercise);
     }
     else if (firstStr === "food") {
       setMainSmileImage(smileImage.food);
+    }
+    else if (firstStr === "schedule") {
+      setMainSmileImage(smileImage.total);
     }
     else if (firstStr === "money") {
       setMainSmileImage(smileImage.money);
@@ -176,10 +171,10 @@ export const TopNav = () => {
   }, [firstStr, smileImage]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
-  // 퍼센트, 자산, 체중 설정
+  // - 퍼센트, 자산, 체중 설정
   useEffect(() => {
-    if (sessionTitle?.setting?.sync) {
-      const { percent, property, nutrition, scale } = sessionTitle.setting.sync;
+    if (sessionTitle?.setting?.fnSync) {
+      const { percent, property, nutrition, scale } = sessionTitle.setting.fnSync;
 
       // 상태가 실제로 변경될 때만 업데이트
       setPercent((prev: any) => {
@@ -210,135 +205,146 @@ export const TopNav = () => {
   }, [sessionTitle]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
-  // 페이지 변경시 초기화
+  // - 페이지 변경시 초기화
   useEffect(() => {
-    // 1. calendar
-    if (firstStr === "calendar") {
-      if (secondStr === "list" || secondStr === "detail") {
+
+	  // 0. admin
+		(firstStr === "admin") ? (
+			(secondStr === "dashboard") && (
+				setSelectedTab((prev) => ({
+					...prev,
+					admin: "dashboard",
+				}))
+			)
+		)
+
+    // 1. schedule
+		: (firstStr === "schedule") ? (
+			(secondStr === "goal") && (
         setSelectedTab((prev) => ({
           ...prev,
-          calendar: "schedule",
-        }));
-      }
-    }
-    // 2. today
-    else if (firstStr === "today") {
-      if (secondStr === "goal") {
+          schedule: "goalToday",
+        }))
+			),
+			(secondStr === "record") && (
         setSelectedTab((prev) => ({
           ...prev,
-          today: "goal",
-        }));
-      }
-      else if (secondStr === "list" || secondStr === "detail") {
-        setSelectedTab((prev) => ({
-          ...prev,
-          today: "real",
-        }));
-      }
-    }
-    // 3. food
-    else if (firstStr === "food") {
-      if (secondStr === "chart") {
-        setSelectedTab((prev) => ({
-          ...prev,
-          food: "chart",
-        }));
-      }
-      else if (secondStr === "goal") {
-        setSelectedTab((prev) => ({
-          ...prev,
-          food: "goal",
-        }));
-      }
-      else if (secondStr === "find") {
-        setSelectedTab((prev) => ({
-          ...prev,
-          food: "find",
-        }));
-      }
-      else if (secondStr === "favorite") {
-        setSelectedTab((prev) => ({
-          ...prev,
-          food: "favorite",
-        }));
-      }
-      else if (secondStr === "list" || secondStr === "detail") {
-        setSelectedTab((prev) => ({
-          ...prev,
-          food: "real",
-        }));
-      }
-    }
-    // 4. exercise, money, sleep
-    else if (firstStr === "exercise" || firstStr === "money" || firstStr === "sleep") {
-      if (secondStr === "chart") {
-        setSelectedTab((prev) => ({
-          ...prev,
-          [firstStr]: "chart",
-        }));
-      }
-      else if (secondStr === "goal") {
-        setSelectedTab((prev) => ({
-          ...prev,
-          [firstStr]: "goal",
-        }));
-      }
-      else if (secondStr === "list" || secondStr === "detail") {
-        setSelectedTab((prev) => ({
-          ...prev,
-          [firstStr]: "real",
-        }));
-      }
-    }
-    // 5. admin
-    else if (firstStr === "admin") {
-      if (secondStr === "dashboard") {
-        setSelectedTab((prev) => ({
-          ...prev,
-          admin: "dashboard",
-        }));
-      }
-    }
+          schedule: "recordToday",
+        }))
+			),
+			(secondStr === "planner") && (
+				setSelectedTab((prev) => ({
+					...prev,
+					schedule: "planner",
+				}))
+			)
+		)
+
+		// 2. food
+		: (firstStr === "food") ? (
+			(secondStr === "chart") && (
+				setSelectedTab((prev) => ({
+					...prev,
+					food: "chart",
+				}))
+			),
+			(secondStr === "favorite") && (
+				setSelectedTab((prev) => ({
+					...prev,
+					food: "favorite",
+				}))
+			),
+			(secondStr === "find") && (
+				setSelectedTab((prev) => ({
+					...prev,
+					food: "find",
+				}))
+			),
+			(secondStr === "goal") && (
+				setSelectedTab((prev) => ({
+					...prev,
+					food: "goal",
+				}))
+			),
+			(secondStr === "record") && (
+				setSelectedTab((prev) => ({
+					...prev,
+					food: "record",
+				}))
+			)
+		)
+
+		// 3. exercise, money, sleep
+		: (firstStr === "exercise" || firstStr === "money" || firstStr === "sleep") ? (
+			(secondStr === "chart") && (
+				setSelectedTab((prev) => ({
+					...prev,
+					[firstStr]: "chart",
+				}))
+			),
+			(secondStr === "goal") && (
+				setSelectedTab((prev) => ({
+					...prev,
+					[firstStr]: "goal",
+				}))
+			),
+			(secondStr === "record") && (
+				setSelectedTab((prev) => ({
+					...prev,
+					[firstStr]: "record",
+				}))
+			)
+		)
+
+		// 4. etc
+		: console.error(`[TopNav] firstStr, secondStr error: ${firstStr}, ${secondStr}`);
+
   }, [firstStr, secondStr]);
 
 	// 4. handle ----------------------------------------------------------------------------------
   const handleClickTobNav = (value: string) => {
-    if (value === "find" || value === "favorite") {
-      navigate(`/${firstStr}/${value}/list`, {
-        state: {
-          dateType: "",
-          dateStart: "",
-          dateEnd: "",
-        }
-      });
-    }
-    else if (value === "real" || value === "schedule") {
-      navigate(`/${firstStr}/list`, {
+
+		// 1. schedule
+		(firstStr === "schedule" && value === "goalToday") ? (
+      navigate(`/${firstStr}/goal/list`, {
         state: {
           dateType: "",
           dateStart: getDayFmt(),
           dateEnd: getDayFmt(),
         }
-      });
-    }
-    else if (value === "dashboard") {
+      })
+		)
+
+		// 1. schedule
+		: (firstStr === "schedule" && value === "recordToday") ? (
+      navigate(`/${firstStr}/record/list`, {
+        state: {
+          dateType: "",
+          dateStart: getDayFmt(),
+          dateEnd: getDayFmt(),
+        }
+      })
+		)
+
+		// 2. dashboard
+		: (value === "dashboard") ? (
       navigate(`/${firstStr}/dashboard`, {
         state: {
           dateType: "",
           dateStart: getDayFmt(),
           dateEnd: getDayFmt(),
         }
-      });
-    }
-    else {
-      navigate(`/${firstStr}/${value}/list`, {
-        state: {
-          dateType: "",
-          dateStart: getDayFmt(),
-          dateEnd: getDayFmt(),
-        }
-      });
-    }
+      })
+		)
+
+		// 3. etc
+		: navigate(`/${firstStr}/${value}/list`, {
+				state: {
+					dateType: "",
+					dateStart: getDayFmt(),
+					dateEnd: getDayFmt(),
+				}
+			})
   };
 
   // 7. topNav -------------------------------------------------------------------------------------
@@ -544,7 +550,7 @@ export const TopNav = () => {
               </Grid>
               <Grid size={7} className={"d-row-right"}>
                 <Div className={"fs-1-1rem fw-600 black mr-5px"}>
-                  {insertComma(scale.initScale || "0")}
+                  {fnInsertComma(scale.initScale || "0")}
                 </Div>
               </Grid>
               <Grid size={2} className={"d-row-center"}>
@@ -572,7 +578,7 @@ export const TopNav = () => {
               </Grid>
               <Grid size={7} className={"d-row-right"}>
                 <Div className={"fs-1-1rem fw-600 black mr-5px"}>
-                  {insertComma(scale.curScale || "0")}
+                  {fnInsertComma(scale.curScale || "0")}
                 </Div>
               </Grid>
               <Grid size={2} className={"d-row-center"}>
@@ -587,7 +593,7 @@ export const TopNav = () => {
                 <Input
                   readOnly={true}
                   label={translate("minScale")}
-                  value={insertComma(scale.minScale || "0")}
+                  value={fnInsertComma(scale.minScale || "0")}
                   startadornment={
                     <Img
                       max={14}
@@ -609,7 +615,7 @@ export const TopNav = () => {
                 <Input
                   readOnly={true}
                   label={translate("maxScale")}
-                  value={insertComma(scale.maxScale || "0")}
+                  value={fnInsertComma(scale.maxScale || "0")}
                   startadornment={
                     <Img
                       max={14}
@@ -705,7 +711,7 @@ export const TopNav = () => {
               </Grid>
               <Grid size={7} className={"d-row-right"}>
                 <Div className={"fs-1-1rem fw-600 black mr-5px"}>
-                  {insertComma(nutrition.initAvgKcalIntake || "0")}
+                  {fnInsertComma(nutrition.initAvgKcalIntake || "0")}
                 </Div>
               </Grid>
               <Grid size={2} className={"d-row-center"}>
@@ -737,9 +743,9 @@ export const TopNav = () => {
               <Grid size={7} className={"d-row-right"}>
                 <Div className={"fs-1-1rem fw-600 black mr-5px"}>
                   {nutritionType === "avg" ? (
-                    insertComma(nutrition.curAvgKcalIntake || "0")
+                    fnInsertComma(nutrition.curAvgKcalIntake || "0")
                   ) : (
-                    insertComma(nutrition.totalKcalIntake || "0")
+                    fnInsertComma(nutrition.totalKcalIntake || "0")
                   )}
                 </Div>
               </Grid>
@@ -763,9 +769,9 @@ export const TopNav = () => {
                   }
                   value={
                     nutritionType === "avg" ? (
-                      insertComma(nutrition.curAvgCarbIntake || "0")
+                      fnInsertComma(nutrition.curAvgCarbIntake || "0")
                     ) : (
-                      insertComma(nutrition.totalCarbIntake || "0")
+                      fnInsertComma(nutrition.totalCarbIntake || "0")
                     )
                   }
                   startadornment={
@@ -797,9 +803,9 @@ export const TopNav = () => {
                   }
                   value={
                     nutritionType === "avg" ? (
-                      insertComma(nutrition.curAvgProteinIntake || "0")
+                      fnInsertComma(nutrition.curAvgProteinIntake || "0")
                     ) : (
-                      insertComma(nutrition.totalProteinIntake || "0")
+                      fnInsertComma(nutrition.totalProteinIntake || "0")
                     )
                   }
                   startadornment={
@@ -831,9 +837,9 @@ export const TopNav = () => {
                   }
                   value={
                     nutritionType === "avg" ? (
-                      insertComma(nutrition.curAvgFatIntake || "0")
+                      fnInsertComma(nutrition.curAvgFatIntake || "0")
                     ) : (
-                      insertComma(nutrition.totalFatIntake || "0")
+                      fnInsertComma(nutrition.totalFatIntake || "0")
                     )
                   }
                   startadornment={
@@ -921,7 +927,7 @@ export const TopNav = () => {
               </Grid>
               <Grid size={7} className={"d-row-right"}>
                 <Div className={"fs-1-1rem fw-600 black mr-5px"}>
-                  {insertComma(property.initProperty || "0")}
+                  {fnInsertComma(property.initProperty || "0")}
                 </Div>
               </Grid>
               <Grid size={2} className={"d-row-center"}>
@@ -949,9 +955,9 @@ export const TopNav = () => {
               <Grid size={7} className={"d-row-right"}>
                 <Div className={"fs-1-1rem fw-600 black mr-5px"}>
                   {includingExclusions ? (
-                    insertComma(property.curPropertyAll || "0")
+                    fnInsertComma(property.curPropertyAll || "0")
                   ) : (
-                    insertComma(property.curPropertyExclusion || "0")
+                    fnInsertComma(property.curPropertyExclusion || "0")
                   )}
                 </Div>
               </Grid>
@@ -969,9 +975,9 @@ export const TopNav = () => {
                   label={translate("sumIncome")}
                   value={
                     includingExclusions ? (
-                      insertComma(property.totalIncomeAll || "0")
+                      fnInsertComma(property.totalIncomeAll || "0")
                     ) : (
-                      insertComma(property.totalIncomeExclusion || "0")
+                      fnInsertComma(property.totalIncomeExclusion || "0")
                     )
                   }
                   startadornment={
@@ -997,9 +1003,9 @@ export const TopNav = () => {
                   label={translate("sumExpense")}
                   value={
                     includingExclusions ? (
-                      insertComma(property.totalExpenseAll || "0")
+                      fnInsertComma(property.totalExpenseAll || "0")
                     ) : (
-                      insertComma(property.totalExpenseExclusion || "0")
+                      fnInsertComma(property.totalExpenseExclusion || "0")
                     )
                   }
                   startadornment={
@@ -1037,10 +1043,8 @@ export const TopNav = () => {
       />
     );
 
-    // TODO: 탭 드롭다운으로 변경
     // 5. tabs -------------------------------------------------------------------------------------
-    const tabsSection = () => {
-      return (
+    const tabsSection = () => (
         <>
           <Tabs
             value={selectedTab[firstStr as keyof typeof selectedTab]}
@@ -1058,13 +1062,13 @@ export const TopNav = () => {
             <Tab
               label={translate(selectedTab[firstStr as keyof typeof selectedTab])}
               value={selectedTab[firstStr as keyof typeof selectedTab]}
+              className={"fs-1-2rem fw-700"}
               onClick={(e) => {
                 setSelectedAnchorEl((prev) => ({
                   ...prev,
                   [firstStr]: e.currentTarget
                 }))
               }}
-              className={"fs-1-2rem fw-700"}
             />
           </Tabs>
           <Menu
@@ -1108,8 +1112,7 @@ export const TopNav = () => {
             ))}
           </Menu>
         </>
-      );
-    };
+		);
 
     // 5. return -----------------------------------------------------------------------------------
     return (
@@ -1135,4 +1138,4 @@ export const TopNav = () => {
       {topNavNode()}
     </>
   );
-};
+});

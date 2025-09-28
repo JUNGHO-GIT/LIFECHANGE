@@ -105,21 +105,21 @@ export const list = async (
       const dateStart = goal?.money_goal_dateStart;
       const dateEnd = goal?.money_goal_dateEnd;
 
-      const listReal = await repository.listReal(
+      const listRecord = await repository.listRecord(
         user_id_param, dateType, dateStart, dateEnd,
       );
 
-      const moneyTotalIncome = listReal.reduce((acc: any, curr: any) => (
-        acc + (parseFloat(curr?.money_total_income || 0))
+      const moneyTotalIncome = listRecord.reduce((acc: any, curr: any) => (
+        acc + (parseFloat(curr?.money_record_total_income || 0))
       ), 0);
-      const moneyTotalExpense = listReal.reduce((acc: any, curr: any) => (
-        acc + (parseFloat(curr?.money_total_expense || 0))
+      const moneyTotalExpense = listRecord.reduce((acc: any, curr: any) => (
+        acc + (parseFloat(curr?.money_record_total_expense || 0))
       ), 0);
 
       return {
         ...goal,
-        money_total_income: String(moneyTotalIncome.toFixed(0)),
-        money_total_expense: String(moneyTotalExpense.toFixed(0)),
+        money_record_total_income: String(moneyTotalIncome.toFixed(0)),
+        money_record_total_expense: String(moneyTotalExpense.toFixed(0)),
       };
     }));
     statusResult = "success";
@@ -153,7 +153,7 @@ export const detail = async (
     user_id_param, dateType, dateStart, dateEnd
   );
 
-  // real = section?.length
+  // record = section?.length
   // goal = 0 or 1
   if (!findResult) {
     finalResult = null;

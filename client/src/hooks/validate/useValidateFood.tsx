@@ -1,7 +1,7 @@
-// useValidateFood.tsx
+// useValidateFoodRecord.tsx
 
-import { useState, createRef, useRef } from "@importReacts";
-import { useStoreLanguage, useStoreAlert, useStoreConfirm } from "@importStores";
+import { createRef, useCallback, useRef, useState } from "@importReacts";
+import { useStoreAlert, useStoreConfirm, useStoreLanguage } from "@importStores";
 
 // -------------------------------------------------------------------------------------------------
 export const useValidateFood = () => {
@@ -17,7 +17,7 @@ export const useValidateFood = () => {
   const validate = useRef<Function>(() => {});
 
   // alert 표시 및 focus ---------------------------------------------------------------------------
-  const showAlertAndFocus = (field: string, msg: string, idx: number) => {
+  const showAlertAndFocus = useCallback((field: string, msg: string, idx: number) => {
     setALERT({
       open: true,
       msg: translate(msg),
@@ -37,7 +37,7 @@ export const useValidateFood = () => {
       });
     }
     return false;
-  };
+  }, [setALERT, translate]);
 
   // 7. validate -----------------------------------------------------------------------------------
   validate.current = async (OBJECT: any, COUNT: any, extra: string) => {
@@ -86,18 +86,18 @@ export const useValidateFood = () => {
       return true;
     }
 
-    // 2. real -----------------------------------------------------------------------------------
-    else if (extra === "real") {
+    // 2. record -----------------------------------------------------------------------------------
+    else if (extra === "record") {
       const target = [
-        "food_part",
-        "food_name",
-        "food_brand",
-        "food_count",
-        "food_gram",
-        "food_kcal",
-        "food_carb",
-        "food_protein",
-        "food_fat",
+        "food_record_part",
+        "food_record_name",
+        "food_record_brand",
+        "food_record_count",
+        "food_record_gram",
+        "food_record_kcal",
+        "food_record_carb",
+        "food_record_protein",
+        "food_record_fat",
       ];
       REFS.current = (
         Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
@@ -123,26 +123,26 @@ export const useValidateFood = () => {
       }
 
       for (let i = 0; i < section?.length; i++) {
-        if (!section[i].food_part || section[i].food_part === "") {
-          return showAlertAndFocus('food_part', "errorFoodPart", i);
+        if (!section[i].food_record_part || section[i].food_record_part === "") {
+          return showAlertAndFocus('food_record_part', "errorFoodPart", i);
         }
-        else if (!section[i].food_name || section[i].food_name === "") {
-          return showAlertAndFocus('food_name', "errorFoodName", i);
+        else if (!section[i].food_record_name || section[i].food_record_name === "") {
+          return showAlertAndFocus('food_record_name', "errorFoodName", i);
         }
-        else if (!section[i].food_count || section[i].food_count === "0") {
-          return showAlertAndFocus('food_count', "errorFoodCount", i);
+        else if (!section[i].food_record_count || section[i].food_record_count === "0") {
+          return showAlertAndFocus('food_record_count', "errorFoodCount", i);
         }
-        else if (!section[i].food_kcal) {
-          return showAlertAndFocus('food_kcal', "errorFoodKcal", i);
+        else if (!section[i].food_record_kcal) {
+          return showAlertAndFocus('food_record_kcal', "errorFoodKcal", i);
         }
-        else if (!section[i].food_carb) {
-          return showAlertAndFocus('food_carb', "errorFoodCarb", i);
+        else if (!section[i].food_record_carb) {
+          return showAlertAndFocus('food_record_carb', "errorFoodCarb", i);
         }
-        else if (!section[i].food_protein) {
-          return showAlertAndFocus('food_protein', "errorFoodProtein", i);
+        else if (!section[i].food_record_protein) {
+          return showAlertAndFocus('food_record_protein', "errorFoodProtein", i);
         }
-        else if (!section[i].food_fat) {
-          return showAlertAndFocus('food_fat', "errorFoodFat", i);
+        else if (!section[i].food_record_fat) {
+          return showAlertAndFocus('food_record_fat', "errorFoodFat", i);
         }
       }
       return true;

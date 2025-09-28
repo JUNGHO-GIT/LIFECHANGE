@@ -43,33 +43,33 @@ export const list = async (object: any) => {
   };
 
   // 1. compareValue -------------------------------------------------------------------------------
-  const compareValue = (goalParam: string, realParam: string) => {
+  const compareValue = (goalParam: string, recordParam: string) => {
 
     let goal: number = parseFloat(goalParam);
-    let real: number = parseFloat(realParam);
+    let record: number = parseFloat(recordParam);
     let finalResult: string = "";
 
-    if (goal > real) {
-      finalResult = `-${(parseFloat(Math.abs(goal - real).toFixed(2)).toString())}`;
+    if (goal > record) {
+      finalResult = `-${(parseFloat(Math.abs(goal - record).toFixed(2)).toString())}`;
     }
     else {
-      finalResult = `+${(parseFloat(Math.abs(real - goal).toFixed(2)).toString())}`;
+      finalResult = `+${(parseFloat(Math.abs(record - goal).toFixed(2)).toString())}`;
     }
 
     return finalResult;
   };
 
   // 2. compareTime --------------------------------------------------------------------------------
-  const compareTime = (goalParam: string, realParam: string) => {
+  const compareTime = (goalParam: string, recordParam: string) => {
 
     let goal: string = goalParam;
-    let real: string = realParam;
+    let record: string = recordParam;
     let finalResult: string = "";
 
     const goalDate = new Date(`1970-01-01T${goal}:00Z`);
-    const realDate = new Date(`1970-01-01T${real}:00Z`);
+    const recordDate = new Date(`1970-01-01T${record}:00Z`);
 
-    let diff = differenceInMinutes(realDate, goalDate);
+    let diff = differenceInMinutes(recordDate, goalDate);
 
     // 시간 차이가 음수인 경우 절대값 적용
     if (diff < 0) {
@@ -79,7 +79,7 @@ export const list = async (object: any) => {
     const hours = Math.floor(diff / 60);
     const minutes = diff % 60;
 
-    if (goalDate > realDate) {
+    if (goalDate > recordDate) {
       finalResult = `-${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
     }
     else {
@@ -90,16 +90,16 @@ export const list = async (object: any) => {
   };
 
   // 4. calcDiffColor ------------------------------------------------------------------------------
-  const calcDiffColor = (goalParam: string, realParam: string, extra: string) => {
+  const calcDiffColor = (goalParam: string, recordParam: string, extra: string) => {
 
     let goal: number = parseFloat(goalParam);
-    let real: number = parseFloat(realParam);
+    let record: number = parseFloat(recordParam);
     let percent: number = 0;
     let finalResult: string = "";
 
     // 1. count
     if (extra === "count") {
-      percent = Math.abs(((goal - real) / goal) * 100);
+      percent = Math.abs(((goal - record) / goal) * 100);
 
       // 1. - 1%
       if (percent > 0 && percent <= 1) {
@@ -125,7 +125,7 @@ export const list = async (object: any) => {
 
     // 2. volume
     else if (extra === "volume") {
-      percent = Math.abs(((goal - real) / goal) * 100);
+      percent = Math.abs(((goal - record) / goal) * 100);
 
       // 1. - 1%
       if (percent > 0 && percent <= 1) {
@@ -152,11 +152,11 @@ export const list = async (object: any) => {
     // 3. cardio
     else if (extra === "cardio") {
       const hoursGoal = parseFloat(goalParam?.split(":")[0]);
-      const hoursReal = parseFloat(realParam?.split(":")[0]);
-      const hours = Math.abs(hoursGoal - hoursReal);
+      const hoursRecord = parseFloat(recordParam?.split(":")[0]);
+      const hours = Math.abs(hoursGoal - hoursRecord);
       const minutesGoal = parseFloat(goalParam?.split(":")[1]);
-      const minutesReal = parseFloat(realParam?.split(":")[1]);
-      const minutes = Math.abs(minutesGoal - minutesReal);
+      const minutesRecord = parseFloat(recordParam?.split(":")[1]);
+      const minutes = Math.abs(minutesGoal - minutesRecord);
 
       const diffVal = (hours * 60) + minutes;
 
@@ -184,7 +184,7 @@ export const list = async (object: any) => {
 
     // 4. scale
     else if (extra === "scale") {
-      percent = Math.abs(((goal - real) / goal) * 100);
+      percent = Math.abs(((goal - record) / goal) * 100);
 
       // 1. - 1%
       if (percent > 0 && percent <= 1) {
@@ -213,17 +213,17 @@ export const list = async (object: any) => {
 
   // 10. result ------------------------------------------------------------------------------------
   object?.result?.forEach((item: any) => {
-    item.exercise_total_count = calcOverTenMillion(
-      item?.exercise_total_count
+    item.exercise_record_total_count = calcOverTenMillion(
+      item?.exercise_record_total_count
     );
-    item.exercise_total_volume = calcOverTenMillion(
-      item?.exercise_total_volume
+    item.exercise_record_total_volume = calcOverTenMillion(
+      item?.exercise_record_total_volume
     );
-    item.exercise_total_cardio = calcOverTenMillion(
-      item?.exercise_total_cardio
+    item.exercise_record_total_cardio = calcOverTenMillion(
+      item?.exercise_record_total_cardio
     );
-    item.exercise_total_scale = calcOverTenMillion(
-      item?.exercise_total_scale
+    item.exercise_record_total_scale = calcOverTenMillion(
+      item?.exercise_record_total_scale
     );
 
     item.exercise_goal_count = calcOverTenMillion(
@@ -239,17 +239,17 @@ export const list = async (object: any) => {
       item?.exercise_goal_scale
     );
 
-    item.exercise_total_count_color = calcNonValueColor(
-      item?.exercise_total_count
+    item.exercise_record_total_count_color = calcNonValueColor(
+      item?.exercise_record_total_count
     );
-    item.exercise_total_volume_color = calcNonValueColor(
-      item?.exercise_total_volume
+    item.exercise_record_total_volume_color = calcNonValueColor(
+      item?.exercise_record_total_volume
     );
-    item.exercise_total_cardio_color = calcNonValueColor(
-      item?.exercise_total_cardio
+    item.exercise_record_total_cardio_color = calcNonValueColor(
+      item?.exercise_record_total_cardio
     );
-    item.exercise_total_scale_color = calcNonValueColor(
-      item?.exercise_total_scale
+    item.exercise_record_total_scale_color = calcNonValueColor(
+      item?.exercise_record_total_scale
     );
 
     item.exercise_goal_count_color = calcNonValueColor(
@@ -265,30 +265,30 @@ export const list = async (object: any) => {
       item?.exercise_goal_scale
     );
 
-    item.exercise_diff_count = calcOverTenMillion(compareValue(
-      item?.exercise_goal_count, item?.exercise_total_count
+    item.exercise_record_diff_count = calcOverTenMillion(compareValue(
+      item?.exercise_goal_count, item?.exercise_record_total_count
     ));
-    item.exercise_diff_volume = calcOverTenMillion(compareValue(
-      item?.exercise_goal_volume, item?.exercise_total_volume
+    item.exercise_record_diff_volume = calcOverTenMillion(compareValue(
+      item?.exercise_goal_volume, item?.exercise_record_total_volume
     ));
-    item.exercise_diff_cardio = calcOverTenMillion(compareTime(
-      item?.exercise_goal_cardio, item?.exercise_total_cardio
+    item.exercise_record_diff_cardio = calcOverTenMillion(compareTime(
+      item?.exercise_goal_cardio, item?.exercise_record_total_cardio
     ));
-    item.exercise_diff_scale = calcOverTenMillion(compareValue(
-      item?.exercise_goal_scale, item?.exercise_total_scale
+    item.exercise_record_diff_scale = calcOverTenMillion(compareValue(
+      item?.exercise_goal_scale, item?.exercise_record_total_scale
     ));
 
-    item.exercise_diff_count_color = calcDiffColor(
-      item?.exercise_goal_count, item?.exercise_total_count, "count"
+    item.exercise_record_diff_count_color = calcDiffColor(
+      item?.exercise_goal_count, item?.exercise_record_total_count, "count"
     );
-    item.exercise_diff_volume_color = calcDiffColor(
-      item?.exercise_goal_volume, item?.exercise_total_volume, "volume"
+    item.exercise_record_diff_volume_color = calcDiffColor(
+      item?.exercise_goal_volume, item?.exercise_record_total_volume, "volume"
     );
-    item.exercise_diff_cardio_color = calcDiffColor(
-      item?.exercise_goal_cardio, item?.exercise_total_cardio, "cardio"
+    item.exercise_record_diff_cardio_color = calcDiffColor(
+      item?.exercise_goal_cardio, item?.exercise_record_total_cardio, "cardio"
     );
-    item.exercise_diff_scale_color = calcDiffColor(
-      item?.exercise_goal_scale, item?.exercise_total_scale, "scale"
+    item.exercise_record_diff_scale_color = calcDiffColor(
+      item?.exercise_goal_scale, item?.exercise_record_total_scale, "scale"
     );
   });
 

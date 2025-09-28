@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 import { incrementSeq } from "@schemas/Counter";
-import { calendarArray } from "@assets/arrays/calendarArray";
+import { scheduleArray } from "@assets/arrays/scheduleArray";
 import { exerciseArray } from "@assets/arrays/exerciseArray";
 import { moneyArray } from "@assets/arrays/moneyArray";
 import { foodArray } from "@assets/arrays/foodArray";
@@ -145,52 +145,52 @@ const schema = new mongoose.Schema({
   },
 
   user_favorite: [{
-    food_key : {
+    food_record_key : {
       type: String,
       default: "",
       required: false
     },
-    food_name : {
+    food_record_name : {
       type: String,
       default: "",
       required: false,
     },
-    food_brand : {
+    food_record_brand : {
       type: String,
       default: "",
       required: false
     },
-    food_count : {
+    food_record_count : {
       type: String,
       default: "",
       required: false
     },
-    food_serv : {
+    food_record_serv : {
       type: String,
       default: "",
       required: false
     },
-    food_gram : {
+    food_record_gram : {
       type: String,
       default: "",
       required: false
     },
-    food_kcal : {
+    food_record_kcal : {
       type: String,
       default: "",
       required: false
     },
-    food_carb : {
+    food_record_carb : {
       type: String,
       default: "",
       required: false
     },
-    food_protein : {
+    food_record_protein : {
       type: String,
       default: "",
       required: false
     },
-    food_fat : {
+    food_record_fat : {
       type: String,
       default: "",
       required: false
@@ -198,9 +198,9 @@ const schema = new mongoose.Schema({
   }],
 
   user_dataCategory: {
-    calendar: {
+    schedule: {
       type: Array,
-      default: calendarArray,
+      default: scheduleArray,
       required: false
     },
     exercise: {

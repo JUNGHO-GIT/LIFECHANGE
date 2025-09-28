@@ -43,19 +43,19 @@ export const list = async (object: any) => {
   };
 
   // 1. compareTime --------------------------------------------------------------------------------
-  const compareTime = (goalParam: string, realParam: string, extra: string) => {
+  const compareTime = (goalParam: string, recordParam: string, extra: string) => {
 
     let goal: string = goalParam;
-    let real: string = realParam;
+    let record: string = recordParam;
     let diffVal: number = 0;
     let finalResult: string = "";
 
     // 1. bedTime, wakeTime
     if (extra === "bedTime" || extra === "wakeTime") {
       const goalDate = new Date(`1970-01-01T${goal}:00Z`);
-      const realDate = new Date(`1970-01-01T${real}:00Z`);
+      const recordDate = new Date(`1970-01-01T${record}:00Z`);
 
-      diffVal = differenceInMinutes(realDate, goalDate);
+      diffVal = differenceInMinutes(recordDate, goalDate);
 
       // 차이가 음수인 경우, 절대값을 사용하여 계산
       if (diffVal < 0) {
@@ -66,7 +66,7 @@ export const list = async (object: any) => {
       const hours = Math.floor(diffVal / 60);
       const minutes = diffVal % 60;
 
-      if (goalDate > realDate) {
+      if (goalDate > recordDate) {
         finalResult = `-${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
       }
       else {
@@ -76,9 +76,9 @@ export const list = async (object: any) => {
     // 2. sleepTime
     else if (extra === "sleepTime") {
       const goalDate = new Date(`1970-01-01T${goal}:00Z`);
-      const realDate = new Date(`1970-01-01T${real}:00Z`);
+      const recordDate = new Date(`1970-01-01T${record}:00Z`);
 
-      diffVal = differenceInMinutes(realDate, goalDate);
+      diffVal = differenceInMinutes(recordDate, goalDate);
 
       // 시간 차이가 음수인 경우 절대값 적용
       if (diffVal < 0) {
@@ -88,7 +88,7 @@ export const list = async (object: any) => {
       const hours = Math.floor(diffVal / 60);
       const minutes = diffVal % 60;
 
-      if (goalDate > realDate) {
+      if (goalDate > recordDate) {
         finalResult = `-${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
       }
       else {
@@ -100,23 +100,23 @@ export const list = async (object: any) => {
   };
 
   // 4. calcDiffColor ------------------------------------------------------------------------------
-  const calcDiffColor = (goalParam: string, realParam: string, extra: string) => {
+  const calcDiffColor = (goalParam: string, recordParam: string, extra: string) => {
 
     let goal: string = goalParam;
-    let real: string = realParam;
+    let record: string = recordParam;
     let diffVal: number = 0;
     let finalResult: string = "";
 
     // 1. bedTime, wakeTime
     if (extra === "bedTime" || extra === "wakeTime") {
       const goalDate = new Date(`1970-01-01T${goal}:00Z`);
-      const realDate = new Date(`1970-01-01T${real}:00Z`);
+      const recordDate = new Date(`1970-01-01T${record}:00Z`);
 
-      if (realDate < goalDate) {
-        diffVal = goalDate.getTime() - realDate.getTime();
+      if (recordDate < goalDate) {
+        diffVal = goalDate.getTime() - recordDate.getTime();
       }
       else {
-        diffVal = realDate.getTime() - goalDate.getTime();
+        diffVal = recordDate.getTime() - goalDate.getTime();
       }
 
       // 1. - 10분
@@ -143,11 +143,11 @@ export const list = async (object: any) => {
     // 2. sleepTime
     else if (extra === "sleepTime") {
       const hoursGoal = parseFloat(goalParam?.split(":")[0]);
-      const hoursReal = parseFloat(realParam?.split(":")[0]);
-      const hours = Math.abs(hoursGoal - hoursReal);
+      const hoursRecord = parseFloat(recordParam?.split(":")[0]);
+      const hours = Math.abs(hoursGoal - hoursRecord);
       const minutesGoal = parseFloat(goalParam?.split(":")[1]);
-      const minutesReal = parseFloat(realParam?.split(":")[1]);
-      const minutes = Math.abs(minutesGoal - minutesReal);
+      const minutesRecord = parseFloat(recordParam?.split(":")[1]);
+      const minutes = Math.abs(minutesGoal - minutesRecord);
 
       diffVal = (hours * 60) + minutes;
 
@@ -178,14 +178,14 @@ export const list = async (object: any) => {
 
 	// 10. return ----------------------------------------------------------------------------------
   object?.result?.forEach((item: any) => {
-    item.sleep_bedTime = calcOverTenMillion(
-      item?.sleep_bedTime
+    item.sleep_record_bedTime = calcOverTenMillion(
+      item?.sleep_record_bedTime
     );
-    item.sleep_wakeTime = calcOverTenMillion(
-      item?.sleep_wakeTime
+    item.sleep_record_wakeTime = calcOverTenMillion(
+      item?.sleep_record_wakeTime
     );
-    item.sleep_sleepTime = calcOverTenMillion(
-      item?.sleep_sleepTime
+    item.sleep_record_sleepTime = calcOverTenMillion(
+      item?.sleep_record_sleepTime
     );
 
     item.sleep_goal_bedTime = calcOverTenMillion(
@@ -198,14 +198,14 @@ export const list = async (object: any) => {
       item?.sleep_goal_sleepTime
     );
 
-    item.sleep_bedTime_color = calcNonValueColor(
-      item?.sleep_bedTime
+    item.sleep_record_bedTime_color = calcNonValueColor(
+      item?.sleep_record_bedTime
     );
-    item.sleep_wakeTime_color = calcNonValueColor(
-      item?.sleep_wakeTime
+    item.sleep_record_wakeTime_color = calcNonValueColor(
+      item?.sleep_record_wakeTime
     );
-    item.sleep_sleepTime_color = calcNonValueColor(
-      item?.sleep_sleepTime
+    item.sleep_record_sleepTime_color = calcNonValueColor(
+      item?.sleep_record_sleepTime
     );
 
     item.sleep_goal_bedTime_color = calcNonValueColor(
@@ -218,24 +218,24 @@ export const list = async (object: any) => {
       item?.sleep_goal_sleepTime
     );
 
-    item.sleep_diff_bedTime = calcOverTenMillion(compareTime(
-      item?.sleep_goal_bedTime, item?.sleep_bedTime, "bedTime"
+    item.sleep_record_diff_bedTime = calcOverTenMillion(compareTime(
+      item?.sleep_goal_bedTime, item?.sleep_record_bedTime, "bedTime"
     ));
-    item.sleep_diff_wakeTime = calcOverTenMillion(compareTime(
-      item?.sleep_goal_wakeTime, item?.sleep_wakeTime, "wakeTime"
+    item.sleep_record_diff_wakeTime = calcOverTenMillion(compareTime(
+      item?.sleep_goal_wakeTime, item?.sleep_record_wakeTime, "wakeTime"
     ));
-    item.sleep_diff_sleepTime = calcOverTenMillion(compareTime(
-      item?.sleep_goal_sleepTime, item?.sleep_sleepTime, "sleepTime"
+    item.sleep_record_diff_sleepTime = calcOverTenMillion(compareTime(
+      item?.sleep_goal_sleepTime, item?.sleep_record_sleepTime, "sleepTime"
     ));
 
-    item.sleep_diff_bedTime_color = calcDiffColor(
-      item?.sleep_goal_bedTime, item?.sleep_bedTime, "bedTime"
+    item.sleep_record_diff_bedTime_color = calcDiffColor(
+      item?.sleep_goal_bedTime, item?.sleep_record_bedTime, "bedTime"
     );
-    item.sleep_diff_wakeTime_color = calcDiffColor(
-      item?.sleep_goal_wakeTime, item?.sleep_wakeTime, "wakeTime"
+    item.sleep_record_diff_wakeTime_color = calcDiffColor(
+      item?.sleep_goal_wakeTime, item?.sleep_record_wakeTime, "wakeTime"
     );
-    item.sleep_diff_sleepTime_color = calcDiffColor(
-      item?.sleep_goal_sleepTime, item?.sleep_sleepTime, "sleepTime"
+    item.sleep_record_diff_sleepTime_color = calcDiffColor(
+      item?.sleep_goal_sleepTime, item?.sleep_record_sleepTime, "sleepTime"
     );
   });
 

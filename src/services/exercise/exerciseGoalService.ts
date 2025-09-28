@@ -1,6 +1,6 @@
 // exerciseGoalService.ts
 
-import { strToDecimal, decimalToStr } from "@assets/scripts/utils";
+import { fnStrToDecimal, fnDecimalToStr } from "@assets/scripts/utils";
 import * as repository from "@repositories/exercise/exerciseGoalRepository";
 
 // 0. exist ----------------------------------------------------------------------------------------
@@ -106,33 +106,33 @@ export const list = async (
       const dateStart = goal?.exercise_goal_dateStart;
       const dateEnd = goal?.exercise_goal_dateEnd;
 
-      const listReal = await repository.listReal(
+      const listRecord = await repository.listRecord(
         user_id_param, dateType, dateStart, dateEnd,
       );
 
       // totalVolume 이 0이 아닌 경우의 수를 계산해서 total count를 구함
-      const exerciseTotalCount = listReal.reduce((acc: any, curr: any) => (
-        acc + (curr?.exercise_total_volume !== "0" ? 1 : 0)
+      const exerciseTotalCount = listRecord.reduce((acc: any, curr: any) => (
+        acc + (curr?.exercise_record_total_volume !== "0" ? 1 : 0)
       ), 0);
-      const exerciseTotalVolume = listReal.reduce((acc: any, curr: any) => (
-        acc + parseFloat(curr?.exercise_total_volume || "0")
+      const exerciseTotalVolume = listRecord.reduce((acc: any, curr: any) => (
+        acc + parseFloat(curr?.exercise_record_total_volume || "0")
       ), 0);
-      const exerciseTotalCardio = listReal.reduce((acc: any, curr: any) => (
-        acc + strToDecimal(curr?.exercise_total_cardio || "00:00")
+      const exerciseTotalCardio = listRecord.reduce((acc: any, curr: any) => (
+        acc + fnStrToDecimal(curr?.exercise_record_total_cardio || "00:00")
       ), 0);
-      const exerciseCurScale = listReal.reduce((latest: any, curr: any) => {
-        if (curr?.exercise_total_scale) {
-          return curr.exercise_total_scale;
+      const exerciseCurScale = listRecord.reduce((latest: any, curr: any) => {
+        if (curr?.exercise_record_total_scale) {
+          return curr.exercise_record_total_scale;
         }
         return latest;
       }, "0");
 
       return {
         ...goal,
-        exercise_total_count: String(exerciseTotalCount),
-        exercise_total_volume: String(exerciseTotalVolume.toFixed(0)),
-        exercise_total_cardio: decimalToStr(exerciseTotalCardio),
-        exercise_total_scale: String(exerciseCurScale),
+        exercise_record_total_count: String(exerciseTotalCount),
+        exercise_record_total_volume: String(exerciseTotalVolume.toFixed(0)),
+        exercise_record_total_cardio: fnDecimalToStr(exerciseTotalCardio),
+        exercise_record_total_scale: String(exerciseCurScale),
       };
     }));
     statusResult = "success";
@@ -166,7 +166,7 @@ export const detail = async (
     user_id_param, dateType, dateStart, dateEnd
   );
 
-  // real = section?.length
+  // record = section?.length
   // goal = 0 or 1
   if (!findResult) {
     finalResult = null;

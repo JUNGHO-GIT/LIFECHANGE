@@ -2,16 +2,16 @@
 
 import mongoose from "mongoose";
 import { ExerciseGoal } from "@schemas/exercise/ExerciseGoal";
-import { Exercise } from "@schemas/exercise/Exercise";
+import { ExerciseRecord } from "@schemas/exercise/ExerciseRecord";
 import { FoodGoal } from "@schemas/food/FoodGoal";
-import { Food } from "@schemas/food/Food";
+import { FoodRecord } from "@schemas/food/FoodRecord";
 import { MoneyGoal } from "@schemas/money/MoneyGoal";
-import { Money } from "@schemas/money/Money";
+import { MoneyRecord } from "@schemas/money/MoneyRecord";
 import { SleepGoal } from "@schemas/sleep/SleepGoal";
-import { Sleep } from "@schemas/sleep/Sleep";
+import { SleepRecord } from "@schemas/sleep/SleepRecord";
 import { User } from "@schemas/user/User";
 import { Verify } from "@schemas/Verify";
-import { calendarArray } from "@assets/arrays/calendarArray";
+import { scheduleArray } from "@assets/arrays/scheduleArray";
 import { exerciseArray } from "@assets/arrays/exerciseArray";
 import { moneyArray } from "@assets/arrays/moneyArray";
 import { foodArray } from "@assets/arrays/foodArray";
@@ -133,16 +133,16 @@ export const userSignup = async (
       user_curPropertyExclusion: "",
 
       user_favorite: [{
-        food_key: "",
-        food_name: "",
-        food_brand: "",
-        food_kcal: "",
-        food_carb: "",
-        food_protein: "",
-        food_fat: "",
+        food_record_key: "",
+        food_record_name: "",
+        food_record_brand: "",
+        food_record_kcal: "",
+        food_record_carb: "",
+        food_record_protein: "",
+        food_record_fat: "",
       }],
       user_dataCategory: {
-        calendar: calendarArray,
+				schedule: scheduleArray,
         exercise: exerciseArray,
         food: foodArray,
         money: moneyArray,
@@ -251,7 +251,7 @@ export const userDelete = async (
         user_id: user_id_param
       }
     )
-    await Exercise.deleteMany(
+    await ExerciseRecord.deleteMany(
       {
         user_id: user_id_param
       }
@@ -261,7 +261,7 @@ export const userDelete = async (
         user_id: user_id_param
       }
     )
-    await Food.deleteMany(
+    await FoodRecord.deleteMany(
       {
         user_id: user_id_param
       }
@@ -271,7 +271,7 @@ export const userDelete = async (
         user_id: user_id_param
       }
     )
-    await Money.deleteMany(
+    await MoneyRecord.deleteMany(
       {
         user_id: user_id_param
       }
@@ -281,7 +281,7 @@ export const userDelete = async (
         user_id: user_id_param
       }
     )
-    await Sleep.deleteMany(
+    await SleepRecord.deleteMany(
       {
         user_id: user_id_param
       }
@@ -333,7 +333,7 @@ export const categoryUpdate = async (
     {
       $set: {
         user_dataCategory: {
-          calendar: OBJECT_param.calendar,
+          schedule: OBJECT_param.schedule,
           exercise: OBJECT_param.exercise,
           food: OBJECT_param.food,
           money: OBJECT_param.money,

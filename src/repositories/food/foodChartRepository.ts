@@ -1,7 +1,7 @@
 // foodChartRepository.ts
 
-import { Food } from "@schemas/food/Food";
 import { FoodGoal } from "@schemas/food/FoodGoal";
+import { FoodRecord } from "@schemas/food/FoodRecord";
 
 // 1-1. chart (bar - goal) -------------------------------------------------------------------------
 export const barGoal = async (
@@ -44,21 +44,21 @@ export const barGoal = async (
   return finalResult;
 };
 
-// 1-2. chart (bar - real) -------------------------------------------------------------------------
-export const barReal = async (
+// 1-2. chart (bar - record) -------------------------------------------------------------------------
+export const barRecord = async (
   user_id_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await Food.aggregate([
+  const finalResult:any = await FoodRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
-        food_dateStart: {
+        food_record_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_dateEnd: {
+        food_record_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -67,17 +67,17 @@ export const barReal = async (
     {
       $project: {
         _id: 0,
-        food_dateStart: 1,
-        food_dateEnd: 1,
-        food_total_kcal: 1,
-        food_total_carb: 1,
-        food_total_protein: 1,
-        food_total_fat: 1
+        food_record_dateStart: 1,
+        food_record_dateEnd: 1,
+        food_record_total_kcal: 1,
+        food_record_total_carb: 1,
+        food_record_total_protein: 1,
+        food_record_total_fat: 1
       }
     },
     {
       $sort: {
-        food_dateStart: 1
+        food_record_dateStart: 1
       }
     }
   ]);
@@ -91,15 +91,15 @@ export const pieKcal = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await Food.aggregate([
+  const finalResult:any = await FoodRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
-        food_dateStart: {
+        food_record_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_dateEnd: {
+        food_record_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -110,10 +110,10 @@ export const pieKcal = async (
     },
     {
       $group: {
-        _id: "$food_section.food_name",
+        _id: "$food_section.food_record_name",
         value: {
           $sum: {
-            $toDouble: "$food_section.food_kcal"
+            $toDouble: "$food_section.food_record_kcal"
           }
         }
       }
@@ -137,15 +137,15 @@ export const pieNut = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await Food.aggregate([
+  const finalResult:any = await FoodRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
-        food_dateStart: {
+        food_record_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_dateEnd: {
+        food_record_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -156,17 +156,17 @@ export const pieNut = async (
         _id: null,
         total_carb: {
           $sum: {
-            $toDouble: "$food_total_carb"
+            $toDouble: "$food_record_total_carb"
           }
         },
         total_protein: {
           $sum: {
-            $toDouble: "$food_total_protein"
+            $toDouble: "$food_record_total_protein"
           }
         },
         total_fat: {
           $sum: {
-            $toDouble: "$food_total_fat"
+            $toDouble: "$food_record_total_fat"
           }
         }
       }
@@ -174,14 +174,14 @@ export const pieNut = async (
     {
       $project: {
         _id: 0,
-        food_total_carb: "$total_carb",
-        food_total_protein: "$total_protein",
-        food_total_fat: "$total_fat"
+        food_record_total_carb: "$total_carb",
+        food_record_total_protein: "$total_protein",
+        food_record_total_fat: "$total_fat"
       }
     },
     {
       $sort: {
-        food_dateStart: 1
+        food_record_dateStart: 1
       }
     }
   ]);
@@ -195,15 +195,15 @@ export const lineKcal = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await Food.aggregate([
+  const finalResult:any = await FoodRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
-        food_dateStart: {
+        food_record_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_dateEnd: {
+        food_record_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -212,14 +212,14 @@ export const lineKcal = async (
     {
       $project: {
         _id: 0,
-        food_dateStart: 1,
-        food_dateEnd: 1,
-        food_total_kcal: 1
+        food_record_dateStart: 1,
+        food_record_dateEnd: 1,
+        food_record_total_kcal: 1
       }
     },
     {
       $sort: {
-        food_dateStart: 1
+        food_record_dateStart: 1
       }
     }
   ]);
@@ -233,15 +233,15 @@ export const lineNut = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await Food.aggregate([
+  const finalResult:any = await FoodRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
-        food_dateStart: {
+        food_record_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_dateEnd: {
+        food_record_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -250,16 +250,16 @@ export const lineNut = async (
     {
       $project: {
         _id: 0,
-        food_dateStart: 1,
-        food_dateEnd: 1,
-        food_total_carb: 1,
-        food_total_protein: 1,
-        food_total_fat: 1
+        food_record_dateStart: 1,
+        food_record_dateEnd: 1,
+        food_record_total_carb: 1,
+        food_record_total_protein: 1,
+        food_record_total_fat: 1
       }
     },
     {
       $sort: {
-        food_dateStart: 1
+        food_record_dateStart: 1
       }
     }
   ]);
@@ -273,15 +273,15 @@ export const avgKcal = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await Food.aggregate([
+  const finalResult:any = await FoodRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
-        food_dateStart: {
+        food_record_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_dateEnd: {
+        food_record_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -290,14 +290,14 @@ export const avgKcal = async (
     {
       $project: {
         _id: 0,
-        food_dateStart: 1,
-        food_dateEnd: 1,
-        food_total_kcal: 1
+        food_record_dateStart: 1,
+        food_record_dateEnd: 1,
+        food_record_total_kcal: 1
       }
     },
     {
       $sort: {
-        food_dateStart: 1
+        food_record_dateStart: 1
       }
     }
   ]);
@@ -311,15 +311,15 @@ export const avgNut = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await Food.aggregate([
+  const finalResult:any = await FoodRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
-        food_dateStart: {
+        food_record_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_dateEnd: {
+        food_record_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -328,16 +328,16 @@ export const avgNut = async (
     {
       $project: {
         _id: 0,
-        food_dateStart: 1,
-        food_dateEnd: 1,
-        food_total_carb: 1,
-        food_total_protein: 1,
-        food_total_fat: 1
+        food_record_dateStart: 1,
+        food_record_dateEnd: 1,
+        food_record_total_carb: 1,
+        food_record_total_protein: 1,
+        food_record_total_fat: 1
       }
     },
     {
       $sort: {
-        food_dateStart: 1
+        food_record_dateStart: 1
       }
     }
   ]);

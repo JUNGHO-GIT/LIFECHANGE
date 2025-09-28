@@ -1,34 +1,27 @@
 // utils.ts
 
-// -------------------------------------------------------------------------------------------------
-export const randomNumber = (data: number) => {
+// 1. random ----------------------------------------------------------------------------------
+export const fnRandomNumber = (data: number) => {
 	return Math.floor(Math.random() * data);
 };
 
-// -------------------------------------------------------------------------------------------------
-/**
- * 시간 문자열 생성
- * @param none
- * @returns {string}
- */
-export const randomTime = (): string => {
+// 2. time ------------------------------------------------------------------------------------
+export const fnRandomTime = (): string => {
 	const hour = Math.floor(Math.random() * 23).toString().padStart(2, '0');
 	const minute = Math.floor(Math.random() * 60).toString().padStart(2, '0');
 	return `${hour}:${minute}`;
 };
 
-// --------------------------------------------------------------------------------------------
-// 3. date
-export const calcDate = (startTime: string, endTime: string) => {
+// 3. date ------------------------------------------------------------------------------------
+export const fnCalcDate = (startTime: string, endTime: string) => {
 	const start = new Date(`1970/01/01 ${startTime}`);
 	const end = new Date(`1970/01/01 ${endTime}`);
 	const duration = new Date(Number(end) - Number(start) + 24 * 60 * 60 * 1000);
 	return `${duration.getHours().toString().padStart(2, '0')}:${duration.getMinutes().toString().padStart(2, '0')}`;
 };
 
-// --------------------------------------------------------------------------------------------
-// 4. decimal
-export const strToDecimal = (time: string) => {
+// 4. decimal ---------------------------------------------------------------------------------
+export const fnStrToDecimal = (time: string) => {
 	if (!time) {
 		return 0;
 	}
@@ -39,9 +32,8 @@ export const strToDecimal = (time: string) => {
 	return adjustedHours + adjustedMinutes / 60;
 };
 
-// --------------------------------------------------------------------------------------------
-// 4. decimal
-export const decimalToStr = (time: number) => {
+// 4. decimal --------------------------------------------------------------------------------
+export const fnDecimalToStr = (time: number) => {
 	if (time === null || time === undefined) {
 		return "00:00";
 	}
@@ -53,10 +45,9 @@ export const decimalToStr = (time: number) => {
 	return `${String(adjustedHours).padStart(2, "0")}:${String(adjustedMinutes).padStart(2, "0")}`;
 };
 
-// --------------------------------------------------------------------------------------------
-// 5. insertComma
+// 5. insertComma -----------------------------------------------------------------------------
 // - 세자리 마다 콤마(,) 삽입
-export const insertComma = (str: string | number) => {
+export const fnInsertComma = (str: string | number) => {
 	try {
 		// 만약 number 형식이면 string 으로 변환
 		if (typeof str === "number") {
@@ -89,9 +80,8 @@ export const insertComma = (str: string | number) => {
 	}
 };
 
-// --------------------------------------------------------------------------------------------
-// 6. makeForm
-export const makeForm = (
+// 6. makeForm --------------------------------------------------------------------------------
+export const fnMakeForm = (
 	object: any,
 	fileList: File[] | null,
 	extra?: any
@@ -135,10 +125,9 @@ export const makeForm = (
 	return form;
 };
 
-// -------------------------------------------------------------------------------------------------
-// 7. handleY
+// 7. handleY -------------------------------------------------------------------------------------
 // - 차트 Y축 범위 및 눈금 계산
-export const handleY = (
+export const fnHandleY = (
 	OBJECT: any,
 	array: any,
 	type: string,

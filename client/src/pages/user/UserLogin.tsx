@@ -1,17 +1,17 @@
 // UserLogin.tsx
 
-import {useState, useEffect} from "@importReacts";
+import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
 import {useCommonValue, useValidateUser} from "@importHooks";
 import {useStoreLanguage, useStoreAlert, useStoreLoading} from "@importStores";
 import {axios} from "@importLibs";
-import {sync, getLocal, setLocal, setSession} from "@importScripts";
+import {fnSync, fnGetLocal, fnSetLocal, fnSetSession} from "@importScripts";
 import {User} from "@importSchemas";
 import {Input} from "@importContainers";
 import {Div, Btn, Img, Hr, Paper, Grid } from "@importComponents";
 import {Checkbox} from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
-export const UserLogin = () => {
+export const UserLogin = memo(() => {
 
 	// 1. common -------------------------------------------------------------------------------------
 	const {URL_OBJECT, URL_GOOGLE, ADMIN_ID, ADMIN_PW, navigate} = useCommonValue();
@@ -45,7 +45,7 @@ export const UserLogin = () => {
 	// 2-3. useEffect -----------------------------------------------------------------------------
 	// 초기 로드 시 자동로그인 설정 가져오기
 	useEffect(() => {
-		const {autoLogin, autoLoginId, autoLoginPw} = getLocal("setting", "id", "") || {};
+		const {autoLogin, autoLoginId, autoLoginPw} = fnGetLocal("setting", "id", "") || {};
 
 		// 자동로그인 o
 		if (autoLogin === "true") {
@@ -72,7 +72,7 @@ export const UserLogin = () => {
 	// 2-3. useEffect -----------------------------------------------------------------------------
 	// 초기 로드 시 아이디 저장 설정 가져오기
 	useEffect(() => {
-		const {isSaved, isSavedId} = getLocal("setting", "id", "") || {};
+		const {isSaved, isSavedId} = fnGetLocal("setting", "id", "") || {};
 		// 아이디 저장 o
 		if (isSaved === "true") {
 			setCheckedSaveId(true);
@@ -95,14 +95,14 @@ export const UserLogin = () => {
 	// 자동로그인 활성화된 경우
 	useEffect(() => {
 		if (checkedAutoLogin) {
-			setLocal("setting", "id", "", {
+			fnSetLocal("setting", "id", "", {
 				autoLogin: "true",
 				autoLoginId: OBJECT.user_id,
 				autoLoginPw: OBJECT.user_pw,
 			});
 		}
 		else {
-			setLocal("setting", "id", "", {
+			fnSetLocal("setting", "id", "", {
 				autoLogin: "false",
 				autoLoginId: "",
 				autoLoginPw: "",
@@ -114,13 +114,13 @@ export const UserLogin = () => {
 	// 아이디 저장 활성화된 경우
 	useEffect(() => {
 		if (checkedSaveId) {
-			setLocal("setting", "id", "", {
+			fnSetLocal("setting", "id", "", {
 				isSaved: "true",
 				isSavedId: OBJECT.user_id,
 			});
 		}
 		else {
-			setLocal("setting", "id", "", {
+			fnSetLocal("setting", "id", "", {
 				isSaved: "false",
 				isSavedId: "",
 			});
@@ -142,12 +142,12 @@ export const UserLogin = () => {
 		.then((res: any) => {
 			if (res.data.status === "success") {
 				setLOADING(false);
-				setSession("setting", "id", "", {
+				fnSetSession("setting", "id", "", {
 					sessionId: res.data.result.user_id,
 					admin: res.data.admin === "admin" ? "true" : "false",
 				});
-				navigate("/today/list");
-				sync();
+				navigate("/schedule/record/list");
+				fnSync();
 			}
 			else if (res.data.status === "isGoogleUser") {
 				setLOADING(false);
@@ -156,7 +156,7 @@ export const UserLogin = () => {
 					msg: translate(res.data.msg),
 					severity: "error",
 				});
-				setSession("setting", "id", "", {
+				fnSetSession("setting", "id", "", {
 					sessionId: res.data.result.user_id,
 					admin: res.data.admin === "admin" ? "true" : "false",
 				});
@@ -168,7 +168,7 @@ export const UserLogin = () => {
 					msg: translate(res.data.msg),
 					severity: "error",
 				});
-				setSession("setting", "id", "", {
+				fnSetSession("setting", "id", "", {
 					sessionId: "",
 					admin: "false",
 				});
@@ -435,4 +435,4 @@ export const UserLogin = () => {
 			{userLoginNode()}
 		</>
 	);
-};
+});

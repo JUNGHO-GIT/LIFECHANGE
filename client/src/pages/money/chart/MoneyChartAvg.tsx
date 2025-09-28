@@ -1,11 +1,11 @@
 // MoneyChartAvg.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
 import { MoneyAvg, MoneyAvgType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { handleY } from "@importScripts";
+import { fnHandleY } from "@importScripts";
 import { Select, PopUp } from "@importContainers";
 import { Div, Img, Br, Paper, Grid } from "@importComponents";
 import { FormGroup, FormControlLabel, Switch, MenuItem } from "@importMuis";
@@ -13,7 +13,7 @@ import { ComposedChart, Bar } from "recharts";
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 // -------------------------------------------------------------------------------------------------
-export const MoneyChartAvg = () => {
+export const MoneyChartAvg = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, sessionId, chartColors, moneyChartArray } = useCommonValue();
@@ -99,7 +99,7 @@ export const MoneyChartAvg = () => {
       endStr = "";
     }
 
-    const {domain, ticks, formatterY} = handleY(object, moneyChartArray, "money");
+    const {domain, ticks, formatterY} = fnHandleY(object, moneyChartArray, "money");
     return (
 			<ResponsiveContainer width={"100%"} height={350}>
 				<ComposedChart
@@ -297,4 +297,4 @@ export const MoneyChartAvg = () => {
       {chartNode()}
     </>
   );
-};
+});

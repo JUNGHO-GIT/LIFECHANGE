@@ -20,30 +20,30 @@ export type FoodGoalType = {
 	food_goal_regDt: string;
 	food_goal_updateDt: string;
 
-	// real
-	food_dateType: string;
-	food_dateStart: string;
-	food_dateEnd: string;
-	food_total_kcal: string;
-	food_total_kcal_color: string;
-	food_total_carb: string;
-	food_total_carb_color: string;
-	food_total_protein: string;
-	food_total_protein_color: string;
-	food_total_fat: string;
-	food_total_fat_color: string;
-	food_regDt: string;
-	food_updateDt: string;
+	// record
+	food_record_dateType: string;
+	food_record_dateStart: string;
+	food_record_dateEnd: string;
+	food_record_total_kcal: string;
+	food_record_total_kcal_color: string;
+	food_record_total_carb: string;
+	food_record_total_carb_color: string;
+	food_record_total_protein: string;
+	food_record_total_protein_color: string;
+	food_record_total_fat: string;
+	food_record_total_fat_color: string;
+	food_record_regDt: string;
+	food_record_updateDt: string;
 
 	// diff
-	food_diff_kcal: string;
-	food_diff_kcal_color: string;
-	food_diff_carb: string;
-	food_diff_carb_color: string;
-	food_diff_protein: string;
-	food_diff_protein_color: string;
-	food_diff_fat: string;
-	food_diff_fat_color: string;
+	food_record_diff_kcal: string;
+	food_record_diff_kcal_color: string;
+	food_record_diff_carb: string;
+	food_record_diff_carb_color: string;
+	food_record_diff_protein: string;
+	food_record_diff_protein_color: string;
+	food_record_diff_fat: string;
+	food_record_diff_fat_color: string;
 };
 
 // Schema -----------------------------------------------------------------------------------------
@@ -66,28 +66,28 @@ export const FoodGoal: FoodGoalType = {
 	food_goal_regDt: "",
 	food_goal_updateDt: "",
 
-	// real
-	food_dateType: "",
-	food_dateStart: "0000-00-00",
-	food_dateEnd: "0000-00-00",
-	food_total_kcal: "0",
-	food_total_kcal_color: "",
-	food_total_carb: "0",
-	food_total_carb_color:	 "",
-	food_total_protein: "0",
-	food_total_protein_color: "",
-	food_total_fat: "0",
-	food_total_fat_color: "",
-	food_regDt: "",
-	food_updateDt: "",
+	// record
+	food_record_dateType: "",
+	food_record_dateStart: "0000-00-00",
+	food_record_dateEnd: "0000-00-00",
+	food_record_total_kcal: "0",
+	food_record_total_kcal_color: "",
+	food_record_total_carb: "0",
+	food_record_total_carb_color:	 "",
+	food_record_total_protein: "0",
+	food_record_total_protein_color: "",
+	food_record_total_fat: "0",
+	food_record_total_fat_color: "",
+	food_record_regDt: "",
+	food_record_updateDt: "",
 
 	// diff
-	food_diff_kcal: "0",
-	food_diff_kcal_color: "",
-	food_diff_carb: "0",
-	food_diff_carb_color: "",
-	food_diff_protein: "0",
-	food_diff_protein_color: "",
-	food_diff_fat: "0",
-	food_diff_fat_color: "",
+	food_record_diff_kcal: "0",
+	food_record_diff_kcal_color: "",
+	food_record_diff_carb: "0",
+	food_record_diff_carb_color: "",
+	food_record_diff_protein: "0",
+	food_record_diff_protein_color: "",
+	food_record_diff_fat: "0",
+	food_record_diff_fat_color: "",
 };

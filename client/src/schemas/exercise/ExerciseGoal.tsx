@@ -20,30 +20,30 @@ export type ExerciseGoalType = {
 	exercise_goal_regDt: string;
 	exercise_goal_updateDt: string;
 
-	// real
-	exercise_dateType: string;
-	exercise_dateStart: string;
-	exercise_dateEnd: string;
-	exercise_total_count: string;
-	exercise_total_count_color: string;
-	exercise_total_volume: string;
-	exercise_total_volume_color: string;
-	exercise_total_scale: string;
-	exercise_total_scale_color: string;
-	exercise_total_cardio: string;
-	exercise_total_cardio_color: string;
-	exercise_regDt: string;
-	exercise_updateDt: string;
+	// record
+	exercise_record_dateType: string;
+	exercise_record_dateStart: string;
+	exercise_record_dateEnd: string;
+	exercise_record_total_count: string;
+	exercise_record_total_count_color: string;
+	exercise_record_total_volume: string;
+	exercise_record_total_volume_color: string;
+	exercise_record_total_scale: string;
+	exercise_record_total_scale_color: string;
+	exercise_record_total_cardio: string;
+	exercise_record_total_cardio_color: string;
+	exercise_record_regDt: string;
+	exercise_record_updateDt: string;
 
 	// diff
-	exercise_diff_count: string;
-	exercise_diff_count_color: string;
-	exercise_diff_cardio: string;
-	exercise_diff_cardio_color: string;
-	exercise_diff_volume: string;
-	exercise_diff_volume_color: string;
-	exercise_diff_scale: string;
-	exercise_diff_scale_color: string;
+	exercise_record_diff_count: string;
+	exercise_record_diff_count_color: string;
+	exercise_record_diff_cardio: string;
+	exercise_record_diff_cardio_color: string;
+	exercise_record_diff_volume: string;
+	exercise_record_diff_volume_color: string;
+	exercise_record_diff_scale: string;
+	exercise_record_diff_scale_color: string;
 };
 
 // Schema -----------------------------------------------------------------------------------------
@@ -66,28 +66,28 @@ export const ExerciseGoal: ExerciseGoalType = {
 	exercise_goal_regDt: "",
 	exercise_goal_updateDt: "",
 
-	// real
-	exercise_dateType: "",
-	exercise_dateStart: "0000-00-00",
-	exercise_dateEnd: "0000-00-00",
-	exercise_total_count: "0",
-	exercise_total_count_color: "",
-	exercise_total_volume: "0",
-	exercise_total_volume_color: "",
-	exercise_total_scale: "0",
-	exercise_total_scale_color: "",
-	exercise_total_cardio: "00:00",
-	exercise_total_cardio_color: "",
-	exercise_regDt: "",
-	exercise_updateDt: "",
+	// record
+	exercise_record_dateType: "",
+	exercise_record_dateStart: "0000-00-00",
+	exercise_record_dateEnd: "0000-00-00",
+	exercise_record_total_count: "0",
+	exercise_record_total_count_color: "",
+	exercise_record_total_volume: "0",
+	exercise_record_total_volume_color: "",
+	exercise_record_total_scale: "0",
+	exercise_record_total_scale_color: "",
+	exercise_record_total_cardio: "00:00",
+	exercise_record_total_cardio_color: "",
+	exercise_record_regDt: "",
+	exercise_record_updateDt: "",
 
 	// diff
-	exercise_diff_count: "0",
-	exercise_diff_count_color: "",
-	exercise_diff_cardio: "00:00",
-	exercise_diff_cardio_color: "",
-	exercise_diff_volume: "0",
-	exercise_diff_volume_color: "",
-	exercise_diff_scale: "0",
-	exercise_diff_scale_color: "",
+	exercise_record_diff_count: "0",
+	exercise_record_diff_count_color: "",
+	exercise_record_diff_cardio: "00:00",
+	exercise_record_diff_cardio_color: "",
+	exercise_record_diff_volume: "0",
+	exercise_record_diff_volume_color: "",
+	exercise_record_diff_scale: "0",
+	exercise_record_diff_scale_color: "",
 };

@@ -93,8 +93,8 @@
         "randomNumber",
         "randomTime",
         "calcDate",
-        "strToDecimal",
-        "decimalToStr"
+        "fnStrToDecimal",
+        "fnDecimalToStr"
       ],
       "skipped": false
     }

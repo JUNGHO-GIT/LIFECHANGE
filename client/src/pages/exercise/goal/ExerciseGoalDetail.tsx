@@ -1,20 +1,20 @@
 // ExerciseGoalDetail.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useTime, useValidateExercise } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { ExerciseGoal, ExerciseGoalType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { insertComma, sync } from "@importScripts";
+import { fnInsertComma, fnSync } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, PickerTime, Count, Delete, Input } from "@importContainers";
 import { Img, Bg, Paper, Grid, Br } from "@importComponents";
 
 // -------------------------------------------------------------------------------------------------
-export const ExerciseGoalDetail = () => {
+export const ExerciseGoalDetail = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
-  const { URL_OBJECT, PATH, sessionId, toList, toToday, navigate, localUnit } = useCommonValue();
+  const { URL_OBJECT, PATH, sessionId, toList, toSchedule, navigate, localUnit } = useCommonValue();
   const { location_from, location_dateType } = useCommonValue();
   const { location_dateStart, location_dateEnd } = useCommonValue();
   const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
@@ -56,7 +56,7 @@ export const ExerciseGoalDetail = () => {
   });
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
-  useTime(OBJECT, setOBJECT, PATH, "real");
+  useTime(OBJECT, setOBJECT, PATH, "record");
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
@@ -172,14 +172,14 @@ export const ExerciseGoalDetail = () => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(location_from === "today" ? toToday : toList, {
+        navigate(location_from === "schedule" ? toSchedule : toList, {
           state: {
             dateType: "",
             dateStart: DATE.dateStart,
             dateEnd: DATE.dateEnd
           }
         });
-        sync("scale");
+        fnSync("scale");
       }
       else {
         setLOADING(false);
@@ -225,14 +225,14 @@ export const ExerciseGoalDetail = () => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(location_from === "today" ? toToday : toList, {
+        navigate(location_from === "schedule" ? toSchedule : toList, {
           state: {
             dateType: "",
             dateStart: DATE.dateStart,
             dateEnd: DATE.dateEnd
           }
         });
-        sync("scale");
+        fnSync("scale");
       }
       else {
         setLOADING(false);
@@ -272,9 +272,7 @@ export const ExerciseGoalDetail = () => {
     }));
   };
 
-	// --------------------------------------------------------------------------------------------
-	// 7. detail
-	// --------------------------------------------------------------------------------------------
+	// 7. detail ----------------------------------------------------------------------------------
   const detailNode = () => {
     // 7-1. date + count
 		const dateCountSection = () => (
@@ -326,7 +324,7 @@ export const ExerciseGoalDetail = () => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={insertComma(item?.exercise_goal_count || "0")}
+									value={fnInsertComma(item?.exercise_goal_count || "0")}
 									inputRef={REFS?.[i]?.exercise_goal_count}
 									error={ERRORS?.[i]?.exercise_goal_count}
 									label={
@@ -375,7 +373,7 @@ export const ExerciseGoalDetail = () => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={insertComma(item?.exercise_goal_volume || "0")}
+									value={fnInsertComma(item?.exercise_goal_volume || "0")}
 									inputRef={REFS?.[i]?.exercise_goal_volume}
 									error={ERRORS?.[i]?.exercise_goal_volume}
 									label={
@@ -443,7 +441,7 @@ export const ExerciseGoalDetail = () => {
 								<Input
 									locked={LOCKED}
 									label={translate("goalScale")}
-									value={insertComma(item?.exercise_goal_scale || "0")}
+									value={fnInsertComma(item?.exercise_goal_scale || "0")}
 									inputRef={REFS?.[i]?.exercise_goal_scale}
 									error={ERRORS?.[i]?.exercise_goal_scale}
 									startadornment={
@@ -526,4 +524,4 @@ export const ExerciseGoalDetail = () => {
       {footerNode()}
     </>
   );
-};
+});

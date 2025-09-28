@@ -1,12 +1,12 @@
 // userSyncRepository.ts
 
-import { Exercise } from "@schemas/exercise/Exercise";
+import { ExerciseRecord } from "@schemas/exercise/ExerciseRecord";
 import { ExerciseGoal } from "@schemas/exercise/ExerciseGoal";
-import { Food } from "@schemas/food/Food";
+import { FoodRecord } from "@schemas/food/FoodRecord";
 import { FoodGoal } from "@schemas/food/FoodGoal";
-import { Money } from "@schemas/money/Money";
+import { MoneyRecord } from "@schemas/money/MoneyRecord";
 import { MoneyGoal } from "@schemas/money/MoneyGoal";
-import { Sleep } from "@schemas/sleep/Sleep";
+import { SleepRecord } from "@schemas/sleep/SleepRecord";
 import { SleepGoal } from "@schemas/sleep/SleepGoal";
 import { User } from "@schemas/user/User";
 
@@ -24,7 +24,7 @@ export const listCategory = async (
     {
       $project: {
         _id: 0,
-        calendar: "$user_dataCategory.calendar",
+        schedule: "$user_dataCategory.schedule",
         exercise: "$user_dataCategory.exercise",
         food: "$user_dataCategory.food",
         money: "$user_dataCategory.money",
@@ -73,21 +73,21 @@ export const percent = {
     return finalResult;
   },
 
-  // 1-2. exercise (real)
+  // 1-2. exercise (record)
   listExercise: async (
     user_id_param: string,
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
-    const finalResult:any = await Exercise.aggregate([
+    const finalResult:any = await ExerciseRecord.aggregate([
       {
         $match: {
           user_id: user_id_param,
-          exercise_dateStart: {
+          exercise_record_dateStart: {
             $gte: dateStart_param,
             $lte: dateEnd_param,
           },
-          exercise_dateEnd: {
+          exercise_record_dateEnd: {
             $gte: dateStart_param,
             $lte: dateEnd_param,
           }
@@ -96,18 +96,18 @@ export const percent = {
       {
         $project: {
           _id: 0,
-          exercise_total_volume: 1,
-          exercise_total_cardio: 1,
-          exercise_total_scale: 1,
-          exercise_total_count: {
+          exercise_record_total_volume: 1,
+          exercise_record_total_cardio: 1,
+          exercise_record_total_scale: 1,
+          exercise_record_total_count: {
             $cond: {
               if: {
                 $and: [
                   {
-                    $lte: ["$exercise_total_volume", 1]
+                    $lte: ["$exercise_record_total_volume", 1]
                   },
                   {
-                    $eq: ["$exercise_total_cardio", "00:00"]
+                    $eq: ["$exercise_record_total_cardio", "00:00"]
                   }
                 ]
               },
@@ -156,21 +156,21 @@ export const percent = {
     return finalResult;
   },
 
-  // 2-2. food (real)
+  // 2-2. food (record)
   listFood: async (
     user_id_param: string,
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
-    const finalResult:any = await Food.aggregate([
+    const finalResult:any = await FoodRecord.aggregate([
       {
         $match: {
           user_id: user_id_param,
-          food_dateStart: {
+          food_record_dateStart: {
             $gte: dateStart_param,
             $lte: dateEnd_param,
           },
-          food_dateEnd: {
+          food_record_dateEnd: {
             $gte: dateStart_param,
             $lte: dateEnd_param,
           }
@@ -179,10 +179,10 @@ export const percent = {
       {
         $project: {
           _id: 0,
-          food_total_kcal: 1,
-          food_total_carb: 1,
-          food_total_protein: 1,
-          food_total_fat: 1,
+          food_record_total_kcal: 1,
+          food_record_total_carb: 1,
+          food_record_total_protein: 1,
+          food_record_total_fat: 1,
         }
       }
     ]);
@@ -222,21 +222,21 @@ export const percent = {
     return finalResult;
   },
 
-  // 3-2. money (real)
+  // 3-2. money (record)
   listMoney: async (
     user_id_param: string,
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
-    const finalResult:any = await Money.aggregate([
+    const finalResult:any = await MoneyRecord.aggregate([
       {
         $match: {
           user_id: user_id_param,
-          money_dateStart: {
+          money_record_dateStart: {
             $gte: dateStart_param,
             $lte: dateEnd_param,
           },
-          money_dateEnd: {
+          money_record_dateEnd: {
             $gte: dateStart_param,
             $lte: dateEnd_param,
           }
@@ -245,8 +245,8 @@ export const percent = {
       {
         $project: {
           _id: 0,
-          money_total_income: 1,
-          money_total_expense: 1,
+          money_record_total_income: 1,
+          money_record_total_expense: 1,
         }
       }
     ]);
@@ -287,21 +287,21 @@ export const percent = {
     return finalResult;
   },
 
-  // 4-2. sleep (real)
+  // 4-2. sleep (record)
   listSleep: async (
     user_id_param: string,
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
-    const finalResult:any = await Sleep.aggregate([
+    const finalResult:any = await SleepRecord.aggregate([
       {
         $match: {
           user_id: user_id_param,
-          sleep_dateStart: {
+          sleep_record_dateStart: {
             $gte: dateStart_param,
             $lte: dateEnd_param,
           },
-          sleep_dateEnd: {
+          sleep_record_dateEnd: {
             $gte: dateStart_param,
             $lte: dateEnd_param,
           },
@@ -310,9 +310,9 @@ export const percent = {
       {
         $project: {
           _id: 0,
-          sleep_bedTime: { $arrayElemAt: ["$sleep_section.sleep_bedTime", 0] },
-          sleep_wakeTime: { $arrayElemAt: ["$sleep_section.sleep_wakeTime", 0] },
-          sleep_sleepTime: { $arrayElemAt: ["$sleep_section.sleep_sleepTime", 0] },
+          sleep_record_bedTime: { $arrayElemAt: ["$sleep_section.sleep_record_bedTime", 0] },
+          sleep_record_wakeTime: { $arrayElemAt: ["$sleep_section.sleep_record_wakeTime", 0] },
+          sleep_record_sleepTime: { $arrayElemAt: ["$sleep_section.sleep_record_sleepTime", 0] },
         }
       }
     ]);
@@ -373,15 +373,15 @@ export const scale = {
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
-    const finalResult:any = await Exercise.aggregate([
+    const finalResult:any = await ExerciseRecord.aggregate([
       {
         $match: {
           user_id: user_id_param,
-          exercise_dateStart: {
+          exercise_record_dateStart: {
             $gte: dateStart_param,
             $lte: dateEnd_param,
           },
-          exercise_dateEnd: {
+          exercise_record_dateEnd: {
             $gte: dateStart_param,
             $lte: dateEnd_param,
           }
@@ -389,8 +389,8 @@ export const scale = {
       },
       {
         $addFields: {
-          exercise_total_scale: {
-            $toDouble: "$exercise_total_scale"
+          exercise_record_total_scale: {
+            $toDouble: "$exercise_record_total_scale"
           }
         }
       },
@@ -398,7 +398,7 @@ export const scale = {
         $group: {
           _id: null,
           minScale: {
-            $min: "$exercise_total_scale"
+            $min: "$exercise_record_total_scale"
           },
         }
       },
@@ -419,15 +419,15 @@ export const scale = {
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
-    const finalResult:any = await Exercise.aggregate([
+    const finalResult:any = await ExerciseRecord.aggregate([
       {
         $match: {
           user_id: user_id_param,
-          exercise_dateStart: {
+          exercise_record_dateStart: {
             $gte: dateStart_param,
             $lte: dateEnd_param,
           },
-          exercise_dateEnd: {
+          exercise_record_dateEnd: {
             $gte: dateStart_param,
             $lte: dateEnd_param,
           }
@@ -435,8 +435,8 @@ export const scale = {
       },
       {
         $addFields: {
-          exercise_total_scale: {
-            $toDouble: "$exercise_total_scale"
+          exercise_record_total_scale: {
+            $toDouble: "$exercise_record_total_scale"
           }
         }
       },
@@ -444,7 +444,7 @@ export const scale = {
         $group: {
           _id: null,
           maxScale: {
-            $max: "$exercise_total_scale"
+            $max: "$exercise_record_total_scale"
           },
         }
       },
@@ -465,15 +465,15 @@ export const scale = {
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
-    const finalResult:any = await Exercise.aggregate([
+    const finalResult:any = await ExerciseRecord.aggregate([
       {
         $match: {
           user_id: user_id_param,
-          exercise_dateStart: {
+          exercise_record_dateStart: {
             $gte: dateStart_param,
             $lte: dateEnd_param,
           },
-          exercise_dateEnd: {
+          exercise_record_dateEnd: {
             $gte: dateStart_param,
             $lte: dateEnd_param,
           }
@@ -481,13 +481,13 @@ export const scale = {
       },
       {
         $sort: {
-          exercise_dateEnd: -1,
+          exercise_record_dateEnd: -1,
         }
       },
       {
         $project: {
           _id: 0,
-          exercise_total_scale: "$exercise_total_scale",
+          exercise_record_total_scale: "$exercise_record_total_scale",
         }
       }
     ]);
@@ -557,18 +557,18 @@ export const nutrition = {
     dateEnd_param: string,
   ) => {
     // 데이터중 값이 있는 것만 카운트
-    const finalResult:any = await Food.countDocuments(
+    const finalResult:any = await FoodRecord.countDocuments(
       {
         user_id: user_id_param,
-        food_dateStart: {
+        food_record_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_dateEnd: {
+        food_record_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        "food_section.food_kcal": {
+        "food_section.food_record_kcal": {
           $ne: ""
         }
       }
@@ -606,15 +606,15 @@ export const nutrition = {
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
-    const finalResult:any = await Food.aggregate([
+    const finalResult:any = await FoodRecord.aggregate([
       {
         $match: {
           user_id: user_id_param,
-          food_dateStart: {
+          food_record_dateStart: {
             $gte: dateStart_param,
             $lte: dateEnd_param,
           },
-          food_dateEnd: {
+          food_record_dateEnd: {
             $gte: dateStart_param,
             $lte: dateEnd_param,
           }
@@ -626,24 +626,24 @@ export const nutrition = {
       {
         $group: {
           _id: null,
-          food_total_kcal: {
+          food_record_total_kcal: {
             $sum: {
-              $toDouble: "$food_section.food_kcal"
+              $toDouble: "$food_section.food_record_kcal"
             }
           },
-          food_total_carb: {
+          food_record_total_carb: {
             $sum: {
-              $toDouble: "$food_section.food_carb"
+              $toDouble: "$food_section.food_record_carb"
             }
           },
-          food_total_protein: {
+          food_record_total_protein: {
             $sum: {
-              $toDouble: "$food_section.food_protein"
+              $toDouble: "$food_section.food_record_protein"
             }
           },
-          food_total_fat: {
+          food_record_total_fat: {
             $sum: {
-              $toDouble: "$food_section.food_fat"
+              $toDouble: "$food_section.food_record_fat"
             }
           }
         }
@@ -651,10 +651,10 @@ export const nutrition = {
       {
         $project: {
           _id: 0,
-          food_total_kcal: 1,
-          food_total_carb: 1,
-          food_total_protein: 1,
-          food_total_fat: 1,
+          food_record_total_kcal: 1,
+          food_record_total_carb: 1,
+          food_record_total_protein: 1,
+          food_record_total_fat: 1,
         }
       }
     ]);
@@ -802,15 +802,15 @@ export const property = {
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
-    const allResult:any = await Money.aggregate([
+    const allResult:any = await MoneyRecord.aggregate([
       {
         $match: {
           user_id: user_id_param,
-          money_dateStart: {
+          money_record_dateStart: {
             $gte: dateStart_param,
             $lte: dateEnd_param,
           },
-          money_dateEnd: {
+          money_record_dateEnd: {
             $gte: dateStart_param,
             $lte: dateEnd_param,
           }
@@ -820,9 +820,9 @@ export const property = {
         $unwind: "$money_section"
       },
       {
-        // money_include 상관없이 모두 필터링
+        // money_record_include 상관없이 모두 필터링
         $match: {
-          "money_section.money_include": {
+          "money_section.money_record_include": {
             $ne: null
           }
         }
@@ -830,33 +830,33 @@ export const property = {
       {
         $group: {
           _id: null,
-          // money_part이 "income"인 경우의 수입 합산
-          money_total_income: {
+          // money_record_part이 "income"인 경우의 수입 합산
+          money_record_total_income: {
             $sum: {
               $cond: [
                 {
                   $eq: [
-                    "$money_section.money_part", "income"
+                    "$money_section.money_record_part", "income"
                   ]
                 },
                 {
-                  $toDouble: "$money_section.money_amount"
+                  $toDouble: "$money_section.money_record_amount"
                 },
                 0
               ]
             }
           },
-          // money_part이 "expense"인 경우의 지출 합산
-          money_total_expense: {
+          // money_record_part이 "expense"인 경우의 지출 합산
+          money_record_total_expense: {
             $sum: {
               $cond: [
                 {
                   $eq: [
-                    "$money_section.money_part", "expense"
+                    "$money_section.money_record_part", "expense"
                   ]
                 },
                 {
-                  $toDouble: "$money_section.money_amount"
+                  $toDouble: "$money_section.money_record_amount"
                 },
                 0
               ]
@@ -867,21 +867,21 @@ export const property = {
       {
         $project: {
           _id: 0,
-          money_total_income: 1,
-          money_total_expense: 1,
+          money_record_total_income: 1,
+          money_record_total_expense: 1,
         }
       }
     ]);
 
-    const exclusionResult:any = await Money.aggregate([
+    const exclusionResult:any = await MoneyRecord.aggregate([
       {
         $match: {
           user_id: user_id_param,
-          money_dateStart: {
+          money_record_dateStart: {
             $gte: dateStart_param,
             $lte: dateEnd_param,
           },
-          money_dateEnd: {
+          money_record_dateEnd: {
             $gte: dateStart_param,
             $lte: dateEnd_param,
           }
@@ -891,9 +891,9 @@ export const property = {
         $unwind: "$money_section"
       },
       {
-        // money_include가 "Y"인 경우만 필터링
+        // money_record_include가 "Y"인 경우만 필터링
         $match: {
-          "money_section.money_include": {
+          "money_section.money_record_include": {
             $eq: "Y"
           }
         }
@@ -901,33 +901,33 @@ export const property = {
       {
         $group: {
           _id: null,
-          // money_part이 "income"인 경우의 수입 합산
-          money_total_income: {
+          // money_record_part이 "income"인 경우의 수입 합산
+          money_record_total_income: {
             $sum: {
               $cond: [
                 {
                   $eq: [
-                    "$money_section.money_part", "income"
+                    "$money_section.money_record_part", "income"
                   ]
                 },
                 {
-                  $toDouble: "$money_section.money_amount"
+                  $toDouble: "$money_section.money_record_amount"
                 },
                 0
               ]
             }
           },
-          // money_part이 "expense"인 경우의 지출 합산
-          money_total_expense: {
+          // money_record_part이 "expense"인 경우의 지출 합산
+          money_record_total_expense: {
             $sum: {
               $cond: [
                 {
                   $eq: [
-                    "$money_section.money_part", "expense"
+                    "$money_section.money_record_part", "expense"
                   ]
                 },
                 {
-                  $toDouble: "$money_section.money_amount"
+                  $toDouble: "$money_section.money_record_amount"
                 },
                 0
               ]
@@ -938,8 +938,8 @@ export const property = {
       {
         $project: {
           _id: 0,
-          money_total_income: 1,
-          money_total_expense: 1,
+          money_record_total_income: 1,
+          money_record_total_expense: 1,
         }
       }
     ]);

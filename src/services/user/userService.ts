@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import * as repository from "@repositories/user/userRepository";
-import { emailSending } from "@assets/scripts/email";
+import { fnEmailSending } from "@assets/scripts/email";
 dotenv.config();
 
 // 1-1. sendEmail ----------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ export const sendEmail = async (
     statusResult = "isGoogle";
   }
   else {
-    sendResult = await emailSending(
+    sendResult = await fnEmailSending(
       user_id_param, code
     );
     await repository.emailSendEmail(

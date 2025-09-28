@@ -1,48 +1,46 @@
 // useCommonDate.tsx
 
+import { useCallback } from "@importReacts";
 import { useCommonValue } from "@importHooks";
 import { moment, type Moment } from "@importLibs";
 
 // -------------------------------------------------------------------------------------------------
 export const useCommonDate = () => {
 
-	// -----------------------------------------------------------------------------------------------
-	// 1. common
-	// -----------------------------------------------------------------------------------------------
+	// 1. common ------------------------------------------------------------------------------------
   const { localTimeZone } = useCommonValue();
 
-	// -----------------------------------------------------------------------------------------------
-  // 2. helper
-	// -----------------------------------------------------------------------------------------------
-	const getMoment = (params?: Moment | Date | string) => {
+  // 2. helper -------------------------------------------------------------------------------------
+	const getMoment = useCallback((params?: Moment | Date | string) => {
     if (!params || params === "0000-00-00") {
       return moment();
     }
     return moment(new Date(params as string));
-	}
-  const createMomentWithTimezone = (params?: Moment | Date | string) => {
+	}, []);
+
+  const createMomentWithTimezone = useCallback((params?: Moment | Date | string) => {
     if (!params || params === "0000-00-00") {
       return moment().tz(localTimeZone);
     }
     return moment(new Date(params as string)).tz(localTimeZone);
-  }
-  const createDateFunction = (modifier?: (m: moment.Moment) => moment.Moment) => {
+  }, [localTimeZone]);
+
+  const createDateFunction = useCallback((modifier?: (m: moment.Moment) => moment.Moment) => {
     return function(params?: Moment | Date | string) {
       const m = createMomentWithTimezone(params);
       return modifier ? modifier(m) : m;
     };
-  }
-  const createDateFunctionWithFormat = (modifier?: (m: moment.Moment) => moment.Moment) => {
+  }, [createMomentWithTimezone]);
+
+  const createDateFunctionWithFormat = useCallback((modifier?: (m: moment.Moment) => moment.Moment) => {
     return (params?: Moment | Date | string) => {
       const m = createMomentWithTimezone(params);
       const result = modifier ? modifier(m) : m;
       return result.format("YYYY-MM-DD");
     };
-  }
+	}, [createMomentWithTimezone]);
 
-	// -----------------------------------------------------------------------------------------------
-  // 3. not fmt
-	// -----------------------------------------------------------------------------------------------
+  // 3. not fmt -----------------------------------------------------------------------------------
   const getDayNotFmt = createDateFunction();
   const getDayStartNotFmt = createDateFunction(m => m.startOf("day"));
   const getDayEndNotFmt = createDateFunction(m => m.endOf("day"));
@@ -69,9 +67,7 @@ export const useCommonDate = () => {
   const getNextYearStartNotFmt = createDateFunction(m => m.add(1, "years").startOf("year"));
   const getNextYearEndNotFmt = createDateFunction(m => m.add(1, "years").endOf("year"));
 
-	// -----------------------------------------------------------------------------------------------
-  // 4. fmt
-	// -----------------------------------------------------------------------------------------------
+  // 4. fmt ---------------------------------------------------------------------------------------
   const getDayFmt = createDateFunctionWithFormat();
   const getDayStartFmt = createDateFunctionWithFormat(m => m.startOf("day"));
   const getDayEndFmt = createDateFunctionWithFormat(m => m.endOf("day"));
@@ -98,9 +94,7 @@ export const useCommonDate = () => {
   const getNextYearStartFmt = createDateFunctionWithFormat(m => m.add(1, "years").startOf("year"));
   const getNextYearEndFmt = createDateFunctionWithFormat(m => m.add(1, "years").endOf("year"));
 
-	// -----------------------------------------------------------------------------------------------
-	// 5. return
-  // -----------------------------------------------------------------------------------------------
+	// 10. return ----------------------------------------------------------------------------------
   return {
     getMoment,
     getDayNotFmt,

@@ -1,7 +1,7 @@
 // sleepChartRepository.ts
 
-import { Sleep } from "@schemas/sleep/Sleep";
 import { SleepGoal } from "@schemas/sleep/SleepGoal";
+import { SleepRecord } from "@schemas/sleep/SleepRecord";
 
 // 1-1. chart (bar - goal) -------------------------------------------------------------------------
 export const barGoal = async (
@@ -43,21 +43,21 @@ export const barGoal = async (
   return finalResult;
 };
 
-// 1-2. chart (bar - real) -------------------------------------------------------------------------
-export const barReal = async (
+// 1-2. chart (bar - record) -------------------------------------------------------------------------
+export const barRecord = async (
   user_id_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await Sleep.aggregate([
+  const finalResult:any = await SleepRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
-        sleep_dateStart: {
+        sleep_record_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        sleep_dateEnd: {
+        sleep_record_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -66,14 +66,14 @@ export const barReal = async (
     {
       $project: {
         _id: 0,
-        sleep_dateStart: 1,
-        sleep_dateEnd: 1,
+        sleep_record_dateStart: 1,
+        sleep_record_dateEnd: 1,
         sleep_section: 1,
       }
     },
     {
       $sort: {
-        sleep_dateStart: 1
+        sleep_record_dateStart: 1
       }
     }
   ]);
@@ -87,15 +87,15 @@ export const pieAll = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await Sleep.aggregate([
+  const finalResult:any = await SleepRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
-        sleep_dateStart: {
+        sleep_record_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        sleep_dateEnd: {
+        sleep_record_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -104,14 +104,14 @@ export const pieAll = async (
     {
       $project: {
         _id: 0,
-        sleep_dateStart: 1,
-        sleep_dateEnd: 1,
+        sleep_record_dateStart: 1,
+        sleep_record_dateEnd: 1,
         sleep_section: 1,
       }
     },
     {
       $sort: {
-        sleep_dateStart: 1
+        sleep_record_dateStart: 1
       }
     }
   ]);
@@ -125,15 +125,15 @@ export const lineAll = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await Sleep.aggregate([
+  const finalResult:any = await SleepRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
-        sleep_dateStart: {
+        sleep_record_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        sleep_dateEnd: {
+        sleep_record_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -142,14 +142,14 @@ export const lineAll = async (
     {
       $project: {
         _id: 0,
-        sleep_dateStart: 1,
-        sleep_dateEnd: 1,
+        sleep_record_dateStart: 1,
+        sleep_record_dateEnd: 1,
         sleep_section: 1,
       }
     },
     {
       $sort: {
-        sleep_dateStart: 1
+        sleep_record_dateStart: 1
       }
     }
   ]);
@@ -163,15 +163,15 @@ export const avgAll = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await Sleep.aggregate([
+  const finalResult:any = await SleepRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
-        sleep_dateStart: {
+        sleep_record_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        sleep_dateEnd: {
+        sleep_record_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -180,14 +180,14 @@ export const avgAll = async (
     {
       $project: {
         _id: 0,
-        sleep_dateStart: 1,
-        sleep_dateEnd: 1,
+        sleep_record_dateStart: 1,
+        sleep_record_dateEnd: 1,
         sleep_section: 1,
       }
     },
     {
       $sort: {
-        sleep_dateStart: 1
+        sleep_record_dateStart: 1
       }
     }
   ]);

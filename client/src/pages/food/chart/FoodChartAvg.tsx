@@ -1,11 +1,11 @@
 // FoodChartAvg.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
 import { FoodAvgKcal, FoodAvgNut, FoodAvgType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { handleY } from "@importScripts";
+import { fnHandleY } from "@importScripts";
 import { Select, PopUp } from "@importContainers";
 import { Div, Img, Br, Paper, Grid } from "@importComponents";
 import { FormGroup, FormControlLabel, Switch, MenuItem } from "@importMuis";
@@ -13,7 +13,7 @@ import { ComposedChart, Bar } from "recharts";
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 // -------------------------------------------------------------------------------------------------
-export const FoodChartAvg = () => {
+export const FoodChartAvg = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, sessionId, chartColors, foodChartArray } = useCommonValue();
@@ -115,7 +115,7 @@ export const FoodChartAvg = () => {
       endStr = "g";
     }
 
-    const {domain, ticks, formatterY} = handleY(object, foodChartArray, "food");
+    const {domain, ticks, formatterY} = fnHandleY(object, foodChartArray, "food");
     return (
 			<ResponsiveContainer width={"100%"} height={350}>
 				<ComposedChart
@@ -328,4 +328,4 @@ export const FoodChartAvg = () => {
       {chartNode()}
     </>
   );
-};
+});

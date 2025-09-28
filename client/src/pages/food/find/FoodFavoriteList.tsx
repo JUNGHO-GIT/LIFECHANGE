@@ -1,18 +1,18 @@
 // FoodFavoriteList.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
 import { useCommonValue, useCommonDate } from "@importHooks";
 import { useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { FoodFind, FoodFindType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { sync, insertComma, setSession } from "@importScripts";
+import { fnSync, fnInsertComma, fnSetSession } from "@importScripts";
 import { Footer, Empty, Dialog } from "@importLayouts";
 import { Div, Hr, Img, Icons, Paper, Grid } from "@importComponents";
 import { Checkbox,  Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
-export const FoodFavoriteList = () => {
+export const FoodFavoriteList = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, sessionId } = useCommonValue();
@@ -80,7 +80,7 @@ export const FoodFavoriteList = () => {
     const queryKey = `${PAGING.query}_${PAGING.page}`;
     const newChecked = OBJECT.map((item: any) => (
       sectionArray.some((sectionItem: any) => (
-        sectionItem.food_key === item.food_key
+        sectionItem.food_record_key === item.food_record_key
       ))
     ));
     setCheckedQueries({
@@ -92,7 +92,7 @@ export const FoodFavoriteList = () => {
 	// 3. flow ------------------------------------------------------------------------------------
   const flowFind = async () => {
     setLOADING(true);
-    axios.get(`${URL_OBJECT}/find/listFavorite`, {
+    axios.get(`${URL_OBJECT}/favorite/list`, {
       params: {
         user_id: sessionId,
       },
@@ -128,7 +128,7 @@ export const FoodFavoriteList = () => {
 
 	// 3. flow ------------------------------------------------------------------------------------
   const flowUpdateFavorite = (foodFavorite: any) => {
-    axios.put(`${URL_OBJECT}/find/updateFavorite`, {
+    axios.put(`${URL_OBJECT}/favorite/update`, {
       user_id: sessionId,
       foodFavorite: foodFavorite,
     })
@@ -137,7 +137,7 @@ export const FoodFavoriteList = () => {
         setLOADING(false);
         setOBJECT(res.data.result?.length > 0 ? res.data.result : []);
         flowFind();
-        sync("favorite");
+        fnSync("favorite");
       }
       else {
         setLOADING(false);
@@ -176,34 +176,34 @@ export const FoodFavoriteList = () => {
 
     const item = OBJECT[index];
     const newItem = {
-      food_perNumber: item.food_perNumber,
-      food_part: item.food_part,
-      food_key: item.food_key,
-      food_query: item.food_query,
-      food_name: item.food_name,
-      food_brand: item.food_brand,
-      food_gram: item.food_gram,
-      food_serv: item.food_serv,
-      food_count: item.food_count,
-      food_kcal: item.food_kcal,
-      food_carb: item.food_carb,
-      food_protein: item.food_protein,
-      food_fat: item.food_fat,
+      food_record_perNumber: item.food_record_perNumber,
+      food_record_part: item.food_record_part,
+      food_record_key: item.food_record_key,
+      food_record_query: item.food_record_query,
+      food_record_name: item.food_record_name,
+      food_record_brand: item.food_record_brand,
+      food_record_gram: item.food_record_gram,
+      food_record_serv: item.food_record_serv,
+      food_record_count: item.food_record_count,
+      food_record_kcal: item.food_record_kcal,
+      food_record_carb: item.food_record_carb,
+      food_record_protein: item.food_record_protein,
+      food_record_fat: item.food_record_fat,
     };
 
     if (updatedChecked[index]) {
-      if (!sectionArray.some((i: any) => i.food_key === item.food_key)) {
+      if (!sectionArray.some((i: any) => i.food_record_key === item.food_record_key)) {
         sectionArray.push(newItem);
       }
     }
     else {
       sectionArray = sectionArray?.filter((i: any) => (
-        i.food_key !== item.food_key
+        i.food_record_key !== item.food_record_key
       ));
     }
 
     // 스토리지 데이터 설정
-    setSession("section", "food", "", sectionArray);
+    fnSetSession("section", "food", "", sectionArray);
   };
 
   // 7. favorite ---------------------------------------------------------------------------------------
@@ -243,8 +243,8 @@ export const FoodFavoriteList = () => {
 												size={"small"}
 												checked={
 													!! (
-														checkedQueries[`${item.food_query}_${PAGING.page}`] &&
-														checkedQueries[`${item.food_query}_${PAGING.page}`]?.[i]
+														checkedQueries[`${item.food_record_query}_${PAGING.page}`] &&
+														checkedQueries[`${item.food_record_query}_${PAGING.page}`]?.[i]
 													)
 												}
 												onChange={(e: any) => {
@@ -254,8 +254,8 @@ export const FoodFavoriteList = () => {
 											/>
 										</Grid>
 										<Grid size={6} className={"d-row-left"}>
-											<Div className={`fs-0-8rem fw-600 ${item.food_name_color}`}>
-												{item.food_name}
+											<Div className={`fs-0-8rem fw-600 ${item.food_record_name_color}`}>
+												{item.food_record_name}
 											</Div>
 											<Div className={"mt-n3px ml-5px"}>
 												<Icons
@@ -272,9 +272,9 @@ export const FoodFavoriteList = () => {
 											</Div>
 										</Grid>
 										<Grid size={4} className={"d-row-right"}>
-											<Div className={`fs-0-8rem fw-600 ${item.food_count_color}`}>
+											<Div className={`fs-0-8rem fw-600 ${item.food_record_count_color}`}>
 												<Div className={`fs-0-8rem fw-500 dark mr-10px`}>
-													{item.food_brand}
+													{item.food_record_brand}
 												</Div>
 											</Div>
 										</Grid>
@@ -301,8 +301,8 @@ export const FoodFavoriteList = () => {
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-8rem fw-600 ${item.food_kcal_color}`}>
-															{insertComma(item.food_kcal || "0")}
+														<Div className={`fs-0-8rem fw-600 ${item.food_record_kcal_color}`}>
+															{fnInsertComma(item.food_record_kcal || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -336,8 +336,8 @@ export const FoodFavoriteList = () => {
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-8rem fw-600 ${item.food_carb_color}`}>
-															{insertComma(item.food_carb || "0")}
+														<Div className={`fs-0-8rem fw-600 ${item.food_record_carb_color}`}>
+															{fnInsertComma(item.food_record_carb || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -371,8 +371,8 @@ export const FoodFavoriteList = () => {
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-8rem fw-600 ${item.food_protein_color}`}>
-															{insertComma(item.food_carb || "0")}
+														<Div className={`fs-0-8rem fw-600 ${item.food_record_protein_color}`}>
+															{fnInsertComma(item.food_record_carb || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -406,8 +406,8 @@ export const FoodFavoriteList = () => {
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
-														<Div className={`fs-0-8rem fw-600 ${item.food_fat_color}`}>
-															{insertComma(item.food_fat || "0")}
+														<Div className={`fs-0-8rem fw-600 ${item.food_record_fat_color}`}>
+															{fnInsertComma(item.food_record_fat || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -467,4 +467,4 @@ export const FoodFavoriteList = () => {
       {footerNode()}
     </>
   );
-};
+});

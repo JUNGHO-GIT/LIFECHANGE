@@ -2,17 +2,17 @@
 
 import * as repository from "@repositories/sleep/sleepChartRepository";
 import moment from "moment-timezone";
-import { timeToDecimal } from "@assets/scripts/utils";
+import { fnTimeToDecimal } from "@assets/scripts/utils";
 
 // 1-1. chart (bar - today) ------------------------------------------------------------------------
-export const barToday = async (
+export const bar = async (
   user_id_param: string,
   DATE_param: any,
 ) => {
 
   // result 변수 선언
   let findResultGoal:any[] = [];
-  let findResultReal:any[] = [];
+  let findResultRecord:any[] = [];
   let finalResult: any = [];
   let statusResult: string = "";
 
@@ -22,11 +22,11 @@ export const barToday = async (
 
   try {
     // promise 사용하여 병렬 처리
-    [findResultGoal, findResultReal] = await Promise.all([
+    [findResultGoal, findResultRecord] = await Promise.all([
       repository.barGoal(
         user_id_param, dateStart, dateEnd
       ),
-      repository.barReal(
+      repository.barRecord(
         user_id_param, dateStart, dateEnd
       )
     ]);
@@ -36,20 +36,20 @@ export const barToday = async (
       {
         name: String("bedTime"),
         date: String(dateStart),
-        goal: String(timeToDecimal(item?.sleep_goal_bedTime) || "0"),
-        real: String(timeToDecimal(findResultReal?.[0]?.sleep_section?.[0]?.sleep_bedTime) || "0")
+        goal: String(fnTimeToDecimal(item?.sleep_goal_bedTime) || "0"),
+        record: String(fnTimeToDecimal(findResultRecord?.[0]?.sleep_section?.[0]?.sleep_record_bedTime) || "0")
       },
       {
         name: String("wakeTime"),
         date: String(dateStart),
-        goal: String(timeToDecimal(item?.sleep_goal_wakeTime) || "0"),
-        real: String(timeToDecimal(findResultReal?.[0]?.sleep_section?.[0]?.sleep_wakeTime) || "0")
+        goal: String(fnTimeToDecimal(item?.sleep_goal_wakeTime) || "0"),
+        record: String(fnTimeToDecimal(findResultRecord?.[0]?.sleep_section?.[0]?.sleep_record_wakeTime) || "0")
       },
       {
         name: String("sleepTime"),
         date: String(dateStart),
-        goal: String(timeToDecimal(item?.sleep_goal_sleepTime) || "0"),
-        real: String(timeToDecimal(findResultReal?.[0]?.sleep_section?.[0]?.sleep_sleepTime) || "0")
+        goal: String(fnTimeToDecimal(item?.sleep_goal_sleepTime) || "0"),
+        record: String(fnTimeToDecimal(findResultRecord?.[0]?.sleep_section?.[0]?.sleep_record_sleepTime) || "0")
       }
     ]).flat();
 
@@ -99,9 +99,9 @@ export const pieWeek = async (
 
     // sum, count 설정
     findResult.forEach((data: any, index: number) => {
-      sumBedTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_bedTime));
-      sumWakeTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_wakeTime));
-      sumSleepTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_sleepTime));
+      sumBedTime += Number(fnTimeToDecimal(data.sleep_section[0]?.sleep_record_bedTime));
+      sumWakeTime += Number(fnTimeToDecimal(data.sleep_section[0]?.sleep_record_wakeTime));
+      sumSleepTime += Number(fnTimeToDecimal(data.sleep_section[0]?.sleep_record_sleepTime));
       countRecords++;
     });
 
@@ -170,9 +170,9 @@ export const pieMonth = async (
 
     // sum, count 설정
     findResult.forEach((data: any, _index: number) => {
-      sumBedTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_bedTime));
-      sumWakeTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_wakeTime));
-      sumSleepTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_sleepTime));
+      sumBedTime += Number(fnTimeToDecimal(data.sleep_section[0]?.sleep_record_bedTime));
+      sumWakeTime += Number(fnTimeToDecimal(data.sleep_section[0]?.sleep_record_wakeTime));
+      sumSleepTime += Number(fnTimeToDecimal(data.sleep_section[0]?.sleep_record_sleepTime));
       countRecords++;
     });
 
@@ -241,9 +241,9 @@ export const pieYear = async (
 
     // sum, count 설정
     findResult.forEach((data: any, _index: number) => {
-      sumBedTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_bedTime));
-      sumWakeTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_wakeTime));
-      sumSleepTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_sleepTime));
+      sumBedTime += Number(fnTimeToDecimal(data.sleep_section[0]?.sleep_record_bedTime));
+      sumWakeTime += Number(fnTimeToDecimal(data.sleep_section[0]?.sleep_record_wakeTime));
+      sumSleepTime += Number(fnTimeToDecimal(data.sleep_section[0]?.sleep_record_sleepTime));
       countRecords++;
     });
 
@@ -318,7 +318,7 @@ export const lineWeek = async (
       const targetDay = moment(weekStartFmt).clone().add(index, 'days').format("YYYY-MM-DD");
 
       const findIndex = findResult?.findIndex((item: any) => (
-        item.sleep_dateStart === targetDay
+        item.sleep_record_dateStart === targetDay
       ));
 
       finalResult.push({
@@ -326,15 +326,15 @@ export const lineWeek = async (
         date: String(date[index]),
         bedTime:
           findIndex !== -1
-          ? String(timeToDecimal(findResult[findIndex]?.sleep_section[0]?.sleep_bedTime))
+          ? String(fnTimeToDecimal(findResult[findIndex]?.sleep_section[0]?.sleep_record_bedTime))
           : "0",
         wakeTime:
           findIndex !== -1
-          ? String(timeToDecimal(findResult[findIndex]?.sleep_section[0]?.sleep_wakeTime))
+          ? String(fnTimeToDecimal(findResult[findIndex]?.sleep_section[0]?.sleep_record_wakeTime))
           : "0",
         sleepTime:
           findIndex !== -1
-          ? String(timeToDecimal(findResult[findIndex]?.sleep_section[0]?.sleep_sleepTime))
+          ? String(fnTimeToDecimal(findResult[findIndex]?.sleep_section[0]?.sleep_record_sleepTime))
           : "0",
       });
     });
@@ -392,7 +392,7 @@ export const lineMonth = async (
       const targetDay = moment(monthStartFmt).clone().add(index, 'days').format("YYYY-MM-DD");
 
       const findIndex = findResult?.findIndex((item: any) => (
-        item.sleep_dateStart === targetDay
+        item.sleep_record_dateStart === targetDay
       ));
 
       finalResult.push({
@@ -400,15 +400,15 @@ export const lineMonth = async (
         date: String(date[index]),
         bedTime:
           findIndex !== -1
-          ? String(timeToDecimal(findResult[findIndex]?.sleep_section[0]?.sleep_bedTime))
+          ? String(fnTimeToDecimal(findResult[findIndex]?.sleep_section[0]?.sleep_record_bedTime))
           : "0",
         wakeTime:
           findIndex !== -1
-          ? String(timeToDecimal(findResult[findIndex]?.sleep_section[0]?.sleep_wakeTime))
+          ? String(fnTimeToDecimal(findResult[findIndex]?.sleep_section[0]?.sleep_record_wakeTime))
           : "0",
         sleepTime:
           findIndex !== -1
-          ? String(timeToDecimal(findResult[findIndex]?.sleep_section[0]?.sleep_sleepTime))
+          ? String(fnTimeToDecimal(findResult[findIndex]?.sleep_section[0]?.sleep_record_sleepTime))
           : "0",
       });
     });
@@ -486,9 +486,9 @@ export const avgWeek = async (
     // sum, count 설정
     parallelResult.forEach(({ findResult, index }) => {
       findResult.forEach((item: any) => {
-        sumBedTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_bedTime) || "0");
-        sumWakeTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_wakeTime) || "0");
-        sumSleepTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_sleepTime) || "0");
+        sumBedTime[index] += Number(fnTimeToDecimal(item.sleep_section[0]?.sleep_record_bedTime) || "0");
+        sumWakeTime[index] += Number(fnTimeToDecimal(item.sleep_section[0]?.sleep_record_wakeTime) || "0");
+        sumSleepTime[index] += Number(fnTimeToDecimal(item.sleep_section[0]?.sleep_record_sleepTime) || "0");
         countRecords[index]++;
       });
     });
@@ -586,9 +586,9 @@ export const avgMonth = async (
     // sum, count 설정
     parallelResult.forEach(({ findResult, index }) => {
       findResult.forEach((item: any) => {
-        sumBedTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_bedTime) || "0");
-        sumWakeTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_wakeTime) || "0");
-        sumSleepTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_sleepTime) || "0");
+        sumBedTime[index] += Number(fnTimeToDecimal(item.sleep_section[0]?.sleep_record_bedTime) || "0");
+        sumWakeTime[index] += Number(fnTimeToDecimal(item.sleep_section[0]?.sleep_record_wakeTime) || "0");
+        sumSleepTime[index] += Number(fnTimeToDecimal(item.sleep_section[0]?.sleep_record_sleepTime) || "0");
         countRecords[index]++;
       });
     });

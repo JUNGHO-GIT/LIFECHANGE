@@ -18,26 +18,26 @@ export type SleepGoalType = {
 	sleep_goal_regDt: string;
 	sleep_goal_updateDt: string;
 
-	// real
-	sleep_dateType: string;
-	sleep_dateStart: string;
-	sleep_dateEnd: string;
-	sleep_bedTime: string;
-	sleep_bedTime_color: string;
-	sleep_wakeTime: string;
-	sleep_wakeTime_color: string;
-	sleep_sleepTime: string;
-	sleep_sleepTime_color: string;
-	sleep_regDt: string;
-	sleep_updateDt: string;
+	// record
+	sleep_record_dateType: string;
+	sleep_record_dateStart: string;
+	sleep_record_dateEnd: string;
+	sleep_record_bedTime: string;
+	sleep_record_bedTime_color: string;
+	sleep_record_wakeTime: string;
+	sleep_record_wakeTime_color: string;
+	sleep_record_sleepTime: string;
+	sleep_record_sleepTime_color: string;
+	sleep_record_regDt: string;
+	sleep_record_updateDt: string;
 
 	// diff
-	sleep_diff_bedTime: string;
-	sleep_diff_bedTime_color: string;
-	sleep_diff_wakeTime: string;
-	sleep_diff_wakeTime_color: string;
-	sleep_diff_sleepTime: string;
-	sleep_diff_sleepTime_color: string;
+	sleep_record_diff_bedTime: string;
+	sleep_record_diff_bedTime_color: string;
+	sleep_record_diff_wakeTime: string;
+	sleep_record_diff_wakeTime_color: string;
+	sleep_record_diff_sleepTime: string;
+	sleep_record_diff_sleepTime_color: string;
 };
 
 // Schema -----------------------------------------------------------------------------------------
@@ -58,24 +58,24 @@ export const SleepGoal: SleepGoalType = {
 	sleep_goal_regDt: "",
 	sleep_goal_updateDt: "",
 
-	// real
-	sleep_dateType: "",
-	sleep_dateStart: "0000-00-00",
-	sleep_dateEnd: "0000-00-00",
-	sleep_bedTime: "00:00",
-	sleep_bedTime_color: "",
-	sleep_wakeTime: "00:00",
-	sleep_wakeTime_color: "",
-	sleep_sleepTime: "00:00",
-	sleep_sleepTime_color: "",
-	sleep_regDt: "",
-	sleep_updateDt: "",
+	// record
+	sleep_record_dateType: "",
+	sleep_record_dateStart: "0000-00-00",
+	sleep_record_dateEnd: "0000-00-00",
+	sleep_record_bedTime: "00:00",
+	sleep_record_bedTime_color: "",
+	sleep_record_wakeTime: "00:00",
+	sleep_record_wakeTime_color: "",
+	sleep_record_sleepTime: "00:00",
+	sleep_record_sleepTime_color: "",
+	sleep_record_regDt: "",
+	sleep_record_updateDt: "",
 
 	// diff
-	sleep_diff_bedTime: "00:00",
-	sleep_diff_bedTime_color: "",
-	sleep_diff_wakeTime: "00:00",
-	sleep_diff_wakeTime_color: "",
-	sleep_diff_sleepTime: "00:00",
-	sleep_diff_sleepTime_color: ""
+	sleep_record_diff_bedTime: "00:00",
+	sleep_record_diff_bedTime_color: "",
+	sleep_record_diff_wakeTime: "00:00",
+	sleep_record_diff_wakeTime_color: "",
+	sleep_record_diff_sleepTime: "00:00",
+	sleep_record_diff_sleepTime_color: ""
 };

@@ -6,9 +6,9 @@ import * as service from "@services/exercise/exerciseChartService";
 export const router = express.Router();
 
 // 1-1. chart (bar - today) ------------------------------------------------------------------------
-router.get("/bar/today", async (req: Request, res: Response) => {
+router.get("/bar", async (req: Request, res: Response) => {
   try {
-    let finalResult = await service.barToday (
+    let finalResult = await service.bar (
       req.query.user_id as string,
       req.query.DATE as any,
     );

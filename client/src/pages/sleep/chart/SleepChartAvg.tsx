@@ -1,11 +1,11 @@
 // SleepChartAvg.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
 import { SleepAvg, SleepAvgType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { handleY } from "@importScripts";
+import { fnHandleY } from "@importScripts";
 import { Select, PopUp } from "@importContainers";
 import { Div, Img, Br } from "@importComponents";
 import { Paper, Grid, MenuItem } from "@importMuis";
@@ -14,7 +14,7 @@ import { ComposedChart, Bar } from "recharts";
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 // -------------------------------------------------------------------------------------------------
-export const SleepChartAvg = () => {
+export const SleepChartAvg = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, sessionId, chartColors, sleepChartArray } = useCommonValue();
@@ -100,7 +100,7 @@ export const SleepChartAvg = () => {
       endStr = "hm";
     }
 
-    const {domain, ticks, formatterY} = handleY(object, sleepChartArray, "sleep");
+    const {domain, ticks, formatterY} = fnHandleY(object, sleepChartArray, "sleep");
     return (
 			<ResponsiveContainer width={"100%"} height={350}>
 				<ComposedChart
@@ -312,4 +312,4 @@ export const SleepChartAvg = () => {
       {chartNode()}
     </>
   );
-};
+});

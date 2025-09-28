@@ -1,11 +1,11 @@
 // Footer.tsx
 
-import { useState, useEffect } from "@importReacts";
-import { useCommonValue } from "@importHooks";
 import { Paper } from "@importComponents";
+import { useCommonValue } from "@importHooks";
+import { memo, useEffect, useState } from "@importReacts";
 import { Buttons } from "./footer/Buttons";
-import { ListFilter } from "./footer/ListFilter";
 import { FindFilter } from "./footer/FindFilter";
+import { ListFilter } from "./footer/ListFilter";
 
 // -------------------------------------------------------------------------------------------------
 declare type FooterProps = {
@@ -15,7 +15,7 @@ declare type FooterProps = {
 }
 
 // -------------------------------------------------------------------------------------------------
-export const Footer = (
+export const Footer = memo((
   { state, setState, flow }: FooterProps
 ) => {
 
@@ -31,11 +31,7 @@ export const Footer = (
 
     const commonStr = "layout-wrapper p-sticky h-8vh radius-2 border-1 shadow-1";
 
-    if (PATH.includes("/calendar/list")) {
-      setTypeName("");
-      setStyleClass("");
-    }
-		else if (PATH.includes("/calendar/detail")) {
+    if (PATH.includes("/schedule/planner/list") || PATH.includes("/schedule/planner/detail")) {
       setTypeName("");
       setStyleClass("");
 		}
@@ -43,15 +39,15 @@ export const Footer = (
       setTypeName("btn");
       setStyleClass(`${commonStr} bottom-0vh`);
     }
-    else if (PATH.includes("/food/find/list") || PATH.includes("/favorite/list")) {
+    else if (PATH.includes("/food/find/list") || PATH.includes("/food/favorite/list")) {
       setTypeName("findFilter");
       setStyleClass(`${commonStr} bottom-8vh`);
     }
-    else if (PATH.includes("/goal/list") || PATH.includes("/list")) {
+    else if (PATH.includes("/goal/list") || PATH.includes("/record/list")) {
       setTypeName("listFilter");
       setStyleClass(`${commonStr} bottom-8vh`);
     }
-    else if (PATH.includes("/goal/detail") || PATH.includes("/detail")) {
+    else if (PATH.includes("/goal/detail") || PATH.includes("/record/detail")) {
       setTypeName("btn");
       setStyleClass(`${commonStr} bottom-8vh`);
     }
@@ -101,4 +97,4 @@ export const Footer = (
       {footerNode()}
     </>
   );
-};
+});

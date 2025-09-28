@@ -1,10 +1,10 @@
 // UserCategory.tsx
 
-import { useState, useEffect, createRef, useRef } from "@importReacts";
+import { useState, useEffect, useRef, createRef, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
-import { sync } from "@importScripts";
+import { fnSync } from "@importScripts";
 import { Category, CategoryType } from "@importSchemas";
 import { Footer } from "@importLayouts";
 import { PopUp, Input } from "@importContainers";
@@ -13,7 +13,7 @@ import { TableContainer, Table, TableFooter } from "@importMuis";
 import { TableHead, TableBody, TableRow, TableCell } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
-export const UserCategory = () => {
+export const UserCategory = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, sessionId } = useCommonValue();
@@ -65,8 +65,8 @@ export const UserCategory = () => {
           ...REFS.current,
           [dataType]: res.data.result[dataType].map((item: any) => {
             const partRefs = {
-              [`${dataType}_part`]: createRef(),
-              [`${dataType}_title`]: item[`${dataType}_title`]?.map(() => createRef()) || []
+              [`${dataType}_record_part`]: createRef(),
+              [`${dataType}_record_title`]: item[`${dataType}_record_title`]?.map(() => createRef()) || []
             };
             return partRefs;
           })
@@ -101,7 +101,7 @@ export const UserCategory = () => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        sync("category");
+        fnSync("category");
       }
       else {
         setLOADING(false);
@@ -135,8 +135,8 @@ export const UserCategory = () => {
           [dataType]: [
             ...prev[dataType],
             {
-              [`${dataType}_part`]: "",
-              [`${dataType}_title`]: []
+              [`${dataType}_record_part`]: "",
+              [`${dataType}_record_title`]: []
             }
           ]
         };
@@ -144,8 +144,8 @@ export const UserCategory = () => {
           ...REFS.current,
           [dataType]: updatedObject[dataType].map((_: any, idx: number) =>
             REFS.current[dataType]?.[idx] || {
-              [`${dataType}_part`]: createRef(),
-              [`${dataType}_title`]: []
+              [`${dataType}_record_part`]: createRef(),
+              [`${dataType}_record_title`]: []
             }
           )
         };
@@ -160,8 +160,8 @@ export const UserCategory = () => {
             if (idx === selectedIdx.category2Idx) {
               return {
                 ...part,
-                [`${dataType}_title`]: [
-                  ...part[`${dataType}_title`], ""
+                [`${dataType}_record_title`]: [
+                  ...part[`${dataType}_record_title`], ""
                 ]
               };
             }
@@ -174,8 +174,8 @@ export const UserCategory = () => {
             if (idx === selectedIdx.category2Idx) {
               return {
                 ...REFS.current[dataType]?.[idx],
-                [`${dataType}_title`]: part[`${dataType}_title`].map((_: any, titleIdx: number) =>
-                  REFS.current[dataType]?.[idx]?.[`${dataType}_title`]?.[titleIdx] || createRef()
+                [`${dataType}_record_title`]: part[`${dataType}_record_title`].map((_: any, titleIdx: number) =>
+                  REFS.current[dataType]?.[idx]?.[`${dataType}_record_title`]?.[titleIdx] || createRef()
                 )
               };
             }
@@ -194,12 +194,12 @@ export const UserCategory = () => {
 
     if (type === "part") {
       setTimeout(() => {
-        REFS?.current?.[dataType]?.[index]?.[`${dataType}_part`]?.current?.focus();
+        REFS?.current?.[dataType]?.[index]?.[`${dataType}_record_part`]?.current?.focus();
       }, 10);
     }
     else if (type === "title") {
       setTimeout(() => {
-        REFS?.current?.[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`]?.[index]?.current?.focus();
+        REFS?.current?.[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_record_title`]?.[index]?.current?.focus();
       }, 10);
     }
   };
@@ -232,7 +232,7 @@ export const UserCategory = () => {
     }
     else if (type === "title") {
 			// @ts-ignore
-      if (OBJECT?.[dataType]?.[selectedIdx?.category2Idx]?.[`${dataType}_title`]?.length <= 2) {
+      if (OBJECT?.[dataType]?.[selectedIdx?.category2Idx]?.[`${dataType}_record_title`]?.length <= 2) {
         setALERT({
           open: true,
           msg: translate("cantBeDeletedLastItem"),
@@ -247,9 +247,9 @@ export const UserCategory = () => {
             ...prev[dataType]?.slice(0, selectedIdx.category2Idx),
             {
               ...prev[dataType]?.[selectedIdx.category2Idx],
-              [`${dataType}_title`]: [
-                ...prev[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`]?.slice(0, index),
-                ...prev[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`]?.slice(index + 1)
+              [`${dataType}_record_title`]: [
+                ...prev[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_record_title`]?.slice(0, index),
+                ...prev[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_record_title`]?.slice(index + 1)
               ]
             },
             ...prev[dataType]?.slice(selectedIdx.category2Idx + 1)
@@ -259,8 +259,8 @@ export const UserCategory = () => {
           ...REFS.current,
           [dataType]: updatedObject[dataType].map((part: any, idx: number) => ({
             ...REFS.current[dataType]?.[idx],
-            [`${dataType}_title`]: part[`${dataType}_title`].map((_: any, titleIdx: number) =>
-              REFS.current[dataType]?.[idx]?.[`${dataType}_title`]?.[titleIdx] || {}
+            [`${dataType}_record_title`]: part[`${dataType}_record_title`].map((_: any, titleIdx: number) =>
+              REFS.current[dataType]?.[idx]?.[`${dataType}_record_title`]?.[titleIdx] || {}
             )
           }))
         };
@@ -289,19 +289,19 @@ export const UserCategory = () => {
                   <TableRow className={"table-tbody-tr border-bottom-1"} key={index}>
                     <TableCell className={selectedIdx.category2Idx === index ? "bg-light" : ""}>
                       <Div className={"d-center"}>
-                        <Div className={"fs-0-9rem ml-auto"}>
+                        <Div className={"fs-0-9rem mr-auto"}>
                           <Input
                             variant={"standard"}
-                            value={translate(item[`${dataType}_part`]) || ""}
-                            readOnly={isEditable !== `${dataType}_part_${index}`}
+                            value={translate(item[`${dataType}_record_part`]) || ""}
+                            readOnly={isEditable !== `${dataType}_record_part_${index}`}
                             inputclass={"fs-0-9rem"}
-                            inputRef={REFS?.current?.[dataType]?.[index]?.[`${dataType}_part`]}
+                            inputRef={REFS?.current?.[dataType]?.[index]?.[`${dataType}_record_part`]}
                             sx={{
                               "& .MuiInput-root::before": {
                                 borderBottom: "none"
                               },
                               "& .MuiInput-root::after": {
-                                borderBottom: isEditable === `${dataType}_part_${index}` ? (
+                                borderBottom: isEditable === `${dataType}_record_part_${index}` ? (
                                   "2px solid #1976d2"
                                 ) : (
                                   "2px solid #000000"
@@ -309,7 +309,7 @@ export const UserCategory = () => {
                               }
                             }}
                             onClick={(e: any) => {
-                              if (isEditable !== `${dataType}_part_${index}`) {
+                              if (isEditable !== `${dataType}_record_part_${index}`) {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 const target = e.currentTarget;
@@ -326,7 +326,7 @@ export const UserCategory = () => {
                                   ...prev[dataType]?.slice(0, index),
                                   {
                                     ...prev[dataType]?.[index],
-                                    [`${dataType}_part`]: e.target.value
+                                    [`${dataType}_record_part`]: e.target.value
                                   },
                                   ...prev[dataType]?.slice(index + 1)
                                 ]
@@ -403,25 +403,25 @@ export const UserCategory = () => {
                 </TableHead>
                 <TableBody className={"table-tbody"}>
                   {(dataType === "exercise"
-                    ? OBJECT?.exercise?.[selectedIdx?.category2Idx]?.exercise_title
-                    : OBJECT?.money?.[selectedIdx?.category2Idx]?.money_title
+                    ? OBJECT?.exercise?.[selectedIdx?.category2Idx]?.exercise_record_title
+                    : OBJECT?.money?.[selectedIdx?.category2Idx]?.money_record_title
                   )?.map((item: any, index: number) => (index > 0) && (
                     <TableRow key={index} className={"table-tbody-tr border-bottom-1"}>
                       <TableCell>
                         <Div className={"d-center"}>
-                          <Div className={"fs-0-9rem ml-auto"}>
+                          <Div className={"fs-0-9rem mr-auto"}>
                             <Input
                               variant={"standard"}
                               value={translate(item) || ""}
-                              readOnly={isEditable !== `${dataType}_title_${index}`}
+                              readOnly={isEditable !== `${dataType}_record_title_${index}`}
                               inputclass={"fs-0-9rem"}
-                              inputRef={REFS?.current?.[dataType]?.[selectedIdx?.category2Idx]?.[`${dataType}_title`]?.[index]}
+                              inputRef={REFS?.current?.[dataType]?.[selectedIdx?.category2Idx]?.[`${dataType}_record_title`]?.[index]}
                               sx={{
                                 "& .MuiInput-root::before": {
                                   borderBottom: "none"
                                 },
                                 "& .MuiInput-root::after": {
-                                  borderBottom: isEditable === `${dataType}_title_${index}` ? (
+                                  borderBottom: isEditable === `${dataType}_record_title_${index}` ? (
                                     "2px solid #1976d2"
                                   ) : (
                                     "2px solid #000000"
@@ -429,7 +429,7 @@ export const UserCategory = () => {
                                 }
                               }}
                               onClick={(e: any) => {
-                                if (isEditable !== `${dataType}_title_${index}`) {
+                                if (isEditable !== `${dataType}_record_title_${index}`) {
                                   e.preventDefault();
                                   e.stopPropagation();
                                   const target = e.currentTarget;
@@ -446,10 +446,10 @@ export const UserCategory = () => {
                                     ...prev[dataType]?.slice(0, selectedIdx.category2Idx),
                                     {
                                       ...prev[dataType]?.[selectedIdx.category2Idx],
-                                      [`${dataType}_title`]: [
-                                        ...prev[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`]?.slice(0, index),
+                                      [`${dataType}_record_title`]: [
+                                        ...prev[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_record_title`]?.slice(0, index),
                                         e.target.value,
-                                        ...prev[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_title`]?.slice(index + 1)
+                                        ...prev[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_record_title`]?.slice(index + 1)
                                       ]
                                     },
                                     ...prev[dataType]?.slice(selectedIdx.category2Idx + 1)
@@ -601,4 +601,4 @@ export const UserCategory = () => {
       {footerNode()}
     </>
   );
-};
+});

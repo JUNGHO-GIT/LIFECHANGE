@@ -1,6 +1,6 @@
 // ImportMui.tsx
 
-// [mui - material] ------------------------------------------------------------------------------------
+// mui - material ------------------------------------------------------------------------------------
 export {
   // a
   Alert as MuiAlert, Avatar,
@@ -25,14 +25,15 @@ export {
 
 } from '@mui/material';
 
-// [mui - props] ---------------------------------------------------------------------------------------
+// mui - props ---------------------------------------------------------------------------------------
 export type {
   PaperProps,
 	GridProps,
-	PopoverProps
+	PopoverProps,
+	PopoverOrigin,
 } from '@mui/material';
 
-// [mui - datePickers] ---------------------------------------------------------------------------------------
+// mui - datePickers -----------------------------------------------------------------------------------
 export {
   AdapterMoment
 } from '@mui/x-date-pickers/AdapterMoment';
@@ -43,7 +44,7 @@ export {
   PickersDay
 } from '@mui/x-date-pickers';
 
-// [mui - popover] ---------------------------------------------------------------------------------------
+// mui - popover ---------------------------------------------------------------------------------------
 export {
 	bindPopover
 } from 'material-ui-popup-state';
@@ -51,8 +52,7 @@ export {
 	usePopupState
 } from 'material-ui-popup-state/hooks';
 
-// ---------------------------------------------------------------------------------------
-// [mui - file]
+// mui - file -----------------------------------------------------------------------------------------
 export {
   MuiFileInput
 } from 'mui-file-input';

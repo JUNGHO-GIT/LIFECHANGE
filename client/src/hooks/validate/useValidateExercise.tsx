@@ -1,7 +1,7 @@
-// useValidateExercise.tsx
+// useValidateExerciseRecord.tsx
 
-import { useState, createRef, useRef } from "@importReacts";
-import { useStoreLanguage, useStoreAlert, useStoreConfirm } from "@importStores";
+import { createRef, useCallback, useRef, useState } from "@importReacts";
+import { useStoreAlert, useStoreConfirm, useStoreLanguage } from "@importStores";
 
 // -------------------------------------------------------------------------------------------------
 export const useValidateExercise = () => {
@@ -17,7 +17,7 @@ export const useValidateExercise = () => {
   const validate = useRef<Function>(() => {});
 
   // alert 표시 및 focus ---------------------------------------------------------------------------
-  const showAlertAndFocus = (field: string, msg: string, idx: number) => {
+  const showAlertAndFocus = useCallback((field: string, msg: string, idx: number) => {
     setALERT({
       open: true,
       msg: translate(msg),
@@ -37,7 +37,7 @@ export const useValidateExercise = () => {
       });
     }
     return false;
-  };
+  }, [setALERT, translate]);
 
   // 7. validate -----------------------------------------------------------------------------------
   validate.current = async (OBJECT: any, COUNT: any, extra: string) => {
@@ -86,14 +86,14 @@ export const useValidateExercise = () => {
       return true;
     }
 
-    // 2. real -----------------------------------------------------------------------------------
-    else if (extra === "real") {
+    // 2. record -----------------------------------------------------------------------------------
+    else if (extra === "record") {
       const target = [
-        "exercise_part",
-        "exercise_title",
-        "exercise_set",
-        "exercise_rep",
-        "exercise_weight",
+        "exercise_record_part",
+        "exercise_record_title",
+        "exercise_record_set",
+        "exercise_record_rep",
+        "exercise_record_weight",
       ];
       REFS.current = (
         Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
@@ -117,20 +117,20 @@ export const useValidateExercise = () => {
         return showAlertAndFocus("", "errorCount", 0);
       }
       for (let i = 0; i < section?.length; i++) {
-        if (!section[i].exercise_part || section[i].exercise_part === "") {
-          return showAlertAndFocus('exercise_part', "errorExercisePart", i);
+        if (!section[i].exercise_record_part || section[i].exercise_record_part === "") {
+          return showAlertAndFocus('exercise_record_part', "errorExercisePart", i);
         }
-        else if (!section[i].exercise_title || section[i].exercise_title === "") {
-          return showAlertAndFocus('exercise_title', "errorExerciseTitle", i);
+        else if (!section[i].exercise_record_title || section[i].exercise_record_title === "") {
+          return showAlertAndFocus('exercise_record_title', "errorExerciseTitle", i);
         }
-        else if (!section[i].exercise_set || section[i].exercise_set === "0") {
-          return showAlertAndFocus('exercise_set', "errorExerciseSet", i);
+        else if (!section[i].exercise_record_set || section[i].exercise_record_set === "0") {
+          return showAlertAndFocus('exercise_record_set', "errorExerciseSet", i);
         }
-        else if (!section[i].exercise_rep || section[i].exercise_rep === "0") {
-          return showAlertAndFocus('exercise_rep', "errorExerciseRep", i);
+        else if (!section[i].exercise_record_rep || section[i].exercise_record_rep === "0") {
+          return showAlertAndFocus('exercise_record_rep', "errorExerciseRep", i);
         }
-        else if (!section[i].exercise_weight || section[i].exercise_weight === "0") {
-          return showAlertAndFocus('exercise_weight', "errorExerciseKg", i);
+        else if (!section[i].exercise_record_weight || section[i].exercise_record_weight === "0") {
+          return showAlertAndFocus('exercise_record_weight', "errorExerciseKg", i);
         }
       }
       return true;

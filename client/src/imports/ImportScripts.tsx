@@ -2,17 +2,19 @@
 
 // -------------------------------------------------------------------------------------------------
 export {
-  sync,
+	fnSync,
 } from "@assets/scripts/sync";
 
+// -------------------------------------------------------------------------------------------------
 export {
-  getLocal,
-  setLocal,
-  getSession,
-  setSession,
+  fnGetLocal,
+  fnSetLocal,
+  fnGetSession,
+  fnSetSession,
 } from "@assets/scripts/storage";
 
+// -------------------------------------------------------------------------------------------------
 export {
-  insertComma,
-  handleY
+  fnInsertComma,
+  fnHandleY
 } from "@assets/scripts/utils";

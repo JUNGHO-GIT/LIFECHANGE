@@ -1,28 +1,28 @@
-import { useEffect } from "@importReacts";
 import { useCommonDate } from "@importHooks";
+import { useEffect } from "@importReacts";
 
 // -------------------------------------------------------------------------------------------------
 export const useTime = (
-  OBJECT: any,
-  setOBJECT: any,
-  PATH: string,
-  type: string,
+	OBJECT: any,
+	setOBJECT: any,
+	PATH: string,
+	type: string,
 ) => {
 
 	// 1. common ----------------------------------------------------------------------------------
-  const { getDayFmt } = useCommonDate();
-  const match = PATH.match(/\/([^/]+)\//);
-  const strLow = match ? match[1] : null;
+	const { getDayFmt } = useCommonDate();
+	const match = PATH.match(/\/([^/]+)\//);
+	const strLow = match ? match[1] : null;
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
-  useEffect(() => {
+	useEffect(() => {
 
-    // 1-1. goal - exercise
-    if (type === "goal" && strLow === "exercise") {
-      const startTime = OBJECT?.exercise_goal_dateStart;
-      const endTime = OBJECT?.exercise_goal_dateEnd;
+		// 1-1. goal - exercise
+		if (type === "goal" && strLow === "exercise") {
+			const startTime = OBJECT?.exercise_goal_dateStart;
+			const endTime = OBJECT?.exercise_goal_dateEnd;
 
-      if (!startTime || !endTime) {
+			if (!startTime || !endTime) {
 				return;
 			}
 			let startDate: any = new Date(`${startTime}T00:00`);
@@ -47,14 +47,14 @@ export const useTime = (
 					}));
 				}
 			}
-    }
+		}
 
-    // 2-1. goal - sleep
-    else if (type === "goal" && strLow === "sleep") {
-      const bedTimeTime = OBJECT?.sleep_goal_bedTime;
-      const wakeTimeTime = OBJECT?.sleep_goal_wakeTime;
+		// 2-1. goal - sleep
+		else if (type === "goal" && strLow === "sleep") {
+			const bedTimeTime = OBJECT?.sleep_goal_bedTime;
+			const wakeTimeTime = OBJECT?.sleep_goal_wakeTime;
 
-      if (!bedTimeTime || !wakeTimeTime) {
+			if (!bedTimeTime || !wakeTimeTime) {
 				return;
 			}
 			let startDate: any = new Date(`${getDayFmt()}T${bedTimeTime}`);
@@ -84,14 +84,14 @@ export const useTime = (
 					}));
 				}
 			}
-    }
+		}
 
-    // 2-2. real - sleep
-    else if (type === "real" && strLow === "sleep") {
-      const bedTimeTime = OBJECT?.sleep_section?.[0]?.sleep_bedTime;
-      const wakeTimeTime = OBJECT?.sleep_section?.[0]?.sleep_wakeTime;
+		// 2-2. record - sleep
+		else if (type === "record" && strLow === "sleep") {
+			const bedTimeTime = OBJECT?.sleep_section?.[0]?.sleep_record_bedTime;
+			const wakeTimeTime = OBJECT?.sleep_section?.[0]?.sleep_record_wakeTime;
 
-      if (!bedTimeTime || !wakeTimeTime) {
+			if (!bedTimeTime || !wakeTimeTime) {
 				return;
 			}
 			let startDate: any = new Date(`${getDayFmt()}T${bedTimeTime}Z`);
@@ -119,19 +119,19 @@ export const useTime = (
 						...prev,
 						sleep_section: [{
 							...((prev && prev.sleep_section && prev.sleep_section[0]) ? prev.sleep_section[0] : {}),
-							sleep_sleepTime: time,
+							sleep_record_sleepTime: time,
 						}],
 					}));
 				}
-      }
-    }
-  }, [
-    strLow,
-    type === "goal" && strLow === "exercise" ? OBJECT?.exercise_goal_dateStart : "",
-    type === "goal" && strLow === "exercise" ? OBJECT?.exercise_goal_dateEnd : "",
-    type === "goal" && strLow === "sleep" ? OBJECT?.sleep_goal_bedTime : "",
-    type === "goal" && strLow === "sleep" ? OBJECT?.sleep_goal_wakeTime : "",
-    type === "real" && strLow === "sleep" ? OBJECT?.sleep_section?.[0]?.sleep_bedTime : "",
-    type === "real" && strLow === "sleep" ? OBJECT?.sleep_section?.[0]?.sleep_wakeTime : "",
-  ]);
+			}
+		}
+	}, [
+		strLow,
+		type === "goal" && strLow === "exercise" ? OBJECT?.exercise_goal_dateStart : "",
+		type === "goal" && strLow === "exercise" ? OBJECT?.exercise_goal_dateEnd : "",
+		type === "goal" && strLow === "sleep" ? OBJECT?.sleep_goal_bedTime : "",
+		type === "goal" && strLow === "sleep" ? OBJECT?.sleep_goal_wakeTime : "",
+		type === "record" && strLow === "sleep" ? OBJECT?.sleep_section?.[0]?.sleep_record_bedTime : "",
+		type === "record" && strLow === "sleep" ? OBJECT?.sleep_section?.[0]?.sleep_record_wakeTime : "",
+	]);
 };

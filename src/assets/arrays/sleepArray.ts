@@ -2,18 +2,18 @@
 export const sleepArray = [
   // 0
   {
-    sleep_part: "all"
+    sleep_record_part: "all"
   },
   // 1
   {
-    sleep_part: "bedTime"
+    sleep_record_part: "bedTime"
   },
   // 2
   {
-    sleep_part: "wakeTime"
+    sleep_record_part: "wakeTime"
   },
   // 3
   {
-    sleep_part: "sleepTime"
+    sleep_record_part: "sleepTime"
   },
 ];

@@ -41,26 +41,26 @@ export const list = async (object: any) => {
   };
 
   // 1. compareValue -------------------------------------------------------------------------------
-  const compareValue = (goalParam: string, realParam: string, extra: string) => {
+  const compareValue = (goalParam: string, recordParam: string, extra: string) => {
 
     let goal: number = parseFloat(goalParam);
-    let real: number = parseFloat(realParam);
+    let record: number = parseFloat(recordParam);
     let finalResult: string = "";
 
     if (extra === "income") {
-      if (goal > real) {
-        finalResult = `-${(parseFloat(Math.abs(goal - real).toFixed(2)).toString())}`;
+      if (goal > record) {
+        finalResult = `-${(parseFloat(Math.abs(goal - record).toFixed(2)).toString())}`;
       }
       else {
-        finalResult = `+${(parseFloat(Math.abs(real - goal).toFixed(2)).toString())}`;
+        finalResult = `+${(parseFloat(Math.abs(record - goal).toFixed(2)).toString())}`;
       }
     }
     if (extra === "expense") {
-      if (goal > real) {
-        finalResult = `-${(parseFloat(Math.abs(real - goal).toFixed(2)).toString())}`;
+      if (goal > record) {
+        finalResult = `-${(parseFloat(Math.abs(record - goal).toFixed(2)).toString())}`;
       }
       else {
-        finalResult = `+${(parseFloat(Math.abs(real - goal).toFixed(2)).toString())}`;
+        finalResult = `+${(parseFloat(Math.abs(record - goal).toFixed(2)).toString())}`;
       }
     }
 
@@ -68,17 +68,17 @@ export const list = async (object: any) => {
   };
 
   // 4. calcDiffColor ------------------------------------------------------------------------------
-  const calcDiffColor = (goalParam: string, realParam: string, extra: string) => {
+  const calcDiffColor = (goalParam: string, recordParam: string, extra: string) => {
 
     let goal: number = parseFloat(goalParam);
-    let real: number = parseFloat(realParam);
+    let record: number = parseFloat(recordParam);
     let percent: number = 0;
     let finalResult: string = "";
 
     // 1. income
     if (extra === "income") {
-      percent = (Math.abs(goal - real) / goal) * 100;
-      if (goal > real) {
+      percent = (Math.abs(goal - record) / goal) * 100;
+      if (goal > record) {
         if (percent > 0 && percent <= 1) {
           finalResult += " firstScore";
         }
@@ -115,8 +115,8 @@ export const list = async (object: any) => {
     }
     // 2. expense
     if (extra === "expense") {
-      percent = (Math.abs(goal - real) / goal) * 100;
-      if (goal > real) {
+      percent = (Math.abs(goal - record) / goal) * 100;
+      if (goal > record) {
         if (percent > 0 && percent <= 1) {
           finalResult += " fifthScore";
         }
@@ -157,11 +157,11 @@ export const list = async (object: any) => {
 
 	// 10. return ----------------------------------------------------------------------------------
   object?.result?.forEach((item: any) => {
-    item.money_total_income = calcOverTenMillion(
-      item?.money_total_income
+    item.money_record_total_income = calcOverTenMillion(
+      item?.money_record_total_income
     );
-    item.money_total_expense = calcOverTenMillion(
-      item?.money_total_expense
+    item.money_record_total_expense = calcOverTenMillion(
+      item?.money_record_total_expense
     );
     item.money_goal_income = calcOverTenMillion(
       item?.money_goal_income
@@ -170,11 +170,11 @@ export const list = async (object: any) => {
       item?.money_goal_expense
     );
 
-    item.money_total_income_color = calcNonValueColor(
-      item?.money_total_income
+    item.money_record_total_income_color = calcNonValueColor(
+      item?.money_record_total_income
     );
-    item.money_total_expense_color = calcNonValueColor(
-      item?.money_total_expense
+    item.money_record_total_expense_color = calcNonValueColor(
+      item?.money_record_total_expense
     );
     item.money_goal_income_color = calcNonValueColor(
       item?.money_goal_income
@@ -183,17 +183,17 @@ export const list = async (object: any) => {
       item?.money_goal_expense
     );
 
-    item.money_diff_income = calcOverTenMillion(compareValue(
-      item?.money_goal_income, item?.money_total_income, "income"
+    item.money_record_diff_income = calcOverTenMillion(compareValue(
+      item?.money_goal_income, item?.money_record_total_income, "income"
     ));
-    item.money_diff_expense = calcOverTenMillion(compareValue(
-      item?.money_goal_expense, item?.money_total_expense, "expense"
+    item.money_record_diff_expense = calcOverTenMillion(compareValue(
+      item?.money_goal_expense, item?.money_record_total_expense, "expense"
     ));
-    item.money_diff_income_color = calcDiffColor(
-      item?.money_goal_income, item?.money_total_income, "income"
+    item.money_record_diff_income_color = calcDiffColor(
+      item?.money_goal_income, item?.money_record_total_income, "income"
     );
-    item.money_diff_expense_color = calcDiffColor(
-      item?.money_goal_expense, item?.money_total_expense, "expense"
+    item.money_record_diff_expense_color = calcDiffColor(
+      item?.money_goal_expense, item?.money_record_total_expense, "expense"
     );
   });
 

@@ -107,29 +107,29 @@ export const list = async (
       const dateStart = goal?.food_goal_dateStart;
       const dateEnd = goal?.food_goal_dateEnd;
 
-      const listReal = await repository.listReal(
+      const listRecord = await repository.listRecord(
         user_id_param, dateType, dateStart, dateEnd
       );
 
-      const foodTotalKcal = listReal.reduce((acc: any, curr: any) => (
-        acc + (parseFloat(curr?.food_total_kcal || 0))
+      const foodTotalKcal = listRecord.reduce((acc: any, curr: any) => (
+        acc + (parseFloat(curr?.food_record_total_kcal || 0))
       ), 0);
-      const foodTotalCarb = listReal.reduce((acc: any, curr: any) => (
-        acc + (parseFloat(curr?.food_total_carb || 0))
+      const foodTotalCarb = listRecord.reduce((acc: any, curr: any) => (
+        acc + (parseFloat(curr?.food_record_total_carb || 0))
       ), 0);
-      const foodTotalProtein = listReal.reduce((acc: any, curr: any) => (
-        acc + (parseFloat(curr?.food_total_protein || 0))
+      const foodTotalProtein = listRecord.reduce((acc: any, curr: any) => (
+        acc + (parseFloat(curr?.food_record_total_protein || 0))
       ), 0);
-      const foodTotalFat = listReal.reduce((acc: any, curr: any) => (
-        acc + (parseFloat(curr?.food_total_fat || 0))
+      const foodTotalFat = listRecord.reduce((acc: any, curr: any) => (
+        acc + (parseFloat(curr?.food_record_total_fat || 0))
       ), 0);
 
       return {
         ...goal,
-        food_total_kcal: String(foodTotalKcal.toFixed(0)),
-        food_total_carb: String(foodTotalCarb.toFixed(0)),
-        food_total_protein: String(foodTotalProtein.toFixed(0)),
-        food_total_fat: String(foodTotalFat.toFixed(0)),
+        food_record_total_kcal: String(foodTotalKcal.toFixed(0)),
+        food_record_total_carb: String(foodTotalCarb.toFixed(0)),
+        food_record_total_protein: String(foodTotalProtein.toFixed(0)),
+        food_record_total_fat: String(foodTotalFat.toFixed(0)),
       };
     }));
     statusResult = "success";
@@ -163,7 +163,7 @@ export const detail = async (
     user_id_param, dateType, dateStart, dateEnd
   );
 
-  // real = section?.length
+  // record = section?.length
   // goal = 0 or 1
   if (!findResult) {
     finalResult = null;

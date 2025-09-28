@@ -1,10 +1,11 @@
 // FindFilter.tsx
 
-import { useCommonValue } from "@importHooks";
-import { useStoreLanguage } from "@importStores";
+import { Div, Grid, Icons } from "@importComponents";
 import { Input } from "@importContainers";
-import { Icons, Div, Grid } from "@importComponents";
+import { useCommonValue } from "@importHooks";
 import { TablePagination } from "@importMuis";
+import { memo } from "@importReacts";
+import { useStoreLanguage } from "@importStores";
 
 // -------------------------------------------------------------------------------------------------
 declare type FindFilterProps = {
@@ -14,7 +15,7 @@ declare type FindFilterProps = {
 }
 
 // -------------------------------------------------------------------------------------------------
-export const FindFilter = (
+export const FindFilter = memo((
   { state, setState, flow }: FindFilterProps
 ) => {
 
@@ -194,4 +195,4 @@ export const FindFilter = (
       {findFilterNode()}
     </>
   );
-};
+});

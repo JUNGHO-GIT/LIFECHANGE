@@ -1,11 +1,11 @@
 // ExerciseChartAvg.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
 import { ExerciseAvgVolume, ExerciseAvgCardio, ExerciseAvgType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { handleY } from "@importScripts";
+import { fnHandleY } from "@importScripts";
 import { Select, PopUp } from "@importContainers";
 import { Div, Img, Br, Paper, Grid } from "@importComponents";
 import { FormGroup, FormControlLabel, Switch, MenuItem } from "@importMuis";
@@ -13,7 +13,7 @@ import { ComposedChart, Bar } from "recharts";
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 // -------------------------------------------------------------------------------------------------
-export const ExerciseChartAvg = () => {
+export const ExerciseChartAvg = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, sessionId, chartColors, exerciseChartArray } = useCommonValue();
@@ -115,7 +115,7 @@ export const ExerciseChartAvg = () => {
       endStr = "hr";
     }
 
-    const {domain, ticks, formatterY} = handleY(object, exerciseChartArray, "exercise");
+    const {domain, ticks, formatterY} = fnHandleY(object, exerciseChartArray, "exercise");
     return (
 			<ResponsiveContainer width={"100%"} height={350}>
 				<ComposedChart
@@ -308,4 +308,4 @@ export const ExerciseChartAvg = () => {
       {chartNode()}
     </>
   );
-};
+});

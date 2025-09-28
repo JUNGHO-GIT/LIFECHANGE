@@ -1,12 +1,12 @@
 // Alert.tsx
 
-import { useEffect } from "@importReacts";
-import { useStoreAlert } from "@importStores";
 import { Icons } from "@importComponents";
-import { Snackbar, MuiAlert } from "@importMuis";
+import { MuiAlert, Snackbar } from "@importMuis";
+import { memo, useEffect } from "@importReacts";
+import { useStoreAlert } from "@importStores";
 
 // -------------------------------------------------------------------------------------------------
-export const Alert = () => {
+export const Alert = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { ALERT, setALERT } = useStoreAlert();
@@ -66,4 +66,4 @@ export const Alert = () => {
       {alertNode()}
     </>
   );
-};
+});

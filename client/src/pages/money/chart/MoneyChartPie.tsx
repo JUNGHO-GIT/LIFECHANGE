@@ -1,6 +1,6 @@
 // MoneyChartPie.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
 import { MoneyPie, MoneyPieType } from "@importSchemas";
@@ -22,7 +22,7 @@ declare type PieProps = {
 };
 
 // -------------------------------------------------------------------------------------------------
-export const MoneyChartPie = () => {
+export const MoneyChartPie = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, chartColors, sessionId } = useCommonValue();
@@ -346,4 +346,4 @@ export const MoneyChartPie = () => {
       {chartNode()}
     </>
   );
-};
+});

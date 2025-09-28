@@ -1,11 +1,12 @@
 // Confirm.tsx
 
-import { useStoreConfirm } from "@importStores";
 import { Icons } from "@importComponents";
-import { Snackbar, MuiAlert } from "@importMuis";
+import { MuiAlert, Snackbar } from "@importMuis";
+import { memo } from "@importReacts";
+import { useStoreConfirm } from "@importStores";
 
 // -------------------------------------------------------------------------------------------------
-export const Confirm = () => {
+export const Confirm = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { CONFIRM, setCONFIRM } = useStoreConfirm();
@@ -69,4 +70,4 @@ export const Confirm = () => {
       {confirmNode()}
     </>
   );
-};
+});

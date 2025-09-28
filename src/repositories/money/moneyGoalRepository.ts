@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 import { MoneyGoal } from "@schemas/money/MoneyGoal";
-import { Money } from "@schemas/money/Money";
+import { MoneyRecord } from "@schemas/money/MoneyRecord";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
@@ -113,42 +113,42 @@ export const listGoal = async (
   return finalResult;
 };
 
-// 1-2. list (real) --------------------------------------------------------------------------------
-export const listReal = async (
+// 1-2. list (record) --------------------------------------------------------------------------------
+export const listRecord = async (
   user_id_param: string,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await Money.aggregate([
+  const finalResult:any = await MoneyRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
-        money_dateStart: {
+        money_record_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        money_dateEnd: {
+        money_record_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...dateType_param ? { money_dateType: dateType_param } : {},
+        ...dateType_param ? { money_record_dateType: dateType_param } : {},
       }
     },
     {
       $project: {
         _id: 0,
-        money_dateType: 1,
-        money_dateStart: 1,
-        money_dateEnd: 1,
-        money_total_income: 1,
-        money_total_expense: 1,
+        money_record_dateType: 1,
+        money_record_dateStart: 1,
+        money_record_dateEnd: 1,
+        money_record_total_income: 1,
+        money_record_total_expense: 1,
       }
     },
     {
       $sort: {
-        money_dateStart: 1
+        money_record_dateStart: 1
       }
     }
   ]);

@@ -1,11 +1,11 @@
 // MoneyChartLine.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
 import { MoneyLine, MoneyLineType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { handleY } from "@importScripts";
+import { fnHandleY } from "@importScripts";
 import { Select, PopUp } from "@importContainers";
 import { Div, Img, Br, Paper, Grid } from "@importComponents";
 import { FormGroup, FormControlLabel, Switch, MenuItem } from "@importMuis";
@@ -13,7 +13,7 @@ import { Line, LineChart } from "recharts";
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 // -------------------------------------------------------------------------------------------------
-export const MoneyChartLine = () => {
+export const MoneyChartLine = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, sessionId, chartColors, moneyChartArray } = useCommonValue();
@@ -97,7 +97,7 @@ export const MoneyChartLine = () => {
       object = OBJECT_MONTH;
     }
 
-    const {domain, ticks, formatterY} = handleY(object, moneyChartArray, "money");
+    const {domain, ticks, formatterY} = fnHandleY(object, moneyChartArray, "money");
     return (
 			<ResponsiveContainer width={"100%"} height={350}>
 				<LineChart
@@ -299,4 +299,4 @@ export const MoneyChartLine = () => {
       {chartNode()}
     </>
   );
-};
+});

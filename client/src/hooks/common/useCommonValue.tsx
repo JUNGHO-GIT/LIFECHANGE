@@ -20,41 +20,39 @@ export const useCommonValue = () => {
   const secondStr: string = PATH?.split("/")[2] || "";
   const thirdStr: string = PATH?.split("/")[3] || "";
 
-	// list
+	// list, detail, goal
 	const isList: boolean = PATH.includes("/list");
-
-	// detail
 	const isDetail: boolean = PATH.includes("/detail");
+  const isGoal: boolean = secondStr === "goal";
 
-	// today
-	const isTodayGoalList: boolean = PATH.includes("/today/goal/list");
-	const isTodayList: boolean = PATH.includes("/today/list");
-	const isTodayGoalDetail: boolean = PATH.includes("/today/goal/detail");
-	const isTodayDetail: boolean = PATH.includes("/today/detail");
-
-	// calendar
-	const isCalendarList: boolean = !isTodayGoalList && !isTodayList && PATH.includes("/calendar/list");
-	const isCalendarDetail: boolean = !isTodayGoalList && !isTodayList && PATH.includes("/calendar/detail");
+	// schedule
+	const isSchedule: boolean = firstStr === "schedule";
+	const isSchedulePlannerList: boolean = PATH.includes("/schedule/planner/list");
+	const isSchedulePlannerDetail: boolean = PATH.includes("/schedule/planner/detail");
+	const isScheduleGoalList: boolean = PATH.includes("/schedule/goal/list");
+	const isScheduleGoalDetail: boolean = PATH.includes("/schedule/goal/detail");
+	const isScheduleRecordList: boolean = PATH.includes("/schedule/record/list");
+	const isScheduleRecordDetail: boolean = PATH.includes("/schedule/record/detail");
 
 	// find
 	const isFindList: boolean = PATH.includes("/find/list");
 	const isFavoriteList: boolean = PATH.includes("/favorite/list");
 
 	// goal
-	const isGoalList: boolean = !isTodayGoalList && !isTodayList && !isCalendarList && PATH.includes("/goal/list");
-	const isGoalDetail: boolean = !isTodayGoalList && !isTodayList && !isCalendarList && PATH.includes("/goal/detail");
+	const isGoalList: boolean = !isScheduleGoalList && !isSchedulePlannerList && PATH.includes("/goal/list");
+	const isGoalDetail: boolean = !isScheduleGoalList && !isSchedulePlannerList && PATH.includes("/goal/detail");
 
-	// real
-	const isRealList: boolean = !isTodayGoalList && !isTodayList && !isCalendarList && !isGoalList && PATH.includes("/list");
-	const isRealDetail: boolean = !isTodayGoalList && !isTodayList && !isCalendarList && !isGoalDetail && PATH.includes("/detail");
+	// record
+	const isRecordList: boolean = !isScheduleRecordList && !isGoalList && PATH.includes("/record/list");
+	const isRecordDetail: boolean = !isSchedulePlannerDetail && !isGoalDetail && PATH.includes("/record/detail");
 
-  const isGoal: boolean = secondStr === "goal";
-  const toFind: string = `/${firstStr}/find/list`;
+	// to
   const toFavorite: string = `/${firstStr}/favorite/list`;
-  const toList: string = isGoal ? `/${firstStr}/goal/list` : `/${firstStr}/list`;
-  const toDetail: string = isGoal ? `/${firstStr}/goal/detail` : `/${firstStr}/detail`;
-  const toDelete: string = isGoal ? `/${firstStr}/goal/delete` : `/${firstStr}/delete`;
-  const toToday: string = isGoal ? `/today/goal/list` : `/today/list`;
+  const toFind: string = `/${firstStr}/find/list`;
+  const toList: string = isGoal ? `/${firstStr}/goal/list` : `/${firstStr}/record/list`;
+  const toDetail: string = isGoal ? `/${firstStr}/goal/detail` : `/${firstStr}/record/detail`;
+  const toDelete: string = isGoal ? `/${firstStr}/goal/delete` : `/${firstStr}/record/delete`;
+  const toSchedule: string = `/${firstStr}/planner/list`;
 
   // env
   const TITLE: any = process.env.REACT_APP_TITLE || "";
@@ -63,6 +61,7 @@ export const useCommonValue = () => {
   const ADMIN_ID: string = process.env.REACT_APP_ADMIN_ID || "";
   const ADMIN_PW: string = process.env.REACT_APP_ADMIN_PW || "";
   const SUBFIX : string= process.env[`REACT_APP_${firstStr.toUpperCase()}`] || "";
+	const SUBFIX_SCHEDULE: string = process.env[`REACT_APP_SCHEDULE`] || "";
   const SUBFIX_GOOGLE: string = process.env[`REACT_APP_GOOGLE`] || "";
   const SUBFIX_ADMOB: string = process.env[`REACT_APP_ADMOB`] || "";
   const SUBFIX_ADMIN: string = process.env[`REACT_APP_ADMIN`] || "";
@@ -73,6 +72,7 @@ export const useCommonValue = () => {
 
   // URL
   const URL_OBJECT: string = URL + SUBFIX;
+	const URL_SCHEDULE: string = URL + SUBFIX_SCHEDULE;
   const URL_GOOGLE: string = URL + SUBFIX_GOOGLE;
   const URL_ADMOB: string = URL + SUBFIX_ADMOB;
   const URL_ADMIN: string = URL + SUBFIX_ADMIN;
@@ -96,7 +96,6 @@ export const useCommonValue = () => {
   // session storage (object 타입)
   const sessionTitle: any = JSON.parse(sessionStorage.getItem(TITLE) || "{}");
   const sessionSetting: any = sessionTitle?.setting || {};
-
   const sessionPercent: any = sessionTitle?.setting?.sync?.percent || {};
   const sessionScale: any = sessionTitle?.setting?.sync?.scale || {};
   const sessionNutrition: any = sessionTitle?.setting?.sync?.nutrition || {};
@@ -105,9 +104,9 @@ export const useCommonValue = () => {
   const sessionCategory: any = sessionTitle?.setting?.sync?.category || {};
   const sessionFoodSection: any[] = sessionTitle?.section?.food || [];
 
-  const calendarArray: any[] = sessionTitle?.setting?.sync?.category?.calendar || [];
   const exerciseArray: any[] = sessionTitle?.setting?.sync?.category?.exercise || [];
   const foodArray: any[] = sessionTitle?.setting?.sync?.category?.food || [];
+  const scheduleArray: any[] = sessionTitle?.setting?.sync?.category?.schedule || [];
   const moneyArray: any[] = sessionTitle?.setting?.sync?.category?.money || [];
   const sleepArray: any[] = sessionTitle?.setting?.sync?.category?.sleep || [];
 
@@ -127,9 +126,9 @@ export const useCommonValue = () => {
     "bedTime", "wakeTime", "sleepTime"
   ];
   const barChartArray: any[] = [
-    "goal", "real"
+    "goal", "record"
   ];
-  const calendarColors: any[] = [
+  const scheduleColors: any[] = [
     "red", "orange", "yellow", "green", "blue", "navy", "purple", "black", "gray"
   ];
   const bgColors: any[] = [
@@ -158,34 +157,37 @@ export const useCommonValue = () => {
     thirdStr,
 		isList,
 		isDetail,
-		isTodayGoalList,
-		isTodayList,
-		isTodayGoalDetail,
-		isTodayDetail,
-		isCalendarList,
-		isCalendarDetail,
+		isSchedule,
+		isScheduleRecordList,
+		isScheduleRecordDetail,
+		isScheduleGoalDetail,
+		isScheduleGoalList,
+		isSchedulePlannerList,
+		isSchedulePlannerDetail,
 		isFindList,
 		isFavoriteList,
 		isGoalList,
 		isGoalDetail,
-		isRealList,
-		isRealDetail,
+		isRecordList,
+		isRecordDetail,
 		isGoal,
     toFind,
     toFavorite,
     toList,
-    toToday,
+		toSchedule,
     toDetail,
     toDelete,
     TITLE,
     URL,
     GCLOUD_URL,
     SUBFIX,
+		SUBFIX_SCHEDULE,
     SUBFIX_GOOGLE,
     SUBFIX_EXERCISE,
     SUBFIX_FOOD,
     SUBFIX_MONEY,
     SUBFIX_SLEEP,
+		URL_SCHEDULE,
     URL_OBJECT,
     URL_GOOGLE,
     URL_ADMOB,
@@ -210,7 +212,8 @@ export const useCommonValue = () => {
     sessionScale,
     sessionFavorite,
     sessionProperty,
-    calendarArray,
+		sessionNutrition,
+		scheduleArray,
     exerciseArray,
     foodArray,
     moneyArray,
@@ -220,13 +223,12 @@ export const useCommonValue = () => {
     moneyChartArray,
     sleepChartArray,
     barChartArray,
-    calendarColors,
+		scheduleColors,
     bgColors,
     chartColors,
     sessionTitle,
     localTitle,
     sessionSetting,
     sessionFoodSection,
-    sessionNutrition,
   };
 };

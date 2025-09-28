@@ -1,7 +1,7 @@
-// useValidateMoney.tsx
+// useValidateMoneyRecord.tsx
 
-import { useState, createRef, useRef } from "@importReacts";
-import { useStoreLanguage, useStoreAlert, useStoreConfirm } from "@importStores";
+import { createRef, useCallback, useRef, useState } from "@importReacts";
+import { useStoreAlert, useStoreConfirm, useStoreLanguage } from "@importStores";
 
 // -------------------------------------------------------------------------------------------------
 export const useValidateMoney = () => {
@@ -17,7 +17,7 @@ export const useValidateMoney = () => {
   const validate = useRef<Function>(() => {});
 
   // alert 표시 및 focus ---------------------------------------------------------------------------
-  const showAlertAndFocus = (field: string, msg: string, idx: number) => {
+  const showAlertAndFocus = useCallback((field: string, msg: string, idx: number) => {
     setALERT({
       open: true,
       msg: translate(msg),
@@ -37,7 +37,7 @@ export const useValidateMoney = () => {
       });
     }
     return false;
-  };
+  }, [setALERT, translate]);
 
   // 7. validate -----------------------------------------------------------------------------------
   validate.current = async (OBJECT: any, COUNT: any, extra: string) => {
@@ -78,12 +78,12 @@ export const useValidateMoney = () => {
       return true;
     }
 
-    // 2. real -----------------------------------------------------------------------------------
-    else if (extra === "real") {
+    // 2. record -----------------------------------------------------------------------------------
+    else if (extra === "record") {
       const target = [
-        "money_part",
-        "money_title",
-        "money_amount"
+        "money_record_part",
+        "money_record_title",
+        "money_record_amount"
       ];
       REFS.current = (
         Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
@@ -109,14 +109,14 @@ export const useValidateMoney = () => {
       }
 
       for (let i = 0; i < section?.length; i++) {
-        if (!section[i]?.money_part || section[i].money_part === "") {
-          return showAlertAndFocus("money_part", "errorMoneyPart", i);
+        if (!section[i]?.money_record_part || section[i].money_record_part === "") {
+          return showAlertAndFocus("money_record_part", "errorMoneyPart", i);
         }
-        else if (!section[i]?.money_title || section[i].money_title === "") {
-          return showAlertAndFocus("money_title", "errorMoneyTitle", i);
+        else if (!section[i]?.money_record_title || section[i].money_record_title === "") {
+          return showAlertAndFocus("money_record_title", "errorMoneyTitle", i);
         }
-        else if (!section[i]?.money_amount) {
-          return showAlertAndFocus("money_amount", "errorMoneyAmount", i);
+        else if (!section[i]?.money_record_amount) {
+          return showAlertAndFocus("money_record_amount", "errorMoneyAmount", i);
         }
       }
       return true;

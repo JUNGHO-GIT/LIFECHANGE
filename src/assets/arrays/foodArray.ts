@@ -2,22 +2,22 @@
 export const foodArray = [
   // 0
   {
-    food_part: "all"
+    food_record_part: "all"
   },
   // 1
   {
-    food_part: "breakfast"
+    food_record_part: "breakfast"
   },
   // 2
   {
-    food_part: "lunch"
+    food_record_part: "lunch"
   },
   // 3
   {
-    food_part: "dinner"
+    food_record_part: "dinner"
   },
   // 4
   {
-    food_part: "snack"
+    food_record_part: "snack"
   },
 ];

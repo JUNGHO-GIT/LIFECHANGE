@@ -1,17 +1,17 @@
 // sync.js
 
 import { moment, axios } from "@importLibs";
-import { getSession, getLocal, setSession } from "@importScripts";
+import { fnGetSession, fnGetLocal, fnSetSession } from "@importScripts";
 
 // -------------------------------------------------------------------------------------------------
-export const sync = async (extra?: string) => {
+export const fnSync = async (extra?: string) => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_SERVER_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL + SUBFIX;
-  const sessionId = getSession("setting", "id", "sessionId");
-  const localTimeZone = getLocal("setting", "locale", "timeZone");
+  const sessionId = fnGetSession("setting", "id", "sessionId");
+  const localTimeZone = fnGetLocal("setting", "locale", "timeZone");
 
 	// 2-2. useState ---------------------------------------------------------------------------------
   const DATE = {
@@ -33,7 +33,7 @@ export const sync = async (extra?: string) => {
         params: params,
       }),
     ]);
-    setSession("setting", "sync", "", {
+    fnSetSession("setting", "sync", "", {
       [extra]: resExtra.data.result,
     });
   }
@@ -62,7 +62,7 @@ export const sync = async (extra?: string) => {
         params: params,
       }),
     ]);
-    setSession("setting", "sync", "", {
+    fnSetSession("setting", "sync", "", {
       category: resCategory.data.result,
       percent: resPercent.data.result,
       scale: resScale.data.result,

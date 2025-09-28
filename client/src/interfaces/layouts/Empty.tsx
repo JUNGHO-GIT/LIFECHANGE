@@ -1,9 +1,10 @@
 // Empty.tsx
 
-import { useCommonValue, useCommonDate } from "@importHooks";
-import { useStoreLanguage } from "@importStores";
-import { Div, Icons, Grid } from "@importComponents";
+import { Div, Grid, Icons } from "@importComponents";
+import { useCommonDate, useCommonValue } from "@importHooks";
 import { Accordion, AccordionSummary } from "@importMuis";
+import { memo } from "@importReacts";
+import { useStoreLanguage } from "@importStores";
 
 // -------------------------------------------------------------------------------------------------
 declare type EmptyProps = {
@@ -12,18 +13,15 @@ declare type EmptyProps = {
 }
 
 // -------------------------------------------------------------------------------------------------
-export const Empty = (
+export const Empty = memo((
   { DATE, extra }: EmptyProps
 ) => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { PATH, navigate } = useCommonValue();
-	const { getDayStartFmt, getDayEndFmt } = useCommonDate();
-	const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
+	const { isGoalList, isFindList, toDetail } = useCommonValue();
+	const { getDayStartFmt, getDayEndFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
-  const isFindList = PATH.includes("food/find/list");
-  const isGoalList = !isFindList && PATH.includes("goal/list");
-  const toDetail = isGoalList ? `/${extra}/goal/detail` : `/${extra}/detail`;
 
   // 7. emptyNode ----------------------------------------------------------------------------------
   const emptyNode = () => {
@@ -65,7 +63,7 @@ export const Empty = (
 							onClick={() => {
 								navigate(toDetail, {
 									state: {
-										from: PATH.includes("today") ? "today" : "list",
+										from: PATH.includes("schedule") ? "schedule" : "list",
 										dateType: DATE?.dateType || "month",
 										dateStart: DATE?.dateStart || getMonthStartFmt(),
 										dateEnd: DATE?.dateEnd || getMonthEndFmt()
@@ -97,8 +95,8 @@ export const Empty = (
 				</Grid>
       </Grid>
     );
-    // 2. isRealSection
-    const isRealSection = () => (
+    // 2. isRecordSection
+    const isRecordSection = () => (
 			<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-0 mb-10px"}>
 				<Grid size={12} className={"p-2px"}>
 					<Accordion
@@ -109,7 +107,7 @@ export const Empty = (
 							onClick={() => {
 								navigate(toDetail, {
 									state: {
-										from: PATH.includes("today") ? "today" : "list",
+										from: PATH.includes("schedule") ? "schedule" : "list",
 										dateType: DATE?.dateType || "day",
 										dateStart: DATE?.dateStart || getDayStartFmt(),
 										dateEnd: DATE?.dateEnd || getDayEndFmt(),
@@ -150,7 +148,7 @@ export const Empty = (
         isGoalSection()
       )
       : (
-        isRealSection()
+        isRecordSection()
       )
     );
   };
@@ -161,4 +159,4 @@ export const Empty = (
       {emptyNode()}
     </>
   );
-};
+});

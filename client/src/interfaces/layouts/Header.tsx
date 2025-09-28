@@ -1,10 +1,11 @@
 // Header.tsx
 
-import { useCommonValue, useCommonDate } from "@importHooks";
-import { Div, Img, Icons, Paper } from "@importComponents";
+import { Div, Icons, Img, Paper } from "@importComponents";
+import { useCommonDate, useCommonValue } from "@importHooks";
+import { memo } from "@importReacts";
 
 // -------------------------------------------------------------------------------------------------
-export const Header = () => {
+export const Header = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { navigate, firstStr } = useCommonValue();
@@ -16,7 +17,7 @@ export const Header = () => {
 			<Div
 				className={"d-center pointer ml-5px"}
 				onClick={() => {
-					navigate("/today/list", {
+					navigate("/schedule/record/list", {
 						state: {
 							dateType: "day",
 							dateStart: getDayFmt(),
@@ -78,4 +79,4 @@ export const Header = () => {
       {headerNode()}
     </>
   );
-};
+});

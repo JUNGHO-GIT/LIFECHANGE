@@ -1,10 +1,10 @@
 // Dialog.tsx
 
-import { useState } from "@importReacts";
-import { useCommonValue, useCommonDate } from "@importHooks";
-import { useStoreLanguage } from "@importStores";
 import { Div, Icons } from "@importComponents";
-import { SpeedDial, SpeedDialAction, SpeedDialIcon, Backdrop } from "@importMuis";
+import { useCommonDate, useCommonValue } from "@importHooks";
+import { Backdrop, SpeedDial, SpeedDialAction, SpeedDialIcon } from "@importMuis";
+import { memo, useState } from "@importReacts";
+import { useStoreLanguage } from "@importStores";
 
 // -------------------------------------------------------------------------------------------------
 declare type DialogProps = {
@@ -16,29 +16,23 @@ declare type DialogProps = {
 }
 
 // -------------------------------------------------------------------------------------------------
-export const Dialog = (
+export const Dialog = memo((
   { COUNT, setCOUNT, LOCKED, setLOCKED, setIsExpanded }: DialogProps
 ) => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { PATH, navigate, toDetail, localIsoCode } = useCommonValue();
+	const { isSchedule, isGoalList, isFindList, isFavoriteList, isList, isDetail } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
 
 	// 2-2. useState ---------------------------------------------------------------------------------
   const [open, setOpen] = useState(false);
-  const isToday = PATH.includes("/today");
-  const isGoalList = PATH.includes("/goal/list");
-  const isFindList = PATH.includes("/find/list");
-  const isFavoriteList = PATH.includes("/favorite/list");
-  const isList = !isGoalList && !isFindList && !isFavoriteList && PATH.includes("/list");
-	const isCalendarDetail = PATH.includes("/calendar/detail");
-  const isDetail = !isCalendarDetail && PATH.includes("/detail");
 
   // 7. dialog -------------------------------------------------------------------------------------
   const dialogNode = () => {
-    // 1. today
-    const todaySection = () => (
+    // 1. schedule
+    const scheduleSection = () => (
       <Div className={"d-flex"}>
         <Backdrop
           open={open}
@@ -216,8 +210,8 @@ export const Dialog = (
         </SpeedDial>
       </Div>
     );
-    // 3. real
-    const listRealSection = () => (
+    // 3. record
+    const listRecordSection = () => (
       <Div className={"d-flex"}>
         <Backdrop
           open={open}
@@ -530,8 +524,8 @@ export const Dialog = (
     );
     // 10. return
     return (
-      isToday ? (
-        todaySection()
+      isSchedule ? (
+        scheduleSection()
       )
       : isGoalList ? (
         listGoalSection()
@@ -540,7 +534,7 @@ export const Dialog = (
         findSection()
       )
       : isList ? (
-        listRealSection()
+        listRecordSection()
       )
       : isDetail ? (
         detailSection()
@@ -555,4 +549,4 @@ export const Dialog = (
       {dialogNode()}
     </>
   );
-};
+});

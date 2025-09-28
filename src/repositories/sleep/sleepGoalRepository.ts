@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 import { SleepGoal } from "@schemas/sleep/SleepGoal";
-import { Sleep } from "@schemas/sleep/Sleep";
+import { SleepRecord } from "@schemas/sleep/SleepRecord";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
@@ -114,27 +114,27 @@ export const listGoal = async (
   return finalResult;
 };
 
-// 1-2. list (real) --------------------------------------------------------------------------------
-export const listReal = async (
+// 1-2. list (record) --------------------------------------------------------------------------------
+export const listRecord = async (
   user_id_param: string,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await Sleep.aggregate([
+  const finalResult:any = await SleepRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
-        sleep_dateStart: {
+        sleep_record_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        sleep_dateEnd: {
+        sleep_record_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...dateType_param ? { sleep_dateType: dateType_param } : {},
+        ...dateType_param ? { sleep_record_dateType: dateType_param } : {},
       }
     },
     {
@@ -143,17 +143,17 @@ export const listReal = async (
     {
       $project: {
         _id: 0,
-        sleep_dateStart: 1,
-        sleep_dateEnd: 1,
-        sleep_dateType: 1,
-        sleep_bedTime: "$sleep_section.sleep_bedTime",
-        sleep_wakeTime: "$sleep_section.sleep_wakeTime",
-        sleep_sleepTime: "$sleep_section.sleep_sleepTime",
+        sleep_record_dateStart: 1,
+        sleep_record_dateEnd: 1,
+        sleep_record_dateType: 1,
+        sleep_record_bedTime: "$sleep_section.sleep_record_bedTime",
+        sleep_record_wakeTime: "$sleep_section.sleep_record_wakeTime",
+        sleep_record_sleepTime: "$sleep_section.sleep_record_sleepTime",
       }
     },
     {
       $sort: {
-        sleep_dateStart: 1
+        sleep_record_dateStart: 1
       }
     }
   ]);

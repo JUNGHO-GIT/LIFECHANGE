@@ -4,15 +4,15 @@
 export const percent = async (object: any) => {
 
   // 1. exercise
-  const diffExercise = (goalParam: string, realParam: string, extra: string) => {
+  const diffExercise = (goalParam: string, recordParam: string, extra: string) => {
 
     let score: number = 0;
     let percent: number = 0;
     let goal: number = parseFloat(goalParam);
-    let real: number = parseFloat(realParam);
+    let record: number = parseFloat(recordParam);
 
     if (extra === "count" || extra === "volume") {
-      percent = Number(((real - goal) / goal) * 100);
+      percent = Number(((record - goal) / goal) * 100);
 
       // 1. - 1%
       if (percent <= 1) {
@@ -36,7 +36,7 @@ export const percent = async (object: any) => {
       }
     }
     else if (extra === "scale") {
-      percent = Number(((real - goal) / goal) * 100);
+      percent = Number(((record - goal) / goal) * 100);
       // 1. - 1%
       if (percent <= 1) {
         score = 5;
@@ -61,10 +61,10 @@ export const percent = async (object: any) => {
     else if (extra === "cardio") {
       const hoursGoal = parseFloat(goalParam?.split(":")[0]);
       const minutesGoal = parseFloat(goalParam?.split(":")[1]);
-      const hoursReal = parseFloat(realParam?.split(":")[0]);
-      const minutesReal = parseFloat(realParam?.split(":")[1]);
-      const hours = Math.abs(hoursGoal - hoursReal);
-      const minutes = Math.abs(minutesGoal - minutesReal);
+      const hoursRecord = parseFloat(recordParam?.split(":")[0]);
+      const minutesRecord = parseFloat(recordParam?.split(":")[1]);
+      const hours = Math.abs(hoursGoal - hoursRecord);
+      const minutes = Math.abs(minutesGoal - minutesRecord);
       const diffVal = (hours * 60) + minutes;
       percent = Number(((diffVal - goal) / goal) * 100);
       // 1. - 10분
@@ -103,15 +103,15 @@ export const percent = async (object: any) => {
   };
 
   // 2. food
-  const diffFood = (goalParam: string, realParam: string, extra: string) => {
+  const diffFood = (goalParam: string, recordParam: string, extra: string) => {
 
     let score: number = 0;
     let percent: number = 0;
     let goal: number = parseFloat(goalParam);
-    let real: number = parseFloat(realParam);
+    let record: number = parseFloat(recordParam);
 
     if (extra === "kcal" || extra === "carb" || extra === "protein" || extra === "fat") {
-      percent = Number(((real - goal) / goal) * 100);
+      percent = Number(((record - goal) / goal) * 100);
 
       // 1. - 1%
       if (percent <= 1) {
@@ -149,16 +149,16 @@ export const percent = async (object: any) => {
   };
 
   // 3. money
-  const diffMoney = (goalParam: string, realParam: string, extra: string) => {
+  const diffMoney = (goalParam: string, recordParam: string, extra: string) => {
 
     let score: number = 0;
     let percent: number = 0;
     let goal: number = parseFloat(goalParam);
-    let real: number = parseFloat(realParam);
+    let record: number = parseFloat(recordParam);
 
     if (extra === "income") {
-      percent = Number((Math.abs(goal - real) / goal) * 100);
-      if (goal > real) {
+      percent = Number((Math.abs(goal - record) / goal) * 100);
+      if (goal > record) {
         if (percent > 0 && percent <= 1) {
           score = 5;
         }
@@ -203,8 +203,8 @@ export const percent = async (object: any) => {
       }
     }
     else if (extra === "expense") {
-      percent = Number((Math.abs(goal - real) / goal) * 100);
-      if (goal > real) {
+      percent = Number((Math.abs(goal - record) / goal) * 100);
+      if (goal > record) {
         // 1. 0% - 1%
         if (percent > 0 && percent <= 1) {
           score = 1;
@@ -264,22 +264,22 @@ export const percent = async (object: any) => {
   };
 
   // 4. sleep
-  const diffSleep = (goalParam: string, realParam: string, extra: string) => {
+  const diffSleep = (goalParam: string, recordParam: string, extra: string) => {
 
     let score: number = 0;
     let percent: number = 0;
     let goal: string = goalParam;
-    let real: string = realParam;
+    let record: string = recordParam;
 
     if (extra === "bedTime" || extra === "wakeTime") {
       const goalDate = new Date(`1970-01-01T${goal}Z`);
-      const realDate = new Date(`1970-01-01T${real}Z`);
+      const recordDate = new Date(`1970-01-01T${record}Z`);
       let diffVal = 0;
-      if (realDate < goalDate) {
-        diffVal = goalDate.getTime() - realDate.getTime();
+      if (recordDate < goalDate) {
+        diffVal = goalDate.getTime() - recordDate.getTime();
       }
       else {
-        diffVal = realDate.getTime() - goalDate.getTime();
+        diffVal = recordDate.getTime() - goalDate.getTime();
       }
       percent = Number((diffVal / goalDate.getTime()) * 100);
 
@@ -307,10 +307,10 @@ export const percent = async (object: any) => {
     else if (extra === "sleepTime") {
       const hoursGoal = parseFloat(goal?.split(":")[0]);
       const minutesGoal = parseFloat(goal?.split(":")[1]);
-      const hoursReal = parseFloat(real?.split(":")[0]);
-      const minutesReal = parseFloat(real?.split(":")[1]);
-      const hours = Math.abs(hoursGoal - hoursReal);
-      const minutes = Math.abs(minutesGoal - minutesReal);
+      const hoursRecord = parseFloat(record?.split(":")[0]);
+      const minutesRecord = parseFloat(record?.split(":")[1]);
+      const hours = Math.abs(hoursGoal - hoursRecord);
+      const minutes = Math.abs(minutesGoal - minutesRecord);
 
       const diffVal = (hours * 60) + minutes;
       const totalGoalMinutes = (hoursGoal * 60) + minutesGoal;
@@ -378,22 +378,22 @@ export const percent = async (object: any) => {
     exercise = {
       diff_count: diffExercise(
         object?.result?.exerciseGoal?.exercise_goal_count,
-        object?.result?.exercise?.exercise_total_count,
+        object?.result?.exercise?.exercise_record_total_count,
         "count"
       ),
       diff_volume: diffExercise(
         object?.result?.exerciseGoal?.exercise_goal_volume,
-        object?.result?.exercise?.exercise_total_volume,
+        object?.result?.exercise?.exercise_record_total_volume,
         "volume"
       ),
       diff_cardio: diffExercise(
         object?.result?.exerciseGoal?.exercise_goal_cardio,
-        object?.result?.exercise?.exercise_total_cardio,
+        object?.result?.exercise?.exercise_record_total_cardio,
         "cardio"
       ),
       diff_scale:diffExercise(
         object?.result?.exerciseGoal?.exercise_goal_scale,
-        object?.result?.exercise?.exercise_total_scale,
+        object?.result?.exercise?.exercise_record_total_scale,
         "scale"
       ),
     };
@@ -425,22 +425,22 @@ export const percent = async (object: any) => {
     food = {
       diff_kcal: diffFood(
         object?.result?.foodGoal?.food_goal_kcal,
-        object?.result?.food?.food_total_kcal,
+        object?.result?.food?.food_record_total_kcal,
         "kcal"
       ),
       diff_carb: diffFood(
         object?.result?.foodGoal?.food_goal_carb,
-        object?.result?.food?.food_total_carb,
+        object?.result?.food?.food_record_total_carb,
         "carb"
       ),
       diff_protein: diffFood(
         object?.result?.foodGoal?.food_goal_protein,
-        object?.result?.food?.food_total_protein,
+        object?.result?.food?.food_record_total_protein,
         "protein"
       ),
       diff_fat: diffFood(
         object?.result?.foodGoal?.food_goal_fat,
-        object?.result?.food?.food_total_fat,
+        object?.result?.food?.food_record_total_fat,
         "fat"
       ),
     };
@@ -464,12 +464,12 @@ export const percent = async (object: any) => {
     money = {
       diff_income: diffMoney(
         object?.result?.moneyGoal?.money_goal_income,
-        object?.result?.money?.money_total_income,
+        object?.result?.money?.money_record_total_income,
         "income"
       ),
       diff_expense: diffMoney(
         object?.result?.moneyGoal?.money_goal_expense,
-        object?.result?.money?.money_total_expense,
+        object?.result?.money?.money_record_total_expense,
         "expense"
       ),
     };
@@ -497,17 +497,17 @@ export const percent = async (object: any) => {
     sleep = {
       diff_bedTime: diffSleep(
         object?.result?.sleepGoal?.sleep_goal_bedTime,
-        object?.result?.sleep?.sleep_bedTime,
+        object?.result?.sleep?.sleep_record_bedTime,
         "bedTime"
       ),
       diff_wakeTime: diffSleep(
         object?.result?.sleepGoal?.sleep_goal_wakeTime,
-        object?.result?.sleep?.sleep_wakeTime,
+        object?.result?.sleep?.sleep_record_wakeTime,
         "wakeTime"
       ),
       diff_sleepTime: diffSleep(
         object?.result?.sleepGoal?.sleep_goal_sleepTime,
-        object?.result?.sleep?.sleep_sleepTime,
+        object?.result?.sleep?.sleep_record_sleepTime,
         "sleepTime"
       ),
     };

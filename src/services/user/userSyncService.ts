@@ -1,7 +1,7 @@
 // userSyncService.ts
 
 import * as repository from "@repositories/user/userSyncRepository";
-import { timeToDecimal, decimalToTime } from "@assets/scripts/utils";
+import { fnTimeToDecimal, fnDecimalToTime } from "@assets/scripts/utils";
 
 // 0. category (카테고리 조회) ---------------------------------------------------------------------
 export const category = async (
@@ -68,22 +68,22 @@ export const percent = async (
 
   findExercise = findExercise?.length > 0 && findExercise?.reduce((acc: any, curr: any) => {
     const exerciseTotalCount = (
-      parseFloat(acc?.exercise_total_count) + parseFloat(curr?.exercise_total_count)
+      parseFloat(acc?.exercise_record_total_count) + parseFloat(curr?.exercise_record_total_count)
     );
     const exerciseTotalVolume = (
-      parseFloat(acc?.exercise_total_volume) +  parseFloat(curr?.exercise_total_volume)
+      parseFloat(acc?.exercise_record_total_volume) +  parseFloat(curr?.exercise_record_total_volume)
     );
     const exerciseTotalCardio = (
-      timeToDecimal(acc?.exercise_total_cardio) + timeToDecimal(curr?.exercise_total_cardio)
+      fnTimeToDecimal(acc?.exercise_record_total_cardio) + fnTimeToDecimal(curr?.exercise_record_total_cardio)
     );
     const exerciseTotalScale = (
-      curr?.exercise_total_scale !== '0' ? curr?.exercise_total_scale : acc?.exercise_total_scale
+      curr?.exercise_record_total_scale !== '0' ? curr?.exercise_record_total_scale : acc?.exercise_record_total_scale
     );
     return {
-      exercise_total_count: String(exerciseTotalCount),
-      exercise_total_volume: String(exerciseTotalVolume),
-      exercise_total_cardio: String(decimalToTime(exerciseTotalCardio)),
-      exercise_total_scale: String(exerciseTotalScale),
+      exercise_record_total_count: String(exerciseTotalCount),
+      exercise_record_total_volume: String(exerciseTotalVolume),
+      exercise_record_total_cardio: String(fnDecimalToTime(exerciseTotalCardio)),
+      exercise_record_total_scale: String(exerciseTotalScale),
     };
   });
 
@@ -98,22 +98,22 @@ export const percent = async (
   );
   findFood = findFood?.length > 0 && findFood?.reduce((acc: any, curr: any) => {
     const foodTotalKcal = (
-      parseFloat(acc?.food_total_kcal) + parseFloat(curr?.food_total_kcal)
+      parseFloat(acc?.food_record_total_kcal) + parseFloat(curr?.food_record_total_kcal)
     );
     const foodTotalCarb = (
-      parseFloat(acc?.food_total_carb) + parseFloat(curr?.food_total_carb)
+      parseFloat(acc?.food_record_total_carb) + parseFloat(curr?.food_record_total_carb)
     );
     const foodTotalProtein = (
-      parseFloat(acc?.food_total_protein) + parseFloat(curr?.food_total_protein)
+      parseFloat(acc?.food_record_total_protein) + parseFloat(curr?.food_record_total_protein)
     );
     const foodTotalFat = (
-      parseFloat(acc?.food_total_fat) + parseFloat(curr?.food_total_fat)
+      parseFloat(acc?.food_record_total_fat) + parseFloat(curr?.food_record_total_fat)
     );
     return {
-      food_total_kcal: String(foodTotalKcal),
-      food_total_carb: String(foodTotalCarb),
-      food_total_protein: String(foodTotalProtein),
-      food_total_fat: String(foodTotalFat),
+      food_record_total_kcal: String(foodTotalKcal),
+      food_record_total_carb: String(foodTotalCarb),
+      food_record_total_protein: String(foodTotalProtein),
+      food_record_total_fat: String(foodTotalFat),
     };
   });
 
@@ -128,14 +128,14 @@ export const percent = async (
   );
   findMoney = findMoney?.length > 0 && findMoney?.reduce((acc: any, curr: any) => {
     const moneyTotalIncome = (
-      parseFloat(acc?.money_total_income) + parseFloat(curr?.money_total_income)
+      parseFloat(acc?.money_record_total_income) + parseFloat(curr?.money_record_total_income)
     );
     const moneyTotalExpense = (
-      parseFloat(acc?.money_total_expense) + parseFloat(curr?.money_total_expense)
+      parseFloat(acc?.money_record_total_expense) + parseFloat(curr?.money_record_total_expense)
     );
     return {
-      money_total_income: String(moneyTotalIncome),
-      money_total_expense: String(moneyTotalExpense),
+      money_record_total_income: String(moneyTotalIncome),
+      money_record_total_expense: String(moneyTotalExpense),
     };
   });
 
@@ -151,18 +151,18 @@ export const percent = async (
   const findSleepLength = findSleep?.length;
   findSleep = findSleep?.length > 0 && findSleep?.reduce((acc: any, curr: any) => {
     const sleepBedTime = (
-      timeToDecimal(acc?.sleep_bedTime) + timeToDecimal(curr?.sleep_bedTime)
+      fnTimeToDecimal(acc?.sleep_record_bedTime) + fnTimeToDecimal(curr?.sleep_record_bedTime)
     );
     const sleepWakeTime = (
-      timeToDecimal(acc?.sleep_wakeTime) + timeToDecimal(curr?.sleep_wakeTime)
+      fnTimeToDecimal(acc?.sleep_record_wakeTime) + fnTimeToDecimal(curr?.sleep_record_wakeTime)
     );
     const sleepSleepTime = (
-      timeToDecimal(acc?.sleep_sleepTime) + timeToDecimal(curr?.sleep_sleepTime)
+      fnTimeToDecimal(acc?.sleep_record_sleepTime) + fnTimeToDecimal(curr?.sleep_record_sleepTime)
     );
     return {
-      sleep_bedTime: String(decimalToTime(sleepBedTime)),
-      sleep_wakeTime: String(decimalToTime(sleepWakeTime)),
-      sleep_sleepTime: String(decimalToTime(sleepSleepTime)),
+      sleep_record_bedTime: String(fnDecimalToTime(sleepBedTime)),
+      sleep_record_wakeTime: String(fnDecimalToTime(sleepWakeTime)),
+      sleep_record_sleepTime: String(fnDecimalToTime(sleepSleepTime)),
     };
   });
 
@@ -175,9 +175,9 @@ export const percent = async (
     money: findMoney,
     sleepGoal: findSleepGoal[0],
     sleep: {
-      sleep_bedTime: decimalToTime(timeToDecimal(findSleep?.sleep_bedTime) / findSleepLength),
-      sleep_wakeTime: decimalToTime(timeToDecimal(findSleep?.sleep_wakeTime) / findSleepLength),
-      sleep_sleepTime: decimalToTime(timeToDecimal(findSleep?.sleep_sleepTime) / findSleepLength),
+      sleep_record_bedTime: fnDecimalToTime(fnTimeToDecimal(findSleep?.sleep_record_bedTime) / findSleepLength),
+      sleep_record_wakeTime: fnDecimalToTime(fnTimeToDecimal(findSleep?.sleep_record_wakeTime) / findSleepLength),
+      sleep_record_sleepTime: fnDecimalToTime(fnTimeToDecimal(findSleep?.sleep_record_sleepTime) / findSleepLength),
     },
   };
 
@@ -244,7 +244,7 @@ export const scale = async (
   initScale = String (parseFloat(findInitScale?.user_initScale || "0"));
   minScale = String (parseFloat(minScale?.minScale || "0"));
   maxScale = String (parseFloat(maxScale?.maxScale || "0"));
-  curScale = String (parseFloat(curScale?.exercise_total_scale || "0"));
+  curScale = String (parseFloat(curScale?.exercise_record_total_scale || "0"));
 
   if (!findInitScale && !minScale && !maxScale && !curScale) {
     finalResult = null;
@@ -326,16 +326,16 @@ export const nutrition = async (
     parseFloat(findInitNutrition?.user_initAvgKcalIntake || "0").toFixed(0)
   );
   totalKcalIntake = String (
-    parseFloat(findAllInformation?.food_total_kcal || "0").toFixed(0)
+    parseFloat(findAllInformation?.food_record_total_kcal || "0").toFixed(0)
   );
   totalCarbIntake = String (
-    parseFloat(findAllInformation?.food_total_carb || "0").toFixed(0)
+    parseFloat(findAllInformation?.food_record_total_carb || "0").toFixed(0)
   );
   totalProteinIntake = String (
-    parseFloat(findAllInformation?.food_total_protein || "0").toFixed(0)
+    parseFloat(findAllInformation?.food_record_total_protein || "0").toFixed(0)
   );
   totalFatIntake = String (
-    parseFloat(findAllInformation?.food_total_fat || "0").toFixed(0)
+    parseFloat(findAllInformation?.food_record_total_fat || "0").toFixed(0)
   );
   curAvgKcalIntake = String(
     (parseFloat(totalKcalIntake || "0") / (findTotalCnt || 1)).toFixed(0)
@@ -474,16 +474,16 @@ export const property = async (
     parseFloat(findInitProperty?.user_initProperty || "0")
   );
   totalIncomeAll = String(
-    parseFloat(findAllInformation?.allResult?.money_total_income || "0")
+    parseFloat(findAllInformation?.allResult?.money_record_total_income || "0")
   );
   totalExpenseAll = String(
-    parseFloat(findAllInformation?.allResult?.money_total_expense || "0")
+    parseFloat(findAllInformation?.allResult?.money_record_total_expense || "0")
   );
   totalIncomeExclusion = String(
-    parseFloat(findAllInformation?.exclusionResult?.money_total_income || "0")
+    parseFloat(findAllInformation?.exclusionResult?.money_record_total_income || "0")
   );
   totalExpenseExclusion = String(
-    parseFloat(findAllInformation?.exclusionResult?.money_total_expense || "0")
+    parseFloat(findAllInformation?.exclusionResult?.money_record_total_expense || "0")
   );
   curPropertyAll = String (
     parseFloat(findInitProperty?.user_initProperty || "0") +

@@ -12,17 +12,22 @@
       "react-app/jest"
     ],
     "rules": {
+      "import/extensions": "off",
+      "import/prefer-default-export": "off",
+      "no-console": "off",
+      "no-underscore-dangle": "off",
       "no-unused-vars": "off",
       "react-hooks/exhaustive-deps": "off",
       "react-hooks/rules-of-hooks": "warn",
       "@typescript-eslint/no-unused-vars": [
-        "warn",
-        {
-          "varsIgnorePattern": "^_",
-          "argsIgnorePattern": "^_"
-        }
-      ]
-    }
+				"off",
+				{
+					"varsIgnorePattern": "^_",
+					"argsIgnorePattern": "^_"
+				}
+			],
+			"@typescript-eslint/no-unused-expressions": "off"
+		}
   },
   "browserslist": {
     "production": [
@@ -48,11 +53,11 @@
     "@emotion/styled": "^11.14.1",
     "@mui/material": "^7.3.2",
     "@mui/system": "^7.3.2",
-    "@mui/x-date-pickers": "^8.11.1",
+    "@mui/x-date-pickers": "^8.12.0",
     "@react-hooks-library/core": "^0.6.2",
     "ajv": "^8.17.1",
     "ajv-keywords": "^5.1.0",
-    "axios": "^1.11.0",
+    "axios": "^1.12.2",
     "countries-and-timezones": "^3.8.0",
     "date-fns": "^4.1.0",
     "iso-country-currency": "^0.7.2",
@@ -63,9 +68,9 @@
     "react": "^19.1.1",
     "react-calendar": "^6.0.0",
     "react-dom": "^19.1.1",
-    "react-router": "^7.8.2",
+    "react-router": "^7.9.3",
     "react-scripts": "^5.0.1",
-    "recharts": "^3.2.0",
+    "recharts": "^3.2.1",
     "zustand": "^5.0.8"
   },
   "devDependencies": {
@@ -75,10 +80,10 @@
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@craco/craco": "^7.1.0",
     "@mui/types": "^7.4.6",
-    "@swc/core": "^1.13.5",
+    "@swc/core": "^1.13.20",
     "@testing-library/react": "^16.3.0",
-    "@types/node": "^24.3.1",
-    "@types/react": "^19.1.12",
+    "@types/node": "^24.5.2",
+    "@types/react": "^19.1.14",
     "@types/react-dom": "^19.1.9",
     "@types/react-router": "^5.1.20",
     "babel-loader": "^10.0.0",

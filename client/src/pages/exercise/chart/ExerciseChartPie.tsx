@@ -1,6 +1,6 @@
 // ExerciseChartPie.tsx
 
-import { useState, useEffect } from "@importReacts";
+import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
 import { ExercisePie, ExercisePieType } from "@importSchemas";
@@ -22,7 +22,7 @@ declare type PieProps = {
 }
 
 // -------------------------------------------------------------------------------------------------
-export const ExerciseChartPie = () => {
+export const ExerciseChartPie = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, chartColors, sessionId } = useCommonValue();
@@ -352,4 +352,4 @@ export const ExerciseChartPie = () => {
       {chartNode()}
     </>
   );
-};
+});

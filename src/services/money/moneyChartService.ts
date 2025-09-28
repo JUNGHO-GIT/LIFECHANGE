@@ -4,14 +4,14 @@ import * as repository from "@repositories/money/moneyChartRepository";
 import moment from "moment-timezone";
 
 // 1-1. chart (bar - today) ------------------------------------------------------------------------
-export const barToday = async (
+export const bar = async (
   user_id_param: string,
   DATE_param: any,
 ) => {
 
   // result 변수 선언
   let findResultGoal: any[] = [];
-  let findResultReal: any[] = [];
+  let findResultRecord: any[] = [];
   let finalResult: any = [];
   let statusResult: string = "";
 
@@ -21,11 +21,11 @@ export const barToday = async (
 
   try {
     // promise 사용하여 병렬 처리
-    [findResultGoal, findResultReal] = await Promise.all([
+    [findResultGoal, findResultRecord] = await Promise.all([
       repository.barGoal(
         user_id_param, dateStart, dateEnd
       ),
-      repository.barReal(
+      repository.barRecord(
         user_id_param, dateStart, dateEnd
       )
     ]);
@@ -36,13 +36,13 @@ export const barToday = async (
         name: String("income"),
         date: String(dateStart),
         goal: String(findResultGoal?.[0]?.money_goal_income || "0"),
-        real: String(findResultReal?.[0]?.money_total_income || "0"),
+        record: String(findResultRecord?.[0]?.money_record_total_income || "0"),
       },
       {
         name: String("expense"),
         date: String(dateStart),
         goal: String(findResultGoal?.[0]?.money_goal_expense || "0"),
-        real: String(findResultReal?.[0]?.money_total_expense || "0"),
+        record: String(findResultRecord?.[0]?.money_record_total_expense || "0"),
       },
     ]).flat();
 
@@ -279,7 +279,7 @@ export const lineWeek = async (
       const targetDay = moment(weekStartFmt).clone().add(index, 'days').format("YYYY-MM-DD");
 
       const findIndex = findResult.findIndex((item: any) => (
-        item.money_dateStart === targetDay
+        item.money_record_dateStart === targetDay
       ));
 
       finalResult.push({
@@ -287,11 +287,11 @@ export const lineWeek = async (
         date: String(date[index]),
         income:
           findIndex !== -1
-          ? String(findResult[findIndex]?.money_total_income)
+          ? String(findResult[findIndex]?.money_record_total_income)
           : "0",
         expense:
           findIndex !== -1
-          ? String(findResult[findIndex]?.money_total_expense)
+          ? String(findResult[findIndex]?.money_record_total_expense)
           : "0",
       });
     });
@@ -350,7 +350,7 @@ export const lineMonth = async (
       const targetDay = moment(monthStartFmt).clone().add(index, 'days').format("YYYY-MM-DD");
 
       const findIndex = findResult.findIndex((item: any) => (
-        item.money_dateStart === targetDay
+        item.money_record_dateStart === targetDay
       ));
 
       finalResult.push({
@@ -358,11 +358,11 @@ export const lineMonth = async (
         date: String(date[index]),
         income:
           findIndex !== -1
-          ? String(findResult[findIndex]?.money_total_income)
+          ? String(findResult[findIndex]?.money_record_total_income)
           : "0",
         expense:
           findIndex !== -1
-          ? String(findResult[findIndex]?.money_total_expense)
+          ? String(findResult[findIndex]?.money_record_total_expense)
           : "0",
       });
     });
@@ -440,8 +440,8 @@ export const avgWeek = async (
     // sum, count 설정
     parallelResult.forEach(({ findResult, index }) => {
       findResult.forEach((item: any) => {
-        sumIncome[index] += Number(item.money_total_income || "0");
-        sumExpense[index] += Number(item.money_total_expense || "0");
+        sumIncome[index] += Number(item.money_record_total_income || "0");
+        sumExpense[index] += Number(item.money_record_total_expense || "0");
         countRecords[index]++;
       });
     });
@@ -534,8 +534,8 @@ export const avgMonth = async (
     // sum, count 설정
     parallelResult.forEach(({ findResult, index }) => {
       findResult.forEach((item: any) => {
-        sumIncome[index] += Number(item.money_total_income || "0");
-        sumExpense[index] += Number(item.money_total_expense || "0");
+        sumIncome[index] += Number(item.money_record_total_income || "0");
+        sumExpense[index] += Number(item.money_record_total_expense || "0");
         countRecords[index]++;
       });
     });

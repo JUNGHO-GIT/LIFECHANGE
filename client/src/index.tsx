@@ -2,13 +2,13 @@
 
 import "react-calendar/dist/Calendar.css";
 import "@assets/styles/Core.css";
-import "@assets/styles/Calendar.css";
+import "@assets/styles/Schedule.css";
 import "@assets/styles/Chart.css";
 import "@assets/styles/Mui.css";
 import '@assets/styles/Components.css';
 
 import {
-  BrowserRouter, Routes, Route, createRoot, useEffect
+  BrowserRouter, Routes, Route, createRoot, useEffect, memo
 } from "@importReacts";
 
 import {
@@ -16,8 +16,7 @@ import {
 } from "@importMuis";
 
 import {
-  useRoot, useScrollTop, useFoodSection, useLanguageSetting, useLanguageInitialize,
-  useCommonValue,
+  useRoot, useScrollTop, useFoodSection, useLanguageSetting, useLanguageInitialize, useCommonValue,
 } from "@importHooks";
 
 import {
@@ -33,27 +32,23 @@ import {
 } from "@importPages";
 
 import {
-  CalendarList, CalendarDetail
+  SchedulePlannerList, SchedulePlannerDetail, ScheduleGoalList, ScheduleRecordList
 } from "@importPages";
 
 import {
-  ExerciseChart, ExerciseGoalList, ExerciseGoalDetail, ExerciseList, ExerciseDetail
+  ExerciseChart, ExerciseGoalList, ExerciseGoalDetail, ExerciseRecordList, ExerciseRecordDetail
 } from "@importPages";
 
 import {
-  FoodChart, FoodGoalList, FoodGoalDetail, FoodFindList, FoodFavoriteList, FoodList, FoodDetail
+  FoodChart, FoodGoalList, FoodGoalDetail, FoodFindList, FoodFavoriteList, FoodRecordList, FoodRecordDetail
 } from "@importPages";
 
 import {
-  TodayGoalList, TodayList
+  MoneyChart, MoneyGoalList, MoneyGoalDetail, MoneyRecordList, MoneyRecordDetail
 } from "@importPages";
 
 import {
-  MoneyChart, MoneyGoalList, MoneyGoalDetail, MoneyList, MoneyDetail
-} from "@importPages";
-
-import {
-  SleepChart, SleepGoalList, SleepGoalDetail, SleepList, SleepDetail
+  SleepChart, SleepGoalList, SleepGoalDetail, SleepRecordList, SleepRecordDetail
 } from "@importPages";
 
 import {
@@ -61,7 +56,7 @@ import {
 } from "@importPages";
 
 // -------------------------------------------------------------------------------------------------
-const App = () => {
+const App = memo(() => {
 
   const { PATH } = useCommonValue();
   const { setLOADING } = useStoreLoading();
@@ -114,38 +109,37 @@ const App = () => {
         <Route path={"/auth/error/*"} element={<AuthError />} />
         <Route path={"/auth/google/*"} element={<AuthGoogle />} />
         <Route path={"/auth/privacy/*"} element={<AuthPrivacy />} />
-        {/** calendar **/}
-        <Route path={"/calendar/list/*"} element={<CalendarList />} />
-        <Route path={"/calendar/detail/*"} element={<CalendarDetail />} />
+        {/** schedule **/}
+				<Route path={"/schedule/planner/list/*"} element={<SchedulePlannerList />} />
+				<Route path={"/schedule/planner/detail/*"} element={<SchedulePlannerDetail />} />
+        <Route path={"/schedule/goal/list/*"} element={<ScheduleGoalList />} />
+        <Route path={"/schedule/record/list/*"} element={<ScheduleRecordList />} />
         {/** exercise **/}
         <Route path={"/exercise/chart/list/*"} element={<ExerciseChart />} />
         <Route path={"/exercise/goal/list/*"} element={<ExerciseGoalList />} />
         <Route path={"/exercise/goal/detail/*"} element={<ExerciseGoalDetail />} />
-        <Route path={"/exercise/list/*"} element={<ExerciseList />} />
-        <Route path={"/exercise/detail/*"} element={<ExerciseDetail />} />
+        <Route path={"/exercise/record/list/*"} element={<ExerciseRecordList />} />
+        <Route path={"/exercise/record/detail/*"} element={<ExerciseRecordDetail />} />
         {/** food **/}
         <Route path={"/food/chart/list/*"} element={<FoodChart />} />
         <Route path={"/food/goal/list/*"} element={<FoodGoalList />} />
         <Route path={"/food/goal/detail/*"} element={<FoodGoalDetail />} />
-        <Route path={"/food/find/list/*"} element={<FoodFindList />} />
+        <Route path={"/food/record/list/*"} element={<FoodRecordList />} />
+        <Route path={"/food/record/detail/*"} element={<FoodRecordDetail />} />
         <Route path={"/food/favorite/list/*"} element={<FoodFavoriteList />} />
-        <Route path={"/food/list/*"} element={<FoodList />} />
-        <Route path={"/food/detail/*"} element={<FoodDetail />} />
-        {/** today **/}
-        <Route path={"/today/goal/list/*"} element={<TodayGoalList />} />
-        <Route path={"/today/list/*"} element={<TodayList />} />
+        <Route path={"/food/find/list/*"} element={<FoodFindList />} />
         {/** money **/}
         <Route path={"/money/chart/list/*"} element={<MoneyChart />} />
         <Route path={"/money/goal/list/*"} element={<MoneyGoalList />} />
         <Route path={"/money/goal/detail/*"} element={<MoneyGoalDetail />} />
-        <Route path={"/money/list/*"} element={<MoneyList />} />
-        <Route path={"/money/detail/*"} element={<MoneyDetail />} />
+        <Route path={"/money/record/list/*"} element={<MoneyRecordList />} />
+        <Route path={"/money/record/detail/*"} element={<MoneyRecordDetail />} />
         {/** sleep **/}
         <Route path={"/sleep/chart/list/*"} element={<SleepChart />} />
         <Route path={"/sleep/goal/list/*"} element={<SleepGoalList />} />
         <Route path={"/sleep/goal/detail/*"} element={<SleepGoalDetail />} />
-        <Route path={"/sleep/list/*"} element={<SleepList />} />
-        <Route path={"/sleep/detail/*"} element={<SleepDetail />} />
+        <Route path={"/sleep/record/list/*"} element={<SleepRecordList />} />
+        <Route path={"/sleep/record/detail/*"} element={<SleepRecordDetail />} />
         {/** user **/}
         <Route path={"/user/appInfo/*"} element={<AdminAppInfo />} />
         <Route path={"/user/appSetting/*"} element={<UserAppSetting />} />
@@ -159,17 +153,16 @@ const App = () => {
       {noneBottom && <BottomNav />}
     </div>
   );
-};
+});
+
+// -------------------------------------------------------------------------------------------------
+const fontFamily = "'Pretendard Variable', Pretendard, FontAwesome, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif";
 
 // -------------------------------------------------------------------------------------------------
 createRoot(document.getElementById('root') as HTMLElement).render(
   <BrowserRouter basename={"/LIFECHANGE"}>
     <ThemeProvider theme={
-      createTheme({
-        typography:{
-          fontFamily: "'Pretendard Variable', Pretendard, FontAwesome, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif",
-        },
-      })
+      createTheme({ typography:{ fontFamily: fontFamily } })
     }>
       <CssBaseline />
       <App />

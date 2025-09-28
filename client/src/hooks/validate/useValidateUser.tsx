@@ -1,7 +1,7 @@
 // useValidateUser.tsx
 
-import { useState, createRef, useRef } from "@importReacts";
-import { useStoreLanguage, useStoreAlert } from "@importStores";
+import { createRef, useCallback, useRef, useState } from "@importReacts";
+import { useStoreAlert, useStoreLanguage } from "@importStores";
 
 // -------------------------------------------------------------------------------------------------
 export const useValidateUser = () => {
@@ -16,7 +16,7 @@ export const useValidateUser = () => {
   const validate = useRef<Function>(() => {});
 
   // alert 표시 및 focus ---------------------------------------------------------------------------
-  const showAlertAndFocus = (field: string, msg: string, idx: number) => {
+  const showAlertAndFocus = useCallback((field: string, msg: string, idx: number) => {
     setALERT({
       open: true,
       msg: translate(msg),
@@ -36,7 +36,7 @@ export const useValidateUser = () => {
       });
     }
     return false;
-  };
+  }, [setALERT, translate]);
 
   // 이메일 형식 -----------------------------------------------------------------------------------
   const validateEmail = (email: string) => {

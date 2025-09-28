@@ -1,14 +1,14 @@
 // BottomNav.tsx
 
-import { useEffect } from "@importReacts";
-import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
+import { memo, useEffect } from "@importReacts";
+import { useCommonDate, useCommonValue, useStorageLocal } from "@importHooks";
+import { fnGetLocal } from "@importScripts";
 import { useStoreLanguage } from "@importStores";
-import { getLocal } from "@importScripts";
 import { Img, Paper } from "@importComponents";
 import { BottomNavigation, BottomNavigationAction } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
-export const BottomNav = () => {
+export const BottomNav = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { navigate, firstStr } = useCommonValue();
@@ -20,8 +20,7 @@ export const BottomNav = () => {
     "tabs", "bottom", "", {
       exercise: false,
       food: false,
-      today: false,
-      calendar: false,
+      schedule: false,
       money: false,
       sleep: false,
     }
@@ -42,12 +41,12 @@ export const BottomNav = () => {
   const handleClickBottomNav = (value: string) => {
 
     // top selected 값 가져오기
-    const getItem = getLocal("tabs", "top", "");
+    const getItem = fnGetLocal("tabs", "top", "");
     const selectedTop = getItem[value];
 
     let url = "";
-    if (selectedTop === "real" || selectedTop === "schedule") {
-      url = `/${value}/list`;
+    if (value === "schedule") {
+      url = `/${value}/planner/list`;
     }
     else {
       url = `/${value}/${selectedTop}/list`;
@@ -69,7 +68,7 @@ export const BottomNav = () => {
     const tabsSection = () => (
       <BottomNavigation
         showLabels={true}
-        value={Object.keys(selectedTab).find(key => selectedTab[key as keyof typeof selectedTab]) || "calendar"}
+        value={Object.keys(selectedTab).find(key => selectedTab[key as keyof typeof selectedTab]) || "schedule"}
         className={"w-100p"}
       >
         <BottomNavigationAction
@@ -105,35 +104,19 @@ export const BottomNav = () => {
           }}
         />
         <BottomNavigationAction
-          label={translate("today")}
-          value={"today"}
+          label={translate("schedule")}
+          value={"schedule"}
           icon={
             <Img
               max={20}
               hover={true}
               shadow={false}
               radius={false}
-              src={"today1.webp"}
+              src={"schedule1.webp"}
             />
           }
           onClick={() => {
-            handleClickBottomNav("today");
-          }}
-        />
-        <BottomNavigationAction
-          label={translate("calendar")}
-          value={"calendar"}
-          icon={
-            <Img
-              max={20}
-              hover={true}
-              shadow={false}
-              radius={false}
-              src={"calendar1.webp"}
-            />
-          }
-          onClick={() => {
-            handleClickBottomNav("calendar");
+            handleClickBottomNav("schedule");
           }}
         />
         <BottomNavigationAction
@@ -185,4 +168,4 @@ export const BottomNav = () => {
       {bottomNavNode()}
     </>
   );
-};
+});

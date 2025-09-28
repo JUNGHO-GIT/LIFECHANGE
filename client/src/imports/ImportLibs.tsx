@@ -7,4 +7,4 @@ export { default as moment } from "moment-timezone";
 export type { Moment } from "moment";
 export { getCountryForTimezone } from "countries-and-timezones";
 export { getAllInfoByISO } from "iso-country-currency";
-export { Calendar as CalendarReact } from "react-calendar";
+export { Calendar as ReactCalendar } from "react-calendar";
