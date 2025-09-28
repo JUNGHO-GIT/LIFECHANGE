@@ -29,6 +29,13 @@
       "@typescript-eslint/no-unused-expressions": "off"
     }
   },
+	"overrides": {
+		"webidl-conversions": "6.1.0",
+		"whatwg-url": "12.0.1"
+	},
+	"engines": {
+		"node": "16.x"
+	},
   "scripts": {
     "start": "tsx watch --clear-screen=false --ignore node_modules index.ts",
     "gcloud-deploy": "node .node/gcloud.cjs --full-deploy",
