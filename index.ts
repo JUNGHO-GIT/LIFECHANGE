@@ -159,9 +159,6 @@ app.use(cors({
 
 // 라우터 설정 -------------------------------------------------------------------------------------
 
-// admin
-app.use(`${preFix}/admin`, adminRouter);
-
 // schedule
 app.use(`${preFix}/schedule/planner`, schedulePlannerRouter);
 app.use(`${preFix}/schedule/goal`, scheduleGoalRouter);
@@ -192,6 +189,7 @@ app.use(`${preFix}/sleep/record`, sleepRecordRouter);
 // user
 app.use(`${preFix}/user/sync`, userSyncRouter);
 app.use(`${preFix}/user`, userRouter);
+app.use(`${preFix}/admin`, adminRouter);
 app.use(`${preFix}/auth/google`, googleRouter);
 
 // 0. 에러처리 미들웨어 -----------------------------------------------------------------------
