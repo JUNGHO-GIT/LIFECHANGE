@@ -32,7 +32,7 @@ import {
 } from "@importPages";
 
 import {
-  SchedulePlannerList, SchedulePlannerDetail, ScheduleGoalList, ScheduleRecordList
+  SchedulePlannerList, SchedulePlannerDetail, ScheduleGoalList, ScheduleRecordList, ScheduleGoalDetail, ScheduleRecordDetail
 } from "@importPages";
 
 import {
@@ -113,7 +113,9 @@ const App = memo(() => {
 				<Route path={"/schedule/planner/list/*"} element={<SchedulePlannerList />} />
 				<Route path={"/schedule/planner/detail/*"} element={<SchedulePlannerDetail />} />
         <Route path={"/schedule/goal/list/*"} element={<ScheduleGoalList />} />
+				<Route path={"/schedule/goal/detail/*"} element={<ScheduleGoalDetail />} />
         <Route path={"/schedule/record/list/*"} element={<ScheduleRecordList />} />
+				<Route path={"/schedule/record/detail/*"} element={<ScheduleRecordDetail />} />
         {/** exercise **/}
         <Route path={"/exercise/chart/list/*"} element={<ExerciseChart />} />
         <Route path={"/exercise/goal/list/*"} element={<ExerciseGoalList />} />

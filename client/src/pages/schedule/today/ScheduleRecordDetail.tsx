@@ -1,6 +1,6 @@
-// SchedulePlannerDetail.tsx
+// ScheduleRecordDetail.tsx
 
-import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
+import { useState, useEffect, useCallback, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useValidateSchedule } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { ScheduleRecord, ScheduleRecordType } from "@importSchemas";
@@ -12,10 +12,10 @@ import { Img, Bg, Paper, Grid, Div, Br } from "@importComponents";
 import { Checkbox, MenuItem } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
-export const SchedulePlannerDetail = memo(() => {
+export const ScheduleRecordDetail = memo(() => {
 
 	// 1. common -------------------------------------------------------------------------------------
-	const { URL_OBJECT, sessionId, localCurrency } = useCommonValue();
+	const { URL_SCHEDULE, sessionId, localCurrency } = useCommonValue();
 	const { bgColors, localUnit } = useCommonValue();
 	const { exerciseArray, foodArray, moneyArray } = useCommonValue();
 	const { location_dateType } = useCommonValue();
@@ -87,7 +87,7 @@ export const SchedulePlannerDetail = memo(() => {
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
 	useEffect(() => {
-		axios.get(`${URL_OBJECT}/planner/exist`, {
+		axios.get(`${URL_SCHEDULE}/record/exist`, {
 			params: {
 				user_id: sessionId,
 				DATE: {
@@ -109,7 +109,7 @@ export const SchedulePlannerDetail = memo(() => {
 				severity: `error`,
 			});
 		});
-	}, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
+	}, [URL_SCHEDULE, sessionId, DATE.dateStart, DATE.dateEnd]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
 	useEffect(() => {
@@ -118,7 +118,7 @@ export const SchedulePlannerDetail = memo(() => {
 			setLOADING(false);
 			return;
 		}
-		axios.get(`${URL_OBJECT}/planner/detail`, {
+		axios.get(`${URL_SCHEDULE}/record/detail`, {
 			params: {
 				user_id: sessionId,
 				DATE: DATE,
@@ -167,10 +167,10 @@ export const SchedulePlannerDetail = memo(() => {
 		.finally(() => {
 			setLOADING(false);
 		});
-	}, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
+	}, [URL_SCHEDULE, sessionId, DATE.dateStart, DATE.dateEnd]);
 
-	// 4-3. handle ----------------------------------------------------------------------------------
-	const handleDelete = (index: number, section: keyof ScheduleRecordType) => {
+  // 4-3. handle ----------------------------------------------------------------------------------
+  const handleDelete = (index: number, section: keyof ScheduleRecordType) => {
 		setOBJECT((prev) => {
 			const target = prev[section];
 			if (!Array.isArray(target)) {
@@ -183,7 +183,7 @@ export const SchedulePlannerDetail = memo(() => {
 		});
 		setCOUNT((prev) => ({
 			...prev,
-			newSectionCnt: prev.newSectionCnt - 1,
+      newSectionCnt: prev.newSectionCnt - 1,
 		}));
 	};
 
@@ -204,7 +204,7 @@ export const SchedulePlannerDetail = memo(() => {
 	const detailNode = () => {
 		// 7-1. date + count
 		const dateCountSection = () => (
-			<Grid container={true} spacing={2} className={`radius-2 border-1 shadow-0 p-20px`}>
+			<Grid container={true} spacing={2} className={`border-1 radius-2 shadow-1 p-20px`}>
 				<Grid size={12}>
 					<PickerDay
 						DATE={DATE}
@@ -227,24 +227,24 @@ export const SchedulePlannerDetail = memo(() => {
 
 		// 7-2. excersice
 		const exerciseSection = () => (
-			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
+			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-1`}>
 				{OBJECT?.schedule_exercise_section?.map((item, i) => (
 					<Grid container spacing={2} key={`exercise-detail-${i}`}
 					className={`${LOCKED === `locked` ? `locked` : ``} border-1 radius-2 p-20px`}>
 						{/** row 0 **/}
 						{i === 0 && (
-							<Grid container={true} spacing={0} className={`mt-n5px pb-10px border-bottom-1`}>
+							<Grid container={true} spacing={0} className={`mt-n5px pb-10px border-bottom-2`}>
 								<Grid size={12} className={`d-row`}>
 									<Div className={`d-row-left`}>
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
 											src={"exercise1.webp"}
 											className={`ml-5px mr-10px`}
 										/>
-										<Div className={`fs-0-9rem fw-600`}>
+										<Div className={`fw-600 fs-0-75rem`}>
 											{translate(`exercise`)}
 										</Div>
 									</Div>
@@ -298,7 +298,7 @@ export const SchedulePlannerDetail = memo(() => {
 										<MenuItem
 											key={idx}
 											value={part.exercise_record_part}
-											className={`fs-0-8rem`}
+											className={`fs-0-75rem`}
 										>
 											{translate(part.exercise_record_part)}
 										</MenuItem>
@@ -329,7 +329,7 @@ export const SchedulePlannerDetail = memo(() => {
 										<MenuItem
 											key={idx}
 											value={title}
-											className={`fs-0-8rem`}
+											className={`fs-0-75rem`}
 										>
 											{translate(title)}
 										</MenuItem>
@@ -350,7 +350,7 @@ export const SchedulePlannerDetail = memo(() => {
 									error={ERRORS?.[i]?.exercise_record_set}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -385,7 +385,7 @@ export const SchedulePlannerDetail = memo(() => {
 									error={ERRORS?.[i]?.exercise_record_rep}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -425,7 +425,7 @@ export const SchedulePlannerDetail = memo(() => {
 									error={ERRORS?.[i]?.exercise_record_weight}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -472,24 +472,24 @@ export const SchedulePlannerDetail = memo(() => {
 
 		// 7-3. food
 		const foodSection = () => (
-			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
+			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-1`}>
 				{OBJECT?.schedule_food_section?.map((item, i) => (
 					<Grid container spacing={2} key={`food-detail-${i}`}
 					className={`${LOCKED === `locked` ? `locked` : ``} border-1 radius-2 p-20px`}>
 						{/** row 0 **/}
 						{i === 0 && (
-							<Grid container={true} spacing={0} className={`mt-n5px pb-10px border-bottom-1`}>
+							<Grid container={true} spacing={0} className={`mt-n5px pb-10px border-bottom-2`}>
 								<Grid size={12} className={`d-row`}>
 									<Div className={`d-row-left`}>
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
 											src={"food1.webp"}
 											className={`ml-5px mr-10px`}
 										/>
-										<Div className={`fs-0-9rem fw-600`}>
+										<Div className={`fw-600 fs-0-75rem`}>
 											{translate(`food`)}
 										</Div>
 									</Div>
@@ -542,7 +542,7 @@ export const SchedulePlannerDetail = memo(() => {
 										<MenuItem
 											key={idx}
 											value={part.food_record_part}
-											className={`fs-0-8rem`}
+											className={`fs-0-75rem`}
 										>
 											{translate(part.food_record_part)}
 										</MenuItem>
@@ -678,7 +678,7 @@ export const SchedulePlannerDetail = memo(() => {
 									error={ERRORS?.[i]?.food_record_kcal}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -713,7 +713,7 @@ export const SchedulePlannerDetail = memo(() => {
 									error={ERRORS?.[i]?.food_record_carb}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -753,7 +753,7 @@ export const SchedulePlannerDetail = memo(() => {
 									error={ERRORS?.[i]?.food_record_protein}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -788,7 +788,7 @@ export const SchedulePlannerDetail = memo(() => {
 									error={ERRORS?.[i]?.food_record_fat}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -823,24 +823,24 @@ export const SchedulePlannerDetail = memo(() => {
 
 		// 7-4. money
 		const moneySection = () => (
-			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
+			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-1`}>
 				{OBJECT?.schedule_money_section?.map((item, i) => (
 					<Grid container spacing={2} key={`money-detail-${i}`}
 					className={`${LOCKED === `locked` ? `locked` : ``} border-1 radius-2 p-20px`}>
 						{/** row 0 **/}
 						{i === 0 && (
-							<Grid container={true} spacing={0} className={`mt-n5px pb-10px border-bottom-1`}>
+							<Grid container={true} spacing={0} className={`mt-n5px pb-10px border-bottom-2`}>
 								<Grid size={12} className={`d-row`}>
 									<Div className={`d-row-left`}>
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
 											src={"money1.webp"}
 											className={`ml-5px mr-10px`}
 										/>
-										<Div className={`fs-0-9rem fw-600`}>
+										<Div className={`fw-600 fs-0-75rem`}>
 											{translate(`money`)}
 										</Div>
 									</Div>
@@ -894,7 +894,7 @@ export const SchedulePlannerDetail = memo(() => {
 										<MenuItem
 											key={idx}
 											value={part.money_record_part}
-											className={`fs-0-8rem`}
+											className={`fs-0-75rem`}
 										>
 											{translate(part.money_record_part)}
 										</MenuItem>
@@ -925,7 +925,7 @@ export const SchedulePlannerDetail = memo(() => {
 										<MenuItem
 											key={idx}
 											value={title}
-											className={`fs-0-8rem`}
+											className={`fs-0-75rem`}
 										>
 											{translate(title)}
 										</MenuItem>
@@ -946,7 +946,7 @@ export const SchedulePlannerDetail = memo(() => {
 									error={ERRORS?.[i]?.money_record_amount}
 									startadornment={
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
@@ -1017,24 +1017,24 @@ export const SchedulePlannerDetail = memo(() => {
 
 		// 7-5. sleep
 		const sleepSection = () => (
-			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
+			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-1`}>
 				{OBJECT?.schedule_sleep_section?.map((item, i) => (
 					<Grid container spacing={2} key={`sleep-detail-${i}`}
 					className={`${LOCKED === `locked` ? `locked` : ``} border-1 radius-2 p-20px`}>
 						{/** row 0 **/}
 						{i === 0 && (
-							<Grid container={true} spacing={0} className={`mt-n5px pb-10px border-bottom-1`}>
+							<Grid container={true} spacing={0} className={`mt-n5px pb-10px border-bottom-2`}>
 								<Grid size={12} className={`d-row`}>
 									<Div className={`d-row-left`}>
 										<Img
-											max={14}
+											max={12}
 											hover={true}
 											shadow={false}
 											radius={false}
 											src={"sleep1.webp"}
 											className={`ml-5px mr-10px`}
 										/>
-										<Div className={`fs-0-9rem fw-600`}>
+										<Div className={`fw-600 fs-0-75rem`}>
 											{translate(`sleep`)}
 										</Div>
 									</Div>
@@ -1118,7 +1118,7 @@ export const SchedulePlannerDetail = memo(() => {
 
 		// 7-10. return
 		return (
-			<Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
+			<Paper className={`content-wrapper border-1 radius-2 shadow-1 h-min-75vh`}>
 				{dateCountSection()}
 				<Br m={20} />
 				{exerciseSection()}

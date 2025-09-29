@@ -156,7 +156,7 @@ export const Select = memo((props: any) => {
 	return (
 		<TextField
 			{ ...props }
-			select={ true }
+    	select={props?.children ? true : false}
 			children={ props?.children }
 			size={ props?.size || "small" }
 			type={ props?.type || "text" }

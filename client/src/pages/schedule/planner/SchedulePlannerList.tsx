@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
-import { Schedule } from "@importSchemas";
+import { ScheduleRecord } from "@importSchemas";
 import { axios, ReactCalendar } from "@importLibs";
 import { Footer } from "@importLayouts";
 import { Icons, Div, Br, Paper, Grid } from "@importComponents";
@@ -38,7 +38,7 @@ export const SchedulePlannerList = memo(() => {
 	);
 
 	// 2-2. useState -------------------------------------------------------------------------------
-	const [OBJECT, setOBJECT] = useState([Schedule]);
+	const [OBJECT, setOBJECT] = useState([ScheduleRecord]);
 	const [EXIST, setEXIST] = useState({
 		day: [""],
 		week: [""],
@@ -70,7 +70,7 @@ export const SchedulePlannerList = memo(() => {
 		})
 		.then((res: any) => {
 			setLOADING(false);
-			setOBJECT(res.data.result?.length > 0 ? res.data.result : [Schedule]);
+			setOBJECT(res.data.result?.length > 0 ? res.data.result : [ScheduleRecord]);
 		})
 		.catch((err: any) => {
 			setLOADING(false);

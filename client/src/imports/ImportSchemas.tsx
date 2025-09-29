@@ -8,9 +8,13 @@ export {
 
 // schedule -------------------------------------------------------------------------------------------
 export {
-	type ScheduleType,
-  Schedule,
-} from "@schemas/schedule/Schedule";
+	type ScheduleGoalType,
+  ScheduleGoal,
+} from "@schemas/schedule/ScheduleGoal";
+export {
+	type ScheduleRecordType,
+  ScheduleRecord,
+} from "@schemas/schedule/ScheduleRecord";
 
 // exercise -------------------------------------------------------------------------------------------
 export {

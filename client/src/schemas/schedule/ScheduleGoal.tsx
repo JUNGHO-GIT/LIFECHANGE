@@ -1,12 +1,12 @@
-// Schedule.tsx
+// ScheduleGoal.tsx
 
 // Types ------------------------------------------------------------------------------------------
-export type ScheduleType = {
+export type ScheduleGoalType = {
 	_id: string;
-	schedule_number: number;
-	schedule_dateType: string;
-	schedule_dateStart: string;
-	schedule_dateEnd: string;
+	schedule_record_number: number;
+	schedule_record_dateType: string;
+	schedule_record_dateStart: string;
+	schedule_record_dateEnd: string;
 
 	// 1. exercise
 	schedule_exercise_record_dateType: string;
@@ -63,12 +63,12 @@ export type ScheduleType = {
 };
 
 // Schema -----------------------------------------------------------------------------------------
-export const Schedule: ScheduleType = {
+export const ScheduleGoal: ScheduleGoalType = {
 	_id: "",
-	schedule_number: 0,
-	schedule_dateType: "",
-	schedule_dateStart: "0000-00-00",
-	schedule_dateEnd: "0000-00-00",
+	schedule_record_number: 0,
+	schedule_record_dateType: "",
+	schedule_record_dateStart: "0000-00-00",
+	schedule_record_dateEnd: "0000-00-00",
 
 	// 1. exercise
 	schedule_exercise_record_dateType: "",

@@ -30,9 +30,9 @@ export const exist = async (
   else {
     statusResult = "success";
     finalResult = findResult.reduce((acc: any, curr: any) => {
-      const curDateType = curr.schedule_dateType;
-      const curDateStart = curr.schedule_dateStart;
-      const curDateEnd = curr.schedule_dateEnd;
+      const curDateType = curr.schedule_goal_dateType;
+      const curDateStart = curr.schedule_goal_dateStart;
+      const curDateEnd = curr.schedule_goal_dateEnd;
 
       acc[curDateType].push(`${curDateStart} - ${curDateEnd}`);
 
@@ -133,25 +133,13 @@ export const detail = async (
     statusResult = "success";
   }
 
-	// 섹션 카운트
-	exerciseSectionCntResult = findResult?.[0]?.schedule_exercise_section?.length || 0;
-	foodSectionCntResult = findResult?.[0]?.schedule_food_section?.length || 0;
-	moneySectionCntResult = findResult?.[0]?.schedule_money_section?.length || 0;
-	sleepSectionCntResult = findResult?.[0]?.schedule_sleep_section?.length || 0;
-	sectionCntResult = (
-		exerciseSectionCntResult +
-		foodSectionCntResult +
-		moneySectionCntResult +
-		sleepSectionCntResult
-	);
+	// 섹션 카운트 - Goal은 target/current 기반으로 계산
+	const goalData = finalResult;
+	sectionCntResult = 1; // Goal 항목이 있으면 1개로 카운트
 
   return {
     status: statusResult,
-    exerciseSectionCnt: exerciseSectionCntResult,
-    foodSectionCnt: foodSectionCntResult,
-    moneySectionCnt: moneySectionCntResult,
-    sleepSectionCnt: sleepSectionCntResult,
-		sectionCnt: sectionCntResult,
+    sectionCnt: sectionCntResult,
     result: finalResult,
   };
 };

@@ -1,7 +1,7 @@
 // scheduleRecordRepository.ts
 
 import mongoose from "mongoose";
-import { Schedule } from "@schemas/schedule/Schedule";
+import { Schedule } from "@schemas/schedule/ScheduleRecord";
 import { ExerciseRecord } from "@schemas/exercise/ExerciseRecord";
 import { FoodRecord } from "@schemas/food/FoodRecord";
 import { MoneyRecord } from "@schemas/money/MoneyRecord";
@@ -19,26 +19,26 @@ export const exist = async (
 		{
 			$match: {
 				user_id: user_id_param,
-				schedule_dateStart: {
+				schedule_record_dateStart: {
 					$lte: dateEnd_param
 				},
-				schedule_dateEnd: {
+				schedule_record_dateEnd: {
 					$gte: dateStart_param,
 				},
-				...dateType_param ? { schedule_dateType: dateType_param } : {},
+				...dateType_param ? { schedule_record_dateType: dateType_param } : {},
 			}
 		},
 		{
 			$project: {
 				_id: 1,
-				schedule_dateType: 1,
-				schedule_dateStart: 1,
-				schedule_dateEnd: 1,
+				schedule_record_dateType: 1,
+				schedule_record_dateStart: 1,
+				schedule_record_dateEnd: 1,
 			}
 		},
 		{
 			$sort: {
-				schedule_dateStart: 1
+				schedule_record_dateStart: 1
 			}
 		}
 	]);
@@ -57,13 +57,13 @@ export const cnt = async (
 	const finalResult:any = await Schedule.countDocuments(
 		{
 			user_id: user_id_param,
-			schedule_dateStart: {
+			schedule_record_dateStart: {
 				$lte: dateEnd_param,
 			},
-			schedule_dateEnd: {
+			schedule_record_dateEnd: {
 				$gte: dateStart_param,
 			},
-			...dateType_param ? { schedule_dateType: dateType_param } : {},
+			...dateType_param ? { schedule_record_dateType: dateType_param } : {},
 		}
 	);
 
@@ -201,10 +201,10 @@ export const list = async (
 
 		finalResult.push({
 			_id: new mongoose.Types.ObjectId(),
-			schedule_number: finalResult.length + 1,
-			schedule_dateType: dateType_param || "",
-			schedule_dateStart: dateStr,
-			schedule_dateEnd: dateStr,
+			schedule_record_number: finalResult.length + 1,
+			schedule_record_dateType: dateType_param || "",
+			schedule_record_dateStart: dateStr,
+			schedule_record_dateEnd: dateStr,
 
 			schedule_exercise_record_dateType: exerciseItem?.exercise_record_dateType || "",
 			schedule_exercise_record_dateStart: exerciseItem?.exercise_record_dateStart || "0000-00-00",
@@ -361,10 +361,10 @@ export const detail = async (
 
 		finalResult.push({
 			_id: new mongoose.Types.ObjectId(),
-			schedule_number: finalResult.length + 1,
-			schedule_dateType: dateType_param || "",
-			schedule_dateStart: dateStr,
-			schedule_dateEnd: dateStr,
+			schedule_record_number: finalResult.length + 1,
+			schedule_record_dateType: dateType_param || "",
+			schedule_record_dateStart: dateStr,
+			schedule_record_dateEnd: dateStr,
 
 			schedule_exercise_record_dateType: exerciseItem?.exercise_record_dateType || "",
 			schedule_exercise_record_dateStart: exerciseItem?.exercise_record_dateStart || "0000-00-00",

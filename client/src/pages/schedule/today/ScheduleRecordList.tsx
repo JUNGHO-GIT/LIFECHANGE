@@ -1,6 +1,6 @@
 // ScheduleRecordList.tsx
 
-import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
+import { useState, useEffect, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal, useStorageSession } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
 import { axios } from "@importLibs";
@@ -15,7 +15,7 @@ export const ScheduleRecordList = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
 	const { URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP } = useCommonValue();
-	const { PATH, navigate, sessionId, localCurrency, localUnit } = useCommonValue();
+	const { PATH, navigate, sessionId, localCurrency, localUnit, toDetail } = useCommonValue();
 	const { getDayFmt, getDayNotFmt } = useCommonDate();
 	const { translate } = useStoreLanguage();
 	const { setALERT } = useStoreAlert();
@@ -61,14 +61,6 @@ export const ScheduleRecordList = memo(() => {
 		dateType: "day",
 		dateStart: "0000-00-00",
 		dateEnd: "0000-00-00",
-		toExerciseGoal: "/exercise/goal/detail",
-		toExerciseRecord: "/exercise/record/detail",
-		toFoodGoal: "/food/goal/detail",
-		toFoodRecord: "/food/record/detail",
-		toMoneyGoal: "/money/goal/detail",
-		toMoneyRecord: "/money/record/detail",
-		toSleepGoal: "/sleep/goal/detail",
-		toSleepRecord: "/sleep/record/detail",
 	});
 	const [COUNT, setCOUNT] = useState({
 		exercise: 0,
@@ -169,7 +161,7 @@ export const ScheduleRecordList = memo(() => {
 		const exerciseSection = () => (
 			<Grid container={true} spacing={0}>
 				{OBJECT_EXERCISE?.map((item, i) => (
-				<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-0 mb-10px"} key={`list-${i}`}>
+					<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-0 mb-10px"} key={`list-${i}`}>
 						<Grid size={12} className={"p-2px"}>
 							<Accordion
 								className={"border-0 shadow-0 radius-2"}
@@ -197,7 +189,7 @@ export const ScheduleRecordList = memo(() => {
 										/>
 									}
 									onClick={() => {
-										navigate(SEND.toExerciseRecord, {
+										navigate(toDetail, {
 											state: {
 												id: item._id,
 												from: "schedule",
@@ -342,7 +334,7 @@ export const ScheduleRecordList = memo(() => {
 		const foodSection = () => (
 			<Grid container={true} spacing={0}>
 				{OBJECT_FOOD?.map((item, i) => (
-				<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-0 mb-10px"} key={`list-${i}`}>
+					<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-0 mb-10px"} key={`list-${i}`}>
 						<Grid size={12} className={"p-2px"}>
 							<Accordion
 								className={"border-0 shadow-0 radius-2"}
@@ -370,7 +362,7 @@ export const ScheduleRecordList = memo(() => {
 										/>
 									}
 									onClick={() => {
-										navigate(SEND.toExerciseRecord, {
+										navigate(toDetail, {
 											state: {
 												id: item._id,
 												from: "schedule",
@@ -550,7 +542,7 @@ export const ScheduleRecordList = memo(() => {
 		const moneySection = () => (
 			<Grid container={true} spacing={0}>
 				{OBJECT_MONEY?.map((item, i) => (
-				<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-0 mb-10px"} key={`list-${i}`}>
+					<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-0 mb-10px"} key={`list-${i}`}>
 						<Grid size={12} className={"p-2px"}>
 							<Accordion
 								className={"border-0 shadow-0 radius-2"}
@@ -578,7 +570,7 @@ export const ScheduleRecordList = memo(() => {
 										/>
 									}
 									onClick={() => {
-										navigate(SEND.toMoneyRecord, {
+										navigate(toDetail, {
 											state: {
 												id: item._id,
 												from: "schedule",
@@ -716,7 +708,7 @@ export const ScheduleRecordList = memo(() => {
 										/>
 									}
 									onClick={() => {
-										navigate(SEND.toSleepRecord, {
+										navigate(toDetail, {
 											state: {
 												id: item._id,
 												from: "schedule",

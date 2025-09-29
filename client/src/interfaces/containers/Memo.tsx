@@ -41,9 +41,9 @@ export const Memo = memo((
 	}, [setOBJECT, firstStr, i, extra]);
 
 	// 3. memoized values ---------------------------------------------------------------------------
-	const memoValue = useMemo(() =>
-		OBJECT?.[`${firstStr}_section`]?.[i]?.[`${extra}`]
-	, [OBJECT, firstStr, i, extra]);
+	const memoValue = useMemo(() => {
+		return OBJECT?.[`${firstStr}_section`]?.[i]?.[`${extra}`] || "";
+	}, [OBJECT, firstStr, i, extra]);
 
 	// 4. memoNode -----------------------------------------------------------------------------------
 	const memoNode = useMemo(() => (

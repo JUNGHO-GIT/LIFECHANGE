@@ -15,7 +15,7 @@ export const ScheduleGoalList = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
 	const { URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP } = useCommonValue();
-	const { PATH, navigate, sessionId, localCurrency, localUnit } = useCommonValue();
+	const { PATH, navigate, sessionId, localCurrency, localUnit, toDetail } = useCommonValue();
 	const { getDayFmt, getDayNotFmt } = useCommonDate();
 	const { translate } = useStoreLanguage();
 	const { setALERT } = useStoreAlert();
@@ -60,15 +60,7 @@ export const ScheduleGoalList = memo(() => {
 		from: "schedule",
 		dateType: "",
 		dateStart: "0000-00-00",
-		dateEnd: "0000-00-00",
-		toExerciseGoal: "/exercise/goal/detail",
-		toExerciseRecord: "/exercise/goal/detail",
-		toFoodGoal: "/food/goal/detail",
-		toFoodRecord: "/food/goal/detail",
-		toMoneyGoal: "/money/goal/detail",
-		toMoneyRecord: "/money/goal/detail",
-		toSleepGoal: "/sleep/goal/detail",
-		toSleepRecord: "/sleep/goal/detail",
+		dateEnd: "0000-00-00"
 	});
 	const [COUNT, setCOUNT] = useState({
 		exercise: 0,
@@ -197,7 +189,7 @@ export const ScheduleGoalList = memo(() => {
 										/>
 									}
 									onClick={() => {
-										navigate(SEND.toExerciseGoal, {
+										navigate(toDetail, {
 											state: {
 												id: item._id,
 												from: "schedule",
@@ -566,7 +558,7 @@ export const ScheduleGoalList = memo(() => {
 										/>
 									}
 									onClick={() => {
-										navigate(SEND.toFoodGoal, {
+										navigate(toDetail, {
 											state: {
 												id: item._id,
 												from: "schedule",
@@ -935,7 +927,7 @@ export const ScheduleGoalList = memo(() => {
 										/>
 									}
 									onClick={() => {
-										navigate(SEND.toMoneyGoal, {
+										navigate(toDetail, {
 											state: {
 												id: item._id,
 												from: "schedule",
@@ -1158,7 +1150,7 @@ export const ScheduleGoalList = memo(() => {
 										/>
 									}
 									onClick={() => {
-										navigate(SEND.toSleepGoal, {
+										navigate(toDetail, {
 											state: {
 												id: item._id,
 												from: "schedule",

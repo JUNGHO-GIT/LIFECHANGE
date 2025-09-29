@@ -30,9 +30,9 @@ export const exist = async (
 	else {
 		statusResult = "success";
 		finalResult = findResult.reduce((acc: any, curr: any) => {
-			const curDateType = curr.schedule_dateType;
-			const curDateStart = curr.schedule_dateStart;
-			const curDateEnd = curr.schedule_dateEnd;
+			const curDateType = curr.schedule_record_dateType;
+			const curDateStart = curr.schedule_record_dateStart;
+			const curDateEnd = curr.schedule_record_dateEnd;
 
 			acc[curDateType].push(`${curDateStart} - ${curDateEnd}`);
 

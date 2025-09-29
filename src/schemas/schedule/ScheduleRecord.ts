@@ -247,7 +247,7 @@ const schema = new mongoose.Schema({
 // 3. counter --------------------------------------------------------------------------------------
 schema.pre("save", async function(next) {
 	if (this.isNew) {
-		this.schedule_number = await incrementSeq("schedule_number", "Schedule");
+		this.schedule_record_number = await incrementSeq("schedule_record_number", "Schedule");
 	}
 	next();
 });

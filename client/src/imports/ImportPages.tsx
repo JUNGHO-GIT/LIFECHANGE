@@ -13,9 +13,9 @@ export { AuthPrivacy } from "@pages/auth/AuthPrivacy";
 export { SchedulePlannerList } from "@pages/schedule/planner/SchedulePlannerList";
 export { SchedulePlannerDetail } from "@pages/schedule/planner/SchedulePlannerDetail";
 export { ScheduleGoalList } from "@pages/schedule/today/ScheduleGoalList";
-// export { ScheduleGoalDetail } from "@pages/schedule/today/ScheduleGoalDetail";
+export { ScheduleGoalDetail } from "@pages/schedule/today/ScheduleGoalDetail";
 export { ScheduleRecordList } from "@pages/schedule/today/ScheduleRecordList";
-// export { ScheduleRecordDetail } from "@pages/schedule/today/ScheduleRecordDetail";
+export { ScheduleRecordDetail } from "@pages/schedule/today/ScheduleRecordDetail";
 
 // exercise ----------------------------------------------------------------------------------------
 export { ExerciseChart } from "@pages/exercise/chart/ExerciseChart";
