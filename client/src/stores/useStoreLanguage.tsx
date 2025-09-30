@@ -1165,12 +1165,16 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
         en: ""
       },
 			goalToday: {
-				ko: "오늘(목표)",
-				en: "Today(Goal)",
+				ko: "오늘 [목표]",
+				en: "Today [Goal]"
 			},
 			recordToday: {
-				ko: "오늘(기록)",
-				en: "Today(Record)"
+				ko: "오늘 [기록]",
+				en: "Today [Record]",
+			},
+			chartToday: {
+				ko: "오늘 [분석]",
+				en: "Today [Analysis]",
 			},
       this: {
         ko: "오늘",

@@ -8,144 +8,104 @@ import { moment, type Moment } from "@importLibs";
 export const useCommonDate = () => {
 
 	// 1. common ------------------------------------------------------------------------------------
-  const { localTimeZone } = useCommonValue();
+	const { localTimeZone } = useCommonValue();
 
-  // 2. helper -------------------------------------------------------------------------------------
+	// 2. helper -------------------------------------------------------------------------------------
 	const getMoment = useCallback((params?: Moment | Date | string) => {
-    if (!params || params === "0000-00-00") {
-      return moment();
-    }
-    return moment(new Date(params as string));
+		return (!params || params === "0000-00-00") ? moment() : moment(new Date(params as string));
 	}, []);
 
-  const createMomentWithTimezone = useCallback((params?: Moment | Date | string) => {
-    if (!params || params === "0000-00-00") {
-      return moment().tz(localTimeZone);
-    }
-    return moment(new Date(params as string)).tz(localTimeZone);
-  }, [localTimeZone]);
+	const createMomentWithTimezone = useCallback((params?: Moment | Date | string) => {
+		return (!params || params === "0000-00-00") ?
+			moment().tz(localTimeZone) :
+			moment(new Date(params as string)).tz(localTimeZone);
+	}, [localTimeZone]);
 
-  const createDateFunction = useCallback((modifier?: (m: moment.Moment) => moment.Moment) => {
-    return function(params?: Moment | Date | string) {
-      const m = createMomentWithTimezone(params);
-      return modifier ? modifier(m) : m;
-    };
-  }, [createMomentWithTimezone]);
-
-  const createDateFunctionWithFormat = useCallback((modifier?: (m: moment.Moment) => moment.Moment) => {
-    return (params?: Moment | Date | string) => {
-      const m = createMomentWithTimezone(params);
-      const result = modifier ? modifier(m) : m;
-      return result.format("YYYY-MM-DD");
-    };
+	const createDateFunction = useCallback((modifier?: (m: moment.Moment) => moment.Moment) => {
+		return (params?: Moment | Date | string) => {
+			const m = createMomentWithTimezone(params);
+			return modifier ? modifier(m) : m;
+		};
 	}, [createMomentWithTimezone]);
 
-  // 3. not fmt -----------------------------------------------------------------------------------
-  const getDayNotFmt = createDateFunction();
-  const getDayStartNotFmt = createDateFunction(m => m.startOf("day"));
-  const getDayEndNotFmt = createDateFunction(m => m.endOf("day"));
-  const getPrevDayStartNotFmt = createDateFunction(m => m.subtract(1, "days").startOf("day"));
-  const getPrevDayEndNotFmt = createDateFunction(m => m.subtract(1, "days").endOf("day"));
-  const getNextDayStartNotFmt = createDateFunction(m => m.add(1, "days").startOf("day"));
-  const getNextDayEndNotFmt = createDateFunction(m => m.add(1, "days").endOf("day"));
-  const getWeekStartNotFmt = createDateFunction(m => m.startOf("isoWeek"));
-  const getWeekEndNotFmt = createDateFunction(m => m.endOf("isoWeek"));
-  const getPrevWeekStartNotFmt = createDateFunction(m => m.subtract(1, "weeks").startOf("isoWeek"));
-  const getPrevWeekEndNotFmt = createDateFunction(m => m.subtract(1, "weeks").endOf("isoWeek"));
-  const getNextWeekStartNotFmt = createDateFunction(m => m.add(1, "weeks").startOf("isoWeek"));
-  const getNextWeekEndNotFmt = createDateFunction(m => m.add(1, "weeks").endOf("isoWeek"));
-  const getMonthStartNotFmt = createDateFunction(m => m.startOf("month"));
-  const getMonthEndNotFmt = createDateFunction(m => m.endOf("month"));
-  const getPrevMonthStartNotFmt = createDateFunction(m => m.subtract(1, "months").startOf("month"));
-  const getPrevMonthEndNotFmt = createDateFunction(m => m.subtract(1, "months").endOf("month"));
-  const getNextMonthStartNotFmt = createDateFunction(m => m.add(1, "months").startOf("month"));
-  const getNextMonthEndNotFmt = createDateFunction(m => m.add(1, "months").endOf("month"));
-  const getYearStartNotFmt = createDateFunction(m => m.startOf("year"));
-  const getYearEndNotFmt = createDateFunction(m => m.endOf("year"));
-  const getPrevYearStartNotFmt = createDateFunction(m => m.subtract(1, "years").startOf("year"));
-  const getPrevYearEndNotFmt = createDateFunction(m => m.subtract(1, "years").endOf("year"));
-  const getNextYearStartNotFmt = createDateFunction(m => m.add(1, "years").startOf("year"));
-  const getNextYearEndNotFmt = createDateFunction(m => m.add(1, "years").endOf("year"));
-
-  // 4. fmt ---------------------------------------------------------------------------------------
-  const getDayFmt = createDateFunctionWithFormat();
-  const getDayStartFmt = createDateFunctionWithFormat(m => m.startOf("day"));
-  const getDayEndFmt = createDateFunctionWithFormat(m => m.endOf("day"));
-  const getPrevDayStartFmt = createDateFunctionWithFormat(m => m.subtract(1, "days").startOf("day"));
-  const getPrevDayEndFmt = createDateFunctionWithFormat(m => m.subtract(1, "days").endOf("day"));
-  const getNextDayStartFmt = createDateFunctionWithFormat(m => m.add(1, "days").startOf("day"));
-  const getNextDayEndFmt = createDateFunctionWithFormat(m => m.add(1, "days").endOf("day"));
-  const getWeekStartFmt = createDateFunctionWithFormat(m => m.startOf("isoWeek"));
-  const getWeekEndFmt = createDateFunctionWithFormat(m => m.endOf("isoWeek"));
-  const getPrevWeekStartFmt = createDateFunctionWithFormat(m => m.subtract(1, "weeks").startOf("isoWeek"));
-  const getPrevWeekEndFmt = createDateFunctionWithFormat(m => m.subtract(1, "weeks").endOf("isoWeek"));
-  const getNextWeekStartFmt = createDateFunctionWithFormat(m => m.add(1, "weeks").startOf("isoWeek"));
-  const getNextWeekEndFmt = createDateFunctionWithFormat(m => m.add(1, "weeks").endOf("isoWeek"));
-  const getMonthStartFmt = createDateFunctionWithFormat(m => m.startOf("month"));
-  const getMonthEndFmt = createDateFunctionWithFormat(m => m.endOf("month"));
-  const getPrevMonthStartFmt = createDateFunctionWithFormat(m => m.subtract(1, "months").startOf("month"));
-  const getPrevMonthEndFmt = createDateFunctionWithFormat(m => m.subtract(1, "months").endOf("month"));
-  const getNextMonthStartFmt = createDateFunctionWithFormat(m => m.add(1, "months").startOf("month"));
-  const getNextMonthEndFmt = createDateFunctionWithFormat(m => m.add(1, "months").endOf("month"));
-  const getYearStartFmt = createDateFunctionWithFormat(m => m.startOf("year"));
-  const getYearEndFmt = createDateFunctionWithFormat(m => m.endOf("year"));
-  const getPrevYearStartFmt = createDateFunctionWithFormat(m => m.subtract(1, "years").startOf("year"));
-  const getPrevYearEndFmt = createDateFunctionWithFormat(m => m.subtract(1, "years").endOf("year"));
-  const getNextYearStartFmt = createDateFunctionWithFormat(m => m.add(1, "years").startOf("year"));
-  const getNextYearEndFmt = createDateFunctionWithFormat(m => m.add(1, "years").endOf("year"));
+	const createDateFunctionWithFormat = useCallback((modifier?: (m: moment.Moment) => moment.Moment) => {
+		return (params?: Moment | Date | string) => {
+			const m = createMomentWithTimezone(params);
+			const result = modifier ? modifier(m) : m;
+			return result.format("YYYY-MM-DD");
+		};
+	}, [createMomentWithTimezone]);
 
 	// 10. return ----------------------------------------------------------------------------------
-  return {
-    getMoment,
-    getDayNotFmt,
-    getDayFmt,
-    getDayStartNotFmt,
-    getDayStartFmt,
-    getDayEndNotFmt,
-    getDayEndFmt,
-    getPrevDayStartNotFmt,
-    getPrevDayStartFmt,
-    getPrevDayEndNotFmt,
-    getPrevDayEndFmt,
-    getNextDayStartNotFmt,
-    getNextDayStartFmt,
-    getNextDayEndNotFmt,
-    getNextDayEndFmt,
-    getWeekStartNotFmt,
-    getWeekStartFmt,
-    getWeekEndNotFmt,
-    getWeekEndFmt,
-    getPrevWeekStartNotFmt,
-    getPrevWeekStartFmt,
-    getPrevWeekEndNotFmt,
-    getPrevWeekEndFmt,
-    getNextWeekStartNotFmt,
-    getNextWeekStartFmt,
-    getNextWeekEndNotFmt,
-    getNextWeekEndFmt,
-    getMonthStartNotFmt,
-    getMonthStartFmt,
-    getMonthEndNotFmt,
-    getMonthEndFmt,
-    getPrevMonthStartNotFmt,
-    getPrevMonthStartFmt,
-    getPrevMonthEndNotFmt,
-    getPrevMonthEndFmt,
-    getNextMonthStartNotFmt,
-    getNextMonthStartFmt,
-    getNextMonthEndNotFmt,
-    getNextMonthEndFmt,
-    getYearStartNotFmt,
-    getYearStartFmt,
-    getYearEndNotFmt,
-    getYearEndFmt,
-    getPrevYearStartNotFmt,
-    getPrevYearStartFmt,
-    getPrevYearEndNotFmt,
-    getPrevYearEndFmt,
-    getNextYearStartNotFmt,
-    getNextYearStartFmt,
-    getNextYearEndNotFmt,
-    getNextYearEndFmt,
-  };
+	return {
+
+		// Base Functions
+		getMoment,
+
+		// Day Functions (Not Formatted)
+		getDayNotFmt: createDateFunction(),
+		getDayStartNotFmt: createDateFunction(m => m.startOf("day")),
+		getDayEndNotFmt: createDateFunction(m => m.endOf("day")),
+		getPrevDayStartNotFmt: createDateFunction(m => m.subtract(1, "days").startOf("day")),
+		getPrevDayEndNotFmt: createDateFunction(m => m.subtract(1, "days").endOf("day")),
+		getNextDayStartNotFmt: createDateFunction(m => m.add(1, "days").startOf("day")),
+		getNextDayEndNotFmt: createDateFunction(m => m.add(1, "days").endOf("day")),
+
+		// Day Functions (Formatted)
+		getDayFmt: createDateFunctionWithFormat(),
+		getDayStartFmt: createDateFunctionWithFormat(m => m.startOf("day")),
+		getDayEndFmt: createDateFunctionWithFormat(m => m.endOf("day")),
+		getPrevDayStartFmt: createDateFunctionWithFormat(m => m.subtract(1, "days").startOf("day")),
+		getPrevDayEndFmt: createDateFunctionWithFormat(m => m.subtract(1, "days").endOf("day")),
+		getNextDayStartFmt: createDateFunctionWithFormat(m => m.add(1, "days").startOf("day")),
+		getNextDayEndFmt: createDateFunctionWithFormat(m => m.add(1, "days").endOf("day")),
+
+		// Week Functions (Not Formatted)
+		getWeekStartNotFmt: createDateFunction(m => m.startOf("isoWeek")),
+		getWeekEndNotFmt: createDateFunction(m => m.endOf("isoWeek")),
+		getPrevWeekStartNotFmt: createDateFunction(m => m.subtract(1, "weeks").startOf("isoWeek")),
+		getPrevWeekEndNotFmt: createDateFunction(m => m.subtract(1, "weeks").endOf("isoWeek")),
+		getNextWeekStartNotFmt: createDateFunction(m => m.add(1, "weeks").startOf("isoWeek")),
+		getNextWeekEndNotFmt: createDateFunction(m => m.add(1, "weeks").endOf("isoWeek")),
+
+		// Week Functions (Formatted)
+		getWeekStartFmt: createDateFunctionWithFormat(m => m.startOf("isoWeek")),
+		getWeekEndFmt: createDateFunctionWithFormat(m => m.endOf("isoWeek")),
+		getPrevWeekStartFmt: createDateFunctionWithFormat(m => m.subtract(1, "weeks").startOf("isoWeek")),
+		getPrevWeekEndFmt: createDateFunctionWithFormat(m => m.subtract(1, "weeks").endOf("isoWeek")),
+		getNextWeekStartFmt: createDateFunctionWithFormat(m => m.add(1, "weeks").startOf("isoWeek")),
+		getNextWeekEndFmt: createDateFunctionWithFormat(m => m.add(1, "weeks").endOf("isoWeek")),
+
+		// Month Functions (Not Formatted)
+		getMonthStartNotFmt: createDateFunction(m => m.startOf("month")),
+		getMonthEndNotFmt: createDateFunction(m => m.endOf("month")),
+		getPrevMonthStartNotFmt: createDateFunction(m => m.subtract(1, "months").startOf("month")),
+		getPrevMonthEndNotFmt: createDateFunction(m => m.subtract(1, "months").endOf("month")),
+		getNextMonthStartNotFmt: createDateFunction(m => m.add(1, "months").startOf("month")),
+		getNextMonthEndNotFmt: createDateFunction(m => m.add(1, "months").endOf("month")),
+
+		// Month Functions (Formatted)
+		getMonthStartFmt: createDateFunctionWithFormat(m => m.startOf("month")),
+		getMonthEndFmt: createDateFunctionWithFormat(m => m.endOf("month")),
+		getPrevMonthStartFmt: createDateFunctionWithFormat(m => m.subtract(1, "months").startOf("month")),
+		getPrevMonthEndFmt: createDateFunctionWithFormat(m => m.subtract(1, "months").endOf("month")),
+		getNextMonthStartFmt: createDateFunctionWithFormat(m => m.add(1, "months").startOf("month")),
+		getNextMonthEndFmt: createDateFunctionWithFormat(m => m.add(1, "months").endOf("month")),
+
+		// Year Functions (Not Formatted)
+		getYearStartNotFmt: createDateFunction(m => m.startOf("year")),
+		getYearEndNotFmt: createDateFunction(m => m.endOf("year")),
+		getPrevYearStartNotFmt: createDateFunction(m => m.subtract(1, "years").startOf("year")),
+		getPrevYearEndNotFmt: createDateFunction(m => m.subtract(1, "years").endOf("year")),
+		getNextYearStartNotFmt: createDateFunction(m => m.add(1, "years").startOf("year")),
+		getNextYearEndNotFmt: createDateFunction(m => m.add(1, "years").endOf("year")),
+
+		// Year Functions (Formatted)
+		getYearStartFmt: createDateFunctionWithFormat(m => m.startOf("year")),
+		getYearEndFmt: createDateFunctionWithFormat(m => m.endOf("year")),
+		getPrevYearStartFmt: createDateFunctionWithFormat(m => m.subtract(1, "years").startOf("year")),
+		getPrevYearEndFmt: createDateFunctionWithFormat(m => m.subtract(1, "years").endOf("year")),
+		getNextYearStartFmt: createDateFunctionWithFormat(m => m.add(1, "years").startOf("year")),
+		getNextYearEndFmt: createDateFunctionWithFormat(m => m.add(1, "years").endOf("year")),
+	};
 };

@@ -1,234 +1,237 @@
 // useCommonValue.tsx
 
-import { useLocation, useNavigate } from "@importReacts";
+import { useLocation, useNavigate, useMemo } from "@importReacts";
 
 // -------------------------------------------------------------------------------------------------
 export const useCommonValue = () => {
 
-  let navigate = useNavigate();
-  let location = useLocation();
-
-  const location_id: string = location?.state?.id;
-  const location_from: string = location?.state?.from;
-  const location_dateType: string = location?.state?.dateType;
-  const location_dateStart: string = location?.state?.dateStart;
-  const location_dateEnd: string = location?.state?.dateEnd;
-  const location_category: string = location?.state?.category;
-
+  const navigate = useNavigate();
+  const location = useLocation();
   const PATH: string = location?.pathname;
-  const firstStr: string = PATH?.split("/")[1] || "";
-  const secondStr: string = PATH?.split("/")[2] || "";
-  const thirdStr: string = PATH?.split("/")[3] || "";
-
-	// list, detail, goal
-	const isList: boolean = PATH.includes("/list");
-	const isDetail: boolean = PATH.includes("/detail");
-  const isGoal: boolean = secondStr === "goal";
-
-	// schedule
-	const isSchedule: boolean = firstStr === "schedule";
-	const isSchedulePlannerList: boolean = PATH.includes("/schedule/planner/list");
-	const isSchedulePlannerDetail: boolean = PATH.includes("/schedule/planner/detail");
-	const isScheduleGoalList: boolean = PATH.includes("/schedule/goal/list");
-	const isScheduleGoalDetail: boolean = PATH.includes("/schedule/goal/detail");
-	const isScheduleRecordList: boolean = PATH.includes("/schedule/record/list");
-	const isScheduleRecordDetail: boolean = PATH.includes("/schedule/record/detail");
-
-	// find
-	const isFindList: boolean = PATH.includes("/find/list");
-	const isFavoriteList: boolean = PATH.includes("/favorite/list");
-
-	// goal
-	const isGoalList: boolean = !isScheduleGoalList && !isSchedulePlannerList && PATH.includes("/goal/list");
-	const isGoalDetail: boolean = !isScheduleGoalList && !isSchedulePlannerList && PATH.includes("/goal/detail");
-
-	// record
-	const isRecordList: boolean = !isScheduleRecordList && !isGoalList && PATH.includes("/record/list");
-	const isRecordDetail: boolean = !isSchedulePlannerDetail && !isGoalDetail && PATH.includes("/record/detail");
-
-	// to
-  const toFavorite: string = `/${firstStr}/favorite/list`;
-  const toFind: string = `/${firstStr}/find/list`;
-  const toList: string = isGoal ? `/${firstStr}/goal/list` : `/${firstStr}/record/list`;
-  const toDetail: string = isGoal ? `/${firstStr}/goal/detail` : `/${firstStr}/record/detail`;
-  const toDelete: string = isGoal ? `/${firstStr}/goal/delete` : `/${firstStr}/record/delete`;
-  const toSchedule: string = `/${firstStr}/planner/list`;
-
-  // env
+  const pathParts = PATH?.split("/") || [];
   const TITLE: any = process.env.REACT_APP_TITLE || "";
-  const URL: string = process.env.REACT_APP_SERVER_URL || "";
-  const GCLOUD_URL: string = process.env.REACT_APP_GCLOUD_URL || "";
-  const ADMIN_ID: string = process.env.REACT_APP_ADMIN_ID || "";
-  const ADMIN_PW: string = process.env.REACT_APP_ADMIN_PW || "";
-  const SUBFIX : string= process.env[`REACT_APP_${firstStr.toUpperCase()}`] || "";
-	const SUBFIX_SCHEDULE: string = process.env[`REACT_APP_SCHEDULE`] || "";
-  const SUBFIX_GOOGLE: string = process.env[`REACT_APP_GOOGLE`] || "";
-  const SUBFIX_ADMOB: string = process.env[`REACT_APP_ADMOB`] || "";
-  const SUBFIX_ADMIN: string = process.env[`REACT_APP_ADMIN`] || "";
-  const SUBFIX_EXERCISE: string = process.env[`REACT_APP_EXERCISE`] || "";
-  const SUBFIX_FOOD: string = process.env[`REACT_APP_FOOD`] || "";
-  const SUBFIX_MONEY: string = process.env[`REACT_APP_MONEY`] || "";
-  const SUBFIX_SLEEP: string = process.env[`REACT_APP_SLEEP`] || "";
+  const localTitle: any = useMemo(() => JSON.parse(localStorage.getItem(TITLE) || "{}"), [TITLE]);
+  const sessionTitle: any = useMemo(() => JSON.parse(sessionStorage.getItem(TITLE) || "{}"), [TITLE]);
 
-  // URL
-  const URL_OBJECT: string = URL + SUBFIX;
-	const URL_SCHEDULE: string = URL + SUBFIX_SCHEDULE;
-  const URL_GOOGLE: string = URL + SUBFIX_GOOGLE;
-  const URL_ADMOB: string = URL + SUBFIX_ADMOB;
-  const URL_ADMIN: string = URL + SUBFIX_ADMIN;
-  const URL_EXERCISE: string = URL + SUBFIX_EXERCISE;
-  const URL_FOOD: string = URL + SUBFIX_FOOD;
-  const URL_MONEY: string = URL + SUBFIX_MONEY;
-  const URL_SLEEP: string = URL + SUBFIX_SLEEP;
-
-  // local storage (object 타입)
-  const localTitle: any = JSON.parse(localStorage.getItem(TITLE) || "{}");
-  const localSetting: any = localTitle?.setting || {};
-
-  // local storage (string 타입)
-  const localTimeZone: string = localTitle?.setting?.locale?.timeZone || "UTC";
-  const localZoneName: string = localTitle?.setting?.locale?.zoneName || "UTC";
-  const localLang: string = localTitle?.setting?.locale?.lang;
-  const localIsoCode: string = localTitle?.setting?.locale?.isoCode || "US";
-  const localCurrency: string = localTitle?.setting?.locale?.currency || "USD";
-  const localUnit: string = localTitle?.setting?.locale?.unit || "lbs";
-
-  // session storage (object 타입)
-  const sessionTitle: any = JSON.parse(sessionStorage.getItem(TITLE) || "{}");
-  const sessionSetting: any = sessionTitle?.setting || {};
-  const sessionPercent: any = sessionTitle?.setting?.sync?.percent || {};
-  const sessionScale: any = sessionTitle?.setting?.sync?.scale || {};
-  const sessionNutrition: any = sessionTitle?.setting?.sync?.nutrition || {};
-  const sessionFavorite: any = sessionTitle?.setting?.sync?.favorite || {};
-  const sessionProperty: any = sessionTitle?.setting?.sync?.property || {};
-  const sessionCategory: any = sessionTitle?.setting?.sync?.category || {};
-  const sessionFoodSection: any[] = sessionTitle?.section?.food || [];
-
-  const exerciseArray: any[] = sessionTitle?.setting?.sync?.category?.exercise || [];
-  const foodArray: any[] = sessionTitle?.setting?.sync?.category?.food || [];
-  const scheduleArray: any[] = sessionTitle?.setting?.sync?.category?.schedule || [];
-  const moneyArray: any[] = sessionTitle?.setting?.sync?.category?.money || [];
-  const sleepArray: any[] = sessionTitle?.setting?.sync?.category?.sleep || [];
-
-  // session storage (string 타입)
-  const isAdmin: string = sessionTitle?.setting?.id?.admin || "";
-  const sessionId: string = sessionTitle?.setting?.id?.sessionId || "";
-  const exerciseChartArray: any[] = [
-    "volume", "cardio"
-  ];
-  const foodChartArray: any[] = [
-    "kcal", "carb", "protein", "fat"
-  ];
-  const moneyChartArray: any[] = [
-    "income", "expense"
-  ];
-  const sleepChartArray: any[] = [
-    "bedTime", "wakeTime", "sleepTime"
-  ];
-  const barChartArray: any[] = [
-    "goal", "record"
-  ];
-  const scheduleColors: any[] = [
-    "red", "orange", "yellow", "green", "blue", "navy", "purple", "black", "gray"
-  ];
-  const bgColors: any[] = [
-    "#1976d2", "#4CAF50", "#FFC107", "#FF5722", "#673AB7",
-    "#3F51B5", "#2196F3", "#009688", "#CDDC39", "#FFEB3B",
-    "#9E9E9E"
-  ];
-  const chartColors: any[] = [
-    "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
-    "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
-  ];
-
-  // -----------------------------------------------------------------------------------------------
+  // ----------------------------------------------------------------------------------------------------
   return {
+    // Router & Location
     navigate,
     location,
-    location_id,
-    location_from,
-    location_dateType,
-    location_dateStart,
-    location_dateEnd,
-    location_category,
+    location_id: location?.state?.id,
+    location_from: location?.state?.from,
+    location_dateType: location?.state?.dateType,
+    location_dateStart: location?.state?.dateStart,
+    location_dateEnd: location?.state?.dateEnd,
+    location_category: location?.state?.category,
+    // Path Information
     PATH,
-    firstStr,
-    secondStr,
-    thirdStr,
-		isList,
-		isDetail,
-		isSchedule,
-		isScheduleRecordList,
-		isScheduleRecordDetail,
-		isScheduleGoalDetail,
-		isScheduleGoalList,
-		isSchedulePlannerList,
-		isSchedulePlannerDetail,
-		isFindList,
-		isFavoriteList,
-		isGoalList,
-		isGoalDetail,
-		isRecordList,
-		isRecordDetail,
-		isGoal,
-    toFind,
-    toFavorite,
-    toList,
-		toSchedule,
-    toDetail,
-    toDelete,
+    firstStr: pathParts[1] || "",
+    secondStr: pathParts[2] || "",
+    thirdStr: pathParts[3] || "",
+    // Basic Flags
+		isList: PATH.includes("/list"),
+		isDetail: PATH.includes("/detail"),
+		isGoal: pathParts[2] === "goal",
+		isRecord: pathParts[2] === "record",
+		isFind: pathParts[2] === "find",
+		isFavorite: pathParts[2] === "favorite",
+		isChart: pathParts[2] === "chart",
+    // Main Category Flags
+		isSchedule: pathParts[1] === "schedule",
+		isExercise: pathParts[1] === "exercise",
+		isFood: pathParts[1] === "food",
+		isMoney: pathParts[1] === "money",
+		isSleep: pathParts[1] === "sleep",
+		isUser: pathParts[1] === "user",
+		isAuth: pathParts[1] === "auth",
+		isAdminPage: pathParts[1] === "admin",
+    // Schedule Flags
+		isSchedulePlannerList: PATH.includes("/schedule/planner/list"),
+		isSchedulePlannerDetail: PATH.includes("/schedule/planner/detail"),
+		isScheduleGoalList: PATH.includes("/schedule/goal/list"),
+		isScheduleGoalDetail: PATH.includes("/schedule/goal/detail"),
+		isScheduleRecordList: PATH.includes("/schedule/record/list"),
+		isScheduleRecordDetail: PATH.includes("/schedule/record/detail"),
+    // Exercise Flags
+		isExerciseChartList: PATH.includes("/exercise/chart/list"),
+		isExerciseGoalList: PATH.includes("/exercise/goal/list"),
+		isExerciseGoalDetail: PATH.includes("/exercise/goal/detail"),
+		isExerciseRecordList: PATH.includes("/exercise/record/list"),
+		isExerciseRecordDetail: PATH.includes("/exercise/record/detail"),
+		isExerciseFindList: PATH.includes("/exercise/find/list"),
+		isExerciseFavoriteList: PATH.includes("/exercise/favorite/list"),
+    // Food Flags
+		isFoodChartList: PATH.includes("/food/chart/list"),
+		isFoodGoalList: PATH.includes("/food/goal/list"),
+		isFoodGoalDetail: PATH.includes("/food/goal/detail"),
+		isFoodRecordList: PATH.includes("/food/record/list"),
+		isFoodRecordDetail: PATH.includes("/food/record/detail"),
+		isFoodFindList: PATH.includes("/food/find/list"),
+		isFoodFavoriteList: PATH.includes("/food/favorite/list"),
+    // Money Flags
+		isMoneyChartList: PATH.includes("/money/chart/list"),
+		isMoneyGoalList: PATH.includes("/money/goal/list"),
+		isMoneyGoalDetail: PATH.includes("/money/goal/detail"),
+		isMoneyRecordList: PATH.includes("/money/record/list"),
+		isMoneyRecordDetail: PATH.includes("/money/record/detail"),
+		isMoneyFindList: PATH.includes("/money/find/list"),
+		isMoneyFavoriteList: PATH.includes("/money/favorite/list"),
+    // Sleep Flags
+		isSleepChartList: PATH.includes("/sleep/chart/list"),
+		isSleepGoalList: PATH.includes("/sleep/goal/list"),
+		isSleepGoalDetail: PATH.includes("/sleep/goal/detail"),
+		isSleepRecordList: PATH.includes("/sleep/record/list"),
+		isSleepRecordDetail: PATH.includes("/sleep/record/detail"),
+		isSleepFindList: PATH.includes("/sleep/find/list"),
+		isSleepFavoriteList: PATH.includes("/sleep/favorite/list"),
+    // User Flags
+		isUserAppInfo: PATH.includes("/user/appInfo"),
+		isUserAppSetting: PATH.includes("/user/appSetting"),
+		isUserSignup: PATH.includes("/user/signup"),
+		isUserLogin: PATH.includes("/user/login"),
+		isUserResetPw: PATH.includes("/user/resetPw"),
+		isUserDetail: PATH.includes("/user/detail"),
+		isUserDelete: PATH.includes("/user/delete"),
+		isUserCategory: PATH.includes("/user/category"),
+    // Auth Flags
+		isAuthError: PATH.includes("/auth/error"),
+		isAuthGoogle: PATH.includes("/auth/google"),
+		isAuthPrivacy: PATH.includes("/auth/privacy"),
+    // Admin Flags
+		isAdminDashboard: PATH.includes("/admin/dashboard"),
+    // Combined Flags
+		isChartList: (
+			PATH.includes("/exercise/chart/list") ||
+			PATH.includes("/food/chart/list") ||
+			PATH.includes("/money/chart/list") ||
+			PATH.includes("/sleep/chart/list")
+		),
+		isFindList: (
+			PATH.includes("/exercise/find/list") ||
+			PATH.includes("/food/find/list") ||
+			PATH.includes("/money/find/list") ||
+			PATH.includes("/sleep/find/list")
+		),
+		isFavoriteList: (
+			PATH.includes("/exercise/favorite/list") ||
+			PATH.includes("/food/favorite/list") ||
+			PATH.includes("/money/favorite/list") ||
+			PATH.includes("/sleep/favorite/list")
+		),
+		isGoalList: (
+			PATH.includes("/exercise/goal/list") ||
+			PATH.includes("/food/goal/list") ||
+			PATH.includes("/money/goal/list") ||
+			PATH.includes("/sleep/goal/list")
+		),
+		isGoalDetail: (
+			PATH.includes("/exercise/goal/detail") ||
+			PATH.includes("/food/goal/detail") ||
+			PATH.includes("/money/goal/detail") ||
+			PATH.includes("/sleep/goal/detail")
+		),
+		isRecordList: (
+			PATH.includes("/exercise/record/list") ||
+			PATH.includes("/food/record/list") ||
+			PATH.includes("/money/record/list") ||
+			PATH.includes("/sleep/record/list")
+		),
+		isRecordDetail: (
+			PATH.includes("/exercise/record/detail") ||
+			PATH.includes("/food/record/detail") ||
+			PATH.includes("/money/record/detail") ||
+			PATH.includes("/sleep/record/detail")
+		),
+    // Navigation Paths
+    toFind: `/${pathParts[1]}/find/list`,
+    toFavorite: `/${pathParts[1]}/favorite/list`,
+    toList: pathParts[2] === "goal" ? `/${pathParts[1]}/goal/list` : `/${pathParts[1]}/record/list`,
+		toSchedule: `/${pathParts[1]}/planner/list`,
+    toDetail: pathParts[2] === "goal" ? `/${pathParts[1]}/goal/detail` : `/${pathParts[1]}/record/detail`,
+    toDelete: pathParts[2] === "goal" ? `/${pathParts[1]}/goal/delete` : `/${pathParts[1]}/record/delete`,
+    // Environment Variables
     TITLE,
-    URL,
-    GCLOUD_URL,
-    SUBFIX,
-		SUBFIX_SCHEDULE,
-    SUBFIX_GOOGLE,
-    SUBFIX_EXERCISE,
-    SUBFIX_FOOD,
-    SUBFIX_MONEY,
-    SUBFIX_SLEEP,
-		URL_SCHEDULE,
-    URL_OBJECT,
-    URL_GOOGLE,
-    URL_ADMOB,
-    URL_ADMIN,
-    URL_EXERCISE,
-    URL_FOOD,
-    URL_MONEY,
-    URL_SLEEP,
-    ADMIN_ID,
-    ADMIN_PW,
-    isAdmin,
-    sessionId,
-    localSetting,
-    localTimeZone,
-    localZoneName,
-    localLang,
-    localIsoCode,
-    localCurrency,
-    localUnit,
-    sessionPercent,
-    sessionCategory,
-    sessionScale,
-    sessionFavorite,
-    sessionProperty,
-		sessionNutrition,
-		scheduleArray,
-    exerciseArray,
-    foodArray,
-    moneyArray,
-    sleepArray,
-    exerciseChartArray,
-    foodChartArray,
-    moneyChartArray,
-    sleepChartArray,
-    barChartArray,
-		scheduleColors,
-    bgColors,
-    chartColors,
+    URL: process.env.REACT_APP_SERVER_URL || "",
+    GCLOUD_URL: process.env.REACT_APP_GCLOUD_URL || "",
+    ADMIN_ID: process.env.REACT_APP_ADMIN_ID || "",
+    ADMIN_PW: process.env.REACT_APP_ADMIN_PW || "",
+    // API Suffixes
+    SUBFIX: process.env[`REACT_APP_${pathParts[1]?.toUpperCase()}`] || "",
+		SUBFIX_SCHEDULE: process.env.REACT_APP_SCHEDULE || "",
+    SUBFIX_GOOGLE: process.env.REACT_APP_GOOGLE || "",
+    SUBFIX_ADMOB: process.env.REACT_APP_ADMOB || "",
+    SUBFIX_ADMIN: process.env.REACT_APP_ADMIN || "",
+    SUBFIX_EXERCISE: process.env.REACT_APP_EXERCISE || "",
+    SUBFIX_FOOD: process.env.REACT_APP_FOOD || "",
+    SUBFIX_MONEY: process.env.REACT_APP_MONEY || "",
+    SUBFIX_SLEEP: process.env.REACT_APP_SLEEP || "",
+    // API URLs
+		URL_SCHEDULE: (process.env.REACT_APP_SERVER_URL || "") + (process.env.REACT_APP_SCHEDULE || ""),
+    URL_OBJECT: (process.env.REACT_APP_SERVER_URL || "") + (process.env[`REACT_APP_${pathParts[1]?.toUpperCase()}`] || ""),
+    URL_GOOGLE: (process.env.REACT_APP_SERVER_URL || "") + (process.env.REACT_APP_GOOGLE || ""),
+    URL_ADMOB: (process.env.REACT_APP_SERVER_URL || "") + (process.env.REACT_APP_ADMOB || ""),
+    URL_ADMIN: (process.env.REACT_APP_SERVER_URL || "") + (process.env.REACT_APP_ADMIN || ""),
+    URL_EXERCISE: (process.env.REACT_APP_SERVER_URL || "") + (process.env.REACT_APP_EXERCISE || ""),
+    URL_FOOD: (process.env.REACT_APP_SERVER_URL || "") + (process.env.REACT_APP_FOOD || ""),
+    URL_MONEY: (process.env.REACT_APP_SERVER_URL || "") + (process.env.REACT_APP_MONEY || ""),
+    URL_SLEEP: (process.env.REACT_APP_SERVER_URL || "") + (process.env.REACT_APP_SLEEP || ""),
+    // Admin & Session ID
+    isAdmin: sessionTitle?.setting?.id?.admin || "",
+    sessionId: sessionTitle?.setting?.id?.sessionId || "",
+    // Local Storage Settings
+    localSetting: localTitle?.setting || {},
+    localTimeZone: localTitle?.setting?.locale?.timeZone || "UTC",
+    localZoneName: localTitle?.setting?.locale?.zoneName || "UTC",
+    localLang: localTitle?.setting?.locale?.lang,
+    localIsoCode: localTitle?.setting?.locale?.isoCode || "US",
+    localCurrency: localTitle?.setting?.locale?.currency || "USD",
+    localUnit: localTitle?.setting?.locale?.unit || "lbs",
+    // Session Storage Settings
+    sessionPercent: sessionTitle?.setting?.sync?.percent || {},
+    sessionCategory: sessionTitle?.setting?.sync?.category || {},
+    sessionScale: sessionTitle?.setting?.sync?.scale || {},
+    sessionFavorite: sessionTitle?.setting?.sync?.favorite || {},
+    sessionProperty: sessionTitle?.setting?.sync?.property || {},
+		sessionNutrition: sessionTitle?.setting?.sync?.nutrition || {},
+    // Category Arrays
+		scheduleArray: sessionTitle?.setting?.sync?.category?.schedule || [],
+    exerciseArray: sessionTitle?.setting?.sync?.category?.exercise || [],
+    foodArray: sessionTitle?.setting?.sync?.category?.food || [],
+    moneyArray: sessionTitle?.setting?.sync?.category?.money || [],
+    sleepArray: sessionTitle?.setting?.sync?.category?.sleep || [],
+    // Storage Objects
     sessionTitle,
     localTitle,
-    sessionSetting,
-    sessionFoodSection,
+    sessionSetting: sessionTitle?.setting || {},
+    sessionFoodSection: sessionTitle?.section?.food || [],
+    // Chart Configuration Arrays
+    exerciseChartArray: [
+			"volume", "cardio"
+		],
+    foodChartArray: [
+			"kcal", "carb", "protein", "fat"
+		],
+    moneyChartArray: [
+			"income", "expense"
+		],
+    sleepChartArray: [
+			"bedTime", "wakeTime", "sleepTime"
+		],
+    barChartArray: [
+			"goal", "record"
+		],
+		scheduleColors: [
+			"red", "orange", "yellow", "green", "blue",
+			"navy", "purple", "black", "gray"
+		],
+    bgColors: [
+			"#1976d2", "#4CAF50", "#FFC107", "#FF5722", "#673AB7",
+			"#3F51B5", "#2196F3", "#009688", "#CDDC39", "#FFEB3B", "#9E9E9E"
+		],
+    chartColors: [
+			"#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
+			"#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA"
+		],
   };
 };

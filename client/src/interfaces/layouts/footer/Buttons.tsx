@@ -3,7 +3,7 @@
 import { Btn, Div, Grid } from "@importComponents";
 import { PopUp } from "@importContainers";
 import { useCommonValue } from "@importHooks";
-import { memo } from "@importReacts";
+import { memo, useMemo } from "@importReacts";
 import { fnSetSession } from "@importScripts";
 import { useStoreLanguage } from "@importStores";
 
@@ -19,8 +19,16 @@ export const Buttons = memo((
 ) => {
 
 	// 1. common ----------------------------------------------------------------------------------
-  const { PATH, toFind, toFavorite, navigate } = useCommonValue();
+  const { toFind, toFavorite, navigate } = useCommonValue();
+	const { isFoodRecordDetail, isUserCategory, isUserDetail, isDetail, isSleep } = useCommonValue();
   const { translate } = useStoreLanguage();
+
+  // 2. useMemo ---------------------------------------------------------------------------------
+  const navigationState = useMemo(() => ({
+    dateType: state?.DATE.dateType,
+    dateStart: state?.DATE.dateStart,
+    dateEnd: state?.DATE.dateEnd
+  }), [state?.DATE.dateType, state?.DATE.dateStart, state?.DATE.dateEnd]);
 
   // 3. handler ------------------------------------------------------------------------------------
   const handleSave = (type: string) => {
@@ -29,159 +37,124 @@ export const Buttons = memo((
   };
 
   // 7. btn ----------------------------------------------------------------------------------------
-  const btnNode = () => {
+  const toFindBtn = useMemo(() => (
+    <Btn
+      color={"success"}
+      className={"ml-2vw mr-2vw"}
+      onClick={() => {
+        navigate(toFind, { state: navigationState });
+      }}
+    >
+      {translate("find")}
+    </Btn>
+  ), [navigate, toFind, navigationState, translate]);
 
-    // 1. find
-    const toFindSection = () => (
-      <Btn
-        color={"success"}
-        className={"ml-2vw mr-2vw"}
-        onClick={() => {
-          navigate(toFind, {
-            state: {
-              dateType: state?.DATE.dateType,
-              dateStart: state?.DATE.dateStart,
-              dateEnd: state?.DATE.dateEnd
-            },
-          });
-        }}
-      >
-        {translate("find")}
-      </Btn>
-    );
+  const favoriteBtn = useMemo(() => (
+    <Btn
+      color={"warning"}
+      className={"ml-2vw mr-2vw"}
+      onClick={() => {
+        navigate(toFavorite, { state: navigationState });
+      }}
+    >
+      {translate("favorite")}
+    </Btn>
+  ), [navigate, toFavorite, navigationState, translate]);
 
-    // 2. favorite
-    const favoriteSection = () => (
-      <Btn
-        color={"warning"}
-        className={"ml-2vw mr-2vw"}
-        onClick={() => {
-          navigate(toFavorite, {
-            state: {
-              dateType: state?.DATE.dateType,
-              dateStart: state?.DATE.dateStart,
-              dateEnd: state?.DATE.dateEnd
-            },
-          });
-        }}
-      >
-        {translate("favorite")}
-      </Btn>
-    );
+  const deleteBtn = useMemo(() => (
+    <Btn
+      color={"error"}
+      className={"ml-2vw mr-2vw"}
+      onClick={() => {
+        flow?.flowDelete();
+      }}
+    >
+      {translate("delete")}
+    </Btn>
+  ), [flow, translate]);
 
-    // 3. save
-    const saveSection = () => (
-      <PopUp
-        key={"innerCenter"}
-        type={"innerCenter"}
-        position={"center"}
-        direction={"center"}
-        padding={"6px"}
-        contents={
-          <Grid container={true} spacing={2} className={"h-max-30vh d-row-center"}>
-            <Grid size={12}>
-              <Div className={"fs-0-8rem fw-600 pre-line dark-grey"}>
-                {translate("replaceOrInsert")}
-              </Div>
-            </Grid>
-            <Grid
-              size={PATH.includes("/sleep") ? 12 : 6}
-              className={PATH.includes("/sleep") ? "d-center" : "d-row-right"}
-            >
-              <Btn
-                size={"large"}
-                color={"primary"}
-                variant={"text"}
-                className={"fs-1-2rem fw-600 ml-2vw mr-2vw"}
-                onClick={() => {
-                  handleSave("replace");
-                }}
-              >
-                {translate("replace")}
-              </Btn>
-            </Grid>
-            <Grid
-              size={PATH.includes("/sleep") ? 0 : 6}
-              className={PATH.includes("/sleep") ? "d-none" : "d-row-left"}
-            >
-              <Btn
-                size={"large"}
-                color={"primary"}
-                variant={"text"}
-                className={"fs-1-2rem fw-600 ml-2vw mr-2vw"}
-                onClick={() => {
-                  handleSave("insert");
-                }}
-              >
-                {translate("insert")}
-              </Btn>
-            </Grid>
+  const saveBtn = useMemo(() => (
+    <PopUp
+      key={"innerCenter"}
+      type={"innerCenter"}
+      position={"center"}
+      direction={"center"}
+      padding={"6px"}
+      contents={
+        <Grid container={true} spacing={2} className={"h-max-30vh d-row-center"}>
+          <Grid size={12}>
+            <Div className={"fs-0-8rem fw-600 pre-line dark-grey"}>
+              {translate("replaceOrInsert")}
+            </Div>
           </Grid>
-        }
-        children={(popTrigger: any) => (
-          <Btn
-            color={"primary"}
-            className={"ml-2vw mr-2vw"}
-            onClick={(e: any) => {
-              if (state.FLOW?.exist) {
-                if (state.FLOW?.itsMe) {
-                  handleSave("update");
-                }
-                else {
-                  popTrigger.openPopup(e.currentTarget);
-                }
-              }
-              else {
-                handleSave("create");
-              }
-            }}
+          <Grid
+            size={isSleep ? 12 : 6}
+            className={isSleep ? "d-center" : "d-row-right"}
           >
-            {translate("save")}
-          </Btn>
-        )}
-      />
-    );
-
-    // 4. delete
-    const deleteSection = () => (
-      <Btn
-        color={"error"}
-        className={"ml-2vw mr-2vw"}
-        onClick={() => {
-          flow?.flowDelete();
-        }}
-      >
-        {translate("delete")}
-      </Btn>
-    );
-
-    // 10. return
-    return (
-      PATH.includes("/user/category") || PATH.includes("/user/detail") ? (
-        <Grid container={true} spacing={1}>
-          <Grid size={10} className={"d-center"}>
-            {saveSection()}
+            <Btn
+              size={"large"}
+              color={"primary"}
+              variant={"text"}
+              className={"fs-1-2rem fw-600 ml-2vw mr-2vw"}
+              onClick={() => {
+                handleSave("replace");
+              }}
+            >
+              {translate("replace")}
+            </Btn>
+          </Grid>
+          <Grid
+            size={isSleep ? 0 : 6}
+            className={isSleep ? "d-none" : "d-row-left"}
+          >
+            <Btn
+              size={"large"}
+              color={"primary"}
+              variant={"text"}
+              className={"fs-1-2rem fw-600 ml-2vw mr-2vw"}
+              onClick={() => {
+                handleSave("insert");
+              }}
+            >
+              {translate("insert")}
+            </Btn>
           </Grid>
         </Grid>
-      )
-      : PATH.includes("/detail") ? (
-        <Grid container={true} spacing={1}>
-          <Grid size={10} className={"d-center"}>
-            {PATH.includes("/food/detail") && toFindSection()}
-            {PATH.includes("/food/detail") && favoriteSection()}
-            {saveSection()}
-            {deleteSection()}
-          </Grid>
-        </Grid>
-      )
-      : null
-    );
-  };
+      }
+      children={(popTrigger: any) => (
+        <Btn
+          color={"primary"}
+          className={"ml-2vw mr-2vw"}
+          onClick={(e: any) => {
+            state.FLOW?.exist ? (
+              state.FLOW?.itsMe ? handleSave("update") : popTrigger.openPopup(e.currentTarget)
+            ) : handleSave("create");
+          }}
+        >
+          {translate("save")}
+        </Btn>
+      )}
+    />
+  ), [isSleep, translate, state.FLOW?.exist, state.FLOW?.itsMe]);
 
 	// 10. return ----------------------------------------------------------------------------------
   return (
-    <>
-      {btnNode()}
-    </>
-  );
+		(isUserCategory || isUserDetail) ? (
+			<Grid container={true} spacing={1}>
+				<Grid size={10} className={"d-center"}>
+					{saveBtn}
+				</Grid>
+			</Grid>
+		)
+		: isDetail ? (
+			<Grid container={true} spacing={1}>
+				<Grid size={10} className={"d-center"}>
+					{saveBtn}
+					{deleteBtn}
+					{isFoodRecordDetail && toFindBtn}
+					{isFoodRecordDetail && favoriteBtn}
+				</Grid>
+			</Grid>
+		) : null
+	);
 });

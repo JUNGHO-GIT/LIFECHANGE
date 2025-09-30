@@ -4,7 +4,7 @@ import { Div, Grid, Icons } from "@importComponents";
 import { Input } from "@importContainers";
 import { useCommonValue } from "@importHooks";
 import { TablePagination } from "@importMuis";
-import { memo } from "@importReacts";
+import { memo, useMemo } from "@importReacts";
 import { useStoreLanguage } from "@importStores";
 
 // -------------------------------------------------------------------------------------------------
@@ -20,179 +20,150 @@ export const FindFilter = memo((
 ) => {
 
 	// 1. common ----------------------------------------------------------------------------------
-  const { PATH, navigate , toDetail } = useCommonValue();
+  const { navigate, toDetail, isFavoriteList } = useCommonValue();
   const { translate } = useStoreLanguage();
 
+  // 2. useMemo ---------------------------------------------------------------------------------
+  const navigationState = useMemo(() => ({
+    dateType: state?.DATE.dateType,
+    dateStart: state?.DATE.dateStart,
+    dateEnd: state?.DATE.dateEnd
+  }), [state?.DATE.dateType, state?.DATE.dateStart, state?.DATE.dateEnd]);
+
+	// 4. handler ------------------------------------------------------------------------------------
+  const handleSearch = () => {
+    flow.flowFind();
+    setState?.setPAGING((prev: any) => ({
+      ...prev,
+      page: 0
+    }));
+    window.scrollTo(0, 0);
+  };
+
+	// 4. handler ------------------------------------------------------------------------------------
+  const handleNavigateToDetail = () => {
+    navigate(toDetail, { state: navigationState });
+  };
+
 	// 7. find -------------------------------------------------------------------------------------
-  const findFilterNode = () => {
-		// 1. find
-		const findSection = () => (
-			<Div className={"d-center"}>
-				<Input
-					label={translate("query")}
-					value={state?.PAGING.query}
-					disabled={false}
-					inputclass={"h-30px"}
-					shrink={"shrink"}
-					onChange={(e: any) => {
-						setState?.setPAGING((prev: any) => ({
-							...prev,
-							query: e.target.value
-						}));
-					}}
-					onKeyDown={(e: any) => {
-						if (e.key === 'Enter') {
-							flow.flowFind();
-							setState?.setPAGING((prev: any) => ({
-								...prev,
-								page: 0
-							}));
-							window.scrollTo(0, 0);
-						}
-					}}
-				/>
-				<Div className={"d-center mr-n3px"}>
-					<Icons
-						key={"Search"}
-						name={"Search"}
-						className={"w-22px h-22px primary pointer-primary"}
-						disabled={false}
-						onClick={() => {
-							flow.flowFind();
-							setState?.setPAGING((prev: any) => ({
-								...prev,
-								page: 0
-							}));
-							window.scrollTo(0, 0);
-						}}
-					/>
-				</Div>
-				<Div className={"d-center ml-n3px"}>
-					<Icons
-						key={"CheckCircle"}
-						name={"CheckCircle"}
-						className={"w-22px h-22px burgundy pointer-burgundy"}
-						disabled={false}
-						onClick={() => {
-							navigate(toDetail, {
-								state: {
-									dateType: state?.DATE.dateType,
-									dateStart: state?.DATE.dateStart,
-									dateEnd: state?.DATE.dateEnd
-								}
-							});
-						}}
-					/>
-				</Div>
-			</Div>
-    );
-		// 2. favorite
-		const favoriteSection = () => (
-			<Div className={"d-center"}>
-				<Input
-					label={translate("query")}
-					value={translate("favorite")}
-					disabled={true}
-					inputclass={"h-30px"}
-					shrink={"shrink"}
-					onChange={(e: any) => {
-						setState?.setPAGING((prev: any) => ({
-							...prev,
-							query: "favorite"
-						}));
-					}}
-					onKeyDown={(e: any) => {
-						if (e.key === 'Enter') {
-							flow.flowFind();
-							setState?.setPAGING((prev: any) => ({
-								...prev,
-								page: 0
-							}));
-							window.scrollTo(0, 0);
-						}
-					}}
-				/>
-				<Div className={"d-center mr-n3px"}>
-					<Icons
-						key={"Search"}
-						name={"Search"}
-						className={"w-22px h-22px grey"}
-						disabled={true}
-						onClick={() => {
-							flow.flowFind();
-							setState?.setPAGING((prev: any) => ({
-								...prev,
-								page: 0
-							}));
-							window.scrollTo(0, 0);
-						}}
-					/>
-				</Div>
-				<Div className={"d-center ml-n3px"}>
-					<Icons
-						key={"CheckCircle"}
-						name={"CheckCircle"}
-						className={"w-22px h-22px burgundy pointer-burgundy"}
-						onClick={() => {
-							navigate(toDetail, {
-								state: {
-									dateType: state?.DATE.dateType,
-									dateStart: state?.DATE.dateStart,
-									dateEnd: state?.DATE.dateEnd
-								}
-							});
-						}}
-					/>
-				</Div>
-			</Div>
-		);
-    // 3. pagination
-    const paginationSection = () => (
-      <TablePagination
-        rowsPerPageOptions={[10]}
-        labelRowsPerPage={""}
-        count={state?.COUNT.totalCnt}
-        page={state?.PAGING.page}
-        showFirstButton={true}
-        showLastButton={true}
-        component={"div"}
-        disabled={PATH.includes("/favorite/list") ? true : false}
-        className={"border-left-2"}
-        rowsPerPage={10}
-        // 숫자 숨기기 ( 1 of 10 )
-        labelDisplayedRows={() => ""}
-        onPageChange={(_event, newPage) => {
+  const findSection = useMemo(() => (
+    <Div className={"d-center"}>
+      <Input
+        label={translate("query")}
+        value={state?.PAGING.query}
+        disabled={false}
+        inputclass={"h-30px"}
+        shrink={"shrink"}
+        onChange={(e: any) => {
           setState?.setPAGING((prev: any) => ({
             ...prev,
-            page: newPage
+            query: e.target.value
           }));
-          window.scrollTo(0, 0);
         }}
-        onRowsPerPageChange={(event) => {
-          setState?.setPAGING((prev: any) => ({
-            ...prev,
-            limit: parseFloat(event.target.value)
-          }));
-          window.scrollTo(0, 0);
+        onKeyDown={(e: any) => {
+          e.key === 'Enter' && handleSearch();
         }}
       />
-    );
-    return (
-      <Grid container={true} spacing={0}>
-        <Grid size={8} className={"d-row-center"}>
-					{PATH.includes("/favorite/list") ? favoriteSection() : findSection()}
-        </Grid>
-        <Grid size={4} className={"h-100p d-col-center"}>
-          {paginationSection()}
-        </Grid>
-      </Grid>
-    );
-  };
+      <Div className={"d-center mr-n3px"}>
+        <Icons
+          key={"Search"}
+          name={"Search"}
+          className={"w-22px h-22px primary pointer-primary"}
+          disabled={false}
+          onClick={handleSearch}
+        />
+      </Div>
+      <Div className={"d-center ml-n3px"}>
+        <Icons
+          key={"CheckCircle"}
+          name={"CheckCircle"}
+          className={"w-22px h-22px burgundy pointer-burgundy"}
+          disabled={false}
+          onClick={handleNavigateToDetail}
+        />
+      </Div>
+    </Div>
+  ), [state?.PAGING.query, translate, handleSearch, handleNavigateToDetail]);
+
+	// 7. favorite ---------------------------------------------------------------------------------
+  const favoriteSection = useMemo(() => (
+    <Div className={"d-center"}>
+      <Input
+        label={translate("query")}
+        value={translate("favorite")}
+        disabled={true}
+        inputclass={"h-30px"}
+        shrink={"shrink"}
+        onChange={(e: any) => {
+          setState?.setPAGING((prev: any) => ({
+            ...prev,
+            query: "favorite"
+          }));
+        }}
+        onKeyDown={(e: any) => {
+          e.key === 'Enter' && handleSearch();
+        }}
+      />
+      <Div className={"d-center mr-n3px"}>
+        <Icons
+          key={"Search"}
+          name={"Search"}
+          className={"w-22px h-22px grey"}
+          disabled={true}
+          onClick={handleSearch}
+        />
+      </Div>
+      <Div className={"d-center ml-n3px"}>
+        <Icons
+          key={"CheckCircle"}
+          name={"CheckCircle"}
+          className={"w-22px h-22px burgundy pointer-burgundy"}
+          onClick={handleNavigateToDetail}
+        />
+      </Div>
+    </Div>
+  ), [translate, handleSearch, handleNavigateToDetail]);
+
+	// 7. pagination ------------------------------------------------------------------------------
+  const paginationSection = useMemo(() => (
+    <TablePagination
+      rowsPerPageOptions={[10]}
+      labelRowsPerPage={""}
+      count={state?.COUNT.totalCnt}
+      page={state?.PAGING.page}
+      showFirstButton={true}
+      showLastButton={true}
+      component={"div"}
+      disabled={isFavoriteList}
+      className={"border-left-2"}
+      rowsPerPage={10}
+      labelDisplayedRows={() => ""}
+      onPageChange={(_event, newPage) => {
+        setState?.setPAGING((prev: any) => ({
+          ...prev,
+          page: newPage
+        }));
+        window.scrollTo(0, 0);
+      }}
+      onRowsPerPageChange={(event) => {
+        setState?.setPAGING((prev: any) => ({
+          ...prev,
+          limit: parseFloat(event.target.value)
+        }));
+        window.scrollTo(0, 0);
+      }}
+    />
+  ), [state?.COUNT.totalCnt, state?.PAGING.page, isFavoriteList, setState]);
 
 	// 10. return ----------------------------------------------------------------------------------
   return (
-    <>
-      {findFilterNode()}
-    </>
+    <Grid container={true} spacing={0}>
+      <Grid size={7} className={"d-row-center"}>
+        {isFavoriteList ? favoriteSection : findSection}
+      </Grid>
+      <Grid size={5} className={"h-100p d-col-center"}>
+        {paginationSection}
+      </Grid>
+    </Grid>
   );
 });

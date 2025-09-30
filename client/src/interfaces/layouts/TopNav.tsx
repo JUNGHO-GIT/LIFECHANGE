@@ -93,7 +93,7 @@ export const TopNav = memo(() => {
   const [dataArray, _setDataArray] = useState({
     exercise: ["chart", "goal", "record"],
     food: ["chart", "goal", "record", "favorite", "find"],
-    schedule: ["planner", "goalToday", "recordToday"],
+    schedule: ["chartToday", "goalToday", "recordToday", "planner"],
     money: ["chart", "goal", "record"],
     sleep: ["chart", "goal", "record"],
     admin: ["dashboard"],
@@ -1118,13 +1118,13 @@ export const TopNav = memo(() => {
     return (
       <Paper className={"layout-wrapper p-sticky top-8vh h-8vh radius-2 border-1 shadow-1 p-0px"}>
         <Grid container spacing={0}>
-          <Grid size={8} className={"d-row-center"}>
+          <Grid size={7} className={"d-row-center"}>
             {smileSection()}
             {scaleSection()}
             {nutritionSection()}
             {propertySection()}
           </Grid>
-          <Grid size={4} className={"d-row-center border-left-2"}>
+          <Grid size={5} className={"d-row-center border-left-2"}>
             {tabsSection()}
           </Grid>
         </Grid>

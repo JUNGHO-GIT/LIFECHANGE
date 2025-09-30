@@ -41,12 +41,12 @@
       "last 1 safari version"
     ]
   },
+	"engines": {
+		"node": "16.x"
+	},
 	"overrides": {
 		"webidl-conversions": "6.1.0",
 		"whatwg-url": "12.0.1"
-	},
-	"engines": {
-		"node": "16.x"
 	},
   "scripts": {
     "start": "craco start",
