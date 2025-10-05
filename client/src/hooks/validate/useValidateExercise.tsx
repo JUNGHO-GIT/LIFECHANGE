@@ -17,7 +17,7 @@ export const useValidateExercise = () => {
 	const validate = useRef<Function>(() => {});
 
 	// alert 표시 및 focus ---------------------------------------------------------------------------
-	const showAlertAndFocus = useCallback((field: string, msg: string, idx: number) => {
+	const fnAlert = useCallback((field: string, msg: string, idx: number) => {
 		setALERT({
 			open: true,
 			msg: translate(msg),
@@ -64,19 +64,19 @@ export const useValidateExercise = () => {
 				))
 			);
 			if (COUNT.newSectionCnt <= 0) {
-				return showAlertAndFocus("", "errorCount", 0);
+				return fnAlert("", "errorCount", 0);
 			}
 			else if (!OBJECT.exercise_goal_count || OBJECT.exercise_goal_count === "0") {
-				return showAlertAndFocus("exercise_goal_count", "errorExerciseGoalCount", 0);
+				return fnAlert("exercise_goal_count", "errorExerciseGoalCount", 0);
 			}
 			else if (!OBJECT.exercise_goal_volume || OBJECT.exercise_goal_volume === "0") {
-				return showAlertAndFocus("exercise_goal_volume", "errorExerciseGoalVolume", 0);
+				return fnAlert("exercise_goal_volume", "errorExerciseGoalVolume", 0);
 			}
 			else if (!OBJECT.exercise_goal_cardio || OBJECT.exercise_goal_cardio === "00:00") {
-				return showAlertAndFocus("exercise_goal_cardio", "errorExerciseGoalCardio", 0);
+				return fnAlert("exercise_goal_cardio", "errorExerciseGoalCardio", 0);
 			}
 			else if (!OBJECT.exercise_goal_scale || OBJECT.exercise_goal_scale === "0") {
-				return showAlertAndFocus("exercise_goal_scale", "errorExerciseGoalScale", 0);
+				return fnAlert("exercise_goal_scale", "errorExerciseGoalScale", 0);
 			}
 			return true;
 		}
@@ -109,23 +109,23 @@ export const useValidateExercise = () => {
 
 			const section = OBJECT.exercise_section;
       if (COUNT.newSectionCnt <= 0) {
-        return showAlertAndFocus("", "errorCount", 0);
+        return fnAlert("", "errorCount", 0);
       }
       for (let i = 0; i < section?.length; i++) {
         if (!section[i].exercise_record_part || section[i].exercise_record_part === "all") {
-          return showAlertAndFocus('exercise_record_part', "errorExercisePart", i);
+          return fnAlert('exercise_record_part', "errorExercisePart", i);
         }
         else if (!section[i].exercise_record_title || section[i].exercise_record_title === "all") {
-          return showAlertAndFocus('exercise_record_title', "errorExerciseTitle", i);
+          return fnAlert('exercise_record_title', "errorExerciseTitle", i);
         }
         else if (!section[i].exercise_record_set || section[i].exercise_record_set === "0") {
-          return showAlertAndFocus('exercise_record_set', "errorExerciseSet", i);
+          return fnAlert('exercise_record_set', "errorExerciseSet", i);
         }
         else if (!section[i].exercise_record_rep || section[i].exercise_record_rep === "0") {
-          return showAlertAndFocus('exercise_record_rep', "errorExerciseRep", i);
+          return fnAlert('exercise_record_rep', "errorExerciseRep", i);
         }
         else if (!section[i].exercise_record_weight || section[i].exercise_record_weight === "0") {
-          return showAlertAndFocus('exercise_record_weight', "errorExerciseKg", i);
+          return fnAlert('exercise_record_weight', "errorExerciseKg", i);
         }
       }
       return true;
@@ -162,7 +162,7 @@ export const useValidateExercise = () => {
 			});
 			if (await confirmResult) {
 				if (!OBJECT?._id || OBJECT?._id === "") {
-					return showAlertAndFocus("", "noData", 0);
+					return fnAlert("", "noData", 0);
 				}
 				return true;
 			}

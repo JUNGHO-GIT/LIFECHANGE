@@ -39,7 +39,7 @@ export const PickerDay = memo((
 	const { isGoalList, isGoalDetail } = useCommonValue();
 	const { isRecordList, isRecordDetail } = useCommonValue();
 	const { isSchedule, isScheduleRecordList, isScheduleGoalList } = useCommonValue();
-	const { isSchedulePlannerList, isSchedulePlannerDetail } = useCommonValue();
+	const { isScheduleRecordDetail, isScheduleGoalDetail, isSchedulePlannerDetail } = useCommonValue();
 	const { isList, isDetail } = useCommonValue();
 	const { getDayFmt, getDayNotFmt, getDayStartFmt, getDayEndFmt } = useCommonDate();
 	const { getPrevDayStartFmt, getPrevDayEndFmt } = useCommonDate();
@@ -1442,7 +1442,7 @@ export const PickerDay = memo((
 		// 10. return ----------------------------------------------------------------------------------
 		return (
 
-			// 1-1. 리스트 (Schedule -  - Goal)
+			// 1-1. 리스트 (Schedule - Goal)
 			isScheduleGoalList ? (
 				<Grid container={true} spacing={1}>
 					<Grid size={3} className={"d-center"}>
@@ -1454,7 +1454,7 @@ export const PickerDay = memo((
 				</Grid>
 			)
 
-			// 1-2. 리스트 (Schedule -  - Record)
+			// 1-2. 리스트 (Schedule - Record)
 			: isScheduleRecordList ? (
 				<Grid container={true} spacing={1}>
 					<Grid size={3} className={"d-center"}>
@@ -1511,7 +1511,37 @@ export const PickerDay = memo((
 				</Grid>
 			)
 
-			// 2-2. 세이브 (목표)
+			// 2-1. 세이브 (Schedule - Goal)
+			: isScheduleGoalDetail ? (
+				<Grid container={true} spacing={1}>
+					<Grid size={{xs: 4, sm: 3}} className={"d-center"}>
+						{dateTypeInSaveSection()}
+					</Grid>
+					<Grid size={{xs: 8, sm: 9}} className={"d-center"}>
+						{DATE.dateType === "day" && daySection()}
+						{DATE.dateType === "week" && weekSection()}
+						{DATE.dateType === "month" && monthSection()}
+						{DATE.dateType === "year" && yearSection()}
+					</Grid>
+				</Grid>
+			)
+
+			// 2-1. 세이브 (Schedule - Record)
+			: isScheduleRecordDetail ? (
+				<Grid container={true} spacing={1}>
+					<Grid size={{xs: 4, sm: 3}} className={"d-center"}>
+						{dateTypeInSaveSection()}
+					</Grid>
+					<Grid size={{xs: 8, sm: 9}} className={"d-center"}>
+						{DATE.dateType === "day" && daySection()}
+						{DATE.dateType === "week" && weekSection()}
+						{DATE.dateType === "month" && monthSection()}
+						{DATE.dateType === "year" && yearSection()}
+					</Grid>
+				</Grid>
+			)
+
+			// 2-2. 세이브 (Goal)
 			: isGoalDetail ? (
 				<Grid container={true} spacing={1}>
 					<Grid size={{xs: 4, sm: 3}} className={"d-center"}>
@@ -1525,7 +1555,7 @@ export const PickerDay = memo((
 				</Grid>
 			)
 
-			// 2-3. 세이브 (실제)
+			// 2-3. 세이브 (Record)
 			: isRecordDetail ? (
 				<Grid container={true} spacing={1}>
 					<Grid size={{xs: 4, sm: 3}} className={"d-center"}>

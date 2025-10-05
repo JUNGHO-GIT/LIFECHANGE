@@ -16,7 +16,7 @@ export const useValidateUser = () => {
   const validate = useRef<Function>(() => {});
 
 	// alert 표시 및 focus ---------------------------------------------------------------------------
-	const showAlertAndFocus = useCallback((field: string, msg: string, idx: number) => {
+	const fnAlert = useCallback((field: string, msg: string, idx: number) => {
 		setALERT({
 			open: true,
 			msg: translate(msg),
@@ -74,13 +74,13 @@ export const useValidateUser = () => {
       );
 
       if (!OBJECT.user_id) {
-        return showAlertAndFocus("user_id", "errorUserId", 0);
+        return fnAlert("user_id", "errorUserId", 0);
       }
       else if (!validateEmail(OBJECT.user_id)) {
-        return showAlertAndFocus("user_id", "errorUserIdAt", 0);
+        return fnAlert("user_id", "errorUserIdAt", 0);
       }
       else if (!OBJECT.user_pw) {
-        return showAlertAndFocus("user_pw", "errorUserPw", 0);
+        return fnAlert("user_pw", "errorUserPw", 0);
       }
       return true;
     }
@@ -116,47 +116,47 @@ export const useValidateUser = () => {
 
       if (email === "send") {
         if (!OBJECT.user_id) {
-          return showAlertAndFocus("user_id", "errorUserId", 0);
+          return fnAlert("user_id", "errorUserId", 0);
         }
         else if (!validateEmail(OBJECT.user_id)) {
-          return showAlertAndFocus("user_id", "errorUserIdAt", 0);
+          return fnAlert("user_id", "errorUserIdAt", 0);
         }
       }
       else if (email === "verify") {
         if (!OBJECT.user_verify_code) {
-          return showAlertAndFocus("user_id_verified", "errorUserVerifyCode", 0);
+          return fnAlert("user_id_verified", "errorUserVerifyCode", 0);
         }
       }
       else if (email === "save") {
         if (!OBJECT.user_id) {
-          return showAlertAndFocus("user_id", "errorUserId", 0);
+          return fnAlert("user_id", "errorUserId", 0);
         }
         else if (!validateEmail(OBJECT.user_id)) {
-          return showAlertAndFocus("user_id", "errorUserIdAt", 0);
+          return fnAlert("user_id", "errorUserIdAt", 0);
         }
         else if (!OBJECT.user_id_verified) {
-          return showAlertAndFocus("user_id_verified", "errorUserIdVerified", 0);
+          return fnAlert("user_id_verified", "errorUserIdVerified", 0);
         }
         else if (!OBJECT.user_pw) {
-          return showAlertAndFocus("user_pw", "errorUserPw", 0);
+          return fnAlert("user_pw", "errorUserPw", 0);
         }
         else if (!validatePassword(OBJECT.user_pw)) {
-          return showAlertAndFocus("user_pw", "errorUserPwRule", 0);
+          return fnAlert("user_pw", "errorUserPwRule", 0);
         }
         else if (!OBJECT.user_pw_verified) {
-          return showAlertAndFocus("user_pw_verified", "errorUserPwVerified", 0);
+          return fnAlert("user_pw_verified", "errorUserPwVerified", 0);
         }
         else if (OBJECT.user_pw !== OBJECT.user_pw_verified) {
-          return showAlertAndFocus("user_pw_verified", "errorUserPwMatch", 0);
+          return fnAlert("user_pw_verified", "errorUserPwMatch", 0);
         }
         else if (!OBJECT.user_initScale) {
-          return showAlertAndFocus("user_initScale", "errorUserInitScale", 0);
+          return fnAlert("user_initScale", "errorUserInitScale", 0);
         }
         else if (!OBJECT.user_initAvgKcalIntake) {
-          return showAlertAndFocus("user_initAvgKcalIntake", "errorUserInitAvgKcalIntake", 0);
+          return fnAlert("user_initAvgKcalIntake", "errorUserInitAvgKcalIntake", 0);
         }
         else if (!OBJECT.user_initProperty) {
-          return showAlertAndFocus("user_initProperty", "errorUserInitProperty", 0);
+          return fnAlert("user_initProperty", "errorUserInitProperty", 0);
         }
       }
       return true;
@@ -187,13 +187,13 @@ export const useValidateUser = () => {
       );
 
       if (!OBJECT.user_initScale) {
-        return showAlertAndFocus("user_initScale", "errorUserInitScale", 0);
+        return fnAlert("user_initScale", "errorUserInitScale", 0);
       }
       else if (!OBJECT.user_initAvgKcalIntake) {
-        return showAlertAndFocus("user_initAvgKcalIntake", "errorUserInitAvgKcalIntake", 0);
+        return fnAlert("user_initAvgKcalIntake", "errorUserInitAvgKcalIntake", 0);
       }
       else if (!OBJECT.user_initProperty) {
-        return showAlertAndFocus("user_initProperty", "errorUserInitProperty", 0);
+        return fnAlert("user_initProperty", "errorUserInitProperty", 0);
       }
       return true;
     }
@@ -226,38 +226,38 @@ export const useValidateUser = () => {
 
       if (email === "send") {
         if (!OBJECT.user_id) {
-          return showAlertAndFocus("user_id", "errorUserId", 0);
+          return fnAlert("user_id", "errorUserId", 0);
         }
         else if (!validateEmail(OBJECT.user_id)) {
-          return showAlertAndFocus("user_id", "errorUserIdAt", 0);
+          return fnAlert("user_id", "errorUserIdAt", 0);
         }
       }
       else if (email === "verify") {
         if (!OBJECT.user_verify_code) {
-          return showAlertAndFocus("user_id_verified", "errorUserVerifyCode", 0);
+          return fnAlert("user_id_verified", "errorUserVerifyCode", 0);
         }
       }
       else if (email === "save") {
         if (!OBJECT.user_id) {
-          return showAlertAndFocus("user_id", "errorUserId", 0);
+          return fnAlert("user_id", "errorUserId", 0);
         }
         else if (!validateEmail(OBJECT.user_id)) {
-          return showAlertAndFocus("user_id", "errorUserIdAt", 0);
+          return fnAlert("user_id", "errorUserIdAt", 0);
         }
         else if (!OBJECT.user_id_verified) {
-          return showAlertAndFocus("user_id_verified", "errorUserIdVerified", 0);
+          return fnAlert("user_id_verified", "errorUserIdVerified", 0);
         }
         else if (!OBJECT.user_pw) {
-          return showAlertAndFocus("user_pw", "errorUserPw", 0);
+          return fnAlert("user_pw", "errorUserPw", 0);
         }
         else if (!validatePassword(OBJECT.user_pw)) {
-          return showAlertAndFocus("user_pw", "errorUserPwRule", 0);
+          return fnAlert("user_pw", "errorUserPwRule", 0);
         }
         else if (!OBJECT.user_pw_verified) {
-          return showAlertAndFocus("user_pw_verified", "errorUserPwVerified", 0);
+          return fnAlert("user_pw_verified", "errorUserPwVerified", 0);
         }
         else if (OBJECT.user_pw !== OBJECT.user_pw_verified) {
-          return showAlertAndFocus("user_pw_verified", "errorUserPwMatch", 0);
+          return fnAlert("user_pw_verified", "errorUserPwMatch", 0);
         }
       }
 			return true;

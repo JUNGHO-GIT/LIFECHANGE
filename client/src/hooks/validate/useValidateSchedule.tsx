@@ -17,7 +17,7 @@ export const useValidateSchedule = () => {
   const validate = useRef<Function>(() => {});
 
 	// alert 표시 및 focus ---------------------------------------------------------------------------
-	const showAlertAndFocus = useCallback((field: string, msg: string, idx: number) => {
+	const fnAlert = useCallback((field: string, msg: string, idx: number) => {
 		setALERT({
 			open: true,
 			msg: translate(msg),
@@ -65,17 +65,17 @@ export const useValidateSchedule = () => {
 
       const section = OBJECT.schedule_section;
       if (COUNT.newSectionCnt <= 0) {
-        return showAlertAndFocus("", "errorCount", 0);
+        return fnAlert("", "errorCount", 0);
       }
       for (let i = 0; i < section?.length; i++) {
         if (!section[i].schedule_part || section[i].schedule_part === "") {
-          return showAlertAndFocus('schedule_part', "errorSchedulePart", i);
+          return fnAlert('schedule_part', "errorSchedulePart", i);
         }
         else if (!section[i].schedule_title) {
-          return showAlertAndFocus('schedule_title', "errorScheduleTitle", i);
+          return fnAlert('schedule_title', "errorScheduleTitle", i);
         }
         else if (!section[i].schedule_color) {
-          return showAlertAndFocus('schedule_color', "errorScheduleColor", i);
+          return fnAlert('schedule_color', "errorScheduleColor", i);
         }
       }
       return true;
@@ -112,7 +112,7 @@ export const useValidateSchedule = () => {
 			});
 			if (await confirmResult) {
 				if (!OBJECT?._id || OBJECT?._id === "") {
-					return showAlertAndFocus("", "noData", 0);
+					return fnAlert("", "noData", 0);
 				}
 				return true;
 			}

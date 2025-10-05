@@ -17,7 +17,7 @@ export const useValidateMoney = () => {
   const validate = useRef<Function>(() => {});
 
 	// alert 표시 및 focus ---------------------------------------------------------------------------
-	const showAlertAndFocus = useCallback((field: string, msg: string, idx: number) => {
+	const fnAlert = useCallback((field: string, msg: string, idx: number) => {
 		setALERT({
 			open: true,
 			msg: translate(msg),
@@ -62,13 +62,13 @@ export const useValidateMoney = () => {
 				))
 			);
 			if (COUNT.newSectionCnt <= 0) {
-				return showAlertAndFocus("", "errorCount", 0);
+				return fnAlert("", "errorCount", 0);
 			}
 			else if (!OBJECT.money_goal_income || OBJECT.money_goal_income === "0") {
-				return showAlertAndFocus("money_goal_income", "errorMoneyGoalIncome", 0);
+				return fnAlert("money_goal_income", "errorMoneyGoalIncome", 0);
 			}
 			else if (!OBJECT.money_goal_expense || OBJECT.money_goal_expense === "0") {
-				return showAlertAndFocus("money_goal_expense", "errorMoneyGoalExpense", 0);
+				return fnAlert("money_goal_expense", "errorMoneyGoalExpense", 0);
 			}
 			return true;
 		}
@@ -99,18 +99,18 @@ export const useValidateMoney = () => {
 
       const section = OBJECT.money_section;
       if (COUNT.newSectionCnt <= 0) {
-        return showAlertAndFocus("", "errorCount", 0);
+        return fnAlert("", "errorCount", 0);
       }
 
       for (let i = 0; i < section?.length; i++) {
         if (!section[i]?.money_record_part || section[i].money_record_part === "all") {
-          return showAlertAndFocus("money_record_part", "errorMoneyPart", i);
+          return fnAlert("money_record_part", "errorMoneyPart", i);
         }
         else if (!section[i]?.money_record_title || section[i].money_record_title === "all") {
-          return showAlertAndFocus("money_record_title", "errorMoneyTitle", i);
+          return fnAlert("money_record_title", "errorMoneyTitle", i);
         }
         else if (!section[i]?.money_record_amount) {
-          return showAlertAndFocus("money_record_amount", "errorMoneyAmount", i);
+          return fnAlert("money_record_amount", "errorMoneyAmount", i);
         }
       }
       return true;
@@ -147,7 +147,7 @@ export const useValidateMoney = () => {
 			});
 			if (await confirmResult) {
 				if (!OBJECT?._id || OBJECT?._id === "") {
-					return showAlertAndFocus("", "noData", 0);
+					return fnAlert("", "noData", 0);
 				}
 				return true;
 			}

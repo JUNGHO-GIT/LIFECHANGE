@@ -30,11 +30,11 @@ export const ScheduleRecordDetail = memo(() => {
 	const [LOCKED, setLOCKED] = useState<string>(`unlocked`);
 	const [OBJECT, setOBJECT] = useState<ScheduleRecordType>(ScheduleRecord);
 	const [EXIST, setEXIST] = useState({
-		day: [``],
-		week: [``],
-		month: [``],
-		year: [``],
-		select: [``],
+    day: [""],
+    week: [""],
+    month: [""],
+    year: [""],
+    select: [""],
 	});
 	const [FLOW, setFLOW] = useState({
 		exist: false,
@@ -42,10 +42,10 @@ export const ScheduleRecordDetail = memo(() => {
 		itsNew: false,
 	});
 	const [SEND, setSEND] = useState({
-		id: ``,
-		dateType: ``,
-		dateStart: `0000-00-00`,
-		dateEnd: `0000-00-00`,
+    id: "",
+    dateType: "",
+    dateStart: "0000-00-00",
+    dateEnd: "0000-00-00",
 	});
 	const [COUNT, setCOUNT] = useState({
 		totalCnt: 0,
@@ -218,7 +218,7 @@ export const ScheduleRecordDetail = memo(() => {
 	const detailNode = () => {
 		// 7-1. date + count
 		const dateCountSection = () => (
-			<Grid container={true} spacing={2} className={`border-1 radius-2 shadow-1 p-20px`}>
+			<Grid container={true} spacing={2} className={`radius-2 border-1 shadow-0 p-20px`}>
 				<Grid size={12}>
 					<PickerDay
 						DATE={DATE}
@@ -241,7 +241,7 @@ export const ScheduleRecordDetail = memo(() => {
 
 		// 7-2. excersice
 		const exerciseSection = () => (
-			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-1`}>
+			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
 				{OBJECT?.schedule_exercise_section?.map((item, i) => (
 					<Grid container spacing={2} key={`exercise-detail-${i}`}
 					className={`${LOCKED === `locked` ? `locked` : ``} border-1 radius-2 p-20px`}>
@@ -486,7 +486,7 @@ export const ScheduleRecordDetail = memo(() => {
 
 		// 7-3. food
 		const foodSection = () => (
-			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-1`}>
+			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
 				{OBJECT?.schedule_food_section?.map((item, i) => (
 					<Grid container spacing={2} key={`food-detail-${i}`}
 					className={`${LOCKED === `locked` ? `locked` : ``} border-1 radius-2 p-20px`}>
@@ -837,7 +837,7 @@ export const ScheduleRecordDetail = memo(() => {
 
 		// 7-4. money
 		const moneySection = () => (
-			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-1`}>
+			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
 				{OBJECT?.schedule_money_section?.map((item, i) => (
 					<Grid container spacing={2} key={`money-detail-${i}`}
 					className={`${LOCKED === `locked` ? `locked` : ``} border-1 radius-2 p-20px`}>
@@ -1031,10 +1031,10 @@ export const ScheduleRecordDetail = memo(() => {
 
 		// 7-5. sleep
 		const sleepSection = () => (
-			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-1`}>
-				{OBJECT?.schedule_sleep_section?.map((item, i) => (
-					<Grid container spacing={2} key={`sleep-detail-${i}`}
-					className={`${LOCKED === `locked` ? `locked` : ``} border-1 radius-2 p-20px`}>
+			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
+				{OBJECT.schedule_sleep_section?.map((item, i) => (
+					<Grid container spacing={2} key={`detail-${i}`}
+					className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}>
 						{/** row 0 **/}
 						{i === 0 && (
 							<Grid container={true} spacing={0} className={`mt-n5px pb-10px border-bottom-2`}>
@@ -1055,6 +1055,8 @@ export const ScheduleRecordDetail = memo(() => {
 								</Grid>
 							</Grid>
 						)}
+						{/** /.row 0 **/}
+
 						{/** row 1 **/}
 						<Grid container={true} spacing={1}>
 							<Grid size={6} className={`d-row-left`}>
@@ -1085,7 +1087,7 @@ export const ScheduleRecordDetail = memo(() => {
 									ERRORS={ERRORS}
 									DATE={DATE}
 									LOCKED={LOCKED}
-									extra={`sleep_record_bedTime`}
+									extra={"sleep_record_bedTime"}
 									i={i}
 								/>
 							</Grid>
@@ -1102,7 +1104,7 @@ export const ScheduleRecordDetail = memo(() => {
 									ERRORS={ERRORS}
 									DATE={DATE}
 									LOCKED={LOCKED}
-									extra={`sleep_record_wakeTime`}
+									extra={"sleep_record_wakeTime"}
 									i={i}
 								/>
 							</Grid>
@@ -1119,7 +1121,7 @@ export const ScheduleRecordDetail = memo(() => {
 									ERRORS={ERRORS}
 									DATE={DATE}
 									LOCKED={LOCKED}
-									extra={`sleep_record_sleepTime`}
+									extra={"sleep_record_sleepTime"}
 									i={i}
 								/>
 							</Grid>
@@ -1129,10 +1131,9 @@ export const ScheduleRecordDetail = memo(() => {
 				))}
 			</Grid>
 		);
-
 		// 7-10. return
 		return (
-			<Paper className={`content-wrapper border-1 radius-2 shadow-1 h-min-75vh`}>
+      <Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-75vh"}>
 				{dateCountSection()}
 				<Br m={20} />
 				{exerciseSection()}
