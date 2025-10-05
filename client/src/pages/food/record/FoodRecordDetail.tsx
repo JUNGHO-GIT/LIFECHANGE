@@ -287,8 +287,8 @@ export const FoodRecordDetail = memo(() => {
         navigate(location_from === "schedule" ? toSchedule : toList, {
           state: {
             dateType: "",
-            dateStart: DATE.dateStart,
-            dateEnd: DATE.dateEnd
+            dateStart: dateRef.current.dateStart,
+            dateEnd: dateRef.current.dateEnd
           }
         });
         fnSync("nutrition");

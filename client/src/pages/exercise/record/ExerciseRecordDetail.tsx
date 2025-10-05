@@ -140,28 +140,23 @@ export const ExerciseRecordDetail = memo(() => {
       },
     })
     .then((res: any) => {
-      setLOADING(false);
-      setOBJECT(res.data.result || ExerciseRecord);
+			setLOADING(false);
+			setOBJECT(res.data.result || ExerciseRecord);
 
-      // sectionCnt가 0이면 section 초기화
-      if (res.data.sectionCnt <= 0) {
-        setOBJECT((prev) => ({
-          ...prev,
-          exercise_section: []
-        }));
-      }
-      // sectionCnt가 0이 아니면 section 내부 재정렬
-      else {
-        setOBJECT((prev) => ({
-          ...prev,
-          exercise_section: prev.exercise_section?.sort((a: any, b: any) => (
-            exerciseArray.findIndex((item: any) => item.exercise_record_part === a.exercise_record_part) -
-            exerciseArray.findIndex((item: any) => item.exercise_record_part === b.exercise_record_part)
-          )),
-        }));
-      }
-      // count 설정
-      setCOUNT((prev) => ({
+			res.data.sectionCnt <= 0 && setOBJECT((prev) => ({
+				...prev,
+				exercise_section: []
+			}));
+
+			res.data.sectionCnt > 0 && setOBJECT((prev) => ({
+				...prev,
+				exercise_section: prev.exercise_section?.sort((a: any, b: any) => (
+					exerciseArray.findIndex((item: any) => item.exercise_record_part === a.exercise_record_part) -
+					exerciseArray.findIndex((item: any) => item.exercise_record_part === b.exercise_record_part)
+				)),
+			}));
+
+			setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
         sectionCnt: res.data.sectionCnt || 0,
@@ -240,7 +235,7 @@ export const ExerciseRecordDetail = memo(() => {
 	// 3. flow ------------------------------------------------------------------------------------
   const flowSave = async (type: string) => {
     setLOADING(true);
-    if (!await validate(OBJECT, COUNT, "record")) {
+    if (!await validate(objectRef.current, countRef.current, "record")) {
       setLOADING(false);
       return;
     }
@@ -249,8 +244,8 @@ export const ExerciseRecordDetail = memo(() => {
       url: type === "create" ? `${URL_OBJECT}/record/create` : `${URL_OBJECT}/record/update`,
       data: {
         user_id: sessionId,
-        OBJECT: OBJECT,
-        DATE: DATE,
+        OBJECT: objectRef.current,
+        DATE: dateRef.current,
         type: type,
       }
     })
@@ -265,8 +260,8 @@ export const ExerciseRecordDetail = memo(() => {
         navigate(location_from === "schedule" ? toSchedule : toList, {
           state: {
             dateType: "",
-            dateStart: DATE.dateStart,
-            dateEnd: DATE.dateEnd
+            dateStart: dateRef.current.dateStart,
+            dateEnd: dateRef.current.dateEnd
           }
         });
         fnSync("scale");
@@ -297,14 +292,16 @@ export const ExerciseRecordDetail = memo(() => {
 	// 3. flow ------------------------------------------------------------------------------------
   const flowDelete = async () => {
     setLOADING(true);
-    if (!await validate(OBJECT, COUNT, "delete")) {
+    if (!await validate(objectRef.current, countRef.current, "delete")) {
       setLOADING(false);
       return;
     }
-    axios.delete(`${URL_OBJECT}/record/delete`, {
+    axios({
+      method: "delete",
+      url: `${URL_OBJECT}/record/delete`,
       data: {
         user_id: sessionId,
-        DATE: DATE,
+        DATE: dateRef.current,
       }
     })
     .then((res: any) => {
@@ -318,8 +315,8 @@ export const ExerciseRecordDetail = memo(() => {
         navigate(location_from === "schedule" ? toSchedule : toList, {
           state: {
             dateType: "",
-            dateStart: DATE.dateStart,
-            dateEnd: DATE.dateEnd
+            dateStart: dateRef.current.dateStart,
+            dateEnd: dateRef.current.dateEnd
           }
         });
         fnSync("scale");

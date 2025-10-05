@@ -112,10 +112,10 @@ export const useValidateExercise = () => {
         return showAlertAndFocus("", "errorCount", 0);
       }
       for (let i = 0; i < section?.length; i++) {
-        if (!section[i].exercise_record_part || section[i].exercise_record_part === "") {
+        if (!section[i].exercise_record_part || section[i].exercise_record_part === "all") {
           return showAlertAndFocus('exercise_record_part', "errorExercisePart", i);
         }
-        else if (!section[i].exercise_record_title || section[i].exercise_record_title === "") {
+        else if (!section[i].exercise_record_title || section[i].exercise_record_title === "all") {
           return showAlertAndFocus('exercise_record_title', "errorExerciseTitle", i);
         }
         else if (!section[i].exercise_record_set || section[i].exercise_record_set === "0") {

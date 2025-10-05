@@ -1,11 +1,11 @@
 // MoneyRecordDetail.tsx
 
-import { useState, useEffect, useRef, useCallback, useMemo, memo } from "@importReacts";
+import { useState, useEffect, useRef, useCallback, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useValidateMoney } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
+import { MoneyRecord, MoneyRecordType } from "@importSchemas";
 import { axios } from "@importLibs";
 import { fnInsertComma, fnSync } from "@importScripts";
-import { MoneyRecord, MoneyRecordType } from "@importSchemas";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, Memo, Count, Delete, Select, Input } from "@importContainers";
 import { Img, Bg, Div, Paper, Grid, Br } from "@importComponents";
@@ -56,12 +56,10 @@ export const MoneyRecordDetail = memo(() => {
 		dateEnd: location_dateEnd || getDayFmt(),
 	});
 
-	// 2-2. useRef ----------------------------------------------------------------------------------
+	// 2-3. useRef --------------------------------------------------------------------------------
 	const countRef = useRef(COUNT);
 	const objectRef = useRef(OBJECT);
 	const dateRef = useRef(DATE);
-	const existTimerRef = useRef<any>(null);
-	const detailReqSeqRef = useRef<number>(0);
 
 	// 2-3. useEffect ------------------------------------------------------------------------------
 	useEffect(() => {
@@ -72,37 +70,10 @@ export const MoneyRecordDetail = memo(() => {
 		COUNT, OBJECT, DATE
 	]);
 
-	// 2-3. useMemo ---------------------------------------------------------------------------------
-	const partIndexMap = useMemo(() => {
-		return new Map<string, number>(moneyArray.map((m: any, idx: number) => [m.money_record_part, idx]));
-	}, [moneyArray]);
-
-	// 2-3. useMemo ---------------------------------------------------------------------------------
-	const totals = useMemo(() => {
-		const acc = (OBJECT?.money_section || []).reduce((acc: any, cur: any) => {
-			const amount = Number(cur?.money_record_amount || 0);
-			cur?.money_record_part === "income" ? acc.income += amount : cur?.money_record_part === "expense" ? acc.expense += amount : null;
-			return acc;
-		}, { income: 0, expense: 0 });
-
-		return {
-			income: Math.round(acc.income).toString(),
-			expense: Math.round(acc.expense).toString()
-		};
-	}, [OBJECT?.money_section]);
-
-	// 2-3. useMemo ---------------------------------------------------------------------------------
-	const defaultSection = useMemo(() => ({
-		money_record_part: moneyArray[1]?.money_record_part || "",
-		money_record_title: moneyArray[0]?.money_record_title?.[0] || "",
-		money_record_amount: "0",
-		money_record_content: "",
-		money_record_include: "Y",
-	}), [moneyArray]);
-
-	// 2-4. useEffect -------------------------------------------------------------------------------
+	// 2-3. useEffect -----------------------------------------------------------------------------
 	useEffect(() => {
 		if (EXIST?.[DATE.dateType as keyof typeof EXIST]?.length > 0) {
+
 			const dateRange = `${DATE.dateStart.trim()} - ${DATE.dateEnd.trim()}`;
 			const objectRange = `${OBJECT.money_record_dateStart.trim()} - ${OBJECT.money_record_dateEnd.trim()}`;
 
@@ -124,207 +95,158 @@ export const MoneyRecordDetail = memo(() => {
 				itsNew: itsNew
 			}));
 		}
-	}, [EXIST, DATE.dateType, DATE.dateStart, DATE.dateEnd, OBJECT.money_record_dateStart, OBJECT.money_record_dateEnd]);
+	}, [EXIST, DATE.dateEnd, OBJECT.money_record_dateEnd]);
 
-	// 2-4. useEffect -------------------------------------------------------------------------------
+	// 2-3. useEffect -----------------------------------------------------------------------------
 	useEffect(() => {
-		if (existTimerRef.current) {
-			clearTimeout(existTimerRef.current);
-		}
-
-		const controller = new AbortController();
-
-		existTimerRef.current = setTimeout(() => {
-			axios.get(`${URL_OBJECT}/record/exist`, {
-				params: {
-					user_id: sessionId,
-					DATE: {
-						dateType: "",
-						dateStart: getMonthStartFmt(DATE.dateStart),
-						dateEnd: getMonthEndFmt(DATE.dateEnd),
-					},
+		axios.get(`${URL_OBJECT}/record/exist`, {
+			params: {
+				user_id: sessionId,
+				DATE: {
+					dateType: "",
+					dateStart: getMonthStartFmt(DATE.dateStart),
+					dateEnd: getMonthEndFmt(DATE.dateEnd),
 				},
-				signal: controller.signal
-			})
-			.then((res: any) => {
-				const next = res?.data?.result;
-				setEXIST(
-					next && typeof next === "object"
-						? next
-						: {
-							day: [""],
-							week: [""],
-							month: [""],
-							year: [""],
-							select: [""],
-						}
-				);
-			})
-			.catch((err: any) => {
-				if (axios.isCancel && axios.isCancel(err)) {
-					return;
-				}
-				if (err?.name === "CanceledError") {
-					return;
-				}
-				setALERT({
-					open: true,
-					msg: translate(err?.response?.data?.msg),
-					severity: "error",
-				});
+			},
+		})
+		.then((res: any) => {
+			setEXIST(
+				!res.data.result || res.data.result?.length === 0 ? [""] : res.data.result
+			);
+		})
+		.catch((err: any) => {
+			setALERT({
+				open: true,
+				msg: translate(err.response.data.msg),
+				severity: "error",
 			});
-		}, 300);
-
-		return () => {
-			controller.abort();
-			if (existTimerRef.current) {
-				clearTimeout(existTimerRef.current);
-			}
-		};
+		});
 	}, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
-	// 2-4. useEffect -------------------------------------------------------------------------------
+	// 2-3. useEffect -----------------------------------------------------------------------------
 	useEffect(() => {
 		setLOADING(true);
 		if (LOCKED === "locked") {
 			setLOADING(false);
 			return;
 		}
-
-		const seq = ++detailReqSeqRef.current;
-		const controller = new AbortController();
-
 		axios.get(`${URL_OBJECT}/record/detail`, {
 			params: {
 				user_id: sessionId,
 				DATE: DATE,
 			},
-			signal: controller.signal
 		})
 		.then((res: any) => {
-			if (seq !== detailReqSeqRef.current) {
-				return;
-			}
+			setLOADING(false);
+			setOBJECT(res.data.result || MoneyRecord);
 
-			const data = res?.data || {};
-			const next = data?.result || MoneyRecord;
+			res.data.sectionCnt <= 0 && setOBJECT((prev) => ({
+				...prev,
+				money_section: []
+			}));
 
-			// sectionCnt가 0이면 section 초기화
-			if ((data.sectionCnt || 0) <= 0) {
-				setOBJECT((prev) => ({
-					...prev,
-					...next,
-					money_section: []
-				}));
-			}
-			// sectionCnt가 0이 아니면 section 내부 재정렬
-			else {
-				const sorted = (next.money_section || []).slice().sort((a: any, b: any) => {
-					const ai = partIndexMap.get(a?.money_record_part) ?? 9999;
-					const bi = partIndexMap.get(b?.money_record_part) ?? 9999;
-					return ai - bi;
-				});
-
-				setOBJECT((prev) => ({
-					...prev,
-					...next,
-					money_section: sorted
-				}));
-			}
+			res.data.sectionCnt > 0 && setOBJECT((prev) => ({
+				...prev,
+				money_section: prev.money_section?.sort((a: any, b: any) => (
+					moneyArray.findIndex((item: any) => item.money_record_part === a.money_record_part) -
+					moneyArray.findIndex((item: any) => item.money_record_part === b.money_record_part)
+				)),
+			}));
 
 			setCOUNT((prev) => ({
 				...prev,
-				totalCnt: data.totalCnt || 0,
-				sectionCnt: data.sectionCnt || 0,
-				newSectionCnt: data.sectionCnt || 0
+				totalCnt: res.data.totalCnt || 0,
+				sectionCnt: res.data.sectionCnt || 0,
+				newSectionCnt: res.data.sectionCnt || 0
 			}));
 		})
 		.catch((err: any) => {
-			if (axios.isCancel && axios.isCancel(err)) {
-				return;
-			}
-			if (err?.name === "CanceledError") {
-				return;
-			}
+			setLOADING(false);
 			setALERT({
 				open: true,
-				msg: translate(err?.response?.data?.msg),
+				msg: translate(err.response.data.msg),
 				severity: "error",
 			});
-			console.error(err);
 		})
 		.finally(() => {
 			setLOADING(false);
 		});
-
-		return () => {
-			controller.abort();
-		};
 	}, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
-	// 2-4. useEffect -------------------------------------------------------------------------------
+	// 2-3. useEffect -----------------------------------------------------------------------------
 	useEffect(() => {
-		setOBJECT((prev) => {
-			const cur = prev?.money_section || [];
-			const nextLen = COUNT?.newSectionCnt || 0;
-
-			if (cur.length === nextLen) {
-				return prev;
-			}
-
-			const filled = Array.from({ length: nextLen }, (_: any, idx: number) => (
-				idx < cur.length ? cur[idx] : { ...defaultSection }
-			));
-
-			// 내용이 동일하면 갱신 불필요
-			let same = cur.length === filled.length;
-			same &&= cur.every((v: any, i: number) => v === filled[i]);
-			return same ? prev : { ...prev, money_section: filled };
+		const totals = OBJECT?.money_section.reduce((acc: any, cur: any) => {
+			return {
+				totalIncome: acc.totalIncome + (cur.money_record_part === "income" ? Number(cur.money_record_amount) : 0),
+				totalExpense: acc.totalExpense + (cur.money_record_part === "expense" ? Number(cur.money_record_amount) : 0),
+			};
+		}, {
+			totalIncome: 0,
+			totalExpense: 0
 		});
-	}, [COUNT?.newSectionCnt, defaultSection]);
+
+		setOBJECT((prev) => ({
+			...prev,
+			money_record_total_income: Number(totals.totalIncome).toString(),
+			money_record_total_expense: Number(totals.totalExpense).toString(),
+		}));
+	}, [OBJECT?.money_section]);
+
+	// 2-3. useEffect -----------------------------------------------------------------------------
+	useEffect(() => {
+		const defaultSection = {
+			money_record_part: moneyArray[1]?.money_record_part || "",
+			money_record_title: moneyArray[0]?.money_record_title?.[0] || "",
+			money_record_amount: "0",
+			money_record_content: "",
+			money_record_include: "Y",
+		};
+		let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) => {
+			return idx < OBJECT?.money_section?.length ? OBJECT?.money_section[idx] : defaultSection
+		});
+		setOBJECT((prev) => ({
+			...prev,
+			money_section: updatedSection
+		}));
+
+	},[COUNT?.newSectionCnt]);
 
 	// 3. flow ------------------------------------------------------------------------------------
-	const flowSave = useCallback(async (type: string) => {
+	const flowSave = async (type: string) => {
 		setLOADING(true);
-
-		const ok = await validate(OBJECT, COUNT, "record");
-		if (!ok) {
+		if (!await validate(objectRef.current, countRef.current, "record")) {
 			setLOADING(false);
 			return;
 		}
-
 		axios({
 			method: type === "create" ? "post" : "put",
 			url: type === "create" ? `${URL_OBJECT}/record/create` : `${URL_OBJECT}/record/update`,
 			data: {
 				user_id: sessionId,
-				OBJECT: OBJECT,
-				DATE: DATE,
+				OBJECT: objectRef.current,
+				DATE: dateRef.current,
 				type: type,
 			}
 		})
 		.then((res: any) => {
 			if (res.data.status === "success") {
+				setLOADING(false);
 				setALERT({
 					open: true,
 					msg: translate(res.data.msg),
 					severity: "success",
 				});
-
-				navigate(
-					location_from === "schedule" ? toSchedule : toList,
-					{
-						state: {
-							dateType: "",
-							dateStart: DATE.dateStart,
-							dateEnd: DATE.dateEnd
-						}
+				navigate(location_from === "schedule" ? toSchedule : toList, {
+					state: {
+						dateType: "",
+						dateStart: DATE.dateStart,
+						dateEnd: DATE.dateEnd
 					}
-				);
-
+				});
 				fnSync("property");
 			}
 			else {
+				setLOADING(false);
 				setALERT({
 					open: true,
 					msg: translate(res.data.msg),
@@ -333,9 +255,10 @@ export const MoneyRecordDetail = memo(() => {
 			}
 		})
 		.catch((err: any) => {
+			setLOADING(false);
 			setALERT({
 				open: true,
-				msg: translate(err?.response?.data?.msg),
+				msg: translate(err.response.data.msg),
 				severity: "error",
 			});
 			console.error(err);
@@ -343,46 +266,42 @@ export const MoneyRecordDetail = memo(() => {
 		.finally(() => {
 			setLOADING(false);
 		});
-	}, [OBJECT, COUNT, DATE, URL_OBJECT, sessionId, validate, setLOADING, setALERT, translate, navigate, location_from, toSchedule, toList]);
+	};
 
 	// 3. flow ------------------------------------------------------------------------------------
-	const flowDelete = useCallback(async () => {
+	const flowDelete = async () => {
 		setLOADING(true);
-
-		const ok = await validate(OBJECT, COUNT, "delete");
-		if (!ok) {
+		if (!await validate(objectRef.current, countRef.current, "delete")) {
 			setLOADING(false);
 			return;
 		}
-
-		axios.delete(`${URL_OBJECT}/record/delete`, {
+		axios({
+			method: "delete",
+			url: `${URL_OBJECT}/record/delete`,
 			data: {
 				user_id: sessionId,
-				DATE: DATE,
+				DATE: dateRef.current,
 			}
 		})
 		.then((res: any) => {
 			if (res.data.status === "success") {
+				setLOADING(false);
 				setALERT({
 					open: true,
 					msg: translate(res.data.msg),
 					severity: "success",
 				});
-
-				navigate(
-					location_from === "schedule" ? toSchedule : toList,
-					{
-						state: {
-							dateType: "",
-							dateStart: DATE.dateStart,
-							dateEnd: DATE.dateEnd
-						}
+				navigate(location_from === "schedule" ? toSchedule : toList, {
+					state: {
+						dateType: "",
+						dateStart: dateRef.current.dateStart,
+						dateEnd: dateRef.current.dateEnd
 					}
-				);
-
+				});
 				fnSync("property");
 			}
 			else {
+				setLOADING(false);
 				setALERT({
 					open: true,
 					msg: translate(res.data.msg),
@@ -391,9 +310,10 @@ export const MoneyRecordDetail = memo(() => {
 			}
 		})
 		.catch((err: any) => {
+			setLOADING(false);
 			setALERT({
 				open: true,
-				msg: translate(err?.response?.data?.msg),
+				msg: translate(err.response.data.msg),
 				severity: "error",
 			});
 			console.error(err);
@@ -401,7 +321,7 @@ export const MoneyRecordDetail = memo(() => {
 		.finally(() => {
 			setLOADING(false);
 		});
-	}, [OBJECT, COUNT, DATE, URL_OBJECT, sessionId, validate, setLOADING, setALERT, translate, navigate, location_from, toSchedule, toList]);
+	};
 
 	// 4-3. handle --------------------------------------------------------------------------------
 	const handleDelete = useCallback((index: number) => {
@@ -448,7 +368,7 @@ export const MoneyRecordDetail = memo(() => {
 							locked={LOCKED}
 							readOnly={true}
 							label={translate("totalIncome")}
-							value={fnInsertComma(totals.income || "0")}
+							value={fnInsertComma(OBJECT?.money_record_total_income || "0")}
 							startadornment={
 								<Img
 									max={14}
@@ -473,7 +393,7 @@ export const MoneyRecordDetail = memo(() => {
 							locked={LOCKED}
 							readOnly={true}
 							label={translate("totalExpense")}
-							value={fnInsertComma(totals.expense || "0")}
+							value={fnInsertComma(OBJECT?.money_record_total_expense || "0")}
 							startadornment={
 								<Img
 									max={14}
@@ -507,7 +427,7 @@ export const MoneyRecordDetail = memo(() => {
 								<Grid size={6} className={"d-row-left"}>
 									<Bg
 										badgeContent={i + 1}
-										bgcolor={bgColors?.[partIndexMap.get(item?.money_record_part) ?? 0]}
+										bgcolor={bgColors?.[partIndex]}
 									/>
 								</Grid>
 								<Grid size={6} className={"d-row-right"}>

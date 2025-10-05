@@ -165,7 +165,7 @@ export const SleepGoalDetail = memo(() => {
 	// 3. flow ------------------------------------------------------------------------------------
   const flowSave = async (type: string) => {
     setLOADING(true);
-    if (!await validate(OBJECT, COUNT, "goal")) {
+    if (!await validate(objectRef.current, countRef.current, "goal")) {
       setLOADING(false);
       return;
     }
@@ -190,8 +190,8 @@ export const SleepGoalDetail = memo(() => {
         navigate(location_from === "schedule" ? toSchedule : toList, {
           state: {
             dateType: "",
-            dateStart: DATE.dateStart,
-            dateEnd: DATE.dateEnd
+            dateStart: dateRef.current.dateStart,
+            dateEnd: dateRef.current.dateEnd
           }
         });
         fnSync();
@@ -222,7 +222,7 @@ export const SleepGoalDetail = memo(() => {
 	// 3. flow ------------------------------------------------------------------------------------
   const flowDelete = async () => {
     setLOADING(true);
-    if (!await validate(OBJECT, COUNT, "delete")) {
+    if (!await validate(objectRef.current, countRef.current, "delete")) {
       setLOADING(false);
       return;
     }
@@ -243,8 +243,8 @@ export const SleepGoalDetail = memo(() => {
         navigate(location_from === "schedule" ? toSchedule : toList, {
           state: {
             dateType: "",
-            dateStart: DATE.dateStart,
-            dateEnd: DATE.dateEnd
+            dateStart: dateRef.current.dateStart,
+            dateEnd: dateRef.current.dateEnd
           }
         });
         fnSync();
