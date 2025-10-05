@@ -1,6 +1,6 @@
 // SchedulePlannerDetail.tsx
 
-import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
+import { useState, useEffect, useCallback, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useValidateSchedule } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { ScheduleRecord, ScheduleRecordType } from "@importSchemas";
@@ -170,7 +170,7 @@ export const SchedulePlannerDetail = memo(() => {
 	}, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
 
 	// 4-3. handle ----------------------------------------------------------------------------------
-	const handleDelete = (index: number, section: keyof ScheduleRecordType) => {
+	const handleDelete = useCallback((index: number, section: keyof ScheduleRecordType) => {
 		setOBJECT((prev) => {
 			const target = prev[section];
 			if (!Array.isArray(target)) {
@@ -185,7 +185,7 @@ export const SchedulePlannerDetail = memo(() => {
 			...prev,
 			newSectionCnt: prev.newSectionCnt - 1,
 		}));
-	};
+	}, []);
 
 	// 4-4. handle ----------------------------------------------------------------------------------
 	const handleNumberInput = useCallback((val: string, max: number, allowDecimal: boolean = false) => {

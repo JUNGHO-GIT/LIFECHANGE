@@ -15,28 +15,25 @@ export const useValidateUser = () => {
   const [ERRORS, setERRORS] = useState<any[]>([]);
   const validate = useRef<Function>(() => {});
 
-  // alert 표시 및 focus ---------------------------------------------------------------------------
-  const showAlertAndFocus = useCallback((field: string, msg: string, idx: number) => {
-    setALERT({
-      open: true,
-      msg: translate(msg),
-      severity: "error",
-    });
-    if (field) {
-      setTimeout(() => {
-        REFS?.current?.[idx]?.[field]?.current?.focus();
-      }, 10);
-      setERRORS((prev) => {
-        const updatedErrors = [...prev];
-        updatedErrors[idx] = {
-          ...updatedErrors[idx],
-          [field]: true,
-        };
-        return updatedErrors;
-      });
-    }
-    return false;
-  }, [setALERT, translate]);
+	// alert 표시 및 focus ---------------------------------------------------------------------------
+	const showAlertAndFocus = useCallback((field: string, msg: string, idx: number) => {
+		setALERT({
+			open: true,
+			msg: translate(msg),
+			severity: "error",
+		});
+		field && setTimeout(() => {
+			REFS?.current?.[idx]?.[field]?.current?.focus();
+		}, 0);
+		field && setERRORS((prev) => {
+			const updatedErrors = [...prev];
+			updatedErrors[idx] = {
+				...updatedErrors[idx],
+				[field]: true,
+			};
+			return updatedErrors;
+		});
+	}, [setALERT, translate]);
 
   // 이메일 형식 -----------------------------------------------------------------------------------
   const validateEmail = (email: string) => {
@@ -50,11 +47,11 @@ export const useValidateUser = () => {
     return passwordRegex.test(password);
   }
 
-  // 7. validate -----------------------------------------------------------------------------------
-  validate.current = async (OBJECT: any, extra: string, email: string) => {
+	// 7. validate -----------------------------------------------------------------------------------
+	validate.current = async (OBJECT: any, extra: string, email: string) => {
 
-    // 1. login ----------------------------------------------------------------------------------
-    if (extra === "login") {
+		// 7-1. login ----------------------------------------------------------------------------------
+		if (extra === "login") {
       const target = [
         "user_id",
         "user_pw",
@@ -88,8 +85,8 @@ export const useValidateUser = () => {
       return true;
     }
 
-    // 2. signup ---------------------------------------------------------------------------------
-    else if (extra === "signup") {
+		// 7-2. signup ---------------------------------------------------------------------------------
+		if (extra === "signup") {
       const target = [
         "user_id",
         "user_id_sended",
@@ -165,8 +162,8 @@ export const useValidateUser = () => {
       return true;
     }
 
-    // 3. detail ---------------------------------------------------------------------------------
-    else if (extra === "detail") {
+		// 7-3. detail ---------------------------------------------------------------------------------
+		if (extra === "detail") {
       const target = [
         "user_initScale",
         "user_initAvgKcalIntake",
@@ -201,8 +198,8 @@ export const useValidateUser = () => {
       return true;
     }
 
-    // 4. resetPw, delete ------------------------------------------------------------------------
-    else if (extra === "resetPw" || extra === "delete") {
+		// 7-4. resetPw, delete ------------------------------------------------------------------------
+		if (extra === "resetPw" || extra === "delete") {
       const target = [
         "user_id",
         "user_id_sended",
@@ -263,14 +260,14 @@ export const useValidateUser = () => {
           return showAlertAndFocus("user_pw_verified", "errorUserPwMatch", 0);
         }
       }
-      return true;
-    }
-  };
+			return true;
+		}
+	};
 
 	// 10. return ----------------------------------------------------------------------------------
-  return {
-    ERRORS: ERRORS,
-    REFS: REFS.current,
-    validate: validate.current,
-  };
+	return {
+		ERRORS: ERRORS,
+		REFS: REFS.current,
+		validate: validate.current,
+	};
 };

@@ -2,7 +2,7 @@
 
 import { Paper } from "@importComponents";
 import { useCommonValue } from "@importHooks";
-import { memo, useEffect, useMemo, useState } from "@importReacts";
+import { memo, useEffect, useState } from "@importReacts";
 import { Buttons } from "./Buttons";
 import { FindFilter } from "./FindFilter";
 import { ListFilter } from "./ListFilter";
@@ -43,40 +43,43 @@ export const Footer = memo((
   }, [PATH]);
 
 	// 9. footer ----------------------------------------------------------------------------------
-  const btnSection = useMemo(() => (
-    <Buttons
-      state={state}
-      flow={flow}
-    />
-  ), [state, flow]);
-
-  const listFilterSection = useMemo(() => (
-    <ListFilter
-      state={state}
-      setState={setState}
-    />
-  ), [state, setState]);
-
-  const findFilterSection = useMemo(() => (
-    <FindFilter
-      state={state}
-      setState={setState}
-      flow={flow}
-    />
-  ), [state, setState, flow]);
-
-  const footerNode = useMemo(() => (
-    <Paper className={`${styleClass} fadeIn`}>
-      {typeName === "btn" && btnSection}
-      {typeName === "listFilter" && listFilterSection}
-      {typeName === "findFilter" && findFilterSection}
-    </Paper>
-  ), [typeName, btnSection, listFilterSection, findFilterSection, styleClass]);
+  const footerNode = () => {
+    // 1. btn
+    const btnSection = () => (
+      <Buttons
+        state={state}
+        flow={flow}
+      />
+    );
+    // 3. listFilter
+    const listFilterSection = () => (
+      <ListFilter
+        state={state}
+        setState={setState}
+      />
+    );
+    // 4. findFilter
+    const findFilterSection = () => (
+      <FindFilter
+        state={state}
+        setState={setState}
+        flow={flow}
+      />
+    );
+    // 5. return
+    return (
+      <Paper className={`${styleClass} fadeIn`}>
+        {typeName === "btn" && btnSection()}
+        {typeName === "listFilter" && listFilterSection()}
+        {typeName === "findFilter" && findFilterSection()}
+      </Paper>
+    );
+  };
 
 	// 10. return ----------------------------------------------------------------------------------
   return (
     <>
-      {footerNode}
+      {footerNode()}
     </>
   );
 });

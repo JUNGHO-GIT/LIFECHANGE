@@ -1,6 +1,6 @@
 // ExerciseRecordDetail.tsx
 
-import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
+import { useState, useEffect, useRef, useCallback, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useTime, useValidateExercise } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
@@ -55,6 +55,20 @@ export const ExerciseRecordDetail = memo(() => {
     dateStart: location_dateStart || getDayFmt(),
     dateEnd: location_dateEnd || getDayFmt(),
   });
+
+	// 2-3. useRef --------------------------------------------------------------------------------
+	const countRef = useRef(COUNT);
+	const objectRef = useRef(OBJECT);
+	const dateRef = useRef(DATE);
+
+	// 2-3. useEffect ------------------------------------------------------------------------------
+	useEffect(() => {
+		COUNT !== countRef.current && (countRef.current = COUNT);
+		OBJECT !== objectRef.current && (objectRef.current = OBJECT);
+		DATE !== dateRef.current && (dateRef.current = DATE);
+	}, [
+		COUNT, OBJECT, DATE
+	]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "record");
@@ -215,6 +229,12 @@ export const ExerciseRecordDetail = memo(() => {
       exercise_section: updatedSection
     }));
 
+    // COUNT.sectionCnt도 newSectionCnt와 동기화
+    setCOUNT((prev) => ({
+      ...prev,
+      sectionCnt: COUNT?.newSectionCnt
+    }));
+
   },[COUNT?.newSectionCnt]);
 
 	// 3. flow ------------------------------------------------------------------------------------
@@ -328,7 +348,7 @@ export const ExerciseRecordDetail = memo(() => {
   };
 
   // 4-3. handle --------------------------------------------------------------------------------
-  const handleDelete = (index: number) => {
+  const handleDelete = useCallback((index: number) => {
     setOBJECT((prev) => ({
       ...prev,
       exercise_section: prev.exercise_section?.filter((_item: any, idx: number) => (idx !== index))
@@ -337,7 +357,7 @@ export const ExerciseRecordDetail = memo(() => {
       ...prev,
       newSectionCnt: prev.newSectionCnt - 1,
     }));
-  };
+  }, []);
 
 	// 7. detail ----------------------------------------------------------------------------------
   const detailNode = () => {
@@ -719,6 +739,8 @@ export const ExerciseRecordDetail = memo(() => {
     <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
+			OBJECT={OBJECT}
+			setOBJECT={setOBJECT}
       LOCKED={LOCKED}
       setLOCKED={setLOCKED}
     />

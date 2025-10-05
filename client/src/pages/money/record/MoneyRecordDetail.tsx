@@ -1,6 +1,6 @@
 // MoneyRecordDetail.tsx
 
-import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
+import { useState, useEffect, useRef, useCallback, useMemo, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useValidateMoney } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
@@ -57,8 +57,20 @@ export const MoneyRecordDetail = memo(() => {
 	});
 
 	// 2-2. useRef ----------------------------------------------------------------------------------
+	const countRef = useRef(COUNT);
+	const objectRef = useRef(OBJECT);
+	const dateRef = useRef(DATE);
 	const existTimerRef = useRef<any>(null);
 	const detailReqSeqRef = useRef<number>(0);
+
+	// 2-3. useEffect ------------------------------------------------------------------------------
+	useEffect(() => {
+		COUNT !== countRef.current && (countRef.current = COUNT);
+		OBJECT !== objectRef.current && (objectRef.current = OBJECT);
+		DATE !== dateRef.current && (dateRef.current = DATE);
+	}, [
+		COUNT, OBJECT, DATE
+	]);
 
 	// 2-3. useMemo ---------------------------------------------------------------------------------
 	const partIndexMap = useMemo(() => {

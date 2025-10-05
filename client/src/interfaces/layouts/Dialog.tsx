@@ -10,6 +10,8 @@ import { useStoreLanguage } from "@importStores";
 declare type DialogProps = {
   COUNT?: any;
   setCOUNT?: any;
+  OBJECT?: any;
+  setOBJECT?: any;
   LOCKED?: string;
   setLOCKED?: React.Dispatch<React.SetStateAction<string>>;
   setIsExpanded?: any;
@@ -17,7 +19,7 @@ declare type DialogProps = {
 
 // -------------------------------------------------------------------------------------------------
 export const Dialog = memo((
-  { COUNT, setCOUNT, LOCKED, setLOCKED, setIsExpanded }: DialogProps
+  { COUNT, setCOUNT, OBJECT, setOBJECT, LOCKED, setLOCKED, setIsExpanded }: DialogProps
 ) => {
 
 	// 1. common ----------------------------------------------------------------------------------
@@ -509,13 +511,18 @@ export const Dialog = memo((
                 e.preventDefault();
                 return;
               }
-              else {
-								if (setCOUNT) {
-									setCOUNT((prev: any) => ({
-										...prev,
-										newSectionCnt: 0,
-									}));
-								}
+              if (setOBJECT) {
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  food_section: [],
+                  schedule_food_section: [],
+                }));
+              }
+              if (setCOUNT) {
+                setCOUNT((prev: any) => ({
+                  ...prev,
+                  newSectionCnt: 0,
+                }));
               }
             }}
           />

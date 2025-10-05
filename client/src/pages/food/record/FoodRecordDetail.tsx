@@ -1,6 +1,6 @@
 // FoodRecordDetail.tsx
 
-import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
+import { useState, useEffect, useRef, useCallback, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useValidateFood } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { FoodRecord, FoodRecordType } from "@importSchemas";
@@ -56,6 +56,20 @@ export const FoodRecordDetail = memo(() => {
     dateStart: location_dateStart || getDayFmt(),
     dateEnd: location_dateEnd || getDayFmt(),
   });
+
+	// 2-3. useRef --------------------------------------------------------------------------------
+	const countRef = useRef(COUNT);
+	const objectRef = useRef(OBJECT);
+	const dateRef = useRef(DATE);
+
+	// 2-3. useEffect ------------------------------------------------------------------------------
+	useEffect(() => {
+		COUNT !== countRef.current && (countRef.current = COUNT);
+		OBJECT !== objectRef.current && (objectRef.current = OBJECT);
+		DATE !== dateRef.current && (dateRef.current = DATE);
+	}, [
+		COUNT, OBJECT, DATE
+	]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
@@ -148,24 +162,19 @@ export const FoodRecordDetail = memo(() => {
       setLOADING(false);
       setOBJECT(res.data.result || FoodRecord);
 
-      // sectionCnt가 0이면 section 초기화
-      if (res.data.sectionCnt <= 0) {
-        setOBJECT((prev) => ({
-          ...prev,
-          food_section: []
-        }));
-      }
-      // sectionCnt가 0이 아니면 section 내부 재정렬
-      else {
-        setOBJECT((prev) => ({
-          ...prev,
-          food_section: prev.food_section?.sort((a: any, b: any) => (
-            foodArray.findIndex((item: any) => item.food_record_part === a.food_record_part) -
-            foodArray.findIndex((item: any) => item.food_record_part === b.food_record_part)
-          )),
-        }));
-      }
-      // count 설정
+      res.data.sectionCnt <= 0 && setOBJECT((prev) => ({
+        ...prev,
+        food_section: []
+      }));
+
+      res.data.sectionCnt > 0 && setOBJECT((prev) => ({
+        ...prev,
+        food_section: prev.food_section?.sort((a: any, b: any) => (
+          foodArray.findIndex((item: any) => item.food_record_part === a.food_record_part) -
+          foodArray.findIndex((item: any) => item.food_record_part === b.food_record_part)
+        )),
+      }));
+
       setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
@@ -173,19 +182,15 @@ export const FoodRecordDetail = memo(() => {
         newSectionCnt: res.data.sectionCnt || 0
       }));
 
-      // 스토리지 데이터 가져오기
       let sectionArray = sessionFoodSection?.length > 0 ? sessionFoodSection : [];
 
-      // 기존 food_section 데이터와 병합하여 OBJECT 재설정
       setOBJECT((prev) => ({
         ...prev,
-        // 기존의 food_section만 정렬
         food_section: prev?.food_section
 				? [...prev.food_section]?.sort((a, b) => parseInt(a.food_record_part) - parseInt(b.food_record_part)).concat(sectionArray)
 				: [...sectionArray]
       }));
 
-      // 병합된 데이터를 바탕으로 COUNT 재설정
       setCOUNT((prev) => ({
         ...prev,
         newSectionCnt: prev?.newSectionCnt + sectionArray?.length
@@ -244,9 +249,9 @@ export const FoodRecordDetail = memo(() => {
       food_record_carb: "0",
       food_record_protein: "0",
     };
-    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) =>
-      idx < OBJECT?.food_section?.length ? OBJECT?.food_section[idx] : defaultSection
-    );
+    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) => {
+			return idx < OBJECT?.food_section?.length ? OBJECT?.food_section[idx] : defaultSection
+		});
     setOBJECT((prev) => ({
       ...prev,
       food_section: updatedSection
@@ -257,7 +262,7 @@ export const FoodRecordDetail = memo(() => {
 	// 3. flow ------------------------------------------------------------------------------------
   const flowSave = async (type: string) => {
     setLOADING(true);
-    if (!await validate(OBJECT, COUNT, "record")) {
+    if (!await validate(objectRef.current, countRef.current, "record")) {
       setLOADING(false);
       return;
     }
@@ -266,8 +271,8 @@ export const FoodRecordDetail = memo(() => {
       url: type === "create" ? `${URL_OBJECT}/record/create` : `${URL_OBJECT}/record/update`,
       data: {
         user_id: sessionId,
-        OBJECT: OBJECT,
-        DATE: DATE,
+        OBJECT: objectRef.current,
+        DATE: dateRef.current,
         type: type,
       }
     })
@@ -314,7 +319,7 @@ export const FoodRecordDetail = memo(() => {
 	// 3. flow ------------------------------------------------------------------------------------
   const flowDelete = async () => {
     setLOADING(true);
-    if (!await validate(OBJECT, COUNT, "delete")) {
+    if (!await validate(objectRef.current, countRef.current, "delete")) {
       setLOADING(false);
       return;
     }
@@ -323,7 +328,7 @@ export const FoodRecordDetail = memo(() => {
       url: `${URL_OBJECT}/record/delete`,
       data: {
         user_id: sessionId,
-        DATE: DATE,
+        DATE: dateRef.current,
       }
     })
     .then((res: any) => {
@@ -337,8 +342,8 @@ export const FoodRecordDetail = memo(() => {
         navigate(location_from === "schedule" ? toSchedule : toList, {
           state: {
             dateType: "",
-            dateStart: DATE.dateStart,
-            dateEnd: DATE.dateEnd
+            dateStart: dateRef.current.dateStart,
+            dateEnd: dateRef.current.dateEnd
           }
         });
         fnSync("nutrition");
@@ -367,32 +372,24 @@ export const FoodRecordDetail = memo(() => {
   };
 
 	// 3. flow ------------------------------------------------------------------------------------
-  const flowUpdateFavorite = (foodFavorite: any) => {
-		if (!foodFavorite.food_record_name || foodFavorite.food_record_name.trim() === "") {
-			setALERT({
-        open: true,
-        msg: translate("음식 이름을 입력해주세요."),
-        severity: "error",
-      });
-			return;
-		}
+  const flowUpdateFavorite = useCallback((foodFavorite: any) => {
+		(!foodFavorite.food_record_name || foodFavorite.food_record_name.trim() === "") && setALERT({
+      open: true,
+      msg: translate("음식 이름을 입력해주세요."),
+      severity: "error",
+    }) && (() => { return; })();
+
     axios.put(`${URL_OBJECT}/find/update`, {
       user_id: sessionId,
       foodFavorite: foodFavorite,
     })
     .then((res: any) => {
-      if (res.data.status === "success") {
-        setFAVORITE(res.data.result);
-        fnSync("favorite");
-      }
-      else {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg),
-          severity: "error",
-        });
-      }
+      res.data.status === "success" && setFAVORITE(res.data.result) && fnSync("favorite");
+      res.data.status !== "success" && setLOADING(false) && setALERT({
+        open: true,
+        msg: translate(res.data.msg),
+        severity: "error",
+      });
     })
     .catch((err: any) => {
       setLOADING(false);
@@ -406,44 +403,29 @@ export const FoodRecordDetail = memo(() => {
     .finally(() => {
       setLOADING(false);
     });
-  };
+  }, [URL_OBJECT, sessionId, setLOADING, setALERT, translate]);
 
   // 4-3. handle --------------------------------------------------------------------------------
-  const handleDelete = (index: number) => {
+  const handleDelete = useCallback((index: number) => {
 
-    // 스토리지 데이터 가져오기
     let sectionArray = [];
     let section = sessionFoodSection;
-
-    // sectionArray 초기화
-    if (section) {
-      sectionArray = section;
-    }
-    else {
-      sectionArray = [];
-    }
-
-    // sectionArray 삭제
+    section ? sectionArray = section : sectionArray = [];
     sectionArray.splice(index, 1);
-
-    // 스토리지 데이터 설정
     fnSetSession("section", "food", "", sectionArray);
 
-    // OBJECT 설정
     setOBJECT((prev) => ({
       ...prev,
       food_section: prev?.food_section?.filter((_item: any, idx: number) => (idx !== index))
     }));
-
-    // COUNT 설정
     setCOUNT((prev) => ({
       ...prev,
       newSectionCnt: prev?.newSectionCnt - 1,
     }));
-  };
+  }, [sessionFoodSection]);
 
   // 4-5. handle (favorite 추가) -------------------------------------------------------------------
-  const handleFoodFavorite = (index: number) => {
+  const handleFoodFavorite = useCallback((index: number) => {
 
     const food_record_name = OBJECT?.food_section[index]?.food_record_name;
     const food_record_brand = OBJECT?.food_section[index]?.food_record_brand;
@@ -479,7 +461,7 @@ export const FoodRecordDetail = memo(() => {
       food_record_protein: food_record_protein,
       food_record_fat: food_record_fat,
     };
-  };
+  }, [OBJECT]);
 
 	// 7. detail ----------------------------------------------------------------------------------
   const detailNode = () => {
@@ -1017,6 +999,8 @@ export const FoodRecordDetail = memo(() => {
     <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
+			OBJECT={OBJECT}
+			setOBJECT={setOBJECT}
       LOCKED={LOCKED}
       setLOCKED={setLOCKED}
     />

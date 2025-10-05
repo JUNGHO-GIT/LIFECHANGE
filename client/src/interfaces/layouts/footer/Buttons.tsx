@@ -1,9 +1,9 @@
 // Buttons.tsx
 
+import { memo, useMemo, useEffect } from "@importReacts";
 import { Btn, Div, Grid } from "@importComponents";
 import { PopUp } from "@importContainers";
 import { useCommonValue } from "@importHooks";
-import { memo, useMemo } from "@importReacts";
 import { fnSetSession } from "@importScripts";
 import { useStoreLanguage } from "@importStores";
 
@@ -42,7 +42,9 @@ export const Buttons = memo((
       color={"success"}
       className={"ml-2vw mr-2vw"}
       onClick={() => {
-        navigate(toFind, { state: navigationState });
+        navigate(toFind, {
+					state: navigationState
+				});
       }}
     >
       {translate("find")}
@@ -54,7 +56,9 @@ export const Buttons = memo((
       color={"warning"}
       className={"ml-2vw mr-2vw"}
       onClick={() => {
-        navigate(toFavorite, { state: navigationState });
+        navigate(toFavorite, {
+          state: navigationState
+        });
       }}
     >
       {translate("favorite")}
@@ -128,7 +132,9 @@ export const Buttons = memo((
           onClick={(e: any) => {
             state.FLOW?.exist ? (
               state.FLOW?.itsMe ? handleSave("update") : popTrigger.openPopup(e.currentTarget)
-            ) : handleSave("create");
+            ) : (
+							handleSave("create")
+						);
           }}
         >
           {translate("save")}

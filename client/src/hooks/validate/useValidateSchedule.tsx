@@ -16,62 +16,57 @@ export const useValidateSchedule = () => {
   const [ERRORS, setERRORS] = useState<any[]>([]);
   const validate = useRef<Function>(() => {});
 
-  // alert 표시 및 focus ---------------------------------------------------------------------------
-  const showAlertAndFocus = useCallback((field: string, msg: string, idx: number) => {
-    setALERT({
-      open: true,
-      msg: translate(msg),
-      severity: "error",
-    });
-    if (field) {
-      setTimeout(() => {
-        REFS?.current?.[idx]?.[field]?.current?.focus();
-      }, 10);
-      setERRORS((prev) => {
-        const updatedErrors = [...prev];
-        updatedErrors[idx] = {
-          ...updatedErrors[idx],
-          [field]: true,
-        };
-        return updatedErrors;
-      });
-    }
-    return false;
-  }, [setALERT, translate]);
+	// alert 표시 및 focus ---------------------------------------------------------------------------
+	const showAlertAndFocus = useCallback((field: string, msg: string, idx: number) => {
+		setALERT({
+			open: true,
+			msg: translate(msg),
+			severity: "error",
+		});
+		field && setTimeout(() => {
+			REFS?.current?.[idx]?.[field]?.current?.focus();
+		}, 0);
+		field && setERRORS((prev) => {
+			const updatedErrors = [...prev];
+			updatedErrors[idx] = {
+				...updatedErrors[idx],
+				[field]: true,
+			};
+			return updatedErrors;
+		});
+	}, [setALERT, translate]);
 
-  // 7. validate -----------------------------------------------------------------------------------
-  validate.current = async (OBJECT: any, COUNT: any, extra: string) => {
+	// 7. validate -----------------------------------------------------------------------------------
+	validate.current = async (OBJECT: any, COUNT: any, extra: string) => {
 
-    // 2. record -----------------------------------------------------------------------------------
-    if (extra === "record") {
-      const target = [
-        "schedule_part",
-        "schedule_color",
-        "schedule_title",
-      ];
-      REFS.current = (
-        Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
-          target.reduce((acc, cur) => ({
-            ...acc,
-            [cur]: createRef()
-          }), {})
-        ))
-      );
-      setERRORS (
-        Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
-          target.reduce((acc, cur) => ({
-            ...acc,
-            [cur]: false
-          }), {})
-        ))
-      );
+		// 7-1. record -----------------------------------------------------------------------------------
+		if (extra === "record") {
+			const target = [
+				"schedule_part",
+				"schedule_color",
+				"schedule_title",
+			];
+			REFS.current = (
+				Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
+					target.reduce((acc, cur) => ({
+						...acc,
+						[cur]: createRef()
+					}), {})
+				))
+			);
+			setERRORS (
+				Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
+					target.reduce((acc, cur) => ({
+						...acc,
+						[cur]: false
+					}), {})
+				))
+			);
 
       const section = OBJECT.schedule_section;
-
       if (COUNT.newSectionCnt <= 0) {
         return showAlertAndFocus("", "errorCount", 0);
       }
-
       for (let i = 0; i < section?.length; i++) {
         if (!section[i].schedule_part || section[i].schedule_part === "") {
           return showAlertAndFocus('schedule_part', "errorSchedulePart", i);
@@ -86,52 +81,51 @@ export const useValidateSchedule = () => {
       return true;
     }
 
-    // 3. delete ---------------------------------------------------------------------------------
-    else if (extra === "delete") {
-      const target = [
-        "_id",
-      ];
-      REFS.current = (
-        Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
-          target.reduce((acc, cur) => ({
-            ...acc,
-            [cur]: createRef()
-          }), {})
-        ))
-      );
-      setERRORS (
-        Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
-          target.reduce((acc, cur) => ({
-            ...acc,
-            [cur]: false
-          }), {})
-        ))
-      );
-      const confirmResult = new Promise((resolve) => {
-        setCONFIRM({
-          open: true,
-          msg: translate("confirmDelete"),
-        }, (confirmed: boolean) => {
-          resolve(confirmed);
-        });
-      });
-
-      if (await confirmResult) {
-        if (!OBJECT?._id || OBJECT?._id === "") {
-          return showAlertAndFocus("", "noData", 0);
-        }
-        return true;
-      }
-      else {
-        return false;
-      }
-    }
-  }
+		// 7-2. delete ---------------------------------------------------------------------------------
+		if (extra === "delete") {
+			const target = [
+				"_id",
+			];
+			REFS.current = (
+				Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
+					target.reduce((acc, cur) => ({
+						...acc,
+						[cur]: createRef()
+					}), {})
+				))
+			);
+			setERRORS (
+				Array.from({ length: COUNT.newSectionCnt }, (_, _idx) => (
+					target.reduce((acc, cur) => ({
+						...acc,
+						[cur]: false
+					}), {})
+				))
+			);
+			const confirmResult = new Promise((resolve) => {
+				setCONFIRM({
+					open: true,
+					msg: translate("confirmDelete"),
+				}, (confirmed: boolean) => {
+					resolve(confirmed);
+				});
+			});
+			if (await confirmResult) {
+				if (!OBJECT?._id || OBJECT?._id === "") {
+					return showAlertAndFocus("", "noData", 0);
+				}
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	};
 
 	// 10. return ----------------------------------------------------------------------------------
-  return {
-    ERRORS: ERRORS,
-    REFS: REFS.current,
-    validate: validate.current,
-  };
+	return {
+		ERRORS: ERRORS,
+		REFS: REFS.current,
+		validate: validate.current,
+	};
 };

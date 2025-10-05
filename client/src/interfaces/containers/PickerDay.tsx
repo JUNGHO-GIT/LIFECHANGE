@@ -70,7 +70,8 @@ export const PickerDay = memo((
 	);
 
 	// ---------------------------------------------------------------------------------------------
-	/* useEffect(() => {
+	/*
+	useEffect(() => {
 		console.log(
 			"Date Debug Log", {
 				dateTypeInList,
@@ -80,7 +81,8 @@ export const PickerDay = memo((
 				DATE: JSON.stringify(DATE, null, 2)
 			}
 		);
-	}, [DATE, dateTypeInList, dateTypeInSave, dateStrInList, dateStrInSave]); */
+	}, [DATE, dateTypeInList, dateTypeInSave, dateStrInList, dateStrInSave]);
+	*/
 
 	// 2-2. useEffect -----------------------------------------------------------------------------
 	// - 화면 로딩시 초기값 설정 1

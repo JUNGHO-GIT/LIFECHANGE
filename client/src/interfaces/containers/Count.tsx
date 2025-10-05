@@ -1,9 +1,9 @@
 // Count.tsx
 
+import { memo, useCallback, useMemo, useEffect } from "@importReacts";
 import { Div, Grid, Icons, Img } from "@importComponents";
 import { Input } from "@importContainers";
 import { useCommonValue } from "@importHooks";
-import { memo, useCallback, useMemo } from "@importReacts";
 import { useStoreAlert, useStoreLanguage } from "@importStores";
 
 // -------------------------------------------------------------------------------------------------
@@ -22,11 +22,12 @@ declare type CountProps = {
 	setLOCKED: React.Dispatch<React.SetStateAction<string>>;
 	limit: number;
 	disabled?: boolean;
+	onCountChange?: (newSectionCnt: number) => void;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const Count = memo((
-	{ COUNT, setCOUNT, LOCKED, setLOCKED, limit, disabled }: CountProps
+	{ COUNT, setCOUNT, LOCKED, setLOCKED, limit, disabled, onCountChange }: CountProps
 ) => {
 
 	// 1. common ----------------------------------------------------------------------------------
@@ -34,7 +35,7 @@ export const Count = memo((
 	const { translate } = useStoreLanguage();
 	const { setALERT } = useStoreAlert();
 
-	// 2. callbacks ----------------------------------------------------------------------------------
+	// 4. handle ----------------------------------------------------------------------------------
 	const handleLockToggle = useCallback(() => {
 		if (disabled) {
 			return;
@@ -42,6 +43,7 @@ export const Count = memo((
 		setLOCKED(LOCKED === "locked" ? "unlocked" : "locked");
 	}, [disabled, LOCKED, setLOCKED]);
 
+	// 4. handle ----------------------------------------------------------------------------------
 	const handleMinus = useCallback(() => {
 		if (disabled) {
 			return;
@@ -50,10 +52,12 @@ export const Count = memo((
 			return;
 		}
 		if (COUNT.newSectionCnt > COUNT.sectionCnt) {
+			const newCnt = COUNT.newSectionCnt - 1;
 			setCOUNT((prev) => ({
 				...prev,
-				newSectionCnt: prev.newSectionCnt - 1
+				newSectionCnt: newCnt
 			}));
+			onCountChange && onCountChange(newCnt);
 		}
 		else {
 			setALERT({
@@ -61,13 +65,14 @@ export const Count = memo((
 				severity: "error",
 				msg: (
 					localLang === "ko"
-						? `${COUNT.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
-						: `Please enter ${COUNT.sectionCnt} or more and ${limit} or less.`
+					? `${COUNT.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
+					: `Please enter ${COUNT.sectionCnt} or more and ${limit} or less.`
 				),
 			});
 		}
 	}, [disabled, LOCKED, PATH, COUNT.newSectionCnt, COUNT.sectionCnt, setCOUNT, setALERT, localLang, limit]);
 
+	// 4. handle ----------------------------------------------------------------------------------
 	const handlePlus = useCallback(() => {
 		if (disabled) {
 			return;
@@ -76,10 +81,12 @@ export const Count = memo((
 			return;
 		}
 		if (COUNT.newSectionCnt < limit) {
+			const newCnt = COUNT.newSectionCnt + 1;
 			setCOUNT((prev) => ({
 				...prev,
-				newSectionCnt: prev.newSectionCnt + 1
+				newSectionCnt: newCnt
 			}));
+			onCountChange && onCountChange(newCnt);
 		}
 		else {
 			setALERT({

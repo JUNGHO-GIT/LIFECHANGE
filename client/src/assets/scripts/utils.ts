@@ -125,7 +125,22 @@ export const fnMakeForm = (
 	return form;
 };
 
-// 7. handleY -------------------------------------------------------------------------------------
+// 7. handleNumberInput ---------------------------------------------------------------------------
+// - 숫자 입력 처리 (콤마 제거, 최대값 제한, 소수점 처리, 앞자리 0 제거)
+// 호출예시: fnHandleNumberInput("1,234.56", 10000, 2);
+export const fnHandleNumberInput = (val: string, max: number, decimalPlaces: number = 0) => {
+	let processedValue = val === "" ? "0" : val.replace(/,/g, "");
+	const regex = decimalPlaces === 0 ? /^\d+$/ : new RegExp(`^\\d*\\.?\\d{0,${decimalPlaces}}$`);
+	if (Number(processedValue) > max || !regex.test(processedValue)) {
+		return null;
+	}
+	if (/^0(?!\.)/.test(processedValue)) {
+		processedValue = processedValue.replace(/^0+/, "");
+	}
+	return processedValue;
+};
+
+// 8. handleY -------------------------------------------------------------------------------------
 // - 차트 Y축 범위 및 눈금 계산
 export const fnHandleY = (
 	OBJECT: any,

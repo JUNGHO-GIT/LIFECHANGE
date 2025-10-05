@@ -16,5 +16,6 @@ export {
 // -------------------------------------------------------------------------------------------------
 export {
   fnInsertComma,
-  fnHandleY
+  fnHandleY,
+  fnHandleNumberInput
 } from "@assets/scripts/utils";

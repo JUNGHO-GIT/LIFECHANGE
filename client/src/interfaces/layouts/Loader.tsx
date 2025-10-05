@@ -1,7 +1,7 @@
 // Loader.tsx
 
-import { Div } from "@importComponents";
 import { memo } from "@importReacts";
+import { Div } from "@importComponents";
 import { useStoreLoading } from "@importStores";
 
 // -------------------------------------------------------------------------------------------------

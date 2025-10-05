@@ -5,7 +5,6 @@ export type {
 	JSX
 } from "react";
 export {
-  default as React,
   useState,
   useEffect,
   useCallback,
@@ -13,6 +12,9 @@ export {
   createRef,
 	memo,
 	useMemo,
+} from "react";
+export {
+	default as React,
 } from "react";
 
 // react-dom ----------------------------------------------------------------------------------------

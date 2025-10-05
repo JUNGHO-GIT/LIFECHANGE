@@ -1,6 +1,6 @@
 // FoodGoalDetail.tsx
 
-import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@importReacts";
+import { useState, useEffect, useRef, useCallback, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useValidateFood } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { FoodGoal, FoodGoalType } from "@importSchemas";
@@ -54,6 +54,20 @@ export const FoodGoalDetail = memo(() => {
     dateStart: location_dateStart || getMonthStartFmt(),
     dateEnd: location_dateEnd || getMonthEndFmt(),
   });
+
+	// 2-3. useRef --------------------------------------------------------------------------------
+	const countRef = useRef(COUNT);
+	const objectRef = useRef(OBJECT);
+	const dateRef = useRef(DATE);
+
+	// 2-3. useEffect ------------------------------------------------------------------------------
+	useEffect(() => {
+		COUNT !== countRef.current && (countRef.current = COUNT);
+		OBJECT !== objectRef.current && (objectRef.current = OBJECT);
+		DATE !== dateRef.current && (dateRef.current = DATE);
+	}, [
+		COUNT, OBJECT, DATE
+	]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
@@ -255,7 +269,7 @@ export const FoodGoalDetail = memo(() => {
   };
 
   // 4-3. handle --------------------------------------------------------------------------------
-  const handleDelete = (_index: number) => {
+  const handleDelete = useCallback((_index: number) => {
     setOBJECT((prev) => ({
       ...prev,
       food_goal_kcal: "",
@@ -267,7 +281,7 @@ export const FoodGoalDetail = memo(() => {
       ...prev,
       newSectionCnt: prev.newSectionCnt - 1
     }));
-  };
+  }, []);
 
 	// 7. detail ----------------------------------------------------------------------------------
   const detailNode = () => {
@@ -530,6 +544,8 @@ export const FoodGoalDetail = memo(() => {
     <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
+			OBJECT={OBJECT}
+			setOBJECT={setOBJECT}
       LOCKED={LOCKED}
       setLOCKED={setLOCKED}
     />
