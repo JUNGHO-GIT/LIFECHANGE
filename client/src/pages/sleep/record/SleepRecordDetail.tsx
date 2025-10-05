@@ -199,7 +199,7 @@ export const SleepRecordDetail = memo(() => {
 	// 3. flow ------------------------------------------------------------------------------------
   const flowSave = async (type: string) => {
     setLOADING(true);
-    if (!await validate(objectRef.current, countRef.current, "goal")) {
+    if (!await validate(objectRef.current, countRef.current, "record")) {
       setLOADING(false);
       return;
     }
