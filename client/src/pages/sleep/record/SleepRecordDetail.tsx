@@ -208,8 +208,8 @@ export const SleepRecordDetail = memo(() => {
       url: type === "create" ? `${URL_OBJECT}/record/create` : `${URL_OBJECT}/record/update`,
       data: {
         user_id: sessionId,
-        OBJECT: OBJECT,
-        DATE: DATE,
+        OBJECT: objectRef.current,
+        DATE: dateRef.current,
         type: type,
       }
     })
@@ -263,7 +263,7 @@ export const SleepRecordDetail = memo(() => {
     axios.delete(`${URL_OBJECT}/record/delete`, {
       data: {
         user_id: sessionId,
-        DATE: DATE,
+        DATE: dateRef.current,
       }
     })
     .then((res: any) => {

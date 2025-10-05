@@ -170,8 +170,8 @@ export const FoodGoalDetail = memo(() => {
       url: type === "create" ? `${URL_OBJECT}/goal/create` : `${URL_OBJECT}/goal/update`,
       data: {
         user_id: sessionId,
-        OBJECT: OBJECT,
-        DATE: DATE,
+        OBJECT: objectRef.current,
+        DATE: dateRef.current,
         type: type,
       }
     })
@@ -225,7 +225,7 @@ export const FoodGoalDetail = memo(() => {
     axios.delete(`${URL_OBJECT}/goal/delete`, {
       data: {
         user_id: sessionId,
-        DATE: DATE,
+        DATE: dateRef.current,
       }
     })
     .then((res: any) => {
