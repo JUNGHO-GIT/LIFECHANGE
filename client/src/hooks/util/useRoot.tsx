@@ -22,7 +22,7 @@ export const useRoot = () => {
           navigate("/user/login");
         }
         else {
-          navigate("/schedule/record/list");
+          navigate("/today/record/list");
         }
       }
     }

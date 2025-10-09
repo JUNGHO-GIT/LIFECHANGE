@@ -13,9 +13,9 @@ export const useFoodSection = () => {
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (
-      !PATH.includes("food/find/list") &&
-      !PATH.includes("food/favorite/list") &&
-      !PATH.includes("food/record/detail")
+      !PATH.includes("food/find") &&
+      !PATH.includes("food/favorite") &&
+      !PATH.includes("food/record")
     ) {
       fnSetSession("section", "food", "", []);
     }

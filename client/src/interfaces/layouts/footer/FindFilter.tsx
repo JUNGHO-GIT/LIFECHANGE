@@ -20,15 +20,8 @@ export const FindFilter = memo((
 ) => {
 
 	// 1. common ----------------------------------------------------------------------------------
-  const { navigate, toDetail, isFavoriteList } = useCommonValue();
+  const { navigate, toDetail, isFind, isFavorite } = useCommonValue();
   const { translate } = useStoreLanguage();
-
-  // 2. useMemo ---------------------------------------------------------------------------------
-  const navigationState = useMemo(() => ({
-    dateType: state?.DATE.dateType,
-    dateStart: state?.DATE.dateStart,
-    dateEnd: state?.DATE.dateEnd
-  }), [state?.DATE.dateType, state?.DATE.dateStart, state?.DATE.dateEnd]);
 
 	// 4. handler ------------------------------------------------------------------------------------
   const handleSearch = () => {
@@ -42,8 +35,14 @@ export const FindFilter = memo((
 
 	// 4. handler ------------------------------------------------------------------------------------
   const handleNavigateToDetail = () => {
-    navigate(toDetail, { state: navigationState });
-  };
+    navigate(toDetail, {
+			state: {
+				dateType: state?.DATE.dateType,
+				dateStart: state?.DATE.dateStart,
+				dateEnd: state?.DATE.dateEnd,
+			}
+		});
+	};
 
 	// 7. find -------------------------------------------------------------------------------------
   const findSection = useMemo(() => (
@@ -134,7 +133,7 @@ export const FindFilter = memo((
       showFirstButton={true}
       showLastButton={true}
       component={"div"}
-      disabled={isFavoriteList}
+      disabled={isFavorite}
       className={"border-left-2"}
       rowsPerPage={10}
       labelDisplayedRows={() => ""}
@@ -153,13 +152,14 @@ export const FindFilter = memo((
         window.scrollTo(0, 0);
       }}
     />
-  ), [state?.COUNT.totalCnt, state?.PAGING.page, isFavoriteList, setState]);
+  ), [state?.COUNT.totalCnt, state?.PAGING.page, isFavorite, setState]);
 
 	// 10. return ----------------------------------------------------------------------------------
   return (
     <Grid container={true} spacing={0}>
       <Grid size={7} className={"d-row-center"}>
-        {isFavoriteList ? favoriteSection : findSection}
+				{isFind && findSection}
+				{isFavorite && favoriteSection}
       </Grid>
       <Grid size={5} className={"h-100p d-col-center"}>
         {paginationSection}

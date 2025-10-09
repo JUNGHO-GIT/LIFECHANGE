@@ -36,122 +36,103 @@ export const PickerTime = memo((
 
 	// 2-3. useEffect ----------------------------------------------------------------------------
 	useEffect(() => {
-		// 1. schedule
-		if (firstStr === `schedule`) {
-			if (extra.includes(`exercise_record_cardio`)) {
-				setImage(`exercise4`);
-				setTargetStr(`exercise`);
-				setTranslateStr(translate(`cardio`));
-			}
-			else if (extra.includes(`sleep_record_bedTime`)) {
-				setImage(`sleep2`);
-				setTargetStr(`sleep`);
-				setTranslateStr(translate(`bedTime`));
-			}
-			else if (extra.includes(`sleep_record_wakeTime`)) {
-				setImage(`sleep3`);
-				setTargetStr(`sleep`);
-				setTranslateStr(translate(`wakeTime`));
-			}
-			else if (extra.includes(`sleep_record_sleepTime`)) {
-				setImage(`sleep4`);
-				setTargetStr(`sleep`);
-				setTranslateStr(translate(`sleepTime`));
-			}
-		}
+		// 1. today & calendar
+		(firstStr === `today` || firstStr === `calendar`) && (
+			extra === `exercise_record_cardio` ? (
+				setImage(`exercise4`),
+				setTargetStr(`exercise`),
+				setTranslateStr(translate(`cardio`))
+			) : extra === `sleep_record_bedTime` ? (
+				setImage(`sleep2`),
+				setTargetStr(`sleep`),
+				setTranslateStr(translate(`bedTime`))
+			) : extra === `sleep_record_wakeTime` ? (
+				setImage(`sleep3`),
+				setTargetStr(`sleep`),
+				setTranslateStr(translate(`wakeTime`))
+			) : extra === `sleep_record_sleepTime` && (
+				setImage(`sleep4`),
+				setTargetStr(`sleep`),
+				setTranslateStr(translate(`sleepTime`))
+			)
+		);
 
 		// 2. exercise
-		else if (firstStr === `exercise`) {
+		firstStr === `exercise` && (
 			// 1. exercise - goal 인 경우
-			if (secondStr === `goal`) {
-				if (extra.includes(`exercise_goal_cardio`)) {
-					setImage(`exercise4`);
-					setTargetStr(`exercise`);
-					setTranslateStr(
-						DATE?.dateType === `day` ? (
-							translate(`goalCardio`)
-						) : (
-							`${translate(`goalCardio`)} (${translate(`total`)})`
-						)
-					);
-				}
-			}
+			secondStr === `goal` && extra === `exercise_goal_cardio` && (
+				setImage(`exercise4`),
+				setTargetStr(`exercise`),
+				setTranslateStr(
+					DATE?.dateType === `day`
+					? translate(`goalCardio`)
+					: `${translate(`goalCardio`)} (${translate(`total`)})`
+				)
+			),
 
 			// 4. exercise - goal 아닌 경우
-			else if (secondStr !== `goal`) {
-				if (extra.includes(`exercise_record_cardio`)) {
-					setImage(`exercise4`);
-					setTargetStr(`exercise`);
-					setTranslateStr(translate(`cardio`));
-				}
-			}
-		}
+			secondStr !== `goal` && extra === `exercise_record_cardio` && (
+				setImage(`exercise4`),
+				setTargetStr(`exercise`),
+				setTranslateStr(translate(`cardio`))
+			)
+		);
 
 		// 3. sleep
-		else if (firstStr === `sleep`) {
+		firstStr === `sleep` && (
 			// 1. sleep - goal 인 경우
-			if (secondStr === `goal`) {
-				if (extra.includes(`sleep_goal_bedTime`)) {
-					setImage(`sleep2`);
-					setTargetStr(`sleep`);
+			secondStr === `goal` && (
+				extra === `sleep_goal_bedTime` ? (
+					setImage(`sleep2`),
+					setTargetStr(`sleep`),
 					setTranslateStr(
-						DATE?.dateType === `day` ? (
-							translate(`goalBedTime`)
-						) : (
-							`${translate(`goalBedTime`)} (${translate(`avg`)})`
-						)
-					);
-				}
-				else if (extra.includes(`sleep_goal_wakeTime`)) {
-					setImage(`sleep3`);
-					setTargetStr(`sleep`);
+						DATE?.dateType === `day`
+						? translate(`goalBedTime`)
+						: `${translate(`goalBedTime`)} (${translate(`avg`)})`
+					)
+				) : extra === `sleep_goal_wakeTime` ? (
+					setImage(`sleep3`),
+					setTargetStr(`sleep`),
 					setTranslateStr(
-						DATE?.dateType === `day` ? (
-							translate(`goalWakeTime`)
-						) : (
-							`${translate(`goalWakeTime`)} (${translate(`avg`)})`
-						)
-					);
-				}
-				else if (extra.includes(`sleep_goal_sleepTime`)) {
-					setImage(`sleep4`);
-					setTargetStr(`sleep`);
+						DATE?.dateType === `day`
+						? translate(`goalWakeTime`)
+						: `${translate(`goalWakeTime`)} (${translate(`avg`)})`
+					)
+				) : extra === `sleep_goal_sleepTime` && (
+					setImage(`sleep4`),
+					setTargetStr(`sleep`),
 					setTranslateStr(
-						DATE?.dateType === `day` ? (
-							translate(`goalSleepTime`)
-						) : (
-							`${translate(`goalSleepTime`)} (${translate(`avg`)})`
-						)
-					);
-				}
-			}
+						DATE?.dateType === `day`
+						? translate(`goalSleepTime`)
+						: `${translate(`goalSleepTime`)} (${translate(`avg`)})`
+					)
+				)
+			),
 
 			// 2. sleep - goal 아닌 경우
-			else if (secondStr !== `goal`) {
-				if (extra.includes(`sleep_record_bedTime`)) {
-					setImage(`sleep2`);
-					setTargetStr(`sleep`);
-					setTranslateStr(translate(`bedTime`));
-				}
-				else if (extra.includes(`sleep_record_wakeTime`)) {
-					setImage(`sleep3`);
-					setTargetStr(`sleep`);
-					setTranslateStr(translate(`wakeTime`));
-				}
-				else if (extra.includes(`sleep_record_sleepTime`)) {
-					setImage(`sleep4`);
-					setTargetStr(`sleep`);
-					setTranslateStr(translate(`sleepTime`));
-				}
-			}
-		}
+			secondStr !== `goal` && (
+				extra === `sleep_record_bedTime` ? (
+					setImage(`sleep2`),
+					setTargetStr(`sleep`),
+					setTranslateStr(translate(`bedTime`))
+				) : extra === `sleep_record_wakeTime` ? (
+					setImage(`sleep3`),
+					setTargetStr(`sleep`),
+					setTranslateStr(translate(`wakeTime`))
+				) : extra === `sleep_record_sleepTime` && (
+					setImage(`sleep4`),
+					setTargetStr(`sleep`),
+					setTranslateStr(translate(`sleepTime`))
+				)
+			)
+		);
 	}, [firstStr, secondStr, extra, DATE, translate]);
 
-	// 3. callbacks ----------------------------------------------------------------------------------
-	const handleCalendarChange = useCallback((e: any, closePopup: any) => {
+	// 4. handle ----------------------------------------------------------------------------------
+	const fnHandleTodayChange = useCallback((e: any, closePopup: any) => {
 		setOBJECT((prev: any) => ({
 			...prev,
-			[`schedule_${targetStr}_section`]: prev?.[`schedule_${targetStr}_section`]?.map((section: any, idx: number) => (
+			[`today_${targetStr}_section`]: prev?.[`today_${targetStr}_section`]?.map((section: any, idx: number) => (
 				idx === i ? {
 					...section,
 					[`${extra}`]: moment(e).format("HH:mm")
@@ -161,7 +142,8 @@ export const PickerTime = memo((
 		closePopup();
 	}, [setOBJECT, targetStr, i, extra]);
 
-	const handleGoalChange = useCallback((e: any, closePopup: any) => {
+	// 4. handle ----------------------------------------------------------------------------------
+	const fnHandleGoalChange = useCallback((e: any, closePopup: any) => {
 		setOBJECT((prev: any) => ({
 			...prev,
 			[`${extra}`]: moment(e).format("HH:mm")
@@ -169,7 +151,8 @@ export const PickerTime = memo((
 		closePopup();
 	}, [setOBJECT, extra]);
 
-	const handleRecordChange = useCallback((e: any, closePopup: any) => {
+	// 4. handle ----------------------------------------------------------------------------------
+	const fnHandleRecordChange = useCallback((e: any, closePopup: any) => {
 		setOBJECT((prev: any) => ({
 			...prev,
 			[`${firstStr}_section`]: prev?.[`${firstStr}_section`]?.map((section: any, idx: number) => (
@@ -193,6 +176,7 @@ export const PickerTime = memo((
 		/>
 	), [image]);
 
+	// 4. memoized values ---------------------------------------------------------------------------
 	const digitalClockProps = useMemo(() => ({
 		timeStep: 10,
 		ampm: false,
@@ -205,7 +189,8 @@ export const PickerTime = memo((
 
 	// 7. time ---------------------------------------------------------------------------------------
 	const timeNode = useMemo(() => {
-		const scheduleSection = () => (
+		// 1. today & calendar
+		const todaySection = () => (
 			<PopUp
 				key={`${firstStr}-${extra}-${i}`}
 				type={"innerCenter"}
@@ -217,8 +202,8 @@ export const PickerTime = memo((
 							<LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLang}>
 								<DigitalClock
 									{...digitalClockProps}
-									value={moment(OBJECT?.[`schedule_${targetStr}_section`]?.[i]?.[`${extra}`], "HH:mm")}
-									onChange={(e: any) => handleCalendarChange(e, closePopup)}
+									value={moment(OBJECT?.[`today_${targetStr}_section`]?.[i]?.[`${extra}`], "HH:mm")}
+									onChange={(e: any) => fnHandleTodayChange(e, closePopup)}
 								/>
 							</LocalizationProvider>
 						</Grid>
@@ -227,22 +212,23 @@ export const PickerTime = memo((
 				children={(popTrigger: any) => (
 					<Input
 						label={translateStr}
-						value={OBJECT?.[`schedule_${targetStr}_section`]?.[i]?.[`${extra}`] || ``}
+						value={OBJECT?.[`today_${targetStr}_section`]?.[i]?.[`${extra}`] || ``}
 						inputRef={REFS?.[i]?.[`${extra}`]}
 						error={ERRORS?.[i]?.[`${extra}`]}
 						readOnly={true}
 						locked={LOCKED}
 						startadornment={imgAdornment}
 						endadornment={translate("hm")}
-						onClick={(e: any) => {
-							extra !== "sleep_record_sleepTime" && (
-								LOCKED === "unlocked" && popTrigger.openPopup(e.currentTarget)
-							);
-						}}
+						onClick={(e: any) => (
+							extra !== "sleep_record_sleepTime" &&
+							LOCKED === "unlocked" &&
+							popTrigger.openPopup(e.currentTarget)
+						)}
 					/>
 				)}
 			/>
 		);
+		// 2. goal
 		const goalSection = () => (
 			<PopUp
 				key={`${firstStr}-${extra}-goal-${i}`}
@@ -256,7 +242,7 @@ export const PickerTime = memo((
 								<DigitalClock
 									{...digitalClockProps}
 									value={moment(OBJECT?.[`${extra}`], "HH:mm")}
-									onChange={(e: any) => handleGoalChange(e, closePopup)}
+									onChange={(e: any) => fnHandleGoalChange(e, closePopup)}
 								/>
 							</LocalizationProvider>
 						</Grid>
@@ -272,13 +258,15 @@ export const PickerTime = memo((
 						locked={LOCKED}
 						startadornment={imgAdornment}
 						endadornment={translate("hm")}
-						onClick={(e: any) => {
-							LOCKED === "unlocked" && popTrigger.openPopup(e.currentTarget);
-						}}
+						onClick={(e: any) => (
+							LOCKED === "unlocked" &&
+							popTrigger.openPopup(e.currentTarget)
+						)}
 					/>
 				)}
 			/>
 		);
+		// 3. record
 		const recordSection = () => (
 			<PopUp
 				key={`${firstStr}-${extra}-record-${i}`}
@@ -292,7 +280,7 @@ export const PickerTime = memo((
 								<DigitalClock
 									{...digitalClockProps}
 									value={moment(OBJECT?.[`${firstStr}_section`]?.[i]?.[`${extra}`], "HH:mm")}
-									onChange={(e: any) => handleRecordChange(e, closePopup)}
+									onChange={(e: any) => fnHandleRecordChange(e, closePopup)}
 								/>
 							</LocalizationProvider>
 						</Grid>
@@ -308,21 +296,24 @@ export const PickerTime = memo((
 						locked={LOCKED}
 						startadornment={imgAdornment}
 						endadornment={translate("hm")}
-						onClick={(e: any) => {
-							extra !== "sleep_record_sleepTime" && (
-								LOCKED === "unlocked" && popTrigger.openPopup(e.currentTarget)
-							);
-						}}
+						onClick={(e: any) => (
+							extra !== "sleep_record_sleepTime" &&
+							LOCKED === "unlocked" &&
+							popTrigger.openPopup(e.currentTarget)
+						)}
 					/>
 				)}
 			/>
 		);
 		return (
-			firstStr === "schedule" && scheduleSection(),
-			firstStr !== "schedule" && secondStr === "goal" ? goalSection() : recordSection()
+			<>
+				{(firstStr === "today" || firstStr === "calendar") && todaySection()}
+				{(firstStr !== "today" && firstStr !== "calendar" && secondStr === "goal") && goalSection()}
+				{(firstStr !== "today" && firstStr !== "calendar" && secondStr !== "goal") && recordSection()}
+			</>
 		);
 	}, [
-		firstStr, secondStr, extra, i, OBJECT, REFS, ERRORS, LOCKED, targetStr, translateStr, imgAdornment, digitalClockProps, localLang, translate, handleCalendarChange, handleGoalChange, handleRecordChange
+		firstStr, secondStr, extra, i, OBJECT, REFS, ERRORS, LOCKED, targetStr, translateStr, imgAdornment, digitalClockProps, localLang, translate, fnHandleTodayChange, fnHandleGoalChange, fnHandleRecordChange
 	]);
 
 	// 10. return ------------------------------------------------------------------------------------

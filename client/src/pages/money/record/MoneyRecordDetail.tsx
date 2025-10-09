@@ -16,7 +16,7 @@ export const MoneyRecordDetail = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
 	const { URL_OBJECT, navigate, sessionId, localCurrency, moneyArray } = useCommonValue();
-	const { toList, toSchedule, bgColors } = useCommonValue();
+	const { toList, toToday, bgColors } = useCommonValue();
 	const { location_from, location_dateStart, location_dateEnd } = useCommonValue();
 	const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
 	const { ERRORS, REFS, validate } = useValidateMoney();
@@ -236,7 +236,7 @@ export const MoneyRecordDetail = memo(() => {
 					msg: translate(res.data.msg),
 					severity: "success",
 				});
-				navigate(location_from === "schedule" ? toSchedule : toList, {
+				navigate(location_from === "today" ? toToday : toList, {
 					state: {
 						dateType: "",
 						dateStart: DATE.dateStart,
@@ -291,7 +291,7 @@ export const MoneyRecordDetail = memo(() => {
 					msg: translate(res.data.msg),
 					severity: "success",
 				});
-				navigate(location_from === "schedule" ? toSchedule : toList, {
+				navigate(location_from === "today" ? toToday : toList, {
 					state: {
 						dateType: "",
 						dateStart: dateRef.current.dateStart,

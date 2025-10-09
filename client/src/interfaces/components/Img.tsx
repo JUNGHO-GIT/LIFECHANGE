@@ -85,16 +85,33 @@ export const Img = memo((
 		setIsLoading(true);
 		setIsEmptyHandled(false);
 
-		if (!src || src === "" || src === "empty") {
+		// src가 없거나 빈 문자열이거나 유효하지 않은 경우
+		if (!src || src === "" || src === "empty" || typeof src !== "string") {
 			setFileName("empty");
 			setImgSrc(`${GCLOUD_URL}/main/empty.webp`);
 			setIsEmptyHandled(true);
 			setIsLoading(false);
 		}
+		// src가 유효한 문자열인 경우
 		else {
-			setFileName(src.split("/").pop()?.split(".")[0] || "empty");
-			setImgSrc(group === "new" ? src : `${GCLOUD_URL}/${group || "main"}/${src}`);
-			setIsEmptyHandled(false);
+			const trimmedSrc = src.trim();
+			// 빈 문자열이거나 유효하지 않은 파일명인 경우
+			if (!trimmedSrc ||
+				!trimmedSrc.includes(".") ||
+				trimmedSrc.startsWith(".") ||
+				trimmedSrc.endsWith(".") ||
+				trimmedSrc === "." ||
+				trimmedSrc.length < 3) {
+				setFileName("empty");
+				setImgSrc(`${GCLOUD_URL}/main/empty.webp`);
+				setIsEmptyHandled(true);
+				setIsLoading(false);
+			}
+			else {
+				setFileName(trimmedSrc.split("/").pop()?.split(".")[0] || "empty");
+				setImgSrc(group === "new" ? trimmedSrc : `${GCLOUD_URL}/${group || "main"}/${trimmedSrc}`);
+				setIsEmptyHandled(false);
+			}
 		}
 	}, [GCLOUD_URL, group, src]);
 

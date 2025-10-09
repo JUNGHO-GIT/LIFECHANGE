@@ -17,7 +17,7 @@ export const Header = memo(() => {
 			<Div
 				className={"d-center pointer ml-5px"}
 				onClick={() => {
-					navigate("/schedule/record/list", {
+					navigate("/today/record/list", {
 						state: {
 							dateType: "day",
 							dateStart: getDayFmt(),

@@ -80,7 +80,7 @@ export const Memo = memo((
 							hover={true}
 							shadow={false}
 							radius={false}
-							src={"schedule3.webp"}
+							src={"calendar3.webp"}
 						/>
 					}
 					onClick={(e: any) => {

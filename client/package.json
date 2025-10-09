@@ -60,7 +60,7 @@
     "@emotion/styled": "^11.14.1",
     "@mui/material": "^7.3.4",
     "@mui/system": "^7.3.3",
-    "@mui/x-date-pickers": "^8.12.0",
+    "@mui/x-date-pickers": "^8.14.0",
     "@react-hooks-library/core": "^0.6.2",
     "ajv": "^8.17.1",
     "ajv-keywords": "^5.1.0",
@@ -75,7 +75,7 @@
     "react": "^19.2.0",
     "react-calendar": "^6.0.0",
     "react-dom": "^19.2.0",
-    "react-router": "^7.9.3",
+    "react-router": "^7.9.4",
     "react-scripts": "^5.0.1",
     "recharts": "^3.2.1",
     "zustand": "^5.0.8"
@@ -89,9 +89,9 @@
     "@mui/types": "^7.4.7",
     "@swc/core": "^1.13.5",
     "@testing-library/react": "^16.3.0",
-    "@types/node": "^24.6.2",
-    "@types/react": "^19.2.0",
-    "@types/react-dom": "^19.2.0",
+    "@types/node": "^24.7.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.1",
     "@types/react-router": "^5.1.20",
     "babel-loader": "^10.0.0",
     "compression-webpack-plugin": "^11.1.0",
@@ -102,6 +102,6 @@
     "ts-prune": "^0.10.3",
     "tslib": "^2.8.1",
     "typescript": "^5.9.3",
-    "webpack": "^5.102.0"
+    "webpack": "^5.102.1"
   }
 }

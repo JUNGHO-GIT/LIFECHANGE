@@ -15,7 +15,7 @@ import { MenuItem } from "@importMuis";
 export const ExerciseRecordDetail = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
-  const { URL_OBJECT, PATH, navigate, toList, toSchedule } = useCommonValue();
+  const { URL_OBJECT, PATH, navigate, toList, toToday } = useCommonValue();
   const { sessionId, localUnit, bgColors, exerciseArray } = useCommonValue();
   const { location_from, location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt,getMonthStartFmt, getMonthEndFmt } = useCommonDate();
@@ -257,7 +257,7 @@ export const ExerciseRecordDetail = memo(() => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(location_from === "schedule" ? toSchedule : toList, {
+        navigate(location_from === "today" ? toToday : toList, {
           state: {
             dateType: "",
             dateStart: dateRef.current.dateStart,
@@ -312,7 +312,7 @@ export const ExerciseRecordDetail = memo(() => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(location_from === "schedule" ? toSchedule : toList, {
+        navigate(location_from === "today" ? toToday : toList, {
           state: {
             dateType: "",
             dateStart: dateRef.current.dateStart,

@@ -2,11 +2,10 @@
 
 import mongoose from "mongoose";
 import { incrementSeq } from "@schemas/Counter";
-import { scheduleArray } from "@assets/arrays/scheduleArray";
-import { exerciseArray } from "@assets/arrays/exerciseArray";
-import { moneyArray } from "@assets/arrays/moneyArray";
-import { foodArray } from "@assets/arrays/foodArray";
-import { sleepArray } from "@assets/arrays/sleepArray";
+import { exerciseArray } from "@assets/arrays/ExerciseArray";
+import { moneyArray } from "@assets/arrays/MoneyArray";
+import { foodArray } from "@assets/arrays/FoodArray";
+import { sleepArray } from "@assets/arrays/SleepArray";
 
 // 1. schema ---------------------------------------------------------------------------------------
 const schema = new mongoose.Schema({
@@ -198,11 +197,6 @@ const schema = new mongoose.Schema({
   }],
 
   user_dataCategory: {
-    schedule: {
-      type: Array,
-      default: scheduleArray,
-      required: false
-    },
     exercise: {
       type: Array,
       default: exerciseArray,

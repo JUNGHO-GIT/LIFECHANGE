@@ -38,8 +38,9 @@ export const PickerDay = memo((
 	const { PATH, localLang, localTimeZone } = useCommonValue();
 	const { isGoalList, isGoalDetail } = useCommonValue();
 	const { isRecordList, isRecordDetail } = useCommonValue();
-	const { isSchedule, isScheduleRecordList, isScheduleGoalList } = useCommonValue();
-	const { isScheduleRecordDetail, isScheduleGoalDetail, isSchedulePlannerDetail } = useCommonValue();
+	const { isToday, isTodayRecordList, isTodayGoalList } = useCommonValue();
+	const { isTodayRecordDetail, isTodayGoalDetail } = useCommonValue();
+	const { isCalendarList, isCalendarDetail } = useCommonValue();
 	const { isList, isDetail } = useCommonValue();
 	const { getDayFmt, getDayNotFmt, getDayStartFmt, getDayEndFmt } = useCommonDate();
 	const { getPrevDayStartFmt, getPrevDayEndFmt } = useCommonDate();
@@ -102,8 +103,8 @@ export const PickerDay = memo((
 	// - 화면 로딩시 초기값 설정 2
 	// - 리스트 설정
 	useEffect(() => {
-		// 1. Schedule -  - Goal
-		if (isScheduleGoalList) {
+		// 1. Today - Goal
+		if (isTodayGoalList) {
 			setDATE({
 				dateType: "",
 				dateStart: DATE.dateStart || getDayFmt(),
@@ -115,8 +116,8 @@ export const PickerDay = memo((
 			);
 		}
 
-		// 2. Schedule -  - Record
-		else if (isScheduleRecordList) {
+		// 2. Today - Record
+		else if (isTodayRecordList) {
 			setDATE({
 				dateType: "day",
 				dateStart: DATE.dateStart || getDayFmt(),
@@ -276,8 +277,8 @@ export const PickerDay = memo((
 	// 2-3. useEffect -----------------------------------------------------------------------------
 	// - 리스트에서 타입 변경시 처리 (일, 주, 월, 년)
 	useEffect(() => {
-		// 1. Schedule -  - Goal
-		if (isScheduleGoalList) {
+		// 1. Today - Goal
+		if (isTodayGoalList) {
 			setDATE({
 				dateType: "",
 				dateStart: getDayFmt(),
@@ -289,8 +290,8 @@ export const PickerDay = memo((
 			);
 		}
 
-		// 2. Schedule -  - Record
-		else if (isScheduleRecordList) {
+		// 2. Today - Record
+		else if (isTodayRecordList) {
 			setDATE({
 				dateType: "day",
 				dateStart: getDayFmt(),
@@ -566,7 +567,7 @@ export const PickerDay = memo((
 				label={translate("dateType")}
 				value={DATE.dateType || dateTypeInList}
 				inputclass={`pointer ${dateClassInList}`}
-				disabled={isSchedule}
+				disabled={isToday}
 				onChange={(e: any) => {
 					setDateTypeInList(e.target.value);
 				}}
@@ -607,7 +608,7 @@ export const PickerDay = memo((
 					}
 				}}
 			>
-				{isSchedulePlannerDetail ? (
+				{(isTodayRecordDetail || isTodayGoalDetail) ? (
 					["day"]?.map((item: any) => (
 						<MenuItem
 							key={item}
@@ -1442,8 +1443,8 @@ export const PickerDay = memo((
 		// 10. return ----------------------------------------------------------------------------------
 		return (
 
-			// 1-1. 리스트 (Schedule - Goal)
-			isScheduleGoalList ? (
+			// 1-1. 리스트 (Today - Goal)
+			isTodayGoalList ? (
 				<Grid container={true} spacing={1}>
 					<Grid size={3} className={"d-center"}>
 						{dateTypeInListSection()}
@@ -1454,8 +1455,8 @@ export const PickerDay = memo((
 				</Grid>
 			)
 
-			// 1-2. 리스트 (Schedule - Record)
-			: isScheduleRecordList ? (
+			// 1-2. 리스트 (Today - Record)
+			: isTodayRecordList ? (
 				<Grid container={true} spacing={1}>
 					<Grid size={3} className={"d-center"}>
 						{dateTypeInListSection()}
@@ -1496,8 +1497,8 @@ export const PickerDay = memo((
 				</Grid>
 			)
 
-			// 2-1. 세이브 (Schedule - Planner)
-			: isSchedulePlannerDetail ? (
+			// 2-1. 세이브 (Today - Goal)
+			: isTodayGoalDetail ? (
 				<Grid container={true} spacing={1}>
 					<Grid size={{xs: 4, sm: 3}} className={"d-center"}>
 						{dateTypeInSaveSection()}
@@ -1511,8 +1512,8 @@ export const PickerDay = memo((
 				</Grid>
 			)
 
-			// 2-1. 세이브 (Schedule - Goal)
-			: isScheduleGoalDetail ? (
+			// 2-1. 세이브 (Today - Record)
+			: isTodayRecordDetail ? (
 				<Grid container={true} spacing={1}>
 					<Grid size={{xs: 4, sm: 3}} className={"d-center"}>
 						{dateTypeInSaveSection()}
@@ -1526,8 +1527,8 @@ export const PickerDay = memo((
 				</Grid>
 			)
 
-			// 2-1. 세이브 (Schedule - Record)
-			: isScheduleRecordDetail ? (
+			// 2-1. 세이브 (Calendar)
+			: isCalendarDetail ? (
 				<Grid container={true} spacing={1}>
 					<Grid size={{xs: 4, sm: 3}} className={"d-center"}>
 						{dateTypeInSaveSection()}

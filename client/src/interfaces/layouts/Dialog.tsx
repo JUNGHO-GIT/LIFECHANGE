@@ -24,7 +24,7 @@ export const Dialog = memo((
 
 	// 1. common ----------------------------------------------------------------------------------
   const { PATH, navigate, toDetail, localIsoCode } = useCommonValue();
-	const { isSchedule, isGoalList, isFindList, isFavoriteList, isList, isDetail } = useCommonValue();
+	const { isToday, isGoalList, isFindList, isFavoriteList, isList, isDetail } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
 
@@ -33,8 +33,8 @@ export const Dialog = memo((
 
   // 7. dialog -------------------------------------------------------------------------------------
   const dialogNode = () => {
-    // 1. schedule
-    const scheduleSection = () => (
+    // 1. today
+    const todaySection = () => (
       <Div className={"d-flex"}>
         <Backdrop
           open={open}
@@ -515,7 +515,7 @@ export const Dialog = memo((
                 setOBJECT((prev: any) => ({
                   ...prev,
                   food_section: [],
-                  schedule_food_section: [],
+                  today_food_section: [],
                 }));
               }
               if (setCOUNT) {
@@ -531,8 +531,8 @@ export const Dialog = memo((
     );
     // 10. return
     return (
-      isSchedule ? (
-        scheduleSection()
+      isToday ? (
+        todaySection()
       )
       : isGoalList ? (
         listGoalSection()

@@ -19,14 +19,15 @@ export const Empty = memo((
 
 	// 1. common ----------------------------------------------------------------------------------
   const { PATH, navigate } = useCommonValue();
-	const { isGoalList, isFindList, toDetail } = useCommonValue();
+	const { isToday, isFind, isGoal, isRecord } = useCommonValue();
+	const { toDetail } = useCommonValue();
 	const { getDayStartFmt, getDayEndFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
 
   // 7. emptyNode ----------------------------------------------------------------------------------
   const emptyNode = () => {
-    // 2. isScheduleSection
-    const isScheduleSection = () => (
+    // 1. isTodaySection
+    const isTodaySection = () => (
 			<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-0 mb-10px"}>
 				<Grid size={12} className={"p-2px"}>
 					<Accordion
@@ -37,7 +38,7 @@ export const Empty = memo((
 							onClick={() => {
 								navigate(toDetail, {
 									state: {
-										from: PATH.includes("schedule") ? "schedule" : "list",
+										from: PATH.includes("today") ? "today" : "list",
 										dateType: DATE?.dateType || "day",
 										dateStart: DATE?.dateStart || getDayStartFmt(),
 										dateEnd: DATE?.dateEnd || getDayEndFmt(),
@@ -107,7 +108,7 @@ export const Empty = memo((
 							onClick={() => {
 								navigate(toDetail, {
 									state: {
-										from: PATH.includes("schedule") ? "schedule" : "list",
+										from: PATH.includes("today") ? "today" : "list",
 										dateType: DATE?.dateType || "month",
 										dateStart: DATE?.dateStart || getMonthStartFmt(),
 										dateEnd: DATE?.dateEnd || getMonthEndFmt()
@@ -151,7 +152,7 @@ export const Empty = memo((
 							onClick={() => {
 								navigate(toDetail, {
 									state: {
-										from: PATH.includes("schedule") ? "schedule" : "list",
+										from: PATH.includes("today") ? "today" : "list",
 										dateType: DATE?.dateType || "day",
 										dateStart: DATE?.dateStart || getDayStartFmt(),
 										dateEnd: DATE?.dateEnd || getDayEndFmt(),
@@ -185,7 +186,12 @@ export const Empty = memo((
     );
     // 3. return
     return (
-      isFindList ? isFindSection() : isGoalList ? isGoalSection() : isRecordSection()
+			<>
+				{(isToday && isTodaySection())}
+				{(!isToday && isFind) && isFindSection()}
+				{(!isToday && !isFind && isGoal) && isGoalSection()}
+				{(!isToday && !isFind && !isGoal && isRecord) && isRecordSection()}
+			</>
     );
   };
 

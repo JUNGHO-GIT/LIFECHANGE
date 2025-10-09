@@ -58,7 +58,7 @@ export const ListFilter = memo((
   ), [state?.DATE, setState?.setDATE, state?.EXIST]);
 
   const listFilterNode = useMemo(() => (
-    PATH.includes("/schedule") ? (
+    PATH.includes("/today") ? (
       <Grid container={true} spacing={1}>
         <Grid size={12}>
           {pickerSection}

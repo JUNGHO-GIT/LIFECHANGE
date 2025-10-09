@@ -16,8 +16,8 @@ export const useCommonValue = () => {
   // ----------------------------------------------------------------------------------------------------
   return {
     // Router & Location
-    navigate,
-    location,
+    navigate: navigate,
+    location: location,
     location_id: location?.state?.id,
     location_from: location?.state?.from,
     location_dateType: location?.state?.dateType,
@@ -25,7 +25,7 @@ export const useCommonValue = () => {
     location_dateEnd: location?.state?.dateEnd,
     location_category: location?.state?.category,
     // Path Information
-    PATH,
+    PATH: PATH,
     firstStr: pathParts[1] || "",
     secondStr: pathParts[2] || "",
     thirdStr: pathParts[3] || "",
@@ -37,8 +37,8 @@ export const useCommonValue = () => {
 		isFind: pathParts[2] === "find",
 		isFavorite: pathParts[2] === "favorite",
 		isChart: pathParts[2] === "chart",
-    // Main Category Flags
-		isSchedule: pathParts[1] === "schedule",
+		isToday: pathParts[1] === "today",
+		isCalendar: pathParts[1] === "calendar",
 		isExercise: pathParts[1] === "exercise",
 		isFood: pathParts[1] === "food",
 		isMoney: pathParts[1] === "money",
@@ -46,13 +46,14 @@ export const useCommonValue = () => {
 		isUser: pathParts[1] === "user",
 		isAuth: pathParts[1] === "auth",
 		isAdminPage: pathParts[1] === "admin",
-    // Schedule Flags
-		isSchedulePlannerList: PATH.includes("/schedule/planner/list"),
-		isSchedulePlannerDetail: PATH.includes("/schedule/planner/detail"),
-		isScheduleGoalList: PATH.includes("/schedule/goal/list"),
-		isScheduleGoalDetail: PATH.includes("/schedule/goal/detail"),
-		isScheduleRecordList: PATH.includes("/schedule/record/list"),
-		isScheduleRecordDetail: PATH.includes("/schedule/record/detail"),
+    // Today Flags
+		isTodayGoalList: PATH.includes("/today/goal/list"),
+		isTodayGoalDetail: PATH.includes("/today/goal/detail"),
+		isTodayRecordList: PATH.includes("/today/record/list"),
+		isTodayRecordDetail: PATH.includes("/today/record/detail"),
+		// Calendar Flags
+		isCalendarList: PATH.includes("/calendar/list"),
+		isCalendarDetail: PATH.includes("/calendar/detail"),
     // Exercise Flags
 		isExerciseChartList: PATH.includes("/exercise/chart/list"),
 		isExerciseGoalList: PATH.includes("/exercise/goal/list"),
@@ -147,7 +148,7 @@ export const useCommonValue = () => {
     toFind: `/${pathParts[1]}/find/list`,
     toFavorite: `/${pathParts[1]}/favorite/list`,
     toList: pathParts[2] === "goal" ? `/${pathParts[1]}/goal/list` : `/${pathParts[1]}/record/list`,
-		toSchedule: `/${pathParts[1]}/planner/list`,
+		toToday: `/today/record/list`,
     toDetail: pathParts[2] === "goal" ? `/${pathParts[1]}/goal/detail` : `/${pathParts[1]}/record/detail`,
     toDelete: pathParts[2] === "goal" ? `/${pathParts[1]}/goal/delete` : `/${pathParts[1]}/record/delete`,
     // Environment Variables
@@ -158,7 +159,8 @@ export const useCommonValue = () => {
     ADMIN_PW: process.env.REACT_APP_ADMIN_PW || "",
     // API Suffixes
     SUBFIX: process.env[`REACT_APP_${pathParts[1]?.toUpperCase()}`] || "",
-		SUBFIX_SCHEDULE: process.env.REACT_APP_SCHEDULE || "",
+		SUBFIX_TODAY: process.env.REACT_APP_TODAY || "",
+		SUBFIX_CALENDAR: process.env.REACT_APP_CALENDAR || "",
     SUBFIX_GOOGLE: process.env.REACT_APP_GOOGLE || "",
     SUBFIX_ADMOB: process.env.REACT_APP_ADMOB || "",
     SUBFIX_ADMIN: process.env.REACT_APP_ADMIN || "",
@@ -167,8 +169,9 @@ export const useCommonValue = () => {
     SUBFIX_MONEY: process.env.REACT_APP_MONEY || "",
     SUBFIX_SLEEP: process.env.REACT_APP_SLEEP || "",
     // API URLs
-		URL_SCHEDULE: (process.env.REACT_APP_SERVER_URL || "") + (process.env.REACT_APP_SCHEDULE || ""),
-    URL_OBJECT: (process.env.REACT_APP_SERVER_URL || "") + (process.env[`REACT_APP_${pathParts[1]?.toUpperCase()}`] || ""),
+    URL_OBJECT:(process.env.REACT_APP_SERVER_URL || "") + (process.env[`REACT_APP_${pathParts[1]?.toUpperCase()}`] || ""),
+		URL_TODAY: (process.env.REACT_APP_SERVER_URL || "") + (process.env.REACT_APP_TODAY || ""),
+		URL_CALENDAR: (process.env.REACT_APP_SERVER_URL || "") + (process.env.REACT_APP_CALENDAR || ""),
     URL_GOOGLE: (process.env.REACT_APP_SERVER_URL || "") + (process.env.REACT_APP_GOOGLE || ""),
     URL_ADMOB: (process.env.REACT_APP_SERVER_URL || "") + (process.env.REACT_APP_ADMOB || ""),
     URL_ADMIN: (process.env.REACT_APP_SERVER_URL || "") + (process.env.REACT_APP_ADMIN || ""),
@@ -195,14 +198,13 @@ export const useCommonValue = () => {
     sessionProperty: sessionTitle?.setting?.sync?.property || {},
 		sessionNutrition: sessionTitle?.setting?.sync?.nutrition || {},
     // Category Arrays
-		scheduleArray: sessionTitle?.setting?.sync?.category?.schedule || [],
     exerciseArray: sessionTitle?.setting?.sync?.category?.exercise || [],
     foodArray: sessionTitle?.setting?.sync?.category?.food || [],
     moneyArray: sessionTitle?.setting?.sync?.category?.money || [],
     sleepArray: sessionTitle?.setting?.sync?.category?.sleep || [],
     // Storage Objects
-    sessionTitle,
-    localTitle,
+    sessionTitle: sessionTitle,
+    localTitle: localTitle,
     sessionSetting: sessionTitle?.setting || {},
     sessionFoodSection: sessionTitle?.section?.food || [],
     // Chart Configuration Arrays
@@ -221,7 +223,7 @@ export const useCommonValue = () => {
     barChartArray: [
 			"goal", "record"
 		],
-		scheduleColors: [
+		todayColors: [
 			"red", "orange", "yellow", "green", "blue",
 			"navy", "purple", "black", "gray"
 		],

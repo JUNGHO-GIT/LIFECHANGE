@@ -15,7 +15,7 @@ export const SleepGoalDetail = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, sessionId, navigate } = useCommonValue();
-  const { toList, toSchedule } = useCommonValue();
+  const { toList, toToday } = useCommonValue();
   const { location_from, location_dateType } = useCommonValue();
   const { location_dateStart, location_dateEnd } = useCommonValue();
   const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
@@ -187,7 +187,7 @@ export const SleepGoalDetail = memo(() => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(location_from === "schedule" ? toSchedule : toList, {
+        navigate(location_from === "today" ? toToday : toList, {
           state: {
             dateType: "",
             dateStart: dateRef.current.dateStart,
@@ -240,7 +240,7 @@ export const SleepGoalDetail = memo(() => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(location_from === "schedule" ? toSchedule : toList, {
+        navigate(location_from === "today" ? toToday : toList, {
           state: {
             dateType: "",
             dateStart: dateRef.current.dateStart,

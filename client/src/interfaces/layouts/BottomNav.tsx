@@ -20,7 +20,8 @@ export const BottomNav = memo(() => {
     "tabs", "bottom", "", {
       exercise: false,
       food: false,
-      schedule: false,
+      today: false,
+      calendar: false,
       money: false,
       sleep: false,
     }
@@ -43,15 +44,7 @@ export const BottomNav = memo(() => {
     // top selected 값 가져오기
     const getItem = fnGetLocal("tabs", "top", "");
     const selectedTop = getItem[value];
-
-    let url = "";
-    if (value === "schedule") {
-      url = `/${value}/planner/list`;
-    }
-    else {
-      url = `/${value}/${selectedTop}/list`;
-    }
-
+		const url = value === "calendar" ? `/${value}/list` : `/${value}/${selectedTop}/list`;
     navigate(url, {
       state: {
         dateType: "",
@@ -68,7 +61,7 @@ export const BottomNav = memo(() => {
     const tabsSection = () => (
       <BottomNavigation
         showLabels={true}
-        value={Object.keys(selectedTab).find(key => selectedTab[key as keyof typeof selectedTab]) || "schedule"}
+        value={Object.keys(selectedTab).find(key => selectedTab[key as keyof typeof selectedTab])}
         className={"w-100p"}
       >
         <BottomNavigationAction
@@ -104,19 +97,35 @@ export const BottomNav = memo(() => {
           }}
         />
         <BottomNavigationAction
-          label={translate("schedule")}
-          value={"schedule"}
+          label={translate("today")}
+          value={"today"}
           icon={
             <Img
               max={20}
               hover={true}
               shadow={false}
               radius={false}
-              src={"schedule1.webp"}
+              src={"today1.webp"}
             />
           }
           onClick={() => {
-            handleClickBottomNav("schedule");
+            handleClickBottomNav("today");
+          }}
+        />
+        <BottomNavigationAction
+          label={translate("calendar")}
+          value={"calendar"}
+          icon={
+            <Img
+              max={20}
+              hover={true}
+              shadow={false}
+              radius={false}
+              src={"calendar1.webp"}
+            />
+          }
+          onClick={() => {
+            handleClickBottomNav("calendar");
           }}
         />
         <BottomNavigationAction

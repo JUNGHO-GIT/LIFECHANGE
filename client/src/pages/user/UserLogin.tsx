@@ -146,7 +146,7 @@ export const UserLogin = memo(() => {
 					sessionId: res.data.result.user_id,
 					admin: res.data.admin === "admin" ? "true" : "false",
 				});
-				navigate("/schedule/record/list");
+				navigate("/today/record/list");
 				fnSync();
 			}
 			else if (res.data.status === "isGoogleUser") {

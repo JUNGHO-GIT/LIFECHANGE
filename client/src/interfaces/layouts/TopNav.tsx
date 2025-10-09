@@ -24,7 +24,8 @@ export const TopNav = memo(() => {
     "tabs", "top", "", {
       exercise: "record",
       food: "record",
-      schedule: "planner",
+      today: "record",
+			calendar: "calendar",
       money: "record",
       sleep: "record",
       admin: "dashboard",
@@ -93,7 +94,8 @@ export const TopNav = memo(() => {
   const [dataArray, _setDataArray] = useState({
     exercise: ["chart", "goal", "record"],
     food: ["chart", "goal", "record", "favorite", "find"],
-    schedule: ["chartToday", "goalToday", "recordToday", "planner"],
+    today: ["chart", "goal", "record"],
+		calendar: ["calendar"],
     money: ["chart", "goal", "record"],
     sleep: ["chart", "goal", "record"],
     admin: ["dashboard"],
@@ -156,7 +158,10 @@ export const TopNav = memo(() => {
     else if (firstStr === "food") {
       setMainSmileImage(smileImage.food);
     }
-    else if (firstStr === "schedule") {
+    else if (firstStr === "today") {
+      setMainSmileImage(smileImage.total);
+    }
+    else if (firstStr === "calendar") {
       setMainSmileImage(smileImage.total);
     }
     else if (firstStr === "money") {
@@ -218,24 +223,28 @@ export const TopNav = memo(() => {
 			)
 		)
 
-    // 1. schedule
-		: (firstStr === "schedule") ? (
+    // 1. today
+		: (firstStr === "today") ? (
 			(secondStr === "goal") && (
         setSelectedTab((prev) => ({
           ...prev,
-          schedule: "goalToday",
+          today: "goal",
         }))
 			),
 			(secondStr === "record") && (
         setSelectedTab((prev) => ({
           ...prev,
-          schedule: "recordToday",
+          today: "record",
         }))
-			),
-			(secondStr === "planner") && (
+			)
+		)
+
+		// 1. calendar
+		: (firstStr === "calendar") ? (
+			(secondStr === "calendar") && (
 				setSelectedTab((prev) => ({
 					...prev,
-					schedule: "planner",
+					calendar: "calendar",
 				}))
 			)
 		)
@@ -304,8 +313,8 @@ export const TopNav = memo(() => {
 	// 4. handle ----------------------------------------------------------------------------------
   const handleClickTobNav = (value: string) => {
 
-		// 1. schedule
-		(firstStr === "schedule" && value === "goalToday") ? (
+		// 1. today - goal
+		(firstStr === "today" && value === "goal") ? (
       navigate(`/${firstStr}/goal/list`, {
         state: {
           dateType: "",
@@ -315,9 +324,20 @@ export const TopNav = memo(() => {
       })
 		)
 
-		// 1. schedule
-		: (firstStr === "schedule" && value === "recordToday") ? (
+		// 1. today - record
+		: (firstStr === "today" && value === "record") ? (
       navigate(`/${firstStr}/record/list`, {
+        state: {
+          dateType: "",
+          dateStart: getDayFmt(),
+          dateEnd: getDayFmt(),
+        }
+      })
+		)
+
+		// 1. calendar - list
+		: (firstStr === "calendar" && value === "calendar") ? (
+			navigate(`/${firstStr}/list`, {
         state: {
           dateType: "",
           dateStart: getDayFmt(),
@@ -1045,73 +1065,73 @@ export const TopNav = memo(() => {
 
     // 5. tabs -------------------------------------------------------------------------------------
     const tabsSection = () => (
-        <>
-          <Tabs
-            value={selectedTab[firstStr as keyof typeof selectedTab]}
-            variant={"fullWidth"}
-            component={"div"}
-            scrollButtons={false}
-            allowScrollButtonsMobile={false}
-            selectionFollowsFocus={true}
-            sx={{
-              [`& .MuiTabs-indicator`]: {
-                "display": "none",
-              }
-            }}
-          >
-            <Tab
-              label={translate(selectedTab[firstStr as keyof typeof selectedTab])}
-              value={selectedTab[firstStr as keyof typeof selectedTab]}
-              className={"fs-1-2rem fw-700"}
-              onClick={(e) => {
-                setSelectedAnchorEl((prev) => ({
-                  ...prev,
-                  [firstStr]: e.currentTarget
-                }))
-              }}
-            />
-          </Tabs>
-          <Menu
-            anchorEl={selectedAnchorEl[firstStr]}
-            open={Boolean(selectedAnchorEl[firstStr])}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "center",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "center",
-            }}
-            slotProps={{
-              paper: {
-                className: "py-0px px-10px",
-              }
-            }}
-            onClose={() => {
-              setSelectedAnchorEl((prev) => ({
-                ...prev,
-                [firstStr]: null
-              }))
-            }}
-          >
-            {dataArray?.[firstStr as keyof typeof dataArray]?.map((tabName: string) => (
-              <MenuItem
-                key={tabName}
-                selected={selectedTab[firstStr as keyof typeof selectedTab] === tabName}
-                className={"text-center"}
-                onClick={() => {
-                  handleClickTobNav(tabName);
-                  setSelectedAnchorEl((prev) => ({
-                    ...prev,
-                    [firstStr]: null
-                  }));
-                }}
-              >
-                {translate(tabName)}
-              </MenuItem>
-            ))}
-          </Menu>
-        </>
+			<>
+				<Tabs
+					value={selectedTab[firstStr as keyof typeof selectedTab]}
+					variant={"fullWidth"}
+					component={"div"}
+					scrollButtons={false}
+					allowScrollButtonsMobile={false}
+					selectionFollowsFocus={true}
+					sx={{
+						[`& .MuiTabs-indicator`]: {
+							"display": "none",
+						}
+					}}
+				>
+					<Tab
+						label={translate(selectedTab[firstStr as keyof typeof selectedTab])}
+						value={selectedTab[firstStr as keyof typeof selectedTab]}
+						className={"fs-1-2rem fw-700"}
+						onClick={(e) => {
+							setSelectedAnchorEl((prev) => ({
+								...prev,
+								[firstStr]: e.currentTarget
+							}))
+						}}
+					/>
+				</Tabs>
+				<Menu
+					anchorEl={selectedAnchorEl[firstStr]}
+					open={Boolean(selectedAnchorEl[firstStr])}
+					anchorOrigin={{
+						vertical: "bottom",
+						horizontal: "center",
+					}}
+					transformOrigin={{
+						vertical: "top",
+						horizontal: "center",
+					}}
+					slotProps={{
+						paper: {
+							className: "py-0px px-10px",
+						}
+					}}
+					onClose={() => {
+						setSelectedAnchorEl((prev) => ({
+							...prev,
+							[firstStr]: null
+						}))
+					}}
+				>
+					{dataArray?.[firstStr as keyof typeof dataArray]?.map((tabName: string) => (
+						<MenuItem
+							key={tabName}
+							selected={selectedTab[firstStr as keyof typeof selectedTab] === tabName}
+							className={"text-center"}
+							onClick={() => {
+								handleClickTobNav(tabName);
+								setSelectedAnchorEl((prev) => ({
+									...prev,
+									[firstStr]: null
+								}));
+							}}
+						>
+							{translate(tabName)}
+						</MenuItem>
+					))}
+				</Menu>
+			</>
 		);
 
     // 5. return -----------------------------------------------------------------------------------

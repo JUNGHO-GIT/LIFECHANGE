@@ -29,13 +29,15 @@ export const Footer = memo((
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     const commonStr = "layout-wrapper p-sticky h-8vh radius-2 border-1 shadow-1";
-    const isSchedule = PATH.includes("/schedule/planner/list") || PATH.includes("/schedule/planner/detail");
+		const isTodayGoal = PATH.includes("/today/goal/list") || PATH.includes("/today/goal/detail");
+    const isTodayRecord = PATH.includes("/today/record/list") || PATH.includes("/today/record/detail");
     const isUser = PATH.includes("/user/category") || PATH.includes("/user/detail");
     const isFood = PATH.includes("/food/find/list") || PATH.includes("/food/favorite/list");
     const isGoalRecord = PATH.includes("/goal/list") || PATH.includes("/record/list");
     const isDetail = PATH.includes("/goal/detail") || PATH.includes("/record/detail");
 
-    isSchedule && (setTypeName(""), setStyleClass(""));
+    isTodayGoal && (setTypeName(""), setStyleClass(""));
+		isTodayRecord && (setTypeName(""), setStyleClass(""));
     isUser && (setTypeName("btn"), setStyleClass(`${commonStr} bottom-0vh`));
     isFood && (setTypeName("findFilter"), setStyleClass(`${commonStr} bottom-8vh`));
     isGoalRecord && (setTypeName("listFilter"), setStyleClass(`${commonStr} bottom-8vh`));

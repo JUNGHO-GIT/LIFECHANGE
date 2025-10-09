@@ -14,7 +14,7 @@ import { Img, Bg, Paper, Grid, Br } from "@importComponents";
 export const MoneyGoalDetail = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
-  const { URL_OBJECT, navigate, sessionId, toSchedule, toList, localCurrency } = useCommonValue();
+  const { URL_OBJECT, navigate, sessionId, toToday, toList, localCurrency } = useCommonValue();
   const { location_from, location_dateType } = useCommonValue();
   const { location_dateStart, location_dateEnd } = useCommonValue();
   const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
@@ -183,7 +183,7 @@ export const MoneyGoalDetail = memo(() => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(location_from === "schedule" ? toSchedule : toList, {
+        navigate(location_from === "today" ? toToday : toList, {
           state: {
             dateType: "",
             dateStart: dateRef.current.dateStart,
@@ -236,7 +236,7 @@ export const MoneyGoalDetail = memo(() => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(location_from === "schedule" ? toSchedule : toList, {
+        navigate(location_from === "today" ? toToday : toList, {
           state: {
             dateType: "",
             dateStart: dateRef.current.dateStart,

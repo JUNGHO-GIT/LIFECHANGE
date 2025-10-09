@@ -6,7 +6,7 @@ import { useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { FoodFind, FoodFindType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnSync, fnInsertComma, fnSetSession } from "@importScripts";
+import { fnSync, fnInsertComma, fnSetSession, fnGetSession } from "@importScripts";
 import { Footer, Empty, Dialog } from "@importLayouts";
 import { Div, Hr, Img, Icons, Paper, Grid } from "@importComponents";
 import { Checkbox,  Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
@@ -171,8 +171,9 @@ export const FoodFavoriteList = memo(() => {
       [queryKey]: updatedChecked,
     }));
 
-    // 스토리지 데이터 가져오기
-    let sectionArray = sessionFoodSection?.length > 0 ? sessionFoodSection : [];
+    // 스토리지 데이터 가져오기 (최신 값을 직접 가져옴)
+    const currentSection = fnGetSession("section", "food", "") || [];
+    let sectionArray = currentSection?.length > 0 ? [...currentSection] : [];
 
     const item = OBJECT[index];
     const newItem = {
@@ -243,8 +244,8 @@ export const FoodFavoriteList = memo(() => {
 												size={"small"}
 												checked={
 													!! (
-														checkedQueries[`${item.food_record_query}_${PAGING.page}`] &&
-														checkedQueries[`${item.food_record_query}_${PAGING.page}`]?.[i]
+														checkedQueries[`${PAGING.query}_${PAGING.page}`] &&
+														checkedQueries[`${PAGING.query}_${PAGING.page}`]?.[i]
 													)
 												}
 												onChange={(e: any) => {

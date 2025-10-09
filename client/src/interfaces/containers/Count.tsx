@@ -1,6 +1,6 @@
 // Count.tsx
 
-import { memo, useCallback, useMemo, useEffect } from "@importReacts";
+import { memo, useCallback, useMemo } from "@importReacts";
 import { Div, Grid, Icons, Img } from "@importComponents";
 import { Input } from "@importContainers";
 import { useCommonValue } from "@importHooks";

@@ -2,7 +2,7 @@
 
 import "react-calendar/dist/Calendar.css";
 import "@assets/styles/Core.css";
-import "@assets/styles/Schedule.css";
+import "@assets/styles/Calendar.css";
 import "@assets/styles/Chart.css";
 import "@assets/styles/Mui.css";
 import '@assets/styles/Components.css';
@@ -32,7 +32,11 @@ import {
 } from "@importPages";
 
 import {
-  SchedulePlannerList, SchedulePlannerDetail, ScheduleGoalList, ScheduleRecordList, ScheduleGoalDetail, ScheduleRecordDetail
+  TodayGoalList, TodayRecordList, TodayGoalDetail, TodayRecordDetail
+} from "@importPages";
+
+import {
+	CalendarList, CalendarDetail
 } from "@importPages";
 
 import {
@@ -109,13 +113,14 @@ const App = memo(() => {
         <Route path={"/auth/error/*"} element={<AuthError />} />
         <Route path={"/auth/google/*"} element={<AuthGoogle />} />
         <Route path={"/auth/privacy/*"} element={<AuthPrivacy />} />
-        {/** schedule **/}
-				<Route path={"/schedule/planner/list/*"} element={<SchedulePlannerList />} />
-				<Route path={"/schedule/planner/detail/*"} element={<SchedulePlannerDetail />} />
-        <Route path={"/schedule/goal/list/*"} element={<ScheduleGoalList />} />
-				<Route path={"/schedule/goal/detail/*"} element={<ScheduleGoalDetail />} />
-        <Route path={"/schedule/record/list/*"} element={<ScheduleRecordList />} />
-				<Route path={"/schedule/record/detail/*"} element={<ScheduleRecordDetail />} />
+        {/** today **/}
+        <Route path={"/today/goal/list/*"} element={<TodayGoalList />} />
+				<Route path={"/today/goal/detail/*"} element={<TodayGoalDetail />} />
+        <Route path={"/today/record/list/*"} element={<TodayRecordList />} />
+				<Route path={"/today/record/detail/*"} element={<TodayRecordDetail />} />
+				{/** calendar **/}
+				<Route path={"/calendar/list/*"} element={<CalendarList />} />
+				<Route path={"/calendar/detail/*"} element={<CalendarDetail />} />
         {/** exercise **/}
         <Route path={"/exercise/chart/list/*"} element={<ExerciseChart />} />
         <Route path={"/exercise/goal/list/*"} element={<ExerciseGoalList />} />

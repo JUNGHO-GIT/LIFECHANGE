@@ -46,7 +46,7 @@ export type UserType = {
 	}>;
 
 	user_dataCategory: {
-		schedule: Array<{ schedule_record_part: string }>;
+		today: Array<{ today_record_part: string }>;
 		exercise: Array<{ exercise_record_part: string; exercise_record_title: Array<string> }>;
 		food: Array<{ food_record_part: string }>;
 		money: Array<{ money_record_part: string; money_record_title: Array<string> }>;
@@ -103,7 +103,7 @@ export const User: UserType = {
   }],
 
   user_dataCategory: {
-    schedule: [],
+    today: [],
     exercise: [],
     food: [],
     money: [],

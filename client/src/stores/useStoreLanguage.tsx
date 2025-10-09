@@ -133,9 +133,9 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
         ko: "탄수화물",
         en: "Carb"
       },
-      schedule: {
+			calendar: {
         ko: "일정",
-        en: "schedule"
+        en: "Calendar"
       },
       cardio: {
         ko: "유산소",
@@ -157,7 +157,7 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
         ko: "문화",
         en: "Culture"
       },
-      scheduleTitle: {
+      todayTitle: {
         ko: "제목",
         en: "Title"
       },
@@ -480,10 +480,6 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
       gender: {
         ko: "성별",
         en: "Gender"
-      },
-      getSchedule: {
-        ko: "일정",
-        en: "Schedule"
       },
       getDay: {
         ko: "오늘",
@@ -944,10 +940,6 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
         ko: "per",
         en: "per"
       },
-			planner: {
-				ko: "일정",
-				en: "Schedule"
-			},
       part: {
         ko: "대분류",
         en: "Part"
@@ -1162,7 +1154,7 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
       },
       today: {
         ko: "오늘",
-        en: ""
+        en: "Today"
       },
 			goalToday: {
 				ko: "오늘 [목표]",
@@ -1975,19 +1967,19 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
         ko: "지방을 입력해주세요",
         en: "Please enter Fat"
       },
-      errorSchedulePart: {
+      errorTodayPart: {
         ko: "대분류를 선택해주세요",
         en: "Please select Part"
       },
-      errorScheduleColor: {
+      errorTodayColor: {
         ko: "색상을 선택해주세요",
         en: "Please select Color"
       },
-      errorScheduleTitle: {
+      errorTodayTitle: {
         ko: "제목을 입력해주세요",
         en: "Please enter Title"
       },
-      errorScheduleContent: {
+      errorTodayContent: {
         ko: "내용을 입력해주세요",
         en: "Please enter Content"
       },

@@ -103,7 +103,7 @@ export const fnSetSession = (key1: string, key2: string, key3: string, value: an
   if (key1 && !key2 && !key3) {
     sessionStorage.setItem(TITLE, JSON.stringify({
       ...sessionTitle,
-      [key1]: typeof value === "object" && !Array.isArray(value) ? {
+      [key1]: (typeof value === "object" && !Array.isArray(value)) ? {
         ...(sessionTitle[key1] || {}),
         ...value
       } : value
@@ -116,7 +116,7 @@ export const fnSetSession = (key1: string, key2: string, key3: string, value: an
       ...sessionTitle,
       [key1]: {
         ...(sessionTitle?.[key1] || {}),
-        [key2]: typeof value === "object" && !Array.isArray(value) ? {
+        [key2]: (typeof value === "object" && !Array.isArray(value)) ? {
           ...(sessionTitle?.[key1]?.[key2] || {}),
           ...value
         } : value
@@ -132,7 +132,7 @@ export const fnSetSession = (key1: string, key2: string, key3: string, value: an
         ...(sessionTitle?.[key1] || {}),
         [key2]: {
           ...(sessionTitle?.[key1]?.[key2] || {}),
-          [key3]: typeof value === "object" && !Array.isArray(value) ? {
+          [key3]: (typeof value === "object" && !Array.isArray(value)) ? {
             ...(sessionTitle?.[key1]?.[key2]?.[key3] || {}),
             ...value
           } : value

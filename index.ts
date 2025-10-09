@@ -7,39 +7,41 @@ import dotenv from "dotenv";
 import express, { type Request, type Response } from "express";
 
 // admin
-import { router as adminRouter } from "@routers/admin/adminRouter";
+import { router as AdminRouter } from "@routers/admin/AdminRouter";
 
-// schedule
-import { router as schedulePlannerRouter } from "@routers/schedule/schedulePlannerRouter";
-import { router as scheduleGoalRouter } from "@routers/schedule/scheduleGoalRouter";
-import { router as scheduleRecordRouter } from "@routers/schedule/scheduleRecordRouter";
+// today
+import { router as TodayGoalRouter } from "@routers/today/TodayGoalRouter";
+import { router as TodayRecordRouter } from "@routers/today/TodayRecordRouter";
+
+// calendar
+import { router as CalendarRouter } from "@routers/calendar/CalendarRouter";
 
 // exercise
-import { router as exerciseChartRouter } from "@routers/exercise/exerciseChartRouter";
-import { router as exerciseGoalRouter } from "@routers/exercise/exerciseGoalRouter";
-import { router as exerciseRecordRouter } from "@routers/exercise/exerciseRecordRouter";
+import { router as ExerciseChartRouter } from "@routers/exercise/ExerciseChartRouter";
+import { router as ExerciseGoalRouter } from "@routers/exercise/ExerciseGoalRouter";
+import { router as ExerciseRecordRouter } from "@routers/exercise/ExerciseRecordRouter";
 
 // food
-import { router as foodChartRouter } from "@routers/food/foodChartRouter";
-import { router as foodGoalRouter } from "@routers/food/foodGoalRouter";
-import { router as foodRecordRouter } from "@routers/food/foodRecordRouter";
-import { router as foodFavoriteRouter } from "@routers/food/foodFavoriteRouter";
-import { router as foodFindRouter } from "@routers/food/foodFindRouter";
+import { router as FoodChartRouter } from "@routers/food/FoodChartRouter";
+import { router as FoodGoalRouter } from "@routers/food/FoodGoalRouter";
+import { router as FoodRecordRouter } from "@routers/food/FoodRecordRouter";
+import { router as FoodFavoriteRouter } from "@routers/food/FoodFavoriteRouter";
+import { router as FoodFindRouter } from "@routers/food/FoodFindRouter";
 
 // money
-import { router as moneyChartRouter } from "@routers/money/moneyChartRouter";
-import { router as moneyGoalRouter } from "@routers/money/moneyGoalRouter";
-import { router as moneyRecordRouter } from "@routers/money/moneyRecordRouter";
+import { router as MoneyChartRouter } from "@routers/money/MoneyChartRouter";
+import { router as MoneyGoalRouter } from "@routers/money/MoneyGoalRouter";
+import { router as MoneyRecordRouter } from "@routers/money/MoneyRecordRouter";
 
 // sleep
-import { router as sleepChartRouter } from "@routers/sleep/sleepChartRouter";
-import { router as sleepGoalRouter } from "@routers/sleep/sleepGoalRouter";
-import { router as sleepRecordRouter } from "@routers/sleep/sleepRecordRouter";
+import { router as SleepChartRouter } from "@routers/sleep/SleepChartRouter";
+import { router as SleepGoalRouter } from "@routers/sleep/SleepGoalRouter";
+import { router as SleepRecordRouter } from "@routers/sleep/SleepRecordRouter";
 
 // user
-import { router as userSyncRouter } from "@routers/user/userSyncRouter";
-import { router as userRouter } from "@routers/user/userRouter";
-import { router as googleRouter } from "@routers/auth/googleRouter";
+import { router as UserSyncRouter } from "@routers/user/UserSyncRouter";
+import { router as UserRouter } from "@routers/user/UserRouter";
+import { router as GoogleRouter } from "@routers/auth/GoogleRouter";
 
 // -------------------------------------------------------------------------------------------------
 dotenv.config();
@@ -102,11 +104,11 @@ if (envStr === "DEVELOPMENT") {
 	const fmtColl = (coll: string) => `${color.coll}${coll}${color.reset}`;
 	const fmtMethod = (m: string) => `${color.method}${m}${color.reset}`;
 	const fmtJson = (obj: any) => JSON.stringify(obj, null, 2)
-		.replace(/"(\$[^"]+)":/g, `"${color.field}$1${color.reset}":`)
-		.replace(/"([^"$]+)":/g, `"${color.field}$1${color.reset}":`)
-		.replace(/: "([^"]*)"/g, `: "${color.string}$1${color.reset}"`)
-		.replace(/: (\d+)/g, `: ${color.number}$1${color.reset}`)
-		.replace(/: (true|false|null)/g, `: ${color.boolean}$1${color.reset}`);
+	.replace(/"(\$[^"]+)":/g, `"${color.field}$1${color.reset}":`)
+	.replace(/"([^"$]+)":/g, `"${color.field}$1${color.reset}":`)
+	.replace(/: "([^"]*)"/g, `: "${color.string}$1${color.reset}"`)
+	.replace(/: (\d+)/g, `: ${color.number}$1${color.reset}`)
+	.replace(/: (true|false|null)/g, `: ${color.boolean}$1${color.reset}`);
 
 	mongoose.set('debug', (coll, method, query, doc, options) => {
 		const log = (...parts: string[]) => console.log(...parts, '\n');
@@ -158,39 +160,40 @@ app.use(cors({
 }));
 
 // 라우터 설정 -------------------------------------------------------------------------------------
+// today
+app.use(`${preFix}/today/goal`, TodayGoalRouter);
+app.use(`${preFix}/today/record`, TodayRecordRouter);
 
-// schedule
-app.use(`${preFix}/schedule/planner`, schedulePlannerRouter);
-app.use(`${preFix}/schedule/goal`, scheduleGoalRouter);
-app.use(`${preFix}/schedule/record`, scheduleRecordRouter);
+// calendar
+app.use(`${preFix}/calendar`, CalendarRouter);
 
 // exercise
-app.use(`${preFix}/exercise/chart`, exerciseChartRouter);
-app.use(`${preFix}/exercise/goal`, exerciseGoalRouter);
-app.use(`${preFix}/exercise/record`, exerciseRecordRouter);
+app.use(`${preFix}/exercise/chart`, ExerciseChartRouter);
+app.use(`${preFix}/exercise/goal`, ExerciseGoalRouter);
+app.use(`${preFix}/exercise/record`, ExerciseRecordRouter);
 
 // food
-app.use(`${preFix}/food/chart`, foodChartRouter);
-app.use(`${preFix}/food/goal`, foodGoalRouter);
-app.use(`${preFix}/food/record`, foodRecordRouter);
-app.use(`${preFix}/food/favorite`, foodFavoriteRouter);
-app.use(`${preFix}/food/find`, foodFindRouter);
+app.use(`${preFix}/food/chart`, FoodChartRouter);
+app.use(`${preFix}/food/goal`, FoodGoalRouter);
+app.use(`${preFix}/food/record`, FoodRecordRouter);
+app.use(`${preFix}/food/favorite`, FoodFavoriteRouter);
+app.use(`${preFix}/food/find`, FoodFindRouter);
 
 // money
-app.use(`${preFix}/money/chart`, moneyChartRouter);
-app.use(`${preFix}/money/goal`, moneyGoalRouter);
-app.use(`${preFix}/money/record`, moneyRecordRouter);
+app.use(`${preFix}/money/chart`, MoneyChartRouter);
+app.use(`${preFix}/money/goal`, MoneyGoalRouter);
+app.use(`${preFix}/money/record`, MoneyRecordRouter);
 
 // sleep
-app.use(`${preFix}/sleep/chart`, sleepChartRouter);
-app.use(`${preFix}/sleep/goal`, sleepGoalRouter);
-app.use(`${preFix}/sleep/record`, sleepRecordRouter);
+app.use(`${preFix}/sleep/chart`, SleepChartRouter);
+app.use(`${preFix}/sleep/goal`, SleepGoalRouter);
+app.use(`${preFix}/sleep/record`, SleepRecordRouter);
 
 // user
-app.use(`${preFix}/user/sync`, userSyncRouter);
-app.use(`${preFix}/user`, userRouter);
-app.use(`${preFix}/admin`, adminRouter);
-app.use(`${preFix}/auth/google`, googleRouter);
+app.use(`${preFix}/user/sync`, UserSyncRouter);
+app.use(`${preFix}/user`, UserRouter);
+app.use(`${preFix}/admin`, AdminRouter);
+app.use(`${preFix}/auth/google`, GoogleRouter);
 
 // 0. 에러처리 미들웨어 -----------------------------------------------------------------------
 app.use((err: Error, req: Request, res: Response, next: Function) => {

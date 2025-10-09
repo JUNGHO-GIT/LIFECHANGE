@@ -9,13 +9,15 @@ export { AuthError } from "@pages/auth/AuthError";
 export { AuthGoogle } from "@pages/auth/AuthGoogle";
 export { AuthPrivacy } from "@pages/auth/AuthPrivacy";
 
-// schedule ----------------------------------------------------------------------------------------
-export { SchedulePlannerList } from "@pages/schedule/planner/SchedulePlannerList";
-export { SchedulePlannerDetail } from "@pages/schedule/planner/SchedulePlannerDetail";
-export { ScheduleGoalList } from "@pages/schedule/today/ScheduleGoalList";
-export { ScheduleGoalDetail } from "@pages/schedule/today/ScheduleGoalDetail";
-export { ScheduleRecordList } from "@pages/schedule/today/ScheduleRecordList";
-export { ScheduleRecordDetail } from "@pages/schedule/today/ScheduleRecordDetail";
+// today ----------------------------------------------------------------------------------------
+export { TodayGoalList } from "@pages/today/goal/TodayGoalList";
+export { TodayGoalDetail } from "@pages/today/goal/TodayGoalDetail";
+export { TodayRecordList } from "@pages/today/record/TodayRecordList";
+export { TodayRecordDetail } from "@pages/today/record/TodayRecordDetail";
+
+// calendar ----------------------------------------------------------------------------------------
+export { CalendarList } from "@pages/calendar/CalendarList";
+export { CalendarDetail } from "@pages/calendar/CalendarDetail";
 
 // exercise ----------------------------------------------------------------------------------------
 export { ExerciseChart } from "@pages/exercise/chart/ExerciseChart";
