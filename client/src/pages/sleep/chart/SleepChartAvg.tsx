@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
 import { SleepAvg, SleepAvgType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnHandleY } from "@importScripts";
+import { fnFormatY } from "@importScripts";
 import { Select, PopUp } from "@importContainers";
 import { Div, Img, Br } from "@importComponents";
 import { Paper, Grid, MenuItem } from "@importMuis";
@@ -91,24 +91,57 @@ export const SleepChartAvg = memo(() => {
 
     let object = null;
     let endStr = "";
-    if (TYPE.section === "week") {
-      object = OBJECT_WEEK;
-      endStr = "hm";
-    }
-    else if (TYPE.section === "month") {
-      object = OBJECT_MONTH;
-      endStr = "hm";
-    }
+    let dateRange = "";
 
-    const {domain, ticks, formatterY} = fnHandleY(object, sleepChartArray, "sleep");
-    return (
+		(TYPE.section === "week") && (
+			object = OBJECT_WEEK,
+			endStr = "hm",
+			dateRange = `${DATE.weekStartFmt} \u00A0 - \u00A0 ${DATE.weekEndFmt}`
+		);
+
+		(TYPE.section === "month") && (
+			object = OBJECT_MONTH,
+			endStr = "hm",
+			dateRange = `${DATE.monthStartFmt} \u00A0 - \u00A0 ${DATE.monthEndFmt}`
+		);
+
+    const { domain, ticks, formatterY } = fnFormatY(object, sleepChartArray, "sleep");
+		return (
 			<ResponsiveContainer width={"100%"} height={350}>
 				<ComposedChart
 					data={object as any[]}
-					margin={{top: 30, right: 30, bottom: 20, left: 20}}
+					margin={{top: 60, right: 20, bottom: 10, left: 20}}
 					barGap={8}
 					barCategoryGap={"20%"}
 				>
+					<defs>
+						<filter id={"textBackground"} x={0} y={0} width={1} height={1}>
+							<feFlood floodColor={"#f9f9f9"} />
+							<feComposite in={"SourceGraphic"} />
+						</filter>
+					</defs>
+					<rect
+						x={"50%"}
+						y={15}
+						width={120}
+						height={20}
+						rx={4}
+						transform={"translate(-60, 0)"}
+						fill={"transparent"}
+					/>
+					<text
+						x={"50%"}
+						y={25}
+						textAnchor={"middle"}
+						dominantBaseline={"middle"}
+						style={{
+							fontSize: "0.80rem",
+							fill: "#666",
+							fontWeight: 600,
+						}}
+					>
+						{dateRange}
+					</text>
 					<CartesianGrid
 						strokeDasharray={"3 3"}
 						stroke={"#f5f5f5"}
@@ -134,51 +167,45 @@ export const SleepChartAvg = memo(() => {
 						tickFormatter={formatterY}
 					/>
 					{TYPE.line.includes("bedTime") && (
-						<>
-							<Bar
-								dataKey={"bedTime"}
-								fill={chartColors[4]}
-								radius={[10, 10, 0, 0]}
-								minPointSize={1}
-								isAnimationActive={true}
-								animationBegin={0}
-								animationDuration={400}
-								animationEasing={"linear"}
-							/>
-						</>
+						<Bar
+							dataKey={"bedTime"}
+							fill={chartColors[4]}
+							radius={[10, 10, 0, 0]}
+							minPointSize={1}
+							isAnimationActive={true}
+							animationBegin={0}
+							animationDuration={400}
+							animationEasing={"linear"}
+						/>
 					)}
 					{TYPE.line.includes("wakeTime") && (
-						<>
-							<Bar
-								dataKey={"wakeTime"}
-								fill={chartColors[1]}
-								radius={[10, 10, 0, 0]}
-								minPointSize={1}
-								isAnimationActive={true}
-								animationBegin={0}
-								animationDuration={400}
-								animationEasing={"linear"}
-							/>
-						</>
+						<Bar
+							dataKey={"wakeTime"}
+							fill={chartColors[1]}
+							radius={[10, 10, 0, 0]}
+							minPointSize={1}
+							isAnimationActive={true}
+							animationBegin={0}
+							animationDuration={400}
+							animationEasing={"linear"}
+						/>
 					)}
 					{TYPE.line.includes("sleepTime") && (
-						<>
-							<Bar
-								dataKey={"sleepTime"}
-								fill={chartColors[2]}
-								radius={[10, 10, 0, 0]}
-								minPointSize={1}
-								isAnimationActive={true}
-								animationBegin={0}
-								animationDuration={400}
-								animationEasing={"linear"}
-							/>
-						</>
+						<Bar
+							dataKey={"sleepTime"}
+							fill={chartColors[2]}
+							radius={[10, 10, 0, 0]}
+							minPointSize={1}
+							isAnimationActive={true}
+							animationBegin={0}
+							animationDuration={400}
+							animationEasing={"linear"}
+						/>
 					)}
 					<Tooltip
 						labelFormatter={(_label: any, payload: any) => {
-							const date = payload?.length > 0 ? payload[0]?.payload.date : '';
-							return `${date}`;
+							const name = payload?.length > 0 ? payload[0]?.payload.name : '';
+							return `${translate(name)}`;
 						}}
 						formatter={(value: any, name: any) => {
 							const customName = translate(name);
@@ -213,14 +240,14 @@ export const SleepChartAvg = memo(() => {
 					/>
 				</ComposedChart>
 			</ResponsiveContainer>
-    );
+		);
   };
 
   // 7. chart --------------------------------------------------------------------------------------
   const chartNode = () => {
     // 7-1. head
     const headSection = () => (
-			<Grid container={true} spacing={0} className={"p-10px d-row-between"}>
+			<Grid container={true} spacing={0} className={"d-row-between"}>
 				<Grid size={3} className={"d-row-left"}>
 					<Select
 						value={TYPE.section}
@@ -236,7 +263,7 @@ export const SleepChartAvg = memo(() => {
 					</Select>
 				</Grid>
 				<Grid size={6} className={"d-row-center"}>
-					<Div className={"fs-0-8rem fw-600"}>
+					<Div className={"fs-0-95rem fw-600"}>
 						{translate("chartAvg")}
 					</Div>
 				</Grid>
@@ -279,6 +306,7 @@ export const SleepChartAvg = memo(() => {
 								shadow={false}
 								radius={false}
 								src={"common3_1.webp"}
+								className={"mr-10px"}
 								onClick={(e: any) => {
 									popTrigger.openPopup(e.currentTarget)
 								}}
@@ -291,7 +319,7 @@ export const SleepChartAvg = memo(() => {
 		// 2. chart
 		const chartSection = () => (
 			<Grid container={true} spacing={2} className={"border-1 radius-2"}>
-				<Grid size={12} className={"d-col-center p-10px"}>
+				<Grid size={12} className={"d-col-center p-5px"}>
 					{chartAvg()}
 				</Grid>
 			</Grid>

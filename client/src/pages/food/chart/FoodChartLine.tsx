@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
 import { FoodLineKcal, FoodLineNut, FoodLineType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnHandleY } from "@importScripts";
+import { fnFormatY } from "@importScripts";
 import { Select, PopUp } from "@importContainers";
 import { Div, Img, Br, Paper, Grid } from "@importComponents";
 import { FormGroup, FormControlLabel, Switch, MenuItem } from "@importMuis";
@@ -98,32 +98,73 @@ export const FoodChartLine = memo(() => {
 
     let object = null;
     let endStr = "";
-    if (TYPE.section === "week" && TYPE.line === "kcal") {
-      object = OBJECT_KCAL_WEEK;
-      endStr = "kcal";
-    }
-    else if (TYPE.section === "week" && TYPE.line === "nut") {
-      object = OBJECT_NUT_WEEK;
-      endStr = "g";
-    }
-    else if (TYPE.section === "month" && TYPE.line === "kcal") {
-      object = OBJECT_KCAL_MONTH;
-      endStr = "kcal";
-    }
-    else if (TYPE.section === "month" && TYPE.line === "nut") {
-      object = OBJECT_NUT_MONTH;
-      endStr = "g";
-    }
+    let dateRange = "";
+    const monthStart = DATE.monthStartFmt;
+    const monthEnd = DATE.monthEndFmt;
+    const yearStart = DATE.yearStartFmt;
+    const yearEnd = DATE.yearEndFmt;
 
-    const {domain, ticks, formatterY} = fnHandleY(object, foodChartArray, "food");
-    return (
+		(TYPE.section === "week" && TYPE.line === "kcal") && (
+			object = OBJECT_KCAL_WEEK,
+			endStr = "kcal",
+			dateRange = `${monthStart} \u00A0 - \u00A0 ${monthEnd}`
+		);
+
+		(TYPE.section === "week" && TYPE.line === "nut") && (
+			object = OBJECT_NUT_WEEK,
+			endStr = "g",
+			dateRange = `${monthStart} \u00A0 - \u00A0 ${monthEnd}`
+		);
+
+		(TYPE.section === "month" && TYPE.line === "kcal") && (
+			object = OBJECT_KCAL_MONTH,
+			endStr = "kcal",
+			dateRange = `${yearStart} \u00A0 - \u00A0 ${yearEnd}`
+		);
+
+		(TYPE.section === "month" && TYPE.line === "nut") && (
+			object = OBJECT_NUT_MONTH,
+			endStr = "g",
+			dateRange = `${yearStart} \u00A0 - \u00A0 ${yearEnd}`
+		);
+
+    const { domain, ticks, formatterY } = fnFormatY(object, foodChartArray, "food");
+		return (
 			<ResponsiveContainer width={"100%"} height={350}>
 				<LineChart
 					data={object as any[]}
-					margin={{top: 30, right: 30, bottom: 20, left: 20}}
+					margin={{top: 60, right: 20, bottom: 10, left: 20}}
 					barGap={20}
 					barCategoryGap={"20%"}
 				>
+					<defs>
+						<filter id={"textBackground"} x={0} y={0} width={1} height={1}>
+							<feFlood floodColor={"#f9f9f9"} />
+							<feComposite in={"SourceGraphic"} />
+						</filter>
+					</defs>
+					<rect
+						x={"50%"}
+						y={15}
+						width={120}
+						height={20}
+						rx={4}
+						transform={"translate(-60, 0)"}
+						fill={"transparent"}
+					/>
+					<text
+						x={"50%"}
+						y={25}
+						textAnchor={"middle"}
+						dominantBaseline={"middle"}
+						style={{
+							fontSize: "0.80rem",
+							fill: "#666",
+							fontWeight: 600,
+						}}
+					>
+						{dateRange}
+					</text>
 					<CartesianGrid
 						strokeDasharray={"3 3"}
 						stroke={"#f5f5f5"}
@@ -134,9 +175,6 @@ export const FoodChartLine = memo(() => {
 						tickLine={false}
 						axisLine={false}
 						tick={{fill:"#666", fontSize:14}}
-						tickFormatter={(value) => (
-							translate(value)
-						)}
 					/>
 					<YAxis
 						width={30}
@@ -149,65 +187,63 @@ export const FoodChartLine = memo(() => {
 						tickFormatter={formatterY}
 					/>
 					{TYPE.line === ("kcal") && (
-						<>
-							<Line
-								dataKey={"kcal"}
-								type={"monotone"}
-								stroke={chartColors[3]}
-								strokeWidth={2}
-								activeDot={{r:4}}
-								dot={false}
-								isAnimationActive={true}
-								animationBegin={0}
-								animationDuration={400}
-								animationEasing={"linear"}
-							/>
-						</>
+						<Line
+							dataKey={"kcal"}
+							type={"monotone"}
+							stroke={chartColors[3]}
+							strokeWidth={2}
+							activeDot={{r:4}}
+							dot={false}
+							isAnimationActive={true}
+							animationBegin={0}
+							animationDuration={400}
+							animationEasing={"linear"}
+						/>
 					)}
 					{TYPE.line === ("nut") && (
 						<>
-							<Line
-								dataKey={"carb"}
-								type={"monotone"}
-								stroke={chartColors[1]}
-								strokeWidth={2}
-								activeDot={{r:4}}
-								dot={false}
-								isAnimationActive={true}
-								animationBegin={0}
-								animationDuration={400}
-								animationEasing={"linear"}
-							/>
-							<Line
-								dataKey={"protein"}
-								type={"monotone"}
-								stroke={chartColors[4]}
-								strokeWidth={2}
-								activeDot={{r:4}}
-								dot={false}
-								isAnimationActive={true}
-								animationBegin={0}
-								animationDuration={400}
-								animationEasing={"linear"}
-							/>
-							<Line
-								dataKey={"fat"}
-								type={"monotone"}
-								stroke={chartColors[2]}
-								strokeWidth={2}
-								activeDot={{r:4}}
-								dot={false}
-								isAnimationActive={true}
-								animationBegin={0}
-								animationDuration={400}
-								animationEasing={"linear"}
-							/>
+						<Line
+							dataKey={"carb"}
+							type={"monotone"}
+							stroke={chartColors[1]}
+							strokeWidth={2}
+							activeDot={{r:4}}
+							dot={false}
+							isAnimationActive={true}
+							animationBegin={0}
+							animationDuration={400}
+							animationEasing={"linear"}
+						/>
+						<Line
+							dataKey={"protein"}
+							type={"monotone"}
+							stroke={chartColors[4]}
+							strokeWidth={2}
+							activeDot={{r:4}}
+							dot={false}
+							isAnimationActive={true}
+							animationBegin={0}
+							animationDuration={400}
+							animationEasing={"linear"}
+						/>
+						<Line
+							dataKey={"fat"}
+							type={"monotone"}
+							stroke={chartColors[2]}
+							strokeWidth={2}
+							activeDot={{r:4}}
+							dot={false}
+							isAnimationActive={true}
+							animationBegin={0}
+							animationDuration={400}
+							animationEasing={"linear"}
+						/>
 						</>
 					)}
 					<Tooltip
 						labelFormatter={(_label: any, payload: any) => {
-							const date = payload?.length > 0 ? payload[0]?.payload.date : '';
-							return `${date}`;
+							const name = payload?.length > 0 ? payload[0]?.payload.name : '';
+							return `${translate(name)}`;
 						}}
 						formatter={(value: any, name: any) => {
 							const customName = translate(name);
@@ -235,7 +271,7 @@ export const FoodChartLine = memo(() => {
 						wrapperStyle={{
 							width:"95%",
 							display:"flex",
-							justifyContent :"center",
+							justifyContent:"center",
 							alignItems:"center",
 							fontSize: "0.8rem",
 						}}
@@ -249,7 +285,7 @@ export const FoodChartLine = memo(() => {
   const chartNode = () => {
     // 7-1. head
     const headSection = () => (
-			<Grid container={true} spacing={2} className={"p-10px d-row-between"}>
+			<Grid container={true} spacing={0} className={"d-row-between"}>
 				<Grid size={3} className={"d-row-left"}>
 					<Select
 						value={TYPE.section}
@@ -265,14 +301,14 @@ export const FoodChartLine = memo(() => {
 					</Select>
 				</Grid>
 				<Grid size={6} className={"d-row-center"}>
-					<Div className={"fs-0-8rem fw-600"}>
+					<Div className={"fs-0-95rem fw-600"}>
 						{translate("chartLine")}
 					</Div>
 					<Div className={"fs-0-8rem fw-500 grey ml-10px"}>
 						{`[${translate(TYPE.line)}]`}
 					</Div>
 				</Grid>
-				<Grid size={2} className={"d-row-right"}>
+				<Grid size={3} className={"d-row-right"}>
 					<PopUp
 						type={"chart"}
 						position={"bottom"}
@@ -303,6 +339,7 @@ export const FoodChartLine = memo(() => {
 								shadow={false}
 								radius={false}
 								src={"common3_1.webp"}
+								className={"mr-10px"}
 								onClick={(e: any) => {
 									popTrigger.openPopup(e.currentTarget)
 								}}
@@ -312,22 +349,22 @@ export const FoodChartLine = memo(() => {
 				</Grid>
 			</Grid>
 		);
-    // 7-2. chart
-    const chartSection = () => (
-      <Grid container={true} spacing={2} className={"border-1 radius-2"}>
-        <Grid size={12} className={"d-col-center p-10px"}>
+		// 2. chart
+		const chartSection = () => (
+			<Grid container={true} spacing={2} className={"border-1 radius-2"}>
+				<Grid size={12} className={"d-col-center p-5px"}>
 					{chartLine()}
 				</Grid>
-      </Grid>
-    );
-    // 7-10. return
-    return (
-      <Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-40vh"}>
-        {headSection()}
-        <Br m={10} />
-        {chartSection()}
-      </Paper>
-    );
+			</Grid>
+		);
+		// 7-10. return
+		return (
+			<Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-40vh"}>
+				{headSection()}
+				<Br m={10} />
+				{chartSection()}
+			</Paper>
+		);
   };
 
 	// 10. return ----------------------------------------------------------------------------------

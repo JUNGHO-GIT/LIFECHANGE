@@ -179,38 +179,79 @@ export const MoneyChartPie = memo(() => {
 
     let object = null;
     let endStr = "";
-    if (TYPE.section === "week" && TYPE.line === "income") {
-      object = OBJECT_INCOME_WEEK;
-      endStr = "";
-    }
-    else if (TYPE.section === "week" && TYPE.line === "expense") {
-      object = OBJECT_EXPENSE_WEEK;
-      endStr = "";
-    }
-    else if (TYPE.section === "month" && TYPE.line === "income") {
-      object = OBJECT_INCOME_MONTH;
-      endStr = "";
-    }
-    else if (TYPE.section === "month" && TYPE.line === "expense") {
-      object = OBJECT_EXPENSE_MONTH;
-      endStr = "";
-    }
-    else if (TYPE.section === "year" && TYPE.line === "income") {
-      object = OBJECT_INCOME_YEAR;
-      endStr = "";
-    }
-    else if (TYPE.section === "year" && TYPE.line === "expense") {
-      object = OBJECT_EXPENSE_YEAR;
-      endStr = "";
-    }
+    let dateRange = "";
+
+		(TYPE.section === "week" && TYPE.line === "income") && (
+			object = OBJECT_INCOME_WEEK,
+			endStr = "",
+			dateRange = `${DATE.weekStartFmt} \u00A0 - \u00A0 ${DATE.weekEndFmt}`
+		);
+
+		(TYPE.section === "week" && TYPE.line === "expense") && (
+			object = OBJECT_EXPENSE_WEEK,
+			endStr = "",
+			dateRange = `${DATE.weekStartFmt} \u00A0 - \u00A0 ${DATE.weekEndFmt}`
+		);
+
+		(TYPE.section === "month" && TYPE.line === "income") && (
+			object = OBJECT_INCOME_MONTH,
+			endStr = "",
+			dateRange = `${DATE.monthStartFmt} \u00A0 - \u00A0 ${DATE.monthEndFmt}`
+		);
+
+		(TYPE.section === "month" && TYPE.line === "expense") && (
+			object = OBJECT_EXPENSE_MONTH,
+			endStr = "",
+			dateRange = `${DATE.monthStartFmt} \u00A0 - \u00A0 ${DATE.monthEndFmt}`
+		);
+
+		(TYPE.section === "year" && TYPE.line === "income") && (
+			object = OBJECT_INCOME_YEAR,
+			endStr = "",
+			dateRange = `${DATE.yearStartFmt} \u00A0 - \u00A0 ${DATE.yearEndFmt}`
+		);
+
+		(TYPE.section === "year" && TYPE.line === "expense") && (
+			object = OBJECT_EXPENSE_YEAR,
+			endStr = "",
+			dateRange = `${DATE.yearStartFmt} \u00A0 - \u00A0 ${DATE.yearEndFmt}`
+		);
 
     return (
 			<ResponsiveContainer width={"100%"} height={350}>
-				<PieChart margin={{top: 40, right: 20, bottom: 20, left: 20}}>
+				<PieChart margin={{top: 60, right: 20, bottom: 10, left: 20}}>
+					<defs>
+						<filter id={"textBackground"} x={0} y={0} width={1} height={1}>
+							<feFlood floodColor={"#f9f9f9"} />
+							<feComposite in={"SourceGraphic"} />
+						</filter>
+					</defs>
+					<rect
+						x={"50%"}
+						y={15}
+						width={120}
+						height={20}
+						rx={4}
+						transform={"translate(-60, 0)"}
+						fill={"transparent"}
+					/>
+					<text
+						x={"50%"}
+						y={25}
+						textAnchor={"middle"}
+						dominantBaseline={"middle"}
+						style={{
+							fontSize: "0.80rem",
+							fill: "#666",
+							fontWeight: 600,
+						}}
+					>
+						{dateRange}
+					</text>
 					<Pie
 						data={object as any[]}
 						cx={"50%"}
-						cy={"50%"}
+						cy={"45%"}
 						label={renderPie as any}
 						labelLine={false}
 						outerRadius={110}
@@ -244,21 +285,23 @@ export const MoneyChartPie = memo(() => {
 							return translate(value);
 						}}
 						wrapperStyle={{
-							lineHeight:"40px",
-							paddingTop:"40px",
-							fontSize:"12px"
+							width:"95%",
+							display:"flex",
+							justifyContent:"center",
+							alignItems:"center",
+							fontSize: "0.8rem",
 						}}
 					/>
 				</PieChart>
 			</ResponsiveContainer>
-    );
+		);
   };
 
   // 7. chart --------------------------------------------------------------------------------------
   const chartNode = () => {
     // 7-1. head
     const headSection = () => (
-			<Grid container={true} spacing={1}>
+			<Grid container={true} spacing={0} className={"d-row-between"}>
 				<Grid size={3} className={"d-row-left"}>
 					<Select
 						value={TYPE.section}
@@ -275,7 +318,7 @@ export const MoneyChartPie = memo(() => {
 					</Select>
 				</Grid>
 				<Grid size={6} className={"d-row-center"}>
-					<Div className={"fs-0-8rem fw-600"}>
+					<Div className={"fs-0-95rem fw-600"}>
 						{translate("chartPie")}
 					</Div>
 					<Div className={"fs-0-8rem fw-500 grey ml-10px"}>
@@ -313,6 +356,7 @@ export const MoneyChartPie = memo(() => {
 								shadow={false}
 								radius={false}
 								src={"common3_1.webp"}
+								className={"mr-10px"}
 								onClick={(e: any) => {
 									popTrigger.openPopup(e.currentTarget)
 								}}
@@ -322,23 +366,23 @@ export const MoneyChartPie = memo(() => {
 				</Grid>
 			</Grid>
 		);
-    // 7-2. chart
-    const chartSection = () => (
-      <Grid container={true} spacing={2} className={"border-1 radius-2"}>
-        <Grid size={12} className={"d-col-center p-10px"}>
+		// 2. chart
+		const chartSection = () => (
+			<Grid container={true} spacing={2} className={"border-1 radius-2"}>
+				<Grid size={12} className={"d-col-center p-5px"}>
 					{chartPie()}
 				</Grid>
-      </Grid>
-    );
-    // 7-10. return
-    return (
-      <Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-40vh"}>
-        {headSection()}
-        <Br m={10} />
-        {chartSection()}
-      </Paper>
-    );
-  };
+			</Grid>
+		);
+		// 7-10. return
+		return (
+			<Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-40vh"}>
+				{headSection()}
+				<Br m={10} />
+				{chartSection()}
+			</Paper>
+		);
+	};
 
 	// 10. return ----------------------------------------------------------------------------------
   return (

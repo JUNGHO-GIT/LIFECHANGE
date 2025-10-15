@@ -140,75 +140,78 @@ export const fnHandleNumberInput = (val: string, max: number, decimalPlaces: num
 	return processedValue;
 };
 
-// 8. handleY -------------------------------------------------------------------------------------
+// 8. formatY -------------------------------------------------------------------------------------
 // - 차트 Y축 범위 및 눈금 계산
-export const fnHandleY = (
+export const fnFormatY = (
 	OBJECT: any,
 	array: any,
 	type: string,
+	_extra?: string,
 ) => {
 
-	let ticks = [];
-	let maxValue = 0;
-	let topValue = 0;
-	let tickInterval = 0;
+	const ticks = [];
 
 	// 숫자 변환 및 NaN 처리
-	OBJECT = OBJECT.map((item: any) => {
-		let newItem: any = {};
-		for (let key in item) {
+	const convertedObject = OBJECT.map((item: any) => {
+		const newItem: any = {};
+		for (const key in item) {
 			newItem[key] = Number(item[key] || 0);
 		}
 		return newItem;
 	});
 
-	if (type === "sleep") {
-		maxValue = Math.max(...OBJECT.map((item: any) => (
+	const fnCalculateMaxValue = () => (
+		Math.max(...convertedObject.map((item: any) => (
 			Math.max(...array.map((key: any) => (
 				item[key] || 0
 			)))
-		)));
-		tickInterval = 1;
-		topValue = 24;
-	}
-	else if (type === "money") {
-		maxValue = Math.max(...OBJECT.map((item: any) => (
-			Math.max(...array.map((key: any) => (
-				item[key] || 0
-			)))
-		)));
-		tickInterval = 100;
-		topValue = Math.ceil(maxValue / 100) * 100;
-	}
-	else if (type === "food") {
-		maxValue = Math.max(...OBJECT.map((item: any) => (
-			Math.max(...array.map((key: any) => (
-				item[key] || 0
-			)))
-		)));
-		tickInterval = 10;
-		topValue = Math.ceil(maxValue / 100) * 100;
-	}
-	else if (type === "exercise") {
-		maxValue = Math.max(...OBJECT.map((item: any) => (
-			Math.max(...array.map((key: any) => (
-				item[key] || 0
-			)))
-		)));
-		tickInterval = 10;
-		topValue = Math.ceil(maxValue / 100) * 100;
-	}
-	else {
-		throw new Error("handleY: type error");
-	}
+		)))
+	);
 
-	for (let i = 0; i <= topValue; i += tickInterval) {
+	const config = (
+		type === "sleep" ? {
+			maxValue: fnCalculateMaxValue(),
+			tickInterval: _extra === "line" ? 5 : 1,
+			topValue: _extra === "line" ? Math.ceil(fnCalculateMaxValue() / 100) * 100 : 24,
+		}
+		: type === "money" ? {
+			maxValue: fnCalculateMaxValue(),
+			tickInterval: 100,
+			topValue: Math.ceil(fnCalculateMaxValue() / 100) * 100
+		}
+		: type === "food" ? {
+			maxValue: fnCalculateMaxValue(),
+			tickInterval: 10,
+			topValue: Math.ceil(fnCalculateMaxValue() / 100) * 100
+		}
+		: type === "exercise" ? {
+			maxValue: fnCalculateMaxValue(),
+			tickInterval: 10,
+			topValue: Math.ceil(fnCalculateMaxValue() / 100) * 100
+		}
+		: (() => {
+			throw new Error("formatY: type error");
+		})()
+	);
+
+	for (let i = 0; i <= config.topValue; i += config.tickInterval) {
 		ticks.push(i);
 	}
 
 	return {
-		domain: [0, topValue],
+		domain: [0, config.topValue],
 		ticks: ticks,
-		formatterY: (tick: any) => (`${Number(tick).toLocaleString()}`)
+		formatterY: (value: number) => (
+			value >= 1000000000 ? (
+				`${(value / 1000000000).toFixed(1)}b`
+			)
+			: value >= 1000000 ? (
+				`${(value / 1000000).toFixed(1)}m`
+			)
+			: value >= 1000 ? (
+				`${(value / 1000).toFixed(1)}k`
+			)
+			: value.toLocaleString()
+		)
 	};
 };

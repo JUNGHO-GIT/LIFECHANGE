@@ -395,19 +395,24 @@ export const lineWeek = async (
   let finalResult: any = [];
   let statusResult: string = "";
 
-  // date 변수 정의
-  const dateStart = DATE_param.weekStartFmt;
-  const dateEnd = DATE_param.weekEndFmt;
-  const weekStartFmt = DATE_param.weekStartFmt;
+  // date 변수 정의 (현재 월의 전체 범위)
+  const monthStartFmt = moment(DATE_param.weekStartFmt).startOf('month').format("YYYY-MM-DD");
+  const monthEndFmt = moment(DATE_param.weekStartFmt).endOf('month').format("YYYY-MM-DD");
+  const dateStart = monthStartFmt;
+  const dateEnd = monthEndFmt;
 
-  // ex. mon, tue
-  const name = [
-    "mon", "tue", "wed", "thu", "fri", "sat", "sun"
-  ];
+  // ex. 1주, 2주, 3주, 4주, 5주
+  const name = ["1주", "2주", "3주", "4주", "5주"];
 
-  // ex. 00-00
-  const date = Array.from({ length: 7 }, (_, i) => {
-    return moment(weekStartFmt).clone().add(i, 'days').format("MM-DD");
+  // 주차별 날짜 범위 계산
+  const weekRanges = Array.from({ length: 5 }, (_, i) => {
+    const weekStart = moment(monthStartFmt).add(i * 7, 'days');
+    const weekEnd = moment(weekStart).add(6, 'days');
+    return {
+      start: weekStart.format("YYYY-MM-DD"),
+      end: weekEnd.format("YYYY-MM-DD"),
+      label: weekStart.format("MM-DD")
+    };
   });
 
   try {
@@ -424,34 +429,47 @@ export const lineWeek = async (
       ),
     ]);
 
-    // name 배열 순회하며 결과 저장
-    name.forEach((data: any, index: number) => {
-      const targetDay = moment(weekStartFmt).clone().add(index, 'days').format("YYYY-MM-DD");
+    // 주차별 총합 계산
+    weekRanges.forEach((range: any, index: number) => {
+      let weekScaleSum = 0;
+      let weekVolumeSum = 0;
+      let weekCardioSum = 0;
 
-      const findIndexScale = findResultScale?.findIndex((item: any) => (
-        item.exercise_record_dateStart === targetDay
-      ));
-      const findIndexVolume = findResultVolume?.findIndex((item: any) => (
-        item.exercise_record_dateStart === targetDay
-      ));
-      const findIndexCardio = findResultCardio?.findIndex((item: any) => (
-        item.exercise_record_dateStart === targetDay
-      ));
+      findResultScale?.forEach((item: any) => {
+        const itemDate = item.exercise_record_dateStart;
+        (itemDate >= range.start && itemDate <= range.end) && (
+          weekScaleSum += Number(item.exercise_record_total_scale || 0)
+        );
+      });
+
+      findResultVolume?.forEach((item: any) => {
+        const itemDate = item.exercise_record_dateStart;
+        (itemDate >= range.start && itemDate <= range.end) && (
+          weekVolumeSum += Number(item.exercise_record_total_volume || 0)
+        );
+      });
+
+      findResultCardio?.forEach((item: any) => {
+        const itemDate = item.exercise_record_dateStart;
+        (itemDate >= range.start && itemDate <= range.end) && (
+          weekCardioSum += fnTimeToDecimal(item.exercise_record_total_cardio || "00:00")
+        );
+      });
 
       finalResultScale.push({
-        name: String(data),
-        date: String(date[index]),
-        scale: String(findResultScale[findIndexScale]?.exercise_record_total_scale || "0")
+        name: String(name[index]),
+        date: String(range.label),
+        scale: String(weekScaleSum)
       });
       finalResultVolume.push({
-        name: String(data),
-        date: String(date[index]),
-        volume: String(findResultVolume[findIndexVolume]?.exercise_record_total_volume || "0")
+        name: String(name[index]),
+        date: String(range.label),
+        volume: String(weekVolumeSum)
       });
       finalResultCardio.push({
-        name: String(data),
-        date: String(date[index]),
-        cardio: String(fnTimeToDecimal(findResultCardio[findIndexCardio]?.exercise_record_total_cardio) || "0")
+        name: String(name[index]),
+        date: String(range.label),
+        cardio: String(weekCardioSum)
       });
     });
 
@@ -489,21 +507,25 @@ export const lineMonth = async (
   let finalResult: any = [];
   let statusResult: string = "";
 
-  // date 변수 정의
-  const dateStart = DATE_param.monthStartFmt;
-  const dateEnd = DATE_param.monthEndFmt;
-  const monthStartFmt = DATE_param.monthStartFmt;
-  const monthEndFmt = DATE_param.monthEndFmt;
+  // date 변수 정의 (현재 연도 전체 범위)
+  const yearStartFmt = moment(DATE_param.monthStartFmt).startOf('year').format("YYYY-MM-DD");
+  const yearEndFmt = moment(DATE_param.monthStartFmt).endOf('year').format("YYYY-MM-DD");
+  const dateStart = yearStartFmt;
+  const dateEnd = yearEndFmt;
 
-  // ex. 00일
-  const name = Array.from({ length: moment(monthEndFmt).date() }, (_, i) => (
-    `${i + 1}`
-  ));
+  // ex. 1월, 2월, ..., 12월
+  const name = Array.from({ length: 12 }, (_, i) => `${i + 1}월`);
 
-  // ex. 00-00
-  const date = Array.from({ length: moment(monthEndFmt).date() }, (_, i) => (
-    moment(monthStartFmt).clone().add(i, 'days').format("MM-DD")
-  ));
+  // 월별 날짜 범위 계산
+  const monthRanges = Array.from({ length: 12 }, (_, i) => {
+    const monthStart = moment(yearStartFmt).add(i, 'months').startOf('month');
+    const monthEnd = moment(monthStart).endOf('month');
+    return {
+      start: monthStart.format("YYYY-MM-DD"),
+      end: monthEnd.format("YYYY-MM-DD"),
+      label: monthStart.format("MM")
+    };
+  });
 
   try {
     // promise 사용하여 병렬 처리
@@ -519,34 +541,47 @@ export const lineMonth = async (
       ),
     ]);
 
-    // name 배열 순회하며 결과 저장
-    name.forEach((data: any, index: number) => {
-      const targetDay = moment(monthStartFmt).clone().add(index, 'days').format("YYYY-MM-DD");
+    // 월별 총합 계산
+    monthRanges.forEach((range: any, index: number) => {
+      let monthScaleSum = 0;
+      let monthVolumeSum = 0;
+      let monthCardioSum = 0;
 
-      const findIndexScale = findResultScale?.findIndex((item: any) => (
-        item.exercise_record_dateStart === targetDay
-      ));
-      const findIndexVolume = findResultVolume?.findIndex((item: any) => (
-        item.exercise_record_dateStart === targetDay
-      ));
-      const findIndexCardio = findResultCardio?.findIndex((item: any) => (
-        item.exercise_record_dateStart === targetDay
-      ));
+      findResultScale?.forEach((item: any) => {
+        const itemDate = item.exercise_record_dateStart;
+        (itemDate >= range.start && itemDate <= range.end) && (
+          monthScaleSum += Number(item.exercise_record_total_scale || 0)
+        );
+      });
+
+      findResultVolume?.forEach((item: any) => {
+        const itemDate = item.exercise_record_dateStart;
+        (itemDate >= range.start && itemDate <= range.end) && (
+          monthVolumeSum += Number(item.exercise_record_total_volume || 0)
+        );
+      });
+
+      findResultCardio?.forEach((item: any) => {
+        const itemDate = item.exercise_record_dateStart;
+        (itemDate >= range.start && itemDate <= range.end) && (
+          monthCardioSum += fnTimeToDecimal(item.exercise_record_total_cardio || "00:00")
+        );
+      });
 
       finalResultScale.push({
-        name: String(data),
-        date: String(date[index]),
-        scale: String(findResultScale[findIndexScale]?.exercise_record_total_scale || "0")
+        name: String(name[index]),
+        date: String(range.label),
+        scale: String(monthScaleSum)
       });
       finalResultVolume.push({
-        name: String(data),
-        date: String(date[index]),
-        volume: String(findResultVolume[findIndexVolume]?.exercise_record_total_volume || "0")
+        name: String(name[index]),
+        date: String(range.label),
+        volume: String(monthVolumeSum)
       });
       finalResultCardio.push({
-        name: String(data),
-        date: String(date[index]),
-        cardio: String(fnTimeToDecimal(findResultCardio[findIndexCardio]?.exercise_record_total_cardio) || "0")
+        name: String(name[index]),
+        date: String(range.label),
+        cardio: String(monthCardioSum)
       });
     });
 
@@ -601,12 +636,10 @@ export const avgWeek = async (
     `week${i + 1}`
   ));
 
-  // ex. 00-00 - 00-00
-  const date = Array.from({ length: 5 }, (_, i) => {
-    const startOfWeek = moment(monthStartFmt).add(i, 'weeks').startOf('isoWeek').format("MM-DD");
-    const endOfWeek = moment(monthStartFmt).add(i, 'weeks').endOf('isoWeek').format("MM-DD");
-    return `${startOfWeek} - ${endOfWeek}`;
-  });
+  // ex. 10월
+  const date = Array.from({ length: 5 }, (_, i) => (
+    `${moment(monthStartFmt).format("MM")}월`
+  ));
 
   try {
     // promise 사용하여 병렬 처리

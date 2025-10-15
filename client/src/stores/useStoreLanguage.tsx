@@ -178,8 +178,8 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
         en: "Proportion"
       },
       chartLine: {
-        ko: "추이",
-        en: "Trend"
+        ko: "총합",
+        en: "Total"
       },
       chartAvg: {
         ko: "평균",
@@ -1330,27 +1330,27 @@ export const useStoreLanguage = create<LanguageState>((set, get) => ({
         en: "Wake"
       },
       week1: {
-        ko: "1주차",
+        ko: "1주",
         en: "Week1"
       },
       week2: {
-        ko: "2주차",
+        ko: "2주",
         en: "Week2"
       },
       week3: {
-        ko: "3주차",
+        ko: "3주",
         en: "Week3"
       },
       week4: {
-        ko: "4주차",
+        ko: "4주",
         en: "Week4"
       },
       week5: {
-        ko: "5주차",
+        ko: "5주",
         en: "Week5"
       },
       week6: {
-        ko: "6주차",
+        ko: "6주",
         en: "Week6"
       },
 
