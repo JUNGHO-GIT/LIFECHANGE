@@ -71,13 +71,13 @@ export const MoneyGoalDetail = memo(() => {
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
-    if (EXIST?.[DATE.dateType as keyof typeof EXIST]?.length > 0) {
+    if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
 
-      const dateRange = `${DATE.dateStart.trim()} - ${DATE.dateEnd.trim()}`;
+      const dateRange = `${DATE?.dateStart.trim()} - ${DATE?.dateEnd.trim()}`;
       const objectRange = `${OBJECT.money_goal_dateStart.trim()} - ${OBJECT.money_goal_dateEnd.trim()}`;
 
       const isExist = (
-        EXIST?.[DATE.dateType as keyof typeof EXIST]?.includes(dateRange)
+        EXIST?.[DATE?.dateType as keyof typeof EXIST]?.includes(dateRange)
       );
       const itsMe = (
         dateRange === objectRange
@@ -94,7 +94,7 @@ export const MoneyGoalDetail = memo(() => {
         itsNew: itsNew
       }));
     }
-  }, [EXIST, DATE.dateEnd, OBJECT.money_goal_dateEnd]);
+  }, [EXIST, DATE?.dateEnd, OBJECT.money_goal_dateEnd]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
@@ -103,8 +103,8 @@ export const MoneyGoalDetail = memo(() => {
         user_id: sessionId,
         DATE: {
           dateType: "",
-          dateStart: getMonthStartFmt(DATE.dateStart),
-          dateEnd: getMonthEndFmt(DATE.dateEnd),
+          dateStart: getMonthStartFmt(DATE?.dateStart),
+          dateEnd: getMonthEndFmt(DATE?.dateEnd),
         },
       },
     })
@@ -120,7 +120,7 @@ export const MoneyGoalDetail = memo(() => {
         severity: "error",
       });
     });
-  }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
@@ -156,7 +156,7 @@ export const MoneyGoalDetail = memo(() => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
 
 	// 3. flow ------------------------------------------------------------------------------------
   const flowSave = async (type: string) => {
@@ -337,7 +337,7 @@ export const MoneyGoalDetail = memo(() => {
 									inputRef={REFS?.[i]?.money_goal_income}
 									error={ERRORS?.[i]?.money_goal_income}
 									label={
-										DATE.dateType === "day" ? (
+										DATE?.dateType === "day" ? (
 											`${translate("goalIncome")}`
 										) : (
 											`${translate("goalIncome")} (${translate("total")})`
@@ -386,7 +386,7 @@ export const MoneyGoalDetail = memo(() => {
 									inputRef={REFS?.[i]?.money_goal_expense}
 									error={ERRORS?.[i]?.money_goal_expense}
 									label={
-										DATE.dateType === "day" ? (
+										DATE?.dateType === "day" ? (
 											`${translate("goalExpense")}`
 										) : (
 											`${translate("goalExpense")} (${translate("total")})`

@@ -34,8 +34,8 @@ export const UserAppSetting = memo(() => {
   const handleChangeLanguage = (lang: string) => {
     setLang(lang);
     fnSetLocal("setting", "locale", "lang", lang);
-    navigate("/user/appSetting");
-  };
+    navigate(0);
+	};
 
   // 4-3. handle -------------------------------------------------------------------------------------
   const handleClearStorage = async () => {
@@ -118,9 +118,9 @@ export const UserAppSetting = memo(() => {
 									position={"center"}
 									direction={"center"}
 									contents={
-										<Div className={"d-col-center p-5px"}>
+										<Div className={"d-col-left p-5px"}>
 											<Div
-												className={"d-center pointer"}
+												className={"d-row-center pointer"}
 												onClick={() => {
 													handleChangeLanguage("en")
 												}}

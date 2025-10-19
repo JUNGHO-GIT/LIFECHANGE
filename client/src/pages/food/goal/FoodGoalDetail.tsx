@@ -71,13 +71,13 @@ export const FoodGoalDetail = memo(() => {
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
-    if (EXIST?.[DATE.dateType as keyof typeof EXIST]?.length > 0) {
+    if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
 
-      const dateRange = `${DATE.dateStart.trim()} - ${DATE.dateEnd.trim()}`;
+      const dateRange = `${DATE?.dateStart.trim()} - ${DATE?.dateEnd.trim()}`;
       const objectRange = `${OBJECT.food_goal_dateStart.trim()} - ${OBJECT.food_goal_dateEnd.trim()}`;
 
       const isExist = (
-        EXIST?.[DATE.dateType as keyof typeof EXIST]?.includes(dateRange)
+        EXIST?.[DATE?.dateType as keyof typeof EXIST]?.includes(dateRange)
       );
       const itsMe = (
         dateRange === objectRange
@@ -94,7 +94,7 @@ export const FoodGoalDetail = memo(() => {
         itsNew: itsNew
       }));
     }
-  }, [EXIST, DATE.dateEnd, OBJECT.food_goal_dateEnd]);
+  }, [EXIST, DATE?.dateEnd, OBJECT.food_goal_dateEnd]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
@@ -103,8 +103,8 @@ export const FoodGoalDetail = memo(() => {
         user_id: sessionId,
         DATE: {
           dateType: "",
-          dateStart: getMonthStartFmt(DATE.dateStart),
-          dateEnd: getMonthEndFmt(DATE.dateEnd),
+          dateStart: getMonthStartFmt(DATE?.dateStart),
+          dateEnd: getMonthEndFmt(DATE?.dateEnd),
         },
       },
     })
@@ -120,7 +120,7 @@ export const FoodGoalDetail = memo(() => {
         severity: "error",
       });
     });
-  }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
@@ -156,7 +156,7 @@ export const FoodGoalDetail = memo(() => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
 
 	// 3. flow ------------------------------------------------------------------------------------
   const flowSave = async (type: string) => {
@@ -339,7 +339,7 @@ export const FoodGoalDetail = memo(() => {
 									inputRef={REFS?.[i]?.food_goal_kcal}
 									error={ERRORS?.[i]?.food_goal_kcal}
 									label={
-										DATE.dateType === "day" ? (
+										DATE?.dateType === "day" ? (
 											`${translate("goalKcal")}`
 										) : (
 											`${translate("goalKcal")} (${translate("total")})`
@@ -388,7 +388,7 @@ export const FoodGoalDetail = memo(() => {
 									inputRef={REFS?.[i]?.food_goal_carb}
 									error={ERRORS?.[i]?.food_goal_carb}
 									label={
-										DATE.dateType === "day" ? (
+										DATE?.dateType === "day" ? (
 											`${translate("goalCarb")}`
 										) : (
 											`${translate("goalCarb")} (${translate("total")})`
@@ -437,7 +437,7 @@ export const FoodGoalDetail = memo(() => {
 									inputRef={REFS?.[i]?.food_goal_protein}
 									error={ERRORS?.[i]?.food_goal_protein}
 									label={
-										DATE.dateType === "day" ? (
+										DATE?.dateType === "day" ? (
 											`${translate("goalProtein")}`
 										) : (
 											`${translate("goalProtein")} (${translate("total")})`
@@ -486,7 +486,7 @@ export const FoodGoalDetail = memo(() => {
 									inputRef={REFS?.[i]?.food_goal_fat}
 									error={ERRORS?.[i]?.food_goal_fat}
 									label={
-										DATE.dateType === "day" ? (
+										DATE?.dateType === "day" ? (
 											`${translate("goalFat")}`
 										) : (
 											`${translate("goalFat")} (${translate("total")})`

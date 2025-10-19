@@ -37,9 +37,9 @@ export const FindFilter = memo((
   const handleNavigateToDetail = () => {
     navigate(toDetail, {
 			state: {
-				dateType: state?.DATE.dateType,
-				dateStart: state?.DATE.dateStart,
-				dateEnd: state?.DATE.dateEnd,
+				dateType: state?.DATE?.dateType,
+				dateStart: state?.DATE?.dateStart,
+				dateEnd: state?.DATE?.dateEnd,
 			}
 		});
 	};

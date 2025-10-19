@@ -25,10 +25,10 @@ export const Buttons = memo((
 
   // 2. useMemo ---------------------------------------------------------------------------------
   const navigationState = useMemo(() => ({
-    dateType: state?.DATE.dateType,
-    dateStart: state?.DATE.dateStart,
-    dateEnd: state?.DATE.dateEnd
-  }), [state?.DATE.dateType, state?.DATE.dateStart, state?.DATE.dateEnd]);
+    dateType: state?.DATE?.dateType,
+    dateStart: state?.DATE?.dateStart,
+    dateEnd: state?.DATE?.dateEnd
+  }), [state?.DATE?.dateType, state?.DATE?.dateStart, state?.DATE?.dateEnd]);
 
   // 3. handler ------------------------------------------------------------------------------------
   const handleSave = (type: string) => {

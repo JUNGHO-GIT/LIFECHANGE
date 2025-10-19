@@ -299,16 +299,34 @@ export const lineWeek = async (
   // ex. 1주, 2주, 3주, 4주, 5주
   const name = ["1주", "2주", "3주", "4주", "5주"];
 
-  // 주차별 날짜 범위 계산
-  const weekRanges = Array.from({ length: 5 }, (_, i) => {
-    const weekStart = moment(monthStartFmt).add(i * 7, 'days');
-    const weekEnd = moment(weekStart).add(6, 'days');
-    return {
-      start: weekStart.format("YYYY-MM-DD"),
-      end: weekEnd.format("YYYY-MM-DD"),
-      label: weekStart.format("MM-DD")
-    };
-  });
+  // 해당 월의 1일이 포함된 주의 시작일 (월요일 기준)
+  const firstWeekStart = moment(monthStartFmt).startOf('isoWeek');
+
+  // 주차별 날짜 범위 계산 (해당 월의 날짜가 포함된 주만)
+  const weekRanges: any[] = [];
+  let currentWeekStart = moment(firstWeekStart);
+  let weekIndex = 0;
+
+  while (weekIndex < 6) {
+    const weekEnd = moment(currentWeekStart).add(6, 'days');
+    const weekEndDate = weekEnd.format("YYYY-MM-DD");
+    const weekStartDate = currentWeekStart.format("YYYY-MM-DD");
+
+    // 해당 주에 현재 월의 날짜가 하나라도 포함되어 있는지 확인
+    const hasMonthDate = (weekStartDate <= monthEndFmt && weekEndDate >= monthStartFmt);
+
+    hasMonthDate && weekRanges.push({
+      start: weekStartDate,
+      end: weekEndDate,
+      label: currentWeekStart.format("MM-DD")
+    });
+
+    currentWeekStart.add(7, 'days');
+    weekIndex++;
+
+    // 주의 시작일이 다음 달로 넘어가면 중단
+    (currentWeekStart.isAfter(moment(monthEndFmt).add(7, 'days'))) && (weekIndex = 6);
+  }
 
   try {
     // promise 사용하여 병렬 처리
@@ -334,11 +352,11 @@ export const lineWeek = async (
       });
 
       finalResult.push({
-				name: String(name[index]),
-				date: String(range.label),
-				bedTime: String(weekBedTimeSum.toFixed(1)),
-				wakeTime: String(weekWakeTimeSum.toFixed(1)),
-				sleepTime: String(weekSleepTimeSum.toFixed(1))
+        name: String(name[index]),
+        date: String(`${range.start} - ${range.end}`),
+        bedTime: String(weekBedTimeSum.toFixed(1)),
+        wakeTime: String(weekWakeTimeSum.toFixed(1)),
+        sleepTime: String(weekSleepTimeSum.toFixed(1))
       });
     });
 
@@ -410,11 +428,11 @@ export const lineMonth = async (
       });
 
       finalResult.push({
-				name: String(name[index]),
-				date: String(range.label),
-				bedTime: String(monthBedTimeSum.toFixed(1)),
-				wakeTime: String(monthWakeTimeSum.toFixed(1)),
-				sleepTime: String(monthSleepTimeSum.toFixed(1))
+        name: String(name[index]),
+        date: String(`${range.start} - ${range.end}`),
+        bedTime: String(monthBedTimeSum.toFixed(1)),
+        wakeTime: String(monthWakeTimeSum.toFixed(1)),
+        sleepTime: String(monthSleepTimeSum.toFixed(1))
       });
     });
 
@@ -461,10 +479,12 @@ export const avgWeek = async (
     `week${i + 1}`
   ));
 
-  // ex. 10월
-  const date = Array.from({ length: 5 }, (_, i) => (
-    `${moment(monthStartFmt).format("MM")}월`
-  ));
+  // ex. 00-00 - 00-00
+  const date = Array.from({ length: 5 }, (_, i) => {
+    const startOfWeek = weekStartDate[i].clone().startOf('isoWeek').format("MM-DD");
+    const endOfWeek = weekStartDate[i].clone().endOf('isoWeek').format("MM-DD");
+    return `${startOfWeek} - ${endOfWeek}`;
+  });
 
   try {
     // promise 사용하여 병렬 처리

@@ -148,70 +148,92 @@ export const fnFormatY = (
 	type: string,
 	_extra?: string,
 ) => {
+	// 캐시: 동일한 데이터(reference)로 여러 번 호출될 때 계산을 재사용
+	const cacheMap = (fnFormatY as any)._cache || new WeakMap();
+	(fnFormatY as any)._cache || ((fnFormatY as any)._cache = cacheMap);
 
-	const ticks = [];
+	const objRef = OBJECT || [];
+	const key = `${(array || []).join("|")}|${type}|${_extra || ""}`;
 
-	// 숫자 변환 및 NaN 처리
-	const convertedObject = OBJECT.map((item: any) => {
-		const newItem: any = {};
-		for (const key in item) {
-			newItem[key] = Number(item[key] || 0);
+	const outer = cacheMap.get(objRef) || (cacheMap.set(objRef, new Map()), cacheMap.get(objRef));
+	const cached = outer.get(key);
+	return cached ? cached : (() => {
+		const ticks: number[] = [];
+
+		// maxValue 계산 (한 번만, 불필요한 중복 계산 제거)
+		let maxValue = 0;
+		for (let i = 0; i < (objRef || []).length; i++) {
+			const item = objRef[i];
+			for (let j = 0; j < (array || []).length; j++) {
+				const val = Number(item?.[array[j]] || 0);
+				(val > maxValue) && (maxValue = val);
+			}
 		}
-		return newItem;
-	});
 
-	const fnCalculateMaxValue = () => (
-		Math.max(...convertedObject.map((item: any) => (
-			Math.max(...array.map((key: any) => (
-				item[key] || 0
-			)))
-		)))
-	);
+		// 범위를 사람이 읽기 좋은 값으로 맞춰주는 보조 함수
+		const computeNiceTick = (max: number, targetTicks: number) => {
+			const rough = Math.max(Math.ceil(max / Math.max(targetTicks, 1)), 1);
+			const exponent = rough > 0 ? Math.floor(Math.log10(rough)) : 0;
+			const pow10 = Math.pow(10, exponent);
+			const normalized = rough / pow10;
+			const niceFraction = normalized <= 1 ? 1 : normalized <= 2 ? 2 : normalized <= 5 ? 5 : 10;
+			const niceTick = niceFraction * pow10;
+			const top = Math.ceil(max / niceTick) * niceTick;
+			return { niceTick, top };
+		};
 
-	const config = (
-		type === "sleep" ? {
-			maxValue: fnCalculateMaxValue(),
-			tickInterval: _extra === "line" ? 5 : 1,
-			topValue: _extra === "line" ? Math.ceil(fnCalculateMaxValue() / 100) * 100 : 24,
-		}
-		: type === "money" ? {
-			maxValue: fnCalculateMaxValue(),
-			tickInterval: 100,
-			topValue: Math.ceil(fnCalculateMaxValue() / 100) * 100
-		}
-		: type === "food" ? {
-			maxValue: fnCalculateMaxValue(),
-			tickInterval: 10,
-			topValue: Math.ceil(fnCalculateMaxValue() / 100) * 100
-		}
-		: type === "exercise" ? {
-			maxValue: fnCalculateMaxValue(),
-			tickInterval: 10,
-			topValue: Math.ceil(fnCalculateMaxValue() / 100) * 100
-		}
-		: (() => {
-			throw new Error("formatY: type error");
-		})()
-	);
+		const config = (
+			type === "sleep" ? {
+				maxValue: maxValue,
+				tickInterval: _extra === "line" ? 5 : 1,
+				topValue: _extra === "line" ? Math.ceil(maxValue / 100) * 100 : 24,
+			}
+			: type === "money" ? (() => {
+				const { niceTick, top } = computeNiceTick(maxValue, 6);
+				return { maxValue: maxValue, tickInterval: niceTick, topValue: top };
+			})()
+			: type === "food" ? (() => {
+				const { niceTick, top } = computeNiceTick(maxValue, 6);
+				return { maxValue: maxValue, tickInterval: Math.max(niceTick, 1), topValue: top };
+			})()
+			: type === "exercise" ? (() => {
+				const { niceTick, top } = computeNiceTick(maxValue, 6);
+				return { maxValue: maxValue, tickInterval: Math.max(niceTick, 1), topValue: top };
+			})()
+			: (() => {
+				throw new Error("formatY: type error");
+			})()
+		);
 
-	for (let i = 0; i <= config.topValue; i += config.tickInterval) {
-		ticks.push(i);
-	}
+		for (let i = 0; i <= config.topValue; i += config.tickInterval) {
+			ticks.push(i);
+		}
 
-	return {
-		domain: [0, config.topValue],
-		ticks: ticks,
-		formatterY: (value: number) => (
-			value >= 1000000000 ? (
-				`${(value / 1000000000).toFixed(1)}b`
+		const result = {
+			domain: [0, config.topValue],
+			ticks: ticks,
+			formatterY: (value: number) => (
+				value >= 1000000000 ? (
+					`${(value / 1000000000).toFixed(1)}b`
+				)
+				: value >= 1000000 ? (
+					`${(value / 1000000).toFixed(1)}m`
+				)
+				: value >= 1000 ? (
+					`${(value / 1000).toFixed(1)}k`
+				)
+				: value.toLocaleString()
 			)
-			: value >= 1000000 ? (
-				`${(value / 1000000).toFixed(1)}m`
-			)
-			: value >= 1000 ? (
-				`${(value / 1000).toFixed(1)}k`
-			)
-			: value.toLocaleString()
-		)
-	};
+		};
+
+		outer.set(key, result);
+		return result;
+	})();
+};
+
+// 9. formaytDate ---------------------------------------------------------------------------------
+// - 날짜 형식 변환 (YYYY-MM-DD -> MM-DD)
+export const fnFormatDate = (dateStr: string) => {
+	const datePattern = /\d{4}-(\d{2})-(\d{2})/g;
+	return dateStr.replace(datePattern, '$1-$2');
 };

@@ -5,15 +5,17 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
 import { ExerciseLineVolume, ExerciseLineCardio, ExerciseLineScale, ExerciseLineType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnFormatY } from "@importScripts";
-import { Select, PopUp } from "@importContainers";
-import { Div, Img, Br, Paper, Grid } from "@importComponents";
-import { FormGroup, FormControlLabel, Switch, MenuItem } from "@importMuis";
-import { Line, LineChart } from "recharts";
-import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { fnFormatY, fnFormatDate } from "@importScripts";
+import { Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@importLibs";
 
 // -------------------------------------------------------------------------------------------------
-export const ExerciseChartLine = memo(() => {
+declare interface ExerciseChartLineProps {
+	TYPE?: any;
+	setTYPE?: any;
+}
+
+// -------------------------------------------------------------------------------------------------
+export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, sessionId, chartColors } = useCommonValue();
@@ -33,6 +35,9 @@ export const ExerciseChartLine = memo(() => {
   );
 
 	// 2-2. useState -------------------------------------------------------------------------------
+	const [TYPE_STATE, setTYPE_STATE] = useState(() => {
+		return props?.TYPE !== undefined ? props.TYPE : TYPE;
+	});
   const [DATE, _setDATE] = useState({
     dateType: "",
     dateStart: getDayFmt(),
@@ -102,51 +107,70 @@ export const ExerciseChartLine = memo(() => {
     }
   })()}, [URL_OBJECT, DATE, sessionId]);
 
+	// 2-3. useEffect -----------------------------------------------------------------------------
+	useEffect(() => {
+		if (props?.TYPE !== undefined) {
+			const isSame = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
+			if (!isSame) {
+				setTYPE_STATE(props.TYPE);
+			}
+		}
+	}, [props?.TYPE]);
+
+	// 2-3. useEffect -----------------------------------------------------------------------------
+	useEffect(() => {
+		if (props?.setTYPE) {
+			const isSame = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
+			if (!isSame) {
+				props.setTYPE(TYPE_STATE);
+			}
+		}
+		else {
+			setTYPE(TYPE_STATE);
+		}
+	}, [TYPE_STATE]);
+
   // 5-1. chart ------------------------------------------------------------------------------------
-  const chartLine = () => {
+  const chartNode = () => {
 
     let object = null;
     let endStr = "";
     let dateRange = "";
-    const monthStart = DATE.monthStartFmt;
-    const monthEnd = DATE.monthEndFmt;
-    const yearStart = DATE.yearStartFmt;
-    const yearEnd = DATE.yearEndFmt;
 
-		(TYPE.section === "week" && TYPE.line === "scale") && (
+		(TYPE_STATE.section === "week" && TYPE_STATE.line === "scale") && (
 			object = OBJECT_SCALE_WEEK,
 			endStr = localUnit,
-			dateRange = `${monthStart} \u00A0 - \u00A0 ${monthEnd}`
+			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`
 		);
 
-		(TYPE.section === "week" && TYPE.line === "volume") && (
+		(TYPE_STATE.section === "week" && TYPE_STATE.line === "volume") && (
 			object = OBJECT_VOLUME_WEEK,
 			endStr = "vol",
-			dateRange = `${monthStart} \u00A0 - \u00A0 ${monthEnd}`
+			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`
 		);
 
-		(TYPE.section === "week" && TYPE.line === "cardio") && (
+		(TYPE_STATE.section === "week" && TYPE_STATE.line === "cardio") && (
 			object = OBJECT_CARDIO_WEEK,
 			endStr = "hr",
-			dateRange = `${monthStart} \u00A0 - \u00A0 ${monthEnd}`
+			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`
 		);
 
-		(TYPE.section === "month" && TYPE.line === "scale") && (
+		(TYPE_STATE.section === "month" && TYPE_STATE.line === "scale") && (
 			object = OBJECT_SCALE_MONTH,
 			endStr = localUnit,
-			dateRange = `${yearStart} \u00A0 - \u00A0 ${yearEnd}`
+			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`
 		);
 
-		(TYPE.section === "month" && TYPE.line === "volume") && (
+		(TYPE_STATE.section === "month" && TYPE_STATE.line === "volume") && (
 			object = OBJECT_VOLUME_MONTH,
 			endStr = "vol",
-			dateRange = `${yearStart} \u00A0 - \u00A0 ${yearEnd}`
+			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`
 		);
 
-		(TYPE.section === "month" && TYPE.line === "cardio") && (
+		(TYPE_STATE.section === "month" && TYPE_STATE.line === "cardio") && (
 			object = OBJECT_CARDIO_MONTH,
 			endStr = "hr",
-			dateRange = `${yearStart} \u00A0 - \u00A0 ${yearEnd}`
+			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`
 		);
 
     const { domain, ticks, formatterY } = fnFormatY(object, exerciseChartArray, "exercise");
@@ -207,7 +231,7 @@ export const ExerciseChartLine = memo(() => {
 						tick={{fill: "#666", fontSize: 14}}
 						tickFormatter={formatterY}
 					/>
-					{TYPE.line === ("scale") && (
+					{TYPE_STATE.line === ("scale") && (
 						<Line
 							dataKey={"scale"}
 							type={"monotone"}
@@ -221,7 +245,7 @@ export const ExerciseChartLine = memo(() => {
 							animationEasing={"linear"}
 						/>
 					)}
-					{TYPE.line === ("volume") && (
+					{TYPE_STATE.line === ("volume") && (
 						<Line
 							dataKey={"volume"}
 							type={"monotone"}
@@ -235,7 +259,7 @@ export const ExerciseChartLine = memo(() => {
 							animationEasing={"linear"}
 						/>
 					)}
-					{TYPE.line === ("cardio") && (
+					{TYPE_STATE.line === ("cardio") && (
 						<Line
 							dataKey={"cardio"}
 							type={"monotone"}
@@ -252,7 +276,8 @@ export const ExerciseChartLine = memo(() => {
 					<Tooltip
 						labelFormatter={(_label: any, payload: any) => {
 							const name = payload?.length > 0 ? payload[0]?.payload.name : '';
-							return `${translate(name)}`;
+							const date = payload?.length > 0 ? payload[0]?.payload.date : '';
+							return `${translate(name)} (${fnFormatDate(date)})`;
 						}}
 						formatter={(value: any, name: any) => {
 							const customName = translate(name);
@@ -288,92 +313,6 @@ export const ExerciseChartLine = memo(() => {
 				</LineChart>
 			</ResponsiveContainer>
     );
-  };
-
-  // 7. chart --------------------------------------------------------------------------------------
-  const chartNode = () => {
-    // 7-1. head
-    const headSection = () => (
-			<Grid container={true} spacing={0} className={"d-row-between"}>
-				<Grid size={3} className={"d-row-left"}>
-					<Select
-						value={TYPE.section}
-						onChange={(e: any) => {
-							setTYPE((prev) => ({
-								...prev,
-								section: e.target.value,
-							}));
-						}}
-					>
-						<MenuItem value={"week"}>{translate("week")}</MenuItem>
-						<MenuItem value={"month"}>{translate("month")}</MenuItem>
-					</Select>
-				</Grid>
-				<Grid size={6} className={"d-row-center"}>
-					<Div className={"fs-0-95rem fw-600"}>
-						{translate("chartLine")}
-					</Div>
-					<Div className={"fs-0-8rem fw-500 grey ml-10px"}>
-						{`[${translate(TYPE.line)}]`}
-					</Div>
-				</Grid>
-				<Grid size={3} className={"d-row-right"}>
-					<PopUp
-						type={"chart"}
-						position={"bottom"}
-						direction={"center"}
-						contents={
-							["volume", "cardio", "scale"].map((key, index) => (
-								<FormGroup key={index} children={
-									<FormControlLabel label={translate(key)} labelPlacement={"start"} control={
-										<Switch checked={TYPE.line === key} onChange={() => {
-											if (TYPE.line === key) {
-												return;
-											}
-											else {
-												setTYPE((prev) => ({
-													...prev,
-													line: key,
-												}));
-											}
-										}}/>
-									}/>
-								}/>
-							))
-						}
-						children={(popTrigger: any) => (
-							<Img
-								max={24}
-								hover={true}
-								shadow={false}
-								radius={false}
-								src={"common3_1.webp"}
-								className={"mr-10px"}
-								onClick={(e: any) => {
-									popTrigger.openPopup(e.currentTarget)
-								}}
-							/>
-						)}
-					/>
-				</Grid>
-			</Grid>
-		);
-		// 2. chart
-		const chartSection = () => (
-			<Grid container={true} spacing={2} className={"border-1 radius-2"}>
-				<Grid size={12} className={"d-col-center p-5px"}>
-					{chartLine()}
-				</Grid>
-			</Grid>
-		);
-		// 7-10. return
-		return (
-			<Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-40vh"}>
-				{headSection()}
-				<Br m={10} />
-				{chartSection()}
-			</Paper>
-		);
   };
 
 	// 10. return ----------------------------------------------------------------------------------

@@ -75,13 +75,13 @@ export const ExerciseRecordDetail = memo(() => {
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
-    if (EXIST?.[DATE.dateType as keyof typeof EXIST]?.length > 0) {
+    if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
 
-      const dateRange = `${DATE.dateStart.trim()} - ${DATE.dateEnd.trim()}`;
+      const dateRange = `${DATE?.dateStart.trim()} - ${DATE?.dateEnd.trim()}`;
       const objectRange = `${OBJECT.exercise_record_dateStart.trim()} - ${OBJECT.exercise_record_dateEnd.trim()}`;
 
       const isExist = (
-        EXIST?.[DATE.dateType as keyof typeof EXIST]?.includes(dateRange)
+        EXIST?.[DATE?.dateType as keyof typeof EXIST]?.includes(dateRange)
       );
       const itsMe = (
         dateRange === objectRange
@@ -98,7 +98,7 @@ export const ExerciseRecordDetail = memo(() => {
         itsNew: itsNew
       }));
     }
-  }, [EXIST, DATE.dateEnd, OBJECT.exercise_record_dateEnd]);
+  }, [EXIST, DATE?.dateEnd, OBJECT.exercise_record_dateEnd]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
@@ -107,8 +107,8 @@ export const ExerciseRecordDetail = memo(() => {
         user_id: sessionId,
         DATE: {
           dateType: "",
-          dateStart: getMonthStartFmt(DATE.dateStart),
-          dateEnd: getMonthEndFmt(DATE.dateEnd),
+          dateStart: getMonthStartFmt(DATE?.dateStart),
+          dateEnd: getMonthEndFmt(DATE?.dateEnd),
         },
       },
     })
@@ -124,7 +124,7 @@ export const ExerciseRecordDetail = memo(() => {
         severity: "error",
       });
     });
-  }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
@@ -174,7 +174,7 @@ export const ExerciseRecordDetail = memo(() => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {

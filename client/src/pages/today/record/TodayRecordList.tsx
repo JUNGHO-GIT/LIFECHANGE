@@ -152,7 +152,7 @@ export const TodayRecordList = memo(() => {
 		}
 	})()}, [
 		URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP,
-		sessionId, PAGING?.sort, PAGING.page, DATE.dateEnd
+		sessionId, PAGING?.sort, PAGING.page, DATE?.dateEnd
 	]);
 
 	// 7. list -----------------------------------------------------------------------------------

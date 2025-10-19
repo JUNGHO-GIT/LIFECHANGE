@@ -5,16 +5,17 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
 import { SleepAvg, SleepAvgType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnFormatY } from "@importScripts";
-import { Select, PopUp } from "@importContainers";
-import { Div, Img, Br } from "@importComponents";
-import { Paper, Grid, MenuItem } from "@importMuis";
-import { FormGroup, FormControlLabel, Switch } from "@importMuis";
-import { ComposedChart, Bar } from "recharts";
-import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { fnFormatY, fnFormatDate } from "@importScripts";
+import { ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@importLibs";
 
 // -------------------------------------------------------------------------------------------------
-export const SleepChartAvg = memo(() => {
+declare interface SleepChartAvgProps {
+	TYPE?: any;
+	setTYPE?: any;
+}
+
+// -------------------------------------------------------------------------------------------------
+export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, sessionId, chartColors, sleepChartArray } = useCommonValue();
@@ -25,14 +26,17 @@ export const SleepChartAvg = memo(() => {
   const { setLOADING } = useStoreLoading();
 
 	// 2-1. useStorageLocal -----------------------------------------------------------------------
-  const [TYPE, setTYPE] = useStorageLocal(
-    "type", "avg", PATH, {
-      section: "week",
-      line: sleepChartArray,
-    }
-  );
+	const [TYPE, setTYPE] = useStorageLocal(
+		"type", "avg", PATH, {
+			section: "week",
+			line: sleepChartArray,
+		}
+	);
 
 	// 2-2. useState -------------------------------------------------------------------------------
+	const [TYPE_STATE, setTYPE_STATE] = useState(() => {
+		return props?.TYPE !== undefined ? props.TYPE : TYPE;
+	});
   const [DATE, _setDATE] = useState({
     dateType: "",
     dateStart: getDayFmt(),
@@ -86,23 +90,46 @@ export const SleepChartAvg = memo(() => {
     }
   })()}, [URL_OBJECT, DATE, sessionId]);
 
+	// 2-3. useEffect -----------------------------------------------------------------------------
+	useEffect(() => {
+		if (props?.TYPE !== undefined) {
+			const isSame = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
+			if (!isSame) {
+				setTYPE_STATE(props.TYPE);
+			}
+		}
+	}, [props?.TYPE]);
+
+	// 2-3. useEffect -----------------------------------------------------------------------------
+	useEffect(() => {
+		if (props?.setTYPE) {
+			const isSame = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
+			if (!isSame) {
+				props.setTYPE(TYPE_STATE);
+			}
+		}
+		else {
+			setTYPE(TYPE_STATE);
+		}
+	}, [TYPE_STATE]);
+
   // 5-1. chart ------------------------------------------------------------------------------------
-  const chartAvg = () => {
+  const chartNode = () => {
 
     let object = null;
     let endStr = "";
     let dateRange = "";
 
-		(TYPE.section === "week") && (
+		(TYPE_STATE.section === "week") && (
 			object = OBJECT_WEEK,
 			endStr = "hm",
-			dateRange = `${DATE.weekStartFmt} \u00A0 - \u00A0 ${DATE.weekEndFmt}`
+			dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`
 		);
 
-		(TYPE.section === "month") && (
+		(TYPE_STATE.section === "month") && (
 			object = OBJECT_MONTH,
 			endStr = "hm",
-			dateRange = `${DATE.monthStartFmt} \u00A0 - \u00A0 ${DATE.monthEndFmt}`
+			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`
 		);
 
     const { domain, ticks, formatterY } = fnFormatY(object, sleepChartArray, "sleep");
@@ -166,7 +193,7 @@ export const SleepChartAvg = memo(() => {
 						tick={{fill: "#666", fontSize: 14}}
 						tickFormatter={formatterY}
 					/>
-					{TYPE.line.includes("bedTime") && (
+					{TYPE_STATE.line.includes("bedTime") && (
 						<Bar
 							dataKey={"bedTime"}
 							fill={chartColors[4]}
@@ -178,7 +205,7 @@ export const SleepChartAvg = memo(() => {
 							animationEasing={"linear"}
 						/>
 					)}
-					{TYPE.line.includes("wakeTime") && (
+					{TYPE_STATE.line.includes("wakeTime") && (
 						<Bar
 							dataKey={"wakeTime"}
 							fill={chartColors[1]}
@@ -190,7 +217,7 @@ export const SleepChartAvg = memo(() => {
 							animationEasing={"linear"}
 						/>
 					)}
-					{TYPE.line.includes("sleepTime") && (
+					{TYPE_STATE.line.includes("sleepTime") && (
 						<Bar
 							dataKey={"sleepTime"}
 							fill={chartColors[2]}
@@ -205,7 +232,8 @@ export const SleepChartAvg = memo(() => {
 					<Tooltip
 						labelFormatter={(_label: any, payload: any) => {
 							const name = payload?.length > 0 ? payload[0]?.payload.name : '';
-							return `${translate(name)}`;
+							const date = payload?.length > 0 ? payload[0]?.payload.date : '';
+							return `${translate(name)} (${fnFormatDate(date)})`;
 						}}
 						formatter={(value: any, name: any) => {
 							const customName = translate(name);
@@ -242,97 +270,6 @@ export const SleepChartAvg = memo(() => {
 			</ResponsiveContainer>
 		);
   };
-
-  // 7. chart --------------------------------------------------------------------------------------
-  const chartNode = () => {
-    // 7-1. head
-    const headSection = () => (
-			<Grid container={true} spacing={0} className={"d-row-between"}>
-				<Grid size={3} className={"d-row-left"}>
-					<Select
-						value={TYPE.section}
-						onChange={(e: any) => {
-							setTYPE((prev) => ({
-								...prev,
-								section: e.target.value,
-							}));
-						}}
-					>
-						<MenuItem value={"week"}>{translate("week")}</MenuItem>
-						<MenuItem value={"month"}>{translate("month")}</MenuItem>
-					</Select>
-				</Grid>
-				<Grid size={6} className={"d-row-center"}>
-					<Div className={"fs-0-95rem fw-600"}>
-						{translate("chartAvg")}
-					</Div>
-				</Grid>
-				<Grid size={3} className={"d-row-right"}>
-					<PopUp
-						type={"chart"}
-						position={"bottom"}
-						direction={"center"}
-						contents={
-							["bedTime", "wakeTime", "sleepTime"]?.map((key: string, index: number) => (
-								<FormGroup key={index} children={
-									<FormControlLabel label={translate(key)} labelPlacement={"start"} control={
-										<Switch checked={TYPE.line.includes(key)} onChange={() => {
-											if (TYPE.line.includes(key)) {
-												if (TYPE.line?.length > 1) {
-													setTYPE((prev) => ({
-														...prev,
-														line: TYPE.line?.filter((item: any) => item !== key),
-													}));
-												}
-												else {
-													return;
-												}
-											}
-											else {
-												setTYPE((prev) => ({
-													...prev,
-													line: [...TYPE.line, key],
-												}));
-											}
-										}}/>
-									}/>
-								}/>
-							))
-						}
-						children={(popTrigger: any) => (
-							<Img
-								max={24}
-								hover={true}
-								shadow={false}
-								radius={false}
-								src={"common3_1.webp"}
-								className={"mr-10px"}
-								onClick={(e: any) => {
-									popTrigger.openPopup(e.currentTarget)
-								}}
-							/>
-						)}
-					/>
-				</Grid>
-			</Grid>
-		);
-		// 2. chart
-		const chartSection = () => (
-			<Grid container={true} spacing={2} className={"border-1 radius-2"}>
-				<Grid size={12} className={"d-col-center p-5px"}>
-					{chartAvg()}
-				</Grid>
-			</Grid>
-		);
-		// 7-10. return
-		return (
-			<Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-40vh"}>
-				{headSection()}
-				<Br m={10} />
-				{chartSection()}
-			</Paper>
-		);
-	};
 
 	// 10. return ----------------------------------------------------------------------------------
   return (

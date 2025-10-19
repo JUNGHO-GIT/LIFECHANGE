@@ -5,12 +5,13 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
 import { MoneyPie, MoneyPieType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { PopUp, Select } from "@importContainers";
-import { Div, Img, Br, Paper, Grid } from "@importComponents";
-import { FormGroup, FormControlLabel, Switch, MenuItem } from "@importMuis";
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "@importLibs";
 
 // -------------------------------------------------------------------------------------------------
+declare interface MoneyChartPieProps {
+	TYPE?: any;
+	setTYPE?: any;
+}
 declare type PieProps = {
   cx?: number;
   cy?: number;
@@ -22,7 +23,7 @@ declare type PieProps = {
 };
 
 // -------------------------------------------------------------------------------------------------
-export const MoneyChartPie = memo(() => {
+export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, chartColors, sessionId } = useCommonValue();
@@ -41,6 +42,9 @@ export const MoneyChartPie = memo(() => {
   );
 
 	// 2-2. useState -------------------------------------------------------------------------------
+	const [TYPE_STATE, setTYPE_STATE] = useState(() => {
+		return props?.TYPE !== undefined ? props.TYPE : TYPE;
+	});
   const [DATE, _setDATE] = useState({
     dateType: "",
     dateStart: getDayFmt(),
@@ -113,28 +117,51 @@ export const MoneyChartPie = memo(() => {
     }
   })()}, [URL_OBJECT, DATE, sessionId]);
 
+	// 2-3. useEffect -----------------------------------------------------------------------------
+	useEffect(() => {
+		if (props?.TYPE !== undefined) {
+			const isSame = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
+			if (!isSame) {
+				setTYPE_STATE(props.TYPE);
+			}
+		}
+	}, [props?.TYPE]);
+
+	// 2-3. useEffect -----------------------------------------------------------------------------
+	useEffect(() => {
+		if (props?.setTYPE) {
+			const isSame = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
+			if (!isSame) {
+				props.setTYPE(TYPE_STATE);
+			}
+		}
+		else {
+			setTYPE(TYPE_STATE);
+		}
+	}, [TYPE_STATE]);
+
   // 4-1. render -----------------------------------------------------------------------------------
   const renderPie = (
     { cx, cy, midAngle, innerRadius, outerRadius, value, index }: PieProps
   ) => {
 
     let object = null;
-    if (TYPE.section === "week" && TYPE.line === "income") {
+    if (TYPE_STATE.section === "week" && TYPE_STATE.line === "income") {
       object = OBJECT_INCOME_WEEK;
     }
-    else if (TYPE.section === "week" && TYPE.line === "expense") {
+    else if (TYPE_STATE.section === "week" && TYPE_STATE.line === "expense") {
       object = OBJECT_EXPENSE_WEEK;
     }
-    else if (TYPE.section === "month" && TYPE.line === "income") {
+    else if (TYPE_STATE.section === "month" && TYPE_STATE.line === "income") {
       object = OBJECT_INCOME_MONTH;
     }
-    else if (TYPE.section === "month" && TYPE.line === "expense") {
+    else if (TYPE_STATE.section === "month" && TYPE_STATE.line === "expense") {
       object = OBJECT_EXPENSE_MONTH;
     }
-    else if (TYPE.section === "year" && TYPE.line === "income") {
+    else if (TYPE_STATE.section === "year" && TYPE_STATE.line === "income") {
       object = OBJECT_INCOME_YEAR;
     }
-    else if (TYPE.section === "year" && TYPE.line === "expense") {
+    else if (TYPE_STATE.section === "year" && TYPE_STATE.line === "expense") {
       object = OBJECT_EXPENSE_YEAR;
     }
 
@@ -175,46 +202,46 @@ export const MoneyChartPie = memo(() => {
   };
 
   // 5-1. chart ------------------------------------------------------------------------------------
-  const chartPie = () => {
+  const chartNode = () => {
 
     let object = null;
     let endStr = "";
     let dateRange = "";
 
-		(TYPE.section === "week" && TYPE.line === "income") && (
+		(TYPE_STATE.section === "week" && TYPE_STATE.line === "income") && (
 			object = OBJECT_INCOME_WEEK,
 			endStr = "",
-			dateRange = `${DATE.weekStartFmt} \u00A0 - \u00A0 ${DATE.weekEndFmt}`
+			dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`
 		);
 
-		(TYPE.section === "week" && TYPE.line === "expense") && (
+		(TYPE_STATE.section === "week" && TYPE_STATE.line === "expense") && (
 			object = OBJECT_EXPENSE_WEEK,
 			endStr = "",
-			dateRange = `${DATE.weekStartFmt} \u00A0 - \u00A0 ${DATE.weekEndFmt}`
+			dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`
 		);
 
-		(TYPE.section === "month" && TYPE.line === "income") && (
+		(TYPE_STATE.section === "month" && TYPE_STATE.line === "income") && (
 			object = OBJECT_INCOME_MONTH,
 			endStr = "",
-			dateRange = `${DATE.monthStartFmt} \u00A0 - \u00A0 ${DATE.monthEndFmt}`
+			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`
 		);
 
-		(TYPE.section === "month" && TYPE.line === "expense") && (
+		(TYPE_STATE.section === "month" && TYPE_STATE.line === "expense") && (
 			object = OBJECT_EXPENSE_MONTH,
 			endStr = "",
-			dateRange = `${DATE.monthStartFmt} \u00A0 - \u00A0 ${DATE.monthEndFmt}`
+			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`
 		);
 
-		(TYPE.section === "year" && TYPE.line === "income") && (
+		(TYPE_STATE.section === "year" && TYPE_STATE.line === "income") && (
 			object = OBJECT_INCOME_YEAR,
 			endStr = "",
-			dateRange = `${DATE.yearStartFmt} \u00A0 - \u00A0 ${DATE.yearEndFmt}`
+			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`
 		);
 
-		(TYPE.section === "year" && TYPE.line === "expense") && (
+		(TYPE_STATE.section === "year" && TYPE_STATE.line === "expense") && (
 			object = OBJECT_EXPENSE_YEAR,
 			endStr = "",
-			dateRange = `${DATE.yearStartFmt} \u00A0 - \u00A0 ${DATE.yearEndFmt}`
+			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`
 		);
 
     return (
@@ -296,93 +323,6 @@ export const MoneyChartPie = memo(() => {
 			</ResponsiveContainer>
 		);
   };
-
-  // 7. chart --------------------------------------------------------------------------------------
-  const chartNode = () => {
-    // 7-1. head
-    const headSection = () => (
-			<Grid container={true} spacing={0} className={"d-row-between"}>
-				<Grid size={3} className={"d-row-left"}>
-					<Select
-						value={TYPE.section}
-						onChange={(e: any) => {
-							setTYPE((prev) => ({
-								...prev,
-								section: e.target.value,
-							}));
-						}}
-					>
-						<MenuItem value={"week"}>{translate("week")}</MenuItem>
-						<MenuItem value={"month"}>{translate("month")}</MenuItem>
-						<MenuItem value={"year"}>{translate("year")}</MenuItem>
-					</Select>
-				</Grid>
-				<Grid size={6} className={"d-row-center"}>
-					<Div className={"fs-0-95rem fw-600"}>
-						{translate("chartPie")}
-					</Div>
-					<Div className={"fs-0-8rem fw-500 grey ml-10px"}>
-						{`[${translate(TYPE.line)}]`}
-					</Div>
-				</Grid>
-				<Grid size={3} className={"d-row-right"}>
-					<PopUp
-						type={"chart"}
-						position={"bottom"}
-						direction={"center"}
-						contents={
-							["income", "expense"]?.map((key: string, index: number) => (
-								<FormGroup key={index} children={
-									<FormControlLabel label={translate(key)} labelPlacement={"start"} control={
-										<Switch checked={TYPE.line === key} onChange={() => {
-											if (TYPE.line === key) {
-												return;
-											}
-											else {
-												setTYPE((prev) => ({
-													...prev,
-													line: key,
-												}));
-											}
-										}}/>
-									}/>
-								}/>
-							))
-						}
-						children={(popTrigger: any) => (
-							<Img
-								max={24}
-								hover={true}
-								shadow={false}
-								radius={false}
-								src={"common3_1.webp"}
-								className={"mr-10px"}
-								onClick={(e: any) => {
-									popTrigger.openPopup(e.currentTarget)
-								}}
-							/>
-						)}
-					/>
-				</Grid>
-			</Grid>
-		);
-		// 2. chart
-		const chartSection = () => (
-			<Grid container={true} spacing={2} className={"border-1 radius-2"}>
-				<Grid size={12} className={"d-col-center p-5px"}>
-					{chartPie()}
-				</Grid>
-			</Grid>
-		);
-		// 7-10. return
-		return (
-			<Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-40vh"}>
-				{headSection()}
-				<Br m={10} />
-				{chartSection()}
-			</Paper>
-		);
-	};
 
 	// 10. return ----------------------------------------------------------------------------------
   return (

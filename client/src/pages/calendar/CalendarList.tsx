@@ -63,8 +63,8 @@ export const CalendarList = memo(() => {
 				PAGING: PAGING,
 				DATE: {
 					dateType: "",
-					dateStart: DATE.dateStart,
-					dateEnd: DATE.dateEnd,
+					dateStart: DATE?.dateStart,
+					dateEnd: DATE?.dateEnd,
 				},
 			},
 		})
@@ -83,7 +83,7 @@ export const CalendarList = memo(() => {
 		.finally(() => {
 			setLOADING(false);
 		});
-	}, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
+	}, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
 
 	// 7. list -----------------------------------------------------------------------------------
 	const listNode = () => {
@@ -130,7 +130,7 @@ export const CalendarList = memo(() => {
 							}));
 						}}
 					>
-						{getDayNotFmt(DATE.dateStart).format("YYYY-MM")}
+						{getDayNotFmt(DATE?.dateStart).format("YYYY-MM")}
 					</Div>
 				</Grid>
 				<Grid size={3} className={"d-row-right"}>
@@ -158,7 +158,7 @@ export const CalendarList = memo(() => {
 						view={"month"}
 						locale={localLang}
 						calendarType={"gregory"}
-						value={getMoment(DATE.dateStart).toDate()}
+						value={getMoment(DATE?.dateStart).toDate()}
 						showNavigation={false}
 						showDoubleView={false}
 						showNeighboringMonth={true}
@@ -197,7 +197,7 @@ export const CalendarList = memo(() => {
 							let is = getMoment(date).isSame(new Date(), 'day');
 
 							// 이번달
-							let isCurrentMonth = getMoment(date).isSame(getMoment(DATE.dateStart), 'month');
+							let isCurrentMonth = getMoment(date).isSame(getMoment(DATE?.dateStart), 'month');
 
 							// 섹션이 3개 이상인 경우 스크롤
 							let className = "calendar-tile";

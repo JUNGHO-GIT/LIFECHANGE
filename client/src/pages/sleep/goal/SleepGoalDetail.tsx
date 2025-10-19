@@ -75,13 +75,13 @@ export const SleepGoalDetail = memo(() => {
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
-    if (EXIST?.[DATE.dateType as keyof typeof EXIST]?.length > 0) {
+    if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
 
-      const dateRange = `${DATE.dateStart.trim()} - ${DATE.dateEnd.trim()}`;
+      const dateRange = `${DATE?.dateStart.trim()} - ${DATE?.dateEnd.trim()}`;
       const objectRange = `${OBJECT.sleep_goal_dateStart.trim()} - ${OBJECT.sleep_goal_dateEnd.trim()}`;
 
       const isExist = (
-        EXIST?.[DATE.dateType as keyof typeof EXIST]?.includes(dateRange)
+        EXIST?.[DATE?.dateType as keyof typeof EXIST]?.includes(dateRange)
       );
       const itsMe = (
         dateRange === objectRange
@@ -98,7 +98,7 @@ export const SleepGoalDetail = memo(() => {
         itsNew: itsNew
       }));
     }
-  }, [EXIST, DATE.dateEnd, OBJECT.sleep_goal_dateEnd]);
+  }, [EXIST, DATE?.dateEnd, OBJECT.sleep_goal_dateEnd]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
@@ -107,8 +107,8 @@ export const SleepGoalDetail = memo(() => {
         user_id: sessionId,
         DATE: {
           dateType: "",
-          dateStart: getMonthStartFmt(DATE.dateStart),
-          dateEnd: getMonthEndFmt(DATE.dateEnd),
+          dateStart: getMonthStartFmt(DATE?.dateStart),
+          dateEnd: getMonthEndFmt(DATE?.dateEnd),
         },
       },
     })
@@ -124,7 +124,7 @@ export const SleepGoalDetail = memo(() => {
         severity: "error",
       });
     });
-  }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
@@ -160,7 +160,7 @@ export const SleepGoalDetail = memo(() => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
 
 	// 3. flow ------------------------------------------------------------------------------------
   const flowSave = async (type: string) => {

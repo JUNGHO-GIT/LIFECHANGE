@@ -74,13 +74,13 @@ export const ExerciseGoalDetail = memo(() => {
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
-    if (EXIST?.[DATE.dateType as keyof typeof EXIST]?.length > 0) {
+    if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
 
-      const dateRange = `${DATE.dateStart.trim()} - ${DATE.dateEnd.trim()}`;
+      const dateRange = `${DATE?.dateStart.trim()} - ${DATE?.dateEnd.trim()}`;
       const objectRange = `${OBJECT.exercise_goal_dateStart.trim()} - ${OBJECT.exercise_goal_dateEnd.trim()}`;
 
       const isExist = (
-        EXIST?.[DATE.dateType as keyof typeof EXIST]?.includes(dateRange)
+        EXIST?.[DATE?.dateType as keyof typeof EXIST]?.includes(dateRange)
       );
       const itsMe = (
         dateRange === objectRange
@@ -97,7 +97,7 @@ export const ExerciseGoalDetail = memo(() => {
         itsNew: itsNew
       }));
     }
-  }, [EXIST, DATE.dateEnd, OBJECT.exercise_goal_dateEnd]);
+  }, [EXIST, DATE?.dateEnd, OBJECT.exercise_goal_dateEnd]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
@@ -106,8 +106,8 @@ export const ExerciseGoalDetail = memo(() => {
         user_id: sessionId,
         DATE: {
           dateType: "",
-          dateStart: getMonthStartFmt(DATE.dateStart),
-          dateEnd: getMonthEndFmt(DATE.dateEnd),
+          dateStart: getMonthStartFmt(DATE?.dateStart),
+          dateEnd: getMonthEndFmt(DATE?.dateEnd),
         },
       },
     })
@@ -123,7 +123,7 @@ export const ExerciseGoalDetail = memo(() => {
         severity: "error",
       });
     });
-  }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
@@ -159,7 +159,7 @@ export const ExerciseGoalDetail = memo(() => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
 
 	// 3. flow ------------------------------------------------------------------------------------
   const flowSave = async (type: string) => {
@@ -342,7 +342,7 @@ export const ExerciseGoalDetail = memo(() => {
 									inputRef={REFS?.[i]?.exercise_goal_count}
 									error={ERRORS?.[i]?.exercise_goal_count}
 									label={
-										DATE.dateType === "day" ? (
+										DATE?.dateType === "day" ? (
 											`${translate("goalCount")}`
 										) : (
 											`${translate("goalCount")} (${translate("total")})`
@@ -391,7 +391,7 @@ export const ExerciseGoalDetail = memo(() => {
 									inputRef={REFS?.[i]?.exercise_goal_volume}
 									error={ERRORS?.[i]?.exercise_goal_volume}
 									label={
-										DATE.dateType === "day" ? (
+										DATE?.dateType === "day" ? (
 											`${translate("goalVolume")}`
 										) : (
 											`${translate("goalVolume")} (${translate("total")})`

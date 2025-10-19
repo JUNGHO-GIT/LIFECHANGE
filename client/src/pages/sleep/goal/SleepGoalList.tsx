@@ -68,8 +68,8 @@ export const SleepGoalList = memo(() => {
         user_id: sessionId,
         DATE: {
           dateType: "",
-          dateStart: getMonthStartFmt(DATE.dateStart),
-          dateEnd: getMonthEndFmt(DATE.dateEnd),
+          dateStart: getMonthStartFmt(DATE?.dateStart),
+          dateEnd: getMonthEndFmt(DATE?.dateEnd),
         },
       },
     })
@@ -85,7 +85,7 @@ export const SleepGoalList = memo(() => {
         severity: "error",
       });
     });
-  }, [URL_OBJECT, sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
@@ -96,8 +96,8 @@ export const SleepGoalList = memo(() => {
         PAGING: PAGING,
         DATE: {
           dateType: "",
-          dateStart: DATE.dateStart,
-          dateEnd: DATE.dateEnd,
+          dateStart: DATE?.dateStart,
+          dateEnd: DATE?.dateEnd,
         },
       },
     })
@@ -128,7 +128,7 @@ export const SleepGoalList = memo(() => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [URL_OBJECT, sessionId, PAGING?.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
+  }, [URL_OBJECT, sessionId, PAGING?.sort, PAGING.page, DATE?.dateStart, DATE?.dateEnd]);
 
 	// 7. list -----------------------------------------------------------------------------------
   const listNode = () => {

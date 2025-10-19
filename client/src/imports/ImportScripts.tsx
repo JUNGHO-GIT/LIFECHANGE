@@ -18,4 +18,5 @@ export {
   fnInsertComma,
   fnFormatY,
   fnHandleNumberInput,
+	fnFormatDate,
 } from "@assets/scripts/utils";
