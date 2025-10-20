@@ -182,7 +182,7 @@ export const FoodRecordDetail = memo(() => {
         newSectionCnt: res.data.sectionCnt || 0
       }));
 
-      let sectionArray = sessionFoodSection?.length > 0 ? sessionFoodSection : [];
+      const sectionArray = sessionFoodSection?.length > 0 ? sessionFoodSection : [];
 
       setOBJECT((prev) => ({
         ...prev,
@@ -249,7 +249,7 @@ export const FoodRecordDetail = memo(() => {
       food_record_carb: "0",
       food_record_protein: "0",
     };
-    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) => {
+    const updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) => {
 			return idx < OBJECT?.food_section?.length ? OBJECT?.food_section[idx] : defaultSection
 		});
     setOBJECT((prev) => ({

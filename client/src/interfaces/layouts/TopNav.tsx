@@ -209,105 +209,46 @@ export const TopNav = memo(() => {
     }
   }, [sessionTitle]);
 
-	// 2-3. useEffect -----------------------------------------------------------------------------
-  // - 페이지 변경시 초기화
+  // 2-3. useEffect -----------------------------------------------------------------------------
+  // - 페이지 변경시 초기화 (if 문 없이 매핑으로 처리)
   useEffect(() => {
+    const mapping: Record<string, Record<string, { key: string; value: string }>> = {
+      admin: {
+        dashboard: { key: "admin", value: "dashboard" },
+      },
+      today: {
+        goal: { key: "today", value: "goal" },
+        record: { key: "today", value: "record" },
+      },
+      calendar: {
+        calendar: { key: "calendar", value: "calendar" },
+      },
+      food: {
+        chart: { key: "food", value: "chart" },
+        favorite: { key: "food", value: "favorite" },
+        find: { key: "food", value: "find" },
+        goal: { key: "food", value: "goal" },
+        record: { key: "food", value: "record" },
+      },
+      exercise: {
+        chart: { key: "exercise", value: "chart" },
+        goal: { key: "exercise", value: "goal" },
+        record: { key: "exercise", value: "record" },
+      },
+      money: {
+        chart: { key: "money", value: "chart" },
+        goal: { key: "money", value: "goal" },
+        record: { key: "money", value: "record" },
+      },
+      sleep: {
+        chart: { key: "sleep", value: "chart" },
+        goal: { key: "sleep", value: "goal" },
+        record: { key: "sleep", value: "record" },
+      },
+    };
 
-	  // 0. admin
-		(firstStr === "admin") ? (
-			(secondStr === "dashboard") && (
-				setSelectedTab((prev) => ({
-					...prev,
-					admin: "dashboard",
-				}))
-			)
-		)
-
-    // 1. today
-		: (firstStr === "today") ? (
-			(secondStr === "goal") && (
-        setSelectedTab((prev) => ({
-          ...prev,
-          today: "goal",
-        }))
-			),
-			(secondStr === "record") && (
-        setSelectedTab((prev) => ({
-          ...prev,
-          today: "record",
-        }))
-			)
-		)
-
-		// 1. calendar
-		: (firstStr === "calendar") ? (
-			(secondStr === "calendar") && (
-				setSelectedTab((prev) => ({
-					...prev,
-					calendar: "calendar",
-				}))
-			)
-		)
-
-		// 2. food
-		: (firstStr === "food") ? (
-			(secondStr === "chart") && (
-				setSelectedTab((prev) => ({
-					...prev,
-					food: "chart",
-				}))
-			),
-			(secondStr === "favorite") && (
-				setSelectedTab((prev) => ({
-					...prev,
-					food: "favorite",
-				}))
-			),
-			(secondStr === "find") && (
-				setSelectedTab((prev) => ({
-					...prev,
-					food: "find",
-				}))
-			),
-			(secondStr === "goal") && (
-				setSelectedTab((prev) => ({
-					...prev,
-					food: "goal",
-				}))
-			),
-			(secondStr === "record") && (
-				setSelectedTab((prev) => ({
-					...prev,
-					food: "record",
-				}))
-			)
-		)
-
-		// 3. exercise, money, sleep
-		: (firstStr === "exercise" || firstStr === "money" || firstStr === "sleep") ? (
-			(secondStr === "chart") && (
-				setSelectedTab((prev) => ({
-					...prev,
-					[firstStr]: "chart",
-				}))
-			),
-			(secondStr === "goal") && (
-				setSelectedTab((prev) => ({
-					...prev,
-					[firstStr]: "goal",
-				}))
-			),
-			(secondStr === "record") && (
-				setSelectedTab((prev) => ({
-					...prev,
-					[firstStr]: "record",
-				}))
-			)
-		)
-
-		// 4. etc
-		: console.error(`[TopNav] firstStr, secondStr error: ${firstStr}, ${secondStr}`);
-
+    const entry = mapping[firstStr ?? ""]?.[secondStr ?? ""];
+    entry && setSelectedTab((prev) => ({ ...prev, [entry.key]: entry.value }));
   }, [firstStr, secondStr]);
 
 	// 4. handle ----------------------------------------------------------------------------------
@@ -1063,76 +1004,81 @@ export const TopNav = memo(() => {
       />
     );
 
-    // 5. tabs -------------------------------------------------------------------------------------
-    const tabsSection = () => (
-			<>
-				<Tabs
-					value={selectedTab[firstStr as keyof typeof selectedTab]}
-					variant={"fullWidth"}
-					component={"div"}
-					scrollButtons={false}
-					allowScrollButtonsMobile={false}
-					selectionFollowsFocus={true}
-					sx={{
-						[`& .MuiTabs-indicator`]: {
-							"display": "none",
-						}
-					}}
-				>
-					<Tab
-						label={translate(selectedTab[firstStr as keyof typeof selectedTab])}
-						value={selectedTab[firstStr as keyof typeof selectedTab]}
-						className={"fs-1-2rem fw-700"}
-						onClick={(e) => {
-							setSelectedAnchorEl((prev) => ({
-								...prev,
-								[firstStr]: e.currentTarget
-							}))
-						}}
-					/>
-				</Tabs>
-				<Menu
-					anchorEl={selectedAnchorEl[firstStr]}
-					open={Boolean(selectedAnchorEl[firstStr])}
-					anchorOrigin={{
-						vertical: "bottom",
-						horizontal: "center",
-					}}
-					transformOrigin={{
-						vertical: "top",
-						horizontal: "center",
-					}}
-					slotProps={{
-						paper: {
-							className: "py-0px px-10px",
-						}
-					}}
-					onClose={() => {
-						setSelectedAnchorEl((prev) => ({
-							...prev,
-							[firstStr]: null
-						}))
-					}}
-				>
-					{dataArray?.[firstStr as keyof typeof dataArray]?.map((tabName: string) => (
-						<MenuItem
-							key={tabName}
-							selected={selectedTab[firstStr as keyof typeof selectedTab] === tabName}
-							className={"text-center"}
-							onClick={() => {
-								handleClickTobNav(tabName);
-								setSelectedAnchorEl((prev) => ({
-									...prev,
-									[firstStr]: null
-								}));
-							}}
-						>
-							{translate(tabName)}
-						</MenuItem>
-					))}
-				</Menu>
-			</>
-		);
+  // 5. tabs -------------------------------------------------------------------------------------
+  const tabsSection = () => {
+    // Expression-based guard: derive a current tab value without using `if`.
+    const currentTabValue = (!firstStr ? "" : ((selectedTab as any)[firstStr] ?? (dataArray as any)[firstStr]?.[0] ?? ""));
+
+    return currentTabValue ? (
+      <>
+        <Tabs
+          value={currentTabValue}
+          variant={"fullWidth"}
+          component={"div"}
+          scrollButtons={false}
+          allowScrollButtonsMobile={false}
+          selectionFollowsFocus={true}
+          sx={{
+            [`& .MuiTabs-indicator`]: {
+              "display": "none",
+            }
+          }}
+        >
+          <Tab
+            label={translate(currentTabValue)}
+            value={currentTabValue}
+            className={"fs-1-2rem fw-700"}
+            onClick={(e) => {
+              setSelectedAnchorEl((prev) => ({
+                ...prev,
+                [firstStr]: e.currentTarget
+              }))
+            }}
+          />
+        </Tabs>
+        <Menu
+          anchorEl={selectedAnchorEl[firstStr]}
+          open={Boolean(selectedAnchorEl[firstStr])}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "center",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+          slotProps={{
+            paper: {
+              className: "py-0px px-10px",
+            }
+          }}
+          onClose={() => {
+            setSelectedAnchorEl((prev) => ({
+              ...prev,
+              [firstStr]: null
+            }))
+          }}
+        >
+          {dataArray?.[firstStr as keyof typeof dataArray]?.map((tabName: string) => (
+            <MenuItem
+              key={tabName}
+              selected={currentTabValue === tabName}
+              className={"text-center"}
+              onClick={() => {
+                handleClickTobNav(tabName);
+                setSelectedAnchorEl((prev) => ({
+                  ...prev,
+                  [firstStr]: null
+                }));
+              }}
+            >
+              {translate(tabName)}
+            </MenuItem>
+          ))}
+        </Menu>
+      </>
+    ) : null;
+  };
 
     // 5. return -----------------------------------------------------------------------------------
     return (

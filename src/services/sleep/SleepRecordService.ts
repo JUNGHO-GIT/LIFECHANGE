@@ -1,6 +1,7 @@
 // sleepRecordService.ts
 
 import * as repository from "@repositories/sleep/SleepRecordRepository";
+import { fnTimeToDecimal, fnDecimalToTime } from "@assets/scripts/utils";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
@@ -87,22 +88,70 @@ export const list = async (
     statusResult = "fail";
   }
   else {
-    findResult?.sort((a: any, b: any) => {
+    // group records by dateStart to ensure single entry per date
+    const grouped: Record<string, any> = {};
+    findResult.forEach((doc: any) => {
+      const key = doc.sleep_record_dateStart;
+      if (!grouped[key]) {
+        grouped[key] = {
+          docs: [],
+          totalBedDecimal: 0,
+          totalWakeDecimal: 0,
+          totalSleepDecimal: 0,
+          bedCount: 0,
+          wakeCount: 0,
+          sleepCount: 0,
+        };
+      }
+      grouped[key].docs.push(doc);
+      const sections = doc?.sleep_section || [];
+      sections.forEach((sec: any) => {
+        grouped[key].totalBedDecimal += fnTimeToDecimal(sec?.sleep_record_bedTime || "00:00");
+        grouped[key].bedCount++;
+        grouped[key].totalWakeDecimal += fnTimeToDecimal(sec?.sleep_record_wakeTime || "00:00");
+        grouped[key].wakeCount++;
+        grouped[key].totalSleepDecimal += fnTimeToDecimal(sec?.sleep_record_sleepTime || "00:00");
+        grouped[key].sleepCount++;
+      });
+    });
+
+    // build final array from grouped results
+    const groupedArray = Object.keys(grouped).map((dateKey) => {
+      const g = grouped[dateKey];
+      const firstDoc = g.docs[0];
+      const avgBed = fnDecimalToTime(g.totalBedDecimal / (g.bedCount || 1));
+      const avgWake = fnDecimalToTime(g.totalWakeDecimal / (g.wakeCount || 1));
+      const avgSleep = fnDecimalToTime(g.totalSleepDecimal / (g.sleepCount || 1));
+      return {
+        _id: firstDoc?._id || null,
+        sleep_record_dateType: firstDoc?.sleep_record_dateType,
+        sleep_record_dateStart: dateKey,
+        sleep_record_dateEnd: firstDoc?.sleep_record_dateEnd,
+        sleep_record_bedTime: avgBed,
+        sleep_record_wakeTime: avgWake,
+        sleep_record_sleepTime: avgSleep,
+        // keep representative sleep_section (first doc) for detail navigation
+        sleep_section: firstDoc?.sleep_section || [],
+      };
+    });
+
+    // sort grouped array
+    groupedArray.sort((a: any, b: any) => {
       const dateTypeA = a.sleep_record_dateType;
       const dateTypeB = b.sleep_record_dateType;
       const dateStartA = new Date(a.sleep_record_dateStart);
       const dateStartB = new Date(b.sleep_record_dateStart);
-      const sortOrder = sort;
-
       const dateTypeDiff = dateTypeOrder.indexOf(dateTypeA) - dateTypeOrder.indexOf(dateTypeB);
       const dateDiff = dateStartA.getTime() - dateStartB.getTime();
-
       if (dateTypeDiff !== 0) {
         return dateTypeDiff;
       }
-      return sortOrder === 1 ? dateDiff : -dateDiff;
+      return sort === 1 ? dateDiff : -dateDiff;
     });
-    finalResult = findResult;
+
+    finalResult = groupedArray;
+    // set total count to number of unique dates
+    totalCntResult = groupedArray.length;
     statusResult = "success";
   }
 

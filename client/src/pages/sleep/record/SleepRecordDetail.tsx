@@ -74,29 +74,29 @@ export const SleepRecordDetail = memo(() => {
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
-    if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
+    if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length <= 0) {
+			return;
+		}
 
-      const dateRange = `${DATE?.dateStart.trim()} - ${DATE?.dateEnd.trim()}`;
-      const objectRange = `${OBJECT.sleep_record_dateStart.trim()} - ${OBJECT.sleep_record_dateEnd.trim()}`;
+		const dateRange = `${DATE?.dateStart.trim()} - ${DATE?.dateEnd.trim()}`;
+		const objectRange = `${OBJECT.sleep_record_dateStart.trim()} - ${OBJECT.sleep_record_dateEnd.trim()}`;
+		const isExist = (
+			EXIST?.[DATE?.dateType as keyof typeof EXIST]?.includes(dateRange)
+		);
+		const itsMe = (
+			dateRange === objectRange
+		);
+		const itsNew = (
+			OBJECT.sleep_record_dateStart === "0000-00-00" &&
+			OBJECT.sleep_record_dateEnd === "0000-00-00"
+		);
 
-      const isExist = (
-        EXIST?.[DATE?.dateType as keyof typeof EXIST]?.includes(dateRange)
-      );
-      const itsMe = (
-        dateRange === objectRange
-      );
-      const itsNew = (
-        OBJECT.sleep_record_dateStart === "0000-00-00" &&
-        OBJECT.sleep_record_dateEnd === "0000-00-00"
-      );
-
-      setFLOW((prev) => ({
-        ...prev,
-        exist: isExist,
-        itsMe: itsMe,
-        itsNew: itsNew
-      }));
-    }
+		setFLOW((prev) => ({
+			...prev,
+			exist: isExist,
+			itsMe: itsMe,
+			itsNew: itsNew
+		}));
   }, [EXIST, DATE?.dateEnd, OBJECT.sleep_record_dateEnd]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
@@ -186,9 +186,9 @@ export const SleepRecordDetail = memo(() => {
       sleep_record_wakeTime: "00:00",
       sleep_record_sleepTime: "00:00",
     };
-    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) =>
-      idx < OBJECT?.sleep_section?.length ? OBJECT?.sleep_section[idx] : defaultSection
-    );
+    const updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) => {
+      return idx < OBJECT?.sleep_section?.length ? OBJECT?.sleep_section[idx] : defaultSection;
+    });
     setOBJECT((prev: any) => ({
       ...prev,
       sleep_section: updatedSection
@@ -214,30 +214,29 @@ export const SleepRecordDetail = memo(() => {
       }
     })
     .then((res: any) => {
-      if (res.data.status === "success") {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg),
-          severity: "success",
-        });
-        navigate(location_from === "today" ? toToday : toList, {
-          state: {
-            dateType: "",
-            dateStart: dateRef.current.dateStart,
-            dateEnd: dateRef.current.dateEnd
-          }
-        });
-        fnSync();
-      }
-      else {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg),
-          severity: "error",
-        });
-      }
+      res.data.status === "success" ? (
+				setLOADING(false),
+				setALERT({
+					open: true,
+					msg: translate(res.data.msg),
+					severity: "success",
+				}),
+				navigate(location_from === "today" ? toToday : toList, {
+					state: {
+						dateType: "",
+						dateStart: dateRef.current.dateStart,
+						dateEnd: dateRef.current.dateEnd
+					}
+				}),
+				fnSync()
+			) : (
+				setLOADING(false),
+				setALERT({
+					open: true,
+					msg: translate(res.data.msg),
+					severity: "error",
+				})
+			);
     })
     .catch((err: any) => {
       setLOADING(false);
@@ -267,30 +266,29 @@ export const SleepRecordDetail = memo(() => {
       }
     })
     .then((res: any) => {
-      if (res.data.status === "success") {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg),
-          severity: "success",
-        });
-        navigate(location_from === "today" ? toToday : toList, {
-          state: {
-            dateType: "",
-            dateStart: dateRef.current.dateStart,
-            dateEnd: dateRef.current.dateEnd
-          }
-        });
-        fnSync();
-      }
-      else {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg),
-          severity: "error",
-        });
-      }
+      res.data.status === "success" ? (
+				setLOADING(false),
+				setALERT({
+					open: true,
+					msg: translate(res.data.msg),
+					severity: "success",
+				}),
+				navigate(location_from === "today" ? toToday : toList, {
+					state: {
+						dateType: "",
+						dateStart: dateRef.current.dateStart,
+						dateEnd: dateRef.current.dateEnd
+					}
+				}),
+				fnSync()
+			) : (
+				setLOADING(false),
+				setALERT({
+					open: true,
+					msg: translate(res.data.msg),
+					severity: "error",
+				})
+			);
     })
     .catch((err: any) => {
       setLOADING(false);
@@ -336,7 +334,7 @@ export const SleepRecordDetail = memo(() => {
             setCOUNT={setCOUNT}
             LOCKED={LOCKED}
             setLOCKED={setLOCKED}
-            limit={1}
+            limit={10}
           />
         </Grid>
       </Grid>

@@ -37,71 +37,50 @@ export const Count = memo((
 
 	// 4. handle ----------------------------------------------------------------------------------
 	const handleLockToggle = useCallback(() => {
-		if (disabled) {
-			return;
-		}
-		setLOCKED(LOCKED === "locked" ? "unlocked" : "locked");
+		disabled || setLOCKED(LOCKED === "locked" ? "unlocked" : "locked");
 	}, [disabled, LOCKED, setLOCKED]);
 
 	// 4. handle ----------------------------------------------------------------------------------
 	const handleMinus = useCallback(() => {
-		if (disabled) {
-			return;
-		}
-		if (LOCKED === "locked" || PATH.includes("/food/find/list")) {
-			return;
-		}
-		if (COUNT.newSectionCnt > COUNT.sectionCnt) {
-			const newCnt = COUNT.newSectionCnt - 1;
-			setCOUNT((prev) => ({
-				...prev,
-				newSectionCnt: newCnt
-			}));
-			onCountChange && onCountChange(newCnt);
-		}
-		else {
-			setALERT({
-				open: true,
-				severity: "error",
-				msg: (
-					localLang === "ko"
-					? `${COUNT.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
-					: `Please enter ${COUNT.sectionCnt} or more and ${limit} or less.`
-				),
-			});
-		}
-	}, [disabled, LOCKED, PATH, COUNT.newSectionCnt, COUNT.sectionCnt, setCOUNT, setALERT, localLang, limit]);
+		!disabled && LOCKED !== "locked" && !PATH.includes("/food/find/list") &&
+		setCOUNT((prev) =>
+			prev.newSectionCnt > prev.sectionCnt ? (
+				onCountChange?.(prev.newSectionCnt - 1),
+				{ ...prev, newSectionCnt: prev.newSectionCnt - 1 }
+			) : (
+				setALERT({
+					open: true,
+					severity: "error",
+					msg: localLang === "ko"
+					? `${prev.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
+					: `Please enter ${prev.sectionCnt} or more and ${limit} or less.`,
+				}),
+				prev
+			)
+		);
+	}, [disabled, LOCKED, PATH, setCOUNT, onCountChange, setALERT, localLang, limit]);
 
 	// 4. handle ----------------------------------------------------------------------------------
 	const handlePlus = useCallback(() => {
-		if (disabled) {
-			return;
-		}
-		if (LOCKED === "locked" || PATH.includes("/food/find/list")) {
-			return;
-		}
-		if (COUNT.newSectionCnt < limit) {
-			const newCnt = COUNT.newSectionCnt + 1;
-			setCOUNT((prev) => ({
-				...prev,
-				newSectionCnt: newCnt
-			}));
-			onCountChange && onCountChange(newCnt);
-		}
-		else {
-			setALERT({
-				open: true,
-				severity: "error",
-				msg: (
-					localLang === "ko"
-						? `${COUNT.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
-						: `Please enter ${COUNT.sectionCnt} or more and ${limit} or less.`
-				),
-			});
-		}
-	}, [disabled, LOCKED, PATH, COUNT.newSectionCnt, limit, COUNT.sectionCnt, setCOUNT, setALERT, localLang]);
+		!disabled && LOCKED !== "locked" && !PATH.includes("/food/find/list") &&
+		setCOUNT((prev) =>
+			prev.newSectionCnt < limit ? (
+				onCountChange?.(prev.newSectionCnt + 1),
+				{ ...prev, newSectionCnt: prev.newSectionCnt + 1 }
+			) : (
+				setALERT({
+					open: true,
+					severity: "error",
+					msg: localLang === "ko"
+						? `${prev.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
+						: `Please enter ${prev.sectionCnt} or more and ${limit} or less.`,
+				}),
+				prev
+			)
+		);
+	}, [disabled, LOCKED, PATH, setCOUNT, onCountChange, setALERT, localLang, limit]);
 
-	// 3. memoized components ------------------------------------------------------------------------
+	// 3. useMEMO ----------------------------------------------------------------------------------
 	const lockIcon = useMemo(() => (
 		LOCKED === "locked" ? (
 			<Icons
@@ -118,6 +97,7 @@ export const Count = memo((
 		)
 	), [LOCKED]);
 
+	// 3. useMEMO ----------------------------------------------------------------------------------
 	const countEndAdornment = useMemo(() => (
 		!disabled || LOCKED === "unlocked" ? (
 			<Div className={"d-row-center"}>
@@ -168,7 +148,9 @@ export const Count = memo((
 				disabled={disabled}
 				sx={{
 					"& .MuiOutlinedInput-notchedOutline": {
-						borderColor: COUNT.newSectionCnt <= 0 ? "#f44336" : "rgba(0, 0, 0, 0.23)"
+						borderColor: COUNT.newSectionCnt <= 0
+						? "#f44336"
+						: "rgba(0, 0, 0, 0.23)"
 					}
 				}}
 				startadornment={

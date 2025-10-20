@@ -180,30 +180,29 @@ export const SleepGoalDetail = memo(() => {
       }
     })
     .then((res: any) => {
-      if (res.data.status === "success") {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg),
-          severity: "success",
-        });
-        navigate(location_from === "today" ? toToday : toList, {
-          state: {
-            dateType: "",
-            dateStart: dateRef.current.dateStart,
-            dateEnd: dateRef.current.dateEnd
-          }
-        });
-        fnSync();
-      }
-      else {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg),
-          severity: "error",
-        });
-      }
+      res.data.status === "success" ? (
+				setLOADING(false),
+				setALERT({
+					open: true,
+					msg: translate(res.data.msg),
+					severity: "success",
+				}),
+				navigate(location_from === "today" ? toToday : toList, {
+					state: {
+						dateType: "",
+						dateStart: dateRef.current.dateStart,
+						dateEnd: dateRef.current.dateEnd
+					}
+				}),
+				fnSync()
+			) : (
+				setLOADING(false),
+				setALERT({
+					open: true,
+					msg: translate(res.data.msg),
+					severity: "error",
+				})
+			);
     })
     .catch((err: any) => {
       setLOADING(false);
@@ -233,30 +232,29 @@ export const SleepGoalDetail = memo(() => {
       }
     })
     .then((res: any) => {
-      if (res.data.status === "success") {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg),
-          severity: "success",
-        });
-        navigate(location_from === "today" ? toToday : toList, {
-          state: {
-            dateType: "",
-            dateStart: dateRef.current.dateStart,
-            dateEnd: dateRef.current.dateEnd
-          }
-        });
-        fnSync();
-      }
-      else {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg),
-          severity: "error",
-        });
-      }
+      res.data.status === "success" ? (
+				setLOADING(false),
+				setALERT({
+					open: true,
+					msg: translate(res.data.msg),
+					severity: "success",
+				}),
+				navigate(location_from === "today" ? toToday : toList, {
+					state: {
+						dateType: "",
+						dateStart: dateRef.current.dateStart,
+						dateEnd: dateRef.current.dateEnd
+					}
+				}),
+				fnSync()
+			) : (
+				setLOADING(false),
+				setALERT({
+					open: true,
+					msg: translate(res.data.msg),
+					severity: "error",
+				})
+			);
     })
     .catch((err: any) => {
       setLOADING(false);

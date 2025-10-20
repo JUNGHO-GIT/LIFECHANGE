@@ -88,42 +88,57 @@ export const useTime = (
 
 		// 2-2. record - sleep
 		else if (type === "record" && strLow === "sleep") {
-			const bedTimeTime = OBJECT?.sleep_section?.[0]?.sleep_record_bedTime;
-			const wakeTimeTime = OBJECT?.sleep_section?.[0]?.sleep_record_wakeTime;
-
-			if (!bedTimeTime || !wakeTimeTime) {
+			const sections = OBJECT?.sleep_section || [];
+			if (!sections || sections.length <= 0) {
 				return;
 			}
-			let startDate: any = new Date(`${getDayFmt()}T${bedTimeTime}Z`);
-			let endDate: any = new Date(`${getDayFmt()}T${wakeTimeTime}Z`);
 
-			if (isNaN(startDate.getTime())) {
-				startDate = new Date(String(getDayFmt()).replace(/\//g, "-") + "T" + bedTimeTime);
-			}
-			if (isNaN(endDate.getTime())) {
-				endDate = new Date(String(getDayFmt()).replace(/\//g, "-") + "T" + wakeTimeTime);
-			}
-
-			if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
-				if (endDate.getTime() < startDate.getTime()) {
-					endDate.setDate(endDate.getDate() + 1);
+			const updatedSections = sections.map((section: any) => {
+				const bedTimeTime = section?.sleep_record_bedTime;
+				const wakeTimeTime = section?.sleep_record_wakeTime;
+				if (!bedTimeTime || !wakeTimeTime) {
+					return section;
 				}
 
-				const diff = endDate.getTime() - startDate.getTime();
-				if (!isNaN(diff) && isFinite(diff)) {
-					const hours = Math.floor(diff / 3600000);
-					const minutes = Math.floor((diff % 3600000) / 60000);
-					const time = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+				let startDate: any = new Date(`${getDayFmt()}T${bedTimeTime}Z`);
+				let endDate: any = new Date(`${getDayFmt()}T${wakeTimeTime}Z`);
 
-					setOBJECT((prev: any) => ({
-						...prev,
-						sleep_section: [{
-							...((prev && prev.sleep_section && prev.sleep_section[0]) ? prev.sleep_section[0] : {}),
+				if (isNaN(startDate.getTime())) {
+					startDate = new Date(String(getDayFmt()).replace(/\//g, "-") + "T" + bedTimeTime);
+				}
+				if (isNaN(endDate.getTime())) {
+					endDate = new Date(String(getDayFmt()).replace(/\//g, "-") + "T" + wakeTimeTime);
+				}
+
+				if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+					if (endDate.getTime() < startDate.getTime()) {
+						endDate.setDate(endDate.getDate() + 1);
+					}
+
+					const diff = endDate.getTime() - startDate.getTime();
+					if (!isNaN(diff) && isFinite(diff)) {
+						const hours = Math.floor(diff / 3600000);
+						const minutes = Math.floor((diff % 3600000) / 60000);
+						const time = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+						return {
+							...section,
 							sleep_record_sleepTime: time,
-						}],
-					}));
+						};
+					}
 				}
-			}
+				return section;
+			});
+
+			setOBJECT((prev: any) => {
+				const prevSections = prev?.sleep_section || [];
+				const isSame = prevSections.length === updatedSections.length && prevSections.every((s: any, idx: number) => (
+					s?.sleep_record_sleepTime === updatedSections[idx]?.sleep_record_sleepTime
+				));
+				return isSame ? prev : ({
+					...prev,
+					sleep_section: updatedSections,
+				});
+			});
 		}
 	}, [
 		strLow,
@@ -131,7 +146,6 @@ export const useTime = (
 		type === "goal" && strLow === "exercise" ? OBJECT?.exercise_goal_dateEnd : "",
 		type === "goal" && strLow === "sleep" ? OBJECT?.sleep_goal_bedTime : "",
 		type === "goal" && strLow === "sleep" ? OBJECT?.sleep_goal_wakeTime : "",
-		type === "record" && strLow === "sleep" ? OBJECT?.sleep_section?.[0]?.sleep_record_bedTime : "",
-		type === "record" && strLow === "sleep" ? OBJECT?.sleep_section?.[0]?.sleep_record_wakeTime : "",
+		type === "record" && strLow === "sleep" ? (OBJECT?.sleep_section?.map((s: any) => `${s?.sleep_record_bedTime || ""}-${s?.sleep_record_wakeTime || ""}`) || []).join("|") : "",
 	]);
 };

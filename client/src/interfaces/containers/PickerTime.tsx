@@ -42,15 +42,18 @@ export const PickerTime = memo((
 				setImage(`exercise4`),
 				setTargetStr(`exercise`),
 				setTranslateStr(translate(`cardio`))
-			) : extra === `sleep_record_bedTime` ? (
+			)
+			: extra === `sleep_record_bedTime` ? (
 				setImage(`sleep2`),
 				setTargetStr(`sleep`),
 				setTranslateStr(translate(`bedTime`))
-			) : extra === `sleep_record_wakeTime` ? (
+			)
+			: extra === `sleep_record_wakeTime` ? (
 				setImage(`sleep3`),
 				setTargetStr(`sleep`),
 				setTranslateStr(translate(`wakeTime`))
-			) : extra === `sleep_record_sleepTime` && (
+			)
+			: extra === `sleep_record_sleepTime` && (
 				setImage(`sleep4`),
 				setTargetStr(`sleep`),
 				setTranslateStr(translate(`sleepTime`))
@@ -90,7 +93,8 @@ export const PickerTime = memo((
 						? translate(`goalBedTime`)
 						: `${translate(`goalBedTime`)} (${translate(`avg`)})`
 					)
-				) : extra === `sleep_goal_wakeTime` ? (
+				)
+				: extra === `sleep_goal_wakeTime` ? (
 					setImage(`sleep3`),
 					setTargetStr(`sleep`),
 					setTranslateStr(
@@ -98,7 +102,8 @@ export const PickerTime = memo((
 						? translate(`goalWakeTime`)
 						: `${translate(`goalWakeTime`)} (${translate(`avg`)})`
 					)
-				) : extra === `sleep_goal_sleepTime` && (
+				)
+				: extra === `sleep_goal_sleepTime` && (
 					setImage(`sleep4`),
 					setTargetStr(`sleep`),
 					setTranslateStr(
@@ -115,11 +120,13 @@ export const PickerTime = memo((
 					setImage(`sleep2`),
 					setTargetStr(`sleep`),
 					setTranslateStr(translate(`bedTime`))
-				) : extra === `sleep_record_wakeTime` ? (
+				)
+				: extra === `sleep_record_wakeTime` ? (
 					setImage(`sleep3`),
 					setTargetStr(`sleep`),
 					setTranslateStr(translate(`wakeTime`))
-				) : extra === `sleep_record_sleepTime` && (
+				)
+				: extra === `sleep_record_sleepTime` && (
 					setImage(`sleep4`),
 					setTargetStr(`sleep`),
 					setTranslateStr(translate(`sleepTime`))

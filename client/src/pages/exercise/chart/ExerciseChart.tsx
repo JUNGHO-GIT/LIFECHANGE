@@ -111,7 +111,7 @@ export const ExerciseChart = memo(() => {
       </Grid>
     );
     return (
-      <Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-40vh"}>
+      <Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-75vh"}>
         <Grid container={true} spacing={2} className={"border-0 radius-0"}>
           <Grid size={12} className={"d-col-center p-0px"}>
             {headSection()}

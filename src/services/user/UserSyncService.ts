@@ -148,22 +148,32 @@ export const percent = async (
   findSleep = await repository.percent.listSleep(
     user_id_param, dateStart, dateEnd
   );
-  const findSleepLength = findSleep?.length;
-  findSleep = findSleep?.length > 0 && findSleep?.reduce((acc: any, curr: any) => {
-    const sleepBedTime = (
-      fnTimeToDecimal(acc?.sleep_record_bedTime) + fnTimeToDecimal(curr?.sleep_record_bedTime)
-    );
-    const sleepWakeTime = (
-      fnTimeToDecimal(acc?.sleep_record_wakeTime) + fnTimeToDecimal(curr?.sleep_record_wakeTime)
-    );
-    const sleepSleepTime = (
-      fnTimeToDecimal(acc?.sleep_record_sleepTime) + fnTimeToDecimal(curr?.sleep_record_sleepTime)
-    );
-    return {
-      sleep_record_bedTime: String(fnDecimalToTime(sleepBedTime)),
-      sleep_record_wakeTime: String(fnDecimalToTime(sleepWakeTime)),
-      sleep_record_sleepTime: String(fnDecimalToTime(sleepSleepTime)),
-    };
+
+  // aggregate across all sections (support multi-section records)
+  let totalBedDecimal = 0;
+  let totalWakeDecimal = 0;
+  let totalSleepDecimal = 0;
+  let totalBedCount = 0;
+  let totalWakeCount = 0;
+  let totalSleepCount = 0;
+
+  (findSleep || []).forEach((doc: any) => {
+    const bedArr = Array.isArray(doc?.sleep_record_bedTime) ? doc.sleep_record_bedTime : (doc?.sleep_record_bedTime ? [doc.sleep_record_bedTime] : []);
+    const wakeArr = Array.isArray(doc?.sleep_record_wakeTime) ? doc.sleep_record_wakeTime : (doc?.sleep_record_wakeTime ? [doc.sleep_record_wakeTime] : []);
+    const sleepArr = Array.isArray(doc?.sleep_record_sleepTime) ? doc.sleep_record_sleepTime : (doc?.sleep_record_sleepTime ? [doc.sleep_record_sleepTime] : []);
+
+    bedArr.forEach((val: any) => {
+      totalBedDecimal += fnTimeToDecimal(val || "00:00");
+      totalBedCount++;
+    });
+    wakeArr.forEach((val: any) => {
+      totalWakeDecimal += fnTimeToDecimal(val || "00:00");
+      totalWakeCount++;
+    });
+    sleepArr.forEach((val: any) => {
+      totalSleepDecimal += fnTimeToDecimal(val || "00:00");
+      totalSleepCount++;
+    });
   });
 
   findResult = {
@@ -175,9 +185,9 @@ export const percent = async (
     money: findMoney,
     sleepGoal: findSleepGoal[0],
     sleep: {
-      sleep_record_bedTime: fnDecimalToTime(fnTimeToDecimal(findSleep?.sleep_record_bedTime) / findSleepLength),
-      sleep_record_wakeTime: fnDecimalToTime(fnTimeToDecimal(findSleep?.sleep_record_wakeTime) / findSleepLength),
-      sleep_record_sleepTime: fnDecimalToTime(fnTimeToDecimal(findSleep?.sleep_record_sleepTime) / findSleepLength),
+      sleep_record_bedTime: fnDecimalToTime(totalBedDecimal / (totalBedCount || 1)),
+      sleep_record_wakeTime: fnDecimalToTime(totalWakeDecimal / (totalWakeCount || 1)),
+      sleep_record_sleepTime: fnDecimalToTime(totalSleepDecimal / (totalSleepCount || 1)),
     },
   };
 

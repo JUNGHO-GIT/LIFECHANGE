@@ -94,20 +94,14 @@ export const list = async (
       }
     },
     {
-      $unwind: "$sleep_section"
-    },
-    {
       $project: {
-        _id: 0,
+        _id: 1,
         sleep_record_dateType: 1,
         sleep_record_dateStart: 1,
         sleep_record_dateEnd: 1,
-        sleep_section: [{
-          _id: "$sleep_section._id",
-          sleep_record_bedTime: "$sleep_section.sleep_record_bedTime",
-          sleep_record_wakeTime: "$sleep_section.sleep_record_wakeTime",
-          sleep_record_sleepTime: "$sleep_section.sleep_record_sleepTime",
-        }]
+        sleep_section: 1,
+        sleep_record_regDt: 1,
+        sleep_record_updateDt: 1,
       }
     },
     {
@@ -115,9 +109,7 @@ export const list = async (
         sleep_record_dateStart: sort_param
       }
     },
-    {
-      $skip: (Number(page_param) - 1)
-    }
+    // pagination/grouping is handled in service layer to ensure unique dates
   ]);
 
   return finalResult;

@@ -310,9 +310,10 @@ export const percent = {
       {
         $project: {
           _id: 0,
-          sleep_record_bedTime: { $arrayElemAt: ["$sleep_section.sleep_record_bedTime", 0] },
-          sleep_record_wakeTime: { $arrayElemAt: ["$sleep_section.sleep_record_wakeTime", 0] },
-          sleep_record_sleepTime: { $arrayElemAt: ["$sleep_section.sleep_record_sleepTime", 0] },
+          // return arrays so caller can handle multiple sections per record
+          sleep_record_bedTime: "$sleep_section.sleep_record_bedTime",
+          sleep_record_wakeTime: "$sleep_section.sleep_record_wakeTime",
+          sleep_record_sleepTime: "$sleep_section.sleep_record_sleepTime",
         }
       }
     ]);

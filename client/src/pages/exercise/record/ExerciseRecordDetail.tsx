@@ -216,7 +216,7 @@ export const ExerciseRecordDetail = memo(() => {
       exercise_record_volume: "0",
       exercise_record_cardio: "00:00",
     };
-    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) =>
+    const updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) =>
       idx < OBJECT?.exercise_section?.length ? OBJECT?.exercise_section[idx] : defaultSection
     );
     setOBJECT((prev) => ({

@@ -201,7 +201,7 @@ export const MoneyRecordDetail = memo(() => {
 			money_record_content: "",
 			money_record_include: "Y",
 		};
-		let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) => {
+		const updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) => {
 			return idx < OBJECT?.money_section?.length ? OBJECT?.money_section[idx] : defaultSection
 		});
 		setOBJECT((prev) => ({
