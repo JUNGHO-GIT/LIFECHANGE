@@ -7,7 +7,7 @@ import { FoodChartPie } from "./FoodChartPie";
 import { FoodChartLine } from "./FoodChartLine";
 import { FoodChartAvg } from "./FoodChartAvg";
 import { Select } from "@importContainers";
-import { Paper, Grid } from "@importComponents";
+import { Paper, Grid, Br } from "@importComponents";
 import { MenuItem } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -118,7 +118,8 @@ export const FoodChart = memo(() => {
             {headSection()}
           </Grid>
         </Grid>
-        <Grid container={true} spacing={0} className={"border-1 radius-2 h-min-60vh"}>
+				<Br m={10} />
+        <Grid container={true} spacing={0} className={"border-1 radius-2 h-min-63vh"}>
           <Grid size={12} className={"d-col-center p-5px"}>
             {curView === "pie" && <FoodChartPie TYPE={TYPE_PIE} setTYPE={setTYPE_PIE} />}
             {curView === "line" && <FoodChartLine TYPE={TYPE_LINE} setTYPE={setTYPE_LINE} />}

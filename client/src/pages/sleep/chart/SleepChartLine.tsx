@@ -132,7 +132,7 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
 
     const { domain, ticks, formatterY } = fnFormatY(object, sleepChartArray, "sleep", "line");
 		return (
-			<ResponsiveContainer width={"100%"} height={350}>
+			<ResponsiveContainer width={"100%"} height={500}>
 				<LineChart
 					data={object as any[]}
 					margin={{top: 60, right: 20, bottom: 10, left: 20}}
@@ -160,7 +160,7 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
 						textAnchor={"middle"}
 						dominantBaseline={"middle"}
 						style={{
-							fontSize: "0.80rem",
+							fontSize: "1.0rem",
 							fill: "#666",
 							fontWeight: 600,
 						}}

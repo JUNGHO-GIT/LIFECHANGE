@@ -154,7 +154,7 @@ export const ExerciseChartAvg = memo((props: ExerciseChartAvgProps) => {
 
     const { domain, ticks, formatterY } = fnFormatY(object, exerciseChartArray, "exercise");
 		return (
-			<ResponsiveContainer width={"100%"} height={350}>
+			<ResponsiveContainer width={"100%"} height={500}>
 				<ComposedChart
 					data={object as any[]}
 					margin={{top: 60, right: 20, bottom: 10, left: 20}}
@@ -182,7 +182,7 @@ export const ExerciseChartAvg = memo((props: ExerciseChartAvgProps) => {
 						textAnchor={"middle"}
 						dominantBaseline={"middle"}
 						style={{
-							fontSize: "0.80rem",
+							fontSize: "1.0rem",
 							fill: "#666",
 							fontWeight: 600,
 						}}

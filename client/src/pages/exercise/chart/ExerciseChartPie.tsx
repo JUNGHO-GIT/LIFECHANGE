@@ -85,14 +85,6 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
         }),
       ]);
 
-      // 디버깅: 서버 응답 확인
-      console.log("ExerciseChartPie - Week Part:", resWeek.data.result.part);
-      console.log("ExerciseChartPie - Week Title:", resWeek.data.result.title);
-      console.log("ExerciseChartPie - Month Part:", resMonth.data.result.part);
-      console.log("ExerciseChartPie - Month Title:", resMonth.data.result.title);
-      console.log("ExerciseChartPie - Year Part:", resYear.data.result.part);
-      console.log("ExerciseChartPie - Year Title:", resYear.data.result.title);
-
       // 서버에서 기본값을 포함한 응답을 받으므로 직접 설정
       setOBJECT_PART_WEEK(
         resWeek.data.result.part && Array.isArray(resWeek.data.result.part)
@@ -262,18 +254,23 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
 			object = OBJECT_TITLE_YEAR || [ExercisePie];
 			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
 		}
-
-		// 안전장치: object가 비어있거나 null인 경우 기본값 설정
+		else {
+			if (TYPE_STATE.section === "week") {
+				dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
+			}
+			else if (TYPE_STATE.section === "month") {
+				dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+			}
+			else if (TYPE_STATE.section === "year") {
+				dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
+			}
+		}
 		if (!object || !Array.isArray(object) || object.length === 0) {
 			object = [ExercisePie];
 		}
 
-		// 디버깅: 최종 object 확인
-		console.log("ExerciseChartPie - chartNode - TYPE_STATE:", TYPE_STATE);
-		console.log("ExerciseChartPie - chartNode - object:", object);
-
     return (
-			<ResponsiveContainer width={"100%"} height={350}>
+			<ResponsiveContainer width={"100%"} height={500}>
 				<PieChart margin={{top: 60, right: 20, bottom: 10, left: 20}}>
 					<defs>
 						<filter id={"textBackground"} x={0} y={0} width={1} height={1}>
@@ -296,7 +293,7 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
 						textAnchor={"middle"}
 						dominantBaseline={"middle"}
 						style={{
-							fontSize: "0.80rem",
+							fontSize: "1.0rem",
 							fill: "#666",
 							fontWeight: 600,
 						}}

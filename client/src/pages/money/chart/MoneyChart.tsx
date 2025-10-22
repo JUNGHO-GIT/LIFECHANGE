@@ -7,7 +7,7 @@ import { MoneyChartPie } from "./MoneyChartPie";
 import { MoneyChartLine } from "./MoneyChartLine";
 import { MoneyChartAvg } from "./MoneyChartAvg";
 import { Select } from "@importContainers";
-import { Paper, Grid } from "@importComponents";
+import { Paper, Grid, Br } from "@importComponents";
 import { MenuItem } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -114,11 +114,12 @@ export const MoneyChart = memo(() => {
 		return (
 			<Paper className={"content-wrapper d-col-between radius-2 border-1 shadow-1 h-min-75vh"}>
 				<Grid container={true} spacing={0} className={"border-0 radius-0"}>
-					<Grid size={12} className={"d-col-center p-0px"}>
-						{headSection()}
-					</Grid>
-				</Grid>
-				<Grid container={true} spacing={0} className={"border-1 radius-2 h-min-60vh"}>
+          <Grid size={12} className={"d-col-center p-0px"}>
+            {headSection()}
+          </Grid>
+        </Grid>
+				<Br m={10} />
+        <Grid container={true} spacing={0} className={"border-1 radius-2 h-min-63vh"}>
 					<Grid size={12} className={"d-col-center p-5px"}>
 						{curView === "pie" && <MoneyChartPie TYPE={TYPE_PIE} setTYPE={setTYPE_PIE} />}
 						{curView === "line" && <MoneyChartLine TYPE={TYPE_LINE} setTYPE={setTYPE_LINE} />}
