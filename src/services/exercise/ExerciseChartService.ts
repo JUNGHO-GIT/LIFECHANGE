@@ -244,6 +244,14 @@ export const pieWeek = async (
       value: Number(item.value) || 0
     }));
 
+    // 데이터가 없을 때 기본값 설정
+    if (!finalResultPart || finalResultPart.length === 0) {
+      finalResultPart = [{ name: "Empty", value: 100 }];
+    }
+    if (!finalResultTitle || finalResultTitle.length === 0) {
+      finalResultTitle = [{ name: "Empty", value: 100 }];
+    }
+
     finalResult = {
       part: finalResultPart,
       title: finalResultTitle,
@@ -302,6 +310,14 @@ export const pieMonth = async (
       name: String(item._id),
       value: Number(item.value) || 0
     }));
+
+    // 데이터가 없을 때 기본값 설정
+    if (!finalResultPart || finalResultPart.length === 0) {
+      finalResultPart = [{ name: "Empty", value: 100 }];
+    }
+    if (!finalResultTitle || finalResultTitle.length === 0) {
+      finalResultTitle = [{ name: "Empty", value: 100 }];
+    }
 
     finalResult = {
       part: finalResultPart,
@@ -362,6 +378,14 @@ export const pieYear = async (
       value: Number(item.value) || 0
     }));
 
+    // 데이터가 없을 때 기본값 설정
+    if (!finalResultPart || finalResultPart.length === 0) {
+      finalResultPart = [{ name: "Empty", value: 100 }];
+    }
+    if (!finalResultTitle || finalResultTitle.length === 0) {
+      finalResultTitle = [{ name: "Empty", value: 100 }];
+    }
+
     finalResult = {
       part: finalResultPart,
       title: finalResultTitle,
@@ -369,8 +393,11 @@ export const pieYear = async (
     statusResult = "success";
   }
   catch (err: any) {
-    finalResult = [];
-    statusResult = "fail";
+    finalResult = {
+      part: [{ name: "Empty", value: 100 }],
+      title: [{ name: "Empty", value: 100 }],
+    };
+    statusResult = "success";
   }
 
   return {

@@ -209,7 +209,7 @@ export const ExerciseRecordDetail = memo(() => {
   useEffect(() => {
     const defaultSection = {
       exercise_record_part: exerciseArray[1]?.exercise_record_part || "",
-      exercise_record_title: exerciseArray[0]?.exercise_record_title[0] || "",
+      exercise_record_title: exerciseArray[1]?.exercise_record_title?.[0] || "",
       exercise_record_set: "0",
       exercise_record_rep: "0",
       exercise_record_weight: "0",
@@ -508,13 +508,15 @@ export const ExerciseRecordDetail = memo(() => {
 									error={ERRORS?.[i]?.exercise_record_part}
 									onChange={(e: any) => {
 										let value = String(e.target.value || "");
+										const foundIndex = exerciseArray.findIndex((f: any) => f.exercise_record_part === value);
+										const foundItem = foundIndex !== -1 ? exerciseArray[foundIndex] : null;
 										setOBJECT((prev) => ({
 											...prev,
 											exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
 												idx === i ? {
 													...section,
 													exercise_record_part: value,
-													exercise_record_title: exerciseArray[exerciseArray.findIndex((f: any) => f.exercise_record_part === value)]?.exercise_record_title[0],
+													exercise_record_title: foundItem?.exercise_record_title?.[0] || "",
 												} : section
 											))
 										}));
@@ -551,15 +553,19 @@ export const ExerciseRecordDetail = memo(() => {
 										}));
 									}}
 								>
-									{exerciseArray[exerciseArray.findIndex((f: any) => f.exercise_record_part === item?.exercise_record_part)]?.exercise_record_title.map((title: any, idx: number) => (
-										<MenuItem
-											key={idx}
-											value={title}
-											className={"fs-0-8rem"}
-										>
-											{translate(title)}
-										</MenuItem>
-									))}
+									{(() => {
+										const foundIndex = exerciseArray.findIndex((f: any) => f.exercise_record_part === item?.exercise_record_part);
+										const foundItem = foundIndex !== -1 ? exerciseArray[foundIndex] : null;
+										return foundItem?.exercise_record_title?.map((title: any, idx: number) => (
+											<MenuItem
+												key={idx}
+												value={title}
+												className={"fs-0-8rem"}
+											>
+												{translate(title)}
+											</MenuItem>
+										)) || [];
+									})()}
 								</Select>
 							</Grid>
 						</Grid>

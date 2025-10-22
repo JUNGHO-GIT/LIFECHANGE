@@ -178,8 +178,8 @@ export const TopNav = memo(() => {
 	// 2-3. useEffect -----------------------------------------------------------------------------
   // - 퍼센트, 자산, 체중 설정
   useEffect(() => {
-    if (sessionTitle?.setting?.fnSync) {
-      const { percent, property, nutrition, scale } = sessionTitle.setting.fnSync;
+    if (sessionTitle?.setting?.sync) {
+      const { percent, property, nutrition, scale } = sessionTitle?.setting?.sync;
 
       // 상태가 실제로 변경될 때만 업데이트
       setPercent((prev: any) => {
@@ -464,7 +464,7 @@ export const TopNav = memo(() => {
               radius={false}
               src={`${mainSmileImage}.webp`}
               onClick={(e: any) => {
-                setPercent(sessionPercent);
+                setPercent(sessionPercent as any);
                 popTrigger.openPopup(e.currentTarget)
               }}
             />

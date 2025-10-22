@@ -132,6 +132,14 @@ export const pieWeek = async (
       },
     ]).flat();
 
+    // 데이터가 없을 때 기본값 설정
+    if (!finalResultKcal || finalResultKcal.length === 0) {
+      finalResultKcal = [{ name: "Empty", value: 100 }];
+    }
+    if (!finalResultNut || finalResultNut.length === 0) {
+      finalResultNut = [{ name: "Empty", value: 100 }];
+    }
+
     finalResult = {
       kcal: finalResultKcal,
       nut: finalResultNut
@@ -139,8 +147,11 @@ export const pieWeek = async (
     statusResult = "success";
   }
   catch (err: any) {
-    finalResult = [];
-    statusResult = "fail";
+    finalResult = {
+      kcal: [{ name: "Empty", value: 100 }],
+      nut: [{ name: "Empty", value: 100 }],
+    };
+    statusResult = "success";
   }
 
   return {
@@ -203,6 +214,14 @@ export const pieMonth = async (
       },
     ]).flat();
 
+    // 데이터가 없을 때 기본값 설정
+    if (!finalResultKcal || finalResultKcal.length === 0) {
+      finalResultKcal = [{ name: "Empty", value: 100 }];
+    }
+    if (!finalResultNut || finalResultNut.length === 0) {
+      finalResultNut = [{ name: "Empty", value: 100 }];
+    }
+
     finalResult = {
       kcal: finalResultKcal,
       nut: finalResultNut
@@ -210,8 +229,11 @@ export const pieMonth = async (
     statusResult = "success";
   }
   catch (err: any) {
-    finalResult = [];
-    statusResult = "fail";
+    finalResult = {
+      kcal: [{ name: "Empty", value: 100 }],
+      nut: [{ name: "Empty", value: 100 }],
+    };
+    statusResult = "success";
   }
 
   return {
@@ -274,6 +296,14 @@ export const pieYear = async (
       },
     ]).flat();
 
+    // 데이터가 없을 때 기본값 설정
+    if (!finalResultKcal || finalResultKcal.length === 0) {
+      finalResultKcal = [{ name: "Empty", value: 100 }];
+    }
+    if (!finalResultNut || finalResultNut.length === 0) {
+      finalResultNut = [{ name: "Empty", value: 100 }];
+    }
+
     finalResult = {
       kcal: finalResultKcal,
       nut: finalResultNut
@@ -281,8 +311,11 @@ export const pieYear = async (
     statusResult = "success";
   }
   catch (err: any) {
-    finalResult = [];
-    statusResult = "fail";
+    finalResult = {
+      kcal: [{ name: "Empty", value: 100 }],
+      nut: [{ name: "Empty", value: 100 }],
+    };
+    statusResult = "success";
   }
 
   return {

@@ -101,6 +101,14 @@ export const pieWeek = async (
       value: Number(item.value) || 0
     }));
 
+    // 데이터가 없을 때 기본값 설정
+    if (!finalResultInCome || finalResultInCome.length === 0) {
+      finalResultInCome = [{ name: "Empty", value: 100 }];
+    }
+    if (!finalResultExpense || finalResultExpense.length === 0) {
+      finalResultExpense = [{ name: "Empty", value: 100 }];
+    }
+
     finalResult = {
       income: finalResultInCome,
       expense: finalResultExpense,
@@ -108,8 +116,11 @@ export const pieWeek = async (
     statusResult = "success";
   }
   catch (err: any) {
-    finalResult = [];
-    statusResult = "fail";
+    finalResult = {
+      income: [{ name: "Empty", value: 100 }],
+      expense: [{ name: "Empty", value: 100 }],
+    };
+    statusResult = "success";
   }
 
   return {
@@ -149,7 +160,7 @@ export const pieMonth = async (
     ]);
 
     // findResultInCome 배열을 순회하며 결과 저장
-    finalResultInCome = findResultInCome?.map((item: any) => ({
+    finalResultInCome = finalResultInCome?.map((item: any) => ({
       name: String(item._id),
       value: Number(item.value) || 0
     }));
@@ -160,6 +171,14 @@ export const pieMonth = async (
       value: Number(item.value) || 0
     }));
 
+    // 데이터가 없을 때 기본값 설정
+    if (!finalResultInCome || finalResultInCome.length === 0) {
+      finalResultInCome = [{ name: "Empty", value: 100 }];
+    }
+    if (!finalResultExpense || finalResultExpense.length === 0) {
+      finalResultExpense = [{ name: "Empty", value: 100 }];
+    }
+
     finalResult = {
       income: finalResultInCome,
       expense: finalResultExpense,
@@ -167,8 +186,11 @@ export const pieMonth = async (
     statusResult = "success";
   }
   catch (err: any) {
-    finalResult = [];
-    statusResult = "fail";
+    finalResult = {
+      income: [{ name: "Empty", value: 100 }],
+      expense: [{ name: "Empty", value: 100 }],
+    };
+    statusResult = "success";
   }
 
   return {
@@ -219,6 +241,14 @@ export const pieYear = async (
       value: Number(item.value) || 0
     }));
 
+    // 데이터가 없을 때 기본값 설정
+    if (!finalResultInCome || finalResultInCome.length === 0) {
+      finalResultInCome = [{ name: "Empty", value: 100 }];
+    }
+    if (!finalResultExpense || finalResultExpense.length === 0) {
+      finalResultExpense = [{ name: "Empty", value: 100 }];
+    }
+
     finalResult = {
       income: finalResultInCome,
       expense: finalResultExpense,
@@ -226,8 +256,11 @@ export const pieYear = async (
     statusResult = "success";
   }
   catch (err: any) {
-    finalResult = [];
-    statusResult = "fail";
+    finalResult = {
+      income: [{ name: "Empty", value: 100 }],
+      expense: [{ name: "Empty", value: 100 }],
+    };
+    statusResult = "success";
   }
 
   return {

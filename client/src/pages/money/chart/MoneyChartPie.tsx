@@ -84,23 +84,37 @@ export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
           params: params,
         }),
       ]);
+
+      // 서버에서 기본값을 포함한 응답을 받으므로 직접 설정
       setOBJECT_INCOME_WEEK(
-        resWeek.data.result.income?.length > 0 ? resWeek.data.result.income : [MoneyPie]
+        resWeek.data.result.income && Array.isArray(resWeek.data.result.income)
+          ? resWeek.data.result.income
+          : [MoneyPie]
       );
       setOBJECT_EXPENSE_WEEK(
-        resWeek.data.result.expense?.length > 0 ? resWeek.data.result.expense : [MoneyPie]
+        resWeek.data.result.expense && Array.isArray(resWeek.data.result.expense)
+          ? resWeek.data.result.expense
+          : [MoneyPie]
       );
       setOBJECT_INCOME_MONTH(
-        resMonth.data.result.income?.length > 0 ? resMonth.data.result.income : [MoneyPie]
+        resMonth.data.result.income && Array.isArray(resMonth.data.result.income)
+          ? resMonth.data.result.income
+          : [MoneyPie]
       );
       setOBJECT_EXPENSE_MONTH(
-        resMonth.data.result.expense?.length > 0 ? resMonth.data.result.expense : [MoneyPie]
+        resMonth.data.result.expense && Array.isArray(resMonth.data.result.expense)
+          ? resMonth.data.result.expense
+          : [MoneyPie]
       );
       setOBJECT_INCOME_YEAR(
-        resYear.data.result.income?.length > 0 ? resYear.data.result.income : [MoneyPie]
+        resYear.data.result.income && Array.isArray(resYear.data.result.income)
+          ? resYear.data.result.income
+          : [MoneyPie]
       );
       setOBJECT_EXPENSE_YEAR(
-        resYear.data.result.expense?.length > 0 ? resYear.data.result.expense : [MoneyPie]
+        resYear.data.result.expense && Array.isArray(resYear.data.result.expense)
+          ? resYear.data.result.expense
+          : [MoneyPie]
       );
     }
     catch (err: any) {
@@ -111,6 +125,13 @@ export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
         severity: "error",
       });
       console.error(err);
+      // 에러 발생 시에도 기본값 설정
+      setOBJECT_INCOME_WEEK([MoneyPie]);
+      setOBJECT_EXPENSE_WEEK([MoneyPie]);
+      setOBJECT_INCOME_MONTH([MoneyPie]);
+      setOBJECT_EXPENSE_MONTH([MoneyPie]);
+      setOBJECT_INCOME_YEAR([MoneyPie]);
+      setOBJECT_EXPENSE_YEAR([MoneyPie]);
     }
     finally {
       setLOADING(false);
@@ -204,45 +225,39 @@ export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartNode = () => {
 
-    let object = null;
+    let object: any[] = [MoneyPie];
     let endStr = "";
     let dateRange = "";
 
-		(TYPE_STATE.section === "week" && TYPE_STATE.line === "income") && (
-			object = OBJECT_INCOME_WEEK,
-			endStr = "",
-			dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`
-		);
+		if (TYPE_STATE.section === "week" && TYPE_STATE.line === "income") {
+			object = OBJECT_INCOME_WEEK || [MoneyPie];
+			dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
+		}
+		else if (TYPE_STATE.section === "week" && TYPE_STATE.line === "expense") {
+			object = OBJECT_EXPENSE_WEEK || [MoneyPie];
+			dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
+		}
+		else if (TYPE_STATE.section === "month" && TYPE_STATE.line === "income") {
+			object = OBJECT_INCOME_MONTH || [MoneyPie];
+			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+		}
+		else if (TYPE_STATE.section === "month" && TYPE_STATE.line === "expense") {
+			object = OBJECT_EXPENSE_MONTH || [MoneyPie];
+			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+		}
+		else if (TYPE_STATE.section === "year" && TYPE_STATE.line === "income") {
+			object = OBJECT_INCOME_YEAR || [MoneyPie];
+			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
+		}
+		else if (TYPE_STATE.section === "year" && TYPE_STATE.line === "expense") {
+			object = OBJECT_EXPENSE_YEAR || [MoneyPie];
+			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
+		}
 
-		(TYPE_STATE.section === "week" && TYPE_STATE.line === "expense") && (
-			object = OBJECT_EXPENSE_WEEK,
-			endStr = "",
-			dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`
-		);
-
-		(TYPE_STATE.section === "month" && TYPE_STATE.line === "income") && (
-			object = OBJECT_INCOME_MONTH,
-			endStr = "",
-			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`
-		);
-
-		(TYPE_STATE.section === "month" && TYPE_STATE.line === "expense") && (
-			object = OBJECT_EXPENSE_MONTH,
-			endStr = "",
-			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`
-		);
-
-		(TYPE_STATE.section === "year" && TYPE_STATE.line === "income") && (
-			object = OBJECT_INCOME_YEAR,
-			endStr = "",
-			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`
-		);
-
-		(TYPE_STATE.section === "year" && TYPE_STATE.line === "expense") && (
-			object = OBJECT_EXPENSE_YEAR,
-			endStr = "",
-			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`
-		);
+		// 안전장치: object가 비어있거나 null인 경우 기본값 설정
+		if (!object || !Array.isArray(object) || object.length === 0) {
+			object = [MoneyPie];
+		}
 
     return (
 			<ResponsiveContainer width={"100%"} height={350}>

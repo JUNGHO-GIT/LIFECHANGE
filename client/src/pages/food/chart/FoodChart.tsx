@@ -7,7 +7,7 @@ import { FoodChartPie } from "./FoodChartPie";
 import { FoodChartLine } from "./FoodChartLine";
 import { FoodChartAvg } from "./FoodChartAvg";
 import { Select } from "@importContainers";
-import { Br, Paper, Grid } from "@importComponents";
+import { Paper, Grid } from "@importComponents";
 import { MenuItem } from "@importMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -45,20 +45,22 @@ export const FoodChart = memo(() => {
 
   // 3. useEffect -------------------------------------------------------------------------------
   useEffect(() => {
-    if (curView === "pie") {
-      setCurSetType(() => setTYPE_PIE);
-      setCurSection(TYPE_PIE.section || "week");
-      setCurValue(TYPE_PIE.line || "kcal");
-    } else if (curView === "line") {
-      setCurSetType(() => setTYPE_LINE);
-      setCurSection(TYPE_LINE.section || "week");
-      setCurValue(TYPE_LINE.line || "kcal");
-    } else if (curView === "avg") {
-      setCurSetType(() => setTYPE_AVG);
-      setCurSection(TYPE_AVG.section || "week");
-      setCurValue(TYPE_AVG.line || "kcal");
-    }
-  }, [curView, TYPE_PIE, TYPE_LINE, TYPE_AVG]);
+		curView === "pie" ? (
+			setCurSetType(() => setTYPE_PIE),
+			setCurSection(TYPE_PIE.section || "week"),
+			setCurValue(TYPE_PIE.line || "kcal")
+		)
+		: curView === "line" ? (
+			setCurSetType(() => setTYPE_LINE),
+			setCurSection(TYPE_LINE.section || "week"),
+			setCurValue(TYPE_LINE.line || "kcal")
+		)
+		: curView === "avg" && (
+			setCurSetType(() => setTYPE_AVG),
+			setCurSection(TYPE_AVG.section || "week"),
+			setCurValue(TYPE_AVG.line || "kcal")
+		);
+	}, [curView, TYPE_PIE, TYPE_LINE, TYPE_AVG]);
 
   // 7. chart --------------------------------------------------------------------------------------
   const chartNode = () => {
@@ -110,14 +112,13 @@ export const FoodChart = memo(() => {
       </Grid>
     );
     return (
-      <Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-75vh"}>
-        <Grid container={true} spacing={2} className={"border-0 radius-0"}>
+      <Paper className={"content-wrapper d-col-between radius-2 border-1 shadow-1 h-min-75vh"}>
+        <Grid container={true} spacing={0} className={"border-0 radius-0"}>
           <Grid size={12} className={"d-col-center p-0px"}>
             {headSection()}
           </Grid>
         </Grid>
-        <Br m={10} />
-        <Grid container={true} spacing={2} className={"border-1 radius-2"}>
+        <Grid container={true} spacing={0} className={"border-1 radius-2 h-min-60vh"}>
           <Grid size={12} className={"d-col-center p-5px"}>
             {curView === "pie" && <FoodChartPie TYPE={TYPE_PIE} setTYPE={setTYPE_PIE} />}
             {curView === "line" && <FoodChartLine TYPE={TYPE_LINE} setTYPE={setTYPE_LINE} />}

@@ -29,4 +29,6 @@ export {
   BrowserRouter,
   Routes,
   Route,
+	type Location,
+	type NavigateFunction,
 } from "react-router";

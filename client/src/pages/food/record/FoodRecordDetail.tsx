@@ -182,7 +182,7 @@ export const FoodRecordDetail = memo(() => {
         newSectionCnt: res.data.sectionCnt || 0
       }));
 
-      const sectionArray = sessionFoodSection?.length > 0 ? sessionFoodSection : [];
+      const sectionArray: typeof sessionFoodSection = sessionFoodSection?.length > 0 ? sessionFoodSection : [];
 
       setOBJECT((prev) => ({
         ...prev,
@@ -408,7 +408,7 @@ export const FoodRecordDetail = memo(() => {
   // 4-3. handle --------------------------------------------------------------------------------
   const handleDelete = useCallback((index: number) => {
 
-    let sectionArray = [];
+    let sectionArray: typeof sessionFoodSection = [];
     let section = sessionFoodSection;
     section ? sectionArray = section : sectionArray = [];
     sectionArray.splice(index, 1);

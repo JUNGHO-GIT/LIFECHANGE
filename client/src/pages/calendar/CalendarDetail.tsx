@@ -282,13 +282,15 @@ export const CalendarDetail = memo(() => {
 									error={ERRORS?.[i]?.exercise_record_part || null}
 									onChange={(e: any) => {
 										let value = String(e.target.value || ``);
+										const foundIndex = exerciseArray.findIndex((f: any) => f.exercise_record_part === value);
+										const foundItem = foundIndex !== -1 ? exerciseArray[foundIndex] : null;
 										setOBJECT((prev: TodayRecordType) => ({
 											...prev,
 											today_exercise_section: prev.today_exercise_section?.map((section: any, idx: number) => (
 												idx === i ? {
 													...section,
 													exercise_record_part: value,
-													exercise_record_title: exerciseArray[exerciseArray.findIndex((f: any) => f.exercise_record_part === value)]?.exercise_record_title[0],
+													exercise_record_title: foundItem?.exercise_record_title?.[0] || ``,
 												} : section
 											))
 										}));
@@ -325,15 +327,19 @@ export const CalendarDetail = memo(() => {
 										}));
 									}}
 								>
-									{exerciseArray[exerciseArray.findIndex((f: any) => f.exercise_record_part === item?.exercise_record_part)]?.exercise_record_title.map((title: any, idx: number) => (
-										<MenuItem
-											key={idx}
-											value={title}
-											className={`fs-0-8rem`}
-										>
-											{translate(title)}
-										</MenuItem>
-									))}
+									{(() => {
+										const foundIndex = exerciseArray.findIndex((f: any) => f.exercise_record_part === item?.exercise_record_part);
+										const foundItem = foundIndex !== -1 ? exerciseArray[foundIndex] : null;
+										return foundItem?.exercise_record_title?.map((title: any, idx: number) => (
+											<MenuItem
+												key={idx}
+												value={title}
+												className={`fs-0-8rem`}
+											>
+												{translate(title)}
+											</MenuItem>
+										)) || [];
+									})()}
 								</Select>
 							</Grid>
 						</Grid>
@@ -878,13 +884,15 @@ export const CalendarDetail = memo(() => {
 									error={ERRORS?.[i]?.money_record_part}
 									onChange={(e: any) => {
 										let value = String(e.target.value || ``);
+										const foundIndex = moneyArray.findIndex((f: any) => f.money_record_part === value);
+										const foundItem = foundIndex !== -1 ? moneyArray[foundIndex] : null;
 										setOBJECT((prev: TodayRecordType) => ({
 											...prev,
 											today_money_section: prev.today_money_section?.map((section: any, idx: number) => (
 												idx === i ? {
 													...section,
 													money_record_part: value,
-													money_record_title: moneyArray[moneyArray.findIndex((f: any) => f.money_record_part === value)]?.money_record_title[0],
+													money_record_title: foundItem?.money_record_title?.[0] || ``,
 												} : section
 											))
 										}));
@@ -921,15 +929,19 @@ export const CalendarDetail = memo(() => {
 										}));
 									}}
 								>
-									{moneyArray[moneyArray.findIndex((f: any) => f.money_record_part === item?.money_record_part)]?.money_record_title.map((title: any, idx: number) => (
-										<MenuItem
-											key={idx}
-											value={title}
-											className={`fs-0-8rem`}
-										>
-											{translate(title)}
-										</MenuItem>
-									))}
+									{(() => {
+										const foundIndex = moneyArray.findIndex((f: any) => f.money_record_part === item?.money_record_part);
+										const foundItem = foundIndex !== -1 ? moneyArray[foundIndex] : null;
+										return foundItem?.money_record_title?.map((title: any, idx: number) => (
+											<MenuItem
+												key={idx}
+												value={title}
+												className={`fs-0-8rem`}
+											>
+												{translate(title)}
+											</MenuItem>
+										)) || [];
+									})()}
 								</Select>
 							</Grid>
 						</Grid>

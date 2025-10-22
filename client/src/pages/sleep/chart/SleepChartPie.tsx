@@ -81,29 +81,22 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
           params: params,
         }),
       ]);
+
+      // 서버에서 기본값을 포함한 응답을 받으므로 직접 설정
       setOBJECT_WEEK(
-        (resWeek.data.result?.length > 0) &&
-        (resWeek.data.result[0].value !== 0) &&
-        (resWeek.data.result[1].value !== 0) &&
-        (resWeek.data.result[2].value !== 0)
-        ? resWeek.data.result
-        : [SleepPie]
+        resWeek.data.result && Array.isArray(resWeek.data.result)
+          ? resWeek.data.result
+          : [SleepPie]
       );
       setOBJECT_MONTH(
-        (resMonth.data.result?.length > 0) &&
-        (resMonth.data.result[0].value !== 0) &&
-        (resMonth.data.result[1].value !== 0) &&
-        (resMonth.data.result[2].value !== 0)
-        ? resMonth.data.result
-        : [SleepPie]
+        resMonth.data.result && Array.isArray(resMonth.data.result)
+          ? resMonth.data.result
+          : [SleepPie]
       );
       setOBJECT_YEAR(
-        (resYear.data.result?.length > 0) &&
-        (resYear.data.result[0].value !== 0) &&
-        (resYear.data.result[1].value !== 0) &&
-        (resYear.data.result[2].value !== 0)
-        ? resYear.data.result
-        : [SleepPie]
+        resYear.data.result && Array.isArray(resYear.data.result)
+          ? resYear.data.result
+          : [SleepPie]
       );
     }
     catch (err: any) {
@@ -114,6 +107,10 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
         severity: "error",
       });
       console.error(err);
+      // 에러 발생 시에도 기본값 설정
+      setOBJECT_WEEK([SleepPie]);
+      setOBJECT_MONTH([SleepPie]);
+      setOBJECT_YEAR([SleepPie]);
     }
     finally {
       setLOADING(false);
@@ -202,27 +199,27 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartNode = () => {
 
-    let object = null;
-    let endStr = "";
+    let object: any[] = [SleepPie];
+    let endStr = "%";
     let dateRange = "";
 
-    (TYPE_STATE.section === "week") && (
-			object = OBJECT_WEEK,
-			endStr = "%",
-			dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`
-		);
+    if (TYPE_STATE.section === "week") {
+			object = OBJECT_WEEK || [SleepPie];
+			dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
+		}
+    else if (TYPE_STATE.section === "month") {
+			object = OBJECT_MONTH || [SleepPie];
+			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+		}
+    else if (TYPE_STATE.section === "year") {
+			object = OBJECT_YEAR || [SleepPie];
+			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
+		}
 
-    (TYPE_STATE.section === "month") && (
-			object = OBJECT_MONTH,
-			endStr = "%",
-			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`
-		);
-
-    (TYPE_STATE.section === "year") && (
-			object = OBJECT_YEAR,
-			endStr = "%",
-			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`
-		);
+		// 안전장치: object가 비어있거나 null인 경우 기본값 설정
+		if (!object || !Array.isArray(object) || object.length === 0) {
+			object = [SleepPie];
+		}
 
     return (
 			<ResponsiveContainer width={"100%"} height={350}>

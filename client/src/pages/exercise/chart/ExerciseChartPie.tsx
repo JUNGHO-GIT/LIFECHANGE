@@ -37,7 +37,7 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
   const [TYPE, setTYPE] = useStorageLocal(
     "type", "pie", PATH, {
       section: "week",
-      line: "volume",
+      line: "part",
     }
   );
 
@@ -84,23 +84,45 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
           params: params,
         }),
       ]);
+
+      // 디버깅: 서버 응답 확인
+      console.log("ExerciseChartPie - Week Part:", resWeek.data.result.part);
+      console.log("ExerciseChartPie - Week Title:", resWeek.data.result.title);
+      console.log("ExerciseChartPie - Month Part:", resMonth.data.result.part);
+      console.log("ExerciseChartPie - Month Title:", resMonth.data.result.title);
+      console.log("ExerciseChartPie - Year Part:", resYear.data.result.part);
+      console.log("ExerciseChartPie - Year Title:", resYear.data.result.title);
+
+      // 서버에서 기본값을 포함한 응답을 받으므로 직접 설정
       setOBJECT_PART_WEEK(
-        resWeek.data.result.part?.length > 0 ? resWeek.data.result.part : [ExercisePie]
+        resWeek.data.result.part && Array.isArray(resWeek.data.result.part)
+          ? resWeek.data.result.part
+          : [ExercisePie]
       );
       setOBJECT_TITLE_WEEK(
-        resWeek.data.result.title?.length > 0 ? resWeek.data.result.title : [ExercisePie]
+        resWeek.data.result.title && Array.isArray(resWeek.data.result.title)
+          ? resWeek.data.result.title
+          : [ExercisePie]
       );
       setOBJECT_PART_MONTH(
-        resMonth.data.result.part?.length > 0 ? resMonth.data.result.part : [ExercisePie]
+        resMonth.data.result.part && Array.isArray(resMonth.data.result.part)
+          ? resMonth.data.result.part
+          : [ExercisePie]
       );
       setOBJECT_TITLE_MONTH(
-        resMonth.data.result.title?.length > 0 ? resMonth.data.result.title : [ExercisePie]
+        resMonth.data.result.title && Array.isArray(resMonth.data.result.title)
+          ? resMonth.data.result.title
+          : [ExercisePie]
       );
       setOBJECT_PART_YEAR(
-        resYear.data.result.part?.length > 0 ? resYear.data.result.part : [ExercisePie]
+        resYear.data.result.part && Array.isArray(resYear.data.result.part)
+          ? resYear.data.result.part
+          : [ExercisePie]
       );
       setOBJECT_TITLE_YEAR(
-        resYear.data.result.title?.length > 0 ? resYear.data.result.title : [ExercisePie]
+        resYear.data.result.title && Array.isArray(resYear.data.result.title)
+          ? resYear.data.result.title
+          : [ExercisePie]
       );
     }
     catch (err: any) {
@@ -111,6 +133,13 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
         severity: "error",
       });
       console.error(err);
+      // 에러 발생 시에도 기본값 설정
+      setOBJECT_PART_WEEK([ExercisePie]);
+      setOBJECT_TITLE_WEEK([ExercisePie]);
+      setOBJECT_PART_MONTH([ExercisePie]);
+      setOBJECT_TITLE_MONTH([ExercisePie]);
+      setOBJECT_PART_YEAR([ExercisePie]);
+      setOBJECT_TITLE_YEAR([ExercisePie]);
     }
     finally {
       setLOADING(false);
@@ -144,31 +173,26 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
   const renderPie = (
     { cx, cy, midAngle, innerRadius, outerRadius, value, index }: PieProps
   ) => {
-    let object = null;
-    let endStr = "";
+    let object: any[] = [ExercisePie];
+    let endStr = "%";
+
 		if (TYPE_STATE.section === "week" && TYPE_STATE.line === "part") {
-      object = OBJECT_PART_WEEK;
-      endStr = "%";
+      object = OBJECT_PART_WEEK || [ExercisePie];
     }
 		else if (TYPE_STATE.section === "week" && TYPE_STATE.line === "title") {
-      object = OBJECT_TITLE_WEEK;
-      endStr = "%";
+      object = OBJECT_TITLE_WEEK || [ExercisePie];
     }
 		else if (TYPE_STATE.section === "month" && TYPE_STATE.line === "part") {
-      object = OBJECT_PART_MONTH;
-      endStr = "%";
+      object = OBJECT_PART_MONTH || [ExercisePie];
     }
 		else if (TYPE_STATE.section === "month" && TYPE_STATE.line === "title") {
-      object = OBJECT_TITLE_MONTH;
-      endStr = "%";
+      object = OBJECT_TITLE_MONTH || [ExercisePie];
     }
 		else if (TYPE_STATE.section === "year" && TYPE_STATE.line === "part") {
-      object = OBJECT_PART_YEAR;
-      endStr = "%";
+      object = OBJECT_PART_YEAR || [ExercisePie];
     }
 		else if (TYPE_STATE.section === "year" && TYPE_STATE.line === "title") {
-      object = OBJECT_TITLE_YEAR;
-      endStr = "%";
+      object = OBJECT_TITLE_YEAR || [ExercisePie];
     }
 
     if (
@@ -210,45 +234,43 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartNode = () => {
 
-    let object = null;
-    let endStr = "";
+    let object: any[] = [ExercisePie];
+    let endStr = "%";
     let dateRange = "";
 
-		(TYPE_STATE.section === "week" && TYPE_STATE.line === "part") && (
-			object = OBJECT_PART_WEEK,
-			endStr = "%",
-			dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`
-		);
+		if (TYPE_STATE.section === "week" && TYPE_STATE.line === "part") {
+			object = OBJECT_PART_WEEK || [ExercisePie];
+			dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
+		}
+		else if (TYPE_STATE.section === "week" && TYPE_STATE.line === "title") {
+			object = OBJECT_TITLE_WEEK || [ExercisePie];
+			dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
+		}
+		else if (TYPE_STATE.section === "month" && TYPE_STATE.line === "part") {
+			object = OBJECT_PART_MONTH || [ExercisePie];
+			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+		}
+		else if (TYPE_STATE.section === "month" && TYPE_STATE.line === "title") {
+			object = OBJECT_TITLE_MONTH || [ExercisePie];
+			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+		}
+		else if (TYPE_STATE.section === "year" && TYPE_STATE.line === "part") {
+			object = OBJECT_PART_YEAR || [ExercisePie];
+			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
+		}
+		else if (TYPE_STATE.section === "year" && TYPE_STATE.line === "title") {
+			object = OBJECT_TITLE_YEAR || [ExercisePie];
+			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
+		}
 
-		(TYPE_STATE.section === "week" && TYPE_STATE.line === "title") && (
-			object = OBJECT_TITLE_WEEK,
-			endStr = "%",
-			dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`
-		);
+		// 안전장치: object가 비어있거나 null인 경우 기본값 설정
+		if (!object || !Array.isArray(object) || object.length === 0) {
+			object = [ExercisePie];
+		}
 
-		(TYPE_STATE.section === "month" && TYPE_STATE.line === "part") && (
-			object = OBJECT_PART_MONTH,
-			endStr = "%",
-			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`
-		);
-
-		(TYPE_STATE.section === "month" && TYPE_STATE.line === "title") && (
-			object = OBJECT_TITLE_MONTH,
-			endStr = "%",
-			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`
-		);
-
-		(TYPE_STATE.section === "year" && TYPE_STATE.line === "part") && (
-			object = OBJECT_PART_YEAR,
-			endStr = "%",
-			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`
-		);
-
-		(TYPE_STATE.section === "year" && TYPE_STATE.line === "title") && (
-			object = OBJECT_TITLE_YEAR,
-			endStr = "%",
-			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`
-		);
+		// 디버깅: 최종 object 확인
+		console.log("ExerciseChartPie - chartNode - TYPE_STATE:", TYPE_STATE);
+		console.log("ExerciseChartPie - chartNode - object:", object);
 
     return (
 			<ResponsiveContainer width={"100%"} height={350}>

@@ -69,7 +69,7 @@ export const FoodFavoriteList = memo(() => {
 	// 2-3. useEffect -----------------------------------------------------------------------------
 	// - 페이지 로드시 체크박스 상태 초기화
   useEffect(() => {
-    let sectionArray = [];
+    let sectionArray: typeof sessionFoodSection = [];
     let section = sessionFoodSection;
 
     // sectionArray 초기화

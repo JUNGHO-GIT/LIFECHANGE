@@ -84,23 +84,37 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
           params: params,
         }),
       ]);
+
+      // 서버에서 기본값을 포함한 응답을 받으므로 직접 설정
       setOBJECT_KCAL_WEEK(
-        resWeek.data.result.kcal?.length > 0 ? resWeek.data.result.kcal : [FoodPie]
+        resWeek.data.result.kcal && Array.isArray(resWeek.data.result.kcal)
+          ? resWeek.data.result.kcal
+          : [FoodPie]
       );
       setOBJECT_NUT_WEEK(
-        resWeek.data.result.nut?.length > 0 ? resWeek.data.result.nut : [FoodPie]
+        resWeek.data.result.nut && Array.isArray(resWeek.data.result.nut)
+          ? resWeek.data.result.nut
+          : [FoodPie]
       );
       setOBJECT_KCAL_MONTH(
-        resMonth.data.result.kcal?.length > 0 ? resMonth.data.result.kcal : [FoodPie]
+        resMonth.data.result.kcal && Array.isArray(resMonth.data.result.kcal)
+          ? resMonth.data.result.kcal
+          : [FoodPie]
       );
       setOBJECT_NUT_MONTH(
-        resMonth.data.result.nut?.length > 0 ? resMonth.data.result.nut : [FoodPie]
+        resMonth.data.result.nut && Array.isArray(resMonth.data.result.nut)
+          ? resMonth.data.result.nut
+          : [FoodPie]
       );
       setOBJECT_KCAL_YEAR(
-        resYear.data.result.kcal?.length > 0 ? resYear.data.result.kcal : [FoodPie]
+        resYear.data.result.kcal && Array.isArray(resYear.data.result.kcal)
+          ? resYear.data.result.kcal
+          : [FoodPie]
       );
       setOBJECT_NUT_YEAR(
-        resYear.data.result.nut?.length > 0 ? resYear.data.result.nut : [FoodPie]
+        resYear.data.result.nut && Array.isArray(resYear.data.result.nut)
+          ? resYear.data.result.nut
+          : [FoodPie]
       );
     }
     catch (err: any) {
@@ -111,6 +125,13 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
         severity: "error",
       });
       console.error(err);
+      // 에러 발생 시에도 기본값 설정
+      setOBJECT_KCAL_WEEK([FoodPie]);
+      setOBJECT_NUT_WEEK([FoodPie]);
+      setOBJECT_KCAL_MONTH([FoodPie]);
+      setOBJECT_NUT_MONTH([FoodPie]);
+      setOBJECT_KCAL_YEAR([FoodPie]);
+      setOBJECT_NUT_YEAR([FoodPie]);
     }
     finally {
       setLOADING(false);
@@ -211,45 +232,45 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartNode = () => {
 
-    let object = null;
+    let object: any[] = [FoodPie];
     let endStr = "";
     let dateRange = "";
 
-		(TYPE_STATE.section === "week" && TYPE_STATE.line === "kcal") && (
-			object = OBJECT_KCAL_WEEK,
-			endStr = "kcal",
-			dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`
-		);
+		if (TYPE_STATE.section === "week" && TYPE_STATE.line === "kcal") {
+			object = OBJECT_KCAL_WEEK || [FoodPie];
+			endStr = "kcal";
+			dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
+		}
+		else if (TYPE_STATE.section === "week" && TYPE_STATE.line === "nut") {
+			object = OBJECT_NUT_WEEK || [FoodPie];
+			endStr = "g";
+			dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
+		}
+		else if (TYPE_STATE.section === "month" && TYPE_STATE.line === "kcal") {
+			object = OBJECT_KCAL_MONTH || [FoodPie];
+			endStr = "kcal";
+			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+		}
+		else if (TYPE_STATE.section === "month" && TYPE_STATE.line === "nut") {
+			object = OBJECT_NUT_MONTH || [FoodPie];
+			endStr = "g";
+			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+		}
+		else if (TYPE_STATE.section === "year" && TYPE_STATE.line === "kcal") {
+			object = OBJECT_KCAL_YEAR || [FoodPie];
+			endStr = "kcal";
+			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
+		}
+		else if (TYPE_STATE.section === "year" && TYPE_STATE.line === "nut") {
+			object = OBJECT_NUT_YEAR || [FoodPie];
+			endStr = "g";
+			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
+		}
 
-		(TYPE_STATE.section === "week" && TYPE_STATE.line === "nut") && (
-			object = OBJECT_NUT_WEEK,
-			endStr = "g",
-			dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`
-		);
-
-		(TYPE_STATE.section === "month" && TYPE_STATE.line === "kcal") && (
-			object = OBJECT_KCAL_MONTH,
-			endStr = "kcal",
-			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`
-		);
-
-		(TYPE_STATE.section === "month" && TYPE_STATE.line === "nut") && (
-			object = OBJECT_NUT_MONTH,
-			endStr = "g",
-			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`
-		);
-
-		(TYPE_STATE.section === "year" && TYPE_STATE.line === "kcal") && (
-			object = OBJECT_KCAL_YEAR,
-			endStr = "kcal",
-			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`
-		);
-
-		(TYPE_STATE.section === "year" && TYPE_STATE.line === "nut") && (
-			object = OBJECT_NUT_YEAR,
-			endStr = "g",
-			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`
-		);
+		// 안전장치: object가 비어있거나 null인 경우 기본값 설정
+		if (!object || !Array.isArray(object) || object.length === 0) {
+			object = [FoodPie];
+		}
 
     return (
 			<ResponsiveContainer width={"100%"} height={350}>
