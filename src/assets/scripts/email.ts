@@ -1,6 +1,7 @@
 // email.ts
 
 import nodemailer from 'nodemailer';
+import axios from 'axios';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -21,6 +22,7 @@ export const fnEmailSending = async (email: string, code: string) => {
     });
 
     // 이메일 전송
+		const bucketPath = process.env.GCLOUD_BUCKET_PATH;
     await transporter.sendMail({
 
       // 발신자
@@ -68,7 +70,7 @@ export const fnEmailSending = async (email: string, code: string) => {
                 "
               >
                 <img
-                  src="${process.env.GCLOUD_BUCKET_PATH}/main/logo1.webp"
+                  src="${bucketPath}/main/logo1.webp"
                   alt="logo2"
                   loading="lazy"
                   style="
@@ -78,7 +80,7 @@ export const fnEmailSending = async (email: string, code: string) => {
                   "
                 />
                 <img
-                  src="${process.env.GCLOUD_BUCKET_PATH}/main/logo3.webp"
+                  src="${bucketPath}/main/logo3.webp"
                   alt="logo3"
                   loading="lazy"
                   style="
@@ -164,7 +166,6 @@ export const fnEmailSending = async (email: string, code: string) => {
       ========================================
     `;
     console.log(consoleStr);
-
     return "success";
   }
   catch (err: any) {
@@ -174,7 +175,6 @@ export const fnEmailSending = async (email: string, code: string) => {
       ${err}
     `;
     console.log(consoleStr);
-
     return "fail";
   }
 };

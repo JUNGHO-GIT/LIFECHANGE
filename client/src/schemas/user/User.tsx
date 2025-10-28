@@ -10,6 +10,8 @@ export type UserType = {
 	user_id_verified: boolean;
 	user_pw: string;
 	user_pw_verified: string;
+	user_google?: string;
+	user_token?: string;
 	user_image: string;
 
 	user_initScale: string;
@@ -36,9 +38,12 @@ export type UserType = {
 	user_curPropertyExclusion: string;
 
 	user_favorite: Array<{
-		food_record_key: string,
+		food_record_key: string;
 		food_record_name: string;
 		food_record_brand: string;
+		food_record_count: string;
+		food_record_serv: string;
+		food_record_gram: string;
 		food_record_kcal: string;
 		food_record_carb: string;
 		food_record_protein: string;
@@ -46,9 +51,8 @@ export type UserType = {
 	}>;
 
 	user_dataCategory: {
-		today: Array<{ today_record_part: string }>;
 		exercise: Array<{ exercise_record_part: string; exercise_record_title: Array<string> }>;
-		food: Array<{ food_record_part: string }>;
+		food: Array<{ food_record_part: string; food_record_title?: Array<string> }>;
 		money: Array<{ money_record_part: string; money_record_title: Array<string> }>;
 		sleep: Array<{ sleep_record_part: string }>;
 	};
@@ -96,6 +100,9 @@ export const User: UserType = {
     food_record_key: "",
     food_record_name: "",
     food_record_brand: "",
+    food_record_count: "",
+    food_record_serv: "",
+    food_record_gram: "",
     food_record_kcal: "",
     food_record_carb: "",
     food_record_protein: "",
@@ -103,7 +110,6 @@ export const User: UserType = {
   }],
 
   user_dataCategory: {
-    today: [],
     exercise: [],
     food: [],
     money: [],

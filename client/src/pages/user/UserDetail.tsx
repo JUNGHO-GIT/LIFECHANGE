@@ -1,11 +1,11 @@
 // UserDetail.tsx
 
-import { useState, useEffect, memo } from "@importReacts";
+import { useState, useEffect, useRef, memo } from "@importReacts";
 import { useCommonValue, useValidateUser } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
 import { fnSync, fnInsertComma } from "@importScripts";
-import { User } from "@importSchemas";
+import { User, UserType } from "@importSchemas";
 import { Footer } from "@importLayouts";
 import { Input } from "@importContainers";
 import { Hr, Img, Div, Paper, Grid } from "@importComponents";
@@ -22,7 +22,7 @@ export const UserDetail = memo(() => {
   const { ERRORS, REFS, validate } = useValidateUser();
 
 	// 2-2. useState -------------------------------------------------------------------------------
-  const [OBJECT, setOBJECT] = useState(User);
+  const [OBJECT, setOBJECT] = useState<UserType>(User);
   const [includingExclusions, setIncludingExclusions] = useState<boolean>(false);
   const [SEND, setSEND] = useState({
     id: "",
@@ -30,6 +30,16 @@ export const UserDetail = memo(() => {
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
   });
+
+	// 2-3. useRef --------------------------------------------------------------------------------
+	const objectRef = useRef(OBJECT);
+
+	// 2-3. useEffect ------------------------------------------------------------------------------
+	useEffect(() => {
+		OBJECT !== objectRef.current && (objectRef.current = OBJECT);
+	}, [
+		OBJECT
+	]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
@@ -41,7 +51,7 @@ export const UserDetail = memo(() => {
     })
     .then((res: any) => {
       setLOADING(false);
-      setOBJECT(res.data.result || User);
+      setOBJECT(res.data.result ? res.data.result : {});
     })
     .catch((err: any) => {
       setLOADING(false);
@@ -59,12 +69,17 @@ export const UserDetail = memo(() => {
 	// 3. flow ------------------------------------------------------------------------------------
   const flowSave = async () => {
     setLOADING(true);
-    if (!await validate(OBJECT, "detail", "")) {
+    if (!await validate(objectRef.current, "detail", "")) {
+      setLOADING(false);
       return;
     }
-    axios.put(`${URL_OBJECT}/update`, {
-      user_id: sessionId,
-      OBJECT: OBJECT,
+    axios({
+      method: "put",
+			url: `${URL_OBJECT}/update`,
+			data: {
+				user_id: sessionId,
+				OBJECT: OBJECT,
+			}
     })
     .then((res: any) => {
       if (res.data.status === "success") {

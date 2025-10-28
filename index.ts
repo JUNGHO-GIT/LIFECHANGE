@@ -192,6 +192,8 @@ app.use(`${preFix}/sleep/record`, SleepRecordRouter);
 // user
 app.use(`${preFix}/user/sync`, UserSyncRouter);
 app.use(`${preFix}/user`, UserRouter);
+
+// admin
 app.use(`${preFix}/admin`, AdminRouter);
 app.use(`${preFix}/auth/google`, GoogleRouter);
 

@@ -11,10 +11,10 @@ import { MoneyGoal } from "@schemas/money/MoneyGoal";
 import { MoneyRecord } from "@schemas/money/MoneyRecord";
 import { SleepGoal } from "@schemas/sleep/SleepGoal";
 import { SleepRecord } from "@schemas/sleep/SleepRecord";
-import { exerciseArray } from "@assets/arrays/ExerciseArray";
-import { moneyArray } from "@assets/arrays/MoneyArray";
-import { foodArray } from "@assets/arrays/FoodArray";
-import { sleepArray } from "@assets/arrays/SleepArray";
+import { exerciseArray } from "@assets/arrays/exerciseArray";
+import { moneyArray } from "@assets/arrays/moneyArray";
+import { foodArray } from "@assets/arrays/foodArray";
+import { sleepArray } from "@assets/arrays/sleepArray";
 
 // 1-1. email - findId -----------------------------------------------------------------------------
 export const emailFindId = async (

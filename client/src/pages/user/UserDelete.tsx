@@ -1,10 +1,10 @@
 // UserDelete.tsx
 
-import { useState, useEffect, memo } from "@importReacts";
+import { useState, useEffect, useRef, memo } from "@importReacts";
 import { useCommonValue, useValidateUser } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
-import { User } from "@importSchemas";
+import { User, UserType } from "@importSchemas";
 import { Input } from "@importContainers";
 import { Div, Hr, Btn, Paper, Grid } from "@importComponents";
 
@@ -19,25 +19,27 @@ export const UserDelete = memo(() => {
   const { ERRORS, REFS, validate } = useValidateUser();
 
 	// 2-2. useState -------------------------------------------------------------------------------
-  const [OBJECT, setOBJECT] = useState(User);
+	const [OBJECT, setOBJECT] = useState<UserType>(User);
 
-	// 2-3. useEffect -----------------------------------------------------------------------------
-  useEffect(() => {
-    setLOADING(true);
-    setTimeout(() => {
-      setLOADING(false);
-    }, 500);
-  }, []);
+	// 2-3. useRef --------------------------------------------------------------------------------
+	const objectRef = useRef(OBJECT);
+
+	// 2-3. useEffect ------------------------------------------------------------------------------
+	useEffect(() => {
+		OBJECT !== objectRef.current && (objectRef.current = OBJECT);
+	}, [
+		OBJECT
+	]);
 
 	// 3. flow ------------------------------------------------------------------------------------
   const flowSendEmail = async () => {
     setLOADING(true);
-    if (!await validate(OBJECT, "delete", "send")) {
+    if (!await validate(objectRef.current, "delete", "send")) {
       setLOADING(false);
       return;
     }
     axios.post (`${URL_OBJECT}/email/send`, {
-      user_id: OBJECT.user_id,
+      user_id: objectRef.current.user_id,
       type: "delete"
     })
     .then((res: any) => {
@@ -107,13 +109,13 @@ export const UserDelete = memo(() => {
 	// 3. flow ------------------------------------------------------------------------------------
   const flowVerifyEmail = async () => {
     setLOADING(true);
-    if (!await validate(OBJECT, "delete", "verify")) {
+    if (!await validate(objectRef.current, "delete", "verify")) {
       setLOADING(false);
       return;
     }
     axios.post (`${URL_OBJECT}/email/verify`, {
-      user_id: OBJECT.user_id,
-      verify_code: OBJECT.user_verify_code
+      user_id: objectRef.current.user_id,
+      verify_code: objectRef.current.user_verify_code
     })
     .then((res: any) => {
       if (res.data.status === "success") {
@@ -158,14 +160,14 @@ export const UserDelete = memo(() => {
 	// 3. flow ------------------------------------------------------------------------------------
   const flowSave = async () => {
     setLOADING(true);
-    if (!await validate(OBJECT, "delete", "save")) {
+    if (!await validate(objectRef.current, "delete", "save")) {
       setLOADING(false);
       return;
     }
     axios.delete(`${URL_OBJECT}/record/delete`,{
       data: {
-        user_id: OBJECT.user_id,
-        user_pw: OBJECT.user_pw,
+        user_id: objectRef.current.user_id,
+        user_pw: objectRef.current.user_pw,
       },
     })
     .then((res: any) => {

@@ -452,7 +452,7 @@ export interface CommonValueType {
   localSetting: LocalSettingType | {};
   localTimeZone: string;
   localZoneName: string;
-  localLang: string;
+  localLang: string | undefined;
   localIsoCode: string;
   localCurrency: string;
   localUnit: string;

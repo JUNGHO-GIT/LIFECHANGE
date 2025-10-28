@@ -49,6 +49,16 @@ export const UserCategory = memo(() => {
     dateEnd: "0000-00-00",
   });
 
+	// 2-3. useRef --------------------------------------------------------------------------------
+	const objectRef = useRef(OBJECT);
+
+	// 2-3. useEffect ------------------------------------------------------------------------------
+	useEffect(() => {
+		OBJECT !== objectRef.current && (objectRef.current = OBJECT);
+	}, [
+		OBJECT
+	]);
+
 	// 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
@@ -91,7 +101,7 @@ export const UserCategory = memo(() => {
     setLOADING(true);
     axios.post(`${URL_OBJECT}/category/update`, {
       user_id: sessionId,
-      OBJECT: OBJECT
+      OBJECT: objectRef.current
     })
     .then((res: any) => {
       if (res.data.status === "success") {
@@ -191,13 +201,12 @@ export const UserCategory = memo(() => {
   // 4-2. handle----------------------------------------------------------------------------------
   const handleRename = (type: string, index: number) => {
     setIsEditable(`${dataType}_${type}_${index}`);
-
-    if (type === "part") {
+    if (type === "record_part") {
       setTimeout(() => {
         REFS?.current?.[dataType]?.[index]?.[`${dataType}_record_part`]?.current?.focus();
       }, 10);
     }
-    else if (type === "title") {
+    else if (type === "record_title") {
       setTimeout(() => {
         REFS?.current?.[dataType]?.[selectedIdx.category2Idx]?.[`${dataType}_record_title`]?.[index]?.current?.focus();
       }, 10);
@@ -206,7 +215,7 @@ export const UserCategory = memo(() => {
 
   // 4-3. handle --------------------------------------------------------------------------------
   const handleRemove = (type: string, index: number) => {
-    if (type === "part") {
+    if (type === "record_part") {
       if (OBJECT?.[dataType]?.length <= 1) {
         setALERT({
           open: true,
@@ -230,7 +239,7 @@ export const UserCategory = memo(() => {
         return updatedObject;
       });
     }
-    else if (type === "title") {
+    else if (type === "record_title") {
 			// @ts-ignore
       if (OBJECT?.[dataType]?.[selectedIdx?.category2Idx]?.[`${dataType}_record_title`]?.length <= 2) {
         setALERT({
@@ -353,7 +362,7 @@ export const UserCategory = memo(() => {
                                 ...prev,
                                 category2Idx: index
                               }));
-                              handleRename("part", index);
+                              handleRename("record_part", index);
                             }}
                           />
                           <Icons
@@ -364,7 +373,7 @@ export const UserCategory = memo(() => {
                                 ...prev,
                                 category2Idx: index
                               }));
-                              handleRemove("part", index);
+                              handleRemove("record_part", index);
                             }}
                           />
                         </Div>
@@ -467,7 +476,7 @@ export const UserCategory = memo(() => {
                                   ...prev,
                                   category3Idx: index
                                 }));
-                                handleRename("title", index);
+                                handleRename("record_title", index);
                               }}
                             />
                             <Icons
@@ -478,7 +487,7 @@ export const UserCategory = memo(() => {
                                   ...prev,
                                   category3Idx: index
                                 }));
-                                handleRemove("title", index);
+                                handleRemove("record_title", index);
                               }}
                             />
                           </Div>

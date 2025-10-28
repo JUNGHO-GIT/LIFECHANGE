@@ -1,10 +1,10 @@
 // UserResetPw.tsx
 
-import { useState, useEffect, memo } from "@importReacts";
+import { useState, useEffect, useRef, memo } from "@importReacts";
 import { useCommonValue, useValidateUser } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
-import { User } from "@importSchemas";
+import { User, UserType } from "@importSchemas";
 import { Input } from "@importContainers";
 import { Div, Btn, Img, Hr, Paper, Grid } from "@importComponents";
 
@@ -19,25 +19,27 @@ export const UserResetPw = memo(() => {
   const { ERRORS, REFS, validate } = useValidateUser();
 
 	// 2-2. useState -------------------------------------------------------------------------------
-  const [OBJECT, setOBJECT] = useState(User);
+	const [OBJECT, setOBJECT] = useState<UserType>(User);
 
-	// 2-3. useEffect -----------------------------------------------------------------------------
-  useEffect(() => {
-    setLOADING(true);
-    setTimeout(() => {
-      setLOADING(false);
-    }, 500);
-  }, []);
+	// 2-3. useRef --------------------------------------------------------------------------------
+	const objectRef = useRef(OBJECT);
+
+	// 2-3. useEffect ------------------------------------------------------------------------------
+	useEffect(() => {
+		OBJECT !== objectRef.current && (objectRef.current = OBJECT);
+	}, [
+		OBJECT
+	]);
 
 	// 3. flow ------------------------------------------------------------------------------------
   const flowSendEmail = async () => {
     setLOADING(true);
-    if (!await validate(OBJECT, "resetPw", "send")) {
+    if (!await validate(objectRef.current, "resetPw", "send")) {
       setLOADING(false);
       return;
     }
     axios.post (`${URL_OBJECT}/email/send`, {
-      user_id: OBJECT.user_id,
+      user_id: objectRef.current.user_id,
       type: "resetPw"
     })
     .then((res: any) => {
@@ -107,13 +109,13 @@ export const UserResetPw = memo(() => {
 	// 3. flow ------------------------------------------------------------------------------------
   const flowVerifyEmail = async () => {
     setLOADING(true);
-    if (!await validate(OBJECT, "resetPw", "verify")) {
+    if (!await validate(objectRef.current, "resetPw", "verify")) {
       setLOADING(false);
       return;
     }
     axios.post (`${URL_OBJECT}/email/verify`, {
-      user_id: OBJECT.user_id,
-      verify_code: OBJECT.user_verify_code
+      user_id: objectRef.current.user_id,
+      verify_code: objectRef.current.user_verify_code
     })
     .then((res: any) => {
       if (res.data.status === "success") {
@@ -157,13 +159,13 @@ export const UserResetPw = memo(() => {
 	// 3. flow ------------------------------------------------------------------------------------
   const flowSave = async () => {
     setLOADING(true);
-    if (!await validate(OBJECT, "resetPw", "save")) {
+    if (!await validate(objectRef.current, "resetPw", "save")) {
       setLOADING(false);
       return;
     }
     axios.post (`${URL_OBJECT}/resetPw`, {
-      user_id: OBJECT.user_id,
-      OBJECT: OBJECT
+      user_id: objectRef.current.user_id,
+      OBJECT: objectRef.current
     })
     .then((res: any) => {
       if (res.data.status === "success") {

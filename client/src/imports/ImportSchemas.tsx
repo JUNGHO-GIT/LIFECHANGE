@@ -99,6 +99,7 @@ export {
 
 // user -------------------------------------------------------------------------------------------
 export {
+	type UserType,
 	type CategoryType,
   User,
   Category,

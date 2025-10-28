@@ -17,7 +17,7 @@ export const UserAppSetting = memo(() => {
   const { setCONFIRM } = useStoreConfirm();
 
 	// 2-2. useState -------------------------------------------------------------------------------
-  const [lang, setLang] = useState<string>(localLang);
+  const [lang, setLang] = useState<string | undefined>(localLang);
 
   // 4-1. handle -------------------------------------------------------------------------------------
   const handleLogout = () => {

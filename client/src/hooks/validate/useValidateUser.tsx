@@ -36,13 +36,13 @@ export const useValidateUser = () => {
 	}, [setALERT, translate]);
 
   // 이메일 형식 -----------------------------------------------------------------------------------
-  const validateEmail = (email: string) => {
+  const fnValidateEmail = (email: string) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
   }
 
   // 8자 이상, 문자, 숫자, 특수문자 포함 -----------------------------------------------------------
-  const validatePassword = (password: string) => {
+  const fnValidatePw = (password: string) => {
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
     return passwordRegex.test(password);
   }
@@ -76,14 +76,14 @@ export const useValidateUser = () => {
       if (!OBJECT.user_id) {
         return fnAlert("user_id", "errorUserId", 0);
       }
-      else if (!validateEmail(OBJECT.user_id)) {
+      else if (!fnValidateEmail(OBJECT.user_id)) {
         return fnAlert("user_id", "errorUserIdAt", 0);
       }
       else if (!OBJECT.user_pw) {
         return fnAlert("user_pw", "errorUserPw", 0);
       }
       return true;
-    }
+		}
 
 		// 7-2. signup ---------------------------------------------------------------------------------
 		if (extra === "signup") {
@@ -118,7 +118,7 @@ export const useValidateUser = () => {
         if (!OBJECT.user_id) {
           return fnAlert("user_id", "errorUserId", 0);
         }
-        else if (!validateEmail(OBJECT.user_id)) {
+        else if (!fnValidateEmail(OBJECT.user_id)) {
           return fnAlert("user_id", "errorUserIdAt", 0);
         }
       }
@@ -131,7 +131,7 @@ export const useValidateUser = () => {
         if (!OBJECT.user_id) {
           return fnAlert("user_id", "errorUserId", 0);
         }
-        else if (!validateEmail(OBJECT.user_id)) {
+        else if (!fnValidateEmail(OBJECT.user_id)) {
           return fnAlert("user_id", "errorUserIdAt", 0);
         }
         else if (!OBJECT.user_id_verified) {
@@ -140,7 +140,7 @@ export const useValidateUser = () => {
         else if (!OBJECT.user_pw) {
           return fnAlert("user_pw", "errorUserPw", 0);
         }
-        else if (!validatePassword(OBJECT.user_pw)) {
+        else if (!fnValidatePw(OBJECT.user_pw)) {
           return fnAlert("user_pw", "errorUserPwRule", 0);
         }
         else if (!OBJECT.user_pw_verified) {
@@ -160,7 +160,7 @@ export const useValidateUser = () => {
         }
       }
       return true;
-    }
+		}
 
 		// 7-3. detail ---------------------------------------------------------------------------------
 		if (extra === "detail") {
@@ -196,7 +196,7 @@ export const useValidateUser = () => {
         return fnAlert("user_initProperty", "errorUserInitProperty", 0);
       }
       return true;
-    }
+		}
 
 		// 7-4. resetPw, delete ------------------------------------------------------------------------
 		if (extra === "resetPw" || extra === "delete") {
@@ -228,7 +228,7 @@ export const useValidateUser = () => {
         if (!OBJECT.user_id) {
           return fnAlert("user_id", "errorUserId", 0);
         }
-        else if (!validateEmail(OBJECT.user_id)) {
+        else if (!fnValidateEmail(OBJECT.user_id)) {
           return fnAlert("user_id", "errorUserIdAt", 0);
         }
       }
@@ -241,7 +241,7 @@ export const useValidateUser = () => {
         if (!OBJECT.user_id) {
           return fnAlert("user_id", "errorUserId", 0);
         }
-        else if (!validateEmail(OBJECT.user_id)) {
+        else if (!fnValidateEmail(OBJECT.user_id)) {
           return fnAlert("user_id", "errorUserIdAt", 0);
         }
         else if (!OBJECT.user_id_verified) {
@@ -250,7 +250,7 @@ export const useValidateUser = () => {
         else if (!OBJECT.user_pw) {
           return fnAlert("user_pw", "errorUserPw", 0);
         }
-        else if (!validatePassword(OBJECT.user_pw)) {
+        else if (!fnValidatePw(OBJECT.user_pw)) {
           return fnAlert("user_pw", "errorUserPwRule", 0);
         }
         else if (!OBJECT.user_pw_verified) {

@@ -245,7 +245,7 @@ export const useCommonValue = (): CommonValueType => {
     localSetting: localTitle?.setting || {},
     localTimeZone: localTitle?.setting?.locale?.timeZone || "UTC",
     localZoneName: localTitle?.setting?.locale?.zoneName || "UTC",
-    localLang: localTitle?.setting?.locale?.lang || "en",
+    localLang: localTitle?.setting?.locale?.lang,
     localIsoCode: localTitle?.setting?.locale?.isoCode || "US",
     localCurrency: localTitle?.setting?.locale?.currency || "USD",
     localUnit: localTitle?.setting?.locale?.unit || "lbs",

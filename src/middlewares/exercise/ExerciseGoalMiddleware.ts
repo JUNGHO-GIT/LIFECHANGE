@@ -1,4 +1,4 @@
-// exerciseDiffMiddleware.ts
+// ExerciseGoalMiddleware.ts
 
 import { differenceInMinutes } from "date-fns";
 

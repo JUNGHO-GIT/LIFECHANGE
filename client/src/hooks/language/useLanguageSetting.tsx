@@ -8,52 +8,42 @@ import { fnSetLocal } from "@importScripts";
 // -------------------------------------------------------------------------------------------------
 export const useLanguageSetting = () => {
 
-	// 1. common ----------------------------------------------------------------------------------
+  // 1. common ----------------------------------------------------------------------------------
   const { localLang } = useCommonValue();
 
-  // 2. declare ------------------------------------------------------------------------------------
-  let timeZone: string = "";
-  let zoneName: string = "";
-  let isoCode: string = "";
-  let currency: string = "";
-  let unit: string = "";
-  let lang: string = "";
-
-  // 3. useEffect ----------------------------------------------------------------------------------
+  // 2. useEffect ----------------------------------------------------------------------------------
   useEffect(() => {
-		// ex. UTC
-		timeZone = moment.tz.guess();
+    // ex. UTC
+    const timeZone = moment.tz.guess();
 
-		// ex. UTC
-		zoneName = moment.tz(timeZone).zoneName();
+    // ex. UTC
+    const zoneName = moment.tz(timeZone).zoneName();
 
-		// ex. US
-		isoCode = getCountryForTimezone(timeZone)?.id || "";
+    // ex. US
+    const isoCode = getCountryForTimezone(timeZone)?.id || "";
 
-		// ex. USD
-		currency = getAllInfoByISO(isoCode).currency;
+    // ex. USD
+    const currency = getAllInfoByISO(isoCode).currency;
 
-		// 미국인 경우 lbs, 그 외에는 kg 설정
-		unit = isoCode === "US" ? "lbs" : "kg";
+    // 미국인 경우 lbs, 그 외에는 kg 설정
+    const unit = isoCode === "US" ? "lbs" : "kg";
 
-		// ex. en
-		lang = localLang ? localLang : (
-			navigator.language.includes("-") ? navigator.language.split("-")[0] : navigator.language
-		);
+    // ex. en
+    const lang = localLang || (
+      navigator.language.includes("-") ? navigator.language.split("-")[0] : navigator.language
+    );
 
-		// Load lang for moment if necessary
-		if (lang && lang !== "en") {
-			require(`moment/locale/${lang}`);
-		}
+    // Load lang for moment if necessary
+    lang && lang !== "en" && require(`moment/locale/${lang}`);
 
-		// Save to local storage
-		fnSetLocal("setting", "locale", "", {
-			timeZone: timeZone,
-			lang: lang,
-			zoneName: zoneName,
-			isoCode: isoCode,
-			currency: currency,
-			unit: unit,
-		});
-  }, [timeZone, zoneName, isoCode, currency, unit]);
+    // Save to local storage
+    fnSetLocal("setting", "locale", "", {
+      timeZone: timeZone,
+      lang: lang,
+      zoneName: zoneName,
+      isoCode: isoCode,
+      currency: currency,
+      unit: unit,
+    });
+  }, [localLang]);
 };

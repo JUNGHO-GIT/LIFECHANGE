@@ -379,7 +379,7 @@ export const FoodRecordDetail = memo(() => {
       severity: "error",
     }) && (() => { return; })();
 
-    axios.put(`${URL_OBJECT}/find/update`, {
+    axios.put(`${URL_OBJECT}/favorite/update`, {
       user_id: sessionId,
       foodFavorite: foodFavorite,
     })

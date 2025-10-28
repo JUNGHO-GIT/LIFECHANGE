@@ -1,11 +1,11 @@
 // UserLogin.tsx
 
-import { useState, useEffect, memo } from "@importReacts";
+import { useState, useEffect, useRef, memo } from "@importReacts";
 import {useCommonValue, useValidateUser} from "@importHooks";
 import {useStoreLanguage, useStoreAlert, useStoreLoading} from "@importStores";
 import {axios} from "@importLibs";
 import {fnSync, fnGetLocal, fnSetLocal, fnSetSession} from "@importScripts";
-import {User} from "@importSchemas";
+import {User, UserType} from "@importSchemas";
 import {Input} from "@importContainers";
 import {Div, Btn, Img, Hr, Paper, Grid } from "@importComponents";
 import {Checkbox} from "@importMuis";
@@ -21,11 +21,21 @@ export const UserLogin = memo(() => {
 	const {ERRORS, REFS, validate} = useValidateUser();
 
 	// 2-2. useState ---------------------------------------------------------------------------------
+	const [OBJECT, setOBJECT] = useState<UserType>(User);
 	const [loginTrigger, setLoginTrigger] = useState<boolean>(false);
 	const [checkedSaveId, setCheckedSaveId] = useState<boolean>(false);
 	const [checkedAutoLogin, setCheckedAutoLogin] = useState<boolean>(false);
 	const [_clickCount, setClickCount] = useState<number>(0);
-	const [OBJECT, setOBJECT] = useState(User);
+
+	// 2-3. useRef --------------------------------------------------------------------------------
+	const objectRef = useRef(OBJECT);
+
+	// 2-3. useEffect ------------------------------------------------------------------------------
+	useEffect(() => {
+		OBJECT !== objectRef.current && (objectRef.current = OBJECT);
+	}, [
+		OBJECT
+	]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
 	// 트리거가 활성화된 경우
@@ -130,13 +140,13 @@ export const UserLogin = memo(() => {
 	// 3. flow ---------------------------------------------------------------------------------------
 	const flowSave = async () => {
 		setLOADING(true);
-		if (!await validate(OBJECT, "login", "")) {
+		if (!await validate(objectRef.current, "login", "")) {
 			setLOADING(false);
 			return;
 		}
 		axios.post(`${URL_OBJECT}/login`, {
-			user_id: OBJECT.user_id,
-			user_pw: OBJECT.user_pw,
+			user_id: objectRef.current.user_id,
+			user_pw: objectRef.current.user_pw,
 			isAutoLogin: checkedAutoLogin,
 		})
 		.then((res: any) => {

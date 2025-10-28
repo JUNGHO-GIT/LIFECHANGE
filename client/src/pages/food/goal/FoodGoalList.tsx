@@ -373,7 +373,7 @@ export const FoodGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_goal_protein_color}`}>
-															{fnInsertComma(item.food_goal_carb || "0")}
+															{fnInsertComma(item.food_goal_protein || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -389,7 +389,7 @@ export const FoodGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_total_protein_color}`}>
-															{fnInsertComma(item.food_record_total_carb || "0")}
+															{fnInsertComma(item.food_record_total_protein || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -405,7 +405,7 @@ export const FoodGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_diff_protein_color}`}>
-															{fnInsertComma(item.food_record_diff_carb || "0")}
+															{fnInsertComma(item.food_record_diff_protein || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
