@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate, useValidateFood } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { FoodGoal, FoodGoalType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnInsertComma, fnSync } from "@importScripts";
+import { fnInsertComma, fnSync, fnHandleNumberInput } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, Count, Delete, Input } from "@importContainers";
 import { Img, Bg, Paper, Grid, Br } from "@importComponents";
@@ -357,23 +357,14 @@ export const FoodGoalDetail = memo(() => {
 									endadornment={
 										translate("kc")
 									}
-									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 999999 제한 + 정수
-										if (Number(value) > 999999 || !/^\d+$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
-										// object 설정
-										setOBJECT((prev) => ({
-											...prev,
-											food_goal_kcal: value,
-										}));
-									}}
+                  onChange={(e: any) => {
+                    const processedValue = fnHandleNumberInput(e.target.value, 999999);
+                    if (processedValue === null) { return; }
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      food_goal_kcal: processedValue,
+                    }));
+                  }}
 								/>
 							</Grid>
 						</Grid>
@@ -406,23 +397,14 @@ export const FoodGoalDetail = memo(() => {
 									endadornment={
 										translate("g")
 									}
-									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 999999 제한 + 정수
-										if (Number(value) > 999999 || !/^\d+$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
-										// object 설정
-										setOBJECT((prev) => ({
-											...prev,
-											food_goal_carb: value,
-										}));
-									}}
+                  onChange={(e: any) => {
+                    const processedValue = fnHandleNumberInput(e.target.value, 999999);
+                    if (processedValue === null) { return; }
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      food_goal_carb: processedValue,
+                    }));
+                  }}
 								/>
 							</Grid>
 						</Grid>
@@ -455,23 +437,14 @@ export const FoodGoalDetail = memo(() => {
 									endadornment={
 										translate("g")
 									}
-									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 999999 제한 + 정수
-										if (Number(value) > 999999 || !/^\d+$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
-										// object 설정
-										setOBJECT((prev) => ({
-											...prev,
-											food_goal_protein: value,
-										}));
-									}}
+                  onChange={(e: any) => {
+                    const processedValue = fnHandleNumberInput(e.target.value, 999999);
+                    if (processedValue === null) { return; }
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      food_goal_protein: processedValue,
+                    }));
+                  }}
 								/>
 							</Grid>
 						</Grid>
@@ -504,23 +477,14 @@ export const FoodGoalDetail = memo(() => {
 									endadornment={
 										translate("g")
 									}
-									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 999999 제한 + 정수
-										if (Number(value) > 999999 || !/^\d+$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
-										// object 설정
-										setOBJECT((prev) => ({
-											...prev,
-											food_goal_fat: value,
-										}));
-									}}
+                  onChange={(e: any) => {
+                    const processedValue = fnHandleNumberInput(e.target.value, 999999);
+                    if (processedValue === null) { return; }
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      food_goal_fat: processedValue,
+                    }));
+                  }}
 								/>
 							</Grid>
 						</Grid>

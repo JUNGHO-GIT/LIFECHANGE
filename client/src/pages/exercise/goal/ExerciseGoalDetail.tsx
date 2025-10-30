@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate, useTime, useValidateExercise } from "@im
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { ExerciseGoal, ExerciseGoalType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnInsertComma, fnSync } from "@importScripts";
+import { fnInsertComma, fnSync, fnHandleNumberInput } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, PickerTime, Count, Delete, Input } from "@importContainers";
 import { Img, Bg, Paper, Grid, Br } from "@importComponents";
@@ -360,23 +360,14 @@ export const ExerciseGoalDetail = memo(() => {
 									endadornment={
 										translate("c")
 									}
-									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 9999 제한 + 정수
-										if (Number(value) > 9999 || !/^\d+$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
-										// object 설정
-										setOBJECT((prev) => ({
-											...prev,
-											exercise_goal_count: value
-										}));
-									}}
+                  onChange={(e: any) => {
+                    const processedValue = fnHandleNumberInput(e.target.value, 9999);
+                    if (processedValue === null) { return; }
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_goal_count: processedValue
+                    }));
+                  }}
 								/>
 							</Grid>
 						</Grid>
@@ -409,23 +400,14 @@ export const ExerciseGoalDetail = memo(() => {
 									endadornment={
 										translate("vol")
 									}
-									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 9999999 제한 + 정수
-										if (Number(value) > 9999999 || !/^\d+$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
-										// object 설정
-										setOBJECT((prev) => ({
-											...prev,
-											exercise_goal_volume: value
-										}));
-									}}
+                  onChange={(e: any) => {
+                    const processedValue = fnHandleNumberInput(e.target.value, 9999999);
+                    if (processedValue === null) { return; }
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_goal_volume: processedValue
+                    }));
+                  }}
 								/>
 							</Grid>
 						</Grid>
@@ -470,23 +452,14 @@ export const ExerciseGoalDetail = memo(() => {
 									endadornment={
 										localUnit
 									}
-									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 999 제한 + 소수점 둘째 자리
-										if (Number(value) > 999 || !/^\d*\.?\d{0,2}$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
-										// object 설정
-										setOBJECT((prev) => ({
-											...prev,
-											exercise_goal_scale: value
-										}));
-									}}
+                  onChange={(e: any) => {
+                    const processedValue = fnHandleNumberInput(e.target.value, 999, 2);
+                    if (processedValue === null) { return; }
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_goal_scale: processedValue
+                    }));
+                  }}
 								/>
 							</Grid>
 							{/** /.row 5 **/}

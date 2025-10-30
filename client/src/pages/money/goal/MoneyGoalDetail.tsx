@@ -6,6 +6,7 @@ import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores"
 import { MoneyGoal, MoneyGoalType } from "@importSchemas";
 import { axios } from "@importLibs";
 import { fnInsertComma, fnSync } from "@importScripts";
+import { fnHandleNumberInput } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, Count, Delete, Input } from "@importContainers";
 import { Img, Bg, Paper, Grid, Br } from "@importComponents";
@@ -356,21 +357,12 @@ export const MoneyGoalDetail = memo(() => {
 										localCurrency
 									}
 									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 9999999999 제한 + 정수
-										if (Number(value) > 9999999999 || !/^\d+$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
-										// object 설정
-										setOBJECT((prev) => ({
-											...prev,
-											money_goal_income: value,
-										}));
+                    const processedValue = fnHandleNumberInput(e.target.value, 9999999999);
+                    if (processedValue === null) { return; }
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      money_goal_income: processedValue,
+                    }));
 									}}
 								/>
 							</Grid>
@@ -405,21 +397,12 @@ export const MoneyGoalDetail = memo(() => {
 										localCurrency
 									}
 									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 9999999999 제한 + 정수
-										if (Number(value) > 9999999999 || !/^\d+$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
-										// object 설정
-										setOBJECT((prev) => ({
-											...prev,
-											money_goal_expense: value,
-										}));
+                    const processedValue = fnHandleNumberInput(e.target.value, 9999999999);
+                    if (processedValue === null) { return; }
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      money_goal_expense: processedValue,
+                    }));
 									}}
 								/>
 							</Grid>

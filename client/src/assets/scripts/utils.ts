@@ -126,8 +126,18 @@ export const fnMakeForm = (
 };
 
 // 7. handleNumberInput ---------------------------------------------------------------------------
-// - 숫자 입력 처리 (콤마 제거, 최대값 제한, 소수점 처리, 앞자리 0 제거)
-// 호출예시: fnHandleNumberInput("1,234.56", 10000, 2);
+/**
+ * 숫자 입력 처리 유틸
+ * - 콤마(,) 제거, 최대값 제한, 소수점 자리 제한, 선행 0 제거를 수행합니다.
+ * - 유효하지 않은 입력(패턴 불일치 또는 최대값 초과)일 경우 null을 반환합니다.
+ *
+ * 예: fnHandleNumberInput("1,234.56", 10000, 2) => "1234.56"
+ *
+ * @param val 사용자 입력값 (콤마 포함 가능)
+ * @param max 허용 최대값 (Number 비교)
+ * @param decimalPlaces 허용 소수 자릿수 (기본 0, 정수 전용)
+ * @returns 가공된 문자열 값 또는 null
+ */
 export const fnHandleNumberInput = (val: string, max: number, decimalPlaces: number = 0) => {
 	let processedValue = val === "" ? "0" : val.replace(/,/g, "");
 	const regex = decimalPlaces === 0 ? /^\d+$/ : new RegExp(`^\\d*\\.?\\d{0,${decimalPlaces}}$`);

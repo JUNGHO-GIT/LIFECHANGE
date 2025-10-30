@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate, useValidateFood } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { FoodRecord, FoodRecordType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnInsertComma, fnSetSession, fnSync } from "@importScripts";
+import { fnInsertComma, fnSetSession, fnSync, fnHandleNumberInput } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, Count, Delete, Input, Select } from "@importContainers";
 import { Img, Bg, Icons, Div, Paper, Grid, Br } from "@importComponents";
@@ -662,19 +662,11 @@ export const FoodRecordDetail = memo(() => {
 									inputRef={REFS?.[i]?.food_record_count}
 									error={ERRORS?.[i]?.food_record_count}
 									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 99 제한 + 소수점 첫째 자리
-										if (Number(value) > 99 || !/^\d*\.?\d{0,1}$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
+                    const processedValue = fnHandleNumberInput(e.target.value, 99, 1);
+                    if (processedValue === null) { return; }
 										// 영양소 설정 함수
 										const setNutrient = (nut: string | number, extra: string) => {
-											const numericValue = Number(value) || 1;
+                      const numericValue = Number(processedValue) || 1;
 											const foodCount = Number(item?.food_record_count) || 1;
 											if (!isNaN(numericValue) && !isNaN(foodCount)) {
 												return (
@@ -691,7 +683,7 @@ export const FoodRecordDetail = memo(() => {
 											food_section: prev.food_section?.map((section: any, idx: number) => (
 												idx === i ? {
 													...section,
-													food_record_count: value,
+                          food_record_count: processedValue,
 													food_record_kcal: setNutrient(item?.food_record_kcal, "kcal"),
 													food_record_fat: setNutrient(item?.food_record_fat, "fat"),
 													food_record_carb: setNutrient(item?.food_record_carb, "carb"),
@@ -710,23 +702,15 @@ export const FoodRecordDetail = memo(() => {
 									inputRef={REFS?.[i]?.food_record_gram}
 									error={ERRORS?.[i]?.food_record_gram}
 									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 999 제한 + 정수
-										if (Number(value) > 999 || !/^\d+$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
+                    const processedValue = fnHandleNumberInput(e.target.value, 999);
+                    if (processedValue === null) { return; }
 										// object 설정
 										setOBJECT((prev) => ({
 											...prev,
 											food_section: prev.food_section?.map((section: any, idx: number) => (
 												idx === i ? {
 													...section,
-													food_record_gram: value,
+                          food_record_gram: processedValue,
 												} : section
 											))
 										}));
@@ -819,23 +803,15 @@ export const FoodRecordDetail = memo(() => {
 										translate("kc")
 									}
 									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 9999 제한 + 정수
-										if (Number(value) > 9999 || !/^\d+$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
+                    const processedValue = fnHandleNumberInput(e.target.value, 9999);
+                    if (processedValue === null) { return; }
 										// object 설정
 										setOBJECT((prev) => ({
 											...prev,
 											food_section: prev.food_section?.map((section: any, idx: number) => (
 												idx === i ? {
 													...section,
-													food_record_kcal: value,
+                          food_record_kcal: processedValue,
 												} : section
 											))
 										}));
@@ -862,23 +838,15 @@ export const FoodRecordDetail = memo(() => {
 										translate("g")
 									}
 									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 999 제한 + 소수점 첫째 자리
-										if (Number(value) > 999 || !/^\d*\.?\d{0,1}$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
+                    const processedValue = fnHandleNumberInput(e.target.value, 999, 1);
+                    if (processedValue === null) { return; }
 										// object 설정
 										setOBJECT((prev) => ({
 											...prev,
 											food_section: prev.food_section?.map((section: any, idx: number) => (
 												idx === i ? {
 													...section,
-													food_record_carb: value,
+                          food_record_carb: processedValue,
 												} : section
 											))
 										}));
@@ -910,23 +878,15 @@ export const FoodRecordDetail = memo(() => {
 										translate("g")
 									}
 									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 999 제한 + 소수점 첫째 자리
-										if (Number(value) > 999 || !/^\d*\.?\d{0,1}$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
+                    const processedValue = fnHandleNumberInput(e.target.value, 999, 1);
+                    if (processedValue === null) { return; }
 										// object 설정
 										setOBJECT((prev) => ({
 											...prev,
 											food_section: prev.food_section?.map((section: any, idx: number) => (
 												idx === i ? {
 													...section,
-													food_record_protein: value,
+                          food_record_protein: processedValue,
 												} : section
 											))
 										}));
@@ -953,23 +913,15 @@ export const FoodRecordDetail = memo(() => {
 										translate("g")
 									}
 									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 999 제한 + 소수점 첫째 자리
-										if (Number(value) > 999 || !/^\d*\.?\d{0,1}$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
+                    const processedValue = fnHandleNumberInput(e.target.value, 999, 1);
+                    if (processedValue === null) { return; }
 										// object 설정
 										setOBJECT((prev) => ({
 											...prev,
 											food_section: prev.food_section?.map((section: any, idx: number) => (
 												idx === i ? {
 													...section,
-													food_record_fat: value,
+                          food_record_fat: processedValue,
 												} : section
 											))
 										}));

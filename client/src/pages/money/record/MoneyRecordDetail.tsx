@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate, useValidateMoney } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { MoneyRecord, MoneyRecordType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnInsertComma, fnSync } from "@importScripts";
+import { fnInsertComma, fnSync, fnHandleNumberInput } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, Memo, Count, Delete, Select, Input } from "@importContainers";
 import { Img, Bg, Div, Paper, Grid, Br } from "@importComponents";
@@ -531,14 +531,9 @@ export const MoneyRecordDetail = memo(() => {
 											localCurrency
 										}
 										onChange={(e: any) => {
-											let value = (e.target?.value === "" ? "0" : String(e.target.value).replace(/,/g, ""));
-											if (Number(value) > 999999999 || !/^\d+$/.test(value)) {
-												return;
-											}
-											if (/^0(?!\.)/.test(value)) {
-												value = value.replace(/^0+/, "");
-												value = value === "" ? "0" : value;
-											}
+											const processedValue = fnHandleNumberInput(e.target?.value, 999999999);
+											if (processedValue === null) { return; }
+											const value = processedValue === "" ? "0" : processedValue;
 											setOBJECT((prev) => ({
 												...prev,
 												money_section: prev.money_section?.map((section: any, idx: number) => (

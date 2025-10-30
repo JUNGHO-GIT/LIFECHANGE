@@ -34,7 +34,7 @@ export const UserAppSetting = memo(() => {
   const handleChangeLanguage = (lang: string) => {
     setLang(lang);
     fnSetLocal("setting", "locale", "lang", lang);
-    navigate(0);
+		window.location.reload();
 	};
 
   // 4-3. handle -------------------------------------------------------------------------------------

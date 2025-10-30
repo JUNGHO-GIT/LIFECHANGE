@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, memo } from "@importReacts";
 import { useCommonValue, useValidateUser } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
-import { fnInsertComma } from "@importScripts";
+import { fnInsertComma, fnHandleNumberInput } from "@importScripts";
 import { User, UserType } from "@importSchemas";
 import { Input } from "@importContainers";
 import { Div, Btn, Img, Hr, Paper, Grid } from "@importComponents";
@@ -401,23 +401,14 @@ export const UserSignup = memo(() => {
 									endadornment={
 										translate("cm")
 									}
-									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 999 제한 + 소수점 둘째 자리
-										if (Number(value) > 999 || !/^\d*\.?\d{0,2}$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
-										// object 설정
-										setOBJECT((prev) => ({
-											...prev,
-											user_initScale: value,
-										}));
-									}}
+                  onChange={(e: any) => {
+                    const processedValue = fnHandleNumberInput(e.target.value, 999, 2);
+                    if (processedValue === null) { return; }
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      user_initScale: processedValue,
+                    }));
+                  }}
 								/>
 							</Grid>
 						</Grid>
@@ -444,23 +435,14 @@ export const UserSignup = memo(() => {
 									endadornment={
 										translate("kc")
 									}
-									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 9999 제한 + 정수
-										if (Number(value) > 9999 || !/^\d+$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
-										// object 설정
-										setOBJECT((prev) => ({
-											...prev,
-											user_initAvgKcalIntake: value,
-										}));
-									}}
+                  onChange={(e: any) => {
+                    const processedValue = fnHandleNumberInput(e.target.value, 9999);
+                    if (processedValue === null) { return; }
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      user_initAvgKcalIntake: processedValue,
+                    }));
+                  }}
 								/>
 							</Grid>
 						</Grid>
@@ -487,23 +469,14 @@ export const UserSignup = memo(() => {
 									endadornment={
 										localCurrency
 									}
-									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 9999999999 제한 + 정수
-										if (Number(value) > 9999999999 || !/^\d+$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
-										// object 설정
-										setOBJECT((prev) => ({
-											...prev,
-											user_initProperty: value,
-										}));
-									}}
+                  onChange={(e: any) => {
+                    const processedValue = fnHandleNumberInput(e.target.value, 9999999999);
+                    if (processedValue === null) { return; }
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      user_initProperty: processedValue,
+                    }));
+                  }}
 								/>
 							</Grid>
 						</Grid>

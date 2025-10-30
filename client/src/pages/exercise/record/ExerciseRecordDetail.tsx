@@ -5,6 +5,7 @@ import { useCommonValue, useCommonDate, useTime, useValidateExercise } from "@im
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
 import { fnInsertComma, fnSync } from "@importScripts";
+import { fnHandleNumberInput } from "@importScripts";
 import { ExerciseRecord, ExerciseRecordType } from "@importSchemas";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, PickerTime, Count, Delete, Select, Input } from "@importContainers";
@@ -451,20 +452,11 @@ export const ExerciseRecordDetail = memo(() => {
                 localUnit
               }
               onChange={(e: any) => {
-                // 빈값 처리
-                let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-                // 999 제한 + 소수점 둘째 자리
-                if (Number(value) > 999 || !/^\d*\.?\d{0,2}$/.test(value)) {
-                  return;
-                }
-                // 01, 05 같은 숫자는 1, 5로 변경
-                if (/^0(?!\.)/.test(value)) {
-                  value = value.replace(/^0+/, '');
-                }
-                // object 설정
+                const processedValue = fnHandleNumberInput(e.target.value, 999, 2);
+                if (processedValue === null) { return; }
                 setOBJECT((prev) => ({
                   ...prev,
-                  exercise_record_total_scale: value
+                  exercise_record_total_scale: processedValue
                 }));
               }}
             />
@@ -592,28 +584,19 @@ export const ExerciseRecordDetail = memo(() => {
 									endadornment={
 										translate("s")
 									}
-									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 999 제한 + 정수
-										if (Number(value) > 999 || !/^\d+$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
-										// object 설정
-										setOBJECT((prev) => ({
-											...prev,
-											exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
-												idx === i ? {
-													...section,
-													exercise_record_set: value
-												} : section
-											))
-										}));
-									}}
+                  onChange={(e: any) => {
+                    const processedValue = fnHandleNumberInput(e.target.value, 999);
+                    if (processedValue === null) { return; }
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
+                        idx === i ? {
+                          ...section,
+                          exercise_record_set: processedValue
+                        } : section
+                      ))
+                    }));
+                  }}
 								/>
 							</Grid>
 							<Grid size={6}>
@@ -635,28 +618,19 @@ export const ExerciseRecordDetail = memo(() => {
 									endadornment={
 										translate("r")
 									}
-									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 999 제한 + 정수
-										if (Number(value) > 999 || !/^\d+$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
-										// object 설정
-										setOBJECT((prev) => ({
-											...prev,
-											exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
-												idx === i ? {
-													...section,
-													exercise_record_rep: value
-												} : section
-											))
-										}));
-									}}
+                  onChange={(e: any) => {
+                    const processedValue = fnHandleNumberInput(e.target.value, 999);
+                    if (processedValue === null) { return; }
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
+                        idx === i ? {
+                          ...section,
+                          exercise_record_rep: processedValue
+                        } : section
+                      ))
+                    }));
+                  }}
 								/>
 							</Grid>
 						</Grid>
@@ -683,28 +657,19 @@ export const ExerciseRecordDetail = memo(() => {
 									endadornment={
 										localUnit
 									}
-									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 999 제한 + 정수
-										if (Number(value) > 999 || !/^\d+$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
-										// object 설정
-										setOBJECT((prev) => ({
-											...prev,
-											exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
-												idx === i ? {
-													...section,
-													exercise_record_weight: value
-												} : section
-											))
-										}));
-									}}
+                  onChange={(e: any) => {
+                    const processedValue = fnHandleNumberInput(e.target.value, 999);
+                    if (processedValue === null) { return; }
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
+                        idx === i ? {
+                          ...section,
+                          exercise_record_weight: processedValue
+                        } : section
+                      ))
+                    }));
+                  }}
 								/>
 							</Grid>
 							<Grid size={6}>

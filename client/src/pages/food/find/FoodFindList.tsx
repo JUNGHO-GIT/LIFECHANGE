@@ -40,8 +40,8 @@ export const FoodFindList = memo(() => {
   );
 
 	// 2-2. useState -------------------------------------------------------------------------------
-  const [OBJECT, setOBJECT] = useState<[FoodFindType]>([FoodFind]);
-  const [checkedQueries, setCheckedQueries] = useState<{ [key: string]: boolean[] }>({});
+	const [OBJECT, setOBJECT] = useState<[FoodFindType]>([FoodFind]);
+	const [selectedKeys, setSelectedKeys] = useState<Set<string>>(new Set());
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "day",
@@ -69,27 +69,12 @@ export const FoodFindList = memo(() => {
   }, [PAGING.page]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
-	// - 페이지 로드시 체크박스 상태 초기화
-  useEffect(() => {
-    let sectionArray: typeof sessionFoodSection = [];
-    let section = sessionFoodSection;
-
-    // sectionArray 초기화
-    if (section) {
-      sectionArray = section;
-    }
-
-    const queryKey = `${PAGING.query}_${PAGING.page}`;
-    const newChecked = OBJECT.map((item: any) => (
-      sectionArray.some((sectionItem: any) => (
-        sectionItem.food_record_key === item.food_record_key
-      ))
-    ));
-    setCheckedQueries({
-      ...checkedQueries,
-      [queryKey]: newChecked
-    });
-  }, [OBJECT]);
+	// - 선택된 항목 키를 세션 스토리지에서 동기화
+	useEffect(() => {
+		const sectionArray: any[] = sessionFoodSection ? sessionFoodSection : [];
+		const keys = new Set<string>(sectionArray.map((s: any) => s.food_record_key));
+		setSelectedKeys(keys);
+	}, [sessionFoodSection]);
 
 	// 3. flow ------------------------------------------------------------------------------------
   const flowFind = async () => {
@@ -131,51 +116,45 @@ export const FoodFindList = memo(() => {
 
 	// 4. handle ---------------------------------------------------------------------------------
 	// - 체크박스 변경 시
-  const handleCheckboxChange = (index: number) => {
-    const queryKey = `${PAGING.query}_${PAGING.page}`;
-    const updatedChecked = [...(checkedQueries[queryKey] || [])];
-    updatedChecked[index] = !updatedChecked[index];
+	const handleCheckboxChange = (index: number) => {
+		// 스토리지 데이터 가져오기 (최신 값을 직접 가져옴)
+		const currentSection = fnGetSession("section", "food", "") || [];
+		let sectionArray = currentSection?.length > 0 ? [...currentSection] : [];
 
-    setCheckedQueries((prev) => ({
-      ...prev,
-      [queryKey]: updatedChecked,
-    }));
+		const item = OBJECT[index];
+		const key = item.food_record_key;
+		const nextSelected = new Set<string>(selectedKeys);
 
-    // 스토리지 데이터 가져오기 (최신 값을 직접 가져옴)
-    const currentSection = fnGetSession("section", "food", "") || [];
-    let sectionArray = currentSection?.length > 0 ? [...currentSection] : [];
+		const newItem = {
+			food_record_perNumber: item.food_record_perNumber,
+			food_record_part: item.food_record_part,
+			food_record_key: item.food_record_key,
+			food_record_query: item.food_record_query,
+			food_record_name: item.food_record_name,
+			food_record_brand: item.food_record_brand,
+			food_record_gram: item.food_record_gram,
+			food_record_serv: item.food_record_serv,
+			food_record_count: item.food_record_count,
+			food_record_kcal: item.food_record_kcal,
+			food_record_carb: item.food_record_carb,
+			food_record_protein: item.food_record_protein,
+			food_record_fat: item.food_record_fat,
+		};
 
-    const item = OBJECT[index];
-    const newItem = {
-      food_record_perNumber: item.food_record_perNumber,
-      food_record_part: item.food_record_part,
-      food_record_key: item.food_record_key,
-      food_record_query: item.food_record_query,
-      food_record_name: item.food_record_name,
-      food_record_brand: item.food_record_brand,
-      food_record_gram: item.food_record_gram,
-      food_record_serv: item.food_record_serv,
-      food_record_count: item.food_record_count,
-      food_record_kcal: item.food_record_kcal,
-      food_record_carb: item.food_record_carb,
-      food_record_protein: item.food_record_protein,
-      food_record_fat: item.food_record_fat,
-    };
+		// uncheck
+		(nextSelected.has(key)) ? (
+			nextSelected.delete(key),
+			sectionArray = sectionArray.filter((i: any) => i.food_record_key !== key)
+		)
+		// checked
+		: (
+			nextSelected.add(key),
+			!sectionArray.some((i: any) => i.food_record_key === key) && sectionArray.push(newItem)
+		);
 
-    if (updatedChecked[index]) {
-      if (!sectionArray.some((i: any) => i.food_record_key === item.food_record_key)) {
-        sectionArray.push(newItem);
-      }
-    }
-    else {
-      sectionArray = sectionArray?.filter((i: any) => (
-        i.food_record_key !== item.food_record_key
-      ));
-    }
-
-    // 스토리지 데이터 설정
-    fnSetSession("section", "food", "", sectionArray);
-  };
+		setSelectedKeys(nextSelected);
+		fnSetSession("section", "food", "", sectionArray);
+	};
 
   // 7. find ---------------------------------------------------------------------------------------
   const findNode = () => {
@@ -212,12 +191,7 @@ export const FoodFindList = memo(() => {
 												key={`check-${i}`}
 												color={"primary"}
 												size={"small"}
-												checked={
-													!! (
-														checkedQueries[`${PAGING.query}_${PAGING.page}`] &&
-														checkedQueries[`${PAGING.query}_${PAGING.page}`]?.[i]
-													)
-												}
+												checked={selectedKeys.has(item.food_record_key)}
 												onChange={(e: any) => {
 													e.stopPropagation();
 													handleCheckboxChange(i);
@@ -330,7 +304,7 @@ export const FoodFindList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_protein_color}`}>
-															{fnInsertComma(item.food_record_carb || "0")}
+															{fnInsertComma(item.food_record_protein || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -349,7 +323,7 @@ export const FoodFindList = memo(() => {
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={"d-center"}>
 												<Img
-													max={14}
+												max={14}
 													hover={true}
 													shadow={false}
 													radius={false}

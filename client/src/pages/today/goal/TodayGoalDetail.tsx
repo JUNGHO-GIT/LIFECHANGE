@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate, useValidateToday } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { TodayGoal, TodayGoalType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnInsertComma } from "@importScripts";
+import { fnInsertComma, fnHandleNumberInput } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, PickerTime, Count, Delete, Input, Select, Memo } from "@importContainers";
 import { Img, Bg, Paper, Grid, Div, Br } from "@importComponents";
@@ -202,17 +202,7 @@ export const TodayGoalDetail = memo(() => {
 	}, []);
 
 	// 4-4. handle ----------------------------------------------------------------------------------
-	const handleNumberInput = useCallback((val: string, max: number, allowDecimal: boolean = false) => {
-		let processedValue = val === `` ? `0` : val.replace(/,/g, ``);
-		const regex = allowDecimal ? /^\d*\.?\d{0,1}$/ : /^\d+$/;
-		if (Number(processedValue) > max || !regex.test(processedValue)) {
-			return null;
-		}
-		if (/^0(?!\.)/.test(processedValue)) {
-			processedValue = processedValue.replace(/^0+/, ``);
-		}
-		return processedValue;
-	}, []);
+	// 숫자 입력은 공통 유틸을 사용합니다.
 
 	// 7. detail -------------------------------------------------------------------------------------
 	const detailNode = () => {
@@ -381,7 +371,7 @@ export const TodayGoalDetail = memo(() => {
 										translate(`s`)
 									}
 									onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-										const processedValue = handleNumberInput(e.target.value, 999);
+										const processedValue = fnHandleNumberInput(e.target.value, 999);
 										if (processedValue !== null) {
 											setOBJECT((prev: TodayGoalType) => ({
 												...prev,
@@ -416,7 +406,7 @@ export const TodayGoalDetail = memo(() => {
 										translate(`r`)
 									}
 									onChange={(e: any) => {
-										const processedValue = handleNumberInput(e.target.value, 999);
+										const processedValue = fnHandleNumberInput(e.target.value, 999);
 										if (processedValue !== null) {
 											setOBJECT((prev: TodayGoalType) => ({
 												...prev,
@@ -456,7 +446,7 @@ export const TodayGoalDetail = memo(() => {
 										localUnit
 									}
 									onChange={(e: any) => {
-										const processedValue = handleNumberInput(e.target.value, 999);
+										const processedValue = fnHandleNumberInput(e.target.value, 999);
 										if (processedValue !== null) {
 											setOBJECT((prev: TodayGoalType) => ({
 												...prev,
@@ -577,7 +567,7 @@ export const TodayGoalDetail = memo(() => {
 									inputRef={REFS?.[i]?.food_record_count}
 									error={ERRORS?.[i]?.food_record_count}
 									onChange={(e: any) => {
-										const processedValue = handleNumberInput(e.target.value, 99, true);
+										const processedValue = fnHandleNumberInput(e.target.value, 99, 1);
 										if (processedValue !== null) {
 											const numericValue = Number(processedValue) || 1;
 											const foodCount = Number(item?.food_record_count) || 1;
@@ -616,7 +606,7 @@ export const TodayGoalDetail = memo(() => {
 									inputRef={REFS?.[i]?.food_record_gram}
 									error={ERRORS?.[i]?.food_record_gram}
 									onChange={(e: any) => {
-										const processedValue = handleNumberInput(e.target.value, 999);
+										const processedValue = fnHandleNumberInput(e.target.value, 999);
 										if (processedValue !== null) {
 											setOBJECT((prev: TodayGoalType) => ({
 												...prev,
@@ -709,7 +699,7 @@ export const TodayGoalDetail = memo(() => {
 										translate(`kc`)
 									}
 									onChange={(e: any) => {
-										const processedValue = handleNumberInput(e.target.value, 9999);
+										const processedValue = fnHandleNumberInput(e.target.value, 9999);
 										if (processedValue !== null) {
 											setOBJECT((prev: TodayGoalType) => ({
 												...prev,
@@ -744,7 +734,7 @@ export const TodayGoalDetail = memo(() => {
 										translate(`g`)
 									}
 									onChange={(e: any) => {
-										const processedValue = handleNumberInput(e.target.value, 999, true);
+										const processedValue = fnHandleNumberInput(e.target.value, 999, 1);
 										if (processedValue !== null) {
 											setOBJECT((prev: TodayGoalType) => ({
 												...prev,
@@ -784,7 +774,7 @@ export const TodayGoalDetail = memo(() => {
 										translate(`g`)
 									}
 									onChange={(e: any) => {
-										const processedValue = handleNumberInput(e.target.value, 999, true);
+										const processedValue = fnHandleNumberInput(e.target.value, 999, 1);
 										if (processedValue !== null) {
 											setOBJECT((prev: TodayGoalType) => ({
 												...prev,
@@ -819,7 +809,7 @@ export const TodayGoalDetail = memo(() => {
 										translate(`g`)
 									}
 									onChange={(e: any) => {
-										const processedValue = handleNumberInput(e.target.value, 999, true);
+										const processedValue = fnHandleNumberInput(e.target.value, 999, 1);
 										if (processedValue !== null) {
 											setOBJECT((prev: TodayGoalType) => ({
 												...prev,
@@ -983,7 +973,7 @@ export const TodayGoalDetail = memo(() => {
 										localCurrency
 									}
 									onChange={(e: any) => {
-										const processedValue = handleNumberInput(e.target.value, 999999999);
+										const processedValue = fnHandleNumberInput(e.target.value, 999999999);
 										if (processedValue !== null) {
 											setOBJECT((prev: TodayGoalType) => ({
 												...prev,

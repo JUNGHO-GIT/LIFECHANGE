@@ -82,7 +82,7 @@ export const FindFilter = memo((
         />
       </Div>
     </Div>
-  ), [state?.PAGING.query, translate, handleSearch, handleNavigateToDetail]);
+  ), [state?.PAGING.query, translate, setState, handleSearch, handleNavigateToDetail]);
 
 	// 7. favorite ---------------------------------------------------------------------------------
   const favoriteSection = useMemo(() => (

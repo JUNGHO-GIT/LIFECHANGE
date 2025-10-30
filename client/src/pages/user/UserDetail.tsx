@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, memo } from "@importReacts";
 import { useCommonValue, useValidateUser } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
-import { fnSync, fnInsertComma } from "@importScripts";
+import { fnSync, fnInsertComma, fnHandleNumberInput } from "@importScripts";
 import { User, UserType } from "@importSchemas";
 import { Footer } from "@importLayouts";
 import { Input } from "@importContainers";
@@ -179,20 +179,11 @@ export const UserDetail = memo(() => {
 										localUnit
 									}
 									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 999 제한 + 소수점 둘째 자리
-										if (Number(value) > 999 || !/^\d*\.?\d{0,2}$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
-										// object 설정
+										const processedValue = fnHandleNumberInput(e.target.value, 999, 2);
+										if (processedValue === null) { return; }
 										setOBJECT((prev) => ({
 											...prev,
-											user_initScale: value,
+											user_initScale: processedValue,
 										}));
 									}}
 								/>
@@ -245,20 +236,11 @@ export const UserDetail = memo(() => {
 										translate("kc")
 									}
 									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 9999 제한 + 정수
-										if (Number(value) > 9999 || !/^\d+$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
-										// object 설정
+										const processedValue = fnHandleNumberInput(e.target.value, 9999);
+										if (processedValue === null) { return; }
 										setOBJECT((prev) => ({
 											...prev,
-											user_initAvgKcalIntake: value,
+											user_initAvgKcalIntake: processedValue,
 										}));
 									}}
 								/>
@@ -311,20 +293,11 @@ export const UserDetail = memo(() => {
 										localCurrency
 									}
 									onChange={(e: any) => {
-										// 빈값 처리
-										let value = e.target.value === "" ? "0" : e.target.value.replace(/,/g, '');
-										// 9999999999 제한 + 정수
-										if (Number(value) > 9999999999 || !/^\d+$/.test(value)) {
-											return;
-										}
-										// 01, 05 같은 숫자는 1, 5로 변경
-										if (/^0(?!\.)/.test(value)) {
-											value = value.replace(/^0+/, '');
-										}
-										// object 설정
+										const processedValue = fnHandleNumberInput(e.target.value, 9999999999);
+										if (processedValue === null) { return; }
 										setOBJECT((prev) => ({
 											...prev,
-											user_initProperty: value,
+											user_initProperty: processedValue,
 										}));
 									}}
 								/>
