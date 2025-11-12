@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, memo } from "@importReacts";
 import {useCommonValue, useValidateUser} from "@importHooks";
 import {useStoreLanguage, useStoreAlert, useStoreLoading} from "@importStores";
 import {axios} from "@importLibs";
-import {syncData, getLocal, setLocal, setSession} from "@importScripts";
+import {sync, getLocal, setLocal, setSession} from "@importScripts";
 import {User, UserType} from "@importSchemas";
 import {Input} from "@importContainers";
 import {Div, Btn, Img, Hr, Paper, Grid } from "@importComponents";
@@ -157,7 +157,7 @@ export const UserLogin = memo(() => {
 					admin: res.data.admin === "admin" ? "true" : "false",
 				});
 				navigate("/today/record/list");
-						syncData();
+						sync();
 			}
 			else if (res.data.status === "isGoogleUser") {
 				setLOADING(false);

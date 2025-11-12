@@ -4,7 +4,7 @@ import { moment, axios } from "@importLibs";
 import { getSession, getLocal, setSession } from "@importScripts";
 
 // -------------------------------------------------------------------------------------------------
-export const syncData = async (extra?: string) => {
+export const sync = async (extra?: string) => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_SERVER_URL || "";

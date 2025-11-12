@@ -6,7 +6,7 @@ import { useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { FoodFind, FoodFindType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { sync, insertComma, setSession, fnGetSession } from "@importScripts";
+import { sync, insertComma, setSession, getSession } from "@importScripts";
 import { Footer, Empty, Dialog } from "@importLayouts";
 import { Div, Hr, Img, Icons, Paper, Grid } from "@importComponents";
 import { Checkbox,  Accordion, AccordionSummary, AccordionDetails } from "@importMuis";

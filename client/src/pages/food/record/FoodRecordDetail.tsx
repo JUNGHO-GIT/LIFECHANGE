@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate, useValidateFood } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { FoodRecord, FoodRecordType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { insertComma, setSession, sync, fnHandleNumberInput } from "@importScripts";
+import { insertComma, setSession, sync, handleNumberInput } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, Count, Delete, Input, Select } from "@importContainers";
 import { Img, Bg, Icons, Div, Paper, Grid, Br } from "@importComponents";

@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, memo } from "@importReacts";
 import { useCommonValue, useValidateUser } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
-import { syncData, insertComma, handleNumberInput } from "@importScripts";
+import { sync, insertComma, handleNumberInput } from "@importScripts";
 import { User, UserType } from "@importSchemas";
 import { Footer } from "@importLayouts";
 import { Input } from "@importContainers";
@@ -90,7 +90,7 @@ export const UserDetail = memo(() => {
           severity: "success",
         });
         navigate("/user/detail");
-	syncData();
+	sync();
       }
       else {
         setLOADING(false);

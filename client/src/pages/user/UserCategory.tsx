@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, createRef, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
-import { syncData } from "@importScripts";
+import { sync } from "@importScripts";
 import { Category, CategoryType } from "@importSchemas";
 import { Footer } from "@importLayouts";
 import { PopUp, Input } from "@importContainers";
@@ -111,7 +111,7 @@ export const UserCategory = memo(() => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-  syncData("category");
+  			sync("category");
       }
       else {
         setLOADING(false);
