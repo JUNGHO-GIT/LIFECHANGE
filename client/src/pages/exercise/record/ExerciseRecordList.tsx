@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { ExerciseRecord, ExerciseRecordType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnInsertComma } from "@importScripts";
+import { insertComma } from "@importScripts";
 import { Footer, Empty, Dialog } from "@importLayouts";
 import { Div, Hr, Icons, Img, Paper, Grid } from "@importComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
@@ -212,7 +212,7 @@ export const ExerciseRecordList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_volume_color}`}>
-															{fnInsertComma(item.exercise_record_total_volume)}
+															{insertComma(item.exercise_record_total_volume)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -282,7 +282,7 @@ export const ExerciseRecordList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_scale_color}`}>
-															{fnInsertComma(item.exercise_record_total_scale)}
+															{insertComma(item.exercise_record_total_scale)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>

@@ -1,7 +1,7 @@
 // sleepRecordService.ts
 
 import * as repository from "@repositories/sleep/SleepRecordRepository";
-import { fnTimeToDecimal, fnDecimalToTime } from "@assets/scripts/utils";
+import { timeToDecimal, decimalToTime } from "@assets/scripts/utils";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
@@ -106,11 +106,11 @@ export const list = async (
       grouped[key].docs.push(doc);
       const sections = doc?.sleep_section || [];
       sections.forEach((sec: any) => {
-        grouped[key].totalBedDecimal += fnTimeToDecimal(sec?.sleep_record_bedTime || "00:00");
+  grouped[key].totalBedDecimal += timeToDecimal(sec?.sleep_record_bedTime || "00:00");
         grouped[key].bedCount++;
-        grouped[key].totalWakeDecimal += fnTimeToDecimal(sec?.sleep_record_wakeTime || "00:00");
+  grouped[key].totalWakeDecimal += timeToDecimal(sec?.sleep_record_wakeTime || "00:00");
         grouped[key].wakeCount++;
-        grouped[key].totalSleepDecimal += fnTimeToDecimal(sec?.sleep_record_sleepTime || "00:00");
+  grouped[key].totalSleepDecimal += timeToDecimal(sec?.sleep_record_sleepTime || "00:00");
         grouped[key].sleepCount++;
       });
     });
@@ -119,9 +119,9 @@ export const list = async (
     const groupedArray = Object.keys(grouped).map((dateKey) => {
       const g = grouped[dateKey];
       const firstDoc = g.docs[0];
-      const avgBed = fnDecimalToTime(g.totalBedDecimal / (g.bedCount || 1));
-      const avgWake = fnDecimalToTime(g.totalWakeDecimal / (g.wakeCount || 1));
-      const avgSleep = fnDecimalToTime(g.totalSleepDecimal / (g.sleepCount || 1));
+  const avgBed = decimalToTime(g.totalBedDecimal / (g.bedCount || 1));
+  const avgWake = decimalToTime(g.totalWakeDecimal / (g.wakeCount || 1));
+  const avgSleep = decimalToTime(g.totalSleepDecimal / (g.sleepCount || 1));
       return {
         _id: firstDoc?._id || null,
         sleep_record_dateType: firstDoc?.sleep_record_dateType,

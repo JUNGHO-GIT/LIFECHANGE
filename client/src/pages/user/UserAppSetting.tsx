@@ -3,7 +3,7 @@
 import { useState, memo } from "@importReacts";
 import { useCommonValue } from "@importHooks";
 import { useStoreLanguage, useStoreConfirm } from "@importStores";
-import { fnSetLocal } from "@importScripts";
+import { setLocal } from "@importScripts";
 import { PopUp } from "@importContainers";
 import { Icons, Img, Div, Br, Paper, Grid } from "@importComponents";
 import { TableContainer, Table, TableBody, TableRow, TableCell } from "@importMuis";
@@ -21,7 +21,7 @@ export const UserAppSetting = memo(() => {
 
   // 4-1. handle -------------------------------------------------------------------------------------
   const handleLogout = () => {
-    fnSetLocal("setting", "id", "", {
+	setLocal("setting", "id", "", {
       autoLogin: "false",
       autoLoginId: "",
       autoLoginPw: "",
@@ -33,7 +33,7 @@ export const UserAppSetting = memo(() => {
   // 4-2. handle -------------------------------------------------------------------------------------
   const handleChangeLanguage = (lang: string) => {
     setLang(lang);
-    fnSetLocal("setting", "locale", "lang", lang);
+	setLocal("setting", "locale", "lang", lang);
 		window.location.reload();
 	};
 

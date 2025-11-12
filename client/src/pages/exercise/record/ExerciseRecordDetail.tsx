@@ -4,8 +4,8 @@ import { useState, useEffect, useRef, useCallback, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useTime, useValidateExercise } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
-import { fnInsertComma, fnSync } from "@importScripts";
-import { fnHandleNumberInput } from "@importScripts";
+import { insertComma, sync } from "@importScripts";
+import { handleNumberInput } from "@importScripts";
 import { ExerciseRecord, ExerciseRecordType } from "@importSchemas";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, PickerTime, Count, Delete, Select, Input } from "@importContainers";
@@ -265,7 +265,7 @@ export const ExerciseRecordDetail = memo(() => {
             dateEnd: dateRef.current.dateEnd
           }
         });
-        fnSync("scale");
+        sync("scale");
       }
       else {
         setLOADING(false);
@@ -320,7 +320,7 @@ export const ExerciseRecordDetail = memo(() => {
             dateEnd: dateRef.current.dateEnd
           }
         });
-        fnSync("scale");
+        sync("scale");
       }
       else {
         setLOADING(false);
@@ -390,7 +390,7 @@ export const ExerciseRecordDetail = memo(() => {
               locked={LOCKED}
               readOnly={true}
               label={translate("totalVolume")}
-              value={fnInsertComma(OBJECT?.exercise_record_total_volume || "0")}
+              value={insertComma(OBJECT?.exercise_record_total_volume || "0")}
               startadornment={
                 <Img
                   max={14}
@@ -438,7 +438,7 @@ export const ExerciseRecordDetail = memo(() => {
           <Grid size={12}>
             <Input
               label={translate("scale")}
-              value={fnInsertComma(OBJECT?.exercise_record_total_scale || "0")}
+              value={insertComma(OBJECT?.exercise_record_total_scale || "0")}
               startadornment={
                 <Img
                   max={14}
@@ -452,7 +452,7 @@ export const ExerciseRecordDetail = memo(() => {
                 localUnit
               }
               onChange={(e: any) => {
-                const processedValue = fnHandleNumberInput(e.target.value, 999, 2);
+                const processedValue = handleNumberInput(e.target.value, 999, 2);
                 if (processedValue === null) { return; }
                 setOBJECT((prev) => ({
                   ...prev,
@@ -569,7 +569,7 @@ export const ExerciseRecordDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate("set")}
-									value={fnInsertComma(item?.exercise_record_set || "0")}
+									value={insertComma(item?.exercise_record_set || "0")}
 									inputRef={REFS?.[i]?.exercise_record_set}
 									error={ERRORS?.[i]?.exercise_record_set}
 									startadornment={
@@ -585,7 +585,7 @@ export const ExerciseRecordDetail = memo(() => {
 										translate("s")
 									}
                   onChange={(e: any) => {
-                    const processedValue = fnHandleNumberInput(e.target.value, 999);
+                    const processedValue = handleNumberInput(e.target.value, 999);
                     if (processedValue === null) { return; }
                     setOBJECT((prev) => ({
                       ...prev,
@@ -603,7 +603,7 @@ export const ExerciseRecordDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate("rep")}
-									value={fnInsertComma(item?.exercise_record_rep || "0")}
+									value={insertComma(item?.exercise_record_rep || "0")}
 									inputRef={REFS?.[i]?.exercise_record_rep}
 									error={ERRORS?.[i]?.exercise_record_rep}
 									startadornment={
@@ -619,7 +619,7 @@ export const ExerciseRecordDetail = memo(() => {
 										translate("r")
 									}
                   onChange={(e: any) => {
-                    const processedValue = fnHandleNumberInput(e.target.value, 999);
+                    const processedValue = handleNumberInput(e.target.value, 999);
                     if (processedValue === null) { return; }
                     setOBJECT((prev) => ({
                       ...prev,
@@ -642,7 +642,7 @@ export const ExerciseRecordDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate("weight")}
-									value={fnInsertComma(item?.exercise_record_weight || "0")}
+									value={insertComma(item?.exercise_record_weight || "0")}
 									inputRef={REFS?.[i]?.exercise_record_weight}
 									error={ERRORS?.[i]?.exercise_record_weight}
 									startadornment={
@@ -658,7 +658,7 @@ export const ExerciseRecordDetail = memo(() => {
 										localUnit
 									}
                   onChange={(e: any) => {
-                    const processedValue = fnHandleNumberInput(e.target.value, 999);
+                    const processedValue = handleNumberInput(e.target.value, 999);
                     if (processedValue === null) { return; }
                     setOBJECT((prev) => ({
                       ...prev,

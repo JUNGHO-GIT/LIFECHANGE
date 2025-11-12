@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate, useTime, useValidateExercise } from "@im
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { ExerciseGoal, ExerciseGoalType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnInsertComma, fnSync, fnHandleNumberInput } from "@importScripts";
+import { insertComma, sync, handleNumberInput } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, PickerTime, Count, Delete, Input } from "@importContainers";
 import { Img, Bg, Paper, Grid, Br } from "@importComponents";
@@ -193,7 +193,7 @@ export const ExerciseGoalDetail = memo(() => {
             dateEnd: dateRef.current.dateEnd
           }
         });
-        fnSync("scale");
+        sync("scale");
       }
       else {
         setLOADING(false);
@@ -246,7 +246,7 @@ export const ExerciseGoalDetail = memo(() => {
             dateEnd: dateRef.current.dateEnd
           }
         });
-        fnSync("scale");
+        sync("scale");
       }
       else {
         setLOADING(false);
@@ -338,7 +338,7 @@ export const ExerciseGoalDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={fnInsertComma(item?.exercise_goal_count || "0")}
+									value={insertComma(item?.exercise_goal_count || "0")}
 									inputRef={REFS?.[i]?.exercise_goal_count}
 									error={ERRORS?.[i]?.exercise_goal_count}
 									label={
@@ -361,7 +361,7 @@ export const ExerciseGoalDetail = memo(() => {
 										translate("c")
 									}
                   onChange={(e: any) => {
-                    const processedValue = fnHandleNumberInput(e.target.value, 9999);
+                    const processedValue = handleNumberInput(e.target.value, 9999);
                     if (processedValue === null) { return; }
                     setOBJECT((prev) => ({
                       ...prev,
@@ -378,7 +378,7 @@ export const ExerciseGoalDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={fnInsertComma(item?.exercise_goal_volume || "0")}
+									value={insertComma(item?.exercise_goal_volume || "0")}
 									inputRef={REFS?.[i]?.exercise_goal_volume}
 									error={ERRORS?.[i]?.exercise_goal_volume}
 									label={
@@ -401,7 +401,7 @@ export const ExerciseGoalDetail = memo(() => {
 										translate("vol")
 									}
                   onChange={(e: any) => {
-                    const processedValue = fnHandleNumberInput(e.target.value, 9999999);
+                    const processedValue = handleNumberInput(e.target.value, 9999999);
                     if (processedValue === null) { return; }
                     setOBJECT((prev) => ({
                       ...prev,
@@ -437,7 +437,7 @@ export const ExerciseGoalDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate("goalScale")}
-									value={fnInsertComma(item?.exercise_goal_scale || "0")}
+									value={insertComma(item?.exercise_goal_scale || "0")}
 									inputRef={REFS?.[i]?.exercise_goal_scale}
 									error={ERRORS?.[i]?.exercise_goal_scale}
 									startadornment={
@@ -453,7 +453,7 @@ export const ExerciseGoalDetail = memo(() => {
 										localUnit
 									}
                   onChange={(e: any) => {
-                    const processedValue = fnHandleNumberInput(e.target.value, 999, 2);
+                    const processedValue = handleNumberInput(e.target.value, 999, 2);
                     if (processedValue === null) { return; }
                     setOBJECT((prev) => ({
                       ...prev,

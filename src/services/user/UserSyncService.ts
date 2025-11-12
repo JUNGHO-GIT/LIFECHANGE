@@ -1,7 +1,7 @@
 // userSyncService.ts
 
 import * as repository from "@repositories/user/UserSyncRepository";
-import { fnTimeToDecimal, fnDecimalToTime } from "@assets/scripts/utils";
+import { timeToDecimal, decimalToTime } from "@assets/scripts/utils";
 
 // 0. category (카테고리 조회) ---------------------------------------------------------------------
 export const category = async (
@@ -74,7 +74,7 @@ export const percent = async (
       parseFloat(acc?.exercise_record_total_volume) +  parseFloat(curr?.exercise_record_total_volume)
     );
     const exerciseTotalCardio = (
-      fnTimeToDecimal(acc?.exercise_record_total_cardio) + fnTimeToDecimal(curr?.exercise_record_total_cardio)
+  timeToDecimal(acc?.exercise_record_total_cardio) + timeToDecimal(curr?.exercise_record_total_cardio)
     );
     const exerciseTotalScale = (
       curr?.exercise_record_total_scale !== '0' ? curr?.exercise_record_total_scale : acc?.exercise_record_total_scale
@@ -82,7 +82,7 @@ export const percent = async (
     return {
       exercise_record_total_count: String(exerciseTotalCount),
       exercise_record_total_volume: String(exerciseTotalVolume),
-      exercise_record_total_cardio: String(fnDecimalToTime(exerciseTotalCardio)),
+  exercise_record_total_cardio: String(decimalToTime(exerciseTotalCardio)),
       exercise_record_total_scale: String(exerciseTotalScale),
     };
   });
@@ -163,15 +163,15 @@ export const percent = async (
     const sleepArr = Array.isArray(doc?.sleep_record_sleepTime) ? doc.sleep_record_sleepTime : (doc?.sleep_record_sleepTime ? [doc.sleep_record_sleepTime] : []);
 
     bedArr.forEach((val: any) => {
-      totalBedDecimal += fnTimeToDecimal(val || "00:00");
+  totalBedDecimal += timeToDecimal(val || "00:00");
       totalBedCount++;
     });
     wakeArr.forEach((val: any) => {
-      totalWakeDecimal += fnTimeToDecimal(val || "00:00");
+  totalWakeDecimal += timeToDecimal(val || "00:00");
       totalWakeCount++;
     });
     sleepArr.forEach((val: any) => {
-      totalSleepDecimal += fnTimeToDecimal(val || "00:00");
+  totalSleepDecimal += timeToDecimal(val || "00:00");
       totalSleepCount++;
     });
   });
@@ -185,9 +185,9 @@ export const percent = async (
     money: findMoney,
     sleepGoal: findSleepGoal[0],
     sleep: {
-      sleep_record_bedTime: fnDecimalToTime(totalBedDecimal / (totalBedCount || 1)),
-      sleep_record_wakeTime: fnDecimalToTime(totalWakeDecimal / (totalWakeCount || 1)),
-      sleep_record_sleepTime: fnDecimalToTime(totalSleepDecimal / (totalSleepCount || 1)),
+  sleep_record_bedTime: decimalToTime(totalBedDecimal / (totalBedCount || 1)),
+  sleep_record_wakeTime: decimalToTime(totalWakeDecimal / (totalWakeCount || 1)),
+  sleep_record_sleepTime: decimalToTime(totalSleepDecimal / (totalSleepCount || 1)),
     },
   };
 

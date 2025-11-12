@@ -5,7 +5,7 @@ import { Input, PopUp, Select } from "@importContainers";
 import { useCommonDate, useCommonValue, useStorageLocal } from "@importHooks";
 import { AdapterMoment, Badge, DateCalendar, LocalizationProvider, MenuItem, PickersDay } from "@importMuis";
 import { memo, useEffect, useState } from "@importReacts";
-import { fnSetSession } from "@importScripts";
+import { setSession } from "@importScripts";
 import { useStoreLanguage } from "@importStores";
 
 // -------------------------------------------------------------------------------------------------
@@ -742,7 +742,7 @@ export const PickerDay = memo((
 																dateStart: getDayFmt(day),
 																dateEnd: getDayFmt(day),
 															}));
-															fnSetSession("section", "food", "", []);
+															setSession("section", "food", "", []);
 														}}
 													/>
 												</Badge>
@@ -813,7 +813,7 @@ export const PickerDay = memo((
 												dateStart: getPrevDayStartFmt(prev.dateStart),
 												dateEnd: getPrevDayEndFmt(prev.dateStart),
 											}));
-											fnSetSession("section", "food", "", []);
+											setSession("section", "food", "", []);
 										}}
 									/>
 								</Div>
@@ -829,7 +829,7 @@ export const PickerDay = memo((
 												dateStart: getNextDayStartFmt(prev.dateStart),
 												dateEnd: getNextDayEndFmt(prev.dateStart),
 											}));
-											fnSetSession("section", "food", "", []);
+											setSession("section", "food", "", []);
 										}}
 									/>
 								</Div>

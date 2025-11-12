@@ -3,7 +3,7 @@
 import { useCommonValue } from "@importHooks";
 import { getAllInfoByISO, getCountryForTimezone, moment } from "@importLibs";
 import { useEffect } from "@importReacts";
-import { fnSetLocal } from "@importScripts";
+import { setLocal } from "@importScripts";
 
 // -------------------------------------------------------------------------------------------------
 export const useLanguageSetting = () => {
@@ -37,7 +37,7 @@ export const useLanguageSetting = () => {
     lang && lang !== "en" && require(`moment/locale/${lang}`);
 
     // Save to local storage
-    fnSetLocal("setting", "locale", "", {
+    setLocal("setting", "locale", "", {
       timeZone: timeZone,
       lang: lang,
       zoneName: zoneName,

@@ -57,7 +57,6 @@ declare module "@importTypes/*" {
   const value: any;
   export default value;
 }
-
 declare module "@importComponents/*" {
   const value: any;
   export default value;

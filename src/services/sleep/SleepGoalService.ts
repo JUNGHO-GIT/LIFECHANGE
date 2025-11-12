@@ -1,6 +1,6 @@
 // sleepGoalService.ts
 
-import { fnStrToDecimal, fnDecimalToStr } from "@assets/scripts/utils";
+import { strToDecimal, decimalToStr } from "@assets/scripts/utils";
 import * as repository from "@repositories/sleep/SleepGoalRepository";
 
 // 0. exist ----------------------------------------------------------------------------------------
@@ -112,20 +112,20 @@ export const list = async (
 
       // 각 평균값 구하기
       const bedTime = listRecord.reduce((acc: any, curr: any) => (
-        acc + fnStrToDecimal(curr?.sleep_record_bedTime)
+  acc + strToDecimal(curr?.sleep_record_bedTime)
       ), 0) / listRecord?.length;
       const wakeTime = listRecord.reduce((acc: any, curr: any) => (
-        acc + fnStrToDecimal(curr?.sleep_record_wakeTime)
+  acc + strToDecimal(curr?.sleep_record_wakeTime)
       ), 0) / listRecord?.length;
       const sleepTime = listRecord.reduce((acc: any, curr: any) => (
-        acc + fnStrToDecimal(curr?.sleep_record_sleepTime)
+  acc + strToDecimal(curr?.sleep_record_sleepTime)
       ), 0) / listRecord?.length;
 
       return {
         ...goal,
-        sleep_record_bedTime: fnDecimalToStr(bedTime),
-        sleep_record_wakeTime: fnDecimalToStr(wakeTime),
-        sleep_record_sleepTime: fnDecimalToStr(sleepTime)
+  sleep_record_bedTime: decimalToStr(bedTime),
+  sleep_record_wakeTime: decimalToStr(wakeTime),
+  sleep_record_sleepTime: decimalToStr(sleepTime)
       };
     }));
     statusResult = "success";

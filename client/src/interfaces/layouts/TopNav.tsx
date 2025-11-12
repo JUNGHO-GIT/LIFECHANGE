@@ -5,7 +5,7 @@ import { Input, PopUp } from "@importContainers";
 import { useCommonDate, useCommonValue, useStorageLocal } from "@importHooks";
 import { Checkbox, Menu, MenuItem, Tab, Tabs } from "@importMuis";
 import { memo, useEffect, useState } from "@importReacts";
-import { fnInsertComma } from "@importScripts";
+import { insertComma } from "@importScripts";
 import { useStoreLanguage } from "@importStores";
 
 // -------------------------------------------------------------------------------------------------
@@ -511,7 +511,7 @@ export const TopNav = memo(() => {
               </Grid>
               <Grid size={7} className={"d-row-right"}>
                 <Div className={"fs-1-1rem fw-600 black mr-5px"}>
-                  {fnInsertComma(scale.initScale || "0")}
+                  {insertComma(scale.initScale || "0")}
                 </Div>
               </Grid>
               <Grid size={2} className={"d-row-center"}>
@@ -539,7 +539,7 @@ export const TopNav = memo(() => {
               </Grid>
               <Grid size={7} className={"d-row-right"}>
                 <Div className={"fs-1-1rem fw-600 black mr-5px"}>
-                  {fnInsertComma(scale.curScale || "0")}
+                  {insertComma(scale.curScale || "0")}
                 </Div>
               </Grid>
               <Grid size={2} className={"d-row-center"}>
@@ -554,7 +554,7 @@ export const TopNav = memo(() => {
                 <Input
                   readOnly={true}
                   label={translate("minScale")}
-                  value={fnInsertComma(scale.minScale || "0")}
+                  value={insertComma(scale.minScale || "0")}
                   startadornment={
                     <Img
                       max={14}
@@ -576,7 +576,7 @@ export const TopNav = memo(() => {
                 <Input
                   readOnly={true}
                   label={translate("maxScale")}
-                  value={fnInsertComma(scale.maxScale || "0")}
+                  value={insertComma(scale.maxScale || "0")}
                   startadornment={
                     <Img
                       max={14}
@@ -672,7 +672,7 @@ export const TopNav = memo(() => {
               </Grid>
               <Grid size={7} className={"d-row-right"}>
                 <Div className={"fs-1-1rem fw-600 black mr-5px"}>
-                  {fnInsertComma(nutrition.initAvgKcalIntake || "0")}
+                  {insertComma(nutrition.initAvgKcalIntake || "0")}
                 </Div>
               </Grid>
               <Grid size={2} className={"d-row-center"}>
@@ -704,9 +704,9 @@ export const TopNav = memo(() => {
               <Grid size={7} className={"d-row-right"}>
                 <Div className={"fs-1-1rem fw-600 black mr-5px"}>
                   {nutritionType === "avg" ? (
-                    fnInsertComma(nutrition.curAvgKcalIntake || "0")
+                    insertComma(nutrition.curAvgKcalIntake || "0")
                   ) : (
-                    fnInsertComma(nutrition.totalKcalIntake || "0")
+                    insertComma(nutrition.totalKcalIntake || "0")
                   )}
                 </Div>
               </Grid>
@@ -730,9 +730,9 @@ export const TopNav = memo(() => {
                   }
                   value={
                     nutritionType === "avg" ? (
-                      fnInsertComma(nutrition.curAvgCarbIntake || "0")
+                      insertComma(nutrition.curAvgCarbIntake || "0")
                     ) : (
-                      fnInsertComma(nutrition.totalCarbIntake || "0")
+                      insertComma(nutrition.totalCarbIntake || "0")
                     )
                   }
                   startadornment={
@@ -764,9 +764,9 @@ export const TopNav = memo(() => {
                   }
                   value={
                     nutritionType === "avg" ? (
-                      fnInsertComma(nutrition.curAvgProteinIntake || "0")
+                      insertComma(nutrition.curAvgProteinIntake || "0")
                     ) : (
-                      fnInsertComma(nutrition.totalProteinIntake || "0")
+                      insertComma(nutrition.totalProteinIntake || "0")
                     )
                   }
                   startadornment={
@@ -798,9 +798,9 @@ export const TopNav = memo(() => {
                   }
                   value={
                     nutritionType === "avg" ? (
-                      fnInsertComma(nutrition.curAvgFatIntake || "0")
+                      insertComma(nutrition.curAvgFatIntake || "0")
                     ) : (
-                      fnInsertComma(nutrition.totalFatIntake || "0")
+                      insertComma(nutrition.totalFatIntake || "0")
                     )
                   }
                   startadornment={
@@ -888,7 +888,7 @@ export const TopNav = memo(() => {
               </Grid>
               <Grid size={7} className={"d-row-right"}>
                 <Div className={"fs-1-1rem fw-600 black mr-5px"}>
-                  {fnInsertComma(property.initProperty || "0")}
+                  {insertComma(property.initProperty || "0")}
                 </Div>
               </Grid>
               <Grid size={2} className={"d-row-center"}>
@@ -916,9 +916,9 @@ export const TopNav = memo(() => {
               <Grid size={7} className={"d-row-right"}>
                 <Div className={"fs-1-1rem fw-600 black mr-5px"}>
                   {includingExclusions ? (
-                    fnInsertComma(property.curPropertyAll || "0")
+                    insertComma(property.curPropertyAll || "0")
                   ) : (
-                    fnInsertComma(property.curPropertyExclusion || "0")
+                    insertComma(property.curPropertyExclusion || "0")
                   )}
                 </Div>
               </Grid>
@@ -936,9 +936,9 @@ export const TopNav = memo(() => {
                   label={translate("sumIncome")}
                   value={
                     includingExclusions ? (
-                      fnInsertComma(property.totalIncomeAll || "0")
+                      insertComma(property.totalIncomeAll || "0")
                     ) : (
-                      fnInsertComma(property.totalIncomeExclusion || "0")
+                      insertComma(property.totalIncomeExclusion || "0")
                     )
                   }
                   startadornment={
@@ -964,9 +964,9 @@ export const TopNav = memo(() => {
                   label={translate("sumExpense")}
                   value={
                     includingExclusions ? (
-                      fnInsertComma(property.totalExpenseAll || "0")
+                      insertComma(property.totalExpenseAll || "0")
                     ) : (
-                      fnInsertComma(property.totalExpenseExclusion || "0")
+                      insertComma(property.totalExpenseExclusion || "0")
                     )
                   }
                   startadornment={

@@ -6,7 +6,7 @@ import { useStorageLocal, useStorageSession } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { FoodFind, FoodFindType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnSetSession, fnGetSession, fnInsertComma } from "@importScripts";
+import { setSession, getSession, insertComma } from "@importScripts";
 import { Footer, Empty, Dialog } from "@importLayouts";
 import { Div, Hr, Img, Icons, Paper, Grid } from "@importComponents";
 import { Checkbox,  Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
@@ -118,7 +118,7 @@ export const FoodFindList = memo(() => {
 	// - 체크박스 변경 시
 	const handleCheckboxChange = (index: number) => {
 		// 스토리지 데이터 가져오기 (최신 값을 직접 가져옴)
-		const currentSection = fnGetSession("section", "food", "") || [];
+		const currentSection = getSession("section", "food", "") || [];
 		let sectionArray = currentSection?.length > 0 ? [...currentSection] : [];
 
 		const item = OBJECT[index];
@@ -153,7 +153,7 @@ export const FoodFindList = memo(() => {
 		);
 
 		setSelectedKeys(nextSelected);
-		fnSetSession("section", "food", "", sectionArray);
+		setSession("section", "food", "", sectionArray);
 	};
 
   // 7. find ---------------------------------------------------------------------------------------
@@ -234,7 +234,7 @@ export const FoodFindList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_kcal_color}`}>
-															{fnInsertComma(item.food_record_kcal || "0")}
+															{insertComma(item.food_record_kcal || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -269,7 +269,7 @@ export const FoodFindList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_carb_color}`}>
-															{fnInsertComma(item.food_record_carb || "0")}
+															{insertComma(item.food_record_carb || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -304,7 +304,7 @@ export const FoodFindList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_protein_color}`}>
-															{fnInsertComma(item.food_record_protein || "0")}
+															{insertComma(item.food_record_protein || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -339,7 +339,7 @@ export const FoodFindList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_fat_color}`}>
-															{fnInsertComma(item.food_record_fat || "0")}
+															{insertComma(item.food_record_fat || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>

@@ -17,7 +17,7 @@ export const useValidateSleep = () => {
   const validate = useRef<Function>(() => {});
 
 	// alert 표시 및 focus ---------------------------------------------------------------------------
-	const fnAlert = useCallback((field: string, msg: string, idx: number) => {
+	const alert = useCallback((field: string, msg: string, idx: number) => {
 		setALERT({
 			open: true,
 			msg: translate(msg),
@@ -63,15 +63,15 @@ export const useValidateSleep = () => {
 				))
 			);
 			if (COUNT.newSectionCnt <= 0) {
-				return fnAlert("", "errorCount", 0);
+				return alert("", "errorCount", 0);
 			}			else if (!OBJECT.sleep_goal_bedTime || OBJECT.sleep_goal_bedTime === "00:00") {
-				return fnAlert("sleep_goal_bedTime", "errorSleepGoalBedTime", 0);
+				return alert("sleep_goal_bedTime", "errorSleepGoalBedTime", 0);
 			}
 			else if (!OBJECT.sleep_goal_wakeTime || OBJECT.sleep_goal_wakeTime === "00:00") {
-				return fnAlert("sleep_goal_wakeTime", "errorSleepGoalWakeTime", 0);
+				return alert("sleep_goal_wakeTime", "errorSleepGoalWakeTime", 0);
 			}
 			else if (!OBJECT.sleep_goal_sleepTime) {
-				return fnAlert("sleep_goal_sleepTime", "errorSleepGoalSleepTime", 0);
+				return alert("sleep_goal_sleepTime", "errorSleepGoalSleepTime", 0);
 			}
 			return true;
 		}
@@ -118,17 +118,17 @@ export const useValidateSleep = () => {
 
       const section = OBJECT.sleep_section;
       if (COUNT.newSectionCnt <= 0) {
-        return fnAlert("", "errorCount", 0);
+        return alert("", "errorCount", 0);
       }
       for (let i = 0; i < section?.length; i++) {
         if (!section[i].sleep_record_bedTime || section[i].sleep_record_bedTime === "00:00") {
-          return fnAlert('sleep_record_bedTime', "errorSleepBedTime", i);
+          return alert('sleep_record_bedTime', "errorSleepBedTime", i);
         }
         else if (!section[i].sleep_record_wakeTime || section[i].sleep_record_wakeTime === "00:00") {
-          return fnAlert('sleep_record_wakeTime', "errorSleepWakeTime", i);
+          return alert('sleep_record_wakeTime', "errorSleepWakeTime", i);
         }
         else if (!section[i].sleep_record_sleepTime) {
-          return fnAlert('sleep_record_sleepTime', "errorSleepSleepTime", i);
+          return alert('sleep_record_sleepTime', "errorSleepSleepTime", i);
         }
       }
       return true;
@@ -165,7 +165,7 @@ export const useValidateSleep = () => {
 			});
 			if (await confirmResult) {
 				if (!OBJECT?._id || OBJECT?._id === "") {
-					return fnAlert("", "noData", 0);
+					return alert("", "noData", 0);
 				}
 				return true;
 			}

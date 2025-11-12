@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate, useValidateFood } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { FoodRecord, FoodRecordType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnInsertComma, fnSetSession, fnSync, fnHandleNumberInput } from "@importScripts";
+import { insertComma, setSession, sync, fnHandleNumberInput } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, Count, Delete, Input, Select } from "@importContainers";
 import { Img, Bg, Icons, Div, Paper, Grid, Br } from "@importComponents";
@@ -291,7 +291,7 @@ export const FoodRecordDetail = memo(() => {
             dateEnd: dateRef.current.dateEnd
           }
         });
-        fnSync("nutrition");
+        sync("nutrition");
       }
       else {
         setLOADING(false);
@@ -346,7 +346,7 @@ export const FoodRecordDetail = memo(() => {
             dateEnd: dateRef.current.dateEnd
           }
         });
-        fnSync("nutrition");
+        sync("nutrition");
       }
       else {
         setLOADING(false);
@@ -384,7 +384,7 @@ export const FoodRecordDetail = memo(() => {
       foodFavorite: foodFavorite,
     })
     .then((res: any) => {
-      res.data.status === "success" && setFAVORITE(res.data.result) && fnSync("favorite");
+      res.data.status === "success" && setFAVORITE(res.data.result) && sync("favorite");
       res.data.status !== "success" && setLOADING(false) && setALERT({
         open: true,
         msg: translate(res.data.msg),
@@ -412,7 +412,7 @@ export const FoodRecordDetail = memo(() => {
     let section = sessionFoodSection;
     section ? sectionArray = section : sectionArray = [];
     sectionArray.splice(index, 1);
-    fnSetSession("section", "food", "", sectionArray);
+    setSession("section", "food", "", sectionArray);
 
     setOBJECT((prev) => ({
       ...prev,
@@ -496,7 +496,7 @@ export const FoodRecordDetail = memo(() => {
               locked={LOCKED}
               readOnly={true}
               label={translate("totalKcal")}
-              value={fnInsertComma(OBJECT?.food_record_total_kcal || "0")}
+              value={insertComma(OBJECT?.food_record_total_kcal || "0")}
               startadornment={
                 <Img
                   max={14}
@@ -516,7 +516,7 @@ export const FoodRecordDetail = memo(() => {
               locked={LOCKED}
               readOnly={true}
               label={translate("totalCarb")}
-              value={fnInsertComma(OBJECT?.food_record_total_carb || "0")}
+              value={insertComma(OBJECT?.food_record_total_carb || "0")}
               startadornment={
                 <Img
                   max={14}
@@ -541,7 +541,7 @@ export const FoodRecordDetail = memo(() => {
               locked={LOCKED}
               readOnly={true}
               label={translate("totalProtein")}
-              value={fnInsertComma(OBJECT?.food_record_total_protein || "0")}
+              value={insertComma(OBJECT?.food_record_total_protein || "0")}
               startadornment={
                 <Img
                   max={14}
@@ -561,7 +561,7 @@ export const FoodRecordDetail = memo(() => {
               locked={LOCKED}
               readOnly={true}
               label={translate("totalFat")}
-              value={fnInsertComma(OBJECT?.food_record_total_fat || "0")}
+              value={insertComma(OBJECT?.food_record_total_fat || "0")}
               startadornment={
                 <Img
                   max={14}
@@ -658,11 +658,11 @@ export const FoodRecordDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate("foodCount")}
-									value={fnInsertComma(item?.food_record_count || "0")}
+									value={insertComma(item?.food_record_count || "0")}
 									inputRef={REFS?.[i]?.food_record_count}
 									error={ERRORS?.[i]?.food_record_count}
 									onChange={(e: any) => {
-                    const processedValue = fnHandleNumberInput(e.target.value, 99, 1);
+                    const processedValue = handleNumberInput(e.target.value, 99, 1);
                     if (processedValue === null) { return; }
 										// 영양소 설정 함수
 										const setNutrient = (nut: string | number, extra: string) => {
@@ -698,11 +698,11 @@ export const FoodRecordDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate("gram")}
-									value={fnInsertComma(item?.food_record_gram || "0")}
+									value={insertComma(item?.food_record_gram || "0")}
 									inputRef={REFS?.[i]?.food_record_gram}
 									error={ERRORS?.[i]?.food_record_gram}
 									onChange={(e: any) => {
-                    const processedValue = fnHandleNumberInput(e.target.value, 999);
+                    const processedValue = handleNumberInput(e.target.value, 999);
                     if (processedValue === null) { return; }
 										// object 설정
 										setOBJECT((prev) => ({
@@ -787,7 +787,7 @@ export const FoodRecordDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate("kcal")}
-									value={fnInsertComma(item?.food_record_kcal || "0")}
+									value={insertComma(item?.food_record_kcal || "0")}
 									inputRef={REFS?.[i]?.food_record_kcal}
 									error={ERRORS?.[i]?.food_record_kcal}
 									startadornment={
@@ -803,7 +803,7 @@ export const FoodRecordDetail = memo(() => {
 										translate("kc")
 									}
 									onChange={(e: any) => {
-                    const processedValue = fnHandleNumberInput(e.target.value, 9999);
+                    const processedValue = handleNumberInput(e.target.value, 9999);
                     if (processedValue === null) { return; }
 										// object 설정
 										setOBJECT((prev) => ({
@@ -822,7 +822,7 @@ export const FoodRecordDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate("carb")}
-									value={fnInsertComma(item?.food_record_carb || "0")}
+									value={insertComma(item?.food_record_carb || "0")}
 									inputRef={REFS?.[i]?.food_record_carb}
 									error={ERRORS?.[i]?.food_record_carb}
 									startadornment={
@@ -838,7 +838,7 @@ export const FoodRecordDetail = memo(() => {
 										translate("g")
 									}
 									onChange={(e: any) => {
-                    const processedValue = fnHandleNumberInput(e.target.value, 999, 1);
+                    const processedValue = handleNumberInput(e.target.value, 999, 1);
                     if (processedValue === null) { return; }
 										// object 설정
 										setOBJECT((prev) => ({
@@ -862,7 +862,7 @@ export const FoodRecordDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate("protein")}
-									value={fnInsertComma(item?.food_record_protein || "0")}
+									value={insertComma(item?.food_record_protein || "0")}
 									inputRef={REFS?.[i]?.food_record_protein}
 									error={ERRORS?.[i]?.food_record_protein}
 									startadornment={
@@ -878,7 +878,7 @@ export const FoodRecordDetail = memo(() => {
 										translate("g")
 									}
 									onChange={(e: any) => {
-                    const processedValue = fnHandleNumberInput(e.target.value, 999, 1);
+                    const processedValue = handleNumberInput(e.target.value, 999, 1);
                     if (processedValue === null) { return; }
 										// object 설정
 										setOBJECT((prev) => ({
@@ -897,7 +897,7 @@ export const FoodRecordDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate("fat")}
-									value={fnInsertComma(item?.food_record_fat || "0")}
+									value={insertComma(item?.food_record_fat || "0")}
 									inputRef={REFS?.[i]?.food_record_fat}
 									error={ERRORS?.[i]?.food_record_fat}
 									startadornment={
@@ -913,7 +913,7 @@ export const FoodRecordDetail = memo(() => {
 										translate("g")
 									}
 									onChange={(e: any) => {
-                    const processedValue = fnHandleNumberInput(e.target.value, 999, 1);
+                    const processedValue = handleNumberInput(e.target.value, 999, 1);
                     if (processedValue === null) { return; }
 										// object 설정
 										setOBJECT((prev) => ({

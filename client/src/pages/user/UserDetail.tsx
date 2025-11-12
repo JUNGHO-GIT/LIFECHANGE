@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, memo } from "@importReacts";
 import { useCommonValue, useValidateUser } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
-import { fnSync, fnInsertComma, fnHandleNumberInput } from "@importScripts";
+import { syncData, insertComma, handleNumberInput } from "@importScripts";
 import { User, UserType } from "@importSchemas";
 import { Footer } from "@importLayouts";
 import { Input } from "@importContainers";
@@ -90,7 +90,7 @@ export const UserDetail = memo(() => {
           severity: "success",
         });
         navigate("/user/detail");
-        fnSync();
+	syncData();
       }
       else {
         setLOADING(false);
@@ -163,7 +163,7 @@ export const UserDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									label={translate("initScale")}
-									value={fnInsertComma(item.user_initScale || "0")}
+									  value={insertComma(item.user_initScale || "0")}
 									inputRef={REFS?.[i]?.user_initScale}
 									error={ERRORS?.[i]?.user_initScale}
 									startadornment={
@@ -179,7 +179,7 @@ export const UserDetail = memo(() => {
 										localUnit
 									}
 									onChange={(e: any) => {
-										const processedValue = fnHandleNumberInput(e.target.value, 999, 2);
+										const processedValue = handleNumberInput(e.target.value, 999, 2);
 										if (processedValue === null) { return; }
 										setOBJECT((prev) => ({
 											...prev,
@@ -196,7 +196,7 @@ export const UserDetail = memo(() => {
 								<Input
 									readOnly={true}
 									label={translate("curScale")}
-									value={fnInsertComma(item.user_curScale || "0")}
+									  value={insertComma(item.user_curScale || "0")}
 									startadornment={
 										<Img
 											max={14}
@@ -220,7 +220,7 @@ export const UserDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									label={translate("initAvgKcalIntake")}
-									value={fnInsertComma(item.user_initAvgKcalIntake || "0")}
+									  value={insertComma(item.user_initAvgKcalIntake || "0")}
 									inputRef={REFS?.[i]?.user_initAvgKcalIntake}
 									error={ERRORS?.[i]?.user_initAvgKcalIntake}
 									startadornment={
@@ -236,7 +236,7 @@ export const UserDetail = memo(() => {
 										translate("kc")
 									}
 									onChange={(e: any) => {
-										const processedValue = fnHandleNumberInput(e.target.value, 9999);
+										const processedValue = handleNumberInput(e.target.value, 9999);
 										if (processedValue === null) { return; }
 										setOBJECT((prev) => ({
 											...prev,
@@ -253,7 +253,7 @@ export const UserDetail = memo(() => {
 								<Input
 									readOnly={true}
 									label={translate("curAvgKcalIntake")}
-									value={fnInsertComma(item.user_curAvgKcalIntake || "0")}
+									  value={insertComma(item.user_curAvgKcalIntake || "0")}
 									startadornment={
 										<Img
 											max={14}
@@ -277,7 +277,7 @@ export const UserDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									label={translate("initProperty")}
-									value={fnInsertComma(item.user_initProperty || "0")}
+									  value={insertComma(item.user_initProperty || "0")}
 									inputRef={REFS?.[i]?.user_initProperty}
 									error={ERRORS?.[i]?.user_initProperty}
 									startadornment={
@@ -293,7 +293,7 @@ export const UserDetail = memo(() => {
 										localCurrency
 									}
 									onChange={(e: any) => {
-										const processedValue = fnHandleNumberInput(e.target.value, 9999999999);
+										const processedValue = handleNumberInput(e.target.value, 9999999999);
 										if (processedValue === null) { return; }
 										setOBJECT((prev) => ({
 											...prev,
@@ -312,9 +312,9 @@ export const UserDetail = memo(() => {
 									label={translate("curPropertyExclusion")}
 									value={
 										includingExclusions ? (
-											fnInsertComma(item.user_curPropertyAll || "0")
+											  insertComma(item.user_curPropertyAll || "0")
 										) : (
-											fnInsertComma(item.user_curPropertyExclusion || "0")
+											  insertComma(item.user_curPropertyExclusion || "0")
 										)
 									}
 									startadornment={

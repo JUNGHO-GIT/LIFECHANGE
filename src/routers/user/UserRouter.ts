@@ -8,7 +8,7 @@ export const router = express.Router();
 // 1-1. sendEmail ----------------------------------------------------------------------------------
 router.post("/email/send", async (req: Request, res: Response) => {
   try {
-    let finalResult = await service.sendEmail (
+    let finalResult = await service.sendEmailCode (
       req.body.user_id as string,
       req.body.type as string,
     );

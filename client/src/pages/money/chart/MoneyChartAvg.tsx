@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
 import { MoneyAvg, MoneyAvgType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnFormatY, fnFormatDate } from "@importScripts";
+import { formatY, formatDate } from "@importScripts";
 import { ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@importLibs";
 
 // -------------------------------------------------------------------------------------------------
@@ -132,7 +132,7 @@ export const MoneyChartAvg = memo((props: MoneyChartAvgProps) => {
 			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`
 		);
 
-    const { domain, ticks, formatterY } = fnFormatY(object, moneyChartArray, "money");
+    const { domain, ticks, formatterY } = formatY(object, moneyChartArray, "money");
 		return (
 			<ResponsiveContainer width={"100%"} height={500}>
 				<ComposedChart
@@ -221,7 +221,7 @@ export const MoneyChartAvg = memo((props: MoneyChartAvgProps) => {
 						labelFormatter={(_label: any, payload: any) => {
 							const name = payload?.length > 0 ? payload[0]?.payload.name : '';
 							const date = payload?.length > 0 ? payload[0]?.payload.date : '';
-							return `${translate(name)} (${fnFormatDate(date)})`;
+							return `${translate(name)} (${formatDate(date)})`;
 						}}
 						formatter={(value: any, name: any) => {
 							const customName = translate(name);

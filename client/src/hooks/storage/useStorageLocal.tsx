@@ -1,7 +1,7 @@
 // useStorageLocal.tsx
 
 import { useEffect, useState } from "@importReacts";
-import { fnGetLocal, fnSetLocal } from "@importScripts";
+import { getLocal, setLocal } from "@importScripts";
 import { Dispatch, SetStateAction } from "react";
 
 // -------------------------------------------------------------------------------------------------
@@ -14,13 +14,13 @@ export const useStorageLocal = <T,> (
 
 	// -----------------------------------------------------------------------------------------------
 	const [storedVal, setStoredVal] = useState<T>(() => {
-		const existingValue = fnGetLocal(key1, key2, key3) as T | undefined;
+		const existingValue = getLocal(key1, key2, key3) as T | undefined;
 		return existingValue !== undefined ? existingValue : initialVal;
 	});
 
 	// -----------------------------------------------------------------------------------------------
 	useEffect(() => {
-		fnSetLocal(key1, key2, key3, storedVal);
+		setLocal(key1, key2, key3, storedVal);
 	}, [key1, key2, key3, storedVal]);
 
 	// -----------------------------------------------------------------------------------------------

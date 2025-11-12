@@ -136,7 +136,7 @@ export const PickerTime = memo((
 	}, [firstStr, secondStr, extra, DATE, translate]);
 
 	// 4. handle ----------------------------------------------------------------------------------
-	const fnHandleTodayChange = useCallback((e: any, closePopup: any) => {
+	const handleTodayChange = useCallback((e: any, closePopup: any) => {
 		setOBJECT((prev: any) => ({
 			...prev,
 			[`today_${targetStr}_section`]: prev?.[`today_${targetStr}_section`]?.map((section: any, idx: number) => (
@@ -150,7 +150,7 @@ export const PickerTime = memo((
 	}, [setOBJECT, targetStr, i, extra]);
 
 	// 4. handle ----------------------------------------------------------------------------------
-	const fnHandleGoalChange = useCallback((e: any, closePopup: any) => {
+	const handleGoalChange = useCallback((e: any, closePopup: any) => {
 		setOBJECT((prev: any) => ({
 			...prev,
 			[`${extra}`]: moment(e).format("HH:mm")
@@ -159,7 +159,7 @@ export const PickerTime = memo((
 	}, [setOBJECT, extra]);
 
 	// 4. handle ----------------------------------------------------------------------------------
-	const fnHandleRecordChange = useCallback((e: any, closePopup: any) => {
+	const handleRecordChange = useCallback((e: any, closePopup: any) => {
 		setOBJECT((prev: any) => ({
 			...prev,
 			[`${firstStr}_section`]: prev?.[`${firstStr}_section`]?.map((section: any, idx: number) => (
@@ -210,7 +210,7 @@ export const PickerTime = memo((
 								<DigitalClock
 									{...digitalClockProps}
 									value={moment(OBJECT?.[`today_${targetStr}_section`]?.[i]?.[`${extra}`], "HH:mm")}
-									onChange={(e: any) => fnHandleTodayChange(e, closePopup)}
+									onChange={(e: any) => handleTodayChange(e, closePopup)}
 								/>
 							</LocalizationProvider>
 						</Grid>
@@ -249,7 +249,7 @@ export const PickerTime = memo((
 								<DigitalClock
 									{...digitalClockProps}
 									value={moment(OBJECT?.[`${extra}`], "HH:mm")}
-									onChange={(e: any) => fnHandleGoalChange(e, closePopup)}
+									onChange={(e: any) => handleGoalChange(e, closePopup)}
 								/>
 							</LocalizationProvider>
 						</Grid>
@@ -287,7 +287,7 @@ export const PickerTime = memo((
 								<DigitalClock
 									{...digitalClockProps}
 									value={moment(OBJECT?.[`${firstStr}_section`]?.[i]?.[`${extra}`], "HH:mm")}
-									onChange={(e: any) => fnHandleRecordChange(e, closePopup)}
+									onChange={(e: any) => handleRecordChange(e, closePopup)}
 								/>
 							</LocalizationProvider>
 						</Grid>
@@ -320,7 +320,7 @@ export const PickerTime = memo((
 			</>
 		);
 	}, [
-		firstStr, secondStr, extra, i, OBJECT, REFS, ERRORS, LOCKED, targetStr, translateStr, imgAdornment, digitalClockProps, localLang, translate, fnHandleTodayChange, fnHandleGoalChange, fnHandleRecordChange
+		firstStr, secondStr, extra, i, OBJECT, REFS, ERRORS, LOCKED, targetStr, translateStr, imgAdornment, digitalClockProps, localLang, translate, handleTodayChange, handleGoalChange, handleRecordChange
 	]);
 
 	// 10. return ------------------------------------------------------------------------------------

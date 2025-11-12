@@ -17,7 +17,7 @@ export const useValidateFood = () => {
 	const validate = useRef<Function>(() => {});
 
 	// alert 표시 및 focus ---------------------------------------------------------------------------
-	const fnAlert = useCallback((field: string, msg: string, idx: number) => {
+	const alert = useCallback((field: string, msg: string, idx: number) => {
 		setALERT({
 			open: true,
 			msg: translate(msg),
@@ -64,19 +64,19 @@ export const useValidateFood = () => {
         ))
 			);
 			if (COUNT.newSectionCnt <= 0) {
-				return fnAlert("", "errorCount", 0);
+				return alert("", "errorCount", 0);
 			}
 			else if (!OBJECT.food_goal_kcal || OBJECT.food_goal_kcal === "0") {
-				return fnAlert("food_goal_kcal", "errorFoodGoalKcal", 0);
+				return alert("food_goal_kcal", "errorFoodGoalKcal", 0);
 			}
 			else if (!OBJECT.food_goal_carb || OBJECT.food_goal_carb === "0") {
-				return fnAlert("food_goal_carb", "errorFoodGoalCarb", 0);
+				return alert("food_goal_carb", "errorFoodGoalCarb", 0);
 			}
 			else if (!OBJECT.food_goal_protein || OBJECT.food_goal_protein === "0") {
-				return fnAlert("food_goal_protein", "errorFoodGoalProtein", 0);
+				return alert("food_goal_protein", "errorFoodGoalProtein", 0);
 			}
 			else if (!OBJECT.food_goal_fat || OBJECT.food_goal_fat === "0") {
-				return fnAlert("food_goal_fat", "errorFoodGoalFat", 0);
+				return alert("food_goal_fat", "errorFoodGoalFat", 0);
 			}
 			return true;
 		}
@@ -113,30 +113,30 @@ export const useValidateFood = () => {
 
       const section = OBJECT.food_section;
       if (COUNT.newSectionCnt <= 0) {
-        return fnAlert("", "errorCount", 0);
+        return alert("", "errorCount", 0);
       }
 
       for (let i = 0; i < section?.length; i++) {
         if (!section[i].food_record_part || section[i].food_record_part === "") {
-          return fnAlert('food_record_part', "errorFoodPart", i);
+          return alert('food_record_part', "errorFoodPart", i);
         }
         else if (!section[i].food_record_name || section[i].food_record_name === "") {
-          return fnAlert('food_record_name', "errorFoodName", i);
+          return alert('food_record_name', "errorFoodName", i);
         }
         else if (!section[i].food_record_count || section[i].food_record_count === "0") {
-          return fnAlert('food_record_count', "errorFoodCount", i);
+          return alert('food_record_count', "errorFoodCount", i);
         }
         else if (!section[i].food_record_kcal) {
-          return fnAlert('food_record_kcal', "errorFoodKcal", i);
+          return alert('food_record_kcal', "errorFoodKcal", i);
         }
         else if (!section[i].food_record_carb) {
-          return fnAlert('food_record_carb', "errorFoodCarb", i);
+          return alert('food_record_carb', "errorFoodCarb", i);
         }
         else if (!section[i].food_record_protein) {
-          return fnAlert('food_record_protein', "errorFoodProtein", i);
+          return alert('food_record_protein', "errorFoodProtein", i);
         }
         else if (!section[i].food_record_fat) {
-          return fnAlert('food_record_fat', "errorFoodFat", i);
+          return alert('food_record_fat', "errorFoodFat", i);
         }
       }
       return true;
@@ -173,7 +173,7 @@ export const useValidateFood = () => {
 			});
 			if (await confirmResult) {
 				if (!OBJECT?._id || OBJECT?._id === "") {
-					return fnAlert("", "noData", 0);
+					return alert("", "noData", 0);
 				}
 				return true;
 			}

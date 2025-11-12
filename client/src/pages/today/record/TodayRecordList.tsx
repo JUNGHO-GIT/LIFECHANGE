@@ -4,7 +4,7 @@ import { useState, useEffect, memo } from "@importReacts";
 import { useCommonValue, useCommonDate, useStorageLocal, useStorageSession } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
 import { axios } from "@importLibs";
-import { fnInsertComma } from "@importScripts";
+import { insertComma } from "@importScripts";
 import { ExerciseRecord, FoodRecord, MoneyRecord, SleepRecord } from "@importSchemas";
 import { Footer, Empty, Dialog } from "@importLayouts";
 import { Div, Hr, Img, Icons, Paper, Grid } from "@importComponents";
@@ -240,7 +240,7 @@ export const TodayRecordList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_volume_color}`}>
-															{fnInsertComma(item.exercise_record_total_volume)}
+															{insertComma(item.exercise_record_total_volume)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -310,7 +310,7 @@ export const TodayRecordList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_scale_color}`}>
-															{fnInsertComma(item.exercise_record_total_scale)}
+															{insertComma(item.exercise_record_total_scale)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -413,7 +413,7 @@ export const TodayRecordList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_total_kcal_color}`}>
-															{fnInsertComma(item.food_record_total_kcal || "0")}
+															{insertComma(item.food_record_total_kcal || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -448,7 +448,7 @@ export const TodayRecordList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_total_carb_color}`}>
-															{fnInsertComma(item.food_record_total_carb || "0")}
+															{insertComma(item.food_record_total_carb || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -483,7 +483,7 @@ export const TodayRecordList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_total_protein_color}`}>
-															{fnInsertComma(item.food_record_total_protein || "0")}
+															{insertComma(item.food_record_total_protein || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -518,7 +518,7 @@ export const TodayRecordList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_total_fat_color}`}>
-															{fnInsertComma(item.food_record_total_fat || "0")}
+															{insertComma(item.food_record_total_fat || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -621,7 +621,7 @@ export const TodayRecordList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.money_record_total_income_color}`}>
-															{fnInsertComma(item.money_record_total_income || "0")}
+															{insertComma(item.money_record_total_income || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -656,7 +656,7 @@ export const TodayRecordList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.money_record_total_expense_color}`}>
-															{fnInsertComma(item.money_record_total_expense || "0")}
+															{insertComma(item.money_record_total_expense || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>

@@ -2,21 +2,21 @@
 
 // -------------------------------------------------------------------------------------------------
 export {
-	fnSync,
+  syncData,
 } from "@assets/scripts/sync";
 
 // -------------------------------------------------------------------------------------------------
 export {
-  fnGetLocal,
-  fnSetLocal,
-  fnGetSession,
-  fnSetSession,
+  getLocal,
+  setLocal,
+  getSession,
+  setSession,
 } from "@assets/scripts/storage";
 
 // -------------------------------------------------------------------------------------------------
 export {
-  fnInsertComma,
-  fnFormatY,
-  fnHandleNumberInput,
-	fnFormatDate,
+  insertComma,
+  formatY,
+  handleNumberInput,
+	formatDate,
 } from "@assets/scripts/utils";

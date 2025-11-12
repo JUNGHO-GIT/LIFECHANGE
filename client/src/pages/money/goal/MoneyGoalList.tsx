@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { MoneyGoal, MoneyGoalType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnInsertComma } from "@importScripts";
+import { insertComma } from "@importScripts";
 import { Footer, Empty, Dialog } from "@importLayouts";
 import { Div, Img, Hr, Icons, Paper, Grid } from "@importComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
@@ -227,7 +227,7 @@ export const MoneyGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.money_goal_income_color}`}>
-															{fnInsertComma(item.money_goal_income || "0")}
+															{insertComma(item.money_goal_income || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -243,7 +243,7 @@ export const MoneyGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.money_record_total_income_color}`}>
-															{fnInsertComma(item.money_record_total_income || "0")}
+															{insertComma(item.money_record_total_income || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -259,7 +259,7 @@ export const MoneyGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.money_record_diff_income_color}`}>
-															{fnInsertComma(item.money_record_diff_income || "0")}
+															{insertComma(item.money_record_diff_income || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -300,7 +300,7 @@ export const MoneyGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.money_goal_expense_color}`}>
-															{fnInsertComma(item.money_goal_expense || "0")}
+															{insertComma(item.money_goal_expense || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -316,7 +316,7 @@ export const MoneyGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.money_record_total_expense_color}`}>
-															{fnInsertComma(item.money_record_total_expense || "0")}
+															{insertComma(item.money_record_total_expense || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -332,7 +332,7 @@ export const MoneyGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.money_record_diff_expense_color}`}>
-															{fnInsertComma(item.money_record_diff_expense || "0")}
+															{insertComma(item.money_record_diff_expense || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>

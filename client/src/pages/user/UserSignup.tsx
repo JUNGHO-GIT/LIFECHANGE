@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, memo } from "@importReacts";
 import { useCommonValue, useValidateUser } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { axios } from "@importLibs";
-import { fnInsertComma, fnHandleNumberInput } from "@importScripts";
+import { insertComma, handleNumberInput } from "@importScripts";
 import { User, UserType } from "@importSchemas";
 import { Input } from "@importContainers";
 import { Div, Btn, Img, Hr, Paper, Grid } from "@importComponents";
@@ -384,7 +384,7 @@ export const UserSignup = memo(() => {
 							<Grid size={12}>
 								<Input
 									label={translate("scale")}
-									value={fnInsertComma(item.user_initScale || "0")}
+                  value={insertComma(item.user_initScale || "0")}
 									inputRef={REFS?.[i]?.user_initScale}
 									error={ERRORS?.[i]?.user_initScale}
 									disabled={item.user_id_verified === false}
@@ -402,7 +402,7 @@ export const UserSignup = memo(() => {
 										translate("cm")
 									}
                   onChange={(e: any) => {
-                    const processedValue = fnHandleNumberInput(e.target.value, 999, 2);
+                    const processedValue = handleNumberInput(e.target.value, 999, 2);
                     if (processedValue === null) { return; }
                     setOBJECT((prev) => ({
                       ...prev,
@@ -418,7 +418,7 @@ export const UserSignup = memo(() => {
 							<Grid size={12}>
 								<Input
 									label={translate("avgKcalIntake")}
-									value={fnInsertComma(item.user_initAvgKcalIntake || "0")}
+                  value={insertComma(item.user_initAvgKcalIntake || "0")}
 									inputRef={REFS?.[i]?.user_initAvgKcalIntake}
 									error={ERRORS?.[i]?.user_initAvgKcalIntake}
 									disabled={item.user_id_verified === false}
@@ -436,7 +436,7 @@ export const UserSignup = memo(() => {
 										translate("kc")
 									}
                   onChange={(e: any) => {
-                    const processedValue = fnHandleNumberInput(e.target.value, 9999);
+                    const processedValue = handleNumberInput(e.target.value, 9999);
                     if (processedValue === null) { return; }
                     setOBJECT((prev) => ({
                       ...prev,
@@ -452,7 +452,7 @@ export const UserSignup = memo(() => {
 							<Grid size={12}>
 								<Input
 									label={translate("property")}
-									value={fnInsertComma(item.user_initProperty || "0")}
+                  value={insertComma(item.user_initProperty || "0")}
 									inputRef={REFS?.[i]?.user_initProperty}
 									error={ERRORS?.[i]?.user_initProperty}
 									disabled={item.user_id_verified === false}
@@ -470,7 +470,7 @@ export const UserSignup = memo(() => {
 										localCurrency
 									}
                   onChange={(e: any) => {
-                    const processedValue = fnHandleNumberInput(e.target.value, 9999999999);
+                    const processedValue = handleNumberInput(e.target.value, 9999999999);
                     if (processedValue === null) { return; }
                     setOBJECT((prev) => ({
                       ...prev,

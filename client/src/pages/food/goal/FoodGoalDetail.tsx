@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate, useValidateFood } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { FoodGoal, FoodGoalType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnInsertComma, fnSync, fnHandleNumberInput } from "@importScripts";
+import { insertComma, sync, handleNumberInput } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, Count, Delete, Input } from "@importContainers";
 import { Img, Bg, Paper, Grid, Br } from "@importComponents";
@@ -190,7 +190,7 @@ export const FoodGoalDetail = memo(() => {
             dateEnd: dateRef.current.dateEnd
           }
         });
-        fnSync("nutrition");
+        sync("nutrition");
       }
       else {
         setLOADING(false);
@@ -243,7 +243,7 @@ export const FoodGoalDetail = memo(() => {
             dateEnd: dateRef.current.dateEnd
           }
         });
-        fnSync("nutrition");
+        sync("nutrition");
       }
       else {
         setLOADING(false);
@@ -335,7 +335,7 @@ export const FoodGoalDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={fnInsertComma(item?.food_goal_kcal || "0")}
+									value={insertComma(item?.food_goal_kcal || "0")}
 									inputRef={REFS?.[i]?.food_goal_kcal}
 									error={ERRORS?.[i]?.food_goal_kcal}
 									label={
@@ -358,7 +358,7 @@ export const FoodGoalDetail = memo(() => {
 										translate("kc")
 									}
                   onChange={(e: any) => {
-                    const processedValue = fnHandleNumberInput(e.target.value, 999999);
+                    const processedValue = handleNumberInput(e.target.value, 999999);
                     if (processedValue === null) { return; }
                     setOBJECT((prev) => ({
                       ...prev,
@@ -375,7 +375,7 @@ export const FoodGoalDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={fnInsertComma(item?.food_goal_carb || "0")}
+									value={insertComma(item?.food_goal_carb || "0")}
 									inputRef={REFS?.[i]?.food_goal_carb}
 									error={ERRORS?.[i]?.food_goal_carb}
 									label={
@@ -398,7 +398,7 @@ export const FoodGoalDetail = memo(() => {
 										translate("g")
 									}
                   onChange={(e: any) => {
-                    const processedValue = fnHandleNumberInput(e.target.value, 999999);
+                    const processedValue = handleNumberInput(e.target.value, 999999);
                     if (processedValue === null) { return; }
                     setOBJECT((prev) => ({
                       ...prev,
@@ -415,7 +415,7 @@ export const FoodGoalDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={fnInsertComma(item?.food_goal_protein || "0")}
+									value={insertComma(item?.food_goal_protein || "0")}
 									inputRef={REFS?.[i]?.food_goal_protein}
 									error={ERRORS?.[i]?.food_goal_protein}
 									label={
@@ -438,7 +438,7 @@ export const FoodGoalDetail = memo(() => {
 										translate("g")
 									}
                   onChange={(e: any) => {
-                    const processedValue = fnHandleNumberInput(e.target.value, 999999);
+                    const processedValue = handleNumberInput(e.target.value, 999999);
                     if (processedValue === null) { return; }
                     setOBJECT((prev) => ({
                       ...prev,
@@ -455,7 +455,7 @@ export const FoodGoalDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={fnInsertComma(item?.food_goal_fat || "0")}
+									value={insertComma(item?.food_goal_fat || "0")}
 									inputRef={REFS?.[i]?.food_goal_fat}
 									error={ERRORS?.[i]?.food_goal_fat}
 									label={
@@ -478,7 +478,7 @@ export const FoodGoalDetail = memo(() => {
 										translate("g")
 									}
                   onChange={(e: any) => {
-                    const processedValue = fnHandleNumberInput(e.target.value, 999999);
+                    const processedValue = handleNumberInput(e.target.value, 999999);
                     if (processedValue === null) { return; }
                     setOBJECT((prev) => ({
                       ...prev,

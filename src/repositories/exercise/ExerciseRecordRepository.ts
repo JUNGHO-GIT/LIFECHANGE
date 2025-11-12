@@ -1,7 +1,7 @@
 // exerciseRecordRepository.ts
 
 import mongoose from "mongoose";
-import { fnTimeToDecimal, fnDecimalToTime } from "@assets/scripts/utils";
+import { timeToDecimal, decimalToTime } from "@assets/scripts/utils";
 import { ExerciseRecord } from "@schemas/exercise/ExerciseRecord";
 
 // 0. exist ----------------------------------------------------------------------------------------
@@ -229,9 +229,9 @@ export const update = {
       parseFloat(OBJECT_param.exercise_record_total_volume)
     );
     const newCardio = String (
-      fnDecimalToTime(
-        parseFloat(String(fnTimeToDecimal(findResult.exercise_record_total_cardio))) +
-        parseFloat(String(fnTimeToDecimal(OBJECT_param.exercise_record_total_cardio)))
+      decimalToTime(
+        parseFloat(String(timeToDecimal(findResult.exercise_record_total_cardio))) +
+        parseFloat(String(timeToDecimal(OBJECT_param.exercise_record_total_cardio)))
       )
     );
     const newScale = String (

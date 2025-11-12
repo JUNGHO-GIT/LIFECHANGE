@@ -2,7 +2,7 @@
 
 import { memo, useEffect } from "@importReacts";
 import { useCommonDate, useCommonValue, useStorageLocal } from "@importHooks";
-import { fnGetLocal } from "@importScripts";
+import { getLocal } from "@importScripts";
 import { useStoreLanguage } from "@importStores";
 import { Img, Paper } from "@importComponents";
 import { BottomNavigation, BottomNavigationAction } from "@importMuis";
@@ -42,7 +42,7 @@ export const BottomNav = memo(() => {
   const handleClickBottomNav = (value: string) => {
 
     // top selected 값 가져오기
-    const getItem = fnGetLocal("tabs", "top", "");
+    const getItem = getLocal("tabs", "top", "");
     const selectedTop = getItem[value];
 		const url = value === "calendar" ? `/${value}/list` : `/${value}/${selectedTop}/list`;
     navigate(url, {

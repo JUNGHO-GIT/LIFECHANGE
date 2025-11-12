@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // -------------------------------------------------------------------------------------------------
-export const fnEmailSending = async (email: string, code: string) => {
+export const sendEmail = async (email: string, code: string) => {
   try {
     // 이메일 서버 설정
     const transporter = nodemailer.createTransport({

@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate, useTime, useValidateSleep } from "@impor
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { SleepGoal, SleepGoalType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnSync } from "@importScripts";
+import { sync } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, PickerTime, Count, Delete } from "@importContainers";
 import { Bg, Paper, Grid, Br } from "@importComponents";
@@ -194,7 +194,7 @@ export const SleepGoalDetail = memo(() => {
 						dateEnd: dateRef.current.dateEnd
 					}
 				}),
-				fnSync()
+				sync()
 			) : (
 				setLOADING(false),
 				setALERT({
@@ -246,7 +246,7 @@ export const SleepGoalDetail = memo(() => {
 						dateEnd: dateRef.current.dateEnd
 					}
 				}),
-				fnSync()
+				sync()
 			) : (
 				setLOADING(false),
 				setALERT({

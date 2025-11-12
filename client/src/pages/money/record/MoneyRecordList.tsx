@@ -6,7 +6,7 @@ import { useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { MoneyRecord, MoneyRecordType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnInsertComma } from "@importScripts";
+import { insertComma } from "@importScripts";
 import { Footer, Empty, Dialog } from "@importLayouts";
 import { Div, Hr, Img, Icons, Paper, Grid } from "@importComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
@@ -213,7 +213,7 @@ export const MoneyRecordList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.money_record_total_income_color}`}>
-															{fnInsertComma(item.money_record_total_income || "0")}
+															{insertComma(item.money_record_total_income || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -248,7 +248,7 @@ export const MoneyRecordList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.money_record_total_expense_color}`}>
-															{fnInsertComma(item.money_record_total_expense || "0")}
+															{insertComma(item.money_record_total_expense || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>

@@ -1,19 +1,19 @@
 // utils.ts
 
 // 1. random ----------------------------------------------------------------------------------
-export const fnRandomNumber = (data: number) => {
+export const randomNumber = (data: number) => {
 	return Math.floor(Math.random() * data);
 };
 
 // 2. time ------------------------------------------------------------------------------------
-export const fnRandomTime = (): string => {
+export const randomTime = (): string => {
 	const hour = Math.floor(Math.random() * 23).toString().padStart(2, '0');
 	const minute = Math.floor(Math.random() * 60).toString().padStart(2, '0');
 	return `${hour}:${minute}`;
 };
 
 // 3. date ------------------------------------------------------------------------------------
-export const fnCalcDate = (startTime: string, endTime: string) => {
+export const calcDate = (startTime: string, endTime: string) => {
 	const start = new Date(`1970/01/01 ${startTime}`);
 	const end = new Date(`1970/01/01 ${endTime}`);
 	const duration = new Date(Number(end) - Number(start) + 24 * 60 * 60 * 1000);
@@ -21,7 +21,7 @@ export const fnCalcDate = (startTime: string, endTime: string) => {
 };
 
 // 4. decimal ---------------------------------------------------------------------------------
-export const fnStrToDecimal = (time: string) => {
+export const strToDecimal = (time: string) => {
 	if (!time) {
 		return 0;
 	}
@@ -33,7 +33,7 @@ export const fnStrToDecimal = (time: string) => {
 };
 
 // 4. decimal --------------------------------------------------------------------------------
-export const fnDecimalToStr = (time: number) => {
+export const decimalToStr = (time: number) => {
 	if (time === null || time === undefined) {
 		return "00:00";
 	}
@@ -47,7 +47,7 @@ export const fnDecimalToStr = (time: number) => {
 
 // 5. insertComma -----------------------------------------------------------------------------
 // - 세자리 마다 콤마(,) 삽입
-export const fnInsertComma = (str: string | number) => {
+export const insertComma = (str: string | number) => {
 	try {
 		// 만약 number 형식이면 string 으로 변환
 		if (typeof str === "number") {
@@ -81,7 +81,7 @@ export const fnInsertComma = (str: string | number) => {
 };
 
 // 6. makeForm --------------------------------------------------------------------------------
-export const fnMakeForm = (
+export const makeForm = (
 	object: any,
 	fileList: File[] | null,
 	extra?: any
@@ -131,14 +131,14 @@ export const fnMakeForm = (
  * - 콤마(,) 제거, 최대값 제한, 소수점 자리 제한, 선행 0 제거를 수행합니다.
  * - 유효하지 않은 입력(패턴 불일치 또는 최대값 초과)일 경우 null을 반환합니다.
  *
- * 예: fnHandleNumberInput("1,234.56", 10000, 2) => "1234.56"
+ * 예: handleNumberInput("1,234.56", 10000, 2) => "1234.56"
  *
  * @param val 사용자 입력값 (콤마 포함 가능)
  * @param max 허용 최대값 (Number 비교)
  * @param decimalPlaces 허용 소수 자릿수 (기본 0, 정수 전용)
  * @returns 가공된 문자열 값 또는 null
  */
-export const fnHandleNumberInput = (val: string, max: number, decimalPlaces: number = 0) => {
+export const handleNumberInput = (val: string, max: number, decimalPlaces: number = 0) => {
 	let processedValue = val === "" ? "0" : val.replace(/,/g, "");
 	const regex = decimalPlaces === 0 ? /^\d+$/ : new RegExp(`^\\d*\\.?\\d{0,${decimalPlaces}}$`);
 	if (Number(processedValue) > max || !regex.test(processedValue)) {
@@ -152,15 +152,15 @@ export const fnHandleNumberInput = (val: string, max: number, decimalPlaces: num
 
 // 8. formatY -------------------------------------------------------------------------------------
 // - 차트 Y축 범위 및 눈금 계산
-export const fnFormatY = (
+export const formatY = (
 	OBJECT: any,
 	array: any,
 	type: string,
 	_extra?: string,
 ) => {
 	// 캐시: 동일한 데이터(reference)로 여러 번 호출될 때 계산을 재사용
-	const cacheMap = (fnFormatY as any)._cache || new WeakMap();
-	(fnFormatY as any)._cache || ((fnFormatY as any)._cache = cacheMap);
+	const cacheMap = (formatY as any)._cache || new WeakMap();
+	(formatY as any)._cache || ((formatY as any)._cache = cacheMap);
 
 	const objRef = OBJECT || [];
 	const key = `${(array || []).join("|")}|${type}|${_extra || ""}`;
@@ -243,7 +243,7 @@ export const fnFormatY = (
 
 // 9. formaytDate ---------------------------------------------------------------------------------
 // - 날짜 형식 변환 (YYYY-MM-DD -> MM-DD)
-export const fnFormatDate = (dateStr: string) => {
+export const formatDate = (dateStr: string) => {
 	const datePattern = /\d{4}-(\d{2})-(\d{2})/g;
 	return dateStr.replace(datePattern, '$1-$2');
 };

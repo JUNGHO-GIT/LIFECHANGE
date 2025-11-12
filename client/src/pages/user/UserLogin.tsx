@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, memo } from "@importReacts";
 import {useCommonValue, useValidateUser} from "@importHooks";
 import {useStoreLanguage, useStoreAlert, useStoreLoading} from "@importStores";
 import {axios} from "@importLibs";
-import {fnSync, fnGetLocal, fnSetLocal, fnSetSession} from "@importScripts";
+import {syncData, getLocal, setLocal, setSession} from "@importScripts";
 import {User, UserType} from "@importSchemas";
 import {Input} from "@importContainers";
 import {Div, Btn, Img, Hr, Paper, Grid } from "@importComponents";
@@ -55,7 +55,7 @@ export const UserLogin = memo(() => {
 	// 2-3. useEffect -----------------------------------------------------------------------------
 	// 초기 로드 시 자동로그인 설정 가져오기
 	useEffect(() => {
-		const {autoLogin, autoLoginId, autoLoginPw} = fnGetLocal("setting", "id", "") || {};
+		const {autoLogin, autoLoginId, autoLoginPw} = getLocal("setting", "id", "") || {};
 
 		// 자동로그인 o
 		if (autoLogin === "true") {
@@ -82,7 +82,7 @@ export const UserLogin = memo(() => {
 	// 2-3. useEffect -----------------------------------------------------------------------------
 	// 초기 로드 시 아이디 저장 설정 가져오기
 	useEffect(() => {
-		const {isSaved, isSavedId} = fnGetLocal("setting", "id", "") || {};
+		const {isSaved, isSavedId} = getLocal("setting", "id", "") || {};
 		// 아이디 저장 o
 		if (isSaved === "true") {
 			setCheckedSaveId(true);
@@ -105,14 +105,14 @@ export const UserLogin = memo(() => {
 	// 자동로그인 활성화된 경우
 	useEffect(() => {
 		if (checkedAutoLogin) {
-			fnSetLocal("setting", "id", "", {
+					setLocal("setting", "id", "", {
 				autoLogin: "true",
 				autoLoginId: OBJECT.user_id,
 				autoLoginPw: OBJECT.user_pw,
 			});
 		}
 		else {
-			fnSetLocal("setting", "id", "", {
+					setLocal("setting", "id", "", {
 				autoLogin: "false",
 				autoLoginId: "",
 				autoLoginPw: "",
@@ -124,13 +124,13 @@ export const UserLogin = memo(() => {
 	// 아이디 저장 활성화된 경우
 	useEffect(() => {
 		if (checkedSaveId) {
-			fnSetLocal("setting", "id", "", {
+					setLocal("setting", "id", "", {
 				isSaved: "true",
 				isSavedId: OBJECT.user_id,
 			});
 		}
 		else {
-			fnSetLocal("setting", "id", "", {
+					setLocal("setting", "id", "", {
 				isSaved: "false",
 				isSavedId: "",
 			});
@@ -152,12 +152,12 @@ export const UserLogin = memo(() => {
 		.then((res: any) => {
 			if (res.data.status === "success") {
 				setLOADING(false);
-				fnSetSession("setting", "id", "", {
+						setSession("setting", "id", "", {
 					sessionId: res.data.result.user_id,
 					admin: res.data.admin === "admin" ? "true" : "false",
 				});
 				navigate("/today/record/list");
-				fnSync();
+						syncData();
 			}
 			else if (res.data.status === "isGoogleUser") {
 				setLOADING(false);
@@ -166,7 +166,7 @@ export const UserLogin = memo(() => {
 					msg: translate(res.data.msg),
 					severity: "error",
 				});
-				fnSetSession("setting", "id", "", {
+						setSession("setting", "id", "", {
 					sessionId: res.data.result.user_id,
 					admin: res.data.admin === "admin" ? "true" : "false",
 				});
@@ -178,7 +178,7 @@ export const UserLogin = memo(() => {
 					msg: translate(res.data.msg),
 					severity: "error",
 				});
-				fnSetSession("setting", "id", "", {
+						setSession("setting", "id", "", {
 					sessionId: "",
 					admin: "false",
 				});

@@ -1,6 +1,6 @@
 // exerciseGoalService.ts
 
-import { fnStrToDecimal, fnDecimalToStr } from "@assets/scripts/utils";
+import { strToDecimal, decimalToStr } from "@assets/scripts/utils";
 import * as repository from "@repositories/exercise/ExerciseGoalRepository";
 
 // 0. exist ----------------------------------------------------------------------------------------
@@ -118,7 +118,7 @@ export const list = async (
         acc + parseFloat(curr?.exercise_record_total_volume || "0")
       ), 0);
       const exerciseTotalCardio = listRecord.reduce((acc: any, curr: any) => (
-        acc + fnStrToDecimal(curr?.exercise_record_total_cardio || "00:00")
+  acc + strToDecimal(curr?.exercise_record_total_cardio || "00:00")
       ), 0);
       const exerciseCurScale = listRecord.reduce((latest: any, curr: any) => {
         if (curr?.exercise_record_total_scale) {
@@ -131,7 +131,7 @@ export const list = async (
         ...goal,
         exercise_record_total_count: String(exerciseTotalCount),
         exercise_record_total_volume: String(exerciseTotalVolume.toFixed(0)),
-        exercise_record_total_cardio: fnDecimalToStr(exerciseTotalCardio),
+  exercise_record_total_cardio: decimalToStr(exerciseTotalCardio),
         exercise_record_total_scale: String(exerciseCurScale),
       };
     }));

@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { FoodGoal, FoodGoalType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnInsertComma } from "@importScripts";
+import { insertComma } from "@importScripts";
 import { Footer, Empty, Dialog } from "@importLayouts";
 import { Div, Img, Hr, Icons, Paper, Grid } from "@importComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
@@ -227,7 +227,7 @@ export const FoodGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_goal_kcal_color}`}>
-															{fnInsertComma(item.food_goal_kcal || "0")}
+															{insertComma(item.food_goal_kcal || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -243,7 +243,7 @@ export const FoodGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_total_kcal_color}`}>
-															{fnInsertComma(item.food_record_total_kcal || "0")}
+															{insertComma(item.food_record_total_kcal || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -259,7 +259,7 @@ export const FoodGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_diff_kcal_color}`}>
-															{fnInsertComma(item.food_record_diff_kcal || "0")}
+															{insertComma(item.food_record_diff_kcal || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -300,7 +300,7 @@ export const FoodGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_goal_carb_color}`}>
-															{fnInsertComma(item.food_goal_carb || "0")}
+															{insertComma(item.food_goal_carb || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -316,7 +316,7 @@ export const FoodGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_total_carb_color}`}>
-															{fnInsertComma(item.food_record_total_carb || "0")}
+															{insertComma(item.food_record_total_carb || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -332,7 +332,7 @@ export const FoodGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_diff_carb_color}`}>
-															{fnInsertComma(item.food_record_diff_carb || "0")}
+															{insertComma(item.food_record_diff_carb || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -373,7 +373,7 @@ export const FoodGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_goal_protein_color}`}>
-															{fnInsertComma(item.food_goal_protein || "0")}
+															{insertComma(item.food_goal_protein || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -389,7 +389,7 @@ export const FoodGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_total_protein_color}`}>
-															{fnInsertComma(item.food_record_total_protein || "0")}
+															{insertComma(item.food_record_total_protein || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -405,7 +405,7 @@ export const FoodGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_diff_protein_color}`}>
-															{fnInsertComma(item.food_record_diff_protein || "0")}
+															{insertComma(item.food_record_diff_protein || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -446,7 +446,7 @@ export const FoodGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_goal_fat_color}`}>
-															{fnInsertComma(item.food_goal_fat || "0")}
+															{insertComma(item.food_goal_fat || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -462,7 +462,7 @@ export const FoodGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_total_fat_color}`}>
-															{fnInsertComma(item.food_record_total_fat || "0")}
+															{insertComma(item.food_record_total_fat || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>
@@ -478,7 +478,7 @@ export const FoodGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={"d-row-right"}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_diff_fat_color}`}>
-															{fnInsertComma(item.food_record_diff_fat || "0")}
+															{insertComma(item.food_record_diff_fat || "0")}
 														</Div>
 													</Grid>
 													<Grid size={2} className={"d-row-center"}>

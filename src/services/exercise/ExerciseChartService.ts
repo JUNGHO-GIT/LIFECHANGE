@@ -1,7 +1,7 @@
 // exerciseChartService.ts
 
 import moment from "moment-timezone";
-import { fnTimeToDecimal } from "@assets/scripts/utils";
+import { timeToDecimal } from "@assets/scripts/utils";
 import * as repository from "@repositories/exercise/ExerciseChartRepository";
 
 // 1-1. chart (bar - today) ------------------------------------------------------------------------
@@ -497,7 +497,7 @@ export const lineWeek = async (
       findResultCardio?.forEach((item: any) => {
         const itemDate = item.exercise_record_dateStart;
         (itemDate >= range.start && itemDate <= range.end) && (
-          weekCardioSum += fnTimeToDecimal(item.exercise_record_total_cardio || "00:00")
+          weekCardioSum += timeToDecimal(item.exercise_record_total_cardio || "00:00")
         );
       });
 
@@ -609,7 +609,7 @@ export const lineMonth = async (
       findResultCardio?.forEach((item: any) => {
         const itemDate = item.exercise_record_dateStart;
         (itemDate >= range.start && itemDate <= range.end) && (
-          monthCardioSum += fnTimeToDecimal(item.exercise_record_total_cardio || "00:00")
+          monthCardioSum += timeToDecimal(item.exercise_record_total_cardio || "00:00")
         );
       });
 
@@ -719,7 +719,7 @@ export const avgWeek = async (
         countRecordsVolume[index]++;
       });
       findResultCardio.forEach((item: any) => {
-        sumCardio[index] += Number(fnTimeToDecimal(item.exercise_record_total_cardio) || "0");
+  sumCardio[index] += Number(timeToDecimal(item.exercise_record_total_cardio) || "0");
         countRecordsCardio[index]++;
       });
     });
@@ -832,7 +832,7 @@ export const avgMonth = async (
         countRecordsVolume[index]++;
       });
       findResultCardio.forEach((item: any) => {
-        sumCardio[index] += Number(fnTimeToDecimal(item.exercise_record_total_cardio) || "0");
+  sumCardio[index] += Number(timeToDecimal(item.exercise_record_total_cardio) || "0");
         countRecordsCardio[index]++;
       });
     });

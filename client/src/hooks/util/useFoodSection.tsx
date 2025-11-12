@@ -2,7 +2,7 @@
 
 import { useCommonValue } from "@importHooks";
 import { useEffect } from "@importReacts";
-import { fnSetSession } from "@importScripts";
+import { setSession } from "@importScripts";
 
 // -------------------------------------------------------------------------------------------------
 export const useFoodSection = () => {
@@ -17,7 +17,7 @@ export const useFoodSection = () => {
       !PATH.includes("food/favorite") &&
       !PATH.includes("food/record")
     ) {
-      fnSetSession("section", "food", "", []);
+      setSession("section", "food", "", []);
     }
   }, [PATH]);
 };

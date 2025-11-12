@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate, useValidateToday } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { TodayRecord, TodayRecordType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnInsertComma, fnHandleNumberInput } from "@importScripts";
+import { insertComma, handleNumberInput } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, PickerTime, Count, Delete, Input, Select, Memo } from "@importContainers";
 import { Img, Bg, Paper, Grid, Div, Br } from "@importComponents";
@@ -341,7 +341,7 @@ export const CalendarDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`set`)}
-									value={fnInsertComma(item?.exercise_record_set || `0`)}
+									value={insertComma(item?.exercise_record_set || `0`)}
 									inputRef={REFS?.[i]?.exercise_record_set}
 									error={ERRORS?.[i]?.exercise_record_set}
 									startadornment={
@@ -357,7 +357,7 @@ export const CalendarDetail = memo(() => {
 										translate(`s`)
 									}
 									onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-										const processedValue = fnHandleNumberInput(e.target.value, 999);
+										const processedValue = handleNumberInput(e.target.value, 999);
 										if (processedValue !== null) {
 											setOBJECT((prev: TodayRecordType) => ({
 												...prev,
@@ -376,7 +376,7 @@ export const CalendarDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`rep`)}
-									value={fnInsertComma(item?.exercise_record_rep || `0`)}
+									value={insertComma(item?.exercise_record_rep || `0`)}
 									inputRef={REFS?.[i]?.exercise_record_rep}
 									error={ERRORS?.[i]?.exercise_record_rep}
 									startadornment={
@@ -392,7 +392,7 @@ export const CalendarDetail = memo(() => {
 										translate(`r`)
 									}
 									onChange={(e: any) => {
-										const processedValue = fnHandleNumberInput(e.target.value, 999);
+										const processedValue = handleNumberInput(e.target.value, 999);
 										if (processedValue !== null) {
 											setOBJECT((prev: TodayRecordType) => ({
 												...prev,
@@ -416,7 +416,7 @@ export const CalendarDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`weight`)}
-									value={fnInsertComma(item?.exercise_record_weight || `0`)}
+									value={insertComma(item?.exercise_record_weight || `0`)}
 									inputRef={REFS?.[i]?.exercise_record_weight}
 									error={ERRORS?.[i]?.exercise_record_weight}
 									startadornment={
@@ -432,7 +432,7 @@ export const CalendarDetail = memo(() => {
 										localUnit
 									}
 									onChange={(e: any) => {
-										const processedValue = fnHandleNumberInput(e.target.value, 999);
+										const processedValue = handleNumberInput(e.target.value, 999);
 										if (processedValue !== null) {
 											setOBJECT((prev: TodayRecordType) => ({
 												...prev,
@@ -549,11 +549,11 @@ export const CalendarDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`foodCount`)}
-									value={fnInsertComma(item?.food_record_count || `0`)}
+									value={insertComma(item?.food_record_count || `0`)}
 									inputRef={REFS?.[i]?.food_record_count}
 									error={ERRORS?.[i]?.food_record_count}
 									onChange={(e: any) => {
-										const processedValue = fnHandleNumberInput(e.target.value, 99, 1);
+										const processedValue = handleNumberInput(e.target.value, 99, 1);
 										if (processedValue !== null) {
 											const numericValue = Number(processedValue) || 1;
 											const foodCount = Number(item?.food_record_count) || 1;
@@ -588,11 +588,11 @@ export const CalendarDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`gram`)}
-									value={fnInsertComma(item?.food_record_gram || `0`)}
+									value={insertComma(item?.food_record_gram || `0`)}
 									inputRef={REFS?.[i]?.food_record_gram}
 									error={ERRORS?.[i]?.food_record_gram}
 									onChange={(e: any) => {
-										const processedValue = fnHandleNumberInput(e.target.value, 999);
+										const processedValue = handleNumberInput(e.target.value, 999);
 										if (processedValue !== null) {
 											setOBJECT((prev: TodayRecordType) => ({
 												...prev,
@@ -669,7 +669,7 @@ export const CalendarDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`kcal`)}
-									value={fnInsertComma(item?.food_record_kcal || `0`)}
+									value={insertComma(item?.food_record_kcal || `0`)}
 									inputRef={REFS?.[i]?.food_record_kcal}
 									error={ERRORS?.[i]?.food_record_kcal}
 									startadornment={
@@ -685,7 +685,7 @@ export const CalendarDetail = memo(() => {
 										translate(`kc`)
 									}
 									onChange={(e: any) => {
-										const processedValue = fnHandleNumberInput(e.target.value, 9999);
+										const processedValue = handleNumberInput(e.target.value, 9999);
 										if (processedValue !== null) {
 											setOBJECT((prev: TodayRecordType) => ({
 												...prev,
@@ -704,7 +704,7 @@ export const CalendarDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`carb`)}
-									value={fnInsertComma(item?.food_record_carb || `0`)}
+									value={insertComma(item?.food_record_carb || `0`)}
 									inputRef={REFS?.[i]?.food_record_carb}
 									error={ERRORS?.[i]?.food_record_carb}
 									startadornment={
@@ -720,7 +720,7 @@ export const CalendarDetail = memo(() => {
 										translate(`g`)
 									}
 									onChange={(e: any) => {
-										const processedValue = fnHandleNumberInput(e.target.value, 999, 1);
+										const processedValue = handleNumberInput(e.target.value, 999, 1);
 										if (processedValue !== null) {
 											setOBJECT((prev: TodayRecordType) => ({
 												...prev,
@@ -744,7 +744,7 @@ export const CalendarDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`protein`)}
-									value={fnInsertComma(item?.food_record_protein || `0`)}
+									value={insertComma(item?.food_record_protein || `0`)}
 									inputRef={REFS?.[i]?.food_record_protein}
 									error={ERRORS?.[i]?.food_record_protein}
 									startadornment={
@@ -760,7 +760,7 @@ export const CalendarDetail = memo(() => {
 										translate(`g`)
 									}
 									onChange={(e: any) => {
-										const processedValue = fnHandleNumberInput(e.target.value, 999, 1);
+										const processedValue = handleNumberInput(e.target.value, 999, 1);
 										if (processedValue !== null) {
 											setOBJECT((prev: TodayRecordType) => ({
 												...prev,
@@ -779,7 +779,7 @@ export const CalendarDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`fat`)}
-									value={fnInsertComma(item?.food_record_fat || `0`)}
+									value={insertComma(item?.food_record_fat || `0`)}
 									inputRef={REFS?.[i]?.food_record_fat}
 									error={ERRORS?.[i]?.food_record_fat}
 									startadornment={
@@ -795,7 +795,7 @@ export const CalendarDetail = memo(() => {
 										translate(`g`)
 									}
 									onChange={(e: any) => {
-										const processedValue = fnHandleNumberInput(e.target.value, 999, 1);
+										const processedValue = handleNumberInput(e.target.value, 999, 1);
 										if (processedValue !== null) {
 											setOBJECT((prev: TodayRecordType) => ({
 												...prev,
@@ -943,7 +943,7 @@ export const CalendarDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`amount`)}
-									value={fnInsertComma(item?.money_record_amount || `0`)}
+									value={insertComma(item?.money_record_amount || `0`)}
 									inputRef={REFS?.[i]?.money_record_amount}
 									error={ERRORS?.[i]?.money_record_amount}
 									startadornment={
@@ -959,7 +959,7 @@ export const CalendarDetail = memo(() => {
 										localCurrency
 									}
 									onChange={(e: any) => {
-										const processedValue = fnHandleNumberInput(e.target.value, 999999999);
+										const processedValue = handleNumberInput(e.target.value, 999999999);
 										if (processedValue !== null) {
 											setOBJECT((prev: TodayRecordType) => ({
 												...prev,

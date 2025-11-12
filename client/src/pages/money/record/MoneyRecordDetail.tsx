@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate, useValidateMoney } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { MoneyRecord, MoneyRecordType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnInsertComma, fnSync, fnHandleNumberInput } from "@importScripts";
+import { insertComma, sync, handleNumberInput } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, Memo, Count, Delete, Select, Input } from "@importContainers";
 import { Img, Bg, Div, Paper, Grid, Br } from "@importComponents";
@@ -243,7 +243,7 @@ export const MoneyRecordDetail = memo(() => {
 						dateEnd: DATE?.dateEnd
 					}
 				});
-				fnSync("property");
+				sync("property");
 			}
 			else {
 				setLOADING(false);
@@ -298,7 +298,7 @@ export const MoneyRecordDetail = memo(() => {
 						dateEnd: dateRef.current.dateEnd
 					}
 				});
-				fnSync("property");
+				sync("property");
 			}
 			else {
 				setLOADING(false);
@@ -368,7 +368,7 @@ export const MoneyRecordDetail = memo(() => {
 							locked={LOCKED}
 							readOnly={true}
 							label={translate("totalIncome")}
-							value={fnInsertComma(OBJECT?.money_record_total_income || "0")}
+							value={insertComma(OBJECT?.money_record_total_income || "0")}
 							startadornment={
 								<Img
 									max={14}
@@ -393,7 +393,7 @@ export const MoneyRecordDetail = memo(() => {
 							locked={LOCKED}
 							readOnly={true}
 							label={translate("totalExpense")}
-							value={fnInsertComma(OBJECT?.money_record_total_expense || "0")}
+							value={insertComma(OBJECT?.money_record_total_expense || "0")}
 							startadornment={
 								<Img
 									max={14}
@@ -515,7 +515,7 @@ export const MoneyRecordDetail = memo(() => {
 									<Input
 										locked={LOCKED}
 										label={translate("amount")}
-										value={fnInsertComma(item?.money_record_amount || "0")}
+										value={insertComma(item?.money_record_amount || "0")}
 										inputRef={REFS?.[i]?.money_record_amount}
 										error={ERRORS?.[i]?.money_record_amount}
 										startadornment={
@@ -531,7 +531,7 @@ export const MoneyRecordDetail = memo(() => {
 											localCurrency
 										}
 										onChange={(e: any) => {
-											const processedValue = fnHandleNumberInput(e.target?.value, 999999999);
+											const processedValue = handleNumberInput(e.target?.value, 999999999);
 											if (processedValue === null) { return; }
 											const value = processedValue === "" ? "0" : processedValue;
 											setOBJECT((prev) => ({

@@ -17,7 +17,7 @@ export const useValidateToday = () => {
   const validate = useRef<Function>(() => {});
 
 	// alert 표시 및 focus ---------------------------------------------------------------------------
-	const fnAlert = useCallback((field: string, msg: string, idx: number) => {
+	const alert = useCallback((field: string, msg: string, idx: number) => {
 		setALERT({
 			open: true,
 			msg: translate(msg),
@@ -65,17 +65,17 @@ export const useValidateToday = () => {
 
       const section = OBJECT.today_section;
       if (COUNT.newSectionCnt <= 0) {
-        return fnAlert("", "errorCount", 0);
+        return alert("", "errorCount", 0);
       }
       for (let i = 0; i < section?.length; i++) {
         if (!section[i].today_part || section[i].today_part === "") {
-          return fnAlert('today_part', "errorTodayPart", i);
+          return alert('today_part', "errorTodayPart", i);
         }
         else if (!section[i].today_title) {
-          return fnAlert('today_title', "errorTodayTitle", i);
+          return alert('today_title', "errorTodayTitle", i);
         }
         else if (!section[i].today_color) {
-          return fnAlert('today_color', "errorTodayColor", i);
+          return alert('today_color', "errorTodayColor", i);
         }
       }
       return true;
@@ -112,7 +112,7 @@ export const useValidateToday = () => {
 			});
 			if (await confirmResult) {
 				if (!OBJECT?._id || OBJECT?._id === "") {
-					return fnAlert("", "noData", 0);
+					return alert("", "noData", 0);
 				}
 				return true;
 			}

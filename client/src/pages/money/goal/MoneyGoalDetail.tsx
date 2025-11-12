@@ -5,8 +5,8 @@ import { useCommonValue, useCommonDate, useValidateMoney } from "@importHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
 import { MoneyGoal, MoneyGoalType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnInsertComma, fnSync } from "@importScripts";
-import { fnHandleNumberInput } from "@importScripts";
+import { insertComma, sync } from "@importScripts";
+import { handleNumberInput } from "@importScripts";
 import { Footer, Dialog } from "@importLayouts";
 import { PickerDay, Count, Delete, Input } from "@importContainers";
 import { Img, Bg, Paper, Grid, Br } from "@importComponents";
@@ -191,7 +191,7 @@ export const MoneyGoalDetail = memo(() => {
             dateEnd: dateRef.current.dateEnd
           }
         });
-        fnSync("property");
+        sync("property");
       }
       else {
         setLOADING(false);
@@ -244,7 +244,7 @@ export const MoneyGoalDetail = memo(() => {
             dateEnd: dateRef.current.dateEnd
           }
         });
-        fnSync("property");
+        sync("property");
       }
       else {
         setLOADING(false);
@@ -334,7 +334,7 @@ export const MoneyGoalDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={fnInsertComma(item?.money_goal_income || "0")}
+									value={insertComma(item?.money_goal_income || "0")}
 									inputRef={REFS?.[i]?.money_goal_income}
 									error={ERRORS?.[i]?.money_goal_income}
 									label={
@@ -357,7 +357,7 @@ export const MoneyGoalDetail = memo(() => {
 										localCurrency
 									}
 									onChange={(e: any) => {
-                    const processedValue = fnHandleNumberInput(e.target.value, 9999999999);
+                    const processedValue = handleNumberInput(e.target.value, 9999999999);
                     if (processedValue === null) { return; }
                     setOBJECT((prev) => ({
                       ...prev,
@@ -374,7 +374,7 @@ export const MoneyGoalDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={fnInsertComma(item?.money_goal_expense || "0")}
+									value={insertComma(item?.money_goal_expense || "0")}
 									inputRef={REFS?.[i]?.money_goal_expense}
 									error={ERRORS?.[i]?.money_goal_expense}
 									label={
@@ -397,7 +397,7 @@ export const MoneyGoalDetail = memo(() => {
 										localCurrency
 									}
 									onChange={(e: any) => {
-                    const processedValue = fnHandleNumberInput(e.target.value, 9999999999);
+                    const processedValue = handleNumberInput(e.target.value, 9999999999);
                     if (processedValue === null) { return; }
                     setOBJECT((prev) => ({
                       ...prev,

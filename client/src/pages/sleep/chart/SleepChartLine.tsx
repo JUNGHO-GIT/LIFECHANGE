@@ -5,7 +5,7 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
 import { SleepLine, SleepLineType } from "@importSchemas";
 import { axios } from "@importLibs";
-import { fnFormatY, fnFormatDate } from "@importScripts";
+import { formatY, formatDate } from "@importScripts";
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@importLibs";
 
 // -------------------------------------------------------------------------------------------------
@@ -130,7 +130,7 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
 			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`
 		);
 
-    const { domain, ticks, formatterY } = fnFormatY(object, sleepChartArray, "sleep", "line");
+    const { domain, ticks, formatterY } = formatY(object, sleepChartArray, "sleep", "line");
 		return (
 			<ResponsiveContainer width={"100%"} height={500}>
 				<LineChart
@@ -234,7 +234,7 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
 						labelFormatter={(_label: any, payload: any) => {
 							const name = payload?.length > 0 ? payload[0]?.payload.name : '';
 							const date = payload?.length > 0 ? payload[0]?.payload.date : '';
-							return `${translate(name)} (${fnFormatDate(date)})`;
+							return `${translate(name)} (${formatDate(date)})`;
 						}}
 						formatter={(value: any, name: any) => {
 							const customName = translate(name);
