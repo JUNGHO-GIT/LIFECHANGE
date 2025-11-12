@@ -1,7 +1,7 @@
 // sync.js
 
-import { moment, axios } from "@importLibs";
-import { getSession, getLocal, setSession } from "@importScripts";
+import { moment, axios } from "@exportLibs";
+import { getSession, getLocal, setSession } from "@exportScripts";
 
 // -------------------------------------------------------------------------------------------------
 export const sync = async (extra?: string) => {

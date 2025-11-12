@@ -1,6 +1,6 @@
 // useStoreLanguage.ts
 
-import { create } from "@importLibs";
+import { create } from "@exportLibs";
 
 // 거대한 다국어 리소스 객체를 매 호출마다 재생성하지 않도록 모듈 스코프 캐시 변수 사용
 let __resourcesCache: Record<string, any> | null = null;

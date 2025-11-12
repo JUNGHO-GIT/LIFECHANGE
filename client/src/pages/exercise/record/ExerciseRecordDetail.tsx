@@ -1,16 +1,16 @@
 // ExerciseRecordDetail.tsx
 
-import { useState, useEffect, useRef, useCallback, memo } from "@importReacts";
-import { useCommonValue, useCommonDate, useTime, useValidateExercise } from "@importHooks";
-import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
-import { axios } from "@importLibs";
-import { insertComma, sync } from "@importScripts";
-import { handleNumberInput } from "@importScripts";
-import { ExerciseRecord, ExerciseRecordType } from "@importSchemas";
-import { Footer, Dialog } from "@importLayouts";
-import { PickerDay, PickerTime, Count, Delete, Select, Input } from "@importContainers";
-import { Img, Bg, Paper, Grid, Br } from "@importComponents";
-import { MenuItem } from "@importMuis";
+import { useState, useEffect, useRef, useCallback, memo } from "@exportReacts";
+import { useCommonValue, useCommonDate, useTime, useValidateExercise } from "@exportHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
+import { axios } from "@exportLibs";
+import { insertComma, sync } from "@exportScripts";
+import { handleNumberInput } from "@exportScripts";
+import { ExerciseRecord, ExerciseRecordType } from "@exportSchemas";
+import { Footer, Dialog } from "@exportLayouts";
+import { PickerDay, PickerTime, Count, Delete, Select, Input } from "@exportContainers";
+import { Img, Bg, Paper, Grid, Br } from "@exportComponents";
+import { MenuItem } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseRecordDetail = memo(() => {

@@ -1,9 +1,9 @@
 // Alert.tsx
 
-import { Icons } from "@importComponents";
-import { MuiAlert, Snackbar } from "@importMuis";
-import { memo, useEffect } from "@importReacts";
-import { useStoreAlert } from "@importStores";
+import { Icons } from "@exportComponents";
+import { MuiAlert, Snackbar } from "@exportMuis";
+import { memo, useEffect } from "@exportReacts";
+import { useStoreAlert } from "@exportStores";
 
 // -------------------------------------------------------------------------------------------------
 export const Alert = memo(() => {

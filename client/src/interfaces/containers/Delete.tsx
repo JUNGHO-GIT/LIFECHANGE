@@ -1,7 +1,7 @@
 // Delete.tsx
 
-import { Div, Icons } from "@importComponents";
-import { memo, useCallback, useMemo } from "@importReacts";
+import { Div, Icons } from "@exportComponents";
+import { memo, useCallback, useMemo } from "@exportReacts";
 
 // -------------------------------------------------------------------------------------------------
 declare type DeleteProps = {

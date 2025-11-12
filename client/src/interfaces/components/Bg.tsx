@@ -1,7 +1,7 @@
 // Bg.tsx
 
-import { memo } from "@importReacts";
-import { Badge } from "@importMuis";
+import { memo } from "@exportReacts";
+import { Badge } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const Bg = memo((props: any) =>  (

@@ -1,8 +1,8 @@
 // Footer.tsx
 
-import { Paper } from "@importComponents";
-import { useCommonValue } from "@importHooks";
-import { memo, useEffect, useState } from "@importReacts";
+import { Paper } from "@exportComponents";
+import { useCommonValue } from "@exportHooks";
+import { memo, useEffect, useState } from "@exportReacts";
 import { Buttons } from "./Buttons";
 import { FindFilter } from "./FindFilter";
 import { ListFilter } from "./ListFilter";

@@ -1,15 +1,15 @@
 // UserDetail.tsx
 
-import { useState, useEffect, useRef, memo } from "@importReacts";
-import { useCommonValue, useValidateUser } from "@importHooks";
-import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
-import { axios } from "@importLibs";
-import { sync, insertComma, handleNumberInput } from "@importScripts";
-import { User, UserType } from "@importSchemas";
-import { Footer } from "@importLayouts";
-import { Input } from "@importContainers";
-import { Hr, Img, Div, Paper, Grid } from "@importComponents";
-import { Checkbox, Avatar } from "@importMuis";
+import { useState, useEffect, useRef, memo } from "@exportReacts";
+import { useCommonValue, useValidateUser } from "@exportHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
+import { axios } from "@exportLibs";
+import { sync, insertComma, handleNumberInput } from "@exportScripts";
+import { User, UserType } from "@exportSchemas";
+import { Footer } from "@exportLayouts";
+import { Input } from "@exportContainers";
+import { Hr, Img, Div, Paper, Grid } from "@exportComponents";
+import { Checkbox, Avatar } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const UserDetail = memo(() => {

@@ -1,6 +1,6 @@
 // useCommonValue.tsx
 
-import { useLocation, useNavigate, useMemo } from "@importReacts";
+import { useLocation, useNavigate, useMemo } from "@exportReacts";
 import type {
   CommonValueType,
   EnvType,

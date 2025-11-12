@@ -1,14 +1,14 @@
 // ExerciseGoalDetail.tsx
 
-import { useState, useEffect, useRef, useCallback, memo } from "@importReacts";
-import { useCommonValue, useCommonDate, useTime, useValidateExercise } from "@importHooks";
-import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
-import { ExerciseGoal, ExerciseGoalType } from "@importSchemas";
-import { axios } from "@importLibs";
-import { insertComma, sync, handleNumberInput } from "@importScripts";
-import { Footer, Dialog } from "@importLayouts";
-import { PickerDay, PickerTime, Count, Delete, Input } from "@importContainers";
-import { Img, Bg, Paper, Grid, Br } from "@importComponents";
+import { useState, useEffect, useRef, useCallback, memo } from "@exportReacts";
+import { useCommonValue, useCommonDate, useTime, useValidateExercise } from "@exportHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
+import { ExerciseGoal, ExerciseGoalType } from "@exportSchemas";
+import { axios } from "@exportLibs";
+import { insertComma, sync, handleNumberInput } from "@exportScripts";
+import { Footer, Dialog } from "@exportLayouts";
+import { PickerDay, PickerTime, Count, Delete, Input } from "@exportContainers";
+import { Img, Bg, Paper, Grid, Br } from "@exportComponents";
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseGoalDetail = memo(() => {

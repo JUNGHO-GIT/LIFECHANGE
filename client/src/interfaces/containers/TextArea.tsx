@@ -1,7 +1,7 @@
 // TextArea.tsx
 
-import { TextField } from "@importMuis";
-import { memo, useCallback, useMemo, useRef } from "@importReacts";
+import { TextField } from "@exportMuis";
+import { memo, useCallback, useMemo, useRef } from "@exportReacts";
 
 // -------------------------------------------------------------------------------------------------
 export const TextArea = memo((props: any) => {

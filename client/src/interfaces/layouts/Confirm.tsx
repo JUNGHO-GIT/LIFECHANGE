@@ -1,9 +1,9 @@
 // Confirm.tsx
 
-import { Icons } from "@importComponents";
-import { MuiAlert, Snackbar } from "@importMuis";
-import { memo } from "@importReacts";
-import { useStoreConfirm } from "@importStores";
+import { Icons } from "@exportComponents";
+import { MuiAlert, Snackbar } from "@exportMuis";
+import { memo } from "@exportReacts";
+import { useStoreConfirm } from "@exportStores";
 
 // -------------------------------------------------------------------------------------------------
 export const Confirm = memo(() => {

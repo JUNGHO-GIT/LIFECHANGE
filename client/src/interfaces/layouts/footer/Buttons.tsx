@@ -1,11 +1,11 @@
 // Buttons.tsx
 
-import { memo, useMemo, useEffect } from "@importReacts";
-import { Btn, Div, Grid } from "@importComponents";
-import { PopUp } from "@importContainers";
-import { useCommonValue } from "@importHooks";
-import { setSession } from "@importScripts";
-import { useStoreLanguage } from "@importStores";
+import { memo, useMemo, useEffect } from "@exportReacts";
+import { Btn, Div, Grid } from "@exportComponents";
+import { PopUp } from "@exportContainers";
+import { useCommonValue } from "@exportHooks";
+import { setSession } from "@exportScripts";
+import { useStoreLanguage } from "@exportStores";
 
 // -------------------------------------------------------------------------------------------------
 declare type ButtonsProps = {

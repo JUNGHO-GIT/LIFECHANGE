@@ -1,7 +1,7 @@
 // Popover.tsx
 
-import { Popover as MuiPopover, PopoverProps } from "@importMuis";
-import { memo, useEffect, useRef } from "@importReacts";
+import { Popover as MuiPopover, PopoverProps } from "@exportMuis";
+import { memo, useEffect, useRef } from "@exportReacts";
 
 // -------------------------------------------------------------------------------------------------
 export const Popover = memo((props: PopoverProps) => {

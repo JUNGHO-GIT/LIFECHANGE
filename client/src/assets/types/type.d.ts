@@ -1,6 +1,6 @@
 // type.d.ts
 
-import { type Location, type NavigateFunction } from "@importReacts";
+import { type Location, type NavigateFunction } from "@exportReacts";
 
 // 공통 리터럴 · 유틸 타입 -------------------------------------------------------------------------
 export type FirstPathType =

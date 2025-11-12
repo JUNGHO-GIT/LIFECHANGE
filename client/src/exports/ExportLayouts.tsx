@@ -1,4 +1,4 @@
-// ImportLayouts.tsx
+// ExportLayouts.tsx
 
 // -------------------------------------------------------------------------------------------------
 export { Header } from "@interfaces/layouts/Header";

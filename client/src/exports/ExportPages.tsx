@@ -1,4 +1,4 @@
-// ImportPages.tsx
+// ExportPages.tsx
 
 // admin -------------------------------------------------------------------------------------------
 export { AdminDashboard } from "@pages/admin/AdminDashboard";

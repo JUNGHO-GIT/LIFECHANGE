@@ -1,8 +1,8 @@
 // Imgs.tsx
 
-import { useCommonValue } from "@importHooks";
-import { Skeleton } from "@importMuis";
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from "@importReacts";
+import { useCommonValue } from "@exportHooks";
+import { Skeleton } from "@exportMuis";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "@exportReacts";
 
 // -------------------------------------------------------------------------------------------------
 declare type ImgProps = React.HTMLAttributes<HTMLImageElement> & {

@@ -1,8 +1,8 @@
 // useFoodSection.tsx
 
-import { useCommonValue } from "@importHooks";
-import { useEffect } from "@importReacts";
-import { setSession } from "@importScripts";
+import { useCommonValue } from "@exportHooks";
+import { useEffect } from "@exportReacts";
+import { setSession } from "@exportScripts";
 
 // -------------------------------------------------------------------------------------------------
 export const useFoodSection = () => {

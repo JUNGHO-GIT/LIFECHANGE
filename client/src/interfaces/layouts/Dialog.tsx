@@ -1,10 +1,10 @@
 // Dialog.tsx
 
-import { Div, Icons } from "@importComponents";
-import { useCommonDate, useCommonValue } from "@importHooks";
-import { Backdrop, SpeedDial, SpeedDialAction, SpeedDialIcon } from "@importMuis";
-import { memo, useState } from "@importReacts";
-import { useStoreLanguage } from "@importStores";
+import { Div, Icons } from "@exportComponents";
+import { useCommonDate, useCommonValue } from "@exportHooks";
+import { Backdrop, SpeedDial, SpeedDialAction, SpeedDialIcon } from "@exportMuis";
+import { memo, useState } from "@exportReacts";
+import { useStoreLanguage } from "@exportStores";
 
 // -------------------------------------------------------------------------------------------------
 declare type DialogProps = {

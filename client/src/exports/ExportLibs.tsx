@@ -1,4 +1,4 @@
-// ImportLibs.tsx
+// ExportLibs.tsx
 
 // -------------------------------------------------------------------------------------------------
 export { default as axios } from "axios";

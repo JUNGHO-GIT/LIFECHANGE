@@ -1,7 +1,7 @@
 // useStorageSession.tsx
 
-import { useEffect, useState } from "@importReacts";
-import { getSession, setSession } from "@importScripts";
+import { useEffect, useState } from "@exportReacts";
+import { getSession, setSession } from "@exportScripts";
 import { Dispatch, SetStateAction } from "react";
 
 // -------------------------------------------------------------------------------------------------

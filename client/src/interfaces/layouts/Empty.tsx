@@ -1,10 +1,10 @@
 // Empty.tsx
 
-import { Div, Grid, Icons } from "@importComponents";
-import { useCommonDate, useCommonValue } from "@importHooks";
-import { Accordion, AccordionSummary } from "@importMuis";
-import { memo } from "@importReacts";
-import { useStoreLanguage } from "@importStores";
+import { Div, Grid, Icons } from "@exportComponents";
+import { useCommonDate, useCommonValue } from "@exportHooks";
+import { Accordion, AccordionSummary } from "@exportMuis";
+import { memo } from "@exportReacts";
+import { useStoreLanguage } from "@exportStores";
 
 // -------------------------------------------------------------------------------------------------
 declare type EmptyProps = {

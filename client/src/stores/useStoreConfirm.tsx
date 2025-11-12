@@ -1,6 +1,6 @@
 // useStoreConfirm.tsx
 
-import { create } from "@importLibs";
+import { create } from "@exportLibs";
 
 // -------------------------------------------------------------------------------------------------
 declare type ConfirmState = {

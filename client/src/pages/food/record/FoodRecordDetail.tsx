@@ -1,15 +1,15 @@
 // FoodRecordDetail.tsx
 
-import { useState, useEffect, useRef, useCallback, memo } from "@importReacts";
-import { useCommonValue, useCommonDate, useValidateFood } from "@importHooks";
-import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
-import { FoodRecord, FoodRecordType } from "@importSchemas";
-import { axios } from "@importLibs";
-import { insertComma, setSession, sync, handleNumberInput } from "@importScripts";
-import { Footer, Dialog } from "@importLayouts";
-import { PickerDay, Count, Delete, Input, Select } from "@importContainers";
-import { Img, Bg, Icons, Div, Paper, Grid, Br } from "@importComponents";
-import { MenuItem } from "@importMuis";
+import { useState, useEffect, useRef, useCallback, memo } from "@exportReacts";
+import { useCommonValue, useCommonDate, useValidateFood } from "@exportHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
+import { FoodRecord, FoodRecordType } from "@exportSchemas";
+import { axios } from "@exportLibs";
+import { insertComma, setSession, sync, handleNumberInput } from "@exportScripts";
+import { Footer, Dialog } from "@exportLayouts";
+import { PickerDay, Count, Delete, Input, Select } from "@exportContainers";
+import { Img, Bg, Icons, Div, Paper, Grid, Br } from "@exportComponents";
+import { MenuItem } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodRecordDetail = memo(() => {

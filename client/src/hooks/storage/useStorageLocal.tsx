@@ -1,7 +1,7 @@
 // useStorageLocal.tsx
 
-import { useEffect, useState } from "@importReacts";
-import { getLocal, setLocal } from "@importScripts";
+import { useEffect, useState } from "@exportReacts";
+import { getLocal, setLocal } from "@exportScripts";
 import { Dispatch, SetStateAction } from "react";
 
 // -------------------------------------------------------------------------------------------------

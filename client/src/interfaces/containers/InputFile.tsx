@@ -1,9 +1,9 @@
 // InputFile.tsx
 
-import { Br, Div, Grid, Icons, Img } from "@importComponents";
-import { MuiFileInput } from "@importMuis";
-import { memo, useEffect, useState } from "@importReacts";
-import { useStoreAlert } from "@importStores";
+import { Br, Div, Grid, Icons, Img } from "@exportComponents";
+import { MuiFileInput } from "@exportMuis";
+import { memo, useEffect, useState } from "@exportReacts";
+import { useStoreAlert } from "@exportStores";
 
 // -------------------------------------------------------------------------------------------------
 export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => {

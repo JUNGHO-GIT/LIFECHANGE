@@ -1,8 +1,8 @@
 // useLanguageInitialize.tsx
 
-import { useCommonValue } from "@importHooks";
-import { useEffect } from "@importReacts";
-import { useStoreLanguage } from "@importStores";
+import { useCommonValue } from "@exportHooks";
+import { useEffect } from "@exportReacts";
+import { useStoreLanguage } from "@exportStores";
 
 // -------------------------------------------------------------------------------------------------
 export const useLanguageInitialize = () => {

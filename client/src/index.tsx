@@ -9,55 +9,55 @@ import '@assets/styles/Components.css';
 
 import {
   BrowserRouter, Routes, Route, createRoot, useEffect, memo
-} from "@importReacts";
+} from "@exportReacts";
 
 import {
   CssBaseline, ThemeProvider, createTheme
-} from "@importMuis";
+} from "@exportMuis";
 
 import {
   useRoot, useScrollTop, useFoodSection, useLanguageSetting, useLanguageInitialize, useCommonValue,
-} from "@importHooks";
+} from "@exportHooks";
 
 import {
   useStoreLoading
-} from "@importStores";
+} from "@exportStores";
 
 import {
   Header, TopNav, BottomNav, Alert, Confirm, Loader
-} from "@importLayouts";
+} from "@exportLayouts";
 
 import {
   AdminDashboard, AuthError, AuthGoogle, AuthPrivacy
-} from "@importPages";
+} from "@exportPages";
 
 import {
   TodayGoalList, TodayRecordList, TodayGoalDetail, TodayRecordDetail
-} from "@importPages";
+} from "@exportPages";
 
 import {
 	CalendarList, CalendarDetail
-} from "@importPages";
+} from "@exportPages";
 
 import {
   ExerciseChart, ExerciseGoalList, ExerciseGoalDetail, ExerciseRecordList, ExerciseRecordDetail
-} from "@importPages";
+} from "@exportPages";
 
 import {
   FoodChart, FoodGoalList, FoodGoalDetail, FoodFindList, FoodFavoriteList, FoodRecordList, FoodRecordDetail
-} from "@importPages";
+} from "@exportPages";
 
 import {
   MoneyChart, MoneyGoalList, MoneyGoalDetail, MoneyRecordList, MoneyRecordDetail
-} from "@importPages";
+} from "@exportPages";
 
 import {
   SleepChart, SleepGoalList, SleepGoalDetail, SleepRecordList, SleepRecordDetail
-} from "@importPages";
+} from "@exportPages";
 
 import {
   AdminAppInfo, UserAppSetting, UserSignup, UserLogin, UserResetPw, UserDetail, UserDelete, UserCategory
-} from "@importPages";
+} from "@exportPages";
 
 // -------------------------------------------------------------------------------------------------
 const App = memo(() => {

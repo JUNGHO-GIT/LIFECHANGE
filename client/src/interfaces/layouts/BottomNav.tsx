@@ -1,11 +1,11 @@
 // BottomNav.tsx
 
-import { memo, useEffect } from "@importReacts";
-import { useCommonDate, useCommonValue, useStorageLocal } from "@importHooks";
-import { getLocal } from "@importScripts";
-import { useStoreLanguage } from "@importStores";
-import { Img, Paper } from "@importComponents";
-import { BottomNavigation, BottomNavigationAction } from "@importMuis";
+import { memo, useEffect } from "@exportReacts";
+import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
+import { getLocal } from "@exportScripts";
+import { useStoreLanguage } from "@exportStores";
+import { Img, Paper } from "@exportComponents";
+import { BottomNavigation, BottomNavigationAction } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const BottomNav = memo(() => {

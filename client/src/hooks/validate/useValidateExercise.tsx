@@ -1,7 +1,7 @@
 // useValidateExercise.tsx
 
-import { createRef, useCallback, useRef, useState } from "@importReacts";
-import { useStoreAlert, useStoreConfirm, useStoreLanguage } from "@importStores";
+import { createRef, useCallback, useRef, useState } from "@exportReacts";
+import { useStoreAlert, useStoreConfirm, useStoreLanguage } from "@exportStores";
 
 // -------------------------------------------------------------------------------------------------
 export const useValidateExercise = () => {

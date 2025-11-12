@@ -1,12 +1,12 @@
 // FoodChartAvg.tsx
 
-import { useState, useEffect, memo } from "@importReacts";
-import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
-import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@importStores";
-import { FoodAvgKcal, FoodAvgNut, FoodAvgType } from "@importSchemas";
-import { axios } from "@importLibs";
-import { formatY, formatDate } from "@importScripts";
-import { ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@importLibs";
+import { useState, useEffect, memo } from "@exportReacts";
+import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
+import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
+import { FoodAvgKcal, FoodAvgNut, FoodAvgType } from "@exportSchemas";
+import { axios } from "@exportLibs";
+import { formatY, formatDate } from "@exportScripts";
+import { ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@exportLibs";
 
 // -------------------------------------------------------------------------------------------------
 declare interface FoodChartAvgProps {

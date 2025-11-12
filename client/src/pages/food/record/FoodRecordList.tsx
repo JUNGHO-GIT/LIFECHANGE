@@ -1,14 +1,14 @@
 // FoodRecordList.tsx
 
-import { useState, useEffect, memo } from "@importReacts";
-import { useCommonValue, useCommonDate, useStorageLocal } from "@importHooks";
-import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
-import { FoodRecord, FoodRecordType } from "@importSchemas"
-import { axios } from "@importLibs";
-import { insertComma } from "@importScripts";
-import { Footer, Empty, Dialog } from "@importLayouts";
-import { Div, Hr, Img, Icons, Paper, Grid } from "@importComponents";
-import { Accordion, AccordionSummary, AccordionDetails } from "@importMuis";
+import { useState, useEffect, memo } from "@exportReacts";
+import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
+import { FoodRecord, FoodRecordType } from "@exportSchemas"
+import { axios } from "@exportLibs";
+import { insertComma } from "@exportScripts";
+import { Footer, Empty, Dialog } from "@exportLayouts";
+import { Div, Hr, Img, Icons, Paper, Grid } from "@exportComponents";
+import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodRecordList = memo(() => {

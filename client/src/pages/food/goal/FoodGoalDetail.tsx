@@ -1,14 +1,14 @@
 // FoodGoalDetail.tsx
 
-import { useState, useEffect, useRef, useCallback, memo } from "@importReacts";
-import { useCommonValue, useCommonDate, useValidateFood } from "@importHooks";
-import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@importStores";
-import { FoodGoal, FoodGoalType } from "@importSchemas";
-import { axios } from "@importLibs";
-import { insertComma, sync, handleNumberInput } from "@importScripts";
-import { Footer, Dialog } from "@importLayouts";
-import { PickerDay, Count, Delete, Input } from "@importContainers";
-import { Img, Bg, Paper, Grid, Br } from "@importComponents";
+import { useState, useEffect, useRef, useCallback, memo } from "@exportReacts";
+import { useCommonValue, useCommonDate, useValidateFood } from "@exportHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
+import { FoodGoal, FoodGoalType } from "@exportSchemas";
+import { axios } from "@exportLibs";
+import { insertComma, sync, handleNumberInput } from "@exportScripts";
+import { Footer, Dialog } from "@exportLayouts";
+import { PickerDay, Count, Delete, Input } from "@exportContainers";
+import { Img, Bg, Paper, Grid, Br } from "@exportComponents";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodGoalDetail = memo(() => {

@@ -1,5 +1,5 @@
-import { useCommonDate } from "@importHooks";
-import { useEffect } from "@importReacts";
+import { useCommonDate } from "@exportHooks";
+import { useEffect } from "@exportReacts";
 
 // -------------------------------------------------------------------------------------------------
 export const useTime = (

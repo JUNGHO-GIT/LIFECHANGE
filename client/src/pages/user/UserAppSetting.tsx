@@ -1,12 +1,12 @@
 // UserAppSetting.tsx
 
-import { useState, memo } from "@importReacts";
-import { useCommonValue } from "@importHooks";
-import { useStoreLanguage, useStoreConfirm } from "@importStores";
-import { setLocal } from "@importScripts";
-import { PopUp } from "@importContainers";
-import { Icons, Img, Div, Br, Paper, Grid } from "@importComponents";
-import { TableContainer, Table, TableBody, TableRow, TableCell } from "@importMuis";
+import { useState, memo } from "@exportReacts";
+import { useCommonValue } from "@exportHooks";
+import { useStoreLanguage, useStoreConfirm } from "@exportStores";
+import { setLocal } from "@exportScripts";
+import { PopUp } from "@exportContainers";
+import { Icons, Img, Div, Br, Paper, Grid } from "@exportComponents";
+import { TableContainer, Table, TableBody, TableRow, TableCell } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------
 export const UserAppSetting = memo(() => {
