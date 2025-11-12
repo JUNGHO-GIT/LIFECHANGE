@@ -1,0 +1,43 @@
+{
+  "$schema": "https://www.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@assets/*": ["src/assets/*"],
+      "@middlewares/*": ["src/middlewares/*"],
+      "@repositories/*": ["src/repositories/*"],
+      "@routers/*": ["src/routers/*"],
+      "@schemas/*": ["src/schemas/*"],
+      "@services/*": ["src/services/*"],
+      "@exportLibs": ["src/exports/ExportLibs"],
+      "@exportAssets": ["src/exports/ExportAssets"],
+			"@exportRepositories": ["src/exports/ExportRepositories"],
+			"@exportRouters": ["src/exports/ExportRouters"],
+			"@exportSchemas": ["src/exports/ExportSchemas"],
+			"@exportServices": ["src/exports/ExportServices"]
+    },
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/assets/types"
+    ],
+    "types": [
+    	"node",
+      "alias",
+      "express",
+      "extension"
+    ]
+  },
+  "include": [
+    "index.ts",
+    "src/**/*",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.jsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
+}
