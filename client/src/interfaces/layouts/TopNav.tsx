@@ -178,39 +178,35 @@ export const TopNav = memo(() => {
 	// 2-3. useEffect -----------------------------------------------------------------------------
   // - 퍼센트, 자산, 체중 설정
   useEffect(() => {
-    if (sessionTitle?.setting?.sync) {
-      const { percent, property, nutrition, scale } = sessionTitle?.setting?.sync;
+		const syncStatus = sessionTitle && sessionTitle.setting && sessionTitle.setting.sync;
+    if (!syncStatus) {
+			return;
+		}
+		const percent = syncStatus.percent;
+		const property = syncStatus.property;
+		const nutrition = syncStatus.nutrition;
+		const scale = syncStatus.scale;
 
-      // 상태가 실제로 변경될 때만 업데이트
-      setPercent((prev: any) => {
-        if (JSON.stringify(prev) !== JSON.stringify(percent)) {
-          return percent;
-        }
-        return prev;
-      });
-      setProperty((prev: any) => {
-        if (JSON.stringify(prev) !== JSON.stringify(property)) {
-          return property;
-        }
-        return prev;
-      });
-      setNutrition((prev: any) => {
-        if (JSON.stringify(prev) !== JSON.stringify(nutrition)) {
-          return nutrition;
-        }
-        return prev;
-      });
-      setScale((prev: any) => {
-        if (JSON.stringify(prev) !== JSON.stringify(scale)) {
-          return scale;
-        }
-        return prev;
-      });
-    }
-  }, [sessionTitle]);
+		setPercent((prev: any) => ({
+			...prev,
+			...percent,
+		}));
+		setProperty((prev: any) => ({
+			...prev,
+			...property,
+		}));
+		setNutrition((prev: any) => ({
+			...prev,
+			...nutrition,
+		}));
+		setScale((prev: any) => ({
+			...prev,
+			...scale,
+		}));
+	}, [sessionTitle]);
 
   // 2-3. useEffect -----------------------------------------------------------------------------
-  // - 페이지 변경시 초기화 (if 문 없이 매핑으로 처리)
+  // - 페이지 변경시 초기화
   useEffect(() => {
     const mapping: Record<string, Record<string, { key: string; value: string }>> = {
       admin: {
@@ -311,7 +307,7 @@ export const TopNav = memo(() => {
   // 7. topNav -------------------------------------------------------------------------------------
   const topNavNode = () => {
 
-    // 1. smile ------------------------------------------------------------------------------------
+    // 7-1. smile ------------------------------------------------------------------------------------
     const smileSection = () => (
       <PopUp
         type={"innerCenter"}
@@ -473,7 +469,7 @@ export const TopNav = memo(() => {
       />
     );
 
-    // 2. scale ------------------------------------------------------------------------------------
+    // 7-2. scale ------------------------------------------------------------------------------------
     const scaleSection = () => (
       <PopUp
         type={"innerCenter"}
@@ -612,7 +608,7 @@ export const TopNav = memo(() => {
       />
     );
 
-    // 3. nutrition --------------------------------------------------------------------------------
+    // 7-3. nutrition --------------------------------------------------------------------------------
     const nutritionSection = () => (
       <PopUp
         type={"innerCenter"}
@@ -838,7 +834,7 @@ export const TopNav = memo(() => {
       />
     );
 
-    // 4. property ---------------------------------------------------------------------------------
+    // 7-4. property ---------------------------------------------------------------------------------
     const propertySection = () => (
       <PopUp
         type={"innerCenter"}
@@ -1004,99 +1000,97 @@ export const TopNav = memo(() => {
       />
     );
 
-  // 5. tabs -------------------------------------------------------------------------------------
-  const tabsSection = () => {
-    // Expression-based guard: derive a current tab value without using `if`.
-    const currentTabValue = (!firstStr ? "" : ((selectedTab as any)[firstStr] ?? (dataArray as any)[firstStr]?.[0] ?? ""));
+		// 7-5. tabs -------------------------------------------------------------------------------------
+		const tabsSection = () => {
+			const currentTabValue = (!firstStr ? "" : ((selectedTab as any)[firstStr] ?? (dataArray as any)[firstStr]?.[0] ?? ""));
+			return currentTabValue ? (
+				<>
+					<Tabs
+						value={currentTabValue}
+						variant={"fullWidth"}
+						component={"div"}
+						scrollButtons={false}
+						allowScrollButtonsMobile={false}
+						selectionFollowsFocus={true}
+						sx={{
+							[`& .MuiTabs-indicator`]: {
+								"display": "none",
+							}
+						}}
+					>
+						<Tab
+							label={translate(currentTabValue)}
+							value={currentTabValue}
+							className={"fs-1-2rem fw-700"}
+							onClick={(e) => {
+								setSelectedAnchorEl((prev) => ({
+									...prev,
+									[firstStr]: e.currentTarget
+								}))
+							}}
+						/>
+					</Tabs>
+					<Menu
+						anchorEl={selectedAnchorEl[firstStr]}
+						open={Boolean(selectedAnchorEl[firstStr])}
+						anchorOrigin={{
+							vertical: "bottom",
+							horizontal: "center",
+						}}
+						transformOrigin={{
+							vertical: "top",
+							horizontal: "center",
+						}}
+						slotProps={{
+							paper: {
+								className: "py-0px px-10px",
+							}
+						}}
+						onClose={() => {
+							setSelectedAnchorEl((prev) => ({
+								...prev,
+								[firstStr]: null
+							}))
+						}}
+					>
+						{dataArray?.[firstStr as keyof typeof dataArray]?.map((tabName: string) => (
+							<MenuItem
+								key={tabName}
+								selected={currentTabValue === tabName}
+								className={"text-center"}
+								onClick={() => {
+									handleClickTobNav(tabName);
+									setSelectedAnchorEl((prev) => ({
+										...prev,
+										[firstStr]: null
+									}));
+								}}
+							>
+								{translate(tabName)}
+							</MenuItem>
+						))}
+					</Menu>
+				</>
+			) : null;
+		};
 
-    return currentTabValue ? (
-      <>
-        <Tabs
-          value={currentTabValue}
-          variant={"fullWidth"}
-          component={"div"}
-          scrollButtons={false}
-          allowScrollButtonsMobile={false}
-          selectionFollowsFocus={true}
-          sx={{
-            [`& .MuiTabs-indicator`]: {
-              "display": "none",
-            }
-          }}
-        >
-          <Tab
-            label={translate(currentTabValue)}
-            value={currentTabValue}
-            className={"fs-1-2rem fw-700"}
-            onClick={(e) => {
-              setSelectedAnchorEl((prev) => ({
-                ...prev,
-                [firstStr]: e.currentTarget
-              }))
-            }}
-          />
-        </Tabs>
-        <Menu
-          anchorEl={selectedAnchorEl[firstStr]}
-          open={Boolean(selectedAnchorEl[firstStr])}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "center",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "center",
-          }}
-          slotProps={{
-            paper: {
-              className: "py-0px px-10px",
-            }
-          }}
-          onClose={() => {
-            setSelectedAnchorEl((prev) => ({
-              ...prev,
-              [firstStr]: null
-            }))
-          }}
-        >
-          {dataArray?.[firstStr as keyof typeof dataArray]?.map((tabName: string) => (
-            <MenuItem
-              key={tabName}
-              selected={currentTabValue === tabName}
-              className={"text-center"}
-              onClick={() => {
-                handleClickTobNav(tabName);
-                setSelectedAnchorEl((prev) => ({
-                  ...prev,
-                  [firstStr]: null
-                }));
-              }}
-            >
-              {translate(tabName)}
-            </MenuItem>
-          ))}
-        </Menu>
-      </>
-    ) : null;
-  };
-
-    // 5. return -----------------------------------------------------------------------------------
-    return (
-      <Paper className={"layout-wrapper p-sticky top-8vh h-8vh radius-2 border-1 shadow-1 p-0px"}>
-        <Grid container spacing={0}>
-          <Grid size={7} className={"d-row-center"}>
-            {smileSection()}
-            {scaleSection()}
-            {nutritionSection()}
-            {propertySection()}
-          </Grid>
-          <Grid size={5} className={"d-row-center border-left-2"}>
-            {tabsSection()}
-          </Grid>
-        </Grid>
-      </Paper>
-    );
-  };
+		// 7-9. return -----------------------------------------------------------------------------------
+		return (
+			<Paper className={"layout-wrapper p-sticky top-8vh h-8vh radius-2 border-1 shadow-1 p-0px"}>
+				<Grid container spacing={0}>
+					<Grid size={7} className={"d-row-center"}>
+						{smileSection()}
+						{scaleSection()}
+						{nutritionSection()}
+						{propertySection()}
+					</Grid>
+					<Grid size={5} className={"d-row-center border-left-2"}>
+						{tabsSection()}
+					</Grid>
+				</Grid>
+			</Paper>
+		);
+	};
 
 	// 10. return ----------------------------------------------------------------------------------
   return (
