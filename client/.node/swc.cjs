@@ -13,6 +13,7 @@ const argv = process.argv.slice(2);
 const args1 = argv.find(arg => [`--npm`, `--pnpm`, `--yarn`, `--bun`].includes(arg))?.replace(`--`, ``) || ``;
 const args2 = argv.find(arg => [`--watch`, `--start`, `--compile`, `--build`].includes(arg))?.replace(`--`, ``) || ``;
 const args3 = argv.find(arg => [`--server`, `--client`].includes(arg))?.replace(`--`, ``) || ``;
+const args4 = argv.find(arg => [`--prod`, `--dev`].includes(arg))?.replace(`--`, ``) || ``;
 
 // 컴파일 실행 ----------------------------------------------------------------------------------
 const runCompile = () => {
@@ -72,19 +73,21 @@ const runBuild = () => {
 
 	const { isClient, isServer, hasVite, hasNext } = getProjectType(args3);
 	const outDir = validateDir([`out`, `dist`, `build`]);
+	const mode = args4 === `prod` ? `production` : args4 === `dev` ? `development` : `production`;
+
 	delDir(outDir);
 
 	try {
 		isClient ? (
 			hasVite ? (
 				args1 === `npm` ? (
-					runCmd(args1, [`exec`, `--`, `vite`, `build`])
+					runCmd(args1, [`exec`, `--`, `vite`, `build`, `--mode`, mode])
 				) : args1 === `pnpm` ? (
-					runCmd(args1, [`exec`, `vite`, `build`])
+					runCmd(args1, [`exec`, `vite`, `build`, `--mode`, mode])
 				) : args1 === `yarn` ? (
-					runCmd(args1, [`vite`, `build`])
+					runCmd(args1, [`vite`, `build`, `--mode`, mode])
 				) : args1 === `bun` ? (
-					runCmd(args1, [`x`, `vite`, `build`])
+					runCmd(args1, [`x`, `vite`, `build`, `--mode`, mode])
 				) : (
 					null
 				)
@@ -294,6 +297,7 @@ const runStart = () => {
 	logger(`info`, `전달된 인자 1 : ${args1 || 'none'}`);
 	logger(`info`, `전달된 인자 2 : ${args2 || 'none'}`);
 	logger(`info`, `전달된 인자 3 : ${args3 || 'none'}`);
+	logger(`info`, `전달된 인자 4 : ${args4 || 'none'}`);
 
 	!args1 && (
 		logger(`error`, `패키지 매니저를 지정해주세요: --npm, --pnpm, --yarn, --bun`),
