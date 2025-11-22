@@ -12,6 +12,9 @@ export type TodayRecordType = {
 	today_exercise_record_dateType: string;
 	today_exercise_record_dateStart: string;
 	today_exercise_record_dateEnd: string;
+	today_exercise_record_total_volume: string;
+	today_exercise_record_total_cardio: string;
+	today_exercise_record_total_scale: string;
 	today_exercise_section: Array<{
 		exercise_record_part: string;
 		exercise_record_title: string;
@@ -26,6 +29,11 @@ export type TodayRecordType = {
 	today_food_record_dateType: string;
 	today_food_record_dateStart: string;
 	today_food_record_dateEnd: string;
+	today_food_record_total_calorie: string;
+	today_food_record_total_carb: string;
+	today_food_record_total_protein: string;
+	today_food_record_total_fat: string;
+	today_food_record_total_scale: string;
 	today_food_section: Array<{
 		food_record_part: string;
 		food_record_name: string;
@@ -40,6 +48,12 @@ export type TodayRecordType = {
 	}>;
 
 	// 3. money
+	today_money_record_dateType: string;
+	today_money_record_dateStart: string;
+	today_money_record_dateEnd: string;
+	today_money_record_total_income: string;
+	today_money_record_total_expense: string;
+	today_money_record_total_scale: string;
 	today_money_section: Array<{
 		money_record_part: string;
 		money_record_title: string;
@@ -49,6 +63,11 @@ export type TodayRecordType = {
 	}>;
 
 	// 4. sleep
+	today_sleep_record_dateType: string;
+	today_sleep_record_dateStart: string;
+	today_sleep_record_dateEnd: string;
+	today_sleep_record_total_time: string;
+	today_sleep_record_total_scale: string;
 	today_sleep_section: Array<{
 		sleep_record_bedTime: string;
 		sleep_record_bedTime_color: string;
@@ -74,6 +93,9 @@ export const TodayRecord: TodayRecordType = {
 	today_exercise_record_dateType: "",
 	today_exercise_record_dateStart: "0000-00-00",
 	today_exercise_record_dateEnd: "0000-00-00",
+	today_exercise_record_total_volume: "0",
+	today_exercise_record_total_cardio: "00:00",
+	today_exercise_record_total_scale: "0",
 	today_exercise_section: [
 		{
 			exercise_record_part: "",
@@ -90,6 +112,11 @@ export const TodayRecord: TodayRecordType = {
 	today_food_record_dateType: "",
 	today_food_record_dateStart: "0000-00-00",
 	today_food_record_dateEnd: "0000-00-00",
+	today_food_record_total_calorie: "0",
+	today_food_record_total_carb: "0",
+	today_food_record_total_protein: "0",
+	today_food_record_total_fat: "0",
+	today_food_record_total_scale: "0",
 	today_food_section: [
 		{
 			food_record_part: "",
@@ -106,6 +133,12 @@ export const TodayRecord: TodayRecordType = {
 	],
 
 	// 3. money
+	today_money_record_dateType: "",
+	today_money_record_dateStart: "0000-00-00",
+	today_money_record_dateEnd: "0000-00-00",
+	today_money_record_total_income: "0",
+	today_money_record_total_expense: "0",
+	today_money_record_total_scale: "0",
 	today_money_section: [
 		{
 			money_record_part: "",
@@ -117,6 +150,11 @@ export const TodayRecord: TodayRecordType = {
 	],
 
 	// 4. sleep
+	today_sleep_record_dateType: "",
+	today_sleep_record_dateStart: "0000-00-00",
+	today_sleep_record_dateEnd: "0000-00-00",
+	today_sleep_record_total_time: "00:00",
+	today_sleep_record_total_scale: "0",
 	today_sleep_section: [
 		{
 			sleep_record_bedTime: "00:00",

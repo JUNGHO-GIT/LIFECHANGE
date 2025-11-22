@@ -35,6 +35,7 @@ export const Footer = memo((
     const isFood = PATH.includes("/food/find/list") || PATH.includes("/food/favorite/list");
     const isGoalRecord = PATH.includes("/goal/list") || PATH.includes("/record/list");
     const isDetail = PATH.includes("/goal/detail") || PATH.includes("/record/detail");
+		const isCalendarDetail = PATH.includes("/calendar/detail");
 
     isTodayGoal && (setTypeName(""), setStyleClass(""));
 		isTodayRecord && (setTypeName(""), setStyleClass(""));
@@ -42,6 +43,7 @@ export const Footer = memo((
     isFood && (setTypeName("findFilter"), setStyleClass(`${commonStr} bottom-8vh`));
     isGoalRecord && (setTypeName("listFilter"), setStyleClass(`${commonStr} bottom-8vh`));
     isDetail && (setTypeName("btn"), setStyleClass(`${commonStr} bottom-8vh`));
+		isCalendarDetail && (setTypeName("btn"), setStyleClass(`${commonStr} bottom-8vh`));
   }, [PATH]);
 
 	// 9. footer ----------------------------------------------------------------------------------

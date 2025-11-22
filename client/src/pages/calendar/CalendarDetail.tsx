@@ -1,11 +1,11 @@
 // CalendarDetail.tsx
 
-import { useState, useEffect, useCallback, memo } from "@exportReacts";
-import { useCommonValue, useCommonDate, useValidateToday } from "@exportHooks";
+import { useState, useEffect, useCallback, useRef, memo } from "@exportReacts";
+import { useCommonValue, useCommonDate, useValidateCalendar } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { TodayRecord, TodayRecordType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { insertComma, handleNumberInput } from "@exportScripts";
+import { insertComma, handleNumberInput, sync } from "@exportScripts";
 import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, PickerTime, Count, Delete, Input, Select, Memo } from "@exportContainers";
 import { Img, Bg, Paper, Grid, Div, Br } from "@exportComponents";
@@ -15,16 +15,16 @@ import { Checkbox, MenuItem } from "@exportMuis";
 export const CalendarDetail = memo(() => {
 
 	// 1. common -------------------------------------------------------------------------------------
-	const { URL_OBJECT, sessionId, localCurrency } = useCommonValue();
+  const { URL_OBJECT, PATH, navigate, toList, toToday, sessionId, localCurrency } = useCommonValue();
 	const { bgColors, localUnit } = useCommonValue();
 	const { exerciseArray, foodArray, moneyArray } = useCommonValue();
 	const { location_dateType } = useCommonValue();
-	const { location_dateStart, location_dateEnd } = useCommonValue();
+  const { location_from, location_dateStart, location_dateEnd } = useCommonValue();
 	const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
 	const { translate } = useStoreLanguage();
 	const { setALERT } = useStoreAlert();
 	const { setLOADING } = useStoreLoading();
-	const { ERRORS, REFS, validate } = useValidateToday();
+	const { ERRORS, REFS, validate } = useValidateCalendar();
 
 	// 2-2. useState ---------------------------------------------------------------------------------
 	const [LOCKED, setLOCKED] = useState<string>(`unlocked`);
@@ -57,6 +57,20 @@ export const CalendarDetail = memo(() => {
 		dateStart: location_dateStart || getDayFmt(),
 		dateEnd: location_dateEnd || getDayFmt(),
 	});
+
+	// 2-3. useRef --------------------------------------------------------------------------------
+	const countRef = useRef(COUNT);
+	const objectRef = useRef(OBJECT);
+	const dateRef = useRef(DATE);
+
+	// 2-3. useEffect ------------------------------------------------------------------------------
+	useEffect(() => {
+		COUNT !== countRef.current && (countRef.current = COUNT);
+		OBJECT !== objectRef.current && (objectRef.current = OBJECT);
+		DATE !== dateRef.current && (dateRef.current = DATE);
+	}, [
+		COUNT, OBJECT, DATE
+	]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
 	useEffect(() => {
@@ -169,6 +183,213 @@ export const CalendarDetail = memo(() => {
 		});
 	}, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
 
+	// 2-3. useEffect (exercise total 계산) ------------------------------------------------------
+	useEffect(() => {
+		const totals = OBJECT?.today_exercise_section?.reduce((acc: any, cur: any) => {
+			return {
+				totalVolume: (
+					acc.totalVolume +
+					Number(cur.exercise_record_set) *
+					Number(cur.exercise_record_rep) *
+					Number(cur.exercise_record_weight)
+				),
+				totalCardio: (
+					acc.totalCardio +
+					Number(cur.exercise_record_cardio.split(':')[0]) * 60 +
+					Number(cur.exercise_record_cardio.split(':')[1])
+				)
+			};
+		}, {
+			totalVolume: 0,
+			totalCardio: 0
+		});
+
+		setOBJECT((prev) => ({
+			...prev,
+			today_exercise_record_total_volume: totals.totalVolume.toString(),
+			today_exercise_record_total_cardio: `${Math.floor(totals.totalCardio / 60).toString().padStart(2, '0')}:${(totals.totalCardio % 60).toString().padStart(2, '0')}`
+		}));
+
+	}, [OBJECT?.today_exercise_section]);
+
+	// 2-3. useEffect (food total 계산) ----------------------------------------------------------
+	useEffect(() => {
+		const totals = OBJECT?.today_food_section?.reduce((acc: any, cur: any) => {
+			return {
+				totalCalorie: acc.totalCalorie + Number(cur.food_record_kcal),
+				totalCarb: acc.totalCarb + Number(cur.food_record_carb),
+				totalProtein: acc.totalProtein + Number(cur.food_record_protein),
+				totalFat: acc.totalFat + Number(cur.food_record_fat)
+			};
+		}, {
+			totalCalorie: 0,
+			totalCarb: 0,
+			totalProtein: 0,
+			totalFat: 0
+		});
+
+		setOBJECT((prev) => ({
+			...prev,
+			today_food_record_total_calorie: totals.totalCalorie.toString(),
+			today_food_record_total_carb: totals.totalCarb.toString(),
+			today_food_record_total_protein: totals.totalProtein.toString(),
+			today_food_record_total_fat: totals.totalFat.toString()
+		}));
+
+	}, [OBJECT?.today_food_section]);
+
+	// 2-3. useEffect (money total 계산) ---------------------------------------------------------
+	useEffect(() => {
+		const totals = OBJECT?.today_money_section?.reduce((acc: any, cur: any) => {
+			const amount = Number(cur.money_record_amount);
+			return {
+				totalIncome: cur.money_record_part === 'income' ? acc.totalIncome + amount : acc.totalIncome,
+				totalExpense: cur.money_record_part === 'expense' ? acc.totalExpense + amount : acc.totalExpense
+			};
+		}, {
+			totalIncome: 0,
+			totalExpense: 0
+		});
+
+		setOBJECT((prev) => ({
+			...prev,
+			today_money_record_total_income: totals.totalIncome.toString(),
+			today_money_record_total_expense: totals.totalExpense.toString()
+		}));
+
+	}, [OBJECT?.today_money_section]);
+
+	// 2-3. useEffect (sleep total 계산) ---------------------------------------------------------
+	useEffect(() => {
+		const totals = OBJECT?.today_sleep_section?.reduce((acc: any, cur: any) => {
+			const sleepTime = cur.sleep_record_sleepTime.split(':');
+			const minutes = Number(sleepTime[0]) * 60 + Number(sleepTime[1]);
+			return {
+				totalTime: acc.totalTime + minutes
+			};
+		}, {
+			totalTime: 0
+		});
+
+		setOBJECT((prev) => ({
+			...prev,
+			today_sleep_record_total_time: `${Math.floor(totals.totalTime / 60).toString().padStart(2, '0')}:${(totals.totalTime % 60).toString().padStart(2, '0')}`
+		}));
+
+	}, [OBJECT?.today_sleep_section]);
+
+	// 3. flow ------------------------------------------------------------------------------------
+  const flowSave = async (type: string) => {
+    setLOADING(true);
+    if (!await validate(objectRef.current, countRef.current, "record")) {
+      setLOADING(false);
+      return;
+    }
+    axios({
+      method: "put",
+      url: `${URL_OBJECT}/update`,
+      data: {
+        user_id: sessionId,
+        OBJECT: objectRef.current,
+        DATE: dateRef.current,
+        type: type,
+      }
+    })
+    .then((res: any) => {
+      if (res.data.status === "success") {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "success",
+        });
+        navigate(location_from === "today" ? toToday : toList, {
+          state: {
+            dateType: "",
+            dateStart: dateRef.current.dateStart,
+            dateEnd: dateRef.current.dateEnd
+          }
+        });
+        sync("scale");
+      }
+      else {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
+      }
+    })
+    .catch((err: any) => {
+      setLOADING(false);
+      setALERT({
+        open: true,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
+      console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
+    });
+  };
+
+	// 3. flow ------------------------------------------------------------------------------------
+  const flowDelete = async () => {
+    setLOADING(true);
+    if (!await validate(objectRef.current, countRef.current, "delete")) {
+      setLOADING(false);
+      return;
+    }
+    axios({
+      method: "delete",
+      url: `${URL_OBJECT}/delete`,
+      data: {
+        user_id: sessionId,
+        DATE: dateRef.current,
+      }
+    })
+    .then((res: any) => {
+      if (res.data.status === "success") {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "success",
+        });
+        navigate(location_from === "today" ? toToday : toList, {
+          state: {
+            dateType: "",
+            dateStart: dateRef.current.dateStart,
+            dateEnd: dateRef.current.dateEnd
+          }
+        });
+        sync("scale");
+      }
+      else {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg),
+          severity: "error",
+        });
+      }
+    })
+    .catch((err: any) => {
+      setLOADING(false);
+      setALERT({
+        open: true,
+        msg: translate(err.response.data.msg),
+        severity: "error",
+      });
+      console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
+    });
+  };
+
 	// 4-3. handle ----------------------------------------------------------------------------------
 	const handleDelete = useCallback((index: number, section: keyof TodayRecordType) => {
 		setOBJECT((prev) => {
@@ -186,9 +407,6 @@ export const CalendarDetail = memo(() => {
 			newSectionCnt: prev.newSectionCnt - 1,
 		}));
 	}, []);
-
-	// 4-4. handle ----------------------------------------------------------------------------------
-	// 숫자 입력은 공통 유틸을 사용합니다.
 
 	// 7. detail -------------------------------------------------------------------------------------
 	const detailNode = () => {
@@ -1153,6 +1371,9 @@ export const CalendarDetail = memo(() => {
 			setState={{
 				setDATE, setSEND, setCOUNT, setEXIST, setFLOW,
 			}}
+      flow={{
+        flowSave, flowDelete
+      }}
 		/>
 	);
 
