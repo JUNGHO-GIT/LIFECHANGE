@@ -69,7 +69,7 @@ const schema = new mongoose.Schema(
     }
   },
   {
-    collection: "moneyGoal",
+    collection: "MoneyGoal",
     timestamps: {
       createdAt: "money_goal_regDt",
       updatedAt: "money_goal_updateDt"
@@ -80,9 +80,9 @@ const schema = new mongoose.Schema(
 // 3. counter --------------------------------------------------------------------------------------
 schema.pre<MoneyGoalType>("save", async function() {
   if (this.isNew) {
-    this.money_goal_number = await incrementSeq("money_goal_number", "moneyGoal");
+    this.money_goal_number = await incrementSeq("money_goal_number", "MoneyGoal");
   }
 });
 
 // 5. model ----------------------------------------------------------------------------------------
-export const MoneyGoal = mongoose.model<MoneyGoalType>("moneyGoal", schema);
+export const MoneyGoal = mongoose.model<MoneyGoalType>("MoneyGoal", schema);

@@ -79,7 +79,7 @@ const schema = new mongoose.Schema(
     }
   },
   {
-    collection: "sleepRecord",
+    collection: "SleepRecord",
     timestamps: {
       createdAt: "sleep_record_regDt",
       updatedAt: "sleep_record_updateDt"
@@ -90,9 +90,9 @@ const schema = new mongoose.Schema(
 // 3. counter --------------------------------------------------------------------------------------
 schema.pre<SleepRecordType>("save", async function() {
 	if (this.isNew) {
-		this.sleep_record_number = await incrementSeq("sleep_record_number", "sleepRecord");
+		this.sleep_record_number = await incrementSeq("sleep_record_number", "SleepRecord");
 	}
 });
 
 // 5. model ----------------------------------------------------------------------------------------
-export const SleepRecord = mongoose.model<SleepRecordType>("sleepRecord", schema);
+export const SleepRecord = mongoose.model<SleepRecordType>("SleepRecord", schema);

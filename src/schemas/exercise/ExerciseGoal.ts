@@ -76,7 +76,7 @@ const schema = new mongoose.Schema({
 		required: false
 	}
 }, {
-	collection: "exerciseGoal",
+	collection: "ExerciseGoal",
 	timestamps: {
 		createdAt: "exercise_goal_regDt",
 		updatedAt: "exercise_goal_updateDt"
@@ -86,9 +86,9 @@ const schema = new mongoose.Schema({
 // 3. counter --------------------------------------------------------------------------------------
 schema.pre<ExerciseGoalType>("save", async function () {
 	if (this.isNew) {
-		this.exercise_goal_number = await incrementSeq("exercise_goal_number", "exerciseGoal");
+		this.exercise_goal_number = await incrementSeq("exercise_goal_number", "ExerciseGoal");
 	}
 });
 
 // 5. model ----------------------------------------------------------------------------------------
-export const ExerciseGoal = mongoose.model<ExerciseGoalType>("exerciseGoal", schema);
+export const ExerciseGoal = mongoose.model<ExerciseGoalType>("ExerciseGoal", schema);

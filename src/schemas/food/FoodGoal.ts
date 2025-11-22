@@ -76,7 +76,7 @@ const schema = new mongoose.Schema({
     required: false
   }
 }, {
-  collection: "foodGoal",
+  collection: "FoodGoal",
   timestamps: {
     createdAt: "food_goal_regDt",
     updatedAt: "food_goal_updateDt"
@@ -86,9 +86,9 @@ const schema = new mongoose.Schema({
 // 3. counter --------------------------------------------------------------------------------------
 schema.pre<FoodGoalType>("save", async function() {
   if (this.isNew) {
-    this.food_goal_number = await incrementSeq("food_goal_number", "foodGoal");
+    this.food_goal_number = await incrementSeq("food_goal_number", "FoodGoal");
   }
 });
 
 // 5. model ----------------------------------------------------------------------------------------
-export const FoodGoal = mongoose.model<FoodGoalType>("foodGoal", schema);
+export const FoodGoal = mongoose.model<FoodGoalType>("FoodGoal", schema);

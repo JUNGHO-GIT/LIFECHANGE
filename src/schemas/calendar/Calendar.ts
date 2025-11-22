@@ -285,7 +285,7 @@ const schema = new mongoose.Schema(
 		},
 	},
 	{
-		collection: "calendar",
+		collection: "Calendar",
 		timestamps: {
 			createdAt: "calendar_regDt",
 			updatedAt: "calendar_updateDt",
@@ -296,9 +296,9 @@ const schema = new mongoose.Schema(
 // 3. counter --------------------------------------------------------------------------------------
 schema.pre<CalendarType>("save", async function () {
 	if (this.isNew) {
-		this.calendar_number = await incrementSeq("calendar_number", "calendar");
+		this.calendar_number = await incrementSeq("calendar_number", "Calendar");
 	}
 });
 
 // 5. model ----------------------------------------------------------------------------------------
-export const Calendar = mongoose.model<CalendarType>("calendar", schema);
+export const Calendar = mongoose.model<CalendarType>("Calendar", schema);

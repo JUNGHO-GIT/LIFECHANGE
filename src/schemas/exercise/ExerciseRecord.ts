@@ -119,7 +119,7 @@ const schema = new mongoose.Schema({
     required: false
   }
 }, {
-  collection: "exerciseRecord",
+  collection: "ExerciseRecord",
   timestamps: {
     createdAt: "exercise_record_regDt",
     updatedAt: "exercise_record_updateDt"
@@ -129,9 +129,9 @@ const schema = new mongoose.Schema({
 // 3. counter --------------------------------------------------------------------------------------
 schema.pre<ExerciseRecordType>("save", async function() {
   if (this.isNew) {
-    this.exercise_record_number = await incrementSeq("exercise_record_number", "exerciseRecord");
+    this.exercise_record_number = await incrementSeq("exercise_record_number", "ExerciseRecord");
   }
 });
 
 // 5. model ----------------------------------------------------------------------------------------
-export const ExerciseRecord = mongoose.model<ExerciseRecordType>("exerciseRecord", schema);
+export const ExerciseRecord = mongoose.model<ExerciseRecordType>("ExerciseRecord", schema);

@@ -35,7 +35,7 @@ const schema = new mongoose.Schema(
     }
   },
   {
-    collection: "verify",
+    collection: "Verify",
     timestamps: {
       createdAt: "verify_regDt",
       updatedAt: "verify_updateDt"
@@ -44,4 +44,4 @@ const schema = new mongoose.Schema(
 );
 
 // 5. model ----------------------------------------------------------------------------------------
-export const Verify = mongoose.model<VerifyType>("verify", schema);
+export const Verify = mongoose.model<VerifyType>("Verify", schema);

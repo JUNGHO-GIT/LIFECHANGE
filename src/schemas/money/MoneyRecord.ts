@@ -101,7 +101,7 @@ const schema = new mongoose.Schema({
     required: false
   }
 }, {
-  collection: "moneyRecord",
+  collection: "MoneyRecord",
   timestamps: {
     createdAt: "money_record_regDt",
     updatedAt: "money_record_updateDt"
@@ -111,9 +111,9 @@ const schema = new mongoose.Schema({
 // 3. counter --------------------------------------------------------------------------------------
 schema.pre<MoneyRecordType>("save", async function() {
   if (this.isNew) {
-    this.money_record_number = await incrementSeq("money_record_number", "moneyRecord");
+    this.money_record_number = await incrementSeq("money_record_number", "MoneyRecord");
   }
 });
 
 // 5. model ----------------------------------------------------------------------------------------
-export const MoneyRecord = mongoose.model<MoneyRecordType>("moneyRecord", schema);
+export const MoneyRecord = mongoose.model<MoneyRecordType>("MoneyRecord", schema);

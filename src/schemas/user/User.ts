@@ -276,7 +276,7 @@ const schema = new mongoose.Schema({
     required: false
   }
 }, {
-  collection: "user",
+  collection: "User",
   timestamps: {
     createdAt: "user_regDt",
     updatedAt: "user_updateDt"
@@ -286,9 +286,9 @@ const schema = new mongoose.Schema({
 // 3. counter --------------------------------------------------------------------------------------
 schema.pre<UserType>("save", async function() {
   if (this.isNew) {
-    this.user_number = await incrementSeq("user_number", "user");
+    this.user_number = await incrementSeq("user_number", "User");
   }
 });
 
 // 5. model ----------------------------------------------------------------------------------------
-export const User = mongoose.model<UserType>("user", schema);
+export const User = mongoose.model<UserType>("User", schema);
