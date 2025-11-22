@@ -2,26 +2,46 @@
 
 import mongoose from "mongoose";
 
+// 0. types ---------------------------------------------------------------------------------------
+declare type VerifyType = mongoose.Document & {
+  verify_id: string;
+  verify_code: string;
+  verify_regDt: Date;
+  verify_updateDt: Date;
+};
+
 // 1. schema ---------------------------------------------------------------------------------------
-const schema = new mongoose.Schema({
-  verify_id: {
-    type: String,
-    default: "",
-    required: true
+const schema = new mongoose.Schema(
+  {
+    verify_id: {
+      type: String,
+      default: "",
+      required: true
+    },
+    verify_code: {
+      type: String,
+      default: "",
+      required: true
+    },
+    verify_regDt: {
+      type: Date,
+      default: Date.now,
+      required: false
+    },
+    verify_updateDt: {
+      type: Date,
+      default: Date.now,
+      required: false
+    }
   },
-  verify_code: {
-    type: String,
-    default: "",
-    required: true
-  },
-  verify_regDt: {
-    type: Date,
-    default: Date.now,
-    required: false
-  },
-});
+  {
+    collection: "verify",
+    timestamps: {
+      createdAt: "verify_regDt",
+      updatedAt: "verify_updateDt"
+    }
+  }
+);
 
 // 5. model ----------------------------------------------------------------------------------------
-export const Verify = mongoose.model(
-  "Verify", schema, "verify"
-);
+export const Verify = mongoose.model<VerifyType>("verify", schema);

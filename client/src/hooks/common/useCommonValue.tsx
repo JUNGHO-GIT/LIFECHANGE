@@ -15,8 +15,8 @@ export const useCommonValue = (): CommonValueType => {
   const location = useLocation();
   const PATH: string = location?.pathname || "";
   const pathParts: string[] = PATH ? PATH.split("/") : [];
-  const env: EnvType = process.env as unknown as EnvType;
-  const TITLE: string = env.REACT_APP_TITLE || "";
+  const env: EnvType = import.meta.env as unknown as EnvType;
+  const TITLE: string = env.VITE_APP_TITLE || "";
 
   const localTitle: LocalTitleType = useMemo(() => {
     try {
@@ -212,32 +212,32 @@ export const useCommonValue = (): CommonValueType => {
     toDelete: pathParts[2] === "goal" ? `/${pathParts[1] || ""}/goal/delete` : `/${pathParts[1] || ""}/record/delete`,
     // Environment Variables
     TITLE: TITLE,
-    URL: env.REACT_APP_SERVER_URL || "",
-    GCLOUD_URL: env.REACT_APP_GCLOUD_URL || "",
-    ADMIN_ID: env.REACT_APP_ADMIN_ID || "",
-    ADMIN_PW: env.REACT_APP_ADMIN_PW || "",
+    URL: env.VITE_APP_SERVER_URL || "",
+    GCLOUD_URL: env.VITE_APP_GCLOUD_URL || "",
+    ADMIN_ID: env.VITE_APP_ADMIN_ID || "",
+    ADMIN_PW: env.VITE_APP_ADMIN_PW || "",
     // API Suffixes
-    SUBFIX: env[`REACT_APP_${(pathParts[1] || "").toUpperCase()}`] || "",
-    SUBFIX_TODAY: env.REACT_APP_TODAY || "",
-    SUBFIX_CALENDAR: env.REACT_APP_CALENDAR || "",
-    SUBFIX_GOOGLE: env.REACT_APP_GOOGLE || "",
-    SUBFIX_ADMOB: env.REACT_APP_ADMOB || "",
-    SUBFIX_ADMIN: env.REACT_APP_ADMIN || "",
-    SUBFIX_EXERCISE: env.REACT_APP_EXERCISE || "",
-    SUBFIX_FOOD: env.REACT_APP_FOOD || "",
-    SUBFIX_MONEY: env.REACT_APP_MONEY || "",
-    SUBFIX_SLEEP: env.REACT_APP_SLEEP || "",
+    SUBFIX: env[`VITE_APP_${(pathParts[1] || "").toUpperCase()}`] || "",
+    SUBFIX_TODAY: env.VITE_APP_TODAY || "",
+    SUBFIX_CALENDAR: env.VITE_APP_CALENDAR || "",
+    SUBFIX_GOOGLE: env.VITE_APP_GOOGLE || "",
+    SUBFIX_ADMOB: env.VITE_APP_ADMOB || "",
+    SUBFIX_ADMIN: env.VITE_APP_ADMIN || "",
+    SUBFIX_EXERCISE: env.VITE_APP_EXERCISE || "",
+    SUBFIX_FOOD: env.VITE_APP_FOOD || "",
+    SUBFIX_MONEY: env.VITE_APP_MONEY || "",
+    SUBFIX_SLEEP: env.VITE_APP_SLEEP || "",
     // API URLs
-    URL_OBJECT: (env.REACT_APP_SERVER_URL || "") + (env[`REACT_APP_${(pathParts[1] || "").toUpperCase()}`] || ""),
-    URL_TODAY: (env.REACT_APP_SERVER_URL || "") + (env.REACT_APP_TODAY || ""),
-    URL_CALENDAR: (env.REACT_APP_SERVER_URL || "") + (env.REACT_APP_CALENDAR || ""),
-    URL_GOOGLE: (env.REACT_APP_SERVER_URL || "") + (env.REACT_APP_GOOGLE || ""),
-    URL_ADMOB: (env.REACT_APP_SERVER_URL || "") + (env.REACT_APP_ADMOB || ""),
-    URL_ADMIN: (env.REACT_APP_SERVER_URL || "") + (env.REACT_APP_ADMIN || ""),
-    URL_EXERCISE: (env.REACT_APP_SERVER_URL || "") + (env.REACT_APP_EXERCISE || ""),
-    URL_FOOD: (env.REACT_APP_SERVER_URL || "") + (env.REACT_APP_FOOD || ""),
-    URL_MONEY: (env.REACT_APP_SERVER_URL || "") + (env.REACT_APP_MONEY || ""),
-    URL_SLEEP: (env.REACT_APP_SERVER_URL || "") + (env.REACT_APP_SLEEP || ""),
+    URL_OBJECT: (env.VITE_APP_SERVER_URL || "") + (env[`VITE_APP_${(pathParts[1] || "").toUpperCase()}`] || ""),
+    URL_TODAY: (env.VITE_APP_SERVER_URL || "") + (env.VITE_APP_TODAY || ""),
+    URL_CALENDAR: (env.VITE_APP_SERVER_URL || "") + (env.VITE_APP_CALENDAR || ""),
+    URL_GOOGLE: (env.VITE_APP_SERVER_URL || "") + (env.VITE_APP_GOOGLE || ""),
+    URL_ADMOB: (env.VITE_APP_SERVER_URL || "") + (env.VITE_APP_ADMOB || ""),
+    URL_ADMIN: (env.VITE_APP_SERVER_URL || "") + (env.VITE_APP_ADMIN || ""),
+    URL_EXERCISE: (env.VITE_APP_SERVER_URL || "") + (env.VITE_APP_EXERCISE || ""),
+    URL_FOOD: (env.VITE_APP_SERVER_URL || "") + (env.VITE_APP_FOOD || ""),
+    URL_MONEY: (env.VITE_APP_SERVER_URL || "") + (env.VITE_APP_MONEY || ""),
+    URL_SLEEP: (env.VITE_APP_SERVER_URL || "") + (env.VITE_APP_SLEEP || ""),
     // Admin & Session ID
     isAdmin: sessionTitle?.setting?.id?.admin || "",
     sessionId: sessionTitle?.setting?.id?.sessionId || "",

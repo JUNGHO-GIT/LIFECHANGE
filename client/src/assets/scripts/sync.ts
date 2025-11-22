@@ -7,8 +7,8 @@ import { getSession, getLocal, setSession } from "@exportScripts";
 export const sync = async (extra?: string) => {
 
 	// 1. common ----------------------------------------------------------------------------------
-  const URL = process.env.REACT_APP_SERVER_URL || "";
-  const SUBFIX = process.env.REACT_APP_USER || "";
+  const URL = import.meta.env.VITE_APP_SERVER_URL || "";
+  const SUBFIX = import.meta.env.VITE_APP_USER || "";
   const URL_OBJECT = URL + SUBFIX;
   const sessionId = getSession("setting", "id", "sessionId");
   const localTimeZone = getLocal("setting", "locale", "timeZone");

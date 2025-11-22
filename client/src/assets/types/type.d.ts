@@ -43,21 +43,21 @@ export interface LocationStateType {
 
 // 환경변수 -----------------------------------------------------------------------------------------
 export interface EnvType {
-  REACT_APP_TITLE?: string;
-  REACT_APP_SERVER_URL?: string;
-  REACT_APP_GCLOUD_URL?: string;
-  REACT_APP_ADMIN_ID?: string;
-  REACT_APP_ADMIN_PW?: string;
-  REACT_APP_TODAY?: string;
-  REACT_APP_CALENDAR?: string;
-  REACT_APP_GOOGLE?: string;
-  REACT_APP_ADMOB?: string;
-  REACT_APP_ADMIN?: string;
-  REACT_APP_EXERCISE?: string;
-  REACT_APP_FOOD?: string;
-  REACT_APP_MONEY?: string;
-  REACT_APP_SLEEP?: string;
-  [key: `REACT_APP_${string}`]: string | undefined;
+  VITE_APP_TITLE?: string;
+  VITE_APP_SERVER_URL?: string;
+  VITE_APP_GCLOUD_URL?: string;
+  VITE_APP_ADMIN_ID?: string;
+  VITE_APP_ADMIN_PW?: string;
+  VITE_APP_TODAY?: string;
+  VITE_APP_CALENDAR?: string;
+  VITE_APP_GOOGLE?: string;
+  VITE_APP_ADMOB?: string;
+  VITE_APP_ADMIN?: string;
+  VITE_APP_EXERCISE?: string;
+  VITE_APP_FOOD?: string;
+  VITE_APP_MONEY?: string;
+  VITE_APP_SLEEP?: string;
+  [key: `VITE_APP_${string}`]: string | undefined;
 }
 
 // 로컬 스토리지 스키마 (인라인) -------------------------------------------------------------------

@@ -7,6 +7,52 @@ import { moneyArray } from "@assets/arrays/moneyArray";
 import { foodArray } from "@assets/arrays/foodArray";
 import { sleepArray } from "@assets/arrays/sleepArray";
 
+// 0. types ---------------------------------------------------------------------------------------
+declare type UserFavoriteItem = {
+  food_record_key: string;
+  food_record_name: string;
+  food_record_brand: string;
+  food_record_count: string;
+  food_record_serv: string;
+  food_record_gram: string;
+  food_record_kcal: string;
+  food_record_carb: string;
+  food_record_protein: string;
+  food_record_fat: string;
+};
+declare type UserType = mongoose.Document & {
+  user_id: string;
+  user_number: number;
+  user_google: string;
+  user_token: string;
+  user_pw: string;
+  user_image: string;
+  user_initScale: string;
+  user_minScale: string;
+  user_maxScale: string;
+  user_curScale: string;
+  user_initAvgKcalIntake: string;
+  user_totalKcalIntake: string;
+  user_totalCarbIntake: string;
+  user_totalProteinIntake: string;
+  user_totalFatIntake: string;
+  user_curAvgKcalIntake: string;
+  user_curAvgCarbIntake: string;
+  user_curAvgProteinIntake: string;
+  user_curAvgFatIntake: string;
+  user_initProperty: string;
+  user_totalIncomeAll: string;
+  user_totalIncomeExclusion: string;
+  user_totalExpenseAll: string;
+  user_totalExpenseExclusion: string;
+  user_curPropertyAll: string;
+  user_curPropertyExclusion: string;
+  user_favorite: UserFavoriteItem[];
+  user_dataCategory: any;
+  user_regDt: Date;
+  user_updateDt: Date;
+};
+
 // 1. schema ---------------------------------------------------------------------------------------
 const schema = new mongoose.Schema({
   user_id: {
@@ -229,17 +275,20 @@ const schema = new mongoose.Schema({
     default: Date.now,
     required: false
   }
+}, {
+  collection: "user",
+  timestamps: {
+    createdAt: "user_regDt",
+    updatedAt: "user_updateDt"
+  }
 });
 
 // 3. counter --------------------------------------------------------------------------------------
-schema.pre("save", async function(next) {
+schema.pre<UserType>("save", async function() {
   if (this.isNew) {
-    this.user_number = await incrementSeq("user_number", "User");
+    this.user_number = await incrementSeq("user_number", "user");
   }
-  next();
 });
 
 // 5. model ----------------------------------------------------------------------------------------
-export const User = mongoose.model(
-  "User", schema, "user"
-);
+export const User = mongoose.model<UserType>("user", schema);

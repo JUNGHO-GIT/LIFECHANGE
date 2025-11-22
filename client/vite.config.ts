@@ -14,7 +14,7 @@ export default defineConfig(({ command, mode }) => {
   const isProd = mode === "production";
 
   return {
-    base: env.VITE_PUBLIC_URL || "/LIFECHANGE",
+    base: env.VITE_APP_PUBLIC_URL || "/LIFECHANGE",
     plugins: [
       react(),
       isProd ? (
@@ -32,7 +32,7 @@ export default defineConfig(({ command, mode }) => {
     ].filter(Boolean),
     define: {
       "process.env.NODE_ENV": JSON.stringify(mode),
-      "process.env.PUBLIC_URL": JSON.stringify(env.VITE_PUBLIC_URL || "/LIFECHANGE")
+      "process.env.PUBLIC_URL": JSON.stringify(env.VITE_APP_PUBLIC_URL || "/LIFECHANGE")
     },
     resolve: {
       alias: {

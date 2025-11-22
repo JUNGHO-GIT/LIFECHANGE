@@ -34,7 +34,7 @@ export const useLanguageSetting = () => {
     );
 
     // Load lang for moment if necessary
-    lang && lang !== "en" && require(`moment/locale/${lang}`);
+		lang && lang !== "en" && moment.locale(lang);
 
     // Save to local storage
     setLocal("setting", "locale", "", {
