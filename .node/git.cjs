@@ -12,7 +12,7 @@ const { logger } = require(`../client/.node/utils.cjs`);
 const TITLE = `git.cjs`;
 const argv = process.argv.slice(2);
 const args1 = argv.find(arg => [`--npm`, `--pnpm`, `--yarn`, `--bun`].includes(arg))?.replace(`--`, ``) || ``;
-const args2 = argv.find(arg => [`--push`].includes(arg))?.replace(`--`, ``) || ``;
+const args2 = argv.find(arg => [`--push`, `--fetch`].includes(arg))?.replace(`--`, ``) || ``;
 const winOrLinux = os.platform() === 'win32' ? `win` : `linux`;
 
 // changelog 수정 -------------------------------------------------------------------------------
@@ -40,13 +40,13 @@ const modifyChangelog = () => {
 	const versionArray = lastVersion.split('.').map((v) => parseInt(v));
 
 	versionArray[2] = versionArray[2] + 1;
-	(versionArray[2] >= 10) ? (
+	versionArray[2] >= 10 ? (
 		versionArray[2] = 0,
 		versionArray[1] = versionArray[1] + 1
 	) : (
 		versionArray[2] = versionArray[2]
 	);
-	(versionArray[1] >= 10) ? (
+	versionArray[1] >= 10 ? (
 		versionArray[1] = 0,
 		versionArray[0] = versionArray[0] + 1
 	) : (
@@ -69,7 +69,7 @@ const modifyChangelog = () => {
 };
 
 // package.json 버전 수정 -----------------------------------------------------------------------
-const incrementVersion = (newVersion=``) => {
+const incrementVersion = (newVersion = ``) => {
 	logger(`info`, `package.json 버전 업데이트 시작: ${newVersion}`);
 
 	const packageJsonPath = `package.json`;
@@ -81,7 +81,7 @@ const incrementVersion = (newVersion=``) => {
 };
 
 // git remote 존재 확인 -------------------------------------------------------------------------
-const checkRemoteExists = (remoteName=``) => {
+const checkRemoteExists = (remoteName = ``) => {
 	try {
 		execSync(`git remote get-url ${remoteName}`, { encoding: 'utf8', stdio: 'pipe' });
 		return true;
@@ -91,8 +91,41 @@ const checkRemoteExists = (remoteName=``) => {
 	}
 };
 
+// git fetch ------------------------------------------------------------------
+const gitFetch = () => {
+	try {
+		const currentBranch = execSync(`git branch --show-current`, { encoding: 'utf8' }).trim();
+		const privateExists = checkRemoteExists(`private`);
+		const originExists = checkRemoteExists(`origin`);
+		const targetRemote = privateExists ? `private` : `origin`;
+
+		privateExists ? (
+			logger(`info`, `Private remote 감지 - private만 fetch 진행`)
+		) : (
+			logger(`info`, `Private remote 없음 - origin fetch 진행`)
+		);
+
+		!privateExists && !originExists ? (
+			logger(`error`, `사용 가능한 remote가 없습니다`)
+		) : (() => {
+			logger(`info`, `Git Fetch 시작: ${targetRemote}`);
+			execSync(`git fetch ${targetRemote}`, { stdio: 'inherit' });
+			logger(`success`, `Git Fetch 완료: ${targetRemote}`);
+
+			logger(`info`, `Git Reset Hard 시작: ${targetRemote}/${currentBranch}`);
+			execSync(`git reset --hard ${targetRemote}/${currentBranch}`, { stdio: 'inherit' });
+			logger(`success`, `Git Reset Hard 완료: ${targetRemote}/${currentBranch}`);
+		})();
+	}
+	catch (e) {
+		const msg = e instanceof Error ? e.message : String(e);
+		logger(`error`, `Git Fetch/Reset 실패: ${msg}`);
+		throw e;
+	}
+};
+
 // git push 공통 함수 ---------------------------------------------------------------------------
-const gitPush = (remoteName=``, ignoreFilePath=``, winOrLinux=``) => {
+const gitPush = (remoteName = ``, ignoreFilePath = ``, winOrLinux = ``) => {
 	const remoteExists = checkRemoteExists(remoteName);
 
 	!remoteExists ? (
@@ -140,6 +173,11 @@ const gitPush = (remoteName=``, ignoreFilePath=``, winOrLinux=``) => {
 	logger(`info`, `전달된 인자 2 : ${args2 || 'none'}`);
 
 	try {
+		args2.includes(`fetch`) && (() => {
+			gitFetch();
+			logger(`success`, `Git Fetch & Reset 완료`);
+		})();
+
 		args2.includes(`push`) && (() => {
 			incrementVersion(modifyChangelog());
 			gitPush(`origin`, `.gitignore.public`, winOrLinux);

@@ -1,6 +1,6 @@
 {
   "name": "lifechange-server",
-  "version": "1.1.1",
+  "version": "1.1.5",
   "type": "module",
   "main": "index.ts",
   "license": "Apache-2.0",
@@ -40,7 +40,8 @@
     "compile": "bun .node/swc.cjs --bun --compile --server",
     "reset": "bun .node/reset.cjs --bun --reset",
     "fix": "bun .node/fix.cjs --bun --fix",
-    "git": "bun .node/git.cjs --bun --push",
+    "git-fetch": "bun .node/git.cjs --bun --fetch",
+    "git-push": "bun .node/git.cjs --bun --push",
     "gcloud": "bun .node/gcloud.cjs --bun --deploy"
   },
   "dependencies": {
@@ -60,19 +61,18 @@
     "module-alias": "2.2.3",
     "moment-timezone": "0.6.0",
     "mongodb": "7.0.0",
-    "mongoose": "8.19.4",
+    "mongoose": "9.0.0",
     "nodemailer": "7.0.10",
     "oauth-signature": "1.5.0",
     "passport": "0.7.0",
     "passport-google-oauth20": "2.0.0",
     "qs": "6.14.0",
     "request": "^2.88.2",
-    "request-promise": "^4.2.6",
-    "stripe": "19.3.1"
+    "request-promise": "^4.2.6"
   },
   "devDependencies": {
     "@swc/cli": "0.7.9",
-    "@swc/core": "1.15.2",
+    "@swc/core": "1.15.3",
     "@swc/helpers": "0.5.17",
     "@types/bcryptjs": "3.0.0",
     "@types/cors": "2.8.19",
@@ -82,7 +82,7 @@
     "@types/jsdom": "27.0.0",
     "@types/mocha": "10.0.10",
     "@types/node": "24.10.1",
-    "@types/nodemailer": "7.0.3",
+    "@types/nodemailer": "7.0.4",
     "@types/passport": "1.0.17",
     "@types/passport-google-oauth20": "2.0.17",
     "@types/qs": "6.14.0",
