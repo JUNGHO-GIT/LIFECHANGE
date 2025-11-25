@@ -15,14 +15,22 @@ const args1 = argv.find(arg => [`--npm`, `--pnpm`, `--yarn`, `--bun`].includes(a
 const args2 = argv.find(arg => [`--push`, `--fetch`].includes(arg))?.replace(`--`, ``) || ``;
 const winOrLinux = os.platform() === 'win32' ? `win` : `linux`;
 
-// 브랜치명 가져오기 ----------------------------------------------------------------------------
-const getCurrentBranch = () => {
-	const rawBranch = execSync(`git symbolic-ref --short HEAD`, { encoding: 'utf8' });
-	const trimmedBranch = rawBranch.replace(/[\r\n\t\s]+/g, '');
-	logger(`info`, `브랜치 원본값: [${rawBranch}]`);
-	logger(`info`, `브랜치 파싱값: [${trimmedBranch}]`);
-	logger(`info`, `브랜치 길이: ${trimmedBranch.length}`);
-	return trimmedBranch;
+// 원격 기본 브랜치 감지 ------------------------------------------------------------------------
+const getRemoteDefaultBranch = (remoteName = ``) => {
+	try {
+		const branches = execSync(`git ls-remote --heads ${remoteName}`, { encoding: 'utf8' }).trim();
+		const hasMain = branches.includes(`refs/heads/main`);
+		const hasMaster = branches.includes(`refs/heads/master`);
+		const defaultBranch = hasMain ? `main` : hasMaster ? `master` : ``;
+
+		logger(`info`, `원격 저장소 ${remoteName} 기본 브랜치: ${defaultBranch}`);
+
+		return defaultBranch;
+	}
+	catch (e) {
+		logger(`error`, `원격 브랜치 감지 실패: ${remoteName}`);
+		return ``;
+	}
 };
 
 // changelog 수정 -------------------------------------------------------------------------------
@@ -104,10 +112,10 @@ const checkRemoteExists = (remoteName = ``) => {
 // git fetch ------------------------------------------------------------------
 const gitFetch = () => {
 	try {
-		const currentBranch = getCurrentBranch();
 		const privateExists = checkRemoteExists(`private`);
 		const originExists = checkRemoteExists(`origin`);
 		const targetRemote = privateExists ? `private` : `origin`;
+		const targetBranch = getRemoteDefaultBranch(targetRemote);
 
 		privateExists ? (
 			logger(`info`, `Private remote 감지 - private만 fetch 진행`)
@@ -117,14 +125,16 @@ const gitFetch = () => {
 
 		!privateExists && !originExists ? (
 			logger(`error`, `사용 가능한 remote가 없습니다`)
+		) : !targetBranch ? (
+			logger(`error`, `원격 기본 브랜치를 찾을 수 없습니다`)
 		) : (() => {
 			logger(`info`, `Git Fetch 시작: ${targetRemote}`);
 			execSync(`git fetch ${targetRemote}`, { stdio: 'inherit' });
 			logger(`success`, `Git Fetch 완료: ${targetRemote}`);
 
-			logger(`info`, `Git Reset Hard 시작: ${targetRemote}/${currentBranch}`);
-			execSync(`git reset --hard ${targetRemote}/${currentBranch}`, { stdio: 'inherit' });
-			logger(`success`, `Git Reset Hard 완료: ${targetRemote}/${currentBranch}`);
+			logger(`info`, `Git Reset Hard 시작: ${targetRemote}/${targetBranch}`);
+			execSync(`git reset --hard ${targetRemote}/${targetBranch}`, { stdio: 'inherit' });
+			logger(`success`, `Git Reset Hard 완료: ${targetRemote}/${targetBranch}`);
 		})();
 	}
 	catch (e) {
@@ -141,36 +151,41 @@ const gitPush = (remoteName = ``, ignoreFilePath = ``, winOrLinux = ``) => {
 	!remoteExists ? (
 		logger(`info`, `Remote '${remoteName}' 존재하지 않음 - 건너뜀`)
 	) : (() => {
-		logger(`info`, `Git Push 시작: ${remoteName}`);
+		const targetBranch = getRemoteDefaultBranch(remoteName);
 
-		const ignorePublicFile = fs.readFileSync(`.gitignore.public`, 'utf8');
-		const ignoreContent = fs.readFileSync(ignoreFilePath, 'utf8');
-		const currentBranch = getCurrentBranch();
+		!targetBranch ? (
+			logger(`error`, `원격 기본 브랜치를 찾을 수 없습니다: ${remoteName}`)
+		) : (() => {
+			logger(`info`, `Git Push 시작: ${remoteName}`);
 
-		logger(`info`, `.gitignore 파일 수정 적용: ${ignoreFilePath}`);
+			const ignorePublicFile = fs.readFileSync(`.gitignore.public`, 'utf8');
+			const ignoreContent = fs.readFileSync(ignoreFilePath, 'utf8');
 
-		fs.writeFileSync(`.gitignore`, ignoreContent, 'utf8');
-		execSync(`git rm -r -f --cached .`, { stdio: 'inherit' });
-		execSync(`git add .`, { stdio: 'inherit' });
+			logger(`info`, `.gitignore 파일 수정 적용: ${ignoreFilePath}`);
 
-		const statusOutput = execSync(`git status --porcelain`, { encoding: 'utf8' }).trim();
-		statusOutput ? (() => {
-			logger(`info`, `변경사항 감지 - 커밋 진행`);
-			const commitMessage = winOrLinux === `win` ? (
-				`git commit -m "%date% %time:~0,8%"`
-			) : (
-				`git commit -m "$(date +%Y-%m-%d) $(date +%H:%M:%S)"`
-			);
-			execSync(commitMessage, { stdio: 'inherit' });
-			logger(`success`, `커밋 완료`);
-		})() : logger(`info`, `변경사항 없음 - 커밋 건너뜀`);
+			fs.writeFileSync(`.gitignore`, ignoreContent, 'utf8');
+			execSync(`git rm -r -f --cached .`, { stdio: 'inherit' });
+			execSync(`git add .`, { stdio: 'inherit' });
 
-		logger(`info`, `Push 진행: ${remoteName} ${currentBranch}`);
-		execSync(`git push --force ${remoteName} ${currentBranch}`, { stdio: 'inherit' });
-		logger(`success`, `Push 완료: ${remoteName}`);
+			const statusOutput = execSync(`git status --porcelain`, { encoding: 'utf8' }).trim();
+			statusOutput ? (() => {
+				logger(`info`, `변경사항 감지 - 커밋 진행`);
+				const commitMessage = winOrLinux === `win` ? (
+					`git commit -m "%date% %time:~0,8%"`
+				) : (
+					`git commit -m "$(date +%Y-%m-%d) $(date +%H:%M:%S)"`
+				);
+				execSync(commitMessage, { stdio: 'inherit' });
+				logger(`success`, `커밋 완료`);
+			})() : logger(`info`, `변경사항 없음 - 커밋 건너뜀`);
 
-		fs.writeFileSync(`.gitignore`, ignorePublicFile, 'utf8');
-		logger(`info`, `.gitignore 파일 복원`);
+			logger(`info`, `Push 진행: ${remoteName} ${targetBranch}`);
+			execSync(`git push --force ${remoteName} HEAD:${targetBranch}`, { stdio: 'inherit' });
+			logger(`success`, `Push 완료: ${remoteName} ${targetBranch}`);
+
+			fs.writeFileSync(`.gitignore`, ignorePublicFile, 'utf8');
+			logger(`info`, `.gitignore 파일 복원`);
+		})();
 	})();
 };
 
