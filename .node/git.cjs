@@ -94,7 +94,7 @@ const checkRemoteExists = (remoteName = ``) => {
 // git fetch ------------------------------------------------------------------
 const gitFetch = () => {
 	try {
-		const currentBranch = execSync(`git branch --show-current`, { encoding: 'utf8' }).trim();
+		const currentBranch = execSync(`git rev-parse --abbrev-ref HEAD`, { encoding: 'utf8' }).trim().replace(/\s+/g, '');
 		const privateExists = checkRemoteExists(`private`);
 		const originExists = checkRemoteExists(`origin`);
 		const targetRemote = privateExists ? `private` : `origin`;
@@ -109,6 +109,7 @@ const gitFetch = () => {
 			logger(`error`, `사용 가능한 remote가 없습니다`)
 		) : (() => {
 			logger(`info`, `Git Fetch 시작: ${targetRemote}`);
+			logger(`info`, `현재 브랜치: ${currentBranch}`);
 			execSync(`git fetch ${targetRemote}`, { stdio: 'inherit' });
 			logger(`success`, `Git Fetch 완료: ${targetRemote}`);
 
@@ -135,7 +136,7 @@ const gitPush = (remoteName = ``, ignoreFilePath = ``, winOrLinux = ``) => {
 
 		const ignorePublicFile = fs.readFileSync(`.gitignore.public`, 'utf8');
 		const ignoreContent = fs.readFileSync(ignoreFilePath, 'utf8');
-		const currentBranch = execSync(`git branch --show-current`, { encoding: 'utf8' }).trim();
+		const currentBranch = execSync(`git rev-parse --abbrev-ref HEAD`, { encoding: 'utf8' }).trim().replace(/\s+/g, '');
 
 		logger(`info`, `현재 브랜치: ${currentBranch}`);
 		logger(`info`, `.gitignore 파일 수정 적용: ${ignoreFilePath}`);
