@@ -258,7 +258,7 @@ export const ExerciseRecordDetail = memo(() => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(location_from === "today" ? toToday : toList, {
+        navigate(toList, {
           state: {
             dateType: "",
             dateStart: dateRef.current.dateStart,
@@ -313,7 +313,7 @@ export const ExerciseRecordDetail = memo(() => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(location_from === "today" ? toToday : toList, {
+        navigate(toList, {
           state: {
             dateType: "",
             dateStart: dateRef.current.dateStart,
@@ -389,7 +389,7 @@ export const ExerciseRecordDetail = memo(() => {
             <Input
               locked={LOCKED}
               readOnly={true}
-              label={translate("totalVolume")}
+              label={translate(`totalVolume`)}
               value={insertComma(OBJECT?.exercise_record_total_volume || "0")}
               startadornment={
                 <Img
@@ -401,7 +401,7 @@ export const ExerciseRecordDetail = memo(() => {
                 />
               }
               endadornment={
-                translate("vol")
+                translate(`vol`)
               }
             />
           </Grid>
@@ -414,7 +414,7 @@ export const ExerciseRecordDetail = memo(() => {
             <Input
               locked={LOCKED}
               readOnly={true}
-              label={translate("totalCardio")}
+              label={translate(`totalCardio`)}
               value={OBJECT?.exercise_record_total_cardio}
               startadornment={
                 <Img
@@ -426,7 +426,7 @@ export const ExerciseRecordDetail = memo(() => {
                 />
               }
               endadornment={
-                translate("hm")
+                translate(`hm`)
               }
             />
           </Grid>
@@ -437,7 +437,7 @@ export const ExerciseRecordDetail = memo(() => {
         <Grid container={true} spacing={1}>
           <Grid size={12}>
             <Input
-              label={translate("scale")}
+              label={translate(`scale`)}
               value={insertComma(OBJECT?.exercise_record_total_scale || "0")}
               startadornment={
                 <Img
@@ -473,13 +473,13 @@ export const ExerciseRecordDetail = memo(() => {
 					className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}>
 						{/** row 1 **/}
 						<Grid container={true} spacing={1}>
-							<Grid size={6} className={"d-row-left"}>
+							<Grid size={6} className={`d-row-left`}>
 								<Bg
 									badgeContent={i + 1}
 									bgcolor={bgColors?.[exerciseArray.findIndex((f: any) => f.exercise_record_part === item?.exercise_record_part)]}
 								/>
 							</Grid>
-							<Grid size={6} className={"d-row-right"}>
+							<Grid size={6} className={`d-row-right`}>
 								<Delete
 									index={i}
 									handleDelete={handleDelete}
@@ -494,7 +494,7 @@ export const ExerciseRecordDetail = memo(() => {
 							<Grid size={6}>
 								<Select
 									locked={LOCKED}
-									label={translate("part")}
+									label={translate(`part`)}
 									value={item?.exercise_record_part || ""}
 									inputRef={REFS?.[i]?.exercise_record_part}
 									error={ERRORS?.[i]?.exercise_record_part}
@@ -518,7 +518,7 @@ export const ExerciseRecordDetail = memo(() => {
 										<MenuItem
 											key={idx}
 											value={part.exercise_record_part}
-											className={"fs-0-8rem"}
+											className={`fs-0-8rem`}
 										>
 											{translate(part.exercise_record_part)}
 										</MenuItem>
@@ -528,7 +528,7 @@ export const ExerciseRecordDetail = memo(() => {
 							<Grid size={6}>
 								<Select
 									locked={LOCKED}
-									label={translate("title")}
+									label={translate(`title`)}
 									value={item?.exercise_record_title || ""}
 									inputRef={REFS?.[i]?.exercise_record_title}
 									error={ERRORS?.[i]?.exercise_record_title}
@@ -552,7 +552,7 @@ export const ExerciseRecordDetail = memo(() => {
 											<MenuItem
 												key={idx}
 												value={title}
-												className={"fs-0-8rem"}
+												className={`fs-0-8rem`}
 											>
 												{translate(title)}
 											</MenuItem>
@@ -568,7 +568,7 @@ export const ExerciseRecordDetail = memo(() => {
 							<Grid size={6}>
 								<Input
 									locked={LOCKED}
-									label={translate("set")}
+									label={translate(`set`)}
 									value={insertComma(item?.exercise_record_set || "0")}
 									inputRef={REFS?.[i]?.exercise_record_set}
 									error={ERRORS?.[i]?.exercise_record_set}
@@ -582,7 +582,7 @@ export const ExerciseRecordDetail = memo(() => {
 										/>
 									}
 									endadornment={
-										translate("s")
+										translate(`s`)
 									}
                   onChange={(e: any) => {
                     const processedValue = handleNumberInput(e.target.value, 999);
@@ -602,7 +602,7 @@ export const ExerciseRecordDetail = memo(() => {
 							<Grid size={6}>
 								<Input
 									locked={LOCKED}
-									label={translate("rep")}
+									label={translate(`rep`)}
 									value={insertComma(item?.exercise_record_rep || "0")}
 									inputRef={REFS?.[i]?.exercise_record_rep}
 									error={ERRORS?.[i]?.exercise_record_rep}
@@ -616,7 +616,7 @@ export const ExerciseRecordDetail = memo(() => {
 										/>
 									}
 									endadornment={
-										translate("r")
+										translate(`r`)
 									}
                   onChange={(e: any) => {
                     const processedValue = handleNumberInput(e.target.value, 999);
@@ -641,7 +641,7 @@ export const ExerciseRecordDetail = memo(() => {
 							<Grid size={6}>
 								<Input
 									locked={LOCKED}
-									label={translate("weight")}
+									label={translate(`weight`)}
 									value={insertComma(item?.exercise_record_weight || "0")}
 									inputRef={REFS?.[i]?.exercise_record_weight}
 									error={ERRORS?.[i]?.exercise_record_weight}
@@ -692,7 +692,7 @@ export const ExerciseRecordDetail = memo(() => {
 		);
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-75vh"}>
+      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
         {dateCountSection()}
 				<Br m={20} />
         {totalSection()}

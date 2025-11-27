@@ -86,13 +86,13 @@ export const Count = memo((
 			<Icons
 				key={"Lock"}
 				name={"Lock"}
-				className={"w-20px h-20px"}
+				className={`w-20px h-20px`}
 			/>
 		) : (
 			<Icons
 				key={"UnLock"}
 				name={"UnLock"}
-				className={"w-20px h-20px"}
+				className={`w-20px h-20px`}
 			/>
 		)
 	), [LOCKED]);
@@ -100,21 +100,21 @@ export const Count = memo((
 	// 3. useMEMO ----------------------------------------------------------------------------------
 	const countEndAdornment = useMemo(() => (
 		!disabled || LOCKED === "unlocked" ? (
-			<Div className={"d-row-center"}>
-				<Div className={"mr-n5px"}>
+			<Div className={`d-row-center`}>
+				<Div className={`mr-n5px`}>
 					<Icons
 						key={"Minus"}
 						name={"Minus"}
-						className={"w-20px h-20px"}
+						className={`w-20px h-20px`}
 						locked={LOCKED}
 						onClick={handleMinus}
 					/>
 				</Div>
-				<Div className={"mr-n10px"}>
+				<Div className={`mr-n10px`}>
 					<Icons
 						key={"Plus"}
 						name={"Plus"}
-						className={"w-20px h-20px"}
+						className={`w-20px h-20px`}
 						locked={LOCKED}
 						onClick={handlePlus}
 					/>
@@ -128,7 +128,7 @@ export const Count = memo((
 		// 7-1. lock
 		const lockSection = () => (
 			<Input
-				label={translate("itemLock")}
+				label={translate(`itemLock`)}
 				value={translate(LOCKED) || ""}
 				inputclass={`fs-0-8rem pointer`}
 				adornmentclass={"ml-n10px"}
@@ -140,7 +140,7 @@ export const Count = memo((
 		// 7-2. count
 		const countSection = () => (
 			<Input
-				label={translate("item")}
+				label={translate(`item`)}
 				value={COUNT.newSectionCnt}
 				error={COUNT.newSectionCnt <= 0}
 				locked={LOCKED}
@@ -168,10 +168,10 @@ export const Count = memo((
 		// 7-3. return
 		return (
 			<Grid container={true} spacing={1}>
-				<Grid size={{ xs: 4, sm: 3 }} className={"d-center"}>
+				<Grid size={{ xs: 4, sm: 3 }} className={`d-center`}>
 					{lockSection()}
 				</Grid>
-				<Grid size={{ xs: 8, sm: 9 }} className={"d-center"}>
+				<Grid size={{ xs: 8, sm: 9 }} className={`d-center`}>
 					{countSection()}
 				</Grid>
 			</Grid>

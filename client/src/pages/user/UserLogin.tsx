@@ -152,12 +152,12 @@ export const UserLogin = memo(() => {
 		.then((res: any) => {
 			if (res.data.status === "success") {
 				setLOADING(false);
-						setSession("setting", "id", "", {
+				setSession("setting", "id", "", {
 					sessionId: res.data.result.user_id,
 					admin: res.data.admin === "admin" ? "true" : "false",
 				});
-				navigate("/today/record/list");
-						sync();
+				navigate("/calendar/list");
+				sync();
 			}
 			else if (res.data.status === "isGoogleUser") {
 				setLOADING(false);
@@ -166,7 +166,7 @@ export const UserLogin = memo(() => {
 					msg: translate(res.data.msg),
 					severity: "error",
 				});
-						setSession("setting", "id", "", {
+				setSession("setting", "id", "", {
 					sessionId: res.data.result.user_id,
 					admin: res.data.admin === "admin" ? "true" : "false",
 				});
@@ -178,7 +178,7 @@ export const UserLogin = memo(() => {
 					msg: translate(res.data.msg),
 					severity: "error",
 				});
-						setSession("setting", "id", "", {
+				setSession("setting", "id", "", {
 					sessionId: "",
 					admin: "false",
 				});
@@ -232,7 +232,7 @@ export const UserLogin = memo(() => {
 		const titleSection = () => (
 			<Grid container={true} spacing={1}>
 				<Grid size={12}>
-					<Div className={"fs-1-8rem fw-500"} onClick={() => {
+					<Div className={`fs-1-8rem fw-500`} onClick={() => {
 						setClickCount((prevCount) => {
 							const newCount = prevCount + 1;
 							if (newCount === 5) {
@@ -249,7 +249,7 @@ export const UserLogin = memo(() => {
 							return newCount;
 						});
 					}}>
-						{translate("login")}
+						{translate(`login`)}
 					</Div>
 				</Grid>
 			</Grid>
@@ -258,12 +258,12 @@ export const UserLogin = memo(() => {
 		const loginSection = () => (
 			<Grid container={true} spacing={0}>
 				{[OBJECT]?.map((item, i) => (
-					<Grid container={true} spacing={2} className={"p-10px"} key={`detail-${i}`}>
+					<Grid container={true} spacing={2} className={`p-10px`} key={`detail-${i}`}>
 						{/* row 1 */}
 						<Grid container={true} spacing={0}>
 							<Grid size={12}>
 								<Input
-									label={translate("id")}
+									label={translate(`id`)}
 									value={item.user_id}
 									inputRef={REFS?.[i]?.user_id}
 									error={ERRORS?.[i]?.user_id}
@@ -293,7 +293,7 @@ export const UserLogin = memo(() => {
 							<Grid size={12}>
 								<Input
 									type={"password"}
-									label={translate("pw")}
+									label={translate(`pw`)}
 									value={item.user_pw}
 									inputRef={REFS?.[i]?.user_pw}
 									error={ERRORS?.[i]?.user_pw}
@@ -314,9 +314,9 @@ export const UserLogin = memo(() => {
 		// 7-3. check
 		const checkSection = () => (
 			<Grid container={true} spacing={0}>
-				<Grid size={6} className={"d-row-right"}>
-					<Div className={"d-center fs-0-8rem"}>
-						{translate("autoLogin")}
+				<Grid size={6} className={`d-row-right`}>
+					<Div className={`d-center fs-0-8rem`}>
+						{translate(`autoLogin`)}
 						<Checkbox
 							color={"primary"}
 							size={"small"}
@@ -327,9 +327,9 @@ export const UserLogin = memo(() => {
 						/>
 					</Div>
 				</Grid>
-				<Grid size={6} className={"d-row-left"}>
-					<Div className={"fs-0-8rem"}>
-						{translate("saveId")}
+				<Grid size={6} className={`d-row-left`}>
+					<Div className={`fs-0-8rem`}>
+						{translate(`saveId`)}
 						<Checkbox
 							color={"primary"}
 							size={"small"}
@@ -347,15 +347,15 @@ export const UserLogin = memo(() => {
 			<Grid container={true} spacing={1}>
 				{/** row 1 **/}
 				<Grid container={true} spacing={1}>
-					<Grid size={12} className={"d-col-center"}>
+					<Grid size={12} className={`d-col-center`}>
 						<Btn
 							color={"primary"}
-							className={"w-100p fs-0-8rem"}
+							className={`w-100p fs-0-8rem`}
 							onClick={() => {
 								flowSave();
 							}}
 						>
-							{translate("login")}
+							{translate(`login`)}
 						</Btn>
 					</Grid>
 				</Grid>
@@ -363,15 +363,15 @@ export const UserLogin = memo(() => {
 
 				{/** row 2 **/}
 				<Grid container={true} spacing={1}>
-					<Grid size={12} className={"d-col-center"}>
+					<Grid size={12} className={`d-col-center`}>
 						<Btn
 							color={"primary"}
-							className={"w-100p bg-white"}
+							className={`w-100p bg-white`}
 							onClick={() => {
 								flowGoogle();
 							}}
 						>
-							<Div className={"d-row-center"}>
+							<Div className={`d-row-center`}>
 								<Img
 									max={14}
 									hover={true}
@@ -379,8 +379,8 @@ export const UserLogin = memo(() => {
 									radius={false}
 									src={"user1.webp"}
 								/>
-								<Div className={"fs-0-8rem black ml-10px"}>
-									{translate("googleLogin")}
+								<Div className={`fs-0-8rem black ml-10px`}>
+									{translate(`googleLogin`)}
 								</Div>
 							</Div>
 						</Btn>
@@ -394,14 +394,14 @@ export const UserLogin = memo(() => {
 			<Grid container={true} spacing={1}>
 				{/** row 1 **/}
 				<Grid container={true} spacing={1}>
-					<Grid size={12} className={"d-row-center"}>
-						<Div className={"fs-0-8rem black mr-10px"}>
-							{translate("notId")}
+					<Grid size={12} className={`d-row-center`}>
+						<Div className={`fs-0-8rem black mr-10px`}>
+							{translate(`notId`)}
 						</Div>
-						<Div className={"fs-0-8rem blue pointer"} onClick={() => {
+						<Div className={`fs-0-8rem blue pointer`} onClick={() => {
 							navigate("/user/signup");
 						}}>
-							{translate("signup")}
+							{translate(`signup`)}
 						</Div>
 					</Grid>
 				</Grid>
@@ -409,14 +409,14 @@ export const UserLogin = memo(() => {
 
 				{/** row 2 **/}
 				<Grid container={true} spacing={1}>
-					<Grid size={12} className={"d-row-center"}>
-						<Div className={"fs-0-8rem black mr-10px"}>
-							{translate("forgotPw")}
+					<Grid size={12} className={`d-row-center`}>
+						<Div className={`fs-0-8rem black mr-10px`}>
+							{translate(`forgotPw`)}
 						</Div>
-						<Div className={"fs-0-8rem blue pointer"} onClick={() => {
+						<Div className={`fs-0-8rem blue pointer`} onClick={() => {
 							navigate("/user/resetPw");
 						}}>
-							{translate("resetPw")}
+							{translate(`resetPw`)}
 						</Div>
 					</Grid>
 				</Grid>
@@ -425,15 +425,15 @@ export const UserLogin = memo(() => {
 		);
 		// 7-10. return
 		return (
-			<Paper className={"content-wrapper d-center radius-2 border-1 shadow-1 h-min-100vh"}>
+			<Paper className={`content-wrapper d-center radius-2 border-1 shadow-1 h-min-100vh`}>
 				{titleSection()}
-				<Hr m={30} className={"bg-light"} />
+				<Hr m={30} className={`bg-light`} />
 				{loginSection()}
-				<Hr m={30} className={"bg-light"} />
+				<Hr m={30} className={`bg-light`} />
 				{checkSection()}
-				<Hr m={30} className={"bg-light"} />
+				<Hr m={30} className={`bg-light`} />
 				{buttonSection()}
-				<Hr m={30} className={"bg-light"} />
+				<Hr m={30} className={`bg-light`} />
 				{linkSection()}
 			</Paper>
 		);

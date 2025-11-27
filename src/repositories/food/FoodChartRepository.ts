@@ -9,7 +9,7 @@ export const barGoal = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await FoodGoal.aggregate([
+  const finalResult = await FoodGoal.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -50,7 +50,7 @@ export const barRecord = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await FoodRecord.aggregate([
+  const finalResult = await FoodRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -91,7 +91,7 @@ export const pieKcal = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await FoodRecord.aggregate([
+  const finalResult = await FoodRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -137,7 +137,7 @@ export const pieNut = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await FoodRecord.aggregate([
+  const finalResult = await FoodRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -195,7 +195,7 @@ export const lineKcal = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await FoodRecord.aggregate([
+  const finalResult = await FoodRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -233,7 +233,7 @@ export const lineNut = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await FoodRecord.aggregate([
+  const finalResult = await FoodRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -273,7 +273,7 @@ export const avgKcal = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await FoodRecord.aggregate([
+  const finalResult = await FoodRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -311,7 +311,7 @@ export const avgNut = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await FoodRecord.aggregate([
+  const finalResult = await FoodRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,

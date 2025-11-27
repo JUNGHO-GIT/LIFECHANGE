@@ -13,8 +13,8 @@ export const Loader = memo(() => {
   // 7.loader --------------------------------------------------------------------------------------
   const loaderNode = () => (
     LOADING ? (
-      <Div className={"loader-wrapper"}>
-        <Div className={"loader"} />
+      <Div className={`loader-wrapper`}>
+        <Div className={`loader`} />
       </Div>
     ) : (
       <Div />

@@ -20,7 +20,6 @@ export const BottomNav = memo(() => {
     "tabs", "bottom", "", {
       exercise: false,
       food: false,
-      today: false,
       calendar: false,
       money: false,
       sleep: false,
@@ -62,10 +61,10 @@ export const BottomNav = memo(() => {
       <BottomNavigation
         showLabels={true}
         value={Object.keys(selectedTab).find(key => selectedTab[key as keyof typeof selectedTab])}
-        className={"w-100p"}
+        className={`w-100p`}
       >
         <BottomNavigationAction
-          label={translate("exercise")}
+          label={translate(`exercise`)}
           value={"exercise"}
           icon={
             <Img
@@ -81,7 +80,7 @@ export const BottomNav = memo(() => {
           }}
         />
         <BottomNavigationAction
-          label={translate("food")}
+          label={translate(`food`)}
           value={"food"}
           icon={
             <Img
@@ -97,23 +96,7 @@ export const BottomNav = memo(() => {
           }}
         />
         <BottomNavigationAction
-          label={translate("today")}
-          value={"today"}
-          icon={
-            <Img
-              max={20}
-              hover={true}
-              shadow={false}
-              radius={false}
-              src={"today1.webp"}
-            />
-          }
-          onClick={() => {
-            handleClickBottomNav("today");
-          }}
-        />
-        <BottomNavigationAction
-          label={translate("calendar")}
+          label={translate(`calendar`)}
           value={"calendar"}
           icon={
             <Img
@@ -129,7 +112,7 @@ export const BottomNav = memo(() => {
           }}
         />
         <BottomNavigationAction
-          label={translate("money")}
+          label={translate(`money`)}
           value={"money"}
           icon={
             <Img
@@ -145,7 +128,7 @@ export const BottomNav = memo(() => {
           }}
         />
         <BottomNavigationAction
-          label={translate("sleep")}
+          label={translate(`sleep`)}
           value={"sleep"}
           icon={
             <Img
@@ -165,7 +148,7 @@ export const BottomNav = memo(() => {
 
     // 7-2. return
     return (
-      <Paper className={"layout-wrapper p-sticky bottom-0vh h-8vh radius-2 border-1 shadow-1"}>
+      <Paper className={`layout-wrapper p-sticky bottom-0vh h-8vh radius-2 border-1 shadow-1`}>
         {tabsSection()}
       </Paper>
     );

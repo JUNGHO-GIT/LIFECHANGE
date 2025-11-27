@@ -11,7 +11,7 @@ export const exist = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await SleepRecord.aggregate([
+  const finalResult = await SleepRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -50,7 +50,7 @@ export const cnt = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await SleepRecord.countDocuments(
+  const finalResult = await SleepRecord.countDocuments(
     {
       user_id: user_id_param,
       sleep_record_dateStart: {
@@ -78,7 +78,7 @@ export const list = async (
   page_param: number,
 ) => {
 
-  const finalResult:any = await SleepRecord.aggregate([
+  const finalResult = await SleepRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -123,7 +123,7 @@ export const detail = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await SleepRecord.findOne(
+  const finalResult = await SleepRecord.findOne(
     {
       user_id: user_id_param,
       sleep_record_dateStart: dateStart_param,
@@ -145,7 +145,7 @@ export const create = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await SleepRecord.create(
+  const finalResult = await SleepRecord.create(
     {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
@@ -173,7 +173,7 @@ export const update = {
     dateEnd_param: string,
   ) => {
 
-    const finalResult:any = await SleepRecord.findOneAndUpdate(
+    const finalResult = await SleepRecord.findOneAndUpdate(
       {
         user_id: user_id_param,
         sleep_record_dateStart: dateStart_param,
@@ -205,7 +205,7 @@ export const update = {
     dateEnd_param: string,
   ) => {
 
-    const finalResult:any = await SleepRecord.findOneAndUpdate(
+    const finalResult = await SleepRecord.findOneAndUpdate(
       {
         user_id: user_id_param,
         sleep_record_dateStart: dateStart_param,
@@ -237,7 +237,7 @@ export const update = {
     dateEnd_param: string,
   ) => {
 
-    const finalResult:any = await SleepRecord.findOneAndUpdate(
+    const finalResult = await SleepRecord.findOneAndUpdate(
       {
         user_id: user_id_param,
         sleep_record_dateStart: dateStart_param,
@@ -269,7 +269,7 @@ export const deletes = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await SleepRecord.findOneAndDelete(
+  const finalResult = await SleepRecord.findOneAndDelete(
     {
       user_id: user_id_param,
       sleep_record_dateStart: dateStart_param,

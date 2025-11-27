@@ -284,7 +284,7 @@ export const Icons = memo((props: any) => {
     <IconButton
       {...props}
       component={"div"}
-      className={""}
+      className={``}
       onClick={(e: React.MouseEvent) => {
         // 1. locked 인 경우
         if (props?.locked === "locked") {

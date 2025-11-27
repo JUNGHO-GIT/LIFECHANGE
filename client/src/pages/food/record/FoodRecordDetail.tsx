@@ -15,7 +15,7 @@ import { MenuItem } from "@exportMuis";
 export const FoodRecordDetail = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
-  const { URL_OBJECT, navigate, toToday, toList, sessionId } = useCommonValue();
+  const { URL_OBJECT, navigate, toList, sessionId } = useCommonValue();
   const { foodArray, bgColors, sessionFoodSection } = useCommonValue();
   const { location_from, location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt,getMonthStartFmt, getMonthEndFmt } = useCommonDate();
@@ -284,7 +284,7 @@ export const FoodRecordDetail = memo(() => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(location_from === "today" ? toToday : toList, {
+        navigate(toList, {
           state: {
             dateType: "",
             dateStart: dateRef.current.dateStart,
@@ -339,7 +339,7 @@ export const FoodRecordDetail = memo(() => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(location_from === "today" ? toToday : toList, {
+        navigate(toList, {
           state: {
             dateType: "",
             dateStart: dateRef.current.dateStart,
@@ -375,7 +375,7 @@ export const FoodRecordDetail = memo(() => {
   const flowUpdateFavorite = useCallback((foodFavorite: any) => {
 		(!foodFavorite.food_record_name || foodFavorite.food_record_name.trim() === "") && setALERT({
       open: true,
-      msg: translate("음식 이름을 입력해주세요."),
+      msg: translate(`음식 이름을 입력해주세요.`),
       severity: "error",
     }) && (() => { return; })();
 
@@ -495,7 +495,7 @@ export const FoodRecordDetail = memo(() => {
             <Input
               locked={LOCKED}
               readOnly={true}
-              label={translate("totalKcal")}
+              label={translate(`totalKcal`)}
               value={insertComma(OBJECT?.food_record_total_kcal || "0")}
               startadornment={
                 <Img
@@ -507,7 +507,7 @@ export const FoodRecordDetail = memo(() => {
                 />
               }
               endadornment={
-                translate("kc")
+                translate(`kc`)
               }
             />
           </Grid>
@@ -515,7 +515,7 @@ export const FoodRecordDetail = memo(() => {
             <Input
               locked={LOCKED}
               readOnly={true}
-              label={translate("totalCarb")}
+              label={translate(`totalCarb`)}
               value={insertComma(OBJECT?.food_record_total_carb || "0")}
               startadornment={
                 <Img
@@ -527,7 +527,7 @@ export const FoodRecordDetail = memo(() => {
                 />
               }
               endadornment={
-                translate("g")
+                translate(`g`)
               }
             />
           </Grid>
@@ -540,7 +540,7 @@ export const FoodRecordDetail = memo(() => {
             <Input
               locked={LOCKED}
               readOnly={true}
-              label={translate("totalProtein")}
+              label={translate(`totalProtein`)}
               value={insertComma(OBJECT?.food_record_total_protein || "0")}
               startadornment={
                 <Img
@@ -552,7 +552,7 @@ export const FoodRecordDetail = memo(() => {
                 />
               }
               endadornment={
-                translate("g")
+                translate(`g`)
               }
             />
           </Grid>
@@ -560,7 +560,7 @@ export const FoodRecordDetail = memo(() => {
             <Input
               locked={LOCKED}
               readOnly={true}
-              label={translate("totalFat")}
+              label={translate(`totalFat`)}
               value={insertComma(OBJECT?.food_record_total_fat || "0")}
               startadornment={
                 <Img
@@ -572,7 +572,7 @@ export const FoodRecordDetail = memo(() => {
                 />
               }
               endadornment={
-                translate("g")
+                translate(`g`)
               }
             />
           </Grid>
@@ -588,16 +588,16 @@ export const FoodRecordDetail = memo(() => {
 					className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}>
 						{/** row 1 **/}
 						<Grid container={true} spacing={1}>
-							<Grid size={6} className={"d-row-left"}>
+							<Grid size={6} className={`d-row-left`}>
 								<Bg
 									badgeContent={i + 1}
 									bgcolor={bgColors?.[foodArray.findIndex((f: any) => f.food_record_part === item?.food_record_part)]}
 								/>
-								<Div className={"mt-n10px ml-15px"}>
+								<Div className={`mt-n10px ml-15px`}>
 									<Icons
 										key={"Star"}
 										name={"Star"}
-										className={"w-20px h-20px"}
+										className={`w-20px h-20px`}
 										color={"darkslategrey"}
 										fill={
 											FAVORITE?.length > 0 && FAVORITE.some((item: any) => (
@@ -611,7 +611,7 @@ export const FoodRecordDetail = memo(() => {
 									/>
 								</Div>
 							</Grid>
-							<Grid size={6} className={"d-row-right"}>
+							<Grid size={6} className={`d-row-right`}>
 								<Delete
 									index={i}
 									handleDelete={handleDelete}
@@ -626,7 +626,7 @@ export const FoodRecordDetail = memo(() => {
 							<Grid size={6}>
 								<Select
 									locked={LOCKED}
-									label={translate("part")}
+									label={translate(`part`)}
 									value={item?.food_record_part || ""}
 									inputRef={REFS?.[i]?.food_record_part}
 									error={ERRORS?.[i]?.food_record_part}
@@ -647,7 +647,7 @@ export const FoodRecordDetail = memo(() => {
 										<MenuItem
 											key={idx}
 											value={part.food_record_part}
-											className={"fs-0-8rem"}
+											className={`fs-0-8rem`}
 										>
 											{translate(part.food_record_part)}
 										</MenuItem>
@@ -657,7 +657,7 @@ export const FoodRecordDetail = memo(() => {
 							<Grid size={3}>
 								<Input
 									locked={LOCKED}
-									label={translate("foodCount")}
+									label={translate(`foodCount`)}
 									value={insertComma(item?.food_record_count || "0")}
 									inputRef={REFS?.[i]?.food_record_count}
 									error={ERRORS?.[i]?.food_record_count}
@@ -697,7 +697,7 @@ export const FoodRecordDetail = memo(() => {
 							<Grid size={3}>
 								<Input
 									locked={LOCKED}
-									label={translate("gram")}
+									label={translate(`gram`)}
 									value={insertComma(item?.food_record_gram || "0")}
 									inputRef={REFS?.[i]?.food_record_gram}
 									error={ERRORS?.[i]?.food_record_gram}
@@ -726,7 +726,7 @@ export const FoodRecordDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									shrink={"shrink"}
-									label={translate("foodName")}
+									label={translate(`foodName`)}
 									value={item?.food_record_name || ""}
 									inputRef={REFS?.[i]?.food_record_name}
 									error={ERRORS?.[i]?.food_record_name}
@@ -754,7 +754,7 @@ export const FoodRecordDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									shrink={"shrink"}
-									label={translate("brand")}
+									label={translate(`brand`)}
 									value={item?.food_record_brand || ""}
 									inputRef={REFS?.[i]?.food_record_brand}
 									error={ERRORS?.[i]?.food_record_brand}
@@ -786,7 +786,7 @@ export const FoodRecordDetail = memo(() => {
 							<Grid size={6}>
 								<Input
 									locked={LOCKED}
-									label={translate("kcal")}
+									label={translate(`kcal`)}
 									value={insertComma(item?.food_record_kcal || "0")}
 									inputRef={REFS?.[i]?.food_record_kcal}
 									error={ERRORS?.[i]?.food_record_kcal}
@@ -800,7 +800,7 @@ export const FoodRecordDetail = memo(() => {
 										/>
 									}
 									endadornment={
-										translate("kc")
+										translate(`kc`)
 									}
 									onChange={(e: any) => {
                     const processedValue = handleNumberInput(e.target.value, 9999);
@@ -821,7 +821,7 @@ export const FoodRecordDetail = memo(() => {
 							<Grid size={6}>
 								<Input
 									locked={LOCKED}
-									label={translate("carb")}
+									label={translate(`carb`)}
 									value={insertComma(item?.food_record_carb || "0")}
 									inputRef={REFS?.[i]?.food_record_carb}
 									error={ERRORS?.[i]?.food_record_carb}
@@ -835,7 +835,7 @@ export const FoodRecordDetail = memo(() => {
 										/>
 									}
 									endadornment={
-										translate("g")
+										translate(`g`)
 									}
 									onChange={(e: any) => {
                     const processedValue = handleNumberInput(e.target.value, 999, 1);
@@ -861,7 +861,7 @@ export const FoodRecordDetail = memo(() => {
 							<Grid size={6}>
 								<Input
 									locked={LOCKED}
-									label={translate("protein")}
+									label={translate(`protein`)}
 									value={insertComma(item?.food_record_protein || "0")}
 									inputRef={REFS?.[i]?.food_record_protein}
 									error={ERRORS?.[i]?.food_record_protein}
@@ -875,7 +875,7 @@ export const FoodRecordDetail = memo(() => {
 										/>
 									}
 									endadornment={
-										translate("g")
+										translate(`g`)
 									}
 									onChange={(e: any) => {
                     const processedValue = handleNumberInput(e.target.value, 999, 1);
@@ -896,7 +896,7 @@ export const FoodRecordDetail = memo(() => {
 							<Grid size={6}>
 								<Input
 									locked={LOCKED}
-									label={translate("fat")}
+									label={translate(`fat`)}
 									value={insertComma(item?.food_record_fat || "0")}
 									inputRef={REFS?.[i]?.food_record_fat}
 									error={ERRORS?.[i]?.food_record_fat}
@@ -910,7 +910,7 @@ export const FoodRecordDetail = memo(() => {
 										/>
 									}
 									endadornment={
-										translate("g")
+										translate(`g`)
 									}
 									onChange={(e: any) => {
                     const processedValue = handleNumberInput(e.target.value, 999, 1);
@@ -936,7 +936,7 @@ export const FoodRecordDetail = memo(() => {
 		);
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-75vh"}>
+      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
         {dateCountSection()}
 				<Br m={20} />
         {totalSection()}

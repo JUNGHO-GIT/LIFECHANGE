@@ -38,8 +38,6 @@ export const PickerDay = memo((
 	const { PATH, localLang, localTimeZone } = useCommonValue();
 	const { isGoalList, isGoalDetail } = useCommonValue();
 	const { isRecordList, isRecordDetail } = useCommonValue();
-	const { isToday, isTodayRecordList, isTodayGoalList } = useCommonValue();
-	const { isTodayRecordDetail, isTodayGoalDetail } = useCommonValue();
 	const { isCalendarList, isCalendarDetail } = useCommonValue();
 	const { isList, isDetail } = useCommonValue();
 	const { getDayFmt, getDayNotFmt, getDayStartFmt, getDayEndFmt } = useCommonDate();
@@ -103,34 +101,8 @@ export const PickerDay = memo((
 	// - 화면 로딩시 초기값 설정 2
 	// - 리스트 설정
 	useEffect(() => {
-		// 1. Today - Goal
-		if (isTodayGoalList) {
-			setDATE({
-				dateType: "",
-				dateStart: DATE?.dateStart || getDayFmt(),
-				dateEnd: DATE?.dateEnd || getDayFmt(),
-			});
-			setDateTypeInList("day");
-			setDateStrInList(
-				`${getDayFmt(DATE?.dateStart)}`
-			);
-		}
-
-		// 2. Today - Record
-		else if (isTodayRecordList) {
-			setDATE({
-				dateType: "day",
-				dateStart: DATE?.dateStart || getDayFmt(),
-				dateEnd: DATE?.dateEnd || getDayFmt(),
-			});
-			setDateTypeInList("day");
-			setDateStrInList(
-				`${getDayFmt(DATE?.dateStart)}`
-			);
-		}
-
-		// 3. Goal
-		else if (isGoalList) {
+		// 1. Goal
+		if (isGoalList) {
 			if (dateTypeInList === "day") {
 				setDATE({
 					dateType: "",
@@ -277,34 +249,8 @@ export const PickerDay = memo((
 	// 2-3. useEffect -----------------------------------------------------------------------------
 	// - 리스트에서 타입 변경시 처리 (일, 주, 월, 년)
 	useEffect(() => {
-		// 1. Today - Goal
-		if (isTodayGoalList) {
-			setDATE({
-				dateType: "",
-				dateStart: getDayFmt(),
-				dateEnd: getDayFmt(),
-			});
-			setDateTypeInList("day");
-			setDateStrInList(
-				`${getDayFmt()}`
-			);
-		}
-
-		// 2. Today - Record
-		else if (isTodayRecordList) {
-			setDATE({
-				dateType: "day",
-				dateStart: getDayFmt(),
-				dateEnd: getDayFmt(),
-			});
-			setDateTypeInList("day");
-			setDateStrInList(
-				`${getDayFmt()}`
-			);
-		}
-
-		// 3. Goal - List
-		else if (isGoalList) {
+		// 1. Goal - List
+		if (isGoalList) {
 			if (dateTypeInList === "day") {
 				setDATE({
 					dateType: "",
@@ -564,10 +510,9 @@ export const PickerDay = memo((
 		// 1. dateTypeInList ---------------------------------------------------------------------------------
 		const dateTypeInListSection = () => (
 			<Select
-				label={translate("dateType")}
+				label={translate(`dateType`)}
 				value={DATE?.dateType || dateTypeInList}
 				inputclass={`pointer ${dateClassInList}`}
-				disabled={isToday}
 				onChange={(e: any) => {
 					setDateTypeInList(e.target.value);
 				}}
@@ -578,7 +523,7 @@ export const PickerDay = memo((
 						value={item}
 						selected={item === dateTypeInList}
 					>
-						<Div className={"fs-0-8rem"}>
+						<Div className={`fs-0-8rem`}>
 							{translate(item)}
 						</Div>
 					</MenuItem>
@@ -589,7 +534,7 @@ export const PickerDay = memo((
 		// 2. dateTypeInSave ---------------------------------------------------------------------------------
 		const dateTypeInSaveSection = () => (
 			<Select
-				label={translate("dateType")}
+				label={translate(`dateType`)}
 				value={DATE?.dateType || dateTypeInSave}
 				inputclass={`pointer ${dateClassInSave}`}
 				disabled={!isGoalDetail}
@@ -608,26 +553,14 @@ export const PickerDay = memo((
 					}
 				}}
 			>
-				{(isTodayRecordDetail || isTodayGoalDetail) ? (
-					["day"]?.map((item: any) => (
-						<MenuItem
-							key={item}
-							value={item}
-							selected={item === dateTypeInSave}
-						>
-							<Div className={"fs-0-8rem"}>
-								{translate(item)}
-							</Div>
-						</MenuItem>
-					))
-				) : isGoalDetail ? (
+				{isGoalDetail ? (
 					["week", "month", "year"]?.map((item: any) => (
 						<MenuItem
 							key={item}
 							value={item}
 							selected={item === dateTypeInSave}
 						>
-							<Div className={"fs-0-8rem"}>
+							<Div className={`fs-0-8rem`}>
 								{translate(item)}
 							</Div>
 						</MenuItem>
@@ -639,7 +572,7 @@ export const PickerDay = memo((
 							value={item}
 							selected={item === dateTypeInSave}
 						>
-							<Div className={"fs-0-8rem"}>
+							<Div className={`fs-0-8rem`}>
 								{translate(item)}
 							</Div>
 						</MenuItem>
@@ -655,23 +588,23 @@ export const PickerDay = memo((
 				position={"center"}
 				direction={"center"}
 				contents={
-					<Grid container={true} spacing={2} className={"w-min-70vw"}>
-						<Grid size={12} className={"d-row-center"}>
-							<Div className={"fs-1-2rem fw-600 mr-10px"}>
-								{translate("viewDay")}
+					<Grid container={true} spacing={2} className={`w-min-70vw`}>
+						<Grid size={12} className={`d-row-center`}>
+							<Div className={`fs-1-2rem fw-600 mr-10px`}>
+								{translate(`viewDay`)}
 							</Div>
-							<Div className={"fs-0-8rem fw-500 dark"}>
+							<Div className={`fs-0-8rem fw-500 dark`}>
 								{`[${handlerToMnDd(getDayFmt(DATE?.dateStart))}]`}
 							</Div>
 						</Grid>
-						<Grid size={12} className={"d-center"}>
+						<Grid size={12} className={`d-center`}>
 							<LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLang}>
 								<DateCalendar
 									timezone={localTimeZone}
 									views={["day"]}
 									readOnly={false}
 									value={getDayNotFmt(DATE?.dateStart || DATE?.dateEnd)}
-									className={"border-1 radius-2"}
+									className={`border-1 radius-2`}
 									showDaysOutsideCurrentMonth={true}
 									slots={{
 										day: (props) => {
@@ -751,7 +684,7 @@ export const PickerDay = memo((
 										previousIconButton: (props) => (
 											<Btn
 												{...props}
-												className={"fs-1-4rem"}
+												className={`fs-1-4rem`}
 												onClick={() => {
 													setDATE((prev) => ({
 														...prev,
@@ -766,7 +699,7 @@ export const PickerDay = memo((
 										nextIconButton: (props) => (
 											<Btn
 												{...props}
-												className={"fs-1-4rem"}
+												className={`fs-1-4rem`}
 												onClick={() => {
 													setDATE((prev) => ({
 														...prev,
@@ -786,7 +719,7 @@ export const PickerDay = memo((
 				}
 				children={(popTrigger: any) => (
 					<Input
-						label={translate("date")}
+						label={translate(`date`)}
 						value={isList ? dateStrInList : isDetail ? dateStrInSave : ""}
 						inputclass={`pointer ${dateClassInList}`}
 						readOnly={true}
@@ -800,12 +733,12 @@ export const PickerDay = memo((
 							/>
 						}
 						endadornment={
-							<Div className={"d-row-center"}>
-								<Div className={"mr-n10px"}>
+							<Div className={`d-row-center`}>
+								<Div className={`mr-n10px`}>
 									<Icons
 										key={"ChevronLeft"}
 										name={"ChevronLeft"}
-										className={"w-20px h-20px"}
+										className={`w-20px h-20px`}
 										onClick={(e: any) => {
 											e.stopPropagation();
 											setDATE((prev) => ({
@@ -817,11 +750,11 @@ export const PickerDay = memo((
 										}}
 									/>
 								</Div>
-								<Div className={"mr-n15px"}>
+								<Div className={`mr-n15px`}>
 									<Icons
 										key={"ChevronRight"}
 										name={"ChevronRight"}
-										className={"w-20px h-20px"}
+										className={`w-20px h-20px`}
 										onClick={(e: any) => {
 											e.stopPropagation();
 											setDATE((prev) => ({
@@ -850,23 +783,23 @@ export const PickerDay = memo((
 				position={"center"}
 				direction={"center"}
 				contents={
-					<Grid container={true} spacing={2} className={"w-min-70vw"}>
-						<Grid size={12} className={"d-row-center"}>
-							<Div className={"fs-1-2rem fw-600 mr-10px"}>
-								{translate("viewWeek")}
+					<Grid container={true} spacing={2} className={`w-min-70vw`}>
+						<Grid size={12} className={`d-row-center`}>
+							<Div className={`fs-1-2rem fw-600 mr-10px`}>
+								{translate(`viewWeek`)}
 							</Div>
-							<Div className={"fs-0-8rem fw-500 dark"}>
+							<Div className={`fs-0-8rem fw-500 dark`}>
 								{`[${handlerToMnDd(getWeekStartFmt(DATE?.dateStart))} - ${handlerToMnDd(getWeekEndFmt(DATE?.dateEnd))}]`}
 							</Div>
 						</Grid>
-						<Grid size={12} className={"d-center"}>
+						<Grid size={12} className={`d-center`}>
 							<LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLang}>
 								<DateCalendar
 									timezone={localTimeZone}
 									views={["day"]}
 									readOnly={false}
 									value={getDayNotFmt(DATE?.dateStart || DATE?.dateEnd)}
-									className={"border-1 radius-2"}
+									className={`border-1 radius-2`}
 									showDaysOutsideCurrentMonth={true}
 									slots={{
 										day: (props) => {
@@ -963,7 +896,7 @@ export const PickerDay = memo((
 										previousIconButton: (props) => (
 											<Btn
 												{...props}
-												className={"fs-1-4rem"}
+												className={`fs-1-4rem`}
 												onClick={() => {
 													setDATE((prev) => ({
 														...prev,
@@ -978,7 +911,7 @@ export const PickerDay = memo((
 										nextIconButton: (props) => (
 											<Btn
 												{...props}
-												className={"fs-1-4rem"}
+												className={`fs-1-4rem`}
 												onClick={() => {
 													setDATE((prev) => ({
 														...prev,
@@ -998,7 +931,7 @@ export const PickerDay = memo((
 				}
 				children={(popTrigger: any) => (
 					<Input
-						label={translate("duration")}
+						label={translate(`duration`)}
 						value={isList ? dateStrInList : isDetail ? dateStrInSave : ""}
 						inputclass={`pointer ${dateClassInList}`}
 						readOnly={true}
@@ -1012,12 +945,12 @@ export const PickerDay = memo((
 							/>
 						}
 						endadornment={
-							<Div className={"d-row-center"}>
-								<Div className={"mr-n10px"}>
+							<Div className={`d-row-center`}>
+								<Div className={`mr-n10px`}>
 									<Icons
 										key={"ChevronLeft"}
 										name={"ChevronLeft"}
-										className={"w-20px h-20px"}
+										className={`w-20px h-20px`}
 										onClick={(e: any) => {
 											e.stopPropagation();
 											setDATE((prev) => ({
@@ -1028,11 +961,11 @@ export const PickerDay = memo((
 										}}
 									/>
 								</Div>
-								<Div className={"mr-n15px"}>
+								<Div className={`mr-n15px`}>
 									<Icons
 										key={"ChevronRight"}
 										name={"ChevronRight"}
-										className={"w-20px h-20px"}
+										className={`w-20px h-20px`}
 										onClick={(e: any) => {
 											e.stopPropagation();
 											setDATE((prev) => ({
@@ -1060,23 +993,23 @@ export const PickerDay = memo((
 				position={"center"}
 				direction={"center"}
 				contents={
-					<Grid container={true} spacing={2} className={"w-min-70vw"}>
-						<Grid size={12} className={"d-row-center"}>
-							<Div className={"fs-1-2rem fw-600 mr-10px"}>
-								{translate("viewMonth")}
+					<Grid container={true} spacing={2} className={`w-min-70vw`}>
+						<Grid size={12} className={`d-row-center`}>
+							<Div className={`fs-1-2rem fw-600 mr-10px`}>
+								{translate(`viewMonth`)}
 							</Div>
-							<Div className={"fs-0-8rem fw-500 dark"}>
+							<Div className={`fs-0-8rem fw-500 dark`}>
 								{`[${handlerToMnDd(getMonthStartFmt(DATE?.dateStart))} - ${handlerToMnDd(getMonthEndFmt(DATE?.dateEnd))}]`}
 							</Div>
 						</Grid>
-						<Grid size={12} className={"d-center"}>
+						<Grid size={12} className={`d-center`}>
 							<LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLang}>
 								<DateCalendar
 									timezone={localTimeZone}
 									views={["day"]}
 									readOnly={false}
 									value={getDayNotFmt(DATE?.dateStart || DATE?.dateEnd)}
-									className={"border-1 radius-2"}
+									className={`border-1 radius-2`}
 									showDaysOutsideCurrentMonth={true}
 									slots={{
 										day: (props) => {
@@ -1156,7 +1089,7 @@ export const PickerDay = memo((
 										previousIconButton: (props) => (
 											<Btn
 												{...props}
-												className={"fs-1-4rem"}
+												className={`fs-1-4rem`}
 												onClick={() => {
 													setDATE((prev) => ({
 														...prev,
@@ -1171,7 +1104,7 @@ export const PickerDay = memo((
 										nextIconButton: (props) => (
 											<Btn
 												{...props}
-												className={"fs-1-4rem"}
+												className={`fs-1-4rem`}
 												onClick={() => {
 													setDATE((prev) => ({
 														...prev,
@@ -1191,7 +1124,7 @@ export const PickerDay = memo((
 				}
 				children={(popTrigger: any) => (
 					<Input
-						label={translate("duration")}
+						label={translate(`duration`)}
 						value={isList ? dateStrInList : isDetail ? dateStrInSave : ""}
 						inputclass={`pointer ${dateClassInList}`}
 						readOnly={true}
@@ -1205,12 +1138,12 @@ export const PickerDay = memo((
 							/>
 						}
 						endadornment={
-							<Div className={"d-row-center"}>
-								<Div className={"mr-n10px"}>
+							<Div className={`d-row-center`}>
+								<Div className={`mr-n10px`}>
 									<Icons
 										key={"ChevronLeft"}
 										name={"ChevronLeft"}
-										className={"w-20px h-20px"}
+										className={`w-20px h-20px`}
 										onClick={(e: any) => {
 											e.stopPropagation();
 											setDATE((prev) => ({
@@ -1221,11 +1154,11 @@ export const PickerDay = memo((
 										}}
 									/>
 								</Div>
-								<Div className={"mr-n15px"}>
+								<Div className={`mr-n15px`}>
 									<Icons
 										key={"ChevronRight"}
 										name={"ChevronRight"}
-										className={"w-20px h-20px"}
+										className={`w-20px h-20px`}
 										onClick={(e: any) => {
 											e.stopPropagation();
 											setDATE((prev) => ({
@@ -1253,23 +1186,23 @@ export const PickerDay = memo((
 				position={"center"}
 				direction={"center"}
 				contents={
-					<Grid container={true} spacing={2} className={"w-min-70vw"}>
-						<Grid size={12} className={"d-row-center"}>
-							<Div className={"fs-1-2rem fw-600 mr-10px"}>
-								{translate("viewYear")}
+					<Grid container={true} spacing={2} className={`w-min-70vw`}>
+						<Grid size={12} className={`d-row-center`}>
+							<Div className={`fs-1-2rem fw-600 mr-10px`}>
+								{translate(`viewYear`)}
 							</Div>
-							<Div className={"fs-0-8rem fw-500 dark"}>
+							<Div className={`fs-0-8rem fw-500 dark`}>
 								{`[${getYearStartFmt(DATE?.dateStart)} - ${getYearEndFmt(DATE?.dateEnd)}]`}
 							</Div>
 						</Grid>
-						<Grid size={12} className={"d-center"}>
+						<Grid size={12} className={`d-center`}>
 							<LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLang}>
 								<DateCalendar
 									timezone={localTimeZone}
 									views={["day"]}
 									readOnly={false}
 									value={getDayNotFmt(DATE?.dateStart || DATE?.dateEnd)}
-									className={"border-1 radius-2"}
+									className={`border-1 radius-2`}
 									showDaysOutsideCurrentMonth={true}
 									slots={{
 										day: (props) => {
@@ -1350,7 +1283,7 @@ export const PickerDay = memo((
 										previousIconButton: (props) => (
 											<Btn
 												{...props}
-												className={"fs-1-4rem"}
+												className={`fs-1-4rem`}
 												onClick={() => {
 													setDATE((prev) => ({
 														...prev,
@@ -1365,7 +1298,7 @@ export const PickerDay = memo((
 										nextIconButton: (props) => (
 											<Btn
 												{...props}
-												className={"fs-1-4rem"}
+												className={`fs-1-4rem`}
 												onClick={() => {
 													setDATE((prev) => ({
 														...prev,
@@ -1385,7 +1318,7 @@ export const PickerDay = memo((
 				}
 				children={(popTrigger: any) => (
 					<Input
-						label={translate("duration")}
+						label={translate(`duration`)}
 						value={isList ? dateStrInList : isDetail ? dateStrInSave : ""}
 						inputclass={`pointer ${dateClassInList}`}
 						readOnly={true}
@@ -1399,12 +1332,12 @@ export const PickerDay = memo((
 							/>
 						}
 						endadornment={
-							<Div className={"d-row-center"}>
-								<Div className={"mr-n10px"}>
+							<Div className={`d-row-center`}>
+								<Div className={`mr-n10px`}>
 									<Icons
 										key={"ChevronLeft"}
 										name={"ChevronLeft"}
-										className={"w-20px h-20px"}
+										className={`w-20px h-20px`}
 										onClick={(e: any) => {
 											e.stopPropagation();
 											setDATE((prev) => ({
@@ -1415,11 +1348,11 @@ export const PickerDay = memo((
 										}}
 									/>
 								</Div>
-								<Div className={"mr-n15px"}>
+								<Div className={`mr-n15px`}>
 									<Icons
 										key={"ChevronRight"}
 										name={"ChevronRight"}
-										className={"w-20px h-20px"}
+										className={`w-20px h-20px`}
 										onClick={(e: any) => {
 											e.stopPropagation();
 											setDATE((prev) => ({
@@ -1443,37 +1376,13 @@ export const PickerDay = memo((
 		// 10. return ----------------------------------------------------------------------------------
 		return (
 
-			// 1-1. 리스트 (Today - Goal)
-			isTodayGoalList ? (
+			// 1-1. 리스트 (Goal)
+			isGoalList ? (
 				<Grid container={true} spacing={1}>
-					<Grid size={3} className={"d-center"}>
+					<Grid size={3} className={`d-center`}>
 						{dateTypeInListSection()}
 					</Grid>
-					<Grid size={9} className={"d-center"}>
-						{dateTypeInList === "day" && daySection()}
-					</Grid>
-				</Grid>
-			)
-
-			// 1-2. 리스트 (Today - Record)
-			: isTodayRecordList ? (
-				<Grid container={true} spacing={1}>
-					<Grid size={3} className={"d-center"}>
-						{dateTypeInListSection()}
-					</Grid>
-					<Grid size={9} className={"d-center"}>
-						{dateTypeInList === "day" && daySection()}
-					</Grid>
-				</Grid>
-			)
-
-			// 1-3. 리스트 (Goal)
-			: isGoalList ? (
-				<Grid container={true} spacing={1}>
-					<Grid size={3} className={"d-center"}>
-						{dateTypeInListSection()}
-					</Grid>
-					<Grid size={9} className={"d-center"}>
+					<Grid size={9} className={`d-center`}>
 						{dateTypeInList === "day" && daySection()}
 						{dateTypeInList === "week" && weekSection()}
 						{dateTypeInList === "month" && monthSection()}
@@ -1482,47 +1391,17 @@ export const PickerDay = memo((
 				</Grid>
 			)
 
-			// 1-4. 리스트 (Record)
+			// 1-2. 리스트 (Record)
 			: isRecordList ? (
 				<Grid container={true} spacing={1}>
-					<Grid size={3} className={"d-center"}>
+					<Grid size={3} className={`d-center`}>
 						{dateTypeInListSection()}
 					</Grid>
-					<Grid size={9} className={"d-center"}>
+					<Grid size={9} className={`d-center`}>
 						{dateTypeInList === "day" && daySection()}
 						{dateTypeInList === "week" && weekSection()}
 						{dateTypeInList === "month" && monthSection()}
 						{dateTypeInList === "year" && yearSection()}
-					</Grid>
-				</Grid>
-			)
-
-			// 2-1. 세이브 (Today - Goal)
-			: isTodayGoalDetail ? (
-				<Grid container={true} spacing={1}>
-					<Grid size={{xs: 4, sm: 3}} className={"d-center"}>
-						{dateTypeInSaveSection()}
-					</Grid>
-					<Grid size={{xs: 8, sm: 9}} className={"d-center"}>
-						{DATE?.dateType === "day" && daySection()}
-						{DATE?.dateType === "week" && weekSection()}
-						{DATE?.dateType === "month" && monthSection()}
-						{DATE?.dateType === "year" && yearSection()}
-					</Grid>
-				</Grid>
-			)
-
-			// 2-1. 세이브 (Today - Record)
-			: isTodayRecordDetail ? (
-				<Grid container={true} spacing={1}>
-					<Grid size={{xs: 4, sm: 3}} className={"d-center"}>
-						{dateTypeInSaveSection()}
-					</Grid>
-					<Grid size={{xs: 8, sm: 9}} className={"d-center"}>
-						{DATE?.dateType === "day" && daySection()}
-						{DATE?.dateType === "week" && weekSection()}
-						{DATE?.dateType === "month" && monthSection()}
-						{DATE?.dateType === "year" && yearSection()}
 					</Grid>
 				</Grid>
 			)
@@ -1530,10 +1409,10 @@ export const PickerDay = memo((
 			// 2-1. 세이브 (Calendar)
 			: isCalendarDetail ? (
 				<Grid container={true} spacing={1}>
-					<Grid size={{xs: 4, sm: 3}} className={"d-center"}>
+					<Grid size={{xs: 4, sm: 3}} className={`d-center`}>
 						{dateTypeInSaveSection()}
 					</Grid>
-					<Grid size={{xs: 8, sm: 9}} className={"d-center"}>
+					<Grid size={{xs: 8, sm: 9}} className={`d-center`}>
 						{DATE?.dateType === "day" && daySection()}
 						{DATE?.dateType === "week" && weekSection()}
 						{DATE?.dateType === "month" && monthSection()}
@@ -1545,10 +1424,10 @@ export const PickerDay = memo((
 			// 2-2. 세이브 (Goal)
 			: isGoalDetail ? (
 				<Grid container={true} spacing={1}>
-					<Grid size={{xs: 4, sm: 3}} className={"d-center"}>
+					<Grid size={{xs: 4, sm: 3}} className={`d-center`}>
 						{dateTypeInSaveSection()}
 					</Grid>
-					<Grid size={{xs: 8, sm: 9}} className={"d-center"}>
+					<Grid size={{xs: 8, sm: 9}} className={`d-center`}>
 						{DATE?.dateType === "week" && weekSection()}
 						{DATE?.dateType === "month" && monthSection()}
 						{DATE?.dateType === "year" && yearSection()}
@@ -1559,10 +1438,10 @@ export const PickerDay = memo((
 			// 2-3. 세이브 (Record)
 			: isRecordDetail ? (
 				<Grid container={true} spacing={1}>
-					<Grid size={{xs: 4, sm: 3}} className={"d-center"}>
+					<Grid size={{xs: 4, sm: 3}} className={`d-center`}>
 						{dateTypeInSaveSection()}
 					</Grid>
-					<Grid size={{xs: 8, sm: 9}} className={"d-center"}>
+					<Grid size={{xs: 8, sm: 9}} className={`d-center`}>
 						{DATE?.dateType === "day" && daySection()}
 					</Grid>
 				</Grid>

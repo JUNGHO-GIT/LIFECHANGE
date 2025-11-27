@@ -219,7 +219,7 @@ export const UserCategory = memo(() => {
       if (OBJECT?.[dataType]?.length <= 1) {
         setALERT({
           open: true,
-          msg: translate("cantBeDeletedLastItem"),
+          msg: translate(`cantBeDeletedLastItem`),
           severity: "error",
         });
         return;
@@ -244,7 +244,7 @@ export const UserCategory = memo(() => {
       if (OBJECT?.[dataType]?.[selectedIdx?.category2Idx]?.[`${dataType}_record_title`]?.length <= 2) {
         setALERT({
           open: true,
-          msg: translate("cantBeDeletedLastItem"),
+          msg: translate(`cantBeDeletedLastItem`),
           severity: "error",
         });
         return;
@@ -283,22 +283,22 @@ export const UserCategory = memo(() => {
     // 7-1. popup
     const popupSection = () => (
       <Grid container={true} spacing={0}>
-        <Grid size={12} className={"w-85vw h-60vh d-row"}>
-          <TableContainer className={"border-1 radius-2 over-x-hidden over-y-auto"}>
+        <Grid size={12} className={`w-85vw h-60vh d-row`}>
+          <TableContainer className={`border-1 radius-2 over-x-hidden over-y-auto`}>
             <Table>
-              <TableHead className={"table-thead"}>
-                <TableRow className={"table-thead-tr p-sticky top-0px z-900"}>
+              <TableHead className={`table-thead`}>
+                <TableRow className={`table-thead-tr p-sticky top-0px z-900`}>
                   <TableCell>
-                    {translate("dataCategory2")}
+                    {translate(`dataCategory2`)}
                   </TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody className={"table-tbody"}>
+              <TableBody className={`table-tbody`}>
                 {OBJECT[dataType]?.map((item: any, index: number) => (index > 0) && (
-                  <TableRow className={"table-tbody-tr border-bottom-1"} key={index}>
+                  <TableRow className={`table-tbody-tr border-bottom-1`} key={index}>
                     <TableCell className={selectedIdx.category2Idx === index ? "bg-light" : ""}>
-                      <Div className={"d-center"}>
-                        <Div className={"fs-0-9rem mr-auto"}>
+                      <Div className={`d-center`}>
+                        <Div className={`fs-0-9rem mr-auto`}>
                           <Input
                             variant={"standard"}
                             value={translate(item[`${dataType}_record_part`]) || ""}
@@ -343,10 +343,10 @@ export const UserCategory = memo(() => {
                             }}
                           />
                         </Div>
-                        <Div className={"fs-0-9rem ml-auto d-row-right"}>
+                        <Div className={`fs-0-9rem ml-auto d-row-right`}>
                           <Icons
                             name={"Search"}
-                            className={"w-12px h-12px"}
+                            className={`w-12px h-12px`}
                             onClick={() => {
                               setSelectedIdx((prev) => ({
                                 ...prev,
@@ -356,7 +356,7 @@ export const UserCategory = memo(() => {
                           />
                           <Icons
                             name={"Pencil"}
-                            className={"w-12px h-12px navy"}
+                            className={`w-12px h-12px navy`}
                             onClick={() => {
                               setSelectedIdx((prev) => ({
                                 ...prev,
@@ -367,7 +367,7 @@ export const UserCategory = memo(() => {
                           />
                           <Icons
                             name={"Trash"}
-                            className={"w-12px h-12px burgundy"}
+                            className={`w-12px h-12px burgundy`}
                             onClick={() => {
                               setSelectedIdx((prev) => ({
                                 ...prev,
@@ -382,14 +382,14 @@ export const UserCategory = memo(() => {
                   </TableRow>
                 ))}
               </TableBody>
-              <TableFooter className={"table-tfoot"}>
-                <TableRow className={"table-tfoot-tr"}>
+              <TableFooter className={`table-tfoot`}>
+                <TableRow className={`table-tfoot-tr`}>
                   <TableCell>
-                    <Div className={"d-center"}>
+                    <Div className={`d-center`}>
                       <Icons
                         key={"Plus"}
                         name={"Plus"}
-                        className={"w-12px h-12px"}
+                        className={`w-12px h-12px`}
                         onClick={() => {
                           handleAdd("part");
                         }}
@@ -401,24 +401,24 @@ export const UserCategory = memo(() => {
             </Table>
           </TableContainer>
           {(dataType === "exercise" || dataType === "money") && (
-            <TableContainer className={"border-1 radius-2 over-x-hidden"}>
+            <TableContainer className={`border-1 radius-2 over-x-hidden`}>
               <Table>
-                <TableHead className={"table-thead"}>
-                  <TableRow className={"table-thead-tr p-sticky top-0px z-900"}>
+                <TableHead className={`table-thead`}>
+                  <TableRow className={`table-thead-tr p-sticky top-0px z-900`}>
                     <TableCell>
-                      {translate("dataCategory3")}
+                      {translate(`dataCategory3`)}
                     </TableCell>
                   </TableRow>
                 </TableHead>
-                <TableBody className={"table-tbody"}>
+                <TableBody className={`table-tbody`}>
                   {(dataType === "exercise"
                     ? OBJECT?.exercise?.[selectedIdx?.category2Idx]?.exercise_record_title
                     : OBJECT?.money?.[selectedIdx?.category2Idx]?.money_record_title
                   )?.map((item: any, index: number) => (index > 0) && (
-                    <TableRow key={index} className={"table-tbody-tr border-bottom-1"}>
+                    <TableRow key={index} className={`table-tbody-tr border-bottom-1`}>
                       <TableCell>
-                        <Div className={"d-center"}>
-                          <Div className={"fs-0-9rem mr-auto"}>
+                        <Div className={`d-center`}>
+                          <Div className={`fs-0-9rem mr-auto`}>
                             <Input
                               variant={"standard"}
                               value={translate(item) || ""}
@@ -467,10 +467,10 @@ export const UserCategory = memo(() => {
                               }}
                             />
                           </Div>
-                          <Div className={"fs-0-9rem ml-auto d-row-right"}>
+                          <Div className={`fs-0-9rem ml-auto d-row-right`}>
                             <Icons
                               name={"Pencil"}
-                              className={"w-12px h-12px navy"}
+                              className={`w-12px h-12px navy`}
                               onClick={() => {
                                 setSelectedIdx((prev) => ({
                                   ...prev,
@@ -481,7 +481,7 @@ export const UserCategory = memo(() => {
                             />
                             <Icons
                               name={"Trash"}
-                              className={"w-12px h-12px burgundy"}
+                              className={`w-12px h-12px burgundy`}
                               onClick={() => {
                                 setSelectedIdx((prev) => ({
                                   ...prev,
@@ -496,14 +496,14 @@ export const UserCategory = memo(() => {
                     </TableRow>
                   ))}
                 </TableBody>
-                <TableFooter className={"table-tfoot"}>
-                  <TableRow className={"table-tfoot-tr"}>
+                <TableFooter className={`table-tfoot`}>
+                  <TableRow className={`table-tfoot-tr`}>
                     <TableCell>
-                      <Div className={"d-center"}>
+                      <Div className={`d-center`}>
                         <Icons
                           key={"Plus"}
                           name={"Plus"}
-                          className={"w-12px h-12px"}
+                          className={`w-12px h-12px`}
                           onClick={() => {
                             handleAdd("title");
                           }}
@@ -524,24 +524,24 @@ export const UserCategory = memo(() => {
 				{[OBJECT]?.map((item, i) => (
 					<Grid size={12} key={`detail-${i}`}>
 						<Grid container={true} spacing={1}>
-							<TableContainer className={"border-1 radius-2 over-x-hidden"}>
+							<TableContainer className={`border-1 radius-2 over-x-hidden`}>
 								<Table>
-									<TableHead className={"table-thead"}>
-										<TableRow className={"table-thead-tr"}>
-											<TableCell className={"fs-0-95rem"}>
-												{translate("dataCategory1")}
+									<TableHead className={`table-thead`}>
+										<TableRow className={`table-thead-tr`}>
+											<TableCell className={`fs-0-95rem`}>
+												{translate(`dataCategory1`)}
 											</TableCell>
 										</TableRow>
 									</TableHead>
-									<TableBody className={"table-tbody"}>
+									<TableBody className={`table-tbody`}>
 										{Object.keys(item).map((item: any, idx: number) => (
-											<TableRow className={"table-tbody-tr border-top-1"} key={idx}>
+											<TableRow className={`table-tbody-tr border-top-1`} key={idx}>
 												<TableCell className={`${dataType === item ? "bg-light" : ""}`}>
-													<Div className={"d-center"}>
-														<Div className={"fs-0-95rem ml-0px"}>
+													<Div className={`d-center`}>
+														<Div className={`fs-0-95rem ml-0px`}>
 															{translate(item)}
 														</Div>
-														<Div className={"fs-0-95rem ml-auto"}>
+														<Div className={`fs-0-95rem ml-auto`}>
 														<PopUp
 															type={"innerCenter"}
 															position={"center"}
@@ -553,7 +553,7 @@ export const UserCategory = memo(() => {
 																<Icons
 																	key={"Search"}
 																	name={"Search"}
-																	className={"w-18px h-18px black ml-auto"}
+																	className={`w-18px h-18px black ml-auto`}
 																	onClick={(e: any) => {
 																		setDataType(item);
 																		setSelectedIdx((prev) => ({
@@ -582,7 +582,7 @@ export const UserCategory = memo(() => {
 		);
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-90vh"}>
+      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-90vh`}>
         {detailSection()}
       </Paper>
     );

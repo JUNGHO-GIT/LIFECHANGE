@@ -6,15 +6,15 @@ export {
   AppInfo,
 } from "@schemas/admin/Admin";
 
-// today -------------------------------------------------------------------------------------------
+// calendar -------------------------------------------------------------------------------------------
 export {
-	type TodayGoalType,
-  TodayGoal,
-} from "@schemas/today/TodayGoal";
-export {
-	type TodayRecordType,
-  TodayRecord,
-} from "@schemas/today/TodayRecord";
+  type CalendarExerciseSectionType,
+  type CalendarFoodSectionType,
+  type CalendarMoneySectionType,
+  type CalendarSleepSectionType,
+	type CalendarType,
+  Calendar,
+} from "@schemas/calendar/Calendar";
 
 // exercise -------------------------------------------------------------------------------------------
 export {

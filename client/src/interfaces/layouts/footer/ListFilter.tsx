@@ -25,7 +25,7 @@ export const ListFilter = memo((
   // 7. filter -------------------------------------------------------------------------------------
   const sortSection = useMemo(() => (
     <Select
-      label={translate("sort")}
+      label={translate(`sort`)}
       value={state?.PAGING?.sort || "asc"}
       inputclass={"h-min-0px h-5vh"}
       onChange={(e: any) => {
@@ -41,7 +41,7 @@ export const ListFilter = memo((
           value={item}
           selected={state?.PAGING?.sort === item}
         >
-          <Div className={"fs-0-8rem"}>
+          <Div className={`fs-0-8rem`}>
             {translate(item)}
           </Div>
         </MenuItem>

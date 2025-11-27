@@ -15,9 +15,9 @@ export const Header = memo(() => {
   const headerNode = () => {
 		const iconSection = () => (
 			<Div
-				className={"d-center pointer ml-5px"}
+				className={`d-center pointer ml-5px`}
 				onClick={() => {
-					navigate("/today/record/list", {
+					navigate("/calendar/list", {
 						state: {
 							dateType: "day",
 							dateStart: getDayFmt(),
@@ -32,7 +32,7 @@ export const Header = memo(() => {
 					radius={false}
 					src={"logo2.webp"}
 					loading={"eager"}
-					className={"h-max-30px mr-2vw"}
+					className={`h-max-30px mr-2vw`}
 				/>
 				<Img
 					hover={true}
@@ -40,7 +40,7 @@ export const Header = memo(() => {
 					radius={false}
 					src={"logo3.webp"}
 					loading={"eager"}
-					className={"h-max-30px"}
+					className={`h-max-30px`}
 				/>
 			</Div>
 		);
@@ -49,7 +49,7 @@ export const Header = memo(() => {
 				<Icons
 					key={"Settings"}
 					name={"Settings"}
-					className={"w-25px h-25px"}
+					className={`w-25px h-25px`}
 					onClick={() => {
 						navigate("/user/appSetting");
 					}}
@@ -58,7 +58,7 @@ export const Header = memo(() => {
 				<Icons
 					key={"ArrowRight"}
 					name={"ArrowRight"}
-					className={"w-25px h-25px"}
+					className={`w-25px h-25px`}
 					onClick={() => {
 						navigate(-1);
 					}}
@@ -66,7 +66,7 @@ export const Header = memo(() => {
 			)
 		);
     return (
-      <Paper className={"layout-wrapper d-row-between p-sticky top-0vh h-8vh radius-2 border-1 shadow-1"}>
+      <Paper className={`layout-wrapper d-row-between p-sticky top-0vh h-8vh radius-2 border-1 shadow-1`}>
 				{iconSection()}
 				{btnSection()}
       </Paper>

@@ -199,9 +199,9 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
   // 7. node ---------------------------------------------------------------------------------------
   const adornmentNode = (
     <Grid container={true} spacing={0}>
-      <Grid size={8} className={"d-col-left"}>
+      <Grid size={8} className={`d-col-left`}>
         {fileList && fileList?.length > 0 && fileList.map((file: any, index: number) => (
-          <Div className={"d-row-center"} key={index}>
+          <Div className={`d-row-center`} key={index}>
             <Img
               max={25}
               hover={true}
@@ -209,13 +209,13 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
               radius={false}
               group={"new"}
               src={URL.createObjectURL(file)}
-              className={"mr-10px"}
+              className={`mr-10px`}
             />
-            <Div max={14} className={"black fs-0-9rem fw-500"}>
+            <Div max={14} className={`black fs-0-9rem fw-500`}>
               {file?.name}
             </Div>
             <Div
-              className={"black fs-0-9rem fw-500 pointer-burgundy ml-15px"}
+              className={`black fs-0-9rem fw-500 pointer-burgundy ml-15px`}
               onClick={() => handleFileDelete(index, "single")}
             >
               {file?.name ? "x" : ""}
@@ -223,11 +223,11 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
           </Div>
         ))}
       </Grid>
-      <Grid size={4} className={"d-col-right mr-n20px"}>
+      <Grid size={4} className={`d-col-right mr-n20px`}>
         <Icons
           key={"CirclePlus"}
           name={"CirclePlus"}
-          className={"w-22px h-22px pointer-burgundy"}
+          className={`w-22px h-22px pointer-burgundy`}
           onClick={(e: any) => {
             handleFileAdd(e);
           }}
@@ -235,7 +235,7 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
         <Icons
           key={"Trash"}
           name={"Trash"}
-          className={"w-22px h-22px pointer-burgundy"}
+          className={`w-22px h-22px pointer-burgundy`}
           onClick={() => {
             handleFileDelete(0, "all");
           }}
@@ -247,9 +247,9 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
   // 7. node ---------------------------------------------------------------------------------------
   const existingNode = () => (
     <Grid container={true} spacing={0}>
-      <Grid size={12} className={"d-col-left"}>
+      <Grid size={12} className={`d-col-left`}>
         {fileExisting.map((file: any, index: number) => (
-          <Div className={"d-row-center"} key={index}>
+          <Div className={`d-row-center`} key={index}>
             <Img
               max={25}
               hover={true}
@@ -257,13 +257,13 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
               radius={false}
               group={props?.group}
               src={file}
-              className={"mr-10px"}
+              className={`mr-10px`}
             />
-            <Div max={14} className={"black fs-0-9rem fw-500"}>
+            <Div max={14} className={`black fs-0-9rem fw-500`}>
               {file}
             </Div>
             <Div
-              className={"black fs-0-9rem fw-500 pointer-burgundy ml-5px"}
+              className={`black fs-0-9rem fw-500 pointer-burgundy ml-5px`}
               onClick={() => {
                 handleExistingFileDelete(index);
               }}

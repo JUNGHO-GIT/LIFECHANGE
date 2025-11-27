@@ -11,7 +11,7 @@ export const exist = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await MoneyRecord.aggregate([
+  const finalResult = await MoneyRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -50,7 +50,7 @@ export const cnt = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await MoneyRecord.countDocuments(
+  const finalResult = await MoneyRecord.countDocuments(
     {
       user_id: user_id_param,
       money_record_dateStart: {
@@ -78,7 +78,7 @@ export const list = async (
   page_param: number,
 ) => {
 
-  const finalResult:any = await MoneyRecord.aggregate([
+  const finalResult = await MoneyRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -124,7 +124,7 @@ export const detail = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await MoneyRecord.findOne(
+  const finalResult = await MoneyRecord.findOne(
     {
       user_id: user_id_param,
       money_record_dateStart: dateStart_param,
@@ -146,7 +146,7 @@ export const create = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await MoneyRecord.create(
+  const finalResult = await MoneyRecord.create(
     {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
@@ -176,7 +176,7 @@ export const update = {
     dateEnd_param: string,
   ) => {
 
-    const finalResult:any = await MoneyRecord.findOneAndUpdate(
+    const finalResult = await MoneyRecord.findOneAndUpdate(
       {
         user_id: user_id_param,
         money_record_dateStart: dateStart_param,
@@ -229,7 +229,7 @@ export const update = {
       parseFloat(OBJECT_param.money_record_total_expense)
     );
 
-    const finalResult:any = await MoneyRecord.updateOne(
+    const finalResult = await MoneyRecord.updateOne(
       {
         user_id: user_id_param,
         money_record_dateStart: dateStart_param,
@@ -265,7 +265,7 @@ export const update = {
     dateEnd_param: string,
   ) => {
 
-    const finalResult:any = await MoneyRecord.findOneAndUpdate(
+    const finalResult = await MoneyRecord.findOneAndUpdate(
       {
         user_id: user_id_param,
         money_record_dateStart: dateStart_param,
@@ -299,7 +299,7 @@ export const deletes = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await MoneyRecord.findOneAndDelete(
+  const finalResult = await MoneyRecord.findOneAndDelete(
     {
       user_id: user_id_param,
       money_record_dateStart: dateStart_param,

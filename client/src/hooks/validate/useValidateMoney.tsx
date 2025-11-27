@@ -140,7 +140,7 @@ export const useValidateMoney = () => {
 			const confirmResult = new Promise((resolve) => {
 				setCONFIRM({
 					open: true,
-					msg: translate("confirmDelete"),
+					msg: translate(`confirmDelete`),
 				}, (confirmed: boolean) => {
 					resolve(confirmed);
 				});

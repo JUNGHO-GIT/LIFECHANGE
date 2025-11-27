@@ -12,7 +12,7 @@ export const exist = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await FoodGoal.aggregate([
+  const finalResult = await FoodGoal.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -51,7 +51,7 @@ export const cnt = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await FoodGoal.countDocuments(
+  const finalResult = await FoodGoal.countDocuments(
     {
       user_id: user_id_param,
       food_goal_dateStart: {
@@ -76,7 +76,7 @@ export const listGoal = async (
   sort_param: 1 | -1,
   page_param: number,
 ) => {
-  const finalResult:any = await FoodGoal.aggregate([
+  const finalResult = await FoodGoal.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -121,7 +121,7 @@ export const listRecord = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await FoodRecord.aggregate([
+  const finalResult = await FoodRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -166,7 +166,7 @@ export const detail = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await FoodGoal.findOne(
+  const finalResult = await FoodGoal.findOne(
     {
       user_id: user_id_param,
       food_goal_dateStart: dateStart_param,
@@ -188,7 +188,7 @@ export const create = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await FoodGoal.create(
+  const finalResult = await FoodGoal.create(
     {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
@@ -219,7 +219,7 @@ export const update = {
     dateEnd_param: string,
   ) => {
 
-    const finalResult:any = await FoodGoal.findOneAndUpdate(
+    const finalResult = await FoodGoal.findOneAndUpdate(
       {
         user_id: user_id_param,
         food_goal_dateStart: dateStart_param,
@@ -256,7 +256,7 @@ export const update = {
     dateEnd_param: string,
   ) => {
 
-    const finalResult:any = await FoodGoal.findOneAndUpdate(
+    const finalResult = await FoodGoal.findOneAndUpdate(
       {
         user_id: user_id_param,
         food_goal_dateStart: dateStart_param,
@@ -290,7 +290,7 @@ export const deletes = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await FoodGoal.findOneAndDelete(
+  const finalResult = await FoodGoal.findOneAndDelete(
     {
       user_id: user_id_param,
       food_goal_dateStart: dateStart_param,

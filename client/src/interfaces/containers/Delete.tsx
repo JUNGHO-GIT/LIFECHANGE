@@ -27,12 +27,12 @@ export const Delete = memo((
 
 	// 2. deleteNode --------------------------------------------------------------------------------
 	const deleteNode = useMemo(() => (
-		<Div className={"mt-n10px mr-n10px"}>
+		<Div className={`mt-n10px mr-n10px`}>
 			<Icons
 				key={"X"}
 				name={"X"}
 				locked={LOCKED}
-				className={"w-20px h-20px"}
+				className={`w-20px h-20px`}
 				sx={{
 					color: "var(--color-text-2)",
 					"&:hover": {

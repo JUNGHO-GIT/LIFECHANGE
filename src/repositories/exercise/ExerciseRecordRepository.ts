@@ -12,7 +12,7 @@ export const exist = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await ExerciseRecord.aggregate([
+  const finalResult = await ExerciseRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -51,7 +51,7 @@ export const cnt = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await ExerciseRecord.countDocuments(
+  const finalResult = await ExerciseRecord.countDocuments(
     {
       user_id: user_id_param,
       exercise_record_dateStart: {
@@ -79,7 +79,7 @@ export const list = async (
   page_param: number,
 ) => {
 
-  const finalResult:any = await ExerciseRecord.aggregate([
+  const finalResult = await ExerciseRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -126,7 +126,7 @@ export const detail = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await ExerciseRecord.findOne(
+  const finalResult = await ExerciseRecord.findOne(
     {
       user_id: user_id_param,
       exercise_record_dateStart: dateStart_param,
@@ -148,7 +148,7 @@ export const create = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await ExerciseRecord.create(
+  const finalResult = await ExerciseRecord.create(
     {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
@@ -179,7 +179,7 @@ export const update = {
     dateEnd_param: string,
   ) => {
 
-    const finalResult:any = await ExerciseRecord.findOneAndUpdate(
+    const finalResult = await ExerciseRecord.findOneAndUpdate(
       {
         user_id: user_id_param,
         exercise_record_dateStart: dateStart_param,
@@ -239,7 +239,7 @@ export const update = {
       parseFloat(OBJECT_param.exercise_record_total_scale)
     );
 
-    const finalResult:any = await ExerciseRecord.updateOne(
+    const finalResult = await ExerciseRecord.updateOne(
       {
         user_id: user_id_param,
         exercise_record_dateStart: dateStart_param,
@@ -276,7 +276,7 @@ export const update = {
     dateEnd_param: string,
   ) => {
 
-    const finalResult:any = await ExerciseRecord.findOneAndUpdate(
+    const finalResult = await ExerciseRecord.findOneAndUpdate(
       {
         user_id: user_id_param,
         exercise_record_dateStart: dateStart_param,
@@ -311,7 +311,7 @@ export const deletes = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await ExerciseRecord.findOneAndDelete(
+  const finalResult = await ExerciseRecord.findOneAndDelete(
     {
       user_id: user_id_param,
       exercise_record_dateStart: dateStart_param,

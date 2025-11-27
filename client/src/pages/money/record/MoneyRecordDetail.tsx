@@ -16,7 +16,7 @@ export const MoneyRecordDetail = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
 	const { URL_OBJECT, navigate, sessionId, localCurrency, moneyArray } = useCommonValue();
-	const { toList, toToday, bgColors } = useCommonValue();
+	const { toList, bgColors } = useCommonValue();
 	const { location_from, location_dateStart, location_dateEnd } = useCommonValue();
 	const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
 	const { ERRORS, REFS, validate } = useValidateMoney();
@@ -236,7 +236,7 @@ export const MoneyRecordDetail = memo(() => {
 					msg: translate(res.data.msg),
 					severity: "success",
 				});
-				navigate(location_from === "today" ? toToday : toList, {
+				navigate(toList, {
 					state: {
 						dateType: "",
 						dateStart: DATE?.dateStart,
@@ -291,7 +291,7 @@ export const MoneyRecordDetail = memo(() => {
 					msg: translate(res.data.msg),
 					severity: "success",
 				});
-				navigate(location_from === "today" ? toToday : toList, {
+				navigate(toList, {
 					state: {
 						dateType: "",
 						dateStart: dateRef.current.dateStart,
@@ -367,7 +367,7 @@ export const MoneyRecordDetail = memo(() => {
 						<Input
 							locked={LOCKED}
 							readOnly={true}
-							label={translate("totalIncome")}
+							label={translate(`totalIncome`)}
 							value={insertComma(OBJECT?.money_record_total_income || "0")}
 							startadornment={
 								<Img
@@ -392,7 +392,7 @@ export const MoneyRecordDetail = memo(() => {
 						<Input
 							locked={LOCKED}
 							readOnly={true}
-							label={translate("totalExpense")}
+							label={translate(`totalExpense`)}
 							value={insertComma(OBJECT?.money_record_total_expense || "0")}
 							startadornment={
 								<Img
@@ -424,13 +424,13 @@ export const MoneyRecordDetail = memo(() => {
 						className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}>
 							{/** row 1 **/}
 							<Grid container={true} spacing={1}>
-								<Grid size={6} className={"d-row-left"}>
+								<Grid size={6} className={`d-row-left`}>
 									<Bg
 										badgeContent={i + 1}
 										bgcolor={bgColors?.[partIndex]}
 									/>
 								</Grid>
-								<Grid size={6} className={"d-row-right"}>
+								<Grid size={6} className={`d-row-right`}>
 									<Delete
 										index={i}
 										handleDelete={handleDelete}
@@ -445,7 +445,7 @@ export const MoneyRecordDetail = memo(() => {
 								<Grid size={6}>
 									<Select
 										locked={LOCKED}
-										label={translate("part")}
+										label={translate(`part`)}
 										value={item?.money_record_part || ""}
 										inputRef={REFS?.[i]?.money_record_part}
 										error={ERRORS?.[i]?.money_record_part}
@@ -468,7 +468,7 @@ export const MoneyRecordDetail = memo(() => {
 											<MenuItem
 												key={idx}
 												value={part.money_record_part}
-												className={"fs-0-8rem"}
+												className={`fs-0-8rem`}
 											>
 												{translate(part.money_record_part)}
 											</MenuItem>
@@ -478,7 +478,7 @@ export const MoneyRecordDetail = memo(() => {
 								<Grid size={6}>
 									<Select
 										locked={LOCKED}
-										label={translate("title")}
+										label={translate(`title`)}
 										value={item?.money_record_title || ""}
 										inputRef={REFS?.[i]?.money_record_title}
 										error={ERRORS?.[i]?.money_record_title}
@@ -499,7 +499,7 @@ export const MoneyRecordDetail = memo(() => {
 											<MenuItem
 												key={idx}
 												value={title}
-												className={"fs-0-8rem"}
+												className={`fs-0-8rem`}
 											>
 												{translate(title)}
 											</MenuItem>
@@ -514,7 +514,7 @@ export const MoneyRecordDetail = memo(() => {
 								<Grid size={12}>
 									<Input
 										locked={LOCKED}
-										label={translate("amount")}
+										label={translate(`amount`)}
 										value={insertComma(item?.money_record_amount || "0")}
 										inputRef={REFS?.[i]?.money_record_amount}
 										error={ERRORS?.[i]?.money_record_amount}
@@ -551,7 +551,7 @@ export const MoneyRecordDetail = memo(() => {
 
 							{/** row 4 **/}
 							<Grid container={true} spacing={1}>
-								<Grid size={{ xs: 7, sm: 8 }} className={"d-center"}>
+								<Grid size={{ xs: 7, sm: 8 }} className={`d-center`}>
 									<Memo
 										OBJECT={OBJECT}
 										setOBJECT={setOBJECT}
@@ -560,13 +560,13 @@ export const MoneyRecordDetail = memo(() => {
 										i={i}
 									/>
 								</Grid>
-								<Grid size={{ xs: 5, sm: 4 }} className={"d-center"}>
-									<Div className={"fs-0-7rem fw-500 dark ml-10px"}>
-										{translate("includeProperty")}
+								<Grid size={{ xs: 5, sm: 4 }} className={`d-center`}>
+									<Div className={`fs-0-7rem fw-500 dark ml-10px`}>
+										{translate(`includeProperty`)}
 									</Div>
 									<Checkbox
 										size={"small"}
-										className={"p-0px ml-5px"}
+										className={`p-0px ml-5px`}
 										checked={item?.money_record_include === "Y"}
 										disabled={LOCKED === "locked"}
 										onChange={(e: any) => {
@@ -591,7 +591,7 @@ export const MoneyRecordDetail = memo(() => {
 		);
 		// 7-10. return
 		return (
-			<Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-75vh"}>
+			<Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
 				{dateCountSection()}
 				<Br m={20} />
 				{totalSection()}

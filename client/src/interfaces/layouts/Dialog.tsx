@@ -24,7 +24,7 @@ export const Dialog = memo((
 
 	// 1. common ----------------------------------------------------------------------------------
   const { PATH, navigate, toDetail, localIsoCode } = useCommonValue();
-	const { isToday, isGoalList, isFindList, isFavoriteList, isList, isDetail } = useCommonValue();
+	const { isGoalList, isFindList, isFavoriteList, isList, isDetail } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
 
@@ -33,97 +33,9 @@ export const Dialog = memo((
 
   // 7. dialog -------------------------------------------------------------------------------------
   const dialogNode = () => {
-    // 1. today
-    const todaySection = () => (
-      <Div className={"d-flex"}>
-        <Backdrop
-          open={open}
-          style={{ zIndex: 550 }}
-          onClick={() => {
-            setOpen(false);
-          }}
-        />
-        <SpeedDial
-          ariaLabel={"speedDial"}
-          direction={"up"}
-          open={open}
-          style={{ zIndex: 600 }}
-					className={`p-fixed bottom-18vh right-6vw ml-5px z-600`}
-          icon={
-            <SpeedDialIcon />
-          }
-          FabProps={{
-            size: "small",
-            component: "div",
-          }}
-          onClick={() => {
-            setOpen(!open);
-          }}
-        >
-          <SpeedDialAction
-            key={translate("openAll")}
-            tooltipTitle={translate("openAll")}
-            className={open ? "" : "d-none"}
-            icon={
-              <Icons
-                key={"ChevronDown"}
-                name={"ChevronDown"}
-                className={"w-25px h-25px"}
-              />
-            }
-            onClick={() => {
-              setIsExpanded(() => ({
-                exercise: Array.from({ length: COUNT?.exercise as number }).map((_: any) => ({
-                  expanded: true,
-                })),
-                food: Array.from({ length: COUNT?.food as number }).map((_: any) => ({
-                  expanded: true,
-                })),
-                money: Array.from({ length: COUNT?.money as number }).map((_: any) => ({
-                  expanded: true,
-                })),
-                sleep: Array.from({ length: COUNT?.sleep as number }).map((_: any) => ({
-                  expanded: true,
-                })),
-              }));
-              window.scrollTo(0, 0);
-            }}
-          />
-          <SpeedDialAction
-            key={translate("closeAll")}
-            tooltipTitle={translate("closeAll")}
-            className={open ? "" : "d-none"}
-            icon={
-              <Icons
-                key={"ChevronUp"}
-                name={"ChevronUp"}
-                className={"w-25px h-25px"}
-              />
-            }
-            onClick={() => {
-              setIsExpanded(() => ({
-                exercise: Array.from({ length: COUNT?.exercise as number }).map((_: any) => ({
-                  expanded: false,
-                })),
-                food: Array.from({ length: COUNT?.food as number }).map((_: any) => ({
-                  expanded: false,
-                })),
-                money: Array.from({ length: COUNT?.money as number }).map((_: any) => ({
-                  expanded: false,
-                })),
-                sleep: Array.from({ length: COUNT?.sleep as number }).map((_: any) => ({
-                  expanded: false,
-                })),
-              }));
-              window.scrollTo(0, 0);
-            }}
-          />
-        </SpeedDial>
-      </Div>
-    );
     // 2. goal
     const listGoalSection = () => (
-      <Div className={"d-flex"}>
+      <Div className={`d-flex`}>
         <Backdrop
           open={open}
           style={{ zIndex: 550 }}
@@ -149,14 +61,14 @@ export const Dialog = memo((
           }}
         >
           <SpeedDialAction
-            key={translate("save")}
-            tooltipTitle={translate("save")}
+            key={translate(`save`)}
+            tooltipTitle={translate(`save`)}
             className={open ? "" : "d-none"}
             icon={
               <Icons
                 key={"Pencil"}
                 name={"Pencil"}
-                className={"w-25px h-25px"}
+                className={`w-25px h-25px`}
               />
             }
             onClick={() => {
@@ -170,14 +82,14 @@ export const Dialog = memo((
             }}
           />
           <SpeedDialAction
-            key={translate("openAll")}
-            tooltipTitle={translate("openAll")}
+            key={translate(`openAll`)}
+            tooltipTitle={translate(`openAll`)}
             className={open ? "" : "d-none"}
             icon={
               <Icons
                 key={"ChevronDown"}
                 name={"ChevronDown"}
-                className={"w-25px h-25px"}
+                className={`w-25px h-25px`}
               />
             }
             onClick={() => {
@@ -190,14 +102,14 @@ export const Dialog = memo((
             }}
           />
           <SpeedDialAction
-            key={translate("closeAll")}
-            tooltipTitle={translate("closeAll")}
+            key={translate(`closeAll`)}
+            tooltipTitle={translate(`closeAll`)}
             className={open ? "" : "d-none"}
             icon={
               <Icons
                 key={"ChevronUp"}
                 name={"ChevronUp"}
-                className={"w-25px h-25px"}
+                className={`w-25px h-25px`}
               />
             }
             onClick={() => {
@@ -214,7 +126,7 @@ export const Dialog = memo((
     );
     // 3. record
     const listRecordSection = () => (
-      <Div className={"d-flex"}>
+      <Div className={`d-flex`}>
         <Backdrop
           open={open}
           style={{ zIndex: 550 }}
@@ -240,14 +152,14 @@ export const Dialog = memo((
           }}
         >
           <SpeedDialAction
-            key={translate("save")}
-            tooltipTitle={translate("save")}
+            key={translate(`save`)}
+            tooltipTitle={translate(`save`)}
             className={open ? "" : "d-none"}
             icon={
               <Icons
                 key={"Pencil"}
                 name={"Pencil"}
-                className={"w-25px h-25px"}
+                className={`w-25px h-25px`}
               />
             }
             onClick={() => {
@@ -261,14 +173,14 @@ export const Dialog = memo((
             }}
           />
           <SpeedDialAction
-            key={translate("openAll")}
-            tooltipTitle={translate("openAll")}
+            key={translate(`openAll`)}
+            tooltipTitle={translate(`openAll`)}
             className={open ? "" : "d-none"}
             icon={
               <Icons
                 key={"ChevronDown"}
                 name={"ChevronDown"}
-                className={"w-25px h-25px"}
+                className={`w-25px h-25px`}
               />
             }
             onClick={() => {
@@ -281,14 +193,14 @@ export const Dialog = memo((
             }}
           />
           <SpeedDialAction
-            key={translate("closeAll")}
-            tooltipTitle={translate("closeAll")}
+            key={translate(`closeAll`)}
+            tooltipTitle={translate(`closeAll`)}
             className={open ? "" : "d-none"}
             icon={
               <Icons
                 key={"ChevronUp"}
                 name={"ChevronUp"}
-                className={"w-25px h-25px"}
+                className={`w-25px h-25px`}
               />
             }
             onClick={() => {
@@ -305,7 +217,7 @@ export const Dialog = memo((
     );
     // 4. find
     const findSection = () => (
-      <Div className={"d-flex"}>
+      <Div className={`d-flex`}>
         <Backdrop
           open={open}
           style={{ zIndex: 550 }}
@@ -331,14 +243,14 @@ export const Dialog = memo((
         >
           {PATH.includes("/favorite/list") ? (
             <SpeedDialAction
-              key={translate("search")}
-              tooltipTitle={translate("search")}
+              key={translate(`search`)}
+              tooltipTitle={translate(`search`)}
               className={open ? "" : "d-none"}
               icon={
                 <Icons
                   key={"Search"}
                   name={"Search"}
-                  className={"w-23px h-23px"}
+                  className={`w-23px h-23px`}
                 />
               }
               onClick={() => {
@@ -347,15 +259,15 @@ export const Dialog = memo((
             />
           ) : (
             <SpeedDialAction
-              key={translate("favorite")}
-              tooltipTitle={translate("favorite")}
+              key={translate(`favorite`)}
+              tooltipTitle={translate(`favorite`)}
               className={open ? "" : "d-none"}
               icon={
                 <Icons
                   key={"Star"}
                   name={"Star"}
                   fill={"gold"}
-                  className={"w-23px h-23px"}
+                  className={`w-23px h-23px`}
                 />
               }
               onClick={() => {
@@ -364,14 +276,14 @@ export const Dialog = memo((
             />
           )}
           <SpeedDialAction
-            key={translate("save")}
-            tooltipTitle={translate("save")}
+            key={translate(`save`)}
+            tooltipTitle={translate(`save`)}
             className={open ? "" : "d-none"}
             icon={
               <Icons
                 key={"Pencil"}
                 name={"Pencil"}
-                className={"w-25px h-25px"}
+                className={`w-25px h-25px`}
               />
             }
             onClick={() => {
@@ -385,14 +297,14 @@ export const Dialog = memo((
             }}
           />
           <SpeedDialAction
-            key={translate("openAll")}
-            tooltipTitle={translate("openAll")}
+            key={translate(`openAll`)}
+            tooltipTitle={translate(`openAll`)}
             className={open ? "" : "d-none"}
             icon={
               <Icons
                 key={"ChevronDown"}
                 name={"ChevronDown"}
-                className={"w-25px h-25px"}
+                className={`w-25px h-25px`}
               />
             }
             onClick={() => {
@@ -405,14 +317,14 @@ export const Dialog = memo((
             }}
           />
           <SpeedDialAction
-            key={translate("closeAll")}
-            tooltipTitle={translate("closeAll")}
+            key={translate(`closeAll`)}
+            tooltipTitle={translate(`closeAll`)}
             className={open ? "" : "d-none"}
             icon={
               <Icons
                 key={"ChevronUp"}
                 name={"ChevronUp"}
-                className={"w-25px h-25px"}
+                className={`w-25px h-25px`}
               />
             }
             onClick={() => {
@@ -425,11 +337,11 @@ export const Dialog = memo((
             }}
           />
           <SpeedDialAction
-            key={translate("locale")}
-            tooltipTitle={translate("locale")}
+            key={translate(`locale`)}
+            tooltipTitle={translate(`locale`)}
             className={open ? "" : "d-none"}
             icon={
-              <Div className={"fw-800 fs-0-8rem"}>
+              <Div className={`fw-800 fs-0-8rem`}>
                 {localIsoCode}
               </Div>
             }
@@ -439,7 +351,7 @@ export const Dialog = memo((
     );
     // 5. detail
     const detailSection = () => (
-      <Div className={"d-flex"}>
+      <Div className={`d-flex`}>
         <Backdrop
           open={open}
           style={{ zIndex: 550 }}
@@ -465,21 +377,21 @@ export const Dialog = memo((
           }}
         >
           <SpeedDialAction
-            key={translate("itemLock")}
-            tooltipTitle={translate("itemLock")}
+            key={translate(`itemLock`)}
+            tooltipTitle={translate(`itemLock`)}
             className={open ? "" : "d-none"}
             icon={
               LOCKED === "locked" ? (
                 <Icons
                   key={"UnLock"}
                   name={"UnLock"}
-                  className={"w-25px h-25px"}
+                  className={`w-25px h-25px`}
                 />
               ) : (
                 <Icons
                   key={"Lock"}
                   name={"Lock"}
-                  className={"w-25px h-25px"}
+                  className={`w-25px h-25px`}
                 />
               )
             }
@@ -495,15 +407,15 @@ export const Dialog = memo((
 						}}
           />
           <SpeedDialAction
-            key={translate("closeAll")}
-            tooltipTitle={translate("closeAll")}
+            key={translate(`closeAll`)}
+            tooltipTitle={translate(`closeAll`)}
             className={open ? "" : "d-none"}
             icon={
               <Icons
                 key={"X"}
                 name={"X"}
                 locked={LOCKED}
-                className={"w-25px h-25px"}
+                className={`w-25px h-25px`}
               />
             }
             onClick={(e) => {
@@ -515,7 +427,7 @@ export const Dialog = memo((
                 setOBJECT((prev: any) => ({
                   ...prev,
                   food_section: [],
-                  today_food_section: [],
+                  calendar_food_section: [],
                 }));
               }
               if (setCOUNT) {
@@ -531,10 +443,7 @@ export const Dialog = memo((
     );
     // 10. return
     return (
-      isToday ? (
-        todaySection()
-      )
-      : isGoalList ? (
+			isGoalList ? (
         listGoalSection()
       )
       : isFindList || isFavoriteList ? (

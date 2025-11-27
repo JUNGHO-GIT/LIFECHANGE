@@ -120,11 +120,11 @@ export const UserDetail = memo(() => {
     // 7-1. image
     const imageSection = () => (
       <Grid container={true} spacing={1}>
-        <Grid size={12} className={"d-center"}>
+        <Grid size={12} className={`d-center`}>
           <Avatar
             src={OBJECT?.user_image}
             alt={"user_image"}
-            className={"w-150px h-150px"}
+            className={`w-150px h-150px`}
           />
         </Grid>
       </Grid>
@@ -133,13 +133,13 @@ export const UserDetail = memo(() => {
     const detailSection = () => (
 			<Grid container={true} spacing={0}>
 				{[OBJECT]?.map((item, i) => (
-					<Grid container={true} spacing={2} className={"p-10px"} key={`detail-${i}`}>
+					<Grid container={true} spacing={2} className={`p-10px`} key={`detail-${i}`}>
 						{/** 이메일 **/}
 						<Grid container={true} spacing={0}>
 							<Grid size={12}>
 								<Input
 									readOnly={true}
-									label={translate("id")}
+									label={translate(`id`)}
 									value={item?.user_id}
 								/>
 							</Grid>
@@ -150,19 +150,19 @@ export const UserDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									readOnly={true}
-									label={translate("regDt")}
+									label={translate(`regDt`)}
 									value={item?.user_regDt.split("T")[0]}
 								/>
 							</Grid>
 						</Grid>
 
-						<Hr m={1} className={"bg-light"} />
+						<Hr m={1} className={`bg-light`} />
 
 						{/** 최초 몸무게 **/}
 						<Grid container={true} spacing={0}>
 							<Grid size={12}>
 								<Input
-									label={translate("initScale")}
+									label={translate(`initScale`)}
 									  value={insertComma(item.user_initScale || "0")}
 									inputRef={REFS?.[i]?.user_initScale}
 									error={ERRORS?.[i]?.user_initScale}
@@ -195,7 +195,7 @@ export const UserDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									readOnly={true}
-									label={translate("curScale")}
+									label={translate(`curScale`)}
 									  value={insertComma(item.user_curScale || "0")}
 									startadornment={
 										<Img
@@ -213,13 +213,13 @@ export const UserDetail = memo(() => {
 							</Grid>
 						</Grid>
 
-						<Hr m={1} className={"bg-light"} />
+						<Hr m={1} className={`bg-light`} />
 
 						{/** 초기 평균 칼로리 섭취량 목표 **/}
 						<Grid container={true} spacing={0}>
 							<Grid size={12}>
 								<Input
-									label={translate("initAvgKcalIntake")}
+									label={translate(`initAvgKcalIntake`)}
 									  value={insertComma(item.user_initAvgKcalIntake || "0")}
 									inputRef={REFS?.[i]?.user_initAvgKcalIntake}
 									error={ERRORS?.[i]?.user_initAvgKcalIntake}
@@ -233,7 +233,7 @@ export const UserDetail = memo(() => {
 										/>
 									}
 									endadornment={
-										translate("kc")
+										translate(`kc`)
 									}
 									onChange={(e: any) => {
 										const processedValue = handleNumberInput(e.target.value, 9999);
@@ -252,7 +252,7 @@ export const UserDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									readOnly={true}
-									label={translate("curAvgKcalIntake")}
+									label={translate(`curAvgKcalIntake`)}
 									  value={insertComma(item.user_curAvgKcalIntake || "0")}
 									startadornment={
 										<Img
@@ -264,19 +264,19 @@ export const UserDetail = memo(() => {
 										/>
 									}
 									endadornment={
-										translate("kc")
+										translate(`kc`)
 									}
 								/>
 							</Grid>
 						</Grid>
 
-						<Hr m={1} className={"bg-light"} />
+						<Hr m={1} className={`bg-light`} />
 
 						{/** 초기 자산 **/}
 						<Grid container={true} spacing={0}>
 							<Grid size={12}>
 								<Input
-									label={translate("initProperty")}
+									label={translate(`initProperty`)}
 									  value={insertComma(item.user_initProperty || "0")}
 									inputRef={REFS?.[i]?.user_initProperty}
 									error={ERRORS?.[i]?.user_initProperty}
@@ -309,7 +309,7 @@ export const UserDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									readOnly={true}
-									label={translate("curPropertyExclusion")}
+									label={translate(`curPropertyExclusion`)}
 									value={
 										includingExclusions ? (
 											  insertComma(item.user_curPropertyAll || "0")
@@ -335,13 +335,13 @@ export const UserDetail = memo(() => {
 
 						{/** 포함 여부 **/}
 						<Grid container={true} spacing={0}>
-							<Grid size={12} className={"d-row-left"}>
-								<Div className={"fs-0-7rem fw-500 dark ml-10px"}>
-									{translate("includingExclusions")}
+							<Grid size={12} className={`d-row-left`}>
+								<Div className={`fs-0-7rem fw-500 dark ml-10px`}>
+									{translate(`includingExclusions`)}
 								</Div>
 								<Checkbox
 									size={"small"}
-									className={"p-0px ml-5px"}
+									className={`p-0px ml-5px`}
 									checked={includingExclusions}
 									onChange={(e: any) => {
 										setIncludingExclusions(e.target.checked);
@@ -355,7 +355,7 @@ export const UserDetail = memo(() => {
 		);
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-75vh"}>
+      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
         {imageSection()}
         <Hr m={40} />
         {detailSection()}

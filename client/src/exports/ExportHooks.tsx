@@ -14,7 +14,6 @@ export { useValidateExercise } from "@hooks/validate/useValidateExercise";
 export { useValidateFood } from "@hooks/validate/useValidateFood";
 export { useValidateMoney } from "@hooks/validate/useValidateMoney";
 export { useValidateSleep } from "@hooks/validate/useValidateSleep";
-export { useValidateToday } from "@hooks/validate/useValidateToday";
 export { useValidateCalendar } from "@hooks/validate/useValidateCalendar";
 
 // storage ---------------------------------------------------------------------------------------

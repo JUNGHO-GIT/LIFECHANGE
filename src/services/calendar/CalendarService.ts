@@ -30,9 +30,9 @@ export const exist = async (
 	else {
 		statusResult = "success";
 		finalResult = findResult.reduce((acc: any, curr: any) => {
-			const curDateType = curr.today_record_dateType;
-			const curDateStart = curr.today_record_dateStart;
-			const curDateEnd = curr.today_record_dateEnd;
+			const curDateType = curr.calendar_dateType;
+			const curDateStart = curr.calendar_dateStart;
+			const curDateEnd = curr.calendar_dateEnd;
 
 			acc[curDateType].push(`${curDateStart} - ${curDateEnd}`);
 
@@ -133,10 +133,10 @@ export const detail = async (
 	}
 
 	// 섹션 카운트
-	exerciseSectionCntResult = findResult?.[0]?.today_exercise_section?.length || 0;
-	foodSectionCntResult = findResult?.[0]?.today_food_section?.length || 0;
-	moneySectionCntResult = findResult?.[0]?.today_money_section?.length || 0;
-	sleepSectionCntResult = findResult?.[0]?.today_sleep_section?.length || 0;
+	exerciseSectionCntResult = findResult?.[0]?.calendar_exercise_section?.length || 0;
+	foodSectionCntResult = findResult?.[0]?.calendar_food_section?.length || 0;
+	moneySectionCntResult = findResult?.[0]?.calendar_money_section?.length || 0;
+	sleepSectionCntResult = findResult?.[0]?.calendar_sleep_section?.length || 0;
 	sectionCntResult = (
 		exerciseSectionCntResult +
 		foodSectionCntResult +
@@ -177,16 +177,16 @@ export const update = async (
 	const dateEnd = DATE_param?.dateEnd;
 
 	// exercise 데이터가 있으면 exercise update 호출
-	if (OBJECT_param?.today_exercise_section?.length > 0) {
+	if (OBJECT_param?.calendar_exercise_section?.length > 0) {
 		const ExerciseRecordService = require("@services/exercise/ExerciseRecordService");
 		const exerciseObject = {
-			exercise_record_dateType: dateType,
-			exercise_record_dateStart: dateStart,
-			exercise_record_dateEnd: dateEnd,
-			exercise_record_total_volume: OBJECT_param.today_exercise_record_total_volume || "0",
-			exercise_record_total_cardio: OBJECT_param.today_exercise_record_total_cardio || "00:00",
+			exercise_dateType: dateType,
+			exercise_dateStart: dateStart,
+			exercise_dateEnd: dateEnd,
+			exercise_record_total_volume: OBJECT_param.calendar_exercise_record_total_volume || "0",
+			exercise_record_total_cardio: OBJECT_param.calendar_exercise_record_total_cardio || "00:00",
 			exercise_record_total_scale: "0",
-			exercise_section: OBJECT_param.today_exercise_section,
+			exercise_section: OBJECT_param.calendar_exercise_section,
 		};
 		exerciseResult = await ExerciseRecordService.update(
 			user_id_param, exerciseObject, DATE_param, type_param
@@ -198,18 +198,18 @@ export const update = async (
 	}
 
 	// food 데이터가 있으면 food update 호출
-	if (OBJECT_param?.today_food_section?.length > 0) {
+	if (OBJECT_param?.calendar_food_section?.length > 0) {
 		const FoodRecordService = require("@services/food/FoodRecordService");
 		const foodObject = {
-			food_record_dateType: dateType,
-			food_record_dateStart: dateStart,
-			food_record_dateEnd: dateEnd,
-			food_record_total_calorie: OBJECT_param.today_food_record_total_calorie || "0",
-			food_record_total_carb: OBJECT_param.today_food_record_total_carb || "0",
-			food_record_total_protein: OBJECT_param.today_food_record_total_protein || "0",
-			food_record_total_fat: OBJECT_param.today_food_record_total_fat || "0",
+			food_dateType: dateType,
+			food_dateStart: dateStart,
+			food_dateEnd: dateEnd,
+			food_record_total_calorie: OBJECT_param.calendar_food_record_total_calorie || "0",
+			food_record_total_carb: OBJECT_param.calendar_food_record_total_carb || "0",
+			food_record_total_protein: OBJECT_param.calendar_food_record_total_protein || "0",
+			food_record_total_fat: OBJECT_param.calendar_food_record_total_fat || "0",
 			food_record_total_scale: "0",
-			food_section: OBJECT_param.today_food_section,
+			food_section: OBJECT_param.calendar_food_section,
 		};
 		foodResult = await FoodRecordService.update(
 			user_id_param, foodObject, DATE_param, type_param
@@ -221,16 +221,16 @@ export const update = async (
 	}
 
 	// money 데이터가 있으면 money update 호출
-	if (OBJECT_param?.today_money_section?.length > 0) {
+	if (OBJECT_param?.calendar_money_section?.length > 0) {
 		const MoneyRecordService = require("@services/money/MoneyRecordService");
 		const moneyObject = {
-			money_record_dateType: dateType,
-			money_record_dateStart: dateStart,
-			money_record_dateEnd: dateEnd,
-			money_record_total_income: OBJECT_param.today_money_record_total_income || "0",
-			money_record_total_expense: OBJECT_param.today_money_record_total_expense || "0",
+			money_dateType: dateType,
+			money_dateStart: dateStart,
+			money_dateEnd: dateEnd,
+			money_record_total_income: OBJECT_param.calendar_money_record_total_income || "0",
+			money_record_total_expense: OBJECT_param.calendar_money_record_total_expense || "0",
 			money_record_total_scale: "0",
-			money_section: OBJECT_param.today_money_section,
+			money_section: OBJECT_param.calendar_money_section,
 		};
 		moneyResult = await MoneyRecordService.update(
 			user_id_param, moneyObject, DATE_param, type_param
@@ -242,15 +242,15 @@ export const update = async (
 	}
 
 	// sleep 데이터가 있으면 sleep update 호출
-	if (OBJECT_param?.today_sleep_section?.length > 0) {
+	if (OBJECT_param?.calendar_sleep_section?.length > 0) {
 		const SleepRecordService = require("@services/sleep/SleepRecordService");
 		const sleepObject = {
-			sleep_record_dateType: dateType,
-			sleep_record_dateStart: dateStart,
-			sleep_record_dateEnd: dateEnd,
-			sleep_record_total_time: OBJECT_param.today_sleep_record_total_time || "00:00",
+			sleep_dateType: dateType,
+			sleep_dateStart: dateStart,
+			sleep_dateEnd: dateEnd,
+			sleep_record_total_time: OBJECT_param.calendar_sleep_record_total_time || "00:00",
 			sleep_record_total_scale: "0",
-			sleep_section: OBJECT_param.today_sleep_section,
+			sleep_section: OBJECT_param.calendar_sleep_section,
 		};
 		sleepResult = await SleepRecordService.update(
 			user_id_param, sleepObject, DATE_param, type_param

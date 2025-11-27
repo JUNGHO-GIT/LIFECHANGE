@@ -236,8 +236,8 @@ export const UserResetPw = memo(() => {
     const titleSection = () => (
       <Grid container={true} spacing={1}>
         <Grid size={12}>
-          <Div className={"fs-1-8rem fw-500"}>
-            {translate("resetPw")}
+          <Div className={`fs-1-8rem fw-500`}>
+            {translate(`resetPw`)}
           </Div>
         </Grid>
       </Grid>
@@ -246,13 +246,13 @@ export const UserResetPw = memo(() => {
     const resetSection = () => (
 			<Grid container={true} spacing={0}>
 				{[OBJECT]?.map((item, i) => (
-					<Grid container={true} spacing={2} className={"p-10px"} key={`detail-${i}`}>
+					<Grid container={true} spacing={2} className={`p-10px`} key={`detail-${i}`}>
 						{/** 이메일 **/}
 						<Grid container={true} spacing={1}>
 							<Grid size={10}>
 								<Input
-									label={`${translate("id")}`}
-									helperText={`* ${translate("helperId")}`}
+									label={`${translate(`id`)}`}
+									helperText={`* ${translate(`helperId`)}`}
 									value={item.user_id}
 									inputRef={REFS?.[i]?.user_id}
 									error={ERRORS?.[i]?.user_id}
@@ -278,13 +278,13 @@ export const UserResetPw = memo(() => {
 							<Grid size={2}>
 								<Btn
 									color={"primary"}
-									className={"mt-n25px"}
+									className={`mt-n25px`}
 									disabled={item.user_id_verified === true}
 									onClick={() => {
 										flowSendEmail();
 									}}
 								>
-									{translate("send")}
+									{translate(`send`)}
 								</Btn>
 							</Grid>
 						</Grid>
@@ -293,8 +293,8 @@ export const UserResetPw = memo(() => {
 						<Grid container={true} spacing={1}>
 							<Grid size={10}>
 								<Input
-									label={translate("verify")}
-									helperText={`* ${translate("helperIdVerified")}`}
+									label={translate(`verify`)}
+									helperText={`* ${translate(`helperIdVerified`)}`}
 									value={item.user_verify_code}
 									inputRef={REFS?.[i]?.user_id_verified}
 									error={ERRORS?.[i]?.user_id_verified}
@@ -311,26 +311,26 @@ export const UserResetPw = memo(() => {
 							<Grid size={2}>
 								<Btn
 									color={"primary"}
-									className={"mt-n25px"}
+									className={`mt-n25px`}
 									disabled={!item.user_id_sended || item.user_id_verified === true}
 									onClick={() => {
 										flowVerifyEmail();
 									}}
 								>
-									{translate("verify")}
+									{translate(`verify`)}
 								</Btn>
 							</Grid>
 						</Grid>
 
-						<Hr m={1} className={"bg-light"} />
+						<Hr m={1} className={`bg-light`} />
 
 						{/** 비밀번호 **/}
 						<Grid container={true} spacing={1}>
 							<Grid size={12}>
 								<Input
 									type={"password"}
-									label={translate("pw")}
-									helperText={`* ${translate("helperPw")}`}
+									label={translate(`pw`)}
+									helperText={`* ${translate(`helperPw`)}`}
 									value={item.user_pw}
 									inputRef={REFS?.[i]?.user_pw}
 									error={ERRORS?.[i]?.user_pw}
@@ -350,8 +350,8 @@ export const UserResetPw = memo(() => {
 							<Grid size={12}>
 								<Input
 									type={"password"}
-									label={translate("pwVerified")}
-									helperText={`* ${translate("helperPwVerified")}`}
+									label={translate(`pwVerified`)}
+									helperText={`* ${translate(`helperPwVerified`)}`}
 									value={item.user_pw_verified}
 									inputRef={REFS?.[i]?.user_pw_verified}
 									error={ERRORS?.[i]?.user_pw_verified}
@@ -374,15 +374,15 @@ export const UserResetPw = memo(() => {
       <Grid container={true} spacing={1}>
         {/** row 1 **/}
         <Grid container={true} spacing={1}>
-          <Grid size={12} className={"d-col-center"}>
+          <Grid size={12} className={`d-col-center`}>
             <Btn
               color={"primary"}
-              className={"w-100p fs-0-8rem"}
+              className={`w-100p fs-0-8rem`}
               onClick={() => {
                 flowSave();
               }}
             >
-              {translate("resetPw")}
+              {translate(`resetPw`)}
             </Btn>
           </Grid>
         </Grid>
@@ -390,15 +390,15 @@ export const UserResetPw = memo(() => {
 
         {/** row 2 **/}
         <Grid container={true} spacing={1}>
-          <Grid size={12} className={"d-col-center"}>
+          <Grid size={12} className={`d-col-center`}>
             <Btn
               color={"primary"}
-              className={"w-100p bg-white"}
+              className={`w-100p bg-white`}
               onClick={() => {
                 flowGoogle();
               }}
             >
-              <Div className={"d-row-center"}>
+              <Div className={`d-row-center`}>
                 <Img
                   max={14}
                   hover={true}
@@ -406,8 +406,8 @@ export const UserResetPw = memo(() => {
                   radius={false}
                   src={"user1.webp"}
                 />
-                <Div className={"fs-0-8rem black ml-10px"}>
-                  {translate("googleLogin")}
+                <Div className={`fs-0-8rem black ml-10px`}>
+                  {translate(`googleLogin`)}
                 </Div>
               </Div>
             </Btn>
@@ -421,14 +421,14 @@ export const UserResetPw = memo(() => {
       <Grid container={true} spacing={1}>
         {/** row 1 **/}
         <Grid container={true} spacing={1}>
-          <Grid size={12} className={"d-row-center"}>
-            <Div className={"fs-0-8rem black mr-10px"}>
-              {translate("alreadyId")}
+          <Grid size={12} className={`d-row-center`}>
+            <Div className={`fs-0-8rem black mr-10px`}>
+              {translate(`alreadyId`)}
             </Div>
-            <Div className={"fs-0-8rem blue pointer"} onClick={() => {
+            <Div className={`fs-0-8rem blue pointer`} onClick={() => {
               navigate("/user/login");
             }}>
-              {translate("login")}
+              {translate(`login`)}
             </Div>
           </Grid>
         </Grid>
@@ -436,14 +436,14 @@ export const UserResetPw = memo(() => {
 
         {/** row 2 **/}
         <Grid container={true} spacing={1}>
-          <Grid size={12} className={"d-row-center"}>
-            <Div className={"fs-0-8rem black mr-10px"}>
-              {translate("notId")}
+          <Grid size={12} className={`d-row-center`}>
+            <Div className={`fs-0-8rem black mr-10px`}>
+              {translate(`notId`)}
             </Div>
-            <Div className={"fs-0-8rem blue pointer"} onClick={() => {
+            <Div className={`fs-0-8rem blue pointer`} onClick={() => {
               navigate("/user/signup");
             }}>
-              {translate("signup")}
+              {translate(`signup`)}
             </Div>
           </Grid>
         </Grid>
@@ -452,13 +452,13 @@ export const UserResetPw = memo(() => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper d-center radius-2 border-1 shadow-1 h-min-100vh"}>
+      <Paper className={`content-wrapper d-center radius-2 border-1 shadow-1 h-min-100vh`}>
         {titleSection()}
-        <Hr m={30} className={"bg-light"} />
+        <Hr m={30} className={`bg-light`} />
         {resetSection()}
-        <Hr m={30} className={"bg-light"} />
+        <Hr m={30} className={`bg-light`} />
         {buttonSection()}
-        <Hr m={30} className={"bg-light"} />
+        <Hr m={30} className={`bg-light`} />
         {linkSection()}
       </Paper>
     );

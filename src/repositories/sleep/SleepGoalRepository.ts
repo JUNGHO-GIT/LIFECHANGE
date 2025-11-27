@@ -12,7 +12,7 @@ export const exist = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await SleepGoal.aggregate([
+  const finalResult = await SleepGoal.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -51,7 +51,7 @@ export const cnt = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await SleepGoal.countDocuments(
+  const finalResult = await SleepGoal.countDocuments(
     {
       user_id: user_id_param,
       sleep_goal_dateStart: {
@@ -77,7 +77,7 @@ export const listGoal = async (
   page_param: number,
 ) => {
 
-  const finalResult:any = await SleepGoal.aggregate([
+  const finalResult = await SleepGoal.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -122,7 +122,7 @@ export const listRecord = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await SleepRecord.aggregate([
+  const finalResult = await SleepRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -169,7 +169,7 @@ export const detail = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await SleepGoal.findOne(
+  const finalResult = await SleepGoal.findOne(
     {
       user_id: user_id_param,
       sleep_goal_dateStart: dateStart_param,
@@ -191,7 +191,7 @@ export const create = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await SleepGoal.create(
+  const finalResult = await SleepGoal.create(
     {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
@@ -221,7 +221,7 @@ export const update = {
     dateEnd_param: string,
   ) => {
 
-    const finalResult:any = await SleepGoal.findOneAndUpdate(
+    const finalResult = await SleepGoal.findOneAndUpdate(
       {
         user_id: user_id_param,
         sleep_goal_dateStart: dateStart_param,
@@ -257,7 +257,7 @@ export const update = {
     dateEnd_param: string,
   ) => {
 
-    const finalResult:any = await SleepGoal.findOneAndUpdate(
+    const finalResult = await SleepGoal.findOneAndUpdate(
       {
         user_id: user_id_param,
         sleep_goal_dateStart: dateStart_param,
@@ -291,7 +291,7 @@ export const deletes = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await SleepGoal.findOneAndDelete(
+  const finalResult = await SleepGoal.findOneAndDelete(
     {
       user_id: user_id_param,
       sleep_goal_dateType: dateType_param,

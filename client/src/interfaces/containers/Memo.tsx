@@ -50,10 +50,10 @@ export const Memo = memo((
 			position={"center"}
 			direction={"center"}
 			contents={
-				<Grid container spacing={3} columns={12} className={"w-max-70vw"}>
-					<Grid size={12} className={"d-center"}>
+				<Grid container spacing={3} columns={12} className={`w-max-70vw`}>
+					<Grid size={12} className={`d-center`}>
 						<TextArea
-							className={"w-86vw h-55vh border-1 p-10px"}
+							className={`w-86vw h-55vh border-1 p-10px`}
 							value={memoValue}
 							style={{
 								fontFamily: "inherit",
@@ -67,8 +67,8 @@ export const Memo = memo((
 			}
 			children={(popTrigger: any) => (
 				<Input
-					label={translate("memo")}
-					className={"pointer"}
+					label={translate(`memo`)}
+					className={`pointer`}
 					value={memoValue}
 					readOnly={true}
 					locked={LOCKED}

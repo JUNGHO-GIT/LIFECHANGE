@@ -14,7 +14,109 @@ export const exist = async (
 	dateEnd_param: string,
 ) => {
 
-	const finalResult:any = null;
+	const exerciseResult = await ExerciseRecord.aggregate([
+		{
+			$match: {
+				user_id: user_id_param,
+				exercise_record_dateStart: { $lte: dateEnd_param },
+				exercise_record_dateEnd: { $gte: dateStart_param }
+			}
+		},
+		{
+			$project: {
+				_id: 0,
+				exercise_dateType: "$exercise_record_dateType",
+				exercise_dateStart: "$exercise_record_dateStart",
+				exercise_dateEnd: "$exercise_record_dateEnd"
+			}
+		}
+	]);
+
+	const foodResult = await FoodRecord.aggregate([
+		{
+			$match: {
+				user_id: user_id_param,
+				food_record_dateStart: { $lte: dateEnd_param },
+				food_record_dateEnd: { $gte: dateStart_param },
+			}
+		},
+		{
+			$project: {
+				_id: 0,
+				food_dateType: "$food_record_dateType",
+				food_dateStart: "$food_record_dateStart",
+				food_dateEnd: "$food_record_dateEnd",
+			}
+		}
+	]);
+
+	const moneyResult = await MoneyRecord.aggregate([
+		{
+			$match: {
+				user_id: user_id_param,
+				money_record_dateStart: { $lte: dateEnd_param },
+				money_record_dateEnd: { $gte: dateStart_param },
+			}
+		},
+		{
+			$project: {
+				_id: 0,
+				money_dateType: "$money_record_dateType",
+				money_dateStart: "$money_record_dateStart",
+				money_dateEnd: "$money_record_dateEnd",
+			}
+		}
+	]);
+
+	const sleepResult = await SleepRecord.aggregate([
+		{
+			$match: {
+				user_id: user_id_param,
+				sleep_record_dateStart: { $lte: dateEnd_param },
+				sleep_record_dateEnd: { $gte: dateStart_param },
+			}
+		},
+		{
+			$project: {
+				_id: 0,
+				sleep_dateType: "$sleep_record_dateType",
+				sleep_dateStart: "$sleep_record_dateStart",
+				sleep_dateEnd: "$sleep_record_dateEnd",
+			}
+		}
+	]);
+
+	const finalResult: any[] = [];
+	const allRecords = [...exerciseResult, ...foodResult, ...moneyResult, ...sleepResult];
+
+	for (const record of allRecords) {
+		const dateType = (
+			record.exercise_dateType ||
+			record.food_dateType ||
+			record.money_dateType ||
+			record.sleep_dateType ||
+			""
+		);
+		const dateStart = (
+			record.exercise_dateStart ||
+			record.food_dateStart ||
+			record.money_dateStart ||
+			record.sleep_dateStart ||
+			"0000-00-00"
+		);
+		const dateEnd = (
+			record.exercise_dateEnd ||
+			record.food_dateEnd ||
+			record.money_dateEnd ||
+			record.sleep_dateEnd ||
+			"0000-00-00"
+		);
+		finalResult.push({
+			calendar_dateType: dateType,
+			calendar_dateStart: dateStart,
+			calendar_dateEnd: dateEnd,
+		});
+	}
 
 	return finalResult;
 };
@@ -27,7 +129,13 @@ export const cnt = async (
 	dateEnd_param: string,
 ) => {
 
-	const finalResult:any = null;
+	const existResult = await exist(
+		user_id_param,
+		dateType_param,
+		dateStart_param,
+		dateEnd_param,
+	);
+	const finalResult = Array.isArray(existResult) ? existResult.length : 0;
 
 	return finalResult;
 };
@@ -43,7 +151,7 @@ export const list = async (
 ) => {
 
 	// 1. excercise
-	const exerciseResult:any = await ExerciseRecord.aggregate([
+	const exerciseResult = await ExerciseRecord.aggregate([
 		{
 			$match: {
 				user_id: user_id_param,
@@ -59,16 +167,16 @@ export const list = async (
 		{
 			$project: {
 				_id: 0,
-				exercise_record_dateType: 1,
-				exercise_record_dateStart: 1,
-				exercise_record_dateEnd: 1,
+				exercise_dateType: "$exercise_record_dateType",
+				exercise_dateStart: "$exercise_record_dateStart",
+				exercise_dateEnd: "$exercise_record_dateEnd",
 				exercise_section: 1,
 			}
 		}
 	]);
 
 	// 2. food
-	const foodResult:any = await FoodRecord.aggregate([
+	const foodResult = await FoodRecord.aggregate([
 		{
 			$match: {
 				user_id: user_id_param,
@@ -84,16 +192,16 @@ export const list = async (
 		{
 			$project: {
 				_id: 0,
-				food_record_dateType: 1,
-				food_record_dateStart: 1,
-				food_record_dateEnd: 1,
+				food_dateType: "$food_record_dateType",
+				food_dateStart: "$food_record_dateStart",
+				food_dateEnd: "$food_record_dateEnd",
 				food_section: 1,
 			}
 		}
 	]);
 
 	// 3. money
-	const moneyResult:any = await MoneyRecord.aggregate([
+	const moneyResult = await MoneyRecord.aggregate([
 		{
 			$match: {
 				user_id: user_id_param,
@@ -109,16 +217,16 @@ export const list = async (
 		{
 			$project: {
 				_id: 0,
-				money_record_dateType: 1,
-				money_record_dateStart: 1,
-				money_record_dateEnd: 1,
+				money_dateType: "$money_record_dateType",
+				money_dateStart: "$money_record_dateStart",
+				money_dateEnd: "$money_record_dateEnd",
 				money_section: 1,
 			}
 		}
 	]);
 
 	// 4. sleep
-	const sleepResult:any = await SleepRecord.aggregate([
+	const sleepResult = await SleepRecord.aggregate([
 		{
 			$match: {
 				user_id: user_id_param,
@@ -134,19 +242,18 @@ export const list = async (
 		{
 			$project: {
 				_id: 0,
-				sleep_record_dateType: 1,
-				sleep_record_dateStart: 1,
-				sleep_record_dateEnd: 1,
+				sleep_dateType: "$sleep_record_dateType",
+				sleep_dateStart: "$sleep_record_dateStart",
+				sleep_dateEnd: "$sleep_record_dateEnd",
 				sleep_section: 1,
 			}
 		}
 	]);
 
-	const finalResult:any = [];
+	const finalResult: any[] = [];
 	const startDate = new Date(dateStart_param);
 	const endDate = new Date(dateEnd_param);
 
-	// Map 대신 배열로 조회
 	const getSectionForDate = (list: any[], startKey: string, endKey: string, dateStr: string) => {
 		return list.find(item =>
 			dateStr >= item[startKey] && dateStr <= item[endKey]
@@ -154,38 +261,38 @@ export const list = async (
 	};
 
 	for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
-		const dateStr = d.toISOString().split('T')[0];
-		const exerciseItem = getSectionForDate(exerciseResult, "exercise_record_dateStart", "exercise_record_dateEnd", dateStr);
-		const foodItem = getSectionForDate(foodResult, "food_record_dateStart", "food_record_dateEnd", dateStr);
-		const moneyItem = getSectionForDate(moneyResult, "money_record_dateStart", "money_record_dateEnd", dateStr);
-		const sleepItem = getSectionForDate(sleepResult, "sleep_record_dateStart", "sleep_record_dateEnd", dateStr);
+		const dateStr = d.toISOString().split("T")[0];
+		const exerciseItem = getSectionForDate(exerciseResult, "exercise_dateStart", "exercise_dateEnd", dateStr);
+		const foodItem = getSectionForDate(foodResult, "food_dateStart", "food_dateEnd", dateStr);
+		const moneyItem = getSectionForDate(moneyResult, "money_dateStart", "money_dateEnd", dateStr);
+		const sleepItem = getSectionForDate(sleepResult, "sleep_dateStart", "sleep_dateEnd", dateStr);
 
 		finalResult.push({
 			_id: new mongoose.Types.ObjectId(),
-			today_record_number: finalResult.length + 1,
-			today_record_dateType: dateType_param || "",
-			today_record_dateStart: dateStr,
-			today_record_dateEnd: dateStr,
+			calendar_number: finalResult.length + 1,
+			calendar_dateType: dateType_param || "",
+			calendar_dateStart: dateStr,
+			calendar_dateEnd: dateStr,
 
-			today_exercise_record_dateType: exerciseItem?.exercise_record_dateType || "",
-			today_exercise_record_dateStart: exerciseItem?.exercise_record_dateStart || "0000-00-00",
-			today_exercise_record_dateEnd: exerciseItem?.exercise_record_dateEnd || "0000-00-00",
-			today_exercise_section: exerciseItem?.exercise_section || [],
+			calendar_exercise_dateType: exerciseItem?.exercise_dateType || "",
+			calendar_exercise_dateStart: exerciseItem?.exercise_dateStart || "0000-00-00",
+			calendar_exercise_dateEnd: exerciseItem?.exercise_dateEnd || "0000-00-00",
+			calendar_exercise_section: exerciseItem?.exercise_section || [],
 
-			today_food_record_dateType: foodItem?.food_record_dateType || "",
-			today_food_record_dateStart: foodItem?.food_record_dateStart || "0000-00-00",
-			today_food_record_dateEnd: foodItem?.food_record_dateEnd || "0000-00-00",
-			today_food_section: foodItem?.food_section || [],
+			calendar_food_dateType: foodItem?.food_dateType || "",
+			calendar_food_dateStart: foodItem?.food_dateStart || "0000-00-00",
+			calendar_food_dateEnd: foodItem?.food_dateEnd || "0000-00-00",
+			calendar_food_section: foodItem?.food_section || [],
 
-			today_money_record_dateType: moneyItem?.money_record_dateType || "",
-			today_money_record_dateStart: moneyItem?.money_record_dateStart || "0000-00-00",
-			today_money_record_dateEnd: moneyItem?.money_record_dateEnd || "0000-00-00",
-			today_money_section: moneyItem?.money_section || [],
+			calendar_money_dateType: moneyItem?.money_dateType || "",
+			calendar_money_dateStart: moneyItem?.money_dateStart || "0000-00-00",
+			calendar_money_dateEnd: moneyItem?.money_dateEnd || "0000-00-00",
+			calendar_money_section: moneyItem?.money_section || [],
 
-			today_sleep_record_dateType: sleepItem?.sleep_record_dateType || "",
-			today_sleep_record_dateStart: sleepItem?.sleep_record_dateStart || "0000-00-00",
-			today_sleep_record_dateEnd: sleepItem?.sleep_record_dateEnd || "0000-00-00",
-			today_sleep_section: sleepItem?.sleep_section || [],
+			calendar_sleep_dateType: sleepItem?.sleep_dateType || "",
+			calendar_sleep_dateStart: sleepItem?.sleep_dateStart || "0000-00-00",
+			calendar_sleep_dateEnd: sleepItem?.sleep_dateEnd || "0000-00-00",
+			calendar_sleep_section: sleepItem?.sleep_section || [],
 		});
 	}
 
@@ -201,7 +308,7 @@ export const detail = async (
 ) => {
 
 	// 1. excercise
-	const exerciseResult:any = await ExerciseRecord.aggregate([
+	const exerciseResult = await ExerciseRecord.aggregate([
 		{
 			$match: {
 				user_id: user_id_param,
@@ -217,16 +324,16 @@ export const detail = async (
 		{
 			$project: {
 				_id: 0,
-				exercise_record_dateType: 1,
-				exercise_record_dateStart: 1,
-				exercise_record_dateEnd: 1,
+				exercise_dateType: "$exercise_record_dateType",
+				exercise_dateStart: "$exercise_record_dateStart",
+				exercise_dateEnd: "$exercise_record_dateEnd",
 				exercise_section: 1,
 			}
 		}
 	]);
 
 	// 2. food
-	const foodResult:any = await FoodRecord.aggregate([
+	const foodResult = await FoodRecord.aggregate([
 		{
 			$match: {
 				user_id: user_id_param,
@@ -242,16 +349,16 @@ export const detail = async (
 		{
 			$project: {
 				_id: 0,
-				food_record_dateType: 1,
-				food_record_dateStart: 1,
-				food_record_dateEnd: 1,
+				food_dateType: "$food_record_dateType",
+				food_dateStart: "$food_record_dateStart",
+				food_dateEnd: "$food_record_dateEnd",
 				food_section: 1,
 			}
 		}
 	]);
 
 	// 3. money
-	const moneyResult:any = await MoneyRecord.aggregate([
+	const moneyResult = await MoneyRecord.aggregate([
 		{
 			$match: {
 				user_id: user_id_param,
@@ -267,16 +374,16 @@ export const detail = async (
 		{
 			$project: {
 				_id: 0,
-				money_record_dateType: 1,
-				money_record_dateStart: 1,
-				money_record_dateEnd: 1,
+				money_dateType: "$money_record_dateType",
+				money_dateStart: "$money_record_dateStart",
+				money_dateEnd: "$money_record_dateEnd",
 				money_section: 1,
 			}
 		}
 	]);
 
 	// 4. sleep
-	const sleepResult:any = await SleepRecord.aggregate([
+	const sleepResult = await SleepRecord.aggregate([
 		{
 			$match: {
 				user_id: user_id_param,
@@ -292,59 +399,59 @@ export const detail = async (
 		{
 			$project: {
 				_id: 0,
-				sleep_record_dateType: 1,
-				sleep_record_dateStart: 1,
-				sleep_record_dateEnd: 1,
+				sleep_dateType: "$sleep_record_dateType",
+				sleep_dateStart: "$sleep_record_dateStart",
+				sleep_dateEnd: "$sleep_record_dateEnd",
 				sleep_section: 1,
 			}
 		}
 	]);
 
-	const finalResult:any = [];
+	const finalResult: any[] = [];
 	const startDate = new Date(dateStart_param);
 	const endDate = new Date(dateEnd_param);
 
 	for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
-		const dateStr = d.toISOString().split('T')[0];
+		const dateStr = d.toISOString().split("T")[0];
 		const exerciseItem = exerciseResult.find((item: any) =>
-			dateStr >= item.exercise_record_dateStart && dateStr <= item.exercise_record_dateEnd
+			dateStr >= item.exercise_dateStart && dateStr <= item.exercise_dateEnd
 		) || null;
 		const foodItem = foodResult.find((item: any) =>
-			dateStr >= item.food_record_dateStart && dateStr <= item.food_record_dateEnd
+			dateStr >= item.food_dateStart && dateStr <= item.food_dateEnd
 		) || null;
 		const moneyItem = moneyResult.find((item: any) =>
-			dateStr >= item.money_record_dateStart && dateStr <= item.money_record_dateEnd
+			dateStr >= item.money_dateStart && dateStr <= item.money_dateEnd
 		) || null;
 		const sleepItem = sleepResult.find((item: any) =>
-			dateStr >= item.sleep_record_dateStart && dateStr <= item.sleep_record_dateEnd
+			dateStr >= item.sleep_dateStart && dateStr <= item.sleep_dateEnd
 		) || null;
 
 		finalResult.push({
 			_id: new mongoose.Types.ObjectId(),
-			today_record_number: finalResult.length + 1,
-			today_record_dateType: dateType_param || "",
-			today_record_dateStart: dateStr,
-			today_record_dateEnd: dateStr,
+			calendar_number: finalResult.length + 1,
+			calendar_dateType: dateType_param || "",
+			calendar_dateStart: dateStr,
+			calendar_dateEnd: dateStr,
 
-			today_exercise_record_dateType: exerciseItem?.exercise_record_dateType || "",
-			today_exercise_record_dateStart: exerciseItem?.exercise_record_dateStart || "0000-00-00",
-			today_exercise_record_dateEnd: exerciseItem?.exercise_record_dateEnd || "0000-00-00",
-			today_exercise_section: exerciseItem?.exercise_section || [],
+			calendar_exercise_dateType: exerciseItem?.exercise_dateType || "",
+			calendar_exercise_dateStart: exerciseItem?.exercise_dateStart || "0000-00-00",
+			calendar_exercise_dateEnd: exerciseItem?.exercise_dateEnd || "0000-00-00",
+			calendar_exercise_section: exerciseItem?.exercise_section || [],
 
-			today_food_record_dateType: foodItem?.food_record_dateType || "",
-			today_food_record_dateStart: foodItem?.food_record_dateStart || "0000-00-00",
-			today_food_record_dateEnd: foodItem?.food_record_dateEnd || "0000-00-00",
-			today_food_section: foodItem?.food_section || [],
+			calendar_food_dateType: foodItem?.food_dateType || "",
+			calendar_food_dateStart: foodItem?.food_dateStart || "0000-00-00",
+			calendar_food_dateEnd: foodItem?.food_dateEnd || "0000-00-00",
+			calendar_food_section: foodItem?.food_section || [],
 
-			today_money_record_dateType: moneyItem?.money_record_dateType || "",
-			today_money_record_dateStart: moneyItem?.money_record_dateStart || "0000-00-00",
-			today_money_record_dateEnd: moneyItem?.money_record_dateEnd || "0000-00-00",
-			today_money_section: moneyItem?.money_section || [],
+			calendar_money_dateType: moneyItem?.money_dateType || "",
+			calendar_money_dateStart: moneyItem?.money_dateStart || "0000-00-00",
+			calendar_money_dateEnd: moneyItem?.money_dateEnd || "0000-00-00",
+			calendar_money_section: moneyItem?.money_section || [],
 
-			today_sleep_record_dateType: sleepItem?.sleep_record_dateType || "",
-			today_sleep_record_dateStart: sleepItem?.sleep_record_dateStart || "0000-00-00",
-			today_sleep_record_dateEnd: sleepItem?.sleep_record_dateEnd || "0000-00-00",
-			today_sleep_section: sleepItem?.sleep_section || [],
+			calendar_sleep_dateType: sleepItem?.sleep_dateType || "",
+			calendar_sleep_dateStart: sleepItem?.sleep_dateStart || "0000-00-00",
+			calendar_sleep_dateEnd: sleepItem?.sleep_dateEnd || "0000-00-00",
+			calendar_sleep_section: sleepItem?.sleep_section || [],
 		});
 	}
 

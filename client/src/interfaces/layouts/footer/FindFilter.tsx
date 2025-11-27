@@ -46,9 +46,9 @@ export const FindFilter = memo((
 
 	// 7. find -------------------------------------------------------------------------------------
   const findSection = useMemo(() => (
-    <Div className={"d-center"}>
+    <Div className={`d-center`}>
       <Input
-        label={translate("query")}
+        label={translate(`query`)}
         value={state?.PAGING.query}
         disabled={false}
         inputclass={"h-30px"}
@@ -63,20 +63,20 @@ export const FindFilter = memo((
           e.key === 'Enter' && handleSearch();
         }}
       />
-      <Div className={"d-center mr-n3px"}>
+      <Div className={`d-center mr-n3px`}>
         <Icons
           key={"Search"}
           name={"Search"}
-          className={"w-22px h-22px primary pointer-primary"}
+          className={`w-22px h-22px primary pointer-primary`}
           disabled={false}
           onClick={handleSearch}
         />
       </Div>
-      <Div className={"d-center ml-n3px"}>
+      <Div className={`d-center ml-n3px`}>
         <Icons
           key={"CheckCircle"}
           name={"CheckCircle"}
-          className={"w-22px h-22px burgundy pointer-burgundy"}
+          className={`w-22px h-22px burgundy pointer-burgundy`}
           disabled={false}
           onClick={handleNavigateToDetail}
         />
@@ -86,10 +86,10 @@ export const FindFilter = memo((
 
 	// 7. favorite ---------------------------------------------------------------------------------
   const favoriteSection = useMemo(() => (
-    <Div className={"d-center"}>
+    <Div className={`d-center`}>
       <Input
-        label={translate("query")}
-        value={translate("favorite")}
+        label={translate(`query`)}
+        value={translate(`favorite`)}
         disabled={true}
         inputclass={"h-30px"}
         shrink={"shrink"}
@@ -103,20 +103,20 @@ export const FindFilter = memo((
           e.key === 'Enter' && handleSearch();
         }}
       />
-      <Div className={"d-center mr-n3px"}>
+      <Div className={`d-center mr-n3px`}>
         <Icons
           key={"Search"}
           name={"Search"}
-          className={"w-22px h-22px grey"}
+          className={`w-22px h-22px grey`}
           disabled={true}
           onClick={handleSearch}
         />
       </Div>
-      <Div className={"d-center ml-n3px"}>
+      <Div className={`d-center ml-n3px`}>
         <Icons
           key={"CheckCircle"}
           name={"CheckCircle"}
-          className={"w-22px h-22px burgundy pointer-burgundy"}
+          className={`w-22px h-22px burgundy pointer-burgundy`}
           onClick={handleNavigateToDetail}
         />
       </Div>
@@ -134,7 +134,7 @@ export const FindFilter = memo((
       showLastButton={true}
       component={"div"}
       disabled={isFavorite}
-      className={"border-left-2"}
+      className={`border-left-2`}
       rowsPerPage={10}
       labelDisplayedRows={() => ""}
       onPageChange={(_event, newPage) => {
@@ -157,11 +157,11 @@ export const FindFilter = memo((
 	// 10. return ----------------------------------------------------------------------------------
   return (
     <Grid container={true} spacing={0}>
-      <Grid size={7} className={"d-row-center"}>
+      <Grid size={7} className={`d-row-center`}>
 				{isFind && findSection}
 				{isFavorite && favoriteSection}
       </Grid>
-      <Grid size={5} className={"h-100p d-col-center"}>
+      <Grid size={5} className={`h-100p d-col-center`}>
         {paginationSection}
       </Grid>
     </Grid>

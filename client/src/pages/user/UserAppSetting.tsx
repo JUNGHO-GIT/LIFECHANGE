@@ -42,7 +42,7 @@ export const UserAppSetting = memo(() => {
     const confirmResult = new Promise((resolve) => {
       setCONFIRM({
         open: true,
-        msg: translate("clearStorage"),
+        msg: translate(`clearStorage`),
       }, (confirmed: boolean) => {
         resolve(confirmed);
       });
@@ -56,42 +56,42 @@ export const UserAppSetting = memo(() => {
   const userAppSettingNode = () => {
     // 7-1. detail
     const detailSection = () => (
-			<Grid container={true} spacing={0} className={"border-1 radius-2 shadow-0"}>
+			<Grid container={true} spacing={0} className={`border-1 radius-2 shadow-0`}>
 				<Grid size={12}>
 					<TableContainer>
 						<Table>
-							<TableBody className={"table-tbody"}>
+							<TableBody className={`table-tbody`}>
 								{/** detail **/}
 								<TableRow
-									className={"pointer"}
+									className={`pointer`}
 									onClick={() => {
 										navigate("/user/detail")
 									}}
 								>
-									<TableCell className={"w-90vw p-15px"}>
-										{translate("userInformation")}
+									<TableCell className={`w-90vw p-15px`}>
+										{translate(`userInformation`)}
 									</TableCell>
-									<TableCell className={"w-10vw p-15px"}>
+									<TableCell className={`w-10vw p-15px`}>
 										<Icons
 											name={"ChevronRight"}
-											className={"w-16px h-16px"}
+											className={`w-16px h-16px`}
 										/>
 									</TableCell>
 								</TableRow>
 								{/** category **/}
 								<TableRow
-									className={"pointer"}
+									className={`pointer`}
 									onClick={() => {
 										navigate("/user/category")
 									}}
 								>
-									<TableCell className={"w-90vw p-15px"}>
-										{translate("category")}
+									<TableCell className={`w-90vw p-15px`}>
+										{translate(`category`)}
 									</TableCell>
-									<TableCell className={"w-10vw p-15px"}>
+									<TableCell className={`w-10vw p-15px`}>
 										<Icons
 											name={"ChevronRight"}
-											className={"w-16px h-16px"}
+											className={`w-16px h-16px`}
 										/>
 									</TableCell>
 								</TableRow>
@@ -102,13 +102,13 @@ export const UserAppSetting = memo(() => {
 										navigate("/admin/dashboard")
 									}}
 								>
-									<TableCell className={"w-90vw p-15px"}>
-										{translate("dashboard")}
+									<TableCell className={`w-90vw p-15px`}>
+										{translate(`dashboard`)}
 									</TableCell>
-									<TableCell className={"w-10vw p-15px"}>
+									<TableCell className={`w-10vw p-15px`}>
 										<Icons
 											name={"ChevronRight"}
-											className={"w-16px h-16px"}
+											className={`w-16px h-16px`}
 										/>
 									</TableCell>
 								</TableRow>
@@ -118,9 +118,9 @@ export const UserAppSetting = memo(() => {
 									position={"center"}
 									direction={"center"}
 									contents={
-										<Div className={"d-col-left p-5px"}>
+										<Div className={`d-col-left p-5px`}>
 											<Div
-												className={"d-row-center pointer"}
+												className={`d-row-center pointer`}
 												onClick={() => {
 													handleChangeLanguage("en")
 												}}
@@ -131,7 +131,7 @@ export const UserAppSetting = memo(() => {
 													shadow={false}
 													radius={false}
 													src={"flag2.webp"}
-													className={"mr-15px"}
+													className={`mr-15px`}
 												/>
 												<Div className={`${lang === "en" ? "fw-700" : ""}`}>
 													English
@@ -144,7 +144,7 @@ export const UserAppSetting = memo(() => {
 											</Div>
 											<Br m={20} />
 											<Div
-												className={"d-center pointer"}
+												className={`d-center pointer`}
 												onClick={() => {
 													handleChangeLanguage("ko")
 												}}
@@ -155,7 +155,7 @@ export const UserAppSetting = memo(() => {
 													shadow={false}
 													radius={false}
 													src={"flag1.webp"}
-													className={"mr-15px"}
+													className={`mr-15px`}
 												/>
 												<Div className={`${lang === "ko" ? "fw-700" : ""}`}>
 													한국어
@@ -170,19 +170,19 @@ export const UserAppSetting = memo(() => {
 									}
 									children={(popTrigger: any) => (
 										<TableRow
-											className={"pointer"}
+											className={`pointer`}
 											onClick={(e: any) => {
 												popTrigger.openPopup(e.currentTarget)
 											}}
 										>
-											<TableCell className={"w-90vw p-15px"}>
-												{translate("language")}
+											<TableCell className={`w-90vw p-15px`}>
+												{translate(`language`)}
 											</TableCell>
-											<TableCell className={"w-10vw p-15px"}>
+											<TableCell className={`w-10vw p-15px`}>
 												<Icons
 													key={"ChevronRight"}
 													name={"ChevronRight"}
-													className={"w-16px h-16px"}
+													className={`w-16px h-16px`}
 												/>
 											</TableCell>
 										</TableRow>
@@ -190,35 +190,35 @@ export const UserAppSetting = memo(() => {
 								/>
 								{/** app info **/}
 								<TableRow
-									className={"pointer"}
+									className={`pointer`}
 									onClick={() => {
 										navigate("/user/appInfo")
 									}}
 								>
-									<TableCell className={"w-90vw p-15px"}>
-										{translate("appInfo")}
+									<TableCell className={`w-90vw p-15px`}>
+										{translate(`appInfo`)}
 									</TableCell>
-									<TableCell className={"w-10vw p-15px"}>
+									<TableCell className={`w-10vw p-15px`}>
 										<Icons
 											name={"ChevronRight"}
-											className={"w-16px h-16px"}
+											className={`w-16px h-16px`}
 										/>
 									</TableCell>
 								</TableRow>
 								{/** privacy **/}
 								<TableRow
-									className={"pointer"}
+									className={`pointer`}
 									onClick={() => {
 										navigate("/auth/privacy")
 									}}
 								>
-									<TableCell className={"w-90vw p-15px"}>
-										{translate("privacy")}
+									<TableCell className={`w-90vw p-15px`}>
+										{translate(`privacy`)}
 									</TableCell>
-									<TableCell className={"w-10vw p-15px"}>
+									<TableCell className={`w-10vw p-15px`}>
 										<Icons
 											name={"ChevronRight"}
-											className={"w-16px h-16px"}
+											className={`w-16px h-16px`}
 										/>
 									</TableCell>
 								</TableRow>
@@ -229,47 +229,47 @@ export const UserAppSetting = memo(() => {
 										handleClearStorage();
 									}}
 								>
-									<TableCell className={"w-90vw p-15px"}>
-										{translate("clearStorage")}
+									<TableCell className={`w-90vw p-15px`}>
+										{translate(`clearStorage`)}
 									</TableCell>
-									<TableCell className={"w-10vw p-15px"}>
+									<TableCell className={`w-10vw p-15px`}>
 										<Icons
 											name={"ChevronRight"}
-											className={"w-16px h-16px"}
+											className={`w-16px h-16px`}
 										/>
 									</TableCell>
 								</TableRow>
 								{/** logout **/}
 								<TableRow
-									className={"pointer"}
+									className={`pointer`}
 									onClick={() => {
 										handleLogout();
 									}}
 								>
-									<TableCell className={"w-90vw p-15px"}>
-										{translate("logout")}
+									<TableCell className={`w-90vw p-15px`}>
+										{translate(`logout`)}
 									</TableCell>
-									<TableCell className={"w-10vw p-15px"}>
+									<TableCell className={`w-10vw p-15px`}>
 										<Icons
 											name={"ChevronRight"}
-											className={"w-16px h-16px"}
+											className={`w-16px h-16px`}
 										/>
 									</TableCell>
 								</TableRow>
 								{/** delete **/}
 								<TableRow
-									className={"pointer"}
+									className={`pointer`}
 									onClick={() => {
 										navigate("/user/delete")
 									}}
 								>
-									<TableCell className={"w-90vw p-15px red"}>
-										{translate("userDelete")}
+									<TableCell className={`w-90vw p-15px red`}>
+										{translate(`userDelete`)}
 									</TableCell>
-									<TableCell className={"w-10vw p-15px"}>
+									<TableCell className={`w-10vw p-15px`}>
 										<Icons
 											name={"ChevronRight"}
-											className={"w-16px h-16px"}
+											className={`w-16px h-16px`}
 										/>
 									</TableCell>
 								</TableRow>
@@ -281,7 +281,7 @@ export const UserAppSetting = memo(() => {
 		);
     // 7-10. return
     return (
-      <Paper className={"content-wrapper d-center border-1 radius-2 h-min-90vh"}>
+      <Paper className={`content-wrapper d-center border-1 radius-2 h-min-90vh`}>
         {detailSection()}
       </Paper>
     );

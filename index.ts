@@ -9,10 +9,6 @@ import express, { type Request, type Response } from "express";
 // admin
 import { router as AdminRouter } from "@routers/admin/AdminRouter";
 
-// today
-import { router as TodayGoalRouter } from "@routers/today/TodayGoalRouter";
-import { router as TodayRecordRouter } from "@routers/today/TodayRecordRouter";
-
 // calendar
 import { router as CalendarRouter } from "@routers/calendar/CalendarRouter";
 
@@ -160,10 +156,6 @@ app.use(cors({
 }));
 
 // 라우터 설정 -------------------------------------------------------------------------------------
-// today
-app.use(`${preFix}/today/goal`, TodayGoalRouter);
-app.use(`${preFix}/today/record`, TodayRecordRouter);
-
 // calendar
 app.use(`${preFix}/calendar`, CalendarRouter);
 

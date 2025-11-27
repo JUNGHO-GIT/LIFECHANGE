@@ -187,7 +187,7 @@ export const SleepGoalDetail = memo(() => {
 					msg: translate(res.data.msg),
 					severity: "success",
 				}),
-				navigate(location_from === "today" ? toToday : toList, {
+				navigate(toList, {
 					state: {
 						dateType: "",
 						dateStart: dateRef.current.dateStart,
@@ -239,7 +239,7 @@ export const SleepGoalDetail = memo(() => {
 					msg: translate(res.data.msg),
 					severity: "success",
 				}),
-				navigate(location_from === "today" ? toToday : toList, {
+				navigate(toList, {
 					state: {
 						dateType: "",
 						dateStart: dateRef.current.dateStart,
@@ -315,13 +315,13 @@ export const SleepGoalDetail = memo(() => {
 					className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}>
 						{/** row 1 **/}
 						<Grid container={true} spacing={1}>
-							<Grid size={6} className={"d-row-left"}>
+							<Grid size={6} className={`d-row-left`}>
 								<Bg
 									badgeContent={i + 1}
 									bgcolor={"#1976d2"}
 								/>
 							</Grid>
-							<Grid size={6} className={"d-row-right"}>
+							<Grid size={6} className={`d-row-right`}>
 								<Delete
 									index={i}
 									handleDelete={handleDelete}
@@ -387,7 +387,7 @@ export const SleepGoalDetail = memo(() => {
 		);
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-75vh"}>
+      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
         {dateCountSection()}
 				<Br m={20} />
 				{COUNT?.newSectionCnt > 0 && detailSection()}

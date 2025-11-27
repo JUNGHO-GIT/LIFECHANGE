@@ -31,13 +31,13 @@ export const Confirm = memo(() => {
       <MuiAlert
         severity={"success"}
         variant={"standard"}
-        className={"w-95vw h-8vh d-center border-dark radius-2 shadow-2 fs-0-8rem fw-700 snackbar z-10000"}
+        className={`w-95vw h-8vh d-center border-dark radius-2 shadow-2 fs-0-8rem fw-700 snackbar z-10000`}
         action={
           <>
             <Icons
               key={"Check"}
               name={"Check"}
-              className={"w-24px h-24px primary"}
+              className={`w-24px h-24px primary`}
               onClick={() => {
                 setCONFIRM({
                   open: false,
@@ -48,7 +48,7 @@ export const Confirm = memo(() => {
             <Icons
               key={"X"}
               name={"X"}
-              className={"w-24px h-24px danger"}
+              className={`w-24px h-24px danger`}
               onClick={() => {
                 setCONFIRM({
                   open: false,

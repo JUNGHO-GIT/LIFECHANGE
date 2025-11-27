@@ -12,7 +12,7 @@ export const exist = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await FoodRecord.aggregate([
+  const finalResult = await FoodRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -51,7 +51,7 @@ export const cnt = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await FoodRecord.countDocuments(
+  const finalResult = await FoodRecord.countDocuments(
     {
       user_id: user_id_param,
       food_record_dateStart: {
@@ -79,7 +79,7 @@ export const list = async (
   page_param: number,
 ) => {
 
-  const finalResult:any = await FoodRecord.aggregate([
+  const finalResult = await FoodRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -124,7 +124,7 @@ export const favorite = async (
   user_id_param: string,
 ) => {
 
-  const finalResult:any = await User.findOne(
+  const finalResult = await User.findOne(
     {
       user_id: user_id_param
     },
@@ -146,7 +146,7 @@ export const detail = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await FoodRecord.findOne(
+  const finalResult = await FoodRecord.findOne(
     {
       user_id: user_id_param,
       food_record_dateStart: dateStart_param,
@@ -168,7 +168,7 @@ export const create = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await FoodRecord.create(
+  const finalResult = await FoodRecord.create(
     {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
@@ -200,7 +200,7 @@ export const update = {
     dateEnd_param: string,
   ) => {
 
-    const finalResult:any = await FoodRecord.findOneAndUpdate(
+    const finalResult = await FoodRecord.findOneAndUpdate(
       {
         user_id: user_id_param,
         food_record_dateStart: dateStart_param,
@@ -263,7 +263,7 @@ export const update = {
       parseFloat(OBJECT_param.food_record_total_fat)
     );
 
-    const finalResult:any = await FoodRecord.updateOne(
+    const finalResult = await FoodRecord.updateOne(
       {
         user_id: user_id_param,
         food_record_dateStart: dateStart_param,
@@ -301,7 +301,7 @@ export const update = {
     dateEnd_param: string,
   ) => {
 
-    const finalResult:any = await FoodRecord.findOneAndUpdate(
+    const finalResult = await FoodRecord.findOneAndUpdate(
       {
         user_id: user_id_param,
         food_record_dateStart: dateStart_param,
@@ -334,7 +334,7 @@ export const update = {
     foodFavorite_param: any,
   ) => {
 
-    const finalResult:any = await User.findOneAndUpdate(
+    const finalResult = await User.findOneAndUpdate(
       {
         user_id: user_id_param
       },
@@ -362,7 +362,7 @@ export const deletes = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult:any = await FoodRecord.findOneAndDelete(
+  const finalResult = await FoodRecord.findOneAndDelete(
     {
       user_id: user_id_param,
       food_record_dateStart: dateStart_param,

@@ -96,7 +96,6 @@ export const useCommonValue = (): CommonValueType => {
     isFind: pathParts[2] === "find",
     isFavorite: pathParts[2] === "favorite",
     isChart: pathParts[2] === "chart",
-    isToday: pathParts[1] === "today",
     isCalendar: pathParts[1] === "calendar",
     isExercise: pathParts[1] === "exercise",
     isFood: pathParts[1] === "food",
@@ -105,11 +104,6 @@ export const useCommonValue = (): CommonValueType => {
     isUser: pathParts[1] === "user",
     isAuth: pathParts[1] === "auth",
     isAdminPage: pathParts[1] === "admin",
-    // Today Flags
-    isTodayGoalList: PATH.includes("/today/goal/list"),
-    isTodayGoalDetail: PATH.includes("/today/goal/detail"),
-    isTodayRecordList: PATH.includes("/today/record/list"),
-    isTodayRecordDetail: PATH.includes("/today/record/detail"),
     // Calendar Flags
     isCalendarList: PATH.includes("/calendar/list"),
     isCalendarDetail: PATH.includes("/calendar/detail"),
@@ -207,7 +201,6 @@ export const useCommonValue = (): CommonValueType => {
     toFind: `/${pathParts[1] || ""}/find/list`,
     toFavorite: `/${pathParts[1] || ""}/favorite/list`,
     toList: pathParts[2] === "goal" ? `/${pathParts[1] || ""}/goal/list` : `/${pathParts[1] || ""}/record/list`,
-    toToday: `/today/record/list`,
     toDetail: pathParts[2] === "goal" ? `/${pathParts[1] || ""}/goal/detail` : `/${pathParts[1] || ""}/record/detail`,
     toDelete: pathParts[2] === "goal" ? `/${pathParts[1] || ""}/goal/delete` : `/${pathParts[1] || ""}/record/delete`,
     // Environment Variables
@@ -218,7 +211,6 @@ export const useCommonValue = (): CommonValueType => {
     ADMIN_PW: env.VITE_APP_ADMIN_PW || "",
     // API Suffixes
     SUBFIX: env[`VITE_APP_${(pathParts[1] || "").toUpperCase()}`] || "",
-    SUBFIX_TODAY: env.VITE_APP_TODAY || "",
     SUBFIX_CALENDAR: env.VITE_APP_CALENDAR || "",
     SUBFIX_GOOGLE: env.VITE_APP_GOOGLE || "",
     SUBFIX_ADMOB: env.VITE_APP_ADMOB || "",
@@ -229,7 +221,6 @@ export const useCommonValue = (): CommonValueType => {
     SUBFIX_SLEEP: env.VITE_APP_SLEEP || "",
     // API URLs
     URL_OBJECT: (env.VITE_APP_SERVER_URL || "") + (env[`VITE_APP_${(pathParts[1] || "").toUpperCase()}`] || ""),
-    URL_TODAY: (env.VITE_APP_SERVER_URL || "") + (env.VITE_APP_TODAY || ""),
     URL_CALENDAR: (env.VITE_APP_SERVER_URL || "") + (env.VITE_APP_CALENDAR || ""),
     URL_GOOGLE: (env.VITE_APP_SERVER_URL || "") + (env.VITE_APP_GOOGLE || ""),
     URL_ADMOB: (env.VITE_APP_SERVER_URL || "") + (env.VITE_APP_ADMOB || ""),

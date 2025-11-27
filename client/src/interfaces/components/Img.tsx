@@ -158,7 +158,7 @@ export const Img = memo((
 			variant={"rounded"}
 			animation={"wave"}
 			component={"div"}
-			className={"w-max-10px h-max-10px"}
+			className={`w-max-10px h-max-10px`}
 		/>
 	), []);
 

@@ -139,7 +139,7 @@ export const PickerTime = memo((
 	const handleTodayChange = useCallback((e: any, closePopup: any) => {
 		setOBJECT((prev: any) => ({
 			...prev,
-			[`today_${targetStr}_section`]: prev?.[`today_${targetStr}_section`]?.map((section: any, idx: number) => (
+			[`calendar_${targetStr}_section`]: prev?.[`calendar_${targetStr}_section`]?.map((section: any, idx: number) => (
 				idx === i ? {
 					...section,
 					[`${extra}`]: moment(e).format("HH:mm")
@@ -204,12 +204,12 @@ export const PickerTime = memo((
 				position={"center"}
 				direction={"center"}
 				contents={({ closePopup }: any) => (
-					<Grid container={true} spacing={2} className={"w-max-40vw h-max-40vh"}>
-						<Grid size={12} className={"d-center"}>
+					<Grid container={true} spacing={2} className={`w-max-40vw h-max-40vh`}>
+						<Grid size={12} className={`d-center`}>
 							<LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLang}>
 								<DigitalClock
 									{...digitalClockProps}
-									value={moment(OBJECT?.[`today_${targetStr}_section`]?.[i]?.[`${extra}`], "HH:mm")}
+									value={moment(OBJECT?.[`calendar_${targetStr}_section`]?.[i]?.[`${extra}`], "HH:mm")}
 									onChange={(e: any) => handleTodayChange(e, closePopup)}
 								/>
 							</LocalizationProvider>
@@ -219,13 +219,13 @@ export const PickerTime = memo((
 				children={(popTrigger: any) => (
 					<Input
 						label={translateStr}
-						value={OBJECT?.[`today_${targetStr}_section`]?.[i]?.[`${extra}`] || ``}
+						value={OBJECT?.[`calendar_${targetStr}_section`]?.[i]?.[`${extra}`] || ``}
 						inputRef={REFS?.[i]?.[`${extra}`]}
 						error={ERRORS?.[i]?.[`${extra}`]}
 						readOnly={true}
 						locked={LOCKED}
 						startadornment={imgAdornment}
-						endadornment={translate("hm")}
+						endadornment={translate(`hm`)}
 						onClick={(e: any) => (
 							extra !== "sleep_record_sleepTime" &&
 							LOCKED === "unlocked" &&
@@ -243,8 +243,8 @@ export const PickerTime = memo((
 				position={"center"}
 				direction={"center"}
 				contents={({ closePopup }: any) => (
-					<Grid container={true} spacing={2} className={"w-max-40vw h-max-40vh"}>
-						<Grid size={12} className={"d-center"}>
+					<Grid container={true} spacing={2} className={`w-max-40vw h-max-40vh`}>
+						<Grid size={12} className={`d-center`}>
 							<LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLang}>
 								<DigitalClock
 									{...digitalClockProps}
@@ -264,7 +264,7 @@ export const PickerTime = memo((
 						readOnly={true}
 						locked={LOCKED}
 						startadornment={imgAdornment}
-						endadornment={translate("hm")}
+						endadornment={translate(`hm`)}
 						onClick={(e: any) => (
 							LOCKED === "unlocked" &&
 							popTrigger.openPopup(e.currentTarget)
@@ -281,8 +281,8 @@ export const PickerTime = memo((
 				position={"center"}
 				direction={"center"}
 				contents={({ closePopup }: any) => (
-					<Grid container={true} spacing={2} className={"w-max-40vw h-max-40vh"}>
-						<Grid size={12} className={"d-center"}>
+					<Grid container={true} spacing={2} className={`w-max-40vw h-max-40vh`}>
+						<Grid size={12} className={`d-center`}>
 							<LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLang}>
 								<DigitalClock
 									{...digitalClockProps}
@@ -302,7 +302,7 @@ export const PickerTime = memo((
 						readOnly={true}
 						locked={LOCKED}
 						startadornment={imgAdornment}
-						endadornment={translate("hm")}
+						endadornment={translate(`hm`)}
 						onClick={(e: any) => (
 							extra !== "sleep_record_sleepTime" &&
 							LOCKED === "unlocked" &&

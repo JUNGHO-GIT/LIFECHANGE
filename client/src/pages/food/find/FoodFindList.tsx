@@ -161,10 +161,10 @@ export const FoodFindList = memo(() => {
     const listSection = () => (
 			<Grid container={true} spacing={0}>
 				{OBJECT?.map((item, i) => (
-					<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-0 mb-10px"} key={`list-${i}`}>
-						<Grid size={12} className={"p-2px"}>
+					<Grid container={true} spacing={0} className={`radius-2 border-1 shadow-0 mb-10px`} key={`list-${i}`}>
+						<Grid size={12} className={`p-2px`}>
 							<Accordion
-								className={"border-0 shadow-0 radius-2"}
+								className={`border-0 shadow-0 radius-2`}
 								expanded={isExpanded?.[i]?.expanded}
 							>
 								<AccordionSummary
@@ -172,7 +172,7 @@ export const FoodFindList = memo(() => {
 										<Icons
 											key={"ChevronDown"}
 											name={"ChevronDown"}
-											className={"w-16px h-16px"}
+											className={`w-16px h-16px`}
 											onClick={(e: any) => {
 												e.preventDefault();
 												e.stopPropagation();
@@ -186,7 +186,7 @@ export const FoodFindList = memo(() => {
 									}
 								>
 									<Grid container={true} spacing={1}>
-										<Grid size={2} className={"d-row-center"}>
+										<Grid size={2} className={`d-row-center`}>
 											<Checkbox
 												key={`check-${i}`}
 												color={"primary"}
@@ -198,12 +198,12 @@ export const FoodFindList = memo(() => {
 												}}
 											/>
 										</Grid>
-										<Grid size={6} className={"d-row-left"}>
+										<Grid size={6} className={`d-row-left`}>
 											<Div className={`fs-0-8rem fw-600 ${item.food_record_name_color}`}>
 												{item.food_record_name}
 											</Div>
 										</Grid>
-										<Grid size={4} className={"d-row-right"}>
+										<Grid size={4} className={`d-row-right`}>
 											<Div className={`fs-0-8rem fw-600 ${item.food_record_count_color}`}>
 												<Div className={`fs-0-8rem fw-500 dark mr-10px`}>
 													{item.food_record_brand}
@@ -216,7 +216,7 @@ export const FoodFindList = memo(() => {
 									<Grid container={true} spacing={1}>
 										{/** row 1 **/}
 										<Grid container={true} spacing={1}>
-											<Grid size={2} className={"d-row-center"}>
+											<Grid size={2} className={`d-row-center`}>
 												<Img
 													max={14}
 													hover={true}
@@ -225,21 +225,21 @@ export const FoodFindList = memo(() => {
 													src={"food2.webp"}
 												/>
 											</Grid>
-											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
-													{translate("kcal")}
+											<Grid size={3} className={`d-row-left`}>
+												<Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+													{translate(`kcal`)}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
-													<Grid size={10} className={"d-row-right"}>
+													<Grid size={10} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_kcal_color}`}>
 															{insertComma(item.food_record_kcal || "0")}
 														</Div>
 													</Grid>
-													<Grid size={2} className={"d-row-center"}>
-														<Div className={"fs-0-6rem"}>
-															{translate("kc")}
+													<Grid size={2} className={`d-row-center`}>
+														<Div className={`fs-0-6rem`}>
+															{translate(`kc`)}
 														</Div>
 													</Grid>
 												</Grid>
@@ -247,11 +247,11 @@ export const FoodFindList = memo(() => {
 										</Grid>
 										{/** /.row 1 **/}
 
-										<Hr m={1} className={"bg-light"} />
+										<Hr m={1} className={`bg-light`} />
 
 										{/** row 2 **/}
 										<Grid container={true} spacing={1}>
-											<Grid size={2} className={"d-center"}>
+											<Grid size={2} className={`d-center`}>
 												<Img
 													max={14}
 													hover={true}
@@ -260,21 +260,21 @@ export const FoodFindList = memo(() => {
 													src={"food3.webp"}
 												/>
 											</Grid>
-											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
-													{translate("carb")}
+											<Grid size={3} className={`d-row-left`}>
+												<Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+													{translate(`carb`)}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
-													<Grid size={10} className={"d-row-right"}>
+													<Grid size={10} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_carb_color}`}>
 															{insertComma(item.food_record_carb || "0")}
 														</Div>
 													</Grid>
-													<Grid size={2} className={"d-row-center"}>
-														<Div className={"fs-0-6rem"}>
-															{translate("g")}
+													<Grid size={2} className={`d-row-center`}>
+														<Div className={`fs-0-6rem`}>
+															{translate(`g`)}
 														</Div>
 													</Grid>
 												</Grid>
@@ -282,11 +282,11 @@ export const FoodFindList = memo(() => {
 										</Grid>
 										{/** /.row 2 **/}
 
-										<Hr m={1} className={"bg-light"} />
+										<Hr m={1} className={`bg-light`} />
 
 										{/** row 3 **/}
 										<Grid container={true} spacing={1}>
-											<Grid size={2} className={"d-center"}>
+											<Grid size={2} className={`d-center`}>
 												<Img
 													max={14}
 													hover={true}
@@ -295,21 +295,21 @@ export const FoodFindList = memo(() => {
 													src={"food4.webp"}
 												/>
 											</Grid>
-											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
-													{translate("protein")}
+											<Grid size={3} className={`d-row-left`}>
+												<Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+													{translate(`protein`)}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
-													<Grid size={10} className={"d-row-right"}>
+													<Grid size={10} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_protein_color}`}>
 															{insertComma(item.food_record_protein || "0")}
 														</Div>
 													</Grid>
-													<Grid size={2} className={"d-row-center"}>
-														<Div className={"fs-0-6rem"}>
-															{translate("g")}
+													<Grid size={2} className={`d-row-center`}>
+														<Div className={`fs-0-6rem`}>
+															{translate(`g`)}
 														</Div>
 													</Grid>
 												</Grid>
@@ -317,11 +317,11 @@ export const FoodFindList = memo(() => {
 										</Grid>
 										{/** /.row 2 **/}
 
-										<Hr m={1} className={"bg-light"} />
+										<Hr m={1} className={`bg-light`} />
 
 										{/** row 3 **/}
 										<Grid container={true} spacing={1}>
-											<Grid size={2} className={"d-center"}>
+											<Grid size={2} className={`d-center`}>
 												<Img
 												max={14}
 													hover={true}
@@ -330,21 +330,21 @@ export const FoodFindList = memo(() => {
 													src={"food5.webp"}
 												/>
 											</Grid>
-											<Grid size={3} className={"d-row-left"}>
-												<Div className={"fs-0-8rem fw-600 dark ml-n15px"}>
-													{translate("fat")}
+											<Grid size={3} className={`d-row-left`}>
+												<Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+													{translate(`fat`)}
 												</Div>
 											</Grid>
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
-													<Grid size={10} className={"d-row-right"}>
+													<Grid size={10} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_fat_color}`}>
 															{insertComma(item.food_record_fat || "0")}
 														</Div>
 													</Grid>
-													<Grid size={2} className={"d-row-center"}>
-														<Div className={"fs-0-6rem"}>
-															{translate("g")}
+													<Grid size={2} className={`d-row-center`}>
+														<Div className={`fs-0-6rem`}>
+															{translate(`g`)}
 														</Div>
 													</Grid>
 												</Grid>
@@ -361,7 +361,7 @@ export const FoodFindList = memo(() => {
 		);
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-75vh"}>
+      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
       	{COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={"food"} /> : listSection()}
       </Paper>
     );

@@ -32,10 +32,6 @@ import {
 } from "@exportPages";
 
 import {
-  TodayGoalList, TodayRecordList, TodayGoalDetail, TodayRecordDetail
-} from "@exportPages";
-
-import {
 	CalendarList, CalendarDetail
 } from "@exportPages";
 
@@ -98,7 +94,7 @@ const App = memo(() => {
   );
 
   return (
-    <div className={"App"}>
+    <div className={`App`}>
       {noneHeader && <Header />}
       {noneTop && <TopNav />}
       <Loader />
@@ -113,11 +109,6 @@ const App = memo(() => {
         <Route path={"/auth/error/*"} element={<AuthError />} />
         <Route path={"/auth/google/*"} element={<AuthGoogle />} />
         <Route path={"/auth/privacy/*"} element={<AuthPrivacy />} />
-        {/** today **/}
-        <Route path={"/today/goal/list/*"} element={<TodayGoalList />} />
-				<Route path={"/today/goal/detail/*"} element={<TodayGoalDetail />} />
-        <Route path={"/today/record/list/*"} element={<TodayRecordList />} />
-				<Route path={"/today/record/detail/*"} element={<TodayRecordDetail />} />
 				{/** calendar **/}
 				<Route path={"/calendar/list/*"} element={<CalendarList />} />
 				<Route path={"/calendar/detail/*"} element={<CalendarDetail />} />

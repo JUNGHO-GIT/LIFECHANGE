@@ -184,7 +184,7 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
         fill={"white"}
         textAnchor={"middle"}
         dominantBaseline={"central"}
-        className={"fs-0-6rem"}
+        className={`fs-0-6rem`}
       >
         <tspan x={x} dy={"-0.5em"} dx={"0.4em"}>
           {object && object[index]?.name ? translate(object[index].name) : ""}

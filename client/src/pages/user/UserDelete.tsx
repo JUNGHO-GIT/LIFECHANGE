@@ -209,8 +209,8 @@ export const UserDelete = memo(() => {
     const titleSection = () => (
       <Grid container={true} spacing={1}>
         <Grid size={12}>
-          <Div className={"fs-1-8rem fw-500"}>
-            {translate("userDelete")}
+          <Div className={`fs-1-8rem fw-500`}>
+            {translate(`userDelete`)}
           </Div>
         </Grid>
       </Grid>
@@ -219,13 +219,13 @@ export const UserDelete = memo(() => {
     const deleteSection = () => (
 			<Grid container={true} spacing={0}>
 				{[OBJECT]?.map((item, i) => (
-					<Grid container={true} spacing={2} className={"p-10px"} key={`detail-${i}`}>
+					<Grid container={true} spacing={2} className={`p-10px`} key={`detail-${i}`}>
 						{/** 이메일 **/}
 						<Grid container={true} spacing={1}>
 							<Grid size={10}>
 								<Input
-									label={`${translate("id")}`}
-									helperText={`* ${translate("helperId")}`}
+									label={`${translate(`id`)}`}
+									helperText={`* ${translate(`helperId`)}`}
 									value={item.user_id}
 									inputRef={REFS?.[i]?.user_id}
 									error={ERRORS?.[i]?.user_id}
@@ -251,13 +251,13 @@ export const UserDelete = memo(() => {
 							<Grid size={2}>
 								<Btn
 									color={"primary"}
-									className={"mt-n25px"}
+									className={`mt-n25px`}
 									disabled={item.user_id_verified === true}
 									onClick={() => {
 										flowSendEmail();
 									}}
 								>
-									{translate("send")}
+									{translate(`send`)}
 								</Btn>
 							</Grid>
 						</Grid>
@@ -266,8 +266,8 @@ export const UserDelete = memo(() => {
 						<Grid container={true} spacing={1}>
 							<Grid size={10}>
 								<Input
-									label={translate("verify")}
-									helperText={`* ${translate("helperIdVerified")}`}
+									label={translate(`verify`)}
+									helperText={`* ${translate(`helperIdVerified`)}`}
 									value={item.user_verify_code}
 									inputRef={REFS?.[i]?.user_id_verified}
 									error={ERRORS?.[i]?.user_id_verified}
@@ -284,26 +284,26 @@ export const UserDelete = memo(() => {
 							<Grid size={2}>
 								<Btn
 									color={"primary"}
-									className={"mt-n25px"}
+									className={`mt-n25px`}
 									disabled={!item.user_id_sended || item.user_id_verified === true}
 									onClick={() => {
 										flowVerifyEmail();
 									}}
 								>
-									{translate("verify")}
+									{translate(`verify`)}
 								</Btn>
 							</Grid>
 						</Grid>
 
-						<Hr m={1} className={"bg-light"} />
+						<Hr m={1} className={`bg-light`} />
 
 						{/** 비밀번호 **/}
 						<Grid container={true} spacing={1}>
 							<Grid size={12}>
 								<Input
 									type={"password"}
-									label={translate("pw")}
-									helperText={`* ${translate("helperPw")}`}
+									label={translate(`pw`)}
+									helperText={`* ${translate(`helperPw`)}`}
 									value={item.user_pw}
 									inputRef={REFS?.[i]?.user_pw}
 									error={ERRORS?.[i]?.user_pw}
@@ -323,8 +323,8 @@ export const UserDelete = memo(() => {
 							<Grid size={12}>
 								<Input
 									type={"password"}
-									label={translate("pwVerified")}
-									helperText={`* ${translate("helperPwVerified")}`}
+									label={translate(`pwVerified`)}
+									helperText={`* ${translate(`helperPwVerified`)}`}
 									value={item.user_pw_verified}
 									inputRef={REFS?.[i]?.user_pw_verified}
 									error={ERRORS?.[i]?.user_pw_verified}
@@ -348,23 +348,23 @@ export const UserDelete = memo(() => {
         <Grid size={12}>
           <Btn
             color={"error"}
-            className={"w-100p fs-0-8rem"}
+            className={`w-100p fs-0-8rem`}
             onClick={() => {
               flowSave();
             }}
           >
-            {translate("letsDelete")}
+            {translate(`letsDelete`)}
           </Btn>
         </Grid>
       </Grid>
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper d-center radius-2 border-1 shadow-1 h-min-100vh"}>
+      <Paper className={`content-wrapper d-center radius-2 border-1 shadow-1 h-min-100vh`}>
         {titleSection()}
         <Hr m={40} />
         {deleteSection()}
-        <Hr m={30} className={"bg-light"} />
+        <Hr m={30} className={`bg-light`} />
         {buttonSection()}
       </Paper>
     );

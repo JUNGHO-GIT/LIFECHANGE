@@ -9,12 +9,6 @@ export { AuthError } from "@pages/auth/AuthError";
 export { AuthGoogle } from "@pages/auth/AuthGoogle";
 export { AuthPrivacy } from "@pages/auth/AuthPrivacy";
 
-// today ----------------------------------------------------------------------------------------
-export { TodayGoalList } from "@pages/today/goal/TodayGoalList";
-export { TodayGoalDetail } from "@pages/today/goal/TodayGoalDetail";
-export { TodayRecordList } from "@pages/today/record/TodayRecordList";
-export { TodayRecordDetail } from "@pages/today/record/TodayRecordDetail";
-
 // calendar ----------------------------------------------------------------------------------------
 export { CalendarList } from "@pages/calendar/CalendarList";
 export { CalendarDetail } from "@pages/calendar/CalendarDetail";

@@ -9,7 +9,7 @@ export const barGoal = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await ExerciseGoal.aggregate([
+  const finalResult = await ExerciseGoal.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -49,7 +49,7 @@ export const barRecord = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await ExerciseRecord.aggregate([
+  const finalResult = await ExerciseRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -89,7 +89,7 @@ export const piePart = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await ExerciseRecord.aggregate([
+  const finalResult = await ExerciseRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -142,7 +142,7 @@ export const pieTitle = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await ExerciseRecord.aggregate([
+  const finalResult = await ExerciseRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -195,7 +195,7 @@ export const lineScale = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await ExerciseRecord.aggregate([
+  const finalResult = await ExerciseRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -233,7 +233,7 @@ export const lineVolume = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await ExerciseRecord.aggregate([
+  const finalResult = await ExerciseRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -271,7 +271,7 @@ export const lineCardio = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await ExerciseRecord.aggregate([
+  const finalResult = await ExerciseRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -309,7 +309,7 @@ export const avgVolume = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await ExerciseRecord.aggregate([
+  const finalResult = await ExerciseRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -347,7 +347,7 @@ export const avgCardio = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult:any = await ExerciseRecord.aggregate([
+  const finalResult = await ExerciseRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,

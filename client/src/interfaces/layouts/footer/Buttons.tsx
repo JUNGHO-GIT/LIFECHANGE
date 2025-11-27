@@ -40,40 +40,40 @@ export const Buttons = memo((
   const toFindBtn = useMemo(() => (
     <Btn
       color={"success"}
-      className={"ml-2vw mr-2vw"}
+      className={`ml-2vw mr-2vw`}
       onClick={() => {
         navigate(toFind, {
 					state: navigationState
 				});
       }}
     >
-      {translate("find")}
+      {translate(`find`)}
     </Btn>
   ), [navigate, toFind, navigationState, translate]);
 
   const favoriteBtn = useMemo(() => (
     <Btn
       color={"warning"}
-      className={"ml-2vw mr-2vw"}
+      className={`ml-2vw mr-2vw`}
       onClick={() => {
         navigate(toFavorite, {
           state: navigationState
         });
       }}
     >
-      {translate("favorite")}
+      {translate(`favorite`)}
     </Btn>
   ), [navigate, toFavorite, navigationState, translate]);
 
   const deleteBtn = useMemo(() => (
     <Btn
       color={"error"}
-      className={"ml-2vw mr-2vw"}
+      className={`ml-2vw mr-2vw`}
       onClick={() => {
         flow?.flowDelete();
       }}
     >
-      {translate("delete")}
+      {translate(`delete`)}
     </Btn>
   ), [flow, translate]);
 
@@ -85,10 +85,10 @@ export const Buttons = memo((
       direction={"center"}
       padding={"6px"}
       contents={
-        <Grid container={true} spacing={2} className={"h-max-30vh d-row-center"}>
+        <Grid container={true} spacing={2} className={`h-max-30vh d-row-center`}>
           <Grid size={12}>
-            <Div className={"fs-0-8rem fw-600 pre-line dark-grey"}>
-              {translate("replaceOrInsert")}
+            <Div className={`fs-0-8rem fw-600 pre-line dark-grey`}>
+              {translate(`replaceOrInsert`)}
             </Div>
           </Grid>
           <Grid
@@ -99,12 +99,12 @@ export const Buttons = memo((
               size={"large"}
               color={"primary"}
               variant={"text"}
-              className={"fs-1-2rem fw-600 ml-2vw mr-2vw"}
+              className={`fs-1-2rem fw-600 ml-2vw mr-2vw`}
               onClick={() => {
                 handleSave("replace");
               }}
             >
-              {translate("replace")}
+              {translate(`replace`)}
             </Btn>
           </Grid>
           <Grid
@@ -115,12 +115,12 @@ export const Buttons = memo((
               size={"large"}
               color={"primary"}
               variant={"text"}
-              className={"fs-1-2rem fw-600 ml-2vw mr-2vw"}
+              className={`fs-1-2rem fw-600 ml-2vw mr-2vw`}
               onClick={() => {
                 handleSave("insert");
               }}
             >
-              {translate("insert")}
+              {translate(`insert`)}
             </Btn>
           </Grid>
         </Grid>
@@ -128,7 +128,7 @@ export const Buttons = memo((
       children={(popTrigger: any) => (
         <Btn
           color={"primary"}
-          className={"ml-2vw mr-2vw"}
+          className={`ml-2vw mr-2vw`}
           onClick={(e: any) => {
             state.FLOW?.exist ? (
               state.FLOW?.itsMe ? handleSave("update") : popTrigger.openPopup(e.currentTarget)
@@ -137,7 +137,7 @@ export const Buttons = memo((
 						);
           }}
         >
-          {translate("save")}
+          {translate(`save`)}
         </Btn>
       )}
     />
@@ -147,14 +147,14 @@ export const Buttons = memo((
   return (
 		(isUserCategory || isUserDetail) ? (
 			<Grid container={true} spacing={1}>
-				<Grid size={10} className={"d-center"}>
+				<Grid size={10} className={`d-center`}>
 					{saveBtn}
 				</Grid>
 			</Grid>
 		)
 		: isDetail ? (
 			<Grid container={true} spacing={1}>
-				<Grid size={10} className={"d-center"}>
+				<Grid size={10} className={`d-center`}>
 					{saveBtn}
 					{deleteBtn}
 					{isFoodRecordDetail && toFindBtn}

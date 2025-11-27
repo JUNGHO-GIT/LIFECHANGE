@@ -339,7 +339,6 @@ export interface CommonValueType {
   isFind: boolean;
   isFavorite: boolean;
   isChart: boolean;
-  isToday: boolean;
   isCalendar: boolean;
   isExercise: boolean;
   isFood: boolean;
@@ -348,11 +347,6 @@ export interface CommonValueType {
   isUser: boolean;
   isAuth: boolean;
   isAdminPage: boolean;
-
-  isTodayGoalList: boolean;
-  isTodayGoalDetail: boolean;
-  isTodayRecordList: boolean;
-  isTodayRecordDetail: boolean;
 
   isCalendarList: boolean;
   isCalendarDetail: boolean;
@@ -414,7 +408,6 @@ export interface CommonValueType {
   toFind: string;
   toFavorite: string;
   toList: string;
-  toToday: string;
   toDetail: string;
   toDelete: string;
 
@@ -425,7 +418,6 @@ export interface CommonValueType {
   ADMIN_PW: string;
 
   SUBFIX: string;
-  SUBFIX_TODAY: string;
   SUBFIX_CALENDAR: string;
   SUBFIX_GOOGLE: string;
   SUBFIX_ADMOB: string;
@@ -436,7 +428,6 @@ export interface CommonValueType {
   SUBFIX_SLEEP: string;
 
   URL_OBJECT: string;
-  URL_TODAY: string;
   URL_CALENDAR: string;
   URL_GOOGLE: string;
   URL_ADMOB: string;

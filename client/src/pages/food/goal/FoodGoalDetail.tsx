@@ -14,7 +14,7 @@ import { Img, Bg, Paper, Grid, Br } from "@exportComponents";
 export const FoodGoalDetail = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
-  const { URL_OBJECT, navigate, sessionId, toList, toToday } = useCommonValue();
+  const { URL_OBJECT, navigate, sessionId, toList } = useCommonValue();
   const { location_from, location_dateType } = useCommonValue();
   const { location_dateStart, location_dateEnd } = useCommonValue();
   const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
@@ -183,7 +183,7 @@ export const FoodGoalDetail = memo(() => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(location_from === "today" ? toToday : toList, {
+        navigate(toList, {
           state: {
             dateType: "",
             dateStart: dateRef.current.dateStart,
@@ -236,7 +236,7 @@ export const FoodGoalDetail = memo(() => {
           msg: translate(res.data.msg),
           severity: "success",
         });
-        navigate(location_from === "today" ? toToday : toList, {
+        navigate(toList, {
           state: {
             dateType: "",
             dateStart: dateRef.current.dateStart,
@@ -314,13 +314,13 @@ export const FoodGoalDetail = memo(() => {
 					className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}>
 						{/** row 1 **/}
 						<Grid container={true} spacing={1}>
-							<Grid size={6} className={"d-row-left"}>
+							<Grid size={6} className={`d-row-left`}>
 								<Bg
 									badgeContent={i + 1}
 									bgcolor={"#1976d2"}
 								/>
 							</Grid>
-							<Grid size={6} className={"d-row-right"}>
+							<Grid size={6} className={`d-row-right`}>
 								<Delete
 									index={i}
 									handleDelete={handleDelete}
@@ -355,7 +355,7 @@ export const FoodGoalDetail = memo(() => {
 										/>
 									}
 									endadornment={
-										translate("kc")
+										translate(`kc`)
 									}
                   onChange={(e: any) => {
                     const processedValue = handleNumberInput(e.target.value, 999999);
@@ -395,7 +395,7 @@ export const FoodGoalDetail = memo(() => {
 										/>
 									}
 									endadornment={
-										translate("g")
+										translate(`g`)
 									}
                   onChange={(e: any) => {
                     const processedValue = handleNumberInput(e.target.value, 999999);
@@ -435,7 +435,7 @@ export const FoodGoalDetail = memo(() => {
 										/>
 									}
 									endadornment={
-										translate("g")
+										translate(`g`)
 									}
                   onChange={(e: any) => {
                     const processedValue = handleNumberInput(e.target.value, 999999);
@@ -475,7 +475,7 @@ export const FoodGoalDetail = memo(() => {
 										/>
 									}
 									endadornment={
-										translate("g")
+										translate(`g`)
 									}
                   onChange={(e: any) => {
                     const processedValue = handleNumberInput(e.target.value, 999999);
@@ -495,7 +495,7 @@ export const FoodGoalDetail = memo(() => {
 		);
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius-2 border-1 shadow-1 h-min-75vh"}>
+      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
         {dateCountSection()}
 				<Br m={20} />
 				{COUNT?.newSectionCnt > 0 && detailSection()}

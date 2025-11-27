@@ -314,145 +314,145 @@ export const TopNav = memo(() => {
         position={"center"}
         direction={"center"}
         contents={
-          <Div className={"w-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px"}>
+          <Div className={`w-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px`}>
             <Grid container={true} spacing={0}>
-              <Grid size={12} className={"d-col-center"}>
-                <Div className={"fs-1-0rem fw-600"}>
-                  {translate("monthScore")}
+              <Grid size={12} className={`d-col-center`}>
+                <Div className={`fs-1-0rem fw-600`}>
+                  {translate(`monthScore`)}
                 </Div>
                 <Br m={10} />
-                <Div className={"fs-0-8rem fw-500 dark"}>
+                <Div className={`fs-0-8rem fw-500 dark`}>
                   {`[${getMonthStartFmt()} - ${getMonthEndFmt()}]`}
                 </Div>
               </Grid>
             </Grid>
             <Hr m={30} />
             <Grid container={true} spacing={0} columns={20}>
-              <Grid size={6} className={"d-row-center"}>
+              <Grid size={6} className={`d-row-center`}>
                 <Img
                   max={30}
                   hover={true}
                   shadow={false}
                   radius={false}
                   src={`${smileImage.total}.webp`}
-                  className={"mr-5px"}
+                  className={`mr-5px`}
                 />
               </Grid>
-              <Grid size={8} className={"d-row-left"}>
-                <Div className={"fs-1-3rem fw-500 dark"}>
-                  {`${translate("total")} : `}
+              <Grid size={8} className={`d-row-left`}>
+                <Div className={`fs-1-3rem fw-500 dark`}>
+                  {`${translate(`total`)} : `}
                 </Div>
               </Grid>
-              <Grid size={6} className={"d-row-left"}>
-                <Div className={"fs-1-2rem fw-600 black"}>
+              <Grid size={6} className={`d-row-left`}>
+                <Div className={`fs-1-2rem fw-600 black`}>
                   {smileScore.total}
                 </Div>
               </Grid>
             </Grid>
             <Hr m={30} />
             <Grid container={true} spacing={0} columns={20}>
-              <Grid size={6} className={"d-row-center"}>
+              <Grid size={6} className={`d-row-center`}>
                 <Img
                   max={25}
                   hover={true}
                   shadow={false}
                   radius={false}
                   src={`${smileImage.exercise}.webp`}
-                  className={"mr-5px"}
+                  className={`mr-5px`}
                 />
               </Grid>
-              <Grid size={8} className={"d-row-left"}>
-                <Div className={"fs-1-1rem fw-500 dark"}>
-                  {`${translate("exercise")} : `}
+              <Grid size={8} className={`d-row-left`}>
+                <Div className={`fs-1-1rem fw-500 dark`}>
+                  {`${translate(`exercise`)} : `}
                 </Div>
               </Grid>
-              <Grid size={6} className={"d-row-left"}>
-                <Div className={"fs-0-8rem fw-600 black"}>
+              <Grid size={6} className={`d-row-left`}>
+                <Div className={`fs-0-8rem fw-600 black`}>
                   {smileScore.exercise}
                 </Div>
               </Grid>
             </Grid>
             <Br m={10} />
             <Grid container={true} spacing={0} columns={20}>
-              <Grid size={6} className={"d-row-center"}>
+              <Grid size={6} className={`d-row-center`}>
                 <Img
                   max={25}
                   hover={true}
                   shadow={false}
                   radius={false}
                   src={`${smileImage.food}.webp`}
-                  className={"mr-5px"}
+                  className={`mr-5px`}
                 />
               </Grid>
-              <Grid size={8} className={"d-row-left"}>
-                <Div className={"fs-1-1rem fw-500 dark"}>
-                  {`${translate("food")} : `}
+              <Grid size={8} className={`d-row-left`}>
+                <Div className={`fs-1-1rem fw-500 dark`}>
+                  {`${translate(`food`)} : `}
                 </Div>
               </Grid>
-              <Grid size={6} className={"d-row-left"}>
-                <Div className={"fs-0-8rem fw-600 black"}>
+              <Grid size={6} className={`d-row-left`}>
+                <Div className={`fs-0-8rem fw-600 black`}>
                   {smileScore.food}
                 </Div>
               </Grid>
             </Grid>
             <Br m={10} />
             <Grid container={true} spacing={0} columns={20}>
-              <Grid size={6} className={"d-row-center"}>
+              <Grid size={6} className={`d-row-center`}>
                 <Img
                   max={25}
                   hover={true}
                   shadow={false}
                   radius={false}
                   src={`${smileImage.money}.webp`}
-                  className={"mr-5px"}
+                  className={`mr-5px`}
                 />
               </Grid>
-              <Grid size={8} className={"d-row-left"}>
-                <Div className={"fs-1-1rem fw-500 dark"}>
-                  {`${translate("money")} : `}
+              <Grid size={8} className={`d-row-left`}>
+                <Div className={`fs-1-1rem fw-500 dark`}>
+                  {`${translate(`money`)} : `}
                 </Div>
               </Grid>
-              <Grid size={6} className={"d-row-left"}>
-                <Div className={"fs-0-8rem fw-600 black"}>
+              <Grid size={6} className={`d-row-left`}>
+                <Div className={`fs-0-8rem fw-600 black`}>
                   {smileScore.money}
                 </Div>
               </Grid>
             </Grid>
             <Br m={10} />
             <Grid container={true} spacing={0} columns={20}>
-              <Grid size={6} className={"d-row-center"}>
+              <Grid size={6} className={`d-row-center`}>
                 <Img
                   max={25}
                   hover={true}
                   shadow={false}
                   radius={false}
                   src={`${smileImage.sleep}.webp`}
-                  className={"mr-5px"}
+                  className={`mr-5px`}
                 />
               </Grid>
-              <Grid size={8} className={"d-row-left"}>
-                <Div className={"fs-1-1rem fw-500 dark"}>
-                  {`${translate("sleep")} : `}
+              <Grid size={8} className={`d-row-left`}>
+                <Div className={`fs-1-1rem fw-500 dark`}>
+                  {`${translate(`sleep`)} : `}
                 </Div>
               </Grid>
-              <Grid size={6} className={"d-row-left"}>
-                <Div className={"fs-0-8rem fw-600 black"}>
+              <Grid size={6} className={`d-row-left`}>
+                <Div className={`fs-0-8rem fw-600 black`}>
                   {smileScore.sleep}
                 </Div>
               </Grid>
             </Grid>
             <Hr m={30} />
             <Grid container={true} spacing={0}>
-              <Grid size={12} className={"d-center"}>
-                <Div className={"fs-0-8rem"}>
-                  {translate("score")}
+              <Grid size={12} className={`d-center`}>
+                <Div className={`fs-0-8rem`}>
+                  {translate(`score`)}
                 </Div>
               </Grid>
             </Grid>
           </Div>
         }
         children={(popTrigger: any) => (
-          <Div className={"mx-auto d-center"}>
+          <Div className={`mx-auto d-center`}>
             <Img
               max={27}
               hover={true}
@@ -476,80 +476,80 @@ export const TopNav = memo(() => {
         position={"center"}
         direction={"center"}
         contents={
-          <Div className={"w-max-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px"}>
+          <Div className={`w-max-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px`}>
             <Grid container={true} spacing={0}>
-              <Grid size={12} className={"d-col-center"}>
-                <Div className={"fs-1-3rem fw-600"}>
-                  {`${translate("scale")}`}
+              <Grid size={12} className={`d-col-center`}>
+                <Div className={`fs-1-3rem fw-600`}>
+                  {`${translate(`scale`)}`}
                 </Div>
                 <Br m={10} />
-                <Div className={"fs-0-8rem fw-500 dark"}>
+                <Div className={`fs-0-8rem fw-500 dark`}>
                   {`[${scale?.dateStart} - ${scale?.dateEnd}]`}
                 </Div>
               </Grid>
             </Grid>
             <Hr m={30} />
             <Grid container={true} spacing={0} columns={20}>
-              <Grid size={3} className={"d-row-center"}>
+              <Grid size={3} className={`d-row-center`}>
                 <Img
                   max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
                   src={"exercise5.webp"}
-                  className={"mr-5px"}
+                  className={`mr-5px`}
                 />
               </Grid>
-              <Grid size={8} className={"d-row-left"}>
-                <Div className={"fs-0-8rem fw-500 dark"}>
-                  {`${translate("initValue")} : `}
+              <Grid size={8} className={`d-row-left`}>
+                <Div className={`fs-0-8rem fw-500 dark`}>
+                  {`${translate(`initValue`)} : `}
                 </Div>
               </Grid>
-              <Grid size={7} className={"d-row-right"}>
-                <Div className={"fs-1-1rem fw-600 black mr-5px"}>
+              <Grid size={7} className={`d-row-right`}>
+                <Div className={`fs-1-1rem fw-600 black mr-5px`}>
                   {insertComma(scale.initScale || "0")}
                 </Div>
               </Grid>
-              <Grid size={2} className={"d-row-center"}>
-                <Div className={"fs-0-6rem fw-500 dark"}>
+              <Grid size={2} className={`d-row-center`}>
+                <Div className={`fs-0-6rem fw-500 dark`}>
                   {localUnit}
                 </Div>
               </Grid>
             </Grid>
             <Br m={10} />
             <Grid container={true} spacing={0} columns={20}>
-              <Grid size={3} className={"d-row-center"}>
+              <Grid size={3} className={`d-row-center`}>
                 <Img
                   max={14}
                   hover={true}
                   shadow={false}
                   radius={false}
                   src={"exercise5.webp"}
-                  className={"mr-5px"}
+                  className={`mr-5px`}
                 />
               </Grid>
-              <Grid size={8} className={"d-row-left"}>
-                <Div className={"fs-0-8rem fw-500 dark"}>
-                  {`${translate("curValue")} : `}
+              <Grid size={8} className={`d-row-left`}>
+                <Div className={`fs-0-8rem fw-500 dark`}>
+                  {`${translate(`curValue`)} : `}
                 </Div>
               </Grid>
-              <Grid size={7} className={"d-row-right"}>
-                <Div className={"fs-1-1rem fw-600 black mr-5px"}>
+              <Grid size={7} className={`d-row-right`}>
+                <Div className={`fs-1-1rem fw-600 black mr-5px`}>
                   {insertComma(scale.curScale || "0")}
                 </Div>
               </Grid>
-              <Grid size={2} className={"d-row-center"}>
-                <Div className={"fs-0-6rem fw-500 dark"}>
+              <Grid size={2} className={`d-row-center`}>
+                <Div className={`fs-0-6rem fw-500 dark`}>
                   {localUnit}
                 </Div>
               </Grid>
             </Grid>
             <Hr m={30} />
             <Grid container={true} spacing={0}>
-              <Grid size={12} className={"d-center"}>
+              <Grid size={12} className={`d-center`}>
                 <Input
                   readOnly={true}
-                  label={translate("minScale")}
+                  label={translate(`minScale`)}
                   value={insertComma(scale.minScale || "0")}
                   startadornment={
                     <Img
@@ -568,10 +568,10 @@ export const TopNav = memo(() => {
             </Grid>
             <Br m={20} />
             <Grid container={true} spacing={0}>
-              <Grid size={12} className={"d-center"}>
+              <Grid size={12} className={`d-center`}>
                 <Input
                   readOnly={true}
-                  label={translate("maxScale")}
+                  label={translate(`maxScale`)}
                   value={insertComma(scale.maxScale || "0")}
                   startadornment={
                     <Img
@@ -591,7 +591,7 @@ export const TopNav = memo(() => {
           </Div>
         }
         children={(popTrigger: any) => (
-          <Div className={"mr-auto d-center"}>
+          <Div className={`mr-auto d-center`}>
             <Img
               max={27}
               hover={true}
@@ -615,20 +615,20 @@ export const TopNav = memo(() => {
         position={"center"}
         direction={"center"}
         contents={
-          <Div className={"w-max-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px"}>
+          <Div className={`w-max-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px`}>
             <Grid container={true} spacing={0}>
-              <Grid size={12} className={"d-col-center"}>
-                <Div className={"fs-1-3rem fw-600"}>
-                  {`${translate("intakeNutrition")}`}
+              <Grid size={12} className={`d-col-center`}>
+                <Div className={`fs-1-3rem fw-600`}>
+                  {`${translate(`intakeNutrition`)}`}
                 </Div>
                 <Br m={10} />
-                <Div className={"fs-0-8rem fw-500 dark"}>
+                <Div className={`fs-0-8rem fw-500 dark`}>
                   {`[${nutrition?.dateStart} - ${nutrition?.dateEnd}]`}
                 </Div>
                 <Br m={10} />
-                <Div className={"d-row-center"}>
-                  <Div className={"fs-0-7rem fw-500 dark"}>
-                    {translate("avgValue")}
+                <Div className={`d-row-center`}>
+                  <Div className={`fs-0-7rem fw-500 dark`}>
+                    {translate(`avgValue`)}
                   </Div>
                   <Checkbox
                     size={"small"}
@@ -637,8 +637,8 @@ export const TopNav = memo(() => {
                       setNutritionType(e.target.checked ? "avg" : "total");
                     }}
                   />
-                  <Div className={"fs-0-7rem fw-500 dark ml-10px"}>
-                    {translate("totalValue")}
+                  <Div className={`fs-0-7rem fw-500 dark ml-10px`}>
+                    {translate(`totalValue`)}
                   </Div>
                   <Checkbox
                     size={"small"}
@@ -652,7 +652,7 @@ export const TopNav = memo(() => {
             </Grid>
             <Hr m={30} />
             <Grid container={true} spacing={0} columns={20}>
-              <Grid size={3} className={"d-row-center"}>
+              <Grid size={3} className={`d-row-center`}>
                 <Img
                   max={14}
                   hover={true}
@@ -661,25 +661,25 @@ export const TopNav = memo(() => {
                   src={"food2.webp"}
                 />
               </Grid>
-              <Grid size={8} className={"d-row-left"}>
-                <Div className={"fs-0-8rem fw-500 dark"}>
-                  {`${translate("initAvg")} : `}
+              <Grid size={8} className={`d-row-left`}>
+                <Div className={`fs-0-8rem fw-500 dark`}>
+                  {`${translate(`initAvg`)} : `}
                 </Div>
               </Grid>
-              <Grid size={7} className={"d-row-right"}>
-                <Div className={"fs-1-1rem fw-600 black mr-5px"}>
+              <Grid size={7} className={`d-row-right`}>
+                <Div className={`fs-1-1rem fw-600 black mr-5px`}>
                   {insertComma(nutrition.initAvgKcalIntake || "0")}
                 </Div>
               </Grid>
-              <Grid size={2} className={"d-row-center"}>
-                <Div className={"fs-0-6rem fw-500 dark"}>
-                  {translate("kc")}
+              <Grid size={2} className={`d-row-center`}>
+                <Div className={`fs-0-6rem fw-500 dark`}>
+                  {translate(`kc`)}
                 </Div>
               </Grid>
             </Grid>
             <Br m={10} />
             <Grid container={true} spacing={0} columns={20}>
-              <Grid size={3} className={"d-row-center"}>
+              <Grid size={3} className={`d-row-center`}>
                 <Img
                   max={14}
                   hover={true}
@@ -688,17 +688,17 @@ export const TopNav = memo(() => {
                   src={"food2.webp"}
                 />
               </Grid>
-              <Grid size={8} className={"d-row-left"}>
-                <Div className={"fs-0-8rem fw-500 dark"}>
+              <Grid size={8} className={`d-row-left`}>
+                <Div className={`fs-0-8rem fw-500 dark`}>
                   {nutritionType === "avg" ? (
-                    (`${translate("curAvg")} : `)
+                    (`${translate(`curAvg`)} : `)
                   ) : (
-                    (`${translate("curTotal")} : `)
+                    (`${translate(`curTotal`)} : `)
                   )}
                 </Div>
               </Grid>
-              <Grid size={7} className={"d-row-right"}>
-                <Div className={"fs-1-1rem fw-600 black mr-5px"}>
+              <Grid size={7} className={`d-row-right`}>
+                <Div className={`fs-1-1rem fw-600 black mr-5px`}>
                   {nutritionType === "avg" ? (
                     insertComma(nutrition.curAvgKcalIntake || "0")
                   ) : (
@@ -706,22 +706,22 @@ export const TopNav = memo(() => {
                   )}
                 </Div>
               </Grid>
-              <Grid size={2} className={"d-row-center"}>
-                <Div className={"fs-0-6rem fw-500 dark"}>
-                  {translate("kc")}
+              <Grid size={2} className={`d-row-center`}>
+                <Div className={`fs-0-6rem fw-500 dark`}>
+                  {translate(`kc`)}
                 </Div>
               </Grid>
             </Grid>
             <Hr m={30} />
             <Grid container={true} spacing={0}>
-              <Grid size={12} className={"d-row-center"}>
+              <Grid size={12} className={`d-row-center`}>
                 <Input
                   readOnly={true}
                   label={
                     nutritionType === "avg" ? (
-                      translate("avgCarbIntake")
+                      translate(`avgCarbIntake`)
                     ) : (
-                      translate("totalCarbIntake")
+                      translate(`totalCarbIntake`)
                     )
                   }
                   value={
@@ -741,21 +741,21 @@ export const TopNav = memo(() => {
                     />
                   }
                   endadornment={
-                    translate("g")
+                    translate(`g`)
                   }
                 />
               </Grid>
             </Grid>
             <Br m={20} />
             <Grid container={true} spacing={0}>
-              <Grid size={12} className={"d-row-center"}>
+              <Grid size={12} className={`d-row-center`}>
                 <Input
                   readOnly={true}
                   label={
                     nutritionType === "avg" ? (
-                      translate("avgProteinIntake")
+                      translate(`avgProteinIntake`)
                     ) : (
-                      translate("totalProteinIntake")
+                      translate(`totalProteinIntake`)
                     )
                   }
                   value={
@@ -775,21 +775,21 @@ export const TopNav = memo(() => {
                     />
                   }
                   endadornment={
-                    translate("g")
+                    translate(`g`)
                   }
                 />
               </Grid>
             </Grid>
             <Br m={20} />
             <Grid container={true} spacing={0}>
-              <Grid size={12} className={"d-row-center"}>
+              <Grid size={12} className={`d-row-center`}>
                 <Input
                   readOnly={true}
                   label={
                     nutritionType === "avg" ? (
-                      translate("avgFatIntake")
+                      translate(`avgFatIntake`)
                     ) : (
-                      translate("totalFatIntake")
+                      translate(`totalFatIntake`)
                     )
                   }
                   value={
@@ -809,7 +809,7 @@ export const TopNav = memo(() => {
                     />
                   }
                   endadornment={
-                    translate("g")
+                    translate(`g`)
                   }
                 />
               </Grid>
@@ -817,7 +817,7 @@ export const TopNav = memo(() => {
           </Div>
         }
         children={(popTrigger: any) => (
-          <Div className={"mr-auto d-center"}>
+          <Div className={`mr-auto d-center`}>
             <Img
               max={27}
               hover={true}
@@ -841,20 +841,20 @@ export const TopNav = memo(() => {
         position={"center"}
         direction={"center"}
         contents={
-          <Div className={"w-max-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px"}>
+          <Div className={`w-max-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px`}>
             <Grid container={true} spacing={0}>
-              <Grid size={12} className={"d-col-center"}>
-                <Div className={"fs-1-3rem fw-600"}>
-                  {`${translate("property")}`}
+              <Grid size={12} className={`d-col-center`}>
+                <Div className={`fs-1-3rem fw-600`}>
+                  {`${translate(`property`)}`}
                 </Div>
                 <Br m={10} />
-                <Div className={"fs-0-8rem fw-500 dark"}>
+                <Div className={`fs-0-8rem fw-500 dark`}>
                   {`[${property?.dateStart} - ${property?.dateEnd}]`}
                 </Div>
                 <Br m={10} />
-                <Div className={"d-row-center"}>
-                  <Div className={"fs-0-7rem fw-500 dark"}>
-                    {translate("includingExclusions")}
+                <Div className={`d-row-center`}>
+                  <Div className={`fs-0-7rem fw-500 dark`}>
+                    {translate(`includingExclusions`)}
                   </Div>
                   <Checkbox
                     size={"small"}
@@ -868,7 +868,7 @@ export const TopNav = memo(() => {
             </Grid>
             <Hr m={30} />
             <Grid container={true} spacing={0} columns={20}>
-              <Grid size={3} className={"d-row-center"}>
+              <Grid size={3} className={`d-row-center`}>
                 <Img
                   max={14}
                   hover={true}
@@ -877,25 +877,25 @@ export const TopNav = memo(() => {
                   src={"money2.webp"}
                 />
               </Grid>
-              <Grid size={8} className={"d-row-left"}>
-                <Div className={"fs-0-8rem fw-500 dark"}>
-                  {`${translate("initValue")} : `}
+              <Grid size={8} className={`d-row-left`}>
+                <Div className={`fs-0-8rem fw-500 dark`}>
+                  {`${translate(`initValue`)} : `}
                 </Div>
               </Grid>
-              <Grid size={7} className={"d-row-right"}>
-                <Div className={"fs-1-1rem fw-600 black mr-5px"}>
+              <Grid size={7} className={`d-row-right`}>
+                <Div className={`fs-1-1rem fw-600 black mr-5px`}>
                   {insertComma(property.initProperty || "0")}
                 </Div>
               </Grid>
-              <Grid size={2} className={"d-row-center"}>
-                <Div className={"fs-0-6rem fw-500 dark"}>
+              <Grid size={2} className={`d-row-center`}>
+                <Div className={`fs-0-6rem fw-500 dark`}>
                   {localCurrency}
                 </Div>
               </Grid>
             </Grid>
             <Br m={10} />
             <Grid container={true} spacing={0} columns={20}>
-              <Grid size={3} className={"d-row-center"}>
+              <Grid size={3} className={`d-row-center`}>
                 <Img
                   max={14}
                   hover={true}
@@ -904,13 +904,13 @@ export const TopNav = memo(() => {
                   src={"money2.webp"}
                 />
               </Grid>
-              <Grid size={8} className={"d-row-left"}>
-                <Div className={"fs-0-8rem fw-500 dark"}>
-                  {`${translate("curValue")} : `}
+              <Grid size={8} className={`d-row-left`}>
+                <Div className={`fs-0-8rem fw-500 dark`}>
+                  {`${translate(`curValue`)} : `}
                 </Div>
               </Grid>
-              <Grid size={7} className={"d-row-right"}>
-                <Div className={"fs-1-1rem fw-600 black mr-5px"}>
+              <Grid size={7} className={`d-row-right`}>
+                <Div className={`fs-1-1rem fw-600 black mr-5px`}>
                   {includingExclusions ? (
                     insertComma(property.curPropertyAll || "0")
                   ) : (
@@ -918,18 +918,18 @@ export const TopNav = memo(() => {
                   )}
                 </Div>
               </Grid>
-              <Grid size={2} className={"d-row-center"}>
-                <Div className={"fs-0-6rem fw-500 dark"}>
+              <Grid size={2} className={`d-row-center`}>
+                <Div className={`fs-0-6rem fw-500 dark`}>
                   {localCurrency}
                 </Div>
               </Grid>
             </Grid>
             <Hr m={30} />
             <Grid container={true} spacing={0}>
-              <Grid size={12} className={"d-row-center"}>
+              <Grid size={12} className={`d-row-center`}>
                 <Input
                   readOnly={true}
-                  label={translate("sumIncome")}
+                  label={translate(`sumIncome`)}
                   value={
                     includingExclusions ? (
                       insertComma(property.totalIncomeAll || "0")
@@ -954,10 +954,10 @@ export const TopNav = memo(() => {
             </Grid>
             <Br m={20} />
             <Grid container={true} spacing={0}>
-              <Grid size={12} className={"d-row-center"}>
+              <Grid size={12} className={`d-row-center`}>
                 <Input
                   readOnly={true}
-                  label={translate("sumExpense")}
+                  label={translate(`sumExpense`)}
                   value={
                     includingExclusions ? (
                       insertComma(property.totalExpenseAll || "0")
@@ -983,7 +983,7 @@ export const TopNav = memo(() => {
           </Div>
         }
         children={(popTrigger: any) => (
-          <Div className={"mr-auto d-center"}>
+          <Div className={`mr-auto d-center`}>
             <Img
               max={27}
               hover={true}
@@ -1021,7 +1021,7 @@ export const TopNav = memo(() => {
 						<Tab
 							label={translate(currentTabValue)}
 							value={currentTabValue}
-							className={"fs-1-2rem fw-700"}
+							className={`fs-1-2rem fw-700`}
 							onClick={(e) => {
 								setSelectedAnchorEl((prev) => ({
 									...prev,
@@ -1057,7 +1057,7 @@ export const TopNav = memo(() => {
 							<MenuItem
 								key={tabName}
 								selected={currentTabValue === tabName}
-								className={"text-center"}
+								className={`text-center`}
 								onClick={() => {
 									handleClickTobNav(tabName);
 									setSelectedAnchorEl((prev) => ({
@@ -1076,15 +1076,15 @@ export const TopNav = memo(() => {
 
 		// 7-9. return -----------------------------------------------------------------------------------
 		return (
-			<Paper className={"layout-wrapper p-sticky top-8vh h-8vh radius-2 border-1 shadow-1 p-0px"}>
+			<Paper className={`layout-wrapper p-sticky top-8vh h-8vh radius-2 border-1 shadow-1 p-0px`}>
 				<Grid container spacing={0}>
-					<Grid size={7} className={"d-row-center"}>
+					<Grid size={7} className={`d-row-center`}>
 						{smileSection()}
 						{scaleSection()}
 						{nutritionSection()}
 						{propertySection()}
 					</Grid>
-					<Grid size={5} className={"d-row-center border-left-2"}>
+					<Grid size={5} className={`d-row-center border-left-2`}>
 						{tabsSection()}
 					</Grid>
 				</Grid>

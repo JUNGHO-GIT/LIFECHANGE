@@ -19,75 +19,31 @@ export const Empty = memo((
 
 	// 1. common ----------------------------------------------------------------------------------
   const { PATH, navigate } = useCommonValue();
-	const { isToday, isFind, isGoal, isRecord } = useCommonValue();
+	const { isFind, isGoal, isRecord } = useCommonValue();
 	const { toDetail } = useCommonValue();
 	const { getDayStartFmt, getDayEndFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
 
   // 7. emptyNode ----------------------------------------------------------------------------------
   const emptyNode = () => {
-    // 1. isTodaySection
-    const isTodaySection = () => (
-			<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-0 mb-10px"}>
-				<Grid size={12} className={"p-2px"}>
-					<Accordion
-						className={"border-0 shadow-0 radius-2"}
-						expanded={false}
-					>
-						<AccordionSummary
-							onClick={() => {
-								navigate(toDetail, {
-									state: {
-										from: PATH.includes("today") ? "today" : "list",
-										dateType: DATE?.dateType || "day",
-										dateStart: DATE?.dateStart || getDayStartFmt(),
-										dateEnd: DATE?.dateEnd || getDayEndFmt(),
-									}
-								});
-							}}
-						>
-							<Grid container={true} spacing={1}>
-								<Grid size={2} className={"d-row-left"}>
-									<Icons
-										key={"Search"}
-										name={"Search"}
-										className={"w-16px h-16px"}
-									/>
-								</Grid>
-								<Grid size={4} className={"d-row-left"}>
-									<Div className={"fs-0-9rem fw-600 dark"}>
-										{translate(`${extra}`)}
-									</Div>
-								</Grid>
-								<Grid size={6} className={"d-row-center"}>
-									<Div className={"fs-0-9rem fw-500"}>
-										{translate("empty")}
-									</Div>
-								</Grid>
-							</Grid>
-						</AccordionSummary>
-					</Accordion>
-				</Grid>
-      </Grid>
-    );
     // 2. isFindSection
     const isFindSection = () => (
-			<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-0 mb-10px"}>
-				<Grid size={12} className={"p-2px"}>
+			<Grid container={true} spacing={0} className={`radius-2 border-1 shadow-0 mb-10px`}>
+				<Grid size={12} className={`p-2px`}>
 					<Accordion
-						className={"border-0 shadow-0 radius-2"}
+						className={`border-0 shadow-0 radius-2`}
 						expanded={false}
 					>
 						<AccordionSummary>
 							<Grid container={true} spacing={1}>
-								<Grid size={4} className={"d-row-left"}>
-									<Div className={"fs-0-9rem fw-600 dark"}>
-										{translate("search")}
+								<Grid size={4} className={`d-row-left`}>
+									<Div className={`fs-0-9rem fw-600 dark`}>
+										{translate(`search`)}
 									</Div>
 								</Grid>
-								<Grid size={8} className={"d-row-left"}>
-									<Div className={"fs-0-9rem fw-500"}>
-										{translate("notFound")}
+								<Grid size={8} className={`d-row-left`}>
+									<Div className={`fs-0-9rem fw-500`}>
+										{translate(`notFound`)}
 									</Div>
 								</Grid>
 							</Grid>
@@ -98,10 +54,10 @@ export const Empty = memo((
     );
     // 3. isGoalSection
     const isGoalSection = () => (
-			<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-0 mb-10px"}>
-				<Grid size={12} className={"p-2px"}>
+			<Grid container={true} spacing={0} className={`radius-2 border-1 shadow-0 mb-10px`}>
+				<Grid size={12} className={`p-2px`}>
 					<Accordion
-						className={"border-0 shadow-0 radius-2"}
+						className={`border-0 shadow-0 radius-2`}
 						expanded={false}
 					>
 						<AccordionSummary
@@ -117,21 +73,21 @@ export const Empty = memo((
 							}}
 						>
 							<Grid container={true} spacing={1}>
-								<Grid size={2} className={"d-row-left"}>
+								<Grid size={2} className={`d-row-left`}>
 									<Icons
 										key={"Search"}
 										name={"Search"}
-										className={"w-16px h-16px"}
+										className={`w-16px h-16px`}
 									/>
 								</Grid>
-								<Grid size={4} className={"d-row-left"}>
-									<Div className={"fs-0-9rem fw-600 dark"}>
+								<Grid size={4} className={`d-row-left`}>
+									<Div className={`fs-0-9rem fw-600 dark`}>
 										{translate(`${extra}`)}
 									</Div>
 								</Grid>
-								<Grid size={6} className={"d-row-center"}>
-									<Div className={"fs-0-9rem fw-500"}>
-										{translate("empty")}
+								<Grid size={6} className={`d-row-center`}>
+									<Div className={`fs-0-9rem fw-500`}>
+										{translate(`empty`)}
 									</Div>
 								</Grid>
 							</Grid>
@@ -142,10 +98,10 @@ export const Empty = memo((
     );
     // 4. isRecordSection
     const isRecordSection = () => (
-			<Grid container={true} spacing={0} className={"radius-2 border-1 shadow-0 mb-10px"}>
-				<Grid size={12} className={"p-2px"}>
+			<Grid container={true} spacing={0} className={`radius-2 border-1 shadow-0 mb-10px`}>
+				<Grid size={12} className={`p-2px`}>
 					<Accordion
-						className={"border-0 shadow-0 radius-2"}
+						className={`border-0 shadow-0 radius-2`}
 						expanded={false}
 					>
 						<AccordionSummary
@@ -161,21 +117,21 @@ export const Empty = memo((
 							}}
 						>
 							<Grid container={true} spacing={1}>
-								<Grid size={2} className={"d-row-left"}>
+								<Grid size={2} className={`d-row-left`}>
 									<Icons
 										key={"Search"}
 										name={"Search"}
-										className={"w-16px h-16px"}
+										className={`w-16px h-16px`}
 									/>
 								</Grid>
-								<Grid size={4} className={"d-row-left"}>
-									<Div className={"fs-0-9rem fw-600 dark"}>
+								<Grid size={4} className={`d-row-left`}>
+									<Div className={`fs-0-9rem fw-600 dark`}>
 										{translate(`${extra}`)}
 									</Div>
 								</Grid>
-								<Grid size={6} className={"d-row-center"}>
-									<Div className={"fs-0-9rem fw-500"}>
-										{translate("empty")}
+								<Grid size={6} className={`d-row-center`}>
+									<Div className={`fs-0-9rem fw-500`}>
+										{translate(`empty`)}
 									</Div>
 								</Grid>
 							</Grid>
@@ -187,10 +143,9 @@ export const Empty = memo((
     // 3. return
     return (
 			<>
-				{(isToday && isTodaySection())}
-				{(!isToday && isFind) && isFindSection()}
-				{(!isToday && !isFind && isGoal) && isGoalSection()}
-				{(!isToday && !isFind && !isGoal && isRecord) && isRecordSection()}
+				{(isFind) && isFindSection()}
+				{(!isFind && isGoal) && isGoalSection()}
+				{(!isFind && !isGoal && isRecord) && isRecordSection()}
 			</>
     );
   };
