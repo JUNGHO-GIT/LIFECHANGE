@@ -1,7 +1,7 @@
 {
   "name": "lifechange-client",
   "homepage": "/LIFECHANGE",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "type": "module",
   "main": "index.tsx",
   "license": "Apache-2.0",
@@ -48,8 +48,8 @@
     "whatwg-url": "12.0.1"
   },
   "scripts": {
-		"start-client": "bun .node/swc.cjs --bun --start --client",
-		"start-server": "bun .node/swc.cjs --bun --start --server",
+    "start-client": "bun .node/swc.cjs --bun --start --client",
+    "start-server": "bun .node/swc.cjs --bun --start --server",
     "build-client": "bun .node/swc.cjs --bun --build --client",
     "build-server": "bun .node/swc.cjs --bun --build --server",
     "git-fetch": "bun .node/git.cjs --bun --fetch",
@@ -57,7 +57,7 @@
     "fix": "bun .node/fix.cjs --bun --fix",
     "reset": "bun .node/reset.cjs --bun --reset",
     "vsce": "bun .node/vsce.cjs --bun --package",
-		"gcloud": "bun .node/gcloud.cjs --bun --deploy"
+    "gcloud": "bun .node/gcloud.cjs --bun --deploy"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
