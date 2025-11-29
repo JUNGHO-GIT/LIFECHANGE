@@ -58,10 +58,10 @@ const modifyEnvAndIndex = () => {
 	));
 
 	const updatedIndex = linesIndex.map(line => (
-		line.includes(`const db = process.env.DB_NAME`) && !line.trim().startsWith(`//`) ? (
-			`const db = process.env.DB_NAME`
-		) : line.includes(`const db = process.env.DB_TEST`) && !line.trim().startsWith(`//`) ? (
-			`// const db = process.env.DB_TEST`
+		line.trim().startsWith('// const db = process.env.DB_NAME') ? (
+			`const db = process.env.DB_NAME;`
+		) : line.trim().startsWith('const db = process.env.DB_TEST') ? (
+			`// const db = process.env.DB_TEST;`
 		) : (
 			line
 		)
@@ -97,10 +97,10 @@ const restoreEnvAndIndex = () => {
 	));
 
 	const updatedIndex = linesIndex.map(line => (
-		line.includes(`const db = process.env.DB_NAME`) && !line.trim().startsWith(`//`) ? (
-			`// const db = process.env.DB_NAME`
-		) : line.includes(`const db = process.env.DB_TEST`) && line.trim().startsWith(`//`) ? (
-			`const db = process.env.DB_TEST`
+		line.trim().startsWith('const db = process.env.DB_NAME') ? (
+			`// const db = process.env.DB_NAME;`
+		) : line.trim().startsWith('// const db = process.env.DB_TEST') ? (
+			`const db = process.env.DB_TEST;`
 		) : (
 			line
 		)
