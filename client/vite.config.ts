@@ -137,7 +137,7 @@ export default defineConfig(({ command, mode }) => {
             "vendor": ["axios", "zustand", "moment", "date-fns"]
           },
           assetFileNames: (assetInfo) => {
-            const info = assetInfo.name?.split(".") || [];
+            const info = assetInfo.name ? assetInfo.name.split(".") : [];
             const extType = info[info.length - 1];
             return extType === "css" ? (
               `assets/css/[name].[hash][extname]`

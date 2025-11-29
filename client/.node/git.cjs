@@ -15,7 +15,7 @@ const args1 = argv.find(arg => [`--npm`, `--pnpm`, `--yarn`, `--bun`].includes(a
 const args2 = argv.find(arg => [`--push`, `--fetch`].includes(arg))?.replace(`--`, ``) || ``;
 const winOrLinux = os.platform() === 'win32' ? `win` : `linux`;
 
-// 원격 기본 브랜치 감지 (고정 규칙: public → public/public/main, private → private/private/main) --------
+// 원격 기본 브랜치 감지
 const getRemoteDefaultBranch = (remoteName = ``) => {
 	const fixedBranch = remoteName === `public` ? `public/main` : remoteName === `private` ? `private/main` : ``;
 
