@@ -25,7 +25,7 @@ const CONFIG = {
 	}
 };
 
-// 원격 기본 브랜치 감지 (고정 규칙: public → public/public/main, private → private/private/main) --------
+// 원격 기본 브랜치 감지 -------------------------------------------------------------------------------
 const getRemoteDefaultBranch = (remoteName=``) => {
 	const fixedBranch = remoteName === `public` ? `public/main` : remoteName === `private` ? `private/main` : ``;
 
