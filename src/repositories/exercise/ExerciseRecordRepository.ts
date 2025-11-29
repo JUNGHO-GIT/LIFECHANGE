@@ -43,32 +43,6 @@ export const exist = async (
   return finalResult;
 };
 
-// 0. cnt ------------------------------------------------------------------------------------------
-export const cnt = async (
-  user_id_param: string,
-  dateType_param: string,
-  dateStart_param: string,
-  dateEnd_param: string,
-) => {
-
-  const finalResult = await ExerciseRecord.countDocuments(
-    {
-      user_id: user_id_param,
-      exercise_record_dateStart: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param
-      },
-      exercise_record_dateEnd: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param
-      },
-      ...dateType_param ? { exercise_record_dateType: dateType_param } : {},
-    }
-  );
-
-  return finalResult;
-};
-
 // 1. list -----------------------------------------------------------------------------------------
 export const list = async (
   user_id_param: string,
@@ -259,7 +233,6 @@ export const update = {
       },
       {
         upsert: true,
-        new: true
       }
     )
     .lean();

@@ -270,7 +270,6 @@ export const MoneyGoalList = memo(() => {
 												</Grid>
 											</Grid>
 										</Grid>
-										{/** /.row 1 **/}
 
 										<Hr m={1} className={`bg-light`} />
 
@@ -343,7 +342,6 @@ export const MoneyGoalList = memo(() => {
 												</Grid>
 											</Grid>
 										</Grid>
-										{/** /.row 2 **/}
 									</Grid>
 								</AccordionDetails>
 							</Accordion>

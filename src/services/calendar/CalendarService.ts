@@ -63,7 +63,7 @@ export const list = async (
 	let findResult: any = null;
 	let finalResult: any = null
 	let statusResult: string = "";
-	let totalCntResult: any = null;
+	let totalCntResult: number = 0;
 
 	// 플러스 마이너스 1개월
 	const dateType = DATE_param?.dateType;
@@ -73,10 +73,6 @@ export const list = async (
 	// sort, page 변수 선언
 	const sort = PAGING_param?.sort === "asc" ? 1 : -1;
 	const page = PAGING_param?.page ? PAGING_param.page : 1;
-
-	totalCntResult = await repository.cnt(
-		user_id_param, dateType, dateStart, dateEnd
-	);
 
 	findResult = await repository.list(
 		user_id_param, dateType, dateStart, dateEnd, sort, page
@@ -89,6 +85,12 @@ export const list = async (
 	else {
 		finalResult = findResult;
 		statusResult = "success";
+		totalCntResult = findResult.filter((item: any) => (
+			item.calendar_exercise_section?.length > 0 ||
+			item.calendar_food_section?.length > 0 ||
+			item.calendar_money_section?.length > 0 ||
+			item.calendar_sleep_section?.length > 0
+		)).length;
 	}
 
 	return {
@@ -176,88 +178,129 @@ export const update = async (
 	const dateStart = DATE_param?.dateStart;
 	const dateEnd = DATE_param?.dateEnd;
 
-	// exercise 데이터가 있으면 exercise update 호출
-	if (OBJECT_param?.calendar_exercise_section?.length > 0) {
-		const ExerciseRecordService = require("@services/exercise/ExerciseRecordService");
+	// create인 경우 create 함수 사용, 아니면 update 함수 사용
+	const isCreate = type_param === "create";
+
+	// 유효한 데이터만 필터링
+	const validExerciseSection = OBJECT_param?.calendar_exercise_section?.filter((item: any) => (
+		item.exercise_record_part && item.exercise_record_title
+	)) || [];
+	const validFoodSection = OBJECT_param?.calendar_food_section?.filter((item: any) => (
+		item.food_record_name && item.food_record_name.trim() !== ``
+	)) || [];
+	const validMoneySection = OBJECT_param?.calendar_money_section?.filter((item: any) => (
+		item.money_record_amount && Number(item.money_record_amount) > 0
+	)) || [];
+	const validSleepSection = OBJECT_param?.calendar_sleep_section?.filter((item: any) => (
+		item.sleep_record_sleepTime && item.sleep_record_sleepTime !== `00:00`
+	)) || [];
+
+	// exercise 처리
+	const ExerciseRecordService = require("@services/exercise/ExerciseRecordService");
+	if (validExerciseSection.length > 0) {
 		const exerciseObject = {
-			exercise_dateType: dateType,
-			exercise_dateStart: dateStart,
-			exercise_dateEnd: dateEnd,
+			exercise_record_dateType: dateType,
+			exercise_record_dateStart: dateStart,
+			exercise_record_dateEnd: dateEnd,
 			exercise_record_total_volume: OBJECT_param.calendar_exercise_record_total_volume || "0",
 			exercise_record_total_cardio: OBJECT_param.calendar_exercise_record_total_cardio || "00:00",
 			exercise_record_total_scale: "0",
-			exercise_section: OBJECT_param.calendar_exercise_section,
+			exercise_section: validExerciseSection,
 		};
-		exerciseResult = await ExerciseRecordService.update(
-			user_id_param, exerciseObject, DATE_param, type_param
+		exerciseResult = isCreate ? (
+			await ExerciseRecordService.create(user_id_param, exerciseObject, DATE_param)
+		) : (
+			await ExerciseRecordService.update(user_id_param, exerciseObject, DATE_param, type_param)
 		);
 		if (exerciseResult.status === "fail") {
 			statusResult = "fail";
 		}
 		finalResult.exercise = exerciseResult;
 	}
+	else if (!isCreate && OBJECT_param?.calendar_exercise_dateStart !== "0000-00-00") {
+		exerciseResult = await ExerciseRecordService.deletes(user_id_param, DATE_param);
+		finalResult.exercise = exerciseResult;
+	}
 
-	// food 데이터가 있으면 food update 호출
-	if (OBJECT_param?.calendar_food_section?.length > 0) {
-		const FoodRecordService = require("@services/food/FoodRecordService");
+	// food 처리
+	const FoodRecordService = require("@services/food/FoodRecordService");
+	if (validFoodSection.length > 0) {
 		const foodObject = {
-			food_dateType: dateType,
-			food_dateStart: dateStart,
-			food_dateEnd: dateEnd,
+			food_record_dateType: dateType,
+			food_record_dateStart: dateStart,
+			food_record_dateEnd: dateEnd,
 			food_record_total_calorie: OBJECT_param.calendar_food_record_total_calorie || "0",
 			food_record_total_carb: OBJECT_param.calendar_food_record_total_carb || "0",
 			food_record_total_protein: OBJECT_param.calendar_food_record_total_protein || "0",
 			food_record_total_fat: OBJECT_param.calendar_food_record_total_fat || "0",
 			food_record_total_scale: "0",
-			food_section: OBJECT_param.calendar_food_section,
+			food_section: validFoodSection,
 		};
-		foodResult = await FoodRecordService.update(
-			user_id_param, foodObject, DATE_param, type_param
+		foodResult = isCreate ? (
+			await FoodRecordService.create(user_id_param, foodObject, DATE_param)
+		) : (
+			await FoodRecordService.update(user_id_param, foodObject, DATE_param, type_param)
 		);
 		if (foodResult.status === "fail") {
 			statusResult = "fail";
 		}
 		finalResult.food = foodResult;
 	}
+	else if (!isCreate && OBJECT_param?.calendar_food_dateStart !== "0000-00-00") {
+		foodResult = await FoodRecordService.deletes(user_id_param, DATE_param);
+		finalResult.food = foodResult;
+	}
 
-	// money 데이터가 있으면 money update 호출
-	if (OBJECT_param?.calendar_money_section?.length > 0) {
-		const MoneyRecordService = require("@services/money/MoneyRecordService");
+	// money 처리
+	const MoneyRecordService = require("@services/money/MoneyRecordService");
+	if (validMoneySection.length > 0) {
 		const moneyObject = {
-			money_dateType: dateType,
-			money_dateStart: dateStart,
-			money_dateEnd: dateEnd,
+			money_record_dateType: dateType,
+			money_record_dateStart: dateStart,
+			money_record_dateEnd: dateEnd,
 			money_record_total_income: OBJECT_param.calendar_money_record_total_income || "0",
 			money_record_total_expense: OBJECT_param.calendar_money_record_total_expense || "0",
 			money_record_total_scale: "0",
-			money_section: OBJECT_param.calendar_money_section,
+			money_section: validMoneySection,
 		};
-		moneyResult = await MoneyRecordService.update(
-			user_id_param, moneyObject, DATE_param, type_param
+		moneyResult = isCreate ? (
+			await MoneyRecordService.create(user_id_param, moneyObject, DATE_param)
+		) : (
+			await MoneyRecordService.update(user_id_param, moneyObject, DATE_param, type_param)
 		);
 		if (moneyResult.status === "fail") {
 			statusResult = "fail";
 		}
 		finalResult.money = moneyResult;
 	}
+	else if (!isCreate && OBJECT_param?.calendar_money_dateStart !== "0000-00-00") {
+		moneyResult = await MoneyRecordService.deletes(user_id_param, DATE_param);
+		finalResult.money = moneyResult;
+	}
 
-	// sleep 데이터가 있으면 sleep update 호출
-	if (OBJECT_param?.calendar_sleep_section?.length > 0) {
-		const SleepRecordService = require("@services/sleep/SleepRecordService");
+	// sleep 처리
+	const SleepRecordService = require("@services/sleep/SleepRecordService");
+	if (validSleepSection.length > 0) {
 		const sleepObject = {
-			sleep_dateType: dateType,
-			sleep_dateStart: dateStart,
-			sleep_dateEnd: dateEnd,
+			sleep_record_dateType: dateType,
+			sleep_record_dateStart: dateStart,
+			sleep_record_dateEnd: dateEnd,
 			sleep_record_total_time: OBJECT_param.calendar_sleep_record_total_time || "00:00",
 			sleep_record_total_scale: "0",
-			sleep_section: OBJECT_param.calendar_sleep_section,
+			sleep_section: validSleepSection,
 		};
-		sleepResult = await SleepRecordService.update(
-			user_id_param, sleepObject, DATE_param, type_param
+		sleepResult = isCreate ? (
+			await SleepRecordService.create(user_id_param, sleepObject, DATE_param)
+		) : (
+			await SleepRecordService.update(user_id_param, sleepObject, DATE_param, type_param)
 		);
 		if (sleepResult.status === "fail") {
 			statusResult = "fail";
 		}
+		finalResult.sleep = sleepResult;
+	}
+	else if (!isCreate && OBJECT_param?.calendar_sleep_dateStart !== "0000-00-00") {
+		sleepResult = await SleepRecordService.deletes(user_id_param, DATE_param);
 		finalResult.sleep = sleepResult;
 	}
 

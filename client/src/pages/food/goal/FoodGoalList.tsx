@@ -270,7 +270,6 @@ export const FoodGoalList = memo(() => {
 												</Grid>
 											</Grid>
 										</Grid>
-										{/** /.row 1 **/}
 
 										<Hr m={1} className={`bg-light`} />
 
@@ -343,7 +342,6 @@ export const FoodGoalList = memo(() => {
 												</Grid>
 											</Grid>
 										</Grid>
-										{/** /.row 2 **/}
 
 										<Hr m={1} className={`bg-light`} />
 
@@ -416,7 +414,6 @@ export const FoodGoalList = memo(() => {
 												</Grid>
 											</Grid>
 										</Grid>
-										{/** /.row 3 **/}
 
 										<Hr m={1} className={`bg-light`} />
 
@@ -489,7 +486,6 @@ export const FoodGoalList = memo(() => {
 												</Grid>
 											</Grid>
 										</Grid>
-										{/** /.row 3 **/}
 									</Grid>
 								</AccordionDetails>
 							</Accordion>

@@ -16,7 +16,7 @@ export const MoneyGoalDetail = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, navigate, sessionId, toList, localCurrency } = useCommonValue();
-  const { location_from, location_dateType } = useCommonValue();
+  const { location_dateType } = useCommonValue();
   const { location_dateStart, location_dateEnd } = useCommonValue();
   const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
@@ -35,6 +35,7 @@ export const MoneyGoalDetail = memo(() => {
     select: [""],
   });
   const [FLOW, setFLOW] = useState({
+		theme: `money`,
     exist: false,
     itsMe: false,
     itsNew: false,
@@ -327,7 +328,6 @@ export const MoneyGoalDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 1 **/}
 
 						{/** row 2 **/}
 						<Grid container={true} spacing={1}>
@@ -367,7 +367,6 @@ export const MoneyGoalDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 2 **/}
 
 						{/** row 3 **/}
 						<Grid container={true} spacing={1}>
@@ -407,7 +406,6 @@ export const MoneyGoalDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 3 **/}
 					</Grid>
 				))}
 			</Grid>

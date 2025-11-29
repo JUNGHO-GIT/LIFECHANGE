@@ -1,6 +1,6 @@
 // Buttons.tsx
 
-import { memo, useMemo, useEffect } from "@exportReacts";
+import { memo, useMemo } from "@exportReacts";
 import { Btn, Div, Grid } from "@exportComponents";
 import { PopUp } from "@exportContainers";
 import { useCommonValue } from "@exportHooks";
@@ -20,7 +20,7 @@ export const Buttons = memo((
 
 	// 1. common ----------------------------------------------------------------------------------
   const { toFind, toFavorite, navigate } = useCommonValue();
-	const { isFoodRecordDetail, isUserCategory, isUserDetail, isDetail, isSleep } = useCommonValue();
+	const { isFoodRecordDetail, isUserCategory, isUserDetail, isDetail, isSleep, isCalendarDetail } = useCommonValue();
   const { translate } = useStoreLanguage();
 
   // 2. useMemo ---------------------------------------------------------------------------------
@@ -36,7 +36,7 @@ export const Buttons = memo((
     setSession("section", "food", "", []);
   };
 
-  // 7. btn ----------------------------------------------------------------------------------------
+  // 7-1. btn - toFind -------------------------------------------------------------------------------
   const toFindBtn = useMemo(() => (
     <Btn
       color={"success"}
@@ -51,6 +51,7 @@ export const Buttons = memo((
     </Btn>
   ), [navigate, toFind, navigationState, translate]);
 
+	// 7-2. btn - toFavorite ----------------------------------------------------------------------------
   const favoriteBtn = useMemo(() => (
     <Btn
       color={"warning"}
@@ -65,6 +66,7 @@ export const Buttons = memo((
     </Btn>
   ), [navigate, toFavorite, navigationState, translate]);
 
+	// 8. btn - delete --------------------------------------------------------------------------------
   const deleteBtn = useMemo(() => (
     <Btn
       color={"error"}
@@ -77,6 +79,7 @@ export const Buttons = memo((
     </Btn>
   ), [flow, translate]);
 
+	// 9. btn - save ----------------------------------------------------------------------------------
   const saveBtn = useMemo(() => (
     <PopUp
       key={"innerCenter"}
@@ -91,10 +94,7 @@ export const Buttons = memo((
               {translate(`replaceOrInsert`)}
             </Div>
           </Grid>
-          <Grid
-            size={isSleep ? 12 : 6}
-            className={isSleep ? "d-center" : "d-row-right"}
-          >
+          <Grid size={isSleep ? 12 : 6} className={isSleep ? "d-center" : "d-row-right"}>
             <Btn
               size={"large"}
               color={"primary"}
@@ -107,10 +107,7 @@ export const Buttons = memo((
               {translate(`replace`)}
             </Btn>
           </Grid>
-          <Grid
-            size={isSleep ? 0 : 6}
-            className={isSleep ? "d-none" : "d-row-left"}
-          >
+          <Grid size={isSleep ? 0 : 6} className={isSleep ? "d-none" : "d-row-left"}>
             <Btn
               size={"large"}
               color={"primary"}
@@ -130,18 +127,27 @@ export const Buttons = memo((
           color={"primary"}
           className={`ml-2vw mr-2vw`}
           onClick={(e: any) => {
-            state.FLOW?.exist ? (
-              state.FLOW?.itsMe ? handleSave("update") : popTrigger.openPopup(e.currentTarget)
-            ) : (
-							handleSave("create")
-						);
+						if (state.FLOW?.theme === `calendar`) {
+							state.FLOW?.exist ? (
+								handleSave("update")
+							) : (
+								handleSave("create")
+							);
+						}
+						else {
+							state.FLOW?.exist ? (
+								state.FLOW?.itsMe ? handleSave("update") : popTrigger.openPopup(e.currentTarget)
+							) : (
+								handleSave("create")
+							);
+						}
           }}
         >
           {translate(`save`)}
         </Btn>
       )}
     />
-  ), [isSleep, translate, state.FLOW?.exist, state.FLOW?.itsMe]);
+  ), [isSleep, handleSave, state.FLOW, translate]);
 
 	// 10. return ----------------------------------------------------------------------------------
   return (
@@ -151,8 +157,7 @@ export const Buttons = memo((
 					{saveBtn}
 				</Grid>
 			</Grid>
-		)
-		: isDetail ? (
+		) : (isCalendarDetail || isDetail) ? (
 			<Grid container={true} spacing={1}>
 				<Grid size={10} className={`d-center`}>
 					{saveBtn}

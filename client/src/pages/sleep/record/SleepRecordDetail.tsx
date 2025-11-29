@@ -15,7 +15,7 @@ export const SleepRecordDetail = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, sessionId, navigate } = useCommonValue();
-  const { toList, toToday } = useCommonValue();
+  const { toList } = useCommonValue();
   const { location_from, location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
@@ -34,6 +34,7 @@ export const SleepRecordDetail = memo(() => {
     select: [""],
   });
   const [FLOW, setFLOW] = useState({
+		theme: `sleep`,
     exist: false,
     itsMe: false,
     itsNew: false,
@@ -361,7 +362,6 @@ export const SleepRecordDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 1 **/}
 
 						{/** row 2 **/}
 						<Grid container={true} spacing={1}>
@@ -378,7 +378,6 @@ export const SleepRecordDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 2 **/}
 
 						{/** row 3 **/}
 						<Grid container={true} spacing={1}>
@@ -395,7 +394,6 @@ export const SleepRecordDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 3 **/}
 
 						{/** row 4 **/}
 						<Grid container={true} spacing={1}>
@@ -412,7 +410,6 @@ export const SleepRecordDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 4 **/}
 					</Grid>
 				))}
 			</Grid>

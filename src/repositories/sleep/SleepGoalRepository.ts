@@ -43,30 +43,6 @@ export const exist = async (
   return finalResult;
 }
 
-// 0. cnt ------------------------------------------------------------------------------------------
-export const cnt = async (
-  user_id_param: string,
-  dateType_param: string,
-  dateStart_param: string,
-  dateEnd_param: string,
-) => {
-
-  const finalResult = await SleepGoal.countDocuments(
-    {
-      user_id: user_id_param,
-      sleep_goal_dateStart: {
-        $lte: dateEnd_param,
-      },
-      sleep_goal_dateEnd: {
-        $gte: dateStart_param,
-      },
-      ...dateType_param ? { sleep_goal_dateType: dateType_param } : {},
-    }
-  );
-
-  return finalResult;
-};
-
 // 1. list (goal) ----------------------------------------------------------------------------------
 export const listGoal = async (
   user_id_param: string,

@@ -203,6 +203,8 @@ export const useCommonValue = (): CommonValueType => {
     toList: pathParts[2] === "goal" ? `/${pathParts[1] || ""}/goal/list` : `/${pathParts[1] || ""}/record/list`,
     toDetail: pathParts[2] === "goal" ? `/${pathParts[1] || ""}/goal/detail` : `/${pathParts[1] || ""}/record/detail`,
     toDelete: pathParts[2] === "goal" ? `/${pathParts[1] || ""}/goal/delete` : `/${pathParts[1] || ""}/record/delete`,
+		toCalendarList: `/calendar/list`,
+		toCalendarDetail: `/calendar/detail`,
     // Environment Variables
     TITLE: TITLE,
     URL: env.VITE_APP_SERVER_URL || "",

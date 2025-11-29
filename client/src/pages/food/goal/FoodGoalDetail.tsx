@@ -34,6 +34,7 @@ export const FoodGoalDetail = memo(() => {
     select: [""],
   });
   const [FLOW, setFLOW] = useState({
+		theme: `food`,
     exist: false,
     itsMe: false,
     itsNew: false,
@@ -328,7 +329,6 @@ export const FoodGoalDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 1 **/}
 
 						{/** row 2 **/}
 						<Grid container={true} spacing={1}>
@@ -368,7 +368,6 @@ export const FoodGoalDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 2 **/}
 
 						{/** row 3 **/}
 						<Grid container={true} spacing={1}>
@@ -408,7 +407,6 @@ export const FoodGoalDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 3 **/}
 
 						{/** row 4 **/}
 						<Grid container={true} spacing={1}>
@@ -448,7 +446,6 @@ export const FoodGoalDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 4 **/}
 
 						{/** row 5 **/}
 						<Grid container={true} spacing={1}>
@@ -488,7 +485,6 @@ export const FoodGoalDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 5 **/}
 					</Grid>
 				))}
 			</Grid>

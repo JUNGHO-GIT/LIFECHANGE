@@ -286,7 +286,6 @@ export const UserLogin = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 1 **/}
 
 						{/** row 2 **/}
 						<Grid container={true} spacing={0}>
@@ -306,7 +305,6 @@ export const UserLogin = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 2 **/}
 					</Grid>
 				))}
 			</Grid>
@@ -359,7 +357,6 @@ export const UserLogin = memo(() => {
 						</Btn>
 					</Grid>
 				</Grid>
-				{/** /.row 1 **/}
 
 				{/** row 2 **/}
 				<Grid container={true} spacing={1}>
@@ -386,7 +383,6 @@ export const UserLogin = memo(() => {
 						</Btn>
 					</Grid>
 				</Grid>
-				{/** /.row 2 **/}
 			</Grid>
 		);
 		// 7-5. link
@@ -405,7 +401,6 @@ export const UserLogin = memo(() => {
 						</Div>
 					</Grid>
 				</Grid>
-				{/** /.row 1 **/}
 
 				{/** row 2 **/}
 				<Grid container={true} spacing={1}>
@@ -420,7 +415,6 @@ export const UserLogin = memo(() => {
 						</Div>
 					</Grid>
 				</Grid>
-				{/** /.row 2 **/}
 			</Grid>
 		);
 		// 7-10. return

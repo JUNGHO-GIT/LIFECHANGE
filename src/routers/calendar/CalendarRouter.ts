@@ -129,6 +129,47 @@ router.get("/detail", async (req: Request, res: Response) => {
   }
 });
 
+// 3. create --------------------------------------------------------------------------------------
+router.post("/create", async (req: Request, res: Response) => {
+  try {
+    let finalResult = await service.update(
+      req.body.user_id as string,
+      req.body.OBJECT as any,
+      req.body.DATE as any,
+      req.body.type as string,
+    );
+    if (finalResult.status === "success") {
+      res.json({
+        msg: "createSuccessful",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else if (finalResult.status === "fail") {
+      res.json({
+        msg: "createFailed",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+    else {
+      res.json({
+        msg: "createError",
+        status: finalResult.status,
+        result: finalResult.result,
+      });
+    }
+  }
+  catch (err: any) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      msg: err.toString(),
+      error: err.toString(),
+    });
+  }
+});
+
 // 4. update --------------------------------------------------------------------------------------
 router.put("/update", async (req: Request, res: Response) => {
   try {

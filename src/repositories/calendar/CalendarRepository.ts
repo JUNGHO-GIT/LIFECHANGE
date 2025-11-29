@@ -121,25 +121,6 @@ export const exist = async (
 	return finalResult;
 };
 
-// 0. cnt ------------------------------------------------------------------------------------------
-export const cnt = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
-) => {
-
-	const existResult = await exist(
-		user_id_param,
-		dateType_param,
-		dateStart_param,
-		dateEnd_param,
-	);
-	const finalResult = Array.isArray(existResult) ? existResult.length : 0;
-
-	return finalResult;
-};
-
 // 1. list -----------------------------------------------------------------------------------------
 export const list = async (
 	user_id_param: string,

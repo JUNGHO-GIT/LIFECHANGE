@@ -410,6 +410,8 @@ export interface CommonValueType {
   toList: string;
   toDetail: string;
   toDelete: string;
+	toCalendarList: string;
+	toCalendarDetail: string;
 
   TITLE: string;
   URL: string;

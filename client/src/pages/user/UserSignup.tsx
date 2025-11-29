@@ -501,7 +501,6 @@ export const UserSignup = memo(() => {
             </Btn>
           </Grid>
         </Grid>
-        {/** /.row 1 **/}
 
         {/** row 2 **/}
         <Grid container={true} spacing={1}>
@@ -528,7 +527,6 @@ export const UserSignup = memo(() => {
             </Btn>
           </Grid>
         </Grid>
-        {/** /.row 2 **/}
       </Grid>
     );
     // 7-5. link
@@ -547,7 +545,6 @@ export const UserSignup = memo(() => {
             </Div>
           </Grid>
         </Grid>
-        {/** /.row 1 **/}
 
         {/** row 2 **/}
         <Grid container={true} spacing={1}>
@@ -562,7 +559,6 @@ export const UserSignup = memo(() => {
             </Div>
           </Grid>
         </Grid>
-        {/** /.row 2 **/}
       </Grid>
     );
     // 7-10. return

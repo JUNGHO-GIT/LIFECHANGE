@@ -14,34 +14,36 @@ declare type MemoProps = {
 	LOCKED: string;
 	extra: string;
 	i: number;
+	section?: string;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const Memo = memo((
-	{ OBJECT, setOBJECT, LOCKED, extra, i }: MemoProps
+	{ OBJECT, setOBJECT, LOCKED, extra, i, section }: MemoProps
 ) => {
 
 	// 1. common ----------------------------------------------------------------------------------
 	const { firstStr } = useCommonValue();
 	const { translate } = useStoreLanguage();
+	const targetSection = section || `${firstStr}_section`;
 
 	// 2. callbacks ----------------------------------------------------------------------------------
 	const handleTextChange = useCallback((e: any) => {
 		setOBJECT((prev: any) => ({
 			...prev,
-			[`${firstStr}_section`]: prev[`${firstStr}_section`]?.map((section: any, idx: number) => (
+			[targetSection]: prev[targetSection]?.map((section: any, idx: number) => (
 				idx === i ? {
 					...section,
 					[`${extra}`]: e.target.value || ""
 				} : section
 			))
 		}));
-	}, [setOBJECT, firstStr, i, extra]);
+	}, [setOBJECT, targetSection, i, extra]);
 
 	// 3. memoized values ---------------------------------------------------------------------------
 	const memoValue = useMemo(() => {
-		return OBJECT?.[`${firstStr}_section`]?.[i]?.[`${extra}`] || "";
-	}, [OBJECT, firstStr, i, extra]);
+		return OBJECT?.[targetSection]?.[i]?.[`${extra}`] || "";
+	}, [OBJECT, targetSection, i, extra]);
 
 	// 4. memoNode -----------------------------------------------------------------------------------
 	const memoNode = useMemo(() => (

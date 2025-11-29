@@ -16,7 +16,7 @@ import { MenuItem } from "@exportMuis";
 export const ExerciseRecordDetail = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
-  const { URL_OBJECT, PATH, navigate, toList, toToday } = useCommonValue();
+  const { URL_OBJECT, PATH, navigate, toList } = useCommonValue();
   const { sessionId, localUnit, bgColors, exerciseArray } = useCommonValue();
   const { location_from, location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt,getMonthStartFmt, getMonthEndFmt } = useCommonDate();
@@ -36,6 +36,7 @@ export const ExerciseRecordDetail = memo(() => {
     select: [""],
   });
   const [FLOW, setFLOW] = useState({
+		theme: `exercise`,
     exist: false,
     itsMe: false,
     itsNew: false,
@@ -406,7 +407,6 @@ export const ExerciseRecordDetail = memo(() => {
             />
           </Grid>
         </Grid>
-        {/** /.row 1 **/}
 
         {/** row 2 **/}
         <Grid container={true} spacing={1}>
@@ -431,7 +431,6 @@ export const ExerciseRecordDetail = memo(() => {
             />
           </Grid>
         </Grid>
-        {/** /.row 2 **/}
 
         {/** row 3 **/}
         <Grid container={true} spacing={1}>
@@ -461,7 +460,6 @@ export const ExerciseRecordDetail = memo(() => {
               }}
             />
           </Grid>
-          {/** /.row 3 **/}
         </Grid>
       </Grid>
     );
@@ -487,7 +485,6 @@ export const ExerciseRecordDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 1 **/}
 
 						{/** row 2 **/}
 						<Grid container={true} spacing={1}>
@@ -561,7 +558,6 @@ export const ExerciseRecordDetail = memo(() => {
 								</Select>
 							</Grid>
 						</Grid>
-						{/** /.row 2 **/}
 
 						{/** row 3 **/}
 						<Grid container={true} spacing={1}>
@@ -634,7 +630,6 @@ export const ExerciseRecordDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 3 **/}
 
 						{/** row 4 **/}
 						<Grid container={true} spacing={1}>
@@ -685,7 +680,6 @@ export const ExerciseRecordDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 4 **/}
 					</Grid>
 				))}
 			</Grid>

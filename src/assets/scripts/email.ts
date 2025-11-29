@@ -1,7 +1,6 @@
 // email.ts
 
 import nodemailer from 'nodemailer';
-import axios from 'axios';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -154,7 +153,7 @@ export const sendEmail = async (email: string, code: string) => {
     });
 
     const consoleStr = `
-      ========================================
+      -----------------------------------------
       이메일이 성공적으로 전송되었습니다.
       서비스: ${process.env.EMAIL_SERVICE}
       호스트: ${process.env.EMAIL_HOST}
@@ -163,16 +162,17 @@ export const sendEmail = async (email: string, code: string) => {
       서버 비밀번호: ${process.env.EMAIL_PW}
       클라이언트 이메일: ${email}
       인증 코드: ${code}
-      ========================================
+      -----------------------------------------
     `;
     console.log(consoleStr);
     return "success";
   }
   catch (err: any) {
     const consoleStr = `
-      ========================================
+      -----------------------------------------
       이메일 전송 중 오류가 발생했습니다.
       ${err}
+			-----------------------------------------
     `;
     console.log(consoleStr);
     return "fail";

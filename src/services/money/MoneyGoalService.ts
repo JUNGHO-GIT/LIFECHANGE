@@ -61,7 +61,7 @@ export const list = async (
   // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
-  let totalCntResult: any = null;
+  let totalCntResult: number = 0;
   let statusResult: string = "";
 
   // date 변수 선언
@@ -74,9 +74,6 @@ export const list = async (
   const sort = PAGING_param?.sort === "asc" ? 1 : -1;
   const page = PAGING_param?.page ? PAGING_param.page : 1;
 
-  totalCntResult = await repository.cnt(
-    user_id_param, dateType, dateStart, dateEnd
-  );
   findResult = await repository.listGoal(
     user_id_param, dateType, dateStart, dateEnd, sort, page
   );
@@ -123,6 +120,7 @@ export const list = async (
       };
     }));
     statusResult = "success";
+    totalCntResult = finalResult.length;
   }
 
   return {

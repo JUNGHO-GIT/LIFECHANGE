@@ -5,7 +5,7 @@ import {useCommonValue, useCommonDate, useValidateCalendar} from "@exportHooks";
 import {useStoreLanguage, useStoreAlert, useStoreLoading} from "@exportStores";
 import {Calendar, CalendarType} from "@exportSchemas";
 import {CalendarExerciseSectionType, CalendarFoodSectionType} from "@exportSchemas";
-import {CalendarMoneySectionType, CalendarSleepSectionType} from "@exportSchemas";
+import {CalendarMoneySectionType} from "@exportSchemas";
 import {axios} from "@exportLibs";
 import {insertComma, handleNumberInput, sync} from "@exportScripts";
 import {Footer, Dialog} from "@exportLayouts";
@@ -17,11 +17,11 @@ import {Checkbox, MenuItem} from "@exportMuis";
 export const CalendarDetail = memo(() => {
 
 	// 1. common -------------------------------------------------------------------------------------
-	const {URL_OBJECT, PATH, navigate, toList, sessionId, localCurrency} = useCommonValue();
+	const {URL_OBJECT, navigate, toCalendarList, sessionId, localCurrency} = useCommonValue();
 	const {bgColors, localUnit} = useCommonValue();
 	const {exerciseArray, foodArray, moneyArray} = useCommonValue();
 	const {location_dateType} = useCommonValue();
-	const {location_from, location_dateStart, location_dateEnd} = useCommonValue();
+	const {location_dateStart, location_dateEnd} = useCommonValue();
 	const {getDayFmt, getMonthStartFmt, getMonthEndFmt} = useCommonDate();
 	const {translate} = useStoreLanguage();
 	const {setALERT} = useStoreAlert();
@@ -39,6 +39,7 @@ export const CalendarDetail = memo(() => {
 		select: [``],
 	});
 	const [FLOW, setFLOW] = useState({
+		theme: `calendar`,
 		exist: false,
 		itsMe: false,
 		itsNew: false,
@@ -281,13 +282,13 @@ export const CalendarDetail = memo(() => {
 	// 3. flow ------------------------------------------------------------------------------------
 	const flowSave = async (type: string) => {
 		setLOADING(true);
-		if (!await validate(objectRef.current, countRef.current, type, "record")) {
+		if (!await validate(objectRef.current, countRef.current, "record")) {
 			setLOADING(false);
 			return;
 		}
 		axios({
-			method: "put",
-			url: `${URL_OBJECT}/update`,
+      method: type === "create" ? "post" : "put",
+			url: type === "create" ? `${URL_OBJECT}/create` : `${URL_OBJECT}/update`,
 			data: {
 				user_id: sessionId,
 				OBJECT: objectRef.current,
@@ -295,50 +296,50 @@ export const CalendarDetail = memo(() => {
 				type: type,
 			}
 		})
-			.then((res: any) => {
-				if (res.data.status === "success") {
-					setLOADING(false);
-					setALERT({
-						open: true,
-						msg: translate(res.data.msg),
-						severity: "success",
-					});
-					navigate(toList, {
-						state: {
-							dateType: "",
-							dateStart: dateRef.current.dateStart,
-							dateEnd: dateRef.current.dateEnd
-						}
-					});
-					sync("scale");
-				}
-				else {
-					setLOADING(false);
-					setALERT({
-						open: true,
-						msg: translate(res.data.msg),
-						severity: "error",
-					});
-				}
-			})
-			.catch((err: any) => {
+		.then((res: any) => {
+			if (res.data.status === "success") {
 				setLOADING(false);
 				setALERT({
 					open: true,
-					msg: translate(err.response.data.msg),
+					msg: translate(res.data.msg),
+					severity: "success",
+				});
+				navigate(toCalendarList, {
+					state: {
+						dateType: "",
+						dateStart: dateRef.current.dateStart,
+						dateEnd: dateRef.current.dateEnd
+					}
+				});
+				sync("scale");
+			}
+			else {
+				setLOADING(false);
+				setALERT({
+					open: true,
+					msg: translate(res.data.msg),
 					severity: "error",
 				});
-				console.error(err);
-			})
-			.finally(() => {
-				setLOADING(false);
+			}
+		})
+		.catch((err: any) => {
+			setLOADING(false);
+			setALERT({
+				open: true,
+				msg: translate(err.response.data.msg),
+				severity: "error",
 			});
+			console.error(err);
+		})
+		.finally(() => {
+			setLOADING(false);
+		});
 	};
 
 	// 3. flow ------------------------------------------------------------------------------------
-	const flowDelete = async (type: string) => {
+	const flowDelete = async () => {
 		setLOADING(true);
-		if (!await validate(objectRef.current, countRef.current, type, "delete")) {
+		if (!await validate(objectRef.current, countRef.current, "delete")) {
 			setLOADING(false);
 			return;
 		}
@@ -349,63 +350,61 @@ export const CalendarDetail = memo(() => {
 				user_id: sessionId,
 				DATE: dateRef.current,
 			}
-		})
-			.then((res: any) => {
-				if (res.data.status === "success") {
-					setLOADING(false);
-					setALERT({
-						open: true,
-						msg: translate(res.data.msg),
-						severity: "success",
-					});
-					navigate(toList, {
-						state: {
-							dateType: "",
-							dateStart: dateRef.current.dateStart,
-							dateEnd: dateRef.current.dateEnd
-						}
-					});
-					sync("scale");
-				}
-				else {
-					setLOADING(false);
-					setALERT({
-						open: true,
-						msg: translate(res.data.msg),
-						severity: "error",
-					});
-				}
-			})
-			.catch((err: any) => {
+	})
+		.then((res: any) => {
+			if (res.data.status === "success") {
 				setLOADING(false);
 				setALERT({
 					open: true,
-					msg: translate(err.response.data.msg),
+					msg: translate(res.data.msg),
+					severity: "success",
+				});
+				navigate(toCalendarList, {
+					state: {
+						dateType: "",
+						dateStart: dateRef.current.dateStart,
+						dateEnd: dateRef.current.dateEnd
+					}
+				});
+				sync("scale");
+			}
+			else {
+				setLOADING(false);
+				setALERT({
+					open: true,
+					msg: translate(res.data.msg),
 					severity: "error",
 				});
-				console.error(err);
-			})
-			.finally(() => {
-				setLOADING(false);
+			}
+		})
+		.catch((err: any) => {
+			setLOADING(false);
+			setALERT({
+				open: true,
+				msg: translate(err.response.data.msg),
+				severity: "error",
 			});
+			console.error(err);
+		})
+		.finally(() => {
+			setLOADING(false);
+		});
 	};
 
 	// 4-3. handle ----------------------------------------------------------------------------------
-	const handleDelete = useCallback((index: number, section: keyof CalendarType) => {
-		setOBJECT((prev) => {
-			const target = prev[section];
-			if (!Array.isArray(target)) {
-				return prev;
-			}
-			return {
+	const handleDelete = useCallback((index: number, section?: string) => {
+		section && (
+			setOBJECT((prev: CalendarType) => ({
 				...prev,
-				[section]: target.filter((_, idx) => idx !== index)
-			};
-		});
-		setCOUNT((prev) => ({
-			...prev,
-			newSectionCnt: prev.newSectionCnt - 1,
-		}));
+				[section]: (prev[section as keyof CalendarType] as any[] || []).filter(
+					(_item: any, idx: number) => idx !== index
+				)
+			})),
+			setCOUNT((prev) => ({
+				...prev,
+				newSectionCnt: prev.newSectionCnt - 1,
+			}))
+		);
 	}, []);
 
 	// 7. detail -------------------------------------------------------------------------------------
@@ -433,32 +432,33 @@ export const CalendarDetail = memo(() => {
 			</Grid>
 		);
 
-		// 7-2. excersice
+		// 7-2. exercise
 		const exerciseSection = () => (
 			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
+
+				{/** header **/}
+				<Grid container={true} spacing={0} className={`${OBJECT?.calendar_exercise_section?.length === 0 ? `radius-2` : `radius-top-2`} border-1 p-10px`}>
+					<Grid size={12} className={`d-row`}>
+						<Div className={`d-row-left`}>
+							<Img
+								max={14}
+								hover={true}
+								shadow={false}
+								radius={false}
+								src={"exercise1.webp"}
+								className={`ml-5px mr-10px`}
+							/>
+							<Div className={`fs-0-9rem fw-600`}>
+								{translate(`exercise`)}
+							</Div>
+						</Div>
+					</Grid>
+				</Grid>
+
+				{/** items **/}
 				{OBJECT?.calendar_exercise_section?.map((item, i) => (
 					<Grid container spacing={2} key={`exercise-detail-${i}`}
-						className={`${LOCKED === `locked` ? `locked` : ``} border-1 radius-2 p-20px`}>
-						{/** row 0 **/}
-						{i === 0 && (
-							<Grid container={true} spacing={0} className={`mt-n5px pb-10px border-bottom-1`}>
-								<Grid size={12} className={`d-row`}>
-									<Div className={`d-row-left`}>
-										<Img
-											max={14}
-											hover={true}
-											shadow={false}
-											radius={false}
-											src={"exercise1.webp"}
-											className={`ml-5px mr-10px`}
-										/>
-										<Div className={`fs-0-9rem fw-600`}>
-											{translate(`exercise`)}
-										</Div>
-									</Div>
-								</Grid>
-							</Grid>
-						)}
+						className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`}  border-1 p-20px`}>
 						{/** row 1 **/}
 						<Grid container={true} spacing={1}>
 							<Grid size={6} className={`d-row-left`}>
@@ -471,13 +471,12 @@ export const CalendarDetail = memo(() => {
 								<Delete
 									index={i}
 									section={`calendar_exercise_section`}
-									handleDelete={handleDelete as any}
+									handleDelete={handleDelete}
 									LOCKED={LOCKED}
-									disabled={true}
+									disabled={false}
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 1 **/}
 
 						{/** row 2 **/}
 						<Grid container={true} spacing={1}>
@@ -489,12 +488,12 @@ export const CalendarDetail = memo(() => {
 									inputRef={REFS?.[i]?.exercise_record_part || null}
 									error={ERRORS?.[i]?.exercise_record_part || null}
 									onChange={(e: any) => {
-										let value = String(e.target.value || ``);
+										const value = String(e.target.value || ``);
 										const foundIndex = exerciseArray.findIndex((f: any) => f.exercise_record_part === value);
 										const foundItem = foundIndex !== -1 ? exerciseArray[foundIndex] : null;
 										setOBJECT((prev: CalendarType) => ({
 											...prev,
-											calendar_exercise_section: prev.calendar_exercise_section?.map((section: any, idx: number) => (
+											calendar_exercise_section: prev.calendar_exercise_section?.map((section: CalendarExerciseSectionType, idx: number) => (
 												idx === i ? {
 													...section,
 													exercise_record_part: value,
@@ -523,10 +522,10 @@ export const CalendarDetail = memo(() => {
 									inputRef={REFS?.[i]?.exercise_record_title}
 									error={ERRORS?.[i]?.exercise_record_title}
 									onChange={(e: any) => {
-										let value = String(e.target.value || ``);
+										const value = String(e.target.value || ``);
 										setOBJECT((prev: CalendarType) => ({
 											...prev,
-											calendar_exercise_section: prev.calendar_exercise_section?.map((section: any, idx: number) => (
+											calendar_exercise_section: prev.calendar_exercise_section?.map((section: CalendarExerciseSectionType, idx: number) => (
 												idx === i ? {
 													...section,
 													exercise_record_title: value,
@@ -551,7 +550,6 @@ export const CalendarDetail = memo(() => {
 								</Select>
 							</Grid>
 						</Grid>
-						{/** /.row 2 **/}
 
 						{/** row 3 **/}
 						<Grid container={true} spacing={1}>
@@ -576,17 +574,17 @@ export const CalendarDetail = memo(() => {
 									}
 									onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
 										const processedValue = handleNumberInput(e.target.value, 999);
-										if (processedValue !== null) {
+										processedValue !== null && (
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
-												calendar_exercise_section: prev.calendar_exercise_section?.map((section: any, idx: number) => (
+												calendar_exercise_section: prev.calendar_exercise_section?.map((section: CalendarExerciseSectionType, idx: number) => (
 													idx === i ? {
 														...section,
 														exercise_record_set: processedValue
 													} : section
 												))
-											}));
-										}
+											}))
+										);
 									}}
 								/>
 							</Grid>
@@ -611,22 +609,21 @@ export const CalendarDetail = memo(() => {
 									}
 									onChange={(e: any) => {
 										const processedValue = handleNumberInput(e.target.value, 999);
-										if (processedValue !== null) {
+										processedValue !== null && (
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
-												calendar_exercise_section: prev.calendar_exercise_section?.map((section: any, idx: number) => (
+												calendar_exercise_section: prev.calendar_exercise_section?.map((section: CalendarExerciseSectionType, idx: number) => (
 													idx === i ? {
 														...section,
 														exercise_record_rep: processedValue
 													} : section
 												))
-											}));
-										}
+											}))
+										);
 									}}
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 3 **/}
 
 						{/** row 4 **/}
 						<Grid container={true} spacing={1}>
@@ -651,17 +648,17 @@ export const CalendarDetail = memo(() => {
 									}
 									onChange={(e: any) => {
 										const processedValue = handleNumberInput(e.target.value, 999);
-										if (processedValue !== null) {
+										processedValue !== null && (
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
-												calendar_exercise_section: prev.calendar_exercise_section?.map((section: any, idx: number) => (
+												calendar_exercise_section: prev.calendar_exercise_section?.map((section: CalendarExerciseSectionType, idx: number) => (
 													idx === i ? {
 														...section,
 														exercise_record_weight: processedValue
 													} : section
 												))
-											}));
-										}
+											}))
+										);
 									}}
 								/>
 							</Grid>
@@ -678,7 +675,6 @@ export const CalendarDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 4 **/}
 					</Grid>
 				))}
 			</Grid>
@@ -687,29 +683,30 @@ export const CalendarDetail = memo(() => {
 		// 7-3. food
 		const foodSection = () => (
 			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
+
+				{/** header **/}
+				<Grid container={true} spacing={0} className={`${OBJECT?.calendar_food_section?.length === 0 ? `radius-2` : `radius-top-2`} border-1 p-10px`}>
+					<Grid size={12} className={`d-row`}>
+						<Div className={`d-row-left`}>
+							<Img
+								max={14}
+								hover={true}
+								shadow={false}
+								radius={false}
+								src={"food1.webp"}
+								className={`ml-5px mr-10px`}
+							/>
+							<Div className={`fs-0-9rem fw-600`}>
+								{translate(`food`)}
+							</Div>
+						</Div>
+					</Grid>
+				</Grid>
+
+				{/** items **/}
 				{OBJECT?.calendar_food_section?.map((item, i) => (
 					<Grid container spacing={2} key={`food-detail-${i}`}
-						className={`${LOCKED === `locked` ? `locked` : ``} border-1 radius-2 p-20px`}>
-						{/** row 0 **/}
-						{i === 0 && (
-							<Grid container={true} spacing={0} className={`mt-n5px pb-10px border-bottom-1`}>
-								<Grid size={12} className={`d-row`}>
-									<Div className={`d-row-left`}>
-										<Img
-											max={14}
-											hover={true}
-											shadow={false}
-											radius={false}
-											src={"food1.webp"}
-											className={`ml-5px mr-10px`}
-										/>
-										<Div className={`fs-0-9rem fw-600`}>
-											{translate(`food`)}
-										</Div>
-									</Div>
-								</Grid>
-							</Grid>
-						)}
+						className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`}  border-1 p-20px`}>
 						{/** row 1 **/}
 						<Grid container={true} spacing={1}>
 							<Grid size={6} className={`d-row-left`}>
@@ -722,13 +719,12 @@ export const CalendarDetail = memo(() => {
 								<Delete
 									index={i}
 									section={`calendar_food_section`}
-									handleDelete={handleDelete as any}
+									handleDelete={handleDelete}
 									LOCKED={LOCKED}
-									disabled={true}
+									disabled={false}
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 1 **/}
 
 						{/** row 2 **/}
 						<Grid container={true} spacing={1}>
@@ -740,7 +736,7 @@ export const CalendarDetail = memo(() => {
 									inputRef={REFS?.[i]?.food_record_part}
 									error={ERRORS?.[i]?.food_record_part}
 									onChange={(e: any) => {
-										let value = String(e.target.value || ``);
+										const value = String(e.target.value || ``);
 										setOBJECT((prev: CalendarType) => ({
 											...prev,
 											calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
@@ -772,17 +768,20 @@ export const CalendarDetail = memo(() => {
 									error={ERRORS?.[i]?.food_record_count}
 									onChange={(e: any) => {
 										const processedValue = handleNumberInput(e.target.value, 99, 1);
-										if (processedValue !== null) {
+										processedValue !== null && (() => {
 											const numericValue = Number(processedValue) || 1;
 											const foodCount = Number(item?.food_record_count) || 1;
-											const setNutrient = (nut: string | number, extra: string) => {
-												if (!isNaN(numericValue) && !isNaN(foodCount)) {
-													return extra === `kcal`
-														? (numericValue * Number(nut) / foodCount).toFixed(0)
-														: (numericValue * Number(nut) / foodCount).toFixed(1);
-												}
-												return nut;
-											};
+											const setNutrient = (nut: string | number, extra: string) => (
+												!isNaN(numericValue) && !isNaN(foodCount) ? (
+													extra === `kcal` ? (
+														(numericValue * Number(nut) / foodCount).toFixed(0)
+													) : (
+														(numericValue * Number(nut) / foodCount).toFixed(1)
+													)
+												) : (
+													nut
+												)
+											);
 
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
@@ -797,7 +796,7 @@ export const CalendarDetail = memo(() => {
 													} : section
 												))
 											}));
-										}
+										})();
 									}}
 								/>
 							</Grid>
@@ -810,7 +809,7 @@ export const CalendarDetail = memo(() => {
 									error={ERRORS?.[i]?.food_record_gram}
 									onChange={(e: any) => {
 										const processedValue = handleNumberInput(e.target.value, 999);
-										if (processedValue !== null) {
+										processedValue !== null && (
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
 												calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
@@ -819,13 +818,12 @@ export const CalendarDetail = memo(() => {
 														food_record_gram: processedValue,
 													} : section
 												))
-											}));
-										}
+											}))
+										);
 									}}
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 2 **/}
 
 						{/** row 3 **/}
 						<Grid container={true} spacing={1}>
@@ -838,8 +836,8 @@ export const CalendarDetail = memo(() => {
 									inputRef={REFS?.[i]?.food_record_name}
 									error={ERRORS?.[i]?.food_record_name}
 									onChange={(e: any) => {
-										let value = e.target.value || ``;
-										if (value?.length <= 30) {
+										const value = e.target.value || ``;
+										value?.length <= 30 && (
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
 												calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
@@ -848,8 +846,8 @@ export const CalendarDetail = memo(() => {
 														food_record_name: value,
 													} : section
 												))
-											}));
-										}
+											}))
+										);
 									}}
 								/>
 							</Grid>
@@ -862,8 +860,8 @@ export const CalendarDetail = memo(() => {
 									inputRef={REFS?.[i]?.food_record_brand}
 									error={ERRORS?.[i]?.food_record_brand}
 									onChange={(e: any) => {
-										let value = e.target.value || ``;
-										if (value?.length <= 30) {
+										const value = e.target.value || ``;
+										value?.length <= 30 && (
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
 												calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
@@ -872,13 +870,12 @@ export const CalendarDetail = memo(() => {
 														food_record_brand: value,
 													} : section
 												))
-											}));
-										}
+											}))
+										);
 									}}
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 3 **/}
 
 						{/** row 4 **/}
 						<Grid container={true} spacing={1}>
@@ -903,7 +900,7 @@ export const CalendarDetail = memo(() => {
 									}
 									onChange={(e: any) => {
 										const processedValue = handleNumberInput(e.target.value, 9999);
-										if (processedValue !== null) {
+										processedValue !== null && (
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
 												calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
@@ -912,8 +909,8 @@ export const CalendarDetail = memo(() => {
 														food_record_kcal: processedValue,
 													} : section
 												))
-											}));
-										}
+											}))
+										);
 									}}
 								/>
 							</Grid>
@@ -938,7 +935,7 @@ export const CalendarDetail = memo(() => {
 									}
 									onChange={(e: any) => {
 										const processedValue = handleNumberInput(e.target.value, 999, 1);
-										if (processedValue !== null) {
+										processedValue !== null && (
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
 												calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
@@ -947,13 +944,12 @@ export const CalendarDetail = memo(() => {
 														food_record_carb: processedValue,
 													} : section
 												))
-											}));
-										}
+											}))
+										);
 									}}
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 4 **/}
 
 						{/** row 5 **/}
 						<Grid container={true} spacing={1}>
@@ -978,7 +974,7 @@ export const CalendarDetail = memo(() => {
 									}
 									onChange={(e: any) => {
 										const processedValue = handleNumberInput(e.target.value, 999, 1);
-										if (processedValue !== null) {
+										processedValue !== null && (
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
 												calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
@@ -987,8 +983,8 @@ export const CalendarDetail = memo(() => {
 														food_record_protein: processedValue,
 													} : section
 												))
-											}));
-										}
+											}))
+										);
 									}}
 								/>
 							</Grid>
@@ -1013,7 +1009,7 @@ export const CalendarDetail = memo(() => {
 									}
 									onChange={(e: any) => {
 										const processedValue = handleNumberInput(e.target.value, 999, 1);
-										if (processedValue !== null) {
+										processedValue !== null && (
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
 												calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
@@ -1022,13 +1018,12 @@ export const CalendarDetail = memo(() => {
 														food_record_fat: processedValue,
 													} : section
 												))
-											}));
-										}
+											}))
+										);
 									}}
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 5 **/}
 					</Grid>
 				))}
 			</Grid>
@@ -1037,29 +1032,30 @@ export const CalendarDetail = memo(() => {
 		// 7-4. money
 		const moneySection = () => (
 			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
+
+				{/** header **/}
+				<Grid container={true} spacing={0} className={`${OBJECT?.calendar_money_section?.length === 0 ? `radius-2` : `radius-top-2`} border-1 p-10px`}>
+					<Grid size={12} className={`d-row`}>
+						<Div className={`d-row-left`}>
+							<Img
+								max={14}
+								hover={true}
+								shadow={false}
+								radius={false}
+								src={"money1.webp"}
+								className={`ml-5px mr-10px`}
+							/>
+							<Div className={`fs-0-9rem fw-600`}>
+								{translate(`money`)}
+							</Div>
+						</Div>
+					</Grid>
+				</Grid>
+
+				{/** items **/}
 				{OBJECT?.calendar_money_section?.map((item, i) => (
 					<Grid container spacing={2} key={`money-detail-${i}`}
-						className={`${LOCKED === `locked` ? `locked` : ``} border-1 radius-2 p-20px`}>
-						{/** row 0 **/}
-						{i === 0 && (
-							<Grid container={true} spacing={0} className={`mt-n5px pb-10px border-bottom-1`}>
-								<Grid size={12} className={`d-row`}>
-									<Div className={`d-row-left`}>
-										<Img
-											max={14}
-											hover={true}
-											shadow={false}
-											radius={false}
-											src={"money1.webp"}
-											className={`ml-5px mr-10px`}
-										/>
-										<Div className={`fs-0-9rem fw-600`}>
-											{translate(`money`)}
-										</Div>
-									</Div>
-								</Grid>
-							</Grid>
-						)}
+						className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`}  border-1 p-20px`}>
 						{/** row 1 **/}
 						<Grid container={true} spacing={1}>
 							<Grid size={6} className={`d-row-left`}>
@@ -1072,13 +1068,12 @@ export const CalendarDetail = memo(() => {
 								<Delete
 									index={i}
 									section={`calendar_money_section`}
-									handleDelete={handleDelete as any}
+									handleDelete={handleDelete}
 									LOCKED={LOCKED}
-									disabled={true}
+									disabled={false}
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 1 **/}
 
 						{/** row 2 **/}
 						<Grid container={true} spacing={1}>
@@ -1090,12 +1085,12 @@ export const CalendarDetail = memo(() => {
 									inputRef={REFS?.[i]?.money_record_part}
 									error={ERRORS?.[i]?.money_record_part}
 									onChange={(e: any) => {
-										let value = String(e.target.value || ``);
+										const value = String(e.target.value || ``);
 										const foundIndex = moneyArray.findIndex((f: any) => f.money_record_part === value);
 										const foundItem = foundIndex !== -1 ? moneyArray[foundIndex] : null;
 										setOBJECT((prev: CalendarType) => ({
 											...prev,
-											calendar_money_section: prev.calendar_money_section?.map((section: any, idx: number) => (
+											calendar_money_section: prev.calendar_money_section?.map((section: CalendarMoneySectionType, idx: number) => (
 												idx === i ? {
 													...section,
 													money_record_part: value,
@@ -1124,10 +1119,10 @@ export const CalendarDetail = memo(() => {
 									inputRef={REFS?.[i]?.money_record_title}
 									error={ERRORS?.[i]?.money_record_title}
 									onChange={(e: any) => {
-										let value = String(e.target.value || ``);
+										const value = String(e.target.value || ``);
 										setOBJECT((prev: CalendarType) => ({
 											...prev,
-											calendar_money_section: prev.calendar_money_section?.map((section: any, idx: number) => (
+											calendar_money_section: prev.calendar_money_section?.map((section: CalendarMoneySectionType, idx: number) => (
 												idx === i ? {
 													...section,
 													money_record_title: value,
@@ -1152,7 +1147,6 @@ export const CalendarDetail = memo(() => {
 								</Select>
 							</Grid>
 						</Grid>
-						{/** /.row 2 **/}
 
 						{/** row 3 **/}
 						<Grid container={true} spacing={1}>
@@ -1177,22 +1171,21 @@ export const CalendarDetail = memo(() => {
 									}
 									onChange={(e: any) => {
 										const processedValue = handleNumberInput(e.target.value, 999999999);
-										if (processedValue !== null) {
+										processedValue !== null && (
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
-												calendar_money_section: prev.calendar_money_section?.map((section: any, idx: number) => (
+												calendar_money_section: prev.calendar_money_section?.map((section: CalendarMoneySectionType, idx: number) => (
 													idx === i ? {
 														...section,
 														money_record_amount: processedValue,
 													} : section
 												))
-											}));
-										}
+											}))
+										);
 									}}
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 3 **/}
 
 						{/** row 4 **/}
 						<Grid container={true} spacing={1}>
@@ -1201,8 +1194,9 @@ export const CalendarDetail = memo(() => {
 									OBJECT={OBJECT}
 									setOBJECT={setOBJECT}
 									LOCKED={LOCKED}
-									extra={`money_content`}
+									extra={`money_record_content`}
 									i={i}
+									section={`calendar_money_section`}
 								/>
 							</Grid>
 							<Grid size={{xs: 5, sm: 4}} className={`d-center`}>
@@ -1217,7 +1211,7 @@ export const CalendarDetail = memo(() => {
 									onChange={(e: any) => {
 										setOBJECT((prev: CalendarType) => ({
 											...prev,
-											calendar_money_section: prev.calendar_money_section?.map((section: any, idx: number) => (
+											calendar_money_section: prev.calendar_money_section?.map((section: CalendarMoneySectionType, idx: number) => (
 												idx === i ? {
 													...section,
 													money_record_include: e.target.checked ? `Y` : `N`,
@@ -1228,7 +1222,6 @@ export const CalendarDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 4 **/}
 					</Grid>
 				))}
 			</Grid>
@@ -1237,29 +1230,30 @@ export const CalendarDetail = memo(() => {
 		// 7-5. sleep
 		const sleepSection = () => (
 			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
-				{OBJECT?.calendar_sleep_section?.map((item, i) => (
+
+				{/** header **/}
+				<Grid container={true} spacing={0} className={`${OBJECT?.calendar_sleep_section?.length === 0 ? `radius-2` : `radius-top-2`} border-1 p-10px`}>
+					<Grid size={12} className={`d-row`}>
+						<Div className={`d-row-left`}>
+							<Img
+								max={14}
+								hover={true}
+								shadow={false}
+								radius={false}
+								src={"sleep1.webp"}
+								className={`ml-5px mr-10px`}
+							/>
+							<Div className={`fs-0-9rem fw-600`}>
+								{translate(`sleep`)}
+							</Div>
+						</Div>
+					</Grid>
+				</Grid>
+
+				{/** items **/}
+				{OBJECT?.calendar_sleep_section?.map((_item, i) => (
 					<Grid container spacing={2} key={`sleep-detail-${i}`}
-						className={`${LOCKED === `locked` ? `locked` : ``} border-1 radius-2 p-20px`}>
-						{/** row 0 **/}
-						{i === 0 && (
-							<Grid container={true} spacing={0} className={`mt-n5px pb-10px border-bottom-1`}>
-								<Grid size={12} className={`d-row`}>
-									<Div className={`d-row-left`}>
-										<Img
-											max={14}
-											hover={true}
-											shadow={false}
-											radius={false}
-											src={"sleep1.webp"}
-											className={`ml-5px mr-10px`}
-										/>
-										<Div className={`fs-0-9rem fw-600`}>
-											{translate(`sleep`)}
-										</Div>
-									</Div>
-								</Grid>
-							</Grid>
-						)}
+						className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`}  border-1 p-20px`}>
 						{/** row 1 **/}
 						<Grid container={true} spacing={1}>
 							<Grid size={6} className={`d-row-left`}>
@@ -1272,13 +1266,12 @@ export const CalendarDetail = memo(() => {
 								<Delete
 									index={i}
 									section={`calendar_sleep_section`}
-									handleDelete={handleDelete as any}
+									handleDelete={handleDelete}
 									LOCKED={LOCKED}
-									disabled={true}
+									disabled={false}
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 1 **/}
 
 						{/** row 2 **/}
 						<Grid container={true} spacing={1}>
@@ -1295,7 +1288,6 @@ export const CalendarDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 2 **/}
 
 						{/** row 3 **/}
 						<Grid container={true} spacing={1}>
@@ -1312,7 +1304,6 @@ export const CalendarDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 3 **/}
 
 						{/** row 4 **/}
 						<Grid container={true} spacing={1}>
@@ -1329,7 +1320,6 @@ export const CalendarDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 4 **/}
 					</Grid>
 				))}
 			</Grid>

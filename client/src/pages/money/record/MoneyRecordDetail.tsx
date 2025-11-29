@@ -17,7 +17,7 @@ export const MoneyRecordDetail = memo(() => {
 	// 1. common ----------------------------------------------------------------------------------
 	const { URL_OBJECT, navigate, sessionId, localCurrency, moneyArray } = useCommonValue();
 	const { toList, bgColors } = useCommonValue();
-	const { location_from, location_dateStart, location_dateEnd } = useCommonValue();
+	const { location_dateStart, location_dateEnd } = useCommonValue();
 	const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
 	const { ERRORS, REFS, validate } = useValidateMoney();
 	const { translate } = useStoreLanguage();
@@ -35,6 +35,7 @@ export const MoneyRecordDetail = memo(() => {
 		select: [""],
 	});
 	const [FLOW, setFLOW] = useState({
+		theme: `money`,
 		exist: false,
 		itsMe: false,
 		itsNew: false,
@@ -384,7 +385,6 @@ export const MoneyRecordDetail = memo(() => {
 						/>
 					</Grid>
 				</Grid>
-				{/** /.row 1 **/}
 
 				{/** row 2 **/}
 				<Grid container={true} spacing={1}>
@@ -438,7 +438,6 @@ export const MoneyRecordDetail = memo(() => {
 									/>
 								</Grid>
 							</Grid>
-							{/** /.row 1 **/}
 
 							{/** row 2 **/}
 							<Grid container={true} spacing={1}>
@@ -507,7 +506,6 @@ export const MoneyRecordDetail = memo(() => {
 									</Select>
 								</Grid>
 							</Grid>
-							{/** /.row 2 **/}
 
 							{/** row 3 **/}
 							<Grid container={true} spacing={1}>
@@ -547,7 +545,6 @@ export const MoneyRecordDetail = memo(() => {
 									/>
 								</Grid>
 							</Grid>
-							{/** /.row 3 **/}
 
 							{/** row 4 **/}
 							<Grid container={true} spacing={1}>
@@ -583,7 +580,6 @@ export const MoneyRecordDetail = memo(() => {
 									/>
 								</Grid>
 							</Grid>
-							{/** /.row 4 **/}
 						</Grid>
 					);
 				})}

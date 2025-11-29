@@ -49,14 +49,9 @@
   },
   "scripts": {
     "start-client": "bun .node/swc.cjs --bun --start --client",
-    "start-server": "bun .node/swc.cjs --bun --start --server",
     "build-client": "bun .node/swc.cjs --bun --build --client",
-    "build-server": "bun .node/swc.cjs --bun --build --server",
-    "git-fetch": "bun .node/git.cjs --bun --fetch",
-    "git-push": "bun .node/git.cjs --bun --push",
     "fix": "bun .node/fix.cjs --bun --fix",
     "reset": "bun .node/reset.cjs --bun --reset",
-    "vsce": "bun .node/vsce.cjs --bun --package",
     "gcloud": "bun .node/gcloud.cjs --bun --deploy"
   },
   "dependencies": {
@@ -81,14 +76,14 @@
     "react-dom": "^19.2.0",
     "react-router": "^7.9.6",
     "react-scripts": "^5.0.1",
-    "recharts": "^3.4.1",
+    "recharts": "^3.5.1",
     "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@mui/types": "^7.4.8",
     "@testing-library/react": "^16.3.0",
     "@types/node": "^24.10.1",
-    "@types/react": "^19.2.6",
+    "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@types/react-router": "^5.1.20",
     "typescript": "5.9.3",

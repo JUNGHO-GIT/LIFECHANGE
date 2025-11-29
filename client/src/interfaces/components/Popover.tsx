@@ -25,7 +25,7 @@ export const Popover = memo((props: PopoverProps) => {
   return (
     <MuiPopover
       {...props}
-      slotProps={mergedSlotProps}
+      slotProps={mergedSlotProps as PopoverProps["slotProps"]}
     />
   );
 });

@@ -31,13 +31,13 @@ export const Footer = memo((
     const commonStr = "layout-wrapper p-sticky h-8vh radius-2 border-1 shadow-1";
     const isUser = PATH.includes("/user/category") || PATH.includes("/user/detail");
     const isFood = PATH.includes("/food/find/list") || PATH.includes("/food/favorite/list");
-    const isGoalRecord = PATH.includes("/goal/list") || PATH.includes("/record/list");
+    const isList = PATH.includes("/goal/list") || PATH.includes("/record/list");
     const isDetail = PATH.includes("/goal/detail") || PATH.includes("/record/detail");
 		const isCalendarDetail = PATH.includes("/calendar/detail");
 
     isUser && (setTypeName("btn"), setStyleClass(`${commonStr} bottom-0vh`));
     isFood && (setTypeName("findFilter"), setStyleClass(`${commonStr} bottom-8vh`));
-    isGoalRecord && (setTypeName("listFilter"), setStyleClass(`${commonStr} bottom-8vh`));
+    isList && (setTypeName("listFilter"), setStyleClass(`${commonStr} bottom-8vh`));
     isDetail && (setTypeName("btn"), setStyleClass(`${commonStr} bottom-8vh`));
 		isCalendarDetail && (setTypeName("btn"), setStyleClass(`${commonStr} bottom-8vh`));
   }, [PATH]);

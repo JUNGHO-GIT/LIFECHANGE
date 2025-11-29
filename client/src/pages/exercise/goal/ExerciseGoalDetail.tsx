@@ -34,6 +34,7 @@ export const ExerciseGoalDetail = memo(() => {
     select: [""],
   });
   const [FLOW, setFLOW] = useState({
+		theme: `exercise`,
     exist: false,
     itsMe: false,
     itsNew: false,
@@ -331,7 +332,6 @@ export const ExerciseGoalDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 1 **/}
 
 						{/** row 2 **/}
 						<Grid container={true} spacing={1}>
@@ -371,7 +371,6 @@ export const ExerciseGoalDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 2 **/}
 
 						{/** row 3 **/}
 						<Grid container={true} spacing={1}>
@@ -411,7 +410,6 @@ export const ExerciseGoalDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 3 **/}
 
 						{/** row 4 **/}
 
@@ -429,7 +427,6 @@ export const ExerciseGoalDetail = memo(() => {
 								/>
 							</Grid>
 						</Grid>
-						{/** /.row 4 **/}
 
 						{/** row 5 **/}
 						<Grid container={true} spacing={1}>
@@ -462,7 +459,6 @@ export const ExerciseGoalDetail = memo(() => {
                   }}
 								/>
 							</Grid>
-							{/** /.row 5 **/}
 						</Grid>
 					</Grid>
 				))}

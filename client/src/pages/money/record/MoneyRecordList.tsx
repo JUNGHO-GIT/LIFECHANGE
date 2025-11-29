@@ -224,7 +224,6 @@ export const MoneyRecordList = memo(() => {
 												</Grid>
 											</Grid>
 										</Grid>
-										{/** /.row 1 **/}
 
 										<Hr m={1} className={`bg-light`} />
 
@@ -259,7 +258,6 @@ export const MoneyRecordList = memo(() => {
 												</Grid>
 											</Grid>
 										</Grid>
-										{/** /.row 2 **/}
 									</Grid>
 								</AccordionDetails>
 							</Accordion>
