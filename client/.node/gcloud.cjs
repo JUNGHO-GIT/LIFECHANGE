@@ -14,9 +14,7 @@ const args2 = argv.find(arg => [`--server`, `--client`].includes(arg))?.replace(
 
 // 공통 함수 ------------------------------------------------------------------------------------
 const getKeyPath = (platform=``) => platform === `win` ? CONFIG.ssh.win.keyPath : CONFIG.ssh.linux.keyPath;
-
 const getServiceId = (platform=``) => platform === `win` ? CONFIG.ssh.win.serviceId : CONFIG.ssh.linux.serviceId;
-
 const runSshCommand = (platform=``, commands=``) => {
 	const keyPath = getKeyPath(platform);
 	const serviceId = getServiceId(platform);
@@ -110,24 +108,6 @@ const runServerRemoteScript = (platform=``) => {
 	logger(`info`, `원격 서버 서버 배포 스크립트 실행 완료`);
 };
 
-// 배포 실행 함수 -------------------------------------------------------------------------------
-const deployClient = (platform=``) => {
-	logger(`info`, `클라이언트 배포 프로세스 시작`);
-	buildProject();
-	compressBuild();
-	uploadToGCP();
-	deleteBuildTar(platform);
-	runClientRemoteScript(platform);
-	logger(`info`, `클라이언트 배포 프로세스 완료`);
-};
-
-const deployServer = (platform=``) => {
-	logger(`info`, `서버 배포 프로세스 시작`);
-	runGitPush();
-	runServerRemoteScript(platform);
-	logger(`info`, `서버 배포 프로세스 완료`);
-};
-
 // 실행 ---------------------------------------------------------------------------------------
 (() => {
 	logger(`info`, `스크립트 실행: ${TITLE}`);
@@ -142,7 +122,21 @@ const deployServer = (platform=``) => {
 	) : null;
 
 	try {
-		args2 === `client` ? deployClient(winOrLinux) : deployServer(winOrLinux);
+		args2 === `client` && (() => {
+			logger(`info`, `클라이언트 배포 프로세스 시작`);
+			buildProject();
+			compressBuild();
+			uploadToGCP();
+			deleteBuildTar(winOrLinux);
+			runClientRemoteScript(winOrLinux);
+			logger(`info`, `클라이언트 배포 프로세스 완료`);
+		})();
+		args2 === `server` && (() => {
+			logger(`info`, `서버 배포 프로세스 시작`);
+			runGitPush();
+			runServerRemoteScript(winOrLinux);
+			logger(`info`, `서버 배포 프로세스 완료`);
+		})();
 		logger(`info`, `전체 배포 프로세스 완료`);
 		process.exit(0);
 	}
