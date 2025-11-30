@@ -1,6 +1,6 @@
 {
   "name": "lifechange-server",
-  "version": "1.3.7",
+  "version": "1.3.8",
   "type": "module",
   "main": "index.ts",
   "license": "Apache-2.0",
@@ -38,10 +38,10 @@
   "scripts": {
     "start": "bun .node/swc.cjs --bun --start --server",
     "build": "bun .node/swc.cjs --bun --build --server",
-    "git-fetch": "bun .node/git.cjs --bun --fetch",
-    "git-push": "bun .node/git.cjs --bun --push",
     "fix": "bun .node/fix.cjs --bun --fix",
     "reset": "bun .node/reset.cjs --bun --reset",
+    "git-fetch": "bun .node/git.cjs --bun --fetch",
+    "git-push": "bun .node/git.cjs --bun --push",
     "gcloud": "bun .node/gcloud.cjs --bun --server"
   },
   "dependencies": {

@@ -15,7 +15,7 @@ export const FoodGoalDetail = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, navigate, sessionId, toList } = useCommonValue();
-  const { location_from, location_dateType } = useCommonValue();
+  const { location_dateType } = useCommonValue();
   const { location_dateStart, location_dateEnd } = useCommonValue();
   const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
@@ -288,7 +288,7 @@ export const FoodGoalDetail = memo(() => {
   const detailNode = () => {
     // 7-1. date + count
 		const dateCountSection = () => (
-			<Grid container={true} spacing={2} className={`radius-2 border-1 shadow-0 p-20px`}>
+			<Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1 p-20px`}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}
@@ -309,189 +309,189 @@ export const FoodGoalDetail = memo(() => {
     );
     // 7-3. detail
     const detailSection = () => (
-			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
-				{[OBJECT]?.map((item, i) => (
-					<Grid container spacing={2} key={`detail-${i}`}
-					className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}>
-						{/** row 1 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={6} className={`d-row-left`}>
-								<Bg
-									badgeContent={i + 1}
-									bgcolor={"#1976d2"}
-								/>
-							</Grid>
-							<Grid size={6} className={`d-row-right`}>
-								<Delete
-									index={i}
-									handleDelete={handleDelete}
-									LOCKED={LOCKED}
-								/>
-							</Grid>
+			<>
+			{[OBJECT]?.map((item, i) => (
+				<Grid container spacing={2} key={`detail-${i}`}
+				className={`${LOCKED === "locked" ? "locked" : ""} radius-2 border-1 shadow-1 p-20px`}>
+					{/** row 1 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={6} className={`d-row-left`}>
+							<Bg
+								badgeContent={i + 1}
+								bgcolor={"#1976d2"}
+							/>
 						</Grid>
-
-						{/** row 2 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={12}>
-								<Input
-									locked={LOCKED}
-									value={insertComma(item?.food_goal_kcal || "0")}
-									inputRef={REFS?.[i]?.food_goal_kcal}
-									error={ERRORS?.[i]?.food_goal_kcal}
-									label={
-										DATE?.dateType === "day" ? (
-											`${translate("goalKcal")}`
-										) : (
-											`${translate("goalKcal")} (${translate("total")})`
-										)
-									}
-									startadornment={
-										<Img
-											max={14}
-											hover={true}
-											shadow={false}
-											radius={false}
-											src={"food2.webp"}
-										/>
-									}
-									endadornment={
-										translate(`kc`)
-									}
-                  onChange={(e: any) => {
-                    const processedValue = handleNumberInput(e.target.value, 999999);
-                    if (processedValue === null) { return; }
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      food_goal_kcal: processedValue,
-                    }));
-                  }}
-								/>
-							</Grid>
-						</Grid>
-
-						{/** row 3 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={12}>
-								<Input
-									locked={LOCKED}
-									value={insertComma(item?.food_goal_carb || "0")}
-									inputRef={REFS?.[i]?.food_goal_carb}
-									error={ERRORS?.[i]?.food_goal_carb}
-									label={
-										DATE?.dateType === "day" ? (
-											`${translate("goalCarb")}`
-										) : (
-											`${translate("goalCarb")} (${translate("total")})`
-										)
-									}
-									startadornment={
-										<Img
-											max={14}
-											hover={true}
-											shadow={false}
-											radius={false}
-											src={"food3.webp"}
-										/>
-									}
-									endadornment={
-										translate(`g`)
-									}
-                  onChange={(e: any) => {
-                    const processedValue = handleNumberInput(e.target.value, 999999);
-                    if (processedValue === null) { return; }
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      food_goal_carb: processedValue,
-                    }));
-                  }}
-								/>
-							</Grid>
-						</Grid>
-
-						{/** row 4 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={12}>
-								<Input
-									locked={LOCKED}
-									value={insertComma(item?.food_goal_protein || "0")}
-									inputRef={REFS?.[i]?.food_goal_protein}
-									error={ERRORS?.[i]?.food_goal_protein}
-									label={
-										DATE?.dateType === "day" ? (
-											`${translate("goalProtein")}`
-										) : (
-											`${translate("goalProtein")} (${translate("total")})`
-										)
-									}
-									startadornment={
-										<Img
-											max={14}
-											hover={true}
-											shadow={false}
-											radius={false}
-											src={"food4.webp"}
-										/>
-									}
-									endadornment={
-										translate(`g`)
-									}
-                  onChange={(e: any) => {
-                    const processedValue = handleNumberInput(e.target.value, 999999);
-                    if (processedValue === null) { return; }
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      food_goal_protein: processedValue,
-                    }));
-                  }}
-								/>
-							</Grid>
-						</Grid>
-
-						{/** row 5 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={12}>
-								<Input
-									locked={LOCKED}
-									value={insertComma(item?.food_goal_fat || "0")}
-									inputRef={REFS?.[i]?.food_goal_fat}
-									error={ERRORS?.[i]?.food_goal_fat}
-									label={
-										DATE?.dateType === "day" ? (
-											`${translate("goalFat")}`
-										) : (
-											`${translate("goalFat")} (${translate("total")})`
-										)
-									}
-									startadornment={
-										<Img
-											max={14}
-											hover={true}
-											shadow={false}
-											radius={false}
-											src={"food5.webp"}
-										/>
-									}
-									endadornment={
-										translate(`g`)
-									}
-                  onChange={(e: any) => {
-                    const processedValue = handleNumberInput(e.target.value, 999999);
-                    if (processedValue === null) { return; }
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      food_goal_fat: processedValue,
-                    }));
-                  }}
-								/>
-							</Grid>
+						<Grid size={6} className={`d-row-right`}>
+							<Delete
+								index={i}
+								handleDelete={handleDelete}
+								LOCKED={LOCKED}
+							/>
 						</Grid>
 					</Grid>
-				))}
-			</Grid>
+
+					{/** row 2 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={12}>
+							<Input
+								locked={LOCKED}
+								value={insertComma(item?.food_goal_kcal || "0")}
+								inputRef={REFS?.[i]?.food_goal_kcal}
+								error={ERRORS?.[i]?.food_goal_kcal}
+								label={
+									DATE?.dateType === "day" ? (
+										`${translate("goalKcal")}`
+									) : (
+										`${translate("goalKcal")} (${translate("total")})`
+									)
+								}
+								startadornment={
+									<Img
+										max={14}
+										hover={true}
+										shadow={false}
+										radius={false}
+										src={"food2.webp"}
+									/>
+								}
+								endadornment={
+									translate(`kc`)
+								}
+								onChange={(e: any) => {
+									const processedValue = handleNumberInput(e.target.value, 999999);
+									if (processedValue === null) { return; }
+									setOBJECT((prev) => ({
+										...prev,
+										food_goal_kcal: processedValue,
+									}));
+								}}
+							/>
+						</Grid>
+					</Grid>
+
+					{/** row 3 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={12}>
+							<Input
+								locked={LOCKED}
+								value={insertComma(item?.food_goal_carb || "0")}
+								inputRef={REFS?.[i]?.food_goal_carb}
+								error={ERRORS?.[i]?.food_goal_carb}
+								label={
+									DATE?.dateType === "day" ? (
+										`${translate("goalCarb")}`
+									) : (
+										`${translate("goalCarb")} (${translate("total")})`
+									)
+								}
+								startadornment={
+									<Img
+										max={14}
+										hover={true}
+										shadow={false}
+										radius={false}
+										src={"food3.webp"}
+									/>
+								}
+								endadornment={
+									translate(`g`)
+								}
+								onChange={(e: any) => {
+									const processedValue = handleNumberInput(e.target.value, 999999);
+									if (processedValue === null) { return; }
+									setOBJECT((prev) => ({
+										...prev,
+										food_goal_carb: processedValue,
+									}));
+								}}
+							/>
+						</Grid>
+					</Grid>
+
+					{/** row 4 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={12}>
+							<Input
+								locked={LOCKED}
+								value={insertComma(item?.food_goal_protein || "0")}
+								inputRef={REFS?.[i]?.food_goal_protein}
+								error={ERRORS?.[i]?.food_goal_protein}
+								label={
+									DATE?.dateType === "day" ? (
+										`${translate("goalProtein")}`
+									) : (
+										`${translate("goalProtein")} (${translate("total")})`
+									)
+								}
+								startadornment={
+									<Img
+										max={14}
+										hover={true}
+										shadow={false}
+										radius={false}
+										src={"food4.webp"}
+									/>
+								}
+								endadornment={
+									translate(`g`)
+								}
+								onChange={(e: any) => {
+									const processedValue = handleNumberInput(e.target.value, 999999);
+									if (processedValue === null) { return; }
+									setOBJECT((prev) => ({
+										...prev,
+										food_goal_protein: processedValue,
+									}));
+								}}
+							/>
+						</Grid>
+					</Grid>
+
+					{/** row 5 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={12}>
+							<Input
+								locked={LOCKED}
+								value={insertComma(item?.food_goal_fat || "0")}
+								inputRef={REFS?.[i]?.food_goal_fat}
+								error={ERRORS?.[i]?.food_goal_fat}
+								label={
+									DATE?.dateType === "day" ? (
+										`${translate("goalFat")}`
+									) : (
+										`${translate("goalFat")} (${translate("total")})`
+									)
+								}
+								startadornment={
+									<Img
+										max={14}
+										hover={true}
+										shadow={false}
+										radius={false}
+										src={"food5.webp"}
+									/>
+								}
+								endadornment={
+									translate(`g`)
+								}
+								onChange={(e: any) => {
+									const processedValue = handleNumberInput(e.target.value, 999999);
+									if (processedValue === null) { return; }
+									setOBJECT((prev) => ({
+										...prev,
+										food_goal_fat: processedValue,
+									}));
+								}}
+							/>
+						</Grid>
+					</Grid>
+				</Grid>
+			))}
+			</>
 		);
     // 7-10. return
     return (
-      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
+      <Paper className={`content-wrapper radius-2 border-2 shadow-1 h-min-75vh`}>
         {dateCountSection()}
 				<Br m={20} />
 				{COUNT?.newSectionCnt > 0 && detailSection()}

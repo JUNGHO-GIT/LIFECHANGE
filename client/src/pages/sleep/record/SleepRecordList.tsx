@@ -137,7 +137,7 @@ export const SleepRecordList = memo(() => {
 		const listSection = () => (
 			<Grid container={true} spacing={0}>
 				{OBJECT?.map((item, i) => (
-					<Grid container={true} spacing={0} className={`radius-2 border-1 shadow-0 mb-10px`} key={`list-${i}`}>
+					<Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px`} key={`list-${i}`}>
 						<Grid size={12} className={`p-2px`}>
 							<Accordion
 								className={`border-0 shadow-0 radius-2`}

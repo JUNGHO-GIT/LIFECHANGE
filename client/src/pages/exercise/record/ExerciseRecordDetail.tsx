@@ -18,7 +18,7 @@ export const ExerciseRecordDetail = memo(() => {
 	// 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, navigate, toList } = useCommonValue();
   const { sessionId, localUnit, bgColors, exerciseArray } = useCommonValue();
-  const { location_from, location_dateStart, location_dateEnd } = useCommonValue();
+  const { location_dateStart, location_dateEnd } = useCommonValue();
   const { getDayFmt,getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { ERRORS, REFS, validate } = useValidateExercise();
   const { translate } = useStoreLanguage();
@@ -362,7 +362,7 @@ export const ExerciseRecordDetail = memo(() => {
   const detailNode = () => {
     // 7-1. date + count
 		const dateCountSection = () => (
-			<Grid container={true} spacing={2} className={`radius-2 border-1 shadow-0 p-20px`}>
+			<Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1 p-20px`}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}
@@ -383,7 +383,7 @@ export const ExerciseRecordDetail = memo(() => {
     );
     // 7-2. total
     const totalSection = () => (
-			<Grid container={true} spacing={2} className={`radius-2 border-1 shadow-0 p-20px`}>
+			<Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1 p-20px`}>
         {/** row 1 **/}
         <Grid container={true} spacing={1}>
           <Grid size={12}>
@@ -465,228 +465,228 @@ export const ExerciseRecordDetail = memo(() => {
     );
     // 7-3. detail
     const detailSection = () => (
-			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
-				{OBJECT?.exercise_section?.map((item, i) => (
-					<Grid container spacing={2} key={`detail-${i}`}
-					className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}>
-						{/** row 1 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={6} className={`d-row-left`}>
-								<Bg
-									badgeContent={i + 1}
-									bgcolor={bgColors?.[exerciseArray.findIndex((f: any) => f.exercise_record_part === item?.exercise_record_part)]}
-								/>
-							</Grid>
-							<Grid size={6} className={`d-row-right`}>
-								<Delete
-									index={i}
-									handleDelete={handleDelete}
-									LOCKED={LOCKED}
-								/>
-							</Grid>
+			<>
+			{OBJECT?.exercise_section?.map((item, i) => (
+				<Grid container spacing={2} key={`detail-${i}`}
+				className={`${LOCKED === "locked" ? "locked" : ""} radius-2 border-1 shadow-1 p-20px`}>
+					{/** row 1 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={6} className={`d-row-left`}>
+							<Bg
+								badgeContent={i + 1}
+								bgcolor={bgColors?.[exerciseArray.findIndex((f: any) => f.exercise_record_part === item?.exercise_record_part)]}
+							/>
 						</Grid>
-
-						{/** row 2 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={6}>
-								<Select
-									locked={LOCKED}
-									label={translate(`part`)}
-									value={item?.exercise_record_part || ""}
-									inputRef={REFS?.[i]?.exercise_record_part}
-									error={ERRORS?.[i]?.exercise_record_part}
-									onChange={(e: any) => {
-										let value = String(e.target.value || "");
-										const foundIndex = exerciseArray.findIndex((f: any) => f.exercise_record_part === value);
-										const foundItem = foundIndex !== -1 ? exerciseArray[foundIndex] : null;
-										setOBJECT((prev) => ({
-											...prev,
-											exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
-												idx === i ? {
-													...section,
-													exercise_record_part: value,
-													exercise_record_title: foundItem?.exercise_record_title?.[0] || "",
-												} : section
-											))
-										}));
-									}
-								}>
-									{exerciseArray.map((part: any, idx: number) => (
-										<MenuItem
-											key={idx}
-											value={part.exercise_record_part}
-											className={`fs-0-8rem`}
-										>
-											{translate(part.exercise_record_part)}
-										</MenuItem>
-									))}
-								</Select>
-							</Grid>
-							<Grid size={6}>
-								<Select
-									locked={LOCKED}
-									label={translate(`title`)}
-									value={item?.exercise_record_title || ""}
-									inputRef={REFS?.[i]?.exercise_record_title}
-									error={ERRORS?.[i]?.exercise_record_title}
-									onChange={(e: any) => {
-										let value = String(e.target.value || "");
-										setOBJECT((prev) => ({
-											...prev,
-											exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
-												idx === i ? {
-													...section,
-													exercise_record_title: value,
-												} : section
-											))
-										}));
-									}}
-								>
-									{(() => {
-										const foundIndex = exerciseArray.findIndex((f: any) => f.exercise_record_part === item?.exercise_record_part);
-										const foundItem = foundIndex !== -1 ? exerciseArray[foundIndex] : null;
-										return foundItem?.exercise_record_title?.map((title: any, idx: number) => (
-											<MenuItem
-												key={idx}
-												value={title}
-												className={`fs-0-8rem`}
-											>
-												{translate(title)}
-											</MenuItem>
-										)) || [];
-									})()}
-								</Select>
-							</Grid>
-						</Grid>
-
-						{/** row 3 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={6}>
-								<Input
-									locked={LOCKED}
-									label={translate(`set`)}
-									value={insertComma(item?.exercise_record_set || "0")}
-									inputRef={REFS?.[i]?.exercise_record_set}
-									error={ERRORS?.[i]?.exercise_record_set}
-									startadornment={
-										<Img
-											max={14}
-											hover={true}
-											shadow={false}
-											radius={false}
-											src={"exercise3_1.webp"}
-										/>
-									}
-									endadornment={
-										translate(`s`)
-									}
-                  onChange={(e: any) => {
-                    const processedValue = handleNumberInput(e.target.value, 999);
-                    if (processedValue === null) { return; }
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
-                        idx === i ? {
-                          ...section,
-                          exercise_record_set: processedValue
-                        } : section
-                      ))
-                    }));
-                  }}
-								/>
-							</Grid>
-							<Grid size={6}>
-								<Input
-									locked={LOCKED}
-									label={translate(`rep`)}
-									value={insertComma(item?.exercise_record_rep || "0")}
-									inputRef={REFS?.[i]?.exercise_record_rep}
-									error={ERRORS?.[i]?.exercise_record_rep}
-									startadornment={
-										<Img
-											max={14}
-											hover={true}
-											shadow={false}
-											radius={false}
-											src={"exercise3_2.webp"}
-										/>
-									}
-									endadornment={
-										translate(`r`)
-									}
-                  onChange={(e: any) => {
-                    const processedValue = handleNumberInput(e.target.value, 999);
-                    if (processedValue === null) { return; }
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
-                        idx === i ? {
-                          ...section,
-                          exercise_record_rep: processedValue
-                        } : section
-                      ))
-                    }));
-                  }}
-								/>
-							</Grid>
-						</Grid>
-
-						{/** row 4 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={6}>
-								<Input
-									locked={LOCKED}
-									label={translate(`weight`)}
-									value={insertComma(item?.exercise_record_weight || "0")}
-									inputRef={REFS?.[i]?.exercise_record_weight}
-									error={ERRORS?.[i]?.exercise_record_weight}
-									startadornment={
-										<Img
-											max={14}
-											hover={true}
-											shadow={false}
-											radius={false}
-											src={"exercise3_3.webp"}
-										/>
-									}
-									endadornment={
-										localUnit
-									}
-                  onChange={(e: any) => {
-                    const processedValue = handleNumberInput(e.target.value, 999);
-                    if (processedValue === null) { return; }
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
-                        idx === i ? {
-                          ...section,
-                          exercise_record_weight: processedValue
-                        } : section
-                      ))
-                    }));
-                  }}
-								/>
-							</Grid>
-							<Grid size={6}>
-								<PickerTime
-									OBJECT={OBJECT}
-									setOBJECT={setOBJECT}
-									REFS={REFS}
-									ERRORS={ERRORS}
-									DATE={DATE}
-									LOCKED={LOCKED}
-									extra={"exercise_record_cardio"}
-									i={i}
-								/>
-							</Grid>
+						<Grid size={6} className={`d-row-right`}>
+							<Delete
+								index={i}
+								handleDelete={handleDelete}
+								LOCKED={LOCKED}
+							/>
 						</Grid>
 					</Grid>
-				))}
-			</Grid>
+
+					{/** row 2 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={6}>
+							<Select
+								locked={LOCKED}
+								label={translate(`part`)}
+								value={item?.exercise_record_part || ""}
+								inputRef={REFS?.[i]?.exercise_record_part}
+								error={ERRORS?.[i]?.exercise_record_part}
+								onChange={(e: any) => {
+									let value = String(e.target.value || "");
+									const foundIndex = exerciseArray.findIndex((f: any) => f.exercise_record_part === value);
+									const foundItem = foundIndex !== -1 ? exerciseArray[foundIndex] : null;
+									setOBJECT((prev) => ({
+										...prev,
+										exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
+											idx === i ? {
+												...section,
+												exercise_record_part: value,
+												exercise_record_title: foundItem?.exercise_record_title?.[0] || "",
+											} : section
+										))
+									}));
+								}
+							}>
+								{exerciseArray.map((part: any, idx: number) => (
+									<MenuItem
+										key={idx}
+										value={part.exercise_record_part}
+										className={`fs-0-8rem`}
+									>
+										{translate(part.exercise_record_part)}
+									</MenuItem>
+								))}
+							</Select>
+						</Grid>
+						<Grid size={6}>
+							<Select
+								locked={LOCKED}
+								label={translate(`title`)}
+								value={item?.exercise_record_title || ""}
+								inputRef={REFS?.[i]?.exercise_record_title}
+								error={ERRORS?.[i]?.exercise_record_title}
+								onChange={(e: any) => {
+									let value = String(e.target.value || "");
+									setOBJECT((prev) => ({
+										...prev,
+										exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
+											idx === i ? {
+												...section,
+												exercise_record_title: value,
+											} : section
+										))
+									}));
+								}}
+							>
+								{(() => {
+									const foundIndex = exerciseArray.findIndex((f: any) => f.exercise_record_part === item?.exercise_record_part);
+									const foundItem = foundIndex !== -1 ? exerciseArray[foundIndex] : null;
+									return foundItem?.exercise_record_title?.map((title: any, idx: number) => (
+										<MenuItem
+											key={idx}
+											value={title}
+											className={`fs-0-8rem`}
+										>
+											{translate(title)}
+										</MenuItem>
+									)) || [];
+								})()}
+							</Select>
+						</Grid>
+					</Grid>
+
+					{/** row 3 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={6}>
+							<Input
+								locked={LOCKED}
+								label={translate(`set`)}
+								value={insertComma(item?.exercise_record_set || "0")}
+								inputRef={REFS?.[i]?.exercise_record_set}
+								error={ERRORS?.[i]?.exercise_record_set}
+								startadornment={
+									<Img
+										max={14}
+										hover={true}
+										shadow={false}
+										radius={false}
+										src={"exercise3_1.webp"}
+									/>
+								}
+								endadornment={
+									translate(`s`)
+								}
+								onChange={(e: any) => {
+									const processedValue = handleNumberInput(e.target.value, 999);
+									if (processedValue === null) { return; }
+									setOBJECT((prev) => ({
+										...prev,
+										exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
+											idx === i ? {
+												...section,
+												exercise_record_set: processedValue
+											} : section
+										))
+									}));
+								}}
+							/>
+						</Grid>
+						<Grid size={6}>
+							<Input
+								locked={LOCKED}
+								label={translate(`rep`)}
+								value={insertComma(item?.exercise_record_rep || "0")}
+								inputRef={REFS?.[i]?.exercise_record_rep}
+								error={ERRORS?.[i]?.exercise_record_rep}
+								startadornment={
+									<Img
+										max={14}
+										hover={true}
+										shadow={false}
+										radius={false}
+										src={"exercise3_2.webp"}
+									/>
+								}
+								endadornment={
+									translate(`r`)
+								}
+								onChange={(e: any) => {
+									const processedValue = handleNumberInput(e.target.value, 999);
+									if (processedValue === null) { return; }
+									setOBJECT((prev) => ({
+										...prev,
+										exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
+											idx === i ? {
+												...section,
+												exercise_record_rep: processedValue
+											} : section
+										))
+									}));
+								}}
+							/>
+						</Grid>
+					</Grid>
+
+					{/** row 4 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={6}>
+							<Input
+								locked={LOCKED}
+								label={translate(`weight`)}
+								value={insertComma(item?.exercise_record_weight || "0")}
+								inputRef={REFS?.[i]?.exercise_record_weight}
+								error={ERRORS?.[i]?.exercise_record_weight}
+								startadornment={
+									<Img
+										max={14}
+										hover={true}
+										shadow={false}
+										radius={false}
+										src={"exercise3_3.webp"}
+									/>
+								}
+								endadornment={
+									localUnit
+								}
+								onChange={(e: any) => {
+									const processedValue = handleNumberInput(e.target.value, 999);
+									if (processedValue === null) { return; }
+									setOBJECT((prev) => ({
+										...prev,
+										exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
+											idx === i ? {
+												...section,
+												exercise_record_weight: processedValue
+											} : section
+										))
+									}));
+								}}
+							/>
+						</Grid>
+						<Grid size={6}>
+							<PickerTime
+								OBJECT={OBJECT}
+								setOBJECT={setOBJECT}
+								REFS={REFS}
+								ERRORS={ERRORS}
+								DATE={DATE}
+								LOCKED={LOCKED}
+								extra={"exercise_record_cardio"}
+								i={i}
+							/>
+						</Grid>
+					</Grid>
+				</Grid>
+			))}
+			</>
 		);
     // 7-10. return
     return (
-      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
+      <Paper className={`content-wrapper radius-2 border-2 shadow-1 h-min-75vh`}>
         {dateCountSection()}
 				<Br m={20} />
         {totalSection()}

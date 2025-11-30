@@ -411,7 +411,7 @@ export const CalendarDetail = memo(() => {
 	const detailNode = () => {
 		// 7-1. date + count
 		const dateCountSection = () => (
-			<Grid container={true} spacing={2} className={`radius-2 border-1 shadow-0 p-20px`}>
+			<Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1 p-20px`}>
 				<Grid size={12}>
 					<PickerDay
 						DATE={DATE}
@@ -434,900 +434,896 @@ export const CalendarDetail = memo(() => {
 
 		// 7-2. exercise
 		const exerciseSection = () => (
-			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
-
-				{/** header **/}
-				<Grid container={true} spacing={0} className={`${OBJECT?.calendar_exercise_section?.length === 0 ? `radius-2` : `radius-top-2`} border-1 p-10px`}>
-					<Grid size={12} className={`d-row`}>
-						<Div className={`d-row-left`}>
-							<Img
-								max={14}
-								hover={true}
-								shadow={false}
-								radius={false}
-								src={"exercise1.webp"}
-								className={`ml-5px mr-10px`}
-							/>
-							<Div className={`fs-0-9rem fw-600`}>
-								{translate(`exercise`)}
-							</Div>
+			<>
+			{/** header **/}
+			<Grid container={true} spacing={0} className={`${OBJECT?.calendar_exercise_section?.length === 0 ? `radius-2` : `radius-top-2`} border-1 shadow-1 p-10px`}>
+				<Grid size={12} className={`d-row`}>
+					<Div className={`d-row-left`}>
+						<Img
+							max={14}
+							hover={true}
+							shadow={false}
+							radius={false}
+							src={"exercise1.webp"}
+							className={`ml-5px mr-10px`}
+						/>
+						<Div className={`fs-0-9rem fw-600`}>
+							{translate(`exercise`)}
 						</Div>
-					</Grid>
+					</Div>
 				</Grid>
+			</Grid>
 
-				{/** items **/}
-				{OBJECT?.calendar_exercise_section?.map((item, i) => (
-					<Grid container spacing={2} key={`exercise-detail-${i}`}
-						className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`}  border-1 p-20px`}>
-						{/** row 1 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={6} className={`d-row-left`}>
-								<Bg
-									badgeContent={i + 1}
-									bgcolor={bgColors?.[exerciseArray.findIndex((f: any) => f.exercise_record_part === item?.exercise_record_part)]}
-								/>
-							</Grid>
-							<Grid size={6} className={`d-row-right`}>
-								<Delete
-									index={i}
-									section={`calendar_exercise_section`}
-									handleDelete={handleDelete}
-									LOCKED={LOCKED}
-									disabled={false}
-								/>
-							</Grid>
+			{/** items **/}
+			{OBJECT?.calendar_exercise_section?.map((item, i) => (
+				<Grid container spacing={2} key={`exercise-detail-${i}`}
+					className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-1 shadow-1 p-20px`}>
+					{/** row 1 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={6} className={`d-row-left`}>
+							<Bg
+								badgeContent={i + 1}
+								bgcolor={bgColors?.[exerciseArray.findIndex((f: any) => f.exercise_record_part === item?.exercise_record_part)]}
+							/>
 						</Grid>
+						<Grid size={6} className={`d-row-right`}>
+							<Delete
+								index={i}
+								section={`calendar_exercise_section`}
+								handleDelete={handleDelete}
+								LOCKED={LOCKED}
+								disabled={false}
+							/>
+						</Grid>
+					</Grid>
 
-						{/** row 2 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={6}>
-								<Select
-									locked={LOCKED}
-									label={translate(`part`)}
-									value={item?.exercise_record_part || ``}
-									inputRef={REFS?.[i]?.exercise_record_part || null}
-									error={ERRORS?.[i]?.exercise_record_part || null}
-									onChange={(e: any) => {
-										const value = String(e.target.value || ``);
-										const foundIndex = exerciseArray.findIndex((f: any) => f.exercise_record_part === value);
-										const foundItem = foundIndex !== -1 ? exerciseArray[foundIndex] : null;
-										setOBJECT((prev: CalendarType) => ({
-											...prev,
-											calendar_exercise_section: prev.calendar_exercise_section?.map((section: CalendarExerciseSectionType, idx: number) => (
-												idx === i ? {
-													...section,
-													exercise_record_part: value,
-													exercise_record_title: (foundItem as any)?.exercise_record_title?.[0] || ``,
-												} : section
-											))
-										}));
-									}}
-								>
-									{exerciseArray.map((part: any, idx: number) => (
+					{/** row 2 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={6}>
+							<Select
+								locked={LOCKED}
+								label={translate(`part`)}
+								value={item?.exercise_record_part || ``}
+								inputRef={REFS?.[i]?.exercise_record_part || null}
+								error={ERRORS?.[i]?.exercise_record_part || null}
+								onChange={(e: any) => {
+									const value = String(e.target.value || ``);
+									const foundIndex = exerciseArray.findIndex((f: any) => f.exercise_record_part === value);
+									const foundItem = foundIndex !== -1 ? exerciseArray[foundIndex] : null;
+									setOBJECT((prev: CalendarType) => ({
+										...prev,
+										calendar_exercise_section: prev.calendar_exercise_section?.map((section: CalendarExerciseSectionType, idx: number) => (
+											idx === i ? {
+												...section,
+												exercise_record_part: value,
+												exercise_record_title: (foundItem as any)?.exercise_record_title?.[0] || ``,
+											} : section
+										))
+									}));
+								}}
+							>
+								{exerciseArray.map((part: any, idx: number) => (
+									<MenuItem
+										key={idx}
+										value={part.exercise_record_part}
+										className={`fs-0-8rem`}
+									>
+										{translate(part.exercise_record_part)}
+									</MenuItem>
+								))}
+							</Select>
+						</Grid>
+						<Grid size={6}>
+							<Select
+								locked={LOCKED}
+								label={translate(`title`)}
+								value={item?.exercise_record_title || ``}
+								inputRef={REFS?.[i]?.exercise_record_title}
+								error={ERRORS?.[i]?.exercise_record_title}
+								onChange={(e: any) => {
+									const value = String(e.target.value || ``);
+									setOBJECT((prev: CalendarType) => ({
+										...prev,
+										calendar_exercise_section: prev.calendar_exercise_section?.map((section: CalendarExerciseSectionType, idx: number) => (
+											idx === i ? {
+												...section,
+												exercise_record_title: value,
+											} : section
+										))
+									}));
+								}}
+							>
+								{(() => {
+									const foundIndex = exerciseArray.findIndex((f: any) => f.exercise_record_part === item?.exercise_record_part);
+									const foundItem = foundIndex !== -1 ? exerciseArray[foundIndex] : null;
+									return (foundItem as any)?.exercise_record_title?.map((title: any, idx: number) => (
 										<MenuItem
 											key={idx}
-											value={part.exercise_record_part}
+											value={title}
 											className={`fs-0-8rem`}
 										>
-											{translate(part.exercise_record_part)}
+											{translate(title)}
 										</MenuItem>
-									))}
-								</Select>
-							</Grid>
-							<Grid size={6}>
-								<Select
-									locked={LOCKED}
-									label={translate(`title`)}
-									value={item?.exercise_record_title || ``}
-									inputRef={REFS?.[i]?.exercise_record_title}
-									error={ERRORS?.[i]?.exercise_record_title}
-									onChange={(e: any) => {
-										const value = String(e.target.value || ``);
+									)) || [];
+								})()}
+							</Select>
+						</Grid>
+					</Grid>
+
+					{/** row 3 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={6}>
+							<Input
+								locked={LOCKED}
+								label={translate(`set`)}
+								value={insertComma(item?.exercise_record_set || `0`)}
+								inputRef={REFS?.[i]?.exercise_record_set}
+								error={ERRORS?.[i]?.exercise_record_set}
+								startadornment={
+									<Img
+										max={14}
+										hover={true}
+										shadow={false}
+										radius={false}
+										src={`exercise3_1.webp`}
+									/>
+								}
+								endadornment={
+									translate(`s`)
+								}
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+									const processedValue = handleNumberInput(e.target.value, 999);
+									processedValue !== null && (
 										setOBJECT((prev: CalendarType) => ({
 											...prev,
 											calendar_exercise_section: prev.calendar_exercise_section?.map((section: CalendarExerciseSectionType, idx: number) => (
 												idx === i ? {
 													...section,
-													exercise_record_title: value,
+													exercise_record_set: processedValue
 												} : section
 											))
-										}));
-									}}
-								>
-									{(() => {
-										const foundIndex = exerciseArray.findIndex((f: any) => f.exercise_record_part === item?.exercise_record_part);
-										const foundItem = foundIndex !== -1 ? exerciseArray[foundIndex] : null;
-										return (foundItem as any)?.exercise_record_title?.map((title: any, idx: number) => (
-											<MenuItem
-												key={idx}
-												value={title}
-												className={`fs-0-8rem`}
-											>
-												{translate(title)}
-											</MenuItem>
-										)) || [];
-									})()}
-								</Select>
-							</Grid>
+										}))
+									);
+								}}
+							/>
 						</Grid>
-
-						{/** row 3 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={6}>
-								<Input
-									locked={LOCKED}
-									label={translate(`set`)}
-									value={insertComma(item?.exercise_record_set || `0`)}
-									inputRef={REFS?.[i]?.exercise_record_set}
-									error={ERRORS?.[i]?.exercise_record_set}
-									startadornment={
-										<Img
-											max={14}
-											hover={true}
-											shadow={false}
-											radius={false}
-											src={`exercise3_1.webp`}
-										/>
-									}
-									endadornment={
-										translate(`s`)
-									}
-									onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-										const processedValue = handleNumberInput(e.target.value, 999);
-										processedValue !== null && (
-											setOBJECT((prev: CalendarType) => ({
-												...prev,
-												calendar_exercise_section: prev.calendar_exercise_section?.map((section: CalendarExerciseSectionType, idx: number) => (
-													idx === i ? {
-														...section,
-														exercise_record_set: processedValue
-													} : section
-												))
-											}))
-										);
-									}}
-								/>
-							</Grid>
-							<Grid size={6}>
-								<Input
-									locked={LOCKED}
-									label={translate(`rep`)}
-									value={insertComma(item?.exercise_record_rep || `0`)}
-									inputRef={REFS?.[i]?.exercise_record_rep}
-									error={ERRORS?.[i]?.exercise_record_rep}
-									startadornment={
-										<Img
-											max={14}
-											hover={true}
-											shadow={false}
-											radius={false}
-											src={`exercise3_2.webp`}
-										/>
-									}
-									endadornment={
-										translate(`r`)
-									}
-									onChange={(e: any) => {
-										const processedValue = handleNumberInput(e.target.value, 999);
-										processedValue !== null && (
-											setOBJECT((prev: CalendarType) => ({
-												...prev,
-												calendar_exercise_section: prev.calendar_exercise_section?.map((section: CalendarExerciseSectionType, idx: number) => (
-													idx === i ? {
-														...section,
-														exercise_record_rep: processedValue
-													} : section
-												))
-											}))
-										);
-									}}
-								/>
-							</Grid>
-						</Grid>
-
-						{/** row 4 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={6}>
-								<Input
-									locked={LOCKED}
-									label={translate(`weight`)}
-									value={insertComma(item?.exercise_record_weight || `0`)}
-									inputRef={REFS?.[i]?.exercise_record_weight}
-									error={ERRORS?.[i]?.exercise_record_weight}
-									startadornment={
-										<Img
-											max={14}
-											hover={true}
-											shadow={false}
-											radius={false}
-											src={`exercise3_3.webp`}
-										/>
-									}
-									endadornment={
-										localUnit
-									}
-									onChange={(e: any) => {
-										const processedValue = handleNumberInput(e.target.value, 999);
-										processedValue !== null && (
-											setOBJECT((prev: CalendarType) => ({
-												...prev,
-												calendar_exercise_section: prev.calendar_exercise_section?.map((section: CalendarExerciseSectionType, idx: number) => (
-													idx === i ? {
-														...section,
-														exercise_record_weight: processedValue
-													} : section
-												))
-											}))
-										);
-									}}
-								/>
-							</Grid>
-							<Grid size={6}>
-								<PickerTime
-									OBJECT={OBJECT}
-									setOBJECT={setOBJECT}
-									REFS={REFS}
-									ERRORS={ERRORS}
-									DATE={DATE}
-									LOCKED={LOCKED}
-									extra={`exercise_record_cardio`}
-									i={i}
-								/>
-							</Grid>
+						<Grid size={6}>
+							<Input
+								locked={LOCKED}
+								label={translate(`rep`)}
+								value={insertComma(item?.exercise_record_rep || `0`)}
+								inputRef={REFS?.[i]?.exercise_record_rep}
+								error={ERRORS?.[i]?.exercise_record_rep}
+								startadornment={
+									<Img
+										max={14}
+										hover={true}
+										shadow={false}
+										radius={false}
+										src={`exercise3_2.webp`}
+									/>
+								}
+								endadornment={
+									translate(`r`)
+								}
+								onChange={(e: any) => {
+									const processedValue = handleNumberInput(e.target.value, 999);
+									processedValue !== null && (
+										setOBJECT((prev: CalendarType) => ({
+											...prev,
+											calendar_exercise_section: prev.calendar_exercise_section?.map((section: CalendarExerciseSectionType, idx: number) => (
+												idx === i ? {
+													...section,
+													exercise_record_rep: processedValue
+												} : section
+											))
+										}))
+									);
+								}}
+							/>
 						</Grid>
 					</Grid>
-				))}
-			</Grid>
+
+					{/** row 4 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={6}>
+							<Input
+								locked={LOCKED}
+								label={translate(`weight`)}
+								value={insertComma(item?.exercise_record_weight || `0`)}
+								inputRef={REFS?.[i]?.exercise_record_weight}
+								error={ERRORS?.[i]?.exercise_record_weight}
+								startadornment={
+									<Img
+										max={14}
+										hover={true}
+										shadow={false}
+										radius={false}
+										src={`exercise3_3.webp`}
+									/>
+								}
+								endadornment={
+									localUnit
+								}
+								onChange={(e: any) => {
+									const processedValue = handleNumberInput(e.target.value, 999);
+									processedValue !== null && (
+										setOBJECT((prev: CalendarType) => ({
+											...prev,
+											calendar_exercise_section: prev.calendar_exercise_section?.map((section: CalendarExerciseSectionType, idx: number) => (
+												idx === i ? {
+													...section,
+													exercise_record_weight: processedValue
+												} : section
+											))
+										}))
+									);
+								}}
+							/>
+						</Grid>
+						<Grid size={6}>
+							<PickerTime
+								OBJECT={OBJECT}
+								setOBJECT={setOBJECT}
+								REFS={REFS}
+								ERRORS={ERRORS}
+								DATE={DATE}
+								LOCKED={LOCKED}
+								extra={`exercise_record_cardio`}
+								i={i}
+							/>
+						</Grid>
+					</Grid>
+				</Grid>
+			))}
+			</>
 		);
 
 		// 7-3. food
 		const foodSection = () => (
-			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
-
-				{/** header **/}
-				<Grid container={true} spacing={0} className={`${OBJECT?.calendar_food_section?.length === 0 ? `radius-2` : `radius-top-2`} border-1 p-10px`}>
-					<Grid size={12} className={`d-row`}>
-						<Div className={`d-row-left`}>
-							<Img
-								max={14}
-								hover={true}
-								shadow={false}
-								radius={false}
-								src={"food1.webp"}
-								className={`ml-5px mr-10px`}
-							/>
-							<Div className={`fs-0-9rem fw-600`}>
-								{translate(`food`)}
-							</Div>
+			<>
+			{/** header **/}
+			<Grid container={true} spacing={0} className={`${OBJECT?.calendar_food_section?.length === 0 ? `radius-2` : `radius-top-2`} border-1 shadow-1 p-10px`}>
+				<Grid size={12} className={`d-row`}>
+					<Div className={`d-row-left`}>
+						<Img
+							max={14}
+							hover={true}
+							shadow={false}
+							radius={false}
+							src={"food1.webp"}
+							className={`ml-5px mr-10px`}
+						/>
+						<Div className={`fs-0-9rem fw-600`}>
+							{translate(`food`)}
 						</Div>
-					</Grid>
+					</Div>
 				</Grid>
+			</Grid>
 
-				{/** items **/}
-				{OBJECT?.calendar_food_section?.map((item, i) => (
-					<Grid container spacing={2} key={`food-detail-${i}`}
-						className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`}  border-1 p-20px`}>
-						{/** row 1 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={6} className={`d-row-left`}>
-								<Bg
-									badgeContent={i + 1}
-									bgcolor={bgColors?.[foodArray.findIndex((f: any) => f.food_record_part === item?.food_record_part)]}
-								/>
-							</Grid>
-							<Grid size={6} className={`d-row-right`}>
-								<Delete
-									index={i}
-									section={`calendar_food_section`}
-									handleDelete={handleDelete}
-									LOCKED={LOCKED}
-									disabled={false}
-								/>
-							</Grid>
+			{/** items **/}
+			{OBJECT?.calendar_food_section?.map((item, i) => (
+				<Grid container spacing={2} key={`food-detail-${i}`}
+					className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-1 shadow-1 p-20px`}>
+					{/** row 1 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={6} className={`d-row-left`}>
+							<Bg
+								badgeContent={i + 1}
+								bgcolor={bgColors?.[foodArray.findIndex((f: any) => f.food_record_part === item?.food_record_part)]}
+							/>
 						</Grid>
+						<Grid size={6} className={`d-row-right`}>
+							<Delete
+								index={i}
+								section={`calendar_food_section`}
+								handleDelete={handleDelete}
+								LOCKED={LOCKED}
+								disabled={false}
+							/>
+						</Grid>
+					</Grid>
 
-						{/** row 2 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={6}>
-								<Select
-									locked={LOCKED}
-									label={translate(`part`)}
-									value={item?.food_record_part || ``}
-									inputRef={REFS?.[i]?.food_record_part}
-									error={ERRORS?.[i]?.food_record_part}
-									onChange={(e: any) => {
-										const value = String(e.target.value || ``);
+					{/** row 2 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={6}>
+							<Select
+								locked={LOCKED}
+								label={translate(`part`)}
+								value={item?.food_record_part || ``}
+								inputRef={REFS?.[i]?.food_record_part}
+								error={ERRORS?.[i]?.food_record_part}
+								onChange={(e: any) => {
+									const value = String(e.target.value || ``);
+									setOBJECT((prev: CalendarType) => ({
+										...prev,
+										calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
+											idx === i ? {
+												...section,
+												food_record_part: value,
+											} : section
+										))
+									}));
+								}}
+							>
+								{foodArray.map((part: any, idx: number) => (
+									<MenuItem
+										key={idx}
+										value={part.food_record_part}
+										className={`fs-0-8rem`}
+									>
+										{translate(part.food_record_part)}
+									</MenuItem>
+								))}
+							</Select>
+						</Grid>
+						<Grid size={3}>
+							<Input
+								locked={LOCKED}
+								label={translate(`foodCount`)}
+								value={insertComma(item?.food_record_count || `0`)}
+								inputRef={REFS?.[i]?.food_record_count}
+								error={ERRORS?.[i]?.food_record_count}
+								onChange={(e: any) => {
+									const processedValue = handleNumberInput(e.target.value, 99, 1);
+									processedValue !== null && (() => {
+										const numericValue = Number(processedValue) || 1;
+										const foodCount = Number(item?.food_record_count) || 1;
+										const setNutrient = (nut: string | number, extra: string) => (
+											!isNaN(numericValue) && !isNaN(foodCount) ? (
+												extra === `kcal` ? (
+													(numericValue * Number(nut) / foodCount).toFixed(0)
+												) : (
+													(numericValue * Number(nut) / foodCount).toFixed(1)
+												)
+											) : (
+												nut
+											)
+										);
+
 										setOBJECT((prev: CalendarType) => ({
 											...prev,
 											calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
 												idx === i ? {
 													...section,
-													food_record_part: value,
+													food_record_count: processedValue,
+													food_record_kcal: setNutrient(section.food_record_kcal, `kcal`) as string,
+													food_record_carb: setNutrient(section.food_record_carb, `carb`) as string,
+													food_record_protein: setNutrient(section.food_record_protein, `protein`) as string,
+													food_record_fat: setNutrient(section.food_record_fat, `fat`) as string,
 												} : section
 											))
 										}));
-									}}
-								>
-									{foodArray.map((part: any, idx: number) => (
-										<MenuItem
-											key={idx}
-											value={part.food_record_part}
-											className={`fs-0-8rem`}
-										>
-											{translate(part.food_record_part)}
-										</MenuItem>
-									))}
-								</Select>
-							</Grid>
-							<Grid size={3}>
-								<Input
-									locked={LOCKED}
-									label={translate(`foodCount`)}
-									value={insertComma(item?.food_record_count || `0`)}
-									inputRef={REFS?.[i]?.food_record_count}
-									error={ERRORS?.[i]?.food_record_count}
-									onChange={(e: any) => {
-										const processedValue = handleNumberInput(e.target.value, 99, 1);
-										processedValue !== null && (() => {
-											const numericValue = Number(processedValue) || 1;
-											const foodCount = Number(item?.food_record_count) || 1;
-											const setNutrient = (nut: string | number, extra: string) => (
-												!isNaN(numericValue) && !isNaN(foodCount) ? (
-													extra === `kcal` ? (
-														(numericValue * Number(nut) / foodCount).toFixed(0)
-													) : (
-														(numericValue * Number(nut) / foodCount).toFixed(1)
-													)
-												) : (
-													nut
-												)
-											);
-
-											setOBJECT((prev: CalendarType) => ({
-												...prev,
-												calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
-													idx === i ? {
-														...section,
-														food_record_count: processedValue,
-														food_record_kcal: setNutrient(section.food_record_kcal, `kcal`) as string,
-														food_record_carb: setNutrient(section.food_record_carb, `carb`) as string,
-														food_record_protein: setNutrient(section.food_record_protein, `protein`) as string,
-														food_record_fat: setNutrient(section.food_record_fat, `fat`) as string,
-													} : section
-												))
-											}));
-										})();
-									}}
-								/>
-							</Grid>
-							<Grid size={3}>
-								<Input
-									locked={LOCKED}
-									label={translate(`gram`)}
-									value={insertComma(item?.food_record_gram || `0`)}
-									inputRef={REFS?.[i]?.food_record_gram}
-									error={ERRORS?.[i]?.food_record_gram}
-									onChange={(e: any) => {
-										const processedValue = handleNumberInput(e.target.value, 999);
-										processedValue !== null && (
-											setOBJECT((prev: CalendarType) => ({
-												...prev,
-												calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
-													idx === i ? {
-														...section,
-														food_record_gram: processedValue,
-													} : section
-												))
-											}))
-										);
-									}}
-								/>
-							</Grid>
+									})();
+								}}
+							/>
 						</Grid>
-
-						{/** row 3 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={6}>
-								<Input
-									locked={LOCKED}
-									shrink={`shrink`}
-									label={translate(`foodName`)}
-									value={item?.food_record_name || ``}
-									inputRef={REFS?.[i]?.food_record_name}
-									error={ERRORS?.[i]?.food_record_name}
-									onChange={(e: any) => {
-										const value = e.target.value || ``;
-										value?.length <= 30 && (
-											setOBJECT((prev: CalendarType) => ({
-												...prev,
-												calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
-													idx === i ? {
-														...section,
-														food_record_name: value,
-													} : section
-												))
-											}))
-										);
-									}}
-								/>
-							</Grid>
-							<Grid size={6}>
-								<Input
-									locked={LOCKED}
-									shrink={`shrink`}
-									label={translate(`brand`)}
-									value={item?.food_record_brand || ``}
-									inputRef={REFS?.[i]?.food_record_brand}
-									error={ERRORS?.[i]?.food_record_brand}
-									onChange={(e: any) => {
-										const value = e.target.value || ``;
-										value?.length <= 30 && (
-											setOBJECT((prev: CalendarType) => ({
-												...prev,
-												calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
-													idx === i ? {
-														...section,
-														food_record_brand: value,
-													} : section
-												))
-											}))
-										);
-									}}
-								/>
-							</Grid>
-						</Grid>
-
-						{/** row 4 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={6}>
-								<Input
-									locked={LOCKED}
-									label={translate(`kcal`)}
-									value={insertComma(item?.food_record_kcal || `0`)}
-									inputRef={REFS?.[i]?.food_record_kcal}
-									error={ERRORS?.[i]?.food_record_kcal}
-									startadornment={
-										<Img
-											max={14}
-											hover={true}
-											shadow={false}
-											radius={false}
-											src={`food2.webp`}
-										/>
-									}
-									endadornment={
-										translate(`kc`)
-									}
-									onChange={(e: any) => {
-										const processedValue = handleNumberInput(e.target.value, 9999);
-										processedValue !== null && (
-											setOBJECT((prev: CalendarType) => ({
-												...prev,
-												calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
-													idx === i ? {
-														...section,
-														food_record_kcal: processedValue,
-													} : section
-												))
-											}))
-										);
-									}}
-								/>
-							</Grid>
-							<Grid size={6}>
-								<Input
-									locked={LOCKED}
-									label={translate(`carb`)}
-									value={insertComma(item?.food_record_carb || `0`)}
-									inputRef={REFS?.[i]?.food_record_carb}
-									error={ERRORS?.[i]?.food_record_carb}
-									startadornment={
-										<Img
-											max={14}
-											hover={true}
-											shadow={false}
-											radius={false}
-											src={`food3.webp`}
-										/>
-									}
-									endadornment={
-										translate(`g`)
-									}
-									onChange={(e: any) => {
-										const processedValue = handleNumberInput(e.target.value, 999, 1);
-										processedValue !== null && (
-											setOBJECT((prev: CalendarType) => ({
-												...prev,
-												calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
-													idx === i ? {
-														...section,
-														food_record_carb: processedValue,
-													} : section
-												))
-											}))
-										);
-									}}
-								/>
-							</Grid>
-						</Grid>
-
-						{/** row 5 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={6}>
-								<Input
-									locked={LOCKED}
-									label={translate(`protein`)}
-									value={insertComma(item?.food_record_protein || `0`)}
-									inputRef={REFS?.[i]?.food_record_protein}
-									error={ERRORS?.[i]?.food_record_protein}
-									startadornment={
-										<Img
-											max={14}
-											hover={true}
-											shadow={false}
-											radius={false}
-											src={`food4.webp`}
-										/>
-									}
-									endadornment={
-										translate(`g`)
-									}
-									onChange={(e: any) => {
-										const processedValue = handleNumberInput(e.target.value, 999, 1);
-										processedValue !== null && (
-											setOBJECT((prev: CalendarType) => ({
-												...prev,
-												calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
-													idx === i ? {
-														...section,
-														food_record_protein: processedValue,
-													} : section
-												))
-											}))
-										);
-									}}
-								/>
-							</Grid>
-							<Grid size={6}>
-								<Input
-									locked={LOCKED}
-									label={translate(`fat`)}
-									value={insertComma(item?.food_record_fat || `0`)}
-									inputRef={REFS?.[i]?.food_record_fat}
-									error={ERRORS?.[i]?.food_record_fat}
-									startadornment={
-										<Img
-											max={14}
-											hover={true}
-											shadow={false}
-											radius={false}
-											src={`food5.webp`}
-										/>
-									}
-									endadornment={
-										translate(`g`)
-									}
-									onChange={(e: any) => {
-										const processedValue = handleNumberInput(e.target.value, 999, 1);
-										processedValue !== null && (
-											setOBJECT((prev: CalendarType) => ({
-												...prev,
-												calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
-													idx === i ? {
-														...section,
-														food_record_fat: processedValue,
-													} : section
-												))
-											}))
-										);
-									}}
-								/>
-							</Grid>
+						<Grid size={3}>
+							<Input
+								locked={LOCKED}
+								label={translate(`gram`)}
+								value={insertComma(item?.food_record_gram || `0`)}
+								inputRef={REFS?.[i]?.food_record_gram}
+								error={ERRORS?.[i]?.food_record_gram}
+								onChange={(e: any) => {
+									const processedValue = handleNumberInput(e.target.value, 999);
+									processedValue !== null && (
+										setOBJECT((prev: CalendarType) => ({
+											...prev,
+											calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
+												idx === i ? {
+													...section,
+													food_record_gram: processedValue,
+												} : section
+											))
+										}))
+									);
+								}}
+							/>
 						</Grid>
 					</Grid>
-				))}
-			</Grid>
+
+					{/** row 3 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={6}>
+							<Input
+								locked={LOCKED}
+								shrink={`shrink`}
+								label={translate(`foodName`)}
+								value={item?.food_record_name || ``}
+								inputRef={REFS?.[i]?.food_record_name}
+								error={ERRORS?.[i]?.food_record_name}
+								onChange={(e: any) => {
+									const value = e.target.value || ``;
+									value?.length <= 30 && (
+										setOBJECT((prev: CalendarType) => ({
+											...prev,
+											calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
+												idx === i ? {
+													...section,
+													food_record_name: value,
+												} : section
+											))
+										}))
+									);
+								}}
+							/>
+						</Grid>
+						<Grid size={6}>
+							<Input
+								locked={LOCKED}
+								shrink={`shrink`}
+								label={translate(`brand`)}
+								value={item?.food_record_brand || ``}
+								inputRef={REFS?.[i]?.food_record_brand}
+								error={ERRORS?.[i]?.food_record_brand}
+								onChange={(e: any) => {
+									const value = e.target.value || ``;
+									value?.length <= 30 && (
+										setOBJECT((prev: CalendarType) => ({
+											...prev,
+											calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
+												idx === i ? {
+													...section,
+													food_record_brand: value,
+												} : section
+											))
+										}))
+									);
+								}}
+							/>
+						</Grid>
+					</Grid>
+
+					{/** row 4 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={6}>
+							<Input
+								locked={LOCKED}
+								label={translate(`kcal`)}
+								value={insertComma(item?.food_record_kcal || `0`)}
+								inputRef={REFS?.[i]?.food_record_kcal}
+								error={ERRORS?.[i]?.food_record_kcal}
+								startadornment={
+									<Img
+										max={14}
+										hover={true}
+										shadow={false}
+										radius={false}
+										src={`food2.webp`}
+									/>
+								}
+								endadornment={
+									translate(`kc`)
+								}
+								onChange={(e: any) => {
+									const processedValue = handleNumberInput(e.target.value, 9999);
+									processedValue !== null && (
+										setOBJECT((prev: CalendarType) => ({
+											...prev,
+											calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
+												idx === i ? {
+													...section,
+													food_record_kcal: processedValue,
+												} : section
+											))
+										}))
+									);
+								}}
+							/>
+						</Grid>
+						<Grid size={6}>
+							<Input
+								locked={LOCKED}
+								label={translate(`carb`)}
+								value={insertComma(item?.food_record_carb || `0`)}
+								inputRef={REFS?.[i]?.food_record_carb}
+								error={ERRORS?.[i]?.food_record_carb}
+								startadornment={
+									<Img
+										max={14}
+										hover={true}
+										shadow={false}
+										radius={false}
+										src={`food3.webp`}
+									/>
+								}
+								endadornment={
+									translate(`g`)
+								}
+								onChange={(e: any) => {
+									const processedValue = handleNumberInput(e.target.value, 999, 1);
+									processedValue !== null && (
+										setOBJECT((prev: CalendarType) => ({
+											...prev,
+											calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
+												idx === i ? {
+													...section,
+													food_record_carb: processedValue,
+												} : section
+											))
+										}))
+									);
+								}}
+							/>
+						</Grid>
+					</Grid>
+
+					{/** row 5 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={6}>
+							<Input
+								locked={LOCKED}
+								label={translate(`protein`)}
+								value={insertComma(item?.food_record_protein || `0`)}
+								inputRef={REFS?.[i]?.food_record_protein}
+								error={ERRORS?.[i]?.food_record_protein}
+								startadornment={
+									<Img
+										max={14}
+										hover={true}
+										shadow={false}
+										radius={false}
+										src={`food4.webp`}
+									/>
+								}
+								endadornment={
+									translate(`g`)
+								}
+								onChange={(e: any) => {
+									const processedValue = handleNumberInput(e.target.value, 999, 1);
+									processedValue !== null && (
+										setOBJECT((prev: CalendarType) => ({
+											...prev,
+											calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
+												idx === i ? {
+													...section,
+													food_record_protein: processedValue,
+												} : section
+											))
+										}))
+									);
+								}}
+							/>
+						</Grid>
+						<Grid size={6}>
+							<Input
+								locked={LOCKED}
+								label={translate(`fat`)}
+								value={insertComma(item?.food_record_fat || `0`)}
+								inputRef={REFS?.[i]?.food_record_fat}
+								error={ERRORS?.[i]?.food_record_fat}
+								startadornment={
+									<Img
+										max={14}
+										hover={true}
+										shadow={false}
+										radius={false}
+										src={`food5.webp`}
+									/>
+								}
+								endadornment={
+									translate(`g`)
+								}
+								onChange={(e: any) => {
+									const processedValue = handleNumberInput(e.target.value, 999, 1);
+									processedValue !== null && (
+										setOBJECT((prev: CalendarType) => ({
+											...prev,
+											calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
+												idx === i ? {
+													...section,
+													food_record_fat: processedValue,
+												} : section
+											))
+										}))
+									);
+								}}
+							/>
+						</Grid>
+					</Grid>
+				</Grid>
+			))}
+			</>
 		);
 
 		// 7-4. money
 		const moneySection = () => (
-			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
-
-				{/** header **/}
-				<Grid container={true} spacing={0} className={`${OBJECT?.calendar_money_section?.length === 0 ? `radius-2` : `radius-top-2`} border-1 p-10px`}>
-					<Grid size={12} className={`d-row`}>
-						<Div className={`d-row-left`}>
-							<Img
-								max={14}
-								hover={true}
-								shadow={false}
-								radius={false}
-								src={"money1.webp"}
-								className={`ml-5px mr-10px`}
-							/>
-							<Div className={`fs-0-9rem fw-600`}>
-								{translate(`money`)}
-							</Div>
+			<>
+			{/** header **/}
+			<Grid container={true} spacing={0} className={`${OBJECT?.calendar_money_section?.length === 0 ? `radius-2` : `radius-top-2`} border-1 shadow-1 p-10px`}>
+				<Grid size={12} className={`d-row`}>
+					<Div className={`d-row-left`}>
+						<Img
+							max={14}
+							hover={true}
+							shadow={false}
+							radius={false}
+							src={"money1.webp"}
+							className={`ml-5px mr-10px`}
+						/>
+						<Div className={`fs-0-9rem fw-600`}>
+							{translate(`money`)}
 						</Div>
-					</Grid>
+					</Div>
 				</Grid>
+			</Grid>
 
-				{/** items **/}
-				{OBJECT?.calendar_money_section?.map((item, i) => (
-					<Grid container spacing={2} key={`money-detail-${i}`}
-						className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`}  border-1 p-20px`}>
-						{/** row 1 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={6} className={`d-row-left`}>
-								<Bg
-									badgeContent={i + 1}
-									bgcolor={bgColors?.[moneyArray.findIndex((f: any) => f.money_record_part === item?.money_record_part)]}
-								/>
-							</Grid>
-							<Grid size={6} className={`d-row-right`}>
-								<Delete
-									index={i}
-									section={`calendar_money_section`}
-									handleDelete={handleDelete}
-									LOCKED={LOCKED}
-									disabled={false}
-								/>
-							</Grid>
+			{/** items **/}
+			{OBJECT?.calendar_money_section?.map((item, i) => (
+				<Grid container spacing={2} key={`money-detail-${i}`}
+					className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-1 shadow-1 p-20px`}>
+					{/** row 1 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={6} className={`d-row-left`}>
+							<Bg
+								badgeContent={i + 1}
+								bgcolor={bgColors?.[moneyArray.findIndex((f: any) => f.money_record_part === item?.money_record_part)]}
+							/>
 						</Grid>
+						<Grid size={6} className={`d-row-right`}>
+							<Delete
+								index={i}
+								section={`calendar_money_section`}
+								handleDelete={handleDelete}
+								LOCKED={LOCKED}
+								disabled={false}
+							/>
+						</Grid>
+					</Grid>
 
-						{/** row 2 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={6}>
-								<Select
-									locked={LOCKED}
-									label={translate(`part`)}
-									value={item?.money_record_part || ``}
-									inputRef={REFS?.[i]?.money_record_part}
-									error={ERRORS?.[i]?.money_record_part}
-									onChange={(e: any) => {
-										const value = String(e.target.value || ``);
-										const foundIndex = moneyArray.findIndex((f: any) => f.money_record_part === value);
-										const foundItem = foundIndex !== -1 ? moneyArray[foundIndex] : null;
-										setOBJECT((prev: CalendarType) => ({
-											...prev,
-											calendar_money_section: prev.calendar_money_section?.map((section: CalendarMoneySectionType, idx: number) => (
-												idx === i ? {
-													...section,
-													money_record_part: value,
-													money_record_title: (foundItem as any)?.money_record_title?.[0] || ``,
-												} : section
-											))
-										}));
-									}}
-								>
-									{moneyArray.map((part: any, idx: number) => (
+					{/** row 2 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={6}>
+							<Select
+								locked={LOCKED}
+								label={translate(`part`)}
+								value={item?.money_record_part || ``}
+								inputRef={REFS?.[i]?.money_record_part}
+								error={ERRORS?.[i]?.money_record_part}
+								onChange={(e: any) => {
+									const value = String(e.target.value || ``);
+									const foundIndex = moneyArray.findIndex((f: any) => f.money_record_part === value);
+									const foundItem = foundIndex !== -1 ? moneyArray[foundIndex] : null;
+									setOBJECT((prev: CalendarType) => ({
+										...prev,
+										calendar_money_section: prev.calendar_money_section?.map((section: CalendarMoneySectionType, idx: number) => (
+											idx === i ? {
+												...section,
+												money_record_part: value,
+												money_record_title: (foundItem as any)?.money_record_title?.[0] || ``,
+											} : section
+										))
+									}));
+								}}
+							>
+								{moneyArray.map((part: any, idx: number) => (
+									<MenuItem
+										key={idx}
+										value={part.money_record_part}
+										className={`fs-0-8rem`}
+									>
+										{translate(part.money_record_part)}
+									</MenuItem>
+								))}
+							</Select>
+						</Grid>
+						<Grid size={6}>
+							<Select
+								locked={LOCKED}
+								label={translate(`title`)}
+								value={item?.money_record_title || ``}
+								inputRef={REFS?.[i]?.money_record_title}
+								error={ERRORS?.[i]?.money_record_title}
+								onChange={(e: any) => {
+									const value = String(e.target.value || ``);
+									setOBJECT((prev: CalendarType) => ({
+										...prev,
+										calendar_money_section: prev.calendar_money_section?.map((section: CalendarMoneySectionType, idx: number) => (
+											idx === i ? {
+												...section,
+												money_record_title: value,
+											} : section
+										))
+									}));
+								}}
+							>
+								{(() => {
+									const foundIndex = moneyArray.findIndex((f: any) => f.money_record_part === item?.money_record_part);
+									const foundItem = foundIndex !== -1 ? moneyArray[foundIndex] : null;
+									return (foundItem as any)?.money_record_title?.map((title: any, idx: number) => (
 										<MenuItem
 											key={idx}
-											value={part.money_record_part}
+											value={title}
 											className={`fs-0-8rem`}
 										>
-											{translate(part.money_record_part)}
+											{translate(title)}
 										</MenuItem>
-									))}
-								</Select>
-							</Grid>
-							<Grid size={6}>
-								<Select
-									locked={LOCKED}
-									label={translate(`title`)}
-									value={item?.money_record_title || ``}
-									inputRef={REFS?.[i]?.money_record_title}
-									error={ERRORS?.[i]?.money_record_title}
-									onChange={(e: any) => {
-										const value = String(e.target.value || ``);
-										setOBJECT((prev: CalendarType) => ({
-											...prev,
-											calendar_money_section: prev.calendar_money_section?.map((section: CalendarMoneySectionType, idx: number) => (
-												idx === i ? {
-													...section,
-													money_record_title: value,
-												} : section
-											))
-										}));
-									}}
-								>
-									{(() => {
-										const foundIndex = moneyArray.findIndex((f: any) => f.money_record_part === item?.money_record_part);
-										const foundItem = foundIndex !== -1 ? moneyArray[foundIndex] : null;
-										return (foundItem as any)?.money_record_title?.map((title: any, idx: number) => (
-											<MenuItem
-												key={idx}
-												value={title}
-												className={`fs-0-8rem`}
-											>
-												{translate(title)}
-											</MenuItem>
-										)) || [];
-									})()}
-								</Select>
-							</Grid>
-						</Grid>
-
-						{/** row 3 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={12}>
-								<Input
-									locked={LOCKED}
-									label={translate(`amount`)}
-									value={insertComma(item?.money_record_amount || `0`)}
-									inputRef={REFS?.[i]?.money_record_amount}
-									error={ERRORS?.[i]?.money_record_amount}
-									startadornment={
-										<Img
-											max={14}
-											hover={true}
-											shadow={false}
-											radius={false}
-											src={`money2.webp`}
-										/>
-									}
-									endadornment={
-										localCurrency
-									}
-									onChange={(e: any) => {
-										const processedValue = handleNumberInput(e.target.value, 999999999);
-										processedValue !== null && (
-											setOBJECT((prev: CalendarType) => ({
-												...prev,
-												calendar_money_section: prev.calendar_money_section?.map((section: CalendarMoneySectionType, idx: number) => (
-													idx === i ? {
-														...section,
-														money_record_amount: processedValue,
-													} : section
-												))
-											}))
-										);
-									}}
-								/>
-							</Grid>
-						</Grid>
-
-						{/** row 4 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={{xs: 7, sm: 8}} className={`d-center`}>
-								<Memo
-									OBJECT={OBJECT}
-									setOBJECT={setOBJECT}
-									LOCKED={LOCKED}
-									extra={`money_record_content`}
-									i={i}
-									section={`calendar_money_section`}
-								/>
-							</Grid>
-							<Grid size={{xs: 5, sm: 4}} className={`d-center`}>
-								<Div className={`fs-0-7rem fw-500 dark ml-10px`}>
-									{translate(`includeProperty`)}
-								</Div>
-								<Checkbox
-									size={`small`}
-									className={`p-0px ml-5px`}
-									checked={item?.money_record_include === `Y`}
-									disabled={LOCKED === `locked`}
-									onChange={(e: any) => {
-										setOBJECT((prev: CalendarType) => ({
-											...prev,
-											calendar_money_section: prev.calendar_money_section?.map((section: CalendarMoneySectionType, idx: number) => (
-												idx === i ? {
-													...section,
-													money_record_include: e.target.checked ? `Y` : `N`,
-												} : section
-											)),
-										}));
-									}}
-								/>
-							</Grid>
+									)) || [];
+								})()}
+							</Select>
 						</Grid>
 					</Grid>
-				))}
-			</Grid>
+
+					{/** row 3 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={12}>
+							<Input
+								locked={LOCKED}
+								label={translate(`amount`)}
+								value={insertComma(item?.money_record_amount || `0`)}
+								inputRef={REFS?.[i]?.money_record_amount}
+								error={ERRORS?.[i]?.money_record_amount}
+								startadornment={
+									<Img
+										max={14}
+										hover={true}
+										shadow={false}
+										radius={false}
+										src={`money2.webp`}
+									/>
+								}
+								endadornment={
+									localCurrency
+								}
+								onChange={(e: any) => {
+									const processedValue = handleNumberInput(e.target.value, 999999999);
+									processedValue !== null && (
+										setOBJECT((prev: CalendarType) => ({
+											...prev,
+											calendar_money_section: prev.calendar_money_section?.map((section: CalendarMoneySectionType, idx: number) => (
+												idx === i ? {
+													...section,
+													money_record_amount: processedValue,
+												} : section
+											))
+										}))
+									);
+								}}
+							/>
+						</Grid>
+					</Grid>
+
+					{/** row 4 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={{xs: 7, sm: 8}} className={`d-center`}>
+							<Memo
+								OBJECT={OBJECT}
+								setOBJECT={setOBJECT}
+								LOCKED={LOCKED}
+								extra={`money_record_content`}
+								i={i}
+								section={`calendar_money_section`}
+							/>
+						</Grid>
+						<Grid size={{xs: 5, sm: 4}} className={`d-center`}>
+							<Div className={`fs-0-7rem fw-500 dark ml-10px`}>
+								{translate(`includeProperty`)}
+							</Div>
+							<Checkbox
+								size={`small`}
+								className={`p-0px ml-5px`}
+								checked={item?.money_record_include === `Y`}
+								disabled={LOCKED === `locked`}
+								onChange={(e: any) => {
+									setOBJECT((prev: CalendarType) => ({
+										...prev,
+										calendar_money_section: prev.calendar_money_section?.map((section: CalendarMoneySectionType, idx: number) => (
+											idx === i ? {
+												...section,
+												money_record_include: e.target.checked ? `Y` : `N`,
+											} : section
+										)),
+									}));
+								}}
+							/>
+						</Grid>
+					</Grid>
+				</Grid>
+			))}
+			</>
 		);
 
 		// 7-5. sleep
 		const sleepSection = () => (
-			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
-
-				{/** header **/}
-				<Grid container={true} spacing={0} className={`${OBJECT?.calendar_sleep_section?.length === 0 ? `radius-2` : `radius-top-2`} border-1 p-10px`}>
-					<Grid size={12} className={`d-row`}>
-						<Div className={`d-row-left`}>
-							<Img
-								max={14}
-								hover={true}
-								shadow={false}
-								radius={false}
-								src={"sleep1.webp"}
-								className={`ml-5px mr-10px`}
-							/>
-							<Div className={`fs-0-9rem fw-600`}>
-								{translate(`sleep`)}
-							</Div>
+			<>
+			{/** header **/}
+			<Grid container={true} spacing={0} className={`${OBJECT?.calendar_sleep_section?.length === 0 ? `radius-2` : `radius-top-2`} border-1 shadow-1 p-10px`}>
+				<Grid size={12} className={`d-row`}>
+					<Div className={`d-row-left`}>
+						<Img
+							max={14}
+							hover={true}
+							shadow={false}
+							radius={false}
+							src={"sleep1.webp"}
+							className={`ml-5px mr-10px`}
+						/>
+						<Div className={`fs-0-9rem fw-600`}>
+							{translate(`sleep`)}
 						</Div>
+					</Div>
+				</Grid>
+			</Grid>
+
+			{/** items **/}
+			{OBJECT?.calendar_sleep_section?.map((_item, i) => (
+				<Grid container spacing={2} key={`sleep-detail-${i}`}
+					className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-1 shadow-1 p-20px`}>
+					{/** row 1 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={6} className={`d-row-left`}>
+							<Bg
+								badgeContent={i + 1}
+								bgcolor={"#1976d2"}
+							/>
+						</Grid>
+						<Grid size={6} className={`d-row-right`}>
+							<Delete
+								index={i}
+								section={`calendar_sleep_section`}
+								handleDelete={handleDelete}
+								LOCKED={LOCKED}
+								disabled={false}
+							/>
+						</Grid>
+					</Grid>
+
+					{/** row 2 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={12}>
+							<PickerTime
+								OBJECT={OBJECT}
+								setOBJECT={setOBJECT}
+								REFS={REFS}
+								ERRORS={ERRORS}
+								DATE={DATE}
+								LOCKED={LOCKED}
+								extra={`sleep_record_bedTime`}
+								i={i}
+							/>
+						</Grid>
+					</Grid>
+
+					{/** row 3 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={12}>
+							<PickerTime
+								OBJECT={OBJECT}
+								setOBJECT={setOBJECT}
+								REFS={REFS}
+								ERRORS={ERRORS}
+								DATE={DATE}
+								LOCKED={LOCKED}
+								extra={`sleep_record_wakeTime`}
+								i={i}
+							/>
+						</Grid>
+					</Grid>
+
+					{/** row 4 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={12}>
+							<PickerTime
+								OBJECT={OBJECT}
+								setOBJECT={setOBJECT}
+								REFS={REFS}
+								ERRORS={ERRORS}
+								DATE={DATE}
+								LOCKED={LOCKED}
+								extra={`sleep_record_sleepTime`}
+								i={i}
+							/>
+						</Grid>
 					</Grid>
 				</Grid>
-
-				{/** items **/}
-				{OBJECT?.calendar_sleep_section?.map((_item, i) => (
-					<Grid container spacing={2} key={`sleep-detail-${i}`}
-						className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`}  border-1 p-20px`}>
-						{/** row 1 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={6} className={`d-row-left`}>
-								<Bg
-									badgeContent={i + 1}
-									bgcolor={"#1976d2"}
-								/>
-							</Grid>
-							<Grid size={6} className={`d-row-right`}>
-								<Delete
-									index={i}
-									section={`calendar_sleep_section`}
-									handleDelete={handleDelete}
-									LOCKED={LOCKED}
-									disabled={false}
-								/>
-							</Grid>
-						</Grid>
-
-						{/** row 2 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={12}>
-								<PickerTime
-									OBJECT={OBJECT}
-									setOBJECT={setOBJECT}
-									REFS={REFS}
-									ERRORS={ERRORS}
-									DATE={DATE}
-									LOCKED={LOCKED}
-									extra={`sleep_record_bedTime`}
-									i={i}
-								/>
-							</Grid>
-						</Grid>
-
-						{/** row 3 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={12}>
-								<PickerTime
-									OBJECT={OBJECT}
-									setOBJECT={setOBJECT}
-									REFS={REFS}
-									ERRORS={ERRORS}
-									DATE={DATE}
-									LOCKED={LOCKED}
-									extra={`sleep_record_wakeTime`}
-									i={i}
-								/>
-							</Grid>
-						</Grid>
-
-						{/** row 4 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={12}>
-								<PickerTime
-									OBJECT={OBJECT}
-									setOBJECT={setOBJECT}
-									REFS={REFS}
-									ERRORS={ERRORS}
-									DATE={DATE}
-									LOCKED={LOCKED}
-									extra={`sleep_record_sleepTime`}
-									i={i}
-								/>
-							</Grid>
-						</Grid>
-					</Grid>
-				))}
-			</Grid>
+			))}
+			</>
 		);
 
 		// 7-10. return
 		return (
-			<Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
+			<Paper className={`content-wrapper radius-2 border-2 shadow-1 h-min-75vh`}>
 				{dateCountSection()}
 				<Br m={20} />
 				{exerciseSection()}

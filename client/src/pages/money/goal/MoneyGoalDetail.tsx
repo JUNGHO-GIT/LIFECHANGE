@@ -287,7 +287,7 @@ export const MoneyGoalDetail = memo(() => {
   const detailNode = () => {
     // 7-1. date + count
 		const dateCountSection = () => (
-			<Grid container={true} spacing={2} className={`radius-2 border-1 shadow-0 p-20px`}>
+			<Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1 p-20px`}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}
@@ -308,111 +308,111 @@ export const MoneyGoalDetail = memo(() => {
     );
     // 7-3. detail
     const detailSection = () => (
-			<Grid container={true} spacing={0} className={`border-0 radius-2 shadow-0`}>
-				{[OBJECT]?.map((item, i) => (
-					<Grid container spacing={2} key={`detail-${i}`}
-					className={`${LOCKED === "locked" ? "locked" : ""} border-1 radius-2 p-20px`}>
-						{/** row 1 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={6} className={`d-row-left`}>
-								<Bg
-									badgeContent={i + 1}
-									bgcolor={"#1976d2"}
-								/>
-							</Grid>
-							<Grid size={6} className={`d-row-right`}>
-								<Delete
-									index={i}
-									handleDelete={handleDelete}
-									LOCKED={LOCKED}
-								/>
-							</Grid>
+			<>
+			{[OBJECT]?.map((item, i) => (
+				<Grid container spacing={2} key={`detail-${i}`}
+				className={`${LOCKED === "locked" ? "locked" : ""} radius-2 border-1 shadow-1 p-20px`}>
+					{/** row 1 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={6} className={`d-row-left`}>
+							<Bg
+								badgeContent={i + 1}
+								bgcolor={"#1976d2"}
+							/>
 						</Grid>
-
-						{/** row 2 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={12}>
-								<Input
-									locked={LOCKED}
-									value={insertComma(item?.money_goal_income || "0")}
-									inputRef={REFS?.[i]?.money_goal_income}
-									error={ERRORS?.[i]?.money_goal_income}
-									label={
-										DATE?.dateType === "day" ? (
-											`${translate("goalIncome")}`
-										) : (
-											`${translate("goalIncome")} (${translate("total")})`
-										)
-									}
-									startadornment={
-										<Img
-											max={14}
-											hover={true}
-											shadow={false}
-											radius={false}
-											src={"money2.webp"}
-										/>
-									}
-									endadornment={
-										localCurrency
-									}
-									onChange={(e: any) => {
-                    const processedValue = handleNumberInput(e.target.value, 9999999999);
-                    if (processedValue === null) { return; }
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      money_goal_income: processedValue,
-                    }));
-									}}
-								/>
-							</Grid>
-						</Grid>
-
-						{/** row 3 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={12}>
-								<Input
-									locked={LOCKED}
-									value={insertComma(item?.money_goal_expense || "0")}
-									inputRef={REFS?.[i]?.money_goal_expense}
-									error={ERRORS?.[i]?.money_goal_expense}
-									label={
-										DATE?.dateType === "day" ? (
-											`${translate("goalExpense")}`
-										) : (
-											`${translate("goalExpense")} (${translate("total")})`
-										)
-									}
-									startadornment={
-										<Img
-											max={14}
-											hover={true}
-											shadow={false}
-											radius={false}
-											src={"money2.webp"}
-										/>
-									}
-									endadornment={
-										localCurrency
-									}
-									onChange={(e: any) => {
-                    const processedValue = handleNumberInput(e.target.value, 9999999999);
-                    if (processedValue === null) { return; }
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      money_goal_expense: processedValue,
-                    }));
-									}}
-								/>
-							</Grid>
+						<Grid size={6} className={`d-row-right`}>
+							<Delete
+								index={i}
+								handleDelete={handleDelete}
+								LOCKED={LOCKED}
+							/>
 						</Grid>
 					</Grid>
-				))}
-			</Grid>
+
+					{/** row 2 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={12}>
+							<Input
+								locked={LOCKED}
+								value={insertComma(item?.money_goal_income || "0")}
+								inputRef={REFS?.[i]?.money_goal_income}
+								error={ERRORS?.[i]?.money_goal_income}
+								label={
+									DATE?.dateType === "day" ? (
+										`${translate("goalIncome")}`
+									) : (
+										`${translate("goalIncome")} (${translate("total")})`
+									)
+								}
+								startadornment={
+									<Img
+										max={14}
+										hover={true}
+										shadow={false}
+										radius={false}
+										src={"money2.webp"}
+									/>
+								}
+								endadornment={
+									localCurrency
+								}
+								onChange={(e: any) => {
+									const processedValue = handleNumberInput(e.target.value, 9999999999);
+									if (processedValue === null) { return; }
+									setOBJECT((prev) => ({
+										...prev,
+										money_goal_income: processedValue,
+									}));
+								}}
+							/>
+						</Grid>
+					</Grid>
+
+					{/** row 3 **/}
+					<Grid container={true} spacing={1}>
+						<Grid size={12}>
+							<Input
+								locked={LOCKED}
+								value={insertComma(item?.money_goal_expense || "0")}
+								inputRef={REFS?.[i]?.money_goal_expense}
+								error={ERRORS?.[i]?.money_goal_expense}
+								label={
+									DATE?.dateType === "day" ? (
+										`${translate("goalExpense")}`
+									) : (
+										`${translate("goalExpense")} (${translate("total")})`
+									)
+								}
+								startadornment={
+									<Img
+										max={14}
+										hover={true}
+										shadow={false}
+										radius={false}
+										src={"money2.webp"}
+									/>
+								}
+								endadornment={
+									localCurrency
+								}
+								onChange={(e: any) => {
+									const processedValue = handleNumberInput(e.target.value, 9999999999);
+									if (processedValue === null) { return; }
+									setOBJECT((prev) => ({
+										...prev,
+										money_goal_expense: processedValue,
+									}));
+								}}
+							/>
+						</Grid>
+					</Grid>
+				</Grid>
+			))}
+			</>
 		);
     // 7-10. return
     return (
-      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
+      <Paper className={`content-wrapper radius-2 border-2 shadow-1 h-min-75vh`}>
         {dateCountSection()}
 				<Br m={20} />
         {COUNT?.newSectionCnt > 0 && detailSection()}

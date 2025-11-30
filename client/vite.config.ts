@@ -20,54 +20,35 @@ export default defineConfig(({ command, mode }) => {
     acc
   ), {} as Record<string, string>);
 
-  // production 강제 오버라이드 (process.env 잔류값 무시)
-  envMode === "production" ? (
-    (() => {
-      const prodFile = path.join(rootDir, `.env.production`);
-      fs.existsSync(prodFile) ? (
-        fs.readFileSync(prodFile, { encoding: "utf8" })
-          .split(/\r?\n/) // 줄 분리
-          .filter(Boolean) // 빈 줄 제거
-          .forEach(line => {
-            const idx = line.indexOf("=");
-            const hasEq = idx > 0;
-            hasEq ? (
-              (() => {
-                const key = line.slice(0, idx).trim();
-                const val = line.slice(idx + 1).trim();
-                key.startsWith("VITE_") ? (
-                  env[key] = val
-                ) : (
-                  null
-                );
-              })()
-            ) : (
-              null
-            );
-          })
-      ) : (
-        null
-      );
-    })()
-  ) : (
-    null
-  );
+  // production 강제 오버라이드
+	// - process.env 잔류값 무시
+  envMode === "production" ? ((() => {
+		const prodFile = path.join(rootDir, `.env.production`);
+		const readFileSync = fs.readFileSync(prodFile, {encoding: "utf8"}).split(/\r?\n/).filter(Boolean).forEach(line => {
+			const idx = line.indexOf("=");
+			const hasEq = idx > 0;
+			hasEq && (() => {
+				const key = line.slice(0, idx).trim();
+				const val = line.slice(idx + 1).trim();
+				key.startsWith("VITE_") ? env[key] = val : null;
+			})();
+		});
+		fs.existsSync(prodFile) ? readFileSync : null;
+	})()) : null;
 
   const isDev = mode === "development";
   const isProd = mode === "production";
 
-  isDev ? (
+  isDev && (
     console.log(`[Vite Config] mode: ${mode}, envMode: ${envMode}`),
     console.log(`[Vite Config] VITE_APP_SERVER_URL: ${env.VITE_APP_SERVER_URL}`)
-  ) : (
-    null
   );
 
   return {
     base: env.VITE_APP_PUBLIC_URL || "/LIFECHANGE",
     plugins: [
       react(),
-      isProd ? (
+      isProd && (
         viteCompression({
           verbose: false,
           disable: false,
@@ -76,9 +57,7 @@ export default defineConfig(({ command, mode }) => {
           ext: ".br",
           deleteOriginFile: false
         })
-      ) : (
-        null
-      )
+    	)
     ].filter(Boolean),
     define: Object.keys(env).reduce((acc, k) => (
       acc[`import.meta.env.${k}`] = JSON.stringify(env[k]),

@@ -245,7 +245,7 @@ const gitFetch = () => {
 };
 
 // git push 공통 함수 ------------------------------------------------------------------------
-const gitPush = (remoteName=``, ignoreFilePath=``, msg=``) => {
+const gitPush = (remoteName="", ignoreFilePath="", msg="") => {
 	const remoteExists = checkRemoteExists(remoteName);
 
 	!remoteExists && logger(`info`, `Remote '${remoteName}' 존재하지 않음 - 건너뜀`);
@@ -266,14 +266,16 @@ const gitPush = (remoteName=``, ignoreFilePath=``, msg=``) => {
 		const statusOutput = execSync(`git status --porcelain`, { encoding: `utf8` }).trim();
 		statusOutput && (() => {
 			logger(`info`, `변경사항 감지 - 커밋 진행`);
-			const commitCmd = msg ? (
-				`git commit -m "${msg}"`
-			) : osType === `win` ? (
-				`git commit -m "%date% %time:~0,8%"`
-			) : (
-				`git commit -m "$(date +%Y-%m-%d) $(date +%H:%M:%S)"`
-			);
-			execSync(commitCmd, { stdio: `inherit` });
+			const tempFile = `.git-commit-msg.tmp`;
+			const commitContent = msg ? msg : (() => {
+				const now = new Date();
+				const dateStr = now.toISOString().slice(0, 10);
+				const timeStr = now.toTimeString().slice(0, 8);
+				return `${dateStr} ${timeStr}`;
+			})();
+			fs.writeFileSync(tempFile, commitContent, `utf8`);
+			execSync(`git commit -F "${tempFile}"`, { stdio: `inherit` });
+			fs.unlinkSync(tempFile);
 			logger(`success`, `커밋 완료`);
 		})();
 		!statusOutput && logger(`info`, `변경사항 없음 - 커밋 건너뜀`);
