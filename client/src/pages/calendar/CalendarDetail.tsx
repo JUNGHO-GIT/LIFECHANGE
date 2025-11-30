@@ -457,7 +457,7 @@ export const CalendarDetail = memo(() => {
 			{/** items **/}
 			{OBJECT?.calendar_exercise_section?.map((item, i) => (
 				<Grid container spacing={2} key={`exercise-detail-${i}`}
-					className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-1 shadow-1 p-20px`}>
+				className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-1 border-top-0 shadow-1 p-20px`}>
 					{/** row 1 **/}
 					<Grid container={true} spacing={1}>
 						<Grid size={6} className={`d-row-left`}>
@@ -704,7 +704,7 @@ export const CalendarDetail = memo(() => {
 			{/** items **/}
 			{OBJECT?.calendar_food_section?.map((item, i) => (
 				<Grid container spacing={2} key={`food-detail-${i}`}
-					className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-1 shadow-1 p-20px`}>
+				className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-1 border-top-0 shadow-1 p-20px`}>
 					{/** row 1 **/}
 					<Grid container={true} spacing={1}>
 						<Grid size={6} className={`d-row-left`}>
@@ -1052,7 +1052,7 @@ export const CalendarDetail = memo(() => {
 			{/** items **/}
 			{OBJECT?.calendar_money_section?.map((item, i) => (
 				<Grid container spacing={2} key={`money-detail-${i}`}
-					className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-1 shadow-1 p-20px`}>
+				className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-1 border-top-0 shadow-1 p-20px`}>
 					{/** row 1 **/}
 					<Grid container={true} spacing={1}>
 						<Grid size={6} className={`d-row-left`}>
@@ -1249,7 +1249,7 @@ export const CalendarDetail = memo(() => {
 			{/** items **/}
 			{OBJECT?.calendar_sleep_section?.map((_item, i) => (
 				<Grid container spacing={2} key={`sleep-detail-${i}`}
-					className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-1 shadow-1 p-20px`}>
+				className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-1 border-top-0 shadow-1 p-20px`}>
 					{/** row 1 **/}
 					<Grid container={true} spacing={1}>
 						<Grid size={6} className={`d-row-left`}>
