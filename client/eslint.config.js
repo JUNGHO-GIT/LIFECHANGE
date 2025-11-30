@@ -3,12 +3,14 @@
  * @since 2025-11-22
  */
 
-// @ts-nocheck
 import { defineConfig } from "eslint/config";
 import js from "@eslint/js";
 import tseslint from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
 import globals from "globals";
+import react from "eslint-plugin-react";
+import reactHooks from "eslint-plugin-react-hooks";
+import jsxA11y from "eslint-plugin-jsx-a11y";
 
 // 공통: 무시할 경로 패턴 ----------------------------------------------------------
 // 프로젝트 전역에서 공통으로 무시할 폴더/파일 패턴
@@ -57,7 +59,7 @@ const COMMON_LANGUAGE_OPTIONS_ESM = {
 		"extraFileExtensions": []
 	},
 	"globals": {
-		...globals.es2024,
+		...globals.es2021,
 		...globals.browser,
 		...globals.node,
 		...globals.worker,
@@ -118,6 +120,7 @@ const BASE_RULES = {
 			"arraysInArrays": true
 		}
 	],
+
 
 	// 배열 콜백 반환값 강제
 	"array-callback-return": [
@@ -1348,7 +1351,7 @@ const TS_RULES = {
 	"@typescript-eslint/naming-convention": [
 		"off"
 	],
-  	"@typescript-eslint/no-array-constructor": [
+	"@typescript-eslint/no-array-constructor": [
 		"error"
 	],
 	"@typescript-eslint/no-confusing-non-null-assertion": [
@@ -1554,14 +1557,25 @@ export default defineConfig([
 		},
 		// 플러그인 설정 (추후 확장용 자리)
 		"plugins": {
-			"@typescript-eslint": tseslint
+			"@typescript-eslint": tseslint,
+			"react": react,
+			"react-hooks": reactHooks,
+			"jsx-a11y": jsxA11y
 		},
 		"rules": {
 			...BASE_RULES,
 			...tseslint.configs.recommended.rules,
-			...TS_RULES
+			...TS_RULES,
+			...react.configs.recommended.rules,
+			...react.configs["jsx-runtime"].rules,
+			...reactHooks.configs.recommended.rules,
+			...jsxA11y.configs.recommended.rules
 		},
 		// 플러그인별 커스텀 설정 자리
-		"settings": {}
+		"settings": {
+			"react": {
+				"version": "detect"
+			}
+		}
 	}
 ]);
