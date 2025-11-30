@@ -21,8 +21,8 @@ const getRemoteDefaultBranch = (remoteName=``) => {
 	const branch = remoteName === CONFIG.git.remotes.public.name
 		? CONFIG.git.remotes.public.branch
 		: remoteName === CONFIG.git.remotes.private.name
-			? CONFIG.git.remotes.private.branch
-			: ``;
+		? CONFIG.git.remotes.private.branch
+		: ``;
 
 	branch
 		? logger(`info`, `원격 저장소 ${remoteName} 기본 브랜치(고정): ${branch}`)
@@ -67,112 +67,147 @@ const transformLines = (content=``, rules=[]) => {
 
 // env 파일 및 index 파일 수정 ----------------------------------------------------------------
 const modifyEnvAndIndex = () => {
-	logger(`info`, `.env 및 index.ts 파일 수정 시작`);
+	const envExists = fs.existsSync(`.env`);
+	const indexExists = fs.existsSync(`index.ts`);
 
-	const envContent = fs.readFileSync(`.env`, `utf8`);
-	const indexContent = fs.readFileSync(`index.ts`, `utf8`);
+	!envExists && !indexExists && (
+		logger(`info`, `.env 및 index.ts 파일 없음 - 건너뜀`),
+		true
+	);
 
-	const envRules = [
-		{
-			match: (line) => line.startsWith(`CLIENT_URL=`),
-			replace: () => `CLIENT_URL=https://www.${CONFIG.domain}/${CONFIG.projectName}`
-		},
-		{
-			match: (line) => line.startsWith(`GOOGLE_CALLBACK_URL=`),
-			replace: () => `GOOGLE_CALLBACK_URL=https://www.${CONFIG.domain}/${CONFIG.projectName}/api/auth/google/callback`
-		}
-	];
+	envExists && (() => {
+		logger(`info`, `.env 파일 수정 시작`);
+		const envContent = fs.readFileSync(`.env`, `utf8`);
+		const envRules = [
+			{
+				match: (line) => line.startsWith(`CLIENT_URL=`),
+				replace: () => `CLIENT_URL=https://www.${CONFIG.domain}/${CONFIG.projectName}`
+			},
+			{
+				match: (line) => line.startsWith(`GOOGLE_CALLBACK_URL=`),
+				replace: () => `GOOGLE_CALLBACK_URL=https://www.${CONFIG.domain}/${CONFIG.projectName}/${CONFIG.gcp.callback}`
+			}
+		];
+		fs.writeFileSync(`.env`, transformLines(envContent, envRules));
+		logger(`info`, `.env 파일 수정 완료`);
+	})();
 
-	const indexRules = [
-		{
-			match: (line) => line.trim().startsWith(`// const db = process.env.DB_NAME`),
-			replace: () => `const db = process.env.DB_NAME;`
-		},
-		{
-			match: (line) => line.trim().startsWith(`const db = process.env.DB_TEST`),
-			replace: () => `// const db = process.env.DB_TEST;`
-		}
-	];
-
-	fs.writeFileSync(`.env`, transformLines(envContent, envRules));
-	fs.writeFileSync(`index.ts`, transformLines(indexContent, indexRules));
-	logger(`info`, `.env 및 index.ts 파일 수정 완료`);
+	indexExists && (() => {
+		logger(`info`, `index.ts 파일 수정 시작`);
+		const indexContent = fs.readFileSync(`index.ts`, `utf8`);
+		const indexRules = [
+			{
+				match: (line) => line.trim().startsWith(`// const db = process.env.DB_NAME`),
+				replace: () => `const db = process.env.DB_NAME;`
+			},
+			{
+				match: (line) => line.trim().startsWith(`const db = process.env.DB_TEST`),
+				replace: () => `// const db = process.env.DB_TEST;`
+			}
+		];
+		fs.writeFileSync(`index.ts`, transformLines(indexContent, indexRules));
+		logger(`info`, `index.ts 파일 수정 완료`);
+	})();
 };
 
 // env 파일 및 index 파일 복원 ----------------------------------------------------------------
 const restoreEnvAndIndex = () => {
-	logger(`info`, `.env 및 index.ts 파일 복원 시작`);
+	const envExists = fs.existsSync(`.env`);
+	const indexExists = fs.existsSync(`index.ts`);
 
-	const envContent = fs.readFileSync(`.env`, `utf8`);
-	const indexContent = fs.readFileSync(`index.ts`, `utf8`);
+	!envExists && !indexExists && (
+		logger(`info`, `.env 및 index.ts 파일 없음 - 복원 건너뜀`),
+		true
+	);
 
-	const envRules = [
-		{
-			match: (line) => line.startsWith(`CLIENT_URL=`),
-			replace: () => `CLIENT_URL=http://localhost:${CONFIG.localPort.client}/${CONFIG.projectName}`
-		},
-		{
-			match: (line) => line.startsWith(`GOOGLE_CALLBACK_URL=`),
-			replace: () => `GOOGLE_CALLBACK_URL=http://localhost:${CONFIG.localPort.server}/${CONFIG.projectName}/api/auth/google/callback`
-		}
-	];
+	envExists && (() => {
+		logger(`info`, `.env 파일 복원 시작`);
+		const envContent = fs.readFileSync(`.env`, `utf8`);
+		const envRules = [
+			{
+				match: (line) => line.startsWith(`CLIENT_URL=`),
+				replace: () => `CLIENT_URL=http://localhost:${CONFIG.localPort.client}/${CONFIG.projectName}`
+			},
+			{
+				match: (line) => line.startsWith(`GOOGLE_CALLBACK_URL=`),
+				replace: () => `GOOGLE_CALLBACK_URL=http://localhost:${CONFIG.localPort.server}/${CONFIG.projectName}/${CONFIG.gcp.callback}`
+			}
+		];
+		fs.writeFileSync(`.env`, transformLines(envContent, envRules));
+		logger(`info`, `.env 파일 복원 완료`);
+	})();
 
-	const indexRules = [
-		{
-			match: (line) => line.trim().startsWith(`const db = process.env.DB_NAME`),
-			replace: () => `// const db = process.env.DB_NAME;`
-		},
-		{
-			match: (line) => line.trim().startsWith(`// const db = process.env.DB_TEST`),
-			replace: () => `const db = process.env.DB_TEST;`
-		}
-	];
-
-	fs.writeFileSync(`.env`, transformLines(envContent, envRules));
-	fs.writeFileSync(`index.ts`, transformLines(indexContent, indexRules));
-	logger(`info`, `.env 및 index.ts 파일 복원 완료`);
+	indexExists && (() => {
+		logger(`info`, `index.ts 파일 복원 시작`);
+		const indexContent = fs.readFileSync(`index.ts`, `utf8`);
+		const indexRules = [
+			{
+				match: (line) => line.trim().startsWith(`const db = process.env.DB_NAME`),
+				replace: () => `// const db = process.env.DB_NAME;`
+			},
+			{
+				match: (line) => line.trim().startsWith(`// const db = process.env.DB_TEST`),
+				replace: () => `const db = process.env.DB_TEST;`
+			}
+		];
+		fs.writeFileSync(`index.ts`, transformLines(indexContent, indexRules));
+		logger(`info`, `index.ts 파일 복원 완료`);
+	})();
 };
 
 // changelog 수정 ----------------------------------------------------------------------------
 const modifyChangelog = () => {
-	logger(`info`, `changelog.md 업데이트 시작`);
+	const changelogExists = fs.existsSync(`changelog.md`);
 
-	const now = new Date();
-	const dateStr = now.toLocaleDateString(`ko-KR`, { year: `numeric`, month: `2-digit`, day: `2-digit` });
-	const timeStr = now.toLocaleTimeString(`ko-KR`, { hour: `2-digit`, minute: `2-digit`, second: `2-digit`, hour12: false });
+	!changelogExists && logger(`info`, `changelog.md 파일 없음 - 건너뜀`);
 
-	const changelog = fs.readFileSync(`changelog.md`, `utf8`);
-	const matches = [...changelog.matchAll(/(\s*)(\d+[.]\d+[.]\d+)(\s*)/g)];
-	const lastVersion = matches[matches.length - 1][2];
-	const ver = lastVersion.split(`.`).map(Number);
+	const result = changelogExists ? (() => {
+		logger(`info`, `changelog.md 업데이트 시작`);
 
-	ver[2]++;
-	ver[2] >= 10 && (ver[2] = 0, ver[1]++);
-	ver[1] >= 10 && (ver[1] = 0, ver[0]++);
+		const now = new Date();
+		const dateStr = now.toLocaleDateString(`ko-KR`, { year: `numeric`, month: `2-digit`, day: `2-digit` });
+		const timeStr = now.toLocaleTimeString(`ko-KR`, { hour: `2-digit`, minute: `2-digit`, second: `2-digit`, hour12: false });
 
-	const newVersion = ver.join(`.`);
-	const formattedDateTime = `- ${dateStr} (${timeStr})`
-		.replace(/([.]\s*[(])/g, ` (`)
-		.replace(/([.]\s*)/g, `-`)
-		.replace(/[(](\W*)(\s*)/g, `(`);
+		const changelog = fs.readFileSync(`changelog.md`, `utf8`);
+		const matches = [...changelog.matchAll(/(\s*)(\d+[.]\d+[.]\d+)(\s*)/g)];
+		const lastVersion = matches[matches.length - 1][2];
+		const ver = lastVersion.split(`.`).map(Number);
 
-	const newEntry = `\n## \\[ ${newVersion} \\]\n\n${formattedDateTime}\n`;
-	fs.writeFileSync(`changelog.md`, changelog + newEntry, `utf8`);
-	logger(`success`, `changelog.md 업데이트 완료: ${newVersion}`);
+		ver[2]++;
+		ver[2] >= 10 && (ver[2] = 0, ver[1]++);
+		ver[1] >= 10 && (ver[1] = 0, ver[0]++);
 
-	return newVersion;
+		const newVersion = ver.join(`.`);
+		const formattedDateTime = `- ${dateStr} (${timeStr})`
+			.replace(/([.]\s*[(])/g, ` (`)
+			.replace(/([.]\s*)/g, `-`)
+			.replace(/[(](\W*)(\s*)/g, `(`);
+
+		const newEntry = `\n## \\[ ${newVersion} \\]\n\n${formattedDateTime}\n`;
+		fs.writeFileSync(`changelog.md`, changelog + newEntry, `utf8`);
+		logger(`success`, `changelog.md 업데이트 완료: ${newVersion}`);
+
+		return newVersion;
+	})() : ``;
+
+	return result;
 };
 
 // package.json 버전 수정 --------------------------------------------------------------------
 const incrementVersion = (newVersion=``) => {
-	logger(`info`, `package.json 버전 업데이트 시작: ${newVersion}`);
-
 	const pkgPath = `package.json`;
-	const pkg = JSON.parse(fs.readFileSync(pkgPath, `utf8`));
-	pkg.version = newVersion;
+	const pkgExists = fs.existsSync(pkgPath);
 
-	fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + `\n`, `utf8`);
-	logger(`success`, `package.json 버전 업데이트 완료: ${newVersion}`);
+	!newVersion && logger(`info`, `버전 정보 없음 - package.json 업데이트 건너뜀`);
+	!pkgExists && newVersion && logger(`info`, `package.json 파일 없음 - 건너뜀`);
+
+	pkgExists && newVersion && (() => {
+		logger(`info`, `package.json 버전 업데이트 시작: ${newVersion}`);
+		const pkg = JSON.parse(fs.readFileSync(pkgPath, `utf8`));
+		pkg.version = newVersion;
+		fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + `\n`, `utf8`);
+		logger(`success`, `package.json 버전 업데이트 완료: ${newVersion}`);
+	})();
 };
 
 // git fetch ---------------------------------------------------------------------------------
