@@ -3,14 +3,12 @@
  * @since 2025-11-22
  */
 
+// @ts-nocheck
 import { defineConfig } from "eslint/config";
 import js from "@eslint/js";
 import tseslint from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
 import globals from "globals";
-import react from "eslint-plugin-react";
-import reactHooks from "eslint-plugin-react-hooks";
-import jsxA11y from "eslint-plugin-jsx-a11y";
 
 // 공통: 무시할 경로 패턴 ----------------------------------------------------------
 // 프로젝트 전역에서 공통으로 무시할 폴더/파일 패턴
@@ -59,7 +57,7 @@ const COMMON_LANGUAGE_OPTIONS_ESM = {
 		"extraFileExtensions": []
 	},
 	"globals": {
-		...globals.es2021,
+		...globals.es2024,
 		...globals.browser,
 		...globals.node,
 		...globals.worker,
@@ -120,7 +118,6 @@ const BASE_RULES = {
 			"arraysInArrays": true
 		}
 	],
-
 
 	// 배열 콜백 반환값 강제
 	"array-callback-return": [
@@ -1328,13 +1325,13 @@ const TS_RULES = {
 		"error"
 	],
 	"@typescript-eslint/consistent-type-definitions": [
-		"warn"
+		"off"
 	],
 	"@typescript-eslint/consistent-type-exports": [
 		"off"
 	],
 	"@typescript-eslint/consistent-type-imports": [
-		"error"
+		"off"
 	],
 	"@typescript-eslint/explicit-function-return-type": [
 		"off"
@@ -1557,25 +1554,57 @@ export default defineConfig([
 		},
 		// 플러그인 설정 (추후 확장용 자리)
 		"plugins": {
-			"@typescript-eslint": tseslint,
-			"react": react,
-			"react-hooks": reactHooks,
-			"jsx-a11y": jsxA11y
+			"@typescript-eslint": tseslint
 		},
 		"rules": {
 			...BASE_RULES,
 			...tseslint.configs.recommended.rules,
-			...TS_RULES,
-			...react.configs.recommended.rules,
-			...react.configs["jsx-runtime"].rules,
-			...reactHooks.configs.recommended.rules,
-			...jsxA11y.configs.recommended.rules
+			...TS_RULES
 		},
 		// 플러그인별 커스텀 설정 자리
-		"settings": {
-			"react": {
-				"version": "detect"
+		"settings": {}
+	},
+
+	// 2. node-cjs --------------------------------------------------------------
+	{
+		// 설정 블록 이름
+		"name": "node-cjs",
+		// 대상 파일: CJS (Node.js CommonJS 스크립트)
+		"files": [
+			...COMMON_CJS_FILES
+		],
+		// 언어 옵션: CommonJS 환경
+		"languageOptions": {
+			"ecmaVersion": "latest",
+			"sourceType": "commonjs",
+			"parserOptions": {
+				"ecmaVersion": "latest",
+				"sourceType": "commonjs",
+				"ecmaFeatures": {
+					"jsx": false
+				}
+			},
+			"globals": {
+				...globals.es2024,
+				...globals.node,
+				"APP_ENV": "readonly",
+				"APP_VERSION": "readonly",
+				"DEBUG": "readonly"
 			}
-		}
+		},
+		// 린터 옵션 (공통 설정 적용)
+		"linterOptions": {
+			...COMMON_LINTER_OPTIONS
+		},
+		// ESLint JS 추천 규칙 상속
+		"extends": [
+			js.configs.recommended
+		],
+		// 플러그인: (TS 플러그인 미사용)
+		"plugins": {},
+		"rules": {
+			...BASE_RULES
+		},
+		"settings": {}
 	}
 ]);
