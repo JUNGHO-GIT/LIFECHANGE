@@ -51,9 +51,9 @@ export const FoodGoalDetail = memo(() => {
     newSectionCnt: 0
   });
   const [DATE, setDATE] = useState({
-    dateType: location_dateType || "month",
-    dateStart: location_dateStart || getMonthStartFmt(),
-    dateEnd: location_dateEnd || getMonthEndFmt(),
+    dateType: location_dateType ?? "month",
+    dateStart: location_dateStart ?? getMonthStartFmt(),
+    dateEnd: location_dateEnd ?? getMonthEndFmt(),
   });
 
 	// 2-3. useRef --------------------------------------------------------------------------------
@@ -359,7 +359,7 @@ export const FoodGoalDetail = memo(() => {
 								}
 								onChange={(e: any) => {
 									const processedValue = handleNumberInput(e.target.value, 999999);
-									if (processedValue === null) { return; }
+									!processedValue === null && (() => { return })();
 									setOBJECT((prev) => ({
 										...prev,
 										food_goal_kcal: processedValue,
@@ -398,7 +398,7 @@ export const FoodGoalDetail = memo(() => {
 								}
 								onChange={(e: any) => {
 									const processedValue = handleNumberInput(e.target.value, 999999);
-									if (processedValue === null) { return; }
+									!processedValue === null && (() => { return })();
 									setOBJECT((prev) => ({
 										...prev,
 										food_goal_carb: processedValue,
@@ -437,7 +437,7 @@ export const FoodGoalDetail = memo(() => {
 								}
 								onChange={(e: any) => {
 									const processedValue = handleNumberInput(e.target.value, 999999);
-									if (processedValue === null) { return; }
+									!processedValue === null && (() => { return })();
 									setOBJECT((prev) => ({
 										...prev,
 										food_goal_protein: processedValue,
@@ -476,7 +476,7 @@ export const FoodGoalDetail = memo(() => {
 								}
 								onChange={(e: any) => {
 									const processedValue = handleNumberInput(e.target.value, 999999);
-									if (processedValue === null) { return; }
+									!processedValue === null && (() => { return })();
 									setOBJECT((prev) => ({
 										...prev,
 										food_goal_fat: processedValue,

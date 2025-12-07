@@ -46,19 +46,19 @@ export const bar = async (
       return [
         {
           name: String("bedTime"),
-          date: String(item?.sleep_goal_dateStart || dateStart),
+          date: String(item?.sleep_goal_dateStart ?? dateStart),
           goal: String(timeToDecimal(item?.sleep_goal_bedTime) || "0"),
           record: String(sumSections(sections, 'sleep_record_bedTime') || "0")
         },
         {
           name: String("wakeTime"),
-          date: String(item?.sleep_goal_dateStart || dateStart),
+          date: String(item?.sleep_goal_dateStart ?? dateStart),
           goal: String(timeToDecimal(item?.sleep_goal_wakeTime) || "0"),
           record: String(sumSections(sections, 'sleep_record_wakeTime') || "0")
         },
         {
           name: String("sleepTime"),
-          date: String(item?.sleep_goal_dateStart || dateStart),
+          date: String(item?.sleep_goal_dateStart ?? dateStart),
           goal: String(timeToDecimal(item?.sleep_goal_sleepTime) || "0"),
           record: String(sumSections(sections, 'sleep_record_sleepTime') || "0")
         }

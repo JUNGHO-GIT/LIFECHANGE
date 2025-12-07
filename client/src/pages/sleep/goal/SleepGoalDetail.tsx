@@ -52,9 +52,9 @@ export const SleepGoalDetail = memo(() => {
     newSectionCnt: 0
   });
   const [DATE, setDATE] = useState({
-    dateType: location_dateType || "month",
-    dateStart: location_dateStart || getMonthStartFmt(),
-    dateEnd: location_dateEnd || getMonthEndFmt(),
+    dateType: location_dateType ?? "month",
+    dateStart: location_dateStart ?? getMonthStartFmt(),
+    dateEnd: location_dateEnd ?? getMonthEndFmt(),
   });
 
 	// 2-3. useRef --------------------------------------------------------------------------------

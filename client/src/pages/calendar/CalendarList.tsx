@@ -24,15 +24,15 @@ export const CalendarList = memo(() => {
 
 	// 2-1. useStorageLocal ------------------------------------------------------------------------
 	const [DATE, setDATE] = useStorageLocal(
-		"date", PATH, "", {
-		dateType: "",
+		`date`, PATH, ``, {
+		dateType: ``,
 		dateStart: getMonthStartFmt(),
 		dateEnd: getMonthEndFmt(),
 	}
 	);
 	const [PAGING, _setPAGING] = useStorageLocal(
-		"paging", PATH, "", {
-		sort: "asc",
+		`paging`, PATH, ``, {
+		sort: `asc`,
 		page: 1,
 	}
 	);
@@ -40,18 +40,18 @@ export const CalendarList = memo(() => {
 	// 2-2. useState -------------------------------------------------------------------------------
 	const [OBJECT, setOBJECT] = useState([Calendar]);
 	const [EXIST, setEXIST] = useState({
-		day: [""],
-		week: [""],
-		month: [""],
-		year: [""],
-		select: [""],
+		day: [``],
+		week: [``],
+		month: [``],
+		year: [``],
+		select: [``],
 	});
 	const [SEND, setSEND] = useState({
-		category: "",
+		category: ``,
 		refresh: 0,
-		dateType: "day",
-		dateStart: "0000-00-00",
-		dateEnd: "0000-00-00",
+		dateType: `day`,
+		dateStart: `0000-00-00`,
+		dateEnd: `0000-00-00`,
 	});
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ export const CalendarList = memo(() => {
 				user_id: sessionId,
 				PAGING: PAGING,
 				DATE: {
-					dateType: "",
+					dateType: ``,
 					dateStart: DATE?.dateStart,
 					dateEnd: DATE?.dateEnd,
 				},
@@ -77,7 +77,7 @@ export const CalendarList = memo(() => {
 				setALERT({
 					open: true,
 					msg: translate(err.response.data.msg),
-					severity: "error",
+					severity: `error`,
 				});
 			})
 			.finally(() => {
@@ -90,7 +90,7 @@ export const CalendarList = memo(() => {
 
 		// 7-1. dateInRange
 		const dateInRange = (date: any, dateStart: any, dateEnd: any) => {
-			const isValid = (d: any) => !!d && d !== "0000-00-00";
+			const isValid = (d: any) => !!d && d !== `0000-00-00`;
 			if (!isValid(dateStart) || !isValid(dateEnd)) {
 				return false;
 			}
@@ -107,8 +107,8 @@ export const CalendarList = memo(() => {
 			<Grid container={true} spacing={1}>
 				<Grid size={3} className={`d-row-left`}>
 					<Icons
-						key={"ArrowLeft"}
-						name={"ArrowLeft"}
+						key={`ArrowLeft`}
+						name={`ArrowLeft`}
 						className={`w-24px h-24px`}
 						onClick={() => {
 							setDATE((prev) => ({
@@ -130,13 +130,13 @@ export const CalendarList = memo(() => {
 							}));
 						}}
 					>
-						{getDayNotFmt(DATE?.dateStart).format("YYYY-MM")}
+						{getDayNotFmt(DATE?.dateStart).format(`YYYY-MM`)}
 					</Div>
 				</Grid>
 				<Grid size={3} className={`d-row-right`}>
 					<Icons
-						key={"ArrowRight"}
-						name={"ArrowRight"}
+						key={`ArrowRight`}
+						name={`ArrowRight`}
 						className={`w-24px h-24px`}
 						onClick={() => {
 							setDATE((prev) => ({
@@ -153,23 +153,23 @@ export const CalendarList = memo(() => {
 		// 7-2. reactCalendar
 		const reactCalendarSection = () => (
 			<Grid container={true} spacing={0}>
-				<Grid size={12} className={`d-row-center`}>
+				<Grid size={12} className={`d-row-center border-1 shadow-2 radius-2`}>
 					<ReactCalendar
-						view={"month"}
+						view={`month`}
 						locale={localLang}
-						calendarType={"gregory"}
+						calendarType={`gregory`}
 						value={getMoment(DATE?.dateStart).toDate()}
 						showNavigation={false}
 						showDoubleView={false}
 						showNeighboringMonth={true}
 						prev2Label={null}
 						next2Label={null}
-						formatDay={(_locale, date) => getDayNotFmt(date).format("D")}
-						formatWeekday={(_locale, date) => getDayNotFmt(date).format("d")}
-						formatMonth={(_locale, date) => getDayNotFmt(date).format("MM")}
-						formatYear={(_locale, date) => getDayNotFmt(date).format("YYYY")}
-						formatLongDate={(_locale, date) => getDayNotFmt(date).format("YYYY-MM-DD")}
-						formatMonthYear={(_locale, date) => getDayNotFmt(date).format("YYYY-MM")}
+						formatDay={(_locale, date) => getDayNotFmt(date).format(`D`)}
+						formatWeekday={(_locale, date) => getDayNotFmt(date).format(`d`)}
+						formatMonth={(_locale, date) => getDayNotFmt(date).format(`MM`)}
+						formatYear={(_locale, date) => getDayNotFmt(date).format(`YYYY`)}
+						formatLongDate={(_locale, date) => getDayNotFmt(date).format(`YYYY-MM-DD`)}
+						formatMonthYear={(_locale, date) => getDayNotFmt(date).format(`YYYY-MM`)}
 						onActiveStartDateChange={({activeStartDate}) => {
 							setDATE((prev) => ({
 								...prev,
@@ -180,7 +180,7 @@ export const CalendarList = memo(() => {
 						onClickDay={(value: Date) => {
 							navigate(`/calendar/detail`, {
 								state: {
-									dateType: "day",
+									dateType: `day`,
 									dateStart: getDayFmt(value),
 									dateEnd: getDayFmt(value),
 								}
@@ -194,13 +194,13 @@ export const CalendarList = memo(() => {
 							let isSun = getMoment(date).day() === 0;
 
 							// 오늘
-							let is = getMoment(date).isSame(new Date(), 'day');
+							let is = getMoment(date).isSame(new Date(), `day`);
 
 							// 이번달
-							let isCurrentMonth = getMoment(date).isSame(getMoment(DATE?.dateStart), 'month');
+							let isCurrentMonth = getMoment(date).isSame(getMoment(DATE?.dateStart), `month`);
 
 							// 섹션이 3개 이상인 경우 스크롤
-							let className = "calendar-tile";
+							let className = `calendar-tile`;
 
 							const itemMatchesDate = (item: any) => (
 								dateInRange(date, item.calendar_exercise_dateStart, item.calendar_exercise_dateEnd)
@@ -217,28 +217,28 @@ export const CalendarList = memo(() => {
 									+ (dateInRange(date, item.calendar_sleep_dateStart, item.calendar_sleep_dateEnd) ? (item.calendar_sleep_section?.length || 0) : 0)
 								); const hasManySections = calendarForDates.some((item: any) => sectionsCountFor(item) > 2);
 								if (hasManySections) {
-									className += " over-y-auto";
+									className += ` over-y-auto`;
 								}
 							}
 
 							// 토요일 색상 변경
 							if (isSat) {
-								className += " calendar-sat";
+								className += ` calendar-sat`;
 							}
 
 							// 일요일 색상 변경
 							if (isSun) {
-								className += " calendar-sun";
+								className += ` calendar-sun`;
 							}
 
 							// 오늘 날짜
 							if (is) {
-								className += " calendar-today";
+								className += ` calendar-today`;
 							}
 
 							// 이전달 or 다음달
 							if (!isCurrentMonth) {
-								className += " calendar-outside";
+								className += ` calendar-outside`;
 							}
 							return className;
 						}}
@@ -261,7 +261,7 @@ export const CalendarList = memo(() => {
 										<Div
 											key={`exercise-${item._id}`}
 											className={`calendar-filled`}
-											style={{backgroundColor: "#1976d2"}}
+											style={{backgroundColor: `#1976d2`}}
 										>
 											<span className={`calendar-category`}>
 												{translate(`exercise`)}
@@ -272,7 +272,7 @@ export const CalendarList = memo(() => {
 										<Div
 											key={`food-${item._id}`}
 											className={`calendar-filled`}
-											style={{backgroundColor: "#FF5722"}}
+											style={{backgroundColor: `#FF5722`}}
 										>
 											<span className={`calendar-category`}>
 												{translate(`food`)}
@@ -283,7 +283,7 @@ export const CalendarList = memo(() => {
 										<Div
 											key={`money-${item._id}`}
 											className={`calendar-filled`}
-											style={{backgroundColor: "#4CAF50"}}
+											style={{backgroundColor: `#4CAF50`}}
 										>
 											<span className={`calendar-category`}>
 												{translate(`money`)}
@@ -294,7 +294,7 @@ export const CalendarList = memo(() => {
 										<Div
 											key={`sleep-${item._id}`}
 											className={`calendar-filled`}
-											style={{backgroundColor: "#673AB7"}}
+											style={{backgroundColor: `#673AB7`}}
 										>
 											<span className={`calendar-category`}>
 												{translate(`sleep`)}
@@ -313,7 +313,7 @@ export const CalendarList = memo(() => {
 		return (
 			<Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
 				{titleSection()}
-				<Br m={20} />
+				<Br m={10} />
 				{reactCalendarSection()}
 			</Paper>
 		);

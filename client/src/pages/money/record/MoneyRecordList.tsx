@@ -25,9 +25,9 @@ export const MoneyRecordList = memo(() => {
 	// 2-1. useStorageLocal -----------------------------------------------------------------------
   const [DATE, setDATE] = useStorageLocal(
     "date", PATH, "", {
-      dateType: location_dateType || "",
-      dateStart: location_dateStart || getMonthStartFmt(),
-      dateEnd: location_dateEnd || getMonthEndFmt(),
+      dateType: location_dateType ?? "",
+      dateStart: location_dateStart ?? getMonthStartFmt(),
+      dateEnd: location_dateEnd ?? getMonthEndFmt(),
     }
   );
   const [PAGING, setPAGING] = useStorageLocal(

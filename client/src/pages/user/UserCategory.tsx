@@ -26,9 +26,9 @@ export const UserCategory = memo(() => {
   // 2-1. useStorageLocal ------------------------------------------------------------------------
   const [DATE, setDATE] = useStorageLocal(
     "date", PATH, "", {
-      dateType: location_dateType || "day",
-      dateStart: location_dateStart || getDayFmt(),
-      dateEnd: location_dateEnd || getDayFmt(),
+      dateType: location_dateType ?? "day",
+      dateStart: location_dateStart ?? getDayFmt(),
+      dateEnd: location_dateEnd ?? getDayFmt(),
     }
   );
 

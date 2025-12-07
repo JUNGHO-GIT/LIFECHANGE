@@ -51,9 +51,9 @@ export const ExerciseGoalDetail = memo(() => {
     newSectionCnt: 0
   });
   const [DATE, setDATE] = useState({
-    dateType: location_dateType || "month",
-    dateStart: location_dateStart || getMonthStartFmt(),
-    dateEnd: location_dateEnd || getMonthEndFmt(),
+    dateType: location_dateType ?? "month",
+    dateStart: location_dateStart ?? getMonthStartFmt(),
+    dateEnd: location_dateEnd ?? getMonthEndFmt(),
   });
 
 	// 2-3. useRef --------------------------------------------------------------------------------
@@ -362,7 +362,7 @@ export const ExerciseGoalDetail = memo(() => {
 								}
 								onChange={(e: any) => {
 									const processedValue = handleNumberInput(e.target.value, 9999);
-									if (processedValue === null) { return; }
+									!processedValue === null && (() => { return })();
 									setOBJECT((prev) => ({
 										...prev,
 										exercise_goal_count: processedValue
@@ -401,7 +401,7 @@ export const ExerciseGoalDetail = memo(() => {
 								}
 								onChange={(e: any) => {
 									const processedValue = handleNumberInput(e.target.value, 9999999);
-									if (processedValue === null) { return; }
+									!processedValue === null && (() => { return })();
 									setOBJECT((prev) => ({
 										...prev,
 										exercise_goal_volume: processedValue
@@ -451,7 +451,7 @@ export const ExerciseGoalDetail = memo(() => {
 								}
 								onChange={(e: any) => {
 									const processedValue = handleNumberInput(e.target.value, 999, 2);
-									if (processedValue === null) { return; }
+									!processedValue === null && (() => { return })();
 									setOBJECT((prev) => ({
 										...prev,
 										exercise_goal_scale: processedValue

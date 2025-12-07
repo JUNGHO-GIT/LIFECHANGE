@@ -180,7 +180,7 @@ export const UserDetail = memo(() => {
 									}
 									onChange={(e: any) => {
 										const processedValue = handleNumberInput(e.target.value, 999, 2);
-										if (processedValue === null) { return; }
+										!processedValue === null && (() => { return })();
 										setOBJECT((prev) => ({
 											...prev,
 											user_initScale: processedValue,
@@ -237,7 +237,7 @@ export const UserDetail = memo(() => {
 									}
 									onChange={(e: any) => {
 										const processedValue = handleNumberInput(e.target.value, 9999);
-										if (processedValue === null) { return; }
+										!processedValue === null && (() => { return })();
 										setOBJECT((prev) => ({
 											...prev,
 											user_initAvgKcalIntake: processedValue,
@@ -294,7 +294,7 @@ export const UserDetail = memo(() => {
 									}
 									onChange={(e: any) => {
 										const processedValue = handleNumberInput(e.target.value, 9999999999);
-										if (processedValue === null) { return; }
+										!processedValue === null && (() => { return })();
 										setOBJECT((prev) => ({
 											...prev,
 											user_initProperty: processedValue,

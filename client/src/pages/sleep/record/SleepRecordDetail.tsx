@@ -52,8 +52,8 @@ export const SleepRecordDetail = memo(() => {
   });
   const [DATE, setDATE] = useState({
     dateType: "day",
-    dateStart: location_dateStart || getDayFmt(),
-    dateEnd: location_dateEnd || getDayFmt(),
+    dateStart: location_dateStart ?? getDayFmt(),
+    dateEnd: location_dateEnd ?? getDayFmt(),
   });
 
 	// 2-3. useRef --------------------------------------------------------------------------------

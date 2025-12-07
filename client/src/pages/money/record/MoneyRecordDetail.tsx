@@ -53,8 +53,8 @@ export const MoneyRecordDetail = memo(() => {
 	});
 	const [DATE, setDATE] = useState({
 		dateType: "day",
-		dateStart: location_dateStart || getDayFmt(),
-		dateEnd: location_dateEnd || getDayFmt(),
+		dateStart: location_dateStart ?? getDayFmt(),
+		dateEnd: location_dateEnd ?? getDayFmt(),
 	});
 
 	// 2-3. useRef --------------------------------------------------------------------------------
@@ -530,7 +530,7 @@ export const MoneyRecordDetail = memo(() => {
 									}
 									onChange={(e: any) => {
 										const processedValue = handleNumberInput(e.target?.value, 999999999);
-										if (processedValue === null) { return; }
+										!processedValue === null && (() => { return })();
 										const value = processedValue === "" ? "0" : processedValue;
 										setOBJECT((prev) => ({
 											...prev,

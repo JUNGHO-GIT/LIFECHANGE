@@ -54,8 +54,8 @@ export const ExerciseRecordDetail = memo(() => {
   });
   const [DATE, setDATE] = useState({
     dateType: "day",
-    dateStart: location_dateStart || getDayFmt(),
-    dateEnd: location_dateEnd || getDayFmt(),
+    dateStart: location_dateStart ?? getDayFmt(),
+    dateEnd: location_dateEnd ?? getDayFmt(),
   });
 
 	// 2-3. useRef --------------------------------------------------------------------------------
@@ -452,7 +452,7 @@ export const ExerciseRecordDetail = memo(() => {
               }
               onChange={(e: any) => {
                 const processedValue = handleNumberInput(e.target.value, 999, 2);
-                if (processedValue === null) { return; }
+                !processedValue === null && (() => { return })();
                 setOBJECT((prev) => ({
                   ...prev,
                   exercise_record_total_scale: processedValue
@@ -582,7 +582,7 @@ export const ExerciseRecordDetail = memo(() => {
 								}
 								onChange={(e: any) => {
 									const processedValue = handleNumberInput(e.target.value, 999);
-									if (processedValue === null) { return; }
+									!processedValue === null && (() => { return })();
 									setOBJECT((prev) => ({
 										...prev,
 										exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
@@ -616,7 +616,7 @@ export const ExerciseRecordDetail = memo(() => {
 								}
 								onChange={(e: any) => {
 									const processedValue = handleNumberInput(e.target.value, 999);
-									if (processedValue === null) { return; }
+									!processedValue === null && (() => { return })();
 									setOBJECT((prev) => ({
 										...prev,
 										exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
@@ -654,7 +654,7 @@ export const ExerciseRecordDetail = memo(() => {
 								}
 								onChange={(e: any) => {
 									const processedValue = handleNumberInput(e.target.value, 999);
-									if (processedValue === null) { return; }
+									!processedValue === null && (() => { return })();
 									setOBJECT((prev) => ({
 										...prev,
 										exercise_section: prev.exercise_section?.map((section: any, idx: number) => (

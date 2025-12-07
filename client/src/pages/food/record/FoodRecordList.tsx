@@ -23,20 +23,20 @@ export const FoodRecordList = memo(() => {
 
 	// 2-2. useStorageLocal -----------------------------------------------------------------------
   const [DATE, setDATE] = useStorageLocal(
-    "date", PATH, "", {
-      dateType: location_dateType || "",
-      dateStart: location_dateStart || getDayFmt(),
-      dateEnd: location_dateEnd || getDayFmt(),
+    `date`, PATH, ``, {
+      dateType: location_dateType ?? ``,
+      dateStart: location_dateStart ?? getDayFmt(),
+      dateEnd: location_dateEnd ?? getDayFmt(),
     }
   );
   const [PAGING, setPAGING] = useStorageLocal(
-    "paging", PATH, "", {
-      sort: "asc",
+    `paging`, PATH, ``, {
+      sort: `asc`,
       page: 1,
     }
   );
   const [isExpanded, setIsExpanded] = useStorageLocal(
-    "isExpanded", PATH, "", [{
+    `isExpanded`, PATH, ``, [{
       expanded: true
     }]
   );
@@ -44,17 +44,17 @@ export const FoodRecordList = memo(() => {
 	// 2-2. useState -------------------------------------------------------------------------------
   const [OBJECT, setOBJECT] = useState<[FoodRecordType]>([FoodRecord]);
   const [EXIST, setEXIST] = useState({
-    day: [""],
-    week: [""],
-    month: [""],
-    year: [""],
-    select: [""],
+    day: [``],
+    week: [``],
+    month: [``],
+    year: [``],
+    select: [``],
   });
   const [SEND, setSEND] = useState({
-    id: "",
-    dateType: "day",
-    dateStart: "0000-00-00",
-    dateEnd: "0000-00-00",
+    id: ``,
+    dateType: `day`,
+    dateStart: `0000-00-00`,
+    dateEnd: `0000-00-00`,
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -68,7 +68,7 @@ export const FoodRecordList = memo(() => {
       params: {
         user_id: sessionId,
         DATE: {
-          dateType: "",
+          dateType: ``,
           dateStart: getMonthStartFmt(DATE?.dateStart),
           dateEnd: getMonthEndFmt(DATE?.dateEnd),
         },
@@ -76,14 +76,14 @@ export const FoodRecordList = memo(() => {
     })
     .then((res: any) => {
       setEXIST(
-        !res.data.result || res.data.result?.length === 0 ? [""] : res.data.result
+        !res.data.result || res.data.result?.length === 0 ? [``] : res.data.result
       );
     })
     .catch((err: any) => {
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
-        severity: "error",
+        severity: `error`,
       });
     });
   }, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
@@ -96,7 +96,7 @@ export const FoodRecordList = memo(() => {
         user_id: sessionId,
         PAGING: PAGING,
         DATE: {
-          dateType: "",
+          dateType: ``,
           dateStart: DATE?.dateStart,
           dateEnd: DATE?.dateEnd,
         },
@@ -124,7 +124,7 @@ export const FoodRecordList = memo(() => {
       setALERT({
         open: true,
         msg: translate(err.response.data.msg),
-        severity: "error",
+        severity: `error`,
       });
     })
     .finally(() => {
@@ -146,8 +146,8 @@ export const FoodRecordList = memo(() => {
 							>
 								<AccordionSummary expandIcon={
 									<Icons
-										key={"ChevronDown"}
-										name={"ChevronDown"}
+										key={`ChevronDown`}
+										name={`ChevronDown`}
 										className={`w-16px h-16px`}
 										onClick={(e: any) => {
 											e.preventDefault();
@@ -173,8 +173,8 @@ export const FoodRecordList = memo(() => {
 									<Grid container={true} spacing={1}>
 										<Grid size={2} className={`d-row-center`}>
 											<Icons
-												key={"Search"}
-												name={"Search"}
+												key={`Search`}
+												name={`Search`}
 												className={`w-16px h-16px`}
 											/>
 										</Grid>
@@ -183,7 +183,7 @@ export const FoodRecordList = memo(() => {
 												{item.food_record_dateStart?.substring(5, 10)}
 											</Div>
 											<Div className={`fs-0-9rem fw-500 dark ml-5px`}>
-												{translate(getDayNotFmt(item.food_record_dateStart).format("ddd"))}
+												{translate(getDayNotFmt(item.food_record_dateStart).format(`ddd`))}
 											</Div>
 										</Grid>
 									</Grid>
@@ -198,7 +198,7 @@ export const FoodRecordList = memo(() => {
 													hover={true}
 													shadow={false}
 													radius={false}
-													src={"food2.webp"}
+													src={`food2.webp`}
 												/>
 											</Grid>
 											<Grid size={3} className={`d-row-left`}>
@@ -210,7 +210,7 @@ export const FoodRecordList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_total_kcal_color}`}>
-															{insertComma(item.food_record_total_kcal || "0")}
+															{insertComma(item.food_record_total_kcal || `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>
@@ -232,7 +232,7 @@ export const FoodRecordList = memo(() => {
 													hover={true}
 													shadow={false}
 													radius={false}
-													src={"food3.webp"}
+													src={`food3.webp`}
 												/>
 											</Grid>
 											<Grid size={3} className={`d-row-left`}>
@@ -244,7 +244,7 @@ export const FoodRecordList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_total_carb_color}`}>
-															{insertComma(item.food_record_total_carb || "0")}
+															{insertComma(item.food_record_total_carb || `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>
@@ -266,7 +266,7 @@ export const FoodRecordList = memo(() => {
 													hover={true}
 													shadow={false}
 													radius={false}
-													src={"food4.webp"}
+													src={`food4.webp`}
 												/>
 											</Grid>
 											<Grid size={3} className={`d-row-left`}>
@@ -278,7 +278,7 @@ export const FoodRecordList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_total_protein_color}`}>
-															{insertComma(item.food_record_total_protein || "0")}
+															{insertComma(item.food_record_total_protein || `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>
@@ -300,7 +300,7 @@ export const FoodRecordList = memo(() => {
 													hover={true}
 													shadow={false}
 													radius={false}
-													src={"food5.webp"}
+													src={`food5.webp`}
 												/>
 											</Grid>
 											<Grid size={3} className={`d-row-left`}>
@@ -312,7 +312,7 @@ export const FoodRecordList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_total_fat_color}`}>
-															{insertComma(item.food_record_total_fat || "0")}
+															{insertComma(item.food_record_total_fat || `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>
@@ -334,7 +334,7 @@ export const FoodRecordList = memo(() => {
     // 7-10. return
     return (
       <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
-        {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={"food"} /> : listSection()}
+        {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={`food`} /> : listSection()}
       </Paper>
     );
   };

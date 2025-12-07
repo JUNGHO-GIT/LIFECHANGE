@@ -56,9 +56,9 @@ export const CalendarDetail = memo(() => {
 		newSectionCnt: 0
 	});
 	const [DATE, setDATE] = useState({
-		dateType: location_dateType || `select`,
-		dateStart: location_dateStart || getDayFmt(),
-		dateEnd: location_dateEnd || getDayFmt(),
+		dateType: location_dateType ?? `select`,
+		dateStart: location_dateStart ?? getDayFmt(),
+		dateEnd: location_dateEnd ?? getDayFmt(),
 	});
 
 	// 2-3. useRef --------------------------------------------------------------------------------

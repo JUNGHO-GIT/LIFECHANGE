@@ -1,35 +1,35 @@
 // type.d.ts
 
-import { type Location, type NavigateFunction } from "@exportReacts";
+import type { Location, NavigateFunction } from "@exportReacts";
 
 // 공통 리터럴 · 유틸 타입 -------------------------------------------------------------------------
 export type FirstPathType =
-  | "today"
-  | "calendar"
-  | "exercise"
-  | "food"
-  | "money"
-  | "sleep"
-  | "user"
-  | "auth"
-  | "admin"
+  | `today`
+  | `calendar`
+  | `exercise`
+  | `food`
+  | `money`
+  | `sleep`
+  | `user`
+  | `auth`
+  | `admin`
   | (string & {});
 
 export type SecondPathType =
-  | "goal"
-  | "record"
-  | "find"
-  | "favorite"
-  | "chart"
-  | "dashboard"
+  | `goal`
+  | `record`
+  | `find`
+  | `favorite`
+  | `chart`
+  | `dashboard`
   | (string & {});
 
-export type SortType = "asc" | "desc";
-export type DateTypeLiteral = "" | "day" | "week" | "month" | "year";
-export type FoodLineMetricType = "kcal" | "carb" | "protein" | "fat" | (string & {});
-export type ExerciseChartMetricType = "volume" | "cardio" | (string & {});
-export type MoneyChartMetricType = "income" | "expense" | (string & {});
-export type SleepChartMetricType = "bedTime" | "wakeTime" | "sleepTime" | (string & {});
+export type SortType = `asc` | `desc`;
+export type DateTypeLiteral = `` | `day` | `week` | `month` | `year`;
+export type FoodLineMetricType = `kcal` | `carb` | `protein` | `fat` | (string & {});
+export type ExerciseChartMetricType = `volume` | `cardio` | (string & {});
+export type MoneyChartMetricType = `income` | `expense` | (string & {});
+export type SleepChartMetricType = `bedTime` | `wakeTime` | `sleepTime` | (string & {});
 
 // 라우팅 상태 -------------------------------------------------------------------------------------
 export interface LocationStateType {
@@ -63,10 +63,10 @@ export interface EnvType {
 // 로컬 스토리지 스키마 (인라인) -------------------------------------------------------------------
 export interface LocalSettingType {
   id?: {
-    autoLogin?: "true" | "false" | string;
+    autoLogin?: `true` | `false` | string;
     autoLoginId?: string;
     autoLoginPw?: string;
-    isSaved?: "true" | "false" | string;
+    isSaved?: `true` | `false` | string;
     isSavedId?: string;
   };
   locale?: {
@@ -82,10 +82,10 @@ export interface LocalSettingType {
 export interface LocalTitleType {
   setting?: {
     id?: {
-      autoLogin?: "true" | "false" | string;
+      autoLogin?: `true` | `false` | string;
       autoLoginId?: string;
       autoLoginPw?: string;
-      isSaved?: "true" | "false" | string;
+      isSaved?: `true` | `false` | string;
       isSavedId?: string;
     };
     locale?: {
@@ -99,13 +99,13 @@ export interface LocalTitleType {
   };
   tabs?: {
     top?: {
-      exercise?: "record" | "chart" | "goal" | "calendar" | "dashboard" | (string & {});
-      food?: "record" | "chart" | "goal" | "calendar" | "dashboard" | (string & {});
-      today?: "record" | "chart" | "goal" | "calendar" | "dashboard" | (string & {});
-      calendar?: "record" | "chart" | "goal" | "calendar" | "dashboard" | (string & {});
-      money?: "record" | "chart" | "goal" | "calendar" | "dashboard" | (string & {});
-      sleep?: "record" | "chart" | "goal" | "calendar" | "dashboard" | (string & {});
-      admin?: "record" | "chart" | "goal" | "calendar" | "dashboard" | (string & {});
+      exercise?: `record` | `chart` | `goal` | `calendar` | `dashboard` | (string & {});
+      food?: `record` | `chart` | `goal` | `calendar` | `dashboard` | (string & {});
+      today?: `record` | `chart` | `goal` | `calendar` | `dashboard` | (string & {});
+      calendar?: `record` | `chart` | `goal` | `calendar` | `dashboard` | (string & {});
+      money?: `record` | `chart` | `goal` | `calendar` | `dashboard` | (string & {});
+      sleep?: `record` | `chart` | `goal` | `calendar` | `dashboard` | (string & {});
+      admin?: `record` | `chart` | `goal` | `calendar` | `dashboard` | (string & {});
       [key: string]: string | undefined;
     };
     bottom?: {
@@ -118,50 +118,37 @@ export interface LocalTitleType {
       [key: string]: boolean | undefined;
     };
   };
-  paging?: {
-    [route: string]: {
+  paging?: Record<string, {
       sort?: SortType;
       page?: number;
-    };
-  };
-  isExpanded?: {
-    [route: string]:
-      | {
+    }>;
+  isExpanded?: Record<string, | {
           exercise?: unknown[];
           food?: unknown[];
           money?: unknown[];
           sleep?: unknown[];
         }
-      | Array<{ expanded?: boolean }>;
-  };
+      | { expanded?: boolean }[]>;
   type?: {
-    list?: { [route: string]: DateTypeLiteral };
-    pie?: {
-      [route: string]: {
+    list?: Record<string, DateTypeLiteral>;
+    pie?: Record<string, {
         section?: DateTypeLiteral;
         line?: FoodLineMetricType | ExerciseChartMetricType | MoneyChartMetricType | SleepChartMetricType;
-      };
-    };
-    line?: {
-      [route: string]: {
+      }>;
+    line?: Record<string, {
         section?: DateTypeLiteral;
         line?: FoodLineMetricType | ExerciseChartMetricType | MoneyChartMetricType | SleepChartMetricType;
-      };
-    };
-    avg?: {
-      [route: string]: {
+      }>;
+    avg?: Record<string, {
         section?: DateTypeLiteral;
         line?: FoodLineMetricType | ExerciseChartMetricType | MoneyChartMetricType | SleepChartMetricType;
-      };
-    };
+      }>;
   };
-  date?: {
-    [route: string]: {
+  date?: Record<string, {
       dateType?: DateTypeLiteral;
       dateStart?: string;
       dateEnd?: string;
-    };
-  };
+    }>;
   [key: string]: unknown;
 }
 
@@ -281,13 +268,13 @@ export interface SessionSync {
 }
 
 export interface SessionSettingType {
-  id?: { sessionId?: string; admin?: "true" | "false" | string };
+  id?: { sessionId?: string; admin?: `true` | `false` | string };
   sync?: SessionSync;
 }
 
 export interface SessionTitleType {
   section?: {
-    food?: Array<{
+    food?: {
       food_record_part: string;
       food_record_name: string;
       food_record_brand: string;
@@ -298,17 +285,15 @@ export interface SessionTitleType {
       food_record_carb: string;
       food_record_protein: string;
       food_record_fat: string;
-    }>;
+    }[];
     [key: string]: unknown;
   };
   setting?: SessionSettingType;
-  date?: {
-    [route: string]: {
+  date?: Record<string, {
       dateType?: DateTypeLiteral;
       dateStart?: string;
       dateEnd?: string;
-    };
-  };
+    }>;
   [key: string]: unknown;
 }
 
@@ -320,12 +305,12 @@ export interface CommonValueType {
   navigate: NavigateFunction;
   location: Location<LocationStateType> & Record<string, unknown>;
 
-  location_id?: LocationStateType["id"];
-  location_from?: LocationStateType["from"];
-  location_dateType?: LocationStateType["dateType"];
-  location_dateStart?: LocationStateType["dateStart"];
-  location_dateEnd?: LocationStateType["dateEnd"];
-  location_category?: LocationStateType["category"];
+  location_id?: LocationStateType[`id`];
+  location_from?: LocationStateType[`from`];
+  location_dateType?: LocationStateType[`dateType`];
+  location_dateStart?: LocationStateType[`dateStart`];
+  location_dateEnd?: LocationStateType[`dateEnd`];
+  location_category?: LocationStateType[`category`];
 
   PATH: string;
   firstStr: string;
@@ -439,7 +424,7 @@ export interface CommonValueType {
   URL_MONEY: string;
   URL_SLEEP: string;
 
-  isAdmin: string | boolean | "";
+  isAdmin: string | boolean | ``;
   sessionId: string;
 
   localSetting: LocalSettingType | {};
@@ -464,8 +449,8 @@ export interface CommonValueType {
 
   sessionTitle: SessionTitleType;
   localTitle: LocalTitleType;
-  sessionSetting: NonNullable<SessionTitleType["setting"]> | {};
-  sessionFoodSection: Array<{
+  sessionSetting: NonNullable<SessionTitleType[`setting`]> | {};
+  sessionFoodSection: {
     food_record_part: string;
     food_record_name: string;
     food_record_brand: string;
@@ -476,7 +461,7 @@ export interface CommonValueType {
     food_record_carb: string;
     food_record_protein: string;
     food_record_fat: string;
-  }>;
+  }[];
 
   exerciseChartArray: string[];
   foodChartArray: string[];

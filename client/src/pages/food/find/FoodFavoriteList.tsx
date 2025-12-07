@@ -52,9 +52,9 @@ export const FoodFavoriteList = memo(() => {
     newSectionCnt: 0
   });
   const [DATE, setDATE] = useState({
-    dateType: location_dateType || "day",
-    dateStart: location_dateStart || getDayFmt(),
-    dateEnd: location_dateEnd || getDayFmt(),
+    dateType: location_dateType ?? "day",
+    dateStart: location_dateStart ?? getDayFmt(),
+    dateEnd: location_dateEnd ?? getDayFmt(),
   });
 
 	// 2-3. useEffect ------------------------------------------------------------------------------

@@ -52,9 +52,9 @@ export const MoneyGoalDetail = memo(() => {
     newSectionCnt: 0
   });
   const [DATE, setDATE] = useState({
-    dateType: location_dateType || "month",
-    dateStart: location_dateStart || getMonthStartFmt(),
-    dateEnd: location_dateEnd || getMonthEndFmt(),
+    dateType: location_dateType ?? "month",
+    dateStart: location_dateStart ?? getMonthStartFmt(),
+    dateEnd: location_dateEnd ?? getMonthEndFmt(),
   });
 
 	// 2-3. useRef --------------------------------------------------------------------------------
@@ -358,7 +358,7 @@ export const MoneyGoalDetail = memo(() => {
 								}
 								onChange={(e: any) => {
 									const processedValue = handleNumberInput(e.target.value, 9999999999);
-									if (processedValue === null) { return; }
+									!processedValue === null && (() => { return })();
 									setOBJECT((prev) => ({
 										...prev,
 										money_goal_income: processedValue,
@@ -397,7 +397,7 @@ export const MoneyGoalDetail = memo(() => {
 								}
 								onChange={(e: any) => {
 									const processedValue = handleNumberInput(e.target.value, 9999999999);
-									if (processedValue === null) { return; }
+									!processedValue === null && (() => { return })();
 									setOBJECT((prev) => ({
 										...prev,
 										money_goal_expense: processedValue,

@@ -65,9 +65,9 @@ export const Empty = memo((
 								navigate(toDetail, {
 									state: {
 										from: PATH.includes("today") ? "today" : "list",
-										dateType: DATE?.dateType || "month",
-										dateStart: DATE?.dateStart || getMonthStartFmt(),
-										dateEnd: DATE?.dateEnd || getMonthEndFmt()
+										dateType: DATE?.dateType ?? "month",
+										dateStart: DATE?.dateStart ?? getMonthStartFmt(),
+										dateEnd: DATE?.dateEnd ?? getMonthEndFmt()
 									}
 								});
 							}}
@@ -109,9 +109,9 @@ export const Empty = memo((
 								navigate(toDetail, {
 									state: {
 										from: PATH.includes("today") ? "today" : "list",
-										dateType: DATE?.dateType || "day",
-										dateStart: DATE?.dateStart || getDayStartFmt(),
-										dateEnd: DATE?.dateEnd || getDayEndFmt(),
+										dateType: DATE?.dateType ?? "day",
+										dateStart: DATE?.dateStart ?? getDayStartFmt(),
+										dateEnd: DATE?.dateEnd ?? getDayEndFmt(),
 									}
 								});
 							}}

@@ -24,9 +24,9 @@ export const ExerciseGoalList = memo(() => {
   // 2-1. useStorageLocal ------------------------------------------------------------------------
   const [DATE, setDATE] = useStorageLocal(
     "date", PATH, "", {
-      dateType: location_dateType || "",
-      dateStart: location_dateStart || getDayFmt(),
-      dateEnd: location_dateEnd || getDayFmt(),
+      dateType: location_dateType ?? "",
+      dateStart: location_dateStart ?? getDayFmt(),
+      dateEnd: location_dateEnd ?? getDayFmt(),
     }
   );
   const [PAGING, setPAGING] = useStorageLocal(

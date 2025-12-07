@@ -42,8 +42,8 @@ export const useCommonValue = (): CommonValueType => {
     minScale: sessionTitle?.setting?.sync?.scale?.minScale || "",
     maxScale: sessionTitle?.setting?.sync?.scale?.maxScale || "",
     curScale: sessionTitle?.setting?.sync?.scale?.curScale || "",
-    dateStart: sessionTitle?.setting?.sync?.scale?.dateStart || "",
-    dateEnd: sessionTitle?.setting?.sync?.scale?.dateEnd || ""
+    dateStart: sessionTitle?.setting?.sync?.scale?.dateStart ?? "",
+    dateEnd: sessionTitle?.setting?.sync?.scale?.dateEnd ?? ""
   }), [sessionTitle]);
 
   const nutritionDefault = useMemo(() => ({
@@ -56,8 +56,8 @@ export const useCommonValue = (): CommonValueType => {
     curAvgCarbIntake: sessionTitle?.setting?.sync?.nutrition?.curAvgCarbIntake || "",
     curAvgProteinIntake: sessionTitle?.setting?.sync?.nutrition?.curAvgProteinIntake || "",
     curAvgFatIntake: sessionTitle?.setting?.sync?.nutrition?.curAvgFatIntake || "",
-    dateStart: sessionTitle?.setting?.sync?.nutrition?.dateStart || "",
-    dateEnd: sessionTitle?.setting?.sync?.nutrition?.dateEnd || ""
+    dateStart: sessionTitle?.setting?.sync?.nutrition?.dateStart ?? "",
+    dateEnd: sessionTitle?.setting?.sync?.nutrition?.dateEnd ?? ""
   }), [sessionTitle]);
 
   const propertyDefault = useMemo(() => ({
@@ -68,8 +68,8 @@ export const useCommonValue = (): CommonValueType => {
     totalExpenseExclusion: sessionTitle?.setting?.sync?.property?.totalExpenseExclusion || "",
     curPropertyAll: sessionTitle?.setting?.sync?.property?.curPropertyAll || "",
     curPropertyExclusion: sessionTitle?.setting?.sync?.property?.curPropertyExclusion || "",
-    dateStart: sessionTitle?.setting?.sync?.property?.dateStart || "",
-    dateEnd: sessionTitle?.setting?.sync?.property?.dateEnd || ""
+    dateStart: sessionTitle?.setting?.sync?.property?.dateStart ?? "",
+    dateEnd: sessionTitle?.setting?.sync?.property?.dateEnd ?? ""
   }), [sessionTitle]);
 
   // ----------------------------------------------------------------------------------------------------
