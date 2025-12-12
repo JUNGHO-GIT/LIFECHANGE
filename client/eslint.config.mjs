@@ -56,14 +56,16 @@ const JS_RULES = {
 		`error`,
 		{
 			"multiline": true,
-			"minItems": 5,
+			"minItems": 1,
 		},
 	],
 	"arrow-body-style": [
-		`error`, `as-needed`,
+		`error`,
+		`as-needed`,
 	],
 	"arrow-parens": [
-		`error`, `always`,
+		`error`,
+		`always`,
 	],
 	"arrow-spacing": [
 		`error`,
@@ -76,7 +78,8 @@ const JS_RULES = {
 		`error`,
 	],
 	"block-spacing": [
-		`error`, `always`,
+		`error`,
+		`always`,
 	],
 	"brace-style": [
 		`error`,
@@ -86,7 +89,7 @@ const JS_RULES = {
 		},
 	],
 	"camelcase": [
-		`off`,
+		`error`,
 		{
 			"properties": `never`,
 		},
@@ -125,7 +128,8 @@ const JS_RULES = {
 		},
 	],
 	"comma-style": [
-		`error`, `last`,
+		`error`,
+		`last`,
 	],
 	"complexity": [
 		`warn`,
@@ -147,13 +151,15 @@ const JS_RULES = {
 		},
 	],
 	"consistent-this": [
-		`off`, `self`,
+		`off`,
+		`self`,
 	],
 	"constructor-super": [
 		`error`,
 	],
 	"curly": [
-		`error`, `all`,
+		`error`,
+		`all`,
 	],
 	"default-case": [
 		`error`,
@@ -168,7 +174,8 @@ const JS_RULES = {
 		`off`,
 	],
 	"dot-location": [
-		`error`, `property`,
+		`error`,
+		`property`,
 	],
 	"dot-notation": [
 		`error`,
@@ -177,7 +184,8 @@ const JS_RULES = {
 		},
 	],
 	"eol-last": [
-		`error`, `always`,
+		`error`,
+		`always`,
 	],
 	"eqeqeq": [
 		`error`,
@@ -190,13 +198,16 @@ const JS_RULES = {
 		`error`,
 	],
 	"func-call-spacing": [
-		`error`, `never`,
+		`error`,
+		`never`,
 	],
 	"func-name-matching": [
-		`error`, `always`,
+		`error`,
+		`always`,
 	],
 	"func-names": [
-		`warn`, `as-needed`,
+		`warn`,
+		`as-needed`,
 	],
 	"func-style": [
 		`error`,
@@ -206,10 +217,12 @@ const JS_RULES = {
 		},
 	],
 	"function-call-argument-newline": [
-		`off`, `consistent`,
+		`off`,
+		`consistent`,
 	],
 	"function-paren-newline": [
-		`off`, `multiline-arguments`,
+		`off`,
+		`multiline-arguments`,
 	],
 	"generator-star-spacing": [
 		`error`,
@@ -225,19 +238,23 @@ const JS_RULES = {
 		},
 	],
 	"grouped-accessor-pairs": [
-		`error`, `getBeforeSet`,
+		`error`,
+		`getBeforeSet`,
 	],
 	"guard-for-in": [
 		`error`,
 	],
 	"handle-callback-err": [
-		`off`, `^(err|error)$`,
+		`off`,
+		`^(err|error)$`,
 	],
 	"id-blacklist": [
 		`off`,
 	],
 	"id-denylist": [
-		`off`, `data`, `callback`,
+		`off`,
+		`data`,
+		`callback`,
 	],
 	"id-length": [
 		`off`,
@@ -264,7 +281,8 @@ const JS_RULES = {
 		},
 	],
 	"implicit-arrow-linebreak": [
-		`error`, `beside`,
+		`error`,
+		`beside`,
 	],
 	"indent": [
 		`error`,
@@ -298,10 +316,12 @@ const JS_RULES = {
 		},
 	],
 	"init-declarations": [
-		`off`, `always`,
+		`off`,
+		`always`,
 	],
 	"jsx-quotes": [
-		`error`, `prefer-double`,
+		`error`,
+		`prefer-double`,
 	],
 	"key-spacing": [
 		`error`,
@@ -323,22 +343,27 @@ const JS_RULES = {
 		`off`,
 	],
 	"linebreak-style": [
-		`error`, `unix`,
+		`error`,
+		`unix`,
 	],
 	"lines-around-comment": [
 		`off`,
 	],
 	"lines-between-class-members": [
-		`error`, `always`,
+		`error`,
+		`always`,
 	],
 	"logical-assignment-operators": [
-		`error`, `always`,
+		`error`,
+		`always`,
 	],
 	"max-classes-per-file": [
-		`error`, 1,
+		`error`,
+		1,
 	],
 	"max-depth": [
-		`warn`, 4,
+		`warn`,
+		4,
 	],
 	"max-len": [
 		`warn`,
@@ -379,10 +404,12 @@ const JS_RULES = {
 		},
 	],
 	"multiline-comment-style": [
-		`off`, `starred-block`,
+		`off`,
+		`starred-block`,
 	],
 	"multiline-ternary": [
-		`off`, `always-multiline`,
+		`off`,
+		`always-multiline`,
 	],
 	"new-cap": [
 		`error`,
@@ -393,7 +420,8 @@ const JS_RULES = {
 		},
 	],
 	"new-parens": [
-		`error`, `always`,
+		`error`,
+		`always`,
 	],
 	"newline-per-chained-call": [
 		`error`,
@@ -429,7 +457,8 @@ const JS_RULES = {
 		`error`,
 	],
 	"no-cond-assign": [
-		`error`, `except-parens`,
+		`error`,
+		`except-parens`,
 	],
 	"no-confusing-arrow": [
 		`error`,
@@ -441,7 +470,8 @@ const JS_RULES = {
 		`warn`,
 		{
 			"allow": [
-				`warn`, `error`,
+				`warn`,
+				`error`,
 			],
 		},
 	],
@@ -572,7 +602,8 @@ const JS_RULES = {
 			"number": true,
 			"string": true,
 			"allow": [
-				`!!`, `~`,
+				`!!`,
+				`~`,
 			],
 		},
 	],
@@ -629,7 +660,10 @@ const JS_RULES = {
 		`off`,
 		{
 			"ignore": [
-				-1, 0, 1, 2,
+				-1,
+				0,
+				1,
+				2,
 			],
 			"ignoreArrayIndexes": true,
 			"enforceConst": true,
@@ -644,22 +678,28 @@ const JS_RULES = {
 		{
 			"groups": [
 				[
-					`%`, `**`,
+					`%`,
+					`**`,
 				],
 				[
-					`%`, `+`,
+					`%`,
+					`+`,
 				],
 				[
-					`%`, `-`,
+					`%`,
+					`-`,
 				],
 				[
-					`%`, `*`,
+					`%`,
+					`*`,
 				],
 				[
-					`%`, `/`,
+					`%`,
+					`/`,
 				],
 				[
-					`/`, `*`,
+					`/`,
+					`*`,
 				],
 				[
 					`&`,
@@ -681,10 +721,12 @@ const JS_RULES = {
 					`<=`,
 				],
 				[
-					`&&`, `||`,
+					`&&`,
+					`||`,
 				],
 				[
-					`in`, `instanceof`,
+					`in`,
+					`instanceof`,
 				],
 			],
 			"allowSamePrecedence": true,
@@ -788,7 +830,8 @@ const JS_RULES = {
 		`off`,
 	],
 	"no-return-assign": [
-		`error`, `always`,
+		`error`,
+		`always`,
 	],
 	"no-return-await": [
 		`error`,
@@ -969,7 +1012,8 @@ const JS_RULES = {
 		},
 	],
 	"object-curly-spacing": [
-		`error`, `always`,
+		`error`,
+		`always`,
 	],
 	"object-property-newline": [
 		`error`,
@@ -986,19 +1030,24 @@ const JS_RULES = {
 		},
 	],
 	"one-var": [
-		`error`, `never`,
+		`error`,
+		`never`,
 	],
 	"one-var-declaration-per-line": [
-		`error`, `always`,
+		`error`,
+		`always`,
 	],
 	"operator-assignment": [
-		`error`, `always`,
+		`error`,
+		`always`,
 	],
 	"operator-linebreak": [
-		`error`, `before`,
+		`error`,
+		`before`,
 	],
 	"padded-blocks": [
-		`error`, `never`,
+		`error`,
+		`never`,
 	],
 	"padding-line-between-statements": [
 		`off`,
@@ -1063,7 +1112,8 @@ const JS_RULES = {
 		},
 	],
 	"radix": [
-		`error`, `always`,
+		`error`,
+		`always`,
 	],
 	"require-atomic-updates": [
 		`error`,
@@ -1081,10 +1131,12 @@ const JS_RULES = {
 		`error`,
 	],
 	"rest-spread-spacing": [
-		`error`, `never`,
+		`error`,
+		`never`,
 	],
 	"semi": [
-		`error`, `always`,
+		`error`,
+		`always`,
 	],
 	"semi-spacing": [
 		`error`,
@@ -1094,7 +1146,8 @@ const JS_RULES = {
 		},
 	],
 	"semi-style": [
-		`error`, `last`,
+		`error`,
+		`last`,
 	],
 	"sort-imports": [
 		`off`,
@@ -1109,7 +1162,8 @@ const JS_RULES = {
 		},
 	],
 	"space-before-blocks": [
-		`error`, `always`,
+		`error`,
+		`always`,
 	],
 	"space-before-function-paren": [
 		`error`,
@@ -1120,7 +1174,8 @@ const JS_RULES = {
 		},
 	],
 	"space-in-parens": [
-		`error`, `never`,
+		`error`,
+		`never`,
 	],
 	"space-infix-ops": [
 		`error`,
@@ -1136,7 +1191,7 @@ const JS_RULES = {
 		},
 	],
 	"spaced-comment": [
-		`off`,
+		`error`,
 		`always`,
 		{
 			"block": {
@@ -1145,7 +1200,8 @@ const JS_RULES = {
 		},
 	],
 	"strict": [
-		`error`, `never`,
+		`error`,
+		`never`,
 	],
 	"switch-colon-spacing": [
 		`error`,
@@ -1158,13 +1214,16 @@ const JS_RULES = {
 		`error`,
 	],
 	"template-curly-spacing": [
-		`error`, `never`,
+		`error`,
+		`never`,
 	],
 	"template-tag-spacing": [
-		`error`, `never`,
+		`error`,
+		`never`,
 	],
 	"unicode-bom": [
-		`error`, `never`,
+		`error`,
+		`never`,
 	],
 	"use-isnan": [
 		`error`,
@@ -1193,7 +1252,8 @@ const JS_RULES = {
 		},
 	],
 	"yoda": [
-		`error`, `never`,
+		`error`,
+		`never`,
 	],
 };
 
@@ -1256,7 +1316,8 @@ const TS_RULES = {
 		`off`,
 	],
 	"@typescript-eslint/method-signature-style": [
-		`warn`, `property`,
+		`warn`,
+		`property`,
 	],
 	"@typescript-eslint/naming-convention": [
 		`off`,
@@ -1570,7 +1631,10 @@ export default defineConfig([
 	// 2. Js 설정 -------------------------------------------------------------------------------------
 	{
 		"files": [
-			`**/*.js`, `**/*.mjs`, `**/*.cjs`, `**/*.jsx`,
+			`**/*.js`,
+			`**/*.mjs`,
+			`**/*.cjs`,
+			`**/*.jsx`,
 		],
 		"linterOptions": {
 			"noInlineConfig": false,
@@ -1618,7 +1682,10 @@ export default defineConfig([
 	// 3. Ts 설정 -------------------------------------------------------------------------------------
 	{
 		"files": [
-			`**/*.ts`, `**/*.tsx`, `**/*.mts`, `**/*.cts`,
+			`**/*.ts`,
+			`**/*.tsx`,
+			`**/*.mts`,
+			`**/*.cts`,
 		],
 		"linterOptions": {
 			"noInlineConfig": false,

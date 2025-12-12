@@ -511,7 +511,7 @@ const runPushProcess = async () => {
 			cleanupBranches();
 			gitFetch();
 		})();
-		args2 === `push` && (async () => {
+		args2 === `push` && await (async () => {
 			setRemoteDefaultBranch(settings.git.remotes.public.name);
 			setRemoteDefaultBranch(settings.git.remotes.private.name);
 			cleanupBranches();
