@@ -64,7 +64,7 @@ export const Empty = memo((
 							onClick={() => {
 								navigate(toDetail, {
 									state: {
-										from: PATH.includes("today") ? "today" : "list",
+										from: "list",
 										dateType: DATE?.dateType ?? "month",
 										dateStart: DATE?.dateStart ?? getMonthStartFmt(),
 										dateEnd: DATE?.dateEnd ?? getMonthEndFmt()
@@ -108,7 +108,7 @@ export const Empty = memo((
 							onClick={() => {
 								navigate(toDetail, {
 									state: {
-										from: PATH.includes("today") ? "today" : "list",
+										from: "list",
 										dateType: DATE?.dateType ?? "day",
 										dateStart: DATE?.dateStart ?? getDayStartFmt(),
 										dateEnd: DATE?.dateEnd ?? getDayEndFmt(),

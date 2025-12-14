@@ -24,7 +24,6 @@ export const listCategory = async (
     {
       $project: {
         _id: 0,
-				today: "$user_dataCategory.today",
         exercise: "$user_dataCategory.exercise",
         food: "$user_dataCategory.food",
         money: "$user_dataCategory.money",

@@ -331,7 +331,6 @@ export const categoryUpdate = async (
     {
       $set: {
         user_dataCategory: {
-					today: OBJECT_param.today,
           exercise: OBJECT_param.exercise,
           food: OBJECT_param.food,
           money: OBJECT_param.money,
