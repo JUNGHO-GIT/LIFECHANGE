@@ -226,7 +226,7 @@ app.use(`${preFix}/admin`, AdminRouter);
 app.use(`${preFix}/auth/google`, GoogleRouter);
 
 // 0. 에러처리 미들웨어 -----------------------------------------------------------------------
-app.use((err: Error, req: Request, res: Response) => {
+app.use((err: Error, req: Request, res: Response, next: Function) => {
 	console.error(err.stack);
 	res.status(500).send({
 		status: 500,
