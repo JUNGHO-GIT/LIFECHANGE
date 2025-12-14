@@ -5,7 +5,7 @@
  * @since 2025-12-14
  */
 
-import "./src/assets/scripts/fetch";
+import "@scripts/fetch";
 import qs from "qs";
 import cors from "cors";
 import mongoose from "mongoose";
