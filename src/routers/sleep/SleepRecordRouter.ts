@@ -78,14 +78,14 @@ router.get("/list", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 2. detail ---------------------------------------------------------------------------------------
@@ -120,14 +120,14 @@ router.get("/detail", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 3. create ---------------------------------------------------------------------------------------
@@ -160,14 +160,14 @@ router.post("/create", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 4. update ---------------------------------------------------------------------------------------
@@ -201,14 +201,14 @@ router.put("/update", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 5. delete --------------------------------------------------------------------------------------
@@ -240,12 +240,12 @@ router.delete("/delete", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });

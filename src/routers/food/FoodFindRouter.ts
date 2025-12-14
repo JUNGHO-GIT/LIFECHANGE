@@ -39,12 +39,12 @@ router.get("/list", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });

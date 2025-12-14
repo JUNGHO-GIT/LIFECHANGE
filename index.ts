@@ -1,5 +1,11 @@
-// index.ts
+/**
+ * @file index.ts
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-14
+ */
 
+import "./src/assets/scripts/fetch";
 import qs from "qs";
 import cors from "cors";
 import mongoose from "mongoose";
@@ -87,14 +93,14 @@ mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`)
 // 로그 설정 -------------------------------------------------------------------------------------------
 if (envStr === `DEVELOPMENT`) {
 	const color = {
-		"reset": `\u001B[0m`,
-		"coll": `\u001B[38;2;78;201;176m`,
-		"method": `\u001B[38;2;220;220;170m`,
-		"field": `\u001B[38;2;183;126;202m`,
-		"string": `\u001B[38;2;244;212;174m`,
-		"number": `\u001B[38;2;85;221;0m`,
-		"boolean": `\u001B[38;2;86;157;214m`,
-		"null": `\\x1b[38;2;86;157;214m`,
+		reset: `\u001B[0m`,
+		coll: `\u001B[38;2;78;201;176m`,
+		method: `\u001B[38;2;220;220;170m`,
+		field: `\u001B[38;2;183;126;202m`,
+		string: `\u001B[38;2;244;212;174m`,
+		number: `\u001B[38;2;85;221;0m`,
+		boolean: `\u001B[38;2;86;157;214m`,
+		null: `\\x1b[38;2;86;157;214m`,
 	};
 
 	const fmtColl = (coll: string) => `${color.coll}${coll}${color.reset}`;
@@ -165,24 +171,24 @@ app.set(`query parser`, (str: string) => qs.parse(str));
 
 // 미들웨어 설정 -----------------------------------------------------------------------------------
 app.use(express.json());
-app.use(express.urlencoded({ "extended": true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-	"origin": `*`,
-	"methods": [
+	origin: `*`,
+	methods: [
 		`GET`,
 		`POST`,
 		`DELETE`,
 		`PUT`,
 	],
-	"credentials": true,
-	"allowedHeaders": [
+	credentials: true,
+	allowedHeaders: [
 		`Content-Type`,
 		`Authorization`,
 	],
-	"exposedHeaders": [`Authorization`],
-	"maxAge": 3600,
-	"optionsSuccessStatus": 204,
-	"preflightContinue": false,
+	exposedHeaders: [`Authorization`],
+	maxAge: 3600,
+	optionsSuccessStatus: 204,
+	preflightContinue: false,
 }));
 
 // 라우터 설정 -------------------------------------------------------------------------------------
@@ -223,7 +229,7 @@ app.use(`${preFix}/auth/google`, GoogleRouter);
 app.use((err: Error, req: Request, res: Response) => {
 	console.error(err.stack);
 	res.status(500).send({
-		"status": 500,
-		"message": err.message,
+		status: 500,
+		message: err.message,
 	});
 });

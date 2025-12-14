@@ -34,14 +34,14 @@ router.get("/bar", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 2-2. chart (pie - week) -------------------------------------------------------------------------
@@ -73,14 +73,14 @@ router.get("/pie/week", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 2-3. chart (pie - month) ------------------------------------------------------------------------
@@ -112,14 +112,14 @@ router.get("/pie/month", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 2-4. chart (pie - year) -------------------------------------------------------------------------
@@ -151,14 +151,14 @@ router.get("/pie/year", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 3-1. chart (line - week) ------------------------------------------------------------------------
@@ -190,14 +190,14 @@ router.get("/line/week", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 3-2. chart (line - month) -----------------------------------------------------------------------
@@ -229,14 +229,14 @@ router.get("/line/month", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 4-1. chart (avg - week) -------------------------------------------------------------------------
@@ -268,14 +268,14 @@ router.get("/avg/week", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 4-2. chart (avg - month) ------------------------------------------------------------------------
@@ -307,12 +307,12 @@ router.get("/avg/month", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });

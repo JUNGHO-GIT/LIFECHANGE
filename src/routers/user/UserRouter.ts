@@ -55,14 +55,14 @@ router.post("/email/send", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 1-2. verifyEmail --------------------------------------------------------------------------------
@@ -94,14 +94,14 @@ router.post("/email/verify", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 2-1. userSignup ---------------------------------------------------------------------------------
@@ -140,14 +140,14 @@ router.post("/signup", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 2-2. userResetPw --------------------------------------------------------------------------------
@@ -193,14 +193,14 @@ router.post("/resetPw", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 2-3. userLogin ----------------------------------------------------------------------------------
@@ -251,14 +251,14 @@ router.post("/login", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 2-4. userDetail ---------------------------------------------------------------------------------
@@ -289,14 +289,14 @@ router.get("/detail", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 2-5. userUpdate ---------------------------------------------------------------------------------
@@ -335,14 +335,14 @@ router.put("/update", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 2-6. userDelete --------------------------------------------------------------------------------
@@ -381,14 +381,14 @@ router.delete("/delete", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 3-2. categoryDetail -----------------------------------------------------------------------------
@@ -419,14 +419,14 @@ router.get("/category/detail", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 3-2. categoryUpdate -----------------------------------------------------------------------------
@@ -458,12 +458,12 @@ router.post("/category/update", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });

@@ -9,7 +9,7 @@
 import { defineConfig } from "eslint/config";
 import js from "@eslint/js";
 import tseslint from "@typescript-eslint/eslint-plugin";
-import tsParser from "@typescript-eslint/parser/dist/index";
+import tsParser from "@typescript-eslint/parser";
 import unicorn from "eslint-plugin-unicorn";
 import stylistic from "@stylistic/eslint-plugin";
 import globals from "globals";
@@ -2139,11 +2139,7 @@ const UNICORN_RULES = {
 		},
 	],
 	"unicorn/filename-case": [
-		`error`,
-		{
-			case: `kebabCase`,
-			multipleFileExtensions: true,
-		},
+		`off`,
 	],
 	"unicorn/import-style": [
 		`error`,

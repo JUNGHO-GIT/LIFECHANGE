@@ -2139,11 +2139,7 @@ const UNICORN_RULES = {
 		},
 	],
 	"unicorn/filename-case": [
-		`error`,
-		{
-			case: `kebabCase`,
-			multipleFileExtensions: true,
-		},
+		`off`,
 	],
 	"unicorn/import-style": [
 		`error`,

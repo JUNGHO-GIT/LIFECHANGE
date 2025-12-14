@@ -34,14 +34,14 @@ router.get("/category", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 1. percent (퍼센트 조회) ------------------------------------------------------------------------
@@ -74,14 +74,14 @@ router.get("/percent", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 2. scale (체중 조회) ----------------------------------------------------------------------------
@@ -113,14 +113,14 @@ router.get("/scale", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 3-1. nutrition (영양정보 조회) ------------------------------------------------------------------
@@ -152,14 +152,14 @@ router.get("/nutrition", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 3-2. favorite (즐겨찾기 조회) -------------------------------------------------------------------
@@ -191,14 +191,14 @@ router.get("/favorite", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
 
 // 4. property (자산 조회) -------------------------------------------------------------------------
@@ -230,12 +230,12 @@ router.get("/property", async (req: Request, res: Response) => {
       });
     }
   }
-  catch (err: any) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      msg: err.toString(),
-      error: err.toString(),
-    });
-  }
+	catch (error: unknown) {
+		console.error(error);
+		res.status(500).json({
+			status: `error`,
+			msg: error as string,
+			error: error as string,
+		});
+	}
 });
