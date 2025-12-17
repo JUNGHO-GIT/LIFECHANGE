@@ -1765,14 +1765,7 @@ const STYLISTIC_RULES = {
 	"@stylistic/jsx-child-element-spacing": [`off`], // no options
 	"@stylistic/jsx-closing-bracket-location": [`error`, `line-aligned`],
 	"@stylistic/jsx-closing-tag-location": [`error`], // no options
-	"@stylistic/jsx-curly-brace-presence": [
-		`error`,
-		{
-			props: `never`,
-			children: `never`,
-			propElementValues: `always`,
-		},
-	],
+	"@stylistic/jsx-curly-brace-presence": [`off`],
 	"@stylistic/jsx-curly-newline": [
 		`error`,
 		{
@@ -2138,9 +2131,7 @@ const UNICORN_RULES = {
 			allowWarningComments: true,
 		},
 	],
-	"unicorn/filename-case": [
-		`off`,
-	],
+	"unicorn/filename-case": [`off`],
 	"unicorn/import-style": [
 		`error`,
 		{
@@ -2224,6 +2215,7 @@ export default defineConfig([
 			reportUnusedInlineConfigs: `error`,
 		},
 		plugins: {
+			// @ts-ignore
 			"@typescript-eslint": tseslint,
 			"@stylistic": stylistic,
 			unicorn: unicorn,
@@ -2239,7 +2231,7 @@ export default defineConfig([
 			ecmaVersion: `latest`,
 			sourceType: `module`,
 			globals: {
-				...globals.es2021,
+				...globals.es2025,
 				...globals.browser,
 				...globals.node,
 				...globals.worker,
@@ -2255,7 +2247,10 @@ export default defineConfig([
 					globalReturn: false,
 					impliedStrict: true,
 				},
-				lib: [`es2022`],
+				lib: [
+					`dom`,
+					`esnext`,
+				],
 				cacheLifetime: {
 					glob: `Infinity`,
 				},
@@ -2279,6 +2274,7 @@ export default defineConfig([
 			reportUnusedInlineConfigs: `error`,
 		},
 		plugins: {
+			// @ts-ignore
 			"@typescript-eslint": tseslint,
 			"@stylistic": stylistic,
 			unicorn: unicorn,
@@ -2296,7 +2292,7 @@ export default defineConfig([
 			sourceType: `module`,
 			parser: tsParser,
 			globals: {
-				...globals.es2021,
+				...globals.es2025,
 				...globals.browser,
 				...globals.node,
 				...globals.worker,
@@ -2312,7 +2308,10 @@ export default defineConfig([
 					globalReturn: false,
 					impliedStrict: true,
 				},
-				lib: [`es2022`],
+				lib: [
+					`dom`,
+					`esnext`,
+				],
 				cacheLifetime: {
 					glob: `Infinity`,
 				},
