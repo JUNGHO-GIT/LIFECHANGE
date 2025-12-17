@@ -1,6 +1,6 @@
 {
   "name": "lifechange-server",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "type": "module",
   "main": "index.ts",
   "license": "Apache-2.0",
@@ -21,8 +21,8 @@
       "@typescript-eslint/no-unused-vars": [
         "off",
         {
-          "varsIgnorePattern": "^_",
-          "argsIgnorePattern": "^_"
+          "varsIgnorePattern": "_",
+          "argsIgnorePattern": "_"
         }
       ],
       "@typescript-eslint/no-unused-expressions": "off"
@@ -69,8 +69,8 @@
     "passport": "0.7.0",
     "passport-google-oauth20": "2.0.0",
     "qs": "6.14.0",
-    "request": "^2.88.2",
-    "request-promise": "^4.2.6"
+    "request": "2.88.2",
+    "request-promise": "4.2.6"
   },
   "devDependencies": {
     "@eslint/js": "9.39.2",
@@ -100,7 +100,7 @@
     "eslint-define-config": "2.1.0",
     "eslint-plugin-unicorn": "62.0.0",
     "globals": "16.5.0",
-    "jsdom": "^27.3.0",
+    "jsdom": "27.3.0",
     "ts-morph": "27.0.2",
     "ts-prune": "0.10.3",
     "tsc-alias": "1.8.16",
