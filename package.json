@@ -1,6 +1,6 @@
 {
   "name": "lifechange-server",
-  "version": "1.5.9",
+  "version": "1.6.0",
   "type": "module",
   "main": "index.ts",
   "license": "Apache-2.0",

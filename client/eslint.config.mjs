@@ -1765,7 +1765,14 @@ const STYLISTIC_RULES = {
 	"@stylistic/jsx-child-element-spacing": [`off`], // no options
 	"@stylistic/jsx-closing-bracket-location": [`error`, `line-aligned`],
 	"@stylistic/jsx-closing-tag-location": [`error`], // no options
-	"@stylistic/jsx-curly-brace-presence": [`off`],
+	"@stylistic/jsx-curly-brace-presence": [
+		`error`,
+		{
+			props: `never`,
+			children: `never`,
+			propElementValues: `always`,
+		},
+	],
 	"@stylistic/jsx-curly-newline": [
 		`error`,
 		{

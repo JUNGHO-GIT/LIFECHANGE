@@ -48,8 +48,9 @@
 - Never break line before semicolon.
 
 4-2. Comments
-- Major: `// 1. foo ----- ...` (max line 100 chars including text)
-- Minor: `// 1-1. sub-foo` (no dashes)
+- Major section comments: Start with `// 1. LABEL `, then fill with `-` until line length = 100.
+  Example (100 chars): `// 1. init -----------------------------------------------------`
+- Minor subsection: `// 1-1. sub-label` (no dash padding)
 
 ## 5. LANGUAGE-SPECIFIC ----------------------------------------------------------
 5-1. Java
