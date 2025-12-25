@@ -1,6 +1,6 @@
 {
   "name": "lifechange-server",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "type": "module",
   "main": "index.ts",
   "license": "Apache-2.0",
@@ -63,8 +63,8 @@
     "module-alias": "2.2.3",
     "moment-timezone": "0.6.0",
     "mongodb": "7.0.0",
-    "mongoose": "9.0.1",
-    "nodemailer": "7.0.11",
+    "mongoose": "9.0.2",
+    "nodemailer": "7.0.12",
     "oauth-signature": "1.5.0",
     "passport": "0.7.0",
     "passport-google-oauth20": "2.0.0",
@@ -76,7 +76,7 @@
     "@eslint/js": "9.39.2",
     "@stylistic/eslint-plugin": "5.6.1",
     "@swc/cli": "0.7.9",
-    "@swc/core": "1.15.5",
+    "@swc/core": "1.15.7",
     "@swc/helpers": "0.5.17",
     "@types/bcryptjs": "3.0.0",
     "@types/cors": "2.8.19",
@@ -93,8 +93,8 @@
     "@types/passport-google-oauth20": "2.0.17",
     "@types/qs": "6.14.0",
     "@types/react-router-dom": "5.3.3",
-    "@typescript-eslint/eslint-plugin": "8.50.0",
-    "@typescript-eslint/parser": "8.50.0",
+    "@typescript-eslint/eslint-plugin": "8.50.1",
+    "@typescript-eslint/parser": "8.50.1",
     "esbuild": "0.27.2",
     "eslint": "9.39.2",
     "eslint-define-config": "2.1.0",
@@ -105,6 +105,6 @@
     "ts-prune": "0.10.3",
     "tsc-alias": "1.8.16",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.50.0"
+    "typescript-eslint": "8.50.1"
   }
 }

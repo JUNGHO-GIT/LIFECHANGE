@@ -1,4 +1,9 @@
-// ExportLibs.tsx
+/**
+ * @file ExportLibs.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-25
+ */
 
 // -------------------------------------------------------------------------------------------------
 export { default as axios } from "axios";

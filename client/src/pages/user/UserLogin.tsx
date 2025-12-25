@@ -1,6 +1,6 @@
 // UserLogin.tsx
 
-import { useState, useEffect, useRef, memo } from "@exportReacts";
+import { React, useState, useEffect, useRef, memo } from "@exportReacts";
 import {useCommonValue, useValidateUser} from "@exportHooks";
 import {useStoreLanguage, useStoreAlert, useStoreLoading} from "@exportStores";
 import {axios} from "@exportLibs";
@@ -157,13 +157,13 @@ export const UserLogin = memo(() => {
 					admin: res.data.admin === "admin" ? "true" : "false",
 				});
 				navigate("/calendar/list");
-				sync();
+				void sync();
 			}
 			else if (res.data.status === "isGoogleUser") {
 				setLOADING(false);
 				setALERT({
 					open: true,
-					msg: translate(res.data.msg),
+					msg: translate(res.data.msg as string),
 					severity: "error",
 				});
 				setSession("setting", "id", "", {
@@ -175,7 +175,7 @@ export const UserLogin = memo(() => {
 				setLOADING(false);
 				setALERT({
 					open: true,
-					msg: translate(res.data.msg),
+					msg: translate(res.data.msg as string),
 					severity: "error",
 				});
 				setSession("setting", "id", "", {
@@ -210,7 +210,7 @@ export const UserLogin = memo(() => {
 				setLOADING(false);
 				setALERT({
 					open: true,
-					msg: translate(res.data.msg),
+					msg: translate(res.data.msg as string),
 					severity: "error",
 				});
 			}

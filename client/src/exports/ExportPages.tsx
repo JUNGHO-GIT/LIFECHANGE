@@ -1,4 +1,9 @@
-// ExportPages.tsx
+/**
+ * @file ExportPages.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-25
+ */
 
 // admin -------------------------------------------------------------------------------------------
 export { AdminDashboard } from "@pages/admin/AdminDashboard";

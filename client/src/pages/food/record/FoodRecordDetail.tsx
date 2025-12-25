@@ -1,6 +1,6 @@
 // FoodRecordDetail.tsx
 
-import { useState, useEffect, useRef, useCallback, memo } from "@exportReacts";
+import { React, useState, useEffect, useRef, useCallback, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useValidateFood } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { FoodRecord, FoodRecordType } from "@exportSchemas";
@@ -54,14 +54,24 @@ export const FoodRecordDetail = memo(() => {
   });
   const [DATE, setDATE] = useState({
     dateType: "day",
-    dateStart: location_dateStart || getDayFmt(),
-    dateEnd: location_dateEnd || getDayFmt(),
+    dateStart: location_dateStart ?? getDayFmt(),
+    dateEnd: location_dateEnd ?? getDayFmt(),
   });
 
 	// 2-3. useRef --------------------------------------------------------------------------------
-	const countRef = useRef(COUNT);
-	const objectRef = useRef(OBJECT);
-	const dateRef = useRef(DATE);
+	const objectRef: React.RefObject<
+		FoodRecordType
+	> = useRef(OBJECT);
+	const countRef: React.RefObject<{
+		totalCnt: number;
+		sectionCnt: number;
+		newSectionCnt: number;
+	}> = useRef(COUNT);
+	const dateRef: React.RefObject<{
+		dateType: string;
+		dateStart: string;
+		dateEnd: string;
+	}> = useRef(DATE);
 
 	// 2-3. useEffect ------------------------------------------------------------------------------
 	useEffect(() => {
@@ -79,13 +89,13 @@ export const FoodRecordDetail = memo(() => {
       const dateRange = `${DATE?.dateStart.trim()} - ${DATE?.dateEnd.trim()}`;
       const objectRange = `${OBJECT.food_record_dateStart.trim()} - ${OBJECT.food_record_dateEnd.trim()}`;
 
-      const isExist = (
+      const isExist: boolean = (
         EXIST?.[DATE?.dateType as keyof typeof EXIST]?.includes(dateRange)
       );
-      const itsMe = (
+      const itsMe: boolean = (
         dateRange === objectRange
       );
-      const itsNew = (
+      const itsNew: boolean = (
         OBJECT.food_record_dateStart === "0000-00-00" &&
         OBJECT.food_record_dateEnd === "0000-00-00"
       );
@@ -178,8 +188,8 @@ export const FoodRecordDetail = memo(() => {
 
       setCOUNT((prev) => ({
         ...prev,
-        totalCnt: res.data.totalCnt || 0,
-        sectionCnt: res.data.sectionCnt || 0,
+        totalCnt: res.data.totalCnt ?? 0,
+        sectionCnt: res.data.sectionCnt ?? 0,
         newSectionCnt: res.data.sectionCnt || 0
       }));
 
@@ -282,7 +292,7 @@ export const FoodRecordDetail = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "success",
         });
         navigate(toList, {
@@ -298,7 +308,7 @@ export const FoodRecordDetail = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "error",
         });
       }
@@ -337,7 +347,7 @@ export const FoodRecordDetail = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "success",
         });
         navigate(toList, {
@@ -353,7 +363,7 @@ export const FoodRecordDetail = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "error",
         });
       }
@@ -388,7 +398,7 @@ export const FoodRecordDetail = memo(() => {
       res.data.status === "success" && setFAVORITE(res.data.result) && sync("favorite");
       res.data.status !== "success" && setLOADING(false) && setALERT({
         open: true,
-        msg: translate(res.data.msg),
+        msg: translate(res.data.msg as string),
         severity: "error",
       });
     })
@@ -660,13 +670,13 @@ export const FoodRecordDetail = memo(() => {
 								inputRef={REFS?.[i]?.food_record_count}
 								error={ERRORS?.[i]?.food_record_count}
 								onChange={(e: any) => {
-									const processedValue = handleNumberInput(e.target.value, 99, 1);
+									const processedValue: string | null = handleNumberInput(e.target.value, 99, 1);
 									if (processedValue === null) { return; }
 									// 영양소 설정 함수
 									const setNutrient = (nut: string | number, extra: string) => {
 										const numericValue = Number(processedValue) || 1;
 										const foodCount = Number(item?.food_record_count) || 1;
-										if (!isNaN(numericValue) && !isNaN(foodCount)) {
+										if (!Number.isNaN(numericValue) && !Number.isNaN(foodCount)) {
 											return (
 												extra === "kcal"
 												? (numericValue * Number(nut) / foodCount).toFixed(0)
@@ -700,7 +710,7 @@ export const FoodRecordDetail = memo(() => {
 								inputRef={REFS?.[i]?.food_record_gram}
 								error={ERRORS?.[i]?.food_record_gram}
 								onChange={(e: any) => {
-									const processedValue = handleNumberInput(e.target.value, 999);
+									const processedValue: string | null = handleNumberInput(e.target.value, 999);
 									if (processedValue === null) { return; }
 									// object 설정
 									setOBJECT((prev) => ({
@@ -799,7 +809,7 @@ export const FoodRecordDetail = memo(() => {
 									translate(`kc`)
 								}
 								onChange={(e: any) => {
-									const processedValue = handleNumberInput(e.target.value, 9999);
+									const processedValue: string | null = handleNumberInput(e.target.value, 9999);
 									if (processedValue === null) { return; }
 									// object 설정
 									setOBJECT((prev) => ({
@@ -834,7 +844,7 @@ export const FoodRecordDetail = memo(() => {
 									translate(`g`)
 								}
 								onChange={(e: any) => {
-									const processedValue = handleNumberInput(e.target.value, 999, 1);
+									const processedValue: string | null = handleNumberInput(e.target.value, 999, 1);
 									if (processedValue === null) { return; }
 									// object 설정
 									setOBJECT((prev) => ({
@@ -873,7 +883,7 @@ export const FoodRecordDetail = memo(() => {
 									translate(`g`)
 								}
 								onChange={(e: any) => {
-									const processedValue = handleNumberInput(e.target.value, 999, 1);
+									const processedValue: string | null = handleNumberInput(e.target.value, 999, 1);
 									if (processedValue === null) { return; }
 									// object 설정
 									setOBJECT((prev) => ({
@@ -908,7 +918,7 @@ export const FoodRecordDetail = memo(() => {
 									translate(`g`)
 								}
 								onChange={(e: any) => {
-									const processedValue = handleNumberInput(e.target.value, 999, 1);
+									const processedValue: string | null = handleNumberInput(e.target.value, 999, 1);
 									if (processedValue === null) { return; }
 									// object 설정
 									setOBJECT((prev) => ({

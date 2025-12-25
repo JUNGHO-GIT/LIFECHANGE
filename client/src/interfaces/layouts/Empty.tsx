@@ -8,26 +8,24 @@ import { useStoreLanguage } from "@exportStores";
 
 // -------------------------------------------------------------------------------------------------
 declare type EmptyProps = {
-  DATE: any;
-  extra: string;
-}
+	DATE: any;
+	extra: string;
+};
 
 // -------------------------------------------------------------------------------------------------
 export const Empty = memo((
-  { DATE, extra }: EmptyProps
+	{ DATE, extra }: EmptyProps
 ) => {
 
 	// 1. common ----------------------------------------------------------------------------------
-  const { PATH, navigate } = useCommonValue();
-	const { isFind, isGoal, isRecord } = useCommonValue();
-	const { toDetail } = useCommonValue();
+	const { navigate, isFind, isGoal, isRecord, toDetail } = useCommonValue();
 	const { getDayStartFmt, getDayEndFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-  const { translate } = useStoreLanguage();
+	const { translate } = useStoreLanguage();
 
-  // 7. emptyNode ----------------------------------------------------------------------------------
-  const emptyNode = () => {
-    // 2. isFindSection
-    const isFindSection = () => (
+	// 7. emptyNode ----------------------------------------------------------------------------------
+	const emptyNode = () => {
+		// 2. isFindSection
+		const isFindSection = () => (
 			<Grid container={true} spacing={0} className={`radius-2 border-1 shadow-0 mb-10px`}>
 				<Grid size={12} className={`p-2px`}>
 					<Accordion
@@ -51,9 +49,9 @@ export const Empty = memo((
 					</Accordion>
 				</Grid>
 			</Grid>
-    );
-    // 3. isGoalSection
-    const isGoalSection = () => (
+		);
+		// 3. isGoalSection
+		const isGoalSection = () => (
 			<Grid container={true} spacing={0} className={`radius-2 border-1 shadow-0 mb-10px`}>
 				<Grid size={12} className={`p-2px`}>
 					<Accordion
@@ -62,10 +60,10 @@ export const Empty = memo((
 					>
 						<AccordionSummary
 							onClick={() => {
-								navigate(toDetail, {
+								void navigate(toDetail, {
 									state: {
-										from: "list",
-										dateType: DATE?.dateType ?? "month",
+										from: `list`,
+										dateType: DATE?.dateType ?? `month`,
 										dateStart: DATE?.dateStart ?? getMonthStartFmt(),
 										dateEnd: DATE?.dateEnd ?? getMonthEndFmt()
 									}
@@ -75,58 +73,14 @@ export const Empty = memo((
 							<Grid container={true} spacing={1}>
 								<Grid size={2} className={`d-row-left`}>
 									<Icons
-										key={"Search"}
-										name={"Search"}
+										key={`Search`}
+										name={`Search`}
 										className={`w-16px h-16px`}
 									/>
 								</Grid>
 								<Grid size={4} className={`d-row-left`}>
 									<Div className={`fs-0-9rem fw-600 dark`}>
-										{translate(`${extra}`)}
-									</Div>
-								</Grid>
-								<Grid size={6} className={`d-row-center`}>
-									<Div className={`fs-0-9rem fw-500`}>
-										{translate(`empty`)}
-									</Div>
-								</Grid>
-							</Grid>
-						</AccordionSummary>
-					</Accordion>
-				</Grid>
-      </Grid>
-    );
-    // 4. isRecordSection
-    const isRecordSection = () => (
-			<Grid container={true} spacing={0} className={`radius-2 border-1 shadow-0 mb-10px`}>
-				<Grid size={12} className={`p-2px`}>
-					<Accordion
-						className={`border-0 shadow-0 radius-2`}
-						expanded={false}
-					>
-						<AccordionSummary
-							onClick={() => {
-								navigate(toDetail, {
-									state: {
-										from: "list",
-										dateType: DATE?.dateType ?? "day",
-										dateStart: DATE?.dateStart ?? getDayStartFmt(),
-										dateEnd: DATE?.dateEnd ?? getDayEndFmt(),
-									}
-								});
-							}}
-						>
-							<Grid container={true} spacing={1}>
-								<Grid size={2} className={`d-row-left`}>
-									<Icons
-										key={"Search"}
-										name={"Search"}
-										className={`w-16px h-16px`}
-									/>
-								</Grid>
-								<Grid size={4} className={`d-row-left`}>
-									<Div className={`fs-0-9rem fw-600 dark`}>
-										{translate(`${extra}`)}
+										{translate(extra)}
 									</Div>
 								</Grid>
 								<Grid size={6} className={`d-row-center`}>
@@ -139,21 +93,65 @@ export const Empty = memo((
 					</Accordion>
 				</Grid>
 			</Grid>
-    );
-    // 3. return
-    return (
+		);
+		// 4. isRecordSection
+		const isRecordSection = () => (
+			<Grid container={true} spacing={0} className={`radius-2 border-1 shadow-0 mb-10px`}>
+				<Grid size={12} className={`p-2px`}>
+					<Accordion
+						className={`border-0 shadow-0 radius-2`}
+						expanded={false}
+					>
+						<AccordionSummary
+							onClick={() => {
+								void navigate(toDetail, {
+									state: {
+										from: `list`,
+										dateType: DATE?.dateType ?? `day`,
+										dateStart: DATE?.dateStart ?? getDayStartFmt(),
+										dateEnd: DATE?.dateEnd ?? getDayEndFmt(),
+									}
+								});
+							}}
+						>
+							<Grid container={true} spacing={1}>
+								<Grid size={2} className={`d-row-left`}>
+									<Icons
+										key={`Search`}
+										name={`Search`}
+										className={`w-16px h-16px`}
+									/>
+								</Grid>
+								<Grid size={4} className={`d-row-left`}>
+									<Div className={`fs-0-9rem fw-600 dark`}>
+										{translate(extra)}
+									</Div>
+								</Grid>
+								<Grid size={6} className={`d-row-center`}>
+									<Div className={`fs-0-9rem fw-500`}>
+										{translate(`empty`)}
+									</Div>
+								</Grid>
+							</Grid>
+						</AccordionSummary>
+					</Accordion>
+				</Grid>
+			</Grid>
+		);
+		// 3. return
+		return (
 			<>
 				{(isFind) && isFindSection()}
 				{(!isFind && isGoal) && isGoalSection()}
 				{(!isFind && !isGoal && isRecord) && isRecordSection()}
 			</>
-    );
-  };
+		);
+	};
 
-  // 10. return ------------------------------------------------------------------------------------
-  return (
-    <>
-      {emptyNode()}
-    </>
-  );
+	// 10. return ------------------------------------------------------------------------------------
+	return (
+		<>
+			{emptyNode()}
+		</>
+	);
 });

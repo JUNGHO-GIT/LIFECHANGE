@@ -102,7 +102,7 @@ export const FoodFavoriteList = memo(() => {
       setOBJECT(res.data.result?.length > 0 ? res.data.result : []);
       setCOUNT((prev) => ({
         ...prev,
-        totalCnt: res.data.totalCnt || 0,
+        totalCnt: res.data.totalCnt ?? 0,
       }));
 			// 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
       setIsExpanded(() => {
@@ -143,7 +143,7 @@ export const FoodFavoriteList = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "error",
         });
       }

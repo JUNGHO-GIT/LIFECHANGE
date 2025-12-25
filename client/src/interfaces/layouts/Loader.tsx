@@ -8,23 +8,23 @@ import { useStoreLoading } from "@exportStores";
 export const Loader = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
-  const { LOADING } = useStoreLoading();
+	const { LOADING } = useStoreLoading();
 
-  // 7.loader --------------------------------------------------------------------------------------
-  const loaderNode = () => (
-    LOADING ? (
-      <Div className={`loader-wrapper`}>
-        <Div className={`loader`} />
-      </Div>
-    ) : (
-      <Div />
-    )
-  );
+	// 7.loader --------------------------------------------------------------------------------------
+	const loaderNode = () => (
+		LOADING ? (
+			<Div className={`loader-wrapper`}>
+				<Div className={`loader`} />
+			</Div>
+		) : (
+			<Div />
+		)
+	);
 
 	// 10. return ----------------------------------------------------------------------------------
-  return (
-    <>
-      {loaderNode()}
-    </>
-  );
+	return (
+		<>
+			{loaderNode()}
+		</>
+	);
 });

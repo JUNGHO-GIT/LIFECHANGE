@@ -15,17 +15,19 @@ declare type MemoProps = {
 	extra: string;
 	i: number;
 	section?: string;
-}
+};
 
 // -------------------------------------------------------------------------------------------------
 export const Memo = memo((
-	{ OBJECT, setOBJECT, LOCKED, extra, i, section }: MemoProps
+	{
+		OBJECT, setOBJECT, LOCKED, extra, i, section
+	}: MemoProps
 ) => {
 
 	// 1. common ----------------------------------------------------------------------------------
 	const { firstStr } = useCommonValue();
 	const { translate } = useStoreLanguage();
-	const targetSection = section || `${firstStr}_section`;
+	const targetSection: string = section ?? `${firstStr}_section`;
 
 	// 2. callbacks ----------------------------------------------------------------------------------
 	const handleTextChange = useCallback((e: any) => {
@@ -34,39 +36,41 @@ export const Memo = memo((
 			[targetSection]: prev[targetSection]?.map((section: any, idx: number) => (
 				idx === i ? {
 					...section,
-					[`${extra}`]: e.target.value || ""
+					[extra]: e.target.value ?? ``
 				} : section
 			))
 		}));
-	}, [setOBJECT, targetSection, i, extra]);
+	}, [
+		setOBJECT, targetSection, i, extra
+	]);
 
 	// 3. memoized values ---------------------------------------------------------------------------
-	const memoValue = useMemo(() => {
-		return OBJECT?.[targetSection]?.[i]?.[`${extra}`] || "";
-	}, [OBJECT, targetSection, i, extra]);
+	const memoValue = useMemo(() => OBJECT?.[targetSection]?.[i]?.[extra] || ``, [
+		OBJECT, targetSection, i, extra
+	]);
 
 	// 4. memoNode -----------------------------------------------------------------------------------
 	const memoNode = useMemo(() => (
 		<PopUp
-			type={"innerCenter"}
-			position={"center"}
-			direction={"center"}
-			contents={
+			type={`innerCenter`}
+			position={`center`}
+			direction={`center`}
+			contents={(
 				<Grid container spacing={3} columns={12} className={`w-max-70vw`}>
 					<Grid size={12} className={`d-center`}>
 						<TextArea
 							className={`w-86vw h-55vh border-1 p-10px`}
 							value={memoValue}
 							style={{
-								fontFamily: "inherit",
-								fontSize: "inherit",
-								fontWeight: "inherit"
+								fontFamily: `inherit`,
+								fontSize: `inherit`,
+								fontWeight: `inherit`
 							}}
 							onChange={handleTextChange}
 						/>
 					</Grid>
 				</Grid>
-			}
+			)}
 			children={(popTrigger: any) => (
 				<Input
 					label={translate(`memo`)}
@@ -74,22 +78,24 @@ export const Memo = memo((
 					value={memoValue}
 					readOnly={true}
 					locked={LOCKED}
-					startadornment={
+					startadornment={(
 						<Img
 							max={14}
 							hover={true}
 							shadow={false}
 							radius={false}
-							src={"calendar3.webp"}
+							src={`calendar3.webp`}
 						/>
-					}
+					)}
 					onClick={(e: any) => {
 						popTrigger.openPopup(e.currentTarget);
 					}}
 				/>
 			)}
 		/>
-	), [memoValue, handleTextChange, translate, LOCKED]);
+	), [
+		memoValue, handleTextChange, translate, LOCKED
+	]);
 
 	// 10. return ------------------------------------------------------------------------------------
 	return (

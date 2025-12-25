@@ -1,6 +1,6 @@
 // FoodGoalList.tsx
 
-import { useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@exportReacts";
+import { React, useState, useEffect, useRef, createRef, useCallback, useMemo, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { FoodGoal, FoodGoalType } from "@exportSchemas";
@@ -107,8 +107,8 @@ export const FoodGoalList = memo(() => {
       setOBJECT(res.data.result?.length > 0 ? res.data.result : [FoodGoal]);
       setCOUNT((prev) => ({
         ...prev,
-        totalCnt: res.data.totalCnt || 0,
-        sectionCnt: res.data.sectionCnt || 0,
+        totalCnt: res.data.totalCnt ?? 0,
+        sectionCnt: res.data.sectionCnt ?? 0,
         newSectionCnt: res.data.sectionCnt || 0
       }));
 			// 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
@@ -162,7 +162,7 @@ export const FoodGoalList = memo(() => {
 										/>
 									}
 									onClick={() => {
-										navigate(toDetail, {
+										void navigate(toDetail, {
 											state: {
 												id: item._id,
 												dateType: item.food_goal_dateType,

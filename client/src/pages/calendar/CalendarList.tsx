@@ -1,40 +1,40 @@
 // CalendarList.tsx
 
-import {useState, useEffect, memo} from "@exportReacts";
-import {useCommonValue, useCommonDate, useStorageLocal} from "@exportHooks";
-import {useStoreLanguage, useStoreAlert, useStoreLoading} from "@exportStores";
-import {Calendar} from "@exportSchemas";
-import {axios, ReactCalendar} from "@exportLibs";
-import {Footer} from "@exportLayouts";
-import {Icons, Div, Br, Paper, Grid} from "@exportComponents";
+import { useState, useEffect, memo } from "@exportReacts";
+import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
+import { Calendar, CalendarType } from "@exportSchemas";
+import { axios, ReactCalendar } from "@exportLibs";
+import { Footer } from "@exportLayouts";
+import { Icons, Div, Br, Paper, Grid } from "@exportComponents";
 
 // -------------------------------------------------------------------------------------------------
 export const CalendarList = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
-	const {URL_OBJECT, PATH} = useCommonValue();
-	const {sessionId, navigate, localLang} = useCommonValue();
-	const {getMoment, getDayFmt, getDayStartFmt, getDayEndFmt, getDayNotFmt} = useCommonDate();
-	const {getPrevMonthStartFmt, getPrevMonthEndFmt} = useCommonDate();
-	const {getNextMonthStartFmt, getNextMonthEndFmt} = useCommonDate();
-	const {getMonthStartFmt, getMonthEndFmt} = useCommonDate();
-	const {translate} = useStoreLanguage();
-	const {setALERT} = useStoreAlert();
-	const {setLOADING} = useStoreLoading();
+	const { URL_OBJECT, PATH } = useCommonValue();
+	const { sessionId, navigate, localLang } = useCommonValue();
+	const { getMoment, getDayFmt, getDayStartFmt, getDayEndFmt, getDayNotFmt } = useCommonDate();
+	const { getPrevMonthStartFmt, getPrevMonthEndFmt } = useCommonDate();
+	const { getNextMonthStartFmt, getNextMonthEndFmt } = useCommonDate();
+	const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
+	const { translate } = useStoreLanguage();
+	const { setALERT } = useStoreAlert();
+	const { setLOADING } = useStoreLoading();
 
 	// 2-1. useStorageLocal ------------------------------------------------------------------------
 	const [DATE, setDATE] = useStorageLocal(
 		`date`, PATH, ``, {
-		dateType: ``,
-		dateStart: getMonthStartFmt(),
-		dateEnd: getMonthEndFmt(),
-	}
+			dateType: ``,
+			dateStart: getMonthStartFmt(),
+			dateEnd: getMonthEndFmt(),
+		}
 	);
 	const [PAGING, _setPAGING] = useStorageLocal(
 		`paging`, PATH, ``, {
-		sort: `asc`,
-		page: 1,
-	}
+			sort: `asc`,
+			page: 1,
+		}
 	);
 
 	// 2-2. useState -------------------------------------------------------------------------------
@@ -68,21 +68,21 @@ export const CalendarList = memo(() => {
 				},
 			},
 		})
-			.then((res: any) => {
-				setLOADING(false);
-				setOBJECT(res.data.result?.length > 0 ? res.data.result : [Calendar]);
-			})
-			.catch((err: any) => {
-				setLOADING(false);
-				setALERT({
-					open: true,
-					msg: translate(err.response.data.msg),
-					severity: `error`,
-				});
-			})
-			.finally(() => {
-				setLOADING(false);
+		.then((res: any) => {
+			setLOADING(false);
+			setOBJECT(res.data.result?.length > 0 ? res.data.result : [Calendar]);
+		})
+		.catch((error: any) => {
+			setLOADING(false);
+			setALERT({
+				open: true,
+				msg: translate(error.response.data.msg as string),
+				severity: `error`,
 			});
+		})
+		.finally(() => {
+			setLOADING(false);
+		});
 	}, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
 
 	// 7. list -----------------------------------------------------------------------------------
@@ -95,9 +95,9 @@ export const CalendarList = memo(() => {
 				return false;
 			}
 
-			const dayFmt = getDayFmt(date);
-			const dayStart = getDayStartFmt(dateStart);
-			const dayEnd = getDayEndFmt(dateEnd);
+			const dayFmt: string = getDayFmt(date);
+			const dayStart: string = getDayStartFmt(dateStart);
+			const dayEnd: string = getDayEndFmt(dateEnd);
 
 			return dayFmt >= dayStart && dayFmt <= dayEnd;
 		};
@@ -170,7 +170,7 @@ export const CalendarList = memo(() => {
 						formatYear={(_locale, date) => getDayNotFmt(date).format(`YYYY`)}
 						formatLongDate={(_locale, date) => getDayNotFmt(date).format(`YYYY-MM-DD`)}
 						formatMonthYear={(_locale, date) => getDayNotFmt(date).format(`YYYY-MM`)}
-						onActiveStartDateChange={({activeStartDate}) => {
+						onActiveStartDateChange={({ activeStartDate }) => {
 							setDATE((prev) => ({
 								...prev,
 								dateStart: getMonthStartFmt(activeStartDate ?? new Date()),
@@ -178,7 +178,7 @@ export const CalendarList = memo(() => {
 							}));
 						}}
 						onClickDay={(value: Date) => {
-							navigate(`/calendar/detail`, {
+							void navigate(`/calendar/detail`, {
 								state: {
 									dateType: `day`,
 									dateStart: getDayFmt(value),
@@ -186,39 +186,58 @@ export const CalendarList = memo(() => {
 								}
 							});
 						}}
-						tileClassName={({date}) => {
+						tileClassName={({ date }) => {
 							// 토요일
-							let isSat = getMoment(date).day() === 6;
+							const isSat: boolean = getMoment(date).day() === 6;
 
 							// 일요일
-							let isSun = getMoment(date).day() === 0;
+							const isSun: boolean = getMoment(date).day() === 0;
 
 							// 오늘
-							let is = getMoment(date).isSame(new Date(), `day`);
+							const isToday: boolean = getMoment(date).isSame(new Date(), `day`);
 
 							// 이번달
-							let isCurrentMonth = getMoment(date).isSame(getMoment(DATE?.dateStart), `month`);
+							const isCurrentMonth: boolean = getMoment(date).isSame(getMoment(DATE?.dateStart), `month`);
 
 							// 섹션이 3개 이상인 경우 스크롤
-							let className = `calendar-tile`;
+							let className: string = `calendar-tile`;
 
 							const itemMatchesDate = (item: any) => (
-								dateInRange(date, item.calendar_exercise_dateStart, item.calendar_exercise_dateEnd)
-								|| dateInRange(date, item.calendar_food_dateStart, item.calendar_food_dateEnd)
-								|| dateInRange(date, item.calendar_money_dateStart, item.calendar_money_dateEnd)
-								|| dateInRange(date, item.calendar_sleep_dateStart, item.calendar_sleep_dateEnd)
-							); const calendarForDates = OBJECT?.filter(itemMatchesDate);
+								dateInRange(date, item.calendar_exercise_dateStart, item.calendar_exercise_dateEnd) ||
+								dateInRange(date, item.calendar_food_dateStart, item.calendar_food_dateEnd) ||
+								dateInRange(date, item.calendar_money_dateStart, item.calendar_money_dateEnd) ||
+								dateInRange(date, item.calendar_sleep_dateStart, item.calendar_sleep_dateEnd)
+							);
+							const calendarForDates: any[] = OBJECT?.filter((element) => {
+								return itemMatchesDate(element);
+							});
 
 							if (calendarForDates?.length > 0) {
 								const sectionsCountFor = (item: any) => (
-									(dateInRange(date, item.calendar_exercise_dateStart, item.calendar_exercise_dateEnd) ? (item.calendar_exercise_section?.length || 0) : 0)
-									+ (dateInRange(date, item.calendar_food_dateStart, item.calendar_food_dateEnd) ? (item.calendar_food_section?.length || 0) : 0)
-									+ (dateInRange(date, item.calendar_money_dateStart, item.calendar_money_dateEnd) ? (item.calendar_money_section?.length || 0) : 0)
-									+ (dateInRange(date, item.calendar_sleep_dateStart, item.calendar_sleep_dateEnd) ? (item.calendar_sleep_section?.length || 0) : 0)
-								); const hasManySections = calendarForDates.some((item: any) => sectionsCountFor(item) > 2);
-								if (hasManySections) {
-									className += ` over-y-auto`;
-								}
+									Number((dateInRange(
+										date, item.calendar_exercise_dateStart, item.calendar_exercise_dateEnd) ? (
+											item.calendar_exercise_section?.length ?? 0
+										) : 0
+									)) +
+									Number((dateInRange(
+										date, item.calendar_food_dateStart, item.calendar_food_dateEnd) ? (
+											item.calendar_food_section?.length ?? 0
+										) : 0
+									)) +
+									Number((dateInRange(
+										date, item.calendar_money_dateStart, item.calendar_money_dateEnd) ? (
+											item.calendar_money_section?.length ?? 0
+										) : 0
+									)) +
+									Number((dateInRange(
+										date, item.calendar_sleep_dateStart, item.calendar_sleep_dateEnd) ? (
+											item.calendar_sleep_section?.length ?? 0
+										) : 0
+									))
+								);
+
+								const hasManySections: boolean = calendarForDates.some((item: any) => sectionsCountFor(item) > 2);
+								hasManySections && (className += ` over-y-auto`);
 							}
 
 							// 토요일 색상 변경
@@ -232,7 +251,7 @@ export const CalendarList = memo(() => {
 							}
 
 							// 오늘 날짜
-							if (is) {
+							if (isToday) {
 								className += ` calendar-today`;
 							}
 
@@ -242,17 +261,17 @@ export const CalendarList = memo(() => {
 							}
 							return className;
 						}}
-						tileContent={({date}) => {
-							const exerciseForDates = OBJECT?.filter((item: any) => (
+						tileContent={({ date }) => {
+							const exerciseForDates: CalendarType[] = OBJECT?.filter((item: any) => (
 								dateInRange(date, item.calendar_exercise_dateStart, item.calendar_exercise_dateEnd)
 							));
-							const foodForDates = OBJECT?.filter((item: any) => (
+							const foodForDates: CalendarType[] = OBJECT?.filter((item: any) => (
 								dateInRange(date, item.calendar_food_dateStart, item.calendar_food_dateEnd)
 							));
-							const moneyForDates = OBJECT?.filter((item: any) => (
+							const moneyForDates: CalendarType[] = OBJECT?.filter((item: any) => (
 								dateInRange(date, item.calendar_money_dateStart, item.calendar_money_dateEnd)
 							));
-							const sleepForDates = OBJECT?.filter((item: any) => (
+							const sleepForDates: CalendarType[] = OBJECT?.filter((item: any) => (
 								dateInRange(date, item.calendar_sleep_dateStart, item.calendar_sleep_dateEnd)
 							));
 							return (
@@ -261,7 +280,7 @@ export const CalendarList = memo(() => {
 										<Div
 											key={`exercise-${item._id}`}
 											className={`calendar-filled`}
-											style={{backgroundColor: `#1976d2`}}
+											style={{ backgroundColor: `#1976d2` }}
 										>
 											<span className={`calendar-category`}>
 												{translate(`exercise`)}
@@ -272,7 +291,7 @@ export const CalendarList = memo(() => {
 										<Div
 											key={`food-${item._id}`}
 											className={`calendar-filled`}
-											style={{backgroundColor: `#FF5722`}}
+											style={{ backgroundColor: `#FF5722` }}
 										>
 											<span className={`calendar-category`}>
 												{translate(`food`)}
@@ -283,7 +302,7 @@ export const CalendarList = memo(() => {
 										<Div
 											key={`money-${item._id}`}
 											className={`calendar-filled`}
-											style={{backgroundColor: `#4CAF50`}}
+											style={{ backgroundColor: `#4CAF50` }}
 										>
 											<span className={`calendar-category`}>
 												{translate(`money`)}
@@ -294,7 +313,7 @@ export const CalendarList = memo(() => {
 										<Div
 											key={`sleep-${item._id}`}
 											className={`calendar-filled`}
-											style={{backgroundColor: `#673AB7`}}
+											style={{ backgroundColor: `#673AB7` }}
 										>
 											<span className={`calendar-category`}>
 												{translate(`sleep`)}
@@ -319,15 +338,14 @@ export const CalendarList = memo(() => {
 		);
 	};
 
-
 	// 9. footer ----------------------------------------------------------------------------------
 	const footerNode = () => (
 		<Footer
 			state={{
-				DATE, SEND, EXIST
+				DATE: DATE, SEND: SEND, EXIST: EXIST
 			}}
 			setState={{
-				setDATE, setSEND, setEXIST
+				setDATE: setDATE, setSEND: setSEND, setEXIST: setEXIST
 			}}
 		/>
 	);

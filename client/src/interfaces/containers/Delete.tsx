@@ -1,4 +1,9 @@
-// Delete.tsx
+/**
+ * @file Delete.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-25
+ */
 
 import { Div, Icons } from "@exportComponents";
 import { memo, useCallback, useMemo } from "@exportReacts";
@@ -7,14 +12,16 @@ import { memo, useCallback, useMemo } from "@exportReacts";
 declare type DeleteProps = {
 	index: number;
 	section?: string;
-	handleDelete: (index: number, section?: string) => void;
+	handleDelete: (_index: number, _section?: string) => void;
 	LOCKED?: string;
 	disabled?: boolean;
-}
+};
 
 // -------------------------------------------------------------------------------------------------
 export const Delete = memo((
-	{ index, section, handleDelete, LOCKED, disabled }: DeleteProps
+	{
+		index, section, handleDelete, LOCKED, disabled
+	}: DeleteProps
 ) => {
 
 	// 1. callbacks ----------------------------------------------------------------------------------
@@ -23,20 +30,22 @@ export const Delete = memo((
 			return;
 		}
 		handleDelete(index, section);
-	}, [disabled, handleDelete, index, section]);
+	}, [
+		disabled, handleDelete, index, section
+	]);
 
 	// 2. deleteNode --------------------------------------------------------------------------------
 	const deleteNode = useMemo(() => (
 		<Div className={`mt-n10px mr-n10px`}>
 			<Icons
-				key={"X"}
-				name={"X"}
+				key={`X`}
+				name={`X`}
 				locked={LOCKED}
 				className={`w-20px h-20px`}
 				sx={{
-					color: "var(--color-text-2)",
+					color: `var(--color-text-2)`,
 					"&:hover": {
-						color: "var(--color-text-1)",
+						color: `var(--color-text-1)`,
 					},
 				}}
 				onClick={handleClick}

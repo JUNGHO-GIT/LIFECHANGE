@@ -1,4 +1,9 @@
-// ExportLayouts.tsx
+/**
+ * @file ExportLayouts.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-25
+ */
 
 // -------------------------------------------------------------------------------------------------
 export { Header } from "@interfaces/layouts/Header";

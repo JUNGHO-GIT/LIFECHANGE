@@ -1,6 +1,6 @@
 // MoneyGoalDetail.tsx
 
-import { useState, useEffect, useRef, useCallback,  memo } from "@exportReacts";
+import { React, useState, useEffect, useRef, useCallback,  memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useValidateMoney } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { MoneyGoal, MoneyGoalType } from "@exportSchemas";
@@ -58,9 +58,19 @@ export const MoneyGoalDetail = memo(() => {
   });
 
 	// 2-3. useRef --------------------------------------------------------------------------------
-	const countRef = useRef(COUNT);
-	const objectRef = useRef(OBJECT);
-	const dateRef = useRef(DATE);
+	const objectRef: React.RefObject<
+		MoneyGoalType
+	> = useRef(OBJECT);
+	const countRef: React.RefObject<{
+		totalCnt: number;
+		sectionCnt: number;
+		newSectionCnt: number;
+	}> = useRef(COUNT);
+	const dateRef: React.RefObject<{
+		dateType: string;
+		dateStart: string;
+		dateEnd: string;
+	}> = useRef(DATE);
 
 	// 2-3. useEffect ------------------------------------------------------------------------------
 	useEffect(() => {
@@ -78,13 +88,13 @@ export const MoneyGoalDetail = memo(() => {
       const dateRange = `${DATE?.dateStart.trim()} - ${DATE?.dateEnd.trim()}`;
       const objectRange = `${OBJECT.money_goal_dateStart.trim()} - ${OBJECT.money_goal_dateEnd.trim()}`;
 
-      const isExist = (
+      const isExist: boolean = (
         EXIST?.[DATE?.dateType as keyof typeof EXIST]?.includes(dateRange)
       );
-      const itsMe = (
+      const itsMe: boolean = (
         dateRange === objectRange
       );
-      const itsNew = (
+      const itsNew: boolean = (
         OBJECT.money_goal_dateStart === "0000-00-00" &&
         OBJECT.money_goal_dateEnd === "0000-00-00"
       );
@@ -142,8 +152,8 @@ export const MoneyGoalDetail = memo(() => {
       setOBJECT(res.data.result || MoneyGoal);
       setCOUNT((prev) => ({
         ...prev,
-        totalCnt: res.data.totalCnt || 0,
-        sectionCnt: res.data.sectionCnt || 0,
+        totalCnt: res.data.totalCnt ?? 0,
+        sectionCnt: res.data.sectionCnt ?? 0,
         newSectionCnt: res.data.sectionCnt || 0
       }));
     })
@@ -182,7 +192,7 @@ export const MoneyGoalDetail = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "success",
         });
         navigate(toList, {
@@ -198,7 +208,7 @@ export const MoneyGoalDetail = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "error",
         });
       }
@@ -235,7 +245,7 @@ export const MoneyGoalDetail = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "success",
         });
         navigate(toList, {
@@ -251,7 +261,7 @@ export const MoneyGoalDetail = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "error",
         });
       }
@@ -357,7 +367,7 @@ export const MoneyGoalDetail = memo(() => {
 									localCurrency
 								}
 								onChange={(e: any) => {
-									const processedValue = handleNumberInput(e.target.value, 9999999999);
+									const processedValue: string | null = handleNumberInput(e.target.value, 9999999999);
 									!processedValue === null && (() => { return })();
 									setOBJECT((prev) => ({
 										...prev,
@@ -396,7 +406,7 @@ export const MoneyGoalDetail = memo(() => {
 									localCurrency
 								}
 								onChange={(e: any) => {
-									const processedValue = handleNumberInput(e.target.value, 9999999999);
+									const processedValue: string | null = handleNumberInput(e.target.value, 9999999999);
 									!processedValue === null && (() => { return })();
 									setOBJECT((prev) => ({
 										...prev,

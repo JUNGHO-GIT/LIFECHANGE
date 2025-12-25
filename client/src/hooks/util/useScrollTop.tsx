@@ -1,4 +1,9 @@
-// useScrollTop.tsx
+/**
+ * @file useScrollTop.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-25
+ */
 
 import { useCommonValue } from "@exportHooks";
 import { useEffect } from "@exportReacts";

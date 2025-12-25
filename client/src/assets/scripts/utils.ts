@@ -1,123 +1,123 @@
-// utils.ts
+/**
+ * @file utils.ts
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-25
+ */
 
 // 1. random ----------------------------------------------------------------------------------
-export const randomNumber = (data: number) => {
-	return Math.floor(Math.random() * data);
-};
+export const randomNumber = (data: number) => (
+	Math.floor(Math.random() * (Number.isNaN(Number(data)) ? 100 : data))
+);
 
 // 2. time ------------------------------------------------------------------------------------
 export const randomTime = (): string => {
-	const hour = Math.floor(Math.random() * 23).toString().padStart(2, '0');
-	const minute = Math.floor(Math.random() * 60).toString().padStart(2, '0');
+	const hour: string = Math.floor(Math.random() * 23).toString().padStart(2, `0`);
+	const minute: string = Math.floor(Math.random() * 60).toString().padStart(2, `0`);
 	return `${hour}:${minute}`;
 };
 
 // 3. date ------------------------------------------------------------------------------------
 export const calcDate = (startTime: string, endTime: string) => {
-	const start = new Date(`1970/01/01 ${startTime}`);
-	const end = new Date(`1970/01/01 ${endTime}`);
-	const duration = new Date(Number(end) - Number(start) + 24 * 60 * 60 * 1000);
-	return `${duration.getHours().toString().padStart(2, '0')}:${duration.getMinutes().toString().padStart(2, '0')}`;
+	const start: Date = new Date(`1970/01/01 ${startTime}`);
+	const end: Date = new Date(`1970/01/01 ${endTime}`);
+	const duration: Date = new Date(Number(end) - Number(start) + 24 * 60 * 60 * 1000);
+	return `${duration.getHours().toString().padStart(2, `0`)}:${duration.getMinutes().toString().padStart(2, `0`)}`;
 };
 
 // 4. decimal ---------------------------------------------------------------------------------
-export const strToDecimal = (time: string) => {
+export const strToDecimal = (time: string): number => {
 	if (!time) {
 		return 0;
 	}
-	const [hours, minutes] = time.split(":").map(Number);
-	const adjustedHours = hours + Math.floor(minutes / 60);
-	const adjustedMinutes = minutes % 60;
+	const [hours, minutes] = time.split(`:`).map(Number);
+	const adjustedHours: number = hours + Math.floor(minutes / 60);
+	const adjustedMinutes: number = minutes % 60;
 
 	return adjustedHours + adjustedMinutes / 60;
 };
 
-// 4. decimal --------------------------------------------------------------------------------
+// 5. decimal ---------------------------------------------------------------------------------
 export const decimalToStr = (time: number) => {
-	if (time === null || time === undefined) {
-		return "00:00";
+	if (time === null || time === undefined || Number.isNaN(time)) {
+		return `00:00`;
 	}
-	const hours = Math.floor(time);
-	const minutes = Math.round((time - hours) * 60);
-	const adjustedHours = hours + Math.floor(minutes / 60);
-	const adjustedMinutes = minutes % 60;
+	const hours: number = Math.floor(time);
+	const minutes: number = Math.round((time - hours) * 60);
+	const adjustedHours: number = hours + Math.floor(minutes / 60);
+	const adjustedMinutes: number = minutes % 60;
 
-	return `${String(adjustedHours).padStart(2, "0")}:${String(adjustedMinutes).padStart(2, "0")}`;
+	return `${String(adjustedHours).padStart(2, `0`)}:${String(adjustedMinutes).padStart(2, `0`)}`;
 };
 
-// 5. insertComma -----------------------------------------------------------------------------
+// 6. insertComma -----------------------------------------------------------------------------
 // - 세자리 마다 콤마(,) 삽입
-export const insertComma = (str: string | number) => {
-	try {
-		// 만약 number 형식이면 string 으로 변환
-		if (typeof str === "number") {
-			str = str.toString();
-		}
-		// 변환이 실패하면 그대로 반환
-		if (isNaN(Number(str))) {
-			return str;
-		}
+export const insertComma = (param: string | number) => {
+	let str: string | number = param;
 
-		// 맨 앞에 + 또는 - 기호가 있는 경우 제거하고 부호를 기억
-		const isNegative = str.charAt(0) === "-";
-		if (isNegative) {
-			str = str.slice(1);
-		}
-
-		// 소수점 이하 포함하여 문자열로 변환 후 3자리마다 콤마 추가
-		const [integerPart, decimalPart] = str.split(".");
-		const formattedNum = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-		// 최종 반환 문자열 구성 (소수점 이하가 있는 경우 포함)
-		return (
-			(isNegative ? "-" : "") +
-			formattedNum +
-			(decimalPart !== undefined ? "." + decimalPart : "")
-		);
+	// 만약 number 형식이면 string 으로 변환
+	if (typeof str === `number`) {
+		str = str.toString();
 	}
-	catch (error) {
-		console.error("insertComma error", error);
+	// 변환이 실패하면 그대로 반환
+	if (Number.isNaN(Number(str))) {
+		return str;
 	}
+
+	// 맨 앞에 + 또는 - 기호가 있는 경우 제거하고 부호를 기억
+	const isNegative: boolean = str.startsWith(`-`);
+	isNegative && (str = str.slice(1));
+
+	// 소수점 이하 포함하여 문자열로 변환 후 3자리마다 콤마 추가
+	const [integerPart, decimalPart] = str.split(`.`);
+	const formattedNum: string = integerPart.replaceAll(/\B(?=(\d{3})+(?!\d))/g, `,`);
+
+	// 최종 반환 문자열 구성 (소수점 이하가 있는 경우 포함)
+	return (
+		(isNegative ? `-` : ``) +
+		formattedNum +
+		(decimalPart !== undefined ? `.${decimalPart}` : ``)
+	);
 };
 
-// 6. makeForm --------------------------------------------------------------------------------
+// 7. makeForm --------------------------------------------------------------------------------
 export const makeForm = (
-	object: any,
+	object: Record<string, unknown> | null,
 	fileList: File[] | null,
-	extra?: any
+	extra?: Record<string, string>
 ) => {
-
-	const form = new FormData();
+	const form: FormData = new FormData();
 
 	// object 데이터 추가
 	if (object) {
-		Object.keys(object).forEach((key: string, _index: number) => {
+		Object.keys(object).forEach((key: string) => {
+			const value: unknown = object[key];
 			// 이미지 배열인 경우
-			if (Array.isArray(object[key])) {
-				form.append(`OBJECT[${key}]`, JSON.stringify(object[key]));
+			if (Array.isArray(value)) {
+				form.append(`OBJECT[${key}]`, JSON.stringify(value));
 			}
 			// 나머지 항목인 경우
 			else {
-				form.append(`OBJECT[${key}]`, object[key]);
+				form.append(`OBJECT[${key}]`, String(value));
 			}
 		});
 	}
 
 	// 파일 추가
 	if (fileList) {
-		fileList.forEach((file: File, _index: number) => {
-			const newFile = new File(
+		fileList.forEach((file: File) => {
+			const newFile: File = new File(
 				[file],
-				`${new Date().getTime()}_${file.name}`,
+				`${Date.now()}_${file.name}`,
 				{ type: file.type }
 			);
-			form.append("fileList", newFile);
+			form.append(`fileList`, newFile);
 		});
 	}
 
 	// 추가 데이터 추가
 	if (extra) {
-		Object.keys(extra).forEach((key: string, _index: number) => {
+		Object.keys(extra).forEach((key: string) => {
 			form.append(key, extra[key]);
 		});
 	}
@@ -125,7 +125,7 @@ export const makeForm = (
 	return form;
 };
 
-// 7. handleNumberInput ---------------------------------------------------------------------------
+// 8. handleNumberInput -----------------------------------------------------------------------
 /**
  * 숫자 입력 처리 유틸
  * - 콤마(,) 제거, 최대값 제한, 소수점 자리 제한, 선행 0 제거를 수행합니다.
@@ -139,111 +139,139 @@ export const makeForm = (
  * @returns 가공된 문자열 값 또는 null
  */
 export const handleNumberInput = (val: string, max: number, decimalPlaces: number = 0) => {
-	let processedValue = val === "" ? "0" : val.replace(/,/g, "");
-	const regex = decimalPlaces === 0 ? /^\d+$/ : new RegExp(`^\\d*\\.?\\d{0,${decimalPlaces}}$`);
+	let processedValue: string = val === `` ? `0` : val.replaceAll(`,`, ``);
+	const regex: RegExp = decimalPlaces === 0 ? /^\d+$/ : new RegExp(`^\\d*\\.?\\d{0,${decimalPlaces}}$`);
 	if (Number(processedValue) > max || !regex.test(processedValue)) {
 		return null;
 	}
 	if (/^0(?!\.)/.test(processedValue)) {
-		processedValue = processedValue.replace(/^0+/, "");
+		processedValue = processedValue.replaceAll(/^0+/g, ``);
 	}
 	return processedValue;
 };
 
-// 8. formatY -------------------------------------------------------------------------------------
+// 9. formatY ---------------------------------------------------------------------------------
 // - 차트 Y축 범위 및 눈금 계산
+const formatYCache: WeakMap<any, unknown> = new WeakMap();
+
 export const formatY = (
-	OBJECT: any,
-	array: any,
+	OBJECT: unknown,
+	array: unknown,
 	type: string,
 	_extra?: string,
 ) => {
-	// 캐시: 동일한 데이터(reference)로 여러 번 호출될 때 계산을 재사용
-	const cacheMap = (formatY as any)._cache || new WeakMap();
-	(formatY as any)._cache || ((formatY as any)._cache = cacheMap);
-
 	const objRef = OBJECT || [];
-	const key = `${(array || []).join("|")}|${type}|${_extra || ""}`;
+	const arrRef: unknown = array || [];
+	const key: string = `${arrRef.join(`|`)}|${type}|${_extra ?? ``}`;
 
-	const outer = cacheMap.get(objRef) || (cacheMap.set(objRef, new Map()), cacheMap.get(objRef));
-	const cached = outer.get(key);
-	return cached ? cached : (() => {
+	const outerCache: unknown = formatYCache.get(objRef) || (() => {
+		const newMap: Map<unknown, unknown> = new Map();
+		formatYCache.set(objRef, newMap);
+		return newMap;
+	})();
+	const cached: unknown = outerCache.get(key);
+
+	return cached || (() => {
 		const ticks: number[] = [];
 
 		// maxValue 계산 (한 번만, 불필요한 중복 계산 제거)
-		let maxValue = 0;
-		for (let i = 0; i < (objRef || []).length; i++) {
-			const item = objRef[i];
-			for (let j = 0; j < (array || []).length; j++) {
-				const val = Number(item?.[array[j]] || 0);
+		let maxValue: number = 0;
+		objRef.forEach((item: unknown) => {
+			arrRef.forEach((arrKey: unknown) => {
+				const val: number = Number(item?.[arrKey] || 0);
 				(val > maxValue) && (maxValue = val);
-			}
-		}
+			});
+		});
 
 		// 범위를 사람이 읽기 좋은 값으로 맞춰주는 보조 함수
 		const computeNiceTick = (max: number, targetTicks: number) => {
-			const rough = Math.max(Math.ceil(max / Math.max(targetTicks, 1)), 1);
-			const exponent = rough > 0 ? Math.floor(Math.log10(rough)) : 0;
-			const pow10 = Math.pow(10, exponent);
-			const normalized = rough / pow10;
-			const niceFraction = normalized <= 1 ? 1 : normalized <= 2 ? 2 : normalized <= 5 ? 5 : 10;
-			const niceTick = niceFraction * pow10;
-			const top = Math.ceil(max / niceTick) * niceTick;
-			return { niceTick, top };
+			const rough: number = Math.max(Math.ceil(max / Math.max(targetTicks, 1)), 1);
+			const exponent: number = rough > 0 ? Math.floor(Math.log10(rough)) : 0;
+			const pow10: number = 10 ** exponent;
+			const normalized: number = rough / pow10;
+			const niceFraction: number = normalized <= 1 ? 1 : normalized <= 2 ? 2 : normalized <= 5 ? 5 : 10;
+			const niceTick: number = niceFraction * pow10;
+			const top: number = Math.ceil(max / niceTick) * niceTick;
+			return {
+				niceTick: niceTick,
+				top: top,
+			};
 		};
 
 		const config = (
-			type === "sleep" ? {
+			type === `sleep` ? {
 				maxValue: maxValue,
-				tickInterval: _extra === "line" ? 5 : 1,
-				topValue: _extra === "line" ? Math.ceil(maxValue / 100) * 100 : 24,
-			}
-			: type === "money" ? (() => {
+				tickInterval: _extra === `line` ? 5 : 1,
+				topValue: _extra === `line` ? Math.ceil(maxValue / 100) * 100 : 24,
+			} :
+			type === `money` ? (() => {
 				const { niceTick, top } = computeNiceTick(maxValue, 6);
-				return { maxValue: maxValue, tickInterval: niceTick, topValue: top };
-			})()
-			: type === "food" ? (() => {
+				return {
+					maxValue: maxValue,
+					tickInterval: niceTick,
+					topValue: top,
+				};
+			})() :
+			type === `food` ? (() => {
 				const { niceTick, top } = computeNiceTick(maxValue, 6);
-				return { maxValue: maxValue, tickInterval: Math.max(niceTick, 1), topValue: top };
-			})()
-			: type === "exercise" ? (() => {
+				return {
+					maxValue: maxValue,
+					tickInterval: Math.max(niceTick, 1),
+					topValue: top,
+				};
+			})() :
+			type === `exercise` ? (() => {
 				const { niceTick, top } = computeNiceTick(maxValue, 6);
-				return { maxValue: maxValue, tickInterval: Math.max(niceTick, 1), topValue: top };
+				return {
+					maxValue: maxValue,
+					tickInterval: Math.max(niceTick, 1),
+					topValue: top,
+				};
+			})() :
+			(() => {
+				throw new Error(`formatY: type error`);
 			})()
-			: (() => {
-				throw new Error("formatY: type error");
-			})()
-		);
+		) as {
+			maxValue: number;
+			tickInterval: number;
+			topValue: number;
+		};
 
-		for (let i = 0; i <= config.topValue; i += config.tickInterval) {
+		let i: number = 0;
+		while (i <= config.topValue) {
 			ticks.push(i);
+			i += config.tickInterval;
 		}
 
-		const result = {
+		const result: {
+			domain: [number, number];
+			ticks: number[];
+			formatterY: (_value: number) => string;
+		} = {
 			domain: [0, config.topValue],
 			ticks: ticks,
 			formatterY: (value: number) => (
-				value >= 1000000000 ? (
-					`${(value / 1000000000).toFixed(1)}b`
-				)
-				: value >= 1000000 ? (
-					`${(value / 1000000).toFixed(1)}m`
-				)
-				: value >= 1000 ? (
-					`${(value / 1000).toFixed(1)}k`
-				)
-				: value.toLocaleString()
+				value >= 1_000_000_000 ? (
+					`${(value / 1_000_000_000).toFixed(1)}b`
+				) :
+					value >= 1_000_000 ? (
+						`${(value / 1_000_000).toFixed(1)}m`
+					) :
+						value >= 1000 ? (
+							`${(value / 1000).toFixed(1)}k`
+						) :
+							value.toLocaleString()
 			)
 		};
 
-		outer.set(key, result);
+		outerCache.set(key, result);
 		return result;
 	})();
 };
 
-// 9. formaytDate ---------------------------------------------------------------------------------
+// 10. formatDate ---------------------------------------------------------------------------------
 // - 날짜 형식 변환 (YYYY-MM-DD -> MM-DD)
 export const formatDate = (dateStr: string) => {
-	const datePattern = /\d{4}-(\d{2})-(\d{2})/g;
-	return dateStr.replace(datePattern, '$1-$2');
+	const datePattern: RegExp = /\d{4}-(\d{2})-(\d{2})/g;
+	return dateStr.replaceAll(datePattern, `$1-$2`);
 };

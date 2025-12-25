@@ -1,6 +1,6 @@
 // SleepRecordDetail.tsx
 
-import { useState, useEffect, useRef, useCallback, memo } from "@exportReacts";
+import { React, useState, useEffect, useRef, useCallback, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useTime, useValidateSleep } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { SleepRecord, SleepRecordType } from "@exportSchemas";
@@ -57,9 +57,19 @@ export const SleepRecordDetail = memo(() => {
   });
 
 	// 2-3. useRef --------------------------------------------------------------------------------
-	const countRef = useRef(COUNT);
-	const objectRef = useRef(OBJECT);
-	const dateRef = useRef(DATE);
+	const objectRef: React.RefObject<
+		SleepRecordType
+	> = useRef(OBJECT);
+	const countRef: React.RefObject<{
+		totalCnt: number;
+		sectionCnt: number;
+		newSectionCnt: number;
+	}> = useRef(COUNT);
+	const dateRef: React.RefObject<{
+		dateType: string;
+		dateStart: string;
+		dateEnd: string;
+	}> = useRef(DATE);
 
 	// 2-3. useEffect ------------------------------------------------------------------------------
 	useEffect(() => {
@@ -81,13 +91,13 @@ export const SleepRecordDetail = memo(() => {
 
 		const dateRange = `${DATE?.dateStart.trim()} - ${DATE?.dateEnd.trim()}`;
 		const objectRange = `${OBJECT.sleep_record_dateStart.trim()} - ${OBJECT.sleep_record_dateEnd.trim()}`;
-		const isExist = (
+		const isExist: boolean = (
 			EXIST?.[DATE?.dateType as keyof typeof EXIST]?.includes(dateRange)
 		);
-		const itsMe = (
+		const itsMe: boolean = (
 			dateRange === objectRange
 		);
-		const itsNew = (
+		const itsNew: boolean = (
 			OBJECT.sleep_record_dateStart === "0000-00-00" &&
 			OBJECT.sleep_record_dateEnd === "0000-00-00"
 		);
@@ -162,8 +172,8 @@ export const SleepRecordDetail = memo(() => {
       // count 설정
       setCOUNT((prev) => ({
         ...prev,
-        totalCnt: res.data.totalCnt || 0,
-        sectionCnt: res.data.sectionCnt || 0,
+        totalCnt: res.data.totalCnt ?? 0,
+        sectionCnt: res.data.sectionCnt ?? 0,
         newSectionCnt: res.data.sectionCnt || 0
       }));
     })
@@ -219,22 +229,22 @@ export const SleepRecordDetail = memo(() => {
 				setLOADING(false),
 				setALERT({
 					open: true,
-					msg: translate(res.data.msg),
+					msg: translate(res.data.msg as string),
 					severity: "success",
 				}),
-				navigate(toList, {
+				void navigate(toList, {
 					state: {
 						dateType: "",
 						dateStart: dateRef.current.dateStart,
 						dateEnd: dateRef.current.dateEnd
 					}
 				}),
-				sync()
+				void sync()
 			) : (
 				setLOADING(false),
 				setALERT({
 					open: true,
-					msg: translate(res.data.msg),
+					msg: translate(res.data.msg as string),
 					severity: "error",
 				})
 			);
@@ -271,22 +281,22 @@ export const SleepRecordDetail = memo(() => {
 				setLOADING(false),
 				setALERT({
 					open: true,
-					msg: translate(res.data.msg),
+					msg: translate(res.data.msg as string),
 					severity: "success",
 				}),
-				navigate(toList, {
+				void navigate(toList, {
 					state: {
 						dateType: "",
 						dateStart: dateRef.current.dateStart,
 						dateEnd: dateRef.current.dateEnd
 					}
 				}),
-				sync()
+				void sync()
 			) : (
 				setLOADING(false),
 				setALERT({
 					open: true,
-					msg: translate(res.data.msg),
+					msg: translate(res.data.msg as string),
 					severity: "error",
 				})
 			);

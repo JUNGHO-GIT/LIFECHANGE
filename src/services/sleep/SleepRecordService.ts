@@ -127,7 +127,7 @@ export const list = async (
         sleep_record_wakeTime: avgWake,
         sleep_record_sleepTime: avgSleep,
         // keep representative sleep_section (first doc) for detail navigation
-        sleep_section: firstDoc?.sleep_section || [],
+        sleep_section: firstDoc?.sleep_section ?? [],
       };
     });
 

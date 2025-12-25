@@ -7,7 +7,6 @@
 
 // @ts-check
 import { defineConfig } from "eslint/config";
-import js from "@eslint/js";
 import tseslint from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
 import unicorn from "eslint-plugin-unicorn";
@@ -49,7 +48,7 @@ const JS_RULES = {
 		},
 	],
 	"dot-notation": [
-		`error`,
+		`off`,
 		{
 			allowKeywords: true,
 			allowPattern: ``,
@@ -72,7 +71,7 @@ const JS_RULES = {
 
 	// 1-3. function
 	"arrow-body-style": [
-		`error`,
+		`off`,
 		`as-needed`,
 		{
 			requireReturnForObjectLiteral: false,
@@ -109,7 +108,7 @@ const JS_RULES = {
 	],
 	"no-caller": [`error`], // no options
 	"no-empty-function": [
-		`error`,
+		`off`,
 		{
 			allow: [],
 		},
@@ -235,12 +234,12 @@ const JS_RULES = {
 		`error`,
 		{
 			vars: `all`,
-			varsIgnorePattern: ``,
+			varsIgnorePattern: `^_`,
 			args: `after-used`,
-			argsIgnorePattern: ``,
+			argsIgnorePattern: `^_`,
 			caughtErrors: `all`,
-			caughtErrorsIgnorePattern: ``,
-			destructuredArrayIgnorePattern: ``,
+			caughtErrorsIgnorePattern: `^_`,
+			destructuredArrayIgnorePattern: `^_`,
 			ignoreRestSiblings: false,
 			ignoreClassWithStaticInitBlock: false,
 			reportUsedIgnorePattern: false,
@@ -501,7 +500,7 @@ const JS_RULES = {
 		},
 	],
 	"no-void": [
-		`error`,
+		`off`,
 		{
 			allowAsStatement: false,
 		},
@@ -575,7 +574,6 @@ const JS_RULES = {
 		},
 	],
 	"no-restricted-properties": [`off`], // options: list of restricted properties
-	"no-restricted-syntax": [`off`], // options: list of restricted syntax selectors
 	"sort-imports": [
 		`off`,
 		{
@@ -601,7 +599,7 @@ const JS_RULES = {
 			ignoreDestructuring: false,
 			ignoreImports: false,
 			ignoreGlobals: false,
-			allow: [],
+			allow: [ `^.*_.*$` ],
 		},
 	],
 	"capitalized-comments": [
@@ -716,7 +714,7 @@ const JS_RULES = {
 	complexity: [
 		`warn`,
 		{
-			max: 40,
+			max: 300,
 			variant: `classic`,
 		},
 	],
@@ -802,6 +800,20 @@ const JS_RULES = {
 /** @type {RulesRecord} */
 const TS_RULES = {
 	// 2-1. type-safety
+	"@typescript-eslint/no-inferrable-types": [`off`],
+	"@typescript-eslint/typedef": [
+		`error`,
+		{
+			variableDeclaration: true,
+			memberVariableDeclaration: true,
+			parameter: true,
+			arrayDestructuring: false,
+			arrowParameter: false,
+			objectDestructuring: false,
+			propertyDeclaration: false,
+			variableDeclarationIgnoreFunction: true,
+		},
+	],
 	"@typescript-eslint/await-thenable": [`error`], // no options
 	"@typescript-eslint/no-floating-promises": [
 		`error`,
@@ -821,12 +833,12 @@ const TS_RULES = {
 		},
 	],
 	"@typescript-eslint/no-unsafe-argument": [`error`], // no options
-	"@typescript-eslint/no-unsafe-assignment": [`error`], // no options
-	"@typescript-eslint/no-unsafe-call": [`error`], // no options
+	"@typescript-eslint/no-unsafe-assignment": [`off`], // no options
+	"@typescript-eslint/no-unsafe-call": [`off`], // no options
 	"@typescript-eslint/no-unsafe-declaration-merging": [`error`], // no options
 	"@typescript-eslint/no-unsafe-enum-comparison": [`error`], // no options
-	"@typescript-eslint/no-unsafe-function-type": [`error`], // no options
-	"@typescript-eslint/no-unsafe-member-access": [`error`], // no options
+	"@typescript-eslint/no-unsafe-function-type": [`off`], // no options
+	"@typescript-eslint/no-unsafe-member-access": [`off`], // no options
 	"@typescript-eslint/no-unsafe-return": [`error`], // no options
 	"@typescript-eslint/no-unsafe-unary-minus": [`error`], // no options
 	"@typescript-eslint/switch-exhaustiveness-check": [
@@ -879,13 +891,13 @@ const TS_RULES = {
 		},
 	],
 	"@typescript-eslint/dot-notation": [
-		`error`,
+		`off`,
 		{
 			allowKeywords: true,
 			allowPattern: ``,
-			allowPrivateClassPropertyAccess: false,
-			allowProtectedClassPropertyAccess: false,
-			allowIndexSignaturePropertyAccess: false,
+			allowPrivateClassPropertyAccess: true,
+			allowProtectedClassPropertyAccess: true,
+			allowIndexSignaturePropertyAccess: true,
 		},
 	],
 	"@typescript-eslint/member-ordering": [
@@ -941,7 +953,7 @@ const TS_RULES = {
 	],
 	"@typescript-eslint/no-dynamic-delete": [`error`], // no options
 	"@typescript-eslint/no-empty-function": [
-		`error`,
+		`off`,
 		{
 			allow: [],
 		},
@@ -1047,12 +1059,12 @@ const TS_RULES = {
 		`error`,
 		{
 			vars: `all`,
-			varsIgnorePattern: ``,
+			varsIgnorePattern: `^_`,
 			args: `after-used`,
-			argsIgnorePattern: ``,
+			argsIgnorePattern: `^_`,
 			caughtErrors: `all`,
-			caughtErrorsIgnorePattern: ``,
-			destructuredArrayIgnorePattern: ``,
+			caughtErrorsIgnorePattern: `^_`,
+			destructuredArrayIgnorePattern: `^_`,
 			ignoreRestSiblings: false,
 			ignoreClassWithStaticInitBlock: false,
 			reportUsedIgnorePattern: false,
@@ -1061,7 +1073,7 @@ const TS_RULES = {
 	"@typescript-eslint/no-use-before-define": [
 		`error`,
 		{
-			functions: true,
+			functions: false,
 			classes: true,
 			variables: true,
 			allowNamedExports: false,
@@ -1073,15 +1085,15 @@ const TS_RULES = {
 
 	// 2-5. preference
 	"@typescript-eslint/no-explicit-any": [
-		`warn`,
+		`off`,
 		{
-			fixToUnknown: false,
-			ignoreRestArgs: false,
+			fixToUnknown: true,
+			ignoreRestArgs: true,
 		},
 	],
 	"@typescript-eslint/no-non-null-assertion": [`warn`], // no options
 	"@typescript-eslint/no-unnecessary-condition": [
-		`warn`,
+		`off`,
 		{
 			allowConstantLoopConditions: false,
 			allowRuleToRunWithoutStrictNullChecksIKnowWhatIAmDoing: false,
@@ -1114,17 +1126,19 @@ const TS_RULES = {
 	"@typescript-eslint/prefer-nullish-coalescing": [
 		`error`,
 		{
-			ignoreTernaryTests: false,
+			allowRuleToRunWithoutStrictNullChecksIKnowWhatIAmDoing: false,
+			ignoreBooleanCoercion: false,
 			ignoreConditionalTests: false,
+			ignoreIfStatements: false,
 			ignoreMixedLogicalExpressions: false,
 			ignorePrimitives: {
 				bigint: false,
 				boolean: false,
 				number: false,
-				string: false,
+				string: false
 			},
-			allowRuleToRunWithoutStrictNullChecksIKnowWhatIAmDoing: false,
-		},
+			ignoreTernaryTests: false
+		}
 	],
 	"@typescript-eslint/prefer-optional-chain": [
 		`warn`,
@@ -1172,12 +1186,12 @@ const TS_RULES = {
 	"@typescript-eslint/restrict-template-expressions": [
 		`warn`,
 		{
-			allowAny: false,
-			allowBoolean: false,
-			allowNullish: false,
+			allowAny: true,
+			allowBoolean: true,
+			allowNullish: true,
 			allowNumber: true,
-			allowRegExp: false,
-			allowNever: false,
+			allowRegExp: true,
+			allowNever: true,
 		},
 	],
 	"@typescript-eslint/return-await": [`error`, `in-try-catch`],
@@ -1216,13 +1230,6 @@ const TS_RULES = {
 		},
 	],
 	"@typescript-eslint/naming-convention": [`off`], // complex options
-	"@typescript-eslint/no-inferrable-types": [
-		`off`,
-		{
-			ignoreParameters: false,
-			ignoreProperties: false,
-		},
-	],
 	"@typescript-eslint/no-magic-numbers": [
 		`off`,
 		{
@@ -1306,7 +1313,7 @@ const STYLISTIC_RULES = {
 	"@stylistic/array-bracket-newline": [
 		`error`,
 		{
-			minItems: 3,
+			minItems: 6,
 			multiline: true,
 		},
 	],
@@ -1324,12 +1331,12 @@ const STYLISTIC_RULES = {
 		`error`,
 		{
 			ObjectExpression: {
-				minProperties: 3,
+				minProperties: 6,
 				multiline: true,
 				consistent: true,
 			},
 			ObjectPattern: {
-				minProperties: 3,
+				minProperties: 6,
 				multiline: true,
 				consistent: true,
 			},
@@ -1397,20 +1404,56 @@ const STYLISTIC_RULES = {
 			allowSingleLine: false,
 		},
 	],
-	"@stylistic/curly-newline": [`error`, `always`],
+	"@stylistic/curly-newline": [
+		`error`, {
+			consistent: true,
+			multiline: true,
+
+			// 제어문 (Control Statements)
+			IfStatementConsequent: { multiline: true, consistent: true },
+			IfStatementAlternative: { multiline: true, consistent: true },
+			ForStatement: { multiline: true, consistent: true },
+			ForInStatement: { multiline: true, consistent: true },
+			ForOfStatement: { multiline: true, consistent: true },
+			WhileStatement: { multiline: true, consistent: true },
+			DoWhileStatement: { multiline: true, consistent: true },
+			SwitchStatement: { multiline: true, consistent: true },
+			SwitchCase: { multiline: true, consistent: true },
+			WithStatement: { multiline: true, consistent: true },
+
+			// 예외 처리 (Error Handling)
+			TryStatementBlock: { multiline: true, consistent: true },
+			TryStatementHandler: { multiline: true, consistent: true },
+			TryStatementFinalizer: { multiline: true, consistent: true },
+
+			// 함수 및 메서드 (Functions & Methods) - 빈 함수 허용에 중요
+			FunctionDeclaration: { multiline: true, consistent: true },
+			FunctionExpression: { multiline: true, consistent: true },
+			ArrowFunctionExpression: { multiline: true, consistent: true },
+			Property: { multiline: true, consistent: true }, // 객체 메서드 단축 구문
+
+			// 클래스 및 모듈 (Classes & Modules)
+			ClassBody: { multiline: true, consistent: true },
+			StaticBlock: { multiline: true, consistent: true },
+			TSModuleBlock: { multiline: true, consistent: true },
+
+			// 기타 블록 (General Blocks)
+			BlockStatement: { multiline: true, consistent: true }
+		}
+	],
 
 	// 4-4. comma / semicolon
 	"@stylistic/comma-dangle": [
 		`error`,
 		{
-			arrays: `always-multiline`,
-			objects: `always-multiline`,
-			imports: `always-multiline`,
-			exports: `always-multiline`,
-			functions: `never`,
-			enums: `always-multiline`,
-			generics: `never`,
-			tuples: `always-multiline`,
+			arrays: `only-multiline`,
+			objects: `only-multiline`,
+			imports: `only-multiline`,
+			exports: `only-multiline`,
+			functions: `only-multiline`,
+			enums: `only-multiline`,
+			generics: `only-multiline`,
+			tuples: `only-multiline`,
 		},
 	],
 	"@stylistic/comma-spacing": [
@@ -1564,21 +1607,19 @@ const STYLISTIC_RULES = {
 	"@stylistic/one-var-declaration-per-line": [`error`, `always`],
 	"@stylistic/operator-linebreak": [
 		`error`,
-		`before`,
+		`after`,
 		{
-			overrides: {},
+			overrides: {
+				"?": `before`,
+				":": `before`,
+			},
 		},
 	],
-	"@stylistic/padded-blocks": [
-		`error`,
-		`never`,
-		{
-			allowSingleLineBlocks: true,
-		},
-	],
+	"@stylistic/padded-blocks": [`off`],
 	"@stylistic/padding-line-between-statements": [`off`], // complex options
 
-	// 4-7. indent / format
+	// 4-7. indent / format --------------------------------------------------------
+	"@stylistic/indent-binary-ops": [`off`],
 	"@stylistic/indent": [
 		`error`,
 		`tab`,
@@ -1587,35 +1628,34 @@ const STYLISTIC_RULES = {
 			VariableDeclarator: {
 				var: 1,
 				let: 1,
-				const: 1,
+				const: 1
 			},
-			outerIIFEBody: 1,
-			MemberExpression: 1,
 			FunctionDeclaration: {
 				parameters: 1,
-				body: 1,
+				body: 1
 			},
 			FunctionExpression: {
 				parameters: 1,
-				body: 1,
-			},
-			StaticBlock: {
-				body: 1,
+				body: 1
 			},
 			CallExpression: {
-				arguments: 1,
+				arguments: 1
 			},
 			ArrayExpression: 1,
 			ObjectExpression: 1,
+			MemberExpression: 0,
 			ImportDeclaration: 1,
+			StaticBlock: {
+				body: 1
+			},
+			outerIIFEBody: 1,
 			flatTernaryExpressions: false,
-			offsetTernaryExpressions: true,
-			ignoredNodes: [],
-			ignoreComments: false,
-			tabLength: 4,
-		},
+			offsetTernaryExpressions: false,
+			ignoredNodes: [`ConditionalExpression`],
+			tabLength: 2,
+			ignoreComments: false
+		}
 	],
-	"@stylistic/indent-binary-ops": [`error`, `tab`],
 
 	// 4-8. quotes / props
 	"@stylistic/quotes": [
@@ -1666,9 +1706,9 @@ const STYLISTIC_RULES = {
 	"@stylistic/max-len": [
 		`warn`,
 		{
-			code: 200,
+			code: 500,
 			tabWidth: 2,
-			comments: 200,
+			comments: 500,
 			ignorePattern: ``,
 			ignoreComments: false,
 			ignoreTrailingComments: false,
@@ -1767,11 +1807,7 @@ const STYLISTIC_RULES = {
 	"@stylistic/jsx-closing-tag-location": [`error`], // no options
 	"@stylistic/jsx-curly-brace-presence": [
 		`error`,
-		{
-			props: `never`,
-			children: `never`,
-			propElementValues: `always`,
-		},
+		`always`,
 	],
 	"@stylistic/jsx-curly-newline": [
 		`error`,
@@ -1886,7 +1922,12 @@ const STYLISTIC_RULES = {
 		{
 			before: false,
 			after: true,
-			overrides: {},
+			overrides: {
+				arrow: {
+					before: true,
+					after: true,
+				},
+			},
 		},
 	],
 	"@stylistic/type-generic-spacing": [`error`], // no options
@@ -1925,7 +1966,7 @@ const UNICORN_RULES = {
 	"unicorn/consistent-function-scoping": [
 		`warn`,
 		{
-			checkArrowFunctions: true,
+			checkArrowFunctions: false,
 		},
 	],
 	"unicorn/no-anonymous-default-export": [`error`], // no options
@@ -2187,6 +2228,24 @@ const UNICORN_RULES = {
 	"unicorn/prefer-date-now": [`error`], // no options
 };
 
+// 5. Custom 설정 -------------------------------------------------------------------------------------------
+/** @type {RulesRecord} */
+const CUSTOM_RULES = {
+	// 0. custom rules
+	"no-restricted-syntax": [
+		`error`,
+		{
+			selector: `ForStatement`,
+			message: `전통적인 for 루프는 지양하세요. Array.from(), map(), forEach() 또는 while 문을 고려하세요.`
+		},
+		{
+			selector: `VariableDeclarator[id.typeAnnotation=null][init.type='MemberExpression'], VariableDeclarator[id.typeAnnotation=null][init.type='ChainExpression'], VariableDeclarator[id.typeAnnotation=null][init.type='Identifier']`,
+			message: `변수에 값을 할당할 때는 명시적인 타입을 지정해야 합니다 (예: const val: string = obj.val).`
+		},
+	],
+
+};
+
 // 9. 최종 설정 병합 ----------------------------------------------------------------------------------------
 /** @type {import("eslint").Linter.Config[]} */
 export default defineConfig([
@@ -2194,14 +2253,33 @@ export default defineConfig([
 	{
 		ignores: [
 			`**/node_modules/**`,
+			`**/.history/**`,
+			`**/.mongo/**`,
+			`**/.bookmark/**`,
+			`**/.backup/**`,
+			`**/.etc/**`,
+			`**/.tmp/**`,
+			`**/.temp/**`,
+			`**/.nyc_output/**`,
+			`**/.parcel-cache/**`,
+			`**/.idea/**`,
+			`**/.gradle/**`,
+			`**/.bin/**`,
+			`**/.gen/**`,
+			`**/.node/**`,
+			`**/.vscode/**`,
 			`**/dist/**`,
+			`**/.dist/**`,
 			`**/build/**`,
+			`**/.build/**`,
 			`**/.next/**`,
 			`**/.turbo/**`,
 			`**/coverage/**`,
+			`**/.coverage/**`,
 			`**/.git/**`,
 			`**/.cache/**`,
 			`**/out/**`,
+			`**/.out/**`,
 			`**/vendor/**`,
 			`coverage/**`,
 			`!**/*.d.ts`,
@@ -2228,10 +2306,10 @@ export default defineConfig([
 			unicorn: unicorn,
 		},
 		rules: {
-			...js.configs.recommended.rules,
 			...JS_RULES,
 			...STYLISTIC_RULES,
 			...UNICORN_RULES,
+			...CUSTOM_RULES,
 		},
 		settings: {},
 		languageOptions: {
@@ -2287,11 +2365,11 @@ export default defineConfig([
 			unicorn: unicorn,
 		},
 		rules: {
-			...js.configs.recommended.rules,
 			...JS_RULES,
 			...TS_RULES,
 			...STYLISTIC_RULES,
 			...UNICORN_RULES,
+			...CUSTOM_RULES,
 		},
 		settings: {},
 		languageOptions: {

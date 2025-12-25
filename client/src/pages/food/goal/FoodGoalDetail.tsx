@@ -1,6 +1,6 @@
 // FoodGoalDetail.tsx
 
-import { useState, useEffect, useRef, useCallback, memo } from "@exportReacts";
+import { React, useState, useEffect, useRef, useCallback, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useValidateFood } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { FoodGoal, FoodGoalType } from "@exportSchemas";
@@ -57,9 +57,19 @@ export const FoodGoalDetail = memo(() => {
   });
 
 	// 2-3. useRef --------------------------------------------------------------------------------
-	const countRef = useRef(COUNT);
-	const objectRef = useRef(OBJECT);
-	const dateRef = useRef(DATE);
+	const objectRef: React.RefObject<
+		FoodGoalType
+	> = useRef(OBJECT);
+	const countRef: React.RefObject<{
+		totalCnt: number;
+		sectionCnt: number;
+		newSectionCnt: number;
+	}> = useRef(COUNT);
+	const dateRef: React.RefObject<{
+		dateType: string;
+		dateStart: string;
+		dateEnd: string;
+	}> = useRef(DATE);
 
 	// 2-3. useEffect ------------------------------------------------------------------------------
 	useEffect(() => {
@@ -77,13 +87,13 @@ export const FoodGoalDetail = memo(() => {
       const dateRange = `${DATE?.dateStart.trim()} - ${DATE?.dateEnd.trim()}`;
       const objectRange = `${OBJECT.food_goal_dateStart.trim()} - ${OBJECT.food_goal_dateEnd.trim()}`;
 
-      const isExist = (
+      const isExist: boolean = (
         EXIST?.[DATE?.dateType as keyof typeof EXIST]?.includes(dateRange)
       );
-      const itsMe = (
+      const itsMe: boolean = (
         dateRange === objectRange
       );
-      const itsNew = (
+      const itsNew: boolean = (
         OBJECT.food_goal_dateStart === "0000-00-00" &&
         OBJECT.food_goal_dateEnd === "0000-00-00"
       );
@@ -141,8 +151,8 @@ export const FoodGoalDetail = memo(() => {
       setOBJECT(res.data.result || FoodGoal);
       setCOUNT((prev) => ({
         ...prev,
-        totalCnt: res.data.totalCnt || 0,
-        sectionCnt: res.data.sectionCnt || 0,
+        totalCnt: res.data.totalCnt ?? 0,
+        sectionCnt: res.data.sectionCnt ?? 0,
         newSectionCnt: res.data.sectionCnt || 0
       }));
     })
@@ -181,7 +191,7 @@ export const FoodGoalDetail = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "success",
         });
         navigate(toList, {
@@ -197,7 +207,7 @@ export const FoodGoalDetail = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "error",
         });
       }
@@ -234,7 +244,7 @@ export const FoodGoalDetail = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "success",
         });
         navigate(toList, {
@@ -250,7 +260,7 @@ export const FoodGoalDetail = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "error",
         });
       }
@@ -358,7 +368,7 @@ export const FoodGoalDetail = memo(() => {
 									translate(`kc`)
 								}
 								onChange={(e: any) => {
-									const processedValue = handleNumberInput(e.target.value, 999999);
+									const processedValue: string | null = handleNumberInput(e.target.value, 999999);
 									!processedValue === null && (() => { return })();
 									setOBJECT((prev) => ({
 										...prev,
@@ -397,7 +407,7 @@ export const FoodGoalDetail = memo(() => {
 									translate(`g`)
 								}
 								onChange={(e: any) => {
-									const processedValue = handleNumberInput(e.target.value, 999999);
+									const processedValue: string | null = handleNumberInput(e.target.value, 999999);
 									!processedValue === null && (() => { return })();
 									setOBJECT((prev) => ({
 										...prev,
@@ -436,7 +446,7 @@ export const FoodGoalDetail = memo(() => {
 									translate(`g`)
 								}
 								onChange={(e: any) => {
-									const processedValue = handleNumberInput(e.target.value, 999999);
+									const processedValue: string | null = handleNumberInput(e.target.value, 999999);
 									!processedValue === null && (() => { return })();
 									setOBJECT((prev) => ({
 										...prev,
@@ -475,7 +485,7 @@ export const FoodGoalDetail = memo(() => {
 									translate(`g`)
 								}
 								onChange={(e: any) => {
-									const processedValue = handleNumberInput(e.target.value, 999999);
+									const processedValue: string | null = handleNumberInput(e.target.value, 999999);
 									!processedValue === null && (() => { return })();
 									setOBJECT((prev) => ({
 										...prev,

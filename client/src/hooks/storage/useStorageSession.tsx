@@ -1,4 +1,9 @@
-// useStorageSession.tsx
+/**
+ * @file useStorageSession.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-25
+ */
 
 import { useEffect, useState } from "@exportReacts";
 import { getSession, setSession } from "@exportScripts";
@@ -14,14 +19,16 @@ export const useStorageSession = <T,> (
 
 	// -----------------------------------------------------------------------------------------------
 	const [storedVal, setStoredVal] = useState(() => {
-		const existingValue = getSession(key1, key2, key3);
-		return existingValue !== undefined ? existingValue : initialVal;
+		const existingValue = getSession(key1, key2, key3) as T | undefined;
+		return existingValue || initialVal;
 	});
 
 	// -----------------------------------------------------------------------------------------------
 	useEffect(() => {
 		setSession(key1, key2, key3, storedVal);
-	}, [key1, key2, key3, storedVal]);
+	}, [
+		key1, key2, key3, storedVal
+	]);
 
 	// -----------------------------------------------------------------------------------------------
 	return [

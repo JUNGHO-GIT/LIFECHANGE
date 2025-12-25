@@ -1,6 +1,6 @@
 // UserSignup.tsx
 
-import { useState, useEffect, useRef, memo } from "@exportReacts";
+import { React, useState, useEffect, useRef, memo } from "@exportReacts";
 import { useCommonValue, useValidateUser } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { axios } from "@exportLibs";
@@ -48,7 +48,7 @@ export const UserSignup = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "success",
         });
         setOBJECT((prev) => ({
@@ -60,7 +60,7 @@ export const UserSignup = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "error",
         });
         setOBJECT((prev) => ({
@@ -72,7 +72,7 @@ export const UserSignup = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "error",
         });
         setOBJECT((prev) => ({
@@ -84,7 +84,7 @@ export const UserSignup = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "error",
         });
         setOBJECT((prev) => ({
@@ -123,7 +123,7 @@ export const UserSignup = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "success",
         });
         setOBJECT((prev) => ({
@@ -135,7 +135,7 @@ export const UserSignup = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "error",
         });
         setOBJECT((prev) => ({
@@ -174,7 +174,7 @@ export const UserSignup = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "success",
         });
         navigate("/user/login");
@@ -183,7 +183,7 @@ export const UserSignup = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "error",
         });
       }
@@ -191,7 +191,7 @@ export const UserSignup = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "error",
         });
       }
@@ -222,7 +222,7 @@ export const UserSignup = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "error",
         });
       }
@@ -402,7 +402,7 @@ export const UserSignup = memo(() => {
 										translate(`cm`)
 									}
                   onChange={(e: any) => {
-                    const processedValue = handleNumberInput(e.target.value, 999, 2);
+                    const processedValue: string | null = handleNumberInput(e.target.value, 999, 2);
                     !processedValue === null && (() => { return })();
                     setOBJECT((prev) => ({
                       ...prev,
@@ -436,7 +436,7 @@ export const UserSignup = memo(() => {
 										translate(`kc`)
 									}
                   onChange={(e: any) => {
-                    const processedValue = handleNumberInput(e.target.value, 9999);
+                    const processedValue: string | null = handleNumberInput(e.target.value, 9999);
                     !processedValue === null && (() => { return })();
                     setOBJECT((prev) => ({
                       ...prev,
@@ -470,7 +470,7 @@ export const UserSignup = memo(() => {
 										localCurrency
 									}
                   onChange={(e: any) => {
-                    const processedValue = handleNumberInput(e.target.value, 9999999999);
+                    const processedValue: string | null = handleNumberInput(e.target.value, 9999999999);
                     !processedValue === null && (() => { return })();
                     setOBJECT((prev) => ({
                       ...prev,

@@ -1,6 +1,11 @@
-// Count.tsx
+/**
+ * @file Count.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-25
+ */
 
-import { memo, useCallback, useMemo } from "@exportReacts";
+import { React, memo, useCallback, useMemo } from "@exportReacts";
 import { Div, Grid, Icons, Img } from "@exportComponents";
 import { Input } from "@exportContainers";
 import { useCommonValue } from "@exportHooks";
@@ -22,12 +27,14 @@ declare type CountProps = {
 	setLOCKED: React.Dispatch<React.SetStateAction<string>>;
 	limit: number;
 	disabled?: boolean;
-	onCountChange?: (newSectionCnt: number) => void;
-}
+	onCountChange?: (_newSectionCnt: number) => void;
+};
 
 // -------------------------------------------------------------------------------------------------
 export const Count = memo((
-	{ COUNT, setCOUNT, LOCKED, setLOCKED, limit, disabled, onCountChange }: CountProps
+	{
+		COUNT, setCOUNT, LOCKED, setLOCKED, limit, disabled, onCountChange
+	}: CountProps
 ) => {
 
 	// 1. common ----------------------------------------------------------------------------------
@@ -37,61 +44,65 @@ export const Count = memo((
 
 	// 4. handle ----------------------------------------------------------------------------------
 	const handleLockToggle = useCallback(() => {
-		disabled || setLOCKED(LOCKED === "locked" ? "unlocked" : "locked");
-	}, [disabled, LOCKED, setLOCKED]);
+		disabled || setLOCKED(LOCKED === `locked` ? `unlocked` : `locked`);
+	}, [
+		disabled, LOCKED, setLOCKED
+	]);
 
 	// 4. handle ----------------------------------------------------------------------------------
 	const handleMinus = useCallback(() => {
-		!disabled && LOCKED !== "locked" && !PATH.includes("/food/find/list") &&
-		setCOUNT((prev) =>
-			prev.newSectionCnt > prev.sectionCnt ? (
-				onCountChange?.(prev.newSectionCnt - 1),
-				{ ...prev, newSectionCnt: prev.newSectionCnt - 1 }
-			) : (
-				setALERT({
-					open: true,
-					severity: "error",
-					msg: localLang === "ko"
-					? `${prev.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
-					: `Please enter ${prev.sectionCnt} or more and ${limit} or less.`,
-				}),
-				prev
-			)
+		!disabled && LOCKED !== `locked` && !PATH.includes(`/food/find/list`) &&
+		setCOUNT((prev) => (prev.newSectionCnt > prev.sectionCnt ? (
+			onCountChange?.(prev.newSectionCnt - 1),
+			{ ...prev, newSectionCnt: prev.newSectionCnt - 1 }
+		) : (
+			setALERT({
+				open: true,
+				severity: `error`,
+				msg: localLang === `ko` ?
+					`${prev.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.` :
+					`Please enter ${prev.sectionCnt} or more and ${limit} or less.`,
+			}),
+			prev
+		))
 		);
-	}, [disabled, LOCKED, PATH, setCOUNT, onCountChange, setALERT, localLang, limit]);
+	}, [
+		disabled, LOCKED, PATH, setCOUNT, onCountChange, setALERT, localLang, limit
+	]);
 
 	// 4. handle ----------------------------------------------------------------------------------
 	const handlePlus = useCallback(() => {
-		!disabled && LOCKED !== "locked" && !PATH.includes("/food/find/list") &&
-		setCOUNT((prev) =>
-			prev.newSectionCnt < limit ? (
-				onCountChange?.(prev.newSectionCnt + 1),
-				{ ...prev, newSectionCnt: prev.newSectionCnt + 1 }
-			) : (
-				setALERT({
-					open: true,
-					severity: "error",
-					msg: localLang === "ko"
-						? `${prev.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
-						: `Please enter ${prev.sectionCnt} or more and ${limit} or less.`,
-				}),
-				prev
-			)
+		!disabled && LOCKED !== `locked` && !PATH.includes(`/food/find/list`) &&
+		setCOUNT((prev) => (prev.newSectionCnt < limit ? (
+			onCountChange?.(prev.newSectionCnt + 1),
+			{ ...prev, newSectionCnt: prev.newSectionCnt + 1 }
+		) : (
+			setALERT({
+				open: true,
+				severity: `error`,
+				msg: localLang === `ko` ?
+					`${prev.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.` :
+					`Please enter ${prev.sectionCnt} or more and ${limit} or less.`,
+			}),
+			prev
+		))
 		);
-	}, [disabled, LOCKED, PATH, setCOUNT, onCountChange, setALERT, localLang, limit]);
+	}, [
+		disabled, LOCKED, PATH, setCOUNT, onCountChange, setALERT, localLang, limit
+	]);
 
 	// 3. useMEMO ----------------------------------------------------------------------------------
 	const lockIcon = useMemo(() => (
-		LOCKED === "locked" ? (
+		LOCKED === `locked` ? (
 			<Icons
-				key={"Lock"}
-				name={"Lock"}
+				key={`Lock`}
+				name={`Lock`}
 				className={`w-20px h-20px`}
 			/>
 		) : (
 			<Icons
-				key={"UnLock"}
-				name={"UnLock"}
+				key={`UnLock`}
+				name={`UnLock`}
 				className={`w-20px h-20px`}
 			/>
 		)
@@ -99,12 +110,12 @@ export const Count = memo((
 
 	// 3. useMEMO ----------------------------------------------------------------------------------
 	const countEndAdornment = useMemo(() => (
-		!disabled || LOCKED === "unlocked" ? (
+		!disabled || LOCKED === `unlocked` ? (
 			<Div className={`d-row-center`}>
 				<Div className={`mr-n5px`}>
 					<Icons
-						key={"Minus"}
-						name={"Minus"}
+						key={`Minus`}
+						name={`Minus`}
 						className={`w-20px h-20px`}
 						locked={LOCKED}
 						onClick={handleMinus}
@@ -112,8 +123,8 @@ export const Count = memo((
 				</Div>
 				<Div className={`mr-n10px`}>
 					<Icons
-						key={"Plus"}
-						name={"Plus"}
+						key={`Plus`}
+						name={`Plus`}
 						className={`w-20px h-20px`}
 						locked={LOCKED}
 						onClick={handlePlus}
@@ -121,7 +132,9 @@ export const Count = memo((
 				</Div>
 			</Div>
 		) : null
-	), [disabled, LOCKED, handleMinus, handlePlus]);
+	), [
+		disabled, LOCKED, handleMinus, handlePlus
+	]);
 
 	// 7. countNode ----------------------------------------------------------------------------------
 	const countNode = useMemo(() => {
@@ -129,9 +142,9 @@ export const Count = memo((
 		const lockSection = () => (
 			<Input
 				label={translate(`itemLock`)}
-				value={translate(LOCKED) || ""}
+				value={translate(LOCKED) ?? ``}
 				inputclass={`fs-0-8rem pointer`}
-				adornmentclass={"ml-n10px"}
+				adornmentclass={`ml-n10px`}
 				disabled={disabled}
 				onClick={handleLockToggle}
 				startadornment={lockIcon}
@@ -148,20 +161,20 @@ export const Count = memo((
 				disabled={disabled}
 				sx={{
 					"& .MuiOutlinedInput-notchedOutline": {
-						borderColor: COUNT.newSectionCnt <= 0
-						? "#f44336"
-						: "rgba(0, 0, 0, 0.23)"
+						borderColor: COUNT.newSectionCnt <= 0 ?
+							`#f44336` :
+							`rgba(0, 0, 0, 0.23)`
 					}
 				}}
-				startadornment={
+				startadornment={(
 					<Img
 						max={25}
 						hover={true}
 						shadow={false}
 						radius={false}
-						src={"common2.webp"}
+						src={`common2.webp`}
 					/>
-				}
+				)}
 				endadornment={countEndAdornment}
 			/>
 		);
@@ -176,7 +189,9 @@ export const Count = memo((
 				</Grid>
 			</Grid>
 		);
-	}, [translate, LOCKED, disabled, handleLockToggle, lockIcon, COUNT.newSectionCnt, countEndAdornment]);
+	}, [
+		translate, LOCKED, disabled, handleLockToggle, lockIcon, COUNT.newSectionCnt, countEndAdornment
+	]);
 
 	// 10. return ------------------------------------------------------------------------------------
 	return (

@@ -1,4 +1,9 @@
-// useStorageLocal.tsx
+/**
+ * @file useStorageLocal.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-25
+ */
 
 import { useEffect, useState } from "@exportReacts";
 import { getLocal, setLocal } from "@exportScripts";
@@ -15,13 +20,15 @@ export const useStorageLocal = <T,> (
 	// -----------------------------------------------------------------------------------------------
 	const [storedVal, setStoredVal] = useState<T>(() => {
 		const existingValue = getLocal(key1, key2, key3) as T | undefined;
-		return existingValue !== undefined ? existingValue : initialVal;
+		return existingValue || initialVal;
 	});
 
 	// -----------------------------------------------------------------------------------------------
 	useEffect(() => {
 		setLocal(key1, key2, key3, storedVal);
-	}, [key1, key2, key3, storedVal]);
+	}, [
+		key1, key2, key3, storedVal
+	]);
 
 	// -----------------------------------------------------------------------------------------------
 	return [

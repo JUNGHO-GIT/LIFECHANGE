@@ -1,10 +1,10 @@
 // PickerDay.tsx
 
+import { React, memo, useEffect, useState } from "@exportReacts";
 import { Btn, Div, Grid, Icons, Img } from "@exportComponents";
 import { Input, PopUp, Select } from "@exportContainers";
 import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
 import { AdapterMoment, Badge, DateCalendar, LocalizationProvider, MenuItem, PickersDay } from "@exportMuis";
-import { memo, useEffect, useState } from "@exportReacts";
 import { setSession } from "@exportScripts";
 import { useStoreLanguage } from "@exportStores";
 
@@ -31,7 +31,7 @@ declare type PickerDayProps = {
 
 // -------------------------------------------------------------------------------------------------
 export const PickerDay = memo((
-	{DATE, setDATE, EXIST}: PickerDayProps
+	{ DATE, setDATE, EXIST }: PickerDayProps
 ) => {
 
 	// 1. common ----------------------------------------------------------------------------------
@@ -55,16 +55,16 @@ export const PickerDay = memo((
 	const { translate } = useStoreLanguage();
 
 	// 2-2. useState ---------------------------------------------------------------------------------
-	const [dateStrInSave, setDateStrInSave] = useState<string>("");
-	const [dateStrInList, setDateStrInList] = useState<string>("");
-	const [dateClassInSave, setDateClassInSave] = useState<string>("");
-	const [dateClassInList, setDateClassInList] = useState<string>("");
+	const [dateStrInSave, setDateStrInSave] = useState<string>(``);
+	const [dateStrInList, setDateStrInList] = useState<string>(``);
+	const [dateClassInSave, setDateClassInSave] = useState<string>(``);
+	const [dateClassInList, setDateClassInList] = useState<string>(``);
 
 	// 2-1. useStorageLocal -----------------------------------------------------------------------
-	const [dateTypeInSave, setDateTypeInSave] = useState<string>("");
+	const [dateTypeInSave, setDateTypeInSave] = useState<string>(``);
 	const [dateTypeInList, setDateTypeInList] = useStorageLocal(
-		"type", "list", PATH, (
-			"month"
+		`type`, `list`, PATH, (
+			`month`
 		)
 	);
 
@@ -88,12 +88,12 @@ export const PickerDay = memo((
 	// - 클래스 설정
 	useEffect(() => {
 		if (isList) {
-			setDateClassInSave("h-min-0px h-5vh fs-0-8rem pointer");
-			setDateClassInList("h-min-0px h-5vh fs-0-8rem pointer");
+			setDateClassInSave(`h-min-0px h-5vh fs-0-8rem pointer`);
+			setDateClassInList(`h-min-0px h-5vh fs-0-8rem pointer`);
 		}
 		else {
-			setDateClassInSave("h-min-40px fs-0-8rem pointer");
-			setDateClassInList("h-min-40px fs-0-8rem pointer");
+			setDateClassInSave(`h-min-40px fs-0-8rem pointer`);
+			setDateClassInList(`h-min-40px fs-0-8rem pointer`);
 		}
 	}, []);
 
@@ -103,19 +103,19 @@ export const PickerDay = memo((
 	useEffect(() => {
 		// 1. Goal
 		if (isGoalList) {
-			if (dateTypeInList === "day") {
+			if (dateTypeInList === `day`) {
 				setDATE({
-					dateType: "",
+					dateType: ``,
 					dateStart: DATE?.dateStart ?? getDayFmt(),
 					dateEnd: DATE?.dateEnd ?? getDayFmt(),
 				});
 				setDateStrInList(
-					`${getDayFmt(DATE?.dateStart)}`
+					getDayFmt(DATE?.dateStart)
 				);
 			}
-			else if (dateTypeInList === "week") {
+			else if (dateTypeInList === `week`) {
 				setDATE({
-					dateType: "week",
+					dateType: `week`,
 					dateStart: DATE?.dateStart ?? getWeekStartFmt(),
 					dateEnd: DATE?.dateEnd ?? getWeekEndFmt(),
 				});
@@ -123,9 +123,9 @@ export const PickerDay = memo((
 					`${getWeekStartFmt(DATE?.dateStart)} - ${getWeekEndFmt(DATE?.dateStart)}`
 				);
 			}
-			else if (dateTypeInList === "month") {
+			else if (dateTypeInList === `month`) {
 				setDATE({
-					dateType: "month",
+					dateType: `month`,
 					dateStart: DATE?.dateStart ?? getMonthStartFmt(),
 					dateEnd: DATE?.dateEnd ?? getMonthEndFmt(),
 				});
@@ -133,9 +133,9 @@ export const PickerDay = memo((
 					`${getMonthStartFmt(DATE?.dateStart)} - ${getMonthEndFmt(DATE?.dateStart)}`
 				);
 			}
-			else if (dateTypeInList === "year") {
+			else if (dateTypeInList === `year`) {
 				setDATE({
-					dateType: "year",
+					dateType: `year`,
 					dateStart: DATE?.dateStart ?? getYearStartFmt(),
 					dateEnd: DATE?.dateEnd ?? getYearEndFmt(),
 				});
@@ -147,19 +147,19 @@ export const PickerDay = memo((
 
 		// 4. Record
 		else if (isRecordList) {
-			if (dateTypeInList === "day") {
+			if (dateTypeInList === `day`) {
 				setDATE({
-					dateType: "day",
+					dateType: `day`,
 					dateStart: DATE?.dateStart ?? getDayFmt(),
 					dateEnd: DATE?.dateEnd ?? getDayFmt(),
 				});
 				setDateStrInList(
-					`${getDayFmt(DATE?.dateStart)}`
+					getDayFmt(DATE?.dateStart)
 				);
 			}
-			else if (dateTypeInList === "week") {
+			else if (dateTypeInList === `week`) {
 				setDATE({
-					dateType: "week",
+					dateType: `week`,
 					dateStart: DATE?.dateStart ?? getWeekStartFmt(),
 					dateEnd: DATE?.dateEnd ?? getWeekEndFmt(),
 				});
@@ -167,9 +167,9 @@ export const PickerDay = memo((
 					`${getWeekStartFmt(DATE?.dateStart)} - ${getWeekEndFmt(DATE?.dateStart)}`
 				);
 			}
-			else if (dateTypeInList === "month") {
+			else if (dateTypeInList === `month`) {
 				setDATE({
-					dateType: "month",
+					dateType: `month`,
 					dateStart: DATE?.dateStart ?? getMonthStartFmt(),
 					dateEnd: DATE?.dateEnd ?? getMonthEndFmt(),
 				});
@@ -177,9 +177,9 @@ export const PickerDay = memo((
 					`${getMonthStartFmt(DATE?.dateStart)} - ${getMonthEndFmt(DATE?.dateStart)}`
 				);
 			}
-			else if (dateTypeInList === "year") {
+			else if (dateTypeInList === `year`) {
 				setDATE({
-					dateType: "year",
+					dateType: `year`,
 					dateStart: DATE?.dateStart ?? getYearStartFmt(),
 					dateEnd: DATE?.dateEnd ?? getYearEndFmt(),
 				});
@@ -199,10 +199,10 @@ export const PickerDay = memo((
 	useEffect(() => {
 		// 1. Goal
 		if (isGoalDetail) {
-			if (dateTypeInList === "week") {
+			if (dateTypeInList === `week`) {
 				setDATE((prev) => ({
 					...prev,
-					dateType: "week",
+					dateType: `week`,
 					dateStart: getWeekStartFmt(prev.dateStart),
 					dateEnd: getWeekEndFmt(prev.dateStart),
 				}));
@@ -210,9 +210,9 @@ export const PickerDay = memo((
 					`${getWeekStartFmt(DATE?.dateStart)} - ${getWeekEndFmt(DATE?.dateStart)}`
 				);
 			}
-			else if (dateTypeInList === "month") {
+			else if (dateTypeInList === `month`) {
 				setDATE({
-					dateType: "month",
+					dateType: `month`,
 					dateStart: getMonthStartFmt(),
 					dateEnd: getMonthEndFmt(),
 				});
@@ -220,9 +220,9 @@ export const PickerDay = memo((
 					`${getMonthStartFmt(DATE?.dateStart)} - ${getMonthEndFmt(DATE?.dateStart)}`
 				);
 			}
-			else if (dateTypeInList === "year") {
+			else if (dateTypeInList === `year`) {
 				setDATE({
-					dateType: "year",
+					dateType: `year`,
 					dateStart: getYearStartFmt(),
 					dateEnd: getYearEndFmt(),
 				});
@@ -236,12 +236,12 @@ export const PickerDay = memo((
 		else if (isRecordDetail) {
 			setDATE((prev) => ({
 				...prev,
-				dateType: "day",
+				dateType: `day`,
 				dateStart: getDayFmt(prev.dateStart),
 				dateEnd: getDayFmt(prev.dateStart),
 			}));
 			setDateStrInSave(
-				`${getDayFmt(DATE?.dateStart)}`
+				getDayFmt(DATE?.dateStart)
 			);
 		}
 	}, []);
@@ -251,19 +251,19 @@ export const PickerDay = memo((
 	useEffect(() => {
 		// 1. Goal - List
 		if (isGoalList) {
-			if (dateTypeInList === "day") {
+			if (dateTypeInList === `day`) {
 				setDATE({
-					dateType: "",
+					dateType: ``,
 					dateStart: getDayFmt(),
 					dateEnd: getDayFmt(),
 				});
 				setDateStrInList(
-					`${getDayFmt()}`
+					getDayFmt()
 				);
 			}
-			else if (dateTypeInList === "week") {
+			else if (dateTypeInList === `week`) {
 				setDATE({
-					dateType: "week",
+					dateType: `week`,
 					dateStart: getWeekStartFmt(),
 					dateEnd: getWeekEndFmt(),
 				});
@@ -271,9 +271,9 @@ export const PickerDay = memo((
 					`${getWeekStartFmt()} - ${getWeekEndFmt()}`
 				);
 			}
-			else if (dateTypeInList === "month") {
+			else if (dateTypeInList === `month`) {
 				setDATE({
-					dateType: "month",
+					dateType: `month`,
 					dateStart: getMonthStartFmt(),
 					dateEnd: getMonthEndFmt(),
 				});
@@ -281,9 +281,9 @@ export const PickerDay = memo((
 					`${getMonthStartFmt()} - ${getMonthEndFmt()}`
 				);
 			}
-			else if (dateTypeInList === "year") {
+			else if (dateTypeInList === `year`) {
 				setDATE({
-					dateType: "year",
+					dateType: `year`,
 					dateStart: getYearStartFmt(),
 					dateEnd: getYearEndFmt(),
 				});
@@ -295,19 +295,19 @@ export const PickerDay = memo((
 
 		// 4. Record - List
 		else if (isRecordList) {
-			if (dateTypeInList === "day") {
+			if (dateTypeInList === `day`) {
 				setDATE({
-					dateType: "day",
+					dateType: `day`,
 					dateStart: getDayFmt(),
 					dateEnd: getDayFmt(),
 				});
 				setDateStrInList(
-					`${getDayFmt()}`
+					getDayFmt()
 				);
 			}
-			else if (dateTypeInList === "week") {
+			else if (dateTypeInList === `week`) {
 				setDATE({
-					dateType: "week",
+					dateType: `week`,
 					dateStart: getWeekStartFmt(),
 					dateEnd: getWeekEndFmt(),
 				});
@@ -315,9 +315,9 @@ export const PickerDay = memo((
 					`${getWeekStartFmt()} - ${getWeekEndFmt()}`
 				);
 			}
-			else if (dateTypeInList === "month") {
+			else if (dateTypeInList === `month`) {
 				setDATE({
-					dateType: "month",
+					dateType: `month`,
 					dateStart: getMonthStartFmt(),
 					dateEnd: getMonthEndFmt(),
 				});
@@ -325,9 +325,9 @@ export const PickerDay = memo((
 					`${getMonthStartFmt()} - ${getMonthEndFmt()}`
 				);
 			}
-			else if (dateTypeInList === "year") {
+			else if (dateTypeInList === `year`) {
 				setDATE({
-					dateType: "year",
+					dateType: `year`,
 					dateStart: getYearStartFmt(),
 					dateEnd: getYearEndFmt(),
 				});
@@ -343,19 +343,19 @@ export const PickerDay = memo((
 	useEffect(() => {
 		// 1. Goal - Detail
 		if (isGoalDetail) {
-			if (dateTypeInSave === "day") {
+			if (dateTypeInSave === `day`) {
 				setDATE({
-					dateType: "",
+					dateType: ``,
 					dateStart: getDayFmt(),
 					dateEnd: getDayFmt(),
 				});
 				setDateStrInSave(
-					`${getDayFmt()}`
+					getDayFmt()
 				);
 			}
-			else if (dateTypeInSave === "week") {
+			else if (dateTypeInSave === `week`) {
 				setDATE({
-					dateType: "week",
+					dateType: `week`,
 					dateStart: getWeekStartFmt(),
 					dateEnd: getWeekEndFmt(),
 				});
@@ -363,9 +363,9 @@ export const PickerDay = memo((
 					`${getWeekStartFmt()} - ${getWeekEndFmt()}`
 				);
 			}
-			else if (dateTypeInSave === "month") {
+			else if (dateTypeInSave === `month`) {
 				setDATE({
-					dateType: "month",
+					dateType: `month`,
 					dateStart: getMonthStartFmt(),
 					dateEnd: getMonthEndFmt(),
 				});
@@ -373,9 +373,9 @@ export const PickerDay = memo((
 					`${getMonthStartFmt()} - ${getMonthEndFmt()}`
 				);
 			}
-			else if (dateTypeInSave === "year") {
+			else if (dateTypeInSave === `year`) {
 				setDATE({
-					dateType: "year",
+					dateType: `year`,
 					dateStart: getYearStartFmt(),
 					dateEnd: getYearEndFmt(),
 				});
@@ -387,19 +387,19 @@ export const PickerDay = memo((
 
 		// 2. Record - Detail
 		else if (isRecordDetail) {
-			if (dateTypeInSave === "day") {
+			if (dateTypeInSave === `day`) {
 				setDATE({
-					dateType: "",
+					dateType: ``,
 					dateStart: getDayFmt(),
 					dateEnd: getDayFmt(),
 				});
 				setDateStrInSave(
-					`${getDayFmt()}`
+					getDayFmt()
 				);
 			}
-			else if (dateTypeInSave === "week") {
+			else if (dateTypeInSave === `week`) {
 				setDATE({
-					dateType: "week",
+					dateType: `week`,
 					dateStart: getWeekStartFmt(),
 					dateEnd: getWeekEndFmt(),
 				});
@@ -407,9 +407,9 @@ export const PickerDay = memo((
 					`${getWeekStartFmt()} - ${getWeekEndFmt()}`
 				);
 			}
-			else if (dateTypeInSave === "month") {
+			else if (dateTypeInSave === `month`) {
 				setDATE({
-					dateType: "month",
+					dateType: `month`,
 					dateStart: getMonthStartFmt(),
 					dateEnd: getMonthEndFmt(),
 				});
@@ -417,9 +417,9 @@ export const PickerDay = memo((
 					`${getMonthStartFmt()} - ${getMonthEndFmt()}`
 				);
 			}
-			else if (dateTypeInSave === "year") {
+			else if (dateTypeInSave === `year`) {
 				setDATE({
-					dateType: "year",
+					dateType: `year`,
 					dateStart: getYearStartFmt(),
 					dateEnd: getYearEndFmt(),
 				});
@@ -440,7 +440,7 @@ export const PickerDay = memo((
 		if (isList) {
 			if (DATE?.dateType === `day`) {
 				setDateStrInList(
-					`${handlerToMnDd(getDayFmt(DATE?.dateStart))}`
+					handlerToMnDd(getDayFmt(DATE?.dateStart))
 				);
 			}
 			else if (DATE?.dateType === `week`) {
@@ -460,7 +460,7 @@ export const PickerDay = memo((
 			}
 			else {
 				setDateStrInList(
-					`${handlerToMnDd(getDayFmt(DATE?.dateStart))}`
+					handlerToMnDd(getDayFmt(DATE?.dateStart))
 				);
 			}
 		}
@@ -469,7 +469,7 @@ export const PickerDay = memo((
 		else if (isDetail) {
 			if (DATE?.dateType === `day`) {
 				setDateStrInSave(
-					`${handlerToMnDd(getDayFmt(DATE?.dateStart))}`
+					handlerToMnDd(getDayFmt(DATE?.dateStart))
 				);
 			}
 			else if (DATE?.dateType === `week`) {
@@ -489,7 +489,7 @@ export const PickerDay = memo((
 			}
 			else {
 				setDateStrInSave(
-					`${handlerToMnDd(getDayFmt(DATE?.dateStart))}`
+					handlerToMnDd(getDayFmt(DATE?.dateStart))
 				);
 			}
 		}
@@ -498,10 +498,10 @@ export const PickerDay = memo((
 	// 4. handler ----------------------------------------------------------------------------
 	// - "2024-01-15" => "01-15"
 	const handlerToMnDd = (str: string) => {
-		if (str && str.split("-").length === 3) {
-			return `${str.split("-")[1]}-${str.split("-")[2]}`;
+		if (str?.split(`-`).length === 3) {
+			return `${str.split(`-`)[1]}-${str.split(`-`)[2]}`;
 		}
-		return "";
+		return ``;
 	}
 
 	// 7. pickerNode  ----------------------------------------------------------------------------
@@ -517,14 +517,14 @@ export const PickerDay = memo((
 					setDateTypeInList(e.target.value);
 				}}
 			>
-				{["day", "week", "month", "year"]?.map((item: any) => (
+				{[ `day`, `week`, `month`, `year` ]?.map((item: any) => (
 					<MenuItem
 						key={item}
 						value={item}
 						selected={item === dateTypeInList}
 					>
 						<Div className={`fs-0-8rem`}>
-							{translate(item)}
+							{translate(item as string)}
 						</Div>
 					</MenuItem>
 				))}
@@ -539,22 +539,22 @@ export const PickerDay = memo((
 				inputclass={`pointer ${dateClassInSave}`}
 				disabled={!isGoalDetail}
 				onChange={(e: any) => {
-					if (e.target.value === "day") {
-						setDateTypeInSave("day");
+					if (e.target.value === `day`) {
+						setDateTypeInSave(`day`);
 					}
-					else if (e.target.value === "week") {
-						setDateTypeInSave("week");
+					else if (e.target.value === `week`) {
+						setDateTypeInSave(`week`);
 					}
-					else if (e.target.value === "month") {
-						setDateTypeInSave("month");
+					else if (e.target.value === `month`) {
+						setDateTypeInSave(`month`);
 					}
-					else if (e.target.value === "year") {
-						setDateTypeInSave("year");
+					else if (e.target.value === `year`) {
+						setDateTypeInSave(`year`);
 					}
 				}}
 			>
 				{isGoalDetail ? (
-					["week", "month", "year"]?.map((item: any) => (
+					[`week`, `month`, `year`]?.map((item: any) => (
 						<MenuItem
 							key={item}
 							value={item}
@@ -566,7 +566,7 @@ export const PickerDay = memo((
 						</MenuItem>
 					))
 				) : (
-					["day"]?.map((item: any) => (
+					[`day`]?.map((item: any) => (
 						<MenuItem
 							key={item}
 							value={item}
@@ -584,10 +584,10 @@ export const PickerDay = memo((
 		// 3. day --------------------------------------------------------------------------------------
 		const daySection = () => (
 			<PopUp
-				type={"innerCenter"}
-				position={"center"}
-				direction={"center"}
-				contents={
+				type={`innerCenter`}
+				position={`center`}
+				direction={`center`}
+				contents={(
 					<Grid container={true} spacing={2} className={`w-min-70vw`}>
 						<Grid size={12} className={`d-row-center`}>
 							<Div className={`fs-1-2rem fw-600 mr-10px`}>
@@ -601,32 +601,31 @@ export const PickerDay = memo((
 							<LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLang}>
 								<DateCalendar
 									timezone={localTimeZone}
-									views={["day"]}
+									views={[`day`]}
 									readOnly={false}
 									value={getDayNotFmt(DATE?.dateStart ?? DATE?.dateEnd)}
 									className={`border-1 radius-2`}
 									showDaysOutsideCurrentMonth={true}
 									slots={{
 										day: (props) => {
-											const { outsideCurrentMonth, day, ...other} = props;
+											const { outsideCurrentMonth, day, ...other } = props;
 
-											let isSelected = false;
-											let isBadged = false;
+											let isSelected: boolean = false;
+											let isBadged: boolean = false;
 
-											let color = "";
-											let borderRadius = "";
-											let backgroundColor = "";
-											let boxShadow = "";
-											let zIndex = 0;
-
+											let color: string = ``;
+											let borderRadius: string = ``;
+											let backgroundColor: string = ``;
+											let boxShadow: string = ``;
+											let zIndex: number = 0;
 											// badge 표시는 일 단위로 표시
 											if (EXIST?.day) {
 												EXIST?.day.forEach((item: any) => {
 													if (
-														item.split(" - ") &&
-														item.split(" - ")?.length === 2 &&
-														getDayFmt(day) >= item.split(" - ")[0] &&
-														getDayFmt(day) <= item.split(" - ")[1]
+														item.split(` - `) &&
+														item.split(` - `)?.length === 2 &&
+														getDayFmt(day) >= item.split(` - `)[0] &&
+														getDayFmt(day) <= item.split(` - `)[1]
 													) {
 														isBadged = true;
 													}
@@ -638,21 +637,25 @@ export const PickerDay = memo((
 											}
 
 											if (isSelected) {
-												color = "#ffffff";
-												backgroundColor = "#1976d2";
-												boxShadow = "0 0 0 0 #1976d2";
-												borderRadius = "50%";
+												color = `#ffffff`;
+												backgroundColor = `#1976d2`;
+												boxShadow = `0 0 0 0 #1976d2`;
+												borderRadius = `50%`;
 												zIndex = 10;
 											}
 											return (
 												<Badge
 													key={props.day.toString()}
-													badgeContent={""}
+													badgeContent={``}
 													slotProps={{
 														badge: {
 															style: {
-																width: 3, height: 3, padding: 0, top: 8, left: 30,
-																backgroundColor: isBadged ? "#1976d2" : undefined,
+																width: 3,
+																height: 3,
+																padding: 0,
+																top: 8,
+																left: 30,
+																backgroundColor: isBadged ? `#1976d2` : undefined,
 															}
 														}
 													}}
@@ -675,7 +678,7 @@ export const PickerDay = memo((
 																dateStart: getDayFmt(day),
 																dateEnd: getDayFmt(day),
 															}));
-															setSession("section", "food", "", []);
+															setSession(`section`, `food`, ``, []);
 														}}
 													/>
 												</Badge>
@@ -716,28 +719,28 @@ export const PickerDay = memo((
 							</LocalizationProvider>
 						</Grid>
 					</Grid>
-				}
+				)}
 				children={(popTrigger: any) => (
 					<Input
 						label={translate(`date`)}
-						value={isList ? dateStrInList : isDetail ? dateStrInSave : ""}
+						value={isList ? dateStrInList : isDetail ? dateStrInSave : ``}
 						inputclass={`pointer ${dateClassInList}`}
 						readOnly={true}
-						startadornment={
+						startadornment={(
 							<Img
 								max={25}
 								hover={true}
 								shadow={false}
 								radius={false}
-								src={"common1.webp"}
+								src={`common1.webp`}
 							/>
-						}
-						endadornment={
+						)}
+						endadornment={(
 							<Div className={`d-row-center`}>
 								<Div className={`mr-n10px`}>
 									<Icons
-										key={"ChevronLeft"}
-										name={"ChevronLeft"}
+										key={`ChevronLeft`}
+										name={`ChevronLeft`}
 										className={`w-20px h-20px`}
 										onClick={(e: any) => {
 											e.stopPropagation();
@@ -746,14 +749,14 @@ export const PickerDay = memo((
 												dateStart: getPrevDayStartFmt(prev.dateStart),
 												dateEnd: getPrevDayEndFmt(prev.dateStart),
 											}));
-											setSession("section", "food", "", []);
+											setSession(`section`, `food`, ``, []);
 										}}
 									/>
 								</Div>
 								<Div className={`mr-n15px`}>
 									<Icons
-										key={"ChevronRight"}
-										name={"ChevronRight"}
+										key={`ChevronRight`}
+										name={`ChevronRight`}
 										className={`w-20px h-20px`}
 										onClick={(e: any) => {
 											e.stopPropagation();
@@ -762,12 +765,12 @@ export const PickerDay = memo((
 												dateStart: getNextDayStartFmt(prev.dateStart),
 												dateEnd: getNextDayEndFmt(prev.dateStart),
 											}));
-											setSession("section", "food", "", []);
+											setSession(`section`, `food`, ``, []);
 										}}
 									/>
 								</Div>
 							</Div>
-						}
+						)}
 						onClick={(e: any) => {
 							popTrigger.openPopup(e.currentTarget);
 						}}
@@ -779,10 +782,10 @@ export const PickerDay = memo((
 		// 4. week -------------------------------------------------------------------------------------
 		const weekSection = () => (
 			<PopUp
-				type={"innerCenter"}
-				position={"center"}
-				direction={"center"}
-				contents={
+				type={`innerCenter`}
+				position={`center`}
+				direction={`center`}
+				contents={(
 					<Grid container={true} spacing={2} className={`w-min-70vw`}>
 						<Grid size={12} className={`d-row-center`}>
 							<Div className={`fs-1-2rem fw-600 mr-10px`}>
@@ -796,34 +799,34 @@ export const PickerDay = memo((
 							<LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLang}>
 								<DateCalendar
 									timezone={localTimeZone}
-									views={["day"]}
+									views={[`day`]}
 									readOnly={false}
 									value={getDayNotFmt(DATE?.dateStart ?? DATE?.dateEnd)}
 									className={`border-1 radius-2`}
 									showDaysOutsideCurrentMonth={true}
 									slots={{
 										day: (props) => {
-											const { outsideCurrentMonth, day, ...other} = props;
+											const { outsideCurrentMonth, day, ...other } = props;
 
-											let isSelected = false;
-											let isBadged = false;
-											let isFirst = false;
-											let isLast = false;
+											let isSelected: boolean = false;
+											let isBadged: boolean = false;
+											let isFirst: boolean = false;
+											let isLast: boolean = false;
 
-											let color = "";
-											let borderRadius = "";
-											let backgroundColor = "";
-											let boxShadow = "";
-											let zIndex = 0;
+											let color: string = ``;
+											let borderRadius: string = ``;
+											let backgroundColor: string = ``;
+											let boxShadow: string = ``;
+											let zIndex: number = 0;
 
 											// badge 표시는 일 단위로 표시
 											if (EXIST?.day) {
 												EXIST?.day.forEach((item: any) => {
 													if (
-														item.split(" - ") &&
-														item.split(" - ")?.length === 2 &&
-														getDayFmt(day) >= item.split(" - ")[0] &&
-														getDayFmt(day) <= item.split(" - ")[1]
+														item.split(` - `) &&
+														item.split(` - `)?.length === 2 &&
+														getDayFmt(day) >= item.split(` - `)[0] &&
+														getDayFmt(day) <= item.split(` - `)[1]
 													) {
 														isBadged = true;
 													}
@@ -838,34 +841,38 @@ export const PickerDay = memo((
 
 											if (isSelected) {
 												if (isFirst && isLast) {
-													boxShadow = "0 0 0 0 #1976d2";
-													borderRadius = "50%";
+													boxShadow = `0 0 0 0 #1976d2`;
+													borderRadius = `50%`;
 												}
 												else if (isFirst) {
-													boxShadow = "5px 0 0 0 #1976d2";
-													borderRadius = "50% 0 0 50%";
+													boxShadow = `5px 0 0 0 #1976d2`;
+													borderRadius = `50% 0 0 50%`;
 												}
 												else if (isLast) {
-													boxShadow = "-5px 0 0 0 #1976d2";
-													borderRadius = "0 50% 50% 0";
+													boxShadow = `-5px 0 0 0 #1976d2`;
+													borderRadius = `0 50% 50% 0`;
 												}
 												else {
-													boxShadow = "5px 0 0 0 #1976d2";
-													borderRadius = "0%";
+													boxShadow = `5px 0 0 0 #1976d2`;
+													borderRadius = `0%`;
 												}
-												color = "#ffffff";
-												backgroundColor = "#1976d2";
+												color = `#ffffff`;
+												backgroundColor = `#1976d2`;
 												zIndex = 10;
 											}
 											return (
 												<Badge
 													key={props.day.toString()}
-													badgeContent={""}
+													badgeContent={``}
 													slotProps={{
 														badge: {
 															style: {
-																width: 3, height: 3, padding: 0, top: 8, left: 30,
-																backgroundColor: isBadged ? "#1976d2" : undefined,
+																width: 3,
+																height: 3,
+																padding: 0,
+																top: 8,
+																left: 30,
+																backgroundColor: isBadged ? `#1976d2` : undefined,
 															}
 														}
 													}}
@@ -928,28 +935,28 @@ export const PickerDay = memo((
 							</LocalizationProvider>
 						</Grid>
 					</Grid>
-				}
+				)}
 				children={(popTrigger: any) => (
 					<Input
 						label={translate(`duration`)}
-						value={isList ? dateStrInList : isDetail ? dateStrInSave : ""}
+						value={isList ? dateStrInList : isDetail ? dateStrInSave : ``}
 						inputclass={`pointer ${dateClassInList}`}
 						readOnly={true}
-						startadornment={
+						startadornment={(
 							<Img
 								max={25}
 								hover={true}
 								shadow={false}
 								radius={false}
-								src={"common1.webp"}
+								src={`common1.webp`}
 							/>
-						}
-						endadornment={
+						)}
+						endadornment={(
 							<Div className={`d-row-center`}>
 								<Div className={`mr-n10px`}>
 									<Icons
-										key={"ChevronLeft"}
-										name={"ChevronLeft"}
+										key={`ChevronLeft`}
+										name={`ChevronLeft`}
 										className={`w-20px h-20px`}
 										onClick={(e: any) => {
 											e.stopPropagation();
@@ -963,8 +970,8 @@ export const PickerDay = memo((
 								</Div>
 								<Div className={`mr-n15px`}>
 									<Icons
-										key={"ChevronRight"}
-										name={"ChevronRight"}
+										key={`ChevronRight`}
+										name={`ChevronRight`}
 										className={`w-20px h-20px`}
 										onClick={(e: any) => {
 											e.stopPropagation();
@@ -977,7 +984,7 @@ export const PickerDay = memo((
 									/>
 								</Div>
 							</Div>
-						}
+						)}
 						onClick={(e: any) => {
 							popTrigger.openPopup(e.currentTarget);
 						}}
@@ -989,10 +996,10 @@ export const PickerDay = memo((
 		// 5. month ------------------------------------------------------------------------------------
 		const monthSection = () => (
 			<PopUp
-				type={"innerCenter"}
-				position={"center"}
-				direction={"center"}
-				contents={
+				type={`innerCenter`}
+				position={`center`}
+				direction={`center`}
+				contents={(
 					<Grid container={true} spacing={2} className={`w-min-70vw`}>
 						<Grid size={12} className={`d-row-center`}>
 							<Div className={`fs-1-2rem fw-600 mr-10px`}>
@@ -1006,32 +1013,32 @@ export const PickerDay = memo((
 							<LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLang}>
 								<DateCalendar
 									timezone={localTimeZone}
-									views={["day"]}
+									views={[`day`]}
 									readOnly={false}
 									value={getDayNotFmt(DATE?.dateStart ?? DATE?.dateEnd)}
 									className={`border-1 radius-2`}
 									showDaysOutsideCurrentMonth={true}
 									slots={{
 										day: (props) => {
-											const { outsideCurrentMonth, day, ...other} = props;
+											const { outsideCurrentMonth, day, ...other } = props;
 
-											let isSelected = false;
-											let isBadged = false;
+											let isSelected: boolean = false;
+											let isBadged: boolean = false;
 
-											let color = "";
-											let borderRadius = "";
-											let backgroundColor = "";
-											let boxShadow = "";
-											let zIndex = 0;
+											let color: string = ``;
+											let borderRadius: string = ``;
+											let backgroundColor: string = ``;
+											let boxShadow: string = ``;
+											let zIndex: number = 0;
 
 											// badge 표시는 일 단위로 표시
 											if (EXIST?.day) {
 												EXIST?.day.forEach((item: any) => {
 													if (
-														item.split(" - ") &&
-														item.split(" - ")?.length === 2 &&
-														getDayFmt(day) >= item.split(" - ")[0] &&
-														getDayFmt(day) <= item.split(" - ")[1]
+														item.split(` - `) &&
+														item.split(` - `)?.length === 2 &&
+														getDayFmt(day) >= item.split(` - `)[0] &&
+														getDayFmt(day) <= item.split(` - `)[1]
 													) {
 														isBadged = true;
 													}
@@ -1043,22 +1050,26 @@ export const PickerDay = memo((
 											}
 
 											if (isSelected) {
-												color = "#ffffff";
-												backgroundColor = "#1976d2";
-												boxShadow = "0 0 0 0 #1976d2";
-												borderRadius = "50%";
+												color = `#ffffff`;
+												backgroundColor = `#1976d2`;
+												boxShadow = `0 0 0 0 #1976d2`;
+												borderRadius = `50%`;
 												zIndex = 10;
 											}
 
 											return (
 												<Badge
 													key={props.day.toString()}
-													badgeContent={""}
+													badgeContent={``}
 													slotProps={{
 														badge: {
 															style: {
-																width: 3, height: 3, padding: 0, top: 8, left: 30,
-																backgroundColor: isBadged ? "#1976d2" : undefined,
+																width: 3,
+																height: 3,
+																padding: 0,
+																top: 8,
+																left: 30,
+																backgroundColor: isBadged ? `#1976d2` : undefined,
 															}
 														}
 													}}
@@ -1121,28 +1132,28 @@ export const PickerDay = memo((
 							</LocalizationProvider>
 						</Grid>
 					</Grid>
-				}
+				)}
 				children={(popTrigger: any) => (
 					<Input
 						label={translate(`duration`)}
-						value={isList ? dateStrInList : isDetail ? dateStrInSave : ""}
+						value={isList ? dateStrInList : isDetail ? dateStrInSave : ``}
 						inputclass={`pointer ${dateClassInList}`}
 						readOnly={true}
-						startadornment={
+						startadornment={(
 							<Img
 								max={25}
 								hover={true}
 								shadow={false}
 								radius={false}
-								src={"common1.webp"}
+								src={`common1.webp`}
 							/>
-						}
-						endadornment={
+						)}
+						endadornment={(
 							<Div className={`d-row-center`}>
 								<Div className={`mr-n10px`}>
 									<Icons
-										key={"ChevronLeft"}
-										name={"ChevronLeft"}
+										key={`ChevronLeft`}
+										name={`ChevronLeft`}
 										className={`w-20px h-20px`}
 										onClick={(e: any) => {
 											e.stopPropagation();
@@ -1156,8 +1167,8 @@ export const PickerDay = memo((
 								</Div>
 								<Div className={`mr-n15px`}>
 									<Icons
-										key={"ChevronRight"}
-										name={"ChevronRight"}
+										key={`ChevronRight`}
+										name={`ChevronRight`}
 										className={`w-20px h-20px`}
 										onClick={(e: any) => {
 											e.stopPropagation();
@@ -1170,7 +1181,7 @@ export const PickerDay = memo((
 									/>
 								</Div>
 							</Div>
-						}
+						)}
 						onClick={(e: any) => {
 							popTrigger.openPopup(e.currentTarget);
 						}}
@@ -1182,10 +1193,10 @@ export const PickerDay = memo((
 		// 6. year -------------------------------------------------------------------------------------
 		const yearSection = () => (
 			<PopUp
-				type={"innerCenter"}
-				position={"center"}
-				direction={"center"}
-				contents={
+				type={`innerCenter`}
+				position={`center`}
+				direction={`center`}
+				contents={(
 					<Grid container={true} spacing={2} className={`w-min-70vw`}>
 						<Grid size={12} className={`d-row-center`}>
 							<Div className={`fs-1-2rem fw-600 mr-10px`}>
@@ -1199,7 +1210,7 @@ export const PickerDay = memo((
 							<LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLang}>
 								<DateCalendar
 									timezone={localTimeZone}
-									views={["day"]}
+									views={[`day`]}
 									readOnly={false}
 									value={getDayNotFmt(DATE?.dateStart ?? DATE?.dateEnd)}
 									className={`border-1 radius-2`}
@@ -1207,16 +1218,16 @@ export const PickerDay = memo((
 									slots={{
 										day: (props) => {
 
-											const { outsideCurrentMonth, day, ...other} = props;
+											const { outsideCurrentMonth, day, ...other } = props;
 
-											let isSelected = false;
-											let isBadged = false;
+											let isSelected: boolean = false;
+											let isBadged: boolean = false;
 
-											let color = "";
-											let borderRadius = "";
-											let backgroundColor = "";
-											let boxShadow = "";
-											let zIndex = 0;
+											let color: string = ``;
+											let borderRadius: string = ``;
+											let backgroundColor: string = ``;
+											let boxShadow: string = ``;
+											let zIndex: number = 0;
 
 											if (DATE?.dateStart && DATE?.dateEnd) {
 												isSelected = getDayNotFmt(day).month() === 0 && getDayNotFmt(day).date() === 1;
@@ -1226,9 +1237,9 @@ export const PickerDay = memo((
 											if (EXIST?.day) {
 												EXIST?.day.forEach((item: any) => {
 
-													const startYear = item.split(" - ")[0].split("-")[0];
-													const currentYear = getDayFmt(day).split("-")[0];
-													const isJanuary = day.month() === 0;
+													const startYear: string = item.split(` - `)[0].split(`-`)[0];
+													const currentYear: string = getDayFmt(day).split(`-`)[0];
+													const isJanuary: boolean = day.month() === 0;
 
 													if (startYear === currentYear && isJanuary) {
 														isBadged = true;
@@ -1237,22 +1248,26 @@ export const PickerDay = memo((
 											}
 
 											if (isSelected) {
-												color = "#ffffff";
-												backgroundColor = "#1976d2";
-												boxShadow = "0 0 0 0 #1976d2";
-												borderRadius = "50%";
+												color = `#ffffff`;
+												backgroundColor = `#1976d2`;
+												boxShadow = `0 0 0 0 #1976d2`;
+												borderRadius = `50%`;
 												zIndex = 10;
 											}
 
 											return (
 												<Badge
-													key={props.day.toString()}
-													badgeContent={""}
+													key={props?.day.toString()}
+													badgeContent={``}
 													slotProps={{
 														badge: {
 															style: {
-																width: 3, height: 3, padding: 0, top: 8, left: 30,
-																backgroundColor: isBadged ? "#1976d2" : undefined,
+																width: 3,
+																height: 3,
+																padding: 0,
+																top: 8,
+																left: 30,
+																backgroundColor: isBadged ? `#1976d2` : undefined,
 															}
 														}
 													}}
@@ -1315,28 +1330,28 @@ export const PickerDay = memo((
 							</LocalizationProvider>
 						</Grid>
 					</Grid>
-				}
+				)}
 				children={(popTrigger: any) => (
 					<Input
 						label={translate(`duration`)}
-						value={isList ? dateStrInList : isDetail ? dateStrInSave : ""}
+						value={isList ? dateStrInList : isDetail ? dateStrInSave : ``}
 						inputclass={`pointer ${dateClassInList}`}
 						readOnly={true}
-						startadornment={
+						startadornment={(
 							<Img
 								max={25}
 								hover={true}
 								shadow={false}
 								radius={false}
-								src={"common1.webp"}
+								src={`common1.webp`}
 							/>
-						}
-						endadornment={
+						)}
+						endadornment={(
 							<Div className={`d-row-center`}>
 								<Div className={`mr-n10px`}>
 									<Icons
-										key={"ChevronLeft"}
-										name={"ChevronLeft"}
+										key={`ChevronLeft`}
+										name={`ChevronLeft`}
 										className={`w-20px h-20px`}
 										onClick={(e: any) => {
 											e.stopPropagation();
@@ -1350,8 +1365,8 @@ export const PickerDay = memo((
 								</Div>
 								<Div className={`mr-n15px`}>
 									<Icons
-										key={"ChevronRight"}
-										name={"ChevronRight"}
+										key={`ChevronRight`}
+										name={`ChevronRight`}
 										className={`w-20px h-20px`}
 										onClick={(e: any) => {
 											e.stopPropagation();
@@ -1364,7 +1379,7 @@ export const PickerDay = memo((
 									/>
 								</Div>
 							</Div>
-						}
+						)}
 						onClick={(e: any) => {
 							popTrigger.openPopup(e.currentTarget);
 						}}
@@ -1383,70 +1398,70 @@ export const PickerDay = memo((
 						{dateTypeInListSection()}
 					</Grid>
 					<Grid size={9} className={`d-center`}>
-						{dateTypeInList === "day" && daySection()}
-						{dateTypeInList === "week" && weekSection()}
-						{dateTypeInList === "month" && monthSection()}
-						{dateTypeInList === "year" && yearSection()}
+						{dateTypeInList === `day` && daySection()}
+						{dateTypeInList === `week` && weekSection()}
+						{dateTypeInList === `month` && monthSection()}
+						{dateTypeInList === `year` && yearSection()}
 					</Grid>
 				</Grid>
 			)
 
 			// 1-2. 리스트 (Record)
-			: isRecordList ? (
-				<Grid container={true} spacing={1}>
-					<Grid size={3} className={`d-center`}>
-						{dateTypeInListSection()}
+				: isRecordList ? (
+					<Grid container={true} spacing={1}>
+						<Grid size={3} className={`d-center`}>
+							{dateTypeInListSection()}
+						</Grid>
+						<Grid size={9} className={`d-center`}>
+							{dateTypeInList === `day` && daySection()}
+							{dateTypeInList === `week` && weekSection()}
+							{dateTypeInList === `month` && monthSection()}
+							{dateTypeInList === `year` && yearSection()}
+						</Grid>
 					</Grid>
-					<Grid size={9} className={`d-center`}>
-						{dateTypeInList === "day" && daySection()}
-						{dateTypeInList === "week" && weekSection()}
-						{dateTypeInList === "month" && monthSection()}
-						{dateTypeInList === "year" && yearSection()}
-					</Grid>
-				</Grid>
-			)
+				)
 
-			// 2-1. 세이브 (Calendar)
-			: isCalendarDetail ? (
-				<Grid container={true} spacing={1}>
-					<Grid size={{xs: 4, sm: 3}} className={`d-center`}>
-						{dateTypeInSaveSection()}
-					</Grid>
-					<Grid size={{xs: 8, sm: 9}} className={`d-center`}>
-						{DATE?.dateType === "day" && daySection()}
-						{DATE?.dateType === "week" && weekSection()}
-						{DATE?.dateType === "month" && monthSection()}
-						{DATE?.dateType === "year" && yearSection()}
-					</Grid>
-				</Grid>
-			)
+				// 2-1. 세이브 (Calendar)
+					: isCalendarDetail ? (
+						<Grid container={true} spacing={1}>
+							<Grid size={{ xs: 4, sm: 3 }} className={`d-center`}>
+								{dateTypeInSaveSection()}
+							</Grid>
+							<Grid size={{ xs: 8, sm: 9 }} className={`d-center`}>
+								{DATE?.dateType === `day` && daySection()}
+								{DATE?.dateType === `week` && weekSection()}
+								{DATE?.dateType === `month` && monthSection()}
+								{DATE?.dateType === `year` && yearSection()}
+							</Grid>
+						</Grid>
+					)
 
-			// 2-2. 세이브 (Goal)
-			: isGoalDetail ? (
-				<Grid container={true} spacing={1}>
-					<Grid size={{xs: 4, sm: 3}} className={`d-center`}>
-						{dateTypeInSaveSection()}
-					</Grid>
-					<Grid size={{xs: 8, sm: 9}} className={`d-center`}>
-						{DATE?.dateType === "week" && weekSection()}
-						{DATE?.dateType === "month" && monthSection()}
-						{DATE?.dateType === "year" && yearSection()}
-					</Grid>
-				</Grid>
-			)
+					// 2-2. 세이브 (Goal)
+						: isGoalDetail ? (
+							<Grid container={true} spacing={1}>
+								<Grid size={{ xs: 4, sm: 3 }} className={`d-center`}>
+									{dateTypeInSaveSection()}
+								</Grid>
+								<Grid size={{ xs: 8, sm: 9 }} className={`d-center`}>
+									{DATE?.dateType === `week` && weekSection()}
+									{DATE?.dateType === `month` && monthSection()}
+									{DATE?.dateType === `year` && yearSection()}
+								</Grid>
+							</Grid>
+						)
 
-			// 2-3. 세이브 (Record)
-			: isRecordDetail ? (
-				<Grid container={true} spacing={1}>
-					<Grid size={{xs: 4, sm: 3}} className={`d-center`}>
-						{dateTypeInSaveSection()}
-					</Grid>
-					<Grid size={{xs: 8, sm: 9}} className={`d-center`}>
-						{DATE?.dateType === "day" && daySection()}
-					</Grid>
-				</Grid>
-			)
-			: null
+						// 2-3. 세이브 (Record)
+							: isRecordDetail ? (
+								<Grid container={true} spacing={1}>
+									<Grid size={{ xs: 4, sm: 3 }} className={`d-center`}>
+										{dateTypeInSaveSection()}
+									</Grid>
+									<Grid size={{ xs: 8, sm: 9 }} className={`d-center`}>
+										{DATE?.dateType === `day` && daySection()}
+									</Grid>
+								</Grid>
+							)
+								: null
 		);
 	};
 

@@ -1,6 +1,6 @@
 // UserCategory.tsx
 
-import { useState, useEffect, useRef, createRef, memo } from "@exportReacts";
+import { React, useState, useEffect, useRef, createRef, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { axios } from "@exportLibs";
@@ -108,7 +108,7 @@ export const UserCategory = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "success",
         });
   			sync("category");
@@ -117,7 +117,7 @@ export const UserCategory = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "error",
         });
       }

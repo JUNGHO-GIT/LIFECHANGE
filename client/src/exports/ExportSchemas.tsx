@@ -1,19 +1,24 @@
-// ExportSchemas.tsx
+/**
+ * @file ExportSchemas.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-25
+ */
 
 // admin -------------------------------------------------------------------------------------------
 export {
 	type AppInfoType,
-  AppInfo,
+	AppInfo,
 } from "@schemas/admin/Admin";
 
 // calendar -------------------------------------------------------------------------------------------
 export {
-  type CalendarExerciseSectionType,
-  type CalendarFoodSectionType,
-  type CalendarMoneySectionType,
-  type CalendarSleepSectionType,
+	type CalendarExerciseSectionType,
+	type CalendarFoodSectionType,
+	type CalendarMoneySectionType,
+	type CalendarSleepSectionType,
 	type CalendarType,
-  Calendar,
+	Calendar,
 } from "@schemas/calendar/Calendar";
 
 // exercise -------------------------------------------------------------------------------------------
@@ -21,15 +26,15 @@ export {
 	type ExercisePieType,
 	type ExerciseLineType,
 	type ExerciseAvgType,
-  ExercisePie,
-  ExerciseLineScale,
-  ExerciseLineVolume,
-  ExerciseLineCardio,
-  ExerciseAvgVolume,
-  ExerciseAvgCardio,
+	ExercisePie,
+	ExerciseLineScale,
+	ExerciseLineVolume,
+	ExerciseLineCardio,
+	ExerciseAvgVolume,
+	ExerciseAvgCardio,
 } from "@schemas/exercise/ExerciseChart";
 export {
-  type ExerciseGoalType,
+	type ExerciseGoalType,
 	ExerciseGoal,
 } from "@schemas/exercise/ExerciseGoal";
 export {
@@ -42,23 +47,23 @@ export {
 	type FoodPieType,
 	type FoodLineType,
 	type FoodAvgType,
-  FoodPie,
-  FoodLineKcal,
-  FoodLineNut,
-  FoodAvgKcal,
-  FoodAvgNut,
+	FoodPie,
+	FoodLineKcal,
+	FoodLineNut,
+	FoodAvgKcal,
+	FoodAvgNut,
 } from "@schemas/food/FoodChart";
 export {
 	type FoodFindType,
-  FoodFind,
+	FoodFind,
 } from "@schemas/food/FoodFind";
 export {
 	type FoodGoalType,
-  FoodGoal,
+	FoodGoal,
 } from "@schemas/food/FoodGoal";
 export {
 	type FoodRecordType,
-  FoodRecord,
+	FoodRecord,
 } from "@schemas/food/FoodRecord";
 
 // money -------------------------------------------------------------------------------------------
@@ -66,17 +71,17 @@ export {
 	type MoneyPieType,
 	type MoneyLineType,
 	type MoneyAvgType,
-  MoneyPie,
-  MoneyLine,
-  MoneyAvg,
+	MoneyPie,
+	MoneyLine,
+	MoneyAvg,
 } from "@schemas/money/MoneyChart";
 export {
 	type MoneyGoalType,
-  MoneyGoal,
+	MoneyGoal,
 } from "@schemas/money/MoneyGoal";
 export {
 	type MoneyRecordType,
-  MoneyRecord,
+	MoneyRecord,
 } from "@schemas/money/MoneyRecord";
 
 // sleep -------------------------------------------------------------------------------------------
@@ -84,23 +89,23 @@ export {
 	type SleepPieType,
 	type SleepLineType,
 	type SleepAvgType,
-  SleepPie,
-  SleepLine,
-  SleepAvg,
+	SleepPie,
+	SleepLine,
+	SleepAvg,
 } from "@schemas/sleep/SleepChart";
 export {
 	type SleepGoalType,
-  SleepGoal,
+	SleepGoal,
 } from "@schemas/sleep/SleepGoal";
 export {
 	type SleepRecordType,
-  SleepRecord,
+	SleepRecord,
 } from "@schemas/sleep/SleepRecord";
 
 // user -------------------------------------------------------------------------------------------
 export {
 	type UserType,
 	type CategoryType,
-  User,
-  Category,
+	User,
+	Category,
 } from "@schemas/user/User";

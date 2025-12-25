@@ -1,6 +1,6 @@
 // UserResetPw.tsx
 
-import { useState, useEffect, useRef, memo } from "@exportReacts";
+import { React, useState, useEffect, useRef, memo } from "@exportReacts";
 import { useCommonValue, useValidateUser } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { axios } from "@exportLibs";
@@ -47,7 +47,7 @@ export const UserResetPw = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "success",
         });
         setOBJECT((prev) => ({
@@ -59,7 +59,7 @@ export const UserResetPw = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "error",
         });
         setOBJECT((prev) => ({
@@ -71,7 +71,7 @@ export const UserResetPw = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "error",
         });
         setOBJECT((prev) => ({
@@ -83,7 +83,7 @@ export const UserResetPw = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "error",
         });
         setOBJECT((prev) => ({
@@ -122,7 +122,7 @@ export const UserResetPw = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "success",
         });
         setOBJECT((prev) => ({
@@ -133,7 +133,7 @@ export const UserResetPw = memo(() => {
       else {
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "error",
         });
         setOBJECT((prev) => ({
@@ -172,7 +172,7 @@ export const UserResetPw = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "success",
         });
         navigate("/user/login");
@@ -181,7 +181,7 @@ export const UserResetPw = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "error",
         });
       }
@@ -211,7 +211,7 @@ export const UserResetPw = memo(() => {
         setLOADING(false);
         setALERT({
           open: true,
-          msg: translate(res.data.msg),
+          msg: translate(res.data.msg as string),
           severity: "error",
         });
       }

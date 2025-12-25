@@ -16,6 +16,25 @@ import { logger, runPrompt, fileExists } from "../lib/utils.mjs";
 import { env } from "../lib/env.mjs";
 import { settings } from "../lib/settings.mjs";
 
+// 1. 인자 파싱 ------------------------------------------------------------------------------
+const __filename = fileURLToPath(import.meta.url);
+const TITLE = path.basename(__filename);
+const argv = process.argv.slice(2);
+const args1 = argv.find((arg) => [
+	`--npm`,
+	`--pnpm`,
+	`--yarn`,
+	`--bun`,
+].includes(arg))?.replace(`--`, ``) || ``;
+const args2 = argv.find((arg) => [
+	`--push`,
+	`--fetch`,
+].includes(arg))?.replace(`--`, ``) || ``;
+const args3 = argv.find((arg) => [
+	`--y`,
+	`--n`,
+].includes(arg))?.replace(`--`, ``) || ``;
+
 // 0. git 브랜치/리모트 헬퍼 -----------------------------------------------------------------
 const getRemoteSettings = (remoteName = ``) => (
 	remoteName === settings.git.remotes.public.name ? settings.git.remotes.public
@@ -26,7 +45,6 @@ const getRemoteSettings = (remoteName = ``) => (
 const getBranchName = (remoteName = ``) => {
 	const remote = getRemoteSettings(remoteName);
 	const ref = remote?.branch ?? ``;
-	// settings.branch 값을 그대로 반환 (예: public/main, private/main)
 	return ref || null;
 };
 
@@ -56,25 +74,6 @@ const ensureLocalBranchFromRemote = (branch = ``, remoteName = ``) => {
 	})();
 	return ok ?? false;
 };
-
-// 1. 인자 파싱 ------------------------------------------------------------------------------
-const __filename = fileURLToPath(import.meta.url);
-const TITLE = path.basename(__filename);
-const argv = process.argv.slice(2);
-const args1 = argv.find((arg) => [
-	`--npm`,
-	`--pnpm`,
-	`--yarn`,
-	`--bun`,
-].includes(arg))?.replace(`--`, ``) || ``;
-const args2 = argv.find((arg) => [
-	`--push`,
-	`--fetch`,
-].includes(arg))?.replace(`--`, ``) || ``;
-const args3 = argv.find((arg) => [
-	`--y`,
-	`--n`,
-].includes(arg))?.replace(`--`, ``) || ``;
 
 // 2. 원격 기본브랜치 감지 -------------------------------------------------------------------
 const getRemoteDefaultBranch = (remoteName = ``) => {
@@ -124,7 +123,7 @@ const setRemoteDefaultBranch = (remoteName = ``) => {
 	remoteExists && (() => {
 		const targetBranch = getRemoteDefaultBranch(remoteName);
 		const canSet = Boolean(targetBranch);
-		!canSet && logger(`warn`, `원격 기본브랜치를 찾을 수 없습니다: ${remoteName} - 기본브랜치 설정 스킵`);
+		!canSet && logger(`warn`, `원격 기본브랜치를 찾을 수 없습니다: ${remoteName} - 기본브랜치 설정 ��킵`);
 		canSet && (() => {
 			// 원격에 타겟 브랜치가 존재하는지 확인
 			const branchExists = checkRemoteBranchExists(remoteName, targetBranch);
@@ -262,7 +261,52 @@ const cleanupBranches = () => {
 	logger(`success`, `브랜치 정리 완료`);
 };
 
-// 7. git cache 초기화 -----------------------------------------------------------------------
+// 7. git lfs 강제 설정 ----------------------------------------------------------------------
+const ensureGitLfs = () => {
+	logger(`info`, `Git LFS 강제 설정 시작`);
+	try {
+		execSync(`git lfs install --force`, { stdio: `pipe` });
+		logger(`success`, `Git LFS 설치/초기화 완료`);
+
+		// .gitattributes 파일 확인 및 LFS 추적 패턴 설정
+		const gitattributesPath = `.gitattributes`;
+		const lfsPatterns = [
+			`*.zip filter=lfs diff=lfs merge=lfs -text`,
+			`*.tar.gz filter=lfs diff=lfs merge=lfs -text`,
+			`*.7z filter=lfs diff=lfs merge=lfs -text`,
+			`*.rar filter=lfs diff=lfs merge=lfs -text`,
+			`*.png filter=lfs diff=lfs merge=lfs -text`,
+			`*.jpg filter=lfs diff=lfs merge=lfs -text`,
+			`*.jpeg filter=lfs diff=lfs merge=lfs -text`,
+			`*.gif filter=lfs diff=lfs merge=lfs -text`,
+			`*.mp4 filter=lfs diff=lfs merge=lfs -text`,
+			`*.mp3 filter=lfs diff=lfs merge=lfs -text`,
+			`*.pdf filter=lfs diff=lfs merge=lfs -text`,
+			`*.psd filter=lfs diff=lfs merge=lfs -text`,
+			`*.ai filter=lfs diff=lfs merge=lfs -text`,
+			`*.vsix filter=lfs diff=lfs merge=lfs -text`,
+		];
+
+		const existingContent = fileExists(gitattributesPath) ? fs.readFileSync(gitattributesPath, `utf8`) : ``;
+		const existingLines = new Set(existingContent.split(/\r?\n/).map((l) => l.trim()).filter(Boolean));
+		const missingPatterns = lfsPatterns.filter((p) => !existingLines.has(p));
+
+		missingPatterns.length > 0 ? (() => {
+			const newContent = existingContent.trim() + (existingContent.trim() ? os.EOL : ``) + missingPatterns.join(os.EOL) + os.EOL;
+			fs.writeFileSync(gitattributesPath, newContent, `utf8`);
+			logger(`success`, `.gitattributes LFS 패턴 추가 완료: ${missingPatterns.length}개`);
+		})() : logger(`info`, `.gitattributes LFS 패턴 이미 설정됨`);
+
+		// LFS 추적 상태 확인
+		const trackedFiles = execSync(`git lfs ls-files`, { encoding: `utf8` }).trim();
+		trackedFiles ? logger(`info`, `LFS 추적 파일 존재: ${trackedFiles.split(/\r?\n/).length}개`) : logger(`info`, `LFS 추적 파일 없음`);
+	}
+	catch (error) {
+		logger(`warn`, `Git LFS 설정 실패: ${error instanceof Error ? error.message : String(error)}`);
+	}
+};
+
+// 8. git cache 초기화 -----------------------------------------------------------------------
 const clearGitCache = () => {
 	logger(`info`, `Git 캐시 초기화 시작`);
 	try {
@@ -275,7 +319,7 @@ const clearGitCache = () => {
 	}
 };
 
-// 8. 파일 라인 변환 헬퍼 --------------------------------------------------------------------
+// 9. 파일 라인 변환 헬퍼 --------------------------------------------------------------------
 /**
  * @param {string} content
  * @param {Array<{ match: (line: string) => boolean, replace: (line: string) => string }>} rules
@@ -290,7 +334,7 @@ const transformLines = (content = ``, rules = []) => {
 	return transformed.join(os.EOL);
 };
 
-// 9. env 파일 및 index 파일 수정 ------------------------------------------------------------
+// 10. env 파일 및 index 파일 수정 -----------------------------------------------------------
 const modifyEnvAndIndex = () => {
 	const envExists = fileExists(`.env`);
 	const indexExists = fileExists(`index.ts`);
@@ -330,7 +374,7 @@ const modifyEnvAndIndex = () => {
 	})();
 };
 
-// 10. env 파일 및 index 파일 복원 ------------------------------------------------------------
+// 11. env 파일 및 index 파일 복원 -----------------------------------------------------------
 const restoreEnvAndIndex = () => {
 	const envExists = fileExists(`.env`);
 	const indexExists = fileExists(`index.ts`);
@@ -370,7 +414,7 @@ const restoreEnvAndIndex = () => {
 	})();
 };
 
-// 11. changelog 수정 ------------------------------------------------------------------------
+// 12. changelog 수정 ------------------------------------------------------------------------
 const modifyChangelog = (msg = ``) => {
 	const changelogExists = fileExists(`changelog.md`);
 	!changelogExists && logger(`info`, `changelog.md 파일 없음 - 건너뜀`);
@@ -423,7 +467,7 @@ const modifyChangelog = (msg = ``) => {
 	return result;
 };
 
-// 12. package.json 버전 수정 ----------------------------------------------------------------
+// 13. package.json 버전 수정 ----------------------------------------------------------------
 const incrementVersion = (newVersion = ``) => {
 	const pkgPath = `package.json`;
 	const pkgExists = fileExists(pkgPath);
@@ -438,7 +482,7 @@ const incrementVersion = (newVersion = ``) => {
 	})();
 };
 
-// 13. git fetch -----------------------------------------------------------------------------
+// 14. git fetch -----------------------------------------------------------------------------
 const gitFetch = () => {
 	try {
 		const privateExists = checkRemoteExists(settings.git.remotes.private.name);
@@ -469,7 +513,7 @@ const gitFetch = () => {
 	}
 };
 
-// 14. git push 공통 함수 --------------------------------------------------------------------
+// 15. git push 공통 함수 --------------------------------------------------------------------
 const gitPush = (remoteName = ``, ignoreFilePath = ``, msg = ``) => {
 	const remoteExists = checkRemoteExists(remoteName);
 	!remoteExists && logger(`info`, `Remote '${remoteName}' 존재하지 않음 - 건너뜀`);
@@ -517,11 +561,12 @@ const gitPush = (remoteName = ``, ignoreFilePath = ``, msg = ``) => {
 	})();
 };
 
-// 15. Push 프로세스 실행 --------------------------------------------------------------------
+// 16. Push 프로세스 실행 --------------------------------------------------------------------
 const runPushProcess = async () => {
 	const commitMsg = args3.includes(`n`) ? `` : await runPrompt(`커밋 메시지 입력 (빈값 = 날짜/시간): `);
 	logger(`info`, `커밋 메시지: ${commitMsg || `auto (date/time)`}`);
 
+	ensureGitLfs();
 	modifyEnvAndIndex();
 	incrementVersion(modifyChangelog(commitMsg));
 	gitPush(settings.git.remotes.public.name, `.gitignore.public`, commitMsg);
@@ -544,6 +589,7 @@ const runPushProcess = async () => {
 	}
 	try {
 		args2 === `fetch` && (() => {
+			ensureGitLfs();
 			setRemoteDefaultBranch(settings.git.remotes.public.name);
 			setRemoteDefaultBranch(settings.git.remotes.private.name);
 			cleanupBranches();
