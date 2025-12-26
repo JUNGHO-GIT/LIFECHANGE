@@ -1,6 +1,8 @@
 /**
  * @file vite.config.ts
- * @since 2025-11-23
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-27
  */
 
 import path from "node:path";
@@ -110,15 +112,9 @@ export default defineConfig(({ command, mode }) => {
 			rollupOptions: {
 				output: {
 					manualChunks: {
-						react: [
-							`react`, `react-dom`, `react-router`,
-						],
-						mui: [
-							`@mui/material`, `@mui/system`, `@emotion/react`, `@emotion/styled`,
-						],
-						vendor: [
-							`axios`, `zustand`, `moment`, `date-fns`,
-						],
+						react: [`react`, `react-dom`, `react-router`],
+						mui: [`@mui/material`, `@mui/system`, `@emotion/react`, `@emotion/styled`],
+						vendor: [`axios`, `zustand`, `moment`, `date-fns`],
 					},
 					assetFileNames: (assetInfo) => {
 						const info = assetInfo.name ? assetInfo.name.split(`.`) : [];

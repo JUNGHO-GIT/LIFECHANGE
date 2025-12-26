@@ -78,8 +78,8 @@ const id: string | undefined = process.env.DB_USER;
 const pw: string | undefined = process.env.DB_PASS;
 const host: string | undefined = process.env.DB_HOST;
 const port: string | undefined = process.env.DB_PORT;
-// const db: string | undefined = process.env.DB_NAME;
-const db: string | undefined = process.env.DB_TEST;
+const db = process.env.DB_NAME;
+// const db = process.env.DB_TEST;
 const envStr: string = db === process.env.DB_TEST ? `DEVELOPMENT` : `PRODUCTION`;
 
 mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`)
