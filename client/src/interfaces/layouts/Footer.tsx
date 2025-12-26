@@ -1,4 +1,9 @@
-// Footer.tsx
+/**
+ * @file Footer.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { useState, useEffect } from "@exportReacts";
 import { useCommonValue } from "@exportHooks";
@@ -53,7 +58,7 @@ export const Footer = (
 		: (() => {
 			setTypeName(``);
 			setStyleClass(``);
-		})()
+		})();
 	}, [PATH]);
 
 	// 7. footer -------------------------------------------------------------------------------------

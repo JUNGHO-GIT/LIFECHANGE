@@ -123,7 +123,7 @@ const setRemoteDefaultBranch = (remoteName = ``) => {
 	remoteExists && (() => {
 		const targetBranch = getRemoteDefaultBranch(remoteName);
 		const canSet = Boolean(targetBranch);
-		!canSet && logger(`warn`, `원격 기본브랜치를 찾을 수 없습니다: ${remoteName} - 기본브랜치 설정 ��킵`);
+		!canSet && logger(`warn`, `원격 기본브랜치를 찾을 수 없습니다: ${remoteName} - 기본브랜치 설정 스킵`);
 		canSet && (() => {
 			// 원격에 타겟 브랜치가 존재하는지 확인
 			const branchExists = checkRemoteBranchExists(remoteName, targetBranch);

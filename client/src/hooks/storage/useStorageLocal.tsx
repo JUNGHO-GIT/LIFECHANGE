@@ -19,8 +19,8 @@ export const useStorageLocal = <T,> (
 
 	// -----------------------------------------------------------------------------------------------
 	const [storedVal, setStoredVal] = useState<T>(() => {
-		const existingValue = getLocal(key1, key2, key3) as T | undefined;
-		return existingValue || initialVal;
+		const existingValue: T | undefined = getLocal(key1, key2, key3) as T | undefined;
+		return existingValue ?? initialVal;
 	});
 
 	// -----------------------------------------------------------------------------------------------

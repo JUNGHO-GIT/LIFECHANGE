@@ -1,4 +1,9 @@
-// Loader.tsx
+/**
+ * @file Loader.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { memo } from "@exportReacts";
 import { Div } from "@exportComponents";

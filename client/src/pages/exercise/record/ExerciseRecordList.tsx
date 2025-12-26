@@ -1,4 +1,9 @@
-// ExerciseRecordList.tsx
+/**
+ * @file ExerciseRecordList.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { useState, useEffect, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
@@ -14,128 +19,132 @@ import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
 export const ExerciseRecordList = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
-  const { URL_OBJECT, PATH, sessionId, toDetail, localUnit } = useCommonValue();
-  const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
-  const { getDayFmt,getDayNotFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-  const { translate } = useStoreLanguage();
-  const { setALERT } = useStoreAlert();
-  const { setLOADING } = useStoreLoading();
+	const { URL_OBJECT, PATH, sessionId, toDetail, localUnit } = useCommonValue();
+	const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
+	const { getDayFmt, getDayNotFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
+	const { translate } = useStoreLanguage();
+	const { setALERT } = useStoreAlert();
+	const { setLOADING } = useStoreLoading();
 
-  // 2-1. useStorageLocal ------------------------------------------------------------------------
-  const [DATE, setDATE] = useStorageLocal(
-    "date", PATH, "", {
-      dateType: location_dateType ?? "",
-      dateStart: location_dateStart ?? getDayFmt(),
-      dateEnd: location_dateEnd ?? getDayFmt(),
-    }
-  );
-  const [PAGING, setPAGING] = useStorageLocal(
-    "paging", PATH, "", {
-      sort: "asc",
-      page: 1,
-    }
-  );
-  const [isExpanded, setIsExpanded] = useStorageLocal(
-    "isExpanded", PATH, "", [{
-      expanded: true
-    }]
-  );
+	// 2-1. useStorageLocal ------------------------------------------------------------------------
+	const [DATE, setDATE] = useStorageLocal(
+		`date`, PATH, ``, {
+			dateType: location_dateType ?? ``,
+			dateStart: location_dateStart ?? getDayFmt(),
+			dateEnd: location_dateEnd ?? getDayFmt(),
+		}
+	);
+	const [PAGING, setPAGING] = useStorageLocal(
+		`paging`, PATH, ``, {
+			sort: `asc`,
+			page: 1,
+		}
+	);
+	const [isExpanded, setIsExpanded] = useStorageLocal(
+		`isExpanded`, PATH, ``, [
+			{
+				expanded: true
+			}
+		]
+	);
 
 	// 2-2. useState -------------------------------------------------------------------------------
-  const [OBJECT, setOBJECT] = useState<[ExerciseRecordType]>([ExerciseRecord]);
-  const [EXIST, setEXIST] = useState({
-    day: [""],
-    week: [""],
-    month: [""],
-    year: [""],
-    select: [""],
-  });
-  const [SEND, setSEND] = useState({
-    id: "",
-    dateType: "day",
-    dateStart: "0000-00-00",
-    dateEnd: "0000-00-00",
-  });
-  const [COUNT, setCOUNT] = useState({
-    totalCnt: 0,
-    sectionCnt: 0,
-    newSectionCnt: 0
-  });
+	const [OBJECT, setOBJECT] = useState<[ExerciseRecordType]>([ExerciseRecord]);
+	const [EXIST, setEXIST] = useState({
+		day: [``],
+		week: [``],
+		month: [``],
+		year: [``],
+		select: [``],
+	});
+	const [SEND, setSEND] = useState({
+		id: ``,
+		dateType: `day`,
+		dateStart: `0000-00-00`,
+		dateEnd: `0000-00-00`,
+	});
+	const [COUNT, setCOUNT] = useState({
+		totalCnt: 0,
+		sectionCnt: 0,
+		newSectionCnt: 0
+	});
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
-  useEffect(() => {
-    axios.get(`${URL_OBJECT}/record/exist`, {
-      params: {
-        user_id: sessionId,
-        DATE: {
-          dateType: "",
-          dateStart: getMonthStartFmt(DATE?.dateStart),
-          dateEnd: getMonthEndFmt(DATE?.dateEnd),
-        },
-      },
-    })
-    .then((res: any) => {
-      setEXIST(
-        !res.data.result || res.data.result?.length === 0 ? [""] : res.data.result
-      );
-    })
-    .catch((err: any) => {
-      setALERT({
-        open: true,
-        msg: translate(err.response.data.msg),
-        severity: "error",
-      });
-    });
-  }, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
+	useEffect(() => {
+		axios.get(`${URL_OBJECT}/record/exist`, {
+			params: {
+				user_id: sessionId,
+				DATE: {
+					dateType: ``,
+					dateStart: getMonthStartFmt(DATE?.dateStart),
+					dateEnd: getMonthEndFmt(DATE?.dateEnd),
+				},
+			},
+		})
+		.then((res: any) => {
+			setEXIST(
+        !res.data.result || res.data.result?.length === 0 ? [``] : res.data.result
+			);
+		})
+		.catch((error: any) => {
+			setALERT({
+				open: true,
+				msg: translate(error.response.data.msg as string),
+				severity: `error`,
+			});
+		});
+	}, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
-  useEffect(() => {
-    setLOADING(true);
-    axios.get(`${URL_OBJECT}/record/list`, {
-      params: {
-        user_id: sessionId,
-        PAGING: PAGING,
-        DATE: {
-          dateType: "",
-          dateStart: DATE?.dateStart,
-          dateEnd: DATE?.dateEnd,
-        },
-      },
-    })
-    .then((res: any) => {
-      setLOADING(false);
-      setOBJECT(res.data.result?.length > 0 ? res.data.result : [ExerciseRecord]);
-      setCOUNT((prev) => ({
-        ...prev,
-        totalCnt: res.data.totalCnt ?? 0,
-        sectionCnt: res.data.sectionCnt ?? 0,
-        newSectionCnt: res.data.sectionCnt || 0
-      }));
+	useEffect(() => {
+		setLOADING(true);
+		axios.get(`${URL_OBJECT}/record/list`, {
+			params: {
+				user_id: sessionId,
+				PAGING: PAGING,
+				DATE: {
+					dateType: ``,
+					dateStart: DATE?.dateStart,
+					dateEnd: DATE?.dateEnd,
+				},
+			},
+		})
+		.then((res: any) => {
+			setLOADING(false);
+			setOBJECT(res.data.result?.length > 0 ? res.data.result : [ExerciseRecord]);
+			setCOUNT((prev) => ({
+				...prev,
+				totalCnt: res.data.totalCnt ?? 0,
+				sectionCnt: res.data.sectionCnt ?? 0,
+				newSectionCnt: res.data.sectionCnt ?? 0
+			}));
 			// 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
-      setIsExpanded(() => {
+			setIsExpanded(() => {
 				if (res.data.result?.length !== isExpanded.length) {
-					return Array(res.data.result?.length).fill({ expanded: true });
+					return Array.from({ length: res.data.result?.length }).fill({ expanded: true });
 				}
 				return isExpanded;
 			});
-    })
-    .catch((err: any) => {
-      setLOADING(false);
-      setALERT({
-        open: true,
-        msg: translate(err.response.data.msg),
-        severity: "error",
-      });
-    })
-    .finally(() => {
-      setLOADING(false);
-    });
-  }, [URL_OBJECT, sessionId, PAGING?.sort, PAGING.page, DATE?.dateStart, DATE?.dateEnd]);
+		})
+		.catch((error: any) => {
+			setLOADING(false);
+			setALERT({
+				open: true,
+				msg: translate(error.response.data.msg as string),
+				severity: `error`,
+			});
+		})
+		.finally(() => {
+			setLOADING(false);
+		});
+	}, [
+		URL_OBJECT, sessionId, PAGING?.sort, PAGING.page, DATE?.dateStart, DATE?.dateEnd
+	]);
 
 	// 7. list -----------------------------------------------------------------------------------
-  const listNode = () => {
+	const listNode = () => {
 		// 7-1. list
-    const listSection = () => (
+		const listSection = () => (
 			<Grid container={true} spacing={0}>
 				{OBJECT?.map((item, i) => (
 					<Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px`} key={`list-${i}`}>
@@ -145,10 +154,10 @@ export const ExerciseRecordList = memo(() => {
 								expanded={isExpanded?.[i]?.expanded}
 							>
 								<AccordionSummary
-									expandIcon={
+									expandIcon={(
 										<Icons
-											key={"ChevronDown"}
-											name={"ChevronDown"}
+											key={`ChevronDown`}
+											name={`ChevronDown`}
 											className={`w-16px h-16px`}
 											onClick={(e: any) => {
 												e.preventDefault();
@@ -160,7 +169,7 @@ export const ExerciseRecordList = memo(() => {
 												)));
 											}}
 										/>
-									}
+									)}
 									onClick={() => {
 										void navigate(toDetail, {
 											state: {
@@ -175,24 +184,24 @@ export const ExerciseRecordList = memo(() => {
 									<Grid container={true} spacing={1}>
 										<Grid size={2} className={`d-row-center`}>
 											<Icons
-												key={"Search"}
-												name={"Search"}
+												key={`Search`}
+												name={`Search`}
 												className={`w-16px h-16px`}
 											/>
 										</Grid>
 										<Grid size={10} className={`d-row-left`}>
 											<Div className={`fs-0-9rem fw-600 black mr-5px`}>
-												{item.exercise_record_dateStart?.substring(5, 10)}
+												{item.exercise_record_dateStart?.slice(5, 10)}
 											</Div>
 											<Div className={`fs-0-9rem fw-500 dark ml-5px`}>
-												{translate(getDayNotFmt(item.exercise_record_dateStart).format("ddd"))}
+												{translate(getDayNotFmt(item.exercise_record_dateStart).format(`ddd`))}
 											</Div>
 										</Grid>
 									</Grid>
 								</AccordionSummary>
 								<AccordionDetails>
 									<Grid container={true} spacing={1}>
-										{/** row 1 **/}
+										{/** row 1 * */}
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={`d-row-center`}>
 												<Img
@@ -200,7 +209,7 @@ export const ExerciseRecordList = memo(() => {
 													hover={true}
 													shadow={false}
 													radius={false}
-													src={"exercise3_1.webp"}
+													src={`exercise3_1.webp`}
 												/>
 											</Grid>
 											<Grid size={3} className={`d-row-left`}>
@@ -226,7 +235,7 @@ export const ExerciseRecordList = memo(() => {
 
 										<Hr m={1} className={`bg-light`} />
 
-										{/** row 2 **/}
+										{/** row 2 * */}
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={`d-center`}>
 												<Img
@@ -234,7 +243,7 @@ export const ExerciseRecordList = memo(() => {
 													hover={true}
 													shadow={false}
 													radius={false}
-													src={"exercise4.webp"}
+													src={`exercise4.webp`}
 												/>
 											</Grid>
 											<Grid size={3} className={`d-row-left`}>
@@ -260,7 +269,7 @@ export const ExerciseRecordList = memo(() => {
 
 										<Hr m={1} className={`bg-light`} />
 
-										{/** row 3 **/}
+										{/** row 3 * */}
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={`d-center`}>
 												<Img
@@ -268,7 +277,7 @@ export const ExerciseRecordList = memo(() => {
 													hover={true}
 													shadow={false}
 													radius={false}
-													src={"exercise5.webp"}
+													src={`exercise5.webp`}
 												/>
 											</Grid>
 											<Grid size={3} className={`d-row-left`}>
@@ -299,41 +308,41 @@ export const ExerciseRecordList = memo(() => {
 				))}
 			</Grid>
 		);
-    // 7-10. return
-    return (
-      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
-				{COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={"exercise"} /> : listSection()}
-      </Paper>
-    );
-  };
+		// 7-10. return
+		return (
+			<Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
+				{COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={`exercise`} /> : listSection()}
+			</Paper>
+		);
+	};
 
 	// 8. dialog ----------------------------------------------------------------------------------
-  const dialogNode = () => (
-    <Dialog
-      COUNT={COUNT}
-      setCOUNT={setCOUNT}
-      setIsExpanded={setIsExpanded}
-    />
-  );
+	const dialogNode = () => (
+		<Dialog
+			COUNT={COUNT}
+			setCOUNT={setCOUNT}
+			setIsExpanded={setIsExpanded}
+		/>
+	);
 
 	// 9. footer ----------------------------------------------------------------------------------
-  const footerNode = () => (
-    <Footer
-      state={{
-        DATE, SEND, PAGING, COUNT, EXIST
-      }}
-      setState={{
-        setDATE, setSEND, setPAGING, setCOUNT, setEXIST
-      }}
-    />
-  );
+	const footerNode = () => (
+		<Footer
+			state={{
+				DATE, SEND, PAGING, COUNT, EXIST
+			}}
+			setState={{
+				setDATE, setSEND, setPAGING, setCOUNT, setEXIST
+			}}
+		/>
+	);
 
 	// 10. return ----------------------------------------------------------------------------------
-  return (
-    <>
-      {listNode()}
-      {dialogNode()}
-      {footerNode()}
-    </>
-  );
+	return (
+		<>
+			{listNode()}
+			{dialogNode()}
+			{footerNode()}
+		</>
+	);
 });

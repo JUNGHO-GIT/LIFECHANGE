@@ -1,4 +1,9 @@
-// FoodChart.tsx
+/**
+ * @file FoodChart.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 // Types ------------------------------------------------------------------------------------------
 export type FoodPieType = {
@@ -24,30 +29,30 @@ export type FoodAvgType = {
 
 // Schema -----------------------------------------------------------------------------------------
 export const FoodPie: FoodPieType = {
-	name: "Empty",
+	name: `Empty`,
 	value: 100,
 };
 export const FoodLineKcal: FoodLineType = {
-	name: "",
-	date: "",
-	kcal: "",
+	name: ``,
+	date: ``,
+	kcal: ``,
 };
 export const FoodLineNut: FoodLineType = {
-	name: "",
-	date: "",
-	carb: "",
-	protein: "",
-	fat: "",
+	name: ``,
+	date: ``,
+	carb: ``,
+	protein: ``,
+	fat: ``,
 };
 export const FoodAvgKcal: FoodAvgType = {
-	name: "",
-	date: "",
-	kcal: "",
+	name: ``,
+	date: ``,
+	kcal: ``,
 };
 export const FoodAvgNut: FoodAvgType = {
-	name: "",
-	date: "",
-	carb: "",
-	protein: "",
-	fat: "",
+	name: ``,
+	date: ``,
+	carb: ``,
+	protein: ``,
+	fat: ``,
 };

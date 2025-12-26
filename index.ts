@@ -10,7 +10,7 @@ import qs from "qs";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import express, { type Request, type Response } from "express";
+import express, { type Request, type Response, type Express } from "express";
 
 // admin
 import { router as AdminRouter } from "@routers/admin/AdminRouter";
@@ -47,12 +47,12 @@ import { router as GoogleRouter } from "@routers/auth/GoogleRouter";
 
 // -------------------------------------------------------------------------------------------------
 dotenv.config();
-const app = express();
-const preFix = process.env.HTTP_PREFIX ?? ``;
+const app: Express = express();
+const preFix: string = process.env.HTTP_PREFIX ?? ``;
 
 // 서버 포트 설정 ----------------------------------------------------------------------------------
-const httpPort = Number(process.env.HTTP_PORT);
-const httpsPort = Number(process.env.HTTPS_PORT);
+const httpPort: number = Number(process.env.HTTP_PORT);
+const httpsPort: number = Number(process.env.HTTPS_PORT);
 (function start(httpPort: number, httpsPort: number) {
 	try {
 		const httpServer = app.listen(httpPort, () => {
@@ -74,21 +74,21 @@ const httpsPort = Number(process.env.HTTPS_PORT);
 }(httpPort, httpsPort));
 
 // MongoDB 설정 ------------------------------------------------------------------------------------
-const id = process.env.DB_USER;
-const pw = process.env.DB_PASS;
-const host = process.env.DB_HOST;
-const port = process.env.DB_PORT;
-const db = process.env.DB_NAME;
-// const db = process.env.DB_TEST;
-const envStr = db === process.env.DB_TEST ? `DEVELOPMENT` : `PRODUCTION`;
+const id: string | undefined = process.env.DB_USER;
+const pw: string | undefined = process.env.DB_PASS;
+const host: string | undefined = process.env.DB_HOST;
+const port: string | undefined = process.env.DB_PORT;
+// const db: string | undefined = process.env.DB_NAME;
+const db: string | undefined = process.env.DB_TEST;
+const envStr: string = db === process.env.DB_TEST ? `DEVELOPMENT` : `PRODUCTION`;
 
 mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`)
-	.then(() => {
-		console.log(`[${envStr}] MongoDB 연결 성공 [${db}]`);
-	})
-	.catch((error: unknown) => {
-		console.error(`[${envStr}] MongoDB 연결 실패 [${db}] ${error}`);
-	});
+.then(() => {
+	console.log(`[${envStr}] MongoDB 연결 성공 [${db}]`);
+})
+.catch((error: unknown) => {
+	console.error(`[${envStr}] MongoDB 연결 실패 [${db}] ${error}`);
+});
 
 // 로그 설정 -------------------------------------------------------------------------------------------
 if (envStr === `DEVELOPMENT`) {
@@ -106,11 +106,11 @@ if (envStr === `DEVELOPMENT`) {
 	const fmtColl = (coll: string) => `${color.coll}${coll}${color.reset}`;
 	const fmtMethod = (m: string) => `${color.method}${m}${color.reset}`;
 	const fmtJson = (obj: any) => JSON.stringify(obj, null, 2)
-		.replaceAll(/"(\$[^"]+)":/g, `"${color.field}$1${color.reset}":`)
-		.replaceAll(/"([^"$]+)":/g, `"${color.field}$1${color.reset}":`)
-		.replaceAll(/: "([^"]*)"/g, `: "${color.string}$1${color.reset}"`)
-		.replaceAll(/: (\d+)/g, `: ${color.number}$1${color.reset}`)
-		.replaceAll(/: (true|false|null)/g, `: ${color.boolean}$1${color.reset}`);
+	.replaceAll(/"(\$[^"]+)":/g, `"${color.field}$1${color.reset}":`)
+	.replaceAll(/"([^"$]+)":/g, `"${color.field}$1${color.reset}":`)
+	.replaceAll(/: "([^"]*)"/g, `: "${color.string}$1${color.reset}"`)
+	.replaceAll(/: (\d+)/g, `: ${color.number}$1${color.reset}`)
+	.replaceAll(/: (true|false|null)/g, `: ${color.boolean}$1${color.reset}`);
 
 	mongoose.set(`debug`, (coll, method, query, doc, options) => {
 		const log = (...parts: string[]) => {

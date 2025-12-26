@@ -1,4 +1,9 @@
-// foodFavoriteRepository.ts
+/**
+ * @file FoodFavoriteRepository.ts
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { User } from "@schemas/user/User";
 

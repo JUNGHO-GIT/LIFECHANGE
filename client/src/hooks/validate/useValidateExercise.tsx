@@ -10,6 +10,7 @@ import { useStoreAlert, useStoreConfirm, useStoreLanguage } from "@exportStores"
 
 // -------------------------------------------------------------------------------------------------
 export const useValidateExercise = () => {
+
 	// 1. common -------------------------------------------------------------------------------------
 	const { translate } = useStoreLanguage();
 	const { setALERT } = useStoreAlert();

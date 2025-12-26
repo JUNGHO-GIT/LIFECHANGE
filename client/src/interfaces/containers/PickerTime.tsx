@@ -1,4 +1,9 @@
-// PickerTime.tsx
+/**
+ * @file PickerTime.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { JSX, React, memo, useCallback, useEffect, useMemo, useState } from "@exportReacts";
 import { Grid, Img } from "@exportComponents";

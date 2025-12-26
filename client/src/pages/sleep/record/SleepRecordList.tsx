@@ -1,4 +1,9 @@
-// SleepRecordList.tsx
+/**
+ * @file SleepRecordList.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { useState, useEffect, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
@@ -22,38 +27,40 @@ export const SleepRecordList = memo(() => {
 
 	// 2-1. useStorageLocal ------------------------------------------------------------------------
 	const [DATE, setDATE] = useStorageLocal(
-		"date", PATH, "", {
-			dateType: location_dateType ?? "",
+		`date`, PATH, ``, {
+			dateType: location_dateType ?? ``,
 			dateStart: location_dateStart ?? getDayFmt(),
 			dateEnd: location_dateEnd ?? getDayFmt(),
 		}
 	);
 	const [PAGING, setPAGING] = useStorageLocal(
-		"paging", PATH, "", {
-			sort: "asc",
+		`paging`, PATH, ``, {
+			sort: `asc`,
 			page: 1,
 		}
 	);
 	const [isExpanded, setIsExpanded] = useStorageLocal(
-		"isExpanded", PATH, "", [{
-			expanded: true
-		}]
+		`isExpanded`, PATH, ``, [
+			{
+				expanded: true
+			}
+		]
 	);
 
 	// 2-2. useState -------------------------------------------------------------------------------
 	const [OBJECT, setOBJECT] = useState<[SleepRecordType]>([SleepRecord]);
 	const [EXIST, setEXIST] = useState({
-		day: [""],
-		week: [""],
-		month: [""],
-		year: [""],
-		select: [""],
+		day: [``],
+		week: [``],
+		month: [``],
+		year: [``],
+		select: [``],
 	});
 	const [SEND, setSEND] = useState({
-		id: "",
-		dateType: "day",
-		dateStart: "0000-00-00",
-		dateEnd: "0000-00-00",
+		id: ``,
+		dateType: `day`,
+		dateStart: `0000-00-00`,
+		dateEnd: `0000-00-00`,
 	});
 	const [COUNT, setCOUNT] = useState({
 		totalCnt: 0,
@@ -67,7 +74,7 @@ export const SleepRecordList = memo(() => {
 			params: {
 				user_id: sessionId,
 				DATE: {
-					dateType: "",
+					dateType: ``,
 					dateStart: getMonthStartFmt(DATE?.dateStart),
 					dateEnd: getMonthEndFmt(DATE?.dateEnd),
 				},
@@ -75,14 +82,14 @@ export const SleepRecordList = memo(() => {
 		})
 		.then((res: any) => {
 			setEXIST(
-				!res.data.result || res.data.result?.length === 0 ? [""] : res.data.result
+				!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result
 			);
 		})
-		.catch((err: any) => {
+		.catch((error: any) => {
 			setALERT({
 				open: true,
-				msg: translate(err.response.data.msg),
-				severity: "error",
+				msg: translate(error.response.data.msg as string),
+				severity: `error`,
 			});
 		});
 	}, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
@@ -95,7 +102,7 @@ export const SleepRecordList = memo(() => {
 				user_id: sessionId,
 				PAGING: PAGING,
 				DATE: {
-					dateType: "",
+					dateType: ``,
 					dateStart: DATE?.dateStart,
 					dateEnd: DATE?.dateEnd,
 				},
@@ -108,28 +115,30 @@ export const SleepRecordList = memo(() => {
 				...prev,
 				totalCnt: res.data.totalCnt ?? 0,
 				sectionCnt: res.data.sectionCnt ?? 0,
-				newSectionCnt: res.data.sectionCnt || 0
+				newSectionCnt: res.data.sectionCnt ?? 0
 			}));
 			// 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
 			setIsExpanded(() => {
 				if (res.data.result?.length !== isExpanded.length) {
-					return Array(res.data.result?.length).fill({ expanded: true });
+					return Array.from({ length: res.data.result?.length }).fill({ expanded: true });
 				}
 				return isExpanded;
 			});
 		})
-		.catch((err: any) => {
+		.catch((error: any) => {
 			setLOADING(false);
 			setALERT({
 				open: true,
-				msg: translate(err.response.data.msg),
-				severity: "error",
+				msg: translate(error.response.data.msg as string),
+				severity: `error`,
 			});
 		})
 		.finally(() => {
 			setLOADING(false);
 		});
-	}, [URL_OBJECT, sessionId, PAGING?.sort, PAGING.page, DATE?.dateStart, DATE?.dateEnd]);
+	}, [
+		URL_OBJECT, sessionId, PAGING?.sort, PAGING.page, DATE?.dateStart, DATE?.dateEnd
+	]);
 
 	// 7. list -----------------------------------------------------------------------------------
 	const listNode = () => {
@@ -144,10 +153,10 @@ export const SleepRecordList = memo(() => {
 								expanded={isExpanded?.[i]?.expanded}
 							>
 								<AccordionSummary
-									expandIcon={
+									expandIcon={(
 										<Icons
-											key={"ChevronDown"}
-											name={"ChevronDown"}
+											key={`ChevronDown`}
+											name={`ChevronDown`}
 											className={`w-16px h-16px`}
 											onClick={(e: any) => {
 												e.preventDefault();
@@ -159,7 +168,7 @@ export const SleepRecordList = memo(() => {
 												)));
 											}}
 										/>
-									}
+									)}
 									onClick={() => {
 										void navigate(toDetail, {
 											state: {
@@ -174,27 +183,27 @@ export const SleepRecordList = memo(() => {
 									<Grid container={true} spacing={1}>
 										<Grid size={2} className={`d-row-center`}>
 											<Icons
-												key={"Search"}
-												name={"Search"}
+												key={`Search`}
+												name={`Search`}
 												className={`w-16px h-16px`}
 											/>
 										</Grid>
 										<Grid size={10} className={`d-row-left`}>
 											<Div className={`fs-0-9rem fw-600 black mr-5px`}>
-												{item.sleep_record_dateStart?.substring(5, 10)}
+												{item.sleep_record_dateStart?.slice(5, 10)}
 											</Div>
 											<Div className={`fs-0-9rem fw-500 dark ml-5px`}>
-												{translate(getDayNotFmt(item.sleep_record_dateStart).format("ddd"))}
+												{translate(getDayNotFmt(item.sleep_record_dateStart).format(`ddd`))}
 											</Div>
 										</Grid>
 									</Grid>
 								</AccordionSummary>
 								<AccordionDetails>
-									{/** Aggregated summary for the date (averages computed on server) **/}
+									{/** Aggregated summary for the date (averages computed on server) * */}
 									<Grid container={true} spacing={1}>
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={`d-row-center`}>
-												<Img max={14} hover={true} shadow={false} radius={false} src={"sleep2.webp"} />
+												<Img max={14} hover={true} shadow={false} radius={false} src={`sleep2.webp`} />
 											</Grid>
 											<Grid size={3} className={`d-row-left`}>
 												<Div className={`fs-0-8rem fw-600 dark ml-n15px`}>{translate(`bedTime`)}</Div>
@@ -202,8 +211,8 @@ export const SleepRecordList = memo(() => {
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={`d-row-right`}>
-														<Div className={`fs-0-8rem fw-600 ${item.sleep_record_bedTime_color || item.sleep_section?.[0]?.sleep_record_bedTime_color || ""}`}>
-															{item.sleep_record_bedTime || item.sleep_section?.[0]?.sleep_record_bedTime}
+														<Div className={`fs-0-8rem fw-600 ${item.sleep_record_bedTime_color ?? item.sleep_section?.[0]?.sleep_record_bedTime_color ?? ``}`}>
+															{item.sleep_record_bedTime ?? item.sleep_section?.[0]?.sleep_record_bedTime}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>
@@ -217,7 +226,7 @@ export const SleepRecordList = memo(() => {
 
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={`d-center`}>
-												<Img max={14} hover={true} shadow={false} radius={false} src={"sleep3.webp"} />
+												<Img max={14} hover={true} shadow={false} radius={false} src={`sleep3.webp`} />
 											</Grid>
 											<Grid size={3} className={`d-row-left`}>
 												<Div className={`fs-0-8rem fw-600 dark ml-n15px`}>{translate(`wakeTime`)}</Div>
@@ -225,8 +234,8 @@ export const SleepRecordList = memo(() => {
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={`d-row-right`}>
-														<Div className={`fs-0-8rem fw-600 ${item.sleep_record_wakeTime_color || item.sleep_section?.[0]?.sleep_record_wakeTime_color || ""}`}>
-															{item.sleep_record_wakeTime || item.sleep_section?.[0]?.sleep_record_wakeTime}
+														<Div className={`fs-0-8rem fw-600 ${item.sleep_record_wakeTime_color ?? item.sleep_section?.[0]?.sleep_record_wakeTime_color ?? ``}`}>
+															{item.sleep_record_wakeTime ?? item.sleep_section?.[0]?.sleep_record_wakeTime}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>
@@ -240,7 +249,7 @@ export const SleepRecordList = memo(() => {
 
 										<Grid container={true} spacing={1}>
 											<Grid size={2} className={`d-center`}>
-												<Img max={14} hover={true} shadow={false} radius={false} src={"sleep4.webp"} />
+												<Img max={14} hover={true} shadow={false} radius={false} src={`sleep4.webp`} />
 											</Grid>
 											<Grid size={3} className={`d-row-left`}>
 												<Div className={`fs-0-8rem fw-600 dark ml-n15px`}>{translate(`sleepTime`)}</Div>
@@ -248,8 +257,8 @@ export const SleepRecordList = memo(() => {
 											<Grid size={7}>
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={`d-row-right`}>
-														<Div className={`fs-0-8rem fw-600 ${item.sleep_record_sleepTime_color || item.sleep_section?.[0]?.sleep_record_sleepTime_color || ""}`}>
-															{item.sleep_record_sleepTime || item.sleep_section?.[0]?.sleep_record_sleepTime}
+														<Div className={`fs-0-8rem fw-600 ${item.sleep_record_sleepTime_color ?? item.sleep_section?.[0]?.sleep_record_sleepTime_color ?? ``}`}>
+															{item.sleep_record_sleepTime ?? item.sleep_section?.[0]?.sleep_record_sleepTime}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>
@@ -269,7 +278,7 @@ export const SleepRecordList = memo(() => {
 		// 7-10. return
 		return (
 			<Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
-				{COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={"sleep"} /> : listSection()}
+				{COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={`sleep`} /> : listSection()}
 			</Paper>
 		);
 	};

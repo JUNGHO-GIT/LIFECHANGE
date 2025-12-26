@@ -1,4 +1,9 @@
-// SleepGoal.tsx
+/**
+ * @file SleepGoal.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 // Types ------------------------------------------------------------------------------------------
 export type SleepGoalType = {
@@ -42,40 +47,40 @@ export type SleepGoalType = {
 
 // Schema -----------------------------------------------------------------------------------------
 export const SleepGoal: SleepGoalType = {
-	_id: "",
+	_id: ``,
 
 	// goal
 	sleep_goal_number: 0,
-	sleep_goal_dateType: "",
-	sleep_goal_dateStart: "0000-00-00",
-	sleep_goal_dateEnd: "0000-00-00",
-	sleep_goal_bedTime: "00:00",
-	sleep_goal_bedTime_color: "",
-	sleep_goal_wakeTime: "00:00",
-	sleep_goal_wakeTime_color: "",
-	sleep_goal_sleepTime: "00:00",
-	sleep_goal_sleepTime_color: "",
-	sleep_goal_regDt: "",
-	sleep_goal_updateDt: "",
+	sleep_goal_dateType: ``,
+	sleep_goal_dateStart: `0000-00-00`,
+	sleep_goal_dateEnd: `0000-00-00`,
+	sleep_goal_bedTime: `00:00`,
+	sleep_goal_bedTime_color: ``,
+	sleep_goal_wakeTime: `00:00`,
+	sleep_goal_wakeTime_color: ``,
+	sleep_goal_sleepTime: `00:00`,
+	sleep_goal_sleepTime_color: ``,
+	sleep_goal_regDt: ``,
+	sleep_goal_updateDt: ``,
 
 	// record
-	sleep_record_dateType: "",
-	sleep_record_dateStart: "0000-00-00",
-	sleep_record_dateEnd: "0000-00-00",
-	sleep_record_bedTime: "00:00",
-	sleep_record_bedTime_color: "",
-	sleep_record_wakeTime: "00:00",
-	sleep_record_wakeTime_color: "",
-	sleep_record_sleepTime: "00:00",
-	sleep_record_sleepTime_color: "",
-	sleep_record_regDt: "",
-	sleep_record_updateDt: "",
+	sleep_record_dateType: ``,
+	sleep_record_dateStart: `0000-00-00`,
+	sleep_record_dateEnd: `0000-00-00`,
+	sleep_record_bedTime: `00:00`,
+	sleep_record_bedTime_color: ``,
+	sleep_record_wakeTime: `00:00`,
+	sleep_record_wakeTime_color: ``,
+	sleep_record_sleepTime: `00:00`,
+	sleep_record_sleepTime_color: ``,
+	sleep_record_regDt: ``,
+	sleep_record_updateDt: ``,
 
 	// diff
-	sleep_record_diff_bedTime: "00:00",
-	sleep_record_diff_bedTime_color: "",
-	sleep_record_diff_wakeTime: "00:00",
-	sleep_record_diff_wakeTime_color: "",
-	sleep_record_diff_sleepTime: "00:00",
-	sleep_record_diff_sleepTime_color: ""
+	sleep_record_diff_bedTime: `00:00`,
+	sleep_record_diff_bedTime_color: ``,
+	sleep_record_diff_wakeTime: `00:00`,
+	sleep_record_diff_wakeTime_color: ``,
+	sleep_record_diff_sleepTime: `00:00`,
+	sleep_record_diff_sleepTime_color: ``
 };

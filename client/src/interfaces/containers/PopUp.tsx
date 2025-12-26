@@ -1,4 +1,9 @@
-// PopUp.tsx
+/**
+ * @file PopUp.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { React, memo, useCallback, useEffect, useMemo, useState } from "@exportReacts";
 import { Popover } from "@exportComponents";

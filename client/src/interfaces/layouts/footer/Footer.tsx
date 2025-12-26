@@ -1,4 +1,9 @@
-// Footer.tsx
+/**
+ * @file Footer.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { Paper } from "@exportComponents";
 import { useCommonValue } from "@exportHooks";

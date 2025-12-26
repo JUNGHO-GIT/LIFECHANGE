@@ -34,7 +34,7 @@ export const useLanguageSetting = () => {
 		const unit: string = isoCode === `US` ? `lbs` : `kg`;
 
 		// ex. en
-		const lang: string = localLang || (
+		const lang: string = localLang ?? (
 			navigator.language.includes(`-`) ? navigator.language.split(`-`)[0] : navigator.language
 		);
 

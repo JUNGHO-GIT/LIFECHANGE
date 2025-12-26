@@ -1,4 +1,9 @@
-// CalendarList.tsx
+/**
+ * @file CalendarList.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { useState, useEffect, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
@@ -95,9 +100,9 @@ export const CalendarList = memo(() => {
 				return false;
 			}
 
-			const dayFmt: string = getDayFmt(date);
-			const dayStart: string = getDayStartFmt(dateStart);
-			const dayEnd: string = getDayEndFmt(dateEnd);
+			const dayFmt: string = getDayFmt(date as string | Date);
+			const dayStart: string = getDayStartFmt(dateStart as string | Date);
+			const dayEnd: string = getDayEndFmt(dateEnd as string | Date);
 
 			return dayFmt >= dayStart && dayFmt <= dayEnd;
 		};

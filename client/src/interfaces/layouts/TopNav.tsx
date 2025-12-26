@@ -1,4 +1,9 @@
-// TopNav.tsx
+/**
+ * @file TopNav.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { Br, Div, Grid, Hr, Img, Paper } from "@exportComponents";
 import { Input, PopUp } from "@exportContainers";
@@ -119,23 +124,24 @@ export const TopNav = memo(() => {
 
 		const getImage = (score: string) => {
 			const parsScore: number = Number.parseFloat(score);
-			(parsScore >= 0 && parsScore <= 1) ? (() => {
+			if (parsScore >= 0 && parsScore <= 1) {
 				return `smile1`;
-			})()
-			: (parsScore > 1 && parsScore <= 2) ? (() => {
+			}
+			else if (parsScore > 1 && parsScore <= 2) {
 				return `smile2`;
-			})()
-			: (parsScore > 2 && parsScore <= 3) ? (() => {
+			}
+			else if (parsScore > 2 && parsScore <= 3) {
 				return `smile3`;
-			})()
-			: (parsScore > 3 && parsScore <= 4) ? (() => {
+			}
+			else if (parsScore > 3 && parsScore <= 4) {
 				return `smile4`;
-			})()
-			: (parsScore > 4 && parsScore <= 5) && (() => {
+			}
+			else if (parsScore > 4 && parsScore <= 5) {
 				return `smile5`;
-			})();
-
-			return `smile3`;
+			}
+			else {
+				return `smile3`;
+			}
 		};
 
 		setSmileScore(newSmileScore);

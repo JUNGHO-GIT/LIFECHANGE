@@ -1,4 +1,9 @@
-// MoneyRecordDetail.tsx
+/**
+ * @file MoneyRecordDetail.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { React, useState, useEffect, useRef, useCallback, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useValidateMoney } from "@exportHooks";
@@ -25,14 +30,14 @@ export const MoneyRecordDetail = memo(() => {
 	const { setLOADING } = useStoreLoading();
 
 	// 2-2. useState -------------------------------------------------------------------------------
-	const [LOCKED, setLOCKED] = useState<string>("unlocked");
+	const [LOCKED, setLOCKED] = useState<string>(`unlocked`);
 	const [OBJECT, setOBJECT] = useState<MoneyRecordType>(MoneyRecord);
 	const [EXIST, setEXIST] = useState({
-		day: [""],
-		week: [""],
-		month: [""],
-		year: [""],
-		select: [""],
+		day: [``],
+		week: [``],
+		month: [``],
+		year: [``],
+		select: [``],
 	});
 	const [FLOW, setFLOW] = useState({
 		theme: `money`,
@@ -41,10 +46,10 @@ export const MoneyRecordDetail = memo(() => {
 		itsNew: false,
 	});
 	const [SEND, setSEND] = useState({
-		id: "",
-		dateType: "",
-		dateStart: "0000-00-00",
-		dateEnd: "0000-00-00",
+		id: ``,
+		dateType: ``,
+		dateStart: `0000-00-00`,
+		dateEnd: `0000-00-00`,
 	});
 	const [COUNT, setCOUNT] = useState({
 		totalCnt: 0,
@@ -52,7 +57,7 @@ export const MoneyRecordDetail = memo(() => {
 		newSectionCnt: 0
 	});
 	const [DATE, setDATE] = useState({
-		dateType: "day",
+		dateType: `day`,
 		dateStart: location_dateStart ?? getDayFmt(),
 		dateEnd: location_dateEnd ?? getDayFmt(),
 	});
@@ -77,17 +82,18 @@ export const MoneyRecordDetail = memo(() => {
 		COUNT !== countRef.current && (countRef.current = COUNT);
 		OBJECT !== objectRef.current && (objectRef.current = OBJECT);
 		DATE !== dateRef.current && (dateRef.current = DATE);
-	}, [
-		COUNT, OBJECT, DATE
-	]);
+	}, [COUNT, OBJECT, DATE]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
 	useEffect(() => {
 		if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
 
-			const dateRange = `${DATE?.dateStart.trim()} - ${DATE?.dateEnd.trim()}`;
-			const objectRange = `${OBJECT.money_record_dateStart.trim()} - ${OBJECT.money_record_dateEnd.trim()}`;
-
+			const dateRange: string = (
+				`${DATE?.dateStart.trim()} - ${DATE?.dateEnd.trim()}`
+			);
+			const objectRange: string = (
+				`${OBJECT.money_record_dateStart.trim()} - ${OBJECT.money_record_dateEnd.trim()}`
+			);
 			const isExist: boolean = (
 				EXIST?.[DATE?.dateType as keyof typeof EXIST]?.includes(dateRange)
 			);
@@ -95,8 +101,8 @@ export const MoneyRecordDetail = memo(() => {
 				dateRange === objectRange
 			);
 			const itsNew: boolean = (
-				OBJECT.money_record_dateStart === "0000-00-00" &&
-				OBJECT.money_record_dateEnd === "0000-00-00"
+				OBJECT.money_record_dateStart === `0000-00-00` &&
+				OBJECT.money_record_dateEnd === `0000-00-00`
 			);
 
 			setFLOW((prev) => ({
@@ -114,7 +120,7 @@ export const MoneyRecordDetail = memo(() => {
 			params: {
 				user_id: sessionId,
 				DATE: {
-					dateType: "",
+					dateType: ``,
 					dateStart: getMonthStartFmt(DATE?.dateStart),
 					dateEnd: getMonthEndFmt(DATE?.dateEnd),
 				},
@@ -122,14 +128,14 @@ export const MoneyRecordDetail = memo(() => {
 		})
 		.then((res: any) => {
 			setEXIST(
-				!res.data.result || res.data.result?.length === 0 ? [""] : res.data.result
+				!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result
 			);
 		})
-		.catch((err: any) => {
+		.catch((error: any) => {
 			setALERT({
 				open: true,
-				msg: translate(err.response.data.msg),
-				severity: "error",
+				msg: translate(error.response.data.msg),
+				severity: `error`,
 			});
 		});
 	}, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
@@ -137,7 +143,7 @@ export const MoneyRecordDetail = memo(() => {
 	// 2-3. useEffect -----------------------------------------------------------------------------
 	useEffect(() => {
 		setLOADING(true);
-		if (LOCKED === "locked") {
+		if (LOCKED === `locked`) {
 			setLOADING(false);
 			return;
 		}
@@ -149,7 +155,7 @@ export const MoneyRecordDetail = memo(() => {
 		})
 		.then((res: any) => {
 			setLOADING(false);
-			setOBJECT(res.data.result || MoneyRecord);
+			setOBJECT(res.data.result ?? MoneyRecord);
 
 			res.data.sectionCnt <= 0 && setOBJECT((prev) => ({
 				...prev,
@@ -168,15 +174,15 @@ export const MoneyRecordDetail = memo(() => {
 				...prev,
 				totalCnt: res.data.totalCnt ?? 0,
 				sectionCnt: res.data.sectionCnt ?? 0,
-				newSectionCnt: res.data.sectionCnt || 0
+				newSectionCnt: res.data.sectionCnt ?? 0
 			}));
 		})
-		.catch((err: any) => {
+		.catch((error: any) => {
 			setLOADING(false);
 			setALERT({
 				open: true,
-				msg: translate(err.response.data.msg),
-				severity: "error",
+				msg: translate(error.response.data.msg as string),
+				severity: `error`,
 			});
 		})
 		.finally(() => {
@@ -188,8 +194,11 @@ export const MoneyRecordDetail = memo(() => {
 	useEffect(() => {
 		const totals = OBJECT?.money_section.reduce((acc: any, cur: any) => {
 			return {
-				totalIncome: acc.totalIncome + (cur.money_record_part === "income" ? Number(cur.money_record_amount) : 0),
-				totalExpense: acc.totalExpense + (cur.money_record_part === "expense" ? Number(cur.money_record_amount) : 0),
+				totalIncome: Number(acc.totalIncome) +
+				(cur.money_record_part === `income` ? Number(cur.money_record_amount) : 0),
+
+				totalExpense: Number(acc.totalExpense) +
+				(cur.money_record_part === `expense` ? Number(cur.money_record_amount) : 0),
 			};
 		}, {
 			totalIncome: 0,
@@ -205,33 +214,33 @@ export const MoneyRecordDetail = memo(() => {
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
 	useEffect(() => {
-		const defaultSection = {
-			money_record_part: moneyArray[1]?.money_record_part || "",
-			money_record_title: moneyArray[0]?.money_record_title?.[0] || "",
-			money_record_amount: "0",
-			money_record_content: "",
-			money_record_include: "Y",
+		const defaultSection: any = {
+			money_record_part: moneyArray[1]?.money_record_part ?? ``,
+			money_record_title: moneyArray[0]?.money_record_title?.[0] ?? ``,
+			money_record_amount: `0`,
+			money_record_content: ``,
+			money_record_include: `Y`,
 		};
-		const updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_item: any, idx: number) => {
-			return idx < OBJECT?.money_section?.length ? OBJECT?.money_section[idx] : defaultSection
+		const updatedSection: any[] = Array.from({ length: COUNT?.newSectionCnt }).fill(null).map((_item: any, idx: number) => {
+			return idx < OBJECT?.money_section?.length ? OBJECT?.money_section[idx] : defaultSection;
 		});
 		setOBJECT((prev) => ({
 			...prev,
 			money_section: updatedSection
 		}));
 
-	},[COUNT?.newSectionCnt]);
+	}, [COUNT?.newSectionCnt]);
 
 	// 3. flow ------------------------------------------------------------------------------------
 	const flowSave = async (type: string) => {
 		setLOADING(true);
-		if (!await validate(objectRef.current, countRef.current, "record")) {
+		if (!await validate(objectRef.current, countRef.current, `record`)) {
 			setLOADING(false);
 			return;
 		}
 		axios({
-			method: type === "create" ? "post" : "put",
-			url: type === "create" ? `${URL_OBJECT}/record/create` : `${URL_OBJECT}/record/update`,
+			method: type === `create` ? `post` : `put`,
+			url: type === `create` ? `${URL_OBJECT}/record/create` : `${URL_OBJECT}/record/update`,
 			data: {
 				user_id: sessionId,
 				OBJECT: objectRef.current,
@@ -240,39 +249,39 @@ export const MoneyRecordDetail = memo(() => {
 			}
 		})
 		.then((res: any) => {
-			if (res.data.status === "success") {
+			if (res.data.status === `success`) {
 				setLOADING(false);
 				setALERT({
 					open: true,
 					msg: translate(res.data.msg as string),
-					severity: "success",
+					severity: `success`,
 				});
 				void navigate(toList, {
 					state: {
-						dateType: "",
+						dateType: ``,
 						dateStart: DATE?.dateStart,
 						dateEnd: DATE?.dateEnd
 					}
 				});
-				void sync("property");
+				void sync(`property`);
 			}
 			else {
 				setLOADING(false);
 				setALERT({
 					open: true,
 					msg: translate(res.data.msg as string),
-					severity: "error",
+					severity: `error`,
 				});
 			}
 		})
-		.catch((err: any) => {
+		.catch((error: any) => {
 			setLOADING(false);
 			setALERT({
 				open: true,
-				msg: translate(err.response.data.msg),
-				severity: "error",
+				msg: translate(error.response.data.msg as string),
+				severity: `error`,
 			});
-			console.error(err);
+			console.error(error);
 		})
 		.finally(() => {
 			setLOADING(false);
@@ -282,12 +291,12 @@ export const MoneyRecordDetail = memo(() => {
 	// 3. flow ------------------------------------------------------------------------------------
 	const flowDelete = async () => {
 		setLOADING(true);
-		if (!await validate(objectRef.current, countRef.current, "delete")) {
+		if (!await validate(objectRef.current, countRef.current, `delete`)) {
 			setLOADING(false);
 			return;
 		}
 		axios({
-			method: "delete",
+			method: `delete`,
 			url: `${URL_OBJECT}/record/delete`,
 			data: {
 				user_id: sessionId,
@@ -295,39 +304,39 @@ export const MoneyRecordDetail = memo(() => {
 			}
 		})
 		.then((res: any) => {
-			if (res.data.status === "success") {
+			if (res.data.status === `success`) {
 				setLOADING(false);
 				setALERT({
 					open: true,
 					msg: translate(res.data.msg as string),
-					severity: "success",
+					severity: `success`,
 				});
 				void navigate(toList, {
 					state: {
-						dateType: "",
+						dateType: ``,
 						dateStart: dateRef.current.dateStart,
 						dateEnd: dateRef.current.dateEnd
 					}
 				});
-				void sync("property");
+				void sync(`property`);
 			}
 			else {
 				setLOADING(false);
 				setALERT({
 					open: true,
 					msg: translate(res.data.msg as string),
-					severity: "error",
+					severity: `error`,
 				});
 			}
 		})
-		.catch((err: any) => {
+		.catch((error: any) => {
 			setLOADING(false);
 			setALERT({
 				open: true,
-				msg: translate(err.response.data.msg),
-				severity: "error",
+				msg: translate(error.response.data.msg as string),
+				severity: `error`,
 			});
-			console.error(err);
+			console.error(error);
 		})
 		.finally(() => {
 			setLOADING(false);
@@ -372,23 +381,23 @@ export const MoneyRecordDetail = memo(() => {
 		// 7-2. total
 		const totalSection = () => (
 			<Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1 p-20px`}>
-				{/** row 1 **/}
+				{/** row 1 * */}
 				<Grid container={true} spacing={1}>
 					<Grid size={12}>
 						<Input
 							locked={LOCKED}
 							readOnly={true}
 							label={translate(`totalIncome`)}
-							value={insertComma(OBJECT?.money_record_total_income || "0")}
-							startadornment={
+							value={insertComma(OBJECT?.money_record_total_income || `0`)}
+							startadornment={(
 								<Img
 									max={14}
 									hover={true}
 									shadow={false}
 									radius={false}
-									src={"money2.webp"}
+									src={`money2.webp`}
 								/>
-							}
+							)}
 							endadornment={
 								localCurrency
 							}
@@ -396,23 +405,23 @@ export const MoneyRecordDetail = memo(() => {
 					</Grid>
 				</Grid>
 
-				{/** row 2 **/}
+				{/** row 2 * */}
 				<Grid container={true} spacing={1}>
 					<Grid size={12}>
 						<Input
 							locked={LOCKED}
 							readOnly={true}
 							label={translate(`totalExpense`)}
-							value={insertComma(OBJECT?.money_record_total_expense || "0")}
-							startadornment={
+							value={insertComma(OBJECT?.money_record_total_expense || `0`)}
+							startadornment={(
 								<Img
 									max={14}
 									hover={true}
 									shadow={false}
 									radius={false}
-									src={"money2.webp"}
+									src={`money2.webp`}
 								/>
-							}
+							)}
 							endadornment={
 								localCurrency
 							}
@@ -424,175 +433,181 @@ export const MoneyRecordDetail = memo(() => {
 		// 7-3. detail
 		const detailSection = () => (
 			<>
-			{OBJECT.money_section?.map((item, i) => {
-				// money_record_title을 위한 현재 part의 데이터를 찾기
-				const currentPartData = moneyArray.find((f: any) => f.money_record_part === item?.money_record_part);
-				const partIndex = moneyArray.findIndex((f: any) => f.money_record_part === item?.money_record_part);
+				{OBJECT.money_section?.map((item, i) => {
+					// money_record_title을 위한 현재 part의 데이터를 찾기
+					const currentPartData: any = moneyArray.find((f: any) => f.money_record_part === item?.money_record_part);
+					const partIndex: number = moneyArray.findIndex((f: any) => f.money_record_part === item?.money_record_part);
 
-				return (
-					<Grid container spacing={2} key={`detail-${i}`}
-					className={`${LOCKED === "locked" ? "locked" : ""} radius-2 border-1 shadow-1 p-20px`}>
-						{/** row 1 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={6} className={`d-row-left`}>
-								<Bg
-									badgeContent={i + 1}
-									bgcolor={bgColors?.[partIndex]}
-								/>
+					return (
+						<Grid
+							container
+							spacing={2}
+							key={`detail-${i}`}
+							className={`${LOCKED === `locked` ? `locked` : ``} radius-2 border-1 shadow-1 p-20px`}
+						>
+							{/** row 1 * */}
+							<Grid container={true} spacing={1}>
+								<Grid size={6} className={`d-row-left`}>
+									<Bg
+										badgeContent={i + 1}
+										bgcolor={bgColors?.[partIndex]}
+									/>
+								</Grid>
+								<Grid size={6} className={`d-row-right`}>
+									<Delete
+										index={i}
+										handleDelete={handleDelete}
+										LOCKED={LOCKED}
+									/>
+								</Grid>
 							</Grid>
-							<Grid size={6} className={`d-row-right`}>
-								<Delete
-									index={i}
-									handleDelete={handleDelete}
-									LOCKED={LOCKED}
-								/>
-							</Grid>
-						</Grid>
 
-						{/** row 2 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={6}>
-								<Select
-									locked={LOCKED}
-									label={translate(`part`)}
-									value={item?.money_record_part || ""}
-									inputRef={REFS?.[i]?.money_record_part}
-									error={ERRORS?.[i]?.money_record_part}
-									onChange={(e: any) => {
-										let value = String(e.target.value || "");
-										const targetPartData = moneyArray.find((f: any) => f.money_record_part === value);
-										setOBJECT((prev) => ({
-											...prev,
-											money_section: prev.money_section?.map((section: any, idx: number) => (
+							{/** row 2 * */}
+							<Grid container={true} spacing={1}>
+								<Grid size={6}>
+									<Select
+										locked={LOCKED}
+										label={translate(`part`)}
+										value={item?.money_record_part || ``}
+										inputRef={REFS?.[i]?.money_record_part}
+										error={ERRORS?.[i]?.money_record_part}
+										onChange={(e: any) => {
+											const value: string = String(e.target.value ?? ``);
+											const targetPartData = moneyArray.find((f: any) => f.money_record_part === value);
+											setOBJECT((prev) => ({
+												...prev,
+												money_section: prev.money_section?.map((section: any, idx: number) => (
 												idx === i ? {
 													...section,
 													money_record_part: value,
-													money_record_title: targetPartData?.money_record_title?.[0] || "",
+													money_record_title: targetPartData?.money_record_title?.[0] ?? ``,
 												} : section
-											))
-										}));
-									}
-								}>
-									{moneyArray.map((part: any, idx: number) => (
-										<MenuItem
-											key={idx}
-											value={part.money_record_part}
-											className={`fs-0-8rem`}
-										>
-											{translate(part.money_record_part)}
-										</MenuItem>
-									))}
-								</Select>
-							</Grid>
-							<Grid size={6}>
-								<Select
-									locked={LOCKED}
-									label={translate(`title`)}
-									value={item?.money_record_title || ""}
-									inputRef={REFS?.[i]?.money_record_title}
-									error={ERRORS?.[i]?.money_record_title}
-									onChange={(e: any) => {
-										let value = String(e.target.value || "");
-										setOBJECT((prev) => ({
-											...prev,
-											money_section: prev.money_section?.map((section: any, idx: number) => (
+												))
+											}));
+										}}
+									>
+										{moneyArray.map((part: any, idx: number) => (
+											<MenuItem
+												key={idx}
+												value={part.money_record_part}
+												className={`fs-0-8rem`}
+											>
+												{translate(part.money_record_part as string)}
+											</MenuItem>
+										))}
+									</Select>
+								</Grid>
+								<Grid size={6}>
+									<Select
+										locked={LOCKED}
+										label={translate(`title`)}
+										value={item?.money_record_title || ``}
+										inputRef={REFS?.[i]?.money_record_title}
+										error={ERRORS?.[i]?.money_record_title}
+										onChange={(e: any) => {
+											const value: string = String(e.target.value ?? ``);
+											setOBJECT((prev) => ({
+												...prev,
+												money_section: prev.money_section?.map((section: any, idx: number) => (
 												idx === i ? {
 													...section,
 													money_record_title: value,
 												} : section
-											))
-										}));
-									}}
-								>
-									{(currentPartData?.money_record_title || []).map((title: any, idx: number) => (
-										<MenuItem
-											key={idx}
-											value={title}
-											className={`fs-0-8rem`}
-										>
-											{translate(title)}
-										</MenuItem>
-									))}
-								</Select>
+												))
+											}));
+										}}
+									>
+										{(currentPartData?.money_record_title ?? []).map((title: any, idx: number) => (
+											<MenuItem
+												key={idx}
+												value={title}
+												className={`fs-0-8rem`}
+											>
+												{translate(title as string)}
+											</MenuItem>
+										))}
+									</Select>
+								</Grid>
 							</Grid>
-						</Grid>
 
-						{/** row 3 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={12}>
-								<Input
-									locked={LOCKED}
-									label={translate(`amount`)}
-									value={insertComma(item?.money_record_amount || "0")}
-									inputRef={REFS?.[i]?.money_record_amount}
-									error={ERRORS?.[i]?.money_record_amount}
-									startadornment={
-										<Img
-											max={14}
-											hover={true}
-											shadow={false}
-											radius={false}
-											src={"money2.webp"}
-										/>
-									}
-									endadornment={
-										localCurrency
-									}
-									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(e.target?.value, 999999999);
-										!processedValue === null && (() => { return })();
-										const value = processedValue === "" ? "0" : processedValue;
-										setOBJECT((prev) => ({
-											...prev,
-											money_section: prev.money_section?.map((section: any, idx: number) => (
-												idx === i ? {
-													...section,
-													money_record_amount: value,
-												} : section
-											))
-										}));
-									}}
-								/>
+							{/** row 3 * */}
+							<Grid container={true} spacing={1}>
+								<Grid size={12}>
+									<Input
+										locked={LOCKED}
+										label={translate(`amount`)}
+										value={insertComma(item?.money_record_amount || `0`)}
+										inputRef={REFS?.[i]?.money_record_amount}
+										error={ERRORS?.[i]?.money_record_amount}
+										startadornment={(
+											<Img
+												max={14}
+												hover={true}
+												shadow={false}
+												radius={false}
+												src={`money2.webp`}
+											/>
+										)}
+										endadornment={
+											localCurrency
+										}
+										onChange={(e: any) => {
+											const processedValue: string | null = handleNumberInput(e.target?.value, 999_999_999);
+											!processedValue === null && (() => {
+												return;
+											})();
+											const value: string = processedValue === `` ? `0` : processedValue;
+											setOBJECT((prev) => ({
+												...prev,
+												money_section: prev.money_section?.map((section: any, idx: number) => (
+													idx === i ? {
+														...section,
+														money_record_amount: value,
+													} : section
+												))
+											}));
+										}}
+									/>
+								</Grid>
 							</Grid>
-						</Grid>
 
-						{/** row 4 **/}
-						<Grid container={true} spacing={1}>
-							<Grid size={{ xs: 7, sm: 8 }} className={`d-center`}>
-								<Memo
-									OBJECT={OBJECT}
-									setOBJECT={setOBJECT}
-									LOCKED={LOCKED}
-									extra={"money_record_content"}
-									i={i}
-								/>
-							</Grid>
-							<Grid size={{ xs: 5, sm: 4 }} className={`d-center`}>
-								<Div className={`fs-0-7rem fw-500 dark ml-10px`}>
-									{translate(`includeProperty`)}
-								</Div>
-								<Checkbox
-									size={"small"}
-									className={`p-0px ml-5px`}
-									checked={item?.money_record_include === "Y"}
-									disabled={LOCKED === "locked"}
-									onChange={(e: any) => {
-										setOBJECT((prev) => ({
-											...prev,
-											money_section: prev.money_section?.map((section: any, idx: number) => (
-												idx === i ? {
-													...section,
-													money_record_include: e.target.checked ? "Y" : "N",
-												} : section
-											)),
-										}));
-									}}
-								/>
+							{/** row 4 * */}
+							<Grid container={true} spacing={1}>
+								<Grid size={{ xs: 7, sm: 8 }} className={`d-center`}>
+									<Memo
+										OBJECT={OBJECT}
+										setOBJECT={setOBJECT}
+										LOCKED={LOCKED}
+										extra={`money_record_content`}
+										i={i}
+									/>
+								</Grid>
+								<Grid size={{ xs: 5, sm: 4 }} className={`d-center`}>
+									<Div className={`fs-0-7rem fw-500 dark ml-10px`}>
+										{translate(`includeProperty`)}
+									</Div>
+									<Checkbox
+										size={`small`}
+										className={`p-0px ml-5px`}
+										checked={item?.money_record_include === `Y`}
+										disabled={LOCKED === `locked`}
+										onChange={(e: any) => {
+											setOBJECT((prev) => ({
+												...prev,
+												money_section: prev.money_section?.map((section: any, idx: number) => (
+													idx === i ? {
+														...section,
+														money_record_include: e.target.checked ? `Y` : `N`,
+													} : section
+												)),
+											}));
+										}}
+									/>
+								</Grid>
 							</Grid>
 						</Grid>
-					</Grid>
-				);
-			})}
+					);
+				})}
 			</>
 		);
 		// 7-10. return

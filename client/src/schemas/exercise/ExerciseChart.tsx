@@ -1,4 +1,9 @@
-// ExerciseChart.tsx
+/**
+ * @file ExerciseChart.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 // Types ------------------------------------------------------------------------------------------
 export type ExercisePieType = {
@@ -21,31 +26,31 @@ export type ExerciseAvgType = {
 
 // Schema -----------------------------------------------------------------------------------------
 export const ExercisePie: ExercisePieType = {
-	name: "Empty",
+	name: `Empty`,
 	value: 100,
 };
 export const ExerciseLineVolume: ExerciseLineType = {
-	name: "",
-	date: "",
-	volume: "",
+	name: ``,
+	date: ``,
+	volume: ``,
 };
 export const ExerciseLineCardio: ExerciseLineType = {
-	name: "",
-	date: "",
-	cardio: "",
+	name: ``,
+	date: ``,
+	cardio: ``,
 };
 export const ExerciseLineScale: ExerciseLineType = {
-	name: "",
-	date: "",
-	scale: "",
+	name: ``,
+	date: ``,
+	scale: ``,
 };
 export const ExerciseAvgVolume: ExerciseAvgType = {
-	name: "",
-	date: "",
-	volume: "",
+	name: ``,
+	date: ``,
+	volume: ``,
 };
 export const ExerciseAvgCardio: ExerciseAvgType = {
-	name: "",
-	date: "",
-	cardio: "",
+	name: ``,
+	date: ``,
+	cardio: ``,
 };

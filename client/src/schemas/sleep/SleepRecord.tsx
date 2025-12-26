@@ -1,4 +1,9 @@
-// SleepRecord.tsx
+/**
+ * @file SleepRecord.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 // Types ------------------------------------------------------------------------------------------
 export type SleepRecordType = {
@@ -7,7 +12,6 @@ export type SleepRecordType = {
 	sleep_record_dateType: string;
 	sleep_record_dateStart: string;
 	sleep_record_dateEnd: string;
-	// aggregated (average) fields returned by list API (one per date)
 	sleep_record_bedTime?: string;
 	sleep_record_bedTime_color?: string;
 	sleep_record_wakeTime?: string;
@@ -28,26 +32,27 @@ export type SleepRecordType = {
 
 // Schema -----------------------------------------------------------------------------------------
 export const SleepRecord: SleepRecordType = {
-	_id: "",
+	_id: ``,
 	sleep_record_number: 0,
-	sleep_record_dateType: "",
-	sleep_record_dateStart: "0000-00-00",
-	sleep_record_dateEnd: "0000-00-00",
-	// default aggregated values
-	sleep_record_bedTime: "",
-	sleep_record_bedTime_color: "",
-	sleep_record_wakeTime: "",
-	sleep_record_wakeTime_color: "",
-	sleep_record_sleepTime: "",
-	sleep_record_sleepTime_color: "",
-	sleep_section: [{
-		sleep_record_bedTime: "00:00",
-		sleep_record_bedTime_color: "",
-		sleep_record_wakeTime: "00:00",
-		sleep_record_wakeTime_color: "",
-		sleep_record_sleepTime: "00:00",
-		sleep_record_sleepTime_color: "",
-	}],
-	sleep_record_regDt: "",
-	sleep_record_updateDt: "",
+	sleep_record_dateType: ``,
+	sleep_record_dateStart: `0000-00-00`,
+	sleep_record_dateEnd: `0000-00-00`,
+	sleep_record_bedTime: ``,
+	sleep_record_bedTime_color: ``,
+	sleep_record_wakeTime: ``,
+	sleep_record_wakeTime_color: ``,
+	sleep_record_sleepTime: ``,
+	sleep_record_sleepTime_color: ``,
+	sleep_section: [
+		{
+			sleep_record_bedTime: `00:00`,
+			sleep_record_bedTime_color: ``,
+			sleep_record_wakeTime: `00:00`,
+			sleep_record_wakeTime_color: ``,
+			sleep_record_sleepTime: `00:00`,
+			sleep_record_sleepTime_color: ``,
+		}
+	],
+	sleep_record_regDt: ``,
+	sleep_record_updateDt: ``,
 };

@@ -1,4 +1,9 @@
-// SleepChart.tsx
+/**
+ * @file SleepChart.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 // Types ------------------------------------------------------------------------------------------
 export type SleepPieType = {
@@ -22,20 +27,20 @@ export type SleepAvgType = {
 
 // Schema -----------------------------------------------------------------------------------------
 export const SleepPie: SleepPieType = {
-	name: "Empty",
+	name: `Empty`,
 	value: 100,
 };
 export const SleepLine: SleepLineType = {
-	name: "",
-	date: "",
-	bedTime: "0",
-	wakeTime: "0",
-	sleepTime: "0",
+	name: ``,
+	date: ``,
+	bedTime: `0`,
+	wakeTime: `0`,
+	sleepTime: `0`,
 };
 export const SleepAvg: SleepAvgType = {
-	name: "",
-	date: "",
-	bedTime: "0",
-	wakeTime: "0",
-	sleepTime: "0",
+	name: ``,
+	date: ``,
+	bedTime: `0`,
+	wakeTime: `0`,
+	sleepTime: `0`,
 };

@@ -1,4 +1,10 @@
-// Calendar.tsx
+/**
+ * @file Calendar.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
+
 export type CalendarExerciseSectionType = {
 	exercise_record_part: string;
 	exercise_record_title: string;
@@ -95,33 +101,33 @@ export type CalendarType = {
 
 // -------------------------------------------------------------------------------------------------
 export const Calendar: CalendarType = {
-	user_id: "",
+	user_id: ``,
 	calendar_number: 0,
-	calendar_exercise_dateType: "",
-	calendar_exercise_dateStart: "0000-00-00",
-	calendar_exercise_dateEnd: "0000-00-00",
-	calendar_exercise_record_total_volume: "0",
-	calendar_exercise_record_total_cardio: "00:00",
-	calendar_food_dateType: "",
-	calendar_food_dateStart: "0000-00-00",
-	calendar_food_dateEnd: "0000-00-00",
-	calendar_food_record_total_calorie: "0",
-	calendar_food_record_total_carb: "0",
-	calendar_food_record_total_protein: "0",
-	calendar_food_record_total_fat: "0",
-	calendar_money_dateType: "",
-	calendar_money_dateStart: "0000-00-00",
-	calendar_money_dateEnd: "0000-00-00",
-	calendar_money_record_total_income: "0",
-	calendar_money_record_total_expense: "0",
-	calendar_sleep_dateType: "",
-	calendar_sleep_dateStart: "0000-00-00",
-	calendar_sleep_dateEnd: "0000-00-00",
-	calendar_sleep_record_total_time: "00:00",
+	calendar_exercise_dateType: ``,
+	calendar_exercise_dateStart: `0000-00-00`,
+	calendar_exercise_dateEnd: `0000-00-00`,
+	calendar_exercise_record_total_volume: `0`,
+	calendar_exercise_record_total_cardio: `00:00`,
+	calendar_food_dateType: ``,
+	calendar_food_dateStart: `0000-00-00`,
+	calendar_food_dateEnd: `0000-00-00`,
+	calendar_food_record_total_calorie: `0`,
+	calendar_food_record_total_carb: `0`,
+	calendar_food_record_total_protein: `0`,
+	calendar_food_record_total_fat: `0`,
+	calendar_money_dateType: ``,
+	calendar_money_dateStart: `0000-00-00`,
+	calendar_money_dateEnd: `0000-00-00`,
+	calendar_money_record_total_income: `0`,
+	calendar_money_record_total_expense: `0`,
+	calendar_sleep_dateType: ``,
+	calendar_sleep_dateStart: `0000-00-00`,
+	calendar_sleep_dateEnd: `0000-00-00`,
+	calendar_sleep_record_total_time: `00:00`,
 	calendar_exercise_section: [],
 	calendar_food_section: [],
 	calendar_money_section: [],
 	calendar_sleep_section: [],
-	calendar_regDt: "",
-	calendar_updateDt: "",
+	calendar_regDt: ``,
+	calendar_updateDt: ``,
 };

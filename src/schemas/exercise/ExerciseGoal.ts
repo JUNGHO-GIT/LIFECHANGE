@@ -1,4 +1,9 @@
-// ExerciseGoal.ts
+/**
+ * @file ExerciseGoal.ts
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import mongoose from "mongoose";
 import { incrementSeq } from "@schemas/Counter";
@@ -22,7 +27,7 @@ declare type ExerciseGoalType = mongoose.Document & {
 const schema = new mongoose.Schema({
 	user_id: {
 		type: String,
-		default: "",
+		default: ``,
 		required: true
 	},
 	exercise_goal_number: {
@@ -32,37 +37,37 @@ const schema = new mongoose.Schema({
 	},
 	exercise_goal_dateType: {
 		type: String,
-		default: "",
+		default: ``,
 		required: false
 	},
 	exercise_goal_dateStart: {
 		type: String,
-		default: "0000-00-00",
+		default: `0000-00-00`,
 		required: false
 	},
 	exercise_goal_dateEnd: {
 		type: String,
-		default: "0000-00-00",
+		default: `0000-00-00`,
 		required: false
 	},
 	exercise_goal_count: {
 		type: String,
-		default: "",
+		default: ``,
 		required: false
 	},
 	exercise_goal_volume: {
 		type: String,
-		default: "",
+		default: ``,
 		required: false
 	},
 	exercise_goal_cardio: {
 		type: String,
-		default: "00:00",
+		default: `00:00`,
 		required: false
 	},
 	exercise_goal_scale: {
 		type: String,
-		default: "",
+		default: ``,
 		required: false
 	},
 	exercise_goal_regDt: {
@@ -76,19 +81,19 @@ const schema = new mongoose.Schema({
 		required: false
 	}
 }, {
-	collection: "ExerciseGoal",
+	collection: `ExerciseGoal`,
 	timestamps: {
-		createdAt: "exercise_goal_regDt",
-		updatedAt: "exercise_goal_updateDt"
+		createdAt: `exercise_goal_regDt`,
+		updatedAt: `exercise_goal_updateDt`
 	}
 });
 
 // 3. counter --------------------------------------------------------------------------------------
-schema.pre<ExerciseGoalType>("save", async function () {
+schema.pre<ExerciseGoalType>(`save`, async function() {
 	if (this.isNew) {
-		this.exercise_goal_number = await incrementSeq("exercise_goal_number", "ExerciseGoal");
+		this.exercise_goal_number = await incrementSeq(`exercise_goal_number`, `ExerciseGoal`);
 	}
 });
 
 // 5. model ----------------------------------------------------------------------------------------
-export const ExerciseGoal = mongoose.model<ExerciseGoalType>("ExerciseGoal", schema);
+export const ExerciseGoal = mongoose.model<ExerciseGoalType>(`ExerciseGoal`, schema);

@@ -12,19 +12,19 @@ import { getSession, getLocal, setSession } from "@exportScripts";
 export const sync = async (extra?: string) => {
 
 	// 1. common ----------------------------------------------------------------------------------
-	const URL = import.meta.env.VITE_APP_SERVER_URL ?? ``;
-	const SUBFIX = import.meta.env.VITE_APP_USER ?? ``;
-	const URL_OBJECT = URL + SUBFIX;
-	const sessionId = getSession(`setting`, `id`, `sessionId`);
-	const localTimeZone = getLocal(`setting`, `locale`, `timeZone`);
+	const URL: string = import.meta.env.VITE_APP_SERVER_URL ?? ``;
+	const SUBFIX: string = import.meta.env.VITE_APP_USER ?? ``;
+	const URL_OBJECT: string = URL + SUBFIX;
+	const sessionId: any = getSession(`setting`, `id`, `sessionId`);
+	const localTimeZone: any = getLocal(`setting`, `locale`, `timeZone`);
 
 	// 2-2. useState ---------------------------------------------------------------------------------
 	const DATE = {
 		dateType: `day`,
-		dateStart: moment().tz(localTimeZone).format(`YYYY-MM-DD`),
-		dateEnd: moment().tz(localTimeZone).format(`YYYY-MM-DD`),
-		monthStart: moment().tz(localTimeZone).startOf(`month`).format(`YYYY-MM-DD`),
-		monthEnd: moment().tz(localTimeZone).endOf(`month`).format(`YYYY-MM-DD`),
+		dateStart: moment().tz(localTimeZone as string).format(`YYYY-MM-DD`),
+		dateEnd: moment().tz(localTimeZone as string).format(`YYYY-MM-DD`),
+		monthStart: moment().tz(localTimeZone as string).startOf(`month`).format(`YYYY-MM-DD`),
+		monthEnd: moment().tz(localTimeZone as string).endOf(`month`).format(`YYYY-MM-DD`),
 	};
 	const params = {
 		user_id: sessionId as string,

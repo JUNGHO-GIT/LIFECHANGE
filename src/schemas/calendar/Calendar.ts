@@ -1,7 +1,12 @@
-// Calendar.ts
+/**
+ * @file Calendar.ts
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import mongoose from "mongoose";
-import {incrementSeq} from "@schemas/Counter";
+import { incrementSeq } from "@schemas/Counter";
 
 // 0. types ---------------------------------------------------------------------------------------
 declare type CalendarExerciseSection = {
@@ -64,7 +69,7 @@ const schema = new mongoose.Schema(
 	{
 		user_id: {
 			type: String,
-			default: "",
+			default: ``,
 			required: true,
 		},
 		calendar_number: {
@@ -74,99 +79,99 @@ const schema = new mongoose.Schema(
 		},
 		calendar_exercise_dateType: {
 			type: String,
-			default: "",
+			default: ``,
 			required: false,
 		},
 		calendar_exercise_dateStart: {
 			type: String,
-			default: "0000-00-00",
+			default: `0000-00-00`,
 			required: false,
 		},
 		calendar_exercise_dateEnd: {
 			type: String,
-			default: "0000-00-00",
+			default: `0000-00-00`,
 			required: false,
 		},
 		calendar_food_dateType: {
 			type: String,
-			default: "",
+			default: ``,
 			required: false,
 		},
 		calendar_food_dateStart: {
 			type: String,
-			default: "0000-00-00",
+			default: `0000-00-00`,
 			required: false,
 		},
 		calendar_food_dateEnd: {
 			type: String,
-			default: "0000-00-00",
+			default: `0000-00-00`,
 			required: false,
 		},
 		calendar_money_dateType: {
 			type: String,
-			default: "",
+			default: ``,
 			required: false,
 		},
 		calendar_money_dateStart: {
 			type: String,
-			default: "0000-00-00",
+			default: `0000-00-00`,
 			required: false,
 		},
 		calendar_money_dateEnd: {
 			type: String,
-			default: "0000-00-00",
+			default: `0000-00-00`,
 			required: false,
 		},
 		calendar_sleep_dateType: {
 			type: String,
-			default: "",
+			default: ``,
 			required: false,
 		},
 		calendar_sleep_dateStart: {
 			type: String,
-			default: "0000-00-00",
+			default: `0000-00-00`,
 			required: false,
 		},
 		calendar_sleep_dateEnd: {
 			type: String,
-			default: "0000-00-00",
+			default: `0000-00-00`,
 			required: false,
 		},
 		calendar_exercise_section: [
 			{
 				exercise_part: {
 					type: String,
-					default: "",
+					default: ``,
 					required: false,
 				},
 				exercise_title: {
 					type: String,
-					default: "",
+					default: ``,
 					required: false,
 				},
 				exercise_weight: {
 					type: String,
-					default: "",
+					default: ``,
 					required: false,
 				},
 				exercise_set: {
 					type: String,
-					default: "",
+					default: ``,
 					required: false,
 				},
 				exercise_rep: {
 					type: String,
-					default: "",
+					default: ``,
 					required: false,
 				},
 				exercise_volume: {
 					type: String,
-					default: "",
+					default: ``,
 					required: false,
 				},
 				exercise_cardio: {
 					type: String,
-					default: "00:00",
+					default: `00:00`,
 					required: false,
 				},
 			},
@@ -175,52 +180,52 @@ const schema = new mongoose.Schema(
 			{
 				food_part: {
 					type: String,
-					default: "",
+					default: ``,
 					required: false,
 				},
 				food_name: {
 					type: String,
-					default: "",
+					default: ``,
 					required: false,
 				},
 				food_brand: {
 					type: String,
-					default: "",
+					default: ``,
 					required: false,
 				},
 				food_count: {
 					type: String,
-					default: "",
+					default: ``,
 					required: false,
 				},
 				food_serv: {
 					type: String,
-					default: "",
+					default: ``,
 					required: false,
 				},
 				food_gram: {
 					type: String,
-					default: "",
+					default: ``,
 					required: false,
 				},
 				food_kcal: {
 					type: String,
-					default: "",
+					default: ``,
 					required: false,
 				},
 				food_carb: {
 					type: String,
-					default: "",
+					default: ``,
 					required: false,
 				},
 				food_protein: {
 					type: String,
-					default: "",
+					default: ``,
 					required: false,
 				},
 				food_fat: {
 					type: String,
-					default: "",
+					default: ``,
 					required: false,
 				},
 			},
@@ -229,17 +234,17 @@ const schema = new mongoose.Schema(
 			{
 				money_part: {
 					type: String,
-					default: "",
+					default: ``,
 					required: false,
 				},
 				money_title: {
 					type: String,
-					default: "",
+					default: ``,
 					required: false,
 				},
 				money_include: {
 					type: String,
-					default: "Y",
+					default: `Y`,
 					required: false,
 				},
 				money_amount: {
@@ -249,7 +254,7 @@ const schema = new mongoose.Schema(
 				},
 				money_content: {
 					type: String,
-					default: "",
+					default: ``,
 					required: false,
 				},
 			},
@@ -258,17 +263,17 @@ const schema = new mongoose.Schema(
 			{
 				sleep_bedTime: {
 					type: String,
-					default: "00:00",
+					default: `00:00`,
 					required: false,
 				},
 				sleep_wakeTime: {
 					type: String,
-					default: "00:00",
+					default: `00:00`,
 					required: false,
 				},
 				sleep_sleepTime: {
 					type: String,
-					default: "00:00",
+					default: `00:00`,
 					required: false,
 				},
 			},
@@ -285,20 +290,20 @@ const schema = new mongoose.Schema(
 		},
 	},
 	{
-		collection: "Calendar",
+		collection: `Calendar`,
 		timestamps: {
-			createdAt: "calendar_regDt",
-			updatedAt: "calendar_updateDt",
+			createdAt: `calendar_regDt`,
+			updatedAt: `calendar_updateDt`,
 		},
 	},
 );
 
 // 3. counter --------------------------------------------------------------------------------------
-schema.pre<CalendarType>("save", async function () {
+schema.pre<CalendarType>(`save`, async function() {
 	if (this.isNew) {
-		this.calendar_number = await incrementSeq("calendar_number", "Calendar");
+		this.calendar_number = await incrementSeq(`calendar_number`, `Calendar`);
 	}
 });
 
 // 5. model ----------------------------------------------------------------------------------------
-export const Calendar = mongoose.model<CalendarType>("Calendar", schema);
+export const Calendar = mongoose.model<CalendarType>(`Calendar`, schema);

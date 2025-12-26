@@ -1,4 +1,9 @@
-// BottomNav.tsx
+/**
+ * @file BottomNav.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { memo, useEffect } from "@exportReacts";
 import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";

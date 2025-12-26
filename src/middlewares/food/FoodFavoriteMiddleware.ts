@@ -1,4 +1,9 @@
-// FoodFavoriteMiddleware.ts
+/**
+ * @file FoodFavoriteMiddleware.ts
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 // 1. list -----------------------------------------------------------------------------------------
 export const list = async (object: any) => {
@@ -6,16 +11,16 @@ export const list = async (object: any) => {
 	// 0. calcNonValueColor --------------------------------------------------------------------------
 	const calcNonValueColor = (param: string) => {
 
-		let finalResult: string = "";
+		let finalResult: string = ``;
 
 		if (!param) {
 			finalResult = param;
 		}
-		else if (param === "0" || param === "00:00") {
-			finalResult = "grey";
+		else if (param === `0` || param === `00:00`) {
+			finalResult = `grey`;
 		}
 		else {
-			finalResult = "light-black";
+			finalResult = `light-black`;
 		}
 
 		return finalResult;

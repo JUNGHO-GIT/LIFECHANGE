@@ -11,7 +11,7 @@ import { useEffect } from "@exportReacts";
 // -------------------------------------------------------------------------------------------------
 export const useTime = (
 	OBJECT: Record<string, unknown>,
-	setOBJECT: (_updater: (_prev: Record<string, unknown>) => Record<string, unknown>) => void,
+	setOBJECT: any,
 	PATH: string,
 	type: string,
 ) => {
@@ -46,10 +46,10 @@ export const useTime = (
 				let endDate: Date = new Date(`${endTime}T00:00`);
 
 				if (Number.isNaN(startDate.getTime())) {
-					startDate = new Date(`${String(startTime).replaceAll(`/`, `-`)}T00:00`);
+					startDate: Date = new Date(`${String(startTime).replaceAll(`/`, `-`)}T00:00`);
 				}
 				if (Number.isNaN(endDate.getTime())) {
-					endDate = new Date(`${String(endTime).replaceAll(`/`, `-`)}T00:00`);
+					endDate: Date = new Date(`${String(endTime).replaceAll(`/`, `-`)}T00:00`);
 				}
 
 				if (!Number.isNaN(startDate.getTime()) && !Number.isNaN(endDate.getTime())) {
@@ -79,10 +79,10 @@ export const useTime = (
 				let endDate: Date = new Date(`${dayFmt}T${wakeTimeTime}`);
 
 				if (Number.isNaN(startDate.getTime())) {
-					startDate = new Date(`${dayFmt.replaceAll(`/`, `-`)}T${bedTimeTime}`);
+					startDate: Date = new Date(`${dayFmt.replaceAll(`/`, `-`)}T${bedTimeTime}`);
 				}
 				if (Number.isNaN(endDate.getTime())) {
-					endDate = new Date(`${dayFmt.replaceAll(`/`, `-`)}T${wakeTimeTime}`);
+					endDate: Date = new Date(`${dayFmt.replaceAll(`/`, `-`)}T${wakeTimeTime}`);
 				}
 
 				if (!Number.isNaN(startDate.getTime()) && !Number.isNaN(endDate.getTime())) {
@@ -127,10 +127,10 @@ export const useTime = (
 						let endDate: Date = new Date(`${dayFmt}T${wakeTimeTime}`);
 
 						if (Number.isNaN(startDate.getTime())) {
-							startDate = new Date(`${dayFmt.replaceAll(`/`, `-`)}T${bedTimeTime}`);
+							startDate: Date = new Date(`${dayFmt.replaceAll(`/`, `-`)}T${bedTimeTime}`);
 						}
 						if (Number.isNaN(endDate.getTime())) {
-							endDate = new Date(`${dayFmt.replaceAll(`/`, `-`)}T${wakeTimeTime}`);
+							endDate: Date = new Date(`${dayFmt.replaceAll(`/`, `-`)}T${wakeTimeTime}`);
 						}
 
 						if (!Number.isNaN(startDate.getTime()) && !Number.isNaN(endDate.getTime())) {

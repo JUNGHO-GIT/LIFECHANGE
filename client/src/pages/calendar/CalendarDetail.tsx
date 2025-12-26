@@ -1,4 +1,9 @@
-// CalendarDetail.tsx
+/**
+ * @file CalendarDetail.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { React, useState, useEffect, useRef, useCallback, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useValidateCalendar } from "@exportHooks";
@@ -12,7 +17,7 @@ import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, PickerTime, Count, Delete, Input, Select, Memo } from "@exportContainers";
 import { Img, Bg, Paper, Grid, Div, Br } from "@exportComponents";
 import { Checkbox, MenuItem } from "@exportMuis";
-import { MoneyCategoryItem, ExerciseCategoryItem, FoodCategoryItem } from "@exportConstants";
+import { MoneyCategoryItem, ExerciseCategoryItem, FoodCategoryItem } from "@exportTypes";
 
 // -------------------------------------------------------------------------------------------------
 export const CalendarDetail = memo(() => {

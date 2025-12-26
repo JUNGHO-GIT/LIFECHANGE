@@ -1,4 +1,9 @@
-// UserDetail.tsx
+/**
+ * @file UserDetail.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { React, useState, useEffect, useRef, memo } from "@exportReacts";
 import { useCommonValue, useValidateUser } from "@exportHooks";
@@ -15,126 +20,124 @@ import { Checkbox, Avatar } from "@exportMuis";
 export const UserDetail = memo(() => {
 
 	// 1. common ----------------------------------------------------------------------------------
-  const { URL_OBJECT, navigate, sessionId, localCurrency, localUnit } = useCommonValue();
-  const { translate } = useStoreLanguage();
-  const { setALERT } = useStoreAlert();
-  const { setLOADING } = useStoreLoading();
-  const { ERRORS, REFS, validate } = useValidateUser();
+	const { URL_OBJECT, navigate, sessionId, localCurrency, localUnit } = useCommonValue();
+	const { translate } = useStoreLanguage();
+	const { setALERT } = useStoreAlert();
+	const { setLOADING } = useStoreLoading();
+	const { ERRORS, REFS, validate } = useValidateUser();
 
 	// 2-2. useState -------------------------------------------------------------------------------
-  const [OBJECT, setOBJECT] = useState<UserType>(User);
-  const [includingExclusions, setIncludingExclusions] = useState<boolean>(false);
-  const [SEND, setSEND] = useState({
-    id: "",
-    dateType: "",
-    dateStart: "0000-00-00",
-    dateEnd: "0000-00-00",
-  });
+	const [OBJECT, setOBJECT] = useState<UserType>(User);
+	const [includingExclusions, setIncludingExclusions] = useState<boolean>(false);
+	const [SEND, setSEND] = useState({
+		id: ``,
+		dateType: ``,
+		dateStart: `0000-00-00`,
+		dateEnd: `0000-00-00`,
+	});
 
 	// 2-3. useRef --------------------------------------------------------------------------------
-	const objectRef = useRef(OBJECT);
+	const objectRef: React.RefObject<UserType> = useRef(OBJECT);
 
 	// 2-3. useEffect ------------------------------------------------------------------------------
 	useEffect(() => {
 		OBJECT !== objectRef.current && (objectRef.current = OBJECT);
-	}, [
-		OBJECT
-	]);
+	}, [OBJECT]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
-  useEffect(() => {
-    setLOADING(true);
-    axios.get(`${URL_OBJECT}/detail`, {
-      params: {
-        user_id: sessionId
-      },
-    })
-    .then((res: any) => {
-      setLOADING(false);
-      setOBJECT(res.data.result ? res.data.result : {});
-    })
-    .catch((err: any) => {
-      setLOADING(false);
-      setALERT({
-        open: true,
-        msg: translate(err.response.data.msg),
-        severity: "error",
-      });
-    })
-    .finally(() => {
-      setLOADING(false);
-    });
-  }, [URL_OBJECT, sessionId]);
+	useEffect(() => {
+		setLOADING(true);
+		axios.get(`${URL_OBJECT}/detail`, {
+			params: {
+				user_id: sessionId
+			},
+		})
+		.then((res: any) => {
+			setLOADING(false);
+			setOBJECT(res.data.result ? res.data.result : {});
+		})
+		.catch((error: any) => {
+			setLOADING(false);
+			setALERT({
+				open: true,
+				msg: translate(error.response.data.msg as string),
+				severity: `error`,
+			});
+		})
+		.finally(() => {
+			setLOADING(false);
+		});
+	}, [URL_OBJECT, sessionId]);
 
 	// 3. flow ------------------------------------------------------------------------------------
-  const flowSave = async () => {
-    setLOADING(true);
-    if (!await validate(objectRef.current, "detail", "")) {
-      setLOADING(false);
-      return;
-    }
-    axios({
-      method: "put",
+	async function flowSave() {
+		setLOADING(true);
+		if (!await validate(objectRef.current, `detail`, ``)) {
+			setLOADING(false);
+			return;
+		}
+		axios({
+			method: `put`,
 			url: `${URL_OBJECT}/update`,
 			data: {
 				user_id: sessionId,
 				OBJECT: OBJECT,
 			}
-    })
-    .then((res: any) => {
-      if (res.data.status === "success") {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg as string),
-          severity: "success",
-        });
-        navigate("/user/detail");
-	sync();
-      }
-      else {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg as string),
-          severity: "error",
-        });
-      }
-    })
-    .catch((err: any) => {
-      setLOADING(false);
-      setALERT({
-        open: true,
-        msg: translate(err.response.data.msg),
-        severity: "error",
-      });
-      console.error(err);
-    })
-    .finally(() => {
-      setLOADING(false);
-    });
-  };
+		})
+		.then((res: any) => {
+			if (res.data.status === `success`) {
+				setLOADING(false);
+				setALERT({
+					open: true,
+					msg: translate(res.data.msg as string),
+					severity: `success`,
+				});
+				void navigate(`/user/detail`);
+				void sync();
+			}
+			else {
+				setLOADING(false);
+				setALERT({
+					open: true,
+					msg: translate(res.data.msg as string),
+					severity: `error`,
+				});
+			}
+		})
+		.catch((error: any) => {
+			setLOADING(false);
+			setALERT({
+				open: true,
+				msg: translate(error.response.data.msg as string),
+				severity: `error`,
+			});
+			console.error(error);
+		})
+		.finally(() => {
+			setLOADING(false);
+		});
+	};
 
-  // 6. userDetail ---------------------------------------------------------------------------------
-  const userDetailNode = () => {
-    // 7-1. image
-    const imageSection = () => (
-      <Grid container={true} spacing={1}>
-        <Grid size={12} className={`d-center`}>
-          <Avatar
-            src={OBJECT?.user_image}
-            alt={"user_image"}
-            className={`w-150px h-150px`}
-          />
-        </Grid>
-      </Grid>
-    );
-    // 7-2. detail
-    const detailSection = () => (
+	// 6. userDetail ---------------------------------------------------------------------------------
+	const userDetailNode = () => {
+		// 7-1. image
+		const imageSection = () => (
+			<Grid container={true} spacing={1}>
+				<Grid size={12} className={`d-center`}>
+					<Avatar
+						src={OBJECT?.user_image}
+						alt={`user_image`}
+						className={`w-150px h-150px`}
+					/>
+				</Grid>
+			</Grid>
+		);
+		// 7-2. detail
+		const detailSection = () => (
 			<Grid container={true} spacing={0}>
 				{[OBJECT]?.map((item, i) => (
 					<Grid container={true} spacing={2} className={`p-10px`} key={`detail-${i}`}>
-						{/** 이메일 **/}
+						{/** 이메일 * */}
 						<Grid container={true} spacing={0}>
 							<Grid size={12}>
 								<Input
@@ -145,42 +148,44 @@ export const UserDetail = memo(() => {
 							</Grid>
 						</Grid>
 
-						{/** 등록일 **/}
+						{/** 등록일 * */}
 						<Grid container={true} spacing={0}>
 							<Grid size={12}>
 								<Input
 									readOnly={true}
 									label={translate(`regDt`)}
-									value={item?.user_regDt.split("T")[0]}
+									value={item?.user_regDt.split(`T`)[0]}
 								/>
 							</Grid>
 						</Grid>
 
 						<Hr m={1} className={`bg-light`} />
 
-						{/** 최초 몸무게 **/}
+						{/** 최초 몸무게 * */}
 						<Grid container={true} spacing={0}>
 							<Grid size={12}>
 								<Input
 									label={translate(`initScale`)}
-									  value={insertComma(item.user_initScale || "0")}
+									value={insertComma(item.user_initScale || `0`)}
 									inputRef={REFS?.[i]?.user_initScale}
 									error={ERRORS?.[i]?.user_initScale}
-									startadornment={
+									startadornment={(
 										<Img
 											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
-											src={"exercise5.webp"}
+											src={`exercise5.webp`}
 										/>
-									}
+									)}
 									endadornment={
 										localUnit
 									}
 									onChange={(e: any) => {
 										const processedValue: string | null = handleNumberInput(e.target.value, 999, 2);
-										!processedValue === null && (() => { return })();
+										!processedValue === null && (() => {
+											return;
+										})();
 										setOBJECT((prev) => ({
 											...prev,
 											user_initScale: processedValue,
@@ -190,22 +195,22 @@ export const UserDetail = memo(() => {
 							</Grid>
 						</Grid>
 
-						{/** 현재 몸무게 **/}
+						{/** 현재 몸무게 * */}
 						<Grid container={true} spacing={0}>
 							<Grid size={12}>
 								<Input
 									readOnly={true}
 									label={translate(`curScale`)}
-									  value={insertComma(item.user_curScale || "0")}
-									startadornment={
+									value={insertComma(item.user_curScale || `0`)}
+									startadornment={(
 										<Img
 											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
-											src={"exercise5.webp"}
+											src={`exercise5.webp`}
 										/>
-									}
+									)}
 									endadornment={
 										localUnit
 									}
@@ -215,29 +220,31 @@ export const UserDetail = memo(() => {
 
 						<Hr m={1} className={`bg-light`} />
 
-						{/** 초기 평균 칼로리 섭취량 목표 **/}
+						{/** 초기 평균 칼로리 섭취량 목표 * */}
 						<Grid container={true} spacing={0}>
 							<Grid size={12}>
 								<Input
 									label={translate(`initAvgKcalIntake`)}
-									  value={insertComma(item.user_initAvgKcalIntake || "0")}
+									value={insertComma(item.user_initAvgKcalIntake || `0`)}
 									inputRef={REFS?.[i]?.user_initAvgKcalIntake}
 									error={ERRORS?.[i]?.user_initAvgKcalIntake}
-									startadornment={
+									startadornment={(
 										<Img
 											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
-											src={"food2.webp"}
+											src={`food2.webp`}
 										/>
-									}
+									)}
 									endadornment={
 										translate(`kc`)
 									}
 									onChange={(e: any) => {
 										const processedValue: string | null = handleNumberInput(e.target.value, 9999);
-										!processedValue === null && (() => { return })();
+										!processedValue === null && (() => {
+											return;
+										})();
 										setOBJECT((prev) => ({
 											...prev,
 											user_initAvgKcalIntake: processedValue,
@@ -247,22 +254,22 @@ export const UserDetail = memo(() => {
 							</Grid>
 						</Grid>
 
-						{/** 현재 목표 칼로리 **/}
+						{/** 현재 목표 칼로리 * */}
 						<Grid container={true} spacing={0}>
 							<Grid size={12}>
 								<Input
 									readOnly={true}
 									label={translate(`curAvgKcalIntake`)}
-									  value={insertComma(item.user_curAvgKcalIntake || "0")}
-									startadornment={
+									value={insertComma(item.user_curAvgKcalIntake || `0`)}
+									startadornment={(
 										<Img
 											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
-											src={"food2.webp"}
+											src={`food2.webp`}
 										/>
-									}
+									)}
 									endadornment={
 										translate(`kc`)
 									}
@@ -272,29 +279,31 @@ export const UserDetail = memo(() => {
 
 						<Hr m={1} className={`bg-light`} />
 
-						{/** 초기 자산 **/}
+						{/** 초기 자산 * */}
 						<Grid container={true} spacing={0}>
 							<Grid size={12}>
 								<Input
 									label={translate(`initProperty`)}
-									  value={insertComma(item.user_initProperty || "0")}
+									value={insertComma(item.user_initProperty || `0`)}
 									inputRef={REFS?.[i]?.user_initProperty}
 									error={ERRORS?.[i]?.user_initProperty}
-									startadornment={
+									startadornment={(
 										<Img
 											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
-											src={"money2.webp"}
+											src={`money2.webp`}
 										/>
-									}
+									)}
 									endadornment={
 										localCurrency
 									}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(e.target.value, 9999999999);
-										!processedValue === null && (() => { return })();
+										const processedValue: string | null = handleNumberInput(e.target.value, 9_999_999_999);
+										!processedValue === null && (() => {
+											return;
+										})();
 										setOBJECT((prev) => ({
 											...prev,
 											user_initProperty: processedValue,
@@ -304,7 +313,7 @@ export const UserDetail = memo(() => {
 							</Grid>
 						</Grid>
 
-						{/** 현재 자산 **/}
+						{/** 현재 자산 * */}
 						<Grid container={true} spacing={0}>
 							<Grid size={12}>
 								<Input
@@ -312,20 +321,20 @@ export const UserDetail = memo(() => {
 									label={translate(`curPropertyExclusion`)}
 									value={
 										includingExclusions ? (
-											  insertComma(item.user_curPropertyAll || "0")
+											  insertComma(item.user_curPropertyAll || `0`)
 										) : (
-											  insertComma(item.user_curPropertyExclusion || "0")
+											  insertComma(item.user_curPropertyExclusion || `0`)
 										)
 									}
-									startadornment={
+									startadornment={(
 										<Img
 											max={14}
 											hover={true}
 											shadow={false}
 											radius={false}
-											src={"money2.webp"}
+											src={`money2.webp`}
 										/>
-									}
+									)}
 									endadornment={
 										localCurrency
 									}
@@ -333,14 +342,14 @@ export const UserDetail = memo(() => {
 							</Grid>
 						</Grid>
 
-						{/** 포함 여부 **/}
+						{/** 포함 여부 * */}
 						<Grid container={true} spacing={0}>
 							<Grid size={12} className={`d-row-left`}>
 								<Div className={`fs-0-7rem fw-500 dark ml-10px`}>
 									{translate(`includingExclusions`)}
 								</Div>
 								<Checkbox
-									size={"small"}
+									size={`small`}
 									className={`p-0px ml-5px`}
 									checked={includingExclusions}
 									onChange={(e: any) => {
@@ -353,36 +362,36 @@ export const UserDetail = memo(() => {
 				))}
 			</Grid>
 		);
-    // 7-10. return
-    return (
-      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
-        {imageSection()}
-        <Hr m={40} />
-        {detailSection()}
-      </Paper>
-    );
-  };
+		// 7-10. return
+		return (
+			<Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
+				{imageSection()}
+				<Hr m={40} />
+				{detailSection()}
+			</Paper>
+		);
+	};
 
 	// 9. footer ----------------------------------------------------------------------------------
-  const footerNode = () => (
-    <Footer
-      state={{
-        SEND
-      }}
-      setState={{
-        setSEND
-      }}
-      flow={{
-        flowSave
-      }}
-    />
-  );
+	const footerNode = () => (
+		<Footer
+			state={{
+				SEND
+			}}
+			setState={{
+				setSEND
+			}}
+			flow={{
+				flowSave
+			}}
+		/>
+	);
 
 	// 10. return ----------------------------------------------------------------------------------
-  return (
-    <>
-      {userDetailNode()}
-      {footerNode()}
-    </>
-  );
+	return (
+		<>
+			{userDetailNode()}
+			{footerNode()}
+		</>
+	);
 });

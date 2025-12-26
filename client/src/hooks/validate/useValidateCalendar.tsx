@@ -10,7 +10,7 @@ import { useStoreAlert, useStoreConfirm, useStoreLanguage } from "@exportStores"
 
 // -------------------------------------------------------------------------------------------------
 export const useValidateCalendar = () => {
-	
+
 	// 1. common -------------------------------------------------------------------------------------
 	const { translate } = useStoreLanguage();
 	const { setALERT } = useStoreAlert();

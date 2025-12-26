@@ -1,4 +1,9 @@
-// foodFavoriteService.ts
+/**
+ * @file FoodFavoriteService.ts
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import * as repository from "@repositories/food/FoodFavoriteRepository";
 
@@ -11,7 +16,7 @@ export const list = async (
 	let findResult: any = null;
 	let finalResult: any = null;
 	let totalCntResult: any = null;
-	let statusResult: string = "";
+	let statusResult: string = ``;
 
 	findResult = await repository.list(
 		user_id_param
@@ -20,18 +25,18 @@ export const list = async (
 
 	if (!findResult) {
 		finalResult = [];
-		statusResult = "fail";
+		statusResult = `fail`;
 	}
 	else {
 		finalResult = findResult;
-		statusResult = "success";
+		statusResult = `success`;
 	}
 
 	finalResult = finalResult.map((item: any, index: number) => ({
 		...item,
-		food_record_query: "favorite",
+		food_record_query: `favorite`,
 		food_record_perNumber: index + 1,
-		food_record_part: "breakfast",
+		food_record_part: `breakfast`,
 	}));
 
 	return {
@@ -51,9 +56,9 @@ export const update = async (
 	let findResult: any = null;
 	let updateResult: any = null;
 	let finalResult: any = null;
-	let statusResult: string = "";
+	let statusResult: string = ``;
 
-	const foodKey = foodFavorite_param.food_record_key;
+	const foodKey: string = foodFavorite_param.food_record_key;
 
 	findResult = await repository.list(
 		user_id_param
@@ -63,17 +68,12 @@ export const update = async (
 		item.food_record_key === foodKey
 	));
 
-	if (existFavorite) {
-		foodFavorite_param = findResult?.filter((item: any) => (
-			item.food_record_key !== foodKey
-		));
-	}
-	else {
-		foodFavorite_param = [
-			...findResult,
-			foodFavorite_param
-		];
-	}
+	foodFavorite_param = existFavorite ? findResult?.filter((item: any) => (
+		item.food_record_key !== foodKey
+	)) : [
+		...findResult,
+		foodFavorite_param
+	];
 
 	updateResult = await repository.update(
 		user_id_param, foodFavorite_param
@@ -81,11 +81,11 @@ export const update = async (
 
 	if (!updateResult) {
 		finalResult = null;
-		statusResult = "fail";
+		statusResult = `fail`;
 	}
 	else {
 		finalResult = updateResult;
-		statusResult = "success";
+		statusResult = `success`;
 	}
 
 	return {

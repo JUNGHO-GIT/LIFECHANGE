@@ -1,4 +1,9 @@
-// ExerciseGoalDetail.tsx
+/**
+ * @file ExerciseGoalDetail.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { React, useState, useEffect, useRef, useCallback, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useTime, useValidateExercise } from "@exportHooks";
@@ -87,9 +92,12 @@ export const ExerciseGoalDetail = memo(() => {
 	useEffect(() => {
 		if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
 
-			const dateRange = `${DATE?.dateStart.trim()} - ${DATE?.dateEnd.trim()}`;
-			const objectRange = `${OBJECT.exercise_goal_dateStart.trim()} - ${OBJECT.exercise_goal_dateEnd.trim()}`;
-
+			const dateRange: string = (
+				`${DATE?.dateStart.trim()} - ${DATE?.dateEnd.trim()}`
+			);
+			const objectRange: string = (
+				`${OBJECT.exercise_goal_dateStart.trim()} - ${OBJECT.exercise_goal_dateEnd.trim()}`
+			);
 			const isExist: boolean = (
 				EXIST?.[DATE?.dateType as keyof typeof EXIST]?.includes(dateRange)
 			);
@@ -156,7 +164,7 @@ export const ExerciseGoalDetail = memo(() => {
 				...prev,
 				totalCnt: res.data.totalCnt ?? 0,
 				sectionCnt: res.data.sectionCnt ?? 0,
-				newSectionCnt: res.data.sectionCnt || 0
+				newSectionCnt: res.data.sectionCnt ?? 0
 			}));
 		})
 		.catch((error: any) => {
@@ -197,7 +205,7 @@ export const ExerciseGoalDetail = memo(() => {
 					msg: translate(res.data.msg as string),
 					severity: `success`,
 				});
-				navigate(toList, {
+				void navigate(toList, {
 					state: {
 						dateType: ``,
 						dateStart: dateRef.current.dateStart,
@@ -250,7 +258,7 @@ export const ExerciseGoalDetail = memo(() => {
 					msg: translate(res.data.msg as string),
 					severity: `success`,
 				});
-				navigate(toList, {
+				void navigate(toList, {
 					state: {
 						dateType: ``,
 						dateStart: dateRef.current.dateStart,

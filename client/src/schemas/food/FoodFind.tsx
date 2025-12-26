@@ -1,4 +1,9 @@
-// FoodFind.tsx
+/**
+ * @file FoodFind.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 // Types ------------------------------------------------------------------------------------------
 export type FoodFindType = {
@@ -28,26 +33,26 @@ export type FoodFindType = {
 
 // Schema -----------------------------------------------------------------------------------------
 export const FoodFind: FoodFindType = {
-	food_record_query: "",
+	food_record_query: ``,
 	food_record_perNumber: 1,
-	food_record_part: "breakfast",
-	food_record_key: "",
-	food_record_name: "",
-	food_record_name_color: "",
-	food_record_brand: "",
-	food_record_brand_color: "",
-	food_record_count: "0",
-	food_record_count_color: "",
-	food_record_serv: "",
-	food_record_serv_color: "",
-	food_record_gram: "0",
-	food_record_gram_color: "",
-	food_record_kcal: "0",
-	food_record_kcal_color: "",
-	food_record_carb: "0",
-	food_record_carb_color: "",
-	food_record_protein: "0",
-	food_record_protein_color: "",
-	food_record_fat: "0",
-	food_record_fat_color: "",
+	food_record_part: `breakfast`,
+	food_record_key: ``,
+	food_record_name: ``,
+	food_record_name_color: ``,
+	food_record_brand: ``,
+	food_record_brand_color: ``,
+	food_record_count: `0`,
+	food_record_count_color: ``,
+	food_record_serv: ``,
+	food_record_serv_color: ``,
+	food_record_gram: `0`,
+	food_record_gram_color: ``,
+	food_record_kcal: `0`,
+	food_record_kcal_color: ``,
+	food_record_carb: `0`,
+	food_record_carb_color: ``,
+	food_record_protein: `0`,
+	food_record_protein_color: ``,
+	food_record_fat: `0`,
+	food_record_fat_color: ``,
 };

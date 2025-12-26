@@ -19,7 +19,7 @@ export const useCommonValue = (): CommonValueType => {
 
 	const localTitle: LocalTitleType = useMemo(() => {
 		try {
-			return JSON.parse(localStorage.getItem(TITLE) || `{}`) as LocalTitleType;
+			return JSON.parse(localStorage.getItem(TITLE) ?? `{}`) as LocalTitleType;
 		}
 		catch {
 			return {} as LocalTitleType;
@@ -28,7 +28,7 @@ export const useCommonValue = (): CommonValueType => {
 
 	const sessionTitle: SessionTitleType = useMemo(() => {
 		try {
-			return JSON.parse(sessionStorage.getItem(TITLE) || `{}`) as SessionTitleType;
+			return JSON.parse(sessionStorage.getItem(TITLE) ?? `{}`) as SessionTitleType;
 		}
 		catch {
 			return {} as SessionTitleType;
@@ -37,36 +37,36 @@ export const useCommonValue = (): CommonValueType => {
 
 	// 세션 파생값 기본 객체 생성 ----------------------------------------------------------------------
 	const scaleDefault = useMemo(() => ({
-		initScale: sessionTitle?.setting?.sync?.scale?.initScale || ``,
-		minScale: sessionTitle?.setting?.sync?.scale?.minScale || ``,
-		maxScale: sessionTitle?.setting?.sync?.scale?.maxScale || ``,
-		curScale: sessionTitle?.setting?.sync?.scale?.curScale || ``,
+		initScale: sessionTitle?.setting?.sync?.scale?.initScale ?? ``,
+		minScale: sessionTitle?.setting?.sync?.scale?.minScale ?? ``,
+		maxScale: sessionTitle?.setting?.sync?.scale?.maxScale ?? ``,
+		curScale: sessionTitle?.setting?.sync?.scale?.curScale ?? ``,
 		dateStart: sessionTitle?.setting?.sync?.scale?.dateStart ?? ``,
 		dateEnd: sessionTitle?.setting?.sync?.scale?.dateEnd ?? ``
 	}), [sessionTitle]);
 
 	const nutritionDefault = useMemo(() => ({
-		initAvgKcalIntake: sessionTitle?.setting?.sync?.nutrition?.initAvgKcalIntake || ``,
-		totalKcalIntake: sessionTitle?.setting?.sync?.nutrition?.totalKcalIntake || ``,
-		totalCarbIntake: sessionTitle?.setting?.sync?.nutrition?.totalCarbIntake || ``,
-		totalProteinIntake: sessionTitle?.setting?.sync?.nutrition?.totalProteinIntake || ``,
-		totalFatIntake: sessionTitle?.setting?.sync?.nutrition?.totalFatIntake || ``,
-		curAvgKcalIntake: sessionTitle?.setting?.sync?.nutrition?.curAvgKcalIntake || ``,
-		curAvgCarbIntake: sessionTitle?.setting?.sync?.nutrition?.curAvgCarbIntake || ``,
-		curAvgProteinIntake: sessionTitle?.setting?.sync?.nutrition?.curAvgProteinIntake || ``,
-		curAvgFatIntake: sessionTitle?.setting?.sync?.nutrition?.curAvgFatIntake || ``,
+		initAvgKcalIntake: sessionTitle?.setting?.sync?.nutrition?.initAvgKcalIntake ?? ``,
+		totalKcalIntake: sessionTitle?.setting?.sync?.nutrition?.totalKcalIntake ?? ``,
+		totalCarbIntake: sessionTitle?.setting?.sync?.nutrition?.totalCarbIntake ?? ``,
+		totalProteinIntake: sessionTitle?.setting?.sync?.nutrition?.totalProteinIntake ?? ``,
+		totalFatIntake: sessionTitle?.setting?.sync?.nutrition?.totalFatIntake ?? ``,
+		curAvgKcalIntake: sessionTitle?.setting?.sync?.nutrition?.curAvgKcalIntake ?? ``,
+		curAvgCarbIntake: sessionTitle?.setting?.sync?.nutrition?.curAvgCarbIntake ?? ``,
+		curAvgProteinIntake: sessionTitle?.setting?.sync?.nutrition?.curAvgProteinIntake ?? ``,
+		curAvgFatIntake: sessionTitle?.setting?.sync?.nutrition?.curAvgFatIntake ?? ``,
 		dateStart: sessionTitle?.setting?.sync?.nutrition?.dateStart ?? ``,
 		dateEnd: sessionTitle?.setting?.sync?.nutrition?.dateEnd ?? ``
 	}), [sessionTitle]);
 
 	const propertyDefault = useMemo(() => ({
-		initProperty: sessionTitle?.setting?.sync?.property?.initProperty || ``,
-		totalIncomeAll: sessionTitle?.setting?.sync?.property?.totalIncomeAll || ``,
-		totalIncomeExclusion: sessionTitle?.setting?.sync?.property?.totalIncomeExclusion || ``,
-		totalExpenseAll: sessionTitle?.setting?.sync?.property?.totalExpenseAll || ``,
-		totalExpenseExclusion: sessionTitle?.setting?.sync?.property?.totalExpenseExclusion || ``,
-		curPropertyAll: sessionTitle?.setting?.sync?.property?.curPropertyAll || ``,
-		curPropertyExclusion: sessionTitle?.setting?.sync?.property?.curPropertyExclusion || ``,
+		initProperty: sessionTitle?.setting?.sync?.property?.initProperty ?? ``,
+		totalIncomeAll: sessionTitle?.setting?.sync?.property?.totalIncomeAll ?? ``,
+		totalIncomeExclusion: sessionTitle?.setting?.sync?.property?.totalIncomeExclusion ?? ``,
+		totalExpenseAll: sessionTitle?.setting?.sync?.property?.totalExpenseAll ?? ``,
+		totalExpenseExclusion: sessionTitle?.setting?.sync?.property?.totalExpenseExclusion ?? ``,
+		curPropertyAll: sessionTitle?.setting?.sync?.property?.curPropertyAll ?? ``,
+		curPropertyExclusion: sessionTitle?.setting?.sync?.property?.curPropertyExclusion ?? ``,
 		dateStart: sessionTitle?.setting?.sync?.property?.dateStart ?? ``,
 		dateEnd: sessionTitle?.setting?.sync?.property?.dateEnd ?? ``
 	}), [sessionTitle]);
@@ -84,9 +84,9 @@ export const useCommonValue = (): CommonValueType => {
 		location_category: location?.state?.category,
 		// Path Information
 		PATH: PATH,
-		firstStr: pathParts[1] || ``,
-		secondStr: pathParts[2] || ``,
-		thirdStr: pathParts[3] || ``,
+		firstStr: pathParts[1] ?? ``,
+		secondStr: pathParts[2] ?? ``,
+		thirdStr: pathParts[3] ?? ``,
 		// Basic Flags
 		isList: PATH.includes(`/list`),
 		isDetail: PATH.includes(`/detail`),
@@ -206,46 +206,46 @@ export const useCommonValue = (): CommonValueType => {
 		toCalendarDetail: `/calendar/detail`,
 		// Environment Variables
 		TITLE: TITLE,
-		URL: env.VITE_APP_SERVER_URL || ``,
-		GCLOUD_URL: env.VITE_APP_GCLOUD_URL || ``,
-		ADMIN_ID: env.VITE_APP_ADMIN_ID || ``,
-		ADMIN_PW: env.VITE_APP_ADMIN_PW || ``,
+		URL: env.VITE_APP_SERVER_URL ?? ``,
+		GCLOUD_URL: env.VITE_APP_GCLOUD_URL ?? ``,
+		ADMIN_ID: env.VITE_APP_ADMIN_ID ?? ``,
+		ADMIN_PW: env.VITE_APP_ADMIN_PW ?? ``,
 		// API Suffixes
-		SUBFIX: env[`VITE_APP_${(pathParts[1] || ``).toUpperCase()}`] || ``,
-		SUBFIX_CALENDAR: env.VITE_APP_CALENDAR || ``,
-		SUBFIX_GOOGLE: env.VITE_APP_GOOGLE || ``,
-		SUBFIX_ADMOB: env.VITE_APP_ADMOB || ``,
-		SUBFIX_ADMIN: env.VITE_APP_ADMIN || ``,
-		SUBFIX_EXERCISE: env.VITE_APP_EXERCISE || ``,
-		SUBFIX_FOOD: env.VITE_APP_FOOD || ``,
-		SUBFIX_MONEY: env.VITE_APP_MONEY || ``,
-		SUBFIX_SLEEP: env.VITE_APP_SLEEP || ``,
+		SUBFIX: env[`VITE_APP_${(pathParts[1] ?? ``).toUpperCase()}`] ?? ``,
+		SUBFIX_CALENDAR: env.VITE_APP_CALENDAR ?? ``,
+		SUBFIX_GOOGLE: env.VITE_APP_GOOGLE ?? ``,
+		SUBFIX_ADMOB: env.VITE_APP_ADMOB ?? ``,
+		SUBFIX_ADMIN: env.VITE_APP_ADMIN ?? ``,
+		SUBFIX_EXERCISE: env.VITE_APP_EXERCISE ?? ``,
+		SUBFIX_FOOD: env.VITE_APP_FOOD ?? ``,
+		SUBFIX_MONEY: env.VITE_APP_MONEY ?? ``,
+		SUBFIX_SLEEP: env.VITE_APP_SLEEP ?? ``,
 		// API URLs
-		URL_OBJECT: (env.VITE_APP_SERVER_URL || ``) + (env[`VITE_APP_${(pathParts[1] || ``).toUpperCase()}`] || ``),
-		URL_CALENDAR: (env.VITE_APP_SERVER_URL || ``) + (env.VITE_APP_CALENDAR || ``),
-		URL_GOOGLE: (env.VITE_APP_SERVER_URL || ``) + (env.VITE_APP_GOOGLE || ``),
-		URL_ADMOB: (env.VITE_APP_SERVER_URL || ``) + (env.VITE_APP_ADMOB || ``),
-		URL_ADMIN: (env.VITE_APP_SERVER_URL || ``) + (env.VITE_APP_ADMIN || ``),
-		URL_EXERCISE: (env.VITE_APP_SERVER_URL || ``) + (env.VITE_APP_EXERCISE || ``),
-		URL_FOOD: (env.VITE_APP_SERVER_URL || ``) + (env.VITE_APP_FOOD || ``),
-		URL_MONEY: (env.VITE_APP_SERVER_URL || ``) + (env.VITE_APP_MONEY || ``),
-		URL_SLEEP: (env.VITE_APP_SERVER_URL || ``) + (env.VITE_APP_SLEEP || ``),
+		URL_OBJECT: (env.VITE_APP_SERVER_URL ?? ``) + (env[`VITE_APP_${(pathParts[1] ?? ``).toUpperCase()}`] ?? ``),
+		URL_CALENDAR: (env.VITE_APP_SERVER_URL ?? ``) + (env.VITE_APP_CALENDAR ?? ``),
+		URL_GOOGLE: (env.VITE_APP_SERVER_URL ?? ``) + (env.VITE_APP_GOOGLE ?? ``),
+		URL_ADMOB: (env.VITE_APP_SERVER_URL ?? ``) + (env.VITE_APP_ADMOB ?? ``),
+		URL_ADMIN: (env.VITE_APP_SERVER_URL ?? ``) + (env.VITE_APP_ADMIN ?? ``),
+		URL_EXERCISE: (env.VITE_APP_SERVER_URL ?? ``) + (env.VITE_APP_EXERCISE ?? ``),
+		URL_FOOD: (env.VITE_APP_SERVER_URL ?? ``) + (env.VITE_APP_FOOD ?? ``),
+		URL_MONEY: (env.VITE_APP_SERVER_URL ?? ``) + (env.VITE_APP_MONEY ?? ``),
+		URL_SLEEP: (env.VITE_APP_SERVER_URL ?? ``) + (env.VITE_APP_SLEEP ?? ``),
 		// Admin & Session ID
-		isAdmin: sessionTitle?.setting?.id?.admin || ``,
-		sessionId: sessionTitle?.setting?.id?.sessionId || ``,
+		isAdmin: sessionTitle?.setting?.id?.admin ?? ``,
+		sessionId: sessionTitle?.setting?.id?.sessionId ?? ``,
 		// Local Storage Settings
-		localSetting: localTitle?.setting || {},
-		localTimeZone: localTitle?.setting?.locale?.timeZone || `UTC`,
-		localZoneName: localTitle?.setting?.locale?.zoneName || `UTC`,
+		localSetting: localTitle?.setting ?? {},
+		localTimeZone: localTitle?.setting?.locale?.timeZone ?? `UTC`,
+		localZoneName: localTitle?.setting?.locale?.zoneName ?? `UTC`,
 		localLang: localTitle?.setting?.locale?.lang,
-		localIsoCode: localTitle?.setting?.locale?.isoCode || `US`,
-		localCurrency: localTitle?.setting?.locale?.currency || `USD`,
-		localUnit: localTitle?.setting?.locale?.unit || `lbs`,
+		localIsoCode: localTitle?.setting?.locale?.isoCode ?? `US`,
+		localCurrency: localTitle?.setting?.locale?.currency ?? `USD`,
+		localUnit: localTitle?.setting?.locale?.unit ?? `lbs`,
 		// Session Storage Settings
-		sessionPercent: sessionTitle?.setting?.sync?.percent || {},
-		sessionCategory: sessionTitle?.setting?.sync?.category || {},
+		sessionPercent: sessionTitle?.setting?.sync?.percent ?? {},
+		sessionCategory: sessionTitle?.setting?.sync?.category ?? {},
 		sessionScale: scaleDefault,
-		sessionFavorite: sessionTitle?.setting?.sync?.favorite || {},
+		sessionFavorite: sessionTitle?.setting?.sync?.favorite ?? {},
 		sessionProperty: propertyDefault,
 		sessionNutrition: nutritionDefault,
 		// Category Arrays
@@ -256,7 +256,7 @@ export const useCommonValue = (): CommonValueType => {
 		// Storage Objects
 		sessionTitle: sessionTitle || {},
 		localTitle: localTitle || {},
-		sessionSetting: sessionTitle?.setting || {},
+		sessionSetting: sessionTitle?.setting ?? {},
 		sessionFoodSection: sessionTitle?.section?.food ?? [],
 		// Chart Configuration Arrays
 		exerciseChartArray: [`volume`, `cardio`],

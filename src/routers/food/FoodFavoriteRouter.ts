@@ -1,4 +1,9 @@
-// foodFavoriteRouter.ts
+/**
+ * @file FoodFavoriteRouter.ts
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import express from "express";
 import { Request, Response } from "express";
@@ -7,23 +12,23 @@ import * as middleware from "@middlewares/food/FoodFavoriteMiddleware";
 export const router = express.Router();
 
 // 1. list -------------------------------------------------------------------------------
-router.get("/list", async (req: Request, res: Response) => {
+router.get(`/list`, async (req: Request, res: Response) => {
 	try {
-		let finalResult = await service.list (
+		let finalResult = await service.list(
 			req.query.user_id as string,
 		);
 		finalResult = await middleware.list(finalResult);
-		if (finalResult.status === "success") {
+		if (finalResult.status === `success`) {
 			res.json({
-				msg: "searchSuccessful",
+				msg: `searchSuccessful`,
 				status: finalResult.status,
 				totalCnt: finalResult.totalCnt,
 				result: finalResult.result,
 			});
 		}
-		else if (finalResult.status === "fail") {
+		else if (finalResult.status === `fail`) {
 			res.json({
-				msg: "searchFailed",
+				msg: `searchFailed`,
 				status: finalResult.status,
 				totalCnt: finalResult.totalCnt,
 				result: finalResult.result,
@@ -31,7 +36,7 @@ router.get("/list", async (req: Request, res: Response) => {
 		}
 		else {
 			res.json({
-				msg: "searchError",
+				msg: `searchError`,
 				status: finalResult.status,
 				totalCnt: finalResult.totalCnt,
 				result: finalResult.result,
@@ -49,29 +54,29 @@ router.get("/list", async (req: Request, res: Response) => {
 });
 
 // 4. update -----------------------------------------------------------------------------
-router.put("/update", async (req: Request, res: Response) => {
+router.put(`/update`, async (req: Request, res: Response) => {
 	try {
 		let finalResult = await service.update(
 			req.body.user_id as string,
-			req.body.foodFavorite as any,
+			req.body.foodFavorite,
 		);
-		if (finalResult.status === "success") {
+		if (finalResult.status === `success`) {
 			res.json({
-				msg: "updateSuccessful",
+				msg: `updateSuccessful`,
 				status: finalResult.status,
 				result: finalResult.result,
 			});
 		}
-		else if (finalResult.status === "fail") {
+		else if (finalResult.status === `fail`) {
 			res.json({
-				msg: "updateFailed",
+				msg: `updateFailed`,
 				status: finalResult.status,
 				result: finalResult.result,
 			});
 		}
 		else {
 			res.json({
-				msg: "updateError",
+				msg: `updateError`,
 				status: finalResult.status,
 				result: finalResult.result,
 			});

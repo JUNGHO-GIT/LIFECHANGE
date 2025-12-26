@@ -1,4 +1,9 @@
-// MoneyRecord.tsx
+/**
+ * @file MoneyRecord.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 // Types ------------------------------------------------------------------------------------------
 export type MoneyRecordType = {
@@ -24,22 +29,24 @@ export type MoneyRecordType = {
 
 // Schema -----------------------------------------------------------------------------------------
 export const MoneyRecord: MoneyRecordType = {
-	_id: "",
+	_id: ``,
 	money_record_number: 0,
-	money_record_dateType: "",
-	money_record_dateStart: "0000-00-00",
-	money_record_dateEnd: "0000-00-00",
-	money_record_total_income: "0",
-	money_record_total_income_color: "",
-	money_record_total_expense: "0",
-	money_record_total_expense_color: "",
-	money_section: [{
-		money_record_part: "",
-		money_record_title: "",
-		money_record_amount: "0",
-		money_record_content: "",
-		money_record_include: "Y",
-	}],
-	money_record_regDt: "",
-	money_record_updateDt: "",
+	money_record_dateType: ``,
+	money_record_dateStart: `0000-00-00`,
+	money_record_dateEnd: `0000-00-00`,
+	money_record_total_income: `0`,
+	money_record_total_income_color: ``,
+	money_record_total_expense: `0`,
+	money_record_total_expense_color: ``,
+	money_section: [
+		{
+			money_record_part: ``,
+			money_record_title: ``,
+			money_record_amount: `0`,
+			money_record_content: ``,
+			money_record_include: `Y`,
+		}
+	],
+	money_record_regDt: ``,
+	money_record_updateDt: ``,
 };

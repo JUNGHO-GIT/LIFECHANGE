@@ -1,4 +1,9 @@
-// PickerDay.tsx
+/**
+ * @file PickerDay.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { React, memo, useEffect, useState } from "@exportReacts";
 import { Btn, Div, Grid, Icons, Img } from "@exportComponents";

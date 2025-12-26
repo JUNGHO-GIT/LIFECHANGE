@@ -1,4 +1,9 @@
-// Alert.tsx
+/**
+ * @file Alert.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { Icons } from "@exportComponents";
 import { MuiAlert, Snackbar } from "@exportMuis";

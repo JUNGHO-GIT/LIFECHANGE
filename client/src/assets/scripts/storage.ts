@@ -9,7 +9,7 @@ const TITLE: string = import.meta.env.VITE_APP_TITLE ?? ``;
 
 // 1. getLocal -------------------------------------------------------------------------------------
 export const getLocal = (key1: string, key2: string, key3: string) => {
-	const localTitle = JSON.parse(localStorage.getItem(TITLE) || `{}`);
+	const localTitle: any = JSON.parse(localStorage.getItem(TITLE) || `{}`);
 
 	// 1. key1만 있는 경우
 	if (key1 && !key2 && !key3) {
@@ -29,7 +29,7 @@ export const getLocal = (key1: string, key2: string, key3: string) => {
 
 // 2. setLocal -------------------------------------------------------------------------------------
 export const setLocal = (key1: string, key2: string, key3: string, value: any) => {
-	const localTitle = JSON.parse(localStorage.getItem(TITLE) || `{}`);
+	const localTitle: any = JSON.parse(localStorage.getItem(TITLE) || `{}`);
 
 	// 1. key1만 있는 경우
 	if (key1 && !key2 && !key3) {
@@ -76,7 +76,7 @@ export const setLocal = (key1: string, key2: string, key3: string, value: any) =
 
 // 3. getSession -----------------------------------------------------------------------------------
 export const getSession = (key1: string, key2: string, key3: string) => {
-	const sessionTitle = JSON.parse(sessionStorage.getItem(TITLE) || `{}`);
+	const sessionTitle: any = JSON.parse(sessionStorage.getItem(TITLE) || `{}`);
 
 	// 1. key1만 있는 경우
 	if (key1 && !key2 && !key3) {
@@ -98,7 +98,7 @@ export const getSession = (key1: string, key2: string, key3: string) => {
 
 // 4. setSession -----------------------------------------------------------------------------------
 export const setSession = (key1: string, key2: string, key3: string, value: any) => {
-	const sessionTitle = JSON.parse(sessionStorage.getItem(TITLE) || `{}`);
+	const sessionTitle: any = JSON.parse(sessionStorage.getItem(TITLE) || `{}`);
 
 	// 1. key1만 있는 경우
 	if (key1 && !key2 && !key3) {

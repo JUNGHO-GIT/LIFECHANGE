@@ -11,6 +11,7 @@ import tseslint from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
 import unicorn from "eslint-plugin-unicorn";
 import stylistic from "@stylistic/eslint-plugin";
+import html from "eslint-plugin-html";
 import globals from "globals";
 
 // 0. 타입 정의 ---------------------------------------------------------------------------------------------
@@ -339,7 +340,7 @@ const JS_RULES = {
 	"no-else-return": [
 		`error`,
 		{
-			allowElseIf: false,
+			allowElseIf: true,
 		},
 	],
 	"no-empty": [
@@ -2247,6 +2248,117 @@ const CUSTOM_RULES = {
 };
 
 // 9. 최종 설정 병합 ----------------------------------------------------------------------------------------
+
+// 9-0. 공통 객체 재사용 ------------------------------------------------------------------------------------
+/** @type {import("eslint").Linter.LinterOptions} */
+const LINTER_OPTIONS = {
+	noInlineConfig: false,
+	reportUnusedDisableDirectives: `error`,
+	reportUnusedInlineConfigs: `error`,
+};
+
+/** @type {Record<string, import("eslint").ESLint.Plugin>} */
+const PLUGINS = {
+	html: html,
+	// @ts-ignore
+	"@typescript-eslint": tseslint,
+	"@stylistic": stylistic,
+	unicorn: unicorn,
+};
+
+/** @type {import("eslint").Linter.RulesRecord} */
+const RULES_JS = {
+	...JS_RULES,
+	...STYLISTIC_RULES,
+	...UNICORN_RULES,
+	...CUSTOM_RULES,
+};
+
+/** @type {import("eslint").Linter.RulesRecord} */
+const RULES_TS = {
+	...TS_RULES,
+	...STYLISTIC_RULES,
+	...UNICORN_RULES,
+	...CUSTOM_RULES,
+};
+
+/** @type {import("eslint").Linter.LanguageOptions} */
+const JS_LANGUAGE_OPTIONS = {
+	ecmaVersion: `latest`,
+	sourceType: `module`,
+	globals: {
+		...globals.es2025,
+		...globals.browser,
+		...globals.node,
+		...globals.worker,
+		APP_ENV: `readonly`,
+		APP_VERSION: `readonly`,
+		DEBUG: `readonly`,
+	},
+	parserOptions: {
+		ecmaVersion: `latest`,
+		sourceType: `module`,
+		ecmaFeatures: {
+			jsx: true,
+			globalReturn: false,
+			impliedStrict: true,
+		},
+		lib: [
+			`dom`,
+			`esnext`,
+		],
+		cacheLifetime: {
+			glob: `Infinity`,
+		},
+		allowImportExportEverywhere: false,
+		extraFileExtensions: [],
+	},
+};
+
+/** @type {import("eslint").Linter.LanguageOptions} */
+const TS_LANGUAGE_OPTIONS = {
+	ecmaVersion: `latest`,
+	sourceType: `module`,
+	parser: tsParser,
+	globals: {
+		...globals.es2025,
+		...globals.browser,
+		...globals.node,
+		...globals.worker,
+		APP_ENV: `readonly`,
+		APP_VERSION: `readonly`,
+		DEBUG: `readonly`,
+	},
+	parserOptions: {
+		ecmaVersion: `latest`,
+		sourceType: `module`,
+		ecmaFeatures: {
+			jsx: true,
+			globalReturn: false,
+			impliedStrict: true,
+		},
+		lib: [
+			`dom`,
+			`esnext`,
+		],
+		cacheLifetime: {
+			glob: `Infinity`,
+		},
+		allowImportExportEverywhere: false,
+		extraFileExtensions: [],
+		project: false,
+		projectService: true,
+		tsconfigRootDir: import.meta.dirname,
+		warnOnUnsupportedTypeScriptVersion: true,
+		emitDecoratorMetadata: true,
+		experimentalDecorators: true,
+		disallowAutomaticSingleRunInference: false,
+		jsDocParsingMode: `all`,
+		jsxPragma: `React`,
+		jsxFragmentName: null,
+	},
+};
+
 /** @type {import("eslint").Linter.Config[]} */
 export default defineConfig([
 	// 9-1. Ignore 패턴
@@ -2282,11 +2394,60 @@ export default defineConfig([
 			`**/.out/**`,
 			`**/vendor/**`,
 			`coverage/**`,
+			`**/.nuxt/**`,
+			`**/.svelte-kit/**`,
+			`**/.astro/**`,
+			`**/.vite/**`,
+			`**/.vercel/**`,
+			`**/.netlify/**`,
+			`**/.firebase/**`,
+			`**/storybook-static/**`,
+			`**/.serverless/**`,
+			`**/.output/**`,
+			`**/target/**`,
+			`**/.yarn/**`,
+			`**/.pnp.cjs`,
+			`**/.pnp.loader.mjs`,
+			`**/.pnpm-store/**`,
+			`**/.bun/**`,
+			`**/.swc/**`,
+			`**/.rollup.cache/**`,
+			`**/*.tsbuildinfo`,
+			`**/*.min.js`,
+			`**/*.min.css`,
+			`**/*.bundle.js`,
+			`**/*.bundle.css`,
+			`**/*.map`,
+			`**/.eslintcache`,
 			`!**/*.d.ts`,
 		],
 	},
 
-	// 9-2. Js 설정
+	// 9-2. Html 설정
+	{
+		files: [
+			`**/*.html`,
+			`**/*.htm`,
+		],
+		plugins: PLUGINS,
+		linterOptions: LINTER_OPTIONS,
+		settings: {
+			"html/html-extensions": [
+				`.html`,
+				`.htm`,
+			],
+			// 필요 시 mime-type 확장 가능
+			"html/javascript-mime-types": [
+				`text/javascript`,
+				`application/javascript`,
+				`application/ecmascript`,
+				`text/ecmascript`,
+			],
+		},
+		rules: RULES_JS,
+	},
+
+	// 9-3. Js 설정
 	{
 		files: [
 			`**/*.js`,
@@ -2294,58 +2455,13 @@ export default defineConfig([
 			`**/*.cjs`,
 			`**/*.jsx`,
 		],
-		linterOptions: {
-			noInlineConfig: false,
-			reportUnusedDisableDirectives: `error`,
-			reportUnusedInlineConfigs: `error`,
-		},
-		plugins: {
-			// @ts-ignore
-			"@typescript-eslint": tseslint,
-			"@stylistic": stylistic,
-			unicorn: unicorn,
-		},
-		rules: {
-			...JS_RULES,
-			...STYLISTIC_RULES,
-			...UNICORN_RULES,
-			...CUSTOM_RULES,
-		},
-		settings: {},
-		languageOptions: {
-			ecmaVersion: `latest`,
-			sourceType: `module`,
-			globals: {
-				...globals.es2025,
-				...globals.browser,
-				...globals.node,
-				...globals.worker,
-				APP_ENV: `readonly`,
-				APP_VERSION: `readonly`,
-				DEBUG: `readonly`,
-			},
-			parserOptions: {
-				ecmaVersion: `latest`,
-				sourceType: `module`,
-				ecmaFeatures: {
-					jsx: true,
-					globalReturn: false,
-					impliedStrict: true,
-				},
-				lib: [
-					`dom`,
-					`esnext`,
-				],
-				cacheLifetime: {
-					glob: `Infinity`,
-				},
-				allowImportExportEverywhere: false,
-				extraFileExtensions: [],
-			},
-		},
+		plugins: PLUGINS,
+		linterOptions: LINTER_OPTIONS,
+		languageOptions: JS_LANGUAGE_OPTIONS,
+		rules: RULES_JS,
 	},
 
-	// 9-3. Ts 설정
+	// 9-4. Ts 설정
 	{
 		files: [
 			`**/*.ts`,
@@ -2353,65 +2469,9 @@ export default defineConfig([
 			`**/*.mts`,
 			`**/*.cts`,
 		],
-		linterOptions: {
-			noInlineConfig: false,
-			reportUnusedDisableDirectives: `error`,
-			reportUnusedInlineConfigs: `error`,
-		},
-		plugins: {
-			// @ts-ignore
-			"@typescript-eslint": tseslint,
-			"@stylistic": stylistic,
-			unicorn: unicorn,
-		},
-		rules: {
-			...JS_RULES,
-			...TS_RULES,
-			...STYLISTIC_RULES,
-			...UNICORN_RULES,
-			...CUSTOM_RULES,
-		},
-		settings: {},
-		languageOptions: {
-			ecmaVersion: `latest`,
-			sourceType: `module`,
-			parser: tsParser,
-			globals: {
-				...globals.es2025,
-				...globals.browser,
-				...globals.node,
-				...globals.worker,
-				APP_ENV: `readonly`,
-				APP_VERSION: `readonly`,
-				DEBUG: `readonly`,
-			},
-			parserOptions: {
-				ecmaVersion: `latest`,
-				sourceType: `module`,
-				ecmaFeatures: {
-					jsx: true,
-					globalReturn: false,
-					impliedStrict: true,
-				},
-				lib: [
-					`dom`,
-					`esnext`,
-				],
-				cacheLifetime: {
-					glob: `Infinity`,
-				},
-				allowImportExportEverywhere: false,
-				extraFileExtensions: [],
-				projectService: true,
-				tsconfigRootDir: import.meta.dirname,
-				warnOnUnsupportedTypeScriptVersion: true,
-				emitDecoratorMetadata: true,
-				experimentalDecorators: true,
-				disallowAutomaticSingleRunInference: false,
-				jsDocParsingMode: `all`,
-				jsxPragma: `React`,
-				jsxFragmentName: null,
-			},
-		},
+		plugins: PLUGINS,
+		linterOptions: LINTER_OPTIONS,
+		languageOptions: TS_LANGUAGE_OPTIONS,
+		rules: RULES_TS,
 	},
 ]);

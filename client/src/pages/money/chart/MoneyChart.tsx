@@ -1,8 +1,13 @@
-// MoneyChart.tsx
+/**
+ * @file MoneyChart.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { memo, useState, useEffect } from "@exportReacts";
 import { useCommonValue, useStorageLocal } from "@exportHooks";
-import { useStoreLanguage, } from "@exportStores";
+import { useStoreLanguage } from "@exportStores";
 import { MoneyChartPie } from "./MoneyChartPie";
 import { MoneyChartLine } from "./MoneyChartLine";
 import { MoneyChartAvg } from "./MoneyChartAvg";
@@ -19,47 +24,47 @@ export const MoneyChart = memo(() => {
 
 	// 2-1. useStorageLocal -----------------------------------------------------------------------
 	const [TYPE_PIE, setTYPE_PIE] = useStorageLocal(
-		"type", "pie", PATH, {
-			section: "week",
-			line: "income",
+		`type`, `pie`, PATH, {
+			section: `week`,
+			line: `income`,
 		}
 	);
 	const [TYPE_LINE, setTYPE_LINE] = useStorageLocal(
-		"type", "line", PATH, {
-			section: "week",
-			line: "income",
+		`type`, `line`, PATH, {
+			section: `week`,
+			line: `income`,
 		}
 	);
 	const [TYPE_AVG, setTYPE_AVG] = useStorageLocal(
-		"type", "avg", PATH, {
-			section: "week",
-			line: "income",
+		`type`, `avg`, PATH, {
+			section: `week`,
+			line: `income`,
 		}
 	);
 
 	// 2-2. useState ------------------------------------------------------------------------------
-	const [curView, setCurView] = useState("pie");
-	const [curSection, setCurSection] = useState(TYPE_PIE.section || "week");
+	const [curView, setCurView] = useState(`pie`);
+	const [curSection, setCurSection] = useState(TYPE_PIE.section || `week`);
 	const [curSetType, setCurSetType] = useState(() => setTYPE_PIE);
-	const [curValue, setCurValue] = useState(TYPE_PIE.line || "income");
+	const [curValue, setCurValue] = useState(TYPE_PIE.line || `income`);
 
 	// 3. useEffect -------------------------------------------------------------------------------
 	useEffect(() => {
-		curView === "pie" ? (
-			setCurSetType(() => setTYPE_PIE),
-			setCurSection(TYPE_PIE.section || "week"),
-			setCurValue(TYPE_PIE.line || "income")
-		)
-		: curView === "line" ? (
-			setCurSetType(() => setTYPE_LINE),
-			setCurSection(TYPE_LINE.section || "week"),
-			setCurValue(TYPE_LINE.line || "income")
-		)
-		: curView === "avg" && (
-			setCurSetType(() => setTYPE_AVG),
-			setCurSection(TYPE_AVG.section || "week"),
-			setCurValue(TYPE_AVG.line || "income")
-		);
+		curView === `pie` ? (() => {
+			setCurSetType(() => setTYPE_PIE);
+			setCurSection(TYPE_PIE.section || `week`);
+			setCurValue(TYPE_PIE.line || `income`);
+		})()
+		: curView === `line` ? (() => {
+			setCurSetType(() => setTYPE_LINE);
+			setCurSection(TYPE_LINE.section || `week`);
+			setCurValue(TYPE_LINE.line || `income`);
+		})()
+		: curView === `avg` && (() => {
+			setCurSetType(() => setTYPE_AVG);
+			setCurSection(TYPE_AVG.section || `week`);
+			setCurValue(TYPE_AVG.line || `income`);
+		})();
 	}, [curView, TYPE_PIE, TYPE_LINE, TYPE_AVG]);
 
 	// 7. chart --------------------------------------------------------------------------------------
@@ -77,9 +82,9 @@ export const MoneyChart = memo(() => {
 							}));
 						}}
 					>
-						<MenuItem value={"week"}>{translate(`week`)}</MenuItem>
-						<MenuItem value={"month"}>{translate(`month`)}</MenuItem>
-						{curView === "pie" && <MenuItem value={"year"}>{translate(`year`)}</MenuItem>}
+						<MenuItem value={`week`}>{translate(`week`)}</MenuItem>
+						<MenuItem value={`month`}>{translate(`month`)}</MenuItem>
+						{curView === `pie` && <MenuItem value={`year`}>{translate(`year`)}</MenuItem>}
 					</Select>
 				</Grid>
 				<Grid size={4} className={`d-row-center`}>
@@ -89,9 +94,9 @@ export const MoneyChart = memo(() => {
 							setCurView(e.target.value);
 						}}
 					>
-						<MenuItem value={"pie"}>{translate(`chartPie`)}</MenuItem>
-						<MenuItem value={"line"}>{translate(`chartLine`)}</MenuItem>
-						<MenuItem value={"avg"}>{translate(`chartAvg`)}</MenuItem>
+						<MenuItem value={`pie`}>{translate(`chartPie`)}</MenuItem>
+						<MenuItem value={`line`}>{translate(`chartLine`)}</MenuItem>
+						<MenuItem value={`avg`}>{translate(`chartAvg`)}</MenuItem>
 					</Select>
 				</Grid>
 				<Grid size={4} className={`d-row-center`}>
@@ -105,8 +110,8 @@ export const MoneyChart = memo(() => {
 							}));
 						}}
 					>
-						<MenuItem value={"income"}>{translate(`income`)}</MenuItem>
-						<MenuItem value={"expense"}>{translate(`expense`)}</MenuItem>
+						<MenuItem value={`income`}>{translate(`income`)}</MenuItem>
+						<MenuItem value={`expense`}>{translate(`expense`)}</MenuItem>
 					</Select>
 				</Grid>
 			</Grid>
@@ -114,16 +119,16 @@ export const MoneyChart = memo(() => {
 		return (
 			<Paper className={`content-wrapper d-col-between radius-2 border-1 shadow-1 h-min-75vh`}>
 				<Grid container={true} spacing={0} className={`border-0 radius-0`}>
-          <Grid size={12} className={`d-col-center p-0px`}>
-            {headSection()}
-          </Grid>
-        </Grid>
+					<Grid size={12} className={`d-col-center p-0px`}>
+						{headSection()}
+					</Grid>
+				</Grid>
 				<Br m={10} />
-        <Grid container={true} spacing={0} className={`border-1 radius-2 h-min-63vh`}>
+				<Grid container={true} spacing={0} className={`border-1 radius-2 h-min-63vh`}>
 					<Grid size={12} className={`d-col-center p-5px`}>
-						{curView === "pie" && <MoneyChartPie TYPE={TYPE_PIE} setTYPE={setTYPE_PIE} />}
-						{curView === "line" && <MoneyChartLine TYPE={TYPE_LINE} setTYPE={setTYPE_LINE} />}
-						{curView === "avg" && <MoneyChartAvg TYPE={TYPE_AVG} setTYPE={setTYPE_AVG} />}
+						{curView === `pie` && <MoneyChartPie TYPE={TYPE_PIE} setTYPE={setTYPE_PIE} />}
+						{curView === `line` && <MoneyChartLine TYPE={TYPE_LINE} setTYPE={setTYPE_LINE} />}
+						{curView === `avg` && <MoneyChartAvg TYPE={TYPE_AVG} setTYPE={setTYPE_AVG} />}
 					</Grid>
 				</Grid>
 			</Paper>

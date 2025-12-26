@@ -1,4 +1,9 @@
-// FindFilter.tsx
+/**
+ * @file FindFilter.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { Div, Grid, Icons } from "@exportComponents";
 import { Input } from "@exportContainers";

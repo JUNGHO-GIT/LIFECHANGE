@@ -1,262 +1,267 @@
-// moneyChartRepository.ts
+/**
+ * @file MoneyChartRepository.ts
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { MoneyGoal } from "@schemas/money/MoneyGoal";
 import { MoneyRecord } from "@schemas/money/MoneyRecord";
 
 // 1-1. chart (bar - goal) -------------------------------------------------------------------------
 export const barGoal = async (
-  user_id_param: string,
-  dateStart_param: string,
-  dateEnd_param: string,
+	user_id_param: string,
+	dateStart_param: string,
+	dateEnd_param: string,
 ) => {
-  const finalResult = await MoneyGoal.aggregate([
-    {
-      $match: {
-        user_id: user_id_param,
-        money_goal_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_goal_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-      }
-    },
-    {
-      $project: {
-        _id: 0,
-        money_goal_dateStart: 1,
-        money_goal_dateEnd: 1,
-        money_goal_income: 1,
-        money_goal_expense: 1,
-      }
-    },
-    {
-      $sort: {
-        money_goal_dateStart: 1
-      }
-    }
-  ]);
+	const finalResult = await MoneyGoal.aggregate([
+		{
+			$match: {
+				user_id: user_id_param,
+				money_goal_dateStart: {
+					$gte: dateStart_param,
+					$lte: dateEnd_param,
+				},
+				money_goal_dateEnd: {
+					$gte: dateStart_param,
+					$lte: dateEnd_param,
+				},
+			}
+		},
+		{
+			$project: {
+				_id: 0,
+				money_goal_dateStart: 1,
+				money_goal_dateEnd: 1,
+				money_goal_income: 1,
+				money_goal_expense: 1,
+			}
+		},
+		{
+			$sort: {
+				money_goal_dateStart: 1
+			}
+		}
+	]);
 
-  return finalResult;
+	return finalResult;
 };
 
 // 1-2. chart (bar - record) -------------------------------------------------------------------------
 export const barRecord = async (
-  user_id_param: string,
-  dateStart_param: string,
-  dateEnd_param: string,
+	user_id_param: string,
+	dateStart_param: string,
+	dateEnd_param: string,
 ) => {
-  const finalResult = await MoneyRecord.aggregate([
-    {
-      $match: {
-        user_id: user_id_param,
-        money_record_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_record_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-      }
-    },
-    {
-      $project: {
-        _id: 0,
-        money_record_dateStart: 1,
-        money_record_dateEnd: 1,
-        money_record_total_income: 1,
-        money_record_total_expense: 1,
-      }
-    },
-    {
-      $sort: {
-        money_record_dateStart: 1
-      }
-    }
-  ]);
+	const finalResult = await MoneyRecord.aggregate([
+		{
+			$match: {
+				user_id: user_id_param,
+				money_record_dateStart: {
+					$gte: dateStart_param,
+					$lte: dateEnd_param,
+				},
+				money_record_dateEnd: {
+					$gte: dateStart_param,
+					$lte: dateEnd_param,
+				},
+			}
+		},
+		{
+			$project: {
+				_id: 0,
+				money_record_dateStart: 1,
+				money_record_dateEnd: 1,
+				money_record_total_income: 1,
+				money_record_total_expense: 1,
+			}
+		},
+		{
+			$sort: {
+				money_record_dateStart: 1
+			}
+		}
+	]);
 
-  return finalResult;
+	return finalResult;
 };
 
 // 2-1. chart (pie - income) ----------------------------------------------------------------------
 export const pieIncome = async (
-  user_id_param: string,
-  dateStart_param: string,
-  dateEnd_param: string,
+	user_id_param: string,
+	dateStart_param: string,
+	dateEnd_param: string,
 ) => {
-  const finalResult = await MoneyRecord.aggregate([
-    {
-      $match: {
-        user_id: user_id_param,
-        money_record_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_record_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-      }
-    },
-    {
-      $unwind: "$money_section"
-    },
-    {
-      $match: {
-        "money_section.money_record_part": "income"
-      }
-    },
-    {
-      $group: {
-        _id: "$money_section.money_record_title",
-        value: {
-          $sum: {
-            $toDouble: "$money_section.money_record_amount"
-          }
-        }
-      }
-    },
-    {
-      $sort: {
-        value: -1
-      }
-    },
-    {
-      $limit: 5
-    }
-  ]);
+	const finalResult = await MoneyRecord.aggregate([
+		{
+			$match: {
+				user_id: user_id_param,
+				money_record_dateStart: {
+					$gte: dateStart_param,
+					$lte: dateEnd_param,
+				},
+				money_record_dateEnd: {
+					$gte: dateStart_param,
+					$lte: dateEnd_param,
+				},
+			}
+		},
+		{
+			$unwind: `$money_section`
+		},
+		{
+			$match: {
+				"money_section.money_record_part": `income`
+			}
+		},
+		{
+			$group: {
+				_id: `$money_section.money_record_title`,
+				value: {
+					$sum: {
+						$toDouble: `$money_section.money_record_amount`
+					}
+				}
+			}
+		},
+		{
+			$sort: {
+				value: -1
+			}
+		},
+		{
+			$limit: 5
+		}
+	]);
 
-  return finalResult;
+	return finalResult;
 };
 
 // 2-2. chart (pie - expense) ---------------------------------------------------------------------
 export const pieExpense = async (
-  user_id_param: string,
-  dateStart_param: string,
-  dateEnd_param: string,
+	user_id_param: string,
+	dateStart_param: string,
+	dateEnd_param: string,
 ) => {
-  const finalResult = await MoneyRecord.aggregate([
-    {
-      $match: {
-        user_id: user_id_param,
-        money_record_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_record_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-      }
-    },
-    {
-      $unwind: "$money_section"
-    },
-    {
-      $match: {
-        "money_section.money_record_part": "expense"
-      }
-    },
-    {
-      $group: {
-        _id: "$money_section.money_record_title",
-        value: {
-          $sum: {
-            $toDouble: "$money_section.money_record_amount"
-          }
-        }
-      }
-    },
-    {
-      $sort: {
-        value: -1
-      }
-    },
-    {
-      $limit: 5
-    }
-  ]);
+	const finalResult = await MoneyRecord.aggregate([
+		{
+			$match: {
+				user_id: user_id_param,
+				money_record_dateStart: {
+					$gte: dateStart_param,
+					$lte: dateEnd_param,
+				},
+				money_record_dateEnd: {
+					$gte: dateStart_param,
+					$lte: dateEnd_param,
+				},
+			}
+		},
+		{
+			$unwind: `$money_section`
+		},
+		{
+			$match: {
+				"money_section.money_record_part": `expense`
+			}
+		},
+		{
+			$group: {
+				_id: `$money_section.money_record_title`,
+				value: {
+					$sum: {
+						$toDouble: `$money_section.money_record_amount`
+					}
+				}
+			}
+		},
+		{
+			$sort: {
+				value: -1
+			}
+		},
+		{
+			$limit: 5
+		}
+	]);
 
-  return finalResult;
+	return finalResult;
 };
 
 // 3-1. chart (line - all) -------------------------------------------------------------------------
 export const lineAll = async (
-  user_id_param: string,
-  dateStart_param: string,
-  dateEnd_param: string,
+	user_id_param: string,
+	dateStart_param: string,
+	dateEnd_param: string,
 ) => {
-  const finalResult = await MoneyRecord.aggregate([
-    {
-      $match: {
-        user_id: user_id_param,
-        money_record_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_record_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-      }
-    },
-    {
-      $project: {
-        _id: 0,
-        money_record_dateStart: 1,
-        money_record_dateEnd: 1,
-        money_record_total_income: 1,
-        money_record_total_expense: 1
-      }
-    },
-    {
-      $sort: {
-        money_record_dateStart: 1
-      }
-    }
-  ]);
+	const finalResult = await MoneyRecord.aggregate([
+		{
+			$match: {
+				user_id: user_id_param,
+				money_record_dateStart: {
+					$gte: dateStart_param,
+					$lte: dateEnd_param,
+				},
+				money_record_dateEnd: {
+					$gte: dateStart_param,
+					$lte: dateEnd_param,
+				},
+			}
+		},
+		{
+			$project: {
+				_id: 0,
+				money_record_dateStart: 1,
+				money_record_dateEnd: 1,
+				money_record_total_income: 1,
+				money_record_total_expense: 1
+			}
+		},
+		{
+			$sort: {
+				money_record_dateStart: 1
+			}
+		}
+	]);
 
-  return finalResult;
+	return finalResult;
 };
 
 // 4-1. chart (avg - all) --------------------------------------------------------------------------
 export const avgAll = async (
-  user_id_param: string,
-  dateStart_param: string,
-  dateEnd_param: string,
+	user_id_param: string,
+	dateStart_param: string,
+	dateEnd_param: string,
 ) => {
-  const finalResult = await MoneyRecord.aggregate([
-    {
-      $match: {
-        user_id: user_id_param,
-        money_record_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_record_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-      }
-    },
-    {
-      $project: {
-        _id: 0,
-        money_record_dateStart: 1,
-        money_record_dateEnd: 1,
-        money_record_total_income: 1,
-        money_record_total_expense: 1
-      }
-    },
-    {
-      $sort: {
-        money_record_dateStart: 1
-      }
-    }
-  ]);
+	const finalResult = await MoneyRecord.aggregate([
+		{
+			$match: {
+				user_id: user_id_param,
+				money_record_dateStart: {
+					$gte: dateStart_param,
+					$lte: dateEnd_param,
+				},
+				money_record_dateEnd: {
+					$gte: dateStart_param,
+					$lte: dateEnd_param,
+				},
+			}
+		},
+		{
+			$project: {
+				_id: 0,
+				money_record_dateStart: 1,
+				money_record_dateEnd: 1,
+				money_record_total_income: 1,
+				money_record_total_expense: 1
+			}
+		},
+		{
+			$sort: {
+				money_record_dateStart: 1
+			}
+		}
+	]);
 
-  return finalResult;
+	return finalResult;
 };

@@ -112,9 +112,9 @@ export const Img = memo((
 		const cached = imageCache.get(current);
 		cached && (cached.status = `error`);
 		// empty.webp 자체가 에러난 경우 다시 호출하지 않도록 차단
-		!isEmptyHandled && !current.includes(`empty.webp`) ?
-			(setFileName(`empty`), setImgSrc(`${GCLOUD_URL}/main/empty.webp`), setIsEmptyHandled(true), setIsLoading(false)) :
-			setIsLoading(false);
+		!isEmptyHandled && !current.includes(`empty.webp`)
+			? (setFileName(`empty`), setImgSrc(`${GCLOUD_URL}/main/empty.webp`), setIsEmptyHandled(true), setIsLoading(false))
+			: setIsLoading(false);
 	}, [isEmptyHandled, GCLOUD_URL]);
 
 	// 5. useEffect (src 설정 + 이미지 로딩 캐시) -------------------------------------------------------
@@ -125,9 +125,9 @@ export const Img = memo((
 		const fallback = `${GCLOUD_URL}/main/empty.webp`;
 		const trimmed = typeof src === `string` ? src.trim() : ``;
 		const invalidName = !trimmed || !trimmed.includes(`.`) || trimmed.startsWith(`.`) || trimmed.endsWith(`.`) || trimmed === `.` || trimmed.length < 3;
-		const finalSrc = (!src || src === `` || src === `empty` || typeof src !== `string` || invalidName) ?
-			fallback :
-			(group === `new` ? trimmed : `${GCLOUD_URL}/${group || `main`}/${trimmed}`);
+		const finalSrc = (!src || src === `` || src === `empty` || typeof src !== `string` || invalidName)
+			? fallback
+			: (group === `new` ? trimmed : `${GCLOUD_URL}/${group || `main`}/${trimmed}`);
 
 		setFileName(finalSrc === fallback ? `empty` : trimmed.split(`/`).pop()?.split(`.`)[0] || `empty`);
 		setImgSrc(finalSrc);
@@ -152,14 +152,12 @@ export const Img = memo((
 		let cancelled = false;
 		const promise = cached?.promise || preloadImage(finalSrc);
 		promise.then(() => !cancelled && currentImgSrcRef.current === finalSrc && setIsLoading(false))
-			.catch(() => !cancelled && currentImgSrcRef.current === finalSrc && handleImageError());
+		.catch(() => !cancelled && currentImgSrcRef.current === finalSrc && handleImageError());
 
 		return () => {
 			cancelled = true;
 		};
-	}, [
-		GCLOUD_URL, group, src, handleImageError
-	]);
+	}, [GCLOUD_URL, group, src, handleImageError]);
 
 	// 7. skeletonNode -------------------------------------------------------------------------------
 	const skeletonNode = useMemo(() => (

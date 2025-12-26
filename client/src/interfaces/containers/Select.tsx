@@ -1,4 +1,9 @@
-// Select.tsx
+/**
+ * @file Select.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { React, memo, useCallback, useMemo, useRef } from "@exportReacts";
 import { TextField } from "@exportMuis";

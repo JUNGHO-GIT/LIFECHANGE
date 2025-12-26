@@ -1,4 +1,9 @@
-// Memo.tsx
+/**
+ * @file Memo.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { Grid, Img } from "@exportComponents";
 import { Input, PopUp } from "@exportContainers";

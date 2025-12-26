@@ -1,4 +1,9 @@
-// Dialog.tsx
+/**
+ * @file Dialog.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { React, memo, useState } from "@exportReacts";
 import { Div, Icons } from "@exportComponents";

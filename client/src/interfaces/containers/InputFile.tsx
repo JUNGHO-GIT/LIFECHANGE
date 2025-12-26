@@ -1,4 +1,9 @@
-// InputFile.tsx
+/**
+ * @file InputFile.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { Br, Div, Grid, Icons, Img } from "@exportComponents";
 import { MuiFileInput } from "@exportMuis";

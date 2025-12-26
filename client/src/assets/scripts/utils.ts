@@ -6,14 +6,16 @@
  */
 
 // 1. random ----------------------------------------------------------------------------------
-export const randomNumber = (data: number) => (
-	Math.floor(Math.random() * (Number.isNaN(Number(data)) ? 100 : data))
-);
+export const randomNumber = (data: number) => Math.floor(Math.random() * (Number.isNaN(Number(data)) ? 100 : data));
 
 // 2. time ------------------------------------------------------------------------------------
 export const randomTime = (): string => {
-	const hour: string = Math.floor(Math.random() * 23).toString().padStart(2, `0`);
-	const minute: string = Math.floor(Math.random() * 60).toString().padStart(2, `0`);
+	const hour: string = Math.floor(Math.random() * 23)
+	.toString()
+	.padStart(2, `0`);
+	const minute: string = Math.floor(Math.random() * 60)
+	.toString()
+	.padStart(2, `0`);
 	return `${hour}:${minute}`;
 };
 
@@ -63,7 +65,6 @@ export const insertComma = (param: string | number) => {
 	if (Number.isNaN(Number(str))) {
 		return str;
 	}
-
 	// 맨 앞에 + 또는 - 기호가 있는 경우 제거하고 부호를 기억
 	const isNegative: boolean = str.startsWith(`-`);
 	isNegative && (str = str.slice(1));
@@ -73,19 +74,11 @@ export const insertComma = (param: string | number) => {
 	const formattedNum: string = integerPart.replaceAll(/\B(?=(\d{3})+(?!\d))/g, `,`);
 
 	// 최종 반환 문자열 구성 (소수점 이하가 있는 경우 포함)
-	return (
-		(isNegative ? `-` : ``) +
-		formattedNum +
-		(decimalPart !== undefined ? `.${decimalPart}` : ``)
-	);
+	return (isNegative ? `-` : ``) + formattedNum + (decimalPart !== undefined ? `.${decimalPart}` : ``);
 };
 
 // 7. makeForm --------------------------------------------------------------------------------
-export const makeForm = (
-	object: Record<string, unknown> | null,
-	fileList: File[] | null,
-	extra?: Record<string, string>
-) => {
+export const makeForm = (object: Record<string, unknown> | null, fileList: File[] | null, extra?: Record<string, string>) => {
 	const form: FormData = new FormData();
 
 	// object 데이터 추가
@@ -102,26 +95,19 @@ export const makeForm = (
 			}
 		});
 	}
-
 	// 파일 추가
 	if (fileList) {
 		fileList.forEach((file: File) => {
-			const newFile: File = new File(
-				[file],
-				`${Date.now()}_${file.name}`,
-				{ type: file.type }
-			);
+			const newFile: File = new File([file], `${Date.now()}_${file.name}`, { type: file.type });
 			form.append(`fileList`, newFile);
 		});
 	}
-
 	// 추가 데이터 추가
 	if (extra) {
 		Object.keys(extra).forEach((key: string) => {
 			form.append(key, extra[key]);
 		});
 	}
-
 	return form;
 };
 
@@ -154,119 +140,100 @@ export const handleNumberInput = (val: string, max: number, decimalPlaces: numbe
 // - 차트 Y축 범위 및 눈금 계산
 const formatYCache: WeakMap<any, unknown> = new WeakMap();
 
-export const formatY = (
-	OBJECT: unknown,
-	array: unknown,
-	type: string,
-	_extra?: string,
-) => {
-	const objRef = OBJECT || [];
-	const arrRef: unknown = array || [];
+export const formatY = (OBJECT: unknown, array: unknown, type: string, _extra?: string) => {
+	const objRef: unknown = OBJECT ?? [];
+	const arrRef: unknown = array ?? [];
 	const key: string = `${arrRef.join(`|`)}|${type}|${_extra ?? ``}`;
 
-	const outerCache: unknown = formatYCache.get(objRef) || (() => {
+	const outerCache: unknown = formatYCache.get(objRef) ?? (() => {
 		const newMap: Map<unknown, unknown> = new Map();
 		formatYCache.set(objRef, newMap);
 		return newMap;
 	})();
 	const cached: unknown = outerCache.get(key);
 
-	return cached || (() => {
-		const ticks: number[] = [];
+	return (
+		cached || (() => {
+			const ticks: number[] = [];
 
-		// maxValue 계산 (한 번만, 불필요한 중복 계산 제거)
-		let maxValue: number = 0;
-		objRef.forEach((item: unknown) => {
-			arrRef.forEach((arrKey: unknown) => {
-				const val: number = Number(item?.[arrKey] || 0);
-				(val > maxValue) && (maxValue = val);
+			// maxValue 계산 (한 번만, 불필요한 중복 계산 제거)
+			let maxValue: number = 0;
+			objRef.forEach((item: unknown) => {
+				arrRef.forEach((arrKey: unknown) => {
+					const val: number = Number(item?.[arrKey] ?? 0);
+					val > maxValue && (maxValue = val);
+				});
 			});
-		});
 
-		// 범위를 사람이 읽기 좋은 값으로 맞춰주는 보조 함수
-		const computeNiceTick = (max: number, targetTicks: number) => {
-			const rough: number = Math.max(Math.ceil(max / Math.max(targetTicks, 1)), 1);
-			const exponent: number = rough > 0 ? Math.floor(Math.log10(rough)) : 0;
-			const pow10: number = 10 ** exponent;
-			const normalized: number = rough / pow10;
-			const niceFraction: number = normalized <= 1 ? 1 : normalized <= 2 ? 2 : normalized <= 5 ? 5 : 10;
-			const niceTick: number = niceFraction * pow10;
-			const top: number = Math.ceil(max / niceTick) * niceTick;
-			return {
-				niceTick: niceTick,
-				top: top,
+			// 범위를 사람이 읽기 좋은 값으로 맞춰주는 보조 함수
+			const computeNiceTick = (max: number, targetTicks: number) => {
+				const rough: number = Math.max(Math.ceil(max / Math.max(targetTicks, 1)), 1);
+				const exponent: number = rough > 0 ? Math.floor(Math.log10(rough)) : 0;
+				const pow10: number = 10 ** exponent;
+				const normalized: number = rough / pow10;
+				const niceFraction: number = normalized <= 1 ? 1 : normalized <= 2 ? 2 : normalized <= 5 ? 5 : 10;
+				const niceTick: number = niceFraction * pow10;
+				const top: number = Math.ceil(max / niceTick) * niceTick;
+				return {
+					niceTick: niceTick,
+					top: top,
+				};
 			};
-		};
 
-		const config = (
-			type === `sleep` ? {
-				maxValue: maxValue,
-				tickInterval: _extra === `line` ? 5 : 1,
-				topValue: _extra === `line` ? Math.ceil(maxValue / 100) * 100 : 24,
-			} :
-			type === `money` ? (() => {
-				const { niceTick, top } = computeNiceTick(maxValue, 6);
-				return {
+			const config = (
+				type === `sleep` ? {
 					maxValue: maxValue,
-					tickInterval: niceTick,
-					topValue: top,
-				};
-			})() :
-			type === `food` ? (() => {
-				const { niceTick, top } = computeNiceTick(maxValue, 6);
-				return {
-					maxValue: maxValue,
-					tickInterval: Math.max(niceTick, 1),
-					topValue: top,
-				};
-			})() :
-			type === `exercise` ? (() => {
-				const { niceTick, top } = computeNiceTick(maxValue, 6);
-				return {
-					maxValue: maxValue,
-					tickInterval: Math.max(niceTick, 1),
-					topValue: top,
-				};
-			})() :
-			(() => {
-				throw new Error(`formatY: type error`);
-			})()
-		) as {
-			maxValue: number;
-			tickInterval: number;
-			topValue: number;
-		};
+					tickInterval: _extra === `line` ? 5 : 1,
+					topValue: _extra === `line` ? Math.ceil(maxValue / 100) * 100 : 24,
+				} : type === `money` ? (() => {
+					const { niceTick, top } = computeNiceTick(maxValue, 6);
+					return {
+						maxValue: maxValue,
+						tickInterval: niceTick,
+						topValue: top,
+					};
+				})() : type === `food` ? (() => {
+					const { niceTick, top } = computeNiceTick(maxValue, 6);
+					return {
+						maxValue: maxValue,
+						tickInterval: Math.max(niceTick, 1),
+						topValue: top,
+					};
+				})() : type === `exercise` ? (() => {
+					const { niceTick, top } = computeNiceTick(maxValue, 6);
+					return {
+						maxValue: maxValue,
+						tickInterval: Math.max(niceTick, 1),
+						topValue: top,
+					};
+				})() : (() => {
+					throw new Error(`formatY: type error`);
+				})()
+			) as {
+				maxValue: number;
+				tickInterval: number;
+				topValue: number;
+			};
 
-		let i: number = 0;
-		while (i <= config.topValue) {
-			ticks.push(i);
-			i += config.tickInterval;
-		}
+			let i: number = 0;
+			while (i <= config.topValue) {
+				ticks.push(i);
+				i += config.tickInterval;
+			}
+			const result: {
+				domain: [number, number];
+				ticks: number[];
+				formatterY: (_value: number) => string;
+			} = {
+				domain: [0, config.topValue],
+				ticks: ticks,
+				formatterY: (value: number) => (value >= 1_000_000_000 ? `${(value / 1_000_000_000).toFixed(1)}b` : value >= 1_000_000 ? `${(value / 1_000_000).toFixed(1)}m` : value >= 1000 ? `${(value / 1000).toFixed(1)}k` : value.toLocaleString()),
+			};
 
-		const result: {
-			domain: [number, number];
-			ticks: number[];
-			formatterY: (_value: number) => string;
-		} = {
-			domain: [0, config.topValue],
-			ticks: ticks,
-			formatterY: (value: number) => (
-				value >= 1_000_000_000 ? (
-					`${(value / 1_000_000_000).toFixed(1)}b`
-				) :
-					value >= 1_000_000 ? (
-						`${(value / 1_000_000).toFixed(1)}m`
-					) :
-						value >= 1000 ? (
-							`${(value / 1000).toFixed(1)}k`
-						) :
-							value.toLocaleString()
-			)
-		};
-
-		outerCache.set(key, result);
-		return result;
-	})();
+			outerCache.set(key, result);
+			return result;
+		})()
+	);
 };
 
 // 10. formatDate ---------------------------------------------------------------------------------

@@ -1,4 +1,9 @@
-// Header.tsx
+/**
+ * @file Header.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 import { Div, Icons, Img, Paper } from "@exportComponents";
 import { useCommonDate, useCommonValue } from "@exportHooks";

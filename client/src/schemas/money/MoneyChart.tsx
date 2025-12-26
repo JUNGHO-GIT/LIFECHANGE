@@ -1,4 +1,9 @@
-// MoneyChart.tsx
+/**
+ * @file MoneyChart.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-26
+ */
 
 // Types ------------------------------------------------------------------------------------------
 export type MoneyPieType = {
@@ -20,18 +25,18 @@ export type MoneyAvgType = {
 
 // Schema -----------------------------------------------------------------------------------------
 export const MoneyPie: MoneyPieType = {
-	name: "Empty",
+	name: `Empty`,
 	value: 100,
 };
 export const MoneyLine: MoneyLineType = {
-	name: "",
-	date: "",
-	income: "0",
-	expense: "0",
+	name: ``,
+	date: ``,
+	income: `0`,
+	expense: `0`,
 };
 export const MoneyAvg: MoneyAvgType = {
-	name: "",
-	date: "",
-	income: "0",
-	expense: "0",
+	name: ``,
+	date: ``,
+	income: `0`,
+	expense: `0`,
 };
