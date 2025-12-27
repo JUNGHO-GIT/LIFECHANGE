@@ -8,7 +8,7 @@
 import mongoose from "mongoose";
 
 // 0. types ---------------------------------------------------------------------------------------
-declare type VerifyType = mongoose.Document & {
+declare interface VerifyType extends mongoose.Document {
 	verify_id: string;
 	verify_code: string;
 	verify_regDt: Date;

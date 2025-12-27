@@ -13,7 +13,7 @@ import { ListFilter } from "./footer/ListFilter";
 import { FindFilter } from "./footer/FindFilter";
 
 // -------------------------------------------------------------------------------------------------
-declare type FooterProps = {
+declare interface FooterProps {
 	state: any;
 	setState: any;
 	flow?: any;

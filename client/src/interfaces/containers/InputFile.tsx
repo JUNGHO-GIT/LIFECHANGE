@@ -53,32 +53,32 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
 	useEffect(() => {
-		setFileExisting(props?.existing || []);
+		setFileExisting(props?.existing ?? []);
 	}, [props?.existing]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
 	useEffect(() => {
-		setFileLimit(props?.limit || 1);
+		setFileLimit(props?.limit ?? 1);
 	}, [props?.limit]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
 	useEffect(() => {
 
 		// 최초 로드 시 파일 배열 초기화
-		setFileList(props?.value || []);
+		setFileList(props?.value ?? []);
 
 		// 파일 높이 계산
-		const heightPerFile = 30;
-		const minHeight = 100;
-		setFileHeight(`${Math.max(minHeight, (props?.value || [])?.length * heightPerFile)}px`);
+		const heightPerFile: number = 30;
+		const minHeight: number = 100;
+		setFileHeight(`${Math.max(minHeight, (props?.value ?? [])?.length * heightPerFile)}px`);
 
 	}, [props?.value]);
 
 	// 2-3. useEffect -----------------------------------------------------------------------------
 	useEffect(() => {
 		if (fileList) {
-			const newCount = fileList?.length;
-			const existingCount = fileExisting?.length;
+			const newCount: number = fileList?.length;
+			const existingCount: number = fileExisting?.length;
 
 			if (newCount + existingCount > 0) {
 				setFileCount(newCount + existingCount);
@@ -133,7 +133,7 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
 			});
 
 			// input 요소 삭제
-			const input = document.querySelector(`input[type=file]`);
+			const input: Element | null = document.querySelector(`input[type=file]`);
 			if (input) {
 				input.remove();
 			}
@@ -141,15 +141,15 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
 		}
 
 		if (newFiles) {
-			const existingFiles = fileList || [];
+			const existingFiles: File[] = fileList ?? [];
 
 			// Filter out duplicate files
-			const nonDuplicateFiles = newFiles?.filter((newFile) => (
+			const nonDuplicateFiles: File[] = newFiles?.filter((newFile) => (
 				!existingFiles.some((existingFile) => existingFile.name === newFile.name)
 			));
 
 			// Create the updated files list
-			const updatedFiles = [...existingFiles, ...nonDuplicateFiles];
+			const updatedFiles: File[] = [...existingFiles, ...nonDuplicateFiles];
 
 			// Update state
 			setFileList(updatedFiles);
@@ -163,13 +163,13 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
 	// 파일 추가 로직
 	const handleFileAdd = (e: any) => {
 		e.preventDefault();
-		const input = document.createElement(`input`);
+		const input: HTMLInputElement = document.createElement(`input`);
 		input.type = `file`;
 		input.multiple = true;
 		input.accept = `image/*`;
 		input.style.display = `none`;
-		input.addEventListener(`change`, (e: any) => {
-			flowFileChange([...e.target.files]);
+		input.addEventListener(`change`, (event: any) => {
+			flowFileChange([...event.target.files]);
 		});
 		document.body.append(input);
 		input.click();
@@ -181,7 +181,7 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
 			if (!fileList) {
 				return;
 			}
-			const updatedFiles = fileList?.filter((_file, i) => i !== index);
+			const updatedFiles: File[] = fileList?.filter((_file, i) => i !== index);
 			setFileList(updatedFiles);
 			props.onChange(updatedFiles);
 		}
@@ -193,7 +193,7 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
 
 	// 6. handle (파일 삭제) -------------------------------------------------------------------------
 	const handleExistingFileDelete = (index: number) => {
-		const updatedExistingFile = fileExisting?.filter((_file: any, i: number) => i !== index);
+		const updatedExistingFile: any[] = fileExisting?.filter((_file: any, i: number) => i !== index);
 		setFileExisting(updatedExistingFile);
 
 		if (handleExistingFilesChange) {
@@ -213,7 +213,7 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
 							shadow={true}
 							radius={false}
 							group={`new`}
-							src={URL.createObjectURL(file)}
+							src={URL.createObjectURL(file as Blob | MediaSource)}
 							className={`mr-10px`}
 						/>
 						<Div max={14} className={`black fs-0-9rem fw-500`}>
@@ -292,18 +292,21 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
 				value={[]}
 				select={false}
 				variant={`outlined`}
-				size={props?.size || `small`}
+				size={props?.size ?? `small`}
 				className={props?.className ?? ``}
-				inputRef={props?.inputRef || null}
-				error={props?.error || false}
-				fullWidth={props?.fullWidth || true}
-				multiline={props?.multiline || true}
-				multiple={props?.multiple || true}
-				onClick={(e: any) => e.preventDefault()}
+				inputRef={props?.inputRef ?? null}
+				error={props?.error ?? false}
+				fullWidth={props?.fullWidth ?? true}
+				multiline={props?.multiline ?? true}
+				multiple={props?.multiple ?? true}
+				onClick={(e: any) => {
+					e.preventDefault();
+					handleFileAdd(e);
+				}}
 				InputProps={{
 					...props?.InputProps,
 					readOnly: (
-						props?.readOnly || false
+						props?.readOnly ?? false
 					),
 					style: {
 						height: fileHeight,

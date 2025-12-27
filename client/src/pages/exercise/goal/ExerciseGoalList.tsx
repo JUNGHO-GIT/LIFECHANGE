@@ -83,7 +83,7 @@ export const ExerciseGoalList = memo(() => {
 		})
 		.then((res: any) => {
 			setEXIST(
-        !res.data.result || res.data.result?.length === 0 ? [``] : res.data.result
+        !res.data.result ?? res.data.result?.length === 0 ? [``] : res.data.result
 			);
 		})
 		.catch((error: any) => {
@@ -236,7 +236,7 @@ export const ExerciseGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.exercise_goal_count_color}`}>
-															{insertComma(item.exercise_goal_count || `0`)}
+															{insertComma(item.exercise_goal_count ?? `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>
@@ -252,7 +252,7 @@ export const ExerciseGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_count_color}`}>
-															{insertComma(item.exercise_record_total_count || `0`)}
+															{insertComma(item.exercise_record_total_count ?? `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>
@@ -268,7 +268,7 @@ export const ExerciseGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.exercise_record_diff_count_color}`}>
-															{insertComma(item.exercise_record_diff_count || `0`)}
+															{insertComma(item.exercise_record_diff_count ?? `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>
@@ -308,7 +308,7 @@ export const ExerciseGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.exercise_goal_volume_color}`}>
-															{insertComma(item.exercise_goal_volume || `0`)}
+															{insertComma(item.exercise_goal_volume ?? `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>
@@ -324,7 +324,7 @@ export const ExerciseGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_volume_color}`}>
-															{insertComma(item.exercise_record_total_volume || `0`)}
+															{insertComma(item.exercise_record_total_volume ?? `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>
@@ -340,7 +340,7 @@ export const ExerciseGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.exercise_record_diff_volume_color}`}>
-															{insertComma(item.exercise_record_diff_volume || `0`)}
+															{insertComma(item.exercise_record_diff_volume ?? `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>
@@ -452,7 +452,7 @@ export const ExerciseGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.exercise_goal_scale_color}`}>
-															{insertComma(item.exercise_goal_scale || `0`)}
+															{insertComma(item.exercise_goal_scale ?? `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>
@@ -468,7 +468,7 @@ export const ExerciseGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_scale_color}`}>
-															{insertComma(item.exercise_record_total_scale || `0`)}
+															{insertComma(item.exercise_record_total_scale ?? `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>
@@ -484,7 +484,7 @@ export const ExerciseGoalList = memo(() => {
 													</Grid>
 													<Grid size={6} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.exercise_record_diff_scale_color}`}>
-															{insertComma(item.exercise_record_diff_scale || `0`)}
+															{insertComma(item.exercise_record_diff_scale ?? `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>

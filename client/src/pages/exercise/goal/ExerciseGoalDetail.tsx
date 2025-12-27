@@ -132,7 +132,7 @@ export const ExerciseGoalDetail = memo(() => {
 		})
 		.then((res: any) => {
 			setEXIST(
-        !res.data.result || res.data.result?.length === 0 ? [``] : res.data.result
+        !res.data.result ?? res.data.result?.length === 0 ? [``] : res.data.result
 			);
 		})
 		.catch((error: any) => {
@@ -159,7 +159,7 @@ export const ExerciseGoalDetail = memo(() => {
 		})
 		.then((res: any) => {
 			setLOADING(false);
-			setOBJECT(res.data.result || ExerciseGoal);
+			setOBJECT(res.data.result ?? ExerciseGoal);
 			setCOUNT((prev) => ({
 				...prev,
 				totalCnt: res.data.totalCnt ?? 0,
@@ -360,7 +360,7 @@ export const ExerciseGoalDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={insertComma(item?.exercise_goal_count || `0`)}
+									value={insertComma(item?.exercise_goal_count ?? `0`)}
 									inputRef={REFS?.[i]?.exercise_goal_count}
 									error={ERRORS?.[i]?.exercise_goal_count}
 									label={
@@ -399,7 +399,7 @@ export const ExerciseGoalDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={insertComma(item?.exercise_goal_volume || `0`)}
+									value={insertComma(item?.exercise_goal_volume ?? `0`)}
 									inputRef={REFS?.[i]?.exercise_goal_volume}
 									error={ERRORS?.[i]?.exercise_goal_volume}
 									label={
@@ -456,7 +456,7 @@ export const ExerciseGoalDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`goalScale`)}
-									value={insertComma(item?.exercise_goal_scale || `0`)}
+									value={insertComma(item?.exercise_goal_scale ?? `0`)}
 									inputRef={REFS?.[i]?.exercise_goal_scale}
 									error={ERRORS?.[i]?.exercise_goal_scale}
 									startadornment={(

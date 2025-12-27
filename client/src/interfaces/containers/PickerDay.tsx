@@ -14,7 +14,7 @@ import { setSession } from "@exportScripts";
 import { useStoreLanguage } from "@exportStores";
 
 // -------------------------------------------------------------------------------------------------
-declare type PickerDayProps = {
+declare interface PickerDayProps {
 	DATE: {
 		dateType: string;
 		dateStart: string;

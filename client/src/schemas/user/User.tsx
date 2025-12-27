@@ -6,7 +6,7 @@
  */
 
 // Types ------------------------------------------------------------------------------------------
-export type UserType = {
+export interface UserType {
 	_id: string;
 	user_number: number;
 	user_id: string;
@@ -128,7 +128,7 @@ export const User: UserType = {
 };
 
 // Types ------------------------------------------------------------------------------------------
-export type CategoryType = {
+export interface CategoryType {
 	exercise: {
 		exercise_record_part: string;
 		exercise_record_title: string[];

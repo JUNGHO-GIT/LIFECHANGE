@@ -11,7 +11,7 @@ import { create } from "@exportLibs";
 let __resourcesCache: Record<string, any> | null = null;
 
 // -------------------------------------------------------------------------------------------------
-declare type LanguageState = {
+declare interface LanguageState {
 	lang: string;
 	setLang: (lang: string) => void;
 	translate: (key: string) => string;

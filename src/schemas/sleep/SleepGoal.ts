@@ -9,7 +9,7 @@ import mongoose from "mongoose";
 import { incrementSeq } from "@schemas/Counter";
 
 // 0. types ---------------------------------------------------------------------------------------
-declare type SleepGoalType = mongoose.Document & {
+declare interface SleepGoalType extends mongoose.Document {
 	user_id: string;
 	sleep_goal_number: number;
 	sleep_goal_dateType: string;

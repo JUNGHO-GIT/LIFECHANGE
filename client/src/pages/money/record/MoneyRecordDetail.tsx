@@ -128,7 +128,7 @@ export const MoneyRecordDetail = memo(() => {
 		})
 		.then((res: any) => {
 			setEXIST(
-				!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result
+				!res.data.result ?? res.data.result?.length === 0 ? [``] : res.data.result
 			);
 		})
 		.catch((error: any) => {
@@ -347,7 +347,7 @@ export const MoneyRecordDetail = memo(() => {
 	const handleDelete = useCallback((index: number) => {
 		setOBJECT((prev) => ({
 			...prev,
-			money_section: (prev.money_section || []).filter((_item: any, idx: number) => (idx !== index))
+			money_section: (prev.money_section ?? []).filter((_item: any, idx: number) => (idx !== index))
 		}));
 		setCOUNT((prev) => ({
 			...prev,
@@ -388,7 +388,7 @@ export const MoneyRecordDetail = memo(() => {
 							locked={LOCKED}
 							readOnly={true}
 							label={translate(`totalIncome`)}
-							value={insertComma(OBJECT?.money_record_total_income || `0`)}
+							value={insertComma(OBJECT?.money_record_total_income ?? `0`)}
 							startadornment={(
 								<Img
 									max={14}
@@ -412,7 +412,7 @@ export const MoneyRecordDetail = memo(() => {
 							locked={LOCKED}
 							readOnly={true}
 							label={translate(`totalExpense`)}
-							value={insertComma(OBJECT?.money_record_total_expense || `0`)}
+							value={insertComma(OBJECT?.money_record_total_expense ?? `0`)}
 							startadornment={(
 								<Img
 									max={14}
@@ -468,7 +468,7 @@ export const MoneyRecordDetail = memo(() => {
 									<Select
 										locked={LOCKED}
 										label={translate(`part`)}
-										value={item?.money_record_part || ``}
+										value={item?.money_record_part ?? ``}
 										inputRef={REFS?.[i]?.money_record_part}
 										error={ERRORS?.[i]?.money_record_part}
 										onChange={(e: any) => {
@@ -501,7 +501,7 @@ export const MoneyRecordDetail = memo(() => {
 									<Select
 										locked={LOCKED}
 										label={translate(`title`)}
-										value={item?.money_record_title || ``}
+										value={item?.money_record_title ?? ``}
 										inputRef={REFS?.[i]?.money_record_title}
 										error={ERRORS?.[i]?.money_record_title}
 										onChange={(e: any) => {
@@ -536,7 +536,7 @@ export const MoneyRecordDetail = memo(() => {
 									<Input
 										locked={LOCKED}
 										label={translate(`amount`)}
-										value={insertComma(item?.money_record_amount || `0`)}
+										value={insertComma(item?.money_record_amount ?? `0`)}
 										inputRef={REFS?.[i]?.money_record_amount}
 										error={ERRORS?.[i]?.money_record_amount}
 										startadornment={(

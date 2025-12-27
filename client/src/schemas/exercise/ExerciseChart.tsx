@@ -6,18 +6,18 @@
  */
 
 // Types ------------------------------------------------------------------------------------------
-export type ExercisePieType = {
+export interface ExercisePieType {
 	name: string;
 	value: number;
 };
-export type ExerciseLineType = {
+export interface ExerciseLineType {
 	name: string;
 	date: string;
 	volume?: string;
 	cardio?: string;
 	scale?: string;
 };
-export type ExerciseAvgType = {
+export interface ExerciseAvgType {
 	name: string;
 	date: string;
 	volume?: string;

@@ -6,7 +6,7 @@
  */
 
 // Types ------------------------------------------------------------------------------------------
-export type ExerciseRecordType = {
+export interface ExerciseRecordType {
 	_id: string;
 	exercise_record_number: number;
 	exercise_record_dateType: string;

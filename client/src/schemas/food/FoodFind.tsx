@@ -6,7 +6,7 @@
  */
 
 // Types ------------------------------------------------------------------------------------------
-export type FoodFindType = {
+export interface FoodFindType {
 	food_record_query: string;
 	food_record_perNumber: number;
 	food_record_part: string;

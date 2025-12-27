@@ -12,7 +12,7 @@ import { useCommonValue } from "@exportHooks";
 import { useStoreAlert, useStoreLanguage } from "@exportStores";
 
 // -------------------------------------------------------------------------------------------------
-declare type CountProps = {
+declare interface CountProps {
 	COUNT: {
 		totalCnt: number;
 		sectionCnt: number;

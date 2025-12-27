@@ -9,7 +9,7 @@ import mongoose from "mongoose";
 import { incrementSeq } from "@schemas/Counter";
 
 // 0. types ---------------------------------------------------------------------------------------
-declare type ExerciseRecordSection = {
+declare interface ExerciseRecordSection {
 	exercise_record_part: string;
 	exercise_record_title: string;
 	exercise_record_weight: string;
@@ -18,7 +18,7 @@ declare type ExerciseRecordSection = {
 	exercise_record_volume: string;
 	exercise_record_cardio: string;
 };
-declare type ExerciseRecordType = mongoose.Document & {
+declare interface ExerciseRecordType extends mongoose.Document {
 	user_id: string;
 	exercise_record_number: number;
 	exercise_record_dateType: string;

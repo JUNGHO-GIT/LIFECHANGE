@@ -170,7 +170,7 @@ export const FoodFavoriteList = memo(() => {
 	// - 체크박스 변경 시
 	const handleCheckboxChange = (index: number) => {
 		const queryKey: string = `${PAGING.query}_${PAGING.page}`;
-		const updatedChecked: boolean[] = [...(checkedQueries[queryKey] || [])];
+		const updatedChecked: boolean[] = [...(checkedQueries[queryKey] ?? [])];
 		updatedChecked[index] = !updatedChecked[index];
 
 		setCheckedQueries((prev) => ({
@@ -179,7 +179,7 @@ export const FoodFavoriteList = memo(() => {
 		}));
 
 		// 스토리지 데이터 가져오기 (최신 값을 직접 가져옴)
-		const currentSection: any = getSession(`section`, `food`, ``) || [];
+		const currentSection: any = getSession(`section`, `food`, ``) ?? [];
 		let sectionArray: any[] = currentSection?.length > 0 ? [...currentSection] : [];
 
 		const item: FoodFindType = OBJECT[index];
@@ -310,7 +310,7 @@ export const FoodFavoriteList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_kcal_color}`}>
-															{insertComma(item.food_record_kcal || `0`)}
+															{insertComma(item.food_record_kcal ?? `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>
@@ -344,7 +344,7 @@ export const FoodFavoriteList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_carb_color}`}>
-															{insertComma(item.food_record_carb || `0`)}
+															{insertComma(item.food_record_carb ?? `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>
@@ -378,7 +378,7 @@ export const FoodFavoriteList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_protein_color}`}>
-															{insertComma(item.food_record_carb || `0`)}
+															{insertComma(item.food_record_carb ?? `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>
@@ -412,7 +412,7 @@ export const FoodFavoriteList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_fat_color}`}>
-															{insertComma(item.food_record_fat || `0`)}
+															{insertComma(item.food_record_fat ?? `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>

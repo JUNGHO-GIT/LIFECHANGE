@@ -13,7 +13,7 @@ import { memo, useMemo } from "@exportReacts";
 import { useStoreLanguage } from "@exportStores";
 
 // -------------------------------------------------------------------------------------------------
-declare type FindFilterProps = {
+declare interface FindFilterProps {
 	state: any;
 	setState: any;
 	flow: any;

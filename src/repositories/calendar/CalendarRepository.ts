@@ -101,24 +101,24 @@ export const exist = async (
 
 	for (const record of allRecords) {
 		const dateType = (
-			record.exercise_dateType ||
-			record.food_dateType ||
-			record.money_dateType ||
-			record.sleep_dateType ||
+			record.exercise_dateType ??
+			record.food_dateType ??
+			record.money_dateType ??
+			record.sleep_dateType ??
 			``
 		);
 		const dateStart = (
-			record.exercise_dateStart ||
-			record.food_dateStart ||
-			record.money_dateStart ||
-			record.sleep_dateStart ||
+			record.exercise_dateStart ??
+			record.food_dateStart ??
+			record.money_dateStart ??
+			record.sleep_dateStart ??
 			`0000-00-00`
 		);
 		const dateEnd = (
-			record.exercise_dateEnd ||
-			record.food_dateEnd ||
-			record.money_dateEnd ||
-			record.sleep_dateEnd ||
+			record.exercise_dateEnd ??
+			record.food_dateEnd ??
+			record.money_dateEnd ??
+			record.sleep_dateEnd ??
 			`0000-00-00`
 		);
 		finalResult.push({
@@ -247,7 +247,7 @@ export const list = async (
 
 	const getSectionForDate = (list: any[], startKey: string, endKey: string, dateStr: string) => {
 		return list.find((item) => dateStr >= item[startKey] && dateStr <= item[endKey]
-		) || null;
+		) ?? null;
 	};
 
 	for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
@@ -260,7 +260,7 @@ export const list = async (
 		finalResult.push({
 			_id: new mongoose.Types.ObjectId(),
 			calendar_number: finalResult.length + 1,
-			calendar_dateType: dateType_param || ``,
+			calendar_dateType: dateType_param ?? ``,
 			calendar_dateStart: dateStr,
 			calendar_dateEnd: dateStr,
 
@@ -404,18 +404,18 @@ export const detail = async (
 	for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
 		const dateStr: string = d.toISOString().split(`T`)[0];
 		const exerciseItem: any = exerciseResult.find((item: any) => dateStr >= item.exercise_dateStart && dateStr <= item.exercise_dateEnd
-		) || null;
+		) ?? null;
 		const foodItem: any = foodResult.find((item: any) => dateStr >= item.food_dateStart && dateStr <= item.food_dateEnd
-		) || null;
+		) ?? null;
 		const moneyItem: any = moneyResult.find((item: any) => dateStr >= item.money_dateStart && dateStr <= item.money_dateEnd
-		) || null;
+		) ?? null;
 		const sleepItem: any = sleepResult.find((item: any) => dateStr >= item.sleep_dateStart && dateStr <= item.sleep_dateEnd
-		) || null;
+		) ?? null;
 
 		finalResult.push({
 			_id: new mongoose.Types.ObjectId(),
 			calendar_number: finalResult.length + 1,
-			calendar_dateType: dateType_param || ``,
+			calendar_dateType: dateType_param ?? ``,
 			calendar_dateStart: dateStr,
 			calendar_dateEnd: dateStr,
 

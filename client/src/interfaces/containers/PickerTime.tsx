@@ -14,7 +14,7 @@ import { AdapterMoment, DigitalClock, LocalizationProvider } from "@exportMuis";
 import { useStoreLanguage } from "@exportStores";
 
 // -------------------------------------------------------------------------------------------------
-declare type PickerTimeProps = {
+declare interface PickerTimeProps {
 	OBJECT: any;
 	setOBJECT: React.Dispatch<React.SetStateAction<any>>;
 	REFS: Record<string, any>;
@@ -23,7 +23,7 @@ declare type PickerTimeProps = {
 	LOCKED: string;
 	extra: string;
 	i: number;
-};
+}
 
 // -------------------------------------------------------------------------------------------------
 export const PickerTime = memo((

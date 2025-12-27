@@ -28,7 +28,7 @@ export const exist = async (
 		user_id_param, dateType, dateStart, dateEnd
 	);
 
-	if (!findResult || findResult?.length <= 0) {
+	if (!findResult ?? findResult?.length <= 0) {
 		finalResult = null;
 		statusResult = `fail`;
 	}
@@ -99,7 +99,7 @@ export const list = async (
 		return sortOrder === 1 ? dateDiff : -dateDiff;
 	});
 
-	if (!findResult || findResult?.length <= 0) {
+	if (!findResult ?? findResult?.length <= 0) {
 		finalResult = [];
 		statusResult = `fail`;
 	}
@@ -117,10 +117,10 @@ export const list = async (
 				acc + (curr?.exercise_record_total_volume !== `0` ? 1 : 0)
 			), 0);
 			const exerciseTotalVolume: number = listRecord.reduce((acc: any, curr: any) => (
-				acc + Number.parseFloat(curr?.exercise_record_total_volume || `0`)
+				acc + Number.parseFloat(curr?.exercise_record_total_volume ?? `0`)
 			), 0);
 			const exerciseTotalCardio: number = listRecord.reduce((acc: any, curr: any) => (
-				acc + strToDecimal(curr?.exercise_record_total_cardio || `00:00`)
+				acc + strToDecimal(curr?.exercise_record_total_cardio ?? `00:00`)
 			), 0);
 			const exerciseCurScale: string = listRecord.reduce((latest: any, curr: any) => {
 				if (curr?.exercise_record_total_scale) {

@@ -129,7 +129,7 @@ export const FoodRecordDetail = memo(() => {
 		})
 		.then((res: any) => {
 			setEXIST(
-        !res.data.result || res.data.result?.length === 0 ? [``] : res.data.result
+        !res.data.result ?? res.data.result?.length === 0 ? [``] : res.data.result
 			);
 		})
 		.catch((error: any) => {
@@ -150,7 +150,7 @@ export const FoodRecordDetail = memo(() => {
 		})
 		.then((res: any) => {
 			setFAVORITE(
-        !res.data.result || res.data.result?.length === 0 ? [``] : res.data.result
+        !res.data.result ?? res.data.result?.length === 0 ? [``] : res.data.result
 			);
 		})
 		.catch((error: any) => {
@@ -254,7 +254,7 @@ export const FoodRecordDetail = memo(() => {
 	// 2-3. useEffect -----------------------------------------------------------------------------
 	useEffect(() => {
 		const defaultSection = {
-			food_record_part: foodArray[1]?.food_record_part || ``,
+			food_record_part: foodArray[1]?.food_record_part ?? ``,
 			food_record_key: ``,
 			food_record_name: ``,
 			food_record_brand: ``,
@@ -390,7 +390,7 @@ export const FoodRecordDetail = memo(() => {
 
 	// 3. flow ------------------------------------------------------------------------------------
 	const flowUpdateFavorite = useCallback((foodFavorite: any) => {
-		(!foodFavorite.food_record_name || foodFavorite.food_record_name.trim() === ``) && setALERT({
+		(!foodFavorite.food_record_name ?? foodFavorite.food_record_name.trim() === ``) && setALERT({
 			open: true,
 			msg: translate(`음식 이름을 입력해주세요.`),
 			severity: `error`,
@@ -456,7 +456,7 @@ export const FoodRecordDetail = memo(() => {
 		const food_record_brand: string = OBJECT?.food_section[index]?.food_record_brand;
 		const food_record_gram: string = OBJECT?.food_section[index]?.food_record_gram;
 		const food_record_serv: string = OBJECT?.food_section[index]?.food_record_serv;
-		const food_record_count: string = OBJECT?.food_section[index]?.food_record_count || `1`;
+		const food_record_count: string = OBJECT?.food_section[index]?.food_record_count ?? `1`;
 
 		const food_record_kcal: string = (
 			Number.parseFloat(OBJECT?.food_section[index]?.food_record_kcal) / Number.parseFloat(food_record_count)
@@ -521,7 +521,7 @@ export const FoodRecordDetail = memo(() => {
 							locked={LOCKED}
 							readOnly={true}
 							label={translate(`totalKcal`)}
-							value={insertComma(OBJECT?.food_record_total_kcal || `0`)}
+							value={insertComma(OBJECT?.food_record_total_kcal ?? `0`)}
 							startadornment={(
 								<Img
 									max={14}
@@ -541,7 +541,7 @@ export const FoodRecordDetail = memo(() => {
 							locked={LOCKED}
 							readOnly={true}
 							label={translate(`totalCarb`)}
-							value={insertComma(OBJECT?.food_record_total_carb || `0`)}
+							value={insertComma(OBJECT?.food_record_total_carb ?? `0`)}
 							startadornment={(
 								<Img
 									max={14}
@@ -565,7 +565,7 @@ export const FoodRecordDetail = memo(() => {
 							locked={LOCKED}
 							readOnly={true}
 							label={translate(`totalProtein`)}
-							value={insertComma(OBJECT?.food_record_total_protein || `0`)}
+							value={insertComma(OBJECT?.food_record_total_protein ?? `0`)}
 							startadornment={(
 								<Img
 									max={14}
@@ -585,7 +585,7 @@ export const FoodRecordDetail = memo(() => {
 							locked={LOCKED}
 							readOnly={true}
 							label={translate(`totalFat`)}
-							value={insertComma(OBJECT?.food_record_total_fat || `0`)}
+							value={insertComma(OBJECT?.food_record_total_fat ?? `0`)}
 							startadornment={(
 								<Img
 									max={14}
@@ -653,7 +653,7 @@ export const FoodRecordDetail = memo(() => {
 								<Select
 									locked={LOCKED}
 									label={translate(`part`)}
-									value={item?.food_record_part || ``}
+									value={item?.food_record_part ?? ``}
 									inputRef={REFS?.[i]?.food_record_part}
 									error={ERRORS?.[i]?.food_record_part}
 									onChange={(e: any) => {
@@ -684,7 +684,7 @@ export const FoodRecordDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`foodCount`)}
-									value={insertComma(item?.food_record_count || `0`)}
+									value={insertComma(item?.food_record_count ?? `0`)}
 									inputRef={REFS?.[i]?.food_record_count}
 									error={ERRORS?.[i]?.food_record_count}
 									onChange={(e: any) => {
@@ -726,7 +726,7 @@ export const FoodRecordDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`gram`)}
-									value={insertComma(item?.food_record_gram || `0`)}
+									value={insertComma(item?.food_record_gram ?? `0`)}
 									inputRef={REFS?.[i]?.food_record_gram}
 									error={ERRORS?.[i]?.food_record_gram}
 									onChange={(e: any) => {
@@ -756,7 +756,7 @@ export const FoodRecordDetail = memo(() => {
 									locked={LOCKED}
 									shrink={`shrink`}
 									label={translate(`foodName`)}
-									value={item?.food_record_name || ``}
+									value={item?.food_record_name ?? ``}
 									inputRef={REFS?.[i]?.food_record_name}
 									error={ERRORS?.[i]?.food_record_name}
 									onChange={(e: any) => {
@@ -784,7 +784,7 @@ export const FoodRecordDetail = memo(() => {
 									locked={LOCKED}
 									shrink={`shrink`}
 									label={translate(`brand`)}
-									value={item?.food_record_brand || ``}
+									value={item?.food_record_brand ?? ``}
 									inputRef={REFS?.[i]?.food_record_brand}
 									error={ERRORS?.[i]?.food_record_brand}
 									onChange={(e: any) => {
@@ -815,7 +815,7 @@ export const FoodRecordDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`kcal`)}
-									value={insertComma(item?.food_record_kcal || `0`)}
+									value={insertComma(item?.food_record_kcal ?? `0`)}
 									inputRef={REFS?.[i]?.food_record_kcal}
 									error={ERRORS?.[i]?.food_record_kcal}
 									startadornment={(
@@ -852,7 +852,7 @@ export const FoodRecordDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`carb`)}
-									value={insertComma(item?.food_record_carb || `0`)}
+									value={insertComma(item?.food_record_carb ?? `0`)}
 									inputRef={REFS?.[i]?.food_record_carb}
 									error={ERRORS?.[i]?.food_record_carb}
 									startadornment={(
@@ -893,7 +893,7 @@ export const FoodRecordDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`protein`)}
-									value={insertComma(item?.food_record_protein || `0`)}
+									value={insertComma(item?.food_record_protein ?? `0`)}
 									inputRef={REFS?.[i]?.food_record_protein}
 									error={ERRORS?.[i]?.food_record_protein}
 									startadornment={(
@@ -930,7 +930,7 @@ export const FoodRecordDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`fat`)}
-									value={insertComma(item?.food_record_fat || `0`)}
+									value={insertComma(item?.food_record_fat ?? `0`)}
 									inputRef={REFS?.[i]?.food_record_fat}
 									error={ERRORS?.[i]?.food_record_fat}
 									startadornment={(

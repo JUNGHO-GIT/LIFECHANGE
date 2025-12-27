@@ -334,22 +334,124 @@ const transformLines = (content = ``, rules = []) => {
 	return transformed.join(os.EOL);
 };
 
+// 9-1. 안전한 수정/복원용 백업 --------------------------------------------------------------
+const BACKUP_DIR = path.join(`.node`, `.tmp`);
+const BACKUP_PATH = path.join(BACKUP_DIR, `git.mjs.backup.json`);
+
+const ensureBackupDir = () => {
+	try {
+		fs.mkdirSync(BACKUP_DIR, { recursive: true });
+	}
+	catch {
+		// ignore
+	}
+};
+
+const readBackup = () => {
+	try {
+		const raw = fs.readFileSync(BACKUP_PATH, `utf8`);
+		const parsed = JSON.parse(raw);
+		const ok = parsed && typeof parsed === `object`;
+		return ok ? parsed : null;
+	}
+	catch {
+		return null;
+	}
+};
+
+/** @param {any} payload */
+const writeBackup = (payload) => {
+	ensureBackupDir();
+	try {
+		fs.writeFileSync(BACKUP_PATH, `${JSON.stringify(payload, null, 2)}\n`, `utf8`);
+		return true;
+	}
+	catch {
+		return false;
+	}
+};
+
+const findEnvLine = (content = ``, key = ``) => {
+	const lines = content.split(/\r?\n/);
+	const rx = new RegExp(`^\\s*${key}\\s*=`, `i`);
+	const idx = lines.findIndex((line) => rx.test(line));
+	const line = idx >= 0 ? lines[idx] : null;
+	return { idx, line };
+};
+
+/** @param {string} content @param {{[k: string]: string}} envLines */
+const restoreEnvFromBackup = (content = ``, envLines = {}) => {
+	const lines = content.split(/\r?\n/);
+	const keys = Object.keys(envLines || {});
+	keys.forEach((key) => {
+		const { idx } = findEnvLine(content, key);
+		const backed = envLines[key];
+		idx >= 0 && typeof backed === `string` && (() => {
+			lines[idx] = backed;
+		})();
+	});
+	return lines.join(os.EOL);
+};
+
+const findIndexDbLine = (content = ``) => {
+	const lines = content.split(/\r?\n/);
+	const idx = lines.findIndex((line) => /^\s*(\/\/\s*)?const\s+db\b/.test(line));
+	const line = idx >= 0 ? lines[idx] : null;
+	return { idx, line };
+};
+
+const restoreIndexFromBackup = (content = ``, dbLine = null) => {
+	const lines = content.split(/\r?\n/);
+	const { idx } = findIndexDbLine(content);
+	idx >= 0 && typeof dbLine === `string` && (() => {
+		lines[idx] = dbLine;
+	})();
+	return lines.join(os.EOL);
+};
+
+const cleanupBackup = () => {
+	try {
+		fs.existsSync(BACKUP_PATH) && fs.unlinkSync(BACKUP_PATH);
+		fs.existsSync(BACKUP_DIR) && (() => {
+			const remain = fs.readdirSync(BACKUP_DIR);
+			remain.length === 0 && fs.rmdirSync(BACKUP_DIR);
+		})();
+		logger(`info`, `백업 정리 완료: ${BACKUP_PATH}`);
+	}
+	catch {
+		logger(`warn`, `백업 정리 실패: ${BACKUP_PATH}`);
+	}
+};
+
 // 10. env 파일 및 index 파일 수정 -----------------------------------------------------------
 const modifyEnvAndIndex = () => {
 	const envExists = fileExists(`.env`);
 	const indexExists = fileExists(`index.ts`);
 
 	!envExists && !indexExists && logger(`info`, `.env 및 index.ts 파일 없음 - 건너뜀`);
+	const backup = readBackup() ?? {};
+	const nextBackup = {
+		...backup,
+		updatedAt: new Date().toISOString(),
+	};
 	envExists && (() => {
 		logger(`info`, `.env 파일 수정 시작`);
 		const envContent = fs.readFileSync(`.env`, `utf8`);
+		nextBackup.env = nextBackup.env ?? {};
+		[`CLIENT_URL`, `GOOGLE_CALLBACK_URL`].forEach((key) => {
+			const found = findEnvLine(envContent, key);
+			found.line && (() => {
+				nextBackup.env[key] = found.line;
+			})();
+		});
+		writeBackup(nextBackup);
 		const envRules = [
 			{
-				match: (line = ``) => line.startsWith(`CLIENT_URL=`),
+				match: (line = ``) => /^\s*CLIENT_URL\s*=/.test(line),
 				replace: () => `CLIENT_URL=https://www.${env.domain}/${env.projectName}`,
 			},
 			{
-				match: (line = ``) => line.startsWith(`GOOGLE_CALLBACK_URL=`),
+				match: (line = ``) => /^\s*GOOGLE_CALLBACK_URL\s*=/.test(line),
 				replace: () => `GOOGLE_CALLBACK_URL=https://www.${env.domain}/${env.projectName}/${env.gcp.callback}`,
 			},
 		];
@@ -359,14 +461,19 @@ const modifyEnvAndIndex = () => {
 	indexExists && (() => {
 		logger(`info`, `index.ts 파일 수정 시작`);
 		const indexContent = fs.readFileSync(`index.ts`, `utf8`);
+		nextBackup.index = nextBackup.index ?? {};
+		const found = findIndexDbLine(indexContent);
+		found.line && (() => {
+			nextBackup.index.dbLine = found.line;
+		})();
+		writeBackup(nextBackup);
 		const indexRules = [
 			{
-				match: (line = ``) => line.trim().startsWith(`// const db = process.env.DB_NAME`),
-				replace: () => `const db = process.env.DB_NAME;`,
-			},
-			{
-				match: (line = ``) => line.trim().startsWith(`const db = process.env.DB_TEST`),
-				replace: () => `// const db = process.env.DB_TEST;`,
+				match: (line = ``) => /^\s*(\/\/\s*)?const\s+db\b/.test(line),
+				replace: (line = ``) => {
+					const indent = line.match(/^\s*/)?.[0] ?? ``;
+					return indent + 'const db: string = process.env.DB_NAME ?? ``;';
+				},
 			},
 		];
 		fs.writeFileSync(`index.ts`, transformLines(indexContent, indexRules));
@@ -378,38 +485,50 @@ const modifyEnvAndIndex = () => {
 const restoreEnvAndIndex = () => {
 	const envExists = fileExists(`.env`);
 	const indexExists = fileExists(`index.ts`);
+	const backup = readBackup();
 
 	!envExists && !indexExists && logger(`info`, `.env 및 index.ts 파일 없음 - 복원 건너뜀`);
 	envExists && (() => {
 		logger(`info`, `.env 파일 복원 시작`);
 		const envContent = fs.readFileSync(`.env`, `utf8`);
-		const envRules = [
-			{
-				match: (line = ``) => line.startsWith(`CLIENT_URL=`),
-				replace: () => `CLIENT_URL=http://localhost:${env.localPort.client}/${env.projectName}`,
-			},
-			{
-				match: (line = ``) => line.startsWith(`GOOGLE_CALLBACK_URL=`),
-				replace: () => `GOOGLE_CALLBACK_URL=http://localhost:${env.localPort.server}/${env.projectName}/${env.gcp.callback}`,
-			},
-		];
-		fs.writeFileSync(`.env`, transformLines(envContent, envRules));
+		const hasBackup = Boolean(backup?.env?.CLIENT_URL || backup?.env?.GOOGLE_CALLBACK_URL);
+		hasBackup ? (() => {
+			const restored = restoreEnvFromBackup(envContent, backup.env);
+			fs.writeFileSync(`.env`, restored, `utf8`);
+		})() : (() => {
+			const envRules = [
+				{
+					match: (line = ``) => /^\s*CLIENT_URL\s*=/.test(line),
+					replace: () => `CLIENT_URL=http://localhost:${env.localPort.client}/${env.projectName}`,
+				},
+				{
+					match: (line = ``) => /^\s*GOOGLE_CALLBACK_URL\s*=/.test(line),
+					replace: () => `GOOGLE_CALLBACK_URL=http://localhost:${env.localPort.server}/${env.projectName}/${env.gcp.callback}`,
+				},
+			];
+			fs.writeFileSync(`.env`, transformLines(envContent, envRules));
+		})();
 		logger(`info`, `.env 파일 복원 완료`);
 	})();
 	indexExists && (() => {
 		logger(`info`, `index.ts 파일 복원 시작`);
 		const indexContent = fs.readFileSync(`index.ts`, `utf8`);
-		const indexRules = [
-			{
-				match: (line = ``) => line.trim().startsWith(`const db = process.env.DB_NAME`),
-				replace: () => `// const db = process.env.DB_NAME;`,
-			},
-			{
-				match: (line = ``) => line.trim().startsWith(`// const db = process.env.DB_TEST`),
-				replace: () => `const db = process.env.DB_TEST;`,
-			},
-		];
-		fs.writeFileSync(`index.ts`, transformLines(indexContent, indexRules));
+		const hasBackup = typeof backup?.index?.dbLine === `string`;
+		hasBackup ? (() => {
+			const restored = restoreIndexFromBackup(indexContent, backup.index.dbLine);
+			fs.writeFileSync(`index.ts`, restored, `utf8`);
+		})() : (() => {
+			const indexRules = [
+				{
+					match: (line = ``) => /^\s*(\/\/\s*)?const\s+db\b/.test(line),
+					replace: (line = ``) => {
+						const indent = line.match(/^\s*/)?.[0] ?? ``;
+						return indent + 'const db: string = process.env.DB_TEST ?? ``;';
+					},
+				},
+			];
+			fs.writeFileSync(`index.ts`, transformLines(indexContent, indexRules));
+		})();
 		logger(`info`, `index.ts 파일 복원 완료`);
 	})();
 };
@@ -572,6 +691,7 @@ const runPushProcess = async () => {
 	gitPush(settings.git.remotes.public.name, `.gitignore.public`, commitMsg);
 	gitPush(settings.git.remotes.private.name, `.gitignore.private`, commitMsg);
 	restoreEnvAndIndex();
+	cleanupBackup();
 	logger(`success`, `Git Push 완료`);
 };
 

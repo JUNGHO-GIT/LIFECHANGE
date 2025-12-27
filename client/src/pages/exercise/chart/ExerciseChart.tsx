@@ -44,26 +44,26 @@ export const ExerciseChart = memo(() => {
 
 	// 2-2. useState ------------------------------------------------------------------------------
 	const [curView, setCurView] = useState(`pie`);
-	const [curSection, setCurSection] = useState(TYPE_PIE.section || `week`);
+	const [curSection, setCurSection] = useState(TYPE_PIE.section ?? `week`);
 	const [curSetType, setCurSetType] = useState(() => setTYPE_PIE);
-	const [curValue, setCurValue] = useState(TYPE_PIE.line || `volume`);
+	const [curValue, setCurValue] = useState(TYPE_PIE.line ?? `volume`);
 
 	// 3. useEffect -------------------------------------------------------------------------------
 	useEffect(() => {
 		curView === `pie` ? (() => {
 			setCurSetType(() => setTYPE_PIE);
-			setCurSection(TYPE_PIE.section || `week`);
-			setCurValue(TYPE_PIE.line || `volume`);
+			setCurSection(TYPE_PIE.section ?? `week`);
+			setCurValue(TYPE_PIE.line ?? `volume`);
 		})()
 		: curView === `line` ? (() => {
 			setCurSetType(() => setTYPE_LINE);
-			setCurSection(TYPE_LINE.section || `week`);
-			setCurValue(TYPE_LINE.line || `volume`);
+			setCurSection(TYPE_LINE.section ?? `week`);
+			setCurValue(TYPE_LINE.line ?? `volume`);
 		})()
 		: curView === `avg` && (() => {
 			setCurSetType(() => setTYPE_AVG);
-			setCurSection(TYPE_AVG.section || `week`);
-			setCurValue(TYPE_AVG.line || `volume`);
+			setCurSection(TYPE_AVG.section ?? `week`);
+			setCurValue(TYPE_AVG.line ?? `volume`);
 		})();
 	}, [curView, TYPE_PIE, TYPE_LINE, TYPE_AVG]);
 

@@ -78,20 +78,20 @@ const id: string | undefined = process.env.DB_USER;
 const pw: string | undefined = process.env.DB_PASS;
 const host: string | undefined = process.env.DB_HOST;
 const port: string | undefined = process.env.DB_PORT;
-const db = process.env.DB_NAME;
-// const db = process.env.DB_TEST;
-const envStr: string = db === process.env.DB_TEST ? `DEVELOPMENT` : `PRODUCTION`;
+const mode: string | undefined = process.env.NODE_ENV;
+const db: string = process.env.DB_NAME ?? ``;
+const isDev: boolean = mode === `DEVELOPMENT`;
 
 mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`)
 .then(() => {
-	console.log(`[${envStr}] MongoDB 연결 성공 [${db}]`);
+	console.log(`[${mode}] MongoDB 연결 성공 [${db}]`);
 })
 .catch((error: unknown) => {
-	console.error(`[${envStr}] MongoDB 연결 실패 [${db}] ${error}`);
+	console.error(`[${mode}] MongoDB 연결 실패 [${db}] ${error}`);
 });
 
 // 로그 설정 -------------------------------------------------------------------------------------------
-if (envStr === `DEVELOPMENT`) {
+if (isDev) {
 	const color = {
 		reset: `\u001B[0m`,
 		coll: `\u001B[38;2;78;201;176m`,

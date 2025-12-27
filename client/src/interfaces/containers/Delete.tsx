@@ -9,7 +9,7 @@ import { Div, Icons } from "@exportComponents";
 import { memo, useCallback, useMemo } from "@exportReacts";
 
 // -------------------------------------------------------------------------------------------------
-declare type DeleteProps = {
+declare interface DeleteProps {
 	index: number;
 	section?: string;
 	handleDelete: (_index: number, _section?: string) => void;

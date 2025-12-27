@@ -155,7 +155,7 @@ export const UserCategory = memo(() => {
 				};
 				REFS.current = {
 					...REFS.current,
-					[dataType]: updatedObject[dataType].map((_: any, idx: number) => REFS.current[dataType]?.[idx] || {
+					[dataType]: updatedObject[dataType].map((_: any, idx: number) => REFS.current[dataType]?.[idx] ?? {
 						[`${dataType}_record_part`]: createRef(),
 						[`${dataType}_record_title`]: []
 					}
@@ -184,11 +184,11 @@ export const UserCategory = memo(() => {
 						if (idx === selectedIdx.category2Idx) {
 							return {
 								...REFS.current[dataType]?.[idx],
-								[`${dataType}_record_title`]: part[`${dataType}_record_title`].map((_: any, titleIdx: number) => REFS.current[dataType]?.[idx]?.[`${dataType}_record_title`]?.[titleIdx] || createRef()
+								[`${dataType}_record_title`]: part[`${dataType}_record_title`].map((_: any, titleIdx: number) => REFS.current[dataType]?.[idx]?.[`${dataType}_record_title`]?.[titleIdx] ?? createRef()
 								)
 							};
 						}
-						return REFS.current[dataType]?.[idx] || {};
+						return REFS.current[dataType]?.[idx] ?? {};
 					})
 				};
 
@@ -233,7 +233,7 @@ export const UserCategory = memo(() => {
 				};
 				REFS.current = {
 					...REFS.current,
-					[dataType]: updatedObject[dataType].map((_: any, idx: number) => REFS.current[dataType]?.[idx] || {})
+					[dataType]: updatedObject[dataType].map((_: any, idx: number) => REFS.current[dataType]?.[idx] ?? {})
 				};
 				return updatedObject;
 			});
@@ -267,7 +267,7 @@ export const UserCategory = memo(() => {
 					...REFS.current,
 					[dataType]: updatedObject[dataType].map((part: any, idx: number) => ({
 						...REFS.current[dataType]?.[idx],
-						[`${dataType}_record_title`]: part[`${dataType}_record_title`].map((_: any, titleIdx: number) => REFS.current[dataType]?.[idx]?.[`${dataType}_record_title`]?.[titleIdx] || {}
+						[`${dataType}_record_title`]: part[`${dataType}_record_title`].map((_: any, titleIdx: number) => REFS.current[dataType]?.[idx]?.[`${dataType}_record_title`]?.[titleIdx] ?? {}
 						)
 					}))
 				};
@@ -299,7 +299,7 @@ export const UserCategory = memo(() => {
 												<Div className={`fs-0-9rem mr-auto`}>
 													<Input
 														variant={`standard`}
-														value={translate(item[`${dataType}_record_part`] as string) || ``}
+														value={translate(item[`${dataType}_record_part`] as string) ?? ``}
 														readOnly={isEditable !== `${dataType}_record_part_${index}`}
 														inputclass={`fs-0-9rem`}
 														inputRef={REFS?.current?.[dataType]?.[index]?.[`${dataType}_record_part`]}
@@ -398,7 +398,7 @@ export const UserCategory = memo(() => {
 							</TableFooter>
 						</Table>
 					</TableContainer>
-					{(dataType === `exercise` || dataType === `money`) && (
+					{(dataType === `exercise` ?? dataType === `money`) && (
 						<TableContainer className={`border-1 radius-2 over-x-hidden`}>
 							<Table>
 								<TableHead className={`table-thead`}>
@@ -419,7 +419,7 @@ export const UserCategory = memo(() => {
 													<Div className={`fs-0-9rem mr-auto`}>
 														<Input
 															variant={`standard`}
-															value={translate(item as string) || ``}
+															value={translate(item as string) ?? ``}
 															readOnly={isEditable !== `${dataType}_record_title_${index}`}
 															inputclass={`fs-0-9rem`}
 															inputRef={REFS?.current?.[dataType]?.[selectedIdx?.category2Idx]?.[`${dataType}_record_title`]?.[index]}

@@ -13,7 +13,7 @@ import { foodArray } from "@assets/arrays/foodArray";
 import { sleepArray } from "@assets/arrays/sleepArray";
 
 // 0. types ---------------------------------------------------------------------------------------
-declare type UserFavoriteItem = {
+declare interface UserFavoriteItem {
 	food_record_key: string;
 	food_record_name: string;
 	food_record_brand: string;
@@ -25,7 +25,7 @@ declare type UserFavoriteItem = {
 	food_record_protein: string;
 	food_record_fat: string;
 };
-declare type UserType = mongoose.Document & {
+declare interface UserType extends mongoose.Document {
 	user_id: string;
 	user_number: number;
 	user_google: string;

@@ -13,7 +13,7 @@ import { setSession } from "@exportScripts";
 import { useStoreLanguage } from "@exportStores";
 
 // -------------------------------------------------------------------------------------------------
-declare type ButtonsProps = {
+declare interface ButtonsProps {
 	state: any;
 	flow: any;
 };

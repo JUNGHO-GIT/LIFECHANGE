@@ -6,17 +6,17 @@
  */
 
 // Types ------------------------------------------------------------------------------------------
-export type MoneyPieType = {
+export interface MoneyPieType {
 	name: string;
 	value: number;
 };
-export type MoneyLineType = {
+export interface MoneyLineType {
 	name: string;
 	date: string;
 	income?: string;
 	expense?: string;
 };
-export type MoneyAvgType = {
+export interface MoneyAvgType {
 	name: string;
 	date: string;
 	income?: string;

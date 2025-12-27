@@ -22,9 +22,9 @@ export const Icons = memo((props: any) => {
 		strokeWidth: `2`,
 		strokeLinecap: `round`,
 		strokeLinejoin: `round`,
-		color: props?.color || `black`,
-		fill: props?.fill || `#ffffff`,
-		className: props?.className || ``,
+		color: props?.color ?? `black`,
+		fill: props?.fill ?? `#ffffff`,
+		className: props?.className ?? ``,
 	};
 
 	const icons: Record<string, JSX.Element> = {

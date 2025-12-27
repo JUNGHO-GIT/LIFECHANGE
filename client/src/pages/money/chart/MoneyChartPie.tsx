@@ -17,7 +17,7 @@ declare interface MoneyChartPieProps {
 	TYPE?: any;
 	setTYPE?: any;
 }
-declare type PieProps = {
+declare interface PieProps {
 	cx?: number;
 	cy?: number;
 	midAngle?: number;

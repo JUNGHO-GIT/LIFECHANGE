@@ -6,7 +6,7 @@
  */
 
 // Types ------------------------------------------------------------------------------------------
-export type MoneyRecordType = {
+export interface MoneyRecordType {
 	_id: string;
 	money_record_number: number;
 	money_record_dateType: string;

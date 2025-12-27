@@ -9,7 +9,7 @@ import mongoose from "mongoose";
 import { incrementSeq } from "@schemas/Counter";
 
 // 0. types ---------------------------------------------------------------------------------------
-declare type ExerciseGoalType = mongoose.Document & {
+declare interface ExerciseGoalType extends mongoose.Document {
 	user_id: string;
 	exercise_goal_number: number;
 	exercise_goal_dateType: string;

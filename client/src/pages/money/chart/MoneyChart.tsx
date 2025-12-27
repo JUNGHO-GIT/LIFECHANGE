@@ -44,26 +44,26 @@ export const MoneyChart = memo(() => {
 
 	// 2-2. useState ------------------------------------------------------------------------------
 	const [curView, setCurView] = useState(`pie`);
-	const [curSection, setCurSection] = useState(TYPE_PIE.section || `week`);
+	const [curSection, setCurSection] = useState(TYPE_PIE.section ?? `week`);
 	const [curSetType, setCurSetType] = useState(() => setTYPE_PIE);
-	const [curValue, setCurValue] = useState(TYPE_PIE.line || `income`);
+	const [curValue, setCurValue] = useState(TYPE_PIE.line ?? `income`);
 
 	// 3. useEffect -------------------------------------------------------------------------------
 	useEffect(() => {
 		curView === `pie` ? (() => {
 			setCurSetType(() => setTYPE_PIE);
-			setCurSection(TYPE_PIE.section || `week`);
-			setCurValue(TYPE_PIE.line || `income`);
+			setCurSection(TYPE_PIE.section ?? `week`);
+			setCurValue(TYPE_PIE.line ?? `income`);
 		})()
 		: curView === `line` ? (() => {
 			setCurSetType(() => setTYPE_LINE);
-			setCurSection(TYPE_LINE.section || `week`);
-			setCurValue(TYPE_LINE.line || `income`);
+			setCurSection(TYPE_LINE.section ?? `week`);
+			setCurValue(TYPE_LINE.line ?? `income`);
 		})()
 		: curView === `avg` && (() => {
 			setCurSetType(() => setTYPE_AVG);
-			setCurSection(TYPE_AVG.section || `week`);
-			setCurValue(TYPE_AVG.line || `income`);
+			setCurSection(TYPE_AVG.section ?? `week`);
+			setCurValue(TYPE_AVG.line ?? `income`);
 		})();
 	}, [curView, TYPE_PIE, TYPE_LINE, TYPE_AVG]);
 

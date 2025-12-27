@@ -128,7 +128,7 @@ export const MoneyGoalDetail = memo(() => {
 		})
 		.then((res: any) => {
 			setEXIST(
-        !res.data.result || res.data.result?.length === 0 ? [``] : res.data.result
+        !res.data.result ?? res.data.result?.length === 0 ? [``] : res.data.result
 			);
 		})
 		.catch((error: any) => {
@@ -354,7 +354,7 @@ export const MoneyGoalDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={insertComma(item?.money_goal_income || `0`)}
+									value={insertComma(item?.money_goal_income ?? `0`)}
 									inputRef={REFS?.[i]?.money_goal_income}
 									error={ERRORS?.[i]?.money_goal_income}
 									label={
@@ -395,7 +395,7 @@ export const MoneyGoalDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={insertComma(item?.money_goal_expense || `0`)}
+									value={insertComma(item?.money_goal_expense ?? `0`)}
 									inputRef={REFS?.[i]?.money_goal_expense}
 									error={ERRORS?.[i]?.money_goal_expense}
 									label={

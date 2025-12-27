@@ -84,7 +84,7 @@ export const MoneyRecordList = memo(() => {
 		})
 		.then((res: any) => {
 			setEXIST(
-        !res.data.result || res.data.result?.length === 0 ? [``] : res.data.result
+        !res.data.result ?? res.data.result?.length === 0 ? [``] : res.data.result
 			);
 		})
 		.catch((error: any) => {
@@ -222,7 +222,7 @@ export const MoneyRecordList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.money_record_total_income_color}`}>
-															{insertComma(item.money_record_total_income || `0`)}
+															{insertComma(item.money_record_total_income ?? `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>
@@ -256,7 +256,7 @@ export const MoneyRecordList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.money_record_total_expense_color}`}>
-															{insertComma(item.money_record_total_expense || `0`)}
+															{insertComma(item.money_record_total_expense ?? `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>

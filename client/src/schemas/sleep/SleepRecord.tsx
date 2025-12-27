@@ -6,7 +6,7 @@
  */
 
 // Types ------------------------------------------------------------------------------------------
-export type SleepRecordType = {
+export interface SleepRecordType {
 	_id: string;
 	sleep_record_number: number;
 	sleep_record_dateType: string;

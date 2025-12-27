@@ -9,14 +9,14 @@ import mongoose from "mongoose";
 import { incrementSeq } from "@schemas/Counter";
 
 // 0. types ---------------------------------------------------------------------------------------
-declare type MoneyRecordSection = {
+declare interface MoneyRecordSection {
 	money_record_part: string;
 	money_record_title: string;
 	money_record_include: string;
 	money_record_amount: string;
 	money_record_content: string;
 };
-declare type MoneyRecordType = mongoose.Document & {
+declare interface MoneyRecordType extends mongoose.Document {
 	user_id: string;
 	money_record_number: number;
 	money_record_dateType: string;
@@ -108,7 +108,7 @@ const schema = new mongoose.Schema({
 }, {
 	collection: `MoneyRecord`,
 	timestamps: {
-		createdAt: `money_record_regDt`,
+		createdAt: `money_record_regDt`, 
 		updatedAt: `money_record_updateDt`
 	}
 });

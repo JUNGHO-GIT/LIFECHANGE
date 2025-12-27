@@ -6,11 +6,11 @@
  */
 
 // Types ------------------------------------------------------------------------------------------
-export type FoodPieType = {
+export interface FoodPieType {
 	name: string;
 	value: number;
 };
-export type FoodLineType = {
+export interface FoodLineType {
 	name: string;
 	date: string;
 	kcal?: string;
@@ -18,7 +18,7 @@ export type FoodLineType = {
 	protein?: string;
 	fat?: string;
 };
-export type FoodAvgType = {
+export interface FoodAvgType {
 	name: string;
 	date: string;
 	kcal?: string;

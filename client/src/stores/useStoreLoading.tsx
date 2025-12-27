@@ -8,7 +8,7 @@
 import { create } from "@exportLibs";
 
 // -------------------------------------------------------------------------------------------------
-declare type LoadingState = {
+declare interface LoadingState {
 	LOADING: boolean;
 	setLOADING: (loading: boolean) => void;
 };

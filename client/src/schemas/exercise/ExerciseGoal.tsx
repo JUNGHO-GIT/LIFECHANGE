@@ -6,7 +6,7 @@
  */
 
 // Types ------------------------------------------------------------------------------------------
-export type ExerciseGoalType = {
+export interface ExerciseGoalType {
 	_id: string;
 
 	// goal

@@ -6,7 +6,7 @@
  */
 
 // Types ------------------------------------------------------------------------------------------
-export type SleepGoalType = {
+export interface SleepGoalType {
 	_id: string;
 
 	// goal

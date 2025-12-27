@@ -8,7 +8,7 @@
 import { create } from "@exportLibs";
 
 // -------------------------------------------------------------------------------------------------
-declare type ConfirmState = {
+declare interface ConfirmState {
 	CONFIRM: {
 		open: boolean;
 		msg: string;

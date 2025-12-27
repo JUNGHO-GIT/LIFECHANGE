@@ -9,12 +9,12 @@ import mongoose from "mongoose";
 import { incrementSeq } from "@schemas/Counter";
 
 // 0. types ---------------------------------------------------------------------------------------
-declare type SleepRecordSection = {
+declare interface SleepRecordSection {
 	sleep_record_bedTime: string;
 	sleep_record_wakeTime: string;
 	sleep_record_sleepTime: string;
-};
-declare type SleepRecordType = mongoose.Document & {
+}
+declare interface SleepRecordType extends mongoose.Document {
 	user_id: string;
 	sleep_record_number: number;
 	sleep_record_dateType: string;
@@ -23,7 +23,7 @@ declare type SleepRecordType = mongoose.Document & {
 	sleep_section: SleepRecordSection[];
 	sleep_record_regDt: Date;
 	sleep_record_updateDt: Date;
-};
+}
 
 // 1. schema ---------------------------------------------------------------------------------------
 const schema = new mongoose.Schema(

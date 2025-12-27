@@ -13,7 +13,7 @@ import { memo, useCallback, useMemo } from "@exportReacts";
 import { useStoreLanguage } from "@exportStores";
 
 // -------------------------------------------------------------------------------------------------
-declare type MemoProps = {
+declare interface MemoProps {
 	OBJECT: any;
 	setOBJECT: any;
 	LOCKED: string;
@@ -50,7 +50,7 @@ export const Memo = memo((
 	]);
 
 	// 3. memoized values ---------------------------------------------------------------------------
-	const memoValue = useMemo(() => OBJECT?.[targetSection]?.[i]?.[extra] || ``, [
+	const memoValue = useMemo(() => OBJECT?.[targetSection]?.[i]?.[extra] ?? ``, [
 		OBJECT, targetSection, i, extra
 	]);
 

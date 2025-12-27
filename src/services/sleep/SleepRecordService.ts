@@ -28,7 +28,7 @@ export const exist = async (
 		user_id_param, dateType, dateStart, dateEnd
 	);
 
-	if (!findResult || findResult?.length <= 0) {
+	if (!findResult ?? findResult?.length <= 0) {
 		finalResult = null;
 		statusResult = `fail`;
 	}
@@ -84,7 +84,7 @@ export const list = async (
 		user_id_param, dateType, dateStart, dateEnd, sort, page
 	);
 
-	if (!findResult || findResult?.length <= 0) {
+	if (!findResult ?? findResult?.length <= 0) {
 		finalResult = [];
 		statusResult = `fail`;
 	}
@@ -107,11 +107,11 @@ export const list = async (
 			grouped[key].docs.push(doc);
 			const sections: any = doc?.sleep_section ?? [];
 			sections.forEach((sec: any) => {
-				grouped[key].totalBedDecimal += timeToDecimal(sec?.sleep_record_bedTime || `00:00`);
+				grouped[key].totalBedDecimal += timeToDecimal(sec?.sleep_record_bedTime ?? `00:00`);
 				grouped[key].bedCount++;
-				grouped[key].totalWakeDecimal += timeToDecimal(sec?.sleep_record_wakeTime || `00:00`);
+				grouped[key].totalWakeDecimal += timeToDecimal(sec?.sleep_record_wakeTime ?? `00:00`);
 				grouped[key].wakeCount++;
-				grouped[key].totalSleepDecimal += timeToDecimal(sec?.sleep_record_sleepTime || `00:00`);
+				grouped[key].totalSleepDecimal += timeToDecimal(sec?.sleep_record_sleepTime ?? `00:00`);
 				grouped[key].sleepCount++;
 			});
 		});
@@ -120,11 +120,11 @@ export const list = async (
 		const groupedArray: any[] = Object.keys(grouped).map((dateKey: string) => {
 			const g: any = grouped[dateKey];
 			const firstDoc: any = g.docs[0];
-			const avgBed: string = decimalToTime(g.totalBedDecimal / (g.bedCount || 1));
-			const avgWake: string = decimalToTime(g.totalWakeDecimal / (g.wakeCount || 1));
-			const avgSleep: string = decimalToTime(g.totalSleepDecimal / (g.sleepCount || 1));
+			const avgBed: string = decimalToTime(g.totalBedDecimal / (g.bedCount ?? 1));
+			const avgWake: string = decimalToTime(g.totalWakeDecimal / (g.wakeCount ?? 1));
+			const avgSleep: string = decimalToTime(g.totalSleepDecimal / (g.sleepCount ?? 1));
 			return {
-				_id: firstDoc?._id || null,
+				_id: firstDoc?._id ?? null,
 				sleep_record_dateType: firstDoc?.sleep_record_dateType,
 				sleep_record_dateStart: dateKey,
 				sleep_record_dateEnd: firstDoc?.sleep_record_dateEnd,

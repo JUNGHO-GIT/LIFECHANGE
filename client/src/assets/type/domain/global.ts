@@ -29,12 +29,12 @@ export type SecondPathType =
   `dashboard` |
   (string & {});
 
-export type SortType = `asc` | `desc`;
-export type DateTypeLiteral = `` | `day` | `week` | `month` | `year`;
-export type FoodLineMetricType = `kcal` | `carb` | `protein` | `fat` | (string & {});
-export type ExerciseChartMetricType = `volume` | `cardio` | (string & {});
-export type MoneyChartMetricType = `income` | `expense` | (string & {});
-export type SleepChartMetricType = `bedTime` | `wakeTime` | `sleepTime` | (string & {});
+export interface SortType `asc` | `desc`;
+export interface DateTypeLiteral `` | `day` | `week` | `month` | `year`;
+export interface FoodLineMetricType `kcal` | `carb` | `protein` | `fat` | (string & {});
+export interface ExerciseChartMetricType `volume` | `cardio` | (string & {});
+export interface MoneyChartMetricType `income` | `expense` | (string & {});
+export interface SleepChartMetricType `bedTime` | `wakeTime` | `sleepTime` | (string & {});
 
 // 라우팅 상태 -------------------------------------------------------------------------------------
 export interface LocationStateType {
@@ -303,7 +303,7 @@ export interface SessionTitleType {
 }
 
 // 공용 Title 타입 ----------------------------------------------------------------------------------
-export type AppTitleType = LocalTitleType | SessionTitleType;
+export interface AppTitleType LocalTitleType | SessionTitleType;
 
 // useCommonValue 반환 타입 ------------------------------------------------------------------------
 export interface CommonValueType {

@@ -16,7 +16,7 @@ export const percent = async (object: any) => {
 		let goal: number = Number.parseFloat(goalParam);
 		let record: number = Number.parseFloat(recordParam);
 
-		if (extra === `count` || extra === `volume`) {
+		if (extra === `count` ?? extra === `volume`) {
 			percentExercise = Number(((record - goal) / goal) * 100);
 
 			// 1. - 1%
@@ -115,7 +115,7 @@ export const percent = async (object: any) => {
 		let goal: number = Number.parseFloat(goalParam);
 		let record: number = Number.parseFloat(recordParam);
 
-		if (extra === `kcal` || extra === `carb` || extra === `protein` || extra === `fat`) {
+		if (extra === `kcal` ?? extra === `carb` ?? extra === `protein` ?? extra === `fat`) {
 			percentFood = Number(((record - goal) / goal) * 100);
 
 			// 1. - 1%
@@ -276,7 +276,7 @@ export const percent = async (object: any) => {
 		let goal: string = goalParam;
 		let record: string = recordParam;
 
-		if (extra === `bedTime` || extra === `wakeTime`) {
+		if (extra === `bedTime` ?? extra === `wakeTime`) {
 			const goalDate: Date = new Date(`1970-01-01T${goal}Z`);
 			const recordDate: Date = new Date(`1970-01-01T${record}Z`);
 			let diffVal: number = 0;
@@ -353,7 +353,7 @@ export const percent = async (object: any) => {
 
 	// 1. exercise
 	let exercise: any = {};
-	exercise = !object?.result?.exerciseGoal || !object?.result?.exercise ? {
+	exercise = !object?.result?.exerciseGoal ?? !object?.result?.exercise ? {
 		diff_count: {
 			score: `1.00`,
 			percent: `0.00`,
@@ -395,7 +395,7 @@ export const percent = async (object: any) => {
 
 	// 2. food
 	let food: any = {};
-	food = !object?.result?.foodGoal || !object?.result?.food ? {
+	food = !object?.result?.foodGoal ?? !object?.result?.food ? {
 		diff_kcal: {
 			score: `1.00`,
 			percent: `0.00`,
@@ -437,7 +437,7 @@ export const percent = async (object: any) => {
 
 	// 3. money
 	let money: any = {};
-	money = !object?.result?.moneyGoal || !object?.result?.money ? {
+	money = !object?.result?.moneyGoal ?? !object?.result?.money ? {
 		diff_income: {
 			score: `1.00`,
 			percent: `0.00`,
@@ -461,7 +461,7 @@ export const percent = async (object: any) => {
 
 	// 4. sleep
 	let sleep: any = {};
-	sleep = !object?.result?.sleepGoal || !object?.result?.sleep ? {
+	sleep = !object?.result?.sleepGoal ?? !object?.result?.sleep ? {
 		diff_bedTime: {
 			score: `1.00`,
 			percent: `0.00`,
@@ -508,8 +508,8 @@ export const percent = async (object: any) => {
 			};
 		}
 		return {
-			score: (sumScore / count).toFixed(2) || `1.00`,
-			percent: (sumPercent / count).toFixed(2) || `1.00`,
+			score: (sumScore / count).toFixed(2) ?? `1.00`,
+			percent: (sumPercent / count).toFixed(2) ?? `1.00`,
 		};
 	};
 

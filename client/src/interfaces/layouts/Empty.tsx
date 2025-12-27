@@ -12,7 +12,7 @@ import { memo } from "@exportReacts";
 import { useStoreLanguage } from "@exportStores";
 
 // -------------------------------------------------------------------------------------------------
-declare type EmptyProps = {
+declare interface EmptyProps {
 	DATE: any;
 	extra: string;
 };

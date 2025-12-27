@@ -326,7 +326,7 @@ export const UserSignup = memo(() => {
 								<Btn
 									color={`primary`}
 									className={`mt-n25px`}
-									disabled={!item.user_id_sended || item.user_id_verified}
+									disabled={!item.user_id_sended ?? item.user_id_verified}
 									onClick={() => {
 										void flowVerifyEmail();
 									}}
@@ -387,7 +387,7 @@ export const UserSignup = memo(() => {
 							<Grid size={12}>
 								<Input
 									label={translate(`scale`)}
-									value={insertComma(item.user_initScale || `0`)}
+									value={insertComma(item.user_initScale ?? `0`)}
 									inputRef={REFS?.[i]?.user_initScale}
 									error={ERRORS?.[i]?.user_initScale}
 									disabled={!item.user_id_verified}
@@ -423,7 +423,7 @@ export const UserSignup = memo(() => {
 							<Grid size={12}>
 								<Input
 									label={translate(`avgKcalIntake`)}
-									value={insertComma(item.user_initAvgKcalIntake || `0`)}
+									value={insertComma(item.user_initAvgKcalIntake ?? `0`)}
 									inputRef={REFS?.[i]?.user_initAvgKcalIntake}
 									error={ERRORS?.[i]?.user_initAvgKcalIntake}
 									disabled={!item.user_id_verified}
@@ -459,7 +459,7 @@ export const UserSignup = memo(() => {
 							<Grid size={12}>
 								<Input
 									label={translate(`property`)}
-									value={insertComma(item.user_initProperty || `0`)}
+									value={insertComma(item.user_initProperty ?? `0`)}
 									inputRef={REFS?.[i]?.user_initProperty}
 									error={ERRORS?.[i]?.user_initProperty}
 									disabled={!item.user_id_verified}

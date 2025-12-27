@@ -6,7 +6,7 @@
  */
 
 // Types ------------------------------------------------------------------------------------------
-export type MoneyGoalType = {
+export interface MoneyGoalType {
 	_id: string;
 
 	// goal

@@ -172,13 +172,13 @@ export const Input = memo((props: any) => {
 		<TextField
 			{...props}
 			select={false}
-			size={props?.size || `small`}
-			type={props?.type || `text`}
-			variant={props?.variant || `outlined`}
+			size={props?.size ?? `small`}
+			type={props?.type ?? `text`}
+			variant={props?.variant ?? `outlined`}
 			className={props?.className ?? ``}
 			fullWidth={fullWidth}
-			inputRef={props?.inputRef || null}
-			error={props?.error || false}
+			inputRef={props?.inputRef ?? null}
+			error={props?.error ?? false}
 			onClick={handleClick}
 			onChange={props?.onChange ? handleChange : undefined}
 			sx={sxMemo}

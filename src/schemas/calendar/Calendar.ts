@@ -9,7 +9,7 @@ import mongoose from "mongoose";
 import { incrementSeq } from "@schemas/Counter";
 
 // 0. types ---------------------------------------------------------------------------------------
-declare type CalendarExerciseSection = {
+declare interface CalendarExerciseSection {
 	exercise_part: string;
 	exercise_title: string;
 	exercise_weight: string;
@@ -18,7 +18,7 @@ declare type CalendarExerciseSection = {
 	exercise_volume: string;
 	exercise_cardio: string;
 };
-declare type CalendarFoodSection = {
+declare interface CalendarFoodSection {
 	food_part: string;
 	food_name: string;
 	food_brand: string;
@@ -30,19 +30,19 @@ declare type CalendarFoodSection = {
 	food_protein: string;
 	food_fat: string;
 };
-declare type CalendarMoneySection = {
+declare interface CalendarMoneySection {
 	money_part: string;
 	money_title: string;
 	money_include: string;
 	money_amount: string;
 	money_content: string;
 };
-declare type CalendarSleepSection = {
+declare interface CalendarSleepSection {
 	sleep_bedTime: string;
 	sleep_wakeTime: string;
 	sleep_sleepTime: string;
 };
-declare type CalendarType = mongoose.Document & {
+declare interface CalendarType extends mongoose.Document {
 	user_id: string;
 	calendar_number: number;
 	calendar_exercise_dateType: string;

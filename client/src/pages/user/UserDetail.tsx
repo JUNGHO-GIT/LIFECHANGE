@@ -166,7 +166,7 @@ export const UserDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									label={translate(`initScale`)}
-									value={insertComma(item.user_initScale || `0`)}
+									value={insertComma(item.user_initScale ?? `0`)}
 									inputRef={REFS?.[i]?.user_initScale}
 									error={ERRORS?.[i]?.user_initScale}
 									startadornment={(
@@ -201,7 +201,7 @@ export const UserDetail = memo(() => {
 								<Input
 									readOnly={true}
 									label={translate(`curScale`)}
-									value={insertComma(item.user_curScale || `0`)}
+									value={insertComma(item.user_curScale ?? `0`)}
 									startadornment={(
 										<Img
 											max={14}
@@ -225,7 +225,7 @@ export const UserDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									label={translate(`initAvgKcalIntake`)}
-									value={insertComma(item.user_initAvgKcalIntake || `0`)}
+									value={insertComma(item.user_initAvgKcalIntake ?? `0`)}
 									inputRef={REFS?.[i]?.user_initAvgKcalIntake}
 									error={ERRORS?.[i]?.user_initAvgKcalIntake}
 									startadornment={(
@@ -260,7 +260,7 @@ export const UserDetail = memo(() => {
 								<Input
 									readOnly={true}
 									label={translate(`curAvgKcalIntake`)}
-									value={insertComma(item.user_curAvgKcalIntake || `0`)}
+									value={insertComma(item.user_curAvgKcalIntake ?? `0`)}
 									startadornment={(
 										<Img
 											max={14}
@@ -284,7 +284,7 @@ export const UserDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									label={translate(`initProperty`)}
-									value={insertComma(item.user_initProperty || `0`)}
+									value={insertComma(item.user_initProperty ?? `0`)}
 									inputRef={REFS?.[i]?.user_initProperty}
 									error={ERRORS?.[i]?.user_initProperty}
 									startadornment={(
@@ -321,9 +321,9 @@ export const UserDetail = memo(() => {
 									label={translate(`curPropertyExclusion`)}
 									value={
 										includingExclusions ? (
-											  insertComma(item.user_curPropertyAll || `0`)
+											  insertComma(item.user_curPropertyAll ?? `0`)
 										) : (
-											  insertComma(item.user_curPropertyExclusion || `0`)
+											  insertComma(item.user_curPropertyExclusion ?? `0`)
 										)
 									}
 									startadornment={(

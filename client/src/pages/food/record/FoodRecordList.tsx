@@ -83,7 +83,7 @@ export const FoodRecordList = memo(() => {
 		})
 		.then((res: any) => {
 			setEXIST(
-        !res.data.result || res.data.result?.length === 0 ? [``] : res.data.result
+        !res.data.result ?? res.data.result?.length === 0 ? [``] : res.data.result
 			);
 		})
 		.catch((error: any) => {
@@ -221,7 +221,7 @@ export const FoodRecordList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_total_kcal_color}`}>
-															{insertComma(item.food_record_total_kcal || `0`)}
+															{insertComma(item.food_record_total_kcal ?? `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>
@@ -255,7 +255,7 @@ export const FoodRecordList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_total_carb_color}`}>
-															{insertComma(item.food_record_total_carb || `0`)}
+															{insertComma(item.food_record_total_carb ?? `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>
@@ -289,7 +289,7 @@ export const FoodRecordList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_total_protein_color}`}>
-															{insertComma(item.food_record_total_protein || `0`)}
+															{insertComma(item.food_record_total_protein ?? `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>
@@ -323,7 +323,7 @@ export const FoodRecordList = memo(() => {
 												<Grid container={true} spacing={1}>
 													<Grid size={10} className={`d-row-right`}>
 														<Div className={`fs-0-8rem fw-600 ${item.food_record_total_fat_color}`}>
-															{insertComma(item.food_record_total_fat || `0`)}
+															{insertComma(item.food_record_total_fat ?? `0`)}
 														</Div>
 													</Grid>
 													<Grid size={2} className={`d-row-center`}>

@@ -8,7 +8,7 @@
 import { create } from "@exportLibs";
 
 // -------------------------------------------------------------------------------------------------
-declare type AlertState = {
+declare interface AlertState {
 	ALERT: {
 		open: boolean;
 		msg: string;

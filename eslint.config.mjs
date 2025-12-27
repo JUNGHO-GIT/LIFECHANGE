@@ -480,7 +480,7 @@ const JS_RULES = {
 		{
 			allowShortCircuit: true,
 			allowTernary: true,
-			allowTaggedTemplates: false,
+			allowTaggedTemplates: true,
 			enforceForJSX: false,
 		},
 	],
@@ -979,16 +979,16 @@ const TS_RULES = {
 	"@typescript-eslint/no-implied-eval": [`error`], // no options
 	"@typescript-eslint/no-import-type-side-effects": [`error`], // no options
 	"@typescript-eslint/no-invalid-this": [
-		`error`,
+		`off`,
 		{
 			capIsConstructor: true,
 		},
 	],
 	"@typescript-eslint/no-invalid-void-type": [
-		`error`,
+		`off`,
 		{
 			allowInGenericTypeArguments: true,
-			allowAsThisParameter: false,
+			allowAsThisParameter: true,
 		},
 	],
 	"@typescript-eslint/no-loop-func": [`error`], // no options
@@ -1987,7 +1987,7 @@ const UNICORN_RULES = {
 	"unicorn/no-array-method-this-argument": [`error`], // no options
 	"unicorn/no-array-push-push": [`error`], // no options
 	"unicorn/no-array-reduce": [
-		`error`,
+		`off`,
 		{
 			allowSimpleOperations: true,
 		},
@@ -2228,26 +2228,36 @@ const UNICORN_RULES = {
 	"unicorn/prefer-set-size": [`error`], // no options
 	"unicorn/prefer-date-now": [`error`], // no options
 };
-
 // 5. Custom 설정 -------------------------------------------------------------------------------------------
 /** @type {RulesRecord} */
 const CUSTOM_RULES = {
-	// 0. custom rules
 	"no-restricted-syntax": [
 		`error`,
 		{
 			selector: `ForStatement`,
-			message: `전통적인 for 루프는 지양하세요. Array.from(), map(), forEach() 또는 while 문을 고려하세요.`
+			message: `전통적인 for 루프는 지양하세요. Array.from(), map(), forEach() 또는 while 문을 고려하세요.`,
+		},
+
+		{
+			selector: `VariableDeclarator[id.typeAnnotation=null][init.type='MemberExpression']`,
+			message: `변수에 값을 할당할 때는 명시적인 타입을 지정해야 합니다 (예: const val: string = obj.val).`,
 		},
 		{
-			selector: `VariableDeclarator[id.typeAnnotation=null][init.type='MemberExpression'], VariableDeclarator[id.typeAnnotation=null][init.type='ChainExpression'], VariableDeclarator[id.typeAnnotation=null][init.type='Identifier']`,
-			message: `변수에 값을 할당할 때는 명시적인 타입을 지정해야 합니다 (예: const val: string = obj.val).`
+			selector: `VariableDeclarator[id.typeAnnotation=null][init.type='ChainExpression']`,
+			message: `변수에 값을 할당할 때는 명시적인 타입을 지정해야 합니다 (예: const val: string = obj.val).`,
+		},
+		{
+			selector: `VariableDeclarator[id.typeAnnotation=null][init.type='Identifier']`,
+			message: `변수에 값을 할당할 때는 명시적인 타입을 지정해야 합니다 (예: const val: string = obj.val).`,
+		},
+
+		// reduce 지양: 표시 위치를 'reduce' 토큰으로 최대한 좁힘
+		{
+			selector: `CallExpression[callee.type='MemberExpression'][callee.property.name='reduce'] > MemberExpression.callee > Identifier[name='reduce']`,
+			message: `Array.prototype.reduce() 사용 대신 map(), filter(), find() 등을 사용하는 것을 고려하세요.`,
 		},
 	],
-
 };
-
-// 9. 최종 설정 병합 ----------------------------------------------------------------------------------------
 
 // 9-0. 공통 객체 재사용 ------------------------------------------------------------------------------------
 /** @type {import("eslint").Linter.LinterOptions} */

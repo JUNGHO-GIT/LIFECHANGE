@@ -132,7 +132,7 @@ export const ExerciseRecordDetail = memo(() => {
 		})
 		.then((res: any) => {
 			setEXIST(
-        !res.data.result || res.data.result?.length === 0 ? [``] : res.data.result
+        !res.data.result ?? res.data.result?.length === 0 ? [``] : res.data.result
 			);
 		})
 		.catch((error: any) => {
@@ -407,7 +407,7 @@ export const ExerciseRecordDetail = memo(() => {
 							locked={LOCKED}
 							readOnly={true}
 							label={translate(`totalVolume`)}
-							value={insertComma(OBJECT?.exercise_record_total_volume || `0`)}
+							value={insertComma(OBJECT?.exercise_record_total_volume ?? `0`)}
 							startadornment={(
 								<Img
 									max={14}
@@ -453,7 +453,7 @@ export const ExerciseRecordDetail = memo(() => {
 					<Grid size={12}>
 						<Input
 							label={translate(`scale`)}
-							value={insertComma(OBJECT?.exercise_record_total_scale || `0`)}
+							value={insertComma(OBJECT?.exercise_record_total_scale ?? `0`)}
 							startadornment={(
 								<Img
 									max={14}
@@ -514,7 +514,7 @@ export const ExerciseRecordDetail = memo(() => {
 								<Select
 									locked={LOCKED}
 									label={translate(`part`)}
-									value={item?.exercise_record_part || ``}
+									value={item?.exercise_record_part ?? ``}
 									inputRef={REFS?.[i]?.exercise_record_part}
 									error={ERRORS?.[i]?.exercise_record_part}
 									onChange={(e: any) => {
@@ -527,7 +527,7 @@ export const ExerciseRecordDetail = memo(() => {
 											idx === i ? {
 												...section,
 												exercise_record_part: value,
-												exercise_record_title: foundItem?.exercise_record_title?.[0] || ``,
+												exercise_record_title: foundItem?.exercise_record_title?.[0] ?? ``,
 											} : section
 											))
 										}));
@@ -548,7 +548,7 @@ export const ExerciseRecordDetail = memo(() => {
 								<Select
 									locked={LOCKED}
 									label={translate(`title`)}
-									value={item?.exercise_record_title || ``}
+									value={item?.exercise_record_title ?? ``}
 									inputRef={REFS?.[i]?.exercise_record_title}
 									error={ERRORS?.[i]?.exercise_record_title}
 									onChange={(e: any) => {
@@ -575,7 +575,7 @@ export const ExerciseRecordDetail = memo(() => {
 											>
 												{translate(title as string)}
 											</MenuItem>
-										)) || [];
+										)) ?? [];
 									})()}
 								</Select>
 							</Grid>
@@ -587,7 +587,7 @@ export const ExerciseRecordDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`set`)}
-									value={insertComma(item?.exercise_record_set || `0`)}
+									value={insertComma(item?.exercise_record_set ?? `0`)}
 									inputRef={REFS?.[i]?.exercise_record_set}
 									error={ERRORS?.[i]?.exercise_record_set}
 									startadornment={(
@@ -623,7 +623,7 @@ export const ExerciseRecordDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`rep`)}
-									value={insertComma(item?.exercise_record_rep || `0`)}
+									value={insertComma(item?.exercise_record_rep ?? `0`)}
 									inputRef={REFS?.[i]?.exercise_record_rep}
 									error={ERRORS?.[i]?.exercise_record_rep}
 									startadornment={(
@@ -663,7 +663,7 @@ export const ExerciseRecordDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`weight`)}
-									value={insertComma(item?.exercise_record_weight || `0`)}
+									value={insertComma(item?.exercise_record_weight ?? `0`)}
 									inputRef={REFS?.[i]?.exercise_record_weight}
 									error={ERRORS?.[i]?.exercise_record_weight}
 									startadornment={(

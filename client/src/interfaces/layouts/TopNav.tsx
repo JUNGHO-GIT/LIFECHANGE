@@ -115,11 +115,11 @@ export const TopNav = memo(() => {
 		}
 
 		const newSmileScore: any = {
-			total: percent?.total?.average?.score || `0`,
-			exercise: percent?.exercise?.average?.score || `0`,
-			food: percent?.food?.average?.score || `0`,
-			money: percent?.money?.average?.score || `0`,
-			sleep: percent?.sleep?.average?.score || `0`,
+			total: percent?.total?.average?.score ?? `0`,
+			exercise: percent?.exercise?.average?.score ?? `0`,
+			food: percent?.food?.average?.score ?? `0`,
+			money: percent?.money?.average?.score ?? `0`,
+			sleep: percent?.sleep?.average?.score ?? `0`,
 		};
 
 		const getImage = (score: string) => {
@@ -249,7 +249,7 @@ export const TopNav = memo(() => {
 			},
 		};
 
-		const entry = mapping[firstStr || ``]?.[secondStr || ``];
+		const entry = mapping[firstStr ?? ``]?.[secondStr ?? ``];
 		entry && setSelectedTab((prev) => ({ ...prev, [entry.key]: entry.value }));
 	}, [firstStr, secondStr]);
 
@@ -513,7 +513,7 @@ export const TopNav = memo(() => {
 							</Grid>
 							<Grid size={7} className={`d-row-right`}>
 								<Div className={`fs-1-1rem fw-600 black mr-5px`}>
-									{insertComma(scale.initScale || `0`)}
+									{insertComma(scale.initScale ?? `0`)}
 								</Div>
 							</Grid>
 							<Grid size={2} className={`d-row-center`}>
@@ -541,7 +541,7 @@ export const TopNav = memo(() => {
 							</Grid>
 							<Grid size={7} className={`d-row-right`}>
 								<Div className={`fs-1-1rem fw-600 black mr-5px`}>
-									{insertComma(scale.curScale || `0`)}
+									{insertComma(scale.curScale ?? `0`)}
 								</Div>
 							</Grid>
 							<Grid size={2} className={`d-row-center`}>
@@ -556,7 +556,7 @@ export const TopNav = memo(() => {
 								<Input
 									readOnly={true}
 									label={translate(`minScale`)}
-									value={insertComma(scale.minScale || `0`)}
+									value={insertComma(scale.minScale ?? `0`)}
 									startadornment={(
 										<Img
 											max={14}
@@ -578,7 +578,7 @@ export const TopNav = memo(() => {
 								<Input
 									readOnly={true}
 									label={translate(`maxScale`)}
-									value={insertComma(scale.maxScale || `0`)}
+									value={insertComma(scale.maxScale ?? `0`)}
 									startadornment={(
 										<Img
 											max={14}
@@ -674,7 +674,7 @@ export const TopNav = memo(() => {
 							</Grid>
 							<Grid size={7} className={`d-row-right`}>
 								<Div className={`fs-1-1rem fw-600 black mr-5px`}>
-									{insertComma(nutrition.initAvgKcalIntake || `0`)}
+									{insertComma(nutrition.initAvgKcalIntake ?? `0`)}
 								</Div>
 							</Grid>
 							<Grid size={2} className={`d-row-center`}>
@@ -706,9 +706,9 @@ export const TopNav = memo(() => {
 							<Grid size={7} className={`d-row-right`}>
 								<Div className={`fs-1-1rem fw-600 black mr-5px`}>
 									{nutritionType === `avg` ? (
-										insertComma(nutrition.curAvgKcalIntake || `0`)
+										insertComma(nutrition.curAvgKcalIntake ?? `0`)
 									) : (
-										insertComma(nutrition.totalKcalIntake || `0`)
+										insertComma(nutrition.totalKcalIntake ?? `0`)
 									)}
 								</Div>
 							</Grid>
@@ -732,9 +732,9 @@ export const TopNav = memo(() => {
 									}
 									value={
 										nutritionType === `avg` ? (
-											insertComma(nutrition.curAvgCarbIntake || `0`)
+											insertComma(nutrition.curAvgCarbIntake ?? `0`)
 										) : (
-											insertComma(nutrition.totalCarbIntake || `0`)
+											insertComma(nutrition.totalCarbIntake ?? `0`)
 										)
 									}
 									startadornment={(
@@ -766,9 +766,9 @@ export const TopNav = memo(() => {
 									}
 									value={
 										nutritionType === `avg` ? (
-											insertComma(nutrition.curAvgProteinIntake || `0`)
+											insertComma(nutrition.curAvgProteinIntake ?? `0`)
 										) : (
-											insertComma(nutrition.totalProteinIntake || `0`)
+											insertComma(nutrition.totalProteinIntake ?? `0`)
 										)
 									}
 									startadornment={(
@@ -800,9 +800,9 @@ export const TopNav = memo(() => {
 									}
 									value={
 										nutritionType === `avg` ? (
-											insertComma(nutrition.curAvgFatIntake || `0`)
+											insertComma(nutrition.curAvgFatIntake ?? `0`)
 										) : (
-											insertComma(nutrition.totalFatIntake || `0`)
+											insertComma(nutrition.totalFatIntake ?? `0`)
 										)
 									}
 									startadornment={(
@@ -890,7 +890,7 @@ export const TopNav = memo(() => {
 							</Grid>
 							<Grid size={7} className={`d-row-right`}>
 								<Div className={`fs-1-1rem fw-600 black mr-5px`}>
-									{insertComma(property.initProperty || `0`)}
+									{insertComma(property.initProperty ?? `0`)}
 								</Div>
 							</Grid>
 							<Grid size={2} className={`d-row-center`}>
@@ -918,9 +918,9 @@ export const TopNav = memo(() => {
 							<Grid size={7} className={`d-row-right`}>
 								<Div className={`fs-1-1rem fw-600 black mr-5px`}>
 									{includingExclusions ? (
-										insertComma(property.curPropertyAll || `0`)
+										insertComma(property.curPropertyAll ?? `0`)
 									) : (
-										insertComma(property.curPropertyExclusion || `0`)
+										insertComma(property.curPropertyExclusion ?? `0`)
 									)}
 								</Div>
 							</Grid>
@@ -938,9 +938,9 @@ export const TopNav = memo(() => {
 									label={translate(`sumIncome`)}
 									value={
 										includingExclusions ? (
-											insertComma(property.totalIncomeAll || `0`)
+											insertComma(property.totalIncomeAll ?? `0`)
 										) : (
-											insertComma(property.totalIncomeExclusion || `0`)
+											insertComma(property.totalIncomeExclusion ?? `0`)
 										)
 									}
 									startadornment={(
@@ -966,9 +966,9 @@ export const TopNav = memo(() => {
 									label={translate(`sumExpense`)}
 									value={
 										includingExclusions ? (
-											insertComma(property.totalExpenseAll || `0`)
+											insertComma(property.totalExpenseAll ?? `0`)
 										) : (
-											insertComma(property.totalExpenseExclusion || `0`)
+											insertComma(property.totalExpenseExclusion ?? `0`)
 										)
 									}
 									startadornment={(

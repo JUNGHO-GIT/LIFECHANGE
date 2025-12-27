@@ -6,7 +6,7 @@
  */
 
 // Types ------------------------------------------------------------------------------------------
-export type FoodRecordType = {
+export interface FoodRecordType {
 	_id: string;
 	food_record_number: number;
 	food_record_dateType: string;

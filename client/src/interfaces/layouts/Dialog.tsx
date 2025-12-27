@@ -12,7 +12,7 @@ import { Backdrop, SpeedDial, SpeedDialAction, SpeedDialIcon } from "@exportMuis
 import { useStoreLanguage } from "@exportStores";
 
 // -------------------------------------------------------------------------------------------------
-declare type DialogProps = {
+declare interface DialogProps {
 	COUNT?: any;
 	setCOUNT?: any;
 	OBJECT?: any;

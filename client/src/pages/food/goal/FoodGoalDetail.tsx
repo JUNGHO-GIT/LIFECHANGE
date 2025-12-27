@@ -127,7 +127,7 @@ export const FoodGoalDetail = memo(() => {
 		})
 		.then((res: any) => {
 			setEXIST(
-        !res.data.result || res.data.result?.length === 0 ? [``] : res.data.result
+        !res.data.result ?? res.data.result?.length === 0 ? [``] : res.data.result
 			);
 		})
 		.catch((error: any) => {
@@ -154,7 +154,7 @@ export const FoodGoalDetail = memo(() => {
 		})
 		.then((res: any) => {
 			setLOADING(false);
-			setOBJECT(res.data.result || FoodGoal);
+			setOBJECT(res.data.result ?? FoodGoal);
 			setCOUNT((prev) => ({
 				...prev,
 				totalCnt: res.data.totalCnt ?? 0,
@@ -355,7 +355,7 @@ export const FoodGoalDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={insertComma(item?.food_goal_kcal || `0`)}
+									value={insertComma(item?.food_goal_kcal ?? `0`)}
 									inputRef={REFS?.[i]?.food_goal_kcal}
 									error={ERRORS?.[i]?.food_goal_kcal}
 									label={
@@ -396,7 +396,7 @@ export const FoodGoalDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={insertComma(item?.food_goal_carb || `0`)}
+									value={insertComma(item?.food_goal_carb ?? `0`)}
 									inputRef={REFS?.[i]?.food_goal_carb}
 									error={ERRORS?.[i]?.food_goal_carb}
 									label={
@@ -437,7 +437,7 @@ export const FoodGoalDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={insertComma(item?.food_goal_protein || `0`)}
+									value={insertComma(item?.food_goal_protein ?? `0`)}
 									inputRef={REFS?.[i]?.food_goal_protein}
 									error={ERRORS?.[i]?.food_goal_protein}
 									label={
@@ -478,7 +478,7 @@ export const FoodGoalDetail = memo(() => {
 							<Grid size={12}>
 								<Input
 									locked={LOCKED}
-									value={insertComma(item?.food_goal_fat || `0`)}
+									value={insertComma(item?.food_goal_fat ?? `0`)}
 									inputRef={REFS?.[i]?.food_goal_fat}
 									error={ERRORS?.[i]?.food_goal_fat}
 									label={

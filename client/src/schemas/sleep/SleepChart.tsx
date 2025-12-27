@@ -6,18 +6,18 @@
  */
 
 // Types ------------------------------------------------------------------------------------------
-export type SleepPieType = {
+export interface SleepPieType {
 	name: string;
 	value: number;
 };
-export type SleepLineType = {
+export interface SleepLineType {
 	name: string;
 	date: string;
 	bedTime?: string;
 	wakeTime?: string;
 	sleepTime?: string;
 };
-export type SleepAvgType = {
+export interface SleepAvgType {
 	name: string;
 	date: string;
 	bedTime?: string;

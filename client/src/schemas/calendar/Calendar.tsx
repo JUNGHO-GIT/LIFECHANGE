@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-export type CalendarExerciseSectionType = {
+export interface CalendarExerciseSectionType {
 	exercise_record_part: string;
 	exercise_record_title: string;
 	exercise_record_weight: string;
@@ -14,7 +14,7 @@ export type CalendarExerciseSectionType = {
 	exercise_record_volume: string;
 	exercise_record_cardio: string;
 };
-export type CalendarFoodSectionType = {
+export interface CalendarFoodSectionType {
 	food_record_part: string;
 	food_record_name: string;
 	food_record_brand: string;
@@ -26,19 +26,19 @@ export type CalendarFoodSectionType = {
 	food_record_protein: string;
 	food_record_fat: string;
 };
-export type CalendarMoneySectionType = {
+export interface CalendarMoneySectionType {
 	money_record_part: string;
 	money_record_title: string;
 	money_record_include: string;
 	money_record_amount: string;
 	money_record_content: string;
 };
-export type CalendarSleepSectionType = {
+export interface CalendarSleepSectionType {
 	sleep_record_bedTime: string;
 	sleep_record_wakeTime: string;
 	sleep_record_sleepTime: string;
 };
-export type CalendarType = {
+export interface CalendarType {
 	user_id: string;
 	calendar_number: number;
 	calendar_exercise_dateType: string;

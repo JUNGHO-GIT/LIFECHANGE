@@ -129,7 +129,7 @@ export const CalendarDetail = memo(() => {
 		})
 		.then((res: any) => {
 			setEXIST(
-				!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result
+				!res.data.result ?? res.data.result?.length === 0 ? [``] : res.data.result
 			);
 		})
 		.catch((error: any) => {
@@ -156,7 +156,7 @@ export const CalendarDetail = memo(() => {
 		})
 		.then((res: any) => {
 			setLOADING(false);
-			setOBJECT(res.data.result || Calendar);
+			setOBJECT(res.data.result ?? Calendar);
 
 			// sectionCnt가 0이면 section 초기화
 			if (res.data.sectionCnt <= 0) {
@@ -271,7 +271,7 @@ export const CalendarDetail = memo(() => {
 	// 2-3. useEffect (sleep total 계산) ---------------------------------------------------------
 	useEffect(() => {
 		const totals: any = OBJECT?.calendar_sleep_section?.reduce((acc: any, cur: any) => {
-			const sleepTime: any = cur.sleep_record_sleepTime?.split(`:`) || [`0`, `0`];
+			const sleepTime: any = cur.sleep_record_sleepTime?.split(`:`) ?? [`0`, `0`];
 			const minutes: number = Number(sleepTime[0]) * 60 + Number(sleepTime[1]);
 			return {
 				totalTime: Number(acc.totalTime) + minutes,
@@ -403,7 +403,7 @@ export const CalendarDetail = memo(() => {
 		section && (() => {
 			setOBJECT((prev: CalendarType) => ({
 				...prev,
-				[section]: (prev[section as keyof CalendarType] as any[] || []).filter(
+				[section]: (prev[section as keyof CalendarType] as any[] ?? []).filter(
 					(_item: any, idx: number) => idx !== index
 				),
 			}));
@@ -495,8 +495,8 @@ export const CalendarDetail = memo(() => {
 									locked={LOCKED}
 									label={translate(`part`)}
 									value={item?.exercise_record_part ?? ``}
-									inputRef={REFS?.[i]?.exercise_record_part || null}
-									error={ERRORS?.[i]?.exercise_record_part || null}
+									inputRef={REFS?.[i]?.exercise_record_part ?? null}
+									error={ERRORS?.[i]?.exercise_record_part ?? null}
 									onChange={(e: any) => {
 										const value: string = String(e.target.value ?? ``);
 										const foundIndex: number = exerciseArray.findIndex((f: any) => f.exercise_record_part === value);
@@ -507,7 +507,7 @@ export const CalendarDetail = memo(() => {
 												idx === i ? {
 													...section,
 													exercise_record_part: value,
-													exercise_record_title: (foundItem as any)?.exercise_record_title?.[0] || ``,
+													exercise_record_title: (foundItem as any)?.exercise_record_title?.[0] ?? ``,
 												} : section
 											)),
 										}));
@@ -567,7 +567,7 @@ export const CalendarDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`set`)}
-									value={insertComma(item?.exercise_record_set || `0`)}
+									value={insertComma(item?.exercise_record_set ?? `0`)}
 									inputRef={REFS?.[i]?.exercise_record_set}
 									error={ERRORS?.[i]?.exercise_record_set}
 									startadornment={(
@@ -602,7 +602,7 @@ export const CalendarDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`rep`)}
-									value={insertComma(item?.exercise_record_rep || `0`)}
+									value={insertComma(item?.exercise_record_rep ?? `0`)}
 									inputRef={REFS?.[i]?.exercise_record_rep}
 									error={ERRORS?.[i]?.exercise_record_rep}
 									startadornment={(
@@ -641,7 +641,7 @@ export const CalendarDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`weight`)}
-									value={insertComma(item?.exercise_record_weight || `0`)}
+									value={insertComma(item?.exercise_record_weight ?? `0`)}
 									inputRef={REFS?.[i]?.exercise_record_weight}
 									error={ERRORS?.[i]?.exercise_record_weight}
 									startadornment={(
@@ -776,14 +776,14 @@ export const CalendarDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`foodCount`)}
-									value={insertComma(item?.food_record_count || `0`)}
+									value={insertComma(item?.food_record_count ?? `0`)}
 									inputRef={REFS?.[i]?.food_record_count}
 									error={ERRORS?.[i]?.food_record_count}
 									onChange={(e: any) => {
 										const processedValue: string | null = handleNumberInput(e.target.value, 99, 1);
 										processedValue !== null && (() => {
-											const numericValue: number = Number(processedValue) || 1;
-											const foodCount: number = Number(item?.food_record_count) || 1;
+											const numericValue: number = Number(processedValue) ?? 1;
+											const foodCount: number = Number(item?.food_record_count) ?? 1;
 											const setNutrient = (nut: string | number, extra: string) => (
 												!Number.isNaN(numericValue) && !Number.isNaN(foodCount) ? (
 													extra === `kcal` ? (
@@ -817,7 +817,7 @@ export const CalendarDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`gram`)}
-									value={insertComma(item?.food_record_gram || `0`)}
+									value={insertComma(item?.food_record_gram ?? `0`)}
 									inputRef={REFS?.[i]?.food_record_gram}
 									error={ERRORS?.[i]?.food_record_gram}
 									onChange={(e: any) => {
@@ -896,7 +896,7 @@ export const CalendarDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`kcal`)}
-									value={insertComma(item?.food_record_kcal || `0`)}
+									value={insertComma(item?.food_record_kcal ?? `0`)}
 									inputRef={REFS?.[i]?.food_record_kcal}
 									error={ERRORS?.[i]?.food_record_kcal}
 									startadornment={(
@@ -931,7 +931,7 @@ export const CalendarDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`carb`)}
-									value={insertComma(item?.food_record_carb || `0`)}
+									value={insertComma(item?.food_record_carb ?? `0`)}
 									inputRef={REFS?.[i]?.food_record_carb}
 									error={ERRORS?.[i]?.food_record_carb}
 									startadornment={(
@@ -970,7 +970,7 @@ export const CalendarDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`protein`)}
-									value={insertComma(item?.food_record_protein || `0`)}
+									value={insertComma(item?.food_record_protein ?? `0`)}
 									inputRef={REFS?.[i]?.food_record_protein}
 									error={ERRORS?.[i]?.food_record_protein}
 									startadornment={(
@@ -1005,7 +1005,7 @@ export const CalendarDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`fat`)}
-									value={insertComma(item?.food_record_fat || `0`)}
+									value={insertComma(item?.food_record_fat ?? `0`)}
 									inputRef={REFS?.[i]?.food_record_fat}
 									error={ERRORS?.[i]?.food_record_fat}
 									startadornment={(
@@ -1110,7 +1110,7 @@ export const CalendarDetail = memo(() => {
 												idx === i ? {
 													...section,
 													money_record_part: value,
-													money_record_title: (foundItem as any)?.money_record_title?.[0] || ``,
+													money_record_title: (foundItem as any)?.money_record_title?.[0] ?? ``,
 												} : section
 											)),
 										}));
@@ -1170,7 +1170,7 @@ export const CalendarDetail = memo(() => {
 								<Input
 									locked={LOCKED}
 									label={translate(`amount`)}
-									value={insertComma(item?.money_record_amount || `0`)}
+									value={insertComma(item?.money_record_amount ?? `0`)}
 									inputRef={REFS?.[i]?.money_record_amount}
 									error={ERRORS?.[i]?.money_record_amount}
 									startadornment={(
