@@ -77,7 +77,8 @@ export const Img = memo((
 	const { GCLOUD_URL } = useCommonValue();
 
 	// 2-1. useRef -----------------------------------------------------------------------------------
-	const currentImgSrcRef: React.RefObject<string> = useRef<string>(``);
+	const currentImgSrcRef = useRef<string>(``);
+	const isEmptyHandledRef = useRef<boolean>(false);
 
 	// 2-2. useState ---------------------------------------------------------------------------------
 	const [fileName, setFileName] = useState<string>(``);
@@ -111,27 +112,64 @@ export const Img = memo((
 		const current: string = currentImgSrcRef.current;
 		const cached: ImageCacheEntry | undefined = imageCache.get(current);
 		cached && (cached.status = `error`);
-		// empty.webp 자체가 에러난 경우 다시 호출하지 않도록 차단
-		!isEmptyHandled && !current.includes(`empty.webp`)
-			? (setFileName(`empty`), setImgSrc(`${GCLOUD_URL}/main/empty.webp`), setIsEmptyHandled(true), setIsLoading(false))
+
+		const fallback: string = `${GCLOUD_URL}/main/empty.webp`;
+
+		// empty.webp 자체가 에러난 경우 다시 호출하지 않도록 차단 (ref로 제어해서 무한 루프 방지)
+		!isEmptyHandledRef.current && !current.includes(`empty.webp`)
+			? (() => {
+				isEmptyHandledRef.current = true;
+				setIsEmptyHandled(true);
+				setFileName(`empty`);
+				setImgSrc(fallback);
+				setIsLoading(false);
+			})()
 			: setIsLoading(false);
-	}, [isEmptyHandled, GCLOUD_URL]);
+	}, [GCLOUD_URL]);
 
 	// 5. useEffect (src 설정 + 이미지 로딩 캐시) -------------------------------------------------------
 	useEffect(() => {
 		setIsLoading(true);
 		setIsEmptyHandled(false);
+		isEmptyHandledRef.current = false;
 
 		const fallback: string = `${GCLOUD_URL}/main/empty.webp`;
 		const trimmed: string = typeof src === `string` ? src.trim() : ``;
-		const invalidName: boolean = !trimmed || !trimmed.includes(`.`) || trimmed.startsWith(`.`) || trimmed.endsWith(`.`) || trimmed === `.` || trimmed.length < 3;
+
+		const isBlob: boolean = typeof trimmed === `string` && trimmed.startsWith(`blob:`);
+		const isData: boolean = typeof trimmed === `string` && trimmed.startsWith(`data:`);
+		const isHttp: boolean = typeof trimmed === `string` && (/^https?:\/\//).test(trimmed);
+		const isAbsoluteUrl: boolean = isBlob || isData || isHttp;
+
+		// 파일명일 때만 검증 (blob/data/http는 그대로 허용)
+		const invalidName: boolean = !isAbsoluteUrl && (
+			!trimmed ||
+			!trimmed.includes(`.`) ||
+			trimmed.startsWith(`.`) ||
+			trimmed.endsWith(`.`) ||
+			trimmed === `.` ||
+			trimmed.length < 3
+		);
+
 		const finalSrc: string = (!src || src === `` || src === `empty` || typeof src !== `string` || invalidName)
 			? fallback
-			: (group === `new` ? trimmed : `${GCLOUD_URL}/${group ?? `main`}/${trimmed}`);
+			: (
+				group === `new` || isAbsoluteUrl
+					? trimmed
+					: `${GCLOUD_URL}/${group ?? `main`}/${trimmed}`
+			);
 
-		setFileName(finalSrc === fallback ? `empty` : trimmed.split(`/`).pop()?.split(`.`)[0] ?? `empty`);
+		const resolvedName: string = finalSrc === fallback ? `empty` : (
+			isBlob || isData
+				? `preview`
+				: (trimmed.split(`/`).pop()?.split(`?`)[0]?.split(`#`)[0]?.split(`.`)[0] ?? `img`)
+		);
+
+		setFileName(resolvedName);
 		setImgSrc(finalSrc);
 		currentImgSrcRef.current = finalSrc;
+
+		isEmptyHandledRef.current = finalSrc === fallback;
 		setIsEmptyHandled(finalSrc === fallback);
 
 		if (finalSrc === fallback) {
@@ -174,7 +212,7 @@ export const Img = memo((
 		<img
 			{...restProps}
 			alt={fileName}
-			key={fileName}
+			key={imgSrc}
 			src={imgSrc}
 			loading={loading ?? `lazy`}
 			className={imageClass}

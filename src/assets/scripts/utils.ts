@@ -7,7 +7,7 @@
 
 import bcrypt from 'bcryptjs';
 import crypto from 'node:crypto';
-import { loadEnv } from "./env";
+import { loadEnv } from "@assets/scripts/env";
 loadEnv();
 
 // 1-1. number -------------------------------------------------------------------------------------

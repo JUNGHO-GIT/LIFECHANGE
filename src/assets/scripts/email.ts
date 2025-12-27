@@ -6,7 +6,7 @@
  */
 
 import nodemailer from 'nodemailer';
-import { loadEnv } from "./env";
+import { loadEnv } from "@assets/scripts/env";
 loadEnv();
 
 // -------------------------------------------------------------------------------------------------

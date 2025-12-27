@@ -36,7 +36,7 @@ export const Confirm = memo(() => {
 			<MuiAlert
 				severity={`success`}
 				variant={`standard`}
-				className={`w-95vw h-8vh d-center border-dark radius-2 shadow-2 fs-0-8rem fw-700 snackbar z-10000`}
+				className={`w-95vw h-8vh d-center border-1 radius-2 shadow-4 fs-0-8rem fw-700 snackbar z-10000`}
 				action={(
 					<>
 						<Icons
