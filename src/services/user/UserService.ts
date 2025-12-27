@@ -5,12 +5,12 @@
  * @since 2025-12-26
  */
 
-import dotenv from "dotenv";
+import { loadEnv } from "@assets/scripts/env";
 import bcrypt from "bcryptjs";
 import crypto from "node:crypto";
 import * as repository from "@repositories/user/UserRepository";
 import { sendEmail } from "@assets/scripts/email";
-dotenv.config();
+loadEnv();
 
 // 1-1. sendEmailCode ----------------------------------------------------------------------------------
 export const sendEmailCode = async (

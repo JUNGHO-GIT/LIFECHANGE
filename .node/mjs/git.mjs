@@ -334,6 +334,51 @@ const transformLines = (content = ``, rules = []) => {
 	return transformed.join(os.EOL);
 };
 
+// 9-1. env 파일 동기화 --------------------------------------------------------------------
+// - 기존 `.env`는 제거
+// - `.env.development` / `.env.production`은 프로젝트 설정(env.mjs)에 맞춰 자동 보정
+const upsertEnvLine = (content = ``, key = ``, value = ``) => {
+	const lines = content.split(/\r?\n/);
+	const rx = new RegExp(`^\\s*${key}\\s*=`, `i`);
+	const idx = lines.findIndex((line) => rx.test(line));
+	const nextLine = `${key}=${value}`;
+	idx >= 0 ? (() => {
+		lines[idx] = nextLine;
+	})() : (() => {
+		lines.push(nextLine);
+	})();
+	return lines.join(os.EOL);
+};
+
+const syncEnvFile = (filePath = ``, mode = ``) => {
+	!filePath && (() => {
+		throw new Error(`filePath is empty`);
+	})();
+	const abs = path.resolve(process.cwd(), filePath);
+	!fs.existsSync(abs) && (() => {
+		throw new Error(`env file not found: ${abs}`);
+	})();
+
+	const content = fs.readFileSync(abs, `utf8`);
+	const isProd = mode === `PRODUCTION`;
+	const nextNodeEnv = isProd ? `PRODUCTION` : `DEVELOPMENT`;
+	const nextClientUrl = isProd ? `https://www.${env.domain}/${env.projectName}` : `http://localhost:${env.localPort.client}/${env.projectName}`;
+	const nextCallbackUrl = isProd ? `https://www.${env.domain}/${env.projectName}/${env.gcp.callback}` : `http://localhost:${env.localPort.server}/${env.projectName}/${env.gcp.callback}`;
+
+	let next = content;
+	next = upsertEnvLine(next, `NODE_ENV`, nextNodeEnv);
+	next = upsertEnvLine(next, `CLIENT_URL`, nextClientUrl);
+	next = upsertEnvLine(next, `GOOGLE_CALLBACK_URL`, nextCallbackUrl);
+
+	fs.writeFileSync(abs, next, `utf8`);
+};
+
+const syncEnvFiles = () => {
+	syncEnvFile(`.env.development`, `DEVELOPMENT`);
+	syncEnvFile(`.env.production`, `PRODUCTION`);
+	logger(`info`, `.env.development/.env.production 동기화 완료`);
+};
+
 // 9-1. 안전한 수정/복원용 백업 --------------------------------------------------------------
 const BACKUP_DIR = path.join(`.node`, `.tmp`);
 const BACKUP_PATH = path.join(BACKUP_DIR, `git.mjs.backup.json`);
@@ -438,7 +483,7 @@ const modifyEnvAndIndex = () => {
 		logger(`info`, `.env 파일 수정 시작`);
 		const envContent = fs.readFileSync(`.env`, `utf8`);
 		nextBackup.env = nextBackup.env ?? {};
-		[`CLIENT_URL`, `GOOGLE_CALLBACK_URL`].forEach((key) => {
+		[`NODE_ENV`, `CLIENT_URL`, `GOOGLE_CALLBACK_URL`].forEach((key) => {
 			const found = findEnvLine(envContent, key);
 			found.line && (() => {
 				nextBackup.env[key] = found.line;
@@ -446,6 +491,10 @@ const modifyEnvAndIndex = () => {
 		});
 		writeBackup(nextBackup);
 		const envRules = [
+			{
+				match: (line = ``) => /^\s*NODE_ENV\s*=/.test(line),
+				replace: () => `NODE_ENV=PRODUCTION`,
+			},
 			{
 				match: (line = ``) => /^\s*CLIENT_URL\s*=/.test(line),
 				replace: () => `CLIENT_URL=https://www.${env.domain}/${env.projectName}`,
@@ -491,12 +540,16 @@ const restoreEnvAndIndex = () => {
 	envExists && (() => {
 		logger(`info`, `.env 파일 복원 시작`);
 		const envContent = fs.readFileSync(`.env`, `utf8`);
-		const hasBackup = Boolean(backup?.env?.CLIENT_URL || backup?.env?.GOOGLE_CALLBACK_URL);
+		const hasBackup = Boolean(backup?.env?.NODE_ENV || backup?.env?.CLIENT_URL || backup?.env?.GOOGLE_CALLBACK_URL);
 		hasBackup ? (() => {
 			const restored = restoreEnvFromBackup(envContent, backup.env);
 			fs.writeFileSync(`.env`, restored, `utf8`);
 		})() : (() => {
 			const envRules = [
+				{
+					match: (line = ``) => /^\s*NODE_ENV\s*=/.test(line),
+					replace: () => `NODE_ENV=DEVELOPMENT`,
+				},
 				{
 					match: (line = ``) => /^\s*CLIENT_URL\s*=/.test(line),
 					replace: () => `CLIENT_URL=http://localhost:${env.localPort.client}/${env.projectName}`,
@@ -686,12 +739,10 @@ const runPushProcess = async () => {
 	logger(`info`, `커밋 메시지: ${commitMsg || `auto (date/time)`}`);
 
 	ensureGitLfs();
-	modifyEnvAndIndex();
+	syncEnvFiles();
 	incrementVersion(modifyChangelog(commitMsg));
 	gitPush(settings.git.remotes.public.name, `.gitignore.public`, commitMsg);
 	gitPush(settings.git.remotes.private.name, `.gitignore.private`, commitMsg);
-	restoreEnvAndIndex();
-	cleanupBackup();
 	logger(`success`, `Git Push 완료`);
 };
 
@@ -717,7 +768,6 @@ const runPushProcess = async () => {
 		})();
 		args2 === `push` && (await (async () => {
 			await runPushProcess();
-			// push 후 원격 브랜치가 생성된 상태에서 기본 브랜치 설정
 			setRemoteDefaultBranch(settings.git.remotes.public.name);
 			setRemoteDefaultBranch(settings.git.remotes.private.name);
 			cleanupBranches();

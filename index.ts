@@ -5,11 +5,11 @@
  * @since 2025-12-14
  */
 
-import "@scripts/fetch";
+import "@assets/scripts/fetch";
+import { loadEnv } from "@assets/scripts/env";
 import qs from "qs";
 import cors from "cors";
 import mongoose from "mongoose";
-import dotenv from "dotenv";
 import express, { type Request, type Response, type Express } from "express";
 
 // admin
@@ -46,31 +46,26 @@ import { router as UserRouter } from "@routers/user/UserRouter";
 import { router as GoogleRouter } from "@routers/auth/GoogleRouter";
 
 // -------------------------------------------------------------------------------------------------
-dotenv.config();
+loadEnv();
 const app: Express = express();
 const preFix: string = process.env.HTTP_PREFIX ?? ``;
 
 // 서버 포트 설정 ----------------------------------------------------------------------------------
 const httpPort: number = Number(process.env.HTTP_PORT);
 const httpsPort: number = Number(process.env.HTTPS_PORT);
-(function start(httpPort: number, httpsPort: number) {
-	try {
-		const httpServer = app.listen(httpPort, () => {
-			console.log(`HTTP 서버가 포트 ${httpPort}에서 실행 중입니다.`);
-		});
-		httpServer.on(`error`, (err: unknown) => {
-			if (err?.code === `EADDRINUSE`) {
-				console.log(`${httpPort} 포트가 이미 사용 중입니다. 다른 포트로 변경합니다.`);
-				start(httpPort + 1, httpsPort);
-			}
-			else {
-				console.error(`서버 실행 중 오류 발생: ${err}`);
-			}
-		});
-	}
-	catch (error: unknown) {
-		console.error(`서버 실행 중 오류 발생: ${error}`);
-	}
+(function start(httpPortParam: number, httpsPortParam: number) {
+	const httpServer = app.listen(httpPortParam, () => {
+		console.log(`HTTP 서버가 포트 ${httpPortParam}에서 실행 중입니다.`);
+	});
+	httpServer.on(`error`, (err: unknown) => {
+		if (err?.code === `EADDRINUSE`) {
+			console.log(`${httpPortParam} 포트가 이미 사용 중입니다. 다른 포트로 변경합니다.`);
+			start(httpPortParam + 1, httpsPortParam);
+		}
+		else {
+			console.error(`서버 실행 중 오류 발생: ${err}`);
+		}
+	});
 }(httpPort, httpsPort));
 
 // MongoDB 설정 ------------------------------------------------------------------------------------
@@ -79,7 +74,7 @@ const pw: string | undefined = process.env.DB_PASS;
 const host: string | undefined = process.env.DB_HOST;
 const port: string | undefined = process.env.DB_PORT;
 const mode: string | undefined = process.env.NODE_ENV;
-const db: string = process.env.DB_NAME ?? ``;
+const db: string = mode === `PRODUCTION` ? (process.env.DB_NAME ?? ``) : (process.env.DB_TEST ?? ``);
 const isDev: boolean = mode === `DEVELOPMENT`;
 
 mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`)

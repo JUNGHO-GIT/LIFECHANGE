@@ -7,8 +7,8 @@
 
 import bcrypt from 'bcryptjs';
 import crypto from 'node:crypto';
-import dotenv from "dotenv";
-dotenv.config();
+import { loadEnv } from "./env";
+loadEnv();
 
 // 1-1. number -------------------------------------------------------------------------------------
 export const randomNumber = (data: number) => Math.floor(Math.random() * data);

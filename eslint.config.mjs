@@ -481,7 +481,6 @@ const JS_RULES = {
 			allowShortCircuit: true,
 			allowTernary: true,
 			allowTaggedTemplates: true,
-			enforceForJSX: false,
 		},
 	],
 	"no-useless-call": [`error`], // no options
@@ -1053,7 +1052,6 @@ const TS_RULES = {
 			allowShortCircuit: true,
 			allowTernary: true,
 			allowTaggedTemplates: false,
-			enforceForJSX: false,
 		},
 	],
 	"@typescript-eslint/no-unused-vars": [

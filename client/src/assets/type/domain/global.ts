@@ -9,32 +9,52 @@ import type { Location, NavigateFunction } from "@exportReacts";
 
 // 공통 리터럴 · 유틸 타입 -------------------------------------------------------------------------
 export type FirstPathType =
-	`today` |
-  `calendar` |
-  `exercise` |
-  `food` |
-  `money` |
-  `sleep` |
-  `user` |
-  `auth` |
-  `admin` |
-  (string & {});
+	| `today`
+	| `calendar`
+	| `exercise`
+	| `food`
+	| `money`
+	| `sleep`
+	| `user`
+	| `auth`
+	| `admin`
+	| (string & {});
 
 export type SecondPathType =
-  `goal` |
-  `record` |
-  `find` |
-  `favorite` |
-  `chart` |
-  `dashboard` |
-  (string & {});
+	| `goal`
+	| `record`
+	| `find`
+	| `favorite`
+	| `chart`
+	| `dashboard`
+	| (string & {});
 
-export interface SortType `asc` | `desc`;
-export interface DateTypeLiteral `` | `day` | `week` | `month` | `year`;
-export interface FoodLineMetricType `kcal` | `carb` | `protein` | `fat` | (string & {});
-export interface ExerciseChartMetricType `volume` | `cardio` | (string & {});
-export interface MoneyChartMetricType `income` | `expense` | (string & {});
-export interface SleepChartMetricType `bedTime` | `wakeTime` | `sleepTime` | (string & {});
+export type SortType = `asc` | `desc`;
+export type DateTypeLiteral = `` | `day` | `week` | `month` | `year`;
+
+export type FoodLineMetricType =
+	| `kcal`
+	| `carb`
+	| `protein`
+	| `fat`
+	| (string & {});
+
+export type ExerciseChartMetricType =
+	| `volume`
+	| `cardio`
+	| (string & {});
+
+export type MoneyChartMetricType =
+	| `income`
+	| `expense`
+	| (string & {});
+
+export type SleepChartMetricType =
+	| `bedTime`
+	| `wakeTime`
+	| `sleepTime`
+	| (string & {});
+
 
 // 라우팅 상태 -------------------------------------------------------------------------------------
 export interface LocationStateType {
