@@ -73,7 +73,7 @@ const id: string | undefined = process.env.DB_USER;
 const pw: string | undefined = process.env.DB_PASS;
 const host: string | undefined = process.env.DB_HOST;
 const port: string | undefined = process.env.DB_PORT;
-const mode: string | undefined = process.env.NODE_ENV;
+const mode: string | undefined = process.env.ENV_MODE;
 const db: string = mode === `PRODUCTION` ? (process.env.DB_NAME ?? ``) : (process.env.DB_TEST ?? ``);
 const isDev: boolean = mode === `DEVELOPMENT`;
 

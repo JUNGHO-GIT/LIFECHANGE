@@ -34,7 +34,7 @@ const args2 = argv.find((arg) => [
 const getKeyPath = (pf = ``) => (pf === `win` ? env.ssh.win.keyPath : env.ssh.linux.keyPath);
 const getServiceId = (pf = ``) => (pf === `win` ? env.ssh.win.serviceId : env.ssh.linux.serviceId);
 const getGcpPath = () => `gs://${env.gcp.bucket}/${env.gcp.path}`;
-const getBasePath = () => `/var/www/${env.domain}/${env.projectName}`;
+const getBasePath = () => `${env.basePath}/${env.domain}/${env.projectName}`;
 
 // 3. SSH 명령 실행 --------------------------------------------------------------------------
 const runSshCommand = (pf = ``, commands = ``) => {
@@ -153,7 +153,7 @@ const runServerRemoteScript = (pf = ``) => {
 		`sudo chmod -R 755 ${serverPath}`,
 		`if pm2 describe ${env.projectName} >/dev/null 2>&1; then sudo pm2 stop ${env.projectName} && pm2 save; fi`,
 		`sudo rm -rf node_modules package-lock.json`,
-		`sudo npm install --legacy-peer-deps`,
+		`sudo npm install --legacy-peer-deps --omit=dev"`,
 		`sudo pm2 start ecosystem.config.cjs --env production && pm2 save`,
 		`sleep 5 && sudo pm2 save --force`,
 	].join(` && `);
