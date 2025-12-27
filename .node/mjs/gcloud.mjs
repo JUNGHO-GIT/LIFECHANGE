@@ -147,6 +147,8 @@ const runServerRemoteScript = (pf = ``) => {
 
 	// 불필요한 파일 정리
 	const uslessFiles = [
+		`.node`,
+		`.idea`,
 		`.github`,
 		`.vscode`,
 		`.gitattributes`,
