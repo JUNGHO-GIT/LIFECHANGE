@@ -153,7 +153,7 @@ const runServerRemoteScript = (pf = ``) => {
 		`sudo chmod -R 755 ${serverPath}`,
 		`if pm2 describe ${env.projectName} >/dev/null 2>&1; then sudo pm2 stop ${env.projectName} && pm2 save; fi`,
 		`sudo rm -rf node_modules package-lock.json`,
-		`sudo npm install --legacy-peer-deps --omit=dev"`,
+		`sudo npm install --legacy-peer-deps --omit=dev`,
 		`sudo pm2 start ecosystem.config.cjs --env production && pm2 save`,
 		`sleep 5 && sudo pm2 save --force`,
 	].join(` && `);
