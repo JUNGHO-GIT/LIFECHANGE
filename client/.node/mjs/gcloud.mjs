@@ -145,14 +145,28 @@ const runServerRemoteScript = (pf = ``) => {
 		throw new Error(`배포 브랜치가 설정되지 않았습니다 (settings.git.deploy.resetBranch)`);
 	})();
 
+	// 불필요한 파일 정리
+	const uslessFiles = [
+		`.github`,
+		`.vscode`,
+		`.gitattributes`,
+		`.gitignore*`,
+		`*.md`,
+		`eslint.config.mjs`,
+		`.server.swcrc`,
+		`package.default.json`,
+		`tsconfig.default.json`,
+	];
+
 	const commands = [
 		`cd ${serverPath}`,
 		`sudo git fetch --all`,
 		`sudo git reset --hard ${resetBranch}`,
 		`sudo rm -rf client`,
 		`sudo chmod -R 755 ${serverPath}`,
+		...uslessFiles.map((file) => `sudo rm -rf ${file}`),
 		`sudo npm install --legacy-peer-deps`,
-		`if pm2 describe ${env.projectName} >/dev/null 2>&1; then sudo pm2 reload ecosystem.config.cjs --env production --update-env; else sudo pm2 start ecosystem.config.cjs --env production; fi`,
+		`if pm2 describe ${env.projectName} >/dev/null 2>&1; then sudo pm2 reload ecosystem.config.mjs --env production --update-env; else sudo pm2 start ecosystem.config.mjs --env production; fi`,
 		`pm2 save`,
 		`sleep 2 && sudo pm2 save --force`,
 	].join(` && `);
