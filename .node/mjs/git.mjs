@@ -335,8 +335,6 @@ const transformLines = (content = ``, rules = []) => {
 };
 
 // 9-1. env 파일 동기화 --------------------------------------------------------------------
-// - 기존 `.env`는 제거
-// - `.env.development` / `.env.production`은 프로젝트 설정(env.mjs)에 맞춰 자동 보정
 const upsertEnvLine = (content = ``, key = ``, value = ``) => {
 	const lines = content.split(/\r?\n/);
 	const rx = new RegExp(`^\\s*${key}\\s*=`, `i`);
@@ -468,121 +466,56 @@ const cleanupBackup = () => {
 	}
 };
 
-// 10. env 파일 및 index 파일 수정 -----------------------------------------------------------
+// 10. env 파일 수정 (push 시점에만 GLOBAL_ENV=PRODUCTION 강제) -------------------------------
 const modifyEnvAndIndex = () => {
 	const envExists = fileExists(`.env`);
-	const indexExists = fileExists(`index.ts`);
+	!envExists && logger(`info`, `.env 파일 없음 - GLOBAL_ENV 수정 건너뜀`);
+	!envExists && (() => {})();
 
-	!envExists && !indexExists && logger(`info`, `.env 및 index.ts 파일 없음 - 건너뜀`);
 	const backup = readBackup() ?? {};
 	const nextBackup = {
 		...backup,
 		updatedAt: new Date().toISOString(),
 	};
+
 	envExists && (() => {
-		logger(`info`, `.env 파일 수정 시작`);
+		logger(`info`, `.env 파일 수정 시작 (GLOBAL_ENV=PRODUCTION)`);
 		const envContent = fs.readFileSync(`.env`, `utf8`);
 		nextBackup.env = nextBackup.env ?? {};
-		[`NODE_ENV`, `CLIENT_URL`, `GOOGLE_CALLBACK_URL`].forEach((key) => {
+		[`GLOBAL_ENV`].forEach((key) => {
 			const found = findEnvLine(envContent, key);
 			found.line && (() => {
 				nextBackup.env[key] = found.line;
 			})();
 		});
 		writeBackup(nextBackup);
-		const envRules = [
-			{
-				match: (line = ``) => /^\s*NODE_ENV\s*=/.test(line),
-				replace: () => `NODE_ENV=PRODUCTION`,
-			},
-			{
-				match: (line = ``) => /^\s*CLIENT_URL\s*=/.test(line),
-				replace: () => `CLIENT_URL=https://www.${env.domain}/${env.projectName}`,
-			},
-			{
-				match: (line = ``) => /^\s*GOOGLE_CALLBACK_URL\s*=/.test(line),
-				replace: () => `GOOGLE_CALLBACK_URL=https://www.${env.domain}/${env.projectName}/${env.gcp.callback}`,
-			},
-		];
-		fs.writeFileSync(`.env`, transformLines(envContent, envRules));
+
+		let next = envContent;
+		next = upsertEnvLine(next, `GLOBAL_ENV`, `PRODUCTION`);
+		fs.writeFileSync(`.env`, next, `utf8`);
 		logger(`info`, `.env 파일 수정 완료`);
-	})();
-	indexExists && (() => {
-		logger(`info`, `index.ts 파일 수정 시작`);
-		const indexContent = fs.readFileSync(`index.ts`, `utf8`);
-		nextBackup.index = nextBackup.index ?? {};
-		const found = findIndexDbLine(indexContent);
-		found.line && (() => {
-			nextBackup.index.dbLine = found.line;
-		})();
-		writeBackup(nextBackup);
-		const indexRules = [
-			{
-				match: (line = ``) => /^\s*(\/\/\s*)?const\s+db\b/.test(line),
-				replace: (line = ``) => {
-					const indent = line.match(/^\s*/)?.[0] ?? ``;
-					return indent + 'const db: string = process.env.DB_NAME ?? ``;';
-				},
-			},
-		];
-		fs.writeFileSync(`index.ts`, transformLines(indexContent, indexRules));
-		logger(`info`, `index.ts 파일 수정 완료`);
 	})();
 };
 
-// 11. env 파일 및 index 파일 복원 -----------------------------------------------------------
+// 11. env 파일 복원 -----------------------------------------------------------------------
 const restoreEnvAndIndex = () => {
 	const envExists = fileExists(`.env`);
-	const indexExists = fileExists(`index.ts`);
 	const backup = readBackup();
 
-	!envExists && !indexExists && logger(`info`, `.env 및 index.ts 파일 없음 - 복원 건너뜀`);
+	!envExists && logger(`info`, `.env 파일 없음 - GLOBAL_ENV 복원 건너뜀`);
 	envExists && (() => {
 		logger(`info`, `.env 파일 복원 시작`);
 		const envContent = fs.readFileSync(`.env`, `utf8`);
-		const hasBackup = Boolean(backup?.env?.NODE_ENV || backup?.env?.CLIENT_URL || backup?.env?.GOOGLE_CALLBACK_URL);
+		const hasBackup = Boolean(backup?.env?.GLOBAL_ENV);
 		hasBackup ? (() => {
 			const restored = restoreEnvFromBackup(envContent, backup.env);
 			fs.writeFileSync(`.env`, restored, `utf8`);
 		})() : (() => {
-			const envRules = [
-				{
-					match: (line = ``) => /^\s*NODE_ENV\s*=/.test(line),
-					replace: () => `NODE_ENV=DEVELOPMENT`,
-				},
-				{
-					match: (line = ``) => /^\s*CLIENT_URL\s*=/.test(line),
-					replace: () => `CLIENT_URL=http://localhost:${env.localPort.client}/${env.projectName}`,
-				},
-				{
-					match: (line = ``) => /^\s*GOOGLE_CALLBACK_URL\s*=/.test(line),
-					replace: () => `GOOGLE_CALLBACK_URL=http://localhost:${env.localPort.server}/${env.projectName}/${env.gcp.callback}`,
-				},
-			];
-			fs.writeFileSync(`.env`, transformLines(envContent, envRules));
+			let next = envContent;
+			next = upsertEnvLine(next, `GLOBAL_ENV`, `DEVELOPMENT`);
+			fs.writeFileSync(`.env`, next, `utf8`);
 		})();
 		logger(`info`, `.env 파일 복원 완료`);
-	})();
-	indexExists && (() => {
-		logger(`info`, `index.ts 파일 복원 시작`);
-		const indexContent = fs.readFileSync(`index.ts`, `utf8`);
-		const hasBackup = typeof backup?.index?.dbLine === `string`;
-		hasBackup ? (() => {
-			const restored = restoreIndexFromBackup(indexContent, backup.index.dbLine);
-			fs.writeFileSync(`index.ts`, restored, `utf8`);
-		})() : (() => {
-			const indexRules = [
-				{
-					match: (line = ``) => /^\s*(\/\/\s*)?const\s+db\b/.test(line),
-					replace: (line = ``) => {
-						const indent = line.match(/^\s*/)?.[0] ?? ``;
-						return indent + 'const db: string = process.env.DB_TEST ?? ``;';
-					},
-				},
-			];
-			fs.writeFileSync(`index.ts`, transformLines(indexContent, indexRules));
-		})();
-		logger(`info`, `index.ts 파일 복원 완료`);
 	})();
 };
 
@@ -741,9 +674,17 @@ const runPushProcess = async () => {
 	ensureGitLfs();
 	syncEnvFiles();
 	incrementVersion(modifyChangelog(commitMsg));
-	gitPush(settings.git.remotes.public.name, `.gitignore.public`, commitMsg);
-	gitPush(settings.git.remotes.private.name, `.gitignore.private`, commitMsg);
-	logger(`success`, `Git Push 완료`);
+
+	modifyEnvAndIndex();
+	try {
+		gitPush(settings.git.remotes.public.name, `.gitignore.public`, commitMsg);
+		gitPush(settings.git.remotes.private.name, `.gitignore.private`, commitMsg);
+		logger(`success`, `Git Push 완료`);
+	}
+	finally {
+		restoreEnvAndIndex();
+		cleanupBackup();
+	}
 };
 
 // 99. 실행 ----------------------------------------------------------------------------------
