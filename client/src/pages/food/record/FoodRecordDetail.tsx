@@ -129,7 +129,7 @@ export const FoodRecordDetail = memo(() => {
 		})
 		.then((res: any) => {
 			setEXIST(
-        !res.data.result ?? res.data.result?.length === 0 ? [``] : res.data.result
+        (!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result)
 			);
 		})
 		.catch((error: any) => {
@@ -150,7 +150,7 @@ export const FoodRecordDetail = memo(() => {
 		})
 		.then((res: any) => {
 			setFAVORITE(
-        !res.data.result ?? res.data.result?.length === 0 ? [``] : res.data.result
+        (!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result)
 			);
 		})
 		.catch((error: any) => {
@@ -390,11 +390,12 @@ export const FoodRecordDetail = memo(() => {
 
 	// 3. flow ------------------------------------------------------------------------------------
 	const flowUpdateFavorite = useCallback((foodFavorite: any) => {
-		(!foodFavorite.food_record_name ?? foodFavorite.food_record_name.trim() === ``) && setALERT({
-			open: true,
-			msg: translate(`음식 이름을 입력해주세요.`),
-			severity: `error`,
-		}) && (() => {
+		(!foodFavorite.food_record_name || foodFavorite.food_record_name.trim() === ``) && (() => {
+			setALERT({
+				open: true,
+				msg: translate(`음식 이름을 입력해주세요.`),
+				severity: `error`,
+			});
 			return;
 		})();
 

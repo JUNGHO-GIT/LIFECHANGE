@@ -128,13 +128,13 @@ export const MoneyRecordDetail = memo(() => {
 		})
 		.then((res: any) => {
 			setEXIST(
-				!res.data.result ?? res.data.result?.length === 0 ? [``] : res.data.result
+				(!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result)
 			);
 		})
 		.catch((error: any) => {
 			setALERT({
 				open: true,
-				msg: translate(error.response.data.msg),
+				msg: translate(error.response.data.msg as string),
 				severity: `error`,
 			});
 		});

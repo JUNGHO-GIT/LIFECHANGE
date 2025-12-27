@@ -326,7 +326,7 @@ export const UserSignup = memo(() => {
 								<Btn
 									color={`primary`}
 									className={`mt-n25px`}
-									disabled={!item.user_id_sended ?? item.user_id_verified}
+									disabled={!item.user_id_sended || item.user_id_verified}
 									onClick={() => {
 										void flowVerifyEmail();
 									}}

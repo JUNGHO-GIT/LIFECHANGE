@@ -83,7 +83,7 @@ export const ExerciseGoalList = memo(() => {
 		})
 		.then((res: any) => {
 			setEXIST(
-        !res.data.result ?? res.data.result?.length === 0 ? [``] : res.data.result
+        (!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result)
 			);
 		})
 		.catch((error: any) => {

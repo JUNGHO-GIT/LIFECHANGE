@@ -398,7 +398,7 @@ export const UserCategory = memo(() => {
 							</TableFooter>
 						</Table>
 					</TableContainer>
-					{(dataType === `exercise` ?? dataType === `money`) && (
+					{(dataType === `exercise` || dataType === `money`) && (
 						<TableContainer className={`border-1 radius-2 over-x-hidden`}>
 							<Table>
 								<TableHead className={`table-thead`}>
