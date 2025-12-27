@@ -91,5 +91,6 @@ export const settings = {
 				],
 			},
 		],
+		rmFiles: [`client/eslint.config.mjs`],
 	},
 };
