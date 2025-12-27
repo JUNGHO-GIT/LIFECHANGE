@@ -320,7 +320,7 @@ const envManager = {
 
 		syncOne(`.env.development`, `DEVELOPMENT`);
 		syncOne(`.env.production`, `PRODUCTION`);
-		logger(`info`, `.env.development/.env.production 동기화 완료`);
+		logger(`info`, `.env.development/.env.production ���기화 완료`);
 	},
 	modify: () => {
 		const envExists = fileExists(`.env`);
