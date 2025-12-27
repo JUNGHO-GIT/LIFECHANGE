@@ -92,10 +92,10 @@ const uploadToGCP = () => {
 const deleteBuildTar = (pf = ``) => {
 	const tarFile = path.join(process.cwd(), `build.tar.gz`);
 
-	!fileExists(tarFile) ? logger(`warn`, `build.tar.gz 파일이 존재하지 않음 - 삭제 건너뜀`) : (() => {
-		const cmd = pf === `win` ? `del build.tar.gz` : `rm -rf build.tar.gz`;
-		execCommand(cmd, `build.tar.gz 삭제`);
-	})();
+  !fileExists(tarFile) ? logger(`warn`, `build.tar.gz 파일이 존재하지 않음 - 삭제 건너뜀`) : (() => {
+  	const cmd = pf === `win` ? `del build.tar.gz` : `rm -rf build.tar.gz`;
+  	execCommand(cmd, `build.tar.gz 삭제`);
+  })();
 };
 
 // 4-5. client 배포 (원격 서버 스크립트 실행) -------------------------------------------------
@@ -151,11 +151,10 @@ const runServerRemoteScript = (pf = ``) => {
 		`sudo git reset --hard ${resetBranch}`,
 		`sudo rm -rf client`,
 		`sudo chmod -R 755 ${serverPath}`,
-		`if pm2 describe ${env.projectName} >/dev/null 2>&1; then sudo pm2 stop ${env.projectName} && pm2 save; fi`,
-		`sudo rm -rf node_modules package-lock.json`,
 		`sudo npm install --legacy-peer-deps`,
-		`sudo pm2 start ecosystem.config.cjs --env production && pm2 save`,
-		`sleep 5 && sudo pm2 save --force`,
+		`if pm2 describe ${env.projectName} >/dev/null 2>&1; then sudo pm2 reload ecosystem.config.cjs --env production --update-env; else sudo pm2 start ecosystem.config.cjs --env production; fi`,
+		`pm2 save`,
+		`sleep 2 && sudo pm2 save --force`,
 	].join(` && `);
 
 	runSshCommand(pf, commands);

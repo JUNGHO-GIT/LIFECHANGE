@@ -304,16 +304,18 @@ const envManager = {
 		const syncOne = (filePath = ``, mode = ``) => {
 			const abs = path.resolve(process.cwd(), filePath);
 			!fs.existsSync(abs) && (() => {
-				throw new Error(`env file not found: ${abs}`);
+				logger(`info`, `env 파일 없음 - 건너뜀: ${filePath}`);
 			})();
 
-			const content = fs.readFileSync(abs, `utf8`);
-			const isProd = mode === `PRODUCTION`;
-			let next = content;
-			next = envManager.upsertLine(next, `ENV_MODE`, isProd ? `PRODUCTION` : `DEVELOPMENT`);
-			next = envManager.upsertLine(next, `CLIENT_URL`, isProd ? `https://www.${env.domain}/${env.projectName}` : `http://localhost:${env.localPort.client}/${env.projectName}`);
-			next = envManager.upsertLine(next, `GOOGLE_CALLBACK_URL`, isProd ? `https://www.${env.domain}/${env.projectName}/${env.gcp.callback}` : `http://localhost:${env.localPort.server}/${env.projectName}/${env.gcp.callback}`);
-			fs.writeFileSync(abs, next, `utf8`);
+			fs.existsSync(abs) && (() => {
+				const content = fs.readFileSync(abs, `utf8`);
+				const isProd = mode === `PRODUCTION`;
+				let next = content;
+				next = envManager.upsertLine(next, `ENV_MODE`, isProd ? `PRODUCTION` : `DEVELOPMENT`);
+				next = envManager.upsertLine(next, `CLIENT_URL`, isProd ? `https://www.${env.domain}/${env.projectName}` : `http://localhost:${env.localPort.client}/${env.projectName}`);
+				next = envManager.upsertLine(next, `GOOGLE_CALLBACK_URL`, isProd ? `https://www.${env.domain}/${env.projectName}/${env.gcp.callback}` : `http://localhost:${env.localPort.server}/${env.projectName}/${env.gcp.callback}`);
+				fs.writeFileSync(abs, next, `utf8`);
+			})();
 		};
 
 		syncOne(`.env.development`, `DEVELOPMENT`);
