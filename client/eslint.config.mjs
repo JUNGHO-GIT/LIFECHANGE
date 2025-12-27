@@ -1425,7 +1425,7 @@ const STYLISTIC_RULES = {
 			TryStatementHandler: { multiline: true, consistent: true },
 			TryStatementFinalizer: { multiline: true, consistent: true },
 
-			// 함수 및 메서드 (Functions & Methods) - 빈 함수 허용에 ��요
+			// 함수 및 메서드 (Functions & Methods) - 빈 함수 허용에 중요
 			FunctionDeclaration: { multiline: true, consistent: true },
 			FunctionExpression: { multiline: true, consistent: true },
 			ArrowFunctionExpression: { multiline: true, consistent: true },

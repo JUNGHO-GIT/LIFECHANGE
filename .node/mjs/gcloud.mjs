@@ -166,7 +166,7 @@ const runServerRemoteScript = (pf = ``) => {
 		`sudo chmod -R 755 ${serverPath}`,
 		...uslessFiles.map((file) => `sudo rm -rf ${file}`),
 		`sudo npm install --legacy-peer-deps`,
-		`if pm2 describe ${env.projectName} >/dev/null 2>&1; then sudo pm2 reload ecosystem.config.mjs --env production --update-env; else sudo pm2 start ecosystem.config.mjs --env production; fi`,
+		`if pm2 describe ${env.projectName} >/dev/null 2>&1; then sudo pm2 reload ecosystem.config.cjs --env production --update-env; else sudo pm2 start ecosystem.config.cjs --env production; fi`,
 		`pm2 save`,
 		`sleep 2 && sudo pm2 save --force`,
 	].join(` && `);
