@@ -26,8 +26,10 @@ export const settings = {
 		repoPrivate: `JNODE_PRIVATE`,
 		defaultRemote: `private`,
 		defaultCdn: `rawGithub`,
+
+		// 1. forders
 		folders: [
-			// 1. node -------------------------------------------------------------------------------
+			// 1-1. node
 			{
 				sourcePath: `src/public/node/lib`,
 				targetPath: `.node/lib`,
@@ -51,7 +53,7 @@ export const settings = {
 				],
 			},
 
-			// 2. github --------------------------------------------------------------------------------
+			// 1-2. github
 			{
 				sourcePath: `src/public/github`,
 				targetPath: `.github`,
@@ -64,33 +66,35 @@ export const settings = {
 					`.gitattributes`,
 					`.gitignore.public`,
 					`.gitignore.private`,
+					`.gitlab-ci.yml`,
 				],
 			},
 
-			// 3. config --------------------------------------------------------------------------------
+			// 1-3. config
 			{
 				sourcePath: `src/public/config`,
 				targetPath: ``,
-				files: [`package.default.json`],
-			},
-			{
-				sourcePath: `src/public/config`,
-				targetPath: ``,
-				files: [
-					`.server.swcrc`,
-					`eslint.config.mjs`,
-					`tsconfig.default.json`,
-				],
-			},
-			{
-				sourcePath: `src/public/config`,
-				targetPath: `client`,
 				files: [
 					`.client.swcrc`,
-					`tsconfig.default.json`,
+					`.server.swcrc`,
+					`eslint.config.mjs`,
+					`ecosystem.config.cjs`,
+					`package.default.json`,
 				],
 			},
 		],
-		rmFiles: [`client/eslint.config.mjs`],
+
+		// 2. rm files -----------------------------------------------------------------------------
+		rmFiles: [
+			`.client.swcrc`,
+			`client/.server.swcrc`,
+			`client/eslint.config.mjs`,
+			`client/ecosystem.config.cjs`,
+			`client/package.default.json`,
+			`client/.gitignore.public`,
+			`client/.gitignore.private`,
+			`client/.gitattributes`,
+			`client/.gitlab-ci.yml`,
+		],
 	},
 };
