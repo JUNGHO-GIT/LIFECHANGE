@@ -449,7 +449,7 @@ const gitPush = (remoteName = ``, ignoreFilePath = ``, msg = ``, baseCommit = ``
 
 			// 베이스 커밋으로 리셋 (각 push마다 독립적인 커밋 생성)
 			baseCommit && (() => {
-				logger(`info`, `베이스 커밋으로 ��셋: ${baseCommit}`);
+				logger(`info`, `베이스 커밋으로 리셋: ${baseCommit}`);
 				execSync(`git reset --hard ${baseCommit}`, { stdio: `pipe` });
 			})();
 

@@ -66,7 +66,6 @@ export const settings = {
 					`.gitattributes`,
 					`.gitignore.public`,
 					`.gitignore.private`,
-					`.gitlab-ci.yml`,
 				],
 			},
 
@@ -75,26 +74,31 @@ export const settings = {
 				sourcePath: `src/public/config`,
 				targetPath: ``,
 				files: [
-					`.client.swcrc`,
 					`.server.swcrc`,
 					`eslint.config.mjs`,
 					`ecosystem.config.cjs`,
 					`package.default.json`,
 				],
 			},
+			{
+				sourcePath: `src/public/config`,
+				targetPath: `client`,
+				files: [
+					`.client.swcrc`,
+				],
+			},
 		],
 
 		// 2. rm files -----------------------------------------------------------------------------
 		rmFiles: [
-			`.client.swcrc`,
 			`client/.server.swcrc`,
 			`client/eslint.config.mjs`,
 			`client/ecosystem.config.cjs`,
 			`client/package.default.json`,
+			`client/.gitignore`,
 			`client/.gitignore.public`,
 			`client/.gitignore.private`,
 			`client/.gitattributes`,
-			`client/.gitlab-ci.yml`,
 		],
 	},
 };

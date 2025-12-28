@@ -7,6 +7,10 @@
 
 import * as repository from "@repositories/calendar/CalendarRepository";
 import moment from "moment-timezone";
+import * as ExerciseRecordService from "@services/exercise/ExerciseRecordService";
+import * as FoodRecordService from "@services/food/FoodRecordService";
+import * as MoneyRecordService from "@services/money/MoneyRecordService";
+import * as SleepRecordService from "@services/sleep/SleepRecordService";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
@@ -187,21 +191,20 @@ export const update = async (
 	const isCreate: boolean = type_param === `create`;
 
 	// 유효한 데이터만 필터링
-	const validExerciseSection: any = OBJECT_param?.calendar_exercise_section?.filter((item: any) => (
-		item.exercise_record_part && item.exercise_record_title
-	)) ?? [];
-	const validFoodSection: any = OBJECT_param?.calendar_food_section?.filter((item: any) => (
-		item.food_record_name && item.food_record_name.trim() !== ``
-	)) ?? [];
-	const validMoneySection: any = OBJECT_param?.calendar_money_section?.filter((item: any) => (
-		item.money_record_amount && Number(item.money_record_amount) > 0
-	)) ?? [];
-	const validSleepSection: any = OBJECT_param?.calendar_sleep_section?.filter((item: any) => (
-		item.sleep_record_sleepTime && item.sleep_record_sleepTime !== `00:00`
-	)) ?? [];
+	const validExerciseSection: any = OBJECT_param?.calendar_exercise_section?.filter((item: any) => {
+		return item.exercise_record_part && item.exercise_record_part.trim() !== ``;
+	}) ?? [];
+	const validFoodSection: any = OBJECT_param?.calendar_food_section?.filter((item: any) => {
+		return item.food_record_name && item.food_record_name.trim() !== ``;
+	}) ?? [];
+	const validMoneySection: any = OBJECT_param?.calendar_money_section?.filter((item: any) => {
+		return item.money_record_amount && Number(item.money_record_amount) > 0;
+	}) ?? [];
+	const validSleepSection: any = OBJECT_param?.calendar_sleep_section?.filter((item: any) => {
+		return item.sleep_record_sleepTime && item.sleep_record_sleepTime !== `00:00`;
+	}) ?? [];
 
 	// exercise 처리
-	const ExerciseRecordService: any = require(`@services/exercise/ExerciseRecordService`);
 	if (validExerciseSection.length > 0) {
 		const exerciseObject = {
 			exercise_record_dateType: dateType,
@@ -228,7 +231,6 @@ export const update = async (
 	}
 
 	// food 처리
-	const FoodRecordService: any = require(`@services/food/FoodRecordService`);
 	if (validFoodSection.length > 0) {
 		const foodObject = {
 			food_record_dateType: dateType,
@@ -257,7 +259,6 @@ export const update = async (
 	}
 
 	// money 처리
-	const MoneyRecordService: any = require(`@services/money/MoneyRecordService`);
 	if (validMoneySection.length > 0) {
 		const moneyObject = {
 			money_record_dateType: dateType,
@@ -284,7 +285,6 @@ export const update = async (
 	}
 
 	// sleep 처리
-	const SleepRecordService: any = require(`@services/sleep/SleepRecordService`);
 	if (validSleepSection.length > 0) {
 		const sleepObject = {
 			sleep_record_dateType: dateType,
@@ -335,7 +335,6 @@ export const deletes = async (
 	const dateEnd: string = DATE_param?.dateEnd;
 
 	// exercise 데이터 삭제
-	const ExerciseRecordService: any = require(`@services/exercise/ExerciseRecordService`);
 	exerciseResult = await ExerciseRecordService.deletes(
 		user_id_param, DATE_param
 	);
@@ -345,7 +344,6 @@ export const deletes = async (
 	finalResult.exercise = exerciseResult;
 
 	// food 데이터 삭제
-	const FoodRecordService: any = require(`@services/food/FoodRecordService`);
 	foodResult = await FoodRecordService.deletes(
 		user_id_param, DATE_param
 	);
@@ -355,7 +353,6 @@ export const deletes = async (
 	finalResult.food = foodResult;
 
 	// money 데이터 삭제
-	const MoneyRecordService: any = require(`@services/money/MoneyRecordService`);
 	moneyResult = await MoneyRecordService.deletes(
 		user_id_param, DATE_param
 	);
@@ -365,7 +362,6 @@ export const deletes = async (
 	finalResult.money = moneyResult;
 
 	// sleep 데이터 삭제
-	const SleepRecordService: any = require(`@services/sleep/SleepRecordService`);
 	sleepResult = await SleepRecordService.deletes(
 		user_id_param, DATE_param
 	);
