@@ -556,7 +556,7 @@ export const MoneyRecordDetail = memo(() => {
 											!processedValue === null && (() => {
 												return;
 											})();
-											const value: string = processedValue === `` ? `0` : processedValue;
+											const value: string = processedValue ?? `0`;
 											setOBJECT((prev) => ({
 												...prev,
 												money_section: prev.money_section?.map((section: any, idx: number) => (

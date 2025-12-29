@@ -29,9 +29,7 @@ export const TextArea = memo((props: any) => {
 		else if (props?.locked !== `locked` && !props?.disabled) {
 			props?.onClick?.(e);
 		}
-	}, [
-		props?.locked, props?.disabled, props?.onClick
-	]);
+	}, [props?.locked, props?.disabled, props?.onClick]);
 
 	// 4. handle ------------------------------------------------------------------------------------
 	const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {

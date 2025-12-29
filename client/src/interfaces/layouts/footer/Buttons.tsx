@@ -16,7 +16,7 @@ import { useStoreLanguage } from "@exportStores";
 declare interface ButtonsProps {
 	state: any;
 	flow: any;
-};
+}
 
 // -------------------------------------------------------------------------------------------------
 export const Buttons = memo((
@@ -37,9 +37,7 @@ export const Buttons = memo((
 		dateType: state?.DATE?.dateType,
 		dateStart: state?.DATE?.dateStart,
 		dateEnd: state?.DATE?.dateEnd
-	}), [
-		state?.DATE?.dateType, state?.DATE?.dateStart, state?.DATE?.dateEnd
-	]);
+	}), [state?.DATE?.dateType, state?.DATE?.dateStart, state?.DATE?.dateEnd]);
 
 	// 3. handler ------------------------------------------------------------------------------------
 	const handleSave = (type: string) => {
@@ -60,9 +58,7 @@ export const Buttons = memo((
 		>
 			{translate(`find`)}
 		</Btn>
-	), [
-		navigate, toFind, navigationState, translate
-	]);
+	), [navigate, toFind, navigationState, translate]);
 
 	// 7-2. btn - toFavorite ----------------------------------------------------------------------------
 	const favoriteBtn = useMemo(() => (
@@ -77,9 +73,7 @@ export const Buttons = memo((
 		>
 			{translate(`favorite`)}
 		</Btn>
-	), [
-		navigate, toFavorite, navigationState, translate
-	]);
+	), [navigate, toFavorite, navigationState, translate]);
 
 	// 8. btn - delete --------------------------------------------------------------------------------
 	const deleteBtn = useMemo(() => (
@@ -162,9 +156,7 @@ export const Buttons = memo((
 				</Btn>
 			)}
 		/>
-	), [
-		isSleep, handleSave, state.FLOW, translate
-	]);
+	), [isSleep, handleSave, state.FLOW, translate]);
 
 	// 10. return ----------------------------------------------------------------------------------
 	return (

@@ -56,7 +56,18 @@ export const list = async (
 	dateEnd_param: string,
 	sort_param: 1 | -1,
 	page_param: number,
+	part_param?: string,
+	title_param?: string,
 ) => {
+
+	// part, title 필터 조건 구성
+	const matchSection: any = {};
+	if (part_param && part_param !== `all`) {
+		matchSection[`exercise_section.exercise_record_part`] = part_param;
+	}
+	if (title_param && title_param !== `all`) {
+		matchSection[`exercise_section.exercise_record_title`] = title_param;
+	}
 
 	const finalResult = await ExerciseRecord.aggregate([
 		{
@@ -71,6 +82,7 @@ export const list = async (
 					$lte: dateEnd_param
 				},
 				...dateType_param ? { exercise_record_dateType: dateType_param } : {},
+				...matchSection,
 			}
 		},
 		{
@@ -82,6 +94,7 @@ export const list = async (
 				exercise_record_total_volume: 1,
 				exercise_record_total_cardio: 1,
 				exercise_record_total_scale: 1,
+				exercise_section: 1,
 			}
 		},
 		{

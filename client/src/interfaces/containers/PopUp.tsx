@@ -78,16 +78,14 @@ export const PopUp = memo((props: any) => {
 
 	// 4. memoized values ---------------------------------------------------------------------------
 	const popupContents = useMemo(() => (
-		typeof props?.contents === `function` ?
-			props?.contents({ closePopup: closePopup }) :
-			props?.contents
+		typeof props?.contents === `function`
+			? props?.contents({ closePopup: closePopup })
+			: props?.contents
 	), [props?.contents, closePopup]);
 
 	const popupChildren = useMemo(() => (
 		props?.children({ openPopup: openPopup, closePopup: closePopup })
-	), [
-		props?.children, openPopup, closePopup
-	]);
+	), [props?.children, openPopup, closePopup]);
 
 	const anchorOrigin = useMemo<PopoverOrigin>(() => ({
 		vertical: props?.position === `center` ? `center` : (

@@ -20,11 +20,13 @@ declare interface DialogProps {
 	LOCKED?: string;
 	setLOCKED?: React.Dispatch<React.SetStateAction<string>>;
 	setIsExpanded?: any;
-};
+}
 
 // -------------------------------------------------------------------------------------------------
 export const Dialog = memo((
-	{ COUNT, setCOUNT, OBJECT, setOBJECT, LOCKED, setLOCKED, setIsExpanded }: DialogProps
+	{
+		COUNT, setCOUNT, OBJECT, setOBJECT, LOCKED, setLOCKED, setIsExpanded
+	}: DialogProps
 ) => {
 
 	// 1. common ----------------------------------------------------------------------------------
@@ -450,7 +452,7 @@ export const Dialog = memo((
 		return (
 			isGoalList ? (
 				listGoalSection()
-			) 
+			)
 			: isFindList || isFavoriteList ? (
 				findSection()
 			)

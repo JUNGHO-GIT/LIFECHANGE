@@ -29,9 +29,7 @@ export const Input = memo((props: any) => {
 		else if (props?.locked !== `locked` && !props?.disabled) {
 			props?.onClick?.(e);
 		}
-	}, [
-		props?.locked, props?.disabled, props?.onClick
-	]);
+	}, [props?.locked, props?.disabled, props?.onClick]);
 
 	// 4. handle ------------------------------------------------------------------------------------
 	const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,9 +99,7 @@ export const Input = memo((props: any) => {
 				),
 			}
 		},
-	}), [
-		props?.sx, props?.disabled, props?.readOnly, props?.onClick
-	]);
+	}), [props?.sx, props?.disabled, props?.readOnly, props?.onClick]);
 
 	// 5. memo --------------------------------------------------------------------------------------
 	const slotPropsMemo = useMemo(() => ({
@@ -111,7 +107,7 @@ export const Input = memo((props: any) => {
 		input: {
 			...props?.slotProps?.input,
 			readOnly: (
-				!!((props?.readOnly || props?.locked === `locked`))
+				!!((props?.readOnly ?? props?.locked === `locked`))
 			),
 			className: (
 				props?.inputclass?.includes(`fs-`) ? (

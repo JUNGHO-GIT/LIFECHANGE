@@ -17,7 +17,7 @@ declare interface FindFilterProps {
 	state: any;
 	setState: any;
 	flow: any;
-};
+}
 
 // -------------------------------------------------------------------------------------------------
 export const FindFilter = memo((
@@ -89,9 +89,7 @@ export const FindFilter = memo((
 				/>
 			</Div>
 		</Div>
-	), [
-		state?.PAGING.query, translate, setState, handleSearch, handleNavigateToDetail
-	]);
+	), [state?.PAGING.query, translate, setState, handleSearch, handleNavigateToDetail]);
 
 	// 7. favorite ---------------------------------------------------------------------------------
 	const favoriteSection = useMemo(() => (
@@ -130,9 +128,7 @@ export const FindFilter = memo((
 				/>
 			</Div>
 		</Div>
-	), [
-		translate, handleSearch, handleNavigateToDetail
-	]);
+	), [translate, handleSearch, handleNavigateToDetail]);
 
 	// 7. pagination ------------------------------------------------------------------------------
 	const paginationSection = useMemo(() => (
@@ -163,9 +159,7 @@ export const FindFilter = memo((
 				window.scrollTo(0, 0);
 			}}
 		/>
-	), [
-		state?.COUNT.totalCnt, state?.PAGING.page, isFavorite, setState
-	]);
+	), [state?.COUNT.totalCnt, state?.PAGING.page, isFavorite, setState]);
 
 	// 10. return ----------------------------------------------------------------------------------
 	return (

@@ -75,12 +75,14 @@ export const list = async (
 	const dateStart: string = DATE_param?.dateStart;
 	const dateEnd: string = DATE_param?.dateEnd;
 
-	// sort, page 변수 선언
+	// sort, page, part, title 변수 선언
 	const sort: 1 | -1 = PAGING_param?.sort === `asc` ? 1 : -1;
 	const page: number = PAGING_param?.page ?? 1;
+	const part: string = PAGING_param?.part ?? `all`;
+	const title: string = PAGING_param?.title ?? `all`;
 
 	findResult = await repository.list(
-		user_id_param, dateType, dateStart, dateEnd, sort, page
+		user_id_param, dateType, dateStart, dateEnd, sort, page, part, title
 	);
 
 	if (!findResult || findResult?.length <= 0) {

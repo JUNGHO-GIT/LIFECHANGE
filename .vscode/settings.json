@@ -18,7 +18,7 @@
 		"**/build": true,
 		"**/target": true,
 		"**/*.conf": true,
-		"**/*.txt": true,
+		"**/*.txt": true
 	},
   "search.exclude": {
     "**/node_modules": true,

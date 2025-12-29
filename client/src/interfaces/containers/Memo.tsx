@@ -20,7 +20,7 @@ declare interface MemoProps {
 	extra: string;
 	i: number;
 	section?: string;
-};
+}
 
 // -------------------------------------------------------------------------------------------------
 export const Memo = memo((
@@ -45,14 +45,12 @@ export const Memo = memo((
 				} : section
 			))
 		}));
-	}, [
-		setOBJECT, targetSection, i, extra
-	]);
+	}, [setOBJECT, targetSection, i, extra]);
 
 	// 3. memoized values ---------------------------------------------------------------------------
-	const memoValue = useMemo(() => OBJECT?.[targetSection]?.[i]?.[extra] ?? ``, [
-		OBJECT, targetSection, i, extra
-	]);
+	const memoValue = useMemo(() => (
+		OBJECT?.[targetSection]?.[i]?.[extra] ?? ``
+	), [OBJECT, targetSection, i, extra]);
 
 	// 4. memoNode -----------------------------------------------------------------------------------
 	const memoNode = useMemo(() => (
@@ -98,9 +96,7 @@ export const Memo = memo((
 				/>
 			)}
 		/>
-	), [
-		memoValue, handleTextChange, translate, LOCKED
-	]);
+	), [memoValue, handleTextChange, translate, LOCKED]);
 
 	// 10. return ------------------------------------------------------------------------------------
 	return (

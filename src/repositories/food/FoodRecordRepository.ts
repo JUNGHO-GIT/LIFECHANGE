@@ -56,7 +56,14 @@ export const list = async (
 	dateEnd_param: string,
 	sort_param: 1 | -1,
 	page_param: number,
+	part_param?: string,
 ) => {
+
+	// part 필터 조건 구성
+	const matchSection: any = {};
+	if (part_param && part_param !== `all`) {
+		matchSection[`food_section.food_record_part`] = part_param;
+	}
 
 	const finalResult = await FoodRecord.aggregate([
 		{
@@ -71,6 +78,7 @@ export const list = async (
 					$lte: dateEnd_param
 				},
 				...dateType_param ? { food_record_dateType: dateType_param } : {},
+				...matchSection,
 			}
 		},
 		{
@@ -83,6 +91,7 @@ export const list = async (
 				food_record_total_carb: 1,
 				food_record_total_protein: 1,
 				food_record_total_fat: 1,
+				food_section: 1,
 			}
 		},
 		{

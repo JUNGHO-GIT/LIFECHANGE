@@ -55,7 +55,18 @@ export const list = async (
 	dateEnd_param: string,
 	sort_param: 1 | -1,
 	page_param: number,
+	part_param?: string,
+	title_param?: string,
 ) => {
+
+	// part, title 필터 조건 구성
+	const matchSection: any = {};
+	if (part_param && part_param !== `all`) {
+		matchSection[`money_section.money_record_part`] = part_param;
+	}
+	if (title_param && title_param !== `all`) {
+		matchSection[`money_section.money_record_title`] = title_param;
+	}
 
 	const finalResult = await MoneyRecord.aggregate([
 		{
@@ -70,6 +81,7 @@ export const list = async (
 					$lte: dateEnd_param
 				},
 				...dateType_param ? { money_record_dateType: dateType_param } : {},
+				...matchSection,
 			}
 		},
 		{
@@ -80,6 +92,7 @@ export const list = async (
 				money_record_dateEnd: 1,
 				money_record_total_income: 1,
 				money_record_total_expense: 1,
+				money_section: 1,
 			}
 		},
 		{

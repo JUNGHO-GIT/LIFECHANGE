@@ -27,7 +27,9 @@ declare interface PickerTimeProps {
 
 // -------------------------------------------------------------------------------------------------
 export const PickerTime = memo((
-	{ OBJECT, setOBJECT, REFS, ERRORS, DATE, LOCKED, extra, i }: PickerTimeProps
+	{
+		OBJECT, setOBJECT, REFS, ERRORS, DATE, LOCKED, extra, i
+	}: PickerTimeProps
 ) => {
 
 	// 1. common ----------------------------------------------------------------------------------
@@ -218,7 +220,9 @@ export const PickerTime = memo((
 								<DigitalClock
 									{...digitalClockProps}
 									value={moment(OBJECT?.[`calendar_${targetStr}_section`]?.[i]?.[extra], `HH:mm`)}
-									onChange={(e: any) => handleTodayChange(e, closePopup)}
+									onChange={(e: any) => {
+										handleTodayChange(e, closePopup);
+									}}
 								/>
 							</LocalizationProvider>
 						</Grid>

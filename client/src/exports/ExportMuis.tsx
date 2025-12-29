@@ -12,7 +12,7 @@ export {
 	Accordion, AccordionDetails, AccordionSummary,
 
 	// b
-	Backdrop, BottomNavigation, BottomNavigationAction, Button, Badge,
+	Backdrop, BottomNavigation, BottomNavigationAction, Button, Badge, Box,
 
 	// c
 	Checkbox, CssBaseline, createTheme, ThemeProvider, FormControlLabel, FormGroup,

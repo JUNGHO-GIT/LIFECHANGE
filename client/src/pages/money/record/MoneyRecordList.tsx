@@ -39,6 +39,8 @@ export const MoneyRecordList = memo(() => {
 		`paging`, PATH, ``, {
 			sort: `asc`,
 			page: 1,
+			part: `all`,
+			title: `all`,
 		}
 	);
 	const [isExpanded, setIsExpanded] = useStorageLocal(
@@ -139,7 +141,7 @@ export const MoneyRecordList = memo(() => {
 			setLOADING(false);
 		});
 	}, [
-		URL_OBJECT, sessionId, PAGING?.sort, PAGING.page, DATE?.dateStart, DATE?.dateEnd
+		URL_OBJECT, sessionId, PAGING?.sort, PAGING.page, PAGING?.part, PAGING?.title, DATE?.dateStart, DATE?.dateEnd
 	]);
 
 	// 7. list -----------------------------------------------------------------------------------
@@ -150,10 +152,7 @@ export const MoneyRecordList = memo(() => {
 				{OBJECT?.map((item, i) => (
 					<Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px`} key={`list-${i}`}>
 						<Grid size={12} className={`p-2px`}>
-							<Accordion
-								className={`border-0 shadow-0 radius-2`}
-								expanded={isExpanded?.[i]?.expanded}
-							>
+							<Accordion className={`border-0 shadow-0 radius-2`} expanded={isExpanded?.[i]?.expanded}>
 								<AccordionSummary
 									expandIcon={(
 										<Icons

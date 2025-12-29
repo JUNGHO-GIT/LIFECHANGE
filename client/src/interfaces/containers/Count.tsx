@@ -28,7 +28,7 @@ declare interface CountProps {
 	limit: number;
 	disabled?: boolean;
 	onCountChange?: (_newSectionCnt: number) => void;
-};
+}
 
 // -------------------------------------------------------------------------------------------------
 export const Count = memo((
@@ -45,9 +45,7 @@ export const Count = memo((
 	// 4. handle ----------------------------------------------------------------------------------
 	const handleLockToggle = useCallback(() => {
 		disabled || setLOCKED(LOCKED === `locked` ? `unlocked` : `locked`);
-	}, [
-		disabled, LOCKED, setLOCKED
-	]);
+	}, [disabled, LOCKED, setLOCKED]);
 
 	// 4. handle ----------------------------------------------------------------------------------
 	const handleMinus = useCallback(() => {
@@ -59,9 +57,9 @@ export const Count = memo((
 			setALERT({
 				open: true,
 				severity: `error`,
-				msg: localLang === `ko` ?
-					`${prev.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.` :
-					`Please enter ${prev.sectionCnt} or more and ${limit} or less.`,
+				msg: localLang === `ko`
+					? `${prev.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
+					: `Please enter ${prev.sectionCnt} or more and ${limit} or less.`,
 			}),
 			prev
 		))
@@ -80,9 +78,9 @@ export const Count = memo((
 			setALERT({
 				open: true,
 				severity: `error`,
-				msg: localLang === `ko` ?
-					`${prev.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.` :
-					`Please enter ${prev.sectionCnt} or more and ${limit} or less.`,
+				msg: localLang === `ko`
+					? `${prev.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
+					: `Please enter ${prev.sectionCnt} or more and ${limit} or less.`,
 			}),
 			prev
 		))
@@ -132,9 +130,7 @@ export const Count = memo((
 				</Div>
 			</Div>
 		) : null
-	), [
-		disabled, LOCKED, handleMinus, handlePlus
-	]);
+	), [disabled, LOCKED, handleMinus, handlePlus]);
 
 	// 7. countNode ----------------------------------------------------------------------------------
 	const countNode = useMemo(() => {
@@ -161,9 +157,9 @@ export const Count = memo((
 				disabled={disabled}
 				sx={{
 					"& .MuiOutlinedInput-notchedOutline": {
-						borderColor: COUNT.newSectionCnt <= 0 ?
-							`#f44336` :
-							`rgba(0, 0, 0, 0.23)`
+						borderColor: COUNT.newSectionCnt <= 0
+							? `#f44336`
+							: `rgba(0, 0, 0, 0.23)`
 					}
 				}}
 				startadornment={(

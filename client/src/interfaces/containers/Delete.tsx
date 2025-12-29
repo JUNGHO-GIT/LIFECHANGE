@@ -15,7 +15,7 @@ declare interface DeleteProps {
 	handleDelete: (_index: number, _section?: string) => void;
 	LOCKED?: string;
 	disabled?: boolean;
-};
+}
 
 // -------------------------------------------------------------------------------------------------
 export const Delete = memo((
@@ -30,9 +30,7 @@ export const Delete = memo((
 			return;
 		}
 		handleDelete(index, section);
-	}, [
-		disabled, handleDelete, index, section
-	]);
+	}, [disabled, handleDelete, index, section]);
 
 	// 2. deleteNode --------------------------------------------------------------------------------
 	const deleteNode = useMemo(() => (
