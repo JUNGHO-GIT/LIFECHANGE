@@ -6,9 +6,9 @@
  */
 
 import express from "express";
-import { Request, Response } from "express";
+import { type Router, Request, Response } from "express";
 import * as service from "@services/admin/AdminService";
-export const router = express.Router();
+export const router: Router = express.Router();
 
 // 0. curEnv ---------------------------------------------------------------------------------------
 router.get(`/curEnv`, async (_req: Request, res: Response) => {

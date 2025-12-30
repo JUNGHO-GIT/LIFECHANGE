@@ -16,7 +16,7 @@ export const exist = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await MoneyRecord.aggregate([
+  const finalResult: any = await MoneyRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -68,7 +68,7 @@ export const list = async (
     matchSection[`money_section.money_record_title`] = title_param;
   }
 
-  const finalResult = await MoneyRecord.aggregate([
+  const finalResult: any = await MoneyRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -92,7 +92,52 @@ export const list = async (
         money_record_dateEnd: 1,
         money_record_total_income: 1,
         money_record_total_expense: 1,
-        money_section: 1,
+        money_section: {
+          $filter: {
+            input: `$money_section`,
+            as: `section`,
+            cond: {
+              $and: [
+                part_param && part_param !== `all` ? { $eq: [ `$$section.money_record_part`, part_param ] } : true,
+                title_param && title_param !== `all` ? { $eq: [ `$$section.money_record_title`, title_param ] } : true,
+              ],
+            },
+          },
+        },
+      },
+    },
+    {
+      $addFields: {
+        money_record_total_income: {
+          $toString: {
+            $reduce: {
+              input: `$money_section`,
+              initialValue: 0,
+              in: {
+                $cond: [
+                  { $and: [{ $eq: [ `$$this.money_record_part`, `income` ] }, { $eq: [ `$$this.money_record_include`, `Y` ] }] },
+                  { $add: [ `$$value`, { $toDouble: `$$this.money_record_amount` }] },
+                  `$$value`,
+                ],
+              },
+            },
+          },
+        },
+        money_record_total_expense: {
+          $toString: {
+            $reduce: {
+              input: `$money_section`,
+              initialValue: 0,
+              in: {
+                $cond: [
+                  { $and: [{ $eq: [ `$$this.money_record_part`, `expense` ] }, { $eq: [ `$$this.money_record_include`, `Y` ] }] },
+                  { $add: [ `$$value`, { $toDouble: `$$this.money_record_amount` }] },
+                  `$$value`,
+                ],
+              },
+            },
+          },
+        },
       },
     },
     {
@@ -116,7 +161,7 @@ export const detail = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await MoneyRecord.findOne(
+  const finalResult: any = await MoneyRecord.findOne(
     {
       user_id: user_id_param,
       money_record_dateStart: dateStart_param,
@@ -138,7 +183,7 @@ export const create = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await MoneyRecord.create(
+  const finalResult: any = await MoneyRecord.create(
     {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
@@ -168,7 +213,7 @@ export const update = {
     dateEnd_param: string,
   ) => {
 
-    const finalResult = await MoneyRecord.findOneAndUpdate(
+    const finalResult: any = await MoneyRecord.findOneAndUpdate(
       {
         user_id: user_id_param,
         money_record_dateStart: dateStart_param,
@@ -221,7 +266,7 @@ export const update = {
       Number.parseFloat(OBJECT_param.money_record_total_expense as string),
     );
 
-    const finalResult = await MoneyRecord.updateOne(
+    const finalResult: any = await MoneyRecord.updateOne(
       {
         user_id: user_id_param,
         money_record_dateStart: dateStart_param,
@@ -256,7 +301,7 @@ export const update = {
     dateEnd_param: string,
   ) => {
 
-    const finalResult = await MoneyRecord.findOneAndUpdate(
+    const finalResult: any = await MoneyRecord.findOneAndUpdate(
       {
         user_id: user_id_param,
         money_record_dateStart: dateStart_param,
@@ -290,7 +335,7 @@ export const deletes = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await MoneyRecord.findOneAndDelete(
+  const finalResult: any = await MoneyRecord.findOneAndDelete(
     {
       user_id: user_id_param,
       money_record_dateStart: dateStart_param,

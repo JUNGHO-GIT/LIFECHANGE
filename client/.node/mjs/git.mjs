@@ -132,7 +132,7 @@ const setDefaultBranches = () => {
 			if (!targetBranch.endsWith(`main`)) {
 				execSilent(`git push ${remoteName} --delete main`)
 					? logger(`success`, `원격 'main' 브랜치 삭제 완료: ${remoteName}`)
-					: logger(`info`, `원격 'main' ���랜치 없음 또는 이미 삭제됨`);
+					: logger(`info`, `원격 'main' 브랜치 없음 또는 이미 삭제됨`);
 			}
 		}
 		catch (error) {

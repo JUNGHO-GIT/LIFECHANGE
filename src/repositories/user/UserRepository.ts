@@ -26,7 +26,7 @@ export const emailFindId = async (
   user_id_param: string,
 ) => {
 
-  const finalResult = await User.findOne(
+  const finalResult: any = await User.findOne(
     {
       user_id: user_id_param,
     },
@@ -57,7 +57,7 @@ export const emailSendEmail = async (
     );
   }
 
-  const finalResult = await Verify.create(
+  const finalResult: any = await Verify.create(
     {
       verify_id: user_id_param,
       verify_code: code_param,
@@ -73,7 +73,7 @@ export const emailVerifyEmail = async (
   user_id_param: string,
 ) => {
 
-  const finalResult = await Verify.findOne(
+  const finalResult: any = await Verify.findOne(
     {
       verify_id: user_id_param,
     },
@@ -88,7 +88,7 @@ export const userCheckId = async (
   user_id_param: string,
 ) => {
 
-  const finalResult = await User.findOne(
+  const finalResult: any = await User.findOne(
     {
       user_id: user_id_param,
     },
@@ -104,7 +104,7 @@ export const userSignup = async (
   OBJECT_param: any,
 ) => {
 
-  const finalResult = await User.create(
+  const finalResult: any = await User.create(
     {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
@@ -167,7 +167,7 @@ export const userResetPw = async (
   OBJECT_param: any,
 ) => {
 
-  const finalResult = await User.findOneAndUpdate(
+  const finalResult: any = await User.findOneAndUpdate(
     {
       user_id: user_id_param,
     },
@@ -192,7 +192,7 @@ export const userLogin = async (
   user_pw_param: string,
 ) => {
 
-  const finalResult = await User.findOne(
+  const finalResult: any = await User.findOne(
     {
       user_id: user_id_param,
       user_pw: user_pw_param,
@@ -208,7 +208,7 @@ export const userDetail = async (
   user_id_param: string,
 ) => {
 
-  const finalResult = await User.findOne(
+  const finalResult: any = await User.findOne(
     {
       user_id: user_id_param,
     },
@@ -224,7 +224,7 @@ export const userUpdate = async (
   OBJECT_param: any,
 ) => {
 
-  const finalResult = await User.findOneAndUpdate(
+  const finalResult: any = await User.findOneAndUpdate(
     {
       user_id: user_id_param,
     },
@@ -305,7 +305,7 @@ export const categoryDetail = async (
   user_id_param: string,
 ) => {
 
-  const finalResult = await User.aggregate([
+  const finalResult: any = await User.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -331,7 +331,7 @@ export const categoryUpdate = async (
   OBJECT_param: any,
 ) => {
 
-  const finalResult = await User.findOneAndUpdate(
+  const finalResult: any = await User.findOneAndUpdate(
     {
       user_id: user_id_param,
     },

@@ -6,10 +6,10 @@
  */
 
 import express from "express";
-import { Request, Response } from "express";
+import { type Router, Request, Response } from "express";
 import * as service from "@services/money/MoneyGoalService";
 import * as middleware from "@middlewares/money/MoneyGoalMiddleware";
-export const router = express.Router();
+export const router: Router = express.Router();
 
 // 0. exist ----------------------------------------------------------------------------------------
 router.get(`/exist`, async (req: Request, res: Response) => {

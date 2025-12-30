@@ -17,7 +17,7 @@ export const exist = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await MoneyGoal.aggregate([
+  const finalResult: any = await MoneyGoal.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -58,7 +58,7 @@ export const listGoal = async (
   page_param: number,
 ) => {
 
-  const finalResult = await MoneyGoal.aggregate([
+  const finalResult: any = await MoneyGoal.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -102,7 +102,7 @@ export const listRecord: any[] = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await MoneyRecord.aggregate([
+  const finalResult: any = await MoneyRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -145,7 +145,7 @@ export const detail = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await MoneyGoal.findOne(
+  const finalResult: any = await MoneyGoal.findOne(
     {
       user_id: user_id_param,
       money_goal_dateStart: dateStart_param,
@@ -167,7 +167,7 @@ export const create = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await MoneyGoal.create(
+  const finalResult: any = await MoneyGoal.create(
     {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
@@ -196,7 +196,7 @@ export const update = {
     dateEnd_param: string,
   ) => {
 
-    const finalResult = await MoneyGoal.findOneAndUpdate(
+    const finalResult: any = await MoneyGoal.findOneAndUpdate(
       {
         user_id: user_id_param,
         money_goal_dateStart: dateStart_param,
@@ -231,7 +231,7 @@ export const update = {
     dateEnd_param: string,
   ) => {
 
-    const finalResult = await MoneyGoal.findOneAndUpdate(
+    const finalResult: any = await MoneyGoal.findOneAndUpdate(
       {
         user_id: user_id_param,
         money_goal_dateStart: dateStart_param,
@@ -264,7 +264,7 @@ export const deletes = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await MoneyGoal.findOneAndDelete(
+  const finalResult: any = await MoneyGoal.findOneAndDelete(
     {
       user_id: user_id_param,
       money_goal_dateStart: dateStart_param,

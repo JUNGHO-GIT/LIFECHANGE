@@ -63,6 +63,9 @@ export const list = async (
   PAGING_param: any,
 ) => {
 
+  if (typeof DATE_param === `string`) { try { DATE_param = JSON.parse(DATE_param); } catch (e) {} }
+  if (typeof PAGING_param === `string`) { try { PAGING_param = JSON.parse(PAGING_param); } catch (e) {} }
+
   // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;

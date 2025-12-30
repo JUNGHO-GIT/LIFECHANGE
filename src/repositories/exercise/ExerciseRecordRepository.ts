@@ -17,7 +17,7 @@ export const exist = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await ExerciseRecord.aggregate([
+  const finalResult: any = await ExerciseRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -69,7 +69,7 @@ export const list = async (
     matchSection[`exercise_section.exercise_record_title`] = title_param;
   }
 
-  const finalResult = await ExerciseRecord.aggregate([
+  const finalResult: any = await ExerciseRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -94,8 +94,82 @@ export const list = async (
         exercise_record_total_volume: 1,
         exercise_record_total_cardio: 1,
         exercise_record_total_scale: 1,
-        exercise_section: 1,
+        exercise_section: {
+          $filter: {
+            input: `$exercise_section`,
+            as: `section`,
+            cond: {
+              $and: [
+                part_param && part_param !== `all` ? { $eq: [ `$$section.exercise_record_part`, part_param ] } : true,
+                title_param && title_param !== `all` ? { $eq: [ `$$section.exercise_record_title`, title_param ] } : true,
+              ],
+            },
+          },
+        },
       },
+    },
+    {
+      $addFields: {
+        exercise_record_total_volume: {
+          $toString: {
+            $reduce: {
+              input: `$exercise_section`,
+              initialValue: 0,
+              in: { $add: [`$$value`, { $toDouble: `$$this.exercise_record_volume` }] }
+            }
+          }
+        },
+        exercise_record_total_cardio_minutes: {
+          $reduce: {
+            input: `$exercise_section`,
+            initialValue: 0,
+            in: {
+              $let: {
+                vars: {
+                  parts: { $split: [`$$this.exercise_record_cardio`, `:`] }
+                },
+                in: {
+                  $add: [
+                    `$$value`,
+                    { $add: [
+                      { $multiply: [ { $toInt: { $arrayElemAt: [`$$parts`, 0] } }, 60 ] },
+                      { $toInt: { $arrayElemAt: [`$$parts`, 1] } }
+                    ]}
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+    },
+    {
+      $addFields: {
+        exercise_record_total_cardio: {
+          $concat: [
+            {
+              $cond: [
+                { $lt: [ { $floor: { $divide: [`$exercise_record_total_cardio_minutes`, 60] } }, 10 ] },
+                { $concat: [ `0`, { $toString: { $floor: { $divide: [`$exercise_record_total_cardio_minutes`, 60] } } } ] },
+                { $toString: { $floor: { $divide: [`$exercise_record_total_cardio_minutes`, 60] } } }
+              ]
+            },
+            `:`,
+            {
+              $cond: [
+                { $lt: [ { $mod: [`$exercise_record_total_cardio_minutes`, 60] }, 10 ] },
+                { $concat: [ `0`, { $toString: { $mod: [`$exercise_record_total_cardio_minutes`, 60] } } ] },
+                { $toString: { $mod: [`$exercise_record_total_cardio_minutes`, 60] } }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      $project: {
+        exercise_record_total_cardio_minutes: 0
+      }
     },
     {
       $sort: {
@@ -118,7 +192,7 @@ export const detail = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await ExerciseRecord.findOne(
+  const finalResult: any = await ExerciseRecord.findOne(
     {
       user_id: user_id_param,
       exercise_record_dateStart: dateStart_param,
@@ -140,7 +214,7 @@ export const create = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await ExerciseRecord.create(
+  const finalResult: any = await ExerciseRecord.create(
     {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
@@ -171,7 +245,7 @@ export const update = {
     dateEnd_param: string,
   ) => {
 
-    const finalResult = await ExerciseRecord.findOneAndUpdate(
+    const finalResult: any = await ExerciseRecord.findOneAndUpdate(
       {
         user_id: user_id_param,
         exercise_record_dateStart: dateStart_param,
@@ -231,7 +305,7 @@ export const update = {
       Number.parseFloat(OBJECT_param.exercise_record_total_scale as string),
     );
 
-    const finalResult = await ExerciseRecord.updateOne(
+    const finalResult: any = await ExerciseRecord.updateOne(
       {
         user_id: user_id_param,
         exercise_record_dateStart: dateStart_param,
@@ -267,7 +341,7 @@ export const update = {
     dateEnd_param: string,
   ) => {
 
-    const finalResult = await ExerciseRecord.findOneAndUpdate(
+    const finalResult: any = await ExerciseRecord.findOneAndUpdate(
       {
         user_id: user_id_param,
         exercise_record_dateStart: dateStart_param,
@@ -302,7 +376,7 @@ export const deletes = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await ExerciseRecord.findOneAndDelete(
+  const finalResult: any = await ExerciseRecord.findOneAndDelete(
     {
       user_id: user_id_param,
       exercise_record_dateStart: dateStart_param,

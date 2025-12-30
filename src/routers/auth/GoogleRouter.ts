@@ -6,9 +6,9 @@
  */
 
 import express from "express";
-import { Request, Response } from "express";
+import { type Router, Request, Response } from "express";
 import * as service from "@services/auth/GoogleService";
-export const router = express.Router();
+export const router: Router = express.Router();
 import dotenv from 'dotenv';
 dotenv.config();
 

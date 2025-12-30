@@ -6,10 +6,10 @@
  */
 
 import express from "express";
-import { Request, Response } from "express";
+import { type Router, Request, Response } from "express";
 import * as service from "@services/user/UserSyncService";
 import * as middleware from "@middlewares/user/UserSyncMiddleware";
-export const router = express.Router();
+export const router: Router = express.Router();
 
 // 0. category (카테고리 조회) ---------------------------------------------------------------------
 router.get(`/category`, async (req: Request, res: Response) => {

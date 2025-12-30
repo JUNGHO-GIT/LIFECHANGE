@@ -17,7 +17,7 @@ export const exist = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await FoodRecord.aggregate([
+  const finalResult: any = await FoodRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -65,7 +65,7 @@ export const list = async (
     matchSection[`food_section.food_record_part`] = part_param;
   }
 
-  const finalResult = await FoodRecord.aggregate([
+  const finalResult: any = await FoodRecord.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -91,7 +91,57 @@ export const list = async (
         food_record_total_carb: 1,
         food_record_total_protein: 1,
         food_record_total_fat: 1,
-        food_section: 1,
+        food_section: {
+          $filter: {
+            input: `$food_section`,
+            as: `section`,
+            cond: {
+              $and: [
+                part_param && part_param !== `all` ? { $eq: [ `$$section.food_record_part`, part_param ] } : true,
+              ],
+            },
+          },
+        },
+      },
+    },
+    {
+      $addFields: {
+        food_record_total_kcal: {
+          $toString: {
+            $reduce: {
+              input: `$food_section`,
+              initialValue: 0,
+              in: { $add: [`$$value`, { $toDouble: `$$this.food_record_kcal` }] }
+            }
+          }
+        },
+        food_record_total_carb: {
+          $toString: {
+            $reduce: {
+              input: `$food_section`,
+              initialValue: 0,
+              in: { $add: [`$$value`, { $toDouble: `$$this.food_record_carb` }] }
+            }
+          }
+        },
+        food_record_total_protein: {
+          $toString: {
+            $reduce: {
+              input: `$food_section`,
+              initialValue: 0,
+              in: { $add: [`$$value`, { $toDouble: `$$this.food_record_protein` }] }
+            }
+          }
+        },
+        food_record_total_fat: {
+          $toString: {
+            $reduce: {
+              input: `$food_section`,
+              initialValue: 0,
+              in: { $add: [`$$value`, { $toDouble: `$$this.food_record_fat` }] }
+            }
+          }
+        },
       },
     },
     {
@@ -112,7 +162,7 @@ export const favorite = async (
   user_id_param: string,
 ) => {
 
-  const finalResult = await User.findOne(
+  const finalResult: any = await User.findOne(
     {
       user_id: user_id_param,
     },
@@ -134,7 +184,7 @@ export const detail = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await FoodRecord.findOne(
+  const finalResult: any = await FoodRecord.findOne(
     {
       user_id: user_id_param,
       food_record_dateStart: dateStart_param,
@@ -156,7 +206,7 @@ export const create = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await FoodRecord.create(
+  const finalResult: any = await FoodRecord.create(
     {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
@@ -188,7 +238,7 @@ export const update = {
     dateEnd_param: string,
   ) => {
 
-    const finalResult = await FoodRecord.findOneAndUpdate(
+    const finalResult: any = await FoodRecord.findOneAndUpdate(
       {
         user_id: user_id_param,
         food_record_dateStart: dateStart_param,
@@ -251,7 +301,7 @@ export const update = {
       Number.parseFloat(OBJECT_param.food_record_total_fat as string),
     );
 
-    const finalResult = await FoodRecord.updateOne(
+    const finalResult: any = await FoodRecord.updateOne(
       {
         user_id: user_id_param,
         food_record_dateStart: dateStart_param,
@@ -288,7 +338,7 @@ export const update = {
     dateEnd_param: string,
   ) => {
 
-    const finalResult = await FoodRecord.findOneAndUpdate(
+    const finalResult: any = await FoodRecord.findOneAndUpdate(
       {
         user_id: user_id_param,
         food_record_dateStart: dateStart_param,
@@ -321,7 +371,7 @@ export const update = {
     foodFavorite_param: any,
   ) => {
 
-    const finalResult = await User.findOneAndUpdate(
+    const finalResult: any = await User.findOneAndUpdate(
       {
         user_id: user_id_param,
       },
@@ -349,7 +399,7 @@ export const deletes = async (
   dateEnd_param: string,
 ) => {
 
-  const finalResult = await FoodRecord.findOneAndDelete(
+  const finalResult: any = await FoodRecord.findOneAndDelete(
     {
       user_id: user_id_param,
       food_record_dateStart: dateStart_param,

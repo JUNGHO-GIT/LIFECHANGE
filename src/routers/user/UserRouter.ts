@@ -6,9 +6,9 @@
  */
 
 import express from "express";
-import { Request, Response } from "express";
+import { type Router, Request, Response } from "express";
 import * as service from "@services/user/UserService";
-export const router = express.Router();
+export const router: Router = express.Router();
 
 // 1-1. sendEmail ----------------------------------------------------------------------------------
 router.post(`/email/send`, async (req: Request, res: Response) => {

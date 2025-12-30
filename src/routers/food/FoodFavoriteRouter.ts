@@ -6,10 +6,10 @@
  */
 
 import express from "express";
-import { Request, Response } from "express";
+import { type Router, Request, Response } from "express";
 import * as service from "@services/food/FoodFavoriteService";
 import * as middleware from "@middlewares/food/FoodFavoriteMiddleware";
-export const router = express.Router();
+export const router: Router = express.Router();
 
 // 1. list -------------------------------------------------------------------------------
 router.get(`/list`, async (req: Request, res: Response) => {

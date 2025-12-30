@@ -35,7 +35,7 @@ export const update = async (
   foodFavorite_param: any,
 ) => {
 
-  const finalResult = await User.findOneAndUpdate(
+  const finalResult: any = await User.findOneAndUpdate(
     {
       user_id: user_id_param,
     },
