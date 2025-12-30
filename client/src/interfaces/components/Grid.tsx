@@ -11,20 +11,20 @@ import { GridProps, Grid as MuiGrid } from "@exportMuis";
 // -------------------------------------------------------------------------------------------------
 export const Grid = memo((props: GridProps) => {
 
-	const cardRef: React.RefObject<HTMLDivElement | null>= useRef<HTMLDivElement | null>(null);
+  const cardRef: React.RefObject<HTMLDivElement | null> = useRef<HTMLDivElement | null>(null);
 
-	useEffect(() => {
-		if (cardRef.current) {
-			cardRef.current.removeAttribute(`style`);
-		}
-	}, []);
+  useEffect(() => {
+    if (cardRef.current) {
+      cardRef.current.removeAttribute(`style`);
+    }
+  }, []);
 
-	return (
-		<MuiGrid
-			{...props}
-			ref={cardRef}
-			component={`div`}
-			className={props?.className ?? ``}
-		/>
-	);
+  return (
+    <MuiGrid
+      {...props}
+      ref={cardRef}
+      component={`div`}
+      className={props?.className ?? ``}
+    />
+  );
 });

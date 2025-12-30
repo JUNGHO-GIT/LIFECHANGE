@@ -11,24 +11,22 @@ import { useEffect } from "@exportReacts";
 // -------------------------------------------------------------------------------------------------
 export const useRoot = () => {
 
-	// 1. common ----------------------------------------------------------------------------------
-	const { PATH, navigate, sessionId } = useCommonValue();
+  // 1. common ----------------------------------------------------------------------------------
+  const { PATH, navigate, sessionId } = useCommonValue();
 
-	// 2-3. useEffect -----------------------------------------------------------------------------
-	useEffect(() => {
-		if (
-			!PATH.includes(`user/login`) && !PATH.includes(`user/signup`) &&
-			!PATH.includes(`user/resetPw`) && !PATH.includes(`user/delete`) &&
-			!PATH.includes(`auth`) && !PATH.includes(`error`) &&
-			PATH === `/`
-		) {
+  // 2-3. useEffect -----------------------------------------------------------------------------
+  useEffect(() => {
+    if (
+      !PATH.includes(`user/login`) && !PATH.includes(`user/signup`)
+			&& !PATH.includes(`user/resetPw`) && !PATH.includes(`user/delete`)
+			&& !PATH.includes(`auth`) && !PATH.includes(`error`)
+			&& PATH === `/`
+    ) {
 			!sessionId ? (() => {
-				void navigate(`/user/login`);
+			  void navigate(`/user/login`);
 			})() : (() => {
-				void navigate(`/calendar/list`);
+			  void navigate(`/calendar/list`);
 			})();
-		}
-	}, [
-		PATH, sessionId, navigate
-	]);
+    }
+  }, [ PATH, sessionId, navigate ]);
 };

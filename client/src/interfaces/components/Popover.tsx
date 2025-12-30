@@ -11,27 +11,27 @@ import { Popover as MuiPopover, PopoverProps } from "@exportMuis";
 // -------------------------------------------------------------------------------------------------
 export const Popover = memo((props: PopoverProps) => {
 
-	const paperRef: React.RefObject<HTMLDivElement | null> = useRef<HTMLDivElement | null>(null);
+  const paperRef: React.RefObject<HTMLDivElement | null> = useRef<HTMLDivElement | null>(null);
 
-	useEffect(() => {
-		if (paperRef.current) {
-			paperRef.current.removeAttribute(`style`);
-		}
-	}, []);
+  useEffect(() => {
+    if (paperRef.current) {
+      paperRef.current.removeAttribute(`style`);
+    }
+  }, []);
 
-	const mergedSlotProps = {
-		...props.slotProps,
-		paper: {
-			...props.slotProps?.paper,
-			ref: paperRef,
-			component: `div`,
-		},
-	};
+  const mergedSlotProps = {
+    ...props.slotProps,
+    paper: {
+      ...props.slotProps?.paper,
+      ref: paperRef,
+      component: `div`,
+    },
+  };
 
-	return (
-		<MuiPopover
-			{...props}
-			slotProps={mergedSlotProps as PopoverProps[`slotProps`]}
-		/>
-	);
+  return (
+    <MuiPopover
+      {...props}
+      slotProps={mergedSlotProps as PopoverProps[`slotProps`]}
+    />
+  );
 });

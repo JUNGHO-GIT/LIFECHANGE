@@ -7,36 +7,36 @@
 
 // Types ------------------------------------------------------------------------------------------
 export interface MoneyPieType {
-	name: string;
-	value: number;
-};
+  name: string;
+  value: number;
+}
 export interface MoneyLineType {
-	name: string;
-	date: string;
-	income?: string;
-	expense?: string;
-};
+  name: string;
+  date: string;
+  income?: string;
+  expense?: string;
+}
 export interface MoneyAvgType {
-	name: string;
-	date: string;
-	income?: string;
-	expense?: string;
-};
+  name: string;
+  date: string;
+  income?: string;
+  expense?: string;
+}
 
 // Schema -----------------------------------------------------------------------------------------
 export const MoneyPie: MoneyPieType = {
-	name: `Empty`,
-	value: 100,
+  name: `Empty`,
+  value: 100,
 };
 export const MoneyLine: MoneyLineType = {
-	name: ``,
-	date: ``,
-	income: `0`,
-	expense: `0`,
+  name: ``,
+  date: ``,
+  income: `0`,
+  expense: `0`,
 };
 export const MoneyAvg: MoneyAvgType = {
-	name: ``,
-	date: ``,
-	income: `0`,
-	expense: `0`,
+  name: ``,
+  date: ``,
+  income: `0`,
+  expense: `0`,
 };

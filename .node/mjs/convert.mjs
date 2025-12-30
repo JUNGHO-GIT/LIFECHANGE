@@ -33,30 +33,30 @@ const sortArray = (input) => {
 	const cloned = Array.isArray(input) ? [...input] : [];
 
 	const result = cloned
-		.sort((a, b) => {
-			const aKey = a && typeof a.key === `string` ? a.key : ``;
-			const bKey = b && typeof b.key === `string` ? b.key : ``;
-			const aHasPlus = aKey.includes(`+`);
-			const bHasPlus = bKey.includes(`+`);
+	.sort((a, b) => {
+		const aKey = a && typeof a.key === `string` ? a.key : ``;
+		const bKey = b && typeof b.key === `string` ? b.key : ``;
+		const aHasPlus = aKey.includes(`+`);
+		const bHasPlus = bKey.includes(`+`);
 
-			const basicOrder = !aHasPlus && bHasPlus ? -1 : aHasPlus && !bHasPlus ? 1 : 0;
-			const finalOrder = basicOrder !== 0 ? basicOrder : aKey < bKey ? -1 : aKey > bKey ? 1 : 0;
+		const basicOrder = !aHasPlus && bHasPlus ? -1 : aHasPlus && !bHasPlus ? 1 : 0;
+		const finalOrder = basicOrder !== 0 ? basicOrder : aKey < bKey ? -1 : aKey > bKey ? 1 : 0;
 
-			return finalOrder;
-		})
-		.map((obj) => {
-			const reorderedObj = {};
+		return finalOrder;
+	})
+	.map((obj) => {
+		const reorderedObj = {};
 
-			`key` in obj && (reorderedObj.key = obj.key);
-			`command` in obj && (reorderedObj.command = obj.command);
-			`when` in obj && (reorderedObj.when = obj.when);
+		`key` in obj && (reorderedObj.key = obj.key);
+		`command` in obj && (reorderedObj.command = obj.command);
+		`when` in obj && (reorderedObj.when = obj.when);
 
-			Object.keys(obj).forEach((prop) => {
-				prop !== `key` && prop !== `command` && prop !== `when` && (reorderedObj[prop] = obj[prop]);
-			});
-
-			return reorderedObj;
+		Object.keys(obj).forEach((prop) => {
+			prop !== `key` && prop !== `command` && prop !== `when` && (reorderedObj[prop] = obj[prop]);
 		});
+
+		return reorderedObj;
+	});
 
 	return result;
 };
@@ -78,15 +78,15 @@ const sortObject = (input) => {
 
 	const sortedObject = {};
 	Object.keys(grouped)
-		.sort()
-		.forEach((group) => {
-			grouped[group].sort((a, b) => a[0].localeCompare(b[0]));
-			grouped[group].forEach((entry) => {
-				const entryKey = entry[0];
-				const entryValue = entry[1];
-				sortedObject[entryKey] = entryValue;
-			});
+	.sort()
+	.forEach((group) => {
+		grouped[group].sort((a, b) => a[0].localeCompare(b[0]));
+		grouped[group].forEach((entry) => {
+			const entryKey = entry[0];
+			const entryValue = entry[1];
+			sortedObject[entryKey] = entryValue;
 		});
+	});
 
 	const result = sortedObject;
 	return result;
@@ -141,9 +141,9 @@ const processData = (input, modeParam) => {
 
 			const jsonStr = JSON.stringify(obj, null, 2);
 			const indentedJson = jsonStr
-				.split(`\n`)
-				.map((line) => `\t${line}`)
-				.join(`\n`);
+			.split(`\n`)
+			.map((line) => `\t${line}`)
+			.join(`\n`);
 
 			jsoncContent += indentedJson;
 			index < sortedArray.length - 1 && (jsoncContent += `,`);

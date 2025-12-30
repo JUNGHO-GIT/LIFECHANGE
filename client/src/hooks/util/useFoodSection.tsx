@@ -12,13 +12,13 @@ import { setSession } from "@exportScripts";
 // -------------------------------------------------------------------------------------------------
 export const useFoodSection = () => {
 
-	// 1. common ----------------------------------------------------------------------------------
-	const { PATH } = useCommonValue();
+  // 1. common ----------------------------------------------------------------------------------
+  const { PATH } = useCommonValue();
 
-	// 2-3. useEffect -----------------------------------------------------------------------------
-	useEffect(() => {
-		(!PATH.includes(`food/find`) && !PATH.includes(`food/favorite`) && !PATH.includes(`food/record`)) && (() => {
-			setSession(`section`, `food`, ``, []);
-		})();
-	}, [PATH]);
+  // 2-3. useEffect -----------------------------------------------------------------------------
+  useEffect(() => {
+    (!PATH.includes(`food/find`) && !PATH.includes(`food/favorite`) && !PATH.includes(`food/record`)) && (() => {
+      setSession(`section`, `food`, ``, []);
+    })();
+  }, [PATH]);
 };

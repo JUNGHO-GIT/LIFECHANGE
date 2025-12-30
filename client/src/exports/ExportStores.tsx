@@ -7,20 +7,20 @@
 
 // -------------------------------------------------------------------------------------------------
 export {
-	useStoreAlert,
+  useStoreAlert,
 } from "@stores/useStoreAlert";
 
 // -------------------------------------------------------------------------------------------------
 export {
-	useStoreConfirm,
+  useStoreConfirm,
 } from "@stores/useStoreConfirm";
 
 // -------------------------------------------------------------------------------------------------
 export {
-	useStoreLanguage,
+  useStoreLanguage,
 } from "@stores/useStoreLanguage";
 
 // -------------------------------------------------------------------------------------------------
 export {
-	useStoreLoading,
+  useStoreLoading,
 } from "@stores/useStoreLoading";

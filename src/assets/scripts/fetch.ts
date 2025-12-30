@@ -9,13 +9,13 @@ import fetch, { Blob, File, FormData, Headers, Request, Response } from "node-fe
 
 // ---------------------------------------------------------------------------------------------
 const g = globalThis as typeof globalThis & {
-	fetch?: typeof globalThis.fetch;
-	Blob?: typeof globalThis.Blob;
-	File?: typeof globalThis.File;
-	FormData?: typeof globalThis.FormData;
-	Headers?: typeof globalThis.Headers;
-	Request?: typeof globalThis.Request;
-	Response?: typeof globalThis.Response;
+  fetch?: typeof globalThis.fetch;
+  Blob?: typeof globalThis.Blob;
+  File?: typeof globalThis.File;
+  FormData?: typeof globalThis.FormData;
+  Headers?: typeof globalThis.Headers;
+  Request?: typeof globalThis.Request;
+  Response?: typeof globalThis.Response;
 };
 
 // ---------------------------------------------------------------------------------------------

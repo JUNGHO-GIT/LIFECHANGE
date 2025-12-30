@@ -78,14 +78,14 @@ export const settings = {
 					`eslint.config.mjs`,
 					`ecosystem.config.cjs`,
 					`package.default.json`,
+					`.editorconfig`,
+					`license.md`,
 				],
 			},
 			{
 				sourcePath: `src/public/config`,
 				targetPath: `client`,
-				files: [
-					`.client.swcrc`,
-				],
+				files: [`.client.swcrc`],
 			},
 		],
 
@@ -99,6 +99,8 @@ export const settings = {
 			`client/.gitignore.public`,
 			`client/.gitignore.private`,
 			`client/.gitattributes`,
+			`client/license.md`,
+			`client/.editorconfig`,
 		],
 	},
 };

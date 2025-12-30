@@ -207,7 +207,7 @@ export const delFile = (tp = ``, ext = ``) => {
 		return fileExists;
 	})();
 
-	const result = ext ? (patternResult ?? false) : (singleResult ?? false);
+	const result = ext ? patternResult ?? false : singleResult ?? false;
 	return result;
 };
 
@@ -255,7 +255,7 @@ export const delDir = (tp = ``, pat = ``) => {
 		return dirExists;
 	})();
 
-	const result = pat ? (patternResult ?? false) : (singleResult ?? false);
+	const result = pat ? patternResult ?? false : singleResult ?? false;
 	return result;
 };
 
@@ -302,14 +302,14 @@ export const getPlatform = () => (process.platform === `win32` ? `win` : `linux`
 export const getPmArgs = (mgr = ``, baseArgs = [], options = {}) => {
 	const { execPrefix = true } = options;
 
-	const result = mgr === `npm` ? (execPrefix ? [
+	const result = mgr === `npm` ? execPrefix ? [
 		`exec`,
 		`--`,
 		...baseArgs,
-	] : baseArgs) : mgr === `pnpm` ? (execPrefix ? [
+	] : baseArgs : mgr === `pnpm` ? execPrefix ? [
 		`exec`,
 		...baseArgs,
-	] : baseArgs) : mgr === `yarn` ? baseArgs : mgr === `bun` ? [
+	] : baseArgs : mgr === `yarn` ? baseArgs : mgr === `bun` ? [
 		`x`,
 		...baseArgs,
 	] : [];
