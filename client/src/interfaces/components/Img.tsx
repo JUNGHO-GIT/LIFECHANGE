@@ -85,11 +85,7 @@ export const Img = memo((
   const [ imgSrc, setImgSrc ] = useState<string>(``);
   const [ isLoading, setIsLoading ] = useState<boolean>(true);
   const [ isEmptyHandled, setIsEmptyHandled ] = useState<boolean>(false);
-
-  // user event handlers (preserve if passed via props)
-  const {
-    onLoad: userOnLoad, onError: userOnError, ...restProps
-  } = props as any;
+  const { onLoad: userOnLoad, onError: userOnError, ...restProps } = props as any;
 
   // 3. memoized imageClass ------------------------------------------------------------------------
   const imageClass = useMemo(() => [

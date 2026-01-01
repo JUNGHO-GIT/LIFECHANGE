@@ -5,58 +5,60 @@
  * @since 2025-12-26
  */
 
-import { React, memo, useCallback, useEffect, useMemo, useState } from "@exportReacts";
-import { Popover } from "@exportComponents";
+import { memo, useCallback, useMemo, useId } from "@exportReacts";
 import { bindPopover, PopoverOrigin, usePopupState, PopupState } from "@exportMuis";
+import { Popover } from "@exportComponents";
 
 // -------------------------------------------------------------------------------------------------
 export const PopUp = memo((props: any) => {
 
-  // 2-2. useState ---------------------------------------------------------------------------------
+  // 1. Popup State ------------------------------------------------------------------------------
+  const id: string = useId();
   const popupState: PopupState = usePopupState({
     variant: `popover`,
-    popupId: `popup`,
-  });
-  const [ popupStyle, setPopupStyle ] = useState<React.CSSProperties>({
-    display: `flex`,
-    flexDirection: `column`,
-    justifyContent: `center`,
-    alignItems: `center`,
+    popupId: props?.id ?? id,
   });
 
-  // 2-3. useEffect -----------------------------------------------------------------------------
-  useEffect(() => {
-    if (props?.type === `innerCenter`) {
-      setPopupStyle((prev) => ({
-        ...prev,
-        border: `0.2px solid rgba(0, 0, 0, 0.2)`,
-        boxShadow: `0px 0px 10px rgba(0, 0, 0, 0.5)`,
-        padding: `20px`,
-      }));
-    }
-    else if (props?.type === `alert`) {
-      setPopupStyle((prev) => ({
-        ...prev,
-        border: `1px solid red`,
-        boxShadow: `0px 0px 10px rgba(255, 0, 0, 0.5)`,
-        padding: `6px`,
-      }));
-    }
-    else if (props?.type === `chart`) {
-      setPopupStyle((prev) => ({
-        ...prev,
-        border: `0.2px solid rgba(0, 0, 0, 0.2)`,
-        boxShadow: `0px 0px 10px rgba(0, 0, 0, 0.5)`,
-        padding: `6px 0px 6px 12px`,
-      }));
-    }
-    else if (props?.type === `modal`) {
-      setPopupStyle((prev) => ({
-        ...prev,
-        border: `0.2px solid rgba(0, 0, 0, 0.2)`,
-        boxShadow: `0px 0px 10px rgba(0, 0, 0, 0.5)`,
-        padding: `10px`,
-      }));
+  // 2. popupStyle -------------------------------------------------------------------------------
+  const popupStyle = useMemo<React.CSSProperties>(() => {
+    const baseStyle: React.CSSProperties = {
+      display: `flex`,
+      flexDirection: `column`,
+      justifyContent: `center`,
+      alignItems: `center`,
+    };
+
+    switch (props?.type) {
+      case `innerCenter`:
+        return {
+          ...baseStyle,
+          border: `0.2px solid rgba(0, 0, 0, 0.2)`,
+          boxShadow: `0px 0px 10px rgba(0, 0, 0, 0.5)`,
+          padding: `20px`,
+        };
+      case `alert`:
+        return {
+          ...baseStyle,
+          border: `1px solid red`,
+          boxShadow: `0px 0px 10px rgba(255, 0, 0, 0.5)`,
+          padding: `6px`,
+        };
+      case `chart`:
+        return {
+          ...baseStyle,
+          border: `0.2px solid rgba(0, 0, 0, 0.2)`,
+          boxShadow: `0px 0px 10px rgba(0, 0, 0, 0.5)`,
+          padding: `6px 0px 6px 12px`,
+        };
+      case `modal`:
+        return {
+          ...baseStyle,
+          border: `0.2px solid rgba(0, 0, 0, 0.2)`,
+          boxShadow: `0px 0px 10px rgba(0, 0, 0, 0.5)`,
+          padding: `10px`,
+        };
+      default:
+        return baseStyle;
     }
   }, [props?.type]);
 
@@ -78,9 +80,9 @@ export const PopUp = memo((props: any) => {
 
   // 4. memoized values ---------------------------------------------------------------------------
   const popupContents = useMemo(() => (
-		typeof props?.contents === `function`
-			? props?.contents({ closePopup: closePopup })
-			: props?.contents
+    typeof props?.contents === `function`
+      ? props?.contents({ closePopup: closePopup })
+      : props?.contents
   ), [ props?.contents, closePopup ]);
 
   const popupChildren = useMemo(() => (
@@ -89,25 +91,25 @@ export const PopUp = memo((props: any) => {
 
   const anchorOrigin = useMemo<PopoverOrigin>(() => ({
     vertical: props?.position === `center` ? `center` : (
-			props?.position === `top` ? `top` : `bottom`
-		),
+      props?.position === `top` ? `top` : `bottom`
+    ),
     horizontal: props?.direction === `center` ? `center` : (
-			props?.direction === `right` ? `right` : `left`
-		),
+      props?.direction === `right` ? `right` : `left`
+    ),
   }), [ props?.position, props?.direction ]);
 
   const transformOrigin = useMemo<PopoverOrigin>(() => ({
     vertical: props?.position === `center` ? `center` : (
-			props?.position === `top` ? `bottom` : `top`
-		),
+      props?.position === `top` ? `bottom` : `top`
+    ),
     horizontal: props?.direction === `center` ? `center` : (
-			props?.direction === `right` ? `left` : `right`
-		),
+      props?.direction === `right` ? `left` : `right`
+    ),
   }), [ props?.position, props?.direction ]);
 
   const innerCenterAnchorPosition = useMemo(() => ({
-    top: window.innerHeight / 2,
-    left: window.innerWidth / 2,
+    top: typeof window !== `undefined` ? window.innerHeight / 2 : 0,
+    left: typeof window !== `undefined` ? window.innerWidth / 2 : 0,
   }), []);
 
   // 5. chainedPopUp -------------------------------------------------------------------------------
@@ -120,14 +122,17 @@ export const PopUp = memo((props: any) => {
         onClose={handleClose}
         anchorOrigin={anchorOrigin}
         transformOrigin={transformOrigin}
+        keepMounted={false}
+        disableRestoreFocus={false}
         slotProps={{
           paper: {
             sx: popupStyle,
           },
         }}
-      >
-        {popupContents}
-      </Popover>
+        children={(
+          popupContents
+        )}
+      />
       {popupChildren}
     </>
   ), [
@@ -152,14 +157,17 @@ export const PopUp = memo((props: any) => {
           vertical: `center`,
           horizontal: `center`,
         }}
+        keepMounted={false}
+        disableRestoreFocus={false}
         slotProps={{
           paper: {
             sx: popupStyle,
           },
         }}
-      >
-        {popupContents}
-      </Popover>
+        children={(
+          popupContents
+        )}
+      />
       {popupChildren}
     </>
   ), [

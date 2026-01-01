@@ -366,7 +366,7 @@ export const PickerDay = memo((
   // --------------------------------------------------------------------------------------------
   // 2-3. useEffect
   // - 타입 및 날짜 변경시 표시 날짜 텍스트 변경
-  // - handler 사용해서 월, 일만 표시
+  // - handle 사용해서 월, 일만 표시
   useEffect(() => {
 
     // 1. List
@@ -374,30 +374,30 @@ export const PickerDay = memo((
       // ex. 2026-01-15
       if (DATE?.dateType === `day`) {
         setDateStrInList(
-          handlerDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
+          handleDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
         );
       }
       // ex. 01-15 - 01-21
       else if (DATE?.dateType === `week`) {
         setDateStrInList(
-          `${handlerDateFormat(getWeekStartFmt(DATE?.dateStart), `mm-dd`)} - ${handlerDateFormat(getWeekEndFmt(DATE?.dateStart), `mm-dd`)}`,
+          `${handleDateFormat(getWeekStartFmt(DATE?.dateStart), `mm-dd`)} - ${handleDateFormat(getWeekEndFmt(DATE?.dateStart), `mm-dd`)}`,
         );
       }
       // ex. 01-01 - 01-31
       else if (DATE?.dateType === `month`) {
         setDateStrInList(
-          `${handlerDateFormat(getMonthStartFmt(DATE?.dateStart), `mm-dd`)} - ${handlerDateFormat(getMonthEndFmt(DATE?.dateStart), `mm-dd`)}`,
+          `${handleDateFormat(getMonthStartFmt(DATE?.dateStart), `mm-dd`)} - ${handleDateFormat(getMonthEndFmt(DATE?.dateStart), `mm-dd`)}`,
         );
       }
       // ex. 2026
       else if (DATE?.dateType === `year`) {
         setDateStrInList(
-          handlerDateFormat(getYearStartFmt(DATE?.dateStart), `yyyy`),
+          handleDateFormat(getYearStartFmt(DATE?.dateStart), `yyyy`),
         );
       }
       else {
         setDateStrInList(
-          handlerDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
+          handleDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
         );
       }
     }
@@ -407,37 +407,37 @@ export const PickerDay = memo((
       // ex. 2026-01-15
       if (DATE?.dateType === `day`) {
         setDateStrInSave(
-          handlerDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
+          handleDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
         );
       }
       // ex. 01-15 - 01-21
       else if (DATE?.dateType === `week`) {
         setDateStrInSave(
-          `${handlerDateFormat(getWeekStartFmt(DATE?.dateStart), `mm-dd`)} - ${handlerDateFormat(getWeekEndFmt(DATE?.dateStart), `mm-dd`)}`,
+          `${handleDateFormat(getWeekStartFmt(DATE?.dateStart), `mm-dd`)} - ${handleDateFormat(getWeekEndFmt(DATE?.dateStart), `mm-dd`)}`,
         );
       }
       // ex. 01-01 - 01-31
       else if (DATE?.dateType === `month`) {
         setDateStrInSave(
-          `${handlerDateFormat(getMonthStartFmt(DATE?.dateStart), `mm-dd`)} - ${handlerDateFormat(getMonthEndFmt(DATE?.dateStart), `mm-dd`)}`,
+          `${handleDateFormat(getMonthStartFmt(DATE?.dateStart), `mm-dd`)} - ${handleDateFormat(getMonthEndFmt(DATE?.dateStart), `mm-dd`)}`,
         );
       }
       // ex. 2026
       else if (DATE?.dateType === `year`) {
         setDateStrInSave(
-          handlerDateFormat(getYearStartFmt(DATE?.dateStart), `yyyy`),
+          handleDateFormat(getYearStartFmt(DATE?.dateStart), `yyyy`),
         );
       }
       else {
         setDateStrInSave(
-          handlerDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
+          handleDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
         );
       }
     }
   }, [ isList, isDetail, DATE?.dateType, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 4. handler ----------------------------------------------------------------------------
-  const handlerDateFormat = (str: string, format?: string): string => {
+  // 4. handle ----------------------------------------------------------------------------
+  const handleDateFormat = (str: string, format?: string): string => {
     // 1. yyyy
     if (format === `yyyy`) {
       if (str?.split(`-`).length >= 1) {
@@ -549,7 +549,7 @@ export const PickerDay = memo((
                 {translate(`viewDay`)}
               </Div>
               <Div className={`fs-0-8rem fw-500 dark`}>
-                {`[${handlerDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`)}]`}
+                {`[${handleDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`)}]`}
               </Div>
             </Grid>
             <Grid size={12} className={`d-center`}>
@@ -751,7 +751,7 @@ export const PickerDay = memo((
                 {translate(`viewWeek`)}
               </Div>
               <Div className={`fs-0-8rem fw-500 dark`}>
-                {`[${handlerDateFormat(getWeekStartFmt(DATE?.dateStart), `mm-dd`)} - ${handlerDateFormat(getWeekEndFmt(DATE?.dateEnd), `mm-dd`)}]`}
+                {`[${handleDateFormat(getWeekStartFmt(DATE?.dateStart), `mm-dd`)} - ${handleDateFormat(getWeekEndFmt(DATE?.dateEnd), `mm-dd`)}]`}
               </Div>
             </Grid>
             <Grid size={12} className={`d-center`}>
@@ -970,7 +970,7 @@ export const PickerDay = memo((
                 {translate(`viewMonth`)}
               </Div>
               <Div className={`fs-0-8rem fw-500 dark`}>
-                {`[${handlerDateFormat(getMonthStartFmt(DATE?.dateStart), `mm-dd`)} - ${handlerDateFormat(getMonthEndFmt(DATE?.dateEnd), `mm-dd`)}]`}
+                {`[${handleDateFormat(getMonthStartFmt(DATE?.dateStart), `mm-dd`)} - ${handleDateFormat(getMonthEndFmt(DATE?.dateEnd), `mm-dd`)}]`}
               </Div>
             </Grid>
             <Grid size={12} className={`d-center`}>
@@ -1172,7 +1172,7 @@ export const PickerDay = memo((
                 {translate(`viewYear`)}
               </Div>
               <Div className={`fs-0-8rem fw-500 dark`}>
-                {`[${handlerDateFormat(getYearStartFmt(DATE?.dateStart), `yyyy`)}]`}
+                {`[${handleDateFormat(getYearStartFmt(DATE?.dateStart), `yyyy`)}]`}
               </Div>
             </Grid>
             <Grid size={12} className={`d-center`}>

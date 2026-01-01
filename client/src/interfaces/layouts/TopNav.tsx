@@ -9,18 +9,16 @@ import { Br, Div, Grid, Hr, Img, Paper } from "@exportComponents";
 import { Input, PopUp } from "@exportContainers";
 import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
 import { Checkbox, Menu, MenuItem, Tab, Tabs } from "@exportMuis";
-import { memo, useEffect, useState } from "@exportReacts";
+import { memo, useEffect, useMemo, useState } from "@exportReacts";
 import { insertComma } from "@exportScripts";
 import { useStoreLanguage } from "@exportStores";
-import { SessionSync, SessionSyncPercent, SessionSyncProperty, SessionSyncScale, SessionSyncNutrition } from "@exportTypes";
 
 // -------------------------------------------------------------------------------------------------
 export const TopNav = memo(() => {
 
   // 1. common ----------------------------------------------------------------------------------
   const { firstStr, secondStr, localCurrency, localUnit, navigate } = useCommonValue();
-  const { sessionTitle, sessionPercent } = useCommonValue();
-  const { sessionScale, sessionNutrition, sessionProperty } = useCommonValue();
+  const { sessionPercent, sessionScale, sessionNutrition, sessionProperty } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
 
@@ -39,41 +37,19 @@ export const TopNav = memo(() => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------
-  const [ mainSmileImage, setMainSmileImage ] = useState(`smile3`);
   const [ includingExclusions, setIncludingExclusions ] = useState<boolean>(false);
   const [ nutritionType, setNutritionType ] = useState(`avg`);
 
-  // 2-2. useState -------------------------------------------------------------------------------
-  const [ percent, setPercent ] = useState({
-    total: { average: { score: `0` } },
-    exercise: { average: { score: `0` } },
-    food: { average: { score: `0` } },
-    money: { average: { score: `0` } },
-    sleep: { average: { score: `0` } },
-  });
-  const [ smileScore, setSmileScore ] = useState({
-    total: `0`,
-    exercise: `0`,
-    food: `0`,
-    money: `0`,
-    sleep: `0`,
-  });
-  const [ smileImage, setSmileImage ] = useState({
-    total: `smile3`,
-    exercise: `smile3`,
-    food: `smile3`,
-    money: `smile3`,
-    sleep: `smile3`,
-  });
-  const [ scale, setScale ] = useState({
+  // 2-2. variable -------------------------------------------------------------------------------
+  const scale = sessionScale || {
     initScale: `0`,
     minScale: `0`,
     maxScale: `0`,
     curScale: `0`,
     dateStart: ``,
     dateEnd: ``,
-  });
-  const [ nutrition, setNutrition ] = useState({
+  };
+  const nutrition = sessionNutrition || {
     initAvgKcalIntake: `0`,
     totalKcalIntake: `0`,
     totalCarbIntake: `0`,
@@ -85,8 +61,8 @@ export const TopNav = memo(() => {
     curAvgFatIntake: `0`,
     dateStart: ``,
     dateEnd: ``,
-  });
-  const [ property, setProperty ] = useState({
+  };
+  const property = sessionProperty || {
     initProperty: `0`,
     totalIncomeAll: `0`,
     totalIncomeExclusion: `0`,
@@ -96,32 +72,20 @@ export const TopNav = memo(() => {
     curPropertyExclusion: `0`,
     dateStart: ``,
     dateEnd: ``,
-  });
-  const [ dataArray, _setDataArray ] = useState({
-    exercise: [ `chart`, `goal`, `record` ],
-    food: [ `chart`, `goal`, `record`, `favorite`, `find` ],
-    today: [ `chart`, `goal`, `record` ],
-    calendar: [`calendar`],
-    money: [ `chart`, `goal`, `record` ],
-    sleep: [ `chart`, `goal`, `record` ],
-    admin: [`dashboard`],
-  });
+  };
 
-  // 2-3. useEffect -----------------------------------------------------------------------------
-  // - 스마일 지수 계산
-  useEffect(() => {
-    if (!percent) {
-      return;
-    }
-
-    const newSmileScore: any = {
-      total: percent?.total?.average?.score ?? `0`,
-      exercise: percent?.exercise?.average?.score ?? `0`,
-      food: percent?.food?.average?.score ?? `0`,
-      money: percent?.money?.average?.score ?? `0`,
-      sleep: percent?.sleep?.average?.score ?? `0`,
+  // 2-3. useMemo --------------------------------------------------------------------------------
+  const smileScore = useMemo(() => {
+    return {
+      total: sessionPercent?.total?.average?.score ?? `0`,
+      exercise: sessionPercent?.exercise?.average?.score ?? `0`,
+      food: sessionPercent?.food?.average?.score ?? `0`,
+      money: sessionPercent?.money?.average?.score ?? `0`,
+      sleep: sessionPercent?.sleep?.average?.score ?? `0`,
     };
+  }, [sessionPercent]);
 
+  const smileImage = useMemo(() => {
     const getImage = (score: string) => {
       const parsScore: number = Number.parseFloat(score);
       if (parsScore >= 0 && parsScore <= 1) {
@@ -143,73 +107,48 @@ export const TopNav = memo(() => {
         return `smile3`;
       }
     };
+    return {
+      total: getImage(smileScore.total),
+      exercise: getImage(smileScore.exercise),
+      food: getImage(smileScore.food),
+      money: getImage(smileScore.money),
+      sleep: getImage(smileScore.sleep),
+    };
+  }, [smileScore]);
 
-    setSmileScore(newSmileScore);
-    setSmileImage({
-      total: getImage(newSmileScore.total),
-      exercise: getImage(newSmileScore.exercise),
-      food: getImage(newSmileScore.food),
-      money: getImage(newSmileScore.money),
-      sleep: getImage(newSmileScore.sleep),
-    });
-
-  }, [percent]);
-
-  // 2-3. useEffect -----------------------------------------------------------------------------
-  // - 메인 스마일 이미지
-  useEffect(() => {
+  const mainSmileImage = useMemo(() => {
     if (firstStr === `exercise`) {
-      setMainSmileImage(smileImage.exercise);
+      return smileImage.exercise;
     }
     else if (firstStr === `food`) {
-      setMainSmileImage(smileImage.food);
+      return smileImage.food;
     }
     else if (firstStr === `today`) {
-      setMainSmileImage(smileImage.total);
+      return smileImage.total;
     }
     else if (firstStr === `calendar`) {
-      setMainSmileImage(smileImage.total);
+      return smileImage.total;
     }
     else if (firstStr === `money`) {
-      setMainSmileImage(smileImage.money);
+      return smileImage.money;
     }
     else if (firstStr === `sleep`) {
-      setMainSmileImage(smileImage.sleep);
+      return smileImage.sleep;
     }
     else {
-      setMainSmileImage(smileImage.total);
+      return smileImage.total;
     }
   }, [ firstStr, smileImage ]);
 
-  // 2-3. useEffect -----------------------------------------------------------------------------
-  // - 퍼센트, 자산, 체중 설정
-  useEffect(() => {
-    const syncStatus: SessionSync | undefined = sessionTitle?.setting?.sync;
-    if (!syncStatus) {
-      return;
-    }
-    const percentEl: SessionSyncPercent | undefined = syncStatus.percent;
-    const propertyEl: SessionSyncProperty | undefined = syncStatus.property;
-    const nutritionEl: SessionSyncNutrition | undefined = syncStatus.nutrition;
-    const scaleEl: SessionSyncScale | undefined = syncStatus.scale;
-
-    setPercent((prev: any) => ({
-      ...prev,
-      ...percentEl,
-    }));
-    setProperty((prev: any) => ({
-      ...prev,
-      ...propertyEl,
-    }));
-    setNutrition((prev: any) => ({
-      ...prev,
-      ...nutritionEl,
-    }));
-    setScale((prev: any) => ({
-      ...prev,
-      ...scaleEl,
-    }));
-  }, [sessionTitle]);
+  const [ dataArray, _setDataArray ] = useState({
+    exercise: [ `chart`, `goal`, `record` ],
+    food: [ `chart`, `goal`, `record`, `favorite`, `find` ],
+    today: [ `chart`, `goal`, `record` ],
+    calendar: [`calendar`],
+    money: [ `chart`, `goal`, `record` ],
+    sleep: [ `chart`, `goal`, `record` ],
+    admin: [`dashboard`],
+  });
 
   // 2-3. useEffect -----------------------------------------------------------------------------
   // - 페이지 변경시 초기화
@@ -466,7 +405,6 @@ export const TopNav = memo(() => {
               radius={false}
               src={`${mainSmileImage}.webp`}
               onClick={(e: any) => {
-                setPercent(sessionPercent);
                 popTrigger.openPopup(e.currentTarget);
               }}
             />
@@ -605,7 +543,6 @@ export const TopNav = memo(() => {
               radius={false}
               src={`exercise6.webp`}
               onClick={(e: any) => {
-                setScale(sessionScale);
                 popTrigger.openPopup(e.currentTarget);
               }}
             />
@@ -831,7 +768,6 @@ export const TopNav = memo(() => {
               radius={false}
               src={`food6.webp`}
               onClick={(e: any) => {
-                setNutrition(sessionNutrition);
                 popTrigger.openPopup(e.currentTarget);
               }}
             />
@@ -997,7 +933,6 @@ export const TopNav = memo(() => {
               radius={false}
               src={`money4.webp`}
               onClick={(e: any) => {
-                setProperty(sessionProperty);
                 popTrigger.openPopup(e.currentTarget);
               }}
             />

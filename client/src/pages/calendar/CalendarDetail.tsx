@@ -1365,6 +1365,8 @@ export const CalendarDetail = memo(() => {
     <Dialog
       COUNT={COUNT}
       setCOUNT={setCOUNT}
+      OBJECT={OBJECT}
+      setOBJECT={setOBJECT}
       LOCKED={LOCKED}
       setLOCKED={setLOCKED}
     />

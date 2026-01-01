@@ -38,13 +38,13 @@ export const Count = memo((
 ) => {
 
   // 1. common ----------------------------------------------------------------------------------
-  const { PATH, localLang } = useCommonValue();
+  const { PATH, localLang, isCalendarDetail } = useCommonValue();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
 
   // 4. handle ----------------------------------------------------------------------------------
   const handleLockToggle = useCallback(() => {
-    disabled || setLOCKED(LOCKED === `locked` ? `unlocked` : `locked`);
+    disabled ?? setLOCKED(LOCKED === `locked` ? `unlocked` : `locked`);
   }, [ disabled, LOCKED, setLOCKED ]);
 
   // 4. handle ----------------------------------------------------------------------------------
@@ -171,7 +171,7 @@ export const Count = memo((
             src={`common2.webp`}
           />
         )}
-        endadornment={countEndAdornment}
+        endadornment={!isCalendarDetail ? countEndAdornment : null}
       />
     );
     // 7-3. return

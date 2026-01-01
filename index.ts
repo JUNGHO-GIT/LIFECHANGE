@@ -111,7 +111,7 @@ if (isDev) {
     const log = (...parts: string[]) => {
       console.log(...parts, `\n`);
     };
-    const args = [
+    const args: string[] = [
       query,
       doc,
       options,

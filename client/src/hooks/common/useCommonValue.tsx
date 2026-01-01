@@ -24,7 +24,7 @@ export const useCommonValue = (): CommonValueType => {
     catch {
       return {} as LocalTitleType;
     }
-  }, [TITLE]);
+  }, [ TITLE, location.pathname ]);
 
   const sessionTitle: SessionTitleType = useMemo(() => {
     try {
@@ -33,7 +33,7 @@ export const useCommonValue = (): CommonValueType => {
     catch {
       return {} as SessionTitleType;
     }
-  }, [TITLE]);
+  }, [ TITLE, location.pathname ]);
 
   // 세션 파생값 기본 객체 생성 ----------------------------------------------------------------------
   const scaleDefault = useMemo(() => ({

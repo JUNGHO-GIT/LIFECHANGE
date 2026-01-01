@@ -191,8 +191,10 @@ export interface MoneyCategoryItem {
 export interface SleepCategoryItem {
   sleep_record_part: string;
 }
-
-export interface SessionPercentBlock { score?: string; percent?: string }
+export interface SessionPercentBlock {
+  score?: string;
+  percent?: string;
+}
 export interface SessionSyncPercent {
   exercise?: {
     diff_count?: SessionPercentBlock;

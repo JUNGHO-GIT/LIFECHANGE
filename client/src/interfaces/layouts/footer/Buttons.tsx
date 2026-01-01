@@ -39,7 +39,7 @@ export const Buttons = memo((
     dateEnd: state?.DATE?.dateEnd,
   }), [ state?.DATE?.dateType, state?.DATE?.dateStart, state?.DATE?.dateEnd ]);
 
-  // 3. handler ------------------------------------------------------------------------------------
+  // 3. handle ------------------------------------------------------------------------------------
   const handleSave = (type: string) => {
     flow?.flowSave(type);
     setSession(`section`, `food`, ``, []);

@@ -7,7 +7,7 @@
 
 // react ----------------------------------------------------------------------------------------
 export type {
-  JSX
+  JSX,
 } from "react";
 export {
   useState,
@@ -17,6 +17,7 @@ export {
   createRef,
   memo,
   useMemo,
+  useId,
 } from "react";
 export {
   default as React,

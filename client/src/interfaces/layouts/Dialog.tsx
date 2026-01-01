@@ -31,7 +31,9 @@ export const Dialog = memo((
 
   // 1. common ----------------------------------------------------------------------------------
   const { PATH, navigate, toDetail, localIsoCode } = useCommonValue();
-  const { isGoalList, isFindList, isFavoriteList, isList, isDetail } = useCommonValue();
+  const {
+    isGoalList, isFindList, isFavoriteList, isList, isDetail, isCalendar,
+  } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
 
@@ -448,6 +450,100 @@ export const Dialog = memo((
         </SpeedDial>
       </Div>
     );
+    // 6. calendar
+    const calendarDetailSection = () => (
+      <Div className={`d-flex`}>
+        <Backdrop
+          open={open}
+          style={{ zIndex: 550 }}
+          onClick={() => {
+            setOpen(false);
+          }}
+        />
+        <SpeedDial
+          ariaLabel={`speedDial`}
+          direction={`up`}
+          open={open}
+          style={{ zIndex: 600 }}
+          className={`p-fixed bottom-18vh right-6vw ml-5px z-600`}
+          icon={
+            <SpeedDialIcon />
+          }
+          FabProps={{
+            size: `small`,
+            component: `div`,
+          }}
+          onClick={() => {
+            setOpen(!open);
+          }}
+        >
+          <SpeedDialAction
+            key={translate(`itemLock`)}
+            tooltipTitle={translate(`itemLock`)}
+            className={open ? `` : `d-none`}
+            icon={
+							LOCKED === `locked` ? (
+								<Icons
+								  key={`UnLock`}
+								  name={`UnLock`}
+								  className={`w-25px h-25px`}
+								/>
+							) : (
+								<Icons
+								  key={`Lock`}
+								  name={`Lock`}
+								  className={`w-25px h-25px`}
+								/>
+							)
+            }
+            onClick={() => {
+              if (setLOCKED) {
+                if (LOCKED === `locked`) {
+                  setLOCKED(`unlocked`);
+                }
+                else {
+                  setLOCKED(`locked`);
+                }
+              }
+            }}
+          />
+          <SpeedDialAction
+            key={translate(`closeAll`)}
+            tooltipTitle={translate(`closeAll`)}
+            className={open ? `` : `d-none`}
+            icon={(
+              <Icons
+                key={`X`}
+                name={`X`}
+                locked={LOCKED}
+                className={`w-25px h-25px`}
+              />
+            )}
+            onClick={(e) => {
+              if (LOCKED === `locked`) {
+                e.preventDefault();
+                return;
+              }
+              if (setOBJECT) {
+                setOBJECT((prev: any) => ({
+                  ...prev,
+                  calendar_exercise_section: [],
+                  calendar_food_section: [],
+                  calendar_money_section: [],
+                  calendar_sleep_section: [],
+                }));
+              }
+              if (setCOUNT) {
+                setCOUNT((prev: any) => ({
+                  ...prev,
+                  newSectionCnt: 0,
+                }));
+              }
+            }}
+          />
+        </SpeedDial>
+      </Div>
+    );
     // 10. return
     return (
 			isGoalList ? (
@@ -459,8 +555,11 @@ export const Dialog = memo((
 			: isList ? (
 				listRecordSection()
 			)
+			: isCalendar && isDetail ? (
+				calendarDetailSection()
+			)
 			: isDetail ? (
-				detailSection()
+        detailSection()
 			)
 			: null
     );

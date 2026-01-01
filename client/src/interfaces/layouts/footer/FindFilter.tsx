@@ -30,7 +30,7 @@ export const FindFilter = memo((
   } = useCommonValue();
   const { translate } = useStoreLanguage();
 
-  // 4. handler ------------------------------------------------------------------------------------
+  // 4. handle ------------------------------------------------------------------------------------
   const handleSearch = () => {
     flow.flowFind();
     setState?.setPAGING((prev: any) => ({
@@ -40,7 +40,7 @@ export const FindFilter = memo((
     window.scrollTo(0, 0);
   };
 
-  // 4. handler ------------------------------------------------------------------------------------
+  // 4. handle ------------------------------------------------------------------------------------
   const handleNavigateToDetail = () => {
     void navigate(toDetail, {
       state: {
