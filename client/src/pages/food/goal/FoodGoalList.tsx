@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-import { React, useState, useEffect, memo } from "@exportReacts";
+import { useState, useEffect, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { FoodGoal, FoodGoalType } from "@exportSchemas";
@@ -32,20 +32,20 @@ export const FoodGoalList = memo(() => {
       dateType: location_dateType ?? ``,
       dateStart: location_dateStart ?? getDayFmt(),
       dateEnd: location_dateEnd ?? getDayFmt(),
-    }
+    },
   );
   const [ PAGING, setPAGING ] = useStorageLocal(
     `paging`, PATH, ``, {
       sort: `asc`,
       page: 1,
-    }
+    },
   );
   const [ isExpanded, setIsExpanded ] = useStorageLocal(
     `isExpanded`, PATH, ``, [
       {
         expanded: true,
       },
-    ]
+    ],
   );
 
   // 2-2. useState -------------------------------------------------------------------------------
@@ -69,6 +69,11 @@ export const FoodGoalList = memo(() => {
     newSectionCnt: 0,
   });
 
+  // 2-2. useEffect -----------------------------------------------------------------------------
+  useEffect(() => {
+    console.log(`FoodGoalList DATE: ${JSON.stringify(DATE, null, 2)}`);
+  }, [DATE]);
+
   // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     axios.get(`${URL_OBJECT}/goal/exist`, {
@@ -83,7 +88,7 @@ export const FoodGoalList = memo(() => {
     })
     .then((res: any) => {
       setEXIST(
-        (!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result)
+        (!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result),
       );
     })
     .catch((error: any) => {

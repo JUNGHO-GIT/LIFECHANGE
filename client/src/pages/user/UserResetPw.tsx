@@ -304,7 +304,7 @@ export const UserResetPw = memo(() => {
                   disabled={item.user_id_verified}
                   placeholder={`123456`}
                   onChange={(e: any) => {
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       user_verify_code: e.target.value,
                     }));
@@ -339,7 +339,7 @@ export const UserResetPw = memo(() => {
                   error={ERRORS?.[i]?.user_pw}
                   disabled={!item.user_id_verified}
                   onChange={(e: any) => {
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       user_pw: e.target.value,
                     }));
@@ -360,7 +360,7 @@ export const UserResetPw = memo(() => {
                   error={ERRORS?.[i]?.user_pw_verified}
                   disabled={!item.user_id_verified}
                   onChange={(e: any) => {
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       user_pw_verified: e.target.value,
                     }));

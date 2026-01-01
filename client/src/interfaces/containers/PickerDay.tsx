@@ -43,7 +43,7 @@ export const PickerDay = memo((
   const { PATH, localLang, localTimeZone } = useCommonValue();
   const { isGoalList, isGoalDetail } = useCommonValue();
   const { isRecordList, isRecordDetail } = useCommonValue();
-  const { isCalendarList, isCalendarDetail } = useCommonValue();
+  const { isCalendarDetail } = useCommonValue();
   const { isList, isDetail } = useCommonValue();
   const { getDayFmt, getDayNotFmt, getDayStartFmt, getDayEndFmt } = useCommonDate();
   const { getPrevDayStartFmt, getPrevDayEndFmt } = useCommonDate();
@@ -74,6 +74,17 @@ export const PickerDay = memo((
   );
 
   // 2-2. useEffect -----------------------------------------------------------------------------
+  /* useEffect(() => {
+    console.log(`
+      DATE: ${JSON.stringify(DATE, null, 2)}
+      dateStrInSave: ${dateStrInSave}
+      dateStrInList: ${dateStrInList}
+      dateTypeInSave: ${dateTypeInSave}
+      dateTypeInList: ${dateTypeInList}
+    `);
+  }, [ dateStrInSave, dateStrInList, dateTypeInSave, dateTypeInList ]); */
+
+  // 2-2. useEffect -----------------------------------------------------------------------------
   // - 화면 로딩시 초기값 설정 1
   // - 클래스 설정
   useEffect(() => {
@@ -95,13 +106,10 @@ export const PickerDay = memo((
     if (isGoalList) {
       if (dateTypeInList === `day`) {
         setDATE({
-          dateType: ``,
+          dateType: `day`,
           dateStart: DATE?.dateStart ?? getDayFmt(),
           dateEnd: DATE?.dateEnd ?? getDayFmt(),
         });
-        setDateStrInList(
-          getDayFmt(DATE?.dateStart),
-        );
       }
       else if (dateTypeInList === `week`) {
         setDATE({
@@ -109,9 +117,6 @@ export const PickerDay = memo((
           dateStart: DATE?.dateStart ?? getWeekStartFmt(),
           dateEnd: DATE?.dateEnd ?? getWeekEndFmt(),
         });
-        setDateStrInList(
-          `${getWeekStartFmt(DATE?.dateStart)} - ${getWeekEndFmt(DATE?.dateStart)}`,
-        );
       }
       else if (dateTypeInList === `month`) {
         setDATE({
@@ -119,9 +124,6 @@ export const PickerDay = memo((
           dateStart: DATE?.dateStart ?? getMonthStartFmt(),
           dateEnd: DATE?.dateEnd ?? getMonthEndFmt(),
         });
-        setDateStrInList(
-          `${getMonthStartFmt(DATE?.dateStart)} - ${getMonthEndFmt(DATE?.dateStart)}`,
-        );
       }
       else if (dateTypeInList === `year`) {
         setDATE({
@@ -129,9 +131,6 @@ export const PickerDay = memo((
           dateStart: DATE?.dateStart ?? getYearStartFmt(),
           dateEnd: DATE?.dateEnd ?? getYearEndFmt(),
         });
-        setDateStrInList(
-          `${getYearStartFmt(DATE?.dateStart)} - ${getYearEndFmt(DATE?.dateStart)}`,
-        );
       }
     }
 
@@ -143,9 +142,6 @@ export const PickerDay = memo((
           dateStart: DATE?.dateStart ?? getDayFmt(),
           dateEnd: DATE?.dateEnd ?? getDayFmt(),
         });
-        setDateStrInList(
-          getDayFmt(DATE?.dateStart),
-        );
       }
       else if (dateTypeInList === `week`) {
         setDATE({
@@ -153,9 +149,6 @@ export const PickerDay = memo((
           dateStart: DATE?.dateStart ?? getWeekStartFmt(),
           dateEnd: DATE?.dateEnd ?? getWeekEndFmt(),
         });
-        setDateStrInList(
-          `${getWeekStartFmt(DATE?.dateStart)} - ${getWeekEndFmt(DATE?.dateStart)}`,
-        );
       }
       else if (dateTypeInList === `month`) {
         setDATE({
@@ -163,9 +156,6 @@ export const PickerDay = memo((
           dateStart: DATE?.dateStart ?? getMonthStartFmt(),
           dateEnd: DATE?.dateEnd ?? getMonthEndFmt(),
         });
-        setDateStrInList(
-          `${getMonthStartFmt(DATE?.dateStart)} - ${getMonthEndFmt(DATE?.dateStart)}`,
-        );
       }
       else if (dateTypeInList === `year`) {
         setDATE({
@@ -173,9 +163,6 @@ export const PickerDay = memo((
           dateStart: DATE?.dateStart ?? getYearStartFmt(),
           dateEnd: DATE?.dateEnd ?? getYearEndFmt(),
         });
-        setDateStrInList(
-          `${getYearStartFmt(DATE?.dateStart)} - ${getYearEndFmt(DATE?.dateStart)}`,
-        );
       }
     }
   }, []);
@@ -196,9 +183,6 @@ export const PickerDay = memo((
           dateStart: getWeekStartFmt(prev.dateStart),
           dateEnd: getWeekEndFmt(prev.dateStart),
         }));
-        setDateStrInSave(
-          `${getWeekStartFmt(DATE?.dateStart)} - ${getWeekEndFmt(DATE?.dateStart)}`,
-        );
       }
       else if (dateTypeInList === `month`) {
         setDATE({
@@ -206,9 +190,6 @@ export const PickerDay = memo((
           dateStart: getMonthStartFmt(),
           dateEnd: getMonthEndFmt(),
         });
-        setDateStrInSave(
-          `${getMonthStartFmt(DATE?.dateStart)} - ${getMonthEndFmt(DATE?.dateStart)}`,
-        );
       }
       else if (dateTypeInList === `year`) {
         setDATE({
@@ -216,9 +197,6 @@ export const PickerDay = memo((
           dateStart: getYearStartFmt(),
           dateEnd: getYearEndFmt(),
         });
-        setDateStrInSave(
-          `${getYearStartFmt(DATE?.dateStart)} - ${getYearEndFmt(DATE?.dateStart)}`,
-        );
       }
     }
 
@@ -230,9 +208,6 @@ export const PickerDay = memo((
         dateStart: getDayFmt(prev.dateStart),
         dateEnd: getDayFmt(prev.dateStart),
       }));
-      setDateStrInSave(
-        getDayFmt(DATE?.dateStart),
-      );
     }
   }, []);
 
@@ -242,88 +217,72 @@ export const PickerDay = memo((
     // 1. Goal - List
     if (isGoalList) {
       if (dateTypeInList === `day`) {
-        setDATE({
-          dateType: ``,
-          dateStart: getDayFmt(),
-          dateEnd: getDayFmt(),
-        });
-        setDateStrInList(
-          getDayFmt(),
-        );
+        setDATE((prev) => ({
+          ...prev,
+          dateType: `day`,
+          dateStart: getDayFmt(prev.dateStart),
+          dateEnd: getDayFmt(prev.dateStart),
+        }));
       }
       else if (dateTypeInList === `week`) {
-        setDATE({
+        setDATE((prev) => ({
+          ...prev,
           dateType: `week`,
-          dateStart: getWeekStartFmt(),
-          dateEnd: getWeekEndFmt(),
-        });
-        setDateStrInList(
-          `${getWeekStartFmt()} - ${getWeekEndFmt()}`,
-        );
+          dateStart: getWeekStartFmt(prev.dateStart),
+          dateEnd: getWeekEndFmt(prev.dateStart),
+        }));
       }
       else if (dateTypeInList === `month`) {
-        setDATE({
+        setDATE((prev) => ({
+          ...prev,
           dateType: `month`,
-          dateStart: getMonthStartFmt(),
-          dateEnd: getMonthEndFmt(),
-        });
-        setDateStrInList(
-          `${getMonthStartFmt()} - ${getMonthEndFmt()}`,
-        );
+          dateStart: getMonthStartFmt(prev.dateStart),
+          dateEnd: getMonthEndFmt(prev.dateStart),
+        }));
       }
       else if (dateTypeInList === `year`) {
-        setDATE({
+        setDATE((prev) => ({
+          ...prev,
           dateType: `year`,
-          dateStart: getYearStartFmt(),
-          dateEnd: getYearEndFmt(),
-        });
-        setDateStrInList(
-          `${getYearStartFmt()} - ${getYearEndFmt()}`,
-        );
+          dateStart: getYearStartFmt(prev.dateStart),
+          dateEnd: getYearEndFmt(prev.dateStart),
+        }));
       }
     }
 
     // 4. Record - List
     else if (isRecordList) {
       if (dateTypeInList === `day`) {
-        setDATE({
+        setDATE((prev) => ({
+          ...prev,
           dateType: `day`,
-          dateStart: getDayFmt(),
-          dateEnd: getDayFmt(),
-        });
-        setDateStrInList(
-          getDayFmt(),
-        );
+          dateStart: getDayFmt(prev.dateStart),
+          dateEnd: getDayFmt(prev.dateStart),
+        }));
       }
       else if (dateTypeInList === `week`) {
-        setDATE({
+        setDATE((prev) => ({
+          ...prev,
           dateType: `week`,
-          dateStart: getWeekStartFmt(),
-          dateEnd: getWeekEndFmt(),
-        });
-        setDateStrInList(
-          `${getWeekStartFmt()} - ${getWeekEndFmt()}`,
-        );
+          dateStart: getWeekStartFmt(prev.dateStart),
+          dateEnd: getWeekEndFmt(prev.dateStart),
+        }));
       }
       else if (dateTypeInList === `month`) {
-        setDATE({
+        setDATE((prev) => ({
+          ...prev,
           dateType: `month`,
-          dateStart: getMonthStartFmt(),
-          dateEnd: getMonthEndFmt(),
-        });
-        setDateStrInList(
-          `${getMonthStartFmt()} - ${getMonthEndFmt()}`,
-        );
+          dateStart: getMonthStartFmt(prev.dateStart),
+          dateEnd: getMonthEndFmt(prev.dateStart),
+        }));
       }
       else if (dateTypeInList === `year`) {
-        setDATE({
+        setDATE((prev) => ({
+          ...prev,
           dateType: `year`,
-          dateStart: getYearStartFmt(),
-          dateEnd: getYearEndFmt(),
-        });
-        setDateStrInList(
-          `${getYearStartFmt()} - ${getYearEndFmt()}`,
-        );
+          dateStart: getYearStartFmt(prev.dateStart),
+          dateEnd: getYearEndFmt(prev.dateStart),
+        }));
       }
     }
   }, [dateTypeInList]);
@@ -334,88 +293,72 @@ export const PickerDay = memo((
     // 1. Goal - Detail
     if (isGoalDetail) {
       if (dateTypeInSave === `day`) {
-        setDATE({
-          dateType: ``,
-          dateStart: getDayFmt(),
-          dateEnd: getDayFmt(),
-        });
-        setDateStrInSave(
-          getDayFmt(),
-        );
+        setDATE((prev) => ({
+          ...prev,
+          dateType: `day`,
+          dateStart: getDayFmt(prev.dateStart),
+          dateEnd: getDayFmt(prev.dateStart),
+        }));
       }
       else if (dateTypeInSave === `week`) {
-        setDATE({
+        setDATE((prev) => ({
+          ...prev,
           dateType: `week`,
-          dateStart: getWeekStartFmt(),
-          dateEnd: getWeekEndFmt(),
-        });
-        setDateStrInSave(
-          `${getWeekStartFmt()} - ${getWeekEndFmt()}`,
-        );
+          dateStart: getWeekStartFmt(prev.dateStart),
+          dateEnd: getWeekEndFmt(prev.dateStart),
+        }));
       }
       else if (dateTypeInSave === `month`) {
-        setDATE({
+        setDATE((prev) => ({
+          ...prev,
           dateType: `month`,
-          dateStart: getMonthStartFmt(),
-          dateEnd: getMonthEndFmt(),
-        });
-        setDateStrInSave(
-          `${getMonthStartFmt()} - ${getMonthEndFmt()}`,
-        );
+          dateStart: getMonthStartFmt(prev.dateStart),
+          dateEnd: getMonthEndFmt(prev.dateStart),
+        }));
       }
       else if (dateTypeInSave === `year`) {
-        setDATE({
+        setDATE((prev) => ({
+          ...prev,
           dateType: `year`,
-          dateStart: getYearStartFmt(),
-          dateEnd: getYearEndFmt(),
-        });
-        setDateStrInSave(
-          `${getYearStartFmt()} - ${getYearEndFmt()}`,
-        );
+          dateStart: getYearStartFmt(prev.dateStart),
+          dateEnd: getYearEndFmt(prev.dateStart),
+        }));
       }
     }
 
     // 2. Record - Detail
     else if (isRecordDetail) {
       if (dateTypeInSave === `day`) {
-        setDATE({
-          dateType: ``,
-          dateStart: getDayFmt(),
-          dateEnd: getDayFmt(),
-        });
-        setDateStrInSave(
-          getDayFmt(),
-        );
+        setDATE((prev) => ({
+          ...prev,
+          dateType: `day`,
+          dateStart: getDayFmt(prev.dateStart),
+          dateEnd: getDayFmt(prev.dateStart),
+        }));
       }
       else if (dateTypeInSave === `week`) {
-        setDATE({
+        setDATE((prev) => ({
+          ...prev,
           dateType: `week`,
-          dateStart: getWeekStartFmt(),
-          dateEnd: getWeekEndFmt(),
-        });
-        setDateStrInSave(
-          `${getWeekStartFmt()} - ${getWeekEndFmt()}`,
-        );
+          dateStart: getWeekStartFmt(prev.dateStart),
+          dateEnd: getWeekEndFmt(prev.dateStart),
+        }));
       }
       else if (dateTypeInSave === `month`) {
-        setDATE({
+        setDATE((prev) => ({
+          ...prev,
           dateType: `month`,
-          dateStart: getMonthStartFmt(),
-          dateEnd: getMonthEndFmt(),
-        });
-        setDateStrInSave(
-          `${getMonthStartFmt()} - ${getMonthEndFmt()}`,
-        );
+          dateStart: getMonthStartFmt(prev.dateStart),
+          dateEnd: getMonthEndFmt(prev.dateStart),
+        }));
       }
       else if (dateTypeInSave === `year`) {
-        setDATE({
+        setDATE((prev) => ({
+          ...prev,
           dateType: `year`,
-          dateStart: getYearStartFmt(),
-          dateEnd: getYearEndFmt(),
-        });
-        setDateStrInSave(
-          `${getYearStartFmt()} - ${getYearEndFmt()}`,
-        );
+          dateStart: getYearStartFmt(prev.dateStart),
+          dateEnd: getYearEndFmt(prev.dateStart),
+        }));
       }
     }
   }, [dateTypeInSave]);
@@ -428,70 +371,92 @@ export const PickerDay = memo((
 
     // 1. List
     if (isList) {
+      // ex. 2026-01-15
       if (DATE?.dateType === `day`) {
         setDateStrInList(
-          handlerToMnDd(getDayFmt(DATE?.dateStart)),
+          handlerDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
         );
       }
+      // ex. 01-15 - 01-21
       else if (DATE?.dateType === `week`) {
         setDateStrInList(
-          `${handlerToMnDd(getWeekStartFmt(DATE?.dateStart))} - ${handlerToMnDd(getWeekEndFmt(DATE?.dateStart))}`,
+          `${handlerDateFormat(getWeekStartFmt(DATE?.dateStart), `mm-dd`)} - ${handlerDateFormat(getWeekEndFmt(DATE?.dateStart), `mm-dd`)}`,
         );
       }
+      // ex. 01-01 - 01-31
       else if (DATE?.dateType === `month`) {
         setDateStrInList(
-          `${handlerToMnDd(getMonthStartFmt(DATE?.dateStart))} - ${handlerToMnDd(getMonthEndFmt(DATE?.dateStart))}`,
+          `${handlerDateFormat(getMonthStartFmt(DATE?.dateStart), `mm-dd`)} - ${handlerDateFormat(getMonthEndFmt(DATE?.dateStart), `mm-dd`)}`,
         );
       }
+      // ex. 2026
       else if (DATE?.dateType === `year`) {
         setDateStrInList(
-          `${getYearStartFmt(DATE?.dateStart)} - ${getYearEndFmt(DATE?.dateStart)}`,
+          handlerDateFormat(getYearStartFmt(DATE?.dateStart), `yyyy`),
         );
       }
       else {
         setDateStrInList(
-          handlerToMnDd(getDayFmt(DATE?.dateStart)),
+          handlerDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
         );
       }
     }
 
     // 2. Detail
     else if (isDetail) {
+      // ex. 2026-01-15
       if (DATE?.dateType === `day`) {
         setDateStrInSave(
-          handlerToMnDd(getDayFmt(DATE?.dateStart)),
+          handlerDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
         );
       }
+      // ex. 01-15 - 01-21
       else if (DATE?.dateType === `week`) {
         setDateStrInSave(
-          `${handlerToMnDd(getWeekStartFmt(DATE?.dateStart))} - ${handlerToMnDd(getWeekEndFmt(DATE?.dateStart))}`,
+          `${handlerDateFormat(getWeekStartFmt(DATE?.dateStart), `mm-dd`)} - ${handlerDateFormat(getWeekEndFmt(DATE?.dateStart), `mm-dd`)}`,
         );
       }
+      // ex. 01-01 - 01-31
       else if (DATE?.dateType === `month`) {
         setDateStrInSave(
-          `${handlerToMnDd(getMonthStartFmt(DATE?.dateStart))} - ${handlerToMnDd(getMonthEndFmt(DATE?.dateStart))}`,
+          `${handlerDateFormat(getMonthStartFmt(DATE?.dateStart), `mm-dd`)} - ${handlerDateFormat(getMonthEndFmt(DATE?.dateStart), `mm-dd`)}`,
         );
       }
+      // ex. 2026
       else if (DATE?.dateType === `year`) {
         setDateStrInSave(
-          `${getYearStartFmt(DATE?.dateStart)} - ${getYearEndFmt(DATE?.dateStart)}`,
+          handlerDateFormat(getYearStartFmt(DATE?.dateStart), `yyyy`),
         );
       }
       else {
         setDateStrInSave(
-          handlerToMnDd(getDayFmt(DATE?.dateStart)),
+          handlerDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
         );
       }
     }
-  }, [ DATE?.dateType, DATE?.dateStart ]);
+  }, [ isList, isDetail, DATE?.dateType, DATE?.dateStart, DATE?.dateEnd ]);
 
   // 4. handler ----------------------------------------------------------------------------
-  // - "2024-01-15" => "01-15"
-  const handlerToMnDd = (str: string) => {
-    if (str?.split(`-`).length === 3) {
-      return `${str.split(`-`)[1]}-${str.split(`-`)[2]}`;
+  const handlerDateFormat = (str: string, format?: string): string => {
+    // 1. yyyy
+    if (format === `yyyy`) {
+      if (str?.split(`-`).length >= 1) {
+        return str.split(`-`)[0];
+      }
+      return ``;
     }
-    return ``;
+    // 2. mm-dd
+    else if (format === `mm-dd`) {
+      if (str?.split(`-`).length === 3) {
+        return `${str.split(`-`)[1]}-${str.split(`-`)[2]}`;
+      }
+      return ``;
+    }
+    // 3. yyyy-mm-dd
+    else if (format === `yyyy-mm-dd`) {
+      return str;
+    }
+    return str;
   };
 
   // 7. pickerNode  ----------------------------------------------------------------------------
@@ -584,7 +549,7 @@ export const PickerDay = memo((
                 {translate(`viewDay`)}
               </Div>
               <Div className={`fs-0-8rem fw-500 dark`}>
-                {`[${handlerToMnDd(getDayFmt(DATE?.dateStart))}]`}
+                {`[${handlerDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`)}]`}
               </Div>
             </Grid>
             <Grid size={12} className={`d-center`}>
@@ -596,13 +561,17 @@ export const PickerDay = memo((
                   value={getDayNotFmt(DATE?.dateStart ?? DATE?.dateEnd)}
                   className={`border-1 radius-2`}
                   showDaysOutsideCurrentMonth={true}
+                  slotProps={{
+                    calendarHeader: {
+                      format: `YYYY/MM`,
+                    },
+                  }}
                   slots={{
                     day: (props) => {
                       const { outsideCurrentMonth, day, ...other } = props;
 
                       let isSelected: boolean = false;
                       let isBadged: boolean = false;
-
                       let color: string = ``;
                       let borderRadius: string = ``;
                       let backgroundColor: string = ``;
@@ -635,7 +604,7 @@ export const PickerDay = memo((
                       }
                       return (
                         <Badge
-                          key={props.day.toString()}
+                          key={day as unknown as string}
                           badgeContent={``}
                           slotProps={{
                             badge: {
@@ -782,7 +751,7 @@ export const PickerDay = memo((
                 {translate(`viewWeek`)}
               </Div>
               <Div className={`fs-0-8rem fw-500 dark`}>
-                {`[${handlerToMnDd(getWeekStartFmt(DATE?.dateStart))} - ${handlerToMnDd(getWeekEndFmt(DATE?.dateEnd))}]`}
+                {`[${handlerDateFormat(getWeekStartFmt(DATE?.dateStart), `mm-dd`)} - ${handlerDateFormat(getWeekEndFmt(DATE?.dateEnd), `mm-dd`)}]`}
               </Div>
             </Grid>
             <Grid size={12} className={`d-center`}>
@@ -794,6 +763,11 @@ export const PickerDay = memo((
                   value={getDayNotFmt(DATE?.dateStart ?? DATE?.dateEnd)}
                   className={`border-1 radius-2`}
                   showDaysOutsideCurrentMonth={true}
+                  slotProps={{
+                    calendarHeader: {
+                      format: `YYYY/MM`,
+                    },
+                  }}
                   slots={{
                     day: (props) => {
                       const { outsideCurrentMonth, day, ...other } = props;
@@ -852,7 +826,7 @@ export const PickerDay = memo((
                       }
                       return (
                         <Badge
-                          key={props.day.toString()}
+                          key={day as unknown as string}
                           badgeContent={``}
                           slotProps={{
                             badge: {
@@ -996,7 +970,7 @@ export const PickerDay = memo((
                 {translate(`viewMonth`)}
               </Div>
               <Div className={`fs-0-8rem fw-500 dark`}>
-                {`[${handlerToMnDd(getMonthStartFmt(DATE?.dateStart))} - ${handlerToMnDd(getMonthEndFmt(DATE?.dateEnd))}]`}
+                {`[${handlerDateFormat(getMonthStartFmt(DATE?.dateStart), `mm-dd`)} - ${handlerDateFormat(getMonthEndFmt(DATE?.dateEnd), `mm-dd`)}]`}
               </Div>
             </Grid>
             <Grid size={12} className={`d-center`}>
@@ -1008,6 +982,11 @@ export const PickerDay = memo((
                   value={getDayNotFmt(DATE?.dateStart ?? DATE?.dateEnd)}
                   className={`border-1 radius-2`}
                   showDaysOutsideCurrentMonth={true}
+                  slotProps={{
+                    calendarHeader: {
+                      format: `YYYY/MM`,
+                    },
+                  }}
                   slots={{
                     day: (props) => {
                       const { outsideCurrentMonth, day, ...other } = props;
@@ -1049,7 +1028,7 @@ export const PickerDay = memo((
 
                       return (
                         <Badge
-                          key={props.day.toString()}
+                          key={day as unknown as string}
                           badgeContent={``}
                           slotProps={{
                             badge: {
@@ -1193,7 +1172,7 @@ export const PickerDay = memo((
                 {translate(`viewYear`)}
               </Div>
               <Div className={`fs-0-8rem fw-500 dark`}>
-                {`[${getYearStartFmt(DATE?.dateStart)} - ${getYearEndFmt(DATE?.dateEnd)}]`}
+                {`[${handlerDateFormat(getYearStartFmt(DATE?.dateStart), `yyyy`)}]`}
               </Div>
             </Grid>
             <Grid size={12} className={`d-center`}>
@@ -1205,6 +1184,11 @@ export const PickerDay = memo((
                   value={getDayNotFmt(DATE?.dateStart ?? DATE?.dateEnd)}
                   className={`border-1 radius-2`}
                   showDaysOutsideCurrentMonth={true}
+                  slotProps={{
+                    calendarHeader: {
+                      format: `YYYY/MM`,
+                    },
+                  }}
                   slots={{
                     day: (props) => {
 
@@ -1247,7 +1231,7 @@ export const PickerDay = memo((
 
                       return (
                         <Badge
-                          key={props?.day.toString()}
+                          key={day as unknown as string}
                           badgeContent={``}
                           slotProps={{
                             badge: {
@@ -1397,61 +1381,61 @@ export const PickerDay = memo((
 			)
 
 			// 1-2. 리스트 (Record)
-				: isRecordList ? (
-					<Grid container={true} spacing={1}>
-					  <Grid size={3} className={`d-center`}>
-					    {dateTypeInListSection()}
-					  </Grid>
-					  <Grid size={9} className={`d-center`}>
-					    {dateTypeInList === `day` && daySection()}
-					    {dateTypeInList === `week` && weekSection()}
-					    {dateTypeInList === `month` && monthSection()}
-					    {dateTypeInList === `year` && yearSection()}
-					  </Grid>
-					</Grid>
-				)
+      : isRecordList ? (
+        <Grid container={true} spacing={1}>
+          <Grid size={3} className={`d-center`}>
+            {dateTypeInListSection()}
+          </Grid>
+          <Grid size={9} className={`d-center`}>
+            {dateTypeInList === `day` && daySection()}
+            {dateTypeInList === `week` && weekSection()}
+            {dateTypeInList === `month` && monthSection()}
+            {dateTypeInList === `year` && yearSection()}
+          </Grid>
+        </Grid>
+      )
 
-				// 2-1. 세이브 (Calendar)
-					: isCalendarDetail ? (
-						<Grid container={true} spacing={1}>
-						  <Grid size={{ xs: 4, sm: 3 }} className={`d-center`}>
-						    {dateTypeInSaveSection()}
-						  </Grid>
-						  <Grid size={{ xs: 8, sm: 9 }} className={`d-center`}>
-						    {DATE?.dateType === `day` && daySection()}
-						    {DATE?.dateType === `week` && weekSection()}
-						    {DATE?.dateType === `month` && monthSection()}
-						    {DATE?.dateType === `year` && yearSection()}
-						  </Grid>
-						</Grid>
-					)
+      // 2-1. 세이브 (Calendar)
+      : isCalendarDetail ? (
+        <Grid container={true} spacing={1}>
+          <Grid size={{ xs: 4, sm: 3 }} className={`d-center`}>
+            {dateTypeInSaveSection()}
+          </Grid>
+          <Grid size={{ xs: 8, sm: 9 }} className={`d-center`}>
+            {DATE?.dateType === `day` && daySection()}
+            {DATE?.dateType === `week` && weekSection()}
+            {DATE?.dateType === `month` && monthSection()}
+            {DATE?.dateType === `year` && yearSection()}
+          </Grid>
+        </Grid>
+      )
 
-					// 2-2. 세이브 (Goal)
-						: isGoalDetail ? (
-							<Grid container={true} spacing={1}>
-							  <Grid size={{ xs: 4, sm: 3 }} className={`d-center`}>
-							    {dateTypeInSaveSection()}
-							  </Grid>
-							  <Grid size={{ xs: 8, sm: 9 }} className={`d-center`}>
-							    {DATE?.dateType === `week` && weekSection()}
-							    {DATE?.dateType === `month` && monthSection()}
-							    {DATE?.dateType === `year` && yearSection()}
-							  </Grid>
-							</Grid>
-						)
+      // 2-2. 세이브 (Goal)
+      : isGoalDetail ? (
+        <Grid container={true} spacing={1}>
+          <Grid size={{ xs: 4, sm: 3 }} className={`d-center`}>
+            {dateTypeInSaveSection()}
+          </Grid>
+          <Grid size={{ xs: 8, sm: 9 }} className={`d-center`}>
+            {DATE?.dateType === `week` && weekSection()}
+            {DATE?.dateType === `month` && monthSection()}
+            {DATE?.dateType === `year` && yearSection()}
+          </Grid>
+        </Grid>
+      )
 
-						// 2-3. 세이브 (Record)
-							: isRecordDetail ? (
-								<Grid container={true} spacing={1}>
-								  <Grid size={{ xs: 4, sm: 3 }} className={`d-center`}>
-								    {dateTypeInSaveSection()}
-								  </Grid>
-								  <Grid size={{ xs: 8, sm: 9 }} className={`d-center`}>
-								    {DATE?.dateType === `day` && daySection()}
-								  </Grid>
-								</Grid>
-							)
-								: null
+      // 2-3. 세이브 (Record)
+      : isRecordDetail ? (
+        <Grid container={true} spacing={1}>
+          <Grid size={{ xs: 4, sm: 3 }} className={`d-center`}>
+            {dateTypeInSaveSection()}
+          </Grid>
+          <Grid size={{ xs: 8, sm: 9 }} className={`d-center`}>
+            {DATE?.dateType === `day` && daySection()}
+          </Grid>
+        </Grid>
+      )
+      : null
     );
   };
 

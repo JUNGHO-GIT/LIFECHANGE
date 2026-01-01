@@ -47,6 +47,7 @@
     "resolvePackageJsonImports": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": false,
+    "noCheck": false,
     "noImplicitAny": true,
     "noImplicitThis": true,
     "noUnusedLocals": false,
@@ -87,6 +88,6 @@
     "useDefineForClassFields": true,
     "useUnknownInCatchVariables": true,
     "importHelpers": true,
-    "importsNotUsedAsValues": "remove"
+    "importsNotUsedAsValues": "remove",
   }
 }

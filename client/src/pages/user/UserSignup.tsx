@@ -315,7 +315,7 @@ export const UserSignup = memo(() => {
                   disabled={item.user_id_verified}
                   placeholder={`123456`}
                   onChange={(e: any) => {
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       user_verify_code: e.target.value,
                     }));
@@ -350,7 +350,7 @@ export const UserSignup = memo(() => {
                   error={ERRORS?.[i]?.user_pw}
                   disabled={!item.user_id_verified}
                   onChange={(e: any) => {
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       user_pw: e.target.value,
                     }));
@@ -371,7 +371,7 @@ export const UserSignup = memo(() => {
                   error={ERRORS?.[i]?.user_pw_verified}
                   disabled={!item.user_id_verified}
                   onChange={(e: any) => {
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       user_pw_verified: e.target.value,
                     }));
@@ -409,7 +409,7 @@ export const UserSignup = memo(() => {
                     !processedValue === null && (() => {
                       return;
                     })();
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       user_initScale: processedValue,
                     }));
@@ -445,7 +445,7 @@ export const UserSignup = memo(() => {
                     !processedValue === null && (() => {
                       return;
                     })();
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       user_initAvgKcalIntake: processedValue,
                     }));
@@ -481,7 +481,7 @@ export const UserSignup = memo(() => {
                     !processedValue === null && (() => {
                       return;
                     })();
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       user_initProperty: processedValue,
                     }));

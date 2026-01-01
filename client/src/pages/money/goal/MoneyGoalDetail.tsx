@@ -357,13 +357,11 @@ export const MoneyGoalDetail = memo(() => {
                   value={insertComma(item?.money_goal_income ?? `0`)}
                   inputRef={REFS?.[i]?.money_goal_income}
                   error={ERRORS?.[i]?.money_goal_income}
-                  label={
-									DATE?.dateType === `day` ? (
+                  label={DATE?.dateType === `day` ? (
 										translate(`goalIncome`)
 									) : (
 										`${translate(`goalIncome`)} (${translate(`total`)})`
-									)
-                  }
+									)}
                   startadornment={(
                     <Img
                       max={14}
@@ -381,7 +379,7 @@ export const MoneyGoalDetail = memo(() => {
                     !processedValue === null && (() => {
                       return;
                     })();
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       money_goal_income: processedValue,
                     }));
@@ -422,7 +420,7 @@ export const MoneyGoalDetail = memo(() => {
                     !processedValue === null && (() => {
                       return;
                     })();
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       money_goal_expense: processedValue,
                     }));

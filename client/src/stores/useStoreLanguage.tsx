@@ -5,10 +5,7 @@
  * @since 2025-12-26
  */
 
-import { create } from "@exportLibs";
-
-// 모듈 스코프 캐시 변수 사용
-let __resourcesCache: Record<string, any> | null = null;
+import { create, StoreApi, UseBoundStore } from "@exportLibs";
 
 // -------------------------------------------------------------------------------------------------
 declare interface LanguageState {
@@ -18,7 +15,8 @@ declare interface LanguageState {
 }
 
 // -------------------------------------------------------------------------------------------------
-export const useStoreLanguage = create<LanguageState>((set, get) => ({
+let __resourcesCache: Record<string, any> | null = null;
+export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<LanguageState>((set, get) => ({
   lang: `en`,
   setLang: (lang: string) => {
     set({ lang });

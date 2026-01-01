@@ -17,8 +17,12 @@ export const useFoodSection = () => {
 
   // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
-    (!PATH.includes(`food/find`) && !PATH.includes(`food/favorite`) && !PATH.includes(`food/record`)) && (() => {
+    if (
+      !PATH.includes(`food/find`) &&
+      !PATH.includes(`food/favorite`) &&
+      !PATH.includes(`food/record`)
+    ) {
       setSession(`section`, `food`, ``, []);
-    })();
+    }
   }, [PATH]);
 };

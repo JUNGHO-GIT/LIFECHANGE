@@ -18,11 +18,6 @@ export const useLanguageInitialize = () => {
 
   // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
-    if (localLang === `ko`) {
-      setLang(`ko`);
-    }
-    else {
-      setLang(`en`);
-    }
+    localLang === `ko` ? setLang(`ko`) : setLang(`en`);
   }, [localLang]);
 };

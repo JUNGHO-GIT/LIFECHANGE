@@ -466,7 +466,7 @@ export const TopNav = memo(() => {
               radius={false}
               src={`${mainSmileImage}.webp`}
               onClick={(e: any) => {
-                setPercent(sessionPercent as any);
+                setPercent(sessionPercent);
                 popTrigger.openPopup(e.currentTarget);
               }}
             />

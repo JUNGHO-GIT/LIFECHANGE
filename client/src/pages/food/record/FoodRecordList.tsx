@@ -32,21 +32,21 @@ export const FoodRecordList = memo(() => {
       dateType: location_dateType ?? ``,
       dateStart: location_dateStart ?? getDayFmt(),
       dateEnd: location_dateEnd ?? getDayFmt(),
-    }
+    },
   );
   const [ PAGING, setPAGING ] = useStorageLocal(
     `paging`, PATH, ``, {
       sort: `asc`,
       page: 1,
       part: `all`,
-    }
+    },
   );
   const [ isExpanded, setIsExpanded ] = useStorageLocal(
     `isExpanded`, PATH, ``, [
       {
         expanded: true,
       },
-    ]
+    ],
   );
 
   // 2-2. useState -------------------------------------------------------------------------------
@@ -84,7 +84,7 @@ export const FoodRecordList = memo(() => {
     })
     .then((res: any) => {
       setEXIST(
-        (!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result)
+        (!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result),
       );
     })
     .catch((error: any) => {
@@ -161,9 +161,9 @@ export const FoodRecordList = memo(() => {
                         e.preventDefault();
                         e.stopPropagation();
                         setIsExpanded(isExpanded.map((el: any, index: number) => (
-												i === index ? {
-												  expanded: !el.expanded,
-												} : el
+                          i === index ? {
+                            expanded: !el.expanded,
+                          } : el
                         )));
                       }}
                     />

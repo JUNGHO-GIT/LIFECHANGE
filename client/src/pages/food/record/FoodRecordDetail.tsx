@@ -659,7 +659,7 @@ export const FoodRecordDetail = memo(() => {
                   error={ERRORS?.[i]?.food_record_part}
                   onChange={(e: any) => {
                     let value: string = String(e.target.value ?? ``);
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       food_section: prev.food_section?.map((section: any, idx: number) => (
 											idx === i ? {
@@ -707,7 +707,7 @@ export const FoodRecordDetail = memo(() => {
                       return nut;
                     };
                     // object 설정
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       food_section: prev.food_section?.map((section: any, idx: number) => (
 											idx === i ? {
@@ -736,7 +736,7 @@ export const FoodRecordDetail = memo(() => {
                       return;
                     }
                     // object 설정
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       food_section: prev.food_section?.map((section: any, idx: number) => (
 											idx === i ? {
@@ -768,7 +768,7 @@ export const FoodRecordDetail = memo(() => {
                       return;
                     }
                     // object 설정
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       food_section: prev.food_section?.map((section: any, idx: number) => (
 											idx === i ? {
@@ -796,7 +796,7 @@ export const FoodRecordDetail = memo(() => {
                       return;
                     }
                     // object 설정
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       food_section: prev.food_section?.map((section: any, idx: number) => (
 											idx === i ? {
@@ -837,7 +837,7 @@ export const FoodRecordDetail = memo(() => {
                       return;
                     }
                     // object 설정
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       food_section: prev.food_section?.map((section: any, idx: number) => (
 											idx === i ? {
@@ -874,7 +874,7 @@ export const FoodRecordDetail = memo(() => {
                       return;
                     }
                     // object 설정
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       food_section: prev.food_section?.map((section: any, idx: number) => (
 											idx === i ? {
@@ -915,7 +915,7 @@ export const FoodRecordDetail = memo(() => {
                       return;
                     }
                     // object 설정
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       food_section: prev.food_section?.map((section: any, idx: number) => (
 											idx === i ? {
@@ -952,7 +952,7 @@ export const FoodRecordDetail = memo(() => {
                       return;
                     }
                     // object 설정
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       food_section: prev.food_section?.map((section: any, idx: number) => (
 											idx === i ? {

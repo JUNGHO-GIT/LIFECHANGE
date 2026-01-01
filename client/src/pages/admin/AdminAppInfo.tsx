@@ -126,14 +126,11 @@ export const AdminAppInfo = memo(() => {
                       </TableCell>
                       <TableCell className={`w-65vw fs-0-7rem p-15px`}>
                         {localTimeZone}
-                        {` `}
-                        {`|`}
+                        {` | `}
                         {localLang}
-                        {` `}
-                        {`|`}
+                        {` | `}
                         {localIsoCode}
-                        {` `}
-                        {`|`}
+                        {` | `}
                         {localCurrency}
                       </TableCell>
                     </TableRow>

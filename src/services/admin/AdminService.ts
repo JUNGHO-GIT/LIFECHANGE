@@ -17,14 +17,12 @@ export const curEnv = async () => {
   let finalResult: unknown = null;
   let statusResult: string = ``;
 
-  const __filename: string = fileURLToPath(import.meta.url);
-  const __dirname: string = path.dirname(__filename);
-  const indexFile: string = path.join(__dirname, `../../../index.ts`);
-
-  const regex: RegExp = /\/\/\s*const\s*db\s*=\s*process.env.DB_NAME/;
-  const data: string = fs.readFileSync(indexFile, `utf8`);
-  const result: RegExpMatchArray | null = data.match(regex);
-  const env: string = (!result || result === undefined) ? `PRODUCTION` : `DEVELOPMENT`;
+  const hasEnvMode: boolean = !!(process.env.ENV_MODE ?? process.env.NODE_ENV ?? process.env.GLOBAL_ENV);
+  !hasEnvMode ? dotenv.config() : null;
+  const rawMode: string = String(process.env.ENV_MODE ?? process.env.NODE_ENV ?? process.env.GLOBAL_ENV ?? ``).trim().toUpperCase();
+  const env: string = rawMode === `PRODUCTION` || rawMode === `PROD` ? `PRODUCTION`
+    : rawMode === `DEVELOPMENT` || rawMode === `DEV` ? `DEVELOPMENT`
+    : `DEVELOPMENT`;
 
   finalResult = {
     env: env,
@@ -55,7 +53,7 @@ export const appInfo = async () => {
   const dateMatches: RegExpExecArray[] = [...markdownData.matchAll(dateRegex)];
   const packageJson: Record<string, any> = JSON.parse(packageData);
 
-  const lastVersion: string = versionMatches.length > 0 ? versionMatches.at(-1)[2] : ``;
+  const lastVersion: string = versionMatches.length > 0 ? versionMatches.at(-1)![2] : ``;
   const lastDateMatch: RegExpExecArray | null | undefined = dateMatches.length > 0 ? dateMatches.at(-1) : null;
   const lastDateTime: string = lastDateMatch ? `${lastDateMatch[1]}_${lastDateMatch[2]}` : ``;
   const lastLicense: string = packageJson.license ?? ``;

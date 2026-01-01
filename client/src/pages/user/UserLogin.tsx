@@ -303,7 +303,7 @@ export const UserLogin = memo(() => {
                   inputRef={REFS?.[i]?.user_pw}
                   error={ERRORS?.[i]?.user_pw}
                   onChange={(e: any) => {
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       user_pw: e.target.value,
                     }));

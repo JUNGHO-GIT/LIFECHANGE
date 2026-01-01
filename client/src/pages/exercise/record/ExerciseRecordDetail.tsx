@@ -521,7 +521,7 @@ export const ExerciseRecordDetail = memo(() => {
                     const value: string = String(e.target.value ?? ``);
                     const foundIndex: number = exerciseArray.findIndex((f: any) => f.exercise_record_part === value);
                     const foundItem: any = foundIndex !== -1 ? exerciseArray[foundIndex] : null;
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
 											idx === i ? {
@@ -553,7 +553,7 @@ export const ExerciseRecordDetail = memo(() => {
                   error={ERRORS?.[i]?.exercise_record_title}
                   onChange={(e: any) => {
                     const value: string = String(e.target.value ?? ``);
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
 											idx === i ? {
@@ -607,7 +607,7 @@ export const ExerciseRecordDetail = memo(() => {
                     !processedValue === null && (() => {
                       return;
                     })();
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
 											idx === i ? {
@@ -643,7 +643,7 @@ export const ExerciseRecordDetail = memo(() => {
                     !processedValue === null && (() => {
                       return;
                     })();
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
 											idx === i ? {
@@ -683,7 +683,7 @@ export const ExerciseRecordDetail = memo(() => {
                     !processedValue === null && (() => {
                       return;
                     })();
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
 											idx === i ? {

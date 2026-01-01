@@ -186,7 +186,7 @@ export const UserDetail = memo(() => {
                     !processedValue === null && (() => {
                       return;
                     })();
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       user_initScale: processedValue,
                     }));
@@ -245,7 +245,7 @@ export const UserDetail = memo(() => {
                     !processedValue === null && (() => {
                       return;
                     })();
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       user_initAvgKcalIntake: processedValue,
                     }));
@@ -304,7 +304,7 @@ export const UserDetail = memo(() => {
                     !processedValue === null && (() => {
                       return;
                     })();
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       user_initProperty: processedValue,
                     }));

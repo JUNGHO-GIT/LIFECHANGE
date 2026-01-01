@@ -192,3 +192,6 @@
   border-color: #f44336 !important;
   border-width: 2px !important;
 }
+.MuiPickersCalendarHeader-labelContainer {
+  margin: 0 auto !important;
+}

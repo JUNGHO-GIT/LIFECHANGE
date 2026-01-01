@@ -509,10 +509,10 @@ export const MoneyRecordDetail = memo(() => {
                       setOBJECT((prev) => ({
                         ...prev,
                         money_section: prev.money_section?.map((section: any, idx: number) => (
-												idx === i ? {
-												  ...section,
-												  money_record_title: value,
-												} : section
+                          idx === i ? {
+                            ...section,
+                            money_record_title: value,
+                          } : section
                         )),
                       }));
                     }}

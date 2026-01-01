@@ -385,7 +385,7 @@ export const ExerciseGoalDetail = memo(() => {
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 9999);
                     !processedValue === null && (() => {})();
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       exercise_goal_count: processedValue,
                     }));
@@ -424,7 +424,7 @@ export const ExerciseGoalDetail = memo(() => {
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 9_999_999);
                     !processedValue === null && (() => {})();
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       exercise_goal_volume: processedValue,
                     }));
@@ -474,7 +474,7 @@ export const ExerciseGoalDetail = memo(() => {
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999, 2);
                     !processedValue === null && (() => {})();
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       exercise_goal_scale: processedValue,
                     }));

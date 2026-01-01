@@ -34,17 +34,19 @@ export const useLanguageSetting = () => {
     const unit: string = isoCode === `US` ? `lbs` : `kg`;
 
     // ex. en
-    const lang: string = localLang ?? (
-			navigator.language.includes(`-`) ? navigator.language.split(`-`)[0] : navigator.language
-    );
+    const browserLang: string = navigator.language.includes(`-`) ? navigator.language.split(`-`)[0] : navigator.language;
+    const lang: string = localLang ?? browserLang;
 
-    // Load lang for moment if necessary
-    lang && lang !== `en` && moment.locale(lang);
+    // moment locale 정규화
+    const momentLang: string = (lang || ``).toLowerCase().startsWith(`ko`) ? `ko` : `en`;
+
+    // Set moment locale
+    moment.locale(momentLang);
 
     // Save to local storage
     setLocal(`setting`, `locale`, ``, {
       timeZone: timeZone,
-      lang: lang,
+      lang: momentLang,
       zoneName: zoneName,
       isoCode: isoCode,
       currency: currency,

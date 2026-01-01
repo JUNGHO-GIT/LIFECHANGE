@@ -382,7 +382,7 @@ export const FoodGoalDetail = memo(() => {
                     !processedValue === null && (() => {
                       return;
                     })();
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       food_goal_kcal: processedValue,
                     }));
@@ -423,7 +423,7 @@ export const FoodGoalDetail = memo(() => {
                     !processedValue === null && (() => {
                       return;
                     })();
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       food_goal_carb: processedValue,
                     }));
@@ -464,7 +464,7 @@ export const FoodGoalDetail = memo(() => {
                     !processedValue === null && (() => {
                       return;
                     })();
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       food_goal_protein: processedValue,
                     }));
@@ -505,7 +505,7 @@ export const FoodGoalDetail = memo(() => {
                     !processedValue === null && (() => {
                       return;
                     })();
-                    setOBJECT((prev) => ({
+                    setOBJECT((prev: any) => ({
                       ...prev,
                       food_goal_fat: processedValue,
                     }));
