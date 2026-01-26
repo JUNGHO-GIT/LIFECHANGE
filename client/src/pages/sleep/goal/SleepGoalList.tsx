@@ -145,283 +145,281 @@ export const SleepGoalList = memo(() => {
     const listSection = () => (
       <Grid container={true} spacing={0}>
         {OBJECT?.map((item, i) => (
-          <Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px`} key={`list-${i}`}>
-            <Grid size={12} className={`p-2px`}>
-              <Accordion className={`border-0 shadow-0 radius-2`} expanded={isExpanded?.[i]?.expanded}>
-                <AccordionSummary
-                  expandIcon={(
+          <Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px p-2px`} key={`list-${i}`}>
+            <Accordion className={`border-0 shadow-0 radius-2`} expanded={isExpanded?.[i]?.expanded}>
+              <AccordionSummary
+                expandIcon={(
+                  <Icons
+                    key={`ChevronDown`}
+                    name={`ChevronDown`}
+                    className={`w-16px h-16px`}
+                    onClick={(e: any) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setIsExpanded(isExpanded.map((el: any, index: number) => (
+                        i === index ? {
+                          expanded: !el.expanded,
+                        } : el
+                      )));
+                    }}
+                  />
+                )}
+                onClick={() => {
+                  void navigate(toDetail, {
+                    state: {
+                      id: item._id,
+                      dateType: item.sleep_goal_dateType,
+                      dateStart: item.sleep_goal_dateStart,
+                      dateEnd: item.sleep_goal_dateEnd,
+                    },
+                  });
+                }}
+              >
+                <Grid container={true} spacing={1}>
+                  <Grid size={2} className={`d-row-center`}>
                     <Icons
-                      key={`ChevronDown`}
-                      name={`ChevronDown`}
+                      key={`Search`}
+                      name={`Search`}
                       className={`w-16px h-16px`}
-                      onClick={(e: any) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setIsExpanded(isExpanded.map((el: any, index: number) => (
-													i === index ? {
-													  expanded: !el.expanded,
-													} : el
-                        )));
-                      }}
                     />
-                  )}
-                  onClick={() => {
-                    void navigate(toDetail, {
-                      state: {
-                        id: item._id,
-                        dateType: item.sleep_goal_dateType,
-                        dateStart: item.sleep_goal_dateStart,
-                        dateEnd: item.sleep_goal_dateEnd,
-                      },
-                    });
-                  }}
-                >
+                  </Grid>
+                  <Grid size={10} className={`d-row-left`}>
+                    <Div className={`fs-0-8rem fw-600 black`}>
+                      {item.sleep_goal_dateStart?.slice(5, 10)}
+                    </Div>
+                    <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
+                      {translate(getDayNotFmt(item.sleep_goal_dateStart).format(`ddd`))}
+                    </Div>
+                    <Div className={`fs-0-8rem fw-500 dark ml-5px mr-5px`}>
+                      {`-`}
+                    </Div>
+                    <Div className={`fs-0-8rem fw-600 black`}>
+                      {item.sleep_goal_dateEnd?.slice(5, 10)}
+                    </Div>
+                    <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
+                      {translate(getDayNotFmt(item.sleep_goal_dateEnd).format(`ddd`))}
+                    </Div>
+                  </Grid>
+                </Grid>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container={true} spacing={1}>
+                  {/** row 1 * */}
                   <Grid container={true} spacing={1}>
                     <Grid size={2} className={`d-row-center`}>
-                      <Icons
-                        key={`Search`}
-                        name={`Search`}
-                        className={`w-16px h-16px`}
+                      <Img
+                        max={14}
+                        hover={true}
+                        shadow={false}
+                        radius={false}
+                        src={`sleep2.webp`}
                       />
                     </Grid>
-                    <Grid size={10} className={`d-row-left`}>
-                      <Div className={`fs-0-8rem fw-600 black`}>
-                        {item.sleep_goal_dateStart?.slice(5, 10)}
-                      </Div>
-                      <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
-                        {translate(getDayNotFmt(item.sleep_goal_dateStart).format(`ddd`))}
-                      </Div>
-                      <Div className={`fs-0-8rem fw-500 dark ml-5px mr-5px`}>
-                        {`-`}
-                      </Div>
-                      <Div className={`fs-0-8rem fw-600 black`}>
-                        {item.sleep_goal_dateEnd?.slice(5, 10)}
-                      </Div>
-                      <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
-                        {translate(getDayNotFmt(item.sleep_goal_dateEnd).format(`ddd`))}
+                    <Grid size={3} className={`d-row-left`}>
+                      <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                        {translate(`bedTime`)}
                       </Div>
                     </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        {/** goal * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`goal`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.sleep_goal_bedTime_color}`}>
+                            {item.sleep_goal_bedTime}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`hm`)}
+                          </Div>
+                        </Grid>
+                        {/** record * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`record`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.sleep_record_bedTime_color}`}>
+                            {item.sleep_record_bedTime}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`hm`)}
+                          </Div>
+                        </Grid>
+                        {/** diff * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`diff`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.sleep_record_diff_bedTime_color}`}>
+                            {item.sleep_record_diff_bedTime}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`hm`)}
+                          </Div>
+                        </Grid>
+                      </Grid>
+                    </Grid>
                   </Grid>
-                </AccordionSummary>
-                <AccordionDetails>
+
+                  <Hr m={1} className={`bg-light`} />
+
+                  {/** row 2 * */}
                   <Grid container={true} spacing={1}>
-                    {/** row 1 * */}
-                    <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-row-center`}>
-                        <Img
-                          max={14}
-                          hover={true}
-                          shadow={false}
-                          radius={false}
-                          src={`sleep2.webp`}
-                        />
-                      </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
-                          {translate(`bedTime`)}
-                        </Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          {/** goal * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`goal`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.sleep_goal_bedTime_color}`}>
-                              {item.sleep_goal_bedTime}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`hm`)}
-                            </Div>
-                          </Grid>
-                          {/** record * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`record`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.sleep_record_bedTime_color}`}>
-                              {item.sleep_record_bedTime}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`hm`)}
-                            </Div>
-                          </Grid>
-                          {/** diff * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`diff`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.sleep_record_diff_bedTime_color}`}>
-                              {item.sleep_record_diff_bedTime}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`hm`)}
-                            </Div>
-                          </Grid>
-                        </Grid>
-                      </Grid>
+                    <Grid size={2} className={`d-center`}>
+                      <Img
+                        max={14}
+                        hover={true}
+                        shadow={false}
+                        radius={false}
+                        src={`sleep3.webp`}
+                      />
                     </Grid>
-
-                    <Hr m={1} className={`bg-light`} />
-
-                    {/** row 2 * */}
-                    <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-center`}>
-                        <Img
-                          max={14}
-                          hover={true}
-                          shadow={false}
-                          radius={false}
-                          src={`sleep3.webp`}
-                        />
-                      </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
-                          {translate(`wakeTime`)}
-                        </Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          {/** goal * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`goal`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.sleep_goal_wakeTime_color}`}>
-                              {item.sleep_goal_wakeTime}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`hm`)}
-                            </Div>
-                          </Grid>
-                          {/** record * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`record`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.sleep_record_wakeTime_color}`}>
-                              {item.sleep_record_wakeTime}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`hm`)}
-                            </Div>
-                          </Grid>
-                          {/** diff * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`diff`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.sleep_record_diff_wakeTime_color}`}>
-                              {item.sleep_record_diff_wakeTime}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`hm`)}
-                            </Div>
-                          </Grid>
-                        </Grid>
-                      </Grid>
+                    <Grid size={3} className={`d-row-left`}>
+                      <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                        {translate(`wakeTime`)}
+                      </Div>
                     </Grid>
-
-                    <Hr m={1} className={`bg-light`} />
-
-                    {/** row 3 * */}
-                    <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-center`}>
-                        <Img
-                          max={14}
-                          hover={true}
-                          shadow={false}
-                          radius={false}
-                          src={`sleep4.webp`}
-                        />
-                      </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
-                          {translate(`sleepTime`)}
-                        </Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          {/** goal * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`goal`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.sleep_goal_sleepTime_color}`}>
-                              {item.sleep_goal_sleepTime}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`hm`)}
-                            </Div>
-                          </Grid>
-                          {/** record * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`record`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.sleep_record_sleepTime_color}`}>
-                              {item.sleep_record_sleepTime}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`hm`)}
-                            </Div>
-                          </Grid>
-                          {/** diff * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`diff`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.sleep_record_diff_sleepTime_color}`}>
-                              {item.sleep_record_diff_sleepTime}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`hm`)}
-                            </Div>
-                          </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        {/** goal * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`goal`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.sleep_goal_wakeTime_color}`}>
+                            {item.sleep_goal_wakeTime}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`hm`)}
+                          </Div>
+                        </Grid>
+                        {/** record * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`record`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.sleep_record_wakeTime_color}`}>
+                            {item.sleep_record_wakeTime}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`hm`)}
+                          </Div>
+                        </Grid>
+                        {/** diff * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`diff`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.sleep_record_diff_wakeTime_color}`}>
+                            {item.sleep_record_diff_wakeTime}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`hm`)}
+                          </Div>
                         </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
+
+                  <Hr m={1} className={`bg-light`} />
+
+                  {/** row 3 * */}
+                  <Grid container={true} spacing={1}>
+                    <Grid size={2} className={`d-center`}>
+                      <Img
+                        max={14}
+                        hover={true}
+                        shadow={false}
+                        radius={false}
+                        src={`sleep4.webp`}
+                      />
+                    </Grid>
+                    <Grid size={3} className={`d-row-left`}>
+                      <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                        {translate(`sleepTime`)}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        {/** goal * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`goal`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.sleep_goal_sleepTime_color}`}>
+                            {item.sleep_goal_sleepTime}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`hm`)}
+                          </Div>
+                        </Grid>
+                        {/** record * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`record`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.sleep_record_sleepTime_color}`}>
+                            {item.sleep_record_sleepTime}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`hm`)}
+                          </Div>
+                        </Grid>
+                        {/** diff * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`diff`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.sleep_record_diff_sleepTime_color}`}>
+                            {item.sleep_record_diff_sleepTime}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`hm`)}
+                          </Div>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
           </Grid>
         ))}
       </Grid>

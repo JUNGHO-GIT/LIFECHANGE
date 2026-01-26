@@ -87,9 +87,7 @@ export const FoodGoalList = memo(() => {
       },
     })
     .then((res: any) => {
-      setEXIST(
-        (!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result),
-      );
+      setEXIST(!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result)
     })
     .catch((error: any) => {
       setALERT({

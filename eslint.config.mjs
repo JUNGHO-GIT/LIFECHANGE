@@ -786,7 +786,7 @@ const RULES_TS = {
   // 2-1. type-safety
   "@typescript-eslint/no-inferrable-types": [`off`],
   "@typescript-eslint/typedef": [
-    `error`,
+    `warn`,
     {
       variableDeclaration: true,
       memberVariableDeclaration: true,
@@ -1343,7 +1343,7 @@ const RULES_REACT = {
   "react/iframe-missing-sandbox": [`error`],
   "react/no-access-state-in-setstate": [`error`],
   "react/no-adjacent-inline-elements": [`error`],
-  "react/no-array-index-key": [`off`],
+  "react/no-array-index-key": [`error`],
   "react/no-arrow-function-lifecycle": [`error`],
   "react/no-children-prop": [`off`],
   "react/no-danger": [`warn`],
@@ -1974,7 +1974,7 @@ const RULES_STYLISTIC = {
     `error`,
     `always`,
     {
-      exceptAfterSingleLine: false,
+      exceptAfterSingleLine: true,
     },
   ],
   "@stylistic/max-statements-per-line": [ `error`, { max: 1 }],
@@ -2040,7 +2040,7 @@ const RULES_STYLISTIC = {
       },
       outerIIFEBody: 1,
       flatTernaryExpressions: false,
-      offsetTernaryExpressions: false,
+      offsetTernaryExpressions: true,
       ignoredNodes: [`ConditionalExpression`],
       tabLength: 2,
       ignoreComments: false,

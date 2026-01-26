@@ -31,9 +31,8 @@ export const Dialog = memo((
 
   // 1. common ----------------------------------------------------------------------------------
   const { PATH, navigate, toDetail, localIsoCode } = useCommonValue();
-  const {
-    isGoalList, isFindList, isFavoriteList, isList, isDetail, isCalendar,
-  } = useCommonValue();
+  const { isGoalList, isFindList, isFavoriteList } = useCommonValue();
+  const { isList, isDetail, isCalendar } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
 
@@ -42,7 +41,7 @@ export const Dialog = memo((
 
   // 7. dialog -------------------------------------------------------------------------------------
   const dialogNode = () => {
-    // 2. goal
+    // 1. goal
     const listGoalSection = () => (
       <Div className={`d-flex`}>
         <Backdrop
@@ -133,7 +132,7 @@ export const Dialog = memo((
         </SpeedDial>
       </Div>
     );
-    // 3. record
+    // 1. record
     const listRecordSection = () => (
       <Div className={`d-flex`}>
         <Backdrop
@@ -224,7 +223,7 @@ export const Dialog = memo((
         </SpeedDial>
       </Div>
     );
-    // 4. find
+    // 3. find
     const findSection = () => (
       <Div className={`d-flex`}>
         <Backdrop
@@ -358,7 +357,7 @@ export const Dialog = memo((
         </SpeedDial>
       </Div>
     );
-    // 5. detail
+    // 4. detail
     const detailSection = () => (
       <Div className={`d-flex`}>
         <Backdrop
@@ -450,7 +449,7 @@ export const Dialog = memo((
         </SpeedDial>
       </Div>
     );
-    // 6. calendar
+    // 5. calendar
     const calendarDetailSection = () => (
       <Div className={`d-flex`}>
         <Backdrop

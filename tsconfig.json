@@ -1,7 +1,38 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig.json",
-  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
+    "rootDir": "./",
+    "rootDirs": [],
+    "outDir": "./out",
+    "baseUrl": "./",
+    "paths": {
+      "@assets/*": ["src/assets/*"],
+      "@type/*": ["src/assets/type/domain/*"],
+      "@middlewares/*": ["src/middlewares/*"],
+      "@repositories/*": ["src/repositories/*"],
+      "@routers/*": ["src/routers/*"],
+      "@schemas/*": ["src/schemas/*"],
+      "@services/*": ["src/services/*"],
+      "@exportLibs": ["src/exports/ExportLibs"],
+      "@exportAssets": ["src/exports/ExportAssets"],
+      "@exportRepositories": ["src/exports/ExportRepositories"],
+      "@exportRouters": ["src/exports/ExportRouters"],
+      "@exportSchemas": ["src/exports/ExportSchemas"],
+      "@exportServices": ["src/exports/ExportServices"]
+    },
+    "typeRoots": [
+      "src/assets/type/dist",
+      "node_modules/@types"
+    ],
+    "types": [
+      "node"
+    ],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "tsBuildInfoFile": "./tsconfig.tsbuildinfo",
     "allowJs": true,
     "checkJs": true,
     "composite": true,
@@ -9,6 +40,8 @@
     "pretty": true,
     "diagnostics": false,
     "sourceMap": true,
+    "mapRoot": "",
+    "sourceRoot": "",
     "plugins": [],
     "removeComments": true,
     "newLine": "lf",
@@ -18,6 +51,7 @@
     "downlevelIteration": true,
     "traceResolution": false,
     "extendedDiagnostics": false,
+    "explainFiles": false,
     "exactOptionalPropertyTypes": false,
     "inlineSourceMap": false,
     "inlineSources": false,
@@ -28,11 +62,7 @@
     "listEmittedFiles": false,
     "declaration": true,
     "declarationMap": true,
-    "lib": [
-			"DOM",
-			"DOM.Iterable",
-			"ESNext"
-    ],
+    "declarationDir": "",
     "esModuleInterop": true,
     "isolatedModules": false,
     "moduleDetection": "auto",
@@ -42,6 +72,8 @@
     "resolveJsonModule": true,
     "resolvePackageJsonExports": true,
     "resolvePackageJsonImports": true,
+    "customConditions": [],
+    "moduleSuffixes": [],
     "skipLibCheck": true,
     "skipDefaultLibCheck": false,
     "noImplicitAny": true,
@@ -55,10 +87,12 @@
     "noLib": false,
     "noResolve": false,
     "noImplicitOverride": true,
+    "noImplicitUseStrict": false,
     "noEmitHelpers": false,
     "noErrorTruncation": true,
     "noUncheckedIndexedAccess": false,
     "noPropertyAccessFromIndexSignature": false,
+    "noStrictGenericChecks": false,
     "disableReferencedProjectLoad": false,
     "disableSolutionSearching": false,
     "disableSourceOfProjectReferenceRedirect": false,
@@ -66,6 +100,7 @@
     "preserveSymlinks": true,
     "preserveConstEnums": false,
     "preserveWatchOutput": false,
+    "preserveValueImports": false,
     "emitBOM": false,
     "emitDeclarationOnly": false,
     "emitDecoratorMetadata": true,
@@ -76,11 +111,15 @@
     "allowArbitraryExtensions": true,
     "allowUnreachableCode": true,
     "allowUnusedLabels": true,
+    "keyofStringsOnly": false,
+    "suppressExcessPropertyErrors": false,
+    "suppressImplicitAnyIndexErrors": false,
     "strict": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "strictBindCallApply": true,
     "strictPropertyInitialization": true,
+    "strictBuiltinIteratorReturn": false,
     "useDefineForClassFields": true,
     "useUnknownInCatchVariables": true,
     "importHelpers": true,
@@ -88,5 +127,23 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "bundler"
-  }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.jsx",
+    "src/**/*",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "eslint.config.js",
+    "eslint.config.cjs",
+    "eslint.config.mjs",
+    "eslint.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
 }

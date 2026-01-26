@@ -15,7 +15,7 @@ import { Footer, Empty, Dialog } from "@exportLayouts";
 import { Div, Hr, Img, Icons, Paper, Grid } from "@exportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
 
-// -------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------
 export const FoodRecordList = memo(() => {
 
   // 1. common ----------------------------------------------------------------------------------
@@ -26,13 +26,13 @@ export const FoodRecordList = memo(() => {
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-2. useStorageLocal -----------------------------------------------------------------------
+  // 2-1. useStorageLocal -----------------------------------------------------------------------
   const [ DATE, setDATE ] = useStorageLocal(
     `date`, PATH, ``, {
       dateType: location_dateType ?? ``,
-      dateStart: location_dateStart ?? getDayFmt(),
-      dateEnd: location_dateEnd ?? getDayFmt(),
-    },
+      dateStart: location_dateStart ?? getMonthStartFmt(),
+      dateEnd: location_dateEnd ?? getMonthEndFmt(),
+    }
   );
   const [ PAGING, setPAGING ] = useStorageLocal(
     `paging`, PATH, ``, {
@@ -83,9 +83,7 @@ export const FoodRecordList = memo(() => {
       },
     })
     .then((res: any) => {
-      setEXIST(
-        (!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result),
-      );
+      setEXIST(!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result)
     })
     .catch((error: any) => {
       setALERT({
@@ -144,6 +142,41 @@ export const FoodRecordList = memo(() => {
 
   // 7. list -----------------------------------------------------------------------------------
   const listNode = () => {
+    // 7-0. summary
+    const summarySection = () => (
+      <Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px p-2px`} key={`summary`}>
+        <Grid container={true} spacing={1}>
+          <Grid size={2} className={`d-row-center`}>
+            <Img
+              max={14}
+              hover={true}
+              shadow={false}
+              radius={false}
+              src={`food2.webp`}
+            />
+          </Grid>
+          <Grid size={3} className={`d-row-left`}>
+            <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+              {translate(`kcal`)}
+            </Div>
+          </Grid>
+          <Grid size={7}>
+            <Grid container={true} spacing={1}>
+              <Grid size={10} className={`d-row-right`}>
+                <Div className={`fs-0-8rem fw-600`}>
+                  {`123`}
+                </Div>
+              </Grid>
+              <Grid size={2} className={`d-row-center`}>
+                <Div className={`fs-0-6rem`}>
+                  {translate(`kc`)}
+                </Div>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    );
     // 7-1. list
     const listSection = () => (
       <Grid container={true} spacing={0}>
@@ -343,6 +376,8 @@ export const FoodRecordList = memo(() => {
     // 7-10. return
     return (
       <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
+        {summarySection()}
+        <Hr m={20} className={`bg-light`} />
         {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={`food`} /> : listSection()}
       </Paper>
     );
@@ -369,7 +404,7 @@ export const FoodRecordList = memo(() => {
     />
   );
 
-  // 10. return ----------------------------------------------------------------------------------
+  // 10. return ---------------------------------------------------------------------------------
   return (
     <>
       {listNode()}

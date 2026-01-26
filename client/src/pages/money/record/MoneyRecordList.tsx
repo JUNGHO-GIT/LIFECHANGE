@@ -85,9 +85,7 @@ export const MoneyRecordList = memo(() => {
       },
     })
     .then((res: any) => {
-      setEXIST(
-        (!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result)
-      );
+      setEXIST(!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result)
     })
     .catch((error: any) => {
       setALERT({
@@ -124,7 +122,7 @@ export const MoneyRecordList = memo(() => {
       // 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
       setIsExpanded(() => {
         if (res.data.result?.length !== isExpanded.length) {
-          return new Array(res.data.result?.length).fill({ expanded: true });
+          return Array.from({ length: res.data.result?.length }).fill({ expanded: true });
         }
         return isExpanded;
       });
