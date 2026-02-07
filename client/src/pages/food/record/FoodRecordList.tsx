@@ -143,7 +143,7 @@ export const FoodRecordList = memo(() => {
   // 7. list -----------------------------------------------------------------------------------
   const listNode = () => {
     // 7-0. summary
-    const summarySection = () => (
+    /* const summarySection = () => (
       <Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px p-2px`} key={`summary`}>
         <Grid container={true} spacing={1}>
           <Grid size={2} className={`d-row-center`}>
@@ -176,7 +176,7 @@ export const FoodRecordList = memo(() => {
           </Grid>
         </Grid>
       </Grid>
-    );
+    ); */
     // 7-1. list
     const listSection = () => (
       <Grid container={true} spacing={0}>
@@ -376,7 +376,7 @@ export const FoodRecordList = memo(() => {
     // 7-10. return
     return (
       <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
-        {summarySection()}
+        {/* {summarySection()} */}
         <Hr m={20} className={`bg-light`} />
         {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={`food`} /> : listSection()}
       </Paper>

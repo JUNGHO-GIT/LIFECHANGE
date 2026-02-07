@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-import { useState, useEffect, memo } from "@exportReacts";
+import { useState, useEffect, useMemo, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate } from "@exportHooks";
 import { useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
@@ -16,7 +16,7 @@ import { Footer, Empty, Dialog } from "@exportLayouts";
 import { Div, Hr, Img, Icons, Paper, Grid } from "@exportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
 
-// -------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------
 export const MoneyRecordList = memo(() => {
 
   // 1. common ----------------------------------------------------------------------------------
@@ -142,8 +142,141 @@ export const MoneyRecordList = memo(() => {
     URL_OBJECT, sessionId, PAGING?.sort, PAGING.page, PAGING?.part, PAGING?.title, DATE?.dateStart, DATE?.dateEnd,
   ]);
 
+  // 6. useMemo --------------------------------------------------------------------------------
+  const summary = useMemo(() => {
+    const totalIncome = OBJECT.reduce((sum, item) => {
+      return sum + parseFloat(item.money_record_total_income || `0`);
+    }, 0);
+    const totalExpense = OBJECT.reduce((sum, item) => {
+      return sum + parseFloat(item.money_record_total_expense || `0`);
+    }, 0);
+    const balance = totalIncome - totalExpense;
+    return {
+      totalIncome,
+      totalExpense,
+      balance,
+      balanceColor: balance >= 0 ? `primary` : balance < 0 ? `red` : ``,
+    };
+  }, [ OBJECT ]);
+
   // 7. list -----------------------------------------------------------------------------------
   const listNode = () => {
+    // 7-0. summary
+    /* const summarySection = () => (
+      <Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px`}>
+        <Grid size={12} className={`p-10px`}>
+          <Grid container={true} spacing={1}>
+            <Grid size={12} className={`d-row-left mb-5px`}>
+              <Icons
+                key={`Calculator`}
+                name={`Calculator`}
+                className={`w-16px h-16px mr-5px`}
+              />
+              <Div className={`fs-0-9rem fw-700 black`}>
+                {translate(`search_result_summary`)}
+              </Div>
+            </Grid>
+
+            <Hr m={0} className={`bg-light`} />
+
+            <Grid container={true} spacing={1} className={`mt-5px`}>
+              <Grid size={2} className={`d-row-center`}>
+                <Img
+                  max={14}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
+                  src={`money2.webp`}
+                />
+              </Grid>
+              <Grid size={3} className={`d-row-left`}>
+                <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                  {translate(`income`)}
+                </Div>
+              </Grid>
+              <Grid size={7}>
+                <Grid container={true} spacing={1}>
+                  <Grid size={10} className={`d-row-right`}>
+                    <Div className={`fs-0-8rem fw-600 primary`}>
+                      {insertComma(summary.totalIncome.toString())}
+                    </Div>
+                  </Grid>
+                  <Grid size={2} className={`d-row-center`}>
+                    <Div className={`fs-0-6rem`}>
+                      {translate(localCurrency)}
+                    </Div>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+
+            <Hr m={1} className={`bg-light`} />
+
+            <Grid container={true} spacing={1}>
+              <Grid size={2} className={`d-row-center`}>
+                <Img
+                  max={14}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
+                  src={`money2.webp`}
+                />
+              </Grid>
+              <Grid size={3} className={`d-row-left`}>
+                <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                  {translate(`expense`)}
+                </Div>
+              </Grid>
+              <Grid size={7}>
+                <Grid container={true} spacing={1}>
+                  <Grid size={10} className={`d-row-right`}>
+                    <Div className={`fs-0-8rem fw-600 red`}>
+                      {insertComma(summary.totalExpense.toString())}
+                    </Div>
+                  </Grid>
+                  <Grid size={2} className={`d-row-center`}>
+                    <Div className={`fs-0-6rem`}>
+                      {translate(localCurrency)}
+                    </Div>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+
+            <Hr m={1} className={`bg-light`} />
+
+            <Grid container={true} spacing={1}>
+              <Grid size={2} className={`d-row-center`}>
+                <Icons
+                  key={`TrendingUp`}
+                  name={`TrendingUp`}
+                  className={`w-14px h-14px`}
+                />
+              </Grid>
+              <Grid size={3} className={`d-row-left`}>
+                <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                  {translate(`balance`)}
+                </Div>
+              </Grid>
+              <Grid size={7}>
+                <Grid container={true} spacing={1}>
+                  <Grid size={10} className={`d-row-right`}>
+                    <Div className={`fs-0-8rem fw-700 ${summary.balanceColor}`}>
+                      {insertComma(summary.balance.toString())}
+                    </Div>
+                  </Grid>
+                  <Grid size={2} className={`d-row-center`}>
+                    <Div className={`fs-0-6rem`}>
+                      {translate(localCurrency)}
+                    </Div>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    ); */
     // 7-1. list
     const listSection = () => (
       <Grid container={true} spacing={0}>

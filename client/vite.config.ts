@@ -79,7 +79,10 @@ export default defineConfig(({
 
   // 3. plugins --------------------------------------------------------------------------------------
   const plugins: NonNullable<UserConfig[`plugins`]> = [
-    react(),
+    react({
+      devTarget: `esnext`,
+      jsxImportSource: `@emotion/react`,
+    }),
     ...(isProd && isBuild ? [
       viteCompression({
         verbose: false,

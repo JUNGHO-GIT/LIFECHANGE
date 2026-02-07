@@ -2040,7 +2040,7 @@ const RULES_STYLISTIC = {
       },
       outerIIFEBody: 1,
       flatTernaryExpressions: false,
-      offsetTernaryExpressions: true,
+      offsetTernaryExpressions: false,
       ignoredNodes: [`ConditionalExpression`],
       tabLength: 2,
       ignoreComments: false,
