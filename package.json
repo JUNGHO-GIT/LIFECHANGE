@@ -48,9 +48,9 @@
     "git-push-n": "bun .node/mjs/git.mjs --bun --push --n"
   },
   "dependencies": {
-    "ajv": "8.17.1",
+    "ajv": "8.18.0",
     "ajv-keywords": "5.1.0",
-    "axios": "1.13.4",
+    "axios": "1.13.5",
     "bcryptjs": "3.0.3",
     "body-parser": "2.2.2",
     "cors": "2.8.6",
@@ -69,7 +69,7 @@
     "oauth-signature": "1.5.0",
     "passport": "0.7.0",
     "passport-google-oauth20": "2.0.0",
-    "qs": "6.14.1",
+    "qs": "6.14.2",
     "request": "2.88.2",
     "request-promise": "4.2.6"
   },
