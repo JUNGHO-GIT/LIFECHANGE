@@ -56,9 +56,9 @@
     "@mui/system": "7.3.7",
     "@mui/x-date-pickers": "8.27.0",
     "@react-hooks-library/core": "0.6.2",
-    "ajv": "8.17.1",
+    "ajv": "8.18.0",
     "ajv-keywords": "5.1.0",
-    "axios": "1.13.4",
+    "axios": "1.13.5",
     "countries-and-timezones": "3.8.0",
     "date-fns": "4.1.0",
     "iso-country-currency": "0.7.2",
@@ -91,7 +91,7 @@
     "tsc-alias": "1.8.16",
     "tsx": "4.21.0",
     "typescript": "5.9.3",
-    "vite": "7.3.1",
+    "vite": "7.3.2",
     "vite-plugin-compression": "0.5.1"
   }
 }
