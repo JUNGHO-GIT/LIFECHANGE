@@ -86,7 +86,7 @@
     "@types/react-router-dom": "5.3.3",
     "@typescript-eslint/eslint-plugin": "8.58.2",
     "@typescript-eslint/parser": "8.58.2",
-    "esbuild": "0.19.12",
+    "esbuild": "0.25.0",
     "eslint": "10.2.1",
     "eslint-define-config": "2.1.0",
     "eslint-plugin-html": "8.1.4",
