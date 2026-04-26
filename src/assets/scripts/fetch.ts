@@ -5,20 +5,27 @@
  * @since 2025-12-14
  */
 
-import fetch, { Blob, File, FormData, Headers, Request, Response } from "node-fetch";
+import fetch, {
+	Blob,
+	File,
+	FormData,
+	Headers,
+	Request,
+	Response,
+} from "node-fetch";
 
-// ---------------------------------------------------------------------------------------------
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 const g = globalThis as typeof globalThis & {
-  fetch?: typeof globalThis.fetch;
-  Blob?: typeof globalThis.Blob;
-  File?: typeof globalThis.File;
-  FormData?: typeof globalThis.FormData;
-  Headers?: typeof globalThis.Headers;
-  Request?: typeof globalThis.Request;
-  Response?: typeof globalThis.Response;
+	fetch?: typeof globalThis.fetch;
+	Blob?: typeof globalThis.Blob;
+	File?: typeof globalThis.File;
+	FormData?: typeof globalThis.FormData;
+	Headers?: typeof globalThis.Headers;
+	Request?: typeof globalThis.Request;
+	Response?: typeof globalThis.Response;
 };
 
-// ---------------------------------------------------------------------------------------------
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 const fetchPolyfill = fetch as unknown as typeof globalThis.fetch;
 const BlobPolyfill = Blob as unknown as typeof globalThis.Blob;
 const FilePolyfill = File as unknown as typeof globalThis.File;
@@ -27,7 +34,7 @@ const HeadersPolyfill = Headers as unknown as typeof globalThis.Headers;
 const RequestPolyfill = Request as unknown as typeof globalThis.Request;
 const ResponsePolyfill = Response as unknown as typeof globalThis.Response;
 
-// ---------------------------------------------------------------------------------------------
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 typeof g.fetch !== `function` && (g.fetch = fetchPolyfill);
 typeof g.Blob !== `function` && (g.Blob = BlobPolyfill);
 typeof g.File !== `function` && (g.File = FilePolyfill);

@@ -58,10 +58,10 @@ const IMAGE_FILES = [
 
 // 이미지 URL 리스트 생성
 const IMAGE_URLS = IMAGE_FILES.map((file) => (
-	`https://storage.googleapis.com/jungho-bucket/LIFECHANGE/IMAGE/main/${file}`
+	`https://storage.googleapis.com/jungho-bucket/lifechange/image/main/${file}`
 ));
 const IMAGE_FILE_SET = new Set(IMAGE_FILES);
-const CACHE_NAME = `LIFECHANGE_IMAGE_CACHE_V1`;
+const CACHE_NAME = `lifechangeApp_IMAGE_CACHE_V1`;
 
 self.addEventListener(`install`, (event) => {
 	self.skipWaiting();

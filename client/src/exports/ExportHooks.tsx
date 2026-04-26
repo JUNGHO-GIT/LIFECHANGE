@@ -5,28 +5,25 @@
  * @since 2025-12-25
  */
 
-// common -----------------------------------------------------------------------------------------
-export { useCommonValue } from "@hooks/common/useCommonValue";
 export { useCommonDate } from "@hooks/common/useCommonDate";
+// common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+export { useCommonValue } from "@hooks/common/useCommonValue";
 
-// language ---------------------------------------------------------------------------------------
+// language ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export { useLanguageInitialize } from "@hooks/language/useLanguageInitialize";
 export { useLanguageSetting } from "@hooks/language/useLanguageSetting";
-
-// validate ---------------------------------------------------------------------------------------
-export { useValidateUser } from "@hooks/validate/useValidateUser";
+export { useStorageLocal } from "@hooks/storage/useStorageLocal";
+// storage ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+export { useStorageSession } from "@hooks/storage/useStorageSession";
+export { useFoodSection } from "@hooks/util/useFoodSection";
+// util ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+export { useRoot } from "@hooks/util/useRoot";
+export { useScrollTop } from "@hooks/util/useScrollTop";
+export { useTime } from "@hooks/util/useTime";
+export { useValidateCalendar } from "@hooks/validate/useValidateCalendar";
 export { useValidateExercise } from "@hooks/validate/useValidateExercise";
 export { useValidateFood } from "@hooks/validate/useValidateFood";
 export { useValidateMoney } from "@hooks/validate/useValidateMoney";
 export { useValidateSleep } from "@hooks/validate/useValidateSleep";
-export { useValidateCalendar } from "@hooks/validate/useValidateCalendar";
-
-// storage ---------------------------------------------------------------------------------------
-export { useStorageSession } from "@hooks/storage/useStorageSession";
-export { useStorageLocal } from "@hooks/storage/useStorageLocal";
-
-// util ------------------------------------------------------------------------------------------
-export { useRoot } from "@hooks/util/useRoot";
-export { useScrollTop } from "@hooks/util/useScrollTop";
-export { useFoodSection } from "@hooks/util/useFoodSection";
-export { useTime } from "@hooks/util/useTime";
+// validate ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+export { useValidateUser } from "@hooks/validate/useValidateUser";

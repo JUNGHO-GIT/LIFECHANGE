@@ -1,8 +1,8 @@
 {
-  "short_name": "LIFECHANGE",
-  "name": "LIFECHANGE",
-  "id": "com.LIFECHANGE",
-  "start_url": "LIFECHANGE/",
+  "short_name": "lifechange",
+  "name": "lifechange",
+  "id": "com.lifechange",
+  "start_url": "lifechange/",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"

@@ -7,7 +7,7 @@
 
 import * as repository from "@repositories/food/FoodFavoriteRepository";
 
-// 1. list -------------------------------------------------------------------------------
+// 1. list ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const list = async (
   user_id_param: string,
 ) => {
@@ -46,7 +46,7 @@ export const list = async (
   };
 };
 
-// 4. update -----------------------------------------------------------------------------
+// 4. update ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const update = async (
   user_id_param: string,
   foodFavorite_param: any,

@@ -31,7 +31,7 @@ export default defineConfig(({
     Object.entries(rawEnv).filter(([k]) => k.startsWith(`VITE_`)),
   ) as Record<string, string>;
 
-  // 1-3. env.production merge (only when production)
+  // 1-3. env file merge
   const noop: () => void = () => {};
   const noopSet: (target: Record<string, string>, key: string, value: string) => void = () => {};
   const setEnv: (target: Record<string, string>, key: string, value: string) => void = (target, key, value) => {
@@ -64,7 +64,7 @@ export default defineConfig(({
     (exists ? merge : noop)();
   };
 
-  (isProd ? mergeEnvFromFile : noop)(path.join(rootDir, `.env.production`));
+  mergeEnvFromFile(path.join(rootDir, `.env-${envMode}`));
 
   // 1-4. debug
   const debugEnv: () => void = () => {
@@ -74,8 +74,8 @@ export default defineConfig(({
   (isDev ? debugEnv : noop)();
 
   // 2. derived values -------------------------------------------------------------------------------
-  const baseUrl: string = env.VITE_APP_PUBLIC_URL || `/LIFECHANGE`;
-  const publicUrl: string = env.VITE_APP_PUBLIC_URL || `/LIFECHANGE`;
+  const baseUrl: string = env.VITE_APP_PUBLIC_URL || `/lifechange`;
+  const publicUrl: string = env.VITE_APP_PUBLIC_URL || `/lifechange`;
 
   // 3. plugins --------------------------------------------------------------------------------------
   const plugins: NonNullable<UserConfig[`plugins`]> = [
@@ -153,10 +153,25 @@ export default defineConfig(({
       reportCompressedSize: false,
       rollupOptions: {
         output: {
-          manualChunks: {
-            react: [ `react`, `react-dom`, `react-router` ],
-            mui: [ `@mui/material`, `@mui/system`, `@emotion/react`, `@emotion/styled` ],
-            vendor: [ `axios`, `zustand`, `moment`, `date-fns` ],
+          manualChunks: (id: string): string | undefined => {
+            if (id.includes(`node_modules/react`) || id.includes(`node_modules/react-dom`) || id.includes(`node_modules/react-router`)) {
+              return `react`;
+            }
+
+            if (id.includes(`node_modules/@mui`) || id.includes(`node_modules/@emotion`)) {
+              return `mui`;
+            }
+
+            if (
+              id.includes(`node_modules/axios`) ||
+              id.includes(`node_modules/zustand`) ||
+              id.includes(`node_modules/moment`) ||
+              id.includes(`node_modules/date-fns`)
+            ) {
+              return `vendor`;
+            }
+
+            return undefined;
           },
           assetFileNames: (assetInfo) => {
             const info: string[] = assetInfo.name ? assetInfo.name.split(`.`) : [];

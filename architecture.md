@@ -1,9 +1,9 @@
-# LIFECHANGE Architecture
+# lifechange Architecture
 
 ## Structure Map
 
 ```text
-LIFECHANGE
+lifechange
 |-- index.ts         -> server entry
 |-- src/
 |   |-- middlewares/ -> request pipeline hooks

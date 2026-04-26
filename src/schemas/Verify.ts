@@ -7,7 +7,7 @@
 
 import mongoose from "mongoose";
 
-// 0. types ---------------------------------------------------------------------------------------
+// 0. types ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface VerifyType extends mongoose.Document {
   verify_id: string;
   verify_code: string;
@@ -15,7 +15,7 @@ declare interface VerifyType extends mongoose.Document {
   verify_updateDt: Date;
 }
 
-// 1. schema ---------------------------------------------------------------------------------------
+// 1. schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 const schema = new mongoose.Schema(
   {
     verify_id: {
@@ -48,5 +48,5 @@ const schema = new mongoose.Schema(
   },
 );
 
-// 5. model ----------------------------------------------------------------------------------------
+// 5. model ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const Verify = mongoose.model<VerifyType>(`Verify`, schema);

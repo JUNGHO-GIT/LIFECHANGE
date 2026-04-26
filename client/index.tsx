@@ -13,163 +13,189 @@ import "@assets/styles/Mui.css";
 import "@assets/styles/Components.css";
 
 import {
-  BrowserRouter, Routes, Route, createRoot, useEffect, memo,
-} from "@exportReacts";
-
-import {
-  CssBaseline, ThemeProvider, createTheme,
-} from "@exportMuis";
-
-import {
-  useRoot, useScrollTop, useFoodSection, useLanguageSetting, useLanguageInitialize, useCommonValue,
+	useCommonValue,
+	useFoodSection,
+	useLanguageInitialize,
+	useLanguageSetting,
+	useRoot,
+	useScrollTop,
 } from "@exportHooks";
-
 import {
-  useStoreLoading,
-} from "@exportStores";
-
-import {
-  Header, TopNav, BottomNav, Alert, Confirm, Loader,
+	Alert,
+	BottomNav,
+	Confirm,
+	Header,
+	Loader,
+	TopNav,
 } from "@exportLayouts";
-
+import { CssBaseline, createTheme, ThemeProvider } from "@exportMuis";
 import {
-  AdminDashboard, AuthError, AuthGoogle, AuthPrivacy,
+	AdminAppInfo,
+	AdminDashboard,
+	AuthError,
+	AuthGoogle,
+	AuthPrivacy,
+	CalendarDetail,
+	CalendarList,
+	ExerciseChart,
+	ExerciseGoalDetail,
+	ExerciseGoalList,
+	ExerciseRecordDetail,
+	ExerciseRecordList,
+	FoodChart,
+	FoodFavoriteList,
+	FoodFindList,
+	FoodGoalDetail,
+	FoodGoalList,
+	FoodRecordDetail,
+	FoodRecordList,
+	MoneyChart,
+	MoneyGoalDetail,
+	MoneyGoalList,
+	MoneyRecordDetail,
+	MoneyRecordList,
+	SleepChart,
+	SleepGoalDetail,
+	SleepGoalList,
+	SleepRecordDetail,
+	SleepRecordList,
+	UserAppSetting,
+	UserCategory,
+	UserDelete,
+	UserDetail,
+	UserLogin,
+	UserResetPw,
+	UserSignup,
 } from "@exportPages";
-
 import {
-  CalendarList, CalendarDetail,
-} from "@exportPages";
+	BrowserRouter,
+	createRoot,
+	memo,
+	Route,
+	Routes,
+	useEffect,
+} from "@exportReacts";
+import { useStoreLoading } from "@exportStores";
 
-import {
-  ExerciseChart, ExerciseGoalList, ExerciseGoalDetail, ExerciseRecordList, ExerciseRecordDetail,
-} from "@exportPages";
-
-import {
-  FoodChart, FoodGoalList, FoodGoalDetail, FoodFindList, FoodFavoriteList, FoodRecordList, FoodRecordDetail,
-} from "@exportPages";
-
-import {
-  MoneyChart, MoneyGoalList, MoneyGoalDetail, MoneyRecordList, MoneyRecordDetail,
-} from "@exportPages";
-
-import {
-  SleepChart, SleepGoalList, SleepGoalDetail, SleepRecordList, SleepRecordDetail,
-} from "@exportPages";
-
-import {
-  AdminAppInfo, UserAppSetting, UserSignup, UserLogin, UserResetPw, UserDetail, UserDelete, UserCategory,
-} from "@exportPages";
-
-// -------------------------------------------------------------------------------------------------
+// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 const App = memo(() => {
+	const { PATH } = useCommonValue();
+	const { setLOADING } = useStoreLoading();
 
-  const { PATH } = useCommonValue();
-  const { setLOADING } = useStoreLoading();
+	useEffect(() => {
+		setLOADING(true);
+		setTimeout(() => {
+			setLOADING(false);
+		}, 500);
+	}, []);
 
-  useEffect(() => {
-    setLOADING(true);
-    setTimeout(() => {
-      setLOADING(false);
-    }, 500);
-  }, []);
+	useRoot();
+	useScrollTop();
+	useFoodSection();
+	useLanguageInitialize();
+	useLanguageSetting();
 
-  useRoot();
-  useScrollTop();
-  useFoodSection();
-  useLanguageInitialize();
-  useLanguageSetting();
+	const noneHeader: boolean =
+		!PATH.includes(`/user/login`) &&
+		!PATH.includes(`/user/signup`) &&
+		!PATH.includes(`/user/resetPw`) &&
+		!PATH.includes(`/auth/error`) &&
+		!PATH.includes(`/auth/privacy`);
+	const noneTop: boolean =
+		!PATH.includes(`/user`) &&
+		!PATH.includes(`/auth/error`) &&
+		!PATH.includes(`/auth/privacy`);
+	const noneBottom: boolean =
+		!PATH.includes(`/user`) &&
+		!PATH.includes(`/auth/error`) &&
+		!PATH.includes(`/auth/privacy`);
 
-  const noneHeader: boolean = (
-    !PATH.includes(`/user/login`) &&
-    !PATH.includes(`/user/signup`) &&
-    !PATH.includes(`/user/resetPw`) &&
-    !PATH.includes(`/auth/error`) &&
-    !PATH.includes(`/auth/privacy`)
-  );
-  const noneTop: boolean = (
-    !PATH.includes(`/user`) &&
-    !PATH.includes(`/auth/error`) &&
-    !PATH.includes(`/auth/privacy`)
-
-  );
-  const noneBottom: boolean = (
-    !PATH.includes(`/user`) &&
-    !PATH.includes(`/auth/error`) &&
-    !PATH.includes(`/auth/privacy`)
-  );
-
-  return (
-    <div className={`App`}>
-      {noneHeader ? <Header /> : null}
-      {noneTop ? <TopNav /> : null}
-      <Loader />
-      <Alert />
-      <Confirm />
-      <Routes>
-        {/** home * */}
-        <Route path={`/`} element={<div />} />
-        {/** admin * */}
-        <Route path={`/admin/dashboard/*`} element={<AdminDashboard />} />
-        {/** auth * */}
-        <Route path={`/auth/error/*`} element={<AuthError />} />
-        <Route path={`/auth/google/*`} element={<AuthGoogle />} />
-        <Route path={`/auth/privacy/*`} element={<AuthPrivacy />} />
-        {/** calendar * */}
-        <Route path={`/calendar/list/*`} element={<CalendarList />} />
-        <Route path={`/calendar/detail/*`} element={<CalendarDetail />} />
-        {/** exercise * */}
-        <Route path={`/exercise/chart/list/*`} element={<ExerciseChart />} />
-        <Route path={`/exercise/goal/list/*`} element={<ExerciseGoalList />} />
-        <Route path={`/exercise/goal/detail/*`} element={<ExerciseGoalDetail />} />
-        <Route path={`/exercise/record/list/*`} element={<ExerciseRecordList />} />
-        <Route path={`/exercise/record/detail/*`} element={<ExerciseRecordDetail />} />
-        {/** food * */}
-        <Route path={`/food/chart/list/*`} element={<FoodChart />} />
-        <Route path={`/food/goal/list/*`} element={<FoodGoalList />} />
-        <Route path={`/food/goal/detail/*`} element={<FoodGoalDetail />} />
-        <Route path={`/food/record/list/*`} element={<FoodRecordList />} />
-        <Route path={`/food/record/detail/*`} element={<FoodRecordDetail />} />
-        <Route path={`/food/favorite/list/*`} element={<FoodFavoriteList />} />
-        <Route path={`/food/find/list/*`} element={<FoodFindList />} />
-        {/** money * */}
-        <Route path={`/money/chart/list/*`} element={<MoneyChart />} />
-        <Route path={`/money/goal/list/*`} element={<MoneyGoalList />} />
-        <Route path={`/money/goal/detail/*`} element={<MoneyGoalDetail />} />
-        <Route path={`/money/record/list/*`} element={<MoneyRecordList />} />
-        <Route path={`/money/record/detail/*`} element={<MoneyRecordDetail />} />
-        {/** sleep * */}
-        <Route path={`/sleep/chart/list/*`} element={<SleepChart />} />
-        <Route path={`/sleep/goal/list/*`} element={<SleepGoalList />} />
-        <Route path={`/sleep/goal/detail/*`} element={<SleepGoalDetail />} />
-        <Route path={`/sleep/record/list/*`} element={<SleepRecordList />} />
-        <Route path={`/sleep/record/detail/*`} element={<SleepRecordDetail />} />
-        {/** user * */}
-        <Route path={`/user/appInfo/*`} element={<AdminAppInfo />} />
-        <Route path={`/user/appSetting/*`} element={<UserAppSetting />} />
-        <Route path={`/user/signup/*`} element={<UserSignup />} />
-        <Route path={`/user/login/*`} element={<UserLogin />} />
-        <Route path={`/user/resetPw/*`} element={<UserResetPw />} />
-        <Route path={`/user/detail/*`} element={<UserDetail />} />
-        <Route path={`/user/delete/*`} element={<UserDelete />} />
-        <Route path={`/user/category/*`} element={<UserCategory />} />
-      </Routes>
-      {noneBottom ? <BottomNav /> : null}
-    </div>
-  );
+	return (
+		<div className={`App`}>
+			{noneHeader ? <Header /> : null}
+			{noneTop ? <TopNav /> : null}
+			<Loader />
+			<Alert />
+			<Confirm />
+			<Routes>
+				{/** home * */}
+				<Route path={`/`} element={<div />} />
+				{/** admin * */}
+				<Route path={`/admin/dashboard/*`} element={<AdminDashboard />} />
+				{/** auth * */}
+				<Route path={`/auth/error/*`} element={<AuthError />} />
+				<Route path={`/auth/google/*`} element={<AuthGoogle />} />
+				<Route path={`/auth/privacy/*`} element={<AuthPrivacy />} />
+				{/** calendar * */}
+				<Route path={`/calendar/list/*`} element={<CalendarList />} />
+				<Route path={`/calendar/detail/*`} element={<CalendarDetail />} />
+				{/** exercise * */}
+				<Route path={`/exercise/chart/list/*`} element={<ExerciseChart />} />
+				<Route path={`/exercise/goal/list/*`} element={<ExerciseGoalList />} />
+				<Route
+					path={`/exercise/goal/detail/*`}
+					element={<ExerciseGoalDetail />}
+				/>
+				<Route
+					path={`/exercise/record/list/*`}
+					element={<ExerciseRecordList />}
+				/>
+				<Route
+					path={`/exercise/record/detail/*`}
+					element={<ExerciseRecordDetail />}
+				/>
+				{/** food * */}
+				<Route path={`/food/chart/list/*`} element={<FoodChart />} />
+				<Route path={`/food/goal/list/*`} element={<FoodGoalList />} />
+				<Route path={`/food/goal/detail/*`} element={<FoodGoalDetail />} />
+				<Route path={`/food/record/list/*`} element={<FoodRecordList />} />
+				<Route path={`/food/record/detail/*`} element={<FoodRecordDetail />} />
+				<Route path={`/food/favorite/list/*`} element={<FoodFavoriteList />} />
+				<Route path={`/food/find/list/*`} element={<FoodFindList />} />
+				{/** money * */}
+				<Route path={`/money/chart/list/*`} element={<MoneyChart />} />
+				<Route path={`/money/goal/list/*`} element={<MoneyGoalList />} />
+				<Route path={`/money/goal/detail/*`} element={<MoneyGoalDetail />} />
+				<Route path={`/money/record/list/*`} element={<MoneyRecordList />} />
+				<Route
+					path={`/money/record/detail/*`}
+					element={<MoneyRecordDetail />}
+				/>
+				{/** sleep * */}
+				<Route path={`/sleep/chart/list/*`} element={<SleepChart />} />
+				<Route path={`/sleep/goal/list/*`} element={<SleepGoalList />} />
+				<Route path={`/sleep/goal/detail/*`} element={<SleepGoalDetail />} />
+				<Route path={`/sleep/record/list/*`} element={<SleepRecordList />} />
+				<Route
+					path={`/sleep/record/detail/*`}
+					element={<SleepRecordDetail />}
+				/>
+				{/** user * */}
+				<Route path={`/user/appInfo/*`} element={<AdminAppInfo />} />
+				<Route path={`/user/appSetting/*`} element={<UserAppSetting />} />
+				<Route path={`/user/signup/*`} element={<UserSignup />} />
+				<Route path={`/user/login/*`} element={<UserLogin />} />
+				<Route path={`/user/resetPw/*`} element={<UserResetPw />} />
+				<Route path={`/user/detail/*`} element={<UserDetail />} />
+				<Route path={`/user/delete/*`} element={<UserDelete />} />
+				<Route path={`/user/category/*`} element={<UserCategory />} />
+			</Routes>
+			{noneBottom ? <BottomNav /> : null}
+		</div>
+	);
 });
 
-// -------------------------------------------------------------------------------------------------
+// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 const fontFamily: string = `'Pretendard Variable', Pretendard, FontAwesome, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif`;
 
-// -------------------------------------------------------------------------------------------------
+// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 createRoot(document.querySelector(`#root`) as HTMLElement).render(
-  <BrowserRouter basename={`/LIFECHANGE`}>
-    <ThemeProvider theme={
-      createTheme({ typography: { fontFamily: fontFamily } })
-    }
-    >
-      <CssBaseline />
-      <App />
-    </ThemeProvider>
-  </BrowserRouter>,
+	<BrowserRouter basename={`/lifechange`}>
+		<ThemeProvider
+			theme={createTheme({ typography: { fontFamily: fontFamily } })}
+		>
+			<CssBaseline />
+			<App />
+		</ThemeProvider>
+	</BrowserRouter>,
 );

@@ -5,474 +5,487 @@
  * @since 2025-12-26
  */
 
-import { React, useState, useEffect, useRef, useCallback, memo } from "@exportReacts";
-import { useCommonValue, useCommonDate, useValidateMoney } from "@exportHooks";
-import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
-import { MoneyGoal, MoneyGoalType } from "@exportSchemas";
+import { Bg, Br, Grid, Img, Paper } from "@exportComponents";
+import { Count, Delete, Input, PickerDay } from "@exportContainers";
+import { useCommonDate, useCommonValue, useValidateMoney } from "@exportHooks";
+import { Dialog, Footer } from "@exportLayouts";
 import { axios } from "@exportLibs";
-import { insertComma, sync } from "@exportScripts";
-import { handleNumberInput } from "@exportScripts";
-import { Footer, Dialog } from "@exportLayouts";
-import { PickerDay, Count, Delete, Input } from "@exportContainers";
-import { Img, Bg, Paper, Grid, Br } from "@exportComponents";
+import {
+	memo,
+	type React,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from "@exportReacts";
+import { MoneyGoal, type MoneyGoalType } from "@exportSchemas";
+import { handleNumberInput, insertComma, sync } from "@exportScripts";
+import {
+	useStoreAlert,
+	useStoreLanguage,
+	useStoreLoading,
+} from "@exportStores";
 
-// -------------------------------------------------------------------------------------------------
+// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const MoneyGoalDetail = memo(() => {
+	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+	const { URL_OBJECT, navigate, sessionId, toList, localCurrency } =
+		useCommonValue();
+	const { location_dateType } = useCommonValue();
+	const { location_dateStart, location_dateEnd } = useCommonValue();
+	const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
+	const { translate } = useStoreLanguage();
+	const { setALERT } = useStoreAlert();
+	const { setLOADING } = useStoreLoading();
+	const { ERRORS, REFS, validate } = useValidateMoney();
 
-  // 1. common ----------------------------------------------------------------------------------
-  const { URL_OBJECT, navigate, sessionId, toList, localCurrency } = useCommonValue();
-  const { location_dateType } = useCommonValue();
-  const { location_dateStart, location_dateEnd } = useCommonValue();
-  const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-  const { translate } = useStoreLanguage();
-  const { setALERT } = useStoreAlert();
-  const { setLOADING } = useStoreLoading();
-  const { ERRORS, REFS, validate } = useValidateMoney();
+	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+	const [LOCKED, setLOCKED] = useState<string>(`unlocked`);
+	const [OBJECT, setOBJECT] = useState<MoneyGoalType>(MoneyGoal);
+	const [EXIST, setEXIST] = useState({
+		day: [``],
+		week: [``],
+		month: [``],
+		year: [``],
+		select: [``],
+	});
+	const [FLOW, setFLOW] = useState({
+		theme: `money`,
+		exist: false,
+		itsMe: false,
+		itsNew: false,
+	});
+	const [SEND, setSEND] = useState({
+		id: ``,
+		dateType: `day`,
+		dateStart: `0000-00-00`,
+		dateEnd: `0000-00-00`,
+	});
+	const [COUNT, setCOUNT] = useState({
+		totalCnt: 0,
+		sectionCnt: 0,
+		newSectionCnt: 0,
+	});
+	const [DATE, setDATE] = useState({
+		dateType: location_dateType ?? `month`,
+		dateStart: location_dateStart ?? getMonthStartFmt(),
+		dateEnd: location_dateEnd ?? getMonthEndFmt(),
+	});
 
-  // 2-2. useState -------------------------------------------------------------------------------
-  const [ LOCKED, setLOCKED ] = useState<string>(`unlocked`);
-  const [ OBJECT, setOBJECT ] = useState<MoneyGoalType>(MoneyGoal);
-  const [ EXIST, setEXIST ] = useState({
-    day: [``],
-    week: [``],
-    month: [``],
-    year: [``],
-    select: [``],
-  });
-  const [ FLOW, setFLOW ] = useState({
-    theme: `money`,
-    exist: false,
-    itsMe: false,
-    itsNew: false,
-  });
-  const [ SEND, setSEND ] = useState({
-    id: ``,
-    dateType: `day`,
-    dateStart: `0000-00-00`,
-    dateEnd: `0000-00-00`,
-  });
-  const [ COUNT, setCOUNT ] = useState({
-    totalCnt: 0,
-    sectionCnt: 0,
-    newSectionCnt: 0,
-  });
-  const [ DATE, setDATE ] = useState({
-    dateType: location_dateType ?? `month`,
-    dateStart: location_dateStart ?? getMonthStartFmt(),
-    dateEnd: location_dateEnd ?? getMonthEndFmt(),
-  });
+	// 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+	const objectRef: React.RefObject<MoneyGoalType> = useRef(OBJECT);
+	const countRef: React.RefObject<{
+		totalCnt: number;
+		sectionCnt: number;
+		newSectionCnt: number;
+	}> = useRef(COUNT);
+	const dateRef: React.RefObject<{
+		dateType: string;
+		dateStart: string;
+		dateEnd: string;
+	}> = useRef(DATE);
 
-  // 2-3. useRef --------------------------------------------------------------------------------
-  const objectRef: React.RefObject<
-    MoneyGoalType
-  > = useRef(OBJECT);
-  const countRef: React.RefObject<{
-    totalCnt: number;
-    sectionCnt: number;
-    newSectionCnt: number;
-  }> = useRef(COUNT);
-  const dateRef: React.RefObject<{
-    dateType: string;
-    dateStart: string;
-    dateEnd: string;
-  }> = useRef(DATE);
+	// 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+	useEffect(() => {
+		COUNT !== countRef.current && (countRef.current = COUNT);
+		OBJECT !== objectRef.current && (objectRef.current = OBJECT);
+		DATE !== dateRef.current && (dateRef.current = DATE);
+	}, [COUNT, OBJECT, DATE]);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------
-  useEffect(() => {
-    COUNT !== countRef.current && (countRef.current = COUNT);
-    OBJECT !== objectRef.current && (objectRef.current = OBJECT);
-    DATE !== dateRef.current && (dateRef.current = DATE);
-  }, [ COUNT, OBJECT, DATE ]);
+	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+	useEffect(() => {
+		if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
+			const dateRange: string = `${DATE?.dateStart.trim()} - ${DATE?.dateEnd.trim()}`;
+			const objectRange: string = `${OBJECT.money_goal_dateStart.trim()} - ${OBJECT.money_goal_dateEnd.trim()}`;
+			const isExist: boolean =
+				EXIST?.[DATE?.dateType as keyof typeof EXIST]?.includes(dateRange);
+			const itsMe: boolean = dateRange === objectRange;
+			const itsNew: boolean =
+				OBJECT.money_goal_dateStart === `0000-00-00` &&
+				OBJECT.money_goal_dateEnd === `0000-00-00`;
 
-  // 2-3. useEffect -----------------------------------------------------------------------------
-  useEffect(() => {
-    if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
+			setFLOW((prev) => ({
+				...prev,
+				exist: isExist,
+				itsMe: itsMe,
+				itsNew: itsNew,
+			}));
+		}
+	}, [EXIST, DATE?.dateEnd, OBJECT.money_goal_dateEnd]);
 
-      const dateRange: string = (
-        `${DATE?.dateStart.trim()} - ${DATE?.dateEnd.trim()}`
-      );
-      const objectRange: string = (
-        `${OBJECT.money_goal_dateStart.trim()} - ${OBJECT.money_goal_dateEnd.trim()}`
-      );
-      const isExist: boolean = (
-        EXIST?.[DATE?.dateType as keyof typeof EXIST]?.includes(dateRange)
-      );
-      const itsMe: boolean = (
-        dateRange === objectRange
-      );
-      const itsNew: boolean = (
-        OBJECT.money_goal_dateStart === `0000-00-00` &&
-        OBJECT.money_goal_dateEnd === `0000-00-00`
-      );
+	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+	useEffect(() => {
+		axios
+			.get(`${URL_OBJECT}/goal/exist`, {
+				params: {
+					user_id: sessionId,
+					DATE: {
+						dateType: ``,
+						dateStart: getMonthStartFmt(DATE?.dateStart),
+						dateEnd: getMonthEndFmt(DATE?.dateEnd),
+					},
+				},
+			})
+			.then((res: any) => {
+				setEXIST(
+					!res.data.result || res.data.result?.length === 0
+						? [``]
+						: res.data.result,
+				);
+			})
+			.catch((error: any) => {
+				setALERT({
+					open: true,
+					msg: translate(error.response.data.msg as string),
+					severity: `error`,
+				});
+			});
+	}, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
 
-      setFLOW((prev) => ({
-        ...prev,
-        exist: isExist,
-        itsMe: itsMe,
-        itsNew: itsNew,
-      }));
-    }
-  }, [ EXIST, DATE?.dateEnd, OBJECT.money_goal_dateEnd ]);
+	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+	useEffect(() => {
+		setLOADING(true);
+		if (LOCKED === `locked`) {
+			setLOADING(false);
+			return;
+		}
+		axios
+			.get(`${URL_OBJECT}/goal/detail`, {
+				params: {
+					user_id: sessionId,
+					DATE: DATE,
+				},
+			})
+			.then((res: any) => {
+				setLOADING(false);
+				setOBJECT(res.data.result ?? MoneyGoal);
+				setCOUNT((prev) => ({
+					...prev,
+					totalCnt: res.data.totalCnt ?? 0,
+					sectionCnt: res.data.sectionCnt ?? 0,
+					newSectionCnt: res.data.sectionCnt ?? 0,
+				}));
+			})
+			.catch((error: any) => {
+				setLOADING(false);
+				setALERT({
+					open: true,
+					msg: translate(error.response.data.msg as string),
+					severity: `error`,
+				});
+			})
+			.finally(() => {
+				setLOADING(false);
+			});
+	}, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
 
-  // 2-3. useEffect -----------------------------------------------------------------------------
-  useEffect(() => {
-    axios.get(`${URL_OBJECT}/goal/exist`, {
-      params: {
-        user_id: sessionId,
-        DATE: {
-          dateType: ``,
-          dateStart: getMonthStartFmt(DATE?.dateStart),
-          dateEnd: getMonthEndFmt(DATE?.dateEnd),
-        },
-      },
-    })
-    .then((res: any) => {
-      setEXIST(!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result)
-    })
-    .catch((error: any) => {
-      setALERT({
-        open: true,
-        msg: translate(error.response.data.msg as string),
-        severity: `error`,
-      });
-    });
-  }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
+	// 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+	const flowSave = async (type: string) => {
+		setLOADING(true);
+		if (!(await validate(objectRef.current, countRef.current, `goal`))) {
+			setLOADING(false);
+			return;
+		}
+		axios({
+			method: type === `create` ? `post` : `put`,
+			url:
+				type === `create`
+					? `${URL_OBJECT}/goal/create`
+					: `${URL_OBJECT}/goal/update`,
+			data: {
+				user_id: sessionId,
+				OBJECT: objectRef.current,
+				DATE: dateRef.current,
+				type: type,
+			},
+		})
+			.then((res: any) => {
+				if (res.data.status === `success`) {
+					setLOADING(false);
+					setALERT({
+						open: true,
+						msg: translate(res.data.msg as string),
+						severity: `success`,
+					});
+					void navigate(toList, {
+						state: {
+							dateType: ``,
+							dateStart: dateRef.current.dateStart,
+							dateEnd: dateRef.current.dateEnd,
+						},
+					});
+					void sync(`property`);
+				} else {
+					setLOADING(false);
+					setALERT({
+						open: true,
+						msg: translate(res.data.msg as string),
+						severity: `error`,
+					});
+				}
+			})
+			.catch((error: any) => {
+				setLOADING(false);
+				setALERT({
+					open: true,
+					msg: translate(error.response.data.msg as string),
+					severity: `error`,
+				});
+				console.error(error);
+			})
+			.finally(() => {
+				setLOADING(false);
+			});
+	};
 
-  // 2-3. useEffect -----------------------------------------------------------------------------
-  useEffect(() => {
-    setLOADING(true);
-    if (LOCKED === `locked`) {
-      setLOADING(false);
-      return;
-    }
-    axios.get(`${URL_OBJECT}/goal/detail`, {
-      params: {
-        user_id: sessionId,
-        DATE: DATE,
-      },
-    })
-    .then((res: any) => {
-      setLOADING(false);
-      setOBJECT(res.data.result ?? MoneyGoal);
-      setCOUNT((prev) => ({
-        ...prev,
-        totalCnt: res.data.totalCnt ?? 0,
-        sectionCnt: res.data.sectionCnt ?? 0,
-        newSectionCnt: res.data.sectionCnt ?? 0,
-      }));
-    })
-    .catch((error: any) => {
-      setLOADING(false);
-      setALERT({
-        open: true,
-        msg: translate(error.response.data.msg as string),
-        severity: `error`,
-      });
-    })
-    .finally(() => {
-      setLOADING(false);
-    });
-  }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
+	// 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+	const flowDelete = async () => {
+		setLOADING(true);
+		if (!(await validate(objectRef.current, countRef.current, `delete`))) {
+			setLOADING(false);
+			return;
+		}
+		axios
+			.delete(`${URL_OBJECT}/goal/delete`, {
+				data: {
+					user_id: sessionId,
+					DATE: dateRef.current,
+				},
+			})
+			.then((res: any) => {
+				if (res.data.status === `success`) {
+					setLOADING(false);
+					setALERT({
+						open: true,
+						msg: translate(res.data.msg as string),
+						severity: `success`,
+					});
+					void navigate(toList, {
+						state: {
+							dateType: ``,
+							dateStart: dateRef.current.dateStart,
+							dateEnd: dateRef.current.dateEnd,
+						},
+					});
+					void sync(`property`);
+				} else {
+					setLOADING(false);
+					setALERT({
+						open: true,
+						msg: translate(res.data.msg as string),
+						severity: `error`,
+					});
+				}
+			})
+			.catch((error: any) => {
+				setLOADING(false);
+				setALERT({
+					open: true,
+					msg: translate(error.response.data.msg as string),
+					severity: `error`,
+				});
+				console.error(error);
+			})
+			.finally(() => {
+				setLOADING(false);
+			});
+	};
 
-  // 3. flow ------------------------------------------------------------------------------------
-  const flowSave = async (type: string) => {
-    setLOADING(true);
-    if (!await validate(objectRef.current, countRef.current, `goal`)) {
-      setLOADING(false);
-      return;
-    }
-    axios({
-      method: type === `create` ? `post` : `put`,
-      url: type === `create` ? `${URL_OBJECT}/goal/create` : `${URL_OBJECT}/goal/update`,
-      data: {
-        user_id: sessionId,
-        OBJECT: objectRef.current,
-        DATE: dateRef.current,
-        type: type,
-      },
-    })
-    .then((res: any) => {
-      if (res.data.status === `success`) {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg as string),
-          severity: `success`,
-        });
-        void navigate(toList, {
-          state: {
-            dateType: ``,
-            dateStart: dateRef.current.dateStart,
-            dateEnd: dateRef.current.dateEnd,
-          },
-        });
-        void sync(`property`);
-      }
-      else {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg as string),
-          severity: `error`,
-        });
-      }
-    })
-    .catch((error: any) => {
-      setLOADING(false);
-      setALERT({
-        open: true,
-        msg: translate(error.response.data.msg as string),
-        severity: `error`,
-      });
-      console.error(error);
-    })
-    .finally(() => {
-      setLOADING(false);
-    });
-  };
+	// 4-3. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+	const handleDelete = useCallback((_index: number) => {
+		setOBJECT((prev) => ({
+			...prev,
+			money_goal_income: ``,
+			money_goal_expense: ``,
+		}));
+		setCOUNT((prev) => ({
+			...prev,
+			newSectionCnt: prev.newSectionCnt - 1,
+		}));
+	}, []);
 
-  // 3. flow ------------------------------------------------------------------------------------
-  const flowDelete = async () => {
-    setLOADING(true);
-    if (!await validate(objectRef.current, countRef.current, `delete`)) {
-      setLOADING(false);
-      return;
-    }
-    axios.delete(`${URL_OBJECT}/goal/delete`, {
-      data: {
-        user_id: sessionId,
-        DATE: dateRef.current,
-      },
-    })
-    .then((res: any) => {
-      if (res.data.status === `success`) {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg as string),
-          severity: `success`,
-        });
-        void navigate(toList, {
-          state: {
-            dateType: ``,
-            dateStart: dateRef.current.dateStart,
-            dateEnd: dateRef.current.dateEnd,
-          },
-        });
-        void sync(`property`);
-      }
-      else {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(res.data.msg as string),
-          severity: `error`,
-        });
-      }
-    })
-    .catch((error: any) => {
-      setLOADING(false);
-      setALERT({
-        open: true,
-        msg: translate(error.response.data.msg as string),
-        severity: `error`,
-      });
-      console.error(error);
-    })
-    .finally(() => {
-      setLOADING(false);
-    });
-  };
+	// 7. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+	const detailNode = () => {
+		// 7-1. date + count
+		const dateCountSection = () => (
+			<Grid
+				container={true}
+				spacing={2}
+				className={`radius-2 border-1 shadow-1 p-20px`}
+			>
+				<Grid size={12}>
+					<PickerDay DATE={DATE} setDATE={setDATE} EXIST={EXIST} />
+				</Grid>
+				<Grid size={12}>
+					<Count
+						COUNT={COUNT}
+						setCOUNT={setCOUNT}
+						LOCKED={LOCKED}
+						setLOCKED={setLOCKED}
+						limit={1}
+					/>
+				</Grid>
+			</Grid>
+		);
+		// 7-3. detail
+		const detailSection = () => (
+			<>
+				{[OBJECT]?.map((item, i) => (
+					<Grid
+						container={true}
+						spacing={2}
+						key={`detail-${i}`}
+						className={`${LOCKED === `locked` ? `locked` : ``} radius-2 border-1 shadow-1 p-20px`}
+					>
+						{/** row 1 * */}
+						<Grid container={true} spacing={1}>
+							<Grid size={6} className={`d-row-left`}>
+								<Bg badgeContent={i + 1} bgcolor={`#1976d2`} />
+							</Grid>
+							<Grid size={6} className={`d-row-right`}>
+								<Delete index={i} handleDelete={handleDelete} LOCKED={LOCKED} />
+							</Grid>
+						</Grid>
 
-  // 4-3. handle --------------------------------------------------------------------------------
-  const handleDelete = useCallback((_index: number) => {
-    setOBJECT((prev) => ({
-      ...prev,
-      money_goal_income: ``,
-      money_goal_expense: ``,
-    }));
-    setCOUNT((prev) => ({
-      ...prev,
-      newSectionCnt: prev.newSectionCnt - 1,
-    }));
-  }, []);
+						{/** row 2 * */}
+						<Grid container={true} spacing={1}>
+							<Grid size={12}>
+								<Input
+									locked={LOCKED}
+									value={insertComma(item?.money_goal_income ?? `0`)}
+									inputRef={REFS?.[i]?.money_goal_income}
+									error={ERRORS?.[i]?.money_goal_income}
+									label={
+										DATE?.dateType === `day`
+											? translate(`goalIncome`)
+											: `${translate(`goalIncome`)} (${translate(`total`)})`
+									}
+									startadornment={
+										<Img
+											max={14}
+											hover={true}
+											shadow={false}
+											radius={false}
+											src={`money2.webp`}
+										/>
+									}
+									endadornment={localCurrency}
+									onChange={(e: any) => {
+										const processedValue: string | null = handleNumberInput(
+											e.target.value,
+											9_999_999_999,
+										);
+										!processedValue === null &&
+											(() => {
+												return;
+											})();
+										setOBJECT((prev: any) => ({
+											...prev,
+											money_goal_income: processedValue,
+										}));
+									}}
+								/>
+							</Grid>
+						</Grid>
 
-  // 7. detail ----------------------------------------------------------------------------------
-  const detailNode = () => {
-    // 7-1. date + count
-    const dateCountSection = () => (
-      <Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1 p-20px`}>
-        <Grid size={12}>
-          <PickerDay
-            DATE={DATE}
-            setDATE={setDATE}
-            EXIST={EXIST}
-          />
-        </Grid>
-        <Grid size={12}>
-          <Count
-            COUNT={COUNT}
-            setCOUNT={setCOUNT}
-            LOCKED={LOCKED}
-            setLOCKED={setLOCKED}
-            limit={1}
-          />
-        </Grid>
-      </Grid>
-    );
-    // 7-3. detail
-    const detailSection = () => (
-      <>
-        {[OBJECT]?.map((item, i) => (
-          <Grid
-            container={true}
-            spacing={2}
-            key={`detail-${i}`}
-            className={`${LOCKED === `locked` ? `locked` : ``} radius-2 border-1 shadow-1 p-20px`}
-          >
-            {/** row 1 * */}
-            <Grid container={true} spacing={1}>
-              <Grid size={6} className={`d-row-left`}>
-                <Bg
-                  badgeContent={i + 1}
-                  bgcolor={`#1976d2`}
-                />
-              </Grid>
-              <Grid size={6} className={`d-row-right`}>
-                <Delete
-                  index={i}
-                  handleDelete={handleDelete}
-                  LOCKED={LOCKED}
-                />
-              </Grid>
-            </Grid>
+						{/** row 3 * */}
+						<Grid container={true} spacing={1}>
+							<Grid size={12}>
+								<Input
+									locked={LOCKED}
+									value={insertComma(item?.money_goal_expense ?? `0`)}
+									inputRef={REFS?.[i]?.money_goal_expense}
+									error={ERRORS?.[i]?.money_goal_expense}
+									label={
+										DATE?.dateType === `day`
+											? translate(`goalExpense`)
+											: `${translate(`goalExpense`)} (${translate(`total`)})`
+									}
+									startadornment={
+										<Img
+											max={14}
+											hover={true}
+											shadow={false}
+											radius={false}
+											src={`money2.webp`}
+										/>
+									}
+									endadornment={localCurrency}
+									onChange={(e: any) => {
+										const processedValue: string | null = handleNumberInput(
+											e.target.value,
+											9_999_999_999,
+										);
+										!processedValue === null &&
+											(() => {
+												return;
+											})();
+										setOBJECT((prev: any) => ({
+											...prev,
+											money_goal_expense: processedValue,
+										}));
+									}}
+								/>
+							</Grid>
+						</Grid>
+					</Grid>
+				))}
+			</>
+		);
+		// 7-10. return
+		return (
+			<Paper
+				className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}
+			>
+				{dateCountSection()}
+				<Br m={20} />
+				{COUNT?.newSectionCnt > 0 && detailSection()}
+			</Paper>
+		);
+	};
 
-            {/** row 2 * */}
-            <Grid container={true} spacing={1}>
-              <Grid size={12}>
-                <Input
-                  locked={LOCKED}
-                  value={insertComma(item?.money_goal_income ?? `0`)}
-                  inputRef={REFS?.[i]?.money_goal_income}
-                  error={ERRORS?.[i]?.money_goal_income}
-                  label={DATE?.dateType === `day` ? (
-										translate(`goalIncome`)
-									) : (
-										`${translate(`goalIncome`)} (${translate(`total`)})`
-									)}
-                  startadornment={(
-                    <Img
-                      max={14}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`money2.webp`}
-                    />
-                  )}
-                  endadornment={
-                    localCurrency
-                  }
-                  onChange={(e: any) => {
-                    const processedValue: string | null = handleNumberInput(e.target.value, 9_999_999_999);
-                    !processedValue === null && (() => {
-                      return;
-                    })();
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      money_goal_income: processedValue,
-                    }));
-                  }}
-                />
-              </Grid>
-            </Grid>
+	// 8. dialog ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+	const dialogNode = () => (
+		<Dialog
+			COUNT={COUNT}
+			setCOUNT={setCOUNT}
+			OBJECT={OBJECT}
+			setOBJECT={setOBJECT}
+			LOCKED={LOCKED}
+			setLOCKED={setLOCKED}
+		/>
+	);
 
-            {/** row 3 * */}
-            <Grid container={true} spacing={1}>
-              <Grid size={12}>
-                <Input
-                  locked={LOCKED}
-                  value={insertComma(item?.money_goal_expense ?? `0`)}
-                  inputRef={REFS?.[i]?.money_goal_expense}
-                  error={ERRORS?.[i]?.money_goal_expense}
-                  label={
-										DATE?.dateType === `day` ? (
-											translate(`goalExpense`)
-										) : (
-											`${translate(`goalExpense`)} (${translate(`total`)})`
-										)
-                  }
-                  startadornment={(
-                    <Img
-                      max={14}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`money2.webp`}
-                    />
-                  )}
-                  endadornment={
-                    localCurrency
-                  }
-                  onChange={(e: any) => {
-                    const processedValue: string | null = handleNumberInput(e.target.value, 9_999_999_999);
-                    !processedValue === null && (() => {
-                      return;
-                    })();
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      money_goal_expense: processedValue,
-                    }));
-                  }}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-        ))}
-      </>
-    );
-    // 7-10. return
-    return (
-      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
-        {dateCountSection()}
-        <Br m={20} />
-        {COUNT?.newSectionCnt > 0 && detailSection()}
-      </Paper>
-    );
-  };
+	// 9. footer ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+	const footerNode = () => (
+		<Footer
+			state={{
+				DATE,
+				SEND,
+				COUNT,
+				EXIST,
+				FLOW,
+			}}
+			setState={{
+				setDATE,
+				setSEND,
+				setCOUNT,
+				setEXIST,
+				setFLOW,
+			}}
+			flow={{
+				flowSave,
+				flowDelete,
+			}}
+		/>
+	);
 
-  // 8. dialog ----------------------------------------------------------------------------------
-  const dialogNode = () => (
-    <Dialog
-      COUNT={COUNT}
-      setCOUNT={setCOUNT}
-      OBJECT={OBJECT}
-      setOBJECT={setOBJECT}
-      LOCKED={LOCKED}
-      setLOCKED={setLOCKED}
-    />
-  );
-
-  // 9. footer ----------------------------------------------------------------------------------
-  const footerNode = () => (
-    <Footer
-      state={{
-        DATE, SEND, COUNT, EXIST, FLOW,
-      }}
-      setState={{
-        setDATE, setSEND, setCOUNT, setEXIST, setFLOW,
-      }}
-      flow={{
-        flowSave, flowDelete,
-      }}
-    />
-  );
-
-  // 10. return ----------------------------------------------------------------------------------
-  return (
-    <>
-      {detailNode()}
-      {dialogNode()}
-      {footerNode()}
-    </>
-  );
+	// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+	return (
+		<>
+			{detailNode()}
+			{dialogNode()}
+			{footerNode()}
+		</>
+	);
 });

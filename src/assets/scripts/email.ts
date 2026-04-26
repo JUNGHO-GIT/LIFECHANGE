@@ -5,45 +5,45 @@
  * @since 2025-12-26
  */
 
-import nodemailer from 'nodemailer';
 import { loadEnv } from "@assets/scripts/env";
+import nodemailer from "nodemailer";
+
 loadEnv();
 
-// -------------------------------------------------------------------------------------------------
+// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const sendEmail = async (email: string, code: string) => {
-  try {
-    // 이메일 서버 설정
-    const transporter = nodemailer.createTransport({
-      service: process.env.EMAIL_SERVICE as string,
-      host: process.env.EMAIL_HOST as string,
-      port: process.env.EMAIL_PORT as unknown as number,
-      secure: false,
-      requireTLS: true,
-      auth: {
-        user: process.env.EMAIL_ID as string,
-        pass: process.env.EMAIL_PW as string,
-      },
-    });
+	try {
+		// 이메일 서버 설정
+		const transporter = nodemailer.createTransport({
+			service: process.env.EMAIL_SERVICE as string,
+			host: process.env.EMAIL_HOST as string,
+			port: process.env.EMAIL_PORT as unknown as number,
+			secure: false,
+			requireTLS: true,
+			auth: {
+				user: process.env.EMAIL_ID as string,
+				pass: process.env.EMAIL_PW as string,
+			},
+		});
 
-    // 이메일 전송
-    const bucketPath: string | undefined = process.env.GCLOUD_BUCKET_PATH;
-    await transporter.sendMail({
+		// 이메일 전송
+		const bucketPath: string | undefined = process.env.GCLOUD_BUCKET_PATH;
+		await transporter.sendMail({
+			// 발신자
+			from: `"lifechange" <${process.env.EMAIL_ID}>`,
 
-      // 발신자
-      from: `"LIFECHANGE" <${process.env.EMAIL_ID}>`,
+			// 수신자
+			to: email,
 
-      // 수신자
-      to: email,
+			// 제목
+			subject: `lifechange 인증 코드`,
 
-      // 제목
-      subject: `LIFECHANGE 인증 코드`,
-
-      // html
-      html: /* html */ `
+			// html
+			html: /* html */ `
       	<!DOCTYPE html>
       	<html lang="en">
       	  <head>
-      	    <title>LIFECHANGE 인증 코드</title>
+      	    <title>lifechange 인증 코드</title>
       	    <meta charset="UTF-8" />
       	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -115,7 +115,7 @@ export const sendEmail = async (email: string, code: string) => {
       	            font-weight: bold;
       	          "
       	        >
-      	          LIFECHANGE
+      	          lifechange
       	        </span>
       	        <span
       	          style="
@@ -155,10 +155,10 @@ export const sendEmail = async (email: string, code: string) => {
       	  </body>
       	</html>
       `,
-    });
+		});
 
-    const consoleStr: string = `
-      -----------------------------------------
+		const consoleStr: string = `
+      ―――――――――――――――――――――――――――――――――――――――--
       이메일이 성공적으로 전송되었습니다.
       서비스: ${process.env.EMAIL_SERVICE}
       호스트: ${process.env.EMAIL_HOST}
@@ -167,19 +167,18 @@ export const sendEmail = async (email: string, code: string) => {
       서버 비밀번호: ${process.env.EMAIL_PW}
       클라이언트 이메일: ${email}
       인증 코드: ${code}
-      -----------------------------------------
+      ―――――――――――――――――――――――――――――――――――――――--
     `;
-    console.log(consoleStr);
-    return `success`;
-  }
-  catch (error: any) {
-    const consoleStr: string = `
-      -----------------------------------------
+		console.log(consoleStr);
+		return `success`;
+	} catch (error: any) {
+		const consoleStr: string = `
+      ―――――――――――――――――――――――――――――――――――――――--
       이메일 전송 중 오류가 발생했습니다.
       ${error}
-			-----------------------------------------
+			―――――――――――――――――――――――――――――――――――――――--
     `;
-    console.log(consoleStr);
-    return `fail`;
-  }
+		console.log(consoleStr);
+		return `fail`;
+	}
 };

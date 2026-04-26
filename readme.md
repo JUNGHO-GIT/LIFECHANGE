@@ -1,8 +1,8 @@
-# LIFECHANGE
+# lifechange
 
 ## Overview
 
-LIFECHANGE is a full-stack application with a root server layer and a separate
+lifechange is a full-stack application with a root server layer and a separate
 client application stored under `client/`.
 
 ## Structure

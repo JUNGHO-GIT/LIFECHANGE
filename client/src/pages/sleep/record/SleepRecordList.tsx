@@ -5,308 +5,379 @@
  * @since 2025-12-26
  */
 
-import { useState, useEffect, memo } from "@exportReacts";
-import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
-import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
-import { SleepRecord, SleepRecordType } from "@exportSchemas";
+import { Div, Grid, Hr, Icons, Img, Paper } from "@exportComponents";
+import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
+import { Dialog, Empty, Footer } from "@exportLayouts";
 import { axios } from "@exportLibs";
-import { Footer, Empty, Dialog } from "@exportLayouts";
-import { Div, Hr, Img, Icons, Paper, Grid } from "@exportComponents";
-import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
+import { Accordion, AccordionDetails, AccordionSummary } from "@exportMuis";
+import { memo, useEffect, useState } from "@exportReacts";
+import { SleepRecord, type SleepRecordType } from "@exportSchemas";
+import {
+	useStoreAlert,
+	useStoreLanguage,
+	useStoreLoading,
+} from "@exportStores";
 
-// -------------------------------------------------------------------------------------------------
+// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const SleepRecordList = memo(() => {
+	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+	const { URL_OBJECT, PATH, sessionId, toDetail } = useCommonValue();
+	const { navigate, location_dateType, location_dateStart, location_dateEnd } =
+		useCommonValue();
+	const { getDayFmt, getDayNotFmt, getMonthStartFmt, getMonthEndFmt } =
+		useCommonDate();
+	const { translate } = useStoreLanguage();
+	const { setALERT } = useStoreAlert();
+	const { setLOADING } = useStoreLoading();
 
-  // 1. common ----------------------------------------------------------------------------------
-  const { URL_OBJECT, PATH, sessionId, toDetail } = useCommonValue();
-  const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
-  const { getDayFmt, getDayNotFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-  const { translate } = useStoreLanguage();
-  const { setALERT } = useStoreAlert();
-  const { setLOADING } = useStoreLoading();
+	// 2-1. useStorageLocal ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+	const [DATE, setDATE] = useStorageLocal(`date`, PATH, ``, {
+		dateType: location_dateType ?? ``,
+		dateStart: location_dateStart ?? getDayFmt(),
+		dateEnd: location_dateEnd ?? getDayFmt(),
+	});
+	const [PAGING, setPAGING] = useStorageLocal(`paging`, PATH, ``, {
+		sort: `asc`,
+		page: 1,
+	});
+	const [isExpanded, setIsExpanded] = useStorageLocal(`isExpanded`, PATH, ``, [
+		{
+			expanded: true,
+		},
+	]);
 
-  // 2-1. useStorageLocal ------------------------------------------------------------------------
-  const [ DATE, setDATE ] = useStorageLocal(
-    `date`, PATH, ``, {
-      dateType: location_dateType ?? ``,
-      dateStart: location_dateStart ?? getDayFmt(),
-      dateEnd: location_dateEnd ?? getDayFmt(),
-    }
-  );
-  const [ PAGING, setPAGING ] = useStorageLocal(
-    `paging`, PATH, ``, {
-      sort: `asc`,
-      page: 1,
-    }
-  );
-  const [ isExpanded, setIsExpanded ] = useStorageLocal(
-    `isExpanded`, PATH, ``, [
-      {
-        expanded: true,
-      },
-    ]
-  );
+	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+	const [OBJECT, setOBJECT] = useState<[SleepRecordType]>([SleepRecord]);
+	const [EXIST, setEXIST] = useState({
+		day: [``],
+		week: [``],
+		month: [``],
+		year: [``],
+		select: [``],
+	});
+	const [SEND, setSEND] = useState({
+		id: ``,
+		dateType: `day`,
+		dateStart: `0000-00-00`,
+		dateEnd: `0000-00-00`,
+	});
+	const [COUNT, setCOUNT] = useState({
+		totalCnt: 0,
+		sectionCnt: 0,
+		newSectionCnt: 0,
+	});
 
-  // 2-2. useState -------------------------------------------------------------------------------
-  const [ OBJECT, setOBJECT ] = useState<[SleepRecordType]>([SleepRecord]);
-  const [ EXIST, setEXIST ] = useState({
-    day: [``],
-    week: [``],
-    month: [``],
-    year: [``],
-    select: [``],
-  });
-  const [ SEND, setSEND ] = useState({
-    id: ``,
-    dateType: `day`,
-    dateStart: `0000-00-00`,
-    dateEnd: `0000-00-00`,
-  });
-  const [ COUNT, setCOUNT ] = useState({
-    totalCnt: 0,
-    sectionCnt: 0,
-    newSectionCnt: 0,
-  });
+	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+	useEffect(() => {
+		axios
+			.get(`${URL_OBJECT}/record/exist`, {
+				params: {
+					user_id: sessionId,
+					DATE: {
+						dateType: ``,
+						dateStart: getMonthStartFmt(DATE?.dateStart),
+						dateEnd: getMonthEndFmt(DATE?.dateEnd),
+					},
+				},
+			})
+			.then((res: any) => {
+				setEXIST(
+					!res.data.result || res.data.result?.length === 0
+						? [``]
+						: res.data.result,
+				);
+			})
+			.catch((error: any) => {
+				setALERT({
+					open: true,
+					msg: translate(error.response.data.msg as string),
+					severity: `error`,
+				});
+			});
+	}, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
 
-  // 2-3. useEffect -----------------------------------------------------------------------------
-  useEffect(() => {
-    axios.get(`${URL_OBJECT}/record/exist`, {
-      params: {
-        user_id: sessionId,
-        DATE: {
-          dateType: ``,
-          dateStart: getMonthStartFmt(DATE?.dateStart),
-          dateEnd: getMonthEndFmt(DATE?.dateEnd),
-        },
-      },
-    })
-    .then((res: any) => {
-      setEXIST(
-				!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result
-      );
-    })
-    .catch((error: any) => {
-      setALERT({
-        open: true,
-        msg: translate(error.response.data.msg as string),
-        severity: `error`,
-      });
-    });
-  }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
+	// 2-3. fetch list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+	useEffect(() => {
+		setLOADING(true);
+		axios
+			.get(`${URL_OBJECT}/record/list`, {
+				params: {
+					user_id: sessionId,
+					PAGING: PAGING,
+					DATE: {
+						dateType: ``,
+						dateStart: DATE?.dateStart,
+						dateEnd: DATE?.dateEnd,
+					},
+				},
+			})
+			.then((res: any) => {
+				setLOADING(false);
+				setOBJECT(
+					res.data.result?.length > 0 ? res.data.result : [SleepRecord],
+				);
+				setCOUNT((prev) => ({
+					...prev,
+					totalCnt: res.data.totalCnt ?? 0,
+					sectionCnt: res.data.sectionCnt ?? 0,
+					newSectionCnt: res.data.sectionCnt ?? 0,
+				}));
+				// 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
+				setIsExpanded(() => {
+					if (res.data.result?.length !== isExpanded.length) {
+						return Array.from({ length: res.data.result?.length }).fill({
+							expanded: true,
+						});
+					}
+					return isExpanded;
+				});
+			})
+			.catch((error: any) => {
+				setLOADING(false);
+				setALERT({
+					open: true,
+					msg: translate(error.response.data.msg as string),
+					severity: `error`,
+				});
+			})
+			.finally(() => {
+				setLOADING(false);
+			});
+	}, [
+		URL_OBJECT,
+		sessionId,
+		PAGING?.sort,
+		PAGING.page,
+		DATE?.dateStart,
+		DATE?.dateEnd,
+	]);
 
-  // 2-3. fetch list -----------------------------------------------------------------------------
-  useEffect(() => {
-    setLOADING(true);
-    axios.get(`${URL_OBJECT}/record/list`, {
-      params: {
-        user_id: sessionId,
-        PAGING: PAGING,
-        DATE: {
-          dateType: ``,
-          dateStart: DATE?.dateStart,
-          dateEnd: DATE?.dateEnd,
-        },
-      },
-    })
-    .then((res: any) => {
-      setLOADING(false);
-      setOBJECT(res.data.result?.length > 0 ? res.data.result : [SleepRecord]);
-      setCOUNT((prev) => ({
-        ...prev,
-        totalCnt: res.data.totalCnt ?? 0,
-        sectionCnt: res.data.sectionCnt ?? 0,
-        newSectionCnt: res.data.sectionCnt ?? 0,
-      }));
-      // 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
-      setIsExpanded(() => {
-        if (res.data.result?.length !== isExpanded.length) {
-          return Array.from({ length: res.data.result?.length }).fill({ expanded: true });
-        }
-        return isExpanded;
-      });
-    })
-    .catch((error: any) => {
-      setLOADING(false);
-      setALERT({
-        open: true,
-        msg: translate(error.response.data.msg as string),
-        severity: `error`,
-      });
-    })
-    .finally(() => {
-      setLOADING(false);
-    });
-  }, [
-    URL_OBJECT, sessionId, PAGING?.sort, PAGING.page, DATE?.dateStart, DATE?.dateEnd,
-  ]);
+	// 7. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+	const listNode = () => {
+		// 7-1. list
+		const listSection = () => (
+			<Grid container={true} spacing={0}>
+				{OBJECT?.map((item, i) => (
+					<Grid
+						container={true}
+						spacing={0}
+						className={`radius-2 border-1 shadow-1 mb-10px`}
+						key={`list-${i}`}
+					>
+						<Grid size={12} className={`p-2px`}>
+							<Accordion
+								className={`border-0 shadow-0 radius-2`}
+								expanded={isExpanded?.[i]?.expanded}
+							>
+								<AccordionSummary
+									expandIcon={
+										<Icons
+											key={`ChevronDown`}
+											name={`ChevronDown`}
+											className={`w-16px h-16px`}
+											onClick={(e: any) => {
+												e.preventDefault();
+												e.stopPropagation();
+												setIsExpanded(
+													isExpanded.map((el: any, index: number) =>
+														i === index
+															? {
+																	expanded: !el.expanded,
+																}
+															: el,
+													),
+												);
+											}}
+										/>
+									}
+									onClick={() => {
+										void navigate(toDetail, {
+											state: {
+												id: item._id,
+												dateType: item.sleep_record_dateType,
+												dateStart: item.sleep_record_dateStart,
+												dateEnd: item.sleep_record_dateEnd,
+											},
+										});
+									}}
+								>
+									<Grid container={true} spacing={1}>
+										<Grid size={2} className={`d-row-center`}>
+											<Icons
+												key={`Search`}
+												name={`Search`}
+												className={`w-16px h-16px`}
+											/>
+										</Grid>
+										<Grid size={10} className={`d-row-left`}>
+											<Div className={`fs-0-9rem fw-600 black mr-5px`}>
+												{item.sleep_record_dateStart?.slice(5, 10)}
+											</Div>
+											<Div className={`fs-0-9rem fw-500 dark ml-5px`}>
+												{translate(
+													getDayNotFmt(item.sleep_record_dateStart).format(
+														`ddd`,
+													),
+												)}
+											</Div>
+										</Grid>
+									</Grid>
+								</AccordionSummary>
+								<AccordionDetails>
+									{/** Aggregated summary for the date (averages computed on server) * */}
+									<Grid container={true} spacing={1}>
+										<Grid container={true} spacing={1}>
+											<Grid size={2} className={`d-row-center`}>
+												<Img
+													max={14}
+													hover={true}
+													shadow={false}
+													radius={false}
+													src={`sleep2.webp`}
+												/>
+											</Grid>
+											<Grid size={3} className={`d-row-left`}>
+												<Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+													{translate(`bedTime`)}
+												</Div>
+											</Grid>
+											<Grid size={7}>
+												<Grid container={true} spacing={1}>
+													<Grid size={10} className={`d-row-right`}>
+														<Div
+															className={`fs-0-8rem fw-600 ${item.sleep_record_bedTime_color ?? item.sleep_section?.[0]?.sleep_record_bedTime_color ?? ``}`}
+														>
+															{item.sleep_record_bedTime ??
+																item.sleep_section?.[0]?.sleep_record_bedTime}
+														</Div>
+													</Grid>
+													<Grid size={2} className={`d-row-center`}>
+														<Div className={`fs-0-6rem`}>{translate(`hm`)}</Div>
+													</Grid>
+												</Grid>
+											</Grid>
+										</Grid>
 
-  // 7. list -----------------------------------------------------------------------------------
-  const listNode = () => {
-    // 7-1. list
-    const listSection = () => (
-      <Grid container={true} spacing={0}>
-        {OBJECT?.map((item, i) => (
-          <Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px`} key={`list-${i}`}>
-            <Grid size={12} className={`p-2px`}>
-              <Accordion className={`border-0 shadow-0 radius-2`} expanded={isExpanded?.[i]?.expanded}>
-                <AccordionSummary
-                  expandIcon={(
-                    <Icons
-                      key={`ChevronDown`}
-                      name={`ChevronDown`}
-                      className={`w-16px h-16px`}
-                      onClick={(e: any) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setIsExpanded(isExpanded.map((el: any, index: number) => (
-													i === index ? {
-													  expanded: !el.expanded,
-													} : el
-                        )));
-                      }}
-                    />
-                  )}
-                  onClick={() => {
-                    void navigate(toDetail, {
-                      state: {
-                        id: item._id,
-                        dateType: item.sleep_record_dateType,
-                        dateStart: item.sleep_record_dateStart,
-                        dateEnd: item.sleep_record_dateEnd,
-                      },
-                    });
-                  }}
-                >
-                  <Grid container={true} spacing={1}>
-                    <Grid size={2} className={`d-row-center`}>
-                      <Icons
-                        key={`Search`}
-                        name={`Search`}
-                        className={`w-16px h-16px`}
-                      />
-                    </Grid>
-                    <Grid size={10} className={`d-row-left`}>
-                      <Div className={`fs-0-9rem fw-600 black mr-5px`}>
-                        {item.sleep_record_dateStart?.slice(5, 10)}
-                      </Div>
-                      <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
-                        {translate(getDayNotFmt(item.sleep_record_dateStart).format(`ddd`))}
-                      </Div>
-                    </Grid>
-                  </Grid>
-                </AccordionSummary>
-                <AccordionDetails>
-                  {/** Aggregated summary for the date (averages computed on server) * */}
-                  <Grid container={true} spacing={1}>
-                    <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-row-center`}>
-                        <Img max={14} hover={true} shadow={false} radius={false} src={`sleep2.webp`} />
-                      </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>{translate(`bedTime`)}</Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          <Grid size={10} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.sleep_record_bedTime_color ?? item.sleep_section?.[0]?.sleep_record_bedTime_color ?? ``}`}>
-                              {item.sleep_record_bedTime ?? item.sleep_section?.[0]?.sleep_record_bedTime}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>{translate(`hm`)}</Div>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
+										<Hr m={1} className={`bg-light`} />
 
-                    <Hr m={1} className={`bg-light`} />
+										<Grid container={true} spacing={1}>
+											<Grid size={2} className={`d-center`}>
+												<Img
+													max={14}
+													hover={true}
+													shadow={false}
+													radius={false}
+													src={`sleep3.webp`}
+												/>
+											</Grid>
+											<Grid size={3} className={`d-row-left`}>
+												<Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+													{translate(`wakeTime`)}
+												</Div>
+											</Grid>
+											<Grid size={7}>
+												<Grid container={true} spacing={1}>
+													<Grid size={10} className={`d-row-right`}>
+														<Div
+															className={`fs-0-8rem fw-600 ${item.sleep_record_wakeTime_color ?? item.sleep_section?.[0]?.sleep_record_wakeTime_color ?? ``}`}
+														>
+															{item.sleep_record_wakeTime ??
+																item.sleep_section?.[0]?.sleep_record_wakeTime}
+														</Div>
+													</Grid>
+													<Grid size={2} className={`d-row-center`}>
+														<Div className={`fs-0-6rem`}>{translate(`hm`)}</Div>
+													</Grid>
+												</Grid>
+											</Grid>
+										</Grid>
 
-                    <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-center`}>
-                        <Img max={14} hover={true} shadow={false} radius={false} src={`sleep3.webp`} />
-                      </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>{translate(`wakeTime`)}</Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          <Grid size={10} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.sleep_record_wakeTime_color ?? item.sleep_section?.[0]?.sleep_record_wakeTime_color ?? ``}`}>
-                              {item.sleep_record_wakeTime ?? item.sleep_section?.[0]?.sleep_record_wakeTime}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>{translate(`hm`)}</Div>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
+										<Hr m={1} className={`bg-light`} />
 
-                    <Hr m={1} className={`bg-light`} />
+										<Grid container={true} spacing={1}>
+											<Grid size={2} className={`d-center`}>
+												<Img
+													max={14}
+													hover={true}
+													shadow={false}
+													radius={false}
+													src={`sleep4.webp`}
+												/>
+											</Grid>
+											<Grid size={3} className={`d-row-left`}>
+												<Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+													{translate(`sleepTime`)}
+												</Div>
+											</Grid>
+											<Grid size={7}>
+												<Grid container={true} spacing={1}>
+													<Grid size={10} className={`d-row-right`}>
+														<Div
+															className={`fs-0-8rem fw-600 ${item.sleep_record_sleepTime_color ?? item.sleep_section?.[0]?.sleep_record_sleepTime_color ?? ``}`}
+														>
+															{item.sleep_record_sleepTime ??
+																item.sleep_section?.[0]?.sleep_record_sleepTime}
+														</Div>
+													</Grid>
+													<Grid size={2} className={`d-row-center`}>
+														<Div className={`fs-0-6rem`}>{translate(`hm`)}</Div>
+													</Grid>
+												</Grid>
+											</Grid>
+										</Grid>
+									</Grid>
+								</AccordionDetails>
+							</Accordion>
+						</Grid>
+					</Grid>
+				))}
+			</Grid>
+		);
+		// 7-10. return
+		return (
+			<Paper
+				className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}
+			>
+				{COUNT.totalCnt === 0 ? (
+					<Empty DATE={DATE} extra={`sleep`} />
+				) : (
+					listSection()
+				)}
+			</Paper>
+		);
+	};
 
-                    <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-center`}>
-                        <Img max={14} hover={true} shadow={false} radius={false} src={`sleep4.webp`} />
-                      </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>{translate(`sleepTime`)}</Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          <Grid size={10} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.sleep_record_sleepTime_color ?? item.sleep_section?.[0]?.sleep_record_sleepTime_color ?? ``}`}>
-                              {item.sleep_record_sleepTime ?? item.sleep_section?.[0]?.sleep_record_sleepTime}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>{translate(`hm`)}</Div>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
-          </Grid>
-        ))}
-      </Grid>
-    );
-    // 7-10. return
-    return (
-      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
-        {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={`sleep`} /> : listSection()}
-      </Paper>
-    );
-  };
+	// 8. dialog ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+	const dialogNode = () => (
+		<Dialog COUNT={COUNT} setCOUNT={setCOUNT} setIsExpanded={setIsExpanded} />
+	);
 
-  // 8. dialog ----------------------------------------------------------------------------------
-  const dialogNode = () => (
-    <Dialog
-      COUNT={COUNT}
-      setCOUNT={setCOUNT}
-      setIsExpanded={setIsExpanded}
-    />
-  );
+	// 9. footer ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+	const footerNode = () => (
+		<Footer
+			state={{
+				DATE,
+				SEND,
+				PAGING,
+				COUNT,
+				EXIST,
+			}}
+			setState={{
+				setDATE,
+				setSEND,
+				setPAGING,
+				setCOUNT,
+				setEXIST,
+			}}
+		/>
+	);
 
-  // 9. footer ----------------------------------------------------------------------------------
-  const footerNode = () => (
-    <Footer
-      state={{
-        DATE, SEND, PAGING, COUNT, EXIST,
-      }}
-      setState={{
-        setDATE, setSEND, setPAGING, setCOUNT, setEXIST,
-      }}
-    />
-  );
-
-  // 10. return ----------------------------------------------------------------------------------
-  return (
-    <>
-      {listNode()}
-      {dialogNode()}
-      {footerNode()}
-    </>
-  );
+	// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+	return (
+		<>
+			{listNode()}
+			{dialogNode()}
+			{footerNode()}
+		</>
+	);
 });
