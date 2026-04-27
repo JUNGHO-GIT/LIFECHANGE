@@ -5,29 +5,6 @@
   "type": "module",
   "main": "index.tsx",
   "license": "Apache-2.0",
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "rules": {
-      "import/extensions": "off",
-      "import/prefer-default-export": "off",
-      "no-console": "off",
-      "no-underscore-dangle": "off",
-      "no-unused-vars": "off",
-      "react-hooks/exhaustive-deps": "off",
-      "react-hooks/rules-of-hooks": "warn",
-      "@typescript-eslint/no-unused-vars": [
-        "off",
-        {
-          "varsIgnorePattern": "_",
-          "argsIgnorePattern": "_"
-        }
-      ],
-      "@typescript-eslint/no-unused-expressions": "off"
-    }
-  },
   "browserslist": {
     "development": [
       "last 1 chrome version",
@@ -73,6 +50,7 @@
     "zustand": "5.0.12"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.4.13",
     "@mui/types": "9.0.0",
     "@swc/cli": "0.8.1",
     "@swc/core": "1.15.26",
