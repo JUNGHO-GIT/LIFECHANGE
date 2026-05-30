@@ -5,12 +5,12 @@
  * @since 2025-12-26
  */
 
-import { exerciseArray } from "@assets/arrays/exerciseArray";
+import { exerciseArray as exerArry } from "@assets/arrays/exerciseArray";
 import { foodArray } from "@assets/arrays/foodArray";
 import { moneyArray } from "@assets/arrays/moneyArray";
 import { sleepArray } from "@assets/arrays/sleepArray";
 import { ExerciseGoal } from "@schemas/exercise/ExerciseGoal";
-import { ExerciseRecord } from "@schemas/exercise/ExerciseRecord";
+import { ExerciseRecord as ExerRec2 } from "@schemas/exercise/ExerciseRecord";
 import { FoodGoal } from "@schemas/food/FoodGoal";
 import { FoodRecord } from "@schemas/food/FoodRecord";
 import { MoneyGoal } from "@schemas/money/MoneyGoal";
@@ -22,31 +22,31 @@ import { Verify } from "@schemas/Verify";
 import mongoose from "mongoose";
 
 // 1-1. email - findId ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-export const emailFindId = async (user_id_param: string) => {
+export const emailFindId = async (usrIdPrm: string) => {
 	const finalResult: any = await User.findOne({
-		user_id: user_id_param,
+		user_id: usrIdPrm,
 	}).lean();
 
 	return finalResult;
 };
 
 // 1-2. email - sendEmail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-export const emailSendEmail = async (
-	user_id_param: string,
+export const emlSndEml = async (
+	usrIdPrm: string,
 	code_param: string,
 ) => {
 	const findResult: any = await Verify.findOne({
-		verify_id: user_id_param,
+		verify_id: usrIdPrm,
 	}).lean();
 
 	if (findResult !== null) {
 		await Verify.deleteMany({
-			verify_id: user_id_param,
+			verify_id: usrIdPrm,
 		});
 	}
 
 	const finalResult: any = await Verify.create({
-		verify_id: user_id_param,
+		verify_id: usrIdPrm,
 		verify_code: code_param,
 		verify_regDt: new Date(),
 	});
@@ -55,28 +55,28 @@ export const emailSendEmail = async (
 };
 
 // 1-3. email - verifyEmail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-export const emailVerifyEmail = async (user_id_param: string) => {
+export const emlVrfyEml = async (usrIdPrm: string) => {
 	const finalResult: any = await Verify.findOne({
-		verify_id: user_id_param,
+		verify_id: usrIdPrm,
 	}).lean();
 
 	return finalResult;
 };
 
 // 2-1. user - checkId ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-export const userCheckId = async (user_id_param: string) => {
+export const userCheckId = async (usrIdPrm: string) => {
 	const finalResult: any = await User.findOne({
-		user_id: user_id_param,
+		user_id: usrIdPrm,
 	}).lean();
 
 	return finalResult;
 };
 
 // 2-2. user - signup ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-export const userSignup = async (user_id_param: string, OBJECT_param: any) => {
+export const userSignup = async (usrIdPrm: string, OBJECT_param: any) => {
 	const finalResult: any = await User.create({
 		_id: new mongoose.Types.ObjectId(),
-		user_id: user_id_param,
+		user_id: usrIdPrm,
 		user_google: `N`,
 		user_token: OBJECT_param.user_token,
 		user_pw: OBJECT_param.user_pw,
@@ -117,7 +117,7 @@ export const userSignup = async (user_id_param: string, OBJECT_param: any) => {
 			},
 		],
 		user_dataCategory: {
-			exercise: exerciseArray,
+			exercise: exerArry,
 			food: foodArray,
 			money: moneyArray,
 			sleep: sleepArray,
@@ -130,10 +130,10 @@ export const userSignup = async (user_id_param: string, OBJECT_param: any) => {
 };
 
 // 2-3. user - resetPw ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-export const userResetPw = async (user_id_param: string, OBJECT_param: any) => {
+export const userResetPw = async (usrIdPrm: string, OBJECT_param: any) => {
 	const finalResult: any = await User.findOneAndUpdate(
 		{
-			user_id: user_id_param,
+			user_id: usrIdPrm,
 		},
 		{
 			$set: {
@@ -152,31 +152,31 @@ export const userResetPw = async (user_id_param: string, OBJECT_param: any) => {
 
 // 2-4. user - login ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const userLogin = async (
-	user_id_param: string,
-	user_pw_param: string,
+	usrIdPrm: string,
+	usrPwPrm: string,
 ) => {
 	const finalResult: any = await User.findOne({
-		user_id: user_id_param,
-		user_pw: user_pw_param,
+		user_id: usrIdPrm,
+		user_pw: usrPwPrm,
 	}).lean();
 
 	return finalResult;
 };
 
 // 2-5. user - detail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-export const userDetail = async (user_id_param: string) => {
+export const userDetail = async (usrIdPrm: string) => {
 	const finalResult: any = await User.findOne({
-		user_id: user_id_param,
+		user_id: usrIdPrm,
 	}).lean();
 
 	return finalResult;
 };
 
 // 2-6. user - update ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-export const userUpdate = async (user_id_param: string, OBJECT_param: any) => {
+export const userUpdate = async (usrIdPrm: string, OBJECT_param: any) => {
 	const finalResult: any = await User.findOneAndUpdate(
 		{
-			user_id: user_id_param,
+			user_id: usrIdPrm,
 		},
 		{
 			$set: {
@@ -196,44 +196,44 @@ export const userUpdate = async (user_id_param: string, OBJECT_param: any) => {
 };
 
 // 2-7. user - delete ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-export const userDelete = async (user_id_param: string) => {
+export const userDelete = async (usrIdPrm: string) => {
 	const finalResult = await ExerciseGoal.deleteMany({
-		user_id: user_id_param,
+		user_id: usrIdPrm,
 	});
-	await ExerciseRecord.deleteMany({
-		user_id: user_id_param,
+	await ExerRec2.deleteMany({
+		user_id: usrIdPrm,
 	});
 	await FoodGoal.deleteMany({
-		user_id: user_id_param,
+		user_id: usrIdPrm,
 	});
 	await FoodRecord.deleteMany({
-		user_id: user_id_param,
+		user_id: usrIdPrm,
 	});
 	await MoneyGoal.deleteMany({
-		user_id: user_id_param,
+		user_id: usrIdPrm,
 	});
 	await MoneyRecord.deleteMany({
-		user_id: user_id_param,
+		user_id: usrIdPrm,
 	});
 	await SleepGoal.deleteMany({
-		user_id: user_id_param,
+		user_id: usrIdPrm,
 	});
 	await SleepRecord.deleteMany({
-		user_id: user_id_param,
+		user_id: usrIdPrm,
 	});
 	await User.deleteOne({
-		user_id: user_id_param,
+		user_id: usrIdPrm,
 	});
 
 	return finalResult;
 };
 
 // 3-2. category - detail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-export const categoryDetail = async (user_id_param: string) => {
+export const catDtl = async (usrIdPrm: string) => {
 	const finalResult: any = await User.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 			},
 		},
 		{
@@ -251,13 +251,13 @@ export const categoryDetail = async (user_id_param: string) => {
 };
 
 // 3-4. category - update ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-export const categoryUpdate = async (
-	user_id_param: string,
+export const catUpdt = async (
+	usrIdPrm: string,
 	OBJECT_param: any,
 ) => {
 	const finalResult: any = await User.findOneAndUpdate(
 		{
-			user_id: user_id_param,
+			user_id: usrIdPrm,
 		},
 		{
 			$set: {

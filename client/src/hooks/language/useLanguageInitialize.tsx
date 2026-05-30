@@ -5,15 +5,15 @@
  * @since 2025-12-25
  */
 
-import { useCommonValue } from "@exportHooks";
+import { useCommonValue as usCmmnVal } from "@exportHooks";
 import { useEffect } from "@exportReacts";
-import { useStoreLanguage } from "@exportStores";
+import { useStoreLanguage as usStrLang } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const useLanguageInitialize = () => {
+export const usLangIntl = () => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { localLang } = useCommonValue();
-	const { setLang } = useStoreLanguage();
+	const { localLang } = usCmmnVal();
+	const { setLang } = usStrLang();
 
 	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	useEffect(() => {

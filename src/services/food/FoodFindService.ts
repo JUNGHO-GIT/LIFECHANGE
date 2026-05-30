@@ -9,27 +9,27 @@ import axios from "axios";
 import { JSDOM } from "jsdom";
 
 // 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-export const list = async (PAGING_param: any, isoCode_param: string) => {
+export const list = async (PAGING_param: any, isCdPrm: string) => {
 	// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	const query: string = PAGING_param.query;
 	const page: number = PAGING_param?.page;
-	const isoCode: string = isoCode_param.toLowerCase();
+	const isoCode: string = isCdPrm.toLowerCase();
 
 	let serv: string = ``;
 	let gram: string = ``;
 
 	let findResult: any = null;
 	let finalResult: any = [];
-	let totalCntResult: any = null;
+	let ttlCntRes: any = null;
 	let statusResult: string = ``;
 
 	// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const getLangSettingsByIsoCode = (isoCodeParam: string) => {
+	const gtLnStByIsCd = (isoCodeParam: string) => {
 		let langType: string = ``;
 		let servUnit: string = ``;
 		let servArray: string[] = [];
 		let servRegex: RegExp = /(\s*)/;
-		let nutritionRegex: RegExp = /(\s*)/;
+		let ntrtRe: RegExp = /(\s*)/;
 
 		let URL: string = `https://www.fatsecret`;
 		let URL_SEARCH: string = ``;
@@ -56,7 +56,7 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
 
 		const isComGroup: any = [`ar`, `br`, `mx`, `au`, `sg`, `tr`];
 		const isCoGroup: any = [`in`, `id`, `nz`, `za`, `uk`];
-		const isDirectGroup: any = [
+		const isDrctGrp: any = [
 			`ca`,
 			`cl`,
 			`cn`,
@@ -96,7 +96,7 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
 		}
 
 		// foo 형식
-		else if (isDirectGroup.includes(isoCodeParam)) {
+		else if (isDrctGrp.includes(isoCodeParam)) {
 			URL = `${URL}.${isoCodeParam}`;
 		}
 
@@ -129,7 +129,7 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
 				`테이블스푼`,
 			];
 			servRegex = /(\s*)(\d+\s*.*\n*)(\s*당\s*)(\s*-\s*)/;
-			nutritionRegex =
+			ntrtRe =
 				/(\s*)(\s*칼로리\s*:\s*)(\d+\s*.*\n*)(kcal)(\s*\|\s*)(\s*지방\s*:\s*)(\d+\s*.*\n*)(g)(\s*\|\s*)(\s*탄수화물\s*:\s*)(\d+\s*.*\n*)(g)(\s*\|\s*)(\s*단백질\s*:\s*)(\d+\s*.*\n*)(g)/;
 		}
 
@@ -160,7 +160,7 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
 				`tamaño de la porción`,
 			];
 			servRegex = /(\s*)(\s*por\s*)(\d+\s*.*\n*)(\s*-\s*)/;
-			nutritionRegex =
+			ntrtRe =
 				/(\s*)(\s*Calorías\s*:\s*)(\d+\s*.*\n*)(kcal)(\s*\|\s*)(\s*Grasa\s*:\s*)(\d+\s*.*\n*)(g)(\s*\|\s*)(\s*Carbh\s*:\s*)(\d+\s*.*\n*)(g)(\s*\|\s*)(\s*Prot\s*:\s*)(\d+\s*.*\n*)(g)/;
 		}
 
@@ -191,7 +191,7 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
 				`serving size`,
 			];
 			servRegex = /\s*(\s*Per\s*)(\d+\s*.*\n*)(\s*-\s*)/;
-			nutritionRegex =
+			ntrtRe =
 				/(\s*)(\s*Calories\s*:\s*)(\d+\s*.*\n*)(kcal)(\s*\|\s*)(\s*Fat\s*:\s*)(\d+\s*.*\n*)(g)(\s*\|\s*)(\s*Carbs\s*:\s*)(\d+\s*.*\n*)(g)(\s*\|\s*)(\s*Protein\s*:\s*)(\d+\s*.*\n*)(g)/;
 		}
 
@@ -202,7 +202,7 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
 			servUnit: servUnit,
 			servArray: servArray,
 			servRegex: servRegex,
-			nutritionRegex: nutritionRegex,
+			nutritionRegex: ntrtRe,
 		};
 	};
 
@@ -259,13 +259,13 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
 
 	// 영양정보 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	const getServ = (item: any) => {
-		const { servUnit, servArray, servRegex, nutritionRegex } =
-			getLangSettingsByIsoCode(isoCode);
+		const { servUnit, servArray, servRegex, nutritionRegex: ntrtRe } =
+			gtLnStByIsCd(isoCode);
 		const nutName: any = item
 			.querySelector(`div.smallText.greyText.greyLink`)
 			?.textContent?.trim();
 		const servMatch: any = nutName?.match(servRegex);
-		const nutritionMatch: any = nutName?.match(nutritionRegex);
+		const ntrtMtch: any = nutName?.match(ntrtRe);
 
 		// 단위 찾기
 		if (servMatch) {
@@ -289,12 +289,12 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
 
 			// 2. servArray에 포함된 단어가 없는 경우
 			if (!found) {
-				const gramDirectMatch: any = servMatch[2]
+				const grmDrctMtch: any = servMatch[2]
 					?.trim()
 					?.match(/(\d+)\s*(g|ml|l|kg)/);
-				if (gramDirectMatch) {
+				if (grmDrctMtch) {
 					serv = `1${servUnit}`;
-					gram = gramDirectMatch[1];
+					gram = grmDrctMtch[1];
 				} else {
 					const gramMatch: any = servMatch[2]
 						?.trim()
@@ -308,10 +308,10 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
 			count: (serv?.match(/(\d+\.\d+|\d+)/) ?? [``])[0],
 			serv: (serv?.match(/\D+$/) ?? [``])[0],
 			gram: gram && gram,
-			kcal: nutritionMatch?.[3],
-			fat: nutritionMatch?.[7] && Number(nutritionMatch[7]).toFixed(1),
-			carb: nutritionMatch?.[11] && Number(nutritionMatch[11]).toFixed(1),
-			protein: nutritionMatch?.[15] && Number(nutritionMatch[15]).toFixed(1),
+			kcal: ntrtMtch?.[3],
+			fat: ntrtMtch?.[7] && Number(ntrtMtch[7]).toFixed(1),
+			carb: ntrtMtch?.[11] && Number(ntrtMtch[11]).toFixed(1),
+			protein: ntrtMtch?.[15] && Number(ntrtMtch[15]).toFixed(1),
 		};
 	};
 
@@ -356,8 +356,8 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
 	};
 
 	findResult = await getFoodList(
-		getLangSettingsByIsoCode(isoCode).URL_SEARCH,
-		getLangSettingsByIsoCode(isoCode).URL_DEFAULT,
+		gtLnStByIsCd(isoCode).URL_SEARCH,
+		gtLnStByIsCd(isoCode).URL_DEFAULT,
 		query,
 		page,
 	);
@@ -366,7 +366,7 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
 
 	if (!findResult) {
 		finalResult = [];
-		totalCntResult = 0;
+		ttlCntRes = 0;
 		statusResult = `fail`;
 	} else {
 		const tables: NodeListOf<Element> = document.querySelectorAll(
@@ -377,7 +377,7 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
 			[...rows].forEach((prev, rowIndex) => {
 				const titleElement: any = getFoodName(prev);
 				const brandElement: any = getBrand(prev);
-				const nutritionElement: any = getServ(prev);
+				const ntrtElem: any = getServ(prev);
 				finalResult.push({
 					food_record_query: query,
 					food_record_perNumber:
@@ -385,17 +385,17 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
 					food_record_part: `breakfast`,
 					food_record_name: titleElement ?? ``,
 					food_record_brand: brandElement ?? ``,
-					food_record_count: nutritionElement.count ?? `0`,
-					food_record_serv: nutritionElement.serv ?? ``,
-					food_record_gram: nutritionElement.gram ?? `0`,
-					food_record_kcal: nutritionElement.kcal ?? `0`,
-					food_record_fat: nutritionElement.fat ?? `0`,
-					food_record_carb: nutritionElement.carb ?? `0`,
-					food_record_protein: nutritionElement.protein ?? `0`,
+					food_record_count: ntrtElem.count ?? `0`,
+					food_record_serv: ntrtElem.serv ?? ``,
+					food_record_gram: ntrtElem.gram ?? `0`,
+					food_record_kcal: ntrtElem.kcal ?? `0`,
+					food_record_fat: ntrtElem.fat ?? `0`,
+					food_record_carb: ntrtElem.carb ?? `0`,
+					food_record_protein: ntrtElem.protein ?? `0`,
 				});
 			});
 		});
-		totalCntResult = totalCnt;
+		ttlCntRes = totalCnt;
 		statusResult = `success`;
 	}
 
@@ -406,7 +406,7 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
 
 	return {
 		status: statusResult,
-		totalCnt: totalCntResult,
+		totalCnt: ttlCntRes,
 		result: finalResult,
 	};
 };

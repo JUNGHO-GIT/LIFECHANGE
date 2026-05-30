@@ -7,7 +7,7 @@
 
 import { Bg, Br, Grid, Img, Paper } from "@exportComponents";
 import { Count, Delete, Input, PickerDay } from "@exportContainers";
-import { useCommonDate, useCommonValue, useValidateFood } from "@exportHooks";
+import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal, useValidateFood as usValFd } from "@exportHooks";
 import { Dialog, Footer } from "@exportLayouts";
 import { axios } from "@exportLibs";
 import {
@@ -19,24 +19,24 @@ import {
 	useState,
 } from "@exportReacts";
 import { FoodGoal, type FoodGoalType } from "@exportSchemas";
-import { handleNumberInput, insertComma, sync } from "@exportScripts";
+import { handleNumberInput as hndlNmbrInpt, insertComma, sync } from "@exportScripts";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const FoodGoalDetail = memo(() => {
+export const FdGlDtl = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, navigate, sessionId, toList } = useCommonValue();
-	const { location_dateType } = useCommonValue();
-	const { location_dateStart, location_dateEnd } = useCommonValue();
-	const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
-	const { ERRORS, REFS, validate } = useValidateFood();
+	const { URL_OBJECT, navigate, sessionId, toList } = usCmmnVal();
+	const { location_dateType: locDtTyp } = usCmmnVal();
+	const { location_dateStart: locDtStrt, location_dateEnd: locDtEnd } = usCmmnVal();
+	const { getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt } = usCmmnDt();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
+	const { ERRORS, REFS, validate } = usValFd();
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const [LOCKED, setLOCKED] = useState<string>(`unlocked`);
@@ -66,9 +66,9 @@ export const FoodGoalDetail = memo(() => {
 		newSectionCnt: 0,
 	});
 	const [DATE, setDATE] = useState({
-		dateType: location_dateType ?? `month`,
-		dateStart: location_dateStart ?? getMonthStartFmt(),
-		dateEnd: location_dateEnd ?? getMonthEndFmt(),
+		dateType: locDtTyp ?? `month`,
+		dateStart: locDtStrt ?? gtMnStFm(),
+		dateEnd: locDtEnd ?? gtMnthEndFmt(),
 	});
 
 	// 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
@@ -120,8 +120,8 @@ export const FoodGoalDetail = memo(() => {
 					user_id: sessionId,
 					DATE: {
 						dateType: ``,
-						dateStart: getMonthStartFmt(DATE?.dateStart),
-						dateEnd: getMonthEndFmt(DATE?.dateEnd),
+						dateStart: gtMnStFm(DATE?.dateStart),
+						dateEnd: gtMnthEndFmt(DATE?.dateEnd),
 					},
 				},
 			})
@@ -308,7 +308,7 @@ export const FoodGoalDetail = memo(() => {
 	// 7. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const detailNode = () => {
 		// 7-1. date + count
-		const dateCountSection = () => (
+		const dtCntSec = () => (
 			<Grid
 				container={true}
 				spacing={2}
@@ -329,7 +329,7 @@ export const FoodGoalDetail = memo(() => {
 			</Grid>
 		);
 		// 7-3. detail
-		const detailSection = () => (
+		const dtlSec = () => (
 			<>
 				{[OBJECT]?.map((item, i) => (
 					<Grid
@@ -372,17 +372,17 @@ export const FoodGoalDetail = memo(() => {
 									}
 									endadornment={translate(`kc`)}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											999_999,
 										);
-										!processedValue === null &&
+										!procdVal === null &&
 											(() => {
 												return;
 											})();
 										setOBJECT((prev: any) => ({
 											...prev,
-											food_goal_kcal: processedValue,
+											food_goal_kcal: procdVal,
 										}));
 									}}
 								/>
@@ -413,17 +413,17 @@ export const FoodGoalDetail = memo(() => {
 									}
 									endadornment={translate(`g`)}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											999_999,
 										);
-										!processedValue === null &&
+										!procdVal === null &&
 											(() => {
 												return;
 											})();
 										setOBJECT((prev: any) => ({
 											...prev,
-											food_goal_carb: processedValue,
+											food_goal_carb: procdVal,
 										}));
 									}}
 								/>
@@ -454,17 +454,17 @@ export const FoodGoalDetail = memo(() => {
 									}
 									endadornment={translate(`g`)}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											999_999,
 										);
-										!processedValue === null &&
+										!procdVal === null &&
 											(() => {
 												return;
 											})();
 										setOBJECT((prev: any) => ({
 											...prev,
-											food_goal_protein: processedValue,
+											food_goal_protein: procdVal,
 										}));
 									}}
 								/>
@@ -495,17 +495,17 @@ export const FoodGoalDetail = memo(() => {
 									}
 									endadornment={translate(`g`)}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											999_999,
 										);
-										!processedValue === null &&
+										!procdVal === null &&
 											(() => {
 												return;
 											})();
 										setOBJECT((prev: any) => ({
 											...prev,
-											food_goal_fat: processedValue,
+											food_goal_fat: procdVal,
 										}));
 									}}
 								/>
@@ -520,9 +520,9 @@ export const FoodGoalDetail = memo(() => {
 			<Paper
 				className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}
 			>
-				{dateCountSection()}
+				{dtCntSec()}
 				<Br m={20} />
-				{COUNT?.newSectionCnt > 0 && detailSection()}
+				{COUNT?.newSectionCnt > 0 && dtlSec()}
 			</Paper>
 		);
 	};

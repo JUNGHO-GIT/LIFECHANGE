@@ -5,22 +5,22 @@
  * @since 2025-12-26
  */
 
-import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
+import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal, useStorageLocal as usStrgLcl } from "@exportHooks";
 import {
 	axios,
 	Cell,
 	Legend,
 	Pie,
 	PieChart,
-	ResponsiveContainer,
+	ResponsiveContainer as RspnCntn,
 	Tooltip,
 } from "@exportLibs";
 import { memo, useEffect, useState } from "@exportReacts";
 import { MoneyPie, type MoneyPieType } from "@exportSchemas";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
@@ -39,55 +39,55 @@ declare interface PieProps {
 }
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
+export const MnyChrtP = memo((props: MoneyChartPieProps) => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, PATH, chartColors, sessionId } = useCommonValue();
-	const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
-	const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } =
-		useCommonDate();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
+	const { URL_OBJECT, PATH, chartColors, sessionId } = usCmmnVal();
+	const { getDayFmt, getWeekStartFmt: gtWkStrtFmt, getWeekEndFmt: gtWkEndFmt } = usCmmnDt();
+	const { getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt, getYearStartFmt: gtYrStrtFmt, getYearEndFmt: gtYrEndFmt } =
+		usCmmnDt();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
 
 	// 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const [TYPE, setTYPE] = useStorageLocal(`type`, `pie`, PATH, {
+	const [TYPE, setTYPE] = usStrgLcl(`type`, `pie`, PATH, {
 		section: `week`,
 		line: `income`,
 	});
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [TYPE_STATE, setTYPE_STATE] = useState(() => {
+	const [TYPE_STATE, stTypSt] = useState(() => {
 		return props?.TYPE !== undefined ? props.TYPE : TYPE;
 	});
 	const [DATE, _setDATE] = useState({
 		dateType: ``,
 		dateStart: getDayFmt(),
 		dateEnd: getDayFmt(),
-		weekStartFmt: getWeekStartFmt(),
-		weekEndFmt: getWeekEndFmt(),
-		monthStartFmt: getMonthStartFmt(),
-		monthEndFmt: getMonthEndFmt(),
-		yearStartFmt: getYearStartFmt(),
-		yearEndFmt: getYearEndFmt(),
+		weekStartFmt: gtWkStrtFmt(),
+		weekEndFmt: gtWkEndFmt(),
+		monthStartFmt: gtMnStFm(),
+		monthEndFmt: gtMnthEndFmt(),
+		yearStartFmt: gtYrStrtFmt(),
+		yearEndFmt: gtYrEndFmt(),
 	});
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [OBJECT_INCOME_WEEK, setOBJECT_INCOME_WEEK] = useState<[MoneyPieType]>([
+	const [OBJC_INCM_WK, stObjcIncmWk] = useState<[MoneyPieType]>([
 		MoneyPie,
 	]);
-	const [OBJECT_EXPENSE_WEEK, setOBJECT_EXPENSE_WEEK] = useState<
+	const [OBJC_EXPN_WK, stObjcExpnWk] = useState<
 		[MoneyPieType]
 	>([MoneyPie]);
-	const [OBJECT_INCOME_MONTH, setOBJECT_INCOME_MONTH] = useState<
+	const [OBJ_INC_MNT, stObInMn] = useState<
 		[MoneyPieType]
 	>([MoneyPie]);
-	const [OBJECT_EXPENSE_MONTH, setOBJECT_EXPENSE_MONTH] = useState<
+	const [OBJ_EXP_MNT, stObExMn] = useState<
 		[MoneyPieType]
 	>([MoneyPie]);
-	const [OBJECT_INCOME_YEAR, setOBJECT_INCOME_YEAR] = useState<[MoneyPieType]>([
+	const [OBJC_INCM_YR, stObjcIncmYr] = useState<[MoneyPieType]>([
 		MoneyPie,
 	]);
-	const [OBJECT_EXPENSE_YEAR, setOBJECT_EXPENSE_YEAR] = useState<
+	const [OBJC_EXPN_YR, stObjcExpnYr] = useState<
 		[MoneyPieType]
 	>([MoneyPie]);
 
@@ -113,37 +113,37 @@ export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
 				]);
 
 				// 서버에서 기본값을 포함한 응답을 받으므로 직접 설정
-				setOBJECT_INCOME_WEEK(
+				stObjcIncmWk(
 					resWeek.data.result.income &&
 						Array.isArray(resWeek.data.result.income)
 						? resWeek.data.result.income
 						: [MoneyPie],
 				);
-				setOBJECT_EXPENSE_WEEK(
+				stObjcExpnWk(
 					resWeek.data.result.expense &&
 						Array.isArray(resWeek.data.result.expense)
 						? resWeek.data.result.expense
 						: [MoneyPie],
 				);
-				setOBJECT_INCOME_MONTH(
+				stObInMn(
 					resMonth.data.result.income &&
 						Array.isArray(resMonth.data.result.income)
 						? resMonth.data.result.income
 						: [MoneyPie],
 				);
-				setOBJECT_EXPENSE_MONTH(
+				stObExMn(
 					resMonth.data.result.expense &&
 						Array.isArray(resMonth.data.result.expense)
 						? resMonth.data.result.expense
 						: [MoneyPie],
 				);
-				setOBJECT_INCOME_YEAR(
+				stObjcIncmYr(
 					resYear.data.result.income &&
 						Array.isArray(resYear.data.result.income)
 						? resYear.data.result.income
 						: [MoneyPie],
 				);
-				setOBJECT_EXPENSE_YEAR(
+				stObjcExpnYr(
 					resYear.data.result.expense &&
 						Array.isArray(resYear.data.result.expense)
 						? resYear.data.result.expense
@@ -158,12 +158,12 @@ export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
 				});
 				console.error(error);
 				// 에러 발생 시에도 기본값 설정
-				setOBJECT_INCOME_WEEK([MoneyPie]);
-				setOBJECT_EXPENSE_WEEK([MoneyPie]);
-				setOBJECT_INCOME_MONTH([MoneyPie]);
-				setOBJECT_EXPENSE_MONTH([MoneyPie]);
-				setOBJECT_INCOME_YEAR([MoneyPie]);
-				setOBJECT_EXPENSE_YEAR([MoneyPie]);
+				stObjcIncmWk([MoneyPie]);
+				stObjcExpnWk([MoneyPie]);
+				stObInMn([MoneyPie]);
+				stObExMn([MoneyPie]);
+				stObjcIncmYr([MoneyPie]);
+				stObjcExpnYr([MoneyPie]);
 			} finally {
 				setLOADING(false);
 			}
@@ -176,7 +176,7 @@ export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
 			const isSame: boolean =
 				JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
 			if (!isSame) {
-				setTYPE_STATE(props.TYPE);
+				stTypSt(props.TYPE);
 			}
 		}
 	}, [props?.TYPE]);
@@ -208,28 +208,28 @@ export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
 
 		TYPE_STATE.section === `week` && TYPE_STATE.line === `income`
 			? (() => {
-					object = OBJECT_INCOME_WEEK;
+					object = OBJC_INCM_WK;
 				})()
 			: TYPE_STATE.section === `week` && TYPE_STATE.line === `expense`
 				? (() => {
-						object = OBJECT_EXPENSE_WEEK;
+						object = OBJC_EXPN_WK;
 					})()
 				: TYPE_STATE.section === `month` && TYPE_STATE.line === `income`
 					? (() => {
-							object = OBJECT_INCOME_MONTH;
+							object = OBJ_INC_MNT;
 						})()
 					: TYPE_STATE.section === `month` && TYPE_STATE.line === `expense`
 						? (() => {
-								object = OBJECT_EXPENSE_MONTH;
+								object = OBJ_EXP_MNT;
 							})()
 						: TYPE_STATE.section === `year` && TYPE_STATE.line === `income`
 							? (() => {
-									object = OBJECT_INCOME_YEAR;
+									object = OBJC_INCM_YR;
 								})()
 							: TYPE_STATE.section === `year` &&
 								TYPE_STATE.line === `expense` &&
 								(() => {
-									object = OBJECT_EXPENSE_YEAR;
+									object = OBJC_EXPN_YR;
 								})();
 
 		if (
@@ -278,33 +278,33 @@ export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
 
 		TYPE_STATE.section === `week` && TYPE_STATE.line === `income`
 			? (() => {
-					object = OBJECT_INCOME_WEEK;
+					object = OBJC_INCM_WK;
 					dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
 				})()
 			: TYPE_STATE.section === `week` && TYPE_STATE.line === `expense`
 				? (() => {
-						object = OBJECT_EXPENSE_WEEK;
+						object = OBJC_EXPN_WK;
 						dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
 					})()
 				: TYPE_STATE.section === `month` && TYPE_STATE.line === `income`
 					? (() => {
-							object = OBJECT_INCOME_MONTH;
+							object = OBJ_INC_MNT;
 							dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
 						})()
 					: TYPE_STATE.section === `month` && TYPE_STATE.line === `expense`
 						? (() => {
-								object = OBJECT_EXPENSE_MONTH;
+								object = OBJ_EXP_MNT;
 								dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
 							})()
 						: TYPE_STATE.section === `year` && TYPE_STATE.line === `income`
 							? (() => {
-									object = OBJECT_INCOME_YEAR;
+									object = OBJC_INCM_YR;
 									dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
 								})()
 							: TYPE_STATE.section === `year` &&
 								TYPE_STATE.line === `expense` &&
 								(() => {
-									object = OBJECT_EXPENSE_YEAR;
+									object = OBJC_EXPN_YR;
 									dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
 								})();
 
@@ -314,7 +314,7 @@ export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
 		}
 
 		return (
-			<ResponsiveContainer width={`100%`} height={500}>
+			<RspnCntn width={`100%`} height={500}>
 				<PieChart margin={{ top: 60, right: 20, bottom: 10, left: 20 }}>
 					<defs>
 						<filter id={`textBackground`} x={0} y={0} width={1} height={1}>
@@ -395,7 +395,7 @@ export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
 						}}
 					/>
 				</PieChart>
-			</ResponsiveContainer>
+			</RspnCntn>
 		);
 	};
 

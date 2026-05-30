@@ -7,10 +7,10 @@
 
 import { Div, Grid, Icons } from "@exportComponents";
 import { Input } from "@exportContainers";
-import { useCommonValue } from "@exportHooks";
-import { TablePagination } from "@exportMuis";
+import { useCommonValue as usCmmnVal } from "@exportHooks";
+import { TablePagination as TblPgnt } from "@exportMuis";
 import { memo, useMemo } from "@exportReacts";
-import { useStoreLanguage } from "@exportStores";
+import { useStoreLanguage as usStrLang } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 declare interface FindFilterProps {
@@ -22,8 +22,8 @@ declare interface FindFilterProps {
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const FindFilter = memo(({ state, setState, flow }: FindFilterProps) => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { navigate, toDetail, isFind, isFavorite } = useCommonValue();
-	const { translate } = useStoreLanguage();
+	const { navigate, toDetail, isFind, isFavorite } = usCmmnVal();
+	const { translate } = usStrLang();
 
 	// 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 	const handleSearch = () => {
@@ -36,7 +36,7 @@ export const FindFilter = memo(({ state, setState, flow }: FindFilterProps) => {
 	};
 
 	// 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const handleNavigateToDetail = () => {
+	const hndlNvgtTDtl = () => {
 		void navigate(toDetail, {
 			state: {
 				dateType: state?.DATE?.dateType,
@@ -81,7 +81,7 @@ export const FindFilter = memo(({ state, setState, flow }: FindFilterProps) => {
 						name={`CheckCircle`}
 						className={`w-22px h-22px burgundy pointer-burgundy`}
 						disabled={false}
-						onClick={handleNavigateToDetail}
+						onClick={hndlNvgtTDtl}
 					/>
 				</Div>
 			</Div>
@@ -91,12 +91,12 @@ export const FindFilter = memo(({ state, setState, flow }: FindFilterProps) => {
 			translate,
 			setState,
 			handleSearch,
-			handleNavigateToDetail,
+			hndlNvgtTDtl,
 		],
 	);
 
 	// 7. favorite ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const favoriteSection = useMemo(
+	const favSec = useMemo(
 		() => (
 			<Div className={`d-center`}>
 				<Input
@@ -129,18 +129,18 @@ export const FindFilter = memo(({ state, setState, flow }: FindFilterProps) => {
 						key={`CheckCircle`}
 						name={`CheckCircle`}
 						className={`w-22px h-22px burgundy pointer-burgundy`}
-						onClick={handleNavigateToDetail}
+						onClick={hndlNvgtTDtl}
 					/>
 				</Div>
 			</Div>
 		),
-		[translate, handleSearch, handleNavigateToDetail],
+		[translate, handleSearch, hndlNvgtTDtl],
 	);
 
 	// 7. pagination ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const paginationSection = useMemo(
+	const pgntSec = useMemo(
 		() => (
-			<TablePagination
+			<TblPgnt
 				rowsPerPageOptions={[10]}
 				labelRowsPerPage={``}
 				count={state?.COUNT.totalCnt}
@@ -176,10 +176,10 @@ export const FindFilter = memo(({ state, setState, flow }: FindFilterProps) => {
 		<Grid container={true} spacing={0}>
 			<Grid size={7} className={`d-row-center`}>
 				{isFind ? findSection : null}
-				{isFavorite ? favoriteSection : null}
+				{isFavorite ? favSec : null}
 			</Grid>
 			<Grid size={5} className={`h-100p d-col-center`}>
-				{paginationSection}
+				{pgntSec}
 			</Grid>
 		</Grid>
 	);

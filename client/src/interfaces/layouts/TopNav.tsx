@@ -7,27 +7,27 @@
 
 import { Br, Div, Grid, Hr, Img, Paper } from "@exportComponents";
 import { Input, PopUp } from "@exportContainers";
-import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
+import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal, useStorageLocal as usStrgLcl } from "@exportHooks";
 import { Checkbox, Menu, MenuItem, Tab, Tabs } from "@exportMuis";
 import { memo, useEffect, useMemo, useState } from "@exportReacts";
 import { insertComma } from "@exportScripts";
-import { useStoreLanguage } from "@exportStores";
+import { useStoreLanguage as usStrLang } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const TopNav = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { firstStr, secondStr, localCurrency, localUnit, navigate } =
-		useCommonValue();
-	const { sessionPercent, sessionScale, sessionNutrition, sessionProperty } =
-		useCommonValue();
-	const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-	const { translate } = useStoreLanguage();
+	const { firstStr, secondStr, localCurrency: lclCrrn, localUnit, navigate } =
+		usCmmnVal();
+	const { sessionPercent: sessPrcn, sessionScale, sessionNutrition: sessNtrt, sessionProperty: sessPrpr } =
+		usCmmnVal();
+	const { getDayFmt, getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt } = usCmmnDt();
+	const { translate } = usStrLang();
 
 	// 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const [selectedAnchorEl, setSelectedAnchorEl] = useState<
+	const [selAnchEl, stSelAnchEl] = useState<
 		Record<string, HTMLElement | null>
 	>({});
-	const [selectedTab, setSelectedTab] = useStorageLocal(`tabs`, `top`, ``, {
+	const [selectedTab, stSelTb] = usStrgLcl(`tabs`, `top`, ``, {
 		exercise: `record`,
 		food: `record`,
 		today: `record`,
@@ -38,9 +38,9 @@ export const TopNav = memo(() => {
 	});
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [includingExclusions, setIncludingExclusions] =
+	const [inclExcl, stInclExcl] =
 		useState<boolean>(false);
-	const [nutritionType, setNutritionType] = useState(`avg`);
+	const [ntrtTyp, stNtrtTyp] = useState(`avg`);
 
 	// 2-2. variable ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const scale = sessionScale || {
@@ -51,7 +51,7 @@ export const TopNav = memo(() => {
 		dateStart: ``,
 		dateEnd: ``,
 	};
-	const nutrition = sessionNutrition || {
+	const nutrition = sessNtrt || {
 		initAvgKcalIntake: `0`,
 		totalKcalIntake: `0`,
 		totalCarbIntake: `0`,
@@ -64,7 +64,7 @@ export const TopNav = memo(() => {
 		dateStart: ``,
 		dateEnd: ``,
 	};
-	const property = sessionProperty || {
+	const property = sessPrpr || {
 		initProperty: `0`,
 		totalIncomeAll: `0`,
 		totalIncomeExclusion: `0`,
@@ -79,13 +79,13 @@ export const TopNav = memo(() => {
 	// 2-3. useMemo ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	const smileScore = useMemo(() => {
 		return {
-			total: sessionPercent?.total?.average?.score ?? `0`,
-			exercise: sessionPercent?.exercise?.average?.score ?? `0`,
-			food: sessionPercent?.food?.average?.score ?? `0`,
-			money: sessionPercent?.money?.average?.score ?? `0`,
-			sleep: sessionPercent?.sleep?.average?.score ?? `0`,
+			total: sessPrcn?.total?.average?.score ?? `0`,
+			exercise: sessPrcn?.exercise?.average?.score ?? `0`,
+			food: sessPrcn?.food?.average?.score ?? `0`,
+			money: sessPrcn?.money?.average?.score ?? `0`,
+			sleep: sessPrcn?.sleep?.average?.score ?? `0`,
 		};
-	}, [sessionPercent]);
+	}, [sessPrcn]);
 
 	const smileImage = useMemo(() => {
 		const getImage = (score: string) => {
@@ -113,7 +113,7 @@ export const TopNav = memo(() => {
 		};
 	}, [smileScore]);
 
-	const mainSmileImage = useMemo(() => {
+	const mnSmlImg = useMemo(() => {
 		if (firstStr === `exercise`) {
 			return smileImage.exercise;
 		} else if (firstStr === `food`) {
@@ -131,7 +131,7 @@ export const TopNav = memo(() => {
 		}
 	}, [firstStr, smileImage]);
 
-	const [dataArray, _setDataArray] = useState({
+	const [dataArray, _stDtArry] = useState({
 		exercise: [`chart`, `goal`, `record`],
 		food: [`chart`, `goal`, `record`, `favorite`, `find`],
 		today: [`chart`, `goal`, `record`],
@@ -183,11 +183,11 @@ export const TopNav = memo(() => {
 		};
 
 		const entry = mapping[firstStr ?? ``]?.[secondStr ?? ``];
-		entry && setSelectedTab((prev) => ({ ...prev, [entry.key]: entry.value }));
+		entry && stSelTb((prev) => ({ ...prev, [entry.key]: entry.value }));
 	}, [firstStr, secondStr]);
 
 	// 4. handle ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const handleClickTobNav = (value: string) => {
+	const hndlClckTbNv = (value: string) => {
 		// 1. today - goal
 		void (firstStr === `today` && value === `goal`
 			? navigate(`/${firstStr}/goal/list`, {
@@ -253,7 +253,7 @@ export const TopNav = memo(() => {
 								</Div>
 								<Br m={10} />
 								<Div className={`fs-0-8rem fw-500 dark`}>
-									{`[${getMonthStartFmt()} - ${getMonthEndFmt()}]`}
+									{`[${gtMnStFm()} - ${gtMnthEndFmt()}]`}
 								</Div>
 							</Grid>
 						</Grid>
@@ -387,7 +387,7 @@ export const TopNav = memo(() => {
 							hover={true}
 							shadow={false}
 							radius={false}
-							src={`${mainSmileImage}.webp`}
+							src={`${mnSmlImg}.webp`}
 							onClick={(e: any) => {
 								popTrigger.openPopup(e.currentTarget);
 							}}
@@ -528,7 +528,7 @@ export const TopNav = memo(() => {
 		);
 
 		// 7-3. nutrition ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-		const nutritionSection = () => (
+		const ntrtSec = () => (
 			<PopUp
 				type={`innerCenter`}
 				position={`center`}
@@ -553,9 +553,9 @@ export const TopNav = memo(() => {
 									</Div>
 									<Checkbox
 										size={`small`}
-										checked={nutritionType === `avg`}
+										checked={ntrtTyp === `avg`}
 										onChange={(e: any) => {
-											setNutritionType(e.target.checked ? `avg` : `total`);
+											stNtrtTyp(e.target.checked ? `avg` : `total`);
 										}}
 									/>
 									<Div className={`fs-0-7rem fw-500 dark ml-10px`}>
@@ -563,9 +563,9 @@ export const TopNav = memo(() => {
 									</Div>
 									<Checkbox
 										size={`small`}
-										checked={nutritionType === `total`}
+										checked={ntrtTyp === `total`}
 										onChange={(e: any) => {
-											setNutritionType(e.target.checked ? `total` : `avg`);
+											stNtrtTyp(e.target.checked ? `total` : `avg`);
 										}}
 									/>
 								</Div>
@@ -609,14 +609,14 @@ export const TopNav = memo(() => {
 							</Grid>
 							<Grid size={8} className={`d-row-left`}>
 								<Div className={`fs-0-8rem fw-500 dark`}>
-									{nutritionType === `avg`
+									{ntrtTyp === `avg`
 										? `${translate(`curAvg`)} : `
 										: `${translate(`curTotal`)} : `}
 								</Div>
 							</Grid>
 							<Grid size={7} className={`d-row-right`}>
 								<Div className={`fs-1-1rem fw-600 black mr-5px`}>
-									{nutritionType === `avg`
+									{ntrtTyp === `avg`
 										? insertComma(nutrition.curAvgKcalIntake ?? `0`)
 										: insertComma(nutrition.totalKcalIntake ?? `0`)}
 								</Div>
@@ -631,12 +631,12 @@ export const TopNav = memo(() => {
 								<Input
 									readOnly={true}
 									label={
-										nutritionType === `avg`
+										ntrtTyp === `avg`
 											? translate(`avgCarbIntake`)
 											: translate(`totalCarbIntake`)
 									}
 									value={
-										nutritionType === `avg`
+										ntrtTyp === `avg`
 											? insertComma(nutrition.curAvgCarbIntake ?? `0`)
 											: insertComma(nutrition.totalCarbIntake ?? `0`)
 									}
@@ -659,12 +659,12 @@ export const TopNav = memo(() => {
 								<Input
 									readOnly={true}
 									label={
-										nutritionType === `avg`
+										ntrtTyp === `avg`
 											? translate(`avgProteinIntake`)
 											: translate(`totalProteinIntake`)
 									}
 									value={
-										nutritionType === `avg`
+										ntrtTyp === `avg`
 											? insertComma(nutrition.curAvgProteinIntake ?? `0`)
 											: insertComma(nutrition.totalProteinIntake ?? `0`)
 									}
@@ -687,12 +687,12 @@ export const TopNav = memo(() => {
 								<Input
 									readOnly={true}
 									label={
-										nutritionType === `avg`
+										ntrtTyp === `avg`
 											? translate(`avgFatIntake`)
 											: translate(`totalFatIntake`)
 									}
 									value={
-										nutritionType === `avg`
+										ntrtTyp === `avg`
 											? insertComma(nutrition.curAvgFatIntake ?? `0`)
 											: insertComma(nutrition.totalFatIntake ?? `0`)
 									}
@@ -729,7 +729,7 @@ export const TopNav = memo(() => {
 		);
 
 		// 7-4. property ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-		const propertySection = () => (
+		const prprSec = () => (
 			<PopUp
 				type={`innerCenter`}
 				position={`center`}
@@ -754,9 +754,9 @@ export const TopNav = memo(() => {
 									</Div>
 									<Checkbox
 										size={`small`}
-										checked={includingExclusions}
+										checked={inclExcl}
 										onChange={(e: any) => {
-											setIncludingExclusions(e.target.checked);
+											stInclExcl(e.target.checked);
 										}}
 									/>
 								</Div>
@@ -784,7 +784,7 @@ export const TopNav = memo(() => {
 								</Div>
 							</Grid>
 							<Grid size={2} className={`d-row-center`}>
-								<Div className={`fs-0-6rem fw-500 dark`}>{localCurrency}</Div>
+								<Div className={`fs-0-6rem fw-500 dark`}>{lclCrrn}</Div>
 							</Grid>
 						</Grid>
 						<Br m={10} />
@@ -805,13 +805,13 @@ export const TopNav = memo(() => {
 							</Grid>
 							<Grid size={7} className={`d-row-right`}>
 								<Div className={`fs-1-1rem fw-600 black mr-5px`}>
-									{includingExclusions
+									{inclExcl
 										? insertComma(property.curPropertyAll ?? `0`)
 										: insertComma(property.curPropertyExclusion ?? `0`)}
 								</Div>
 							</Grid>
 							<Grid size={2} className={`d-row-center`}>
-								<Div className={`fs-0-6rem fw-500 dark`}>{localCurrency}</Div>
+								<Div className={`fs-0-6rem fw-500 dark`}>{lclCrrn}</Div>
 							</Grid>
 						</Grid>
 						<Hr m={30} />
@@ -821,7 +821,7 @@ export const TopNav = memo(() => {
 									readOnly={true}
 									label={translate(`sumIncome`)}
 									value={
-										includingExclusions
+										inclExcl
 											? insertComma(property.totalIncomeAll ?? `0`)
 											: insertComma(property.totalIncomeExclusion ?? `0`)
 									}
@@ -834,7 +834,7 @@ export const TopNav = memo(() => {
 											src={`money2.webp`}
 										/>
 									}
-									endadornment={localCurrency}
+									endadornment={lclCrrn}
 								/>
 							</Grid>
 						</Grid>
@@ -845,7 +845,7 @@ export const TopNav = memo(() => {
 									readOnly={true}
 									label={translate(`sumExpense`)}
 									value={
-										includingExclusions
+										inclExcl
 											? insertComma(property.totalExpenseAll ?? `0`)
 											: insertComma(property.totalExpenseExclusion ?? `0`)
 									}
@@ -858,7 +858,7 @@ export const TopNav = memo(() => {
 											src={`money2.webp`}
 										/>
 									}
-									endadornment={localCurrency}
+									endadornment={lclCrrn}
 								/>
 							</Grid>
 						</Grid>
@@ -883,13 +883,13 @@ export const TopNav = memo(() => {
 
 		// 7-5. tabs ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 		const tabsSection = () => {
-			const currentTabValue: any = firstStr
+			const curTbVal: any = firstStr
 				? ((selectedTab as any)[firstStr] ?? (dataArray as any)[firstStr]?.[0])
 				: null;
-			return currentTabValue ? (
+			return curTbVal ? (
 				<>
 					<Tabs
-						value={currentTabValue}
+						value={curTbVal}
 						variant={`fullWidth`}
 						component={`div`}
 						scrollButtons={false}
@@ -902,11 +902,11 @@ export const TopNav = memo(() => {
 						}}
 					>
 						<Tab
-							label={translate(currentTabValue)}
-							value={currentTabValue}
+							label={translate(curTbVal)}
+							value={curTbVal}
 							className={`fs-1-2rem fw-700`}
 							onClick={(e) => {
-								setSelectedAnchorEl((prev) => ({
+								stSelAnchEl((prev) => ({
 									...prev,
 									[firstStr]: e.currentTarget,
 								}));
@@ -914,8 +914,8 @@ export const TopNav = memo(() => {
 						/>
 					</Tabs>
 					<Menu
-						anchorEl={selectedAnchorEl[firstStr]}
-						open={Boolean(selectedAnchorEl[firstStr])}
+						anchorEl={selAnchEl[firstStr]}
+						open={Boolean(selAnchEl[firstStr])}
 						anchorOrigin={{
 							vertical: `bottom`,
 							horizontal: `center`,
@@ -930,7 +930,7 @@ export const TopNav = memo(() => {
 							},
 						}}
 						onClose={() => {
-							setSelectedAnchorEl((prev) => ({
+							stSelAnchEl((prev) => ({
 								...prev,
 								[firstStr]: null,
 							}));
@@ -940,11 +940,11 @@ export const TopNav = memo(() => {
 							(tabName: string) => (
 								<MenuItem
 									key={tabName}
-									selected={currentTabValue === tabName}
+									selected={curTbVal === tabName}
 									className={`text-center`}
 									onClick={() => {
-										handleClickTobNav(tabName);
-										setSelectedAnchorEl((prev) => ({
+										hndlClckTbNv(tabName);
+										stSelAnchEl((prev) => ({
 											...prev,
 											[firstStr]: null,
 										}));
@@ -968,8 +968,8 @@ export const TopNav = memo(() => {
 					<Grid size={7} className={`d-row-center`}>
 						{smileSection()}
 						{scaleSection()}
-						{nutritionSection()}
-						{propertySection()}
+						{ntrtSec()}
+						{prprSec()}
 					</Grid>
 					<Grid size={5} className={`d-row-center border-left-2`}>
 						{tabsSection()}

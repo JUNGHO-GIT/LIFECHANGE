@@ -7,14 +7,14 @@
 
 import { Div, Grid, Icons, Paper } from "@exportComponents";
 import { Input, PopUp } from "@exportContainers";
-import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
+import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal, useStorageLocal as usStrgLcl } from "@exportHooks";
 import { Footer } from "@exportLayouts";
 import { axios } from "@exportLibs";
 import {
 	Table,
 	TableBody,
 	TableCell,
-	TableContainer,
+	TableContainer as TblCntn,
 	TableFooter,
 	TableHead,
 	TableRow,
@@ -30,35 +30,35 @@ import {
 import { Category, type CategoryType } from "@exportSchemas";
 import { sync } from "@exportScripts";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const UserCategory = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, PATH, sessionId } = useCommonValue();
-	const { location_dateStart, location_dateEnd, location_dateType } =
-		useCommonValue();
-	const { getDayFmt } = useCommonDate();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
-	const { translate } = useStoreLanguage();
+	const { URL_OBJECT, PATH, sessionId } = usCmmnVal();
+	const { location_dateStart: locDtStrt, location_dateEnd: locDtEnd, location_dateType: locDtTyp } =
+		usCmmnVal();
+	const { getDayFmt } = usCmmnDt();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
+	const { translate } = usStrLang();
 
 	// 2-1. useStorageLocal ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const [DATE, setDATE] = useStorageLocal(`date`, PATH, ``, {
-		dateType: location_dateType ?? `day`,
-		dateStart: location_dateStart ?? getDayFmt(),
-		dateEnd: location_dateEnd ?? getDayFmt(),
+	const [DATE, setDATE] = usStrgLcl(`date`, PATH, ``, {
+		dateType: locDtTyp ?? `day`,
+		dateStart: locDtStrt ?? getDayFmt(),
+		dateEnd: locDtEnd ?? getDayFmt(),
 	});
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const REFS: React.RefObject<any> = useRef<any>({});
 	const [OBJECT, setOBJECT] = useState<CategoryType>(Category);
 	const [dataType, setDataType] = useState<keyof CategoryType>(`exercise`);
-	const [isEditable, setIsEditable] = useState<string>(``);
-	const [selectedIdx, setSelectedIdx] = useState({
+	const [isEditable, stIsEdtb] = useState<string>(``);
+	const [selectedIdx, stSelIdx] = useState({
 		category1Idx: 0,
 		category2Idx: 1,
 		category3Idx: 1,
@@ -90,14 +90,14 @@ export const UserCategory = memo(() => {
 			.then((res: any) => {
 				setLOADING(false);
 				setOBJECT(res.data.result ?? Category);
-				Object.keys(res.data.result).forEach((dataTypeParam: string) => {
+				Object.keys(res.data.result).forEach((dtTypPrm: string) => {
 					REFS.current = {
 						...REFS.current,
-						[dataTypeParam]: res.data.result[dataTypeParam].map((item: any) => {
+						[dtTypPrm]: res.data.result[dtTypPrm].map((item: any) => {
 							const partRefs: any = {
-								[`${dataTypeParam}_record_part`]: createRef(),
-								[`${dataTypeParam}_record_title`]:
-									item[`${dataTypeParam}_record_title`]?.map(() =>
+								[`${dtTypPrm}_record_part`]: createRef(),
+								[`${dtTypPrm}_record_title`]:
+									item[`${dtTypPrm}_record_title`]?.map(() =>
 										createRef(),
 									) ?? [],
 							};
@@ -163,7 +163,7 @@ export const UserCategory = memo(() => {
 	const handleAdd = (type: string) => {
 		if (type === `part`) {
 			setOBJECT((prev) => {
-				const updatedObject = {
+				const updtObjc = {
 					...prev,
 					[dataType]: [
 						...prev[dataType],
@@ -175,7 +175,7 @@ export const UserCategory = memo(() => {
 				};
 				REFS.current = {
 					...REFS.current,
-					[dataType]: updatedObject[dataType].map(
+					[dataType]: updtObjc[dataType].map(
 						(_: any, idx: number) =>
 							REFS.current[dataType]?.[idx] ?? {
 								[`${dataType}_record_part`]: createRef(),
@@ -183,11 +183,11 @@ export const UserCategory = memo(() => {
 							},
 					),
 				};
-				return updatedObject;
+				return updtObjc;
 			});
 		} else if (type === `title`) {
 			setOBJECT((prev) => {
-				const updatedObject: any = {
+				const updtObjc: any = {
 					...prev,
 					[dataType]: prev[dataType].map((part: any, idx: number) => {
 						if (idx === selectedIdx.category2Idx) {
@@ -204,7 +204,7 @@ export const UserCategory = memo(() => {
 				};
 				REFS.current = {
 					...REFS.current,
-					[dataType]: updatedObject[dataType].map((part: any, idx: number) => {
+					[dataType]: updtObjc[dataType].map((part: any, idx: number) => {
 						if (idx === selectedIdx.category2Idx) {
 							return {
 								...REFS.current[dataType]?.[idx],
@@ -222,14 +222,14 @@ export const UserCategory = memo(() => {
 					}),
 				};
 
-				return updatedObject;
+				return updtObjc;
 			});
 		}
 	};
 
 	// 4-2. handle―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const handleRename = (type: string, index: number) => {
-		setIsEditable(`${dataType}_${type}_${index}`);
+		stIsEdtb(`${dataType}_${type}_${index}`);
 		if (type === `record_part`) {
 			setTimeout(() => {
 				REFS?.current?.[dataType]?.[index]?.[
@@ -257,7 +257,7 @@ export const UserCategory = memo(() => {
 				return;
 			}
 			setOBJECT((prev) => {
-				const updatedObject = {
+				const updtObjc = {
 					...prev,
 					[dataType]: [
 						...prev[dataType]?.slice(0, index),
@@ -266,11 +266,11 @@ export const UserCategory = memo(() => {
 				};
 				REFS.current = {
 					...REFS.current,
-					[dataType]: updatedObject[dataType].map(
+					[dataType]: updtObjc[dataType].map(
 						(_: any, idx: number) => REFS.current[dataType]?.[idx] ?? {},
 					),
 				};
-				return updatedObject;
+				return updtObjc;
 			});
 		} else if (type === `record_title`) {
 			// @ts-expect-error
@@ -287,7 +287,7 @@ export const UserCategory = memo(() => {
 				return;
 			}
 			setOBJECT((prev: any) => {
-				const updatedObject = {
+				const updtObjc = {
 					...prev,
 					[dataType]: [
 						...prev[dataType]?.slice(0, selectedIdx.category2Idx),
@@ -307,7 +307,7 @@ export const UserCategory = memo(() => {
 				};
 				REFS.current = {
 					...REFS.current,
-					[dataType]: updatedObject[dataType].map((part: any, idx: number) => ({
+					[dataType]: updtObjc[dataType].map((part: any, idx: number) => ({
 						...REFS.current[dataType]?.[idx],
 						[`${dataType}_record_title`]: part[`${dataType}_record_title`].map(
 							(_: any, titleIdx: number) =>
@@ -317,18 +317,18 @@ export const UserCategory = memo(() => {
 						),
 					})),
 				};
-				return updatedObject;
+				return updtObjc;
 			});
 		}
 	};
 
 	// 7. userCategory ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const userCategoryNode = () => {
+	const usrCatNd = () => {
 		// 7-1. popup
 		const popupSection = () => (
 			<Grid container={true} spacing={0}>
 				<Grid size={12} className={`w-85vw h-60vh d-row`}>
-					<TableContainer
+					<TblCntn
 						className={`border-1 radius-2 over-x-hidden over-y-auto`}
 					>
 						<Table>
@@ -416,7 +416,7 @@ export const UserCategory = memo(() => {
 																name={`Search`}
 																className={`w-12px h-12px`}
 																onClick={() => {
-																	setSelectedIdx((prev) => ({
+																	stSelIdx((prev) => ({
 																		...prev,
 																		category2Idx: index,
 																	}));
@@ -426,7 +426,7 @@ export const UserCategory = memo(() => {
 																name={`Pencil`}
 																className={`w-12px h-12px navy`}
 																onClick={() => {
-																	setSelectedIdx((prev) => ({
+																	stSelIdx((prev) => ({
 																		...prev,
 																		category2Idx: index,
 																	}));
@@ -437,7 +437,7 @@ export const UserCategory = memo(() => {
 																name={`Trash`}
 																className={`w-12px h-12px burgundy`}
 																onClick={() => {
-																	setSelectedIdx((prev) => ({
+																	stSelIdx((prev) => ({
 																		...prev,
 																		category2Idx: index,
 																	}));
@@ -468,9 +468,9 @@ export const UserCategory = memo(() => {
 								</TableRow>
 							</TableFooter>
 						</Table>
-					</TableContainer>
+					</TblCntn>
 					{(dataType === `exercise` || dataType === `money`) && (
-						<TableContainer className={`border-1 radius-2 over-x-hidden`}>
+						<TblCntn className={`border-1 radius-2 over-x-hidden`}>
 							<Table>
 								<TableHead className={`table-thead`}>
 									<TableRow className={`table-thead-tr p-sticky top-0px z-900`}>
@@ -571,7 +571,7 @@ export const UserCategory = memo(() => {
 																	name={`Pencil`}
 																	className={`w-12px h-12px navy`}
 																	onClick={() => {
-																		setSelectedIdx((prev) => ({
+																		stSelIdx((prev) => ({
 																			...prev,
 																			category3Idx: index,
 																		}));
@@ -582,7 +582,7 @@ export const UserCategory = memo(() => {
 																	name={`Trash`}
 																	className={`w-12px h-12px burgundy`}
 																	onClick={() => {
-																		setSelectedIdx((prev) => ({
+																		stSelIdx((prev) => ({
 																			...prev,
 																			category3Idx: index,
 																		}));
@@ -613,13 +613,13 @@ export const UserCategory = memo(() => {
 									</TableRow>
 								</TableFooter>
 							</Table>
-						</TableContainer>
+						</TblCntn>
 					)}
 				</Grid>
 			</Grid>
 		);
 		// 7-2. detail
-		const detailSection = () => (
+		const dtlSec = () => (
 			<Grid
 				container={true}
 				spacing={2}
@@ -628,7 +628,7 @@ export const UserCategory = memo(() => {
 				{[OBJECT]?.map((item, i) => (
 					<Grid size={12} key={`detail-${i}`}>
 						<Grid container={true} spacing={1}>
-							<TableContainer className={`border-1 radius-2 over-x-hidden`}>
+							<TblCntn className={`border-1 radius-2 over-x-hidden`}>
 								<Table>
 									<TableHead className={`table-thead`}>
 										<TableRow className={`table-thead-tr`}>
@@ -663,7 +663,7 @@ export const UserCategory = memo(() => {
 																		className={`w-18px h-18px black ml-auto`}
 																		onClick={(e: any) => {
 																			setDataType(item);
-																			setSelectedIdx((prev) => ({
+																			stSelIdx((prev) => ({
 																				...prev,
 																				category1Idx: idx,
 																				category2Idx: 1,
@@ -681,7 +681,7 @@ export const UserCategory = memo(() => {
 										))}
 									</TableBody>
 								</Table>
-							</TableContainer>
+							</TblCntn>
 						</Grid>
 					</Grid>
 				))}
@@ -692,7 +692,7 @@ export const UserCategory = memo(() => {
 			<Paper
 				className={`content-wrapper radius-2 border-1 shadow-1 h-min-90vh`}
 			>
-				{detailSection()}
+				{dtlSec()}
 			</Paper>
 		);
 	};
@@ -717,7 +717,7 @@ export const UserCategory = memo(() => {
 	// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	return (
 		<>
-			{userCategoryNode()}
+			{usrCatNd()}
 			{footerNode()}
 		</>
 	);

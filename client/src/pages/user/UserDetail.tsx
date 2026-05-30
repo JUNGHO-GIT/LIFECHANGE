@@ -7,32 +7,32 @@
 
 import { Div, Grid, Hr, Img, Paper } from "@exportComponents";
 import { Input } from "@exportContainers";
-import { useCommonValue, useValidateUser } from "@exportHooks";
+import { useCommonValue as usCmmnVal, useValidateUser as usValUsr } from "@exportHooks";
 import { Footer } from "@exportLayouts";
 import { axios } from "@exportLibs";
 import { Avatar, Checkbox } from "@exportMuis";
 import { memo, type React, useEffect, useRef, useState } from "@exportReacts";
 import { User, type UserType } from "@exportSchemas";
-import { handleNumberInput, insertComma, sync } from "@exportScripts";
+import { handleNumberInput as hndlNmbrInpt, insertComma, sync } from "@exportScripts";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const UserDetail = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, navigate, sessionId, localCurrency, localUnit } =
-		useCommonValue();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
-	const { ERRORS, REFS, validate } = useValidateUser();
+	const { URL_OBJECT, navigate, sessionId, localCurrency: lclCrrn, localUnit } =
+		usCmmnVal();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
+	const { ERRORS, REFS, validate } = usValUsr();
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const [OBJECT, setOBJECT] = useState<UserType>(User);
-	const [includingExclusions, setIncludingExclusions] =
+	const [inclExcl, stInclExcl] =
 		useState<boolean>(false);
 	const [SEND, setSEND] = useState({
 		id: ``,
@@ -124,7 +124,7 @@ export const UserDetail = memo(() => {
 	}
 
 	// 6. userDetail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const userDetailNode = () => {
+	const usrDtlNd = () => {
 		// 7-1. image
 		const imageSection = () => (
 			<Grid container={true} spacing={1}>
@@ -138,7 +138,7 @@ export const UserDetail = memo(() => {
 			</Grid>
 		);
 		// 7-2. detail
-		const detailSection = () => (
+		const dtlSec = () => (
 			<Grid container={true} spacing={0}>
 				{[OBJECT]?.map((item, i) => (
 					<Grid
@@ -190,18 +190,18 @@ export const UserDetail = memo(() => {
 									}
 									endadornment={localUnit}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											999,
 											2,
 										);
-										!processedValue === null &&
+										!procdVal === null &&
 											(() => {
 												return;
 											})();
 										setOBJECT((prev: any) => ({
 											...prev,
-											user_initScale: processedValue,
+											user_initScale: procdVal,
 										}));
 									}}
 								/>
@@ -250,17 +250,17 @@ export const UserDetail = memo(() => {
 									}
 									endadornment={translate(`kc`)}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											9999,
 										);
-										!processedValue === null &&
+										!procdVal === null &&
 											(() => {
 												return;
 											})();
 										setOBJECT((prev: any) => ({
 											...prev,
-											user_initAvgKcalIntake: processedValue,
+											user_initAvgKcalIntake: procdVal,
 										}));
 									}}
 								/>
@@ -307,19 +307,19 @@ export const UserDetail = memo(() => {
 											src={`money2.webp`}
 										/>
 									}
-									endadornment={localCurrency}
+									endadornment={lclCrrn}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											9_999_999_999,
 										);
-										!processedValue === null &&
+										!procdVal === null &&
 											(() => {
 												return;
 											})();
 										setOBJECT((prev: any) => ({
 											...prev,
-											user_initProperty: processedValue,
+											user_initProperty: procdVal,
 										}));
 									}}
 								/>
@@ -333,7 +333,7 @@ export const UserDetail = memo(() => {
 									readOnly={true}
 									label={translate(`curPropertyExclusion`)}
 									value={
-										includingExclusions
+										inclExcl
 											? insertComma(item.user_curPropertyAll ?? `0`)
 											: insertComma(item.user_curPropertyExclusion ?? `0`)
 									}
@@ -346,7 +346,7 @@ export const UserDetail = memo(() => {
 											src={`money2.webp`}
 										/>
 									}
-									endadornment={localCurrency}
+									endadornment={lclCrrn}
 								/>
 							</Grid>
 						</Grid>
@@ -360,9 +360,9 @@ export const UserDetail = memo(() => {
 								<Checkbox
 									size={`small`}
 									className={`p-0px ml-5px`}
-									checked={includingExclusions}
+									checked={inclExcl}
 									onChange={(e: any) => {
-										setIncludingExclusions(e.target.checked);
+										stInclExcl(e.target.checked);
 									}}
 								/>
 							</Grid>
@@ -378,7 +378,7 @@ export const UserDetail = memo(() => {
 			>
 				{imageSection()}
 				<Hr m={40} />
-				{detailSection()}
+				{dtlSec()}
 			</Paper>
 		);
 	};
@@ -401,7 +401,7 @@ export const UserDetail = memo(() => {
 	// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	return (
 		<>
-			{userDetailNode()}
+			{usrDtlNd()}
 			{footerNode()}
 		</>
 	);

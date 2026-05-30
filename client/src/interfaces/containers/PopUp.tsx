@@ -8,9 +8,9 @@
 import { Popover } from "@exportComponents";
 import {
 	bindPopover,
-	type PopoverOrigin,
+	type PopoverOrigin as PpvrOrgn,
 	type PopupState,
-	usePopupState,
+	usePopupState as usPppSt,
 } from "@exportMuis";
 import { memo, useCallback, useId, useMemo } from "@exportReacts";
 
@@ -18,7 +18,7 @@ import { memo, useCallback, useId, useMemo } from "@exportReacts";
 export const PopUp = memo((props: any) => {
 	// 1. Popup State ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 	const id: string = useId();
-	const popupState: PopupState = usePopupState({
+	const popupState: PopupState = usPppSt({
 		variant: `popover`,
 		popupId: props?.id ?? id,
 	});
@@ -89,7 +89,7 @@ export const PopUp = memo((props: any) => {
 	}, [popupState]);
 
 	// 4. memoized values ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const popupContents = useMemo(
+	const pppCntn = useMemo(
 		() =>
 			typeof props?.contents === `function`
 				? props?.contents({ closePopup: closePopup })
@@ -97,12 +97,12 @@ export const PopUp = memo((props: any) => {
 		[props?.contents, closePopup],
 	);
 
-	const popupChildren = useMemo(
+	const pppChld = useMemo(
 		() => props?.children({ openPopup: openPopup, closePopup: closePopup }),
 		[props?.children, openPopup, closePopup],
 	);
 
-	const anchorOrigin = useMemo<PopoverOrigin>(
+	const anchorOrigin = useMemo<PpvrOrgn>(
 		() => ({
 			vertical:
 				props?.position === `center`
@@ -120,7 +120,7 @@ export const PopUp = memo((props: any) => {
 		[props?.position, props?.direction],
 	);
 
-	const transformOrigin = useMemo<PopoverOrigin>(
+	const trnsOrgn = useMemo<PpvrOrgn>(
 		() => ({
 			vertical:
 				props?.position === `center`
@@ -138,7 +138,7 @@ export const PopUp = memo((props: any) => {
 		[props?.position, props?.direction],
 	);
 
-	const innerCenterAnchorPosition = useMemo(
+	const innCnAnPs = useMemo(
 		() => ({
 			top: typeof window !== `undefined` ? window.innerHeight / 2 : 0,
 			left: typeof window !== `undefined` ? window.innerWidth / 2 : 0,
@@ -156,7 +156,7 @@ export const PopUp = memo((props: any) => {
 					anchorEl={popupState.anchorEl}
 					onClose={handleClose}
 					anchorOrigin={anchorOrigin}
-					transformOrigin={transformOrigin}
+					transformOrigin={trnsOrgn}
 					keepMounted={false}
 					disableRestoreFocus={false}
 					slotProps={{
@@ -164,24 +164,24 @@ export const PopUp = memo((props: any) => {
 							sx: popupStyle,
 						},
 					}}
-					children={popupContents}
+					children={pppCntn}
 				/>
-				{popupChildren}
+				{pppChld}
 			</>
 		),
 		[
 			popupState,
 			handleClose,
 			anchorOrigin,
-			transformOrigin,
+			trnsOrgn,
 			popupStyle,
-			popupContents,
-			popupChildren,
+			pppCntn,
+			pppChld,
 		],
 	);
 
 	// 6. innerCenterPopUp ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const innerCenterPopUp = useMemo(
+	const innrCntrPpUp = useMemo(
 		() => (
 			<>
 				<Popover
@@ -190,7 +190,7 @@ export const PopUp = memo((props: any) => {
 					anchorEl={null}
 					onClose={handleClose}
 					anchorReference={`anchorPosition`}
-					anchorPosition={innerCenterAnchorPosition}
+					anchorPosition={innCnAnPs}
 					anchorOrigin={{
 						vertical: `center`,
 						horizontal: `center`,
@@ -206,25 +206,25 @@ export const PopUp = memo((props: any) => {
 							sx: popupStyle,
 						},
 					}}
-					children={popupContents}
+					children={pppCntn}
 				/>
-				{popupChildren}
+				{pppChld}
 			</>
 		),
 		[
 			popupState,
 			handleClose,
-			innerCenterAnchorPosition,
+			innCnAnPs,
 			popupStyle,
-			popupContents,
-			popupChildren,
+			pppCntn,
+			pppChld,
 		],
 	);
 
 	// 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 	return (
 		<>
-			{props?.type === `innerCenter` && innerCenterPopUp}
+			{props?.type === `innerCenter` && innrCntrPpUp}
 			{props?.type !== `innerCenter` && chainedPopUp}
 		</>
 	);

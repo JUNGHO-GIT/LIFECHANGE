@@ -6,15 +6,15 @@
  */
 
 import { Div, Icons } from "@exportComponents";
-import { useCommonDate, useCommonValue } from "@exportHooks";
+import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal } from "@exportHooks";
 import {
 	Backdrop,
 	SpeedDial,
-	SpeedDialAction,
-	SpeedDialIcon,
+	SpeedDialAction as SpdDlActn,
+	SpeedDialIcon as SpdDlIcn,
 } from "@exportMuis";
 import { memo, type React, useState } from "@exportReacts";
-import { useStoreLanguage } from "@exportStores";
+import { useStoreLanguage as usStrLang } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 declare interface DialogProps {
@@ -36,14 +36,14 @@ export const Dialog = memo(
 		setOBJECT,
 		LOCKED,
 		setLOCKED,
-		setIsExpanded,
+		setIsExpanded: stIsExpn,
 	}: DialogProps) => {
 		// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		const { PATH, navigate, toDetail, localIsoCode } = useCommonValue();
-		const { isGoalList, isFindList, isFavoriteList } = useCommonValue();
-		const { isList, isDetail, isCalendar } = useCommonValue();
-		const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
-		const { translate } = useStoreLanguage();
+		const { PATH, navigate, toDetail, localIsoCode } = usCmmnVal();
+		const { isGoalList, isFindList, isFavoriteList: isFavLst } = usCmmnVal();
+		const { isList, isDetail, isCalendar } = usCmmnVal();
+		const { getDayFmt, getWeekStartFmt: gtWkStrtFmt, getWeekEndFmt: gtWkEndFmt } = usCmmnDt();
+		const { translate } = usStrLang();
 
 		// 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 		const [open, setOpen] = useState(false);
@@ -51,7 +51,7 @@ export const Dialog = memo(
 		// 7. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 		const dialogNode = () => {
 			// 1. goal
-			const listGoalSection = () => (
+			const lstGlSec = () => (
 				<Div className={`d-flex`}>
 					<Backdrop
 						open={open}
@@ -66,7 +66,7 @@ export const Dialog = memo(
 						open={open}
 						style={{ zIndex: 600 }}
 						className={`p-fixed bottom-18vh right-6vw ml-5px z-600`}
-						icon={<SpeedDialIcon />}
+						icon={<SpdDlIcn />}
 						FabProps={{
 							size: `small`,
 							component: `div`,
@@ -75,7 +75,7 @@ export const Dialog = memo(
 							setOpen(!open);
 						}}
 					>
-						<SpeedDialAction
+						<SpdDlActn
 							key={translate(`save`)}
 							tooltipTitle={translate(`save`)}
 							className={open ? `` : `d-none`}
@@ -90,13 +90,13 @@ export const Dialog = memo(
 								void navigate(toDetail, {
 									state: {
 										dateType: `week`,
-										dateStart: getWeekStartFmt(),
-										dateEnd: getWeekEndFmt(),
+										dateStart: gtWkStrtFmt(),
+										dateEnd: gtWkEndFmt(),
 									},
 								});
 							}}
 						/>
-						<SpeedDialAction
+						<SpdDlActn
 							key={translate(`openAll`)}
 							tooltipTitle={translate(`openAll`)}
 							className={open ? `` : `d-none`}
@@ -108,7 +108,7 @@ export const Dialog = memo(
 								/>
 							}
 							onClick={() => {
-								setIsExpanded(() =>
+								stIsExpn(() =>
 									Array.from({ length: COUNT?.totalCnt as number }).map(
 										(_: any) => ({
 											expanded: true,
@@ -118,7 +118,7 @@ export const Dialog = memo(
 								window.scrollTo(0, 0);
 							}}
 						/>
-						<SpeedDialAction
+						<SpdDlActn
 							key={translate(`closeAll`)}
 							tooltipTitle={translate(`closeAll`)}
 							className={open ? `` : `d-none`}
@@ -130,7 +130,7 @@ export const Dialog = memo(
 								/>
 							}
 							onClick={() => {
-								setIsExpanded(() =>
+								stIsExpn(() =>
 									Array.from({ length: COUNT?.totalCnt as number }).map(
 										(_: any) => ({
 											expanded: false,
@@ -144,7 +144,7 @@ export const Dialog = memo(
 				</Div>
 			);
 			// 1. record
-			const listRecordSection = () => (
+			const lstRecSec = () => (
 				<Div className={`d-flex`}>
 					<Backdrop
 						open={open}
@@ -159,7 +159,7 @@ export const Dialog = memo(
 						open={open}
 						style={{ zIndex: 600 }}
 						className={`p-fixed bottom-18vh right-6vw ml-5px z-600`}
-						icon={<SpeedDialIcon />}
+						icon={<SpdDlIcn />}
 						FabProps={{
 							size: `small`,
 							component: `div`,
@@ -168,7 +168,7 @@ export const Dialog = memo(
 							setOpen(!open);
 						}}
 					>
-						<SpeedDialAction
+						<SpdDlActn
 							key={translate(`save`)}
 							tooltipTitle={translate(`save`)}
 							className={open ? `` : `d-none`}
@@ -189,7 +189,7 @@ export const Dialog = memo(
 								});
 							}}
 						/>
-						<SpeedDialAction
+						<SpdDlActn
 							key={translate(`openAll`)}
 							tooltipTitle={translate(`openAll`)}
 							className={open ? `` : `d-none`}
@@ -201,7 +201,7 @@ export const Dialog = memo(
 								/>
 							}
 							onClick={() => {
-								setIsExpanded(() =>
+								stIsExpn(() =>
 									Array.from({ length: COUNT?.totalCnt as number }).map(
 										(_: any) => ({
 											expanded: true,
@@ -211,7 +211,7 @@ export const Dialog = memo(
 								window.scrollTo(0, 0);
 							}}
 						/>
-						<SpeedDialAction
+						<SpdDlActn
 							key={translate(`closeAll`)}
 							tooltipTitle={translate(`closeAll`)}
 							className={open ? `` : `d-none`}
@@ -223,7 +223,7 @@ export const Dialog = memo(
 								/>
 							}
 							onClick={() => {
-								setIsExpanded(() =>
+								stIsExpn(() =>
 									Array.from({ length: COUNT?.totalCnt as number }).map(
 										(_: any) => ({
 											expanded: false,
@@ -251,7 +251,7 @@ export const Dialog = memo(
 						direction={`up`}
 						open={open}
 						className={`p-fixed bottom-18vh right-6vw ml-5px z-600`}
-						icon={<SpeedDialIcon />}
+						icon={<SpdDlIcn />}
 						FabProps={{
 							size: `small`,
 							component: `div`,
@@ -261,7 +261,7 @@ export const Dialog = memo(
 						}}
 					>
 						{PATH.includes(`/favorite/list`) ? (
-							<SpeedDialAction
+							<SpdDlActn
 								key={translate(`search`)}
 								tooltipTitle={translate(`search`)}
 								className={open ? `` : `d-none`}
@@ -277,7 +277,7 @@ export const Dialog = memo(
 								}}
 							/>
 						) : (
-							<SpeedDialAction
+							<SpdDlActn
 								key={translate(`favorite`)}
 								tooltipTitle={translate(`favorite`)}
 								className={open ? `` : `d-none`}
@@ -294,7 +294,7 @@ export const Dialog = memo(
 								}}
 							/>
 						)}
-						<SpeedDialAction
+						<SpdDlActn
 							key={translate(`save`)}
 							tooltipTitle={translate(`save`)}
 							className={open ? `` : `d-none`}
@@ -315,7 +315,7 @@ export const Dialog = memo(
 								});
 							}}
 						/>
-						<SpeedDialAction
+						<SpdDlActn
 							key={translate(`openAll`)}
 							tooltipTitle={translate(`openAll`)}
 							className={open ? `` : `d-none`}
@@ -327,7 +327,7 @@ export const Dialog = memo(
 								/>
 							}
 							onClick={() => {
-								setIsExpanded(() =>
+								stIsExpn(() =>
 									Array.from({ length: COUNT?.totalCnt as number }).map(
 										(_: any) => ({
 											expanded: true,
@@ -337,7 +337,7 @@ export const Dialog = memo(
 								window.scrollTo(0, 0);
 							}}
 						/>
-						<SpeedDialAction
+						<SpdDlActn
 							key={translate(`closeAll`)}
 							tooltipTitle={translate(`closeAll`)}
 							className={open ? `` : `d-none`}
@@ -349,7 +349,7 @@ export const Dialog = memo(
 								/>
 							}
 							onClick={() => {
-								setIsExpanded(() =>
+								stIsExpn(() =>
 									Array.from({ length: COUNT?.totalCnt as number }).map(
 										(_: any) => ({
 											expanded: false,
@@ -359,7 +359,7 @@ export const Dialog = memo(
 								window.scrollTo(0, 0);
 							}}
 						/>
-						<SpeedDialAction
+						<SpdDlActn
 							key={translate(`locale`)}
 							tooltipTitle={translate(`locale`)}
 							className={open ? `` : `d-none`}
@@ -369,7 +369,7 @@ export const Dialog = memo(
 				</Div>
 			);
 			// 4. detail
-			const detailSection = () => (
+			const dtlSec = () => (
 				<Div className={`d-flex`}>
 					<Backdrop
 						open={open}
@@ -384,7 +384,7 @@ export const Dialog = memo(
 						open={open}
 						style={{ zIndex: 600 }}
 						className={`p-fixed bottom-18vh right-6vw ml-5px z-600`}
-						icon={<SpeedDialIcon />}
+						icon={<SpdDlIcn />}
 						FabProps={{
 							size: `small`,
 							component: `div`,
@@ -393,7 +393,7 @@ export const Dialog = memo(
 							setOpen(!open);
 						}}
 					>
-						<SpeedDialAction
+						<SpdDlActn
 							key={translate(`itemLock`)}
 							tooltipTitle={translate(`itemLock`)}
 							className={open ? `` : `d-none`}
@@ -422,7 +422,7 @@ export const Dialog = memo(
 								}
 							}}
 						/>
-						<SpeedDialAction
+						<SpdDlActn
 							key={translate(`closeAll`)}
 							tooltipTitle={translate(`closeAll`)}
 							className={open ? `` : `d-none`}
@@ -458,7 +458,7 @@ export const Dialog = memo(
 				</Div>
 			);
 			// 5. calendar
-			const calendarDetailSection = () => (
+			const clndDtlSec = () => (
 				<Div className={`d-flex`}>
 					<Backdrop
 						open={open}
@@ -473,7 +473,7 @@ export const Dialog = memo(
 						open={open}
 						style={{ zIndex: 600 }}
 						className={`p-fixed bottom-18vh right-6vw ml-5px z-600`}
-						icon={<SpeedDialIcon />}
+						icon={<SpdDlIcn />}
 						FabProps={{
 							size: `small`,
 							component: `div`,
@@ -482,7 +482,7 @@ export const Dialog = memo(
 							setOpen(!open);
 						}}
 					>
-						<SpeedDialAction
+						<SpdDlActn
 							key={translate(`itemLock`)}
 							tooltipTitle={translate(`itemLock`)}
 							className={open ? `` : `d-none`}
@@ -511,7 +511,7 @@ export const Dialog = memo(
 								}
 							}}
 						/>
-						<SpeedDialAction
+						<SpdDlActn
 							key={translate(`closeAll`)}
 							tooltipTitle={translate(`closeAll`)}
 							className={open ? `` : `d-none`}
@@ -550,15 +550,15 @@ export const Dialog = memo(
 			);
 			// 10. return
 			return isGoalList
-				? listGoalSection()
-				: isFindList || isFavoriteList
+				? lstGlSec()
+				: isFindList || isFavLst
 					? findSection()
 					: isList
-						? listRecordSection()
+						? lstRecSec()
 						: isCalendar && isDetail
-							? calendarDetailSection()
+							? clndDtlSec()
 							: isDetail
-								? detailSection()
+								? dtlSec()
 								: null;
 		};
 

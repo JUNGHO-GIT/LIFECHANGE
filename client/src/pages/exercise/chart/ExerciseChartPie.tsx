@@ -5,22 +5,22 @@
  * @since 2025-12-26
  */
 
-import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
+import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal, useStorageLocal as usStrgLcl } from "@exportHooks";
 import {
 	axios,
 	Cell,
 	Legend,
 	Pie,
 	PieChart,
-	ResponsiveContainer,
+	ResponsiveContainer as RspnCntn,
 	Tooltip,
 } from "@exportLibs";
 import { memo, useEffect, useState } from "@exportReacts";
-import { ExercisePie, type ExercisePieType } from "@exportSchemas";
+import { ExercisePie, type ExercisePieType as ExerPTyp } from "@exportSchemas";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
@@ -39,55 +39,55 @@ declare interface PieProps {
 }
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
+export const ExerChrtP = memo((props: ExerciseChartPieProps) => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, PATH, chartColors, sessionId } = useCommonValue();
-	const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
-	const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } =
-		useCommonDate();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
+	const { URL_OBJECT, PATH, chartColors, sessionId } = usCmmnVal();
+	const { getDayFmt, getWeekStartFmt: gtWkStrtFmt, getWeekEndFmt: gtWkEndFmt } = usCmmnDt();
+	const { getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt, getYearStartFmt: gtYrStrtFmt, getYearEndFmt: gtYrEndFmt } =
+		usCmmnDt();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
 
 	// 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const [TYPE, setTYPE] = useStorageLocal(`type`, `pie`, PATH, {
+	const [TYPE, setTYPE] = usStrgLcl(`type`, `pie`, PATH, {
 		section: `week`,
 		line: `part`,
 	});
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [TYPE_STATE, setTYPE_STATE] = useState(() => {
+	const [TYPE_STATE, stTypSt] = useState(() => {
 		return props?.TYPE !== undefined ? props.TYPE : TYPE;
 	});
 	const [DATE, _setDATE] = useState({
 		dateType: ``,
 		dateStart: getDayFmt(),
 		dateEnd: getDayFmt(),
-		weekStartFmt: getWeekStartFmt(),
-		weekEndFmt: getWeekEndFmt(),
-		monthStartFmt: getMonthStartFmt(),
-		monthEndFmt: getMonthEndFmt(),
-		yearStartFmt: getYearStartFmt(),
-		yearEndFmt: getYearEndFmt(),
+		weekStartFmt: gtWkStrtFmt(),
+		weekEndFmt: gtWkEndFmt(),
+		monthStartFmt: gtMnStFm(),
+		monthEndFmt: gtMnthEndFmt(),
+		yearStartFmt: gtYrStrtFmt(),
+		yearEndFmt: gtYrEndFmt(),
 	});
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [OBJECT_PART_WEEK, setOBJECT_PART_WEEK] = useState<[ExercisePieType]>([
+	const [OBJC_PRT_WK, stObjcPrtWk] = useState<[ExerPTyp]>([
 		ExercisePie,
 	]);
-	const [OBJECT_TITLE_WEEK, setOBJECT_TITLE_WEEK] = useState<[ExercisePieType]>(
+	const [OBJC_TTL_WK, stObjcTtlWk] = useState<[ExerPTyp]>(
 		[ExercisePie],
 	);
-	const [OBJECT_PART_MONTH, setOBJECT_PART_MONTH] = useState<[ExercisePieType]>(
+	const [OBJ_PRT_MNT, stObPrMn] = useState<[ExerPTyp]>(
 		[ExercisePie],
 	);
-	const [OBJECT_TITLE_MONTH, setOBJECT_TITLE_MONTH] = useState<
-		[ExercisePieType]
+	const [OBJ_TTL_MNT, stObTtMn] = useState<
+		[ExerPTyp]
 	>([ExercisePie]);
-	const [OBJECT_PART_YEAR, setOBJECT_PART_YEAR] = useState<[ExercisePieType]>([
+	const [OBJC_PRT_YR, stObjcPrtYr] = useState<[ExerPTyp]>([
 		ExercisePie,
 	]);
-	const [OBJECT_TITLE_YEAR, setOBJECT_TITLE_YEAR] = useState<[ExercisePieType]>(
+	const [OBJC_TTL_YR, stObjcTtlYr] = useState<[ExerPTyp]>(
 		[ExercisePie],
 	);
 
@@ -113,33 +113,33 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
 				]);
 
 				// 서버에서 기본값을 포함한 응답을 받으므로 직접 설정
-				setOBJECT_PART_WEEK(
+				stObjcPrtWk(
 					resWeek.data.result.part && Array.isArray(resWeek.data.result.part)
 						? resWeek.data.result.part
 						: [ExercisePie],
 				);
-				setOBJECT_TITLE_WEEK(
+				stObjcTtlWk(
 					resWeek.data.result.title && Array.isArray(resWeek.data.result.title)
 						? resWeek.data.result.title
 						: [ExercisePie],
 				);
-				setOBJECT_PART_MONTH(
+				stObPrMn(
 					resMonth.data.result.part && Array.isArray(resMonth.data.result.part)
 						? resMonth.data.result.part
 						: [ExercisePie],
 				);
-				setOBJECT_TITLE_MONTH(
+				stObTtMn(
 					resMonth.data.result.title &&
 						Array.isArray(resMonth.data.result.title)
 						? resMonth.data.result.title
 						: [ExercisePie],
 				);
-				setOBJECT_PART_YEAR(
+				stObjcPrtYr(
 					resYear.data.result.part && Array.isArray(resYear.data.result.part)
 						? resYear.data.result.part
 						: [ExercisePie],
 				);
-				setOBJECT_TITLE_YEAR(
+				stObjcTtlYr(
 					resYear.data.result.title && Array.isArray(resYear.data.result.title)
 						? resYear.data.result.title
 						: [ExercisePie],
@@ -153,12 +153,12 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
 				});
 				console.error(error);
 				// 에러 발생 시에도 기본값 설정
-				setOBJECT_PART_WEEK([ExercisePie]);
-				setOBJECT_TITLE_WEEK([ExercisePie]);
-				setOBJECT_PART_MONTH([ExercisePie]);
-				setOBJECT_TITLE_MONTH([ExercisePie]);
-				setOBJECT_PART_YEAR([ExercisePie]);
-				setOBJECT_TITLE_YEAR([ExercisePie]);
+				stObjcPrtWk([ExercisePie]);
+				stObjcTtlWk([ExercisePie]);
+				stObPrMn([ExercisePie]);
+				stObTtMn([ExercisePie]);
+				stObjcPrtYr([ExercisePie]);
+				stObjcTtlYr([ExercisePie]);
 			} finally {
 				setLOADING(false);
 			}
@@ -171,7 +171,7 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
 			const isSame: boolean =
 				JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
 			if (!isSame) {
-				setTYPE_STATE(props.TYPE);
+				stTypSt(props.TYPE);
 			}
 		}
 	}, [props?.TYPE]);
@@ -203,17 +203,17 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
 		const endStr: string = `%`;
 
 		if (TYPE_STATE.section === `week` && TYPE_STATE.line === `part`) {
-			object = OBJECT_PART_WEEK || [ExercisePie];
+			object = OBJC_PRT_WK || [ExercisePie];
 		} else if (TYPE_STATE.section === `week` && TYPE_STATE.line === `title`) {
-			object = OBJECT_TITLE_WEEK || [ExercisePie];
+			object = OBJC_TTL_WK || [ExercisePie];
 		} else if (TYPE_STATE.section === `month` && TYPE_STATE.line === `part`) {
-			object = OBJECT_PART_MONTH || [ExercisePie];
+			object = OBJ_PRT_MNT || [ExercisePie];
 		} else if (TYPE_STATE.section === `month` && TYPE_STATE.line === `title`) {
-			object = OBJECT_TITLE_MONTH || [ExercisePie];
+			object = OBJ_TTL_MNT || [ExercisePie];
 		} else if (TYPE_STATE.section === `year` && TYPE_STATE.line === `part`) {
-			object = OBJECT_PART_YEAR || [ExercisePie];
+			object = OBJC_PRT_YR || [ExercisePie];
 		} else if (TYPE_STATE.section === `year` && TYPE_STATE.line === `title`) {
-			object = OBJECT_TITLE_YEAR || [ExercisePie];
+			object = OBJC_TTL_YR || [ExercisePie];
 		}
 
 		if (
@@ -259,22 +259,22 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
 		let dateRange: string = ``;
 
 		if (TYPE_STATE.section === `week` && TYPE_STATE.line === `part`) {
-			object = OBJECT_PART_WEEK || [ExercisePie];
+			object = OBJC_PRT_WK || [ExercisePie];
 			dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
 		} else if (TYPE_STATE.section === `week` && TYPE_STATE.line === `title`) {
-			object = OBJECT_TITLE_WEEK || [ExercisePie];
+			object = OBJC_TTL_WK || [ExercisePie];
 			dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
 		} else if (TYPE_STATE.section === `month` && TYPE_STATE.line === `part`) {
-			object = OBJECT_PART_MONTH || [ExercisePie];
+			object = OBJ_PRT_MNT || [ExercisePie];
 			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
 		} else if (TYPE_STATE.section === `month` && TYPE_STATE.line === `title`) {
-			object = OBJECT_TITLE_MONTH || [ExercisePie];
+			object = OBJ_TTL_MNT || [ExercisePie];
 			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
 		} else if (TYPE_STATE.section === `year` && TYPE_STATE.line === `part`) {
-			object = OBJECT_PART_YEAR || [ExercisePie];
+			object = OBJC_PRT_YR || [ExercisePie];
 			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
 		} else if (TYPE_STATE.section === `year` && TYPE_STATE.line === `title`) {
-			object = OBJECT_TITLE_YEAR || [ExercisePie];
+			object = OBJC_TTL_YR || [ExercisePie];
 			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
 		} else {
 			if (TYPE_STATE.section === `week`) {
@@ -290,7 +290,7 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
 		}
 
 		return (
-			<ResponsiveContainer width={`100%`} height={500}>
+			<RspnCntn width={`100%`} height={500}>
 				<PieChart margin={{ top: 60, right: 20, bottom: 10, left: 20 }}>
 					<defs>
 						<filter id={`textBackground`} x={0} y={0} width={1} height={1}>
@@ -371,7 +371,7 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
 						}}
 					/>
 				</PieChart>
-			</ResponsiveContainer>
+			</RspnCntn>
 		);
 	};
 

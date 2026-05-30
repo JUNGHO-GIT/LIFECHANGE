@@ -5,30 +5,30 @@
  * @since 2025-12-26
  */
 
-import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
+import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal, useStorageLocal as usStrgLcl } from "@exportHooks";
 import {
 	axios,
-	CartesianGrid,
+	CartesianGrid as CrtsGrd,
 	Legend,
 	Line,
 	LineChart,
-	ResponsiveContainer,
+	ResponsiveContainer as RspnCntn,
 	Tooltip,
 	XAxis,
 	YAxis,
 } from "@exportLibs";
 import { memo, useEffect, useState } from "@exportReacts";
 import {
-	ExerciseLineCardio,
-	ExerciseLineScale,
-	type ExerciseLineType,
-	ExerciseLineVolume,
+	ExerciseLineCardio as ExerLnCrd,
+	ExerciseLineScale as ExerLnScl,
+	type ExerciseLineType as ExerLnTyp,
+	ExerciseLineVolume as ExerLnVol,
 } from "@exportSchemas";
 import { formatDate, formatY } from "@exportScripts";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
@@ -38,58 +38,58 @@ declare interface ExerciseChartLineProps {
 }
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
+export const ExerChrtLn = memo((props: ExerciseChartLineProps) => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, PATH, sessionId, chartColors } = useCommonValue();
-	const { localUnit, exerciseChartArray } = useCommonValue();
-	const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
-	const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } =
-		useCommonDate();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
+	const { URL_OBJECT, PATH, sessionId, chartColors } = usCmmnVal();
+	const { localUnit, exerciseChartArray: exerChrtArry } = usCmmnVal();
+	const { getDayFmt, getWeekStartFmt: gtWkStrtFmt, getWeekEndFmt: gtWkEndFmt } = usCmmnDt();
+	const { getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt, getYearStartFmt: gtYrStrtFmt, getYearEndFmt: gtYrEndFmt } =
+		usCmmnDt();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
 
 	// 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const [TYPE, setTYPE] = useStorageLocal(`type`, `line`, PATH, {
+	const [TYPE, setTYPE] = usStrgLcl(`type`, `line`, PATH, {
 		section: `week`,
 		line: `volume`,
 	});
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [TYPE_STATE, setTYPE_STATE] = useState(() => {
+	const [TYPE_STATE, stTypSt] = useState(() => {
 		return props?.TYPE !== undefined ? props.TYPE : TYPE;
 	});
 	const [DATE, _setDATE] = useState({
 		dateType: ``,
 		dateStart: getDayFmt(),
 		dateEnd: getDayFmt(),
-		weekStartFmt: getWeekStartFmt(),
-		weekEndFmt: getWeekEndFmt(),
-		monthStartFmt: getMonthStartFmt(),
-		monthEndFmt: getMonthEndFmt(),
-		yearStartFmt: getYearStartFmt(),
-		yearEndFmt: getYearEndFmt(),
+		weekStartFmt: gtWkStrtFmt(),
+		weekEndFmt: gtWkEndFmt(),
+		monthStartFmt: gtMnStFm(),
+		monthEndFmt: gtMnthEndFmt(),
+		yearStartFmt: gtYrStrtFmt(),
+		yearEndFmt: gtYrEndFmt(),
 	});
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [OBJECT_SCALE_WEEK, setOBJECT_SCALE_WEEK] = useState<
-		[ExerciseLineType]
-	>([ExerciseLineScale]);
-	const [OBJECT_VOLUME_WEEK, setOBJECT_VOLUME_WEEK] = useState<
-		[ExerciseLineType]
-	>([ExerciseLineVolume]);
-	const [OBJECT_CARDIO_WEEK, setOBJECT_CARDIO_WEEK] = useState<
-		[ExerciseLineType]
-	>([ExerciseLineCardio]);
-	const [OBJECT_SCALE_MONTH, setOBJECT_SCALE_MONTH] = useState<
-		[ExerciseLineType]
-	>([ExerciseLineScale]);
-	const [OBJECT_VOLUME_MONTH, setOBJECT_VOLUME_MONTH] = useState<
-		[ExerciseLineType]
-	>([ExerciseLineVolume]);
-	const [OBJECT_CARDIO_MONTH, setOBJECT_CARDIO_MONTH] = useState<
-		[ExerciseLineType]
-	>([ExerciseLineCardio]);
+	const [OBJC_SCL_WK, stObjcSclWk] = useState<
+		[ExerLnTyp]
+	>([ExerLnScl]);
+	const [OBJC_VOL_WK, stObjcVolWk] = useState<
+		[ExerLnTyp]
+	>([ExerLnVol]);
+	const [OBJC_CRD_WK, stObjcCrdWk] = useState<
+		[ExerLnTyp]
+	>([ExerLnCrd]);
+	const [OBJ_SCL_MNT, stObScMn] = useState<
+		[ExerLnTyp]
+	>([ExerLnScl]);
+	const [OBJ_VOL_MNT, stObVoMn] = useState<
+		[ExerLnTyp]
+	>([ExerLnVol]);
+	const [OBJ_CRD_MNT, stObCrMn] = useState<
+		[ExerLnTyp]
+	>([ExerLnCrd]);
 
 	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	useEffect(() => {
@@ -108,35 +108,35 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
 						params: params,
 					}),
 				]);
-				setOBJECT_SCALE_WEEK(
+				stObjcSclWk(
 					resWeek.data.result.scale?.length > 0
 						? resWeek.data.result.scale
-						: [ExerciseLineScale],
+						: [ExerLnScl],
 				);
-				setOBJECT_VOLUME_WEEK(
+				stObjcVolWk(
 					resWeek.data.result.volume?.length > 0
 						? resWeek.data.result.volume
-						: [ExerciseLineVolume],
+						: [ExerLnVol],
 				);
-				setOBJECT_CARDIO_WEEK(
+				stObjcCrdWk(
 					resWeek.data.result.cardio?.length > 0
 						? resWeek.data.result.cardio
-						: [ExerciseLineCardio],
+						: [ExerLnCrd],
 				);
-				setOBJECT_SCALE_MONTH(
+				stObScMn(
 					resMonth.data.result.scale?.length > 0
 						? resMonth.data.result.scale
-						: [ExerciseLineScale],
+						: [ExerLnScl],
 				);
-				setOBJECT_VOLUME_MONTH(
+				stObVoMn(
 					resMonth.data.result.volume?.length > 0
 						? resMonth.data.result.volume
-						: [ExerciseLineVolume],
+						: [ExerLnVol],
 				);
-				setOBJECT_CARDIO_MONTH(
+				stObCrMn(
 					resMonth.data.result.cardio?.length > 0
 						? resMonth.data.result.cardio
-						: [ExerciseLineCardio],
+						: [ExerLnCrd],
 				);
 			} catch (error: any) {
 				setLOADING(false);
@@ -158,7 +158,7 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
 			const isSame: boolean =
 				JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
 			if (!isSame) {
-				setTYPE_STATE(props.TYPE);
+				stTypSt(props.TYPE);
 			}
 		}
 	}, [props?.TYPE]);
@@ -184,49 +184,49 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
 
 		TYPE_STATE.section === `week` && TYPE_STATE.line === `scale`
 			? (() => {
-					object = OBJECT_SCALE_WEEK;
+					object = OBJC_SCL_WK;
 					endStr = localUnit;
 					dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
 				})()
 			: TYPE_STATE.section === `week` && TYPE_STATE.line === `volume`
 				? (() => {
-						object = OBJECT_VOLUME_WEEK;
+						object = OBJC_VOL_WK;
 						endStr = `vol`;
 						dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
 					})()
 				: TYPE_STATE.section === `week` && TYPE_STATE.line === `cardio`
 					? (() => {
-							object = OBJECT_CARDIO_WEEK;
+							object = OBJC_CRD_WK;
 							endStr = `hr`;
 							dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
 						})()
 					: TYPE_STATE.section === `month` && TYPE_STATE.line === `scale`
 						? (() => {
-								object = OBJECT_SCALE_MONTH;
+								object = OBJ_SCL_MNT;
 								endStr = localUnit;
 								dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
 							})()
 						: TYPE_STATE.section === `month` && TYPE_STATE.line === `volume`
 							? (() => {
-									object = OBJECT_VOLUME_MONTH;
+									object = OBJ_VOL_MNT;
 									endStr = `vol`;
 									dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
 								})()
 							: TYPE_STATE.section === `month` &&
 								TYPE_STATE.line === `cardio` &&
 								(() => {
-									object = OBJECT_CARDIO_MONTH;
+									object = OBJ_CRD_MNT;
 									endStr = `hr`;
 									dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
 								});
 
 		const { domain, ticks, formatterY } = formatY(
 			object,
-			exerciseChartArray,
+			exerChrtArry,
 			`exercise`,
 		);
 		return (
-			<ResponsiveContainer width={`100%`} height={500}>
+			<RspnCntn width={`100%`} height={500}>
 				<LineChart
 					data={object as any[]}
 					margin={{ top: 60, right: 20, bottom: 10, left: 20 }}
@@ -261,7 +261,7 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
 					>
 						{dateRange}
 					</text>
-					<CartesianGrid strokeDasharray={`3 3`} stroke={`#f5f5f5`} />
+					<CrtsGrd strokeDasharray={`3 3`} stroke={`#f5f5f5`} />
 					<XAxis
 						type={`category`}
 						dataKey={`name`}
@@ -364,7 +364,7 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
 						}}
 					/>
 				</LineChart>
-			</ResponsiveContainer>
+			</RspnCntn>
 		);
 	};
 

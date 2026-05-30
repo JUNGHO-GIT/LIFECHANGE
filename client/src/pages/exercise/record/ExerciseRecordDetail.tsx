@@ -15,10 +15,10 @@ import {
 	Select,
 } from "@exportContainers";
 import {
-	useCommonDate,
-	useCommonValue,
+	useCommonDate as usCmmnDt,
+	useCommonValue as usCmmnVal,
 	useTime,
-	useValidateExercise,
+	useValidateExercise as usValExer,
 } from "@exportHooks";
 import { Dialog, Footer } from "@exportLayouts";
 import { axios } from "@exportLibs";
@@ -31,29 +31,29 @@ import {
 	useRef,
 	useState,
 } from "@exportReacts";
-import { ExerciseRecord, type ExerciseRecordType } from "@exportSchemas";
-import { handleNumberInput, insertComma, sync } from "@exportScripts";
+import { ExerciseRecord as ExerRec2, type ExerciseRecordType as ExerRecTyp } from "@exportSchemas";
+import { handleNumberInput as hndlNmbrInpt, insertComma, sync } from "@exportScripts";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const ExerciseRecordDetail = memo(() => {
+export const ExerRecDtl = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, PATH, navigate, toList } = useCommonValue();
-	const { sessionId, localUnit, bgColors, exerciseArray } = useCommonValue();
-	const { location_dateStart, location_dateEnd } = useCommonValue();
-	const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-	const { ERRORS, REFS, validate } = useValidateExercise();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
+	const { URL_OBJECT, PATH, navigate, toList } = usCmmnVal();
+	const { sessionId, localUnit, bgColors, exerciseArray: exerArry } = usCmmnVal();
+	const { location_dateStart: locDtStrt, location_dateEnd: locDtEnd } = usCmmnVal();
+	const { getDayFmt, getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt } = usCmmnDt();
+	const { ERRORS, REFS, validate } = usValExer();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const [LOCKED, setLOCKED] = useState<string>(`unlocked`);
-	const [OBJECT, setOBJECT] = useState<ExerciseRecordType>(ExerciseRecord);
+	const [OBJECT, setOBJECT] = useState<ExerRecTyp>(ExerRec2);
 	const [EXIST, setEXIST] = useState({
 		day: [``],
 		week: [``],
@@ -80,12 +80,12 @@ export const ExerciseRecordDetail = memo(() => {
 	});
 	const [DATE, setDATE] = useState({
 		dateType: `day`,
-		dateStart: location_dateStart ?? getDayFmt(),
-		dateEnd: location_dateEnd ?? getDayFmt(),
+		dateStart: locDtStrt ?? getDayFmt(),
+		dateEnd: locDtEnd ?? getDayFmt(),
 	});
 
 	// 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const objectRef: React.RefObject<ExerciseRecordType> = useRef(OBJECT);
+	const objectRef: React.RefObject<ExerRecTyp> = useRef(OBJECT);
 	const countRef: React.RefObject<{
 		totalCnt: number;
 		sectionCnt: number;
@@ -136,8 +136,8 @@ export const ExerciseRecordDetail = memo(() => {
 					user_id: sessionId,
 					DATE: {
 						dateType: ``,
-						dateStart: getMonthStartFmt(DATE?.dateStart),
-						dateEnd: getMonthEndFmt(DATE?.dateEnd),
+						dateStart: gtMnStFm(DATE?.dateStart),
+						dateEnd: gtMnthEndFmt(DATE?.dateEnd),
 					},
 				},
 			})
@@ -173,7 +173,7 @@ export const ExerciseRecordDetail = memo(() => {
 			})
 			.then((res: any) => {
 				setLOADING(false);
-				setOBJECT(res.data.result ?? ExerciseRecord);
+				setOBJECT(res.data.result ?? ExerRec2);
 
 				res.data.sectionCnt <= 0 &&
 					setOBJECT((prev) => ({
@@ -186,11 +186,11 @@ export const ExerciseRecordDetail = memo(() => {
 						...prev,
 						exercise_section: prev.exercise_section?.sort(
 							(a: any, b: any) =>
-								exerciseArray.findIndex(
+								exerArry.findIndex(
 									(item: any) =>
 										item.exercise_record_part === a.exercise_record_part,
 								) -
-								exerciseArray.findIndex(
+								exerArry.findIndex(
 									(item: any) =>
 										item.exercise_record_part === b.exercise_record_part,
 								),
@@ -253,25 +253,25 @@ export const ExerciseRecordDetail = memo(() => {
 
 	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	useEffect(() => {
-		const defaultSection = {
-			exercise_record_part: exerciseArray[1]?.exercise_record_part ?? ``,
-			exercise_record_title: exerciseArray[1]?.exercise_record_title?.[0] ?? ``,
+		const defSec = {
+			exercise_record_part: exerArry[1]?.exercise_record_part ?? ``,
+			exercise_record_title: exerArry[1]?.exercise_record_title?.[0] ?? ``,
 			exercise_record_set: `0`,
 			exercise_record_rep: `0`,
 			exercise_record_weight: `0`,
 			exercise_record_volume: `0`,
 			exercise_record_cardio: `00:00`,
 		};
-		const updatedSection = Array.from({ length: COUNT?.newSectionCnt })
+		const updtSec = Array.from({ length: COUNT?.newSectionCnt })
 			.fill(null)
 			.map((_item: any, idx: number) => {
 				return idx < OBJECT?.exercise_section?.length
 					? OBJECT?.exercise_section[idx]
-					: defaultSection;
+					: defSec;
 			});
 		setOBJECT((prev) => ({
 			...prev,
-			exercise_section: updatedSection,
+			exercise_section: updtSec,
 		}));
 
 		// COUNT.sectionCnt도 newSectionCnt와 동기화
@@ -411,7 +411,7 @@ export const ExerciseRecordDetail = memo(() => {
 	// 7. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const detailNode = () => {
 		// 7-1. date + count
-		const dateCountSection = () => (
+		const dtCntSec = () => (
 			<Grid
 				container={true}
 				spacing={2}
@@ -499,18 +499,18 @@ export const ExerciseRecordDetail = memo(() => {
 							}
 							endadornment={localUnit}
 							onChange={(e: any) => {
-								const processedValue: string | null = handleNumberInput(
+								const procdVal: string | null = hndlNmbrInpt(
 									e.target.value,
 									999,
 									2,
 								);
-								!processedValue === null &&
+								!procdVal === null &&
 									(() => {
 										return;
 									})();
 								setOBJECT((prev) => ({
 									...prev,
-									exercise_record_total_scale: processedValue,
+									exercise_record_total_scale: procdVal,
 								}));
 							}}
 						/>
@@ -519,7 +519,7 @@ export const ExerciseRecordDetail = memo(() => {
 			</Grid>
 		);
 		// 7-3. detail
-		const detailSection = () => (
+		const dtlSec = () => (
 			<>
 				{OBJECT?.exercise_section?.map((item, i) => (
 					<Grid
@@ -535,7 +535,7 @@ export const ExerciseRecordDetail = memo(() => {
 									badgeContent={i + 1}
 									bgcolor={
 										bgColors?.[
-											exerciseArray.findIndex(
+											exerArry.findIndex(
 												(f: any) =>
 													f.exercise_record_part === item?.exercise_record_part,
 											)
@@ -559,11 +559,11 @@ export const ExerciseRecordDetail = memo(() => {
 									error={ERRORS?.[i]?.exercise_record_part}
 									onChange={(e: any) => {
 										const value: string = String(e.target.value ?? ``);
-										const foundIndex: number = exerciseArray.findIndex(
+										const foundIndex: number = exerArry.findIndex(
 											(f: any) => f.exercise_record_part === value,
 										);
 										const foundItem: any =
-											foundIndex !== -1 ? exerciseArray[foundIndex] : null;
+											foundIndex !== -1 ? exerArry[foundIndex] : null;
 										setOBJECT((prev: any) => ({
 											...prev,
 											exercise_section: prev.exercise_section?.map(
@@ -580,7 +580,7 @@ export const ExerciseRecordDetail = memo(() => {
 										}));
 									}}
 								>
-									{exerciseArray.map((part: any, idx: number) => (
+									{exerArry.map((part: any, idx: number) => (
 										<MenuItem
 											key={idx}
 											value={part.exercise_record_part}
@@ -615,12 +615,12 @@ export const ExerciseRecordDetail = memo(() => {
 									}}
 								>
 									{(() => {
-										const foundIndex: number = exerciseArray.findIndex(
+										const foundIndex: number = exerArry.findIndex(
 											(f: any) =>
 												f.exercise_record_part === item?.exercise_record_part,
 										);
 										const foundItem: any =
-											foundIndex !== -1 ? exerciseArray[foundIndex] : null;
+											foundIndex !== -1 ? exerArry[foundIndex] : null;
 										return (
 											foundItem?.exercise_record_title?.map(
 												(title: any, idx: number) => (
@@ -659,11 +659,11 @@ export const ExerciseRecordDetail = memo(() => {
 									}
 									endadornment={translate(`s`)}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											999,
 										);
-										!processedValue === null &&
+										!procdVal === null &&
 											(() => {
 												return;
 											})();
@@ -674,7 +674,7 @@ export const ExerciseRecordDetail = memo(() => {
 													idx === i
 														? {
 																...section,
-																exercise_record_set: processedValue,
+																exercise_record_set: procdVal,
 															}
 														: section,
 											),
@@ -700,11 +700,11 @@ export const ExerciseRecordDetail = memo(() => {
 									}
 									endadornment={translate(`r`)}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											999,
 										);
-										!processedValue === null &&
+										!procdVal === null &&
 											(() => {
 												return;
 											})();
@@ -715,7 +715,7 @@ export const ExerciseRecordDetail = memo(() => {
 													idx === i
 														? {
 																...section,
-																exercise_record_rep: processedValue,
+																exercise_record_rep: procdVal,
 															}
 														: section,
 											),
@@ -745,11 +745,11 @@ export const ExerciseRecordDetail = memo(() => {
 									}
 									endadornment={localUnit}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											999,
 										);
-										!processedValue === null &&
+										!procdVal === null &&
 											(() => {
 												return;
 											})();
@@ -760,7 +760,7 @@ export const ExerciseRecordDetail = memo(() => {
 													idx === i
 														? {
 																...section,
-																exercise_record_weight: processedValue,
+																exercise_record_weight: procdVal,
 															}
 														: section,
 											),
@@ -790,11 +790,11 @@ export const ExerciseRecordDetail = memo(() => {
 			<Paper
 				className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}
 			>
-				{dateCountSection()}
+				{dtCntSec()}
 				<Br m={20} />
 				{totalSection()}
 				<Br m={20} />
-				{COUNT?.newSectionCnt > 0 && detailSection()}
+				{COUNT?.newSectionCnt > 0 && dtlSec()}
 			</Paper>
 		);
 	};

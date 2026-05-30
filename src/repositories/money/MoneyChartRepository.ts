@@ -10,21 +10,21 @@ import { MoneyRecord } from "@schemas/money/MoneyRecord";
 
 // 1-1. chart (bar - goal) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const barGoal = async (
-	user_id_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await MoneyGoal.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				money_goal_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				money_goal_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 			},
 		},
@@ -49,21 +49,21 @@ export const barGoal = async (
 
 // 1-2. chart (bar - record) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const barRecord = async (
-	user_id_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await MoneyRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				money_record_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				money_record_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 			},
 		},
@@ -88,21 +88,21 @@ export const barRecord = async (
 
 // 2-1. chart (pie - income) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const pieIncome = async (
-	user_id_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await MoneyRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				money_record_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				money_record_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 			},
 		},
@@ -139,21 +139,21 @@ export const pieIncome = async (
 
 // 2-2. chart (pie - expense) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const pieExpense = async (
-	user_id_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await MoneyRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				money_record_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				money_record_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 			},
 		},
@@ -190,21 +190,21 @@ export const pieExpense = async (
 
 // 3-1. chart (line - all) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const lineAll = async (
-	user_id_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await MoneyRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				money_record_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				money_record_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 			},
 		},
@@ -229,21 +229,21 @@ export const lineAll = async (
 
 // 4-1. chart (avg - all) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const avgAll = async (
-	user_id_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await MoneyRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				money_record_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				money_record_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 			},
 		},

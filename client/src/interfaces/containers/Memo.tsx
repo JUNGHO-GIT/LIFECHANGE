@@ -7,10 +7,10 @@
 
 import { Grid, Img } from "@exportComponents";
 import { Input, PopUp } from "@exportContainers";
-import { useCommonValue } from "@exportHooks";
+import { useCommonValue as usCmmnVal } from "@exportHooks";
 import { TextArea } from "@exportMuis";
 import { memo, useCallback, useMemo } from "@exportReacts";
-import { useStoreLanguage } from "@exportStores";
+import { useStoreLanguage as usStrLang } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 declare interface MemoProps {
@@ -26,16 +26,16 @@ declare interface MemoProps {
 export const Memo = memo(
 	({ OBJECT, setOBJECT, LOCKED, extra, i, section }: MemoProps) => {
 		// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		const { firstStr } = useCommonValue();
-		const { translate } = useStoreLanguage();
-		const targetSection: string = section ?? `${firstStr}_section`;
+		const { firstStr } = usCmmnVal();
+		const { translate } = usStrLang();
+		const tgtSec: string = section ?? `${firstStr}_section`;
 
 		// 2. callbacks ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		const handleTextChange = useCallback(
+		const hndlTxtChg = useCallback(
 			(e: any) => {
 				setOBJECT((prev: any) => ({
 					...prev,
-					[targetSection]: prev[targetSection]?.map(
+					[tgtSec]: prev[tgtSec]?.map(
 						(section: any, idx: number) =>
 							idx === i
 								? {
@@ -46,13 +46,13 @@ export const Memo = memo(
 					),
 				}));
 			},
-			[setOBJECT, targetSection, i, extra],
+			[setOBJECT, tgtSec, i, extra],
 		);
 
 		// 3. memoized values ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 		const memoValue = useMemo(
-			() => OBJECT?.[targetSection]?.[i]?.[extra] ?? ``,
-			[OBJECT, targetSection, i, extra],
+			() => OBJECT?.[tgtSec]?.[i]?.[extra] ?? ``,
+			[OBJECT, tgtSec, i, extra],
 		);
 
 		// 4. memoNode ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
@@ -78,7 +78,7 @@ export const Memo = memo(
 										fontSize: `inherit`,
 										fontWeight: `inherit`,
 									}}
-									onChange={handleTextChange}
+									onChange={hndlTxtChg}
 								/>
 							</Grid>
 						</Grid>
@@ -106,7 +106,7 @@ export const Memo = memo(
 					)}
 				/>
 			),
-			[memoValue, handleTextChange, translate, LOCKED],
+			[memoValue, hndlTxtChg, translate, LOCKED],
 		);
 
 		// 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――

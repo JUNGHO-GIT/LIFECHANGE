@@ -6,38 +6,38 @@
  */
 
 import { Br, Div, Grid, Icons, Paper } from "@exportComponents";
-import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
+import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal, useStorageLocal as usStrgLcl } from "@exportHooks";
 import { Footer } from "@exportLayouts";
-import { axios, ReactCalendar } from "@exportLibs";
+import { axios, ReactCalendar as RctClnd } from "@exportLibs";
 import { memo, useEffect, useState } from "@exportReacts";
 import { Calendar, type CalendarType } from "@exportSchemas";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const CalendarList = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, PATH } = useCommonValue();
-	const { sessionId, navigate, localLang } = useCommonValue();
-	const { getMoment, getDayFmt, getDayStartFmt, getDayEndFmt, getDayNotFmt } =
-		useCommonDate();
-	const { getPrevMonthStartFmt, getPrevMonthEndFmt } = useCommonDate();
-	const { getNextMonthStartFmt, getNextMonthEndFmt } = useCommonDate();
-	const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
+	const { URL_OBJECT, PATH } = usCmmnVal();
+	const { sessionId, navigate, localLang } = usCmmnVal();
+	const { getMoment, getDayFmt, getDayStartFmt: gtDyStrtFmt, getDayEndFmt, getDayNotFmt } =
+		usCmmnDt();
+	const { getPrevMonthStartFmt: gtPrMnStFm, getPrevMonthEndFmt: gtPrMnEnFm } = usCmmnDt();
+	const { getNextMonthStartFmt: gtNxMnStFm, getNextMonthEndFmt: gtNxMnEnFm } = usCmmnDt();
+	const { getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt } = usCmmnDt();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
 
 	// 2-1. useStorageLocal ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const [DATE, setDATE] = useStorageLocal(`date`, PATH, ``, {
+	const [DATE, setDATE] = usStrgLcl(`date`, PATH, ``, {
 		dateType: ``,
-		dateStart: getMonthStartFmt(),
-		dateEnd: getMonthEndFmt(),
+		dateStart: gtMnStFm(),
+		dateEnd: gtMnthEndFmt(),
 	});
-	const [PAGING, _setPAGING] = useStorageLocal(`paging`, PATH, ``, {
+	const [PAGING, _setPAGING] = usStrgLcl(`paging`, PATH, ``, {
 		sort: `asc`,
 		page: 1,
 	});
@@ -100,7 +100,7 @@ export const CalendarList = memo(() => {
 				return false;
 			}
 			const dayFmt: string = getDayFmt(date as string | Date);
-			const dayStart: string = getDayStartFmt(dateStart as string | Date);
+			const dayStart: string = gtDyStrtFmt(dateStart as string | Date);
 			const dayEnd: string = getDayEndFmt(dateEnd as string | Date);
 			return dayFmt >= dayStart && dayFmt <= dayEnd;
 		};
@@ -118,8 +118,8 @@ export const CalendarList = memo(() => {
 						onClick={() => {
 							setDATE((prev) => ({
 								...prev,
-								dateStart: getPrevMonthStartFmt(prev.dateStart),
-								dateEnd: getPrevMonthEndFmt(prev.dateStart),
+								dateStart: gtPrMnStFm(prev.dateStart),
+								dateEnd: gtPrMnEnFm(prev.dateStart),
 							}));
 						}}
 					/>
@@ -130,8 +130,8 @@ export const CalendarList = memo(() => {
 						onClick={() => {
 							setDATE((prev) => ({
 								...prev,
-								dateStart: getMonthStartFmt(),
-								dateEnd: getMonthEndFmt(),
+								dateStart: gtMnStFm(),
+								dateEnd: gtMnthEndFmt(),
 							}));
 						}}
 					>
@@ -148,8 +148,8 @@ export const CalendarList = memo(() => {
 						onClick={() => {
 							setDATE((prev) => ({
 								...prev,
-								dateStart: getNextMonthStartFmt(prev.dateStart),
-								dateEnd: getNextMonthEndFmt(prev.dateStart),
+								dateStart: gtNxMnStFm(prev.dateStart),
+								dateEnd: gtNxMnEnFm(prev.dateStart),
 							}));
 						}}
 					/>
@@ -158,8 +158,8 @@ export const CalendarList = memo(() => {
 		);
 
 		// 7-2. reactCalendar
-		const reactCalendarSection = () => (
-			<ReactCalendar
+		const rctClndSec = () => (
+			<RctClnd
 				view={`month`}
 				locale={localLang}
 				calendarType={`gregory`}
@@ -180,11 +180,11 @@ export const CalendarList = memo(() => {
 					getDayNotFmt(date).format(`YYYY-MM`)
 				}
 				className={`border-1 shadow-2 radius-2 over-hidden`}
-				onActiveStartDateChange={({ activeStartDate }) => {
+				onActiveStartDateChange={({ activeStartDate: actvStrtDt }) => {
 					setDATE((prev) => ({
 						...prev,
-						dateStart: getMonthStartFmt(activeStartDate ?? new Date()),
-						dateEnd: getMonthEndFmt(activeStartDate ?? new Date()),
+						dateStart: gtMnStFm(actvStrtDt ?? new Date()),
+						dateEnd: gtMnthEndFmt(actvStrtDt ?? new Date()),
 					}));
 				}}
 				onClickDay={(value: Date) => {
@@ -207,7 +207,7 @@ export const CalendarList = memo(() => {
 					const isToday: boolean = getMoment(date).isSame(new Date(), `day`);
 
 					// 이번달
-					const isCurrentMonth: boolean = getMoment(date).isSame(
+					const isCurMnth: boolean = getMoment(date).isSame(
 						getMoment(DATE?.dateStart),
 						`month`,
 					);
@@ -215,7 +215,7 @@ export const CalendarList = memo(() => {
 					// 섹션이 3개 이상인 경우 스크롤
 					let className: string = `calendar-tile`;
 
-					const itemMatchesDate = (item: any) =>
+					const itmMtchDt = (item: any) =>
 						dateInRange(
 							date,
 							item.calendar_exercise_dateStart,
@@ -236,12 +236,12 @@ export const CalendarList = memo(() => {
 							item.calendar_sleep_dateStart,
 							item.calendar_sleep_dateEnd,
 						);
-					const calendarForDates: any[] = OBJECT?.filter((element) => {
-						return itemMatchesDate(element);
+					const clndFrDts: any[] = OBJECT?.filter((element) => {
+						return itmMtchDt(element);
 					});
 
-					if (calendarForDates?.length > 0) {
-						const sectionsCountFor = (item: any) =>
+					if (clndFrDts?.length > 0) {
+						const sctnCntFr = (item: any) =>
 							Number(
 								dateInRange(
 									date,
@@ -279,10 +279,10 @@ export const CalendarList = memo(() => {
 									: 0,
 							);
 
-						const hasManySections: boolean = calendarForDates.some(
-							(item: any) => sectionsCountFor(item) > 2,
+						const hsMnySctn: boolean = clndFrDts.some(
+							(item: any) => sctnCntFr(item) > 2,
 						);
-						hasManySections && (className += ` over-y-auto`);
+						hsMnySctn && (className += ` over-y-auto`);
 					}
 
 					// 토요일 색상 변경
@@ -301,13 +301,13 @@ export const CalendarList = memo(() => {
 					}
 
 					// 이전달 or 다음달
-					if (!isCurrentMonth) {
+					if (!isCurMnth) {
 						className += ` calendar-outside`;
 					}
 					return className;
 				}}
 				tileContent={({ date }) => {
-					const exerciseForDates: CalendarType[] = OBJECT?.filter((item: any) =>
+					const exerFrDts: CalendarType[] = OBJECT?.filter((item: any) =>
 						dateInRange(
 							date,
 							item.calendar_exercise_dateStart,
@@ -321,14 +321,14 @@ export const CalendarList = memo(() => {
 							item.calendar_food_dateEnd,
 						),
 					);
-					const moneyForDates: CalendarType[] = OBJECT?.filter((item: any) =>
+					const mnyFrDts: CalendarType[] = OBJECT?.filter((item: any) =>
 						dateInRange(
 							date,
 							item.calendar_money_dateStart,
 							item.calendar_money_dateEnd,
 						),
 					);
-					const sleepForDates: CalendarType[] = OBJECT?.filter((item: any) =>
+					const slpFrDts: CalendarType[] = OBJECT?.filter((item: any) =>
 						dateInRange(
 							date,
 							item.calendar_sleep_dateStart,
@@ -337,8 +337,8 @@ export const CalendarList = memo(() => {
 					);
 					return (
 						<>
-							{exerciseForDates?.length > 0 &&
-								exerciseForDates.map((item: any) => (
+							{exerFrDts?.length > 0 &&
+								exerFrDts.map((item: any) => (
 									<Div
 										key={`exercise-${item._id}`}
 										className={`calendar-filled`}
@@ -361,8 +361,8 @@ export const CalendarList = memo(() => {
 										</span>
 									</Div>
 								))}
-							{moneyForDates?.length > 0 &&
-								moneyForDates.map((item: any) => (
+							{mnyFrDts?.length > 0 &&
+								mnyFrDts.map((item: any) => (
 									<Div
 										key={`money-${item._id}`}
 										className={`calendar-filled`}
@@ -373,8 +373,8 @@ export const CalendarList = memo(() => {
 										</span>
 									</Div>
 								))}
-							{sleepForDates?.length > 0 &&
-								sleepForDates.map((item: any) => (
+							{slpFrDts?.length > 0 &&
+								slpFrDts.map((item: any) => (
 									<Div
 										key={`sleep-${item._id}`}
 										className={`calendar-filled`}
@@ -398,7 +398,7 @@ export const CalendarList = memo(() => {
 			>
 				{titleSection()}
 				<Br m={10} />
-				{reactCalendarSection()}
+				{rctClndSec()}
 			</Paper>
 		);
 	};

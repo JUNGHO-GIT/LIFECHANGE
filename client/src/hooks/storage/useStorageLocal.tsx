@@ -7,47 +7,47 @@
 
 import { useEffect, useRef, useState } from "@exportReacts";
 import { getLocal, setLocal } from "@exportScripts";
-import type { Dispatch, SetStateAction } from "react";
+import type { Dispatch, SetStateAction as StStActn } from "react";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const useStorageLocal = <T,>(
+export const usStrgLcl = <T,>(
 	key1: string,
 	key2: string,
 	key3: string,
 	initialVal: T,
-): [T, Dispatch<SetStateAction<T>>] => {
+): [T, Dispatch<StStActn<T>>] => {
 	// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	const keySig: string = `${key1}::${key2}::${key3}`;
-	const prevKeySigRef: React.RefObject<string> = useRef<string>(keySig);
-	const skipWriteOnceRef: React.RefObject<boolean> = useRef<boolean>(false);
+	const prvKySgRf: React.RefObject<string> = useRef<string>(keySig);
+	const skpWrtOncRf: React.RefObject<boolean> = useRef<boolean>(false);
 
 	// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	const [storedVal, setStoredVal] = useState<T>(() => {
-		const existingValue: T | undefined = getLocal(key1, key2, key3) as
+		const exstVal: T | undefined = getLocal(key1, key2, key3) as
 			| T
 			| undefined;
-		return existingValue ?? initialVal;
+		return exstVal ?? initialVal;
 	});
 
 	// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	// key 변경 시: 해당 key로 다시 읽어서 재수화 (old state를 new key로 덮어쓰는 것을 방지)
 	useEffect(() => {
-		const prevKeySig: string = prevKeySigRef.current;
+		const prevKeySig: string = prvKySgRf.current;
 		if (prevKeySig !== keySig) {
-			prevKeySigRef.current = keySig;
-			skipWriteOnceRef.current = true;
+			prvKySgRf.current = keySig;
+			skpWrtOncRf.current = true;
 
-			const existingValue: T | undefined = getLocal(key1, key2, key3) as
+			const exstVal: T | undefined = getLocal(key1, key2, key3) as
 				| T
 				| undefined;
-			setStoredVal(existingValue ?? initialVal);
+			setStoredVal(exstVal ?? initialVal);
 		}
 	}, [keySig, key1, key2, key3]);
 
 	// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	useEffect(() => {
-		if (skipWriteOnceRef.current) {
-			skipWriteOnceRef.current = false;
+		if (skpWrtOncRf.current) {
+			skpWrtOncRf.current = false;
 			return;
 		}
 

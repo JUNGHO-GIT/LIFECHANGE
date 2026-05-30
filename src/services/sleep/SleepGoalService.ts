@@ -9,7 +9,7 @@ import { strToDecimal, decimalToStr } from "@assets/scripts/utils";
 import * as repository from "@repositories/sleep/SleepGoalRepository";
 
 // 0. exist ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const exist = async (user_id_param: string, DATE_param: any) => {
+export const exist = async (usrIdPrm: string, DATE_param: any) => {
 	// result 변수 선언
 	let findResult: any = null;
 	let finalResult: any = null;
@@ -21,7 +21,7 @@ export const exist = async (user_id_param: string, DATE_param: any) => {
 	const dateEnd: string = DATE_param?.dateEnd;
 
 	findResult = await repository.exist(
-		user_id_param,
+		usrIdPrm,
 		dateType,
 		dateStart,
 		dateEnd,
@@ -60,18 +60,18 @@ export const exist = async (user_id_param: string, DATE_param: any) => {
 
 // 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const list = async (
-	user_id_param: string,
+	usrIdPrm: string,
 	DATE_param: any,
 	PAGING_param: any,
 ) => {
 	// result 변수 선언
 	let findResult: any = null;
 	let finalResult: any = null;
-	let totalCntResult: number = 0;
+	let ttlCntRes: number = 0;
 	let statusResult: string = ``;
 
 	// date 변수 선언
-	const dateTypeOrder: string[] = [`day`, `week`, `month`, `year`];
+	const dtTypOrdr: string[] = [`day`, `week`, `month`, `year`];
 	const dateType: string = DATE_param?.dateType;
 	const dateStart: string = DATE_param?.dateStart;
 	const dateEnd: string = DATE_param?.dateEnd;
@@ -81,7 +81,7 @@ export const list = async (
 	const page: number = PAGING_param?.page ?? 1;
 
 	findResult = await repository.listGoal(
-		user_id_param,
+		usrIdPrm,
 		dateType,
 		dateStart,
 		dateEnd,
@@ -96,7 +96,7 @@ export const list = async (
 		const sortOrder: 1 | -1 = sort;
 
 		const dateTypeDiff: number =
-			dateTypeOrder.indexOf(dateTypeA) - dateTypeOrder.indexOf(dateTypeB);
+			dtTypOrdr.indexOf(dateTypeA) - dtTypOrdr.indexOf(dateTypeB);
 		const dateDiff: number = dateStartA.getTime() - dateStartB.getTime();
 
 		if (dateTypeDiff !== 0) {
@@ -115,7 +115,7 @@ export const list = async (
 				const dateEnd: string = goal?.sleep_goal_dateEnd;
 
 				const listRecord: any[] = await repository.listRecord(
-					user_id_param,
+					usrIdPrm,
 					dateType,
 					dateStart,
 					dateEnd,
@@ -150,23 +150,23 @@ export const list = async (
 			}),
 		);
 		statusResult = `success`;
-		totalCntResult = finalResult.length;
+		ttlCntRes = finalResult.length;
 	}
 
 	return {
 		status: statusResult,
-		totalCnt: totalCntResult,
+		totalCnt: ttlCntRes,
 		result: finalResult,
 	};
 };
 
 // 2. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-export const detail = async (user_id_param: string, DATE_param: any) => {
+export const detail = async (usrIdPrm: string, DATE_param: any) => {
 	// result 변수 선언
 	let findResult: any = null;
 	let finalResult: any = null;
 	let statusResult: string = ``;
-	let sectionCntResult: number = 0;
+	let secCntRes: number = 0;
 
 	// date 변수 선언
 	const dateType: string = DATE_param?.dateType;
@@ -174,7 +174,7 @@ export const detail = async (user_id_param: string, DATE_param: any) => {
 	const dateEnd: string = DATE_param?.dateEnd;
 
 	findResult = await repository.detail(
-		user_id_param,
+		usrIdPrm,
 		dateType,
 		dateStart,
 		dateEnd,
@@ -185,23 +185,23 @@ export const detail = async (user_id_param: string, DATE_param: any) => {
 	if (!findResult) {
 		finalResult = null;
 		statusResult = `fail`;
-		sectionCntResult = 0;
+		secCntRes = 0;
 	} else {
 		finalResult = findResult;
 		statusResult = `success`;
-		sectionCntResult = 1;
+		secCntRes = 1;
 	}
 
 	return {
 		status: statusResult,
-		sectionCnt: sectionCntResult,
+		sectionCnt: secCntRes,
 		result: finalResult,
 	};
 };
 
 // 3. create ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const create = async (
-	user_id_param: string,
+	usrIdPrm: string,
 	OBJECT_param: any,
 	DATE_param: any,
 ) => {
@@ -213,23 +213,23 @@ export const create = async (
 	let statusResult: string = ``;
 
 	// date 변수 선언
-	const existingDateType: string = OBJECT_param.sleep_goal_dateType;
-	const existingDateStart: string = OBJECT_param.sleep_goal_dateStart;
-	const existingDateEnd: string = OBJECT_param.sleep_goal_dateEnd;
+	const exstDtTyp: string = OBJECT_param.sleep_goal_dateType;
+	const exstDtStrt: string = OBJECT_param.sleep_goal_dateStart;
+	const exstDtEnd: string = OBJECT_param.sleep_goal_dateEnd;
 	const dateType: string = DATE_param?.dateType;
 	const dateStart: string = DATE_param?.dateStart;
 	const dateEnd: string = DATE_param?.dateEnd;
 
 	findResult = await repository.detail(
-		user_id_param,
-		existingDateType,
-		existingDateStart,
-		existingDateEnd,
+		usrIdPrm,
+		exstDtTyp,
+		exstDtStrt,
+		exstDtEnd,
 	);
 
 	if (!findResult) {
 		createResult = await repository.create(
-			user_id_param,
+			usrIdPrm,
 			OBJECT_param,
 			dateType,
 			dateStart,
@@ -237,17 +237,17 @@ export const create = async (
 		);
 	} else {
 		deleteResult = await repository.deletes(
-			user_id_param,
-			existingDateType,
-			existingDateStart,
-			existingDateEnd,
+			usrIdPrm,
+			exstDtTyp,
+			exstDtStrt,
+			exstDtEnd,
 		);
 		if (!deleteResult) {
 			finalResult = null;
 			statusResult = `fail`;
 		} else {
 			createResult = await repository.create(
-				user_id_param,
+				usrIdPrm,
 				OBJECT_param,
 				dateType,
 				dateStart,
@@ -272,7 +272,7 @@ export const create = async (
 
 // 4. update ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const update = async (
-	user_id_param: string,
+	usrIdPrm: string,
 	OBJECT_param: any,
 	DATE_param: any,
 	type_param: string,
@@ -285,18 +285,18 @@ export const update = async (
 	let statusResult: string = ``;
 
 	// date 변수 선언
-	const existingDateType: string = OBJECT_param.sleep_goal_dateType;
-	const existingDateStart: string = OBJECT_param.sleep_goal_dateStart;
-	const existingDateEnd: string = OBJECT_param.sleep_goal_dateEnd;
+	const exstDtTyp: string = OBJECT_param.sleep_goal_dateType;
+	const exstDtStrt: string = OBJECT_param.sleep_goal_dateStart;
+	const exstDtEnd: string = OBJECT_param.sleep_goal_dateEnd;
 	const dateType: string = DATE_param?.dateType;
 	const dateStart: string = DATE_param?.dateStart;
 	const dateEnd: string = DATE_param?.dateEnd;
 
 	findResult = await repository.detail(
-		user_id_param,
-		existingDateType,
-		existingDateStart,
-		existingDateEnd,
+		usrIdPrm,
+		exstDtTyp,
+		exstDtStrt,
+		exstDtEnd,
 	);
 
 	if (!findResult) {
@@ -306,7 +306,7 @@ export const update = async (
 		// update (기존항목 유지 + 타겟항목으로 수정)
 		if (type_param === `update`) {
 			updateResult = await repository.update.update(
-				user_id_param,
+				usrIdPrm,
 				OBJECT_param,
 				dateType,
 				dateStart,
@@ -323,17 +323,17 @@ export const update = async (
 		// replace (기존항목 제거 + 타겟항목을 교체)
 		else if (type_param === `replace`) {
 			deleteResult = await repository.deletes(
-				user_id_param,
-				existingDateType,
-				existingDateStart,
-				existingDateEnd,
+				usrIdPrm,
+				exstDtTyp,
+				exstDtStrt,
+				exstDtEnd,
 			);
 			if (!deleteResult) {
 				finalResult = null;
 				statusResult = `fail`;
 			} else {
 				updateResult = await repository.update.replace(
-					user_id_param,
+					usrIdPrm,
 					OBJECT_param,
 					dateType,
 					dateStart,
@@ -365,7 +365,7 @@ export const update = async (
 };
 
 // 5. delete ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-export const deletes = async (user_id_param: string, DATE_param: any) => {
+export const deletes = async (usrIdPrm: string, DATE_param: any) => {
 	// result 변수 선언
 	let deleteResult: any = null;
 	let finalResult: any = null;
@@ -377,7 +377,7 @@ export const deletes = async (user_id_param: string, DATE_param: any) => {
 	const dateEnd: string = DATE_param?.dateEnd;
 
 	deleteResult = await repository.deletes(
-		user_id_param,
+		usrIdPrm,
 		dateType,
 		dateStart,
 		dateEnd,

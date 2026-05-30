@@ -14,7 +14,7 @@ import {
 	PickerDay,
 	Select,
 } from "@exportContainers";
-import { useCommonDate, useCommonValue, useValidateMoney } from "@exportHooks";
+import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal, useValidateMoney as usValMny } from "@exportHooks";
 import { Dialog, Footer } from "@exportLayouts";
 import { axios } from "@exportLibs";
 import { Checkbox, MenuItem } from "@exportMuis";
@@ -26,30 +26,30 @@ import {
 	useRef,
 	useState,
 } from "@exportReacts";
-import { MoneyRecord, type MoneyRecordType } from "@exportSchemas";
-import { handleNumberInput, insertComma, sync } from "@exportScripts";
+import { MoneyRecord, type MoneyRecordType as MnyRecTyp } from "@exportSchemas";
+import { handleNumberInput as hndlNmbrInpt, insertComma, sync } from "@exportScripts";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const MoneyRecordDetail = memo(() => {
+export const MnyRecDtl = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, navigate, sessionId, localCurrency, moneyArray } =
-		useCommonValue();
-	const { toList, bgColors } = useCommonValue();
-	const { location_dateStart, location_dateEnd } = useCommonValue();
-	const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-	const { ERRORS, REFS, validate } = useValidateMoney();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
+	const { URL_OBJECT, navigate, sessionId, localCurrency: lclCrrn, moneyArray } =
+		usCmmnVal();
+	const { toList, bgColors } = usCmmnVal();
+	const { location_dateStart: locDtStrt, location_dateEnd: locDtEnd } = usCmmnVal();
+	const { getDayFmt, getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt } = usCmmnDt();
+	const { ERRORS, REFS, validate } = usValMny();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const [LOCKED, setLOCKED] = useState<string>(`unlocked`);
-	const [OBJECT, setOBJECT] = useState<MoneyRecordType>(MoneyRecord);
+	const [OBJECT, setOBJECT] = useState<MnyRecTyp>(MoneyRecord);
 	const [EXIST, setEXIST] = useState({
 		day: [``],
 		week: [``],
@@ -76,12 +76,12 @@ export const MoneyRecordDetail = memo(() => {
 	});
 	const [DATE, setDATE] = useState({
 		dateType: `day`,
-		dateStart: location_dateStart ?? getDayFmt(),
-		dateEnd: location_dateEnd ?? getDayFmt(),
+		dateStart: locDtStrt ?? getDayFmt(),
+		dateEnd: locDtEnd ?? getDayFmt(),
 	});
 
 	// 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const objectRef: React.RefObject<MoneyRecordType> = useRef(OBJECT);
+	const objectRef: React.RefObject<MnyRecTyp> = useRef(OBJECT);
 	const countRef: React.RefObject<{
 		totalCnt: number;
 		sectionCnt: number;
@@ -129,8 +129,8 @@ export const MoneyRecordDetail = memo(() => {
 					user_id: sessionId,
 					DATE: {
 						dateType: ``,
-						dateStart: getMonthStartFmt(DATE?.dateStart),
-						dateEnd: getMonthEndFmt(DATE?.dateEnd),
+						dateStart: gtMnStFm(DATE?.dateStart),
+						dateEnd: gtMnthEndFmt(DATE?.dateEnd),
 					},
 				},
 			})
@@ -241,23 +241,23 @@ export const MoneyRecordDetail = memo(() => {
 
 	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	useEffect(() => {
-		const defaultSection: any = {
+		const defSec: any = {
 			money_record_part: moneyArray[1]?.money_record_part ?? ``,
 			money_record_title: moneyArray[0]?.money_record_title?.[0] ?? ``,
 			money_record_amount: `0`,
 			money_record_content: ``,
 			money_record_include: `Y`,
 		};
-		const updatedSection: any[] = Array.from({ length: COUNT?.newSectionCnt })
+		const updtSec: any[] = Array.from({ length: COUNT?.newSectionCnt })
 			.fill(null)
 			.map((_item: any, idx: number) => {
 				return idx < OBJECT?.money_section?.length
 					? OBJECT?.money_section[idx]
-					: defaultSection;
+					: defSec;
 			});
 		setOBJECT((prev) => ({
 			...prev,
-			money_section: updatedSection,
+			money_section: updtSec,
 		}));
 	}, [COUNT?.newSectionCnt]);
 
@@ -391,7 +391,7 @@ export const MoneyRecordDetail = memo(() => {
 	// 7. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const detailNode = () => {
 		// 7-1. date + count
-		const dateCountSection = () => (
+		const dtCntSec = () => (
 			<Grid
 				container={true}
 				spacing={2}
@@ -435,7 +435,7 @@ export const MoneyRecordDetail = memo(() => {
 									src={`money2.webp`}
 								/>
 							}
-							endadornment={localCurrency}
+							endadornment={lclCrrn}
 						/>
 					</Grid>
 				</Grid>
@@ -457,18 +457,18 @@ export const MoneyRecordDetail = memo(() => {
 									src={`money2.webp`}
 								/>
 							}
-							endadornment={localCurrency}
+							endadornment={lclCrrn}
 						/>
 					</Grid>
 				</Grid>
 			</Grid>
 		);
 		// 7-3. detail
-		const detailSection = () => (
+		const dtlSec = () => (
 			<>
 				{OBJECT.money_section?.map((item, i) => {
 					// money_record_title을 위한 현재 part의 데이터를 찾기
-					const currentPartData: any = moneyArray.find(
+					const curPrtDt: any = moneyArray.find(
 						(f: any) => f.money_record_part === item?.money_record_part,
 					);
 					const partIndex: number = moneyArray.findIndex(
@@ -507,7 +507,7 @@ export const MoneyRecordDetail = memo(() => {
 										error={ERRORS?.[i]?.money_record_part}
 										onChange={(e: any) => {
 											const value: string = String(e.target.value ?? ``);
-											const targetPartData = moneyArray.find(
+											const tgtPrtDt = moneyArray.find(
 												(f: any) => f.money_record_part === value,
 											);
 											setOBJECT((prev) => ({
@@ -519,7 +519,7 @@ export const MoneyRecordDetail = memo(() => {
 																	...section,
 																	money_record_part: value,
 																	money_record_title:
-																		targetPartData?.money_record_title?.[0] ??
+																		tgtPrtDt?.money_record_title?.[0] ??
 																		``,
 																}
 															: section,
@@ -561,7 +561,7 @@ export const MoneyRecordDetail = memo(() => {
 											}));
 										}}
 									>
-										{(currentPartData?.money_record_title ?? []).map(
+										{(curPrtDt?.money_record_title ?? []).map(
 											(title: any, idx: number) => (
 												<MenuItem
 													key={idx}
@@ -594,17 +594,17 @@ export const MoneyRecordDetail = memo(() => {
 												src={`money2.webp`}
 											/>
 										}
-										endadornment={localCurrency}
+										endadornment={lclCrrn}
 										onChange={(e: any) => {
-											const processedValue: string | null = handleNumberInput(
+											const procdVal: string | null = hndlNmbrInpt(
 												e.target?.value,
 												999_999_999,
 											);
-											!processedValue === null &&
+											!procdVal === null &&
 												(() => {
 													return;
 												})();
-											const value: string = processedValue ?? `0`;
+											const value: string = procdVal ?? `0`;
 											setOBJECT((prev) => ({
 												...prev,
 												money_section: prev.money_section?.map(
@@ -671,11 +671,11 @@ export const MoneyRecordDetail = memo(() => {
 			<Paper
 				className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}
 			>
-				{dateCountSection()}
+				{dtCntSec()}
 				<Br m={20} />
 				{totalSection()}
 				<Br m={20} />
-				{COUNT?.newSectionCnt > 0 && detailSection()}
+				{COUNT?.newSectionCnt > 0 && dtlSec()}
 			</Paper>
 		);
 	};

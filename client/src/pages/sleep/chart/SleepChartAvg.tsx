@@ -5,14 +5,14 @@
  * @since 2025-12-26
  */
 
-import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
+import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal, useStorageLocal as usStrgLcl } from "@exportHooks";
 import {
 	axios,
 	Bar,
-	CartesianGrid,
-	ComposedChart,
+	CartesianGrid as CrtsGrd,
+	ComposedChart as CmpsChrt,
 	Legend,
-	ResponsiveContainer,
+	ResponsiveContainer as RspnCntn,
 	Tooltip,
 	XAxis,
 	YAxis,
@@ -21,9 +21,9 @@ import { memo, useEffect, useState } from "@exportReacts";
 import { SleepAvg, type SleepAvgType } from "@exportSchemas";
 import { formatDate, formatY } from "@exportScripts";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
@@ -33,42 +33,42 @@ declare interface SleepChartAvgProps {
 }
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
+export const SlpChrtAvg = memo((props: SleepChartAvgProps) => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, PATH, sessionId, chartColors, sleepChartArray } =
-		useCommonValue();
-	const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
-	const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } =
-		useCommonDate();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
+	const { URL_OBJECT, PATH, sessionId, chartColors, sleepChartArray: slpChrtArry } =
+		usCmmnVal();
+	const { getDayFmt, getWeekStartFmt: gtWkStrtFmt, getWeekEndFmt: gtWkEndFmt } = usCmmnDt();
+	const { getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt, getYearStartFmt: gtYrStrtFmt, getYearEndFmt: gtYrEndFmt } =
+		usCmmnDt();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
 
 	// 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const [TYPE, setTYPE] = useStorageLocal(`type`, `avg`, PATH, {
+	const [TYPE, setTYPE] = usStrgLcl(`type`, `avg`, PATH, {
 		section: `week`,
-		line: sleepChartArray,
+		line: slpChrtArry,
 	});
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [TYPE_STATE, setTYPE_STATE] = useState(() => {
+	const [TYPE_STATE, stTypSt] = useState(() => {
 		return props?.TYPE !== undefined ? props.TYPE : TYPE;
 	});
 	const [DATE, _setDATE] = useState({
 		dateType: ``,
 		dateStart: getDayFmt(),
 		dateEnd: getDayFmt(),
-		weekStartFmt: getWeekStartFmt(),
-		weekEndFmt: getWeekEndFmt(),
-		monthStartFmt: getMonthStartFmt(),
-		monthEndFmt: getMonthEndFmt(),
-		yearStartFmt: getYearStartFmt(),
-		yearEndFmt: getYearEndFmt(),
+		weekStartFmt: gtWkStrtFmt(),
+		weekEndFmt: gtWkEndFmt(),
+		monthStartFmt: gtMnStFm(),
+		monthEndFmt: gtMnthEndFmt(),
+		yearStartFmt: gtYrStrtFmt(),
+		yearEndFmt: gtYrEndFmt(),
 	});
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [OBJECT_WEEK, setOBJECT_WEEK] = useState<[SleepAvgType]>([SleepAvg]);
-	const [OBJECT_MONTH, setOBJECT_MONTH] = useState<[SleepAvgType]>([SleepAvg]);
+	const [OBJECT_WEEK, stObjcWk] = useState<[SleepAvgType]>([SleepAvg]);
+	const [OBJECT_MONTH, stObjcMnth] = useState<[SleepAvgType]>([SleepAvg]);
 
 	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	useEffect(() => {
@@ -87,10 +87,10 @@ export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
 						params: params,
 					}),
 				]);
-				setOBJECT_WEEK(
+				stObjcWk(
 					resWeek.data.result?.length > 0 ? resWeek.data.result : [SleepAvg],
 				);
-				setOBJECT_MONTH(
+				stObjcMnth(
 					resMonth.data.result?.length > 0 ? resMonth.data.result : [SleepAvg],
 				);
 			} catch (error: any) {
@@ -113,7 +113,7 @@ export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
 			const isSame: boolean =
 				JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
 			if (!isSame) {
-				setTYPE_STATE(props.TYPE);
+				stTypSt(props.TYPE);
 			}
 		}
 	}, [props?.TYPE]);
@@ -152,12 +152,12 @@ export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
 
 		const { domain, ticks, formatterY } = formatY(
 			object,
-			sleepChartArray,
+			slpChrtArry,
 			`sleep`,
 		);
 		return (
-			<ResponsiveContainer width={`100%`} height={500}>
-				<ComposedChart
+			<RspnCntn width={`100%`} height={500}>
+				<CmpsChrt
 					data={object as any[]}
 					margin={{ top: 60, right: 20, bottom: 10, left: 20 }}
 					barGap={8}
@@ -191,7 +191,7 @@ export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
 					>
 						{dateRange}
 					</text>
-					<CartesianGrid strokeDasharray={`3 3`} stroke={`#f5f5f5`} />
+					<CrtsGrd strokeDasharray={`3 3`} stroke={`#f5f5f5`} />
 					<XAxis
 						type={`category`}
 						dataKey={`name`}
@@ -290,8 +290,8 @@ export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
 							fontSize: `0.8rem`,
 						}}
 					/>
-				</ComposedChart>
-			</ResponsiveContainer>
+				</CmpsChrt>
+			</RspnCntn>
 		);
 	};
 

@@ -19,6 +19,6 @@ export { sync } from "@assets/scripts/sync";
 export {
 	formatDate,
 	formatY,
-	handleNumberInput,
+	hndlNmbrInpt as handleNumberInput,
 	insertComma,
 } from "@assets/scripts/utils";

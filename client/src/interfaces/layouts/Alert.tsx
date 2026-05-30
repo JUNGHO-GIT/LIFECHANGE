@@ -8,12 +8,12 @@
 import { Icons } from "@exportComponents";
 import { MuiAlert, Snackbar } from "@exportMuis";
 import { memo, useEffect } from "@exportReacts";
-import { useStoreAlert } from "@exportStores";
+import { useStoreAlert as usStrAlrt } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const Alert = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { ALERT, setALERT } = useStoreAlert();
+	const { ALERT, setALERT } = usStrAlrt();
 
 	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	useEffect(() => {

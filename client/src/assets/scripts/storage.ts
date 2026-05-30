@@ -16,7 +16,7 @@ const safeParse = (raw: string | null): any => {
 	}
 };
 
-const isPlainObject = (v: any): boolean => {
+const isPlnObjc2 = (v: any): boolean => {
 	return !!v && typeof v === `object` && !Array.isArray(v);
 };
 
@@ -52,9 +52,9 @@ export const setLocal = (
 	// 1. key1만 있는 경우
 	if (key1 && !key2 && !key3) {
 		const prev1: any = localTitle?.[key1];
-		const next1: any = isPlainObject(value)
+		const next1: any = isPlnObjc2(value)
 			? {
-					...(isPlainObject(prev1) ? prev1 : {}),
+					...(isPlnObjc2(prev1) ? prev1 : {}),
 					...value,
 				}
 			: value;
@@ -72,9 +72,9 @@ export const setLocal = (
 	else if (key1 && key2 && !key3) {
 		const prev1: any = localTitle?.[key1];
 		const prev2: any = localTitle?.[key1]?.[key2];
-		const next2: any = isPlainObject(value)
+		const next2: any = isPlnObjc2(value)
 			? {
-					...(isPlainObject(prev2) ? prev2 : {}),
+					...(isPlnObjc2(prev2) ? prev2 : {}),
 					...value,
 				}
 			: value;
@@ -84,7 +84,7 @@ export const setLocal = (
 			JSON.stringify({
 				...localTitle,
 				[key1]: {
-					...(isPlainObject(prev1) ? prev1 : {}),
+					...(isPlnObjc2(prev1) ? prev1 : {}),
 					[key2]: next2,
 				},
 			}),
@@ -96,9 +96,9 @@ export const setLocal = (
 		const prev1: any = localTitle?.[key1];
 		const prev2: any = localTitle?.[key1]?.[key2];
 		const prev3: any = localTitle?.[key1]?.[key2]?.[key3];
-		const next3: any = isPlainObject(value)
+		const next3: any = isPlnObjc2(value)
 			? {
-					...(isPlainObject(prev3) ? prev3 : {}),
+					...(isPlnObjc2(prev3) ? prev3 : {}),
 					...value,
 				}
 			: value;
@@ -108,9 +108,9 @@ export const setLocal = (
 			JSON.stringify({
 				...localTitle,
 				[key1]: {
-					...(isPlainObject(prev1) ? prev1 : {}),
+					...(isPlnObjc2(prev1) ? prev1 : {}),
 					[key2]: {
-						...(isPlainObject(prev2) ? prev2 : {}),
+						...(isPlnObjc2(prev2) ? prev2 : {}),
 						[key3]: next3,
 					},
 				},
@@ -153,9 +153,9 @@ export const setSession = (
 	// 1. key1만 있는 경우
 	if (key1 && !key2 && !key3) {
 		const prev1: any = sessionTitle?.[key1];
-		const next1: any = isPlainObject(value)
+		const next1: any = isPlnObjc2(value)
 			? {
-					...(isPlainObject(prev1) ? prev1 : {}),
+					...(isPlnObjc2(prev1) ? prev1 : {}),
 					...value,
 				}
 			: value;
@@ -173,9 +173,9 @@ export const setSession = (
 	else if (key1 && key2 && !key3) {
 		const prev1: any = sessionTitle?.[key1];
 		const prev2: any = sessionTitle?.[key1]?.[key2];
-		const next2: any = isPlainObject(value)
+		const next2: any = isPlnObjc2(value)
 			? {
-					...(isPlainObject(prev2) ? prev2 : {}),
+					...(isPlnObjc2(prev2) ? prev2 : {}),
 					...value,
 				}
 			: value;
@@ -185,7 +185,7 @@ export const setSession = (
 			JSON.stringify({
 				...sessionTitle,
 				[key1]: {
-					...(isPlainObject(prev1) ? prev1 : {}),
+					...(isPlnObjc2(prev1) ? prev1 : {}),
 					[key2]: next2,
 				},
 			}),
@@ -197,9 +197,9 @@ export const setSession = (
 		const prev1: any = sessionTitle?.[key1];
 		const prev2: any = sessionTitle?.[key1]?.[key2];
 		const prev3: any = sessionTitle?.[key1]?.[key2]?.[key3];
-		const next3: any = isPlainObject(value)
+		const next3: any = isPlnObjc2(value)
 			? {
-					...(isPlainObject(prev3) ? prev3 : {}),
+					...(isPlnObjc2(prev3) ? prev3 : {}),
 					...value,
 				}
 			: value;
@@ -209,9 +209,9 @@ export const setSession = (
 			JSON.stringify({
 				...sessionTitle,
 				[key1]: {
-					...(isPlainObject(prev1) ? prev1 : {}),
+					...(isPlnObjc2(prev1) ? prev1 : {}),
 					[key2]: {
-						...(isPlainObject(prev2) ? prev2 : {}),
+						...(isPlnObjc2(prev2) ? prev2 : {}),
 						[key3]: next3,
 					},
 				},

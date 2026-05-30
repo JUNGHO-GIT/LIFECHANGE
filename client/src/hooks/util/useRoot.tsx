@@ -5,13 +5,13 @@
  * @since 2025-12-25
  */
 
-import { useCommonValue } from "@exportHooks";
+import { useCommonValue as usCmmnVal } from "@exportHooks";
 import { useEffect } from "@exportReacts";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const useRoot = () => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { PATH, navigate, sessionId } = useCommonValue();
+	const { PATH, navigate, sessionId } = usCmmnVal();
 
 	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	useEffect(() => {

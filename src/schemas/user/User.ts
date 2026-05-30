@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-import { exerciseArray } from "@assets/arrays/exerciseArray";
+import { exerciseArray as exerArry } from "@assets/arrays/exerciseArray";
 import { foodArray } from "@assets/arrays/foodArray";
 import { moneyArray } from "@assets/arrays/moneyArray";
 import { sleepArray } from "@assets/arrays/sleepArray";
@@ -253,7 +253,7 @@ const schema = new mongoose.Schema(
 		user_dataCategory: {
 			exercise: {
 				type: Array,
-				default: exerciseArray,
+				default: exerArry,
 				required: false,
 			},
 			food: {

@@ -7,10 +7,10 @@
 
 import { Btn, Div, Grid } from "@exportComponents";
 import { PopUp } from "@exportContainers";
-import { useCommonValue } from "@exportHooks";
+import { useCommonValue as usCmmnVal } from "@exportHooks";
 import { memo, useMemo } from "@exportReacts";
 import { setSession } from "@exportScripts";
-import { useStoreLanguage } from "@exportStores";
+import { useStoreLanguage as usStrLang } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 declare interface ButtonsProps {
@@ -21,19 +21,19 @@ declare interface ButtonsProps {
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const Buttons = memo(({ state, flow }: ButtonsProps) => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { toFind, toFavorite, navigate } = useCommonValue();
+	const { toFind, toFavorite, navigate } = usCmmnVal();
 	const {
-		isFoodRecordDetail,
-		isUserCategory,
+		isFoodRecordDetail: isFdRecDtl,
+		isUserCategory: isUsrCat,
 		isUserDetail,
 		isDetail,
 		isSleep,
-		isCalendarDetail,
-	} = useCommonValue();
-	const { translate } = useStoreLanguage();
+		isCalendarDetail: isClndDtl,
+	} = usCmmnVal();
+	const { translate } = usStrLang();
 
 	// 2. useMemo ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const navigationState = useMemo(
+	const navSt = useMemo(
 		() => ({
 			dateType: state?.DATE?.dateType,
 			dateStart: state?.DATE?.dateStart,
@@ -56,14 +56,14 @@ export const Buttons = memo(({ state, flow }: ButtonsProps) => {
 				className={`ml-2vw mr-2vw`}
 				onClick={() => {
 					void navigate(toFind, {
-						state: navigationState,
+						state: navSt,
 					});
 				}}
 			>
 				{translate(`find`)}
 			</Btn>
 		),
-		[navigate, toFind, navigationState, translate],
+		[navigate, toFind, navSt, translate],
 	);
 
 	// 7-2. btn - toFavorite ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
@@ -74,14 +74,14 @@ export const Buttons = memo(({ state, flow }: ButtonsProps) => {
 				className={`ml-2vw mr-2vw`}
 				onClick={() => {
 					void navigate(toFavorite, {
-						state: navigationState,
+						state: navSt,
 					});
 				}}
 			>
 				{translate(`favorite`)}
 			</Btn>
 		),
-		[navigate, toFavorite, navigationState, translate],
+		[navigate, toFavorite, navSt, translate],
 	);
 
 	// 8. btn - delete ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
@@ -179,19 +179,19 @@ export const Buttons = memo(({ state, flow }: ButtonsProps) => {
 	);
 
 	// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	return isUserCategory || isUserDetail ? (
+	return isUsrCat || isUserDetail ? (
 		<Grid container={true} spacing={1}>
 			<Grid size={10} className={`d-center`}>
 				{saveBtn}
 			</Grid>
 		</Grid>
-	) : isCalendarDetail || isDetail ? (
+	) : isClndDtl || isDetail ? (
 		<Grid container={true} spacing={1}>
 			<Grid size={10} className={`d-center`}>
 				{saveBtn}
 				{deleteBtn}
-				{isFoodRecordDetail ? toFindBtn : null}
-				{isFoodRecordDetail ? favoriteBtn : null}
+				{isFdRecDtl ? toFindBtn : null}
+				{isFdRecDtl ? favoriteBtn : null}
 			</Grid>
 		</Grid>
 	) : null;

@@ -7,24 +7,24 @@
 
 import { Br, Div, Grid, Icons, Img, Paper } from "@exportComponents";
 import { PopUp } from "@exportContainers";
-import { useCommonValue } from "@exportHooks";
+import { useCommonValue as usCmmnVal } from "@exportHooks";
 import {
 	Table,
 	TableBody,
 	TableCell,
-	TableContainer,
+	TableContainer as TblCntn,
 	TableRow,
 } from "@exportMuis";
 import { memo, useState } from "@exportReacts";
 import { setLocal } from "@exportScripts";
-import { useStoreConfirm, useStoreLanguage } from "@exportStores";
+import { useStoreConfirm as usStrCnfr, useStoreLanguage as usStrLang } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const UserAppSetting = memo(() => {
+export const UsrAppSttn = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { navigate, isAdmin, localLang } = useCommonValue();
-	const { translate } = useStoreLanguage();
-	const { setCONFIRM } = useStoreConfirm();
+	const { navigate, isAdmin, localLang } = usCmmnVal();
+	const { translate } = usStrLang();
+	const { setCONFIRM } = usStrCnfr();
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const [lang, setLang] = useState<string | undefined>(localLang);
@@ -41,15 +41,15 @@ export const UserAppSetting = memo(() => {
 	};
 
 	// 4-2. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const handleChangeLanguage = (langStr: string) => {
+	const hndlChgLang = (langStr: string) => {
 		setLang(langStr);
 		setLocal(`setting`, `locale`, `lang`, langStr);
 		window.location.reload();
 	};
 
 	// 4-3. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const handleClearStorage = async () => {
-		const confirmResult: Promise<unknown> = new Promise((resolve) => {
+	const hndlClrStrg = async () => {
+		const cnfrRes: Promise<unknown> = new Promise((resolve) => {
 			setCONFIRM(
 				{
 					open: true,
@@ -60,22 +60,22 @@ export const UserAppSetting = memo(() => {
 				},
 			);
 		});
-		if (await confirmResult) {
+		if (await cnfrRes) {
 			localStorage.clear();
 		}
 	};
 
 	// 7. userAppSetting ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const userAppSettingNode = () => {
+	const usrAppSttnNd = () => {
 		// 7-1. detail
-		const detailSection = () => (
+		const dtlSec = () => (
 			<Grid
 				container={true}
 				spacing={0}
 				className={`border-1 radius-2 shadow-0`}
 			>
 				<Grid size={12}>
-					<TableContainer>
+					<TblCntn>
 						<Table>
 							<TableBody className={`table-tbody`}>
 								{/** detail * */}
@@ -130,7 +130,7 @@ export const UserAppSetting = memo(() => {
 											<Div
 												className={`d-row-center pointer`}
 												onClick={() => {
-													handleChangeLanguage(`en`);
+													hndlChgLang(`en`);
 												}}
 											>
 												<Img
@@ -154,7 +154,7 @@ export const UserAppSetting = memo(() => {
 											<Div
 												className={`d-center pointer`}
 												onClick={() => {
-													handleChangeLanguage(`ko`);
+													hndlChgLang(`ko`);
 												}}
 											>
 												<Img
@@ -228,7 +228,7 @@ export const UserAppSetting = memo(() => {
 								<TableRow
 									className={`${isAdmin !== `true` ? `d-none` : ``} pointer`}
 									onClick={() => {
-										void handleClearStorage();
+										void hndlClrStrg();
 									}}
 								>
 									<TableCell className={`w-90vw p-15px`}>
@@ -268,7 +268,7 @@ export const UserAppSetting = memo(() => {
 								</TableRow>
 							</TableBody>
 						</Table>
-					</TableContainer>
+					</TblCntn>
 				</Grid>
 			</Grid>
 		);
@@ -277,11 +277,11 @@ export const UserAppSetting = memo(() => {
 			<Paper
 				className={`content-wrapper d-center border-1 radius-2 h-min-90vh`}
 			>
-				{detailSection()}
+				{dtlSec()}
 			</Paper>
 		);
 	};
 
 	// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	return <>{userAppSettingNode()}</>;
+	return <>{usrAppSttnNd()}</>;
 });

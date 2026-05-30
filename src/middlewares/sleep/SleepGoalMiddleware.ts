@@ -5,12 +5,12 @@
  * @since 2025-12-26
  */
 
-import { differenceInMinutes } from "date-fns";
+import { differenceInMinutes as dffrInMnts } from "date-fns";
 
 // 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const list = async (object: any) => {
 	// 0. calcOverTenMillion ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const calcOverTenMillion = (param: string) => {
+	const clcOvrTnMlln = (param: string) => {
 		let finalResult: string = ``;
 
 		if (
@@ -32,7 +32,7 @@ export const list = async (object: any) => {
 	};
 
 	// 0. calcNonValueColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const calcNonValueColor = (param: string) => {
+	const clcNnValClr = (param: string) => {
 		let finalResult: string = ``;
 
 		if (!param) {
@@ -62,7 +62,7 @@ export const list = async (object: any) => {
 			const goalDate = new Date(`1970-01-01T${goal}:00Z`);
 			const recordDate = new Date(`1970-01-01T${record}:00Z`);
 
-			diffVal = differenceInMinutes(recordDate, goalDate);
+			diffVal = dffrInMnts(recordDate, goalDate);
 
 			// 차이가 음수인 경우, 절대값을 사용하여 계산
 			if (diffVal < 0) {
@@ -83,7 +83,7 @@ export const list = async (object: any) => {
 			const goalDate = new Date(`1970-01-01T${goal}:00Z`);
 			const recordDate = new Date(`1970-01-01T${record}:00Z`);
 
-			diffVal = differenceInMinutes(recordDate, goalDate);
+			diffVal = dffrInMnts(recordDate, goalDate);
 
 			// 시간 차이가 음수인 경우 절대값 적용
 			if (diffVal < 0) {
@@ -103,7 +103,7 @@ export const list = async (object: any) => {
 	};
 
 	// 4. calcDiffColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const calcDiffColor = (
+	const clcDffClr = (
 		goalParam: string,
 		recordParam: string,
 		extra: string,
@@ -150,8 +150,8 @@ export const list = async (object: any) => {
 			const hoursRecord = Number.parseFloat(recordParam?.split(`:`)[0]);
 			const hours = Math.abs(hoursGoal - hoursRecord);
 			const minutesGoal = Number.parseFloat(goalParam?.split(`:`)[1]);
-			const minutesRecord = Number.parseFloat(recordParam?.split(`:`)[1]);
-			const minutes = Math.abs(minutesGoal - minutesRecord);
+			const mntsRec = Number.parseFloat(recordParam?.split(`:`)[1]);
+			const minutes = Math.abs(minutesGoal - mntsRec);
 
 			diffVal = hours * 60 + minutes;
 
@@ -182,51 +182,51 @@ export const list = async (object: any) => {
 
 	// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	object?.result?.forEach((item: any) => {
-		item.sleep_record_bedTime = calcOverTenMillion(item?.sleep_record_bedTime);
-		item.sleep_record_wakeTime = calcOverTenMillion(
+		item.sleep_record_bedTime = clcOvrTnMlln(item?.sleep_record_bedTime);
+		item.sleep_record_wakeTime = clcOvrTnMlln(
 			item?.sleep_record_wakeTime,
 		);
-		item.sleep_record_sleepTime = calcOverTenMillion(
+		item.sleep_record_sleepTime = clcOvrTnMlln(
 			item?.sleep_record_sleepTime,
 		);
 
-		item.sleep_goal_bedTime = calcOverTenMillion(item?.sleep_goal_bedTime);
-		item.sleep_goal_wakeTime = calcOverTenMillion(item?.sleep_goal_wakeTime);
-		item.sleep_goal_sleepTime = calcOverTenMillion(item?.sleep_goal_sleepTime);
+		item.sleep_goal_bedTime = clcOvrTnMlln(item?.sleep_goal_bedTime);
+		item.sleep_goal_wakeTime = clcOvrTnMlln(item?.sleep_goal_wakeTime);
+		item.sleep_goal_sleepTime = clcOvrTnMlln(item?.sleep_goal_sleepTime);
 
-		item.sleep_record_bedTime_color = calcNonValueColor(
+		item.sleep_record_bedTime_color = clcNnValClr(
 			item?.sleep_record_bedTime,
 		);
-		item.sleep_record_wakeTime_color = calcNonValueColor(
+		item.sleep_record_wakeTime_color = clcNnValClr(
 			item?.sleep_record_wakeTime,
 		);
-		item.sleep_record_sleepTime_color = calcNonValueColor(
+		item.sleep_record_sleepTime_color = clcNnValClr(
 			item?.sleep_record_sleepTime,
 		);
 
-		item.sleep_goal_bedTime_color = calcNonValueColor(item?.sleep_goal_bedTime);
-		item.sleep_goal_wakeTime_color = calcNonValueColor(
+		item.sleep_goal_bedTime_color = clcNnValClr(item?.sleep_goal_bedTime);
+		item.sleep_goal_wakeTime_color = clcNnValClr(
 			item?.sleep_goal_wakeTime,
 		);
-		item.sleep_goal_sleepTime_color = calcNonValueColor(
+		item.sleep_goal_sleepTime_color = clcNnValClr(
 			item?.sleep_goal_sleepTime,
 		);
 
-		item.sleep_record_diff_bedTime = calcOverTenMillion(
+		item.sleep_record_diff_bedTime = clcOvrTnMlln(
 			compareTime(
 				item?.sleep_goal_bedTime,
 				item?.sleep_record_bedTime,
 				`bedTime`,
 			),
 		);
-		item.sleep_record_diff_wakeTime = calcOverTenMillion(
+		item.sleep_record_diff_wakeTime = clcOvrTnMlln(
 			compareTime(
 				item?.sleep_goal_wakeTime,
 				item?.sleep_record_wakeTime,
 				`wakeTime`,
 			),
 		);
-		item.sleep_record_diff_sleepTime = calcOverTenMillion(
+		item.sleep_record_diff_sleepTime = clcOvrTnMlln(
 			compareTime(
 				item?.sleep_goal_sleepTime,
 				item?.sleep_record_sleepTime,
@@ -234,17 +234,17 @@ export const list = async (object: any) => {
 			),
 		);
 
-		item.sleep_record_diff_bedTime_color = calcDiffColor(
+		item.sleep_record_diff_bedTime_color = clcDffClr(
 			item?.sleep_goal_bedTime,
 			item?.sleep_record_bedTime,
 			`bedTime`,
 		);
-		item.sleep_record_diff_wakeTime_color = calcDiffColor(
+		item.sleep_record_diff_wakeTime_color = clcDffClr(
 			item?.sleep_goal_wakeTime,
 			item?.sleep_record_wakeTime,
 			`wakeTime`,
 		);
-		item.sleep_record_diff_sleepTime_color = calcDiffColor(
+		item.sleep_record_diff_sleepTime_color = clcDffClr(
 			item?.sleep_goal_sleepTime,
 			item?.sleep_record_sleepTime,
 			`sleepTime`,

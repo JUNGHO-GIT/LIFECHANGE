@@ -6,7 +6,7 @@
  */
 
 // 1-1. exerciseArray ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-export const exerciseArray = [
+export const exerArry = [
 	// 0
 	{
 		exercise_record_part: `all`,

@@ -26,19 +26,19 @@ const g = globalThis as typeof globalThis & {
 };
 
 // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-const fetchPolyfill = fetch as unknown as typeof globalThis.fetch;
+const ftchPlyf = fetch as unknown as typeof globalThis.fetch;
 const BlobPolyfill = Blob as unknown as typeof globalThis.Blob;
 const FilePolyfill = File as unknown as typeof globalThis.File;
-const FormDataPolyfill = FormData as unknown as typeof globalThis.FormData;
-const HeadersPolyfill = Headers as unknown as typeof globalThis.Headers;
-const RequestPolyfill = Request as unknown as typeof globalThis.Request;
-const ResponsePolyfill = Response as unknown as typeof globalThis.Response;
+const FrmDtPlyf = FormData as unknown as typeof globalThis.FormData;
+const HdrsPlyf = Headers as unknown as typeof globalThis.Headers;
+const ReqPlyf = Request as unknown as typeof globalThis.Request;
+const ResPlyf = Response as unknown as typeof globalThis.Response;
 
 // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-typeof g.fetch !== `function` && (g.fetch = fetchPolyfill);
+typeof g.fetch !== `function` && (g.fetch = ftchPlyf);
 typeof g.Blob !== `function` && (g.Blob = BlobPolyfill);
 typeof g.File !== `function` && (g.File = FilePolyfill);
-typeof g.FormData !== `function` && (g.FormData = FormDataPolyfill);
-typeof g.Headers !== `function` && (g.Headers = HeadersPolyfill);
-typeof g.Request !== `function` && (g.Request = RequestPolyfill);
-typeof g.Response !== `function` && (g.Response = ResponsePolyfill);
+typeof g.FormData !== `function` && (g.FormData = FrmDtPlyf);
+typeof g.Headers !== `function` && (g.Headers = HdrsPlyf);
+typeof g.Request !== `function` && (g.Request = ReqPlyf);
+typeof g.Response !== `function` && (g.Response = ResPlyf);

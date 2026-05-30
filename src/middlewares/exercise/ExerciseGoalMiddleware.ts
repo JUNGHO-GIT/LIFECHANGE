@@ -5,12 +5,12 @@
  * @since 2025-12-26
  */
 
-import { differenceInMinutes } from "date-fns";
+import { differenceInMinutes as dffrInMnts } from "date-fns";
 
 // 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const list = async (object: any) => {
 	// 0. calcOverTenMillion ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const calcOverTenMillion = (param: string) => {
+	const clcOvrTnMlln = (param: string) => {
 		let finalResult: string = ``;
 
 		if (
@@ -32,7 +32,7 @@ export const list = async (object: any) => {
 	};
 
 	// 0. calcNonValueColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const calcNonValueColor = (param: string) => {
+	const clcNnValClr = (param: string) => {
 		let finalResult: string = ``;
 
 		if (!param) {
@@ -69,7 +69,7 @@ export const list = async (object: any) => {
 		const goalDate: Date = new Date(`1970-01-01T${goal}:00Z`);
 		const recordDate: Date = new Date(`1970-01-01T${record}:00Z`);
 
-		let diff: number = differenceInMinutes(recordDate, goalDate);
+		let diff: number = dffrInMnts(recordDate, goalDate);
 
 		// 시간 차이가 음수인 경우 절대값 적용
 		if (diff < 0) {
@@ -88,7 +88,7 @@ export const list = async (object: any) => {
 	};
 
 	// 4. calcDiffColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const calcDiffColor = (
+	const clcDffClr = (
 		goalParam: string,
 		recordParam: string,
 		extra: string,
@@ -156,10 +156,10 @@ export const list = async (object: any) => {
 			const hoursRecord: number = Number.parseFloat(recordParam?.split(`:`)[0]);
 			const hours: number = Math.abs(hoursGoal - hoursRecord);
 			const minutesGoal: number = Number.parseFloat(goalParam?.split(`:`)[1]);
-			const minutesRecord: number = Number.parseFloat(
+			const mntsRec: number = Number.parseFloat(
 				recordParam?.split(`:`)[1],
 			);
-			const minutes: number = Math.abs(minutesGoal - minutesRecord);
+			const minutes: number = Math.abs(minutesGoal - mntsRec);
 			const diffVal: number = hours * 60 + minutes;
 
 			// 1. - 10분
@@ -215,91 +215,91 @@ export const list = async (object: any) => {
 
 	// 10. result ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 	object?.result?.forEach((item: any) => {
-		item.exercise_record_total_count = calcOverTenMillion(
+		item.exercise_record_total_count = clcOvrTnMlln(
 			item?.exercise_record_total_count,
 		);
-		item.exercise_record_total_volume = calcOverTenMillion(
+		item.exercise_record_total_volume = clcOvrTnMlln(
 			item?.exercise_record_total_volume,
 		);
-		item.exercise_record_total_cardio = calcOverTenMillion(
+		item.exercise_record_total_cardio = clcOvrTnMlln(
 			item?.exercise_record_total_cardio,
 		);
-		item.exercise_record_total_scale = calcOverTenMillion(
+		item.exercise_record_total_scale = clcOvrTnMlln(
 			item?.exercise_record_total_scale,
 		);
 
-		item.exercise_goal_count = calcOverTenMillion(item?.exercise_goal_count);
-		item.exercise_goal_volume = calcOverTenMillion(item?.exercise_goal_volume);
-		item.exercise_goal_cardio = calcOverTenMillion(item?.exercise_goal_cardio);
-		item.exercise_goal_scale = calcOverTenMillion(item?.exercise_goal_scale);
+		item.exercise_goal_count = clcOvrTnMlln(item?.exercise_goal_count);
+		item.exercise_goal_volume = clcOvrTnMlln(item?.exercise_goal_volume);
+		item.exercise_goal_cardio = clcOvrTnMlln(item?.exercise_goal_cardio);
+		item.exercise_goal_scale = clcOvrTnMlln(item?.exercise_goal_scale);
 
-		item.exercise_record_total_count_color = calcNonValueColor(
+		item.exercise_record_total_count_color = clcNnValClr(
 			item?.exercise_record_total_count,
 		);
-		item.exercise_record_total_volume_color = calcNonValueColor(
+		item.exercise_record_total_volume_color = clcNnValClr(
 			item?.exercise_record_total_volume,
 		);
-		item.exercise_record_total_cardio_color = calcNonValueColor(
+		item.exercise_record_total_cardio_color = clcNnValClr(
 			item?.exercise_record_total_cardio,
 		);
-		item.exercise_record_total_scale_color = calcNonValueColor(
+		item.exercise_record_total_scale_color = clcNnValClr(
 			item?.exercise_record_total_scale,
 		);
 
-		item.exercise_goal_count_color = calcNonValueColor(
+		item.exercise_goal_count_color = clcNnValClr(
 			item?.exercise_goal_count,
 		);
-		item.exercise_goal_volume_color = calcNonValueColor(
+		item.exercise_goal_volume_color = clcNnValClr(
 			item?.exercise_goal_volume,
 		);
-		item.exercise_goal_cardio_color = calcNonValueColor(
+		item.exercise_goal_cardio_color = clcNnValClr(
 			item?.exercise_goal_cardio,
 		);
-		item.exercise_goal_scale_color = calcNonValueColor(
+		item.exercise_goal_scale_color = clcNnValClr(
 			item?.exercise_goal_scale,
 		);
 
-		item.exercise_record_diff_count = calcOverTenMillion(
+		item.exercise_record_diff_count = clcOvrTnMlln(
 			compareValue(
 				item?.exercise_goal_count,
 				item?.exercise_record_total_count,
 			),
 		);
-		item.exercise_record_diff_volume = calcOverTenMillion(
+		item.exercise_record_diff_volume = clcOvrTnMlln(
 			compareValue(
 				item?.exercise_goal_volume,
 				item?.exercise_record_total_volume,
 			),
 		);
-		item.exercise_record_diff_cardio = calcOverTenMillion(
+		item.exercise_record_diff_cardio = clcOvrTnMlln(
 			compareTime(
 				item?.exercise_goal_cardio,
 				item?.exercise_record_total_cardio,
 			),
 		);
-		item.exercise_record_diff_scale = calcOverTenMillion(
+		item.exercise_record_diff_scale = clcOvrTnMlln(
 			compareValue(
 				item?.exercise_goal_scale,
 				item?.exercise_record_total_scale,
 			),
 		);
 
-		item.exercise_record_diff_count_color = calcDiffColor(
+		item.exercise_record_diff_count_color = clcDffClr(
 			item?.exercise_goal_count,
 			item?.exercise_record_total_count,
 			`count`,
 		);
-		item.exercise_record_diff_volume_color = calcDiffColor(
+		item.exercise_record_diff_volume_color = clcDffClr(
 			item?.exercise_goal_volume,
 			item?.exercise_record_total_volume,
 			`volume`,
 		);
-		item.exercise_record_diff_cardio_color = calcDiffColor(
+		item.exercise_record_diff_cardio_color = clcDffClr(
 			item?.exercise_goal_cardio,
 			item?.exercise_record_total_cardio,
 			`cardio`,
 		);
-		item.exercise_record_diff_scale_color = calcDiffColor(
+		item.exercise_record_diff_scale_color = clcDffClr(
 			item?.exercise_goal_scale,
 			item?.exercise_record_total_scale,
 			`scale`,

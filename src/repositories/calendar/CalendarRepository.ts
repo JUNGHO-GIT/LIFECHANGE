@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-import { ExerciseRecord } from "@schemas/exercise/ExerciseRecord";
+import { ExerciseRecord as ExerRec2 } from "@schemas/exercise/ExerciseRecord";
 import { FoodRecord } from "@schemas/food/FoodRecord";
 import { MoneyRecord } from "@schemas/money/MoneyRecord";
 import { SleepRecord } from "@schemas/sleep/SleepRecord";
@@ -13,17 +13,17 @@ import mongoose from "mongoose";
 
 // 0. exist ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const exist = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
-	const exerciseResult = await ExerciseRecord.aggregate([
+	const exerRes = await ExerRec2.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
-				exercise_record_dateStart: { $lte: dateEnd_param },
-				exercise_record_dateEnd: { $gte: dateStart_param },
+				user_id: usrIdPrm,
+				exercise_record_dateStart: { $lte: dtEndPrm },
+				exercise_record_dateEnd: { $gte: dtStrtPrm },
 			},
 		},
 		{
@@ -39,9 +39,9 @@ export const exist = async (
 	const foodResult = await FoodRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
-				food_record_dateStart: { $lte: dateEnd_param },
-				food_record_dateEnd: { $gte: dateStart_param },
+				user_id: usrIdPrm,
+				food_record_dateStart: { $lte: dtEndPrm },
+				food_record_dateEnd: { $gte: dtStrtPrm },
 			},
 		},
 		{
@@ -57,9 +57,9 @@ export const exist = async (
 	const moneyResult = await MoneyRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
-				money_record_dateStart: { $lte: dateEnd_param },
-				money_record_dateEnd: { $gte: dateStart_param },
+				user_id: usrIdPrm,
+				money_record_dateStart: { $lte: dtEndPrm },
+				money_record_dateEnd: { $gte: dtStrtPrm },
 			},
 		},
 		{
@@ -75,9 +75,9 @@ export const exist = async (
 	const sleepResult = await SleepRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
-				sleep_record_dateStart: { $lte: dateEnd_param },
-				sleep_record_dateEnd: { $gte: dateStart_param },
+				user_id: usrIdPrm,
+				sleep_record_dateStart: { $lte: dtEndPrm },
+				sleep_record_dateEnd: { $gte: dtStrtPrm },
 			},
 		},
 		{
@@ -92,7 +92,7 @@ export const exist = async (
 
 	const finalResult: any[] = [];
 	const allRecords: any[] = [
-		...exerciseResult,
+		...exerRes,
 		...foodResult,
 		...moneyResult,
 		...sleepResult,
@@ -129,25 +129,25 @@ export const exist = async (
 
 // 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const list = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 	sort_param: 1 | -1,
 	page_param: number,
 ) => {
 	// 1. excercise
-	const exerciseResult = await ExerciseRecord.aggregate([
+	const exerRes = await ExerRec2.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				exercise_record_dateStart: {
-					$lte: dateEnd_param,
+					$lte: dtEndPrm,
 				},
 				exercise_record_dateEnd: {
-					$gte: dateStart_param,
+					$gte: dtStrtPrm,
 				},
-				...(dateType_param ? { exercise_record_dateType: dateType_param } : {}),
+				...(dtTypPrm2 ? { exercise_record_dateType: dtTypPrm2 } : {}),
 			},
 		},
 		{
@@ -165,14 +165,14 @@ export const list = async (
 	const foodResult = await FoodRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				food_record_dateStart: {
-					$lte: dateEnd_param,
+					$lte: dtEndPrm,
 				},
 				food_record_dateEnd: {
-					$gte: dateStart_param,
+					$gte: dtStrtPrm,
 				},
-				...(dateType_param ? { food_record_dateType: dateType_param } : {}),
+				...(dtTypPrm2 ? { food_record_dateType: dtTypPrm2 } : {}),
 			},
 		},
 		{
@@ -190,14 +190,14 @@ export const list = async (
 	const moneyResult = await MoneyRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				money_record_dateStart: {
-					$lte: dateEnd_param,
+					$lte: dtEndPrm,
 				},
 				money_record_dateEnd: {
-					$gte: dateStart_param,
+					$gte: dtStrtPrm,
 				},
-				...(dateType_param ? { money_record_dateType: dateType_param } : {}),
+				...(dtTypPrm2 ? { money_record_dateType: dtTypPrm2 } : {}),
 			},
 		},
 		{
@@ -215,14 +215,14 @@ export const list = async (
 	const sleepResult = await SleepRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				sleep_record_dateStart: {
-					$lte: dateEnd_param,
+					$lte: dtEndPrm,
 				},
 				sleep_record_dateEnd: {
-					$gte: dateStart_param,
+					$gte: dtStrtPrm,
 				},
-				...(dateType_param ? { sleep_record_dateType: dateType_param } : {}),
+				...(dtTypPrm2 ? { sleep_record_dateType: dtTypPrm2 } : {}),
 			},
 		},
 		{
@@ -237,10 +237,10 @@ export const list = async (
 	]);
 
 	const finalResult: any[] = [];
-	const startDate: Date = new Date(dateStart_param);
-	const endDate: Date = new Date(dateEnd_param);
+	const startDate: Date = new Date(dtStrtPrm);
+	const endDate: Date = new Date(dtEndPrm);
 
-	const getSectionForDate = (
+	const gtSecFrDt = (
 		list: any[],
 		startKey: string,
 		endKey: string,
@@ -255,25 +255,25 @@ export const list = async (
 
 	for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
 		const dateStr: string = d.toISOString().split(`T`)[0];
-		const exerciseItem: any = getSectionForDate(
-			exerciseResult,
+		const exerciseItem: any = gtSecFrDt(
+			exerRes,
 			`exercise_dateStart`,
 			`exercise_dateEnd`,
 			dateStr,
 		);
-		const foodItem: any = getSectionForDate(
+		const foodItem: any = gtSecFrDt(
 			foodResult,
 			`food_dateStart`,
 			`food_dateEnd`,
 			dateStr,
 		);
-		const moneyItem: any = getSectionForDate(
+		const moneyItem: any = gtSecFrDt(
 			moneyResult,
 			`money_dateStart`,
 			`money_dateEnd`,
 			dateStr,
 		);
-		const sleepItem: any = getSectionForDate(
+		const sleepItem: any = gtSecFrDt(
 			sleepResult,
 			`sleep_dateStart`,
 			`sleep_dateEnd`,
@@ -283,7 +283,7 @@ export const list = async (
 		finalResult.push({
 			_id: new mongoose.Types.ObjectId(),
 			calendar_number: finalResult.length + 1,
-			calendar_dateType: dateType_param ?? ``,
+			calendar_dateType: dtTypPrm2 ?? ``,
 			calendar_dateStart: dateStr,
 			calendar_dateEnd: dateStr,
 
@@ -315,23 +315,23 @@ export const list = async (
 
 // 2. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const detail = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	// 1. excercise
-	const exerciseResult = await ExerciseRecord.aggregate([
+	const exerRes = await ExerRec2.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				exercise_record_dateStart: {
-					$lte: dateEnd_param,
+					$lte: dtEndPrm,
 				},
 				exercise_record_dateEnd: {
-					$gte: dateStart_param,
+					$gte: dtStrtPrm,
 				},
-				...(dateType_param ? { exercise_record_dateType: dateType_param } : {}),
+				...(dtTypPrm2 ? { exercise_record_dateType: dtTypPrm2 } : {}),
 			},
 		},
 		{
@@ -349,14 +349,14 @@ export const detail = async (
 	const foodResult = await FoodRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				food_record_dateStart: {
-					$lte: dateEnd_param,
+					$lte: dtEndPrm,
 				},
 				food_record_dateEnd: {
-					$gte: dateStart_param,
+					$gte: dtStrtPrm,
 				},
-				...(dateType_param ? { food_record_dateType: dateType_param } : {}),
+				...(dtTypPrm2 ? { food_record_dateType: dtTypPrm2 } : {}),
 			},
 		},
 		{
@@ -374,14 +374,14 @@ export const detail = async (
 	const moneyResult = await MoneyRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				money_record_dateStart: {
-					$lte: dateEnd_param,
+					$lte: dtEndPrm,
 				},
 				money_record_dateEnd: {
-					$gte: dateStart_param,
+					$gte: dtStrtPrm,
 				},
-				...(dateType_param ? { money_record_dateType: dateType_param } : {}),
+				...(dtTypPrm2 ? { money_record_dateType: dtTypPrm2 } : {}),
 			},
 		},
 		{
@@ -399,14 +399,14 @@ export const detail = async (
 	const sleepResult = await SleepRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				sleep_record_dateStart: {
-					$lte: dateEnd_param,
+					$lte: dtEndPrm,
 				},
 				sleep_record_dateEnd: {
-					$gte: dateStart_param,
+					$gte: dtStrtPrm,
 				},
-				...(dateType_param ? { sleep_record_dateType: dateType_param } : {}),
+				...(dtTypPrm2 ? { sleep_record_dateType: dtTypPrm2 } : {}),
 			},
 		},
 		{
@@ -421,13 +421,13 @@ export const detail = async (
 	]);
 
 	const finalResult: any[] = [];
-	const startDate: Date = new Date(dateStart_param);
-	const endDate: Date = new Date(dateEnd_param);
+	const startDate: Date = new Date(dtStrtPrm);
+	const endDate: Date = new Date(dtEndPrm);
 
 	for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
 		const dateStr: string = d.toISOString().split(`T`)[0];
 		const exerciseItem: any =
-			exerciseResult.find(
+			exerRes.find(
 				(item: any) =>
 					dateStr >= item.exercise_dateStart &&
 					dateStr <= item.exercise_dateEnd,
@@ -451,7 +451,7 @@ export const detail = async (
 		finalResult.push({
 			_id: new mongoose.Types.ObjectId(),
 			calendar_number: finalResult.length + 1,
-			calendar_dateType: dateType_param ?? ``,
+			calendar_dateType: dtTypPrm2 ?? ``,
 			calendar_dateStart: dateStr,
 			calendar_dateEnd: dateStr,
 

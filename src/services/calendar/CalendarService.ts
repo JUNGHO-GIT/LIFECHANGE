@@ -6,14 +6,14 @@
  */
 
 import * as repository from "@repositories/calendar/CalendarRepository";
-import * as ExerciseRecordService from "@services/exercise/ExerciseRecordService";
-import * as FoodRecordService from "@services/food/FoodRecordService";
-import * as MoneyRecordService from "@services/money/MoneyRecordService";
-import * as SleepRecordService from "@services/sleep/SleepRecordService";
+import * as ExerRecSvc from "@services/exercise/ExerciseRecordService";
+import * as FdRecSvc from "@services/food/FoodRecordService";
+import * as MnyRecSvc from "@services/money/MoneyRecordService";
+import * as SlpRecSvc from "@services/sleep/SleepRecordService";
 import moment from "moment-timezone";
 
 // 0. exist ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const exist = async (user_id_param: string, DATE_param: any) => {
+export const exist = async (usrIdPrm: string, DATE_param: any) => {
 	// result 변수 선언
 	let findResult: any = null;
 	let finalResult: any = null;
@@ -25,7 +25,7 @@ export const exist = async (user_id_param: string, DATE_param: any) => {
 	const dateEnd: string = DATE_param?.dateEnd;
 
 	findResult = await repository.exist(
-		user_id_param,
+		usrIdPrm,
 		dateType,
 		dateStart,
 		dateEnd,
@@ -64,7 +64,7 @@ export const exist = async (user_id_param: string, DATE_param: any) => {
 
 // 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const list = async (
-	user_id_param: string,
+	usrIdPrm: string,
 	DATE_param: any,
 	PAGING_param: any,
 ) => {
@@ -72,7 +72,7 @@ export const list = async (
 	let findResult: any = null;
 	let finalResult: any = null;
 	let statusResult: string = ``;
-	let totalCntResult: number = 0;
+	let ttlCntRes: number = 0;
 
 	// 플러스 마이너스 1개월
 	const dateType: string = DATE_param?.dateType;
@@ -88,7 +88,7 @@ export const list = async (
 	const page: number = PAGING_param?.page ?? 1;
 
 	findResult = await repository.list(
-		user_id_param,
+		usrIdPrm,
 		dateType,
 		dateStart,
 		dateEnd,
@@ -102,7 +102,7 @@ export const list = async (
 	} else {
 		finalResult = findResult;
 		statusResult = `success`;
-		totalCntResult = findResult.filter(
+		ttlCntRes = findResult.filter(
 			(item: any) =>
 				item.calendar_exercise_section?.length > 0 ||
 				item.calendar_food_section?.length > 0 ||
@@ -113,22 +113,22 @@ export const list = async (
 
 	return {
 		status: statusResult,
-		totalCnt: totalCntResult,
+		totalCnt: ttlCntRes,
 		result: finalResult,
 	};
 };
 
 // 2. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-export const detail = async (user_id_param: string, DATE_param: any) => {
+export const detail = async (usrIdPrm: string, DATE_param: any) => {
 	// result 변수 선언
 	let findResult: any = null;
 	let finalResult: any = null;
 	let statusResult: string = ``;
-	let sectionCntResult: number = 0;
-	let exerciseSectionCntResult: number = 0;
-	let foodSectionCntResult: number = 0;
-	let moneySectionCntResult: number = 0;
-	let sleepSectionCntResult: number = 0;
+	let secCntRes: number = 0;
+	let exeSeCnRe: number = 0;
+	let fdSecCntRes: number = 0;
+	let mnySecCntRes: number = 0;
+	let slpSecCntRes: number = 0;
 
 	// date 변수 선언
 	const dateType: string = DATE_param?.dateType;
@@ -136,7 +136,7 @@ export const detail = async (user_id_param: string, DATE_param: any) => {
 	const dateEnd: string = DATE_param?.dateEnd;
 
 	findResult = await repository.detail(
-		user_id_param,
+		usrIdPrm,
 		dateType,
 		dateStart,
 		dateEnd,
@@ -151,37 +151,37 @@ export const detail = async (user_id_param: string, DATE_param: any) => {
 	}
 
 	// 섹션 카운트
-	exerciseSectionCntResult =
+	exeSeCnRe =
 		findResult?.[0]?.calendar_exercise_section?.length ?? 0;
-	foodSectionCntResult = findResult?.[0]?.calendar_food_section?.length ?? 0;
-	moneySectionCntResult = findResult?.[0]?.calendar_money_section?.length ?? 0;
-	sleepSectionCntResult = findResult?.[0]?.calendar_sleep_section?.length ?? 0;
-	sectionCntResult =
-		exerciseSectionCntResult +
-		foodSectionCntResult +
-		moneySectionCntResult +
-		sleepSectionCntResult;
+	fdSecCntRes = findResult?.[0]?.calendar_food_section?.length ?? 0;
+	mnySecCntRes = findResult?.[0]?.calendar_money_section?.length ?? 0;
+	slpSecCntRes = findResult?.[0]?.calendar_sleep_section?.length ?? 0;
+	secCntRes =
+		exeSeCnRe +
+		fdSecCntRes +
+		mnySecCntRes +
+		slpSecCntRes;
 
 	return {
 		status: statusResult,
-		exerciseSectionCnt: exerciseSectionCntResult,
-		foodSectionCnt: foodSectionCntResult,
-		moneySectionCnt: moneySectionCntResult,
-		sleepSectionCnt: sleepSectionCntResult,
-		sectionCnt: sectionCntResult,
+		exerciseSectionCnt: exeSeCnRe,
+		foodSectionCnt: fdSecCntRes,
+		moneySectionCnt: mnySecCntRes,
+		sleepSectionCnt: slpSecCntRes,
+		sectionCnt: secCntRes,
 		result: finalResult,
 	};
 };
 
 // 4. update ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const update = async (
-	user_id_param: string,
+	usrIdPrm: string,
 	OBJECT_param: any,
 	DATE_param: any,
 	type_param: string,
 ) => {
 	// result 변수 선언
-	let exerciseResult: any = null;
+	let exerRes: any = null;
 	let foodResult: any = null;
 	let moneyResult: any = null;
 	let sleepResult: any = null;
@@ -197,21 +197,21 @@ export const update = async (
 	const isCreate: boolean = type_param === `create`;
 
 	// 유효한 데이터만 필터링
-	const validExerciseSection: any =
+	const vldExerSec: any =
 		OBJECT_param?.calendar_exercise_section?.filter((item: any) => {
 			return (
 				item.exercise_record_part && item.exercise_record_part.trim() !== ``
 			);
 		}) ?? [];
-	const validFoodSection: any =
+	const vldFdSec: any =
 		OBJECT_param?.calendar_food_section?.filter((item: any) => {
 			return item.food_record_name && item.food_record_name.trim() !== ``;
 		}) ?? [];
-	const validMoneySection: any =
+	const vldMnySec: any =
 		OBJECT_param?.calendar_money_section?.filter((item: any) => {
 			return item.money_record_amount && Number(item.money_record_amount) > 0;
 		}) ?? [];
-	const validSleepSection: any =
+	const vldSlpSec: any =
 		OBJECT_param?.calendar_sleep_section?.filter((item: any) => {
 			return (
 				item.sleep_record_sleepTime && item.sleep_record_sleepTime !== `00:00`
@@ -219,8 +219,8 @@ export const update = async (
 		}) ?? [];
 
 	// exercise 처리
-	if (validExerciseSection.length > 0) {
-		const exerciseObject = {
+	if (vldExerSec.length > 0) {
+		const exerObjc = {
 			exercise_record_dateType: dateType,
 			exercise_record_dateStart: dateStart,
 			exercise_record_dateEnd: dateEnd,
@@ -229,37 +229,37 @@ export const update = async (
 			exercise_record_total_cardio:
 				OBJECT_param.calendar_exercise_record_total_cardio ?? `00:00`,
 			exercise_record_total_scale: `0`,
-			exercise_section: validExerciseSection,
+			exercise_section: vldExerSec,
 		};
-		exerciseResult = isCreate
-			? await ExerciseRecordService.create(
-					user_id_param,
-					exerciseObject,
+		exerRes = isCreate
+			? await ExerRecSvc.create(
+					usrIdPrm,
+					exerObjc,
 					DATE_param,
 				)
-			: await ExerciseRecordService.update(
-					user_id_param,
-					exerciseObject,
+			: await ExerRecSvc.update(
+					usrIdPrm,
+					exerObjc,
 					DATE_param,
 					type_param,
 				);
-		if (exerciseResult.status === `fail`) {
+		if (exerRes.status === `fail`) {
 			statusResult = `fail`;
 		}
-		finalResult.exercise = exerciseResult;
+		finalResult.exercise = exerRes;
 	} else if (
 		!isCreate &&
 		OBJECT_param?.calendar_exercise_dateStart !== `0000-00-00`
 	) {
-		exerciseResult = await ExerciseRecordService.deletes(
-			user_id_param,
+		exerRes = await ExerRecSvc.deletes(
+			usrIdPrm,
 			DATE_param,
 		);
-		finalResult.exercise = exerciseResult;
+		finalResult.exercise = exerRes;
 	}
 
 	// food 처리
-	if (validFoodSection.length > 0) {
+	if (vldFdSec.length > 0) {
 		const foodObject = {
 			food_record_dateType: dateType,
 			food_record_dateStart: dateStart,
@@ -272,12 +272,12 @@ export const update = async (
 				OBJECT_param.calendar_food_record_total_protein ?? `0`,
 			food_record_total_fat: OBJECT_param.calendar_food_record_total_fat ?? `0`,
 			food_record_total_scale: `0`,
-			food_section: validFoodSection,
+			food_section: vldFdSec,
 		};
 		foodResult = isCreate
-			? await FoodRecordService.create(user_id_param, foodObject, DATE_param)
-			: await FoodRecordService.update(
-					user_id_param,
+			? await FdRecSvc.create(usrIdPrm, foodObject, DATE_param)
+			: await FdRecSvc.update(
+					usrIdPrm,
 					foodObject,
 					DATE_param,
 					type_param,
@@ -290,12 +290,12 @@ export const update = async (
 		!isCreate &&
 		OBJECT_param?.calendar_food_dateStart !== `0000-00-00`
 	) {
-		foodResult = await FoodRecordService.deletes(user_id_param, DATE_param);
+		foodResult = await FdRecSvc.deletes(usrIdPrm, DATE_param);
 		finalResult.food = foodResult;
 	}
 
 	// money 처리
-	if (validMoneySection.length > 0) {
+	if (vldMnySec.length > 0) {
 		const moneyObject = {
 			money_record_dateType: dateType,
 			money_record_dateStart: dateStart,
@@ -305,12 +305,12 @@ export const update = async (
 			money_record_total_expense:
 				OBJECT_param.calendar_money_record_total_expense ?? `0`,
 			money_record_total_scale: `0`,
-			money_section: validMoneySection,
+			money_section: vldMnySec,
 		};
 		moneyResult = isCreate
-			? await MoneyRecordService.create(user_id_param, moneyObject, DATE_param)
-			: await MoneyRecordService.update(
-					user_id_param,
+			? await MnyRecSvc.create(usrIdPrm, moneyObject, DATE_param)
+			: await MnyRecSvc.update(
+					usrIdPrm,
 					moneyObject,
 					DATE_param,
 					type_param,
@@ -323,12 +323,12 @@ export const update = async (
 		!isCreate &&
 		OBJECT_param?.calendar_money_dateStart !== `0000-00-00`
 	) {
-		moneyResult = await MoneyRecordService.deletes(user_id_param, DATE_param);
+		moneyResult = await MnyRecSvc.deletes(usrIdPrm, DATE_param);
 		finalResult.money = moneyResult;
 	}
 
 	// sleep 처리
-	if (validSleepSection.length > 0) {
+	if (vldSlpSec.length > 0) {
 		const sleepObject = {
 			sleep_record_dateType: dateType,
 			sleep_record_dateStart: dateStart,
@@ -336,12 +336,12 @@ export const update = async (
 			sleep_record_total_time:
 				OBJECT_param.calendar_sleep_record_total_time ?? `00:00`,
 			sleep_record_total_scale: `0`,
-			sleep_section: validSleepSection,
+			sleep_section: vldSlpSec,
 		};
 		sleepResult = isCreate
-			? await SleepRecordService.create(user_id_param, sleepObject, DATE_param)
-			: await SleepRecordService.update(
-					user_id_param,
+			? await SlpRecSvc.create(usrIdPrm, sleepObject, DATE_param)
+			: await SlpRecSvc.update(
+					usrIdPrm,
 					sleepObject,
 					DATE_param,
 					type_param,
@@ -354,7 +354,7 @@ export const update = async (
 		!isCreate &&
 		OBJECT_param?.calendar_sleep_dateStart !== `0000-00-00`
 	) {
-		sleepResult = await SleepRecordService.deletes(user_id_param, DATE_param);
+		sleepResult = await SlpRecSvc.deletes(usrIdPrm, DATE_param);
 		finalResult.sleep = sleepResult;
 	}
 
@@ -365,9 +365,9 @@ export const update = async (
 };
 
 // 5. delete ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-export const deletes = async (user_id_param: string, DATE_param: any) => {
+export const deletes = async (usrIdPrm: string, DATE_param: any) => {
 	// result 변수 선언
-	let exerciseResult: any = null;
+	let exerRes: any = null;
 	let foodResult: any = null;
 	let moneyResult: any = null;
 	let sleepResult: any = null;
@@ -380,31 +380,31 @@ export const deletes = async (user_id_param: string, DATE_param: any) => {
 	const dateEnd: string = DATE_param?.dateEnd;
 
 	// exercise 데이터 삭제
-	exerciseResult = await ExerciseRecordService.deletes(
-		user_id_param,
+	exerRes = await ExerRecSvc.deletes(
+		usrIdPrm,
 		DATE_param,
 	);
-	if (exerciseResult.status === `fail`) {
+	if (exerRes.status === `fail`) {
 		statusResult = `fail`;
 	}
-	finalResult.exercise = exerciseResult;
+	finalResult.exercise = exerRes;
 
 	// food 데이터 삭제
-	foodResult = await FoodRecordService.deletes(user_id_param, DATE_param);
+	foodResult = await FdRecSvc.deletes(usrIdPrm, DATE_param);
 	if (foodResult.status === `fail`) {
 		statusResult = `fail`;
 	}
 	finalResult.food = foodResult;
 
 	// money 데이터 삭제
-	moneyResult = await MoneyRecordService.deletes(user_id_param, DATE_param);
+	moneyResult = await MnyRecSvc.deletes(usrIdPrm, DATE_param);
 	if (moneyResult.status === `fail`) {
 		statusResult = `fail`;
 	}
 	finalResult.money = moneyResult;
 
 	// sleep 데이터 삭제
-	sleepResult = await SleepRecordService.deletes(user_id_param, DATE_param);
+	sleepResult = await SlpRecSvc.deletes(usrIdPrm, DATE_param);
 	if (sleepResult.status === `fail`) {
 		statusResult = `fail`;
 	}

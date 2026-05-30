@@ -7,34 +7,34 @@
 
 import { Btn, Div, Grid, Hr, Img, Paper } from "@exportComponents";
 import { Input } from "@exportContainers";
-import { useCommonValue, useValidateUser } from "@exportHooks";
+import { useCommonValue as usCmmnVal, useValidateUser as usValUsr } from "@exportHooks";
 import { axios } from "@exportLibs";
 import { Checkbox } from "@exportMuis";
 import { memo, type React, useEffect, useRef, useState } from "@exportReacts";
 import { User, type UserType } from "@exportSchemas";
 import { getLocal, setLocal, setSession, sync } from "@exportScripts";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const UserLogin = memo(() => {
 	// 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const { URL_OBJECT, URL_GOOGLE, ADMIN_ID, ADMIN_PW, navigate } =
-		useCommonValue();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
-	const { ERRORS, REFS, validate } = useValidateUser();
+		usCmmnVal();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
+	const { ERRORS, REFS, validate } = usValUsr();
 
 	// 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 	const [OBJECT, setOBJECT] = useState<UserType>(User);
-	const [loginTrigger, setLoginTrigger] = useState<boolean>(false);
-	const [checkedSaveId, setCheckedSaveId] = useState<boolean>(false);
-	const [checkedAutoLogin, setCheckedAutoLogin] = useState<boolean>(false);
-	const [_clickCount, setClickCount] = useState<number>(0);
+	const [loginTrigger, stLgnTrgg] = useState<boolean>(false);
+	const [chckSvId, stChckSvId] = useState<boolean>(false);
+	const [chckAtLgn, stChckAtLgn] = useState<boolean>(false);
+	const [_clickCount, stClckCnt] = useState<number>(0);
 
 	// 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	const objectRef: React.RefObject<UserType> = useRef(OBJECT);
@@ -52,7 +52,7 @@ export const UserLogin = memo(() => {
 				try {
 					await flowSave();
 				} finally {
-					setLoginTrigger(false);
+					stLgnTrgg(false);
 				}
 			})();
 		}
@@ -66,23 +66,23 @@ export const UserLogin = memo(() => {
 
 		// 자동로그인 o
 		if (autoLogin === `true`) {
-			setCheckedAutoLogin(true);
+			stChckAtLgn(true);
 			setOBJECT((prev) => ({
 				...prev,
 				user_id: autoLoginId,
 				user_pw: autoLoginPw,
 			}));
-			setLoginTrigger(true);
+			stLgnTrgg(true);
 		}
 		// 자동로그인 x
 		else if (autoLogin === `false`) {
-			setCheckedAutoLogin(false);
+			stChckAtLgn(false);
 			setOBJECT((prev) => ({
 				...prev,
 				user_id: ``,
 				user_pw: ``,
 			}));
-			setLoginTrigger(false);
+			stLgnTrgg(false);
 		}
 	}, []);
 
@@ -92,7 +92,7 @@ export const UserLogin = memo(() => {
 		const { isSaved, isSavedId } = getLocal(`setting`, `id`, ``) || {};
 		// 아이디 저장 o
 		if (isSaved === `true`) {
-			setCheckedSaveId(true);
+			stChckSvId(true);
 			setOBJECT((prev) => ({
 				...prev,
 				user_id: isSavedId,
@@ -100,7 +100,7 @@ export const UserLogin = memo(() => {
 		}
 		// 아이디 저장 x
 		else if (isSaved === `false`) {
-			setCheckedSaveId(false);
+			stChckSvId(false);
 			setOBJECT((prev) => ({
 				...prev,
 				user_id: ``,
@@ -111,7 +111,7 @@ export const UserLogin = memo(() => {
 	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	// 자동로그인 활성화된 경우
 	useEffect(() => {
-		if (checkedAutoLogin) {
+		if (chckAtLgn) {
 			setLocal(`setting`, `id`, ``, {
 				autoLogin: `true`,
 				autoLoginId: OBJECT.user_id,
@@ -124,12 +124,12 @@ export const UserLogin = memo(() => {
 				autoLoginPw: ``,
 			});
 		}
-	}, [checkedAutoLogin, OBJECT.user_id]);
+	}, [chckAtLgn, OBJECT.user_id]);
 
 	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	// 아이디 저장 활성화된 경우
 	useEffect(() => {
-		if (checkedSaveId) {
+		if (chckSvId) {
 			setLocal(`setting`, `id`, ``, {
 				isSaved: `true`,
 				isSavedId: OBJECT.user_id,
@@ -140,7 +140,7 @@ export const UserLogin = memo(() => {
 				isSavedId: ``,
 			});
 		}
-	}, [checkedSaveId, OBJECT.user_id]);
+	}, [chckSvId, OBJECT.user_id]);
 
 	// 3. flow ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 	async function flowSave() {
@@ -153,7 +153,7 @@ export const UserLogin = memo(() => {
 			.post(`${URL_OBJECT}/login`, {
 				user_id: objectRef.current.user_id,
 				user_pw: objectRef.current.user_pw,
-				isAutoLogin: checkedAutoLogin,
+				isAutoLogin: chckAtLgn,
 			})
 			.then((res: any) => {
 				if (res.data.status === `success`) {
@@ -231,7 +231,7 @@ export const UserLogin = memo(() => {
 	};
 
 	// 7. userLogin ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const userLoginNode = () => {
+	const usrLgnNd = () => {
 		// 7-1. title
 		const titleSection = () => (
 			<Grid container={true} spacing={1}>
@@ -239,7 +239,7 @@ export const UserLogin = memo(() => {
 					<Div
 						className={`fs-1-8rem fw-500`}
 						onClick={() => {
-							setClickCount((prevCount) => {
+							stClckCnt((prevCount) => {
 								const newCount: number = prevCount + 1;
 								if (newCount === 5) {
 									setOBJECT((prev) => ({
@@ -247,10 +247,10 @@ export const UserLogin = memo(() => {
 										user_id: ADMIN_ID,
 										user_pw: ADMIN_PW,
 									}));
-									setCheckedSaveId(true);
-									setCheckedAutoLogin(true);
-									setLoginTrigger(true);
-									setClickCount(0);
+									stChckSvId(true);
+									stChckAtLgn(true);
+									stLgnTrgg(true);
+									stClckCnt(0);
 								}
 								return newCount;
 							});
@@ -329,9 +329,9 @@ export const UserLogin = memo(() => {
 						<Checkbox
 							color={`primary`}
 							size={`small`}
-							checked={checkedAutoLogin}
+							checked={chckAtLgn}
 							onChange={(e: any) => {
-								setCheckedAutoLogin(e.target.checked);
+								stChckAtLgn(e.target.checked);
 							}}
 						/>
 					</Div>
@@ -342,9 +342,9 @@ export const UserLogin = memo(() => {
 						<Checkbox
 							color={`primary`}
 							size={`small`}
-							checked={checkedSaveId}
+							checked={chckSvId}
 							onChange={(e: any) => {
-								setCheckedSaveId(e.target.checked);
+								stChckSvId(e.target.checked);
 							}}
 						/>
 					</Div>
@@ -352,7 +352,7 @@ export const UserLogin = memo(() => {
 			</Grid>
 		);
 		// 7-4. button
-		const buttonSection = () => (
+		const bttnSec = () => (
 			<Grid container={true} spacing={1}>
 				{/** row 1 * */}
 				<Grid container={true} spacing={1}>
@@ -445,7 +445,7 @@ export const UserLogin = memo(() => {
 				<Hr m={30} className={`bg-light`} />
 				{checkSection()}
 				<Hr m={30} className={`bg-light`} />
-				{buttonSection()}
+				{bttnSec()}
 				<Hr m={30} className={`bg-light`} />
 				{linkSection()}
 			</Paper>
@@ -453,5 +453,5 @@ export const UserLogin = memo(() => {
 	};
 
 	// 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	return <>{userLoginNode()}</>;
+	return <>{usrLgnNd()}</>;
 });

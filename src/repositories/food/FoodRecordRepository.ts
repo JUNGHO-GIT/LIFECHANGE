@@ -11,22 +11,22 @@ import mongoose from "mongoose";
 
 // 0. exist ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const exist = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await FoodRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				food_record_dateStart: {
-					$lte: dateEnd_param,
+					$lte: dtEndPrm,
 				},
 				food_record_dateEnd: {
-					$gte: dateStart_param,
+					$gte: dtStrtPrm,
 				},
-				...(dateType_param ? { food_record_dateType: dateType_param } : {}),
+				...(dtTypPrm2 ? { food_record_dateType: dtTypPrm2 } : {}),
 			},
 		},
 		{
@@ -49,10 +49,10 @@ export const exist = async (
 
 // 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const list = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 	sort_param: 1 | -1,
 	page_param: number,
 	part_param?: string,
@@ -66,16 +66,16 @@ export const list = async (
 	const finalResult: any = await FoodRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				food_record_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				food_record_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
-				...(dateType_param ? { food_record_dateType: dateType_param } : {}),
+				...(dtTypPrm2 ? { food_record_dateType: dtTypPrm2 } : {}),
 				...matchSection,
 			},
 		},
@@ -166,10 +166,10 @@ export const list = async (
 };
 
 // 1-2. favorite ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const favorite = async (user_id_param: string) => {
+export const favorite = async (usrIdPrm: string) => {
 	const finalResult: any = await User.findOne(
 		{
-			user_id: user_id_param,
+			user_id: usrIdPrm,
 		},
 		{
 			_id: 0,
@@ -182,16 +182,16 @@ export const favorite = async (user_id_param: string) => {
 
 // 2. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const detail = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await FoodRecord.findOne({
-		user_id: user_id_param,
-		food_record_dateStart: dateStart_param,
-		food_record_dateEnd: dateEnd_param,
-		...(dateType_param ? { food_record_dateType: dateType_param } : {}),
+		user_id: usrIdPrm,
+		food_record_dateStart: dtStrtPrm,
+		food_record_dateEnd: dtEndPrm,
+		...(dtTypPrm2 ? { food_record_dateType: dtTypPrm2 } : {}),
 	}).lean();
 
 	return finalResult;
@@ -199,18 +199,18 @@ export const detail = async (
 
 // 3. create ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const create = async (
-	user_id_param: string,
+	usrIdPrm: string,
 	OBJECT_param: any,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await FoodRecord.create({
 		_id: new mongoose.Types.ObjectId(),
-		user_id: user_id_param,
-		food_record_dateType: dateType_param,
-		food_record_dateStart: dateStart_param,
-		food_record_dateEnd: dateEnd_param,
+		user_id: usrIdPrm,
+		food_record_dateType: dtTypPrm2,
+		food_record_dateStart: dtStrtPrm,
+		food_record_dateEnd: dtEndPrm,
 		food_record_total_kcal: OBJECT_param.food_record_total_kcal,
 		food_record_total_carb: OBJECT_param.food_record_total_carb,
 		food_record_total_protein: OBJECT_param.food_record_total_protein,
@@ -227,18 +227,18 @@ export const create = async (
 export const update = {
 	// 1. update (기존항목 유지 + 타겟항목으로 수정)
 	update: async (
-		user_id_param: string,
+		usrIdPrm: string,
 		OBJECT_param: any,
-		dateType_param: string,
-		dateStart_param: string,
-		dateEnd_param: string,
+		dtTypPrm2: string,
+		dtStrtPrm: string,
+		dtEndPrm: string,
 	) => {
 		const finalResult: any = await FoodRecord.findOneAndUpdate(
 			{
-				user_id: user_id_param,
-				food_record_dateStart: dateStart_param,
-				food_record_dateEnd: dateEnd_param,
-				...(dateType_param ? { food_record_dateType: dateType_param } : {}),
+				user_id: usrIdPrm,
+				food_record_dateStart: dtStrtPrm,
+				food_record_dateEnd: dtEndPrm,
+				...(dtTypPrm2 ? { food_record_dateType: dtTypPrm2 } : {}),
 			},
 			{
 				$set: {
@@ -261,17 +261,17 @@ export const update = {
 
 	// 2. insert (기존항목 제거 + 타겟항목에 추가)
 	insert: async (
-		user_id_param: string,
+		usrIdPrm: string,
 		OBJECT_param: any,
-		dateType_param: string,
-		dateStart_param: string,
-		dateEnd_param: string,
+		dtTypPrm2: string,
+		dtStrtPrm: string,
+		dtEndPrm: string,
 	) => {
 		const findResult: any = await FoodRecord.findOne({
-			user_id: user_id_param,
-			food_record_dateStart: dateStart_param,
-			food_record_dateEnd: dateEnd_param,
-			...(dateType_param ? { food_record_dateType: dateType_param } : {}),
+			user_id: usrIdPrm,
+			food_record_dateStart: dtStrtPrm,
+			food_record_dateEnd: dtEndPrm,
+			...(dtTypPrm2 ? { food_record_dateType: dtTypPrm2 } : {}),
 		}).lean();
 
 		const newKcal: string = String(
@@ -293,10 +293,10 @@ export const update = {
 
 		const finalResult: any = await FoodRecord.updateOne(
 			{
-				user_id: user_id_param,
-				food_record_dateStart: dateStart_param,
-				food_record_dateEnd: dateEnd_param,
-				...(dateType_param ? { food_record_dateType: dateType_param } : {}),
+				user_id: usrIdPrm,
+				food_record_dateStart: dtStrtPrm,
+				food_record_dateEnd: dtEndPrm,
+				...(dtTypPrm2 ? { food_record_dateType: dtTypPrm2 } : {}),
 			},
 			{
 				$set: {
@@ -320,18 +320,18 @@ export const update = {
 
 	// 3. replace (기존항목 제거 + 타겟항목을 교체)
 	replace: async (
-		user_id_param: string,
+		usrIdPrm: string,
 		OBJECT_param: any,
-		dateType_param: string,
-		dateStart_param: string,
-		dateEnd_param: string,
+		dtTypPrm2: string,
+		dtStrtPrm: string,
+		dtEndPrm: string,
 	) => {
 		const finalResult: any = await FoodRecord.findOneAndUpdate(
 			{
-				user_id: user_id_param,
-				food_record_dateStart: dateStart_param,
-				food_record_dateEnd: dateEnd_param,
-				...(dateType_param ? { food_record_dateType: dateType_param } : {}),
+				user_id: usrIdPrm,
+				food_record_dateStart: dtStrtPrm,
+				food_record_dateEnd: dtEndPrm,
+				...(dtTypPrm2 ? { food_record_dateType: dtTypPrm2 } : {}),
 			},
 			{
 				$set: {
@@ -353,14 +353,14 @@ export const update = {
 	},
 
 	// 4. update
-	favorite: async (user_id_param: string, foodFavorite_param: any) => {
+	favorite: async (usrIdPrm: string, fdFavPrm: any) => {
 		const finalResult: any = await User.findOneAndUpdate(
 			{
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 			},
 			{
 				$set: {
-					user_favorite: foodFavorite_param,
+					user_favorite: fdFavPrm,
 				},
 			},
 			{
@@ -375,16 +375,16 @@ export const update = {
 
 // 5. delete ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const deletes = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await FoodRecord.findOneAndDelete({
-		user_id: user_id_param,
-		food_record_dateStart: dateStart_param,
-		food_record_dateEnd: dateEnd_param,
-		...(dateType_param ? { food_record_dateType: dateType_param } : {}),
+		user_id: usrIdPrm,
+		food_record_dateStart: dtStrtPrm,
+		food_record_dateEnd: dtEndPrm,
+		...(dtTypPrm2 ? { food_record_dateType: dtTypPrm2 } : {}),
 	}).lean();
 
 	return finalResult;

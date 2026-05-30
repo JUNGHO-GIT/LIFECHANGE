@@ -5,7 +5,7 @@
  * @since 2025-12-25
  */
 
-import type { Location, NavigateFunction } from "@exportReacts";
+import type { Location, NavigateFunction as NvgtFn } from "@exportReacts";
 
 // 공통 리터럴 · 유틸 타입 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export type FirstPathType =
@@ -397,7 +397,7 @@ export type AppTitleType = LocalTitleType & SessionTitleType;
 
 // useCommonValue 반환 타입 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export interface CommonValueType {
-	navigate: NavigateFunction;
+	navigate: NvgtFn;
 	location: Location<LocationStateType> & Record<string, unknown>;
 
 	location_id?: LocationStateType[`id`];

@@ -61,7 +61,7 @@ export const TextArea = memo((props: any) => {
 	);
 
 	// 5. memo ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const slotPropsMemo = useMemo(
+	const sltPrpsMm = useMemo(
 		() => ({
 			...props?.slotProps,
 			input: {
@@ -135,7 +135,7 @@ export const TextArea = memo((props: any) => {
 			error={props?.error ?? false}
 			onClick={handleClick}
 			onChange={handleChange}
-			slotProps={slotPropsMemo}
+			slotProps={sltPrpsMm}
 		/>
 	);
 });

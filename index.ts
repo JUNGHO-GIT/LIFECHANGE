@@ -11,28 +11,28 @@ import { loadEnv } from "@assets/scripts/env";
 import { router as AdminRouter } from "@routers/admin/AdminRouter";
 import { router as GoogleRouter } from "@routers/auth/GoogleRouter";
 // calendar
-import { router as CalendarRouter } from "@routers/calendar/CalendarRouter";
+import { router as ClndRtr } from "@routers/calendar/CalendarRouter";
 // exercise
-import { router as ExerciseChartRouter } from "@routers/exercise/ExerciseChartRouter";
-import { router as ExerciseGoalRouter } from "@routers/exercise/ExerciseGoalRouter";
-import { router as ExerciseRecordRouter } from "@routers/exercise/ExerciseRecordRouter";
+import { router as ExerChrtRtr } from "@routers/exercise/ExerciseChartRouter";
+import { router as ExerGlRtr } from "@routers/exercise/ExerciseGoalRouter";
+import { router as ExerRecRtr } from "@routers/exercise/ExerciseRecordRouter";
 // food
-import { router as FoodChartRouter } from "@routers/food/FoodChartRouter";
-import { router as FoodFavoriteRouter } from "@routers/food/FoodFavoriteRouter";
-import { router as FoodFindRouter } from "@routers/food/FoodFindRouter";
-import { router as FoodGoalRouter } from "@routers/food/FoodGoalRouter";
-import { router as FoodRecordRouter } from "@routers/food/FoodRecordRouter";
+import { router as FdChrtRtr } from "@routers/food/FoodChartRouter";
+import { router as FdFavRtr } from "@routers/food/FoodFavoriteRouter";
+import { router as FdFndRtr } from "@routers/food/FoodFindRouter";
+import { router as FdGlRtr } from "@routers/food/FoodGoalRouter";
+import { router as FdRecRtr } from "@routers/food/FoodRecordRouter";
 // money
-import { router as MoneyChartRouter } from "@routers/money/MoneyChartRouter";
-import { router as MoneyGoalRouter } from "@routers/money/MoneyGoalRouter";
-import { router as MoneyRecordRouter } from "@routers/money/MoneyRecordRouter";
+import { router as MnyChrtRtr } from "@routers/money/MoneyChartRouter";
+import { router as MnyGlRtr } from "@routers/money/MoneyGoalRouter";
+import { router as MnyRecRtr } from "@routers/money/MoneyRecordRouter";
 // sleep
-import { router as SleepChartRouter } from "@routers/sleep/SleepChartRouter";
-import { router as SleepGoalRouter } from "@routers/sleep/SleepGoalRouter";
-import { router as SleepRecordRouter } from "@routers/sleep/SleepRecordRouter";
+import { router as SlpChrtRtr } from "@routers/sleep/SleepChartRouter";
+import { router as SlpGlRtr } from "@routers/sleep/SleepGoalRouter";
+import { router as SlpRecRtr } from "@routers/sleep/SleepRecordRouter";
 import { router as UserRouter } from "@routers/user/UserRouter";
 // user
-import { router as UserSyncRouter } from "@routers/user/UserSyncRouter";
+import { router as UsrSyncRtr } from "@routers/user/UserSyncRouter";
 import cors from "cors";
 import express, { type Express, type Request, type Response } from "express";
 import mongoose from "mongoose";
@@ -46,16 +46,16 @@ const preFix: string = process.env.HTTP_PREFIX ?? ``;
 // 서버 포트 설정 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 const httpPort: number = Number(process.env.HTTP_PORT);
 const httpsPort: number = Number(process.env.HTTPS_PORT);
-(function start(httpPortParam: number, httpsPortParam: number) {
-	const httpServer = app.listen(httpPortParam, () => {
-		console.log(`HTTP 서버가 포트 ${httpPortParam}에서 실행 중입니다.`);
+(function start(httpPrtPrm: number, httpPrtPrm2: number) {
+	const httpServer = app.listen(httpPrtPrm, () => {
+		console.log(`HTTP 서버가 포트 ${httpPrtPrm}에서 실행 중입니다.`);
 	});
 	httpServer.on(`error`, (err: unknown) => {
 		if (err?.code === `EADDRINUSE`) {
 			console.log(
-				`${httpPortParam} 포트가 이미 사용 중입니다. 다른 포트로 변경합니다.`,
+				`${httpPrtPrm} 포트가 이미 사용 중입니다. 다른 포트로 변경합니다.`,
 			);
-			start(httpPortParam + 1, httpsPortParam);
+			start(httpPrtPrm + 1, httpPrtPrm2);
 		} else {
 			console.error(`서버 실행 중 오류 발생: ${err}`);
 		}
@@ -73,7 +73,7 @@ const db: string =
 	mode === `PRODUCTION`
 		? (process.env.DB_NAME ?? ``)
 		: (process.env.DB_TEST ?? ``);
-const authSourceQuery: string = authSource
+const athSrcQry: string = authSource
 	? `?authSource=${encodeURIComponent(authSource)}`
 	: ``;
 const dbUser: string = encodeURIComponent(id ?? ``);
@@ -81,7 +81,7 @@ const dbPass: string = encodeURIComponent(pw ?? ``);
 const isDev: boolean = mode === `DEVELOPMENT`;
 
 mongoose
-	.connect(`mongodb://${dbUser}:${dbPass}@${host}:${port}/${db}${authSourceQuery}`)
+	.connect(`mongodb://${dbUser}:${dbPass}@${host}:${port}/${db}${athSrcQry}`)
 	.then(() => {
 		console.log(`[${mode}] MongoDB 연결 성공 [${db}]`);
 	})
@@ -187,32 +187,32 @@ app.use(
 
 // 라우터 설정 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 // calendar
-app.use(`${preFix}/calendar`, CalendarRouter);
+app.use(`${preFix}/calendar`, ClndRtr);
 
 // exercise
-app.use(`${preFix}/exercise/chart`, ExerciseChartRouter);
-app.use(`${preFix}/exercise/goal`, ExerciseGoalRouter);
-app.use(`${preFix}/exercise/record`, ExerciseRecordRouter);
+app.use(`${preFix}/exercise/chart`, ExerChrtRtr);
+app.use(`${preFix}/exercise/goal`, ExerGlRtr);
+app.use(`${preFix}/exercise/record`, ExerRecRtr);
 
 // food
-app.use(`${preFix}/food/chart`, FoodChartRouter);
-app.use(`${preFix}/food/goal`, FoodGoalRouter);
-app.use(`${preFix}/food/record`, FoodRecordRouter);
-app.use(`${preFix}/food/favorite`, FoodFavoriteRouter);
-app.use(`${preFix}/food/find`, FoodFindRouter);
+app.use(`${preFix}/food/chart`, FdChrtRtr);
+app.use(`${preFix}/food/goal`, FdGlRtr);
+app.use(`${preFix}/food/record`, FdRecRtr);
+app.use(`${preFix}/food/favorite`, FdFavRtr);
+app.use(`${preFix}/food/find`, FdFndRtr);
 
 // money
-app.use(`${preFix}/money/chart`, MoneyChartRouter);
-app.use(`${preFix}/money/goal`, MoneyGoalRouter);
-app.use(`${preFix}/money/record`, MoneyRecordRouter);
+app.use(`${preFix}/money/chart`, MnyChrtRtr);
+app.use(`${preFix}/money/goal`, MnyGlRtr);
+app.use(`${preFix}/money/record`, MnyRecRtr);
 
 // sleep
-app.use(`${preFix}/sleep/chart`, SleepChartRouter);
-app.use(`${preFix}/sleep/goal`, SleepGoalRouter);
-app.use(`${preFix}/sleep/record`, SleepRecordRouter);
+app.use(`${preFix}/sleep/chart`, SlpChrtRtr);
+app.use(`${preFix}/sleep/goal`, SlpGlRtr);
+app.use(`${preFix}/sleep/record`, SlpRecRtr);
 
 // user
-app.use(`${preFix}/user/sync`, UserSyncRouter);
+app.use(`${preFix}/user/sync`, UsrSyncRtr);
 app.use(`${preFix}/user`, UserRouter);
 
 // admin

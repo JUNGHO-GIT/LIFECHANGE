@@ -36,7 +36,7 @@ export const calcDate = (startTime: string, endTime: string) => {
 };
 
 // 1-2. format ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const timeToDecimal = (data: string) => {
+export const tmTDcml = (data: string) => {
 	if (
 		typeof data !== `string` ||
 		!data ||
@@ -57,7 +57,7 @@ export const timeToDecimal = (data: string) => {
 	return hours + minutes;
 };
 
-export const decimalToTime = (data: number) => {
+export const dcmlTTm = (data: number) => {
 	if (
 		typeof data !== `number` ||
 		!data ||
@@ -81,10 +81,10 @@ export const strToDecimal = (data: string) => {
 		return 0;
 	}
 	const [hours, minutes] = data.split(`:`).map(Number);
-	const adjustedHours: number = hours + Math.floor(minutes / 60);
-	const adjustedMinutes: number = minutes % 60;
+	const adjsHrs: number = hours + Math.floor(minutes / 60);
+	const adjsMnts: number = minutes % 60;
 
-	return adjustedHours + adjustedMinutes / 60;
+	return adjsHrs + adjsMnts / 60;
 };
 
 export const decimalToStr = (data: number) => {
@@ -93,10 +93,10 @@ export const decimalToStr = (data: number) => {
 	}
 	const hours: number = Math.floor(data);
 	const minutes: number = Math.round((data - hours) * 60);
-	const adjustedHours: number = hours + Math.floor(minutes / 60);
-	const adjustedMinutes: number = minutes % 60;
+	const adjsHrs: number = hours + Math.floor(minutes / 60);
+	const adjsMnts: number = minutes % 60;
 
-	return `${String(adjustedHours).padStart(2, `0`)}:${String(adjustedMinutes).padStart(2, `0`)}`;
+	return `${String(adjsHrs).padStart(2, `0`)}:${String(adjsMnts).padStart(2, `0`)}`;
 };
 
 // 4-1. token ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--

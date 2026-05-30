@@ -13,10 +13,10 @@ import "@assets/styles/Mui.css";
 import "@assets/styles/Components.css";
 
 import {
-	useCommonValue,
-	useFoodSection,
-	useLanguageInitialize,
-	useLanguageSetting,
+	useCommonValue as usCmmnVal,
+	useFoodSection as usFdSec,
+	useLanguageInitialize as usLangIntl,
+	useLanguageSetting as usLangSttn,
 	useRoot,
 	useScrollTop,
 } from "@exportHooks";
@@ -28,38 +28,38 @@ import {
 	Loader,
 	TopNav,
 } from "@exportLayouts";
-import { CssBaseline, createTheme, ThemeProvider } from "@exportMuis";
+import { CssBaseline, createTheme, ThemeProvider as ThmProv } from "@exportMuis";
 import {
 	AdminAppInfo,
-	AdminDashboard,
+	AdminDashboard as AdmnDshb,
 	AuthError,
 	AuthGoogle,
 	AuthPrivacy,
-	CalendarDetail,
+	CalendarDetail as ClndDtl,
 	CalendarList,
-	ExerciseChart,
-	ExerciseGoalDetail,
-	ExerciseGoalList,
-	ExerciseRecordDetail,
-	ExerciseRecordList,
+	ExerciseChart as ExerChrt,
+	ExerciseGoalDetail as ExerGlDtl,
+	ExerciseGoalList as ExerGlLst,
+	ExerciseRecordDetail as ExerRecDtl,
+	ExerciseRecordList as ExerRecLst,
 	FoodChart,
-	FoodFavoriteList,
+	FoodFavoriteList as FdFavLst,
 	FoodFindList,
-	FoodGoalDetail,
+	FoodGoalDetail as FdGlDtl,
 	FoodGoalList,
-	FoodRecordDetail,
-	FoodRecordList,
+	FoodRecordDetail as FdRecDtl,
+	FoodRecordList as FdRecLst,
 	MoneyChart,
-	MoneyGoalDetail,
-	MoneyGoalList,
-	MoneyRecordDetail,
-	MoneyRecordList,
+	MoneyGoalDetail as MnyGlDtl,
+	MoneyGoalList as MnyGlLst,
+	MoneyRecordDetail as MnyRecDtl,
+	MoneyRecordList as MnyRecLst,
 	SleepChart,
-	SleepGoalDetail,
-	SleepGoalList,
-	SleepRecordDetail,
-	SleepRecordList,
-	UserAppSetting,
+	SleepGoalDetail as SlpGlDtl,
+	SleepGoalList as SlpGlLst,
+	SleepRecordDetail as SlpRecDtl,
+	SleepRecordList as SlpRecLst,
+	UserAppSetting as UsrAppSttn,
 	UserCategory,
 	UserDelete,
 	UserDetail,
@@ -68,19 +68,19 @@ import {
 	UserSignup,
 } from "@exportPages";
 import {
-	BrowserRouter,
+	BrowserRouter as BrwsRtr,
 	createRoot,
 	memo,
 	Route,
 	Routes,
 	useEffect,
 } from "@exportReacts";
-import { useStoreLoading } from "@exportStores";
+import { useStoreLoading as usStrLoad } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 const App = memo(() => {
-	const { PATH } = useCommonValue();
-	const { setLOADING } = useStoreLoading();
+	const { PATH } = usCmmnVal();
+	const { setLOADING } = usStrLoad();
 
 	useEffect(() => {
 		setLOADING(true);
@@ -91,9 +91,9 @@ const App = memo(() => {
 
 	useRoot();
 	useScrollTop();
-	useFoodSection();
-	useLanguageInitialize();
-	useLanguageSetting();
+	usFdSec();
+	usLangIntl();
+	usLangSttn();
 
 	const noneHeader: boolean =
 		!PATH.includes(`/user/login`) &&
@@ -121,58 +121,58 @@ const App = memo(() => {
 				{/** home * */}
 				<Route path={`/`} element={<div />} />
 				{/** admin * */}
-				<Route path={`/admin/dashboard/*`} element={<AdminDashboard />} />
+				<Route path={`/admin/dashboard/*`} element={<AdmnDshb />} />
 				{/** auth * */}
 				<Route path={`/auth/error/*`} element={<AuthError />} />
 				<Route path={`/auth/google/*`} element={<AuthGoogle />} />
 				<Route path={`/auth/privacy/*`} element={<AuthPrivacy />} />
 				{/** calendar * */}
 				<Route path={`/calendar/list/*`} element={<CalendarList />} />
-				<Route path={`/calendar/detail/*`} element={<CalendarDetail />} />
+				<Route path={`/calendar/detail/*`} element={<ClndDtl />} />
 				{/** exercise * */}
-				<Route path={`/exercise/chart/list/*`} element={<ExerciseChart />} />
-				<Route path={`/exercise/goal/list/*`} element={<ExerciseGoalList />} />
+				<Route path={`/exercise/chart/list/*`} element={<ExerChrt />} />
+				<Route path={`/exercise/goal/list/*`} element={<ExerGlLst />} />
 				<Route
 					path={`/exercise/goal/detail/*`}
-					element={<ExerciseGoalDetail />}
+					element={<ExerGlDtl />}
 				/>
 				<Route
 					path={`/exercise/record/list/*`}
-					element={<ExerciseRecordList />}
+					element={<ExerRecLst />}
 				/>
 				<Route
 					path={`/exercise/record/detail/*`}
-					element={<ExerciseRecordDetail />}
+					element={<ExerRecDtl />}
 				/>
 				{/** food * */}
 				<Route path={`/food/chart/list/*`} element={<FoodChart />} />
 				<Route path={`/food/goal/list/*`} element={<FoodGoalList />} />
-				<Route path={`/food/goal/detail/*`} element={<FoodGoalDetail />} />
-				<Route path={`/food/record/list/*`} element={<FoodRecordList />} />
-				<Route path={`/food/record/detail/*`} element={<FoodRecordDetail />} />
-				<Route path={`/food/favorite/list/*`} element={<FoodFavoriteList />} />
+				<Route path={`/food/goal/detail/*`} element={<FdGlDtl />} />
+				<Route path={`/food/record/list/*`} element={<FdRecLst />} />
+				<Route path={`/food/record/detail/*`} element={<FdRecDtl />} />
+				<Route path={`/food/favorite/list/*`} element={<FdFavLst />} />
 				<Route path={`/food/find/list/*`} element={<FoodFindList />} />
 				{/** money * */}
 				<Route path={`/money/chart/list/*`} element={<MoneyChart />} />
-				<Route path={`/money/goal/list/*`} element={<MoneyGoalList />} />
-				<Route path={`/money/goal/detail/*`} element={<MoneyGoalDetail />} />
-				<Route path={`/money/record/list/*`} element={<MoneyRecordList />} />
+				<Route path={`/money/goal/list/*`} element={<MnyGlLst />} />
+				<Route path={`/money/goal/detail/*`} element={<MnyGlDtl />} />
+				<Route path={`/money/record/list/*`} element={<MnyRecLst />} />
 				<Route
 					path={`/money/record/detail/*`}
-					element={<MoneyRecordDetail />}
+					element={<MnyRecDtl />}
 				/>
 				{/** sleep * */}
 				<Route path={`/sleep/chart/list/*`} element={<SleepChart />} />
-				<Route path={`/sleep/goal/list/*`} element={<SleepGoalList />} />
-				<Route path={`/sleep/goal/detail/*`} element={<SleepGoalDetail />} />
-				<Route path={`/sleep/record/list/*`} element={<SleepRecordList />} />
+				<Route path={`/sleep/goal/list/*`} element={<SlpGlLst />} />
+				<Route path={`/sleep/goal/detail/*`} element={<SlpGlDtl />} />
+				<Route path={`/sleep/record/list/*`} element={<SlpRecLst />} />
 				<Route
 					path={`/sleep/record/detail/*`}
-					element={<SleepRecordDetail />}
+					element={<SlpRecDtl />}
 				/>
 				{/** user * */}
 				<Route path={`/user/appInfo/*`} element={<AdminAppInfo />} />
-				<Route path={`/user/appSetting/*`} element={<UserAppSetting />} />
+				<Route path={`/user/appSetting/*`} element={<UsrAppSttn />} />
 				<Route path={`/user/signup/*`} element={<UserSignup />} />
 				<Route path={`/user/login/*`} element={<UserLogin />} />
 				<Route path={`/user/resetPw/*`} element={<UserResetPw />} />
@@ -190,12 +190,12 @@ const fontFamily: string = `'Pretendard Variable', Pretendard, FontAwesome, -app
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 createRoot(document.querySelector(`#root`) as HTMLElement).render(
-	<BrowserRouter basename={`/lifechange`}>
-		<ThemeProvider
+	<BrwsRtr basename={`/lifechange`}>
+		<ThmProv
 			theme={createTheme({ typography: { fontFamily: fontFamily } })}
 		>
 			<CssBaseline />
 			<App />
-		</ThemeProvider>
-	</BrowserRouter>,
+		</ThmProv>
+	</BrwsRtr>,
 );

@@ -7,12 +7,12 @@
 
 import { Div } from "@exportComponents";
 import { memo } from "@exportReacts";
-import { useStoreLoading } from "@exportStores";
+import { useStoreLoading as usStrLoad } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const Loader = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { LOADING } = useStoreLoading();
+	const { LOADING } = usStrLoad();
 
 	// 7.loader ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	const loaderNode = () =>

@@ -7,10 +7,10 @@
 
 import { Div } from "@exportComponents";
 import { PickerDay, Select } from "@exportContainers";
-import { useCommonValue } from "@exportHooks";
+import { useCommonValue as usCmmnVal } from "@exportHooks";
 import { MenuItem } from "@exportMuis";
 import { memo, useMemo } from "@exportReacts";
-import { useStoreLanguage } from "@exportStores";
+import { useStoreLanguage as usStrLang } from "@exportStores";
 
 // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface ListFilterProps {
@@ -21,47 +21,47 @@ declare interface ListFilterProps {
 // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const ListFilter = memo(({ state, setState }: ListFilterProps) => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { sessionCategory } = useCommonValue();
-	const { isExerciseGoalList, isExerciseRecordList } = useCommonValue();
-	const { isFoodGoalList, isFoodRecordList } = useCommonValue();
-	const { isMoneyGoalList, isMoneyRecordList } = useCommonValue();
-	const { isSleepGoalList, isSleepRecordList } = useCommonValue();
-	const { translate } = useStoreLanguage();
+	const { sessionCategory: sessCat } = usCmmnVal();
+	const { isExerciseGoalList: isExerGlLst, isExerciseRecordList: isExerRecLst } = usCmmnVal();
+	const { isFoodGoalList: isFdGlLst, isFoodRecordList: isFdRecLst } = usCmmnVal();
+	const { isMoneyGoalList: isMnyGlLst, isMoneyRecordList: isMnyRecLst } = usCmmnVal();
+	const { isSleepGoalList: isSlpGlLst, isSleepRecordList: isSlpRecLst } = usCmmnVal();
+	const { translate } = usStrLang();
 
 	// 2. array ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	const dataArray = useMemo(() => {
 		let result: any[] = [];
 
-		(isExerciseGoalList || isExerciseRecordList) &&
-			(result = sessionCategory?.exercise ?? []);
-		(isFoodGoalList || isFoodRecordList) &&
-			(result = sessionCategory?.food ?? []);
-		(isMoneyGoalList || isMoneyRecordList) &&
-			(result = sessionCategory?.money ?? []);
-		(isSleepGoalList || isSleepRecordList) &&
-			(result = sessionCategory?.sleep ?? []);
+		(isExerGlLst || isExerRecLst) &&
+			(result = sessCat?.exercise ?? []);
+		(isFdGlLst || isFdRecLst) &&
+			(result = sessCat?.food ?? []);
+		(isMnyGlLst || isMnyRecLst) &&
+			(result = sessCat?.money ?? []);
+		(isSlpGlLst || isSlpRecLst) &&
+			(result = sessCat?.sleep ?? []);
 
 		return result;
 	}, [
-		isExerciseGoalList,
-		isExerciseRecordList,
-		isFoodGoalList,
-		isFoodRecordList,
-		isMoneyGoalList,
-		isMoneyRecordList,
-		isSleepGoalList,
-		isSleepRecordList,
-		sessionCategory,
+		isExerGlLst,
+		isExerRecLst,
+		isFdGlLst,
+		isFdRecLst,
+		isMnyGlLst,
+		isMnyRecLst,
+		isSlpGlLst,
+		isSlpRecLst,
+		sessCat,
 	]);
 
 	// 3. partArray ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const partArray = useMemo(() => {
 		let partKey: string = ``;
 
-		(isExerciseGoalList || isExerciseRecordList) &&
+		(isExerGlLst || isExerRecLst) &&
 			(partKey = `exercise_record_part`);
-		(isFoodGoalList || isFoodRecordList) && (partKey = `food_record_part`);
-		(isMoneyGoalList || isMoneyRecordList) && (partKey = `money_record_part`);
+		(isFdGlLst || isFdRecLst) && (partKey = `food_record_part`);
+		(isMnyGlLst || isMnyRecLst) && (partKey = `money_record_part`);
 
 		if (!partKey) {
 			return [];
@@ -74,12 +74,12 @@ export const ListFilter = memo(({ state, setState }: ListFilterProps) => {
 
 		return [`all`, ...uniqueParts];
 	}, [
-		isExerciseGoalList,
-		isExerciseRecordList,
-		isFoodGoalList,
-		isFoodRecordList,
-		isMoneyGoalList,
-		isMoneyRecordList,
+		isExerGlLst,
+		isExerRecLst,
+		isFdGlLst,
+		isFdRecLst,
+		isMnyGlLst,
+		isMnyRecLst,
 		dataArray,
 	]);
 
@@ -88,10 +88,10 @@ export const ListFilter = memo(({ state, setState }: ListFilterProps) => {
 		let partKey: string = ``;
 		let titleKey: string = ``;
 
-		(isExerciseGoalList || isExerciseRecordList) &&
+		(isExerGlLst || isExerRecLst) &&
 			((partKey = `exercise_record_part`),
 			(titleKey = `exercise_record_title`));
-		(isMoneyGoalList || isMoneyRecordList) &&
+		(isMnyGlLst || isMnyRecLst) &&
 			((partKey = `money_record_part`), (titleKey = `money_record_title`));
 
 		if (!partKey || !titleKey) {
@@ -109,16 +109,16 @@ export const ListFilter = memo(({ state, setState }: ListFilterProps) => {
 
 		return [`all`, ...uniqueTitles];
 	}, [
-		isExerciseGoalList,
-		isExerciseRecordList,
-		isMoneyGoalList,
-		isMoneyRecordList,
+		isExerGlLst,
+		isExerRecLst,
+		isMnyGlLst,
+		isMnyRecLst,
 		dataArray,
 		state?.PAGING?.part,
 	]);
 
 	// 7. filter ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const listFilterNode = useMemo(() => {
+	const lstFltNd = useMemo(() => {
 		// 7-1. sort ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 		const sortSection = (
 			<Select
@@ -219,7 +219,7 @@ export const ListFilter = memo(({ state, setState }: ListFilterProps) => {
 				>
 					{dateSection}
 				</Div>
-				{isExerciseGoalList || isExerciseRecordList ? (
+				{isExerGlLst || isExerRecLst ? (
 					<>
 						<Div className={`d-center my-1vh mx-5px`} style={{ flexShrink: 0 }}>
 							{partSection}
@@ -229,12 +229,12 @@ export const ListFilter = memo(({ state, setState }: ListFilterProps) => {
 						</Div>
 					</>
 				) : null}
-				{isFoodGoalList || isFoodRecordList ? (
+				{isFdGlLst || isFdRecLst ? (
 					<Div className={`d-center my-1vh mx-5px`} style={{ flexShrink: 0 }}>
 						{partSection}
 					</Div>
 				) : null}
-				{isMoneyGoalList || isMoneyRecordList ? (
+				{isMnyGlLst || isMnyRecLst ? (
 					<>
 						<Div className={`d-center my-1vh mx-5px`} style={{ flexShrink: 0 }}>
 							{partSection}
@@ -252,14 +252,14 @@ export const ListFilter = memo(({ state, setState }: ListFilterProps) => {
 		setState,
 		partArray,
 		titleArray,
-		isExerciseGoalList,
-		isExerciseRecordList,
-		isFoodGoalList,
-		isFoodRecordList,
-		isMoneyGoalList,
-		isMoneyRecordList,
+		isExerGlLst,
+		isExerRecLst,
+		isFdGlLst,
+		isFdRecLst,
+		isMnyGlLst,
+		isMnyRecLst,
 	]);
 
 	// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	return <>{listFilterNode}</>;
+	return <>{lstFltNd}</>;
 });

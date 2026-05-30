@@ -29,27 +29,27 @@ export const ExercisePie: ExercisePieType = {
 	name: `Empty`,
 	value: 100,
 };
-export const ExerciseLineVolume: ExerciseLineType = {
+export const ExerLnVol: ExerciseLineType = {
 	name: ``,
 	date: ``,
 	volume: ``,
 };
-export const ExerciseLineCardio: ExerciseLineType = {
+export const ExerLnCrd: ExerciseLineType = {
 	name: ``,
 	date: ``,
 	cardio: ``,
 };
-export const ExerciseLineScale: ExerciseLineType = {
+export const ExerLnScl: ExerciseLineType = {
 	name: ``,
 	date: ``,
 	scale: ``,
 };
-export const ExerciseAvgVolume: ExerciseAvgType = {
+export const ExerAvgVol: ExerciseAvgType = {
 	name: ``,
 	date: ``,
 	volume: ``,
 };
-export const ExerciseAvgCardio: ExerciseAvgType = {
+export const ExerAvgCrd: ExerciseAvgType = {
 	name: ``,
 	date: ``,
 	cardio: ``,

@@ -5,7 +5,7 @@
  * @since 2025-12-25
  */
 
-import { useCommonDate } from "@exportHooks";
+import { useCommonDate as usCmmnDt } from "@exportHooks";
 import { useEffect } from "@exportReacts";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
@@ -16,17 +16,17 @@ export const useTime = (
 	type: string,
 ) => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { getDayFmt } = useCommonDate();
+	const { getDayFmt } = usCmmnDt();
 	const match: RegExpMatchArray | null = PATH.match(/\/([^/]+)\//);
 	const strLow: string | null = match ? match[1] : null;
 
 	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	useEffect(() => {
-		const isGoalExercise: boolean = type === `goal` && strLow === `exercise`;
+		const isGlExer: boolean = type === `goal` && strLow === `exercise`;
 		const isGoalSleep: boolean = type === `goal` && strLow === `sleep`;
-		const isRecordSleep: boolean = type === `record` && strLow === `sleep`;
+		const isRecSlp: boolean = type === `record` && strLow === `sleep`;
 
-		const getRecordSleepTime: (_section: unknown) => string | null = (
+		const gtRecSlpTm: (_section: unknown) => string | null = (
 			section,
 		) => {
 			const sectionObj: Record<string, unknown> =
@@ -39,7 +39,7 @@ export const useTime = (
 
 		let handled: boolean = false;
 
-		if (isGoalExercise) {
+		if (isGlExer) {
 			handled = true;
 
 			const startTime: string =
@@ -129,13 +129,13 @@ export const useTime = (
 			}
 		}
 
-		if (!handled && isRecordSleep) {
+		if (!handled && isRecSlp) {
 			const dayFmt: string = String(getDayFmt());
 			const sectionsRaw: unknown = OBJECT[`sleep_section`];
 			const sections: unknown[] = Array.isArray(sectionsRaw) ? sectionsRaw : [];
 
 			if (sections.length > 0) {
-				const updatedSections: unknown[] = sections.map((section: unknown) => {
+				const updtSctn: unknown[] = sections.map((section: unknown) => {
 					if (!section || typeof section !== `object`) {
 						return section;
 					}
@@ -195,22 +195,22 @@ export const useTime = (
 				});
 
 				setOBJECT((prev: Record<string, unknown>) => {
-					const prevSectionsRaw: unknown = prev[`sleep_section`];
-					const prevSections: unknown[] = Array.isArray(prevSectionsRaw)
-						? prevSectionsRaw
+					const prvSctnRw: unknown = prev[`sleep_section`];
+					const prevSections: unknown[] = Array.isArray(prvSctnRw)
+						? prvSctnRw
 						: [];
 					const isSame: boolean =
-						prevSections.length === updatedSections.length &&
+						prevSections.length === updtSctn.length &&
 						prevSections.every(
 							(s: unknown, idx: number) =>
-								getRecordSleepTime(s) ===
-								getRecordSleepTime(updatedSections[idx]),
+								gtRecSlpTm(s) ===
+								gtRecSlpTm(updtSctn[idx]),
 						);
 					return isSame
 						? prev
 						: {
 								...prev,
-								sleep_section: updatedSections,
+								sleep_section: updtSctn,
 							};
 				});
 			}

@@ -53,14 +53,14 @@ export const Select = memo((props: any) => {
 			const name: string = e.target.name;
 			debounceRef.current = setTimeout(() => {
 				// 새로운 이벤트 객체 생성
-				const syntheticEvent = {
+				const syntEvt = {
 					target: { value: value, name: name },
 					currentTarget: { value: value, name: name },
 					persist: () => {},
 					preventDefault: () => {},
 					stopPropagation: () => {},
 				} as React.ChangeEvent<HTMLInputElement>;
-				original(syntheticEvent);
+				original(syntEvt);
 			}, debounceMs);
 		},
 		[props?.onChange, props?.debounceMs],
@@ -94,7 +94,7 @@ export const Select = memo((props: any) => {
 	);
 
 	// 5. memo ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const slotPropsMemo = useMemo(
+	const sltPrpsMm = useMemo(
 		() => ({
 			...props?.slotProps,
 			input: {
@@ -170,7 +170,7 @@ export const Select = memo((props: any) => {
 			onClick={handleClick}
 			onChange={handleChange}
 			sx={sxMemo}
-			slotProps={slotPropsMemo}
+			slotProps={sltPrpsMm}
 		/>
 	);
 });

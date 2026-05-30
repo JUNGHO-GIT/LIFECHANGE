@@ -6,7 +6,7 @@
  */
 
 import { Paper } from "@exportComponents";
-import { useCommonValue } from "@exportHooks";
+import { useCommonValue as usCmmnVal } from "@exportHooks";
 import { memo, useEffect, useState } from "@exportReacts";
 import { Buttons } from "./Buttons";
 import { FindFilter } from "./FindFilter";
@@ -22,11 +22,11 @@ declare interface FooterProps {
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const Footer = memo(({ state, setState, flow }: FooterProps) => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { PATH } = useCommonValue();
+	const { PATH } = usCmmnVal();
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const [typeName, setTypeName] = useState<string>(``);
-	const [styleClass, setStyleClass] = useState<string>(``);
+	const [styleClass, stStylClss] = useState<string>(``);
 
 	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	useEffect(() => {
@@ -39,36 +39,36 @@ export const Footer = memo(({ state, setState, flow }: FooterProps) => {
 			PATH.includes(`/goal/list`) || PATH.includes(`/record/list`);
 		const isDetail: boolean =
 			PATH.includes(`/goal/detail`) || PATH.includes(`/record/detail`);
-		const isCalendarDetail: boolean = PATH.includes(`/calendar/detail`);
+		const isClndDtl: boolean = PATH.includes(`/calendar/detail`);
 
 		isUser &&
 			(() => {
 				setTypeName(`btn`);
-				setStyleClass(`${commonStr} bottom-0vh`);
+				stStylClss(`${commonStr} bottom-0vh`);
 			})();
 
 		isFood &&
 			(() => {
 				setTypeName(`findFilter`);
-				setStyleClass(`${commonStr} bottom-8vh`);
+				stStylClss(`${commonStr} bottom-8vh`);
 			})();
 
 		isList &&
 			(() => {
 				setTypeName(`listFilter`);
-				setStyleClass(`${commonStr} bottom-8vh`);
+				stStylClss(`${commonStr} bottom-8vh`);
 			})();
 
 		isDetail &&
 			(() => {
 				setTypeName(`btn`);
-				setStyleClass(`${commonStr} bottom-8vh`);
+				stStylClss(`${commonStr} bottom-8vh`);
 			})();
 
-		isCalendarDetail &&
+		isClndDtl &&
 			(() => {
 				setTypeName(`btn`);
-				setStyleClass(`${commonStr} bottom-8vh`);
+				stStylClss(`${commonStr} bottom-8vh`);
 			})();
 	}, [PATH]);
 
@@ -77,19 +77,19 @@ export const Footer = memo(({ state, setState, flow }: FooterProps) => {
 		// 1. btn
 		const btnSection = () => <Buttons state={state} flow={flow} />;
 		// 3. listFilter
-		const listFilterSection = () => (
+		const lstFltSec = () => (
 			<ListFilter state={state} setState={setState} />
 		);
 		// 4. findFilter
-		const findFilterSection = () => (
+		const fndFltSec = () => (
 			<FindFilter state={state} setState={setState} flow={flow} />
 		);
 		// 5. return
 		return (
 			<Paper className={`${styleClass} fadeIn`}>
 				{typeName === `btn` && btnSection()}
-				{typeName === `listFilter` && listFilterSection()}
-				{typeName === `findFilter` && findFilterSection()}
+				{typeName === `listFilter` && lstFltSec()}
+				{typeName === `findFilter` && fndFltSec()}
 			</Paper>
 		);
 	};

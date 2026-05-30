@@ -10,22 +10,22 @@ import mongoose from "mongoose";
 
 // 0. exist ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const exist = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await MoneyRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				money_record_dateStart: {
-					$lte: dateEnd_param,
+					$lte: dtEndPrm,
 				},
 				money_record_dateEnd: {
-					$gte: dateStart_param,
+					$gte: dtStrtPrm,
 				},
-				...(dateType_param ? { money_record_dateType: dateType_param } : {}),
+				...(dtTypPrm2 ? { money_record_dateType: dtTypPrm2 } : {}),
 			},
 		},
 		{
@@ -48,10 +48,10 @@ export const exist = async (
 
 // 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const list = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 	sort_param: 1 | -1,
 	page_param: number,
 	part_param?: string,
@@ -69,16 +69,16 @@ export const list = async (
 	const finalResult: any = await MoneyRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				money_record_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				money_record_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
-				...(dateType_param ? { money_record_dateType: dateType_param } : {}),
+				...(dtTypPrm2 ? { money_record_dateType: dtTypPrm2 } : {}),
 				...matchSection,
 			},
 		},
@@ -177,16 +177,16 @@ export const list = async (
 
 // 2. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const detail = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await MoneyRecord.findOne({
-		user_id: user_id_param,
-		money_record_dateStart: dateStart_param,
-		money_record_dateEnd: dateEnd_param,
-		...(dateType_param ? { money_record_dateType: dateType_param } : {}),
+		user_id: usrIdPrm,
+		money_record_dateStart: dtStrtPrm,
+		money_record_dateEnd: dtEndPrm,
+		...(dtTypPrm2 ? { money_record_dateType: dtTypPrm2 } : {}),
 	}).lean();
 
 	return finalResult;
@@ -194,18 +194,18 @@ export const detail = async (
 
 // 3. create ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const create = async (
-	user_id_param: string,
+	usrIdPrm: string,
 	OBJECT_param: any,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await MoneyRecord.create({
 		_id: new mongoose.Types.ObjectId(),
-		user_id: user_id_param,
-		money_record_dateType: dateType_param,
-		money_record_dateStart: dateStart_param,
-		money_record_dateEnd: dateEnd_param,
+		user_id: usrIdPrm,
+		money_record_dateType: dtTypPrm2,
+		money_record_dateStart: dtStrtPrm,
+		money_record_dateEnd: dtEndPrm,
 		money_record_total_income: OBJECT_param.money_record_total_income,
 		money_record_total_expense: OBJECT_param.money_record_total_expense,
 		money_section: OBJECT_param.money_section,
@@ -220,18 +220,18 @@ export const create = async (
 export const update = {
 	// 1. update (기존항목 유지 + 타겟항목으로 수정)
 	update: async (
-		user_id_param: string,
+		usrIdPrm: string,
 		OBJECT_param: any,
-		dateType_param: string,
-		dateStart_param: string,
-		dateEnd_param: string,
+		dtTypPrm2: string,
+		dtStrtPrm: string,
+		dtEndPrm: string,
 	) => {
 		const finalResult: any = await MoneyRecord.findOneAndUpdate(
 			{
-				user_id: user_id_param,
-				money_record_dateStart: dateStart_param,
-				money_record_dateEnd: dateEnd_param,
-				...(dateType_param ? { money_record_dateType: dateType_param } : {}),
+				user_id: usrIdPrm,
+				money_record_dateStart: dtStrtPrm,
+				money_record_dateEnd: dtEndPrm,
+				...(dtTypPrm2 ? { money_record_dateType: dtTypPrm2 } : {}),
 			},
 			{
 				$set: {
@@ -252,17 +252,17 @@ export const update = {
 
 	// 2. insert (기존항목 제거 + 타겟항목에 추가)
 	insert: async (
-		user_id_param: string,
+		usrIdPrm: string,
 		OBJECT_param: any,
-		dateType_param: string,
-		dateStart_param: string,
-		dateEnd_param: string,
+		dtTypPrm2: string,
+		dtStrtPrm: string,
+		dtEndPrm: string,
 	) => {
 		const findResult: any = await MoneyRecord.findOne({
-			user_id: user_id_param,
-			money_record_dateStart: dateStart_param,
-			money_record_dateEnd: dateEnd_param,
-			...(dateType_param ? { money_record_dateType: dateType_param } : {}),
+			user_id: usrIdPrm,
+			money_record_dateStart: dtStrtPrm,
+			money_record_dateEnd: dtEndPrm,
+			...(dtTypPrm2 ? { money_record_dateType: dtTypPrm2 } : {}),
 		}).lean();
 
 		const newIncome: string = String(
@@ -276,10 +276,10 @@ export const update = {
 
 		const finalResult: any = await MoneyRecord.updateOne(
 			{
-				user_id: user_id_param,
-				money_record_dateStart: dateStart_param,
-				money_record_dateEnd: dateEnd_param,
-				...(dateType_param ? { money_record_dateType: dateType_param } : {}),
+				user_id: usrIdPrm,
+				money_record_dateStart: dtStrtPrm,
+				money_record_dateEnd: dtEndPrm,
+				...(dtTypPrm2 ? { money_record_dateType: dtTypPrm2 } : {}),
 			},
 			{
 				$set: {
@@ -301,18 +301,18 @@ export const update = {
 
 	// 3. replace (기존항목 제거 + 타겟항목을 교체)
 	replace: async (
-		user_id_param: string,
+		usrIdPrm: string,
 		OBJECT_param: any,
-		dateType_param: string,
-		dateStart_param: string,
-		dateEnd_param: string,
+		dtTypPrm2: string,
+		dtStrtPrm: string,
+		dtEndPrm: string,
 	) => {
 		const finalResult: any = await MoneyRecord.findOneAndUpdate(
 			{
-				user_id: user_id_param,
-				money_record_dateStart: dateStart_param,
-				money_record_dateEnd: dateEnd_param,
-				...(dateType_param ? { money_record_dateType: dateType_param } : {}),
+				user_id: usrIdPrm,
+				money_record_dateStart: dtStrtPrm,
+				money_record_dateEnd: dtEndPrm,
+				...(dtTypPrm2 ? { money_record_dateType: dtTypPrm2 } : {}),
 			},
 			{
 				$set: {
@@ -334,16 +334,16 @@ export const update = {
 
 // 5. delete ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const deletes = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await MoneyRecord.findOneAndDelete({
-		user_id: user_id_param,
-		money_record_dateStart: dateStart_param,
-		money_record_dateEnd: dateEnd_param,
-		...(dateType_param ? { money_record_dateType: dateType_param } : {}),
+		user_id: usrIdPrm,
+		money_record_dateStart: dtStrtPrm,
+		money_record_dateEnd: dtEndPrm,
+		...(dtTypPrm2 ? { money_record_dateType: dtTypPrm2 } : {}),
 	}).lean();
 
 	return finalResult;

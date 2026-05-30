@@ -7,49 +7,49 @@
 
 import { Div, Grid, Hr, Icons, Img, Paper } from "@exportComponents";
 import {
-	useCommonDate,
-	useCommonValue,
-	useStorageLocal,
-	useStorageSession,
+	useCommonDate as usCmmnDt,
+	useCommonValue as usCmmnVal,
+	useStorageLocal as usStrgLcl,
+	useStorageSession as usStrgSess,
 } from "@exportHooks";
 import { Dialog, Empty, Footer } from "@exportLayouts";
 import { axios } from "@exportLibs";
 import {
 	Accordion,
-	AccordionDetails,
-	AccordionSummary,
+	AccordionDetails as AccrDtls,
+	AccordionSummary as AccrSmmr,
 	Checkbox,
 } from "@exportMuis";
 import { memo, useEffect, useState } from "@exportReacts";
 import { FoodFind, type FoodFindType } from "@exportSchemas";
 import { getSession, insertComma, setSession } from "@exportScripts";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const FoodFindList = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, PATH, localIsoCode } = useCommonValue();
-	const { location_dateType, location_dateStart, location_dateEnd } =
-		useCommonValue();
-	const { sessionFoodSection } = useCommonValue();
-	const { getDayFmt } = useCommonDate();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
+	const { URL_OBJECT, PATH, localIsoCode } = usCmmnVal();
+	const { location_dateType: locDtTyp, location_dateStart: locDtStrt, location_dateEnd: locDtEnd } =
+		usCmmnVal();
+	const { sessionFoodSection: sessFdSec } = usCmmnVal();
+	const { getDayFmt } = usCmmnDt();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
 
 	// 2-1. useStorageSession ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const [PAGING, setPAGING] = useStorageSession(`paging`, PATH, ``, {
+	const [PAGING, setPAGING] = usStrgSess(`paging`, PATH, ``, {
 		sort: `asc`,
 		query: ``,
 		page: 0,
 	});
 
 	// 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const [isExpanded, setIsExpanded] = useStorageLocal(`isExpanded`, PATH, ``, [
+	const [isExpanded, stIsExpn] = usStrgLcl(`isExpanded`, PATH, ``, [
 		{
 			expanded: true,
 		},
@@ -57,7 +57,7 @@ export const FoodFindList = memo(() => {
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const [OBJECT, setOBJECT] = useState<[FoodFindType]>([FoodFind]);
-	const [selectedKeys, setSelectedKeys] = useState<Set<string>>(new Set());
+	const [selectedKeys, stSelKys] = useState<Set<string>>(new Set());
 	const [SEND, setSEND] = useState({
 		id: ``,
 		dateType: `day`,
@@ -70,9 +70,9 @@ export const FoodFindList = memo(() => {
 		newSectionCnt: 0,
 	});
 	const [DATE, setDATE] = useState({
-		dateType: location_dateType ?? `day`,
-		dateStart: location_dateStart ?? getDayFmt(),
-		dateEnd: location_dateEnd ?? getDayFmt(),
+		dateType: locDtTyp ?? `day`,
+		dateStart: locDtStrt ?? getDayFmt(),
+		dateEnd: locDtEnd ?? getDayFmt(),
 	});
 
 	// 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -87,12 +87,12 @@ export const FoodFindList = memo(() => {
 	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	// - 선택된 항목 키를 세션 스토리지에서 동기화
 	useEffect(() => {
-		const sectionArray: any[] = sessionFoodSection ?? [];
+		const sectionArray: any[] = sessFdSec ?? [];
 		const keys: Set<string> = new Set<string>(
 			sectionArray.map((s: any) => s.food_record_key),
 		);
-		setSelectedKeys(keys);
-	}, [sessionFoodSection]);
+		stSelKys(keys);
+	}, [sessFdSec]);
 
 	// 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 	async function flowFind() {
@@ -112,7 +112,7 @@ export const FoodFindList = memo(() => {
 					totalCnt: res.data.totalCnt ?? 0,
 				}));
 				// 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
-				setIsExpanded(() => {
+				stIsExpn(() => {
 					if (res.data.result?.length !== isExpanded.length) {
 						return new Array(res.data.result?.length).fill({ expanded: true });
 					}
@@ -135,11 +135,11 @@ export const FoodFindList = memo(() => {
 
 	// 4. handle ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 	// - 체크박스 변경 시
-	const handleCheckboxChange = (index: number) => {
+	const hndlChckChg = (index: number) => {
 		// 스토리지 데이터 가져오기 (최신 값을 직접 가져옴)
-		const currentSection: any = getSession(`section`, `food`, ``) ?? [];
+		const curSec: any = getSession(`section`, `food`, ``) ?? [];
 		let sectionArray: any[] =
-			currentSection?.length > 0 ? [...currentSection] : [];
+			curSec?.length > 0 ? [...curSec] : [];
 
 		const item: FoodFindType = OBJECT[index];
 		const key: string = item.food_record_key;
@@ -176,7 +176,7 @@ export const FoodFindList = memo(() => {
 						sectionArray.push(newItem);
 				})();
 
-		setSelectedKeys(nextSelected);
+		stSelKys(nextSelected);
 		setSession(`section`, `food`, ``, sectionArray);
 	};
 
@@ -196,7 +196,7 @@ export const FoodFindList = memo(() => {
 								className={`border-0 shadow-0 radius-2`}
 								expanded={isExpanded?.[i]?.expanded}
 							>
-								<AccordionSummary
+								<AccrSmmr
 									expandIcon={
 										<Icons
 											key={`ChevronDown`}
@@ -205,7 +205,7 @@ export const FoodFindList = memo(() => {
 											onClick={(e: any) => {
 												e.preventDefault();
 												e.stopPropagation();
-												setIsExpanded(
+												stIsExpn(
 													isExpanded.map((el: any, index: number) =>
 														i === index
 															? {
@@ -227,7 +227,7 @@ export const FoodFindList = memo(() => {
 												checked={selectedKeys.has(item.food_record_key)}
 												onChange={(e: any) => {
 													e.stopPropagation();
-													handleCheckboxChange(i);
+													hndlChckChg(i);
 												}}
 											/>
 										</Grid>
@@ -248,8 +248,8 @@ export const FoodFindList = memo(() => {
 											</Div>
 										</Grid>
 									</Grid>
-								</AccordionSummary>
-								<AccordionDetails>
+								</AccrSmmr>
+								<AccrDtls>
 									<Grid container={true} spacing={1}>
 										{/** row 1 * */}
 										<Grid container={true} spacing={1}>
@@ -385,7 +385,7 @@ export const FoodFindList = memo(() => {
 											</Grid>
 										</Grid>
 									</Grid>
-								</AccordionDetails>
+								</AccrDtls>
 							</Accordion>
 						</Grid>
 					</Grid>
@@ -408,7 +408,7 @@ export const FoodFindList = memo(() => {
 
 	// 8. dialog ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const dialogNode = () => (
-		<Dialog COUNT={COUNT} setCOUNT={setCOUNT} setIsExpanded={setIsExpanded} />
+		<Dialog COUNT={COUNT} setCOUNT={setCOUNT} setIsExpanded={stIsExpn} />
 	);
 
 	// 9. footer ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-

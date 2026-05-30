@@ -7,24 +7,24 @@
 
 import { Btn, Div, Grid, Hr, Img, Paper } from "@exportComponents";
 import { Input } from "@exportContainers";
-import { useCommonValue, useValidateUser } from "@exportHooks";
+import { useCommonValue as usCmmnVal, useValidateUser as usValUsr } from "@exportHooks";
 import { axios } from "@exportLibs";
 import { memo, type React, useEffect, useRef, useState } from "@exportReacts";
 import { User, type UserType } from "@exportSchemas";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const UserResetPw = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, URL_GOOGLE, navigate } = useCommonValue();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
-	const { ERRORS, REFS, validate } = useValidateUser();
+	const { URL_OBJECT, URL_GOOGLE, navigate } = usCmmnVal();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
+	const { ERRORS, REFS, validate } = usValUsr();
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const [OBJECT, setOBJECT] = useState<UserType>(User);
@@ -38,7 +38,7 @@ export const UserResetPw = memo(() => {
 	}, [OBJECT]);
 
 	// 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const flowSendEmail = async () => {
+	const flwSndEml = async () => {
 		setLOADING(true);
 		if (!(await validate(objectRef.current, `resetPw`, `send`))) {
 			setLOADING(false);
@@ -111,7 +111,7 @@ export const UserResetPw = memo(() => {
 	};
 
 	// 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const flowVerifyEmail = async () => {
+	const flwVrfyEml = async () => {
 		setLOADING(true);
 		if (!(await validate(objectRef.current, `resetPw`, `verify`))) {
 			setLOADING(false);
@@ -235,7 +235,7 @@ export const UserResetPw = memo(() => {
 	};
 
 	// 7. userResetPw ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const userResetPwNode = () => {
+	const usrRstPwNd = () => {
 		// 7-1. title
 		const titleSection = () => (
 			<Grid container={true} spacing={1}>
@@ -287,7 +287,7 @@ export const UserResetPw = memo(() => {
 									className={`mt-n25px`}
 									disabled={item.user_id_verified}
 									onClick={() => {
-										void flowSendEmail();
+										void flwSndEml();
 									}}
 								>
 									{translate(`send`)}
@@ -320,7 +320,7 @@ export const UserResetPw = memo(() => {
 									className={`mt-n25px`}
 									disabled={!item.user_id_sended || item.user_id_verified}
 									onClick={() => {
-										void flowVerifyEmail();
+										void flwVrfyEml();
 									}}
 								>
 									{translate(`verify`)}
@@ -376,7 +376,7 @@ export const UserResetPw = memo(() => {
 			</Grid>
 		);
 		// 7-4. button
-		const buttonSection = () => (
+		const bttnSec = () => (
 			<Grid container={true} spacing={1}>
 				{/** row 1 * */}
 				<Grid container={true} spacing={1}>
@@ -467,7 +467,7 @@ export const UserResetPw = memo(() => {
 				<Hr m={30} className={`bg-light`} />
 				{resetSection()}
 				<Hr m={30} className={`bg-light`} />
-				{buttonSection()}
+				{bttnSec()}
 				<Hr m={30} className={`bg-light`} />
 				{linkSection()}
 			</Paper>
@@ -475,5 +475,5 @@ export const UserResetPw = memo(() => {
 	};
 
 	// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	return <>{userResetPwNode()}</>;
+	return <>{usrRstPwNd()}</>;
 });

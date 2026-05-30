@@ -8,26 +8,26 @@
 import { Br, Div, Grid, Icons, Img } from "@exportComponents";
 import { MuiFileInput } from "@exportMuis";
 import { memo, useEffect, useRef, useState } from "@exportReacts";
-import { useStoreAlert } from "@exportStores";
+import { useStoreAlert as usStrAlrt } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const InputFile = memo(
-	({ handleExistingFilesChange, ...props }: any) => {
+	({ handleExistingFilesChange: hndExFlCh, ...props }: any) => {
 		// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		const { setALERT } = useStoreAlert();
+		const { setALERT } = usStrAlrt();
 
 		// 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-		const [fileExisting, setFileExisting] = useState<any[]>([]);
+		const [fileExisting, stFlExst] = useState<any[]>([]);
 		const [fileList, setFileList] = useState<File[]>([]);
 		const [_fileCount, setFileCount] = useState<number>(0);
-		const [fileHeight, setFileHeight] = useState<string>(`100px`);
+		const [fileHeight, stFlHght] = useState<string>(`100px`);
 		const [fileLimit, setFileLimit] = useState<number>(1);
-		const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+		const [previewUrls, stPrvwUrls] = useState<string[]>([]);
 
 		// 2-2. useRef ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 		const fileInputRef: React.RefObject<HTMLInputElement | null> =
 			useRef<HTMLInputElement | null>(null);
-		const previewUrlRef: React.RefObject<string[]> = useRef<string[]>([]);
+		const prvwUrlRf: React.RefObject<string[]> = useRef<string[]>([]);
 		const isPickingRef: React.RefObject<boolean> = useRef<boolean>(false);
 
 		// 3. util ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
@@ -36,7 +36,7 @@ export const InputFile = memo(
 			a.size === b.size &&
 			a.lastModified === b.lastModified;
 
-		const areSameFileList = (a: File[], b: File[]) => {
+		const arSmFlLst = (a: File[], b: File[]) => {
 			if ((a?.length ?? 0) !== (b?.length ?? 0)) {
 				return false;
 			}
@@ -50,7 +50,7 @@ export const InputFile = memo(
 
 		// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 		useEffect(() => {
-			setFileExisting(props?.existing ?? []);
+			stFlExst(props?.existing ?? []);
 		}, [props?.existing]);
 
 		// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
@@ -62,56 +62,56 @@ export const InputFile = memo(
 		useEffect(() => {
 			const nextFiles: File[] = props?.value ?? [];
 			setFileList((prev: File[]) =>
-				areSameFileList(prev ?? [], nextFiles ?? []) ? prev : nextFiles,
+				arSmFlLst(prev ?? [], nextFiles ?? []) ? prev : nextFiles,
 			);
 		}, [props?.value]);
 
 		// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 		useEffect(() => {
 			const newCount: number = fileList?.length ?? 0;
-			const existingCount: number = fileExisting?.length ?? 0;
-			setFileCount(newCount + existingCount);
+			const exstCnt: number = fileExisting?.length ?? 0;
+			setFileCount(newCount + exstCnt);
 
-			const heightPerFile: number = 30;
+			const hghtPrFl: number = 30;
 			const minHeight: number = 100;
-			setFileHeight(`${Math.max(minHeight, newCount * heightPerFile)}px`);
+			stFlHght(`${Math.max(minHeight, newCount * hghtPrFl)}px`);
 		}, [fileList, fileExisting]);
 
 		// 2-3. useEffect (preview url 관리) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 		useEffect(() => {
 			// 기존 URL revoke
-			if (previewUrlRef.current?.length > 0) {
-				previewUrlRef.current.forEach((u: string) => {
+			if (prvwUrlRf.current?.length > 0) {
+				prvwUrlRf.current.forEach((u: string) => {
 					URL.revokeObjectURL(u);
 				});
-				previewUrlRef.current = [];
+				prvwUrlRf.current = [];
 			}
 
 			const urls: string[] = (fileList ?? []).map((file: File) =>
 				URL.createObjectURL(file as Blob),
 			);
 
-			previewUrlRef.current = urls;
-			setPreviewUrls(urls);
+			prvwUrlRf.current = urls;
+			stPrvwUrls(urls);
 
 			return () => {
-				if (previewUrlRef.current?.length > 0) {
-					previewUrlRef.current.forEach((u: string) => {
+				if (prvwUrlRf.current?.length > 0) {
+					prvwUrlRf.current.forEach((u: string) => {
 						URL.revokeObjectURL(u);
 					});
-					previewUrlRef.current = [];
+					prvwUrlRf.current = [];
 				}
 			};
 		}, [fileList]);
 
 		// 6. handle (파일 추가) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		const flowFileChange = (newFiles: File[] | null) => {
+		const flwFlChg = (newFiles: File[] | null) => {
 			let hasError: boolean = false;
 			let errorMsg: string = ``;
 
 			const incoming: File[] = newFiles ?? [];
 			const currentFiles: File[] = fileList ?? [];
-			const existingCount: number = fileExisting?.length ?? 0;
+			const exstCnt: number = fileExisting?.length ?? 0;
 			const currentCount: number = currentFiles?.length ?? 0;
 
 			// 파일이 이미지가 아닌 경우
@@ -127,7 +127,7 @@ export const InputFile = memo(
 				: null;
 
 			// 중복 제거 (name/size/lastModified)
-			const nonDuplicateFiles: File[] = !hasError
+			const nnDplcFls: File[] = !hasError
 				? incoming.filter(
 						(newFile: File) =>
 							!currentFiles.some((existingFile: File) =>
@@ -138,7 +138,7 @@ export const InputFile = memo(
 
 			// 파일 제한 체크 (현재 기준)
 			!hasError &&
-			existingCount + currentCount + nonDuplicateFiles.length > fileLimit
+			exstCnt + currentCount + nnDplcFls.length > fileLimit
 				? ((hasError = true),
 					(errorMsg = `파일은 최대 ${fileLimit}개까지 업로드 가능합니다.`))
 				: null;
@@ -152,7 +152,7 @@ export const InputFile = memo(
 				: (() => {
 						const updatedFiles: File[] = [
 							...currentFiles,
-							...nonDuplicateFiles,
+							...nnDplcFls,
 						];
 						setFileList(updatedFiles);
 						props.onChange(updatedFiles);
@@ -161,7 +161,7 @@ export const InputFile = memo(
 
 		// 5. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 		// 파일 선택창 오픈은 CirclePlus 아이콘에서만 호출되도록 제한
-		const handleFileAdd = (e: any) => {
+		const hndlFlAdd = (e: any) => {
 			e.preventDefault();
 			e.stopPropagation();
 
@@ -183,7 +183,7 @@ export const InputFile = memo(
 		};
 
 		// 6. handle (파일 삭제) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		const handleFileDelete = (index: number, extra?: string) => {
+		const hndlFlDlt = (index: number, extra?: string) => {
 			if (extra === `single`) {
 				const updatedFiles: File[] = (fileList ?? []).filter(
 					(_file: File, i: number) => i !== index,
@@ -197,19 +197,19 @@ export const InputFile = memo(
 		};
 
 		// 6. handle (기존 파일 삭제) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		const handleExistingFileDelete = (index: number) => {
-			const updatedExistingFile: any[] = fileExisting?.filter(
+		const hndExFlDl = (index: number) => {
+			const updtExstFl: any[] = fileExisting?.filter(
 				(_file: any, i: number) => i !== index,
 			);
-			setFileExisting(updatedExistingFile);
+			stFlExst(updtExstFl);
 
-			if (handleExistingFilesChange) {
-				handleExistingFilesChange(updatedExistingFile);
+			if (hndExFlCh) {
+				hndExFlCh(updtExstFl);
 			}
 		};
 
 		// 7. node ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-		const endAdornmentNode = (
+		const endAdrnNd = (
 			<Grid container={true} spacing={0} className={`w-100p`}>
 				<Grid size={12} className={`d-row-right mr-n20px`}>
 					<Icons
@@ -217,7 +217,7 @@ export const InputFile = memo(
 						name={`CirclePlus`}
 						className={`w-22px h-22px pointer-burgundy`}
 						onClick={(e: any) => {
-							handleFileAdd(e);
+							hndlFlAdd(e);
 						}}
 					/>
 					<Icons
@@ -227,7 +227,7 @@ export const InputFile = memo(
 						onClick={(e: any) => {
 							e.preventDefault();
 							e.stopPropagation();
-							handleFileDelete(0, `all`);
+							hndlFlDlt(0, `all`);
 						}}
 					/>
 				</Grid>
@@ -235,7 +235,7 @@ export const InputFile = memo(
 		);
 
 		// 7. node ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-		const adornmentNode = (
+		const adrnNd = (
 			<Grid container={true} spacing={0}>
 				<Grid size={12} className={`d-col-left`}>
 					{fileList && fileList?.length > 0
@@ -262,7 +262,7 @@ export const InputFile = memo(
 											onClick={(e: any) => {
 												e.preventDefault();
 												e.stopPropagation();
-												handleFileDelete(index, `single`);
+												hndlFlDlt(index, `single`);
 											}}
 										>
 											{file?.name ? `x` : ``}
@@ -298,7 +298,7 @@ export const InputFile = memo(
 								onClick={(e: any) => {
 									e.preventDefault();
 									e.stopPropagation();
-									handleExistingFileDelete(index);
+									hndExFlDl(index);
 								}}
 							>
 								{`x`}
@@ -324,7 +324,7 @@ export const InputFile = memo(
 					}}
 					onChange={(e: any) => {
 						const files: File[] = e?.target?.files ? [...e.target.files] : [];
-						flowFileChange(files);
+						flwFlChg(files);
 						isPickingRef.current = false;
 						e.target.value = ``;
 					}}
@@ -359,8 +359,8 @@ export const InputFile = memo(
 						className: props?.inputclass?.includes(`fs-`)
 							? `text-left ${props?.inputclass ?? ``}`
 							: `fs-0-9rem text-left ${props?.inputclass ?? ``}`,
-						startAdornment: adornmentNode,
-						endAdornment: endAdornmentNode,
+						startAdornment: adrnNd,
+						endAdornment: endAdrnNd,
 					}}
 				/>
 				<Br m={20} />

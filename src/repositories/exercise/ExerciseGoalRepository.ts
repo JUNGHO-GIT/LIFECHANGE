@@ -6,27 +6,27 @@
  */
 
 import { ExerciseGoal } from "@schemas/exercise/ExerciseGoal";
-import { ExerciseRecord } from "@schemas/exercise/ExerciseRecord";
+import { ExerciseRecord as ExerRec2 } from "@schemas/exercise/ExerciseRecord";
 import mongoose from "mongoose";
 
 // 0. exist ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const exist = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await ExerciseGoal.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				exercise_goal_dateStart: {
-					$lte: dateEnd_param,
+					$lte: dtEndPrm,
 				},
 				exercise_goal_dateEnd: {
-					$gte: dateStart_param,
+					$gte: dtStrtPrm,
 				},
-				...(dateType_param ? { exercise_goal_dateType: dateType_param } : {}),
+				...(dtTypPrm2 ? { exercise_goal_dateType: dtTypPrm2 } : {}),
 			},
 		},
 		{
@@ -49,24 +49,24 @@ export const exist = async (
 
 // 1-1. list (goal) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const listGoal = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 	sort_param: 1 | -1,
 	page_param: number,
 ) => {
 	const finalResult: any = await ExerciseGoal.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				exercise_goal_dateStart: {
-					$lte: dateEnd_param,
+					$lte: dtEndPrm,
 				},
 				exercise_goal_dateEnd: {
-					$gte: dateStart_param,
+					$gte: dtStrtPrm,
 				},
-				...(dateType_param ? { exercise_goal_dateType: dateType_param } : {}),
+				...(dtTypPrm2 ? { exercise_goal_dateType: dtTypPrm2 } : {}),
 			},
 		},
 		{
@@ -96,24 +96,24 @@ export const listGoal = async (
 
 // 1-2. list (record) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const listRecord: any[] = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
-	const finalResult: any = await ExerciseRecord.aggregate([
+	const finalResult: any = await ExerRec2.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				exercise_record_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				exercise_record_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
-				...(dateType_param ? { exercise_record_dateType: dateType_param } : {}),
+				...(dtTypPrm2 ? { exercise_record_dateType: dtTypPrm2 } : {}),
 			},
 		},
 		{
@@ -155,16 +155,16 @@ export const listRecord: any[] = async (
 
 // 2. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const detail = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await ExerciseGoal.findOne({
-		user_id: user_id_param,
-		exercise_goal_dateStart: dateStart_param,
-		exercise_goal_dateEnd: dateEnd_param,
-		...(dateType_param ? { exercise_goal_dateType: dateType_param } : {}),
+		user_id: usrIdPrm,
+		exercise_goal_dateStart: dtStrtPrm,
+		exercise_goal_dateEnd: dtEndPrm,
+		...(dtTypPrm2 ? { exercise_goal_dateType: dtTypPrm2 } : {}),
 	}).lean();
 
 	return finalResult;
@@ -172,18 +172,18 @@ export const detail = async (
 
 // 3. create ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const create = async (
-	user_id_param: string,
+	usrIdPrm: string,
 	OBJECT_param: any,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await ExerciseGoal.create({
 		_id: new mongoose.Types.ObjectId(),
-		user_id: user_id_param,
-		exercise_goal_dateType: dateType_param,
-		exercise_goal_dateStart: dateStart_param,
-		exercise_goal_dateEnd: dateEnd_param,
+		user_id: usrIdPrm,
+		exercise_goal_dateType: dtTypPrm2,
+		exercise_goal_dateStart: dtStrtPrm,
+		exercise_goal_dateEnd: dtEndPrm,
 		exercise_goal_count: OBJECT_param.exercise_goal_count,
 		exercise_goal_volume: OBJECT_param.exercise_goal_volume,
 		exercise_goal_cardio: OBJECT_param.exercise_goal_cardio,
@@ -199,18 +199,18 @@ export const create = async (
 export const update = {
 	// 1. update (기존항목 유지 + 타겟항목으로 수정)
 	update: async (
-		user_id_param: string,
+		usrIdPrm: string,
 		OBJECT_param: any,
-		dateType_param: string,
-		dateStart_param: string,
-		dateEnd_param: string,
+		dtTypPrm2: string,
+		dtStrtPrm: string,
+		dtEndPrm: string,
 	) => {
 		const finalResult: any = await ExerciseGoal.findOneAndUpdate(
 			{
-				user_id: user_id_param,
-				exercise_goal_dateStart: dateStart_param,
-				exercise_goal_dateEnd: dateEnd_param,
-				...(dateType_param ? { exercise_goal_dateType: dateType_param } : {}),
+				user_id: usrIdPrm,
+				exercise_goal_dateStart: dtStrtPrm,
+				exercise_goal_dateEnd: dtEndPrm,
+				...(dtTypPrm2 ? { exercise_goal_dateType: dtTypPrm2 } : {}),
 			},
 			{
 				$set: {
@@ -234,18 +234,18 @@ export const update = {
 
 	// 3. replace (기존항목 제거 + 타겟항목을 교체)
 	replace: async (
-		user_id_param: string,
+		usrIdPrm: string,
 		OBJECT_param: any,
-		dateType_param: string,
-		dateStart_param: string,
-		dateEnd_param: string,
+		dtTypPrm2: string,
+		dtStrtPrm: string,
+		dtEndPrm: string,
 	) => {
 		const finalResult: any = await ExerciseGoal.findOneAndUpdate(
 			{
-				user_id: user_id_param,
-				exercise_goal_dateStart: dateStart_param,
-				exercise_goal_dateEnd: dateEnd_param,
-				...(dateType_param ? { exercise_goal_dateType: dateType_param } : {}),
+				user_id: usrIdPrm,
+				exercise_goal_dateStart: dtStrtPrm,
+				exercise_goal_dateEnd: dtEndPrm,
+				...(dtTypPrm2 ? { exercise_goal_dateType: dtTypPrm2 } : {}),
 			},
 			{
 				$set: {
@@ -268,16 +268,16 @@ export const update = {
 
 // 5. delete ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const deletes = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await ExerciseGoal.findOneAndDelete({
-		user_id: user_id_param,
-		exercise_goal_dateStart: dateStart_param,
-		exercise_goal_dateEnd: dateEnd_param,
-		...(dateType_param ? { exercise_goal_dateType: dateType_param } : {}),
+		user_id: usrIdPrm,
+		exercise_goal_dateStart: dtStrtPrm,
+		exercise_goal_dateEnd: dtEndPrm,
+		...(dtTypPrm2 ? { exercise_goal_dateType: dtTypPrm2 } : {}),
 	}).lean();
 
 	return finalResult;

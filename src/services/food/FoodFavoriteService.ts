@@ -9,19 +9,19 @@ import * as repository from "@repositories/food/FoodFavoriteRepository";
 
 // 1. list ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const list = async (
-  user_id_param: string,
+  usrIdPrm: string,
 ) => {
 
   // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
-  let totalCntResult: any = null;
+  let ttlCntRes: any = null;
   let statusResult: string = ``;
 
   findResult = await repository.list(
-    user_id_param,
+    usrIdPrm,
   );
-  totalCntResult = findResult?.length;
+  ttlCntRes = findResult?.length;
 
   if (!findResult) {
     finalResult = [];
@@ -41,15 +41,15 @@ export const list = async (
 
   return {
     status: statusResult,
-    totalCnt: totalCntResult,
+    totalCnt: ttlCntRes,
     result: finalResult,
   };
 };
 
 // 4. update ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const update = async (
-  user_id_param: string,
-  foodFavorite_param: any,
+  usrIdPrm: string,
+  fdFavPrm: any,
 ) => {
 
   // result 변수 선언
@@ -58,25 +58,25 @@ export const update = async (
   let finalResult: any = null;
   let statusResult: string = ``;
 
-  const foodKey: string = foodFavorite_param.food_record_key;
+  const foodKey: string = fdFavPrm.food_record_key;
 
   findResult = await repository.list(
-    user_id_param,
+    usrIdPrm,
   );
 
-  const existFavorite = findResult.some((item: any) => (
+  const exstFav = findResult.some((item: any) => (
     item.food_record_key === foodKey
   ));
 
-  foodFavorite_param = existFavorite ? findResult?.filter((item: any) => (
+  fdFavPrm = exstFav ? findResult?.filter((item: any) => (
     item.food_record_key !== foodKey
   )) : [
     ...findResult,
-    foodFavorite_param,
+    fdFavPrm,
   ];
 
   updateResult = await repository.update(
-    user_id_param, foodFavorite_param,
+    usrIdPrm, fdFavPrm,
   );
 
   if (!updateResult) {

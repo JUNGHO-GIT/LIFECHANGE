@@ -8,7 +8,7 @@
 // 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const list = async (object: any) => {
 	// 0. calcOverTenMillion ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const calcOverTenMillion = (param: string) => {
+	const clcOvrTnMlln = (param: string) => {
 		let finalResult: string = ``;
 
 		if (
@@ -30,7 +30,7 @@ export const list = async (object: any) => {
 	};
 
 	// 0. calcNonValueColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const calcNonValueColor = (param: string) => {
+	const clcNnValClr = (param: string) => {
 		let finalResult: string = ``;
 
 		if (!param) {
@@ -46,17 +46,17 @@ export const list = async (object: any) => {
 
 	// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	object?.result?.forEach((item: any) => {
-		item.money_record_total_income = calcOverTenMillion(
+		item.money_record_total_income = clcOvrTnMlln(
 			item?.money_record_total_income,
 		);
-		item.money_record_total_expense = calcOverTenMillion(
+		item.money_record_total_expense = clcOvrTnMlln(
 			item?.money_record_total_expense,
 		);
 
-		item.money_record_total_income_color = calcNonValueColor(
+		item.money_record_total_income_color = clcNnValClr(
 			item?.money_record_total_income,
 		);
-		item.money_record_total_expense_color = calcNonValueColor(
+		item.money_record_total_expense_color = clcNnValClr(
 			item?.money_record_total_expense,
 		);
 	});

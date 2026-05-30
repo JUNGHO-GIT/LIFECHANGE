@@ -8,7 +8,7 @@
 // 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const list = async (object: any) => {
 	// 0. calcOverTenMillion ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const calcOverTenMillion = (param: string) => {
+	const clcOvrTnMlln = (param: string) => {
 		let finalResult: string = ``;
 
 		if (
@@ -30,7 +30,7 @@ export const list = async (object: any) => {
 	};
 
 	// 0. calcNonValueColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const calcNonValueColor = (param: string) => {
+	const clcNnValClr = (param: string) => {
 		let finalResult: string = ``;
 
 		if (!param) {
@@ -46,23 +46,23 @@ export const list = async (object: any) => {
 
 	// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	object?.result?.forEach((item: any) => {
-		item.exercise_record_total_volume = calcOverTenMillion(
+		item.exercise_record_total_volume = clcOvrTnMlln(
 			item?.exercise_record_total_volume,
 		);
-		item.exercise_record_total_cardio = calcOverTenMillion(
+		item.exercise_record_total_cardio = clcOvrTnMlln(
 			item?.exercise_record_total_cardio,
 		);
-		item.exercise_record_total_scale = calcOverTenMillion(
+		item.exercise_record_total_scale = clcOvrTnMlln(
 			item?.exercise_record_total_scale,
 		);
 
-		item.exercise_record_total_volume_color = calcNonValueColor(
+		item.exercise_record_total_volume_color = clcNnValClr(
 			item?.exercise_record_total_volume,
 		);
-		item.exercise_record_total_cardio_color = calcNonValueColor(
+		item.exercise_record_total_cardio_color = clcNnValClr(
 			item?.exercise_record_total_cardio,
 		);
-		item.exercise_record_total_scale_color = calcNonValueColor(
+		item.exercise_record_total_scale_color = clcNnValClr(
 			item?.exercise_record_total_scale,
 		);
 	});

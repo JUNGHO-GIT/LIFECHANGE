@@ -6,13 +6,13 @@
  */
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export { useStoreAlert } from "@stores/useStoreAlert";
+export { usStrAlrt as useStoreAlert } from "@stores/useStoreAlert";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export { useStoreConfirm } from "@stores/useStoreConfirm";
+export { usStrCnfr as useStoreConfirm } from "@stores/useStoreConfirm";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export { useStoreLanguage } from "@stores/useStoreLanguage";
+export { usStrLang as useStoreLanguage } from "@stores/useStoreLanguage";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export { useStoreLoading } from "@stores/useStoreLoading";
+export { usStrLoad as useStoreLoading } from "@stores/useStoreLoading";

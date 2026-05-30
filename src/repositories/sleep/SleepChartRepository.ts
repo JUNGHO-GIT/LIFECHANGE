@@ -10,21 +10,21 @@ import { SleepRecord } from "@schemas/sleep/SleepRecord";
 
 // 1-1. chart (bar - goal) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const barGoal = async (
-	user_id_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await SleepGoal.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				sleep_goal_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				sleep_goal_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 			},
 		},
@@ -50,21 +50,21 @@ export const barGoal = async (
 
 // 1-2. chart (bar - record) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const barRecord = async (
-	user_id_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await SleepRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				sleep_record_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				sleep_record_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 			},
 		},
@@ -88,21 +88,21 @@ export const barRecord = async (
 
 // 2-1. chart (pie - all) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const pieAll = async (
-	user_id_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await SleepRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				sleep_record_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				sleep_record_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 			},
 		},
@@ -126,21 +126,21 @@ export const pieAll = async (
 
 // 3-1. chart (line - all) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const lineAll = async (
-	user_id_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await SleepRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				sleep_record_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				sleep_record_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 			},
 		},
@@ -164,21 +164,21 @@ export const lineAll = async (
 
 // 4-1. chart (avg - all) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const avgAll = async (
-	user_id_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await SleepRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				sleep_record_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				sleep_record_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 			},
 		},

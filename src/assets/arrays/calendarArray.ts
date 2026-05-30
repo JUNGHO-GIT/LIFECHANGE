@@ -6,7 +6,7 @@
  */
 
 // 1-1. calendarArray ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-export const calendarArray = [
+export const clndArry2 = [
 	// 0
 	{
 		calendar_part: `all`,

@@ -18,7 +18,7 @@ declare interface AlertState {
 }
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const useStoreAlert = create<AlertState>((set) => ({
+export const usStrAlrt = create<AlertState>((set) => ({
 	ALERT: {
 		open: false,
 		msg: ``,

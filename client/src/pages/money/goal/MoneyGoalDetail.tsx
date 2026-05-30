@@ -7,7 +7,7 @@
 
 import { Bg, Br, Grid, Img, Paper } from "@exportComponents";
 import { Count, Delete, Input, PickerDay } from "@exportContainers";
-import { useCommonDate, useCommonValue, useValidateMoney } from "@exportHooks";
+import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal, useValidateMoney as usValMny } from "@exportHooks";
 import { Dialog, Footer } from "@exportLayouts";
 import { axios } from "@exportLibs";
 import {
@@ -18,30 +18,30 @@ import {
 	useRef,
 	useState,
 } from "@exportReacts";
-import { MoneyGoal, type MoneyGoalType } from "@exportSchemas";
-import { handleNumberInput, insertComma, sync } from "@exportScripts";
+import { MoneyGoal, type MoneyGoalType as MnyGlTyp } from "@exportSchemas";
+import { handleNumberInput as hndlNmbrInpt, insertComma, sync } from "@exportScripts";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const MoneyGoalDetail = memo(() => {
+export const MnyGlDtl = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, navigate, sessionId, toList, localCurrency } =
-		useCommonValue();
-	const { location_dateType } = useCommonValue();
-	const { location_dateStart, location_dateEnd } = useCommonValue();
-	const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
-	const { ERRORS, REFS, validate } = useValidateMoney();
+	const { URL_OBJECT, navigate, sessionId, toList, localCurrency: lclCrrn } =
+		usCmmnVal();
+	const { location_dateType: locDtTyp } = usCmmnVal();
+	const { location_dateStart: locDtStrt, location_dateEnd: locDtEnd } = usCmmnVal();
+	const { getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt } = usCmmnDt();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
+	const { ERRORS, REFS, validate } = usValMny();
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const [LOCKED, setLOCKED] = useState<string>(`unlocked`);
-	const [OBJECT, setOBJECT] = useState<MoneyGoalType>(MoneyGoal);
+	const [OBJECT, setOBJECT] = useState<MnyGlTyp>(MoneyGoal);
 	const [EXIST, setEXIST] = useState({
 		day: [``],
 		week: [``],
@@ -67,13 +67,13 @@ export const MoneyGoalDetail = memo(() => {
 		newSectionCnt: 0,
 	});
 	const [DATE, setDATE] = useState({
-		dateType: location_dateType ?? `month`,
-		dateStart: location_dateStart ?? getMonthStartFmt(),
-		dateEnd: location_dateEnd ?? getMonthEndFmt(),
+		dateType: locDtTyp ?? `month`,
+		dateStart: locDtStrt ?? gtMnStFm(),
+		dateEnd: locDtEnd ?? gtMnthEndFmt(),
 	});
 
 	// 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const objectRef: React.RefObject<MoneyGoalType> = useRef(OBJECT);
+	const objectRef: React.RefObject<MnyGlTyp> = useRef(OBJECT);
 	const countRef: React.RefObject<{
 		totalCnt: number;
 		sectionCnt: number;
@@ -121,8 +121,8 @@ export const MoneyGoalDetail = memo(() => {
 					user_id: sessionId,
 					DATE: {
 						dateType: ``,
-						dateStart: getMonthStartFmt(DATE?.dateStart),
-						dateEnd: getMonthEndFmt(DATE?.dateEnd),
+						dateStart: gtMnStFm(DATE?.dateStart),
+						dateEnd: gtMnthEndFmt(DATE?.dateEnd),
 					},
 				},
 			})
@@ -307,7 +307,7 @@ export const MoneyGoalDetail = memo(() => {
 	// 7. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const detailNode = () => {
 		// 7-1. date + count
-		const dateCountSection = () => (
+		const dtCntSec = () => (
 			<Grid
 				container={true}
 				spacing={2}
@@ -328,7 +328,7 @@ export const MoneyGoalDetail = memo(() => {
 			</Grid>
 		);
 		// 7-3. detail
-		const detailSection = () => (
+		const dtlSec = () => (
 			<>
 				{[OBJECT]?.map((item, i) => (
 					<Grid
@@ -369,19 +369,19 @@ export const MoneyGoalDetail = memo(() => {
 											src={`money2.webp`}
 										/>
 									}
-									endadornment={localCurrency}
+									endadornment={lclCrrn}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											9_999_999_999,
 										);
-										!processedValue === null &&
+										!procdVal === null &&
 											(() => {
 												return;
 											})();
 										setOBJECT((prev: any) => ({
 											...prev,
-											money_goal_income: processedValue,
+											money_goal_income: procdVal,
 										}));
 									}}
 								/>
@@ -410,19 +410,19 @@ export const MoneyGoalDetail = memo(() => {
 											src={`money2.webp`}
 										/>
 									}
-									endadornment={localCurrency}
+									endadornment={lclCrrn}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											9_999_999_999,
 										);
-										!processedValue === null &&
+										!procdVal === null &&
 											(() => {
 												return;
 											})();
 										setOBJECT((prev: any) => ({
 											...prev,
-											money_goal_expense: processedValue,
+											money_goal_expense: procdVal,
 										}));
 									}}
 								/>
@@ -437,9 +437,9 @@ export const MoneyGoalDetail = memo(() => {
 			<Paper
 				className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}
 			>
-				{dateCountSection()}
+				{dtCntSec()}
 				<Br m={20} />
-				{COUNT?.newSectionCnt > 0 && detailSection()}
+				{COUNT?.newSectionCnt > 0 && dtlSec()}
 			</Paper>
 		);
 	};

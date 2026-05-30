@@ -8,10 +8,10 @@
 import { Bg, Br, Grid, Img, Paper } from "@exportComponents";
 import { Count, Delete, Input, PickerDay, PickerTime } from "@exportContainers";
 import {
-	useCommonDate,
-	useCommonValue,
+	useCommonDate as usCmmnDt,
+	useCommonValue as usCmmnVal,
 	useTime,
-	useValidateExercise,
+	useValidateExercise as usValExer,
 } from "@exportHooks";
 import { Dialog, Footer } from "@exportLayouts";
 import { axios } from "@exportLibs";
@@ -23,30 +23,30 @@ import {
 	useRef,
 	useState,
 } from "@exportReacts";
-import { ExerciseGoal, type ExerciseGoalType } from "@exportSchemas";
-import { handleNumberInput, insertComma, sync } from "@exportScripts";
+import { ExerciseGoal, type ExerciseGoalType as ExerGlTyp } from "@exportSchemas";
+import { handleNumberInput as hndlNmbrInpt, insertComma, sync } from "@exportScripts";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const ExerciseGoalDetail = memo(() => {
+export const ExerGlDtl = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const { URL_OBJECT, PATH, sessionId, toList, navigate, localUnit } =
-		useCommonValue();
-	const { location_dateType } = useCommonValue();
-	const { location_dateStart, location_dateEnd } = useCommonValue();
-	const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
-	const { ERRORS, REFS, validate } = useValidateExercise();
+		usCmmnVal();
+	const { location_dateType: locDtTyp } = usCmmnVal();
+	const { location_dateStart: locDtStrt, location_dateEnd: locDtEnd } = usCmmnVal();
+	const { getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt } = usCmmnDt();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
+	const { ERRORS, REFS, validate } = usValExer();
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const [LOCKED, setLOCKED] = useState<string>(`unlocked`);
-	const [OBJECT, setOBJECT] = useState<ExerciseGoalType>(ExerciseGoal);
+	const [OBJECT, setOBJECT] = useState<ExerGlTyp>(ExerciseGoal);
 	const [EXIST, setEXIST] = useState({
 		day: [``],
 		week: [``],
@@ -72,13 +72,13 @@ export const ExerciseGoalDetail = memo(() => {
 		newSectionCnt: 0,
 	});
 	const [DATE, setDATE] = useState({
-		dateType: location_dateType ?? `month`,
-		dateStart: location_dateStart ?? getMonthStartFmt(),
-		dateEnd: location_dateEnd ?? getMonthEndFmt(),
+		dateType: locDtTyp ?? `month`,
+		dateStart: locDtStrt ?? gtMnStFm(),
+		dateEnd: locDtEnd ?? gtMnthEndFmt(),
 	});
 
 	// 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const objectRef: React.RefObject<ExerciseGoalType> = useRef(OBJECT);
+	const objectRef: React.RefObject<ExerGlTyp> = useRef(OBJECT);
 	const countRef: React.RefObject<{
 		totalCnt: number;
 		sectionCnt: number;
@@ -129,8 +129,8 @@ export const ExerciseGoalDetail = memo(() => {
 					user_id: sessionId,
 					DATE: {
 						dateType: ``,
-						dateStart: getMonthStartFmt(DATE?.dateStart),
-						dateEnd: getMonthEndFmt(DATE?.dateEnd),
+						dateStart: gtMnStFm(DATE?.dateStart),
+						dateEnd: gtMnthEndFmt(DATE?.dateEnd),
 					},
 				},
 			})
@@ -317,7 +317,7 @@ export const ExerciseGoalDetail = memo(() => {
 	// 7. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const detailNode = () => {
 		// 7-1. date + count
-		const dateCountSection = () => (
+		const dtCntSec = () => (
 			<Grid
 				container={true}
 				spacing={2}
@@ -338,7 +338,7 @@ export const ExerciseGoalDetail = memo(() => {
 			</Grid>
 		);
 		// 7-3. detail
-		const detailSection = () => (
+		const dtlSec = () => (
 			<>
 				{[OBJECT]?.map((item, i) => (
 					<Grid
@@ -381,14 +381,14 @@ export const ExerciseGoalDetail = memo(() => {
 									}
 									endadornment={translate(`c`)}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											9999,
 										);
-										!processedValue === null && (() => {})();
+										!procdVal === null && (() => {})();
 										setOBJECT((prev: any) => ({
 											...prev,
-											exercise_goal_count: processedValue,
+											exercise_goal_count: procdVal,
 										}));
 									}}
 								/>
@@ -419,14 +419,14 @@ export const ExerciseGoalDetail = memo(() => {
 									}
 									endadornment={translate(`vol`)}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											9_999_999,
 										);
-										!processedValue === null && (() => {})();
+										!procdVal === null && (() => {})();
 										setOBJECT((prev: any) => ({
 											...prev,
-											exercise_goal_volume: processedValue,
+											exercise_goal_volume: procdVal,
 										}));
 									}}
 								/>
@@ -470,15 +470,15 @@ export const ExerciseGoalDetail = memo(() => {
 									}
 									endadornment={localUnit}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											999,
 											2,
 										);
-										!processedValue === null && (() => {})();
+										!procdVal === null && (() => {})();
 										setOBJECT((prev: any) => ({
 											...prev,
-											exercise_goal_scale: processedValue,
+											exercise_goal_scale: procdVal,
 										}));
 									}}
 								/>
@@ -493,9 +493,9 @@ export const ExerciseGoalDetail = memo(() => {
 			<Paper
 				className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}
 			>
-				{dateCountSection()}
+				{dtCntSec()}
 				<Br m={20} />
-				{COUNT?.newSectionCnt > 0 && detailSection()}
+				{COUNT?.newSectionCnt > 0 && dtlSec()}
 			</Paper>
 		);
 	};

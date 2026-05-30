@@ -60,7 +60,7 @@ const IMAGE_FILES = [
 const IMAGE_URLS = IMAGE_FILES.map((file) => (
 	`https://storage.googleapis.com/jungho-bucket/lifechange/image/main/${file}`
 ));
-const IMAGE_FILE_SET = new Set(IMAGE_FILES);
+const IMG_FL_ST = new Set(IMAGE_FILES);
 const CACHE_NAME = `lifechangeApp_IMAGE_CACHE_V1`;
 
 self.addEventListener(`install`, (event) => {
@@ -104,7 +104,7 @@ self.addEventListener(`fetch`, (event) => {
 	try {
 		const urlObj = new URL(event.request.url);
 		const filename = urlObj.pathname.split(`/`).pop();
-		if (IMAGE_FILE_SET.has(filename)) {
+		if (IMG_FL_ST.has(filename)) {
 			event.respondWith(
 				caches.match(event.request).then((res) => {
 					if (res) {
@@ -112,9 +112,9 @@ self.addEventListener(`fetch`, (event) => {
 					}
 					return fetch(event.request, { cache: `no-store` }).then((response) => {
 						if (response && response.status === 200) {
-							const responseClone = response.clone();
+							const resCln = response.clone();
 							caches.open(CACHE_NAME).then((cache) => {
-								cache.put(event.request, responseClone);
+								cache.put(event.request, resCln);
 							});
 						}
 						return response;

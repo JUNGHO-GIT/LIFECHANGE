@@ -8,7 +8,7 @@
 // 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const list = async (object: any) => {
 	// 0. calcOverTenMillion ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const calcOverTenMillion = (param: string) => {
+	const clcOvrTnMlln = (param: string) => {
 		let finalResult: string = ``;
 
 		if (
@@ -30,7 +30,7 @@ export const list = async (object: any) => {
 	};
 
 	// 0. calcNonValueColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const calcNonValueColor = (param: string) => {
+	const clcNnValClr = (param: string) => {
 		let finalResult: string = ``;
 
 		if (!param) {
@@ -47,23 +47,23 @@ export const list = async (object: any) => {
 	// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	object?.result?.forEach((item: any) => {
 		item.sleep_section?.forEach((section: any) => {
-			section.sleep_record_bedTime = calcOverTenMillion(
+			section.sleep_record_bedTime = clcOvrTnMlln(
 				section?.sleep_record_bedTime,
 			);
-			section.sleep_record_wakeTime = calcOverTenMillion(
+			section.sleep_record_wakeTime = clcOvrTnMlln(
 				section?.sleep_record_wakeTime,
 			);
-			section.sleep_record_sleepTime = calcOverTenMillion(
+			section.sleep_record_sleepTime = clcOvrTnMlln(
 				section?.sleep_record_sleepTime,
 			);
 
-			section.sleep_record_bedTime_color = calcNonValueColor(
+			section.sleep_record_bedTime_color = clcNnValClr(
 				section?.sleep_record_bedTime,
 			);
-			section.sleep_record_wakeTime_color = calcNonValueColor(
+			section.sleep_record_wakeTime_color = clcNnValClr(
 				section?.sleep_record_wakeTime,
 			);
-			section.sleep_record_sleepTime_color = calcNonValueColor(
+			section.sleep_record_sleepTime_color = clcNnValClr(
 				section?.sleep_record_sleepTime,
 			);
 		});

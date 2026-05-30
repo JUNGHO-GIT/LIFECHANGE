@@ -7,17 +7,17 @@
 
 import { type React, useCallback, useRef, useState } from "@exportReacts";
 import {
-	useStoreAlert,
-	useStoreConfirm,
-	useStoreLanguage,
+	useStoreAlert as usStrAlrt,
+	useStoreConfirm as usStrCnfr,
+	useStoreLanguage as usStrLang,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const useValidateCalendar = () => {
+export const usValClnd = () => {
 	// 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setCONFIRM } = useStoreConfirm();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setCONFIRM } = usStrCnfr();
 
 	// 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 	const REFS: React.RefObject<unknown[]> = useRef<unknown[]>([]);
@@ -38,12 +38,12 @@ export const useValidateCalendar = () => {
 				}, 0);
 			field &&
 				setERRORS((prev) => {
-					const updatedErrors: unknown[] = [...prev];
-					updatedErrors[idx] = {
-						...updatedErrors[idx],
+					const updtErrs: unknown[] = [...prev];
+					updtErrs[idx] = {
+						...updtErrs[idx],
 						[field]: true,
 					};
-					return updatedErrors;
+					return updtErrs;
 				});
 		},
 		[setALERT, translate],
@@ -183,7 +183,7 @@ export const useValidateCalendar = () => {
 
 		// 7-2. delete
 		if (extra === `delete`) {
-			const confirmResult: boolean = await new Promise<boolean>((resolve) => {
+			const cnfrRes: boolean = await new Promise<boolean>((resolve) => {
 				setCONFIRM(
 					{
 						open: true,
@@ -194,7 +194,7 @@ export const useValidateCalendar = () => {
 					},
 				);
 			});
-			return confirmResult;
+			return cnfrRes;
 		}
 		return false;
 	};

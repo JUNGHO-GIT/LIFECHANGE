@@ -11,22 +11,22 @@ import mongoose from "mongoose";
 
 // 0. exist ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const exist = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await MoneyGoal.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				money_goal_dateStart: {
-					$lte: dateEnd_param,
+					$lte: dtEndPrm,
 				},
 				money_goal_dateEnd: {
-					$gte: dateStart_param,
+					$gte: dtStrtPrm,
 				},
-				...(dateType_param ? { money_goal_dateType: dateType_param } : {}),
+				...(dtTypPrm2 ? { money_goal_dateType: dtTypPrm2 } : {}),
 			},
 		},
 		{
@@ -49,24 +49,24 @@ export const exist = async (
 
 // 1. list (goal) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const listGoal = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 	sort_param: 1 | -1,
 	page_param: number,
 ) => {
 	const finalResult: any = await MoneyGoal.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				money_goal_dateStart: {
-					$lte: dateEnd_param,
+					$lte: dtEndPrm,
 				},
 				money_goal_dateEnd: {
-					$gte: dateStart_param,
+					$gte: dtStrtPrm,
 				},
-				...(dateType_param ? { money_goal_dateType: dateType_param } : {}),
+				...(dtTypPrm2 ? { money_goal_dateType: dtTypPrm2 } : {}),
 			},
 		},
 		{
@@ -94,24 +94,24 @@ export const listGoal = async (
 
 // 1-2. list (record) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const listRecord: any[] = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await MoneyRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				money_record_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				money_record_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
-				...(dateType_param ? { money_record_dateType: dateType_param } : {}),
+				...(dtTypPrm2 ? { money_record_dateType: dtTypPrm2 } : {}),
 			},
 		},
 		{
@@ -136,16 +136,16 @@ export const listRecord: any[] = async (
 
 // 2. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const detail = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await MoneyGoal.findOne({
-		user_id: user_id_param,
-		money_goal_dateStart: dateStart_param,
-		money_goal_dateEnd: dateEnd_param,
-		...(dateType_param ? { money_goal_dateType: dateType_param } : {}),
+		user_id: usrIdPrm,
+		money_goal_dateStart: dtStrtPrm,
+		money_goal_dateEnd: dtEndPrm,
+		...(dtTypPrm2 ? { money_goal_dateType: dtTypPrm2 } : {}),
 	}).lean();
 
 	return finalResult;
@@ -153,18 +153,18 @@ export const detail = async (
 
 // 3. create ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const create = async (
-	user_id_param: string,
+	usrIdPrm: string,
 	OBJECT_param: any,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await MoneyGoal.create({
 		_id: new mongoose.Types.ObjectId(),
-		user_id: user_id_param,
-		money_goal_dateType: dateType_param,
-		money_goal_dateStart: dateStart_param,
-		money_goal_dateEnd: dateEnd_param,
+		user_id: usrIdPrm,
+		money_goal_dateType: dtTypPrm2,
+		money_goal_dateStart: dtStrtPrm,
+		money_goal_dateEnd: dtEndPrm,
 		money_goal_income: OBJECT_param.money_goal_income,
 		money_goal_expense: OBJECT_param.money_goal_expense,
 		money_goal_regDt: new Date(),
@@ -178,18 +178,18 @@ export const create = async (
 export const update = {
 	// 1. update (기존항목 유지 + 타겟항목으로 수정)
 	update: async (
-		user_id_param: string,
+		usrIdPrm: string,
 		OBJECT_param: any,
-		dateType_param: string,
-		dateStart_param: string,
-		dateEnd_param: string,
+		dtTypPrm2: string,
+		dtStrtPrm: string,
+		dtEndPrm: string,
 	) => {
 		const finalResult: any = await MoneyGoal.findOneAndUpdate(
 			{
-				user_id: user_id_param,
-				money_goal_dateStart: dateStart_param,
-				money_goal_dateEnd: dateEnd_param,
-				...(dateType_param ? { money_goal_dateType: dateType_param } : {}),
+				user_id: usrIdPrm,
+				money_goal_dateStart: dtStrtPrm,
+				money_goal_dateEnd: dtEndPrm,
+				...(dtTypPrm2 ? { money_goal_dateType: dtTypPrm2 } : {}),
 			},
 			{
 				$set: {
@@ -211,18 +211,18 @@ export const update = {
 
 	// 3. replace (기존항목 제거 + 타겟항목을 교체)
 	replace: async (
-		user_id_param: string,
+		usrIdPrm: string,
 		OBJECT_param: any,
-		dateType_param: string,
-		dateStart_param: string,
-		dateEnd_param: string,
+		dtTypPrm2: string,
+		dtStrtPrm: string,
+		dtEndPrm: string,
 	) => {
 		const finalResult: any = await MoneyGoal.findOneAndUpdate(
 			{
-				user_id: user_id_param,
-				money_goal_dateStart: dateStart_param,
-				money_goal_dateEnd: dateEnd_param,
-				...(dateType_param ? { money_goal_dateType: dateType_param } : {}),
+				user_id: usrIdPrm,
+				money_goal_dateStart: dtStrtPrm,
+				money_goal_dateEnd: dtEndPrm,
+				...(dtTypPrm2 ? { money_goal_dateType: dtTypPrm2 } : {}),
 			},
 			{
 				$set: {
@@ -243,16 +243,16 @@ export const update = {
 
 // 5. delete ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const deletes = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await MoneyGoal.findOneAndDelete({
-		user_id: user_id_param,
-		money_goal_dateStart: dateStart_param,
-		money_goal_dateEnd: dateEnd_param,
-		...(dateType_param ? { money_goal_dateType: dateType_param } : {}),
+		user_id: usrIdPrm,
+		money_goal_dateStart: dtStrtPrm,
+		money_goal_dateEnd: dtEndPrm,
+		...(dtTypPrm2 ? { money_goal_dateType: dtTypPrm2 } : {}),
 	}).lean();
 
 	return finalResult;

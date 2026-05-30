@@ -145,7 +145,7 @@ schema.pre<ExerciseRecordType>(`save`, async function () {
 });
 
 // 5. model ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const ExerciseRecord = mongoose.model<ExerciseRecordType>(
+export const ExerRec2 = mongoose.model<ExerciseRecordType>(
 	`ExerciseRecord`,
 	schema,
 );

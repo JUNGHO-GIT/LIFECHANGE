@@ -5,22 +5,22 @@
  * @since 2025-12-26
  */
 
-import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
+import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal, useStorageLocal as usStrgLcl } from "@exportHooks";
 import {
 	axios,
 	Cell,
 	Legend,
 	Pie,
 	PieChart,
-	ResponsiveContainer,
+	ResponsiveContainer as RspnCntn,
 	Tooltip,
 } from "@exportLibs";
 import { memo, useEffect, useState } from "@exportReacts";
 import { FoodPie, type FoodPieType } from "@exportSchemas";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
@@ -41,53 +41,53 @@ declare interface PieProps {
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const FoodChartPie = memo((props: FoodChartPieProps) => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, PATH, chartColors, sessionId } = useCommonValue();
-	const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
-	const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } =
-		useCommonDate();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
+	const { URL_OBJECT, PATH, chartColors, sessionId } = usCmmnVal();
+	const { getDayFmt, getWeekStartFmt: gtWkStrtFmt, getWeekEndFmt: gtWkEndFmt } = usCmmnDt();
+	const { getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt, getYearStartFmt: gtYrStrtFmt, getYearEndFmt: gtYrEndFmt } =
+		usCmmnDt();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
 
 	// 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const [TYPE, setTYPE] = useStorageLocal(`type`, `pie`, PATH, {
+	const [TYPE, setTYPE] = usStrgLcl(`type`, `pie`, PATH, {
 		section: `week`,
 		line: `kcal`,
 	});
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [TYPE_STATE, setTYPE_STATE] = useState(() => {
+	const [TYPE_STATE, stTypSt] = useState(() => {
 		return props?.TYPE !== undefined ? props.TYPE : TYPE;
 	});
 	const [DATE, _setDATE] = useState({
 		dateType: ``,
 		dateStart: getDayFmt(),
 		dateEnd: getDayFmt(),
-		weekStartFmt: getWeekStartFmt(),
-		weekEndFmt: getWeekEndFmt(),
-		monthStartFmt: getMonthStartFmt(),
-		monthEndFmt: getMonthEndFmt(),
-		yearStartFmt: getYearStartFmt(),
-		yearEndFmt: getYearEndFmt(),
+		weekStartFmt: gtWkStrtFmt(),
+		weekEndFmt: gtWkEndFmt(),
+		monthStartFmt: gtMnStFm(),
+		monthEndFmt: gtMnthEndFmt(),
+		yearStartFmt: gtYrStrtFmt(),
+		yearEndFmt: gtYrEndFmt(),
 	});
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState<[FoodPieType]>([
+	const [OBJC_KCL_WK, stObjcKclWk] = useState<[FoodPieType]>([
 		FoodPie,
 	]);
-	const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState<[FoodPieType]>([
+	const [OBJC_NT_WK, stObjcNtWk] = useState<[FoodPieType]>([
 		FoodPie,
 	]);
-	const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState<[FoodPieType]>([
+	const [OBJ_KCL_MNT, stObKcMn] = useState<[FoodPieType]>([
 		FoodPie,
 	]);
-	const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState<[FoodPieType]>([
+	const [OBJC_NT_MNTH, stObjcNtMnth] = useState<[FoodPieType]>([
 		FoodPie,
 	]);
-	const [OBJECT_KCAL_YEAR, setOBJECT_KCAL_YEAR] = useState<[FoodPieType]>([
+	const [OBJC_KCL_YR, stObjcKclYr] = useState<[FoodPieType]>([
 		FoodPie,
 	]);
-	const [OBJECT_NUT_YEAR, setOBJECT_NUT_YEAR] = useState<[FoodPieType]>([
+	const [OBJC_NT_YR, stObjcNtYr] = useState<[FoodPieType]>([
 		FoodPie,
 	]);
 
@@ -113,32 +113,32 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
 				]);
 
 				// 서버에서 기본값을 포함한 응답을 받으므로 직접 설정
-				setOBJECT_KCAL_WEEK(
+				stObjcKclWk(
 					resWeek.data.result.kcal && Array.isArray(resWeek.data.result.kcal)
 						? resWeek.data.result.kcal
 						: [FoodPie],
 				);
-				setOBJECT_NUT_WEEK(
+				stObjcNtWk(
 					resWeek.data.result.nut && Array.isArray(resWeek.data.result.nut)
 						? resWeek.data.result.nut
 						: [FoodPie],
 				);
-				setOBJECT_KCAL_MONTH(
+				stObKcMn(
 					resMonth.data.result.kcal && Array.isArray(resMonth.data.result.kcal)
 						? resMonth.data.result.kcal
 						: [FoodPie],
 				);
-				setOBJECT_NUT_MONTH(
+				stObjcNtMnth(
 					resMonth.data.result.nut && Array.isArray(resMonth.data.result.nut)
 						? resMonth.data.result.nut
 						: [FoodPie],
 				);
-				setOBJECT_KCAL_YEAR(
+				stObjcKclYr(
 					resYear.data.result.kcal && Array.isArray(resYear.data.result.kcal)
 						? resYear.data.result.kcal
 						: [FoodPie],
 				);
-				setOBJECT_NUT_YEAR(
+				stObjcNtYr(
 					resYear.data.result.nut && Array.isArray(resYear.data.result.nut)
 						? resYear.data.result.nut
 						: [FoodPie],
@@ -152,12 +152,12 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
 				});
 				console.error(error);
 				// 에러 발생 시에도 기본값 설정
-				setOBJECT_KCAL_WEEK([FoodPie]);
-				setOBJECT_NUT_WEEK([FoodPie]);
-				setOBJECT_KCAL_MONTH([FoodPie]);
-				setOBJECT_NUT_MONTH([FoodPie]);
-				setOBJECT_KCAL_YEAR([FoodPie]);
-				setOBJECT_NUT_YEAR([FoodPie]);
+				stObjcKclWk([FoodPie]);
+				stObjcNtWk([FoodPie]);
+				stObKcMn([FoodPie]);
+				stObjcNtMnth([FoodPie]);
+				stObjcKclYr([FoodPie]);
+				stObjcNtYr([FoodPie]);
 			} finally {
 				setLOADING(false);
 			}
@@ -170,7 +170,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
 			const isSame: boolean =
 				JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
 			if (!isSame) {
-				setTYPE_STATE(props.TYPE);
+				stTypSt(props.TYPE);
 			}
 		}
 	}, [props?.TYPE]);
@@ -203,32 +203,32 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
 
 		TYPE_STATE.section === `week` && TYPE_STATE.line === `kcal`
 			? (() => {
-					object = OBJECT_KCAL_WEEK;
+					object = OBJC_KCL_WK;
 					endStr = `kcal`;
 				})()
 			: TYPE_STATE.section === `week` && TYPE_STATE.line === `nut`
 				? (() => {
-						object = OBJECT_NUT_WEEK;
+						object = OBJC_NT_WK;
 						endStr = `g`;
 					})()
 				: TYPE_STATE.section === `month` && TYPE_STATE.line === `kcal`
 					? (() => {
-							object = OBJECT_KCAL_MONTH;
+							object = OBJ_KCL_MNT;
 							endStr = `kcal`;
 						})()
 					: TYPE_STATE.section === `month` && TYPE_STATE.line === `nut`
 						? (() => {
-								object = OBJECT_NUT_MONTH;
+								object = OBJC_NT_MNTH;
 								endStr = `g`;
 							})()
 						: TYPE_STATE.section === `year` && TYPE_STATE.line === `kcal`
 							? (() => {
-									object = OBJECT_KCAL_YEAR;
+									object = OBJC_KCL_YR;
 									endStr = `kcal`;
 								})()
 							: TYPE_STATE.section === `year` && TYPE_STATE.line === `nut`
 								? (() => {
-										object = OBJECT_NUT_YEAR;
+										object = OBJC_NT_YR;
 										endStr = `g`;
 									})()
 								: null;
@@ -278,27 +278,27 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
 		let dateRange: string = ``;
 
 		if (TYPE_STATE.section === `week` && TYPE_STATE.line === `kcal`) {
-			object = OBJECT_KCAL_WEEK || [FoodPie];
+			object = OBJC_KCL_WK || [FoodPie];
 			endStr = `kcal`;
 			dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
 		} else if (TYPE_STATE.section === `week` && TYPE_STATE.line === `nut`) {
-			object = OBJECT_NUT_WEEK || [FoodPie];
+			object = OBJC_NT_WK || [FoodPie];
 			endStr = `g`;
 			dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
 		} else if (TYPE_STATE.section === `month` && TYPE_STATE.line === `kcal`) {
-			object = OBJECT_KCAL_MONTH || [FoodPie];
+			object = OBJ_KCL_MNT || [FoodPie];
 			endStr = `kcal`;
 			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
 		} else if (TYPE_STATE.section === `month` && TYPE_STATE.line === `nut`) {
-			object = OBJECT_NUT_MONTH || [FoodPie];
+			object = OBJC_NT_MNTH || [FoodPie];
 			endStr = `g`;
 			dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
 		} else if (TYPE_STATE.section === `year` && TYPE_STATE.line === `kcal`) {
-			object = OBJECT_KCAL_YEAR || [FoodPie];
+			object = OBJC_KCL_YR || [FoodPie];
 			endStr = `kcal`;
 			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
 		} else if (TYPE_STATE.section === `year` && TYPE_STATE.line === `nut`) {
-			object = OBJECT_NUT_YEAR || [FoodPie];
+			object = OBJC_NT_YR || [FoodPie];
 			endStr = `g`;
 			dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
 		}
@@ -309,7 +309,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
 		}
 
 		return (
-			<ResponsiveContainer width={`100%`} height={500}>
+			<RspnCntn width={`100%`} height={500}>
 				<PieChart margin={{ top: 60, right: 20, bottom: 10, left: 20 }}>
 					<defs>
 						<filter id={`textBackground`} x={0} y={0} width={1} height={1}>
@@ -390,7 +390,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
 						}}
 					/>
 				</PieChart>
-			</ResponsiveContainer>
+			</RspnCntn>
 		);
 	};
 

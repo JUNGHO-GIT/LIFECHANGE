@@ -16,9 +16,9 @@ import {
 	Select,
 } from "@exportContainers";
 import {
-	useCommonDate,
-	useCommonValue,
-	useValidateCalendar,
+	useCommonDate as usCmmnDt,
+	useCommonValue as usCmmnVal,
+	useValidateCalendar as usValClnd,
 } from "@exportHooks";
 import { Dialog, Footer } from "@exportLayouts";
 import { axios } from "@exportLibs";
@@ -33,37 +33,37 @@ import {
 } from "@exportReacts";
 import {
 	Calendar,
-	type CalendarExerciseSectionType,
-	type CalendarFoodSectionType,
-	type CalendarMoneySectionType,
+	type CalendarExerciseSectionType as ClnExSeTy,
+	type CalendarFoodSectionType as ClndFdSecTyp,
+	type CalendarMoneySectionType as ClnMnSeTy,
 	type CalendarType,
 } from "@exportSchemas";
-import { handleNumberInput, insertComma, sync } from "@exportScripts";
+import { handleNumberInput as hndlNmbrInpt, insertComma, sync } from "@exportScripts";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 import {
-	type ExerciseCategoryItem,
-	FoodCategoryItem,
-	type MoneyCategoryItem,
+	type ExerciseCategoryItem as ExerCatItm,
+	FoodCategoryItem as FdCatItm,
+	type MoneyCategoryItem as MnyCatItm,
 } from "@exportTypes";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const CalendarDetail = memo(() => {
+export const ClndDtl = memo(() => {
 	// 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, navigate, toCalendarList, sessionId, localCurrency } =
-		useCommonValue();
-	const { bgColors, localUnit } = useCommonValue();
-	const { exerciseArray, foodArray, moneyArray } = useCommonValue();
-	const { location_dateType, location_dateStart, location_dateEnd } =
-		useCommonValue();
-	const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
-	const { ERRORS, REFS, validate } = useValidateCalendar();
+	const { URL_OBJECT, navigate, toCalendarList: tClndLst, sessionId, localCurrency: lclCrrn } =
+		usCmmnVal();
+	const { bgColors, localUnit } = usCmmnVal();
+	const { exerciseArray: exerArry, foodArray, moneyArray } = usCmmnVal();
+	const { location_dateType: locDtTyp, location_dateStart: locDtStrt, location_dateEnd: locDtEnd } =
+		usCmmnVal();
+	const { getDayFmt, getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt } = usCmmnDt();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
+	const { ERRORS, REFS, validate } = usValClnd();
 
 	// 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 	const [LOCKED, setLOCKED] = useState<string>(`unlocked`);
@@ -93,9 +93,9 @@ export const CalendarDetail = memo(() => {
 		newSectionCnt: 0,
 	});
 	const [DATE, setDATE] = useState({
-		dateType: location_dateType ?? `select`,
-		dateStart: location_dateStart ?? getDayFmt(),
-		dateEnd: location_dateEnd ?? getDayFmt(),
+		dateType: locDtTyp ?? `select`,
+		dateStart: locDtStrt ?? getDayFmt(),
+		dateEnd: locDtEnd ?? getDayFmt(),
 	});
 
 	// 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
@@ -146,8 +146,8 @@ export const CalendarDetail = memo(() => {
 					user_id: sessionId,
 					DATE: {
 						dateType: ``,
-						dateStart: getMonthStartFmt(DATE?.dateStart),
-						dateEnd: getMonthEndFmt(DATE?.dateEnd),
+						dateStart: gtMnStFm(DATE?.dateStart),
+						dateEnd: gtMnthEndFmt(DATE?.dateEnd),
 					},
 				},
 			})
@@ -374,7 +374,7 @@ export const CalendarDetail = memo(() => {
 						msg: translate(res.data.msg as string),
 						severity: `success`,
 					});
-					void navigate(toCalendarList, {
+					void navigate(tClndLst, {
 						state: {
 							dateType: ``,
 							dateStart: dateRef.current.dateStart,
@@ -428,7 +428,7 @@ export const CalendarDetail = memo(() => {
 						msg: translate(res.data.msg as string),
 						severity: `success`,
 					});
-					void navigate(toCalendarList, {
+					void navigate(tClndLst, {
 						state: {
 							dateType: ``,
 							dateStart: dateRef.current.dateStart,
@@ -479,7 +479,7 @@ export const CalendarDetail = memo(() => {
 	// 7. detail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const detailNode = () => {
 		// 7-1. date + count
-		const dateCountSection = () => (
+		const dtCntSec = () => (
 			<Grid
 				container={true}
 				spacing={2}
@@ -502,7 +502,7 @@ export const CalendarDetail = memo(() => {
 		);
 
 		// 7-2. exercise
-		const exerciseSection = () => (
+		const exerSec = () => (
 			<>
 				{/** header * */}
 				<Grid
@@ -540,7 +540,7 @@ export const CalendarDetail = memo(() => {
 									badgeContent={i + 1}
 									bgcolor={
 										bgColors?.[
-											exerciseArray.findIndex(
+											exerArry.findIndex(
 												(f: any) =>
 													f.exercise_record_part === item?.exercise_record_part,
 											)
@@ -570,17 +570,17 @@ export const CalendarDetail = memo(() => {
 									error={ERRORS?.[i]?.exercise_record_part ?? null}
 									onChange={(e: any) => {
 										const value: string = String(e.target.value ?? ``);
-										const foundIndex: number = exerciseArray.findIndex(
+										const foundIndex: number = exerArry.findIndex(
 											(f: any) => f.exercise_record_part === value,
 										);
-										const foundItem: ExerciseCategoryItem | null =
-											foundIndex !== -1 ? exerciseArray[foundIndex] : null;
+										const foundItem: ExerCatItm | null =
+											foundIndex !== -1 ? exerArry[foundIndex] : null;
 										setOBJECT((prev: CalendarType) => ({
 											...prev,
 											calendar_exercise_section:
 												prev.calendar_exercise_section?.map(
 													(
-														section: CalendarExerciseSectionType,
+														section: ClnExSeTy,
 														idx: number,
 													) =>
 														idx === i
@@ -596,7 +596,7 @@ export const CalendarDetail = memo(() => {
 										}));
 									}}
 								>
-									{exerciseArray.map((part: any, idx: number) => (
+									{exerArry.map((part: any, idx: number) => (
 										<MenuItem
 											key={idx}
 											value={part.exercise_record_part}
@@ -621,7 +621,7 @@ export const CalendarDetail = memo(() => {
 											calendar_exercise_section:
 												prev.calendar_exercise_section?.map(
 													(
-														section: CalendarExerciseSectionType,
+														section: ClnExSeTy,
 														idx: number,
 													) =>
 														idx === i
@@ -635,12 +635,12 @@ export const CalendarDetail = memo(() => {
 									}}
 								>
 									{(() => {
-										const foundIndex: number = exerciseArray.findIndex(
+										const foundIndex: number = exerArry.findIndex(
 											(f: any) =>
 												f.exercise_record_part === item?.exercise_record_part,
 										);
-										const foundItem: ExerciseCategoryItem | null =
-											foundIndex !== -1 ? exerciseArray[foundIndex] : null;
+										const foundItem: ExerCatItm | null =
+											foundIndex !== -1 ? exerArry[foundIndex] : null;
 										return (
 											(foundItem as any)?.exercise_record_title?.map(
 												(title: any, idx: number) => (
@@ -679,23 +679,23 @@ export const CalendarDetail = memo(() => {
 									}
 									endadornment={translate(`s`)}
 									onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											999,
 										);
-										processedValue !== null &&
+										procdVal !== null &&
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
 												calendar_exercise_section:
 													prev.calendar_exercise_section?.map(
 														(
-															section: CalendarExerciseSectionType,
+															section: ClnExSeTy,
 															idx: number,
 														) =>
 															idx === i
 																? {
 																		...section,
-																		exercise_record_set: processedValue,
+																		exercise_record_set: procdVal,
 																	}
 																: section,
 													),
@@ -721,23 +721,23 @@ export const CalendarDetail = memo(() => {
 									}
 									endadornment={translate(`r`)}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											999,
 										);
-										processedValue !== null &&
+										procdVal !== null &&
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
 												calendar_exercise_section:
 													prev.calendar_exercise_section?.map(
 														(
-															section: CalendarExerciseSectionType,
+															section: ClnExSeTy,
 															idx: number,
 														) =>
 															idx === i
 																? {
 																		...section,
-																		exercise_record_rep: processedValue,
+																		exercise_record_rep: procdVal,
 																	}
 																: section,
 													),
@@ -767,23 +767,23 @@ export const CalendarDetail = memo(() => {
 									}
 									endadornment={localUnit}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											999,
 										);
-										processedValue !== null &&
+										procdVal !== null &&
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
 												calendar_exercise_section:
 													prev.calendar_exercise_section?.map(
 														(
-															section: CalendarExerciseSectionType,
+															section: ClnExSeTy,
 															idx: number,
 														) =>
 															idx === i
 																? {
 																		...section,
-																		exercise_record_weight: processedValue,
+																		exercise_record_weight: procdVal,
 																	}
 																: section,
 													),
@@ -881,7 +881,7 @@ export const CalendarDetail = memo(() => {
 										setOBJECT((prev: CalendarType) => ({
 											...prev,
 											calendar_food_section: prev.calendar_food_section?.map(
-												(section: CalendarFoodSectionType, idx: number) =>
+												(section: ClndFdSecTyp, idx: number) =>
 													idx === i
 														? {
 																...section,
@@ -911,15 +911,15 @@ export const CalendarDetail = memo(() => {
 									inputRef={REFS?.[i]?.food_record_count}
 									error={ERRORS?.[i]?.food_record_count}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											99,
 											1,
 										);
-										processedValue !== null &&
+										procdVal !== null &&
 											(() => {
 												const numericValue: number =
-													Number(processedValue) ?? 1;
+													Number(procdVal) ?? 1;
 												const foodCount: number =
 													Number(item?.food_record_count) ?? 1;
 												const setNutrient = (
@@ -944,13 +944,13 @@ export const CalendarDetail = memo(() => {
 													calendar_food_section:
 														prev.calendar_food_section?.map(
 															(
-																section: CalendarFoodSectionType,
+																section: ClndFdSecTyp,
 																idx: number,
 															) =>
 																idx === i
 																	? {
 																			...section,
-																			food_record_count: processedValue,
+																			food_record_count: procdVal,
 																			food_record_kcal: setNutrient(
 																				section.food_record_kcal,
 																				`kcal`,
@@ -983,19 +983,19 @@ export const CalendarDetail = memo(() => {
 									inputRef={REFS?.[i]?.food_record_gram}
 									error={ERRORS?.[i]?.food_record_gram}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											999,
 										);
-										processedValue !== null &&
+										procdVal !== null &&
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
 												calendar_food_section: prev.calendar_food_section?.map(
-													(section: CalendarFoodSectionType, idx: number) =>
+													(section: ClndFdSecTyp, idx: number) =>
 														idx === i
 															? {
 																	...section,
-																	food_record_gram: processedValue,
+																	food_record_gram: procdVal,
 																}
 															: section,
 												),
@@ -1021,7 +1021,7 @@ export const CalendarDetail = memo(() => {
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
 												calendar_food_section: prev.calendar_food_section?.map(
-													(section: CalendarFoodSectionType, idx: number) =>
+													(section: ClndFdSecTyp, idx: number) =>
 														idx === i
 															? {
 																	...section,
@@ -1047,7 +1047,7 @@ export const CalendarDetail = memo(() => {
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
 												calendar_food_section: prev.calendar_food_section?.map(
-													(section: CalendarFoodSectionType, idx: number) =>
+													(section: ClndFdSecTyp, idx: number) =>
 														idx === i
 															? {
 																	...section,
@@ -1081,19 +1081,19 @@ export const CalendarDetail = memo(() => {
 									}
 									endadornment={translate(`kc`)}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											9999,
 										);
-										processedValue !== null &&
+										procdVal !== null &&
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
 												calendar_food_section: prev.calendar_food_section?.map(
-													(section: CalendarFoodSectionType, idx: number) =>
+													(section: ClndFdSecTyp, idx: number) =>
 														idx === i
 															? {
 																	...section,
-																	food_record_kcal: processedValue,
+																	food_record_kcal: procdVal,
 																}
 															: section,
 												),
@@ -1119,20 +1119,20 @@ export const CalendarDetail = memo(() => {
 									}
 									endadornment={translate(`g`)}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											999,
 											1,
 										);
-										processedValue !== null &&
+										procdVal !== null &&
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
 												calendar_food_section: prev.calendar_food_section?.map(
-													(section: CalendarFoodSectionType, idx: number) =>
+													(section: ClndFdSecTyp, idx: number) =>
 														idx === i
 															? {
 																	...section,
-																	food_record_carb: processedValue,
+																	food_record_carb: procdVal,
 																}
 															: section,
 												),
@@ -1162,20 +1162,20 @@ export const CalendarDetail = memo(() => {
 									}
 									endadornment={translate(`g`)}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											999,
 											1,
 										);
-										processedValue !== null &&
+										procdVal !== null &&
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
 												calendar_food_section: prev.calendar_food_section?.map(
-													(section: CalendarFoodSectionType, idx: number) =>
+													(section: ClndFdSecTyp, idx: number) =>
 														idx === i
 															? {
 																	...section,
-																	food_record_protein: processedValue,
+																	food_record_protein: procdVal,
 																}
 															: section,
 												),
@@ -1201,20 +1201,20 @@ export const CalendarDetail = memo(() => {
 									}
 									endadornment={translate(`g`)}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											999,
 											1,
 										);
-										processedValue !== null &&
+										procdVal !== null &&
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
 												calendar_food_section: prev.calendar_food_section?.map(
-													(section: CalendarFoodSectionType, idx: number) =>
+													(section: ClndFdSecTyp, idx: number) =>
 														idx === i
 															? {
 																	...section,
-																	food_record_fat: processedValue,
+																	food_record_fat: procdVal,
 																}
 															: section,
 												),
@@ -1300,12 +1300,12 @@ export const CalendarDetail = memo(() => {
 										const foundIndex: number = moneyArray.findIndex(
 											(f: any) => f.money_record_part === value,
 										);
-										const foundItem: MoneyCategoryItem | null =
+										const foundItem: MnyCatItm | null =
 											foundIndex !== -1 ? moneyArray[foundIndex] : null;
 										setOBJECT((prev: CalendarType) => ({
 											...prev,
 											calendar_money_section: prev.calendar_money_section?.map(
-												(section: CalendarMoneySectionType, idx: number) =>
+												(section: ClnMnSeTy, idx: number) =>
 													idx === i
 														? {
 																...section,
@@ -1342,7 +1342,7 @@ export const CalendarDetail = memo(() => {
 										setOBJECT((prev: CalendarType) => ({
 											...prev,
 											calendar_money_section: prev.calendar_money_section?.map(
-												(section: CalendarMoneySectionType, idx: number) =>
+												(section: ClnMnSeTy, idx: number) =>
 													idx === i
 														? {
 																...section,
@@ -1358,7 +1358,7 @@ export const CalendarDetail = memo(() => {
 											(f: any) =>
 												f.money_record_part === item?.money_record_part,
 										);
-										const foundItem: MoneyCategoryItem | null =
+										const foundItem: MnyCatItm | null =
 											foundIndex !== -1 ? moneyArray[foundIndex] : null;
 										return (
 											(foundItem as any)?.money_record_title?.map(
@@ -1396,22 +1396,22 @@ export const CalendarDetail = memo(() => {
 											src={`money2.webp`}
 										/>
 									}
-									endadornment={localCurrency}
+									endadornment={lclCrrn}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											999_999_999,
 										);
-										processedValue !== null &&
+										procdVal !== null &&
 											setOBJECT((prev: CalendarType) => ({
 												...prev,
 												calendar_money_section:
 													prev.calendar_money_section?.map(
-														(section: CalendarMoneySectionType, idx: number) =>
+														(section: ClnMnSeTy, idx: number) =>
 															idx === i
 																? {
 																		...section,
-																		money_record_amount: processedValue,
+																		money_record_amount: procdVal,
 																	}
 																: section,
 													),
@@ -1446,7 +1446,7 @@ export const CalendarDetail = memo(() => {
 										setOBJECT((prev: CalendarType) => ({
 											...prev,
 											calendar_money_section: prev.calendar_money_section?.map(
-												(section: CalendarMoneySectionType, idx: number) =>
+												(section: ClnMnSeTy, idx: number) =>
 													idx === i
 														? {
 																...section,
@@ -1571,9 +1571,9 @@ export const CalendarDetail = memo(() => {
 			<Paper
 				className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}
 			>
-				{dateCountSection()}
+				{dtCntSec()}
 				<Br m={20} />
-				{exerciseSection()}
+				{exerSec()}
 				<Br m={20} />
 				{foodSection()}
 				<Br m={20} />

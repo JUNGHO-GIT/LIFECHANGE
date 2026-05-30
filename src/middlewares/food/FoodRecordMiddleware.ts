@@ -8,7 +8,7 @@
 // 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const list = async (object: any) => {
 	// 0. calcOverTenMillion ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const calcOverTenMillion = (param: string) => {
+	const clcOvrTnMlln = (param: string) => {
 		let finalResult: string = ``;
 
 		if (
@@ -30,7 +30,7 @@ export const list = async (object: any) => {
 	};
 
 	// 0. calcNonValueColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const calcNonValueColor = (param: string) => {
+	const clcNnValClr = (param: string) => {
 		let finalResult: string = ``;
 
 		if (!param) {
@@ -46,29 +46,29 @@ export const list = async (object: any) => {
 
 	// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	object?.result?.forEach((item: any) => {
-		item.food_record_total_kcal = calcOverTenMillion(
+		item.food_record_total_kcal = clcOvrTnMlln(
 			item?.food_record_total_kcal,
 		);
-		item.food_record_total_carb = calcOverTenMillion(
+		item.food_record_total_carb = clcOvrTnMlln(
 			item?.food_record_total_carb,
 		);
-		item.food_record_total_protein = calcOverTenMillion(
+		item.food_record_total_protein = clcOvrTnMlln(
 			item?.food_record_total_protein,
 		);
-		item.food_record_total_fat = calcOverTenMillion(
+		item.food_record_total_fat = clcOvrTnMlln(
 			item?.food_record_total_fat,
 		);
 
-		item.food_record_total_kcal_color = calcNonValueColor(
+		item.food_record_total_kcal_color = clcNnValClr(
 			item?.food_record_total_kcal,
 		);
-		item.food_record_total_carb_color = calcNonValueColor(
+		item.food_record_total_carb_color = clcNnValClr(
 			item?.food_record_total_carb,
 		);
-		item.food_record_total_protein_color = calcNonValueColor(
+		item.food_record_total_protein_color = clcNnValClr(
 			item?.food_record_total_protein,
 		);
-		item.food_record_total_fat_color = calcNonValueColor(
+		item.food_record_total_fat_color = clcNnValClr(
 			item?.food_record_total_fat,
 		);
 	});

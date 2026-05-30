@@ -341,7 +341,7 @@ export const Icons = memo((props: any) => {
 		),
 	};
 
-	const IconComponent: JSX.Element | null = icons[props.name] || null;
+	const IcnComp: JSX.Element | null = icons[props.name] || null;
 
 	// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――->
 	return (
@@ -364,7 +364,7 @@ export const Icons = memo((props: any) => {
 				}
 			}}
 		>
-			{IconComponent}
+			{IcnComp}
 		</IconButton>
 	);
 });

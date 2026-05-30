@@ -5,14 +5,14 @@
  * @since 2025-12-25
  */
 
-import { useCommonValue } from "@exportHooks";
+import { useCommonValue as usCmmnVal } from "@exportHooks";
 import { type Moment, moment } from "@exportLibs";
 import { useCallback } from "@exportReacts";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const useCommonDate = () => {
+export const usCmmnDt = () => {
 	// 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const { localTimeZone } = useCommonValue();
+	const { localTimeZone: lclTmZn } = usCmmnVal();
 
 	// 2. helper ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const getMoment = useCallback(
@@ -23,31 +23,31 @@ export const useCommonDate = () => {
 		[],
 	);
 
-	const createMomentWithTimezone = useCallback(
+	const crtMmWtTm = useCallback(
 		(params?: Moment | Date | string) =>
 			!params || params === `0000-00-00`
-				? moment().tz(localTimeZone)
-				: moment(new Date(params as string)).tz(localTimeZone),
-		[localTimeZone],
+				? moment().tz(lclTmZn)
+				: moment(new Date(params as string)).tz(lclTmZn),
+		[lclTmZn],
 	);
 
-	const createDateFunction = useCallback(
+	const crtDtFn = useCallback(
 		(modifier?: (_m: moment.Moment) => moment.Moment) =>
 			(params?: Moment | Date | string) => {
-				const m = createMomentWithTimezone(params);
+				const m = crtMmWtTm(params);
 				return modifier ? modifier(m) : m;
 			},
-		[createMomentWithTimezone],
+		[crtMmWtTm],
 	);
 
-	const createDateFunctionWithFormat = useCallback(
+	const crtDtFnWtFr = useCallback(
 		(modifier?: (_m: moment.Moment) => moment.Moment) =>
 			(params?: Moment | Date | string) => {
-				const m = createMomentWithTimezone(params);
+				const m = crtMmWtTm(params);
 				const result = modifier ? modifier(m) : m;
 				return result.format(`YYYY-MM-DD`);
 			},
-		[createMomentWithTimezone],
+		[crtMmWtTm],
 	);
 
 	// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
@@ -56,132 +56,132 @@ export const useCommonDate = () => {
 		getMoment: getMoment,
 
 		// Day Functions (Not Formatted)
-		getDayNotFmt: createDateFunction(),
-		getDayStartNotFmt: createDateFunction((m) => m.startOf(`day`)),
-		getDayEndNotFmt: createDateFunction((m) => m.endOf(`day`)),
-		getPrevDayStartNotFmt: createDateFunction((m) =>
+		getDayNotFmt: crtDtFn(),
+		getDayStartNotFmt: crtDtFn((m) => m.startOf(`day`)),
+		getDayEndNotFmt: crtDtFn((m) => m.endOf(`day`)),
+		getPrevDayStartNotFmt: crtDtFn((m) =>
 			m.subtract(1, `days`).startOf(`day`),
 		),
-		getPrevDayEndNotFmt: createDateFunction((m) =>
+		getPrevDayEndNotFmt: crtDtFn((m) =>
 			m.subtract(1, `days`).endOf(`day`),
 		),
-		getNextDayStartNotFmt: createDateFunction((m) =>
+		getNextDayStartNotFmt: crtDtFn((m) =>
 			m.add(1, `days`).startOf(`day`),
 		),
-		getNextDayEndNotFmt: createDateFunction((m) =>
+		getNextDayEndNotFmt: crtDtFn((m) =>
 			m.add(1, `days`).endOf(`day`),
 		),
 
 		// Day Functions (Formatted)
-		getDayFmt: createDateFunctionWithFormat(),
-		getDayStartFmt: createDateFunctionWithFormat((m) => m.startOf(`day`)),
-		getDayEndFmt: createDateFunctionWithFormat((m) => m.endOf(`day`)),
-		getPrevDayStartFmt: createDateFunctionWithFormat((m) =>
+		getDayFmt: crtDtFnWtFr(),
+		getDayStartFmt: crtDtFnWtFr((m) => m.startOf(`day`)),
+		getDayEndFmt: crtDtFnWtFr((m) => m.endOf(`day`)),
+		getPrevDayStartFmt: crtDtFnWtFr((m) =>
 			m.subtract(1, `days`).startOf(`day`),
 		),
-		getPrevDayEndFmt: createDateFunctionWithFormat((m) =>
+		getPrevDayEndFmt: crtDtFnWtFr((m) =>
 			m.subtract(1, `days`).endOf(`day`),
 		),
-		getNextDayStartFmt: createDateFunctionWithFormat((m) =>
+		getNextDayStartFmt: crtDtFnWtFr((m) =>
 			m.add(1, `days`).startOf(`day`),
 		),
-		getNextDayEndFmt: createDateFunctionWithFormat((m) =>
+		getNextDayEndFmt: crtDtFnWtFr((m) =>
 			m.add(1, `days`).endOf(`day`),
 		),
 
 		// Week Functions (Not Formatted)
-		getWeekStartNotFmt: createDateFunction((m) => m.startOf(`isoWeek`)),
-		getWeekEndNotFmt: createDateFunction((m) => m.endOf(`isoWeek`)),
-		getPrevWeekStartNotFmt: createDateFunction((m) =>
+		getWeekStartNotFmt: crtDtFn((m) => m.startOf(`isoWeek`)),
+		getWeekEndNotFmt: crtDtFn((m) => m.endOf(`isoWeek`)),
+		getPrevWeekStartNotFmt: crtDtFn((m) =>
 			m.subtract(1, `weeks`).startOf(`isoWeek`),
 		),
-		getPrevWeekEndNotFmt: createDateFunction((m) =>
+		getPrevWeekEndNotFmt: crtDtFn((m) =>
 			m.subtract(1, `weeks`).endOf(`isoWeek`),
 		),
-		getNextWeekStartNotFmt: createDateFunction((m) =>
+		getNextWeekStartNotFmt: crtDtFn((m) =>
 			m.add(1, `weeks`).startOf(`isoWeek`),
 		),
-		getNextWeekEndNotFmt: createDateFunction((m) =>
+		getNextWeekEndNotFmt: crtDtFn((m) =>
 			m.add(1, `weeks`).endOf(`isoWeek`),
 		),
 
 		// Week Functions (Formatted)
-		getWeekStartFmt: createDateFunctionWithFormat((m) => m.startOf(`isoWeek`)),
-		getWeekEndFmt: createDateFunctionWithFormat((m) => m.endOf(`isoWeek`)),
-		getPrevWeekStartFmt: createDateFunctionWithFormat((m) =>
+		getWeekStartFmt: crtDtFnWtFr((m) => m.startOf(`isoWeek`)),
+		getWeekEndFmt: crtDtFnWtFr((m) => m.endOf(`isoWeek`)),
+		getPrevWeekStartFmt: crtDtFnWtFr((m) =>
 			m.subtract(1, `weeks`).startOf(`isoWeek`),
 		),
-		getPrevWeekEndFmt: createDateFunctionWithFormat((m) =>
+		getPrevWeekEndFmt: crtDtFnWtFr((m) =>
 			m.subtract(1, `weeks`).endOf(`isoWeek`),
 		),
-		getNextWeekStartFmt: createDateFunctionWithFormat((m) =>
+		getNextWeekStartFmt: crtDtFnWtFr((m) =>
 			m.add(1, `weeks`).startOf(`isoWeek`),
 		),
-		getNextWeekEndFmt: createDateFunctionWithFormat((m) =>
+		getNextWeekEndFmt: crtDtFnWtFr((m) =>
 			m.add(1, `weeks`).endOf(`isoWeek`),
 		),
 
 		// Month Functions (Not Formatted)
-		getMonthStartNotFmt: createDateFunction((m) => m.startOf(`month`)),
-		getMonthEndNotFmt: createDateFunction((m) => m.endOf(`month`)),
-		getPrevMonthStartNotFmt: createDateFunction((m) =>
+		getMonthStartNotFmt: crtDtFn((m) => m.startOf(`month`)),
+		getMonthEndNotFmt: crtDtFn((m) => m.endOf(`month`)),
+		getPrevMonthStartNotFmt: crtDtFn((m) =>
 			m.subtract(1, `months`).startOf(`month`),
 		),
-		getPrevMonthEndNotFmt: createDateFunction((m) =>
+		getPrevMonthEndNotFmt: crtDtFn((m) =>
 			m.subtract(1, `months`).endOf(`month`),
 		),
-		getNextMonthStartNotFmt: createDateFunction((m) =>
+		getNextMonthStartNotFmt: crtDtFn((m) =>
 			m.add(1, `months`).startOf(`month`),
 		),
-		getNextMonthEndNotFmt: createDateFunction((m) =>
+		getNextMonthEndNotFmt: crtDtFn((m) =>
 			m.add(1, `months`).endOf(`month`),
 		),
 
 		// Month Functions (Formatted)
-		getMonthStartFmt: createDateFunctionWithFormat((m) => m.startOf(`month`)),
-		getMonthEndFmt: createDateFunctionWithFormat((m) => m.endOf(`month`)),
-		getPrevMonthStartFmt: createDateFunctionWithFormat((m) =>
+		getMonthStartFmt: crtDtFnWtFr((m) => m.startOf(`month`)),
+		getMonthEndFmt: crtDtFnWtFr((m) => m.endOf(`month`)),
+		getPrevMonthStartFmt: crtDtFnWtFr((m) =>
 			m.subtract(1, `months`).startOf(`month`),
 		),
-		getPrevMonthEndFmt: createDateFunctionWithFormat((m) =>
+		getPrevMonthEndFmt: crtDtFnWtFr((m) =>
 			m.subtract(1, `months`).endOf(`month`),
 		),
-		getNextMonthStartFmt: createDateFunctionWithFormat((m) =>
+		getNextMonthStartFmt: crtDtFnWtFr((m) =>
 			m.add(1, `months`).startOf(`month`),
 		),
-		getNextMonthEndFmt: createDateFunctionWithFormat((m) =>
+		getNextMonthEndFmt: crtDtFnWtFr((m) =>
 			m.add(1, `months`).endOf(`month`),
 		),
 
 		// Year Functions (Not Formatted)
-		getYearStartNotFmt: createDateFunction((m) => m.startOf(`year`)),
-		getYearEndNotFmt: createDateFunction((m) => m.endOf(`year`)),
-		getPrevYearStartNotFmt: createDateFunction((m) =>
+		getYearStartNotFmt: crtDtFn((m) => m.startOf(`year`)),
+		getYearEndNotFmt: crtDtFn((m) => m.endOf(`year`)),
+		getPrevYearStartNotFmt: crtDtFn((m) =>
 			m.subtract(1, `years`).startOf(`year`),
 		),
-		getPrevYearEndNotFmt: createDateFunction((m) =>
+		getPrevYearEndNotFmt: crtDtFn((m) =>
 			m.subtract(1, `years`).endOf(`year`),
 		),
-		getNextYearStartNotFmt: createDateFunction((m) =>
+		getNextYearStartNotFmt: crtDtFn((m) =>
 			m.add(1, `years`).startOf(`year`),
 		),
-		getNextYearEndNotFmt: createDateFunction((m) =>
+		getNextYearEndNotFmt: crtDtFn((m) =>
 			m.add(1, `years`).endOf(`year`),
 		),
 
 		// Year Functions (Formatted)
-		getYearStartFmt: createDateFunctionWithFormat((m) => m.startOf(`year`)),
-		getYearEndFmt: createDateFunctionWithFormat((m) => m.endOf(`year`)),
-		getPrevYearStartFmt: createDateFunctionWithFormat((m) =>
+		getYearStartFmt: crtDtFnWtFr((m) => m.startOf(`year`)),
+		getYearEndFmt: crtDtFnWtFr((m) => m.endOf(`year`)),
+		getPrevYearStartFmt: crtDtFnWtFr((m) =>
 			m.subtract(1, `years`).startOf(`year`),
 		),
-		getPrevYearEndFmt: createDateFunctionWithFormat((m) =>
+		getPrevYearEndFmt: crtDtFnWtFr((m) =>
 			m.subtract(1, `years`).endOf(`year`),
 		),
-		getNextYearStartFmt: createDateFunctionWithFormat((m) =>
+		getNextYearStartFmt: crtDtFnWtFr((m) =>
 			m.add(1, `years`).startOf(`year`),
 		),
-		getNextYearEndFmt: createDateFunctionWithFormat((m) =>
+		getNextYearEndFmt: crtDtFnWtFr((m) =>
 			m.add(1, `years`).endOf(`year`),
 		),
 	};

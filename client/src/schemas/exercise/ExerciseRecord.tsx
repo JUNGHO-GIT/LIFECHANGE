@@ -32,7 +32,7 @@ export interface ExerciseRecordType {
 }
 
 // Schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-export const ExerciseRecord: ExerciseRecordType = {
+export const ExerRec2: ExerciseRecordType = {
 	_id: ``,
 	exercise_record_number: 0,
 	exercise_record_dateType: ``,

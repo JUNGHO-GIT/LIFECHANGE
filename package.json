@@ -1,6 +1,6 @@
 {
   "name": "lifechange-server",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "type": "module",
   "main": "index.ts",
   "license": "Apache-2.0",
@@ -12,9 +12,10 @@
     "whatwg-url": "12.0.1"
   },
   "scripts": {
-    "git": "bun ~/.bootstrap/bootstrap-sync.mjs --git",
-    "sync": "bun ~/.bootstrap/bootstrap-sync.mjs --sync",
-    "tools": "bun ~/.bootstrap/bootstrap-sync.mjs --tools"
+    "git": "bun run ~/.bootstrap/bootstrap-sync.ts --git",
+    "swc": "bun run ~/.bootstrap/bootstrap-sync.ts --swc",
+    "sync": "bun run ~/.bootstrap/bootstrap-sync.ts --sync",
+    "tools": "bun run ~/.bootstrap/bootstrap-sync.ts --tools"
   },
   "dependencies": {
     "ajv": "8.18.0",

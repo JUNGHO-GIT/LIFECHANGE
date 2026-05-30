@@ -6,48 +6,48 @@
  */
 
 import { Div, Grid, Hr, Icons, Img, Paper } from "@exportComponents";
-import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
+import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal, useStorageLocal as usStrgLcl } from "@exportHooks";
 import { Dialog, Empty, Footer } from "@exportLayouts";
 import { axios } from "@exportLibs";
-import { Accordion, AccordionDetails, AccordionSummary } from "@exportMuis";
+import { Accordion, AccordionDetails as AccrDtls, AccordionSummary as AccrSmmr } from "@exportMuis";
 import { memo, useEffect, useState } from "@exportReacts";
-import { SleepGoal, type SleepGoalType } from "@exportSchemas";
+import { SleepGoal, type SleepGoalType as SlpGlTyp } from "@exportSchemas";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const SleepGoalList = memo(() => {
+export const SlpGlLst = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, PATH, sessionId, toDetail } = useCommonValue();
-	const { navigate, location_dateType, location_dateStart, location_dateEnd } =
-		useCommonValue();
-	const { getDayFmt, getDayNotFmt, getMonthStartFmt, getMonthEndFmt } =
-		useCommonDate();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
+	const { URL_OBJECT, PATH, sessionId, toDetail } = usCmmnVal();
+	const { navigate, location_dateType: locDtTyp, location_dateStart: locDtStrt, location_dateEnd: locDtEnd } =
+		usCmmnVal();
+	const { getDayFmt, getDayNotFmt, getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt } =
+		usCmmnDt();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
 
 	// 2-1. useStorageLocal ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const [DATE, setDATE] = useStorageLocal(`date`, PATH, ``, {
-		dateType: location_dateType ?? ``,
-		dateStart: location_dateStart ?? getDayFmt(),
-		dateEnd: location_dateEnd ?? getDayFmt(),
+	const [DATE, setDATE] = usStrgLcl(`date`, PATH, ``, {
+		dateType: locDtTyp ?? ``,
+		dateStart: locDtStrt ?? getDayFmt(),
+		dateEnd: locDtEnd ?? getDayFmt(),
 	});
-	const [PAGING, setPAGING] = useStorageLocal(`paging`, PATH, ``, {
+	const [PAGING, setPAGING] = usStrgLcl(`paging`, PATH, ``, {
 		sort: `asc`,
 		page: 1,
 	});
-	const [isExpanded, setIsExpanded] = useStorageLocal(`isExpanded`, PATH, ``, [
+	const [isExpanded, stIsExpn] = usStrgLcl(`isExpanded`, PATH, ``, [
 		{
 			expanded: true,
 		},
 	]);
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [OBJECT, setOBJECT] = useState<[SleepGoalType]>([SleepGoal]);
+	const [OBJECT, setOBJECT] = useState<[SlpGlTyp]>([SleepGoal]);
 	const [EXIST, setEXIST] = useState({
 		day: [``],
 		week: [``],
@@ -75,8 +75,8 @@ export const SleepGoalList = memo(() => {
 					user_id: sessionId,
 					DATE: {
 						dateType: ``,
-						dateStart: getMonthStartFmt(DATE?.dateStart),
-						dateEnd: getMonthEndFmt(DATE?.dateEnd),
+						dateStart: gtMnStFm(DATE?.dateStart),
+						dateEnd: gtMnthEndFmt(DATE?.dateEnd),
 					},
 				},
 			})
@@ -120,7 +120,7 @@ export const SleepGoalList = memo(() => {
 					newSectionCnt: res.data.sectionCnt ?? 0,
 				}));
 				// 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
-				setIsExpanded(() => {
+				stIsExpn(() => {
 					if (res.data.result?.length !== isExpanded.length) {
 						return new Array(res.data.result?.length).fill({ expanded: true });
 					}
@@ -163,7 +163,7 @@ export const SleepGoalList = memo(() => {
 							className={`border-0 shadow-0 radius-2`}
 							expanded={isExpanded?.[i]?.expanded}
 						>
-							<AccordionSummary
+							<AccrSmmr
 								expandIcon={
 									<Icons
 										key={`ChevronDown`}
@@ -172,7 +172,7 @@ export const SleepGoalList = memo(() => {
 										onClick={(e: any) => {
 											e.preventDefault();
 											e.stopPropagation();
-											setIsExpanded(
+											stIsExpn(
 												isExpanded.map((el: any, index: number) =>
 													i === index
 														? {
@@ -225,8 +225,8 @@ export const SleepGoalList = memo(() => {
 										</Div>
 									</Grid>
 								</Grid>
-							</AccordionSummary>
-							<AccordionDetails>
+							</AccrSmmr>
+							<AccrDtls>
 								<Grid container={true} spacing={1}>
 									{/** row 1 * */}
 									<Grid container={true} spacing={1}>
@@ -442,7 +442,7 @@ export const SleepGoalList = memo(() => {
 										</Grid>
 									</Grid>
 								</Grid>
-							</AccordionDetails>
+							</AccrDtls>
 						</Accordion>
 					</Grid>
 				))}
@@ -464,7 +464,7 @@ export const SleepGoalList = memo(() => {
 
 	// 8. dialog ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const dialogNode = () => (
-		<Dialog COUNT={COUNT} setCOUNT={setCOUNT} setIsExpanded={setIsExpanded} />
+		<Dialog COUNT={COUNT} setCOUNT={setCOUNT} setIsExpanded={stIsExpn} />
 	);
 
 	// 9. footer ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-

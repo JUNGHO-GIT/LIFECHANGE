@@ -6,10 +6,10 @@
  */
 
 import { Div, Grid, Icons } from "@exportComponents";
-import { useCommonDate, useCommonValue } from "@exportHooks";
-import { Accordion, AccordionSummary } from "@exportMuis";
+import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal } from "@exportHooks";
+import { Accordion, AccordionSummary as AccrSmmr } from "@exportMuis";
 import { memo } from "@exportReacts";
-import { useStoreLanguage } from "@exportStores";
+import { useStoreLanguage as usStrLang } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 declare interface EmptyProps {
@@ -20,15 +20,15 @@ declare interface EmptyProps {
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const Empty = memo(({ DATE, extra }: EmptyProps) => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { navigate, isFind, isGoal, isRecord, toDetail } = useCommonValue();
-	const { getDayStartFmt, getDayEndFmt, getMonthStartFmt, getMonthEndFmt } =
-		useCommonDate();
-	const { translate } = useStoreLanguage();
+	const { navigate, isFind, isGoal, isRecord, toDetail } = usCmmnVal();
+	const { getDayStartFmt: gtDyStrtFmt, getDayEndFmt, getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt } =
+		usCmmnDt();
+	const { translate } = usStrLang();
 
 	// 7. emptyNode ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const emptyNode = () => {
 		// 2. isFindSection
-		const isFindSection = () => (
+		const isFndSec = () => (
 			<Grid
 				container={true}
 				spacing={0}
@@ -36,7 +36,7 @@ export const Empty = memo(({ DATE, extra }: EmptyProps) => {
 			>
 				<Grid size={12} className={`p-2px`}>
 					<Accordion className={`border-0 shadow-0 radius-2`} expanded={false}>
-						<AccordionSummary>
+						<AccrSmmr>
 							<Grid container={true} spacing={1}>
 								<Grid size={4} className={`d-row-left`}>
 									<Div className={`fs-0-9rem fw-600 dark`}>
@@ -49,13 +49,13 @@ export const Empty = memo(({ DATE, extra }: EmptyProps) => {
 									</Div>
 								</Grid>
 							</Grid>
-						</AccordionSummary>
+						</AccrSmmr>
 					</Accordion>
 				</Grid>
 			</Grid>
 		);
 		// 3. isGoalSection
-		const isGoalSection = () => (
+		const isGlSec = () => (
 			<Grid
 				container={true}
 				spacing={0}
@@ -63,14 +63,14 @@ export const Empty = memo(({ DATE, extra }: EmptyProps) => {
 			>
 				<Grid size={12} className={`p-2px`}>
 					<Accordion className={`border-0 shadow-0 radius-2`} expanded={false}>
-						<AccordionSummary
+						<AccrSmmr
 							onClick={() => {
 								void navigate(toDetail, {
 									state: {
 										from: `list`,
 										dateType: DATE?.dateType ?? `month`,
-										dateStart: DATE?.dateStart ?? getMonthStartFmt(),
-										dateEnd: DATE?.dateEnd ?? getMonthEndFmt(),
+										dateStart: DATE?.dateStart ?? gtMnStFm(),
+										dateEnd: DATE?.dateEnd ?? gtMnthEndFmt(),
 									},
 								});
 							}}
@@ -92,13 +92,13 @@ export const Empty = memo(({ DATE, extra }: EmptyProps) => {
 									<Div className={`fs-0-9rem fw-500`}>{translate(`empty`)}</Div>
 								</Grid>
 							</Grid>
-						</AccordionSummary>
+						</AccrSmmr>
 					</Accordion>
 				</Grid>
 			</Grid>
 		);
 		// 4. isRecordSection
-		const isRecordSection = () => (
+		const isRecSec = () => (
 			<Grid
 				container={true}
 				spacing={0}
@@ -106,13 +106,13 @@ export const Empty = memo(({ DATE, extra }: EmptyProps) => {
 			>
 				<Grid size={12} className={`p-2px`}>
 					<Accordion className={`border-0 shadow-0 radius-2`} expanded={false}>
-						<AccordionSummary
+						<AccrSmmr
 							onClick={() => {
 								void navigate(toDetail, {
 									state: {
 										from: `list`,
 										dateType: DATE?.dateType ?? `day`,
-										dateStart: DATE?.dateStart ?? getDayStartFmt(),
+										dateStart: DATE?.dateStart ?? gtDyStrtFmt(),
 										dateEnd: DATE?.dateEnd ?? getDayEndFmt(),
 									},
 								});
@@ -135,7 +135,7 @@ export const Empty = memo(({ DATE, extra }: EmptyProps) => {
 									<Div className={`fs-0-9rem fw-500`}>{translate(`empty`)}</Div>
 								</Grid>
 							</Grid>
-						</AccordionSummary>
+						</AccrSmmr>
 					</Accordion>
 				</Grid>
 			</Grid>
@@ -143,9 +143,9 @@ export const Empty = memo(({ DATE, extra }: EmptyProps) => {
 		// 3. return
 		return (
 			<>
-				{isFind ? isFindSection() : null}
-				{!isFind && isGoal ? isGoalSection() : null}
-				{!isFind && !isGoal && isRecord ? isRecordSection() : null}
+				{isFind ? isFndSec() : null}
+				{!isFind && isGoal ? isGlSec() : null}
+				{!isFind && !isGoal && isRecord ? isRecSec() : null}
 			</>
 		);
 	};

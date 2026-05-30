@@ -14,7 +14,7 @@ declare interface LoadingState {
 }
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const useStoreLoading = create<LoadingState>((set) => ({
+export const usStrLoad = create<LoadingState>((set) => ({
 	LOADING: false,
 	setLOADING: (loading) => {
 		set({ LOADING: loading });

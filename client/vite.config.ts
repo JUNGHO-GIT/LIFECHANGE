@@ -9,7 +9,7 @@ import path from "node:path";
 import fs from "node:fs";
 import { defineConfig, loadEnv, type UserConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
-import viteCompression from "vite-plugin-compression";
+import vtCmpr from "vite-plugin-compression";
 
 // 1. config ---------------------------------------------------------------------------------------
 export default defineConfig(({
@@ -38,7 +38,7 @@ export default defineConfig(({
     target[key] = value;
   };
 
-  const mergeEnvFromFile: (filePath: string) => void = (filePath) => {
+  const mrgEnvFrmFl: (filePath: string) => void = (filePath) => {
     const exists: boolean = fs.existsSync(filePath);
     const merge: () => void = () => {
       fs.readFileSync(filePath, { encoding: `utf8` })
@@ -64,7 +64,7 @@ export default defineConfig(({
     (exists ? merge : noop)();
   };
 
-  mergeEnvFromFile(path.join(rootDir, `.env-${envMode}`));
+  mrgEnvFrmFl(path.join(rootDir, `.env-${envMode}`));
 
   // 1-4. debug
   const debugEnv: () => void = () => {
@@ -84,7 +84,7 @@ export default defineConfig(({
       jsxImportSource: `@emotion/react`,
     }),
     ...(isProd && isBuild ? [
-      viteCompression({
+      vtCmpr({
         verbose: false,
         disable: false,
         threshold: 10_240,

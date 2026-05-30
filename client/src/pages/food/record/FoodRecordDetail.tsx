@@ -7,7 +7,7 @@
 
 import { Bg, Br, Div, Grid, Icons, Img, Paper } from "@exportComponents";
 import { Count, Delete, Input, PickerDay, Select } from "@exportContainers";
-import { useCommonDate, useCommonValue, useValidateFood } from "@exportHooks";
+import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal, useValidateFood as usValFd } from "@exportHooks";
 import { Dialog, Footer } from "@exportLayouts";
 import { axios } from "@exportLibs";
 import { MenuItem } from "@exportMuis";
@@ -19,34 +19,34 @@ import {
 	useRef,
 	useState,
 } from "@exportReacts";
-import { FoodRecord, type FoodRecordType } from "@exportSchemas";
+import { FoodRecord, type FoodRecordType as FdRecTyp } from "@exportSchemas";
 import {
-	handleNumberInput,
+	handleNumberInput as hndlNmbrInpt,
 	insertComma,
 	setSession,
 	sync,
 } from "@exportScripts";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const FoodRecordDetail = memo(() => {
+export const FdRecDtl = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, navigate, toList, sessionId } = useCommonValue();
-	const { foodArray, bgColors, sessionFoodSection } = useCommonValue();
-	const { location_dateStart, location_dateEnd } = useCommonValue();
-	const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-	const { ERRORS, REFS, validate } = useValidateFood();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
+	const { URL_OBJECT, navigate, toList, sessionId } = usCmmnVal();
+	const { foodArray, bgColors, sessionFoodSection: sessFdSec } = usCmmnVal();
+	const { location_dateStart: locDtStrt, location_dateEnd: locDtEnd } = usCmmnVal();
+	const { getDayFmt, getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt } = usCmmnDt();
+	const { ERRORS, REFS, validate } = usValFd();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const [LOCKED, setLOCKED] = useState<string>(`unlocked`);
-	const [OBJECT, setOBJECT] = useState<FoodRecordType>(FoodRecord);
+	const [OBJECT, setOBJECT] = useState<FdRecTyp>(FoodRecord);
 	const [FAVORITE, setFAVORITE] = useState([]);
 	const [EXIST, setEXIST] = useState({
 		day: [``],
@@ -74,12 +74,12 @@ export const FoodRecordDetail = memo(() => {
 	});
 	const [DATE, setDATE] = useState({
 		dateType: `day`,
-		dateStart: location_dateStart ?? getDayFmt(),
-		dateEnd: location_dateEnd ?? getDayFmt(),
+		dateStart: locDtStrt ?? getDayFmt(),
+		dateEnd: locDtEnd ?? getDayFmt(),
 	});
 
 	// 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const objectRef: React.RefObject<FoodRecordType> = useRef(OBJECT);
+	const objectRef: React.RefObject<FdRecTyp> = useRef(OBJECT);
 	const countRef: React.RefObject<{
 		totalCnt: number;
 		sectionCnt: number;
@@ -127,8 +127,8 @@ export const FoodRecordDetail = memo(() => {
 					user_id: sessionId,
 					DATE: {
 						dateType: ``,
-						dateStart: getMonthStartFmt(DATE?.dateStart),
-						dateEnd: getMonthEndFmt(DATE?.dateEnd),
+						dateStart: gtMnStFm(DATE?.dateStart),
+						dateEnd: gtMnthEndFmt(DATE?.dateEnd),
 					},
 				},
 			})
@@ -217,8 +217,8 @@ export const FoodRecordDetail = memo(() => {
 					newSectionCnt: res.data.sectionCnt ?? 0,
 				}));
 
-				const sectionArray: typeof sessionFoodSection =
-					sessionFoodSection?.length > 0 ? sessionFoodSection : [];
+				const sectionArray: typeof sessFdSec =
+					sessFdSec?.length > 0 ? sessFdSec : [];
 
 				setOBJECT((prev) => ({
 					...prev,
@@ -285,7 +285,7 @@ export const FoodRecordDetail = memo(() => {
 
 	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	useEffect(() => {
-		const defaultSection = {
+		const defSec = {
 			food_record_part: foodArray[1]?.food_record_part ?? ``,
 			food_record_key: ``,
 			food_record_name: ``,
@@ -298,16 +298,16 @@ export const FoodRecordDetail = memo(() => {
 			food_record_carb: `0`,
 			food_record_protein: `0`,
 		};
-		const updatedSection = Array.from({ length: COUNT?.newSectionCnt })
+		const updtSec = Array.from({ length: COUNT?.newSectionCnt })
 			.fill(null)
 			.map((_item: any, idx: number) => {
 				return idx < OBJECT?.food_section?.length
 					? OBJECT?.food_section[idx]
-					: defaultSection;
+					: defSec;
 			});
 		setOBJECT((prev) => ({
 			...prev,
-			food_section: updatedSection,
+			food_section: updtSec,
 		}));
 	}, [COUNT?.newSectionCnt]);
 
@@ -425,7 +425,7 @@ export const FoodRecordDetail = memo(() => {
 	};
 
 	// 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const flowUpdateFavorite = useCallback(
+	const flwUpdtFav = useCallback(
 		(foodFavorite: any) => {
 			(!foodFavorite.food_record_name ||
 				foodFavorite.food_record_name.trim() === ``) &&
@@ -478,8 +478,8 @@ export const FoodRecordDetail = memo(() => {
 	// 4-3. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	const handleDelete = useCallback(
 		(index: number) => {
-			let sectionArray: typeof sessionFoodSection = [];
-			const section: any = sessionFoodSection;
+			let sectionArray: typeof sessFdSec = [];
+			const section: any = sessFdSec;
 			section ? (sectionArray = section) : (sectionArray = []);
 			sectionArray.splice(index, 1);
 			setSession(`section`, `food`, ``, sectionArray);
@@ -495,52 +495,52 @@ export const FoodRecordDetail = memo(() => {
 				newSectionCnt: prev?.newSectionCnt - 1,
 			}));
 		},
-		[sessionFoodSection],
+		[sessFdSec],
 	);
 
 	// 4-5. handle (favorite 추가) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const handleFoodFavorite = useCallback(
+	const hndlFdFav = useCallback(
 		(index: number) => {
-			const food_record_name: string =
+			const fdRecNm: string =
 				OBJECT?.food_section[index]?.food_record_name;
-			const food_record_brand: string =
+			const fdRecBrnd: string =
 				OBJECT?.food_section[index]?.food_record_brand;
-			const food_record_gram: string =
+			const fdRecGrm: string =
 				OBJECT?.food_section[index]?.food_record_gram;
-			const food_record_serv: string =
+			const fdRecSrv: string =
 				OBJECT?.food_section[index]?.food_record_serv;
-			const food_record_count: string =
+			const fdRecCnt: string =
 				OBJECT?.food_section[index]?.food_record_count ?? `1`;
 
-			const food_record_kcal: string = (
+			const fdRecKcl: string = (
 				Number.parseFloat(OBJECT?.food_section[index]?.food_record_kcal) /
-				Number.parseFloat(food_record_count)
+				Number.parseFloat(fdRecCnt)
 			).toFixed(0);
-			const food_record_carb: string = (
+			const fdRecCrb: string = (
 				Number.parseFloat(OBJECT?.food_section[index]?.food_record_carb) /
-				Number.parseFloat(food_record_count)
+				Number.parseFloat(fdRecCnt)
 			).toFixed(1);
-			const food_record_protein: string = (
+			const fdRecPrtn: string = (
 				Number.parseFloat(OBJECT?.food_section[index]?.food_record_protein) /
-				Number.parseFloat(food_record_count)
+				Number.parseFloat(fdRecCnt)
 			).toFixed(1);
-			const food_record_fat: string = (
+			const fdRecFt: string = (
 				Number.parseFloat(OBJECT?.food_section[index]?.food_record_fat) /
-				Number.parseFloat(food_record_count)
+				Number.parseFloat(fdRecCnt)
 			).toFixed(1);
-			const food_record_key: string = `${food_record_name}_${food_record_brand}_${food_record_kcal}_${food_record_carb}_${food_record_protein}_${food_record_fat}`;
+			const fdRecKy: string = `${fdRecNm}_${fdRecBrnd}_${fdRecKcl}_${fdRecCrb}_${fdRecPrtn}_${fdRecFt}`;
 
 			return {
-				food_record_key: food_record_key,
-				food_record_name: food_record_name,
-				food_record_brand: food_record_brand,
-				food_record_gram: food_record_gram,
-				food_record_serv: food_record_serv,
+				food_record_key: fdRecKy,
+				food_record_name: fdRecNm,
+				food_record_brand: fdRecBrnd,
+				food_record_gram: fdRecGrm,
+				food_record_serv: fdRecSrv,
 				food_record_count: `1`,
-				food_record_kcal: food_record_kcal,
-				food_record_carb: food_record_carb,
-				food_record_protein: food_record_protein,
-				food_record_fat: food_record_fat,
+				food_record_kcal: fdRecKcl,
+				food_record_carb: fdRecCrb,
+				food_record_protein: fdRecPrtn,
+				food_record_fat: fdRecFt,
 			};
 		},
 		[OBJECT],
@@ -549,7 +549,7 @@ export const FoodRecordDetail = memo(() => {
 	// 7. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const detailNode = () => {
 		// 7-1. date + count
-		const dateCountSection = () => (
+		const dtCntSec = () => (
 			<Grid
 				container={true}
 				spacing={2}
@@ -658,7 +658,7 @@ export const FoodRecordDetail = memo(() => {
 			</Grid>
 		);
 		// 7-3. detail
-		const detailSection = () => (
+		const dtlSec = () => (
 			<>
 				{OBJECT.food_section?.map((item, i) => (
 					<Grid
@@ -692,14 +692,14 @@ export const FoodRecordDetail = memo(() => {
 											FAVORITE.some(
 												(item: any) =>
 													item.food_record_key ===
-													handleFoodFavorite(i).food_record_key,
+													hndlFdFav(i).food_record_key,
 											)
 												? `gold`
 												: `white`
 										}
 										onClick={(e: any) => {
 											e.stopPropagation();
-											flowUpdateFavorite(handleFoodFavorite(i));
+											flwUpdtFav(hndlFdFav(i));
 										}}
 									/>
 								</Div>
@@ -753,12 +753,12 @@ export const FoodRecordDetail = memo(() => {
 									inputRef={REFS?.[i]?.food_record_count}
 									error={ERRORS?.[i]?.food_record_count}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											99,
 											1,
 										);
-										if (processedValue === null) {
+										if (procdVal === null) {
 											return;
 										}
 										// 영양소 설정 함수
@@ -766,7 +766,7 @@ export const FoodRecordDetail = memo(() => {
 											nut: string | number,
 											extra: string,
 										) => {
-											const numericValue: number = Number(processedValue) ?? 1;
+											const numericValue: number = Number(procdVal) ?? 1;
 											const foodCount: number =
 												Number(item?.food_record_count) ?? 1;
 											if (
@@ -791,7 +791,7 @@ export const FoodRecordDetail = memo(() => {
 													idx === i
 														? {
 																...section,
-																food_record_count: processedValue,
+																food_record_count: procdVal,
 																food_record_kcal: setNutrient(
 																	item?.food_record_kcal,
 																	`kcal`,
@@ -823,11 +823,11 @@ export const FoodRecordDetail = memo(() => {
 									inputRef={REFS?.[i]?.food_record_gram}
 									error={ERRORS?.[i]?.food_record_gram}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											999,
 										);
-										if (processedValue === null) {
+										if (procdVal === null) {
 											return;
 										}
 										// object 설정
@@ -838,7 +838,7 @@ export const FoodRecordDetail = memo(() => {
 													idx === i
 														? {
 																...section,
-																food_record_gram: processedValue,
+																food_record_gram: procdVal,
 															}
 														: section,
 											),
@@ -934,11 +934,11 @@ export const FoodRecordDetail = memo(() => {
 									}
 									endadornment={translate(`kc`)}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											9999,
 										);
-										if (processedValue === null) {
+										if (procdVal === null) {
 											return;
 										}
 										// object 설정
@@ -949,7 +949,7 @@ export const FoodRecordDetail = memo(() => {
 													idx === i
 														? {
 																...section,
-																food_record_kcal: processedValue,
+																food_record_kcal: procdVal,
 															}
 														: section,
 											),
@@ -975,12 +975,12 @@ export const FoodRecordDetail = memo(() => {
 									}
 									endadornment={translate(`g`)}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											999,
 											1,
 										);
-										if (processedValue === null) {
+										if (procdVal === null) {
 											return;
 										}
 										// object 설정
@@ -991,7 +991,7 @@ export const FoodRecordDetail = memo(() => {
 													idx === i
 														? {
 																...section,
-																food_record_carb: processedValue,
+																food_record_carb: procdVal,
 															}
 														: section,
 											),
@@ -1021,12 +1021,12 @@ export const FoodRecordDetail = memo(() => {
 									}
 									endadornment={translate(`g`)}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											999,
 											1,
 										);
-										if (processedValue === null) {
+										if (procdVal === null) {
 											return;
 										}
 										// object 설정
@@ -1037,7 +1037,7 @@ export const FoodRecordDetail = memo(() => {
 													idx === i
 														? {
 																...section,
-																food_record_protein: processedValue,
+																food_record_protein: procdVal,
 															}
 														: section,
 											),
@@ -1063,12 +1063,12 @@ export const FoodRecordDetail = memo(() => {
 									}
 									endadornment={translate(`g`)}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											999,
 											1,
 										);
-										if (processedValue === null) {
+										if (procdVal === null) {
 											return;
 										}
 										// object 설정
@@ -1079,7 +1079,7 @@ export const FoodRecordDetail = memo(() => {
 													idx === i
 														? {
 																...section,
-																food_record_fat: processedValue,
+																food_record_fat: procdVal,
 															}
 														: section,
 											),
@@ -1097,11 +1097,11 @@ export const FoodRecordDetail = memo(() => {
 			<Paper
 				className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}
 			>
-				{dateCountSection()}
+				{dtCntSec()}
 				<Br m={20} />
 				{totalSection()}
 				<Br m={20} />
-				{COUNT?.newSectionCnt > 0 && detailSection()}
+				{COUNT?.newSectionCnt > 0 && dtlSec()}
 			</Paper>
 		);
 	};

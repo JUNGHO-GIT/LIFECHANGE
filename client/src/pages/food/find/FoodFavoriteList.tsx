@@ -6,43 +6,43 @@
  */
 
 import { Div, Grid, Hr, Icons, Img, Paper } from "@exportComponents";
-import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
+import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal, useStorageLocal as usStrgLcl } from "@exportHooks";
 import { Dialog, Empty, Footer } from "@exportLayouts";
 import { axios } from "@exportLibs";
 import {
 	Accordion,
-	AccordionDetails,
-	AccordionSummary,
+	AccordionDetails as AccrDtls,
+	AccordionSummary as AccrSmmr,
 	Checkbox,
 } from "@exportMuis";
 import { memo, useEffect, useState } from "@exportReacts";
 import { FoodFind, type FoodFindType } from "@exportSchemas";
 import { getSession, insertComma, setSession, sync } from "@exportScripts";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const FoodFavoriteList = memo(() => {
+export const FdFavLst = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, PATH, sessionId } = useCommonValue();
-	const { location_dateType, location_dateStart, location_dateEnd } =
-		useCommonValue();
-	const { sessionFoodSection } = useCommonValue();
-	const { getDayFmt } = useCommonDate();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
+	const { URL_OBJECT, PATH, sessionId } = usCmmnVal();
+	const { location_dateType: locDtTyp, location_dateStart: locDtStrt, location_dateEnd: locDtEnd } =
+		usCmmnVal();
+	const { sessionFoodSection: sessFdSec } = usCmmnVal();
+	const { getDayFmt } = usCmmnDt();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
 
 	// 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const [PAGING, setPAGING] = useStorageLocal(`paging`, PATH, ``, {
+	const [PAGING, setPAGING] = usStrgLcl(`paging`, PATH, ``, {
 		sort: `asc`,
 		query: `favorite`,
 		page: 0,
 	});
-	const [isExpanded, setIsExpanded] = useStorageLocal(`isExpanded`, PATH, ``, [
+	const [isExpanded, stIsExpn] = usStrgLcl(`isExpanded`, PATH, ``, [
 		{
 			expanded: true,
 		},
@@ -50,7 +50,7 @@ export const FoodFavoriteList = memo(() => {
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const [OBJECT, setOBJECT] = useState<[FoodFindType]>([FoodFind]);
-	const [checkedQueries, setCheckedQueries] = useState<
+	const [chckQrs, stChckQrs] = useState<
 		Record<string, boolean[]>
 	>({});
 	const [SEND, setSEND] = useState({
@@ -65,9 +65,9 @@ export const FoodFavoriteList = memo(() => {
 		newSectionCnt: 0,
 	});
 	const [DATE, setDATE] = useState({
-		dateType: location_dateType ?? `day`,
-		dateStart: location_dateStart ?? getDayFmt(),
-		dateEnd: location_dateEnd ?? getDayFmt(),
+		dateType: locDtTyp ?? `day`,
+		dateStart: locDtStrt ?? getDayFmt(),
+		dateEnd: locDtEnd ?? getDayFmt(),
 	});
 
 	// 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -82,8 +82,8 @@ export const FoodFavoriteList = memo(() => {
 	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	// - 페이지 로드시 체크박스 상태 초기화
 	useEffect(() => {
-		let sectionArray: typeof sessionFoodSection = [];
-		const section: typeof sessionFoodSection = sessionFoodSection;
+		let sectionArray: typeof sessFdSec = [];
+		const section: typeof sessFdSec = sessFdSec;
 
 		// sectionArray 초기화
 		if (section) {
@@ -97,8 +97,8 @@ export const FoodFavoriteList = memo(() => {
 					sectionItem.food_record_key === item.food_record_key,
 			),
 		);
-		setCheckedQueries({
-			...checkedQueries,
+		stChckQrs({
+			...chckQrs,
 			[queryKey]: newChecked,
 		});
 	}, [OBJECT]);
@@ -120,7 +120,7 @@ export const FoodFavoriteList = memo(() => {
 					totalCnt: res.data.totalCnt ?? 0,
 				}));
 				// 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
-				setIsExpanded(() => {
+				stIsExpn(() => {
 					if (res.data.result?.length !== isExpanded.length) {
 						return new Array(res.data.result?.length).fill({ expanded: true });
 					}
@@ -142,7 +142,7 @@ export const FoodFavoriteList = memo(() => {
 	}
 
 	// 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const flowUpdateFavorite = (foodFavorite: any) => {
+	const flwUpdtFav = (foodFavorite: any) => {
 		axios
 			.put(`${URL_OBJECT}/favorite/update`, {
 				user_id: sessionId,
@@ -176,20 +176,20 @@ export const FoodFavoriteList = memo(() => {
 
 	// 4. handle ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 	// - 체크박스 변경 시
-	const handleCheckboxChange = (index: number) => {
+	const hndlChckChg = (index: number) => {
 		const queryKey: string = `${PAGING.query}_${PAGING.page}`;
-		const updatedChecked: boolean[] = [...(checkedQueries[queryKey] ?? [])];
-		updatedChecked[index] = !updatedChecked[index];
+		const updtChck: boolean[] = [...(chckQrs[queryKey] ?? [])];
+		updtChck[index] = !updtChck[index];
 
-		setCheckedQueries((prev) => ({
+		stChckQrs((prev) => ({
 			...prev,
-			[queryKey]: updatedChecked,
+			[queryKey]: updtChck,
 		}));
 
 		// 스토리지 데이터 가져오기 (최신 값을 직접 가져옴)
-		const currentSection: any = getSession(`section`, `food`, ``) ?? [];
+		const curSec: any = getSession(`section`, `food`, ``) ?? [];
 		let sectionArray: any[] =
-			currentSection?.length > 0 ? [...currentSection] : [];
+			curSec?.length > 0 ? [...curSec] : [];
 
 		const item: FoodFindType = OBJECT[index];
 		const newItem = {
@@ -208,7 +208,7 @@ export const FoodFavoriteList = memo(() => {
 			food_record_fat: item.food_record_fat,
 		};
 
-		if (updatedChecked[index]) {
+		if (updtChck[index]) {
 			if (
 				!sectionArray.some(
 					(i: any) => i.food_record_key === item.food_record_key,
@@ -242,7 +242,7 @@ export const FoodFavoriteList = memo(() => {
 								className={`border-0 shadow-0 radius-2`}
 								expanded={isExpanded?.[i]?.expanded}
 							>
-								<AccordionSummary
+								<AccrSmmr
 									expandIcon={
 										<Icons
 											key={`ChevronDown`}
@@ -251,7 +251,7 @@ export const FoodFavoriteList = memo(() => {
 											onClick={(e: any) => {
 												e.preventDefault();
 												e.stopPropagation();
-												setIsExpanded(
+												stIsExpn(
 													isExpanded.map((el: any, index: number) =>
 														i === index
 															? {
@@ -272,15 +272,15 @@ export const FoodFavoriteList = memo(() => {
 												size={`small`}
 												checked={
 													!!(
-														checkedQueries[`${PAGING.query}_${PAGING.page}`] &&
-														checkedQueries[`${PAGING.query}_${PAGING.page}`]?.[
+														chckQrs[`${PAGING.query}_${PAGING.page}`] &&
+														chckQrs[`${PAGING.query}_${PAGING.page}`]?.[
 															i
 														]
 													)
 												}
 												onChange={(e: any) => {
 													e.stopPropagation();
-													handleCheckboxChange(i);
+													hndlChckChg(i);
 												}}
 											/>
 										</Grid>
@@ -299,7 +299,7 @@ export const FoodFavoriteList = memo(() => {
 													fill={`gold`}
 													onClick={(e: any) => {
 														e.stopPropagation();
-														flowUpdateFavorite(item);
+														flwUpdtFav(item);
 													}}
 												/>
 											</Div>
@@ -314,8 +314,8 @@ export const FoodFavoriteList = memo(() => {
 											</Div>
 										</Grid>
 									</Grid>
-								</AccordionSummary>
-								<AccordionDetails>
+								</AccrSmmr>
+								<AccrDtls>
 									<Grid container={true} spacing={1}>
 										{/** row 1 * */}
 										<Grid container={true} spacing={1}>
@@ -451,7 +451,7 @@ export const FoodFavoriteList = memo(() => {
 											</Grid>
 										</Grid>
 									</Grid>
-								</AccordionDetails>
+								</AccrDtls>
 							</Accordion>
 						</Grid>
 					</Grid>
@@ -474,7 +474,7 @@ export const FoodFavoriteList = memo(() => {
 
 	// 8. dialog ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const dialogNode = () => (
-		<Dialog COUNT={COUNT} setCOUNT={setCOUNT} setIsExpanded={setIsExpanded} />
+		<Dialog COUNT={COUNT} setCOUNT={setCOUNT} setIsExpanded={stIsExpn} />
 	);
 
 	// 9. footer ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-

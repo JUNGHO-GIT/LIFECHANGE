@@ -5,25 +5,25 @@
  * @since 2025-12-26
  */
 
-import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
+import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal, useStorageLocal as usStrgLcl } from "@exportHooks";
 import {
 	axios,
-	CartesianGrid,
+	CartesianGrid as CrtsGrd,
 	Legend,
 	Line,
 	LineChart,
-	ResponsiveContainer,
+	ResponsiveContainer as RspnCntn,
 	Tooltip,
 	XAxis,
 	YAxis,
 } from "@exportLibs";
 import { memo, useEffect, useState } from "@exportReacts";
-import { MoneyLine, type MoneyLineType } from "@exportSchemas";
+import { MoneyLine, type MoneyLineType as MnyLnTyp } from "@exportSchemas";
 import { formatDate, formatY } from "@exportScripts";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
@@ -33,42 +33,42 @@ declare interface MoneyChartLineProps {
 }
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const MoneyChartLine = memo((props: MoneyChartLineProps) => {
+export const MnyChrtLn = memo((props: MoneyChartLineProps) => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, PATH, sessionId, chartColors, moneyChartArray } =
-		useCommonValue();
-	const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
-	const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } =
-		useCommonDate();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
+	const { URL_OBJECT, PATH, sessionId, chartColors, moneyChartArray: mnyChrtArry } =
+		usCmmnVal();
+	const { getDayFmt, getWeekStartFmt: gtWkStrtFmt, getWeekEndFmt: gtWkEndFmt } = usCmmnDt();
+	const { getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt, getYearStartFmt: gtYrStrtFmt, getYearEndFmt: gtYrEndFmt } =
+		usCmmnDt();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
 
 	// 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const [TYPE, setTYPE] = useStorageLocal(`type`, `line`, PATH, {
+	const [TYPE, setTYPE] = usStrgLcl(`type`, `line`, PATH, {
 		section: `week`,
 		line: `income`,
 	});
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [TYPE_STATE, setTYPE_STATE] = useState(() => {
+	const [TYPE_STATE, stTypSt] = useState(() => {
 		return props?.TYPE !== undefined ? props.TYPE : TYPE;
 	});
 	const [DATE, _setDATE] = useState({
 		dateType: ``,
 		dateStart: getDayFmt(),
 		dateEnd: getDayFmt(),
-		weekStartFmt: getWeekStartFmt(),
-		weekEndFmt: getWeekEndFmt(),
-		monthStartFmt: getMonthStartFmt(),
-		monthEndFmt: getMonthEndFmt(),
-		yearStartFmt: getYearStartFmt(),
-		yearEndFmt: getYearEndFmt(),
+		weekStartFmt: gtWkStrtFmt(),
+		weekEndFmt: gtWkEndFmt(),
+		monthStartFmt: gtMnStFm(),
+		monthEndFmt: gtMnthEndFmt(),
+		yearStartFmt: gtYrStrtFmt(),
+		yearEndFmt: gtYrEndFmt(),
 	});
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [OBJECT_WEEK, setOBJECT_WEEK] = useState<[MoneyLineType]>([MoneyLine]);
-	const [OBJECT_MONTH, setOBJECT_MONTH] = useState<[MoneyLineType]>([
+	const [OBJECT_WEEK, stObjcWk] = useState<[MnyLnTyp]>([MoneyLine]);
+	const [OBJECT_MONTH, stObjcMnth] = useState<[MnyLnTyp]>([
 		MoneyLine,
 	]);
 
@@ -89,10 +89,10 @@ export const MoneyChartLine = memo((props: MoneyChartLineProps) => {
 						params: params,
 					}),
 				]);
-				setOBJECT_WEEK(
+				stObjcWk(
 					resWeek.data.result?.length > 0 ? resWeek.data.result : [MoneyLine],
 				);
-				setOBJECT_MONTH(
+				stObjcMnth(
 					resMonth.data.result?.length > 0 ? resMonth.data.result : [MoneyLine],
 				);
 			} catch (error: any) {
@@ -115,7 +115,7 @@ export const MoneyChartLine = memo((props: MoneyChartLineProps) => {
 			const isSame: boolean =
 				JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
 			if (!isSame) {
-				setTYPE_STATE(props.TYPE);
+				stTypSt(props.TYPE);
 			}
 		}
 	}, [props?.TYPE]);
@@ -154,11 +154,11 @@ export const MoneyChartLine = memo((props: MoneyChartLineProps) => {
 
 		const { domain, ticks, formatterY } = formatY(
 			object,
-			moneyChartArray,
+			mnyChrtArry,
 			`money`,
 		);
 		return (
-			<ResponsiveContainer width={`100%`} height={500}>
+			<RspnCntn width={`100%`} height={500}>
 				<LineChart
 					data={object as any[]}
 					margin={{ top: 60, right: 20, bottom: 10, left: 20 }}
@@ -193,7 +193,7 @@ export const MoneyChartLine = memo((props: MoneyChartLineProps) => {
 					>
 						{dateRange}
 					</text>
-					<CartesianGrid strokeDasharray={`3 3`} stroke={`#f5f5f5`} />
+					<CrtsGrd strokeDasharray={`3 3`} stroke={`#f5f5f5`} />
 					<XAxis
 						type={`category`}
 						dataKey={`name`}
@@ -282,7 +282,7 @@ export const MoneyChartLine = memo((props: MoneyChartLineProps) => {
 						}}
 					/>
 				</LineChart>
-			</ResponsiveContainer>
+			</RspnCntn>
 		);
 	};
 

@@ -8,10 +8,10 @@
 import { Bg, Br, Grid, Paper } from "@exportComponents";
 import { Count, Delete, PickerDay, PickerTime } from "@exportContainers";
 import {
-	useCommonDate,
-	useCommonValue,
+	useCommonDate as usCmmnDt,
+	useCommonValue as usCmmnVal,
 	useTime,
-	useValidateSleep,
+	useValidateSleep as usValSlp,
 } from "@exportHooks";
 import { Dialog, Footer } from "@exportLayouts";
 import { axios } from "@exportLibs";
@@ -23,29 +23,29 @@ import {
 	useRef,
 	useState,
 } from "@exportReacts";
-import { SleepRecord, type SleepRecordType } from "@exportSchemas";
+import { SleepRecord, type SleepRecordType as SlpRecTyp } from "@exportSchemas";
 import { sync } from "@exportScripts";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const SleepRecordDetail = memo(() => {
+export const SlpRecDtl = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, PATH, sessionId, navigate } = useCommonValue();
-	const { toList } = useCommonValue();
-	const { location_dateStart, location_dateEnd } = useCommonValue();
-	const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
-	const { ERRORS, REFS, validate } = useValidateSleep();
+	const { URL_OBJECT, PATH, sessionId, navigate } = usCmmnVal();
+	const { toList } = usCmmnVal();
+	const { location_dateStart: locDtStrt, location_dateEnd: locDtEnd } = usCmmnVal();
+	const { getDayFmt, getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt } = usCmmnDt();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
+	const { ERRORS, REFS, validate } = usValSlp();
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const [LOCKED, setLOCKED] = useState<string>(`unlocked`);
-	const [OBJECT, setOBJECT] = useState<SleepRecordType>(SleepRecord);
+	const [OBJECT, setOBJECT] = useState<SlpRecTyp>(SleepRecord);
 	const [EXIST, setEXIST] = useState({
 		day: [``],
 		week: [``],
@@ -72,12 +72,12 @@ export const SleepRecordDetail = memo(() => {
 	});
 	const [DATE, setDATE] = useState({
 		dateType: `day`,
-		dateStart: location_dateStart ?? getDayFmt(),
-		dateEnd: location_dateEnd ?? getDayFmt(),
+		dateStart: locDtStrt ?? getDayFmt(),
+		dateEnd: locDtEnd ?? getDayFmt(),
 	});
 
 	// 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const objectRef: React.RefObject<SleepRecordType> = useRef(OBJECT);
+	const objectRef: React.RefObject<SlpRecTyp> = useRef(OBJECT);
 	const countRef: React.RefObject<{
 		totalCnt: number;
 		sectionCnt: number;
@@ -129,8 +129,8 @@ export const SleepRecordDetail = memo(() => {
 					user_id: sessionId,
 					DATE: {
 						dateType: ``,
-						dateStart: getMonthStartFmt(DATE?.dateStart),
-						dateEnd: getMonthEndFmt(DATE?.dateEnd),
+						dateStart: gtMnStFm(DATE?.dateStart),
+						dateEnd: gtMnthEndFmt(DATE?.dateEnd),
 					},
 				},
 			})
@@ -207,21 +207,21 @@ export const SleepRecordDetail = memo(() => {
 
 	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	useEffect(() => {
-		const defaultSection: any = {
+		const defSec: any = {
 			sleep_record_bedTime: `00:00`,
 			sleep_record_wakeTime: `00:00`,
 			sleep_record_sleepTime: `00:00`,
 		};
-		const updatedSection: any[] = Array.from({ length: COUNT?.newSectionCnt })
+		const updtSec: any[] = Array.from({ length: COUNT?.newSectionCnt })
 			.fill(null)
 			.map((_item: any, idx: number) => {
 				return idx < OBJECT?.sleep_section?.length
 					? OBJECT?.sleep_section[idx]
-					: defaultSection;
+					: defSec;
 			});
 		setOBJECT((prev: any) => ({
 			...prev,
-			sleep_section: updatedSection,
+			sleep_section: updtSec,
 		}));
 	}, [COUNT?.newSectionCnt]);
 
@@ -358,7 +358,7 @@ export const SleepRecordDetail = memo(() => {
 	// 7. save ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	const detailNode = () => {
 		// 7-1. date + count
-		const dateCountSection = () => (
+		const dtCntSec = () => (
 			<Grid
 				container={true}
 				spacing={2}
@@ -379,7 +379,7 @@ export const SleepRecordDetail = memo(() => {
 			</Grid>
 		);
 		// 7-3. detail
-		const detailSection = () => (
+		const dtlSec = () => (
 			<>
 				{OBJECT.sleep_section?.map((item, i) => (
 					<Grid
@@ -454,9 +454,9 @@ export const SleepRecordDetail = memo(() => {
 			<Paper
 				className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}
 			>
-				{dateCountSection()}
+				{dtCntSec()}
 				<Br m={20} />
-				{COUNT?.newSectionCnt > 0 && detailSection()}
+				{COUNT?.newSectionCnt > 0 && dtlSec()}
 			</Paper>
 		);
 	};

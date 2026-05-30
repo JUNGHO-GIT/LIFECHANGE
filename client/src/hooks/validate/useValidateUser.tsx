@@ -12,13 +12,13 @@ import {
 	useRef,
 	useState,
 } from "@exportReacts";
-import { useStoreAlert, useStoreLanguage } from "@exportStores";
+import { useStoreAlert as usStrAlrt, useStoreLanguage as usStrLang } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const useValidateUser = () => {
+export const usValUsr = () => {
 	// 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
 
 	// 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 	const REFS: React.RefObject<unknown[]> = useRef<unknown[]>([]);
@@ -39,28 +39,28 @@ export const useValidateUser = () => {
 				}, 0);
 			field &&
 				setERRORS((prev) => {
-					const updatedErrors: unknown[] = [...prev];
-					updatedErrors[idx] = {
-						...updatedErrors[idx],
+					const updtErrs: unknown[] = [...prev];
+					updtErrs[idx] = {
+						...updtErrs[idx],
 						[field]: true,
 					};
-					return updatedErrors;
+					return updtErrs;
 				});
 		},
 		[setALERT, translate],
 	);
 
 	// 이메일 형식 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const validateEmail = (email: string) => {
+	const valEml = (email: string) => {
 		const emailRegex: RegExp = /^[\w%+.-]+@[\d.A-Za-z-]+\.[A-Za-z]{2,}$/;
 		return emailRegex.test(email);
 	};
 
 	// 8자 이상, 문자, 숫자, 특수문자 포함 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	const validatePw = (password: string) => {
-		const passwordRegex: RegExp =
+		const psswRe: RegExp =
 			/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!#$%&*?@])[\d!#$%&*?@A-Za-z]{8,}$/;
-		return passwordRegex.test(password);
+		return psswRe.test(password);
 	};
 
 	// 7. validate ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
@@ -85,7 +85,7 @@ export const useValidateUser = () => {
 				alert(`user_id`, `errorUserId`, 0);
 				return false;
 			}
-			if (!validateEmail(OBJECT.user_id)) {
+			if (!valEml(OBJECT.user_id)) {
 				alert(`user_id`, `errorUserIdAt`, 0);
 				return false;
 			}
@@ -122,7 +122,7 @@ export const useValidateUser = () => {
 					alert(`user_id`, `errorUserId`, 0);
 					return false;
 				}
-				if (!validateEmail(OBJECT.user_id)) {
+				if (!valEml(OBJECT.user_id)) {
 					alert(`user_id`, `errorUserIdAt`, 0);
 					return false;
 				}
@@ -136,7 +136,7 @@ export const useValidateUser = () => {
 					alert(`user_id`, `errorUserId`, 0);
 					return false;
 				}
-				if (!validateEmail(OBJECT.user_id)) {
+				if (!valEml(OBJECT.user_id)) {
 					alert(`user_id`, `errorUserIdAt`, 0);
 					return false;
 				}
@@ -230,7 +230,7 @@ export const useValidateUser = () => {
 					alert(`user_id`, `errorUserId`, 0);
 					return false;
 				}
-				if (!validateEmail(OBJECT.user_id)) {
+				if (!valEml(OBJECT.user_id)) {
 					alert(`user_id`, `errorUserIdAt`, 0);
 					return false;
 				}
@@ -244,7 +244,7 @@ export const useValidateUser = () => {
 					alert(`user_id`, `errorUserId`, 0);
 					return false;
 				}
-				if (!validateEmail(OBJECT.user_id)) {
+				if (!valEml(OBJECT.user_id)) {
 					alert(`user_id`, `errorUserIdAt`, 0);
 					return false;
 				}

@@ -5,7 +5,7 @@
  * @since 2025-12-25
  */
 
-import { useCommonValue } from "@exportHooks";
+import { useCommonValue as usCmmnVal } from "@exportHooks";
 import { Skeleton } from "@exportMuis";
 import {
 	memo,
@@ -35,7 +35,7 @@ declare interface ImageCacheEntry {
 }
 
 // image cache ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-const IMAGE_CACHE_MAX: number = 200;
+const IMG_CCH_MX: number = 200;
 const imageCache: Map<string, ImageCacheEntry> = new Map();
 const preloadImage = (src: string): Promise<void> => {
 	const existing: ImageCacheEntry | undefined = imageCache.get(src);
@@ -66,7 +66,7 @@ const preloadImage = (src: string): Promise<void> => {
 	imageCache.set(src, { status: `loading`, promise: promise });
 	img.src = src;
 
-	if (imageCache.size > IMAGE_CACHE_MAX) {
+	if (imageCache.size > IMG_CCH_MX) {
 		const firstKey = imageCache.keys().next().value;
 		firstKey && imageCache.delete(firstKey);
 	}
@@ -89,17 +89,17 @@ export const Img = memo(
 		...props
 	}: ImgProps) => {
 		// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		const { GCLOUD_URL } = useCommonValue();
+		const { GCLOUD_URL } = usCmmnVal();
 
 		// 2-1. useRef ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-		const currentImgSrcRef = useRef<string>(``);
-		const isEmptyHandledRef = useRef<boolean>(false);
+		const curImgSrcRf = useRef<string>(``);
+		const isEmptHndlRf = useRef<boolean>(false);
 
 		// 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 		const [fileName, setFileName] = useState<string>(``);
 		const [imgSrc, setImgSrc] = useState<string>(``);
 		const [isLoading, setIsLoading] = useState<boolean>(true);
-		const [isEmptyHandled, setIsEmptyHandled] = useState<boolean>(false);
+		const [isEmptHndl, stIsEmptHndl] = useState<boolean>(false);
 		const {
 			onLoad: userOnLoad,
 			onError: userOnError,
@@ -127,18 +127,18 @@ export const Img = memo(
 		);
 
 		// 4. callbacks ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		const handleImageError = useCallback(() => {
-			const current: string = currentImgSrcRef.current;
+		const hndlImgErr = useCallback(() => {
+			const current: string = curImgSrcRf.current;
 			const cached: ImageCacheEntry | undefined = imageCache.get(current);
 			cached && (cached.status = `error`);
 
 			const fallback: string = `${GCLOUD_URL}/main/empty.webp`;
 
 			// empty.webp 자체가 에러난 경우 다시 호출하지 않도록 차단 (ref로 제어해서 무한 루프 방지)
-			!isEmptyHandledRef.current && !current.includes(`empty.webp`)
+			!isEmptHndlRf.current && !current.includes(`empty.webp`)
 				? (() => {
-						isEmptyHandledRef.current = true;
-						setIsEmptyHandled(true);
+						isEmptHndlRf.current = true;
+						stIsEmptHndl(true);
 						setFileName(`empty`);
 						setImgSrc(fallback);
 						setIsLoading(false);
@@ -149,8 +149,8 @@ export const Img = memo(
 		// 5. useEffect (src 설정 + 이미지 로딩 캐시) ――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 		useEffect(() => {
 			setIsLoading(true);
-			setIsEmptyHandled(false);
-			isEmptyHandledRef.current = false;
+			stIsEmptHndl(false);
+			isEmptHndlRf.current = false;
 
 			const fallback: string = `${GCLOUD_URL}/main/empty.webp`;
 			const trimmed: string = typeof src === `string` ? src.trim() : ``;
@@ -161,11 +161,11 @@ export const Img = memo(
 				typeof trimmed === `string` && trimmed.startsWith(`data:`);
 			const isHttp: boolean =
 				typeof trimmed === `string` && /^https?:\/\//.test(trimmed);
-			const isAbsoluteUrl: boolean = isBlob || isData || isHttp;
+			const isAbslUrl: boolean = isBlob || isData || isHttp;
 
 			// 파일명일 때만 검증 (blob/data/http는 그대로 허용)
 			const invalidName: boolean =
-				!isAbsoluteUrl &&
+				!isAbslUrl &&
 				(!trimmed ||
 					!trimmed.includes(`.`) ||
 					trimmed.startsWith(`.`) ||
@@ -180,7 +180,7 @@ export const Img = memo(
 				typeof src !== `string` ||
 				invalidName
 					? fallback
-					: group === `new` || isAbsoluteUrl
+					: group === `new` || isAbslUrl
 						? trimmed
 						: `${GCLOUD_URL}/${group ?? `main`}/${trimmed}`;
 
@@ -198,10 +198,10 @@ export const Img = memo(
 
 			setFileName(resolvedName);
 			setImgSrc(finalSrc);
-			currentImgSrcRef.current = finalSrc;
+			curImgSrcRf.current = finalSrc;
 
-			isEmptyHandledRef.current = finalSrc === fallback;
-			setIsEmptyHandled(finalSrc === fallback);
+			isEmptHndlRf.current = finalSrc === fallback;
+			stIsEmptHndl(finalSrc === fallback);
 
 			if (finalSrc === fallback) {
 				setIsLoading(false);
@@ -214,7 +214,7 @@ export const Img = memo(
 				return;
 			}
 			if (cached?.status === `error`) {
-				handleImageError();
+				hndlImgErr();
 				return;
 			}
 
@@ -224,20 +224,20 @@ export const Img = memo(
 				.then(
 					() =>
 						!cancelled &&
-						currentImgSrcRef.current === finalSrc &&
+						curImgSrcRf.current === finalSrc &&
 						setIsLoading(false),
 				)
 				.catch(
 					() =>
 						!cancelled &&
-						currentImgSrcRef.current === finalSrc &&
-						handleImageError(),
+						curImgSrcRf.current === finalSrc &&
+						hndlImgErr(),
 				);
 
 			return () => {
 				cancelled = true;
 			};
-		}, [GCLOUD_URL, group, src, handleImageError]);
+		}, [GCLOUD_URL, group, src, hndlImgErr]);
 
 		// 7. skeletonNode ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 		const skeletonNode = useMemo(
@@ -267,14 +267,14 @@ export const Img = memo(
 						filter: `contrast(1.1) brightness(1.0)`,
 					}}
 					onLoad={(e) => {
-						currentImgSrcRef.current === imgSrc &&
+						curImgSrcRf.current === imgSrc &&
 							imageCache.get(imgSrc) &&
 							(imageCache.get(imgSrc)!.status = `loaded`);
-						currentImgSrcRef.current === imgSrc && setIsLoading(false);
+						curImgSrcRf.current === imgSrc && setIsLoading(false);
 						userOnLoad?.(e as any);
 					}}
 					onError={(e) => {
-						handleImageError();
+						hndlImgErr();
 						userOnError?.(e as any);
 					}}
 				/>
@@ -285,7 +285,7 @@ export const Img = memo(
 				imgSrc,
 				loading,
 				imageClass,
-				handleImageError,
+				hndlImgErr,
 				userOnLoad,
 				userOnError,
 			],

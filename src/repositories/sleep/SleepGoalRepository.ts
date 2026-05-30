@@ -11,22 +11,22 @@ import mongoose from "mongoose";
 
 // 0. exist ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const exist = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await SleepGoal.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				sleep_goal_dateStart: {
-					$lte: dateEnd_param,
+					$lte: dtEndPrm,
 				},
 				sleep_goal_dateEnd: {
-					$gte: dateStart_param,
+					$gte: dtStrtPrm,
 				},
-				...(dateType_param ? { sleep_goal_dateType: dateType_param } : {}),
+				...(dtTypPrm2 ? { sleep_goal_dateType: dtTypPrm2 } : {}),
 			},
 		},
 		{
@@ -49,24 +49,24 @@ export const exist = async (
 
 // 1. list (goal) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const listGoal = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 	sort_param: 1 | -1,
 	page_param: number,
 ) => {
 	const finalResult: any = await SleepGoal.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				sleep_goal_dateStart: {
-					$lte: dateEnd_param,
+					$lte: dtEndPrm,
 				},
 				sleep_goal_dateEnd: {
-					$gte: dateStart_param,
+					$gte: dtStrtPrm,
 				},
-				...(dateType_param ? { sleep_goal_dateType: dateType_param } : {}),
+				...(dtTypPrm2 ? { sleep_goal_dateType: dtTypPrm2 } : {}),
 			},
 		},
 		{
@@ -95,24 +95,24 @@ export const listGoal = async (
 
 // 1-2. list (record) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const listRecord: any[] = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await SleepRecord.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				sleep_record_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				sleep_record_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
-				...(dateType_param ? { sleep_record_dateType: dateType_param } : {}),
+				...(dtTypPrm2 ? { sleep_record_dateType: dtTypPrm2 } : {}),
 			},
 		},
 		{
@@ -141,16 +141,16 @@ export const listRecord: any[] = async (
 
 // 2. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const detail = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await SleepGoal.findOne({
-		user_id: user_id_param,
-		sleep_goal_dateStart: dateStart_param,
-		sleep_goal_dateEnd: dateEnd_param,
-		...(dateType_param ? { sleep_goal_dateType: dateType_param } : {}),
+		user_id: usrIdPrm,
+		sleep_goal_dateStart: dtStrtPrm,
+		sleep_goal_dateEnd: dtEndPrm,
+		...(dtTypPrm2 ? { sleep_goal_dateType: dtTypPrm2 } : {}),
 	}).lean();
 
 	return finalResult;
@@ -158,18 +158,18 @@ export const detail = async (
 
 // 3. create ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const create = async (
-	user_id_param: string,
+	usrIdPrm: string,
 	OBJECT_param: any,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await SleepGoal.create({
 		_id: new mongoose.Types.ObjectId(),
-		user_id: user_id_param,
-		sleep_goal_dateType: dateType_param,
-		sleep_goal_dateStart: dateStart_param,
-		sleep_goal_dateEnd: dateEnd_param,
+		user_id: usrIdPrm,
+		sleep_goal_dateType: dtTypPrm2,
+		sleep_goal_dateStart: dtStrtPrm,
+		sleep_goal_dateEnd: dtEndPrm,
 		sleep_goal_bedTime: OBJECT_param.sleep_goal_bedTime,
 		sleep_goal_wakeTime: OBJECT_param.sleep_goal_wakeTime,
 		sleep_goal_sleepTime: OBJECT_param.sleep_goal_sleepTime,
@@ -184,18 +184,18 @@ export const create = async (
 export const update = {
 	// 1. update (기존항목 유지 + 타겟항목으로 수정)
 	update: async (
-		user_id_param: string,
+		usrIdPrm: string,
 		OBJECT_param: any,
-		dateType_param: string,
-		dateStart_param: string,
-		dateEnd_param: string,
+		dtTypPrm2: string,
+		dtStrtPrm: string,
+		dtEndPrm: string,
 	) => {
 		const finalResult: any = await SleepGoal.findOneAndUpdate(
 			{
-				user_id: user_id_param,
-				sleep_goal_dateStart: dateStart_param,
-				sleep_goal_dateEnd: dateEnd_param,
-				...(dateType_param ? { sleep_goal_dateType: dateType_param } : {}),
+				user_id: usrIdPrm,
+				sleep_goal_dateStart: dtStrtPrm,
+				sleep_goal_dateEnd: dtEndPrm,
+				...(dtTypPrm2 ? { sleep_goal_dateType: dtTypPrm2 } : {}),
 			},
 			{
 				$set: {
@@ -218,18 +218,18 @@ export const update = {
 
 	// 3. replace (기존항목 제거 + 타겟항목을 교체)
 	replace: async (
-		user_id_param: string,
+		usrIdPrm: string,
 		OBJECT_param: any,
-		dateType_param: string,
-		dateStart_param: string,
-		dateEnd_param: string,
+		dtTypPrm2: string,
+		dtStrtPrm: string,
+		dtEndPrm: string,
 	) => {
 		const finalResult: any = await SleepGoal.findOneAndUpdate(
 			{
-				user_id: user_id_param,
-				sleep_goal_dateStart: dateStart_param,
-				sleep_goal_dateEnd: dateEnd_param,
-				...(dateType_param ? { sleep_goal_dateType: dateType_param } : {}),
+				user_id: usrIdPrm,
+				sleep_goal_dateStart: dtStrtPrm,
+				sleep_goal_dateEnd: dtEndPrm,
+				...(dtTypPrm2 ? { sleep_goal_dateType: dtTypPrm2 } : {}),
 			},
 			{
 				$set: {
@@ -251,16 +251,16 @@ export const update = {
 
 // 5. delete ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const deletes = async (
-	user_id_param: string,
-	dateType_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtTypPrm2: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await SleepGoal.findOneAndDelete({
-		user_id: user_id_param,
-		sleep_goal_dateType: dateType_param,
-		sleep_goal_dateStart: dateStart_param,
-		...(dateEnd_param ? { sleep_goal_dateEnd: dateEnd_param } : {}),
+		user_id: usrIdPrm,
+		sleep_goal_dateType: dtTypPrm2,
+		sleep_goal_dateStart: dtStrtPrm,
+		...(dtEndPrm ? { sleep_goal_dateEnd: dtEndPrm } : {}),
 	}).lean();
 
 	return finalResult;

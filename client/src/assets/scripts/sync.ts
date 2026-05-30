@@ -15,23 +15,23 @@ export const sync = async (extra?: string) => {
 	const SUBFIX: string = import.meta.env.VITE_APP_USER ?? ``;
 	const URL_OBJECT: string = URL + SUBFIX;
 	const sessionId: any = getSession(`setting`, `id`, `sessionId`);
-	const localTimeZone: any = getLocal(`setting`, `locale`, `timeZone`);
+	const lclTmZn: any = getLocal(`setting`, `locale`, `timeZone`);
 
 	// 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 	const DATE = {
 		dateType: `day`,
 		dateStart: moment()
-			.tz(localTimeZone as string)
+			.tz(lclTmZn as string)
 			.format(`YYYY-MM-DD`),
 		dateEnd: moment()
-			.tz(localTimeZone as string)
+			.tz(lclTmZn as string)
 			.format(`YYYY-MM-DD`),
 		monthStart: moment()
-			.tz(localTimeZone as string)
+			.tz(lclTmZn as string)
 			.startOf(`month`)
 			.format(`YYYY-MM-DD`),
 		monthEnd: moment()
-			.tz(localTimeZone as string)
+			.tz(lclTmZn as string)
 			.endOf(`month`)
 			.format(`YYYY-MM-DD`),
 	};

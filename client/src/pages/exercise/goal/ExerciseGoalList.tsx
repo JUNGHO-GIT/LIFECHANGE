@@ -6,52 +6,52 @@
  */
 
 import { Div, Grid, Hr, Icons, Img, Paper } from "@exportComponents";
-import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
+import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal, useStorageLocal as usStrgLcl } from "@exportHooks";
 import { Dialog, Empty, Footer } from "@exportLayouts";
 import { axios } from "@exportLibs";
-import { Accordion, AccordionDetails, AccordionSummary } from "@exportMuis";
+import { Accordion, AccordionDetails as AccrDtls, AccordionSummary as AccrSmmr } from "@exportMuis";
 import { memo, useEffect, useState } from "@exportReacts";
 import { insertComma } from "@exportScripts";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 import {
 	ExerciseGoal,
-	type ExerciseGoalType,
+	type ExerciseGoalType as ExerGlTyp,
 } from "@schemas/exercise/ExerciseGoal";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const ExerciseGoalList = memo(() => {
+export const ExerGlLst = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, PATH, sessionId, toDetail, localUnit } = useCommonValue();
-	const { navigate, location_dateType, location_dateStart, location_dateEnd } =
-		useCommonValue();
-	const { getDayFmt, getDayNotFmt, getMonthStartFmt, getMonthEndFmt } =
-		useCommonDate();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
+	const { URL_OBJECT, PATH, sessionId, toDetail, localUnit } = usCmmnVal();
+	const { navigate, location_dateType: locDtTyp, location_dateStart: locDtStrt, location_dateEnd: locDtEnd } =
+		usCmmnVal();
+	const { getDayFmt, getDayNotFmt, getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt } =
+		usCmmnDt();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
 
 	// 2-1. useStorageLocal ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const [DATE, setDATE] = useStorageLocal(`date`, PATH, ``, {
-		dateType: location_dateType ?? ``,
-		dateStart: location_dateStart ?? getDayFmt(),
-		dateEnd: location_dateEnd ?? getDayFmt(),
+	const [DATE, setDATE] = usStrgLcl(`date`, PATH, ``, {
+		dateType: locDtTyp ?? ``,
+		dateStart: locDtStrt ?? getDayFmt(),
+		dateEnd: locDtEnd ?? getDayFmt(),
 	});
-	const [PAGING, setPAGING] = useStorageLocal(`paging`, PATH, ``, {
+	const [PAGING, setPAGING] = usStrgLcl(`paging`, PATH, ``, {
 		sort: `asc`,
 		page: 1,
 	});
-	const [isExpanded, setIsExpanded] = useStorageLocal(`isExpanded`, PATH, ``, [
+	const [isExpanded, stIsExpn] = usStrgLcl(`isExpanded`, PATH, ``, [
 		{
 			expanded: true,
 		},
 	]);
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [OBJECT, setOBJECT] = useState<[ExerciseGoalType]>([ExerciseGoal]);
+	const [OBJECT, setOBJECT] = useState<[ExerGlTyp]>([ExerciseGoal]);
 	const [EXIST, setEXIST] = useState({
 		day: [``],
 		week: [``],
@@ -79,8 +79,8 @@ export const ExerciseGoalList = memo(() => {
 					user_id: sessionId,
 					DATE: {
 						dateType: ``,
-						dateStart: getMonthStartFmt(DATE?.dateStart),
-						dateEnd: getMonthEndFmt(DATE?.dateEnd),
+						dateStart: gtMnStFm(DATE?.dateStart),
+						dateEnd: gtMnthEndFmt(DATE?.dateEnd),
 					},
 				},
 			})
@@ -127,7 +127,7 @@ export const ExerciseGoalList = memo(() => {
 					newSectionCnt: res.data.sectionCnt ?? 0,
 				}));
 				// 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
-				setIsExpanded(() => {
+				stIsExpn(() => {
 					if (res.data.result?.length !== isExpanded.length) {
 						return new Array(res.data.result?.length).fill({ expanded: true });
 					}
@@ -171,7 +171,7 @@ export const ExerciseGoalList = memo(() => {
 								className={`border-0 shadow-0 radius-2`}
 								expanded={isExpanded?.[i]?.expanded}
 							>
-								<AccordionSummary
+								<AccrSmmr
 									expandIcon={
 										<Icons
 											key={`ChevronDown`}
@@ -180,7 +180,7 @@ export const ExerciseGoalList = memo(() => {
 											onClick={(e: any) => {
 												e.preventDefault();
 												e.stopPropagation();
-												setIsExpanded(
+												stIsExpn(
 													isExpanded.map((el: any, index: number) =>
 														i === index
 															? {
@@ -237,8 +237,8 @@ export const ExerciseGoalList = memo(() => {
 											</Div>
 										</Grid>
 									</Grid>
-								</AccordionSummary>
-								<AccordionDetails>
+								</AccrSmmr>
+								<AccrDtls>
 									<Grid container={true} spacing={1}>
 										{/** row 1 * */}
 										<Grid container={true} spacing={1}>
@@ -550,7 +550,7 @@ export const ExerciseGoalList = memo(() => {
 											</Grid>
 										</Grid>
 									</Grid>
-								</AccordionDetails>
+								</AccrDtls>
 							</Accordion>
 						</Grid>
 					</Grid>
@@ -573,7 +573,7 @@ export const ExerciseGoalList = memo(() => {
 
 	// 8. dialog ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const dialogNode = () => (
-		<Dialog COUNT={COUNT} setCOUNT={setCOUNT} setIsExpanded={setIsExpanded} />
+		<Dialog COUNT={COUNT} setCOUNT={setCOUNT} setIsExpanded={stIsExpn} />
 	);
 
 	// 9. footer ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-

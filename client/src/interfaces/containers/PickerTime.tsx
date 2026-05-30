@@ -7,9 +7,9 @@
 
 import { Grid, Img } from "@exportComponents";
 import { Input, PopUp } from "@exportContainers";
-import { useCommonValue } from "@exportHooks";
+import { useCommonValue as usCmmnVal } from "@exportHooks";
 import { moment } from "@exportLibs";
-import { AdapterMoment, DigitalClock, LocalizationProvider } from "@exportMuis";
+import { AdapterMoment as AdptMmnt, DigitalClock, LocalizationProvider as LclzProv } from "@exportMuis";
 import {
 	type JSX,
 	memo,
@@ -19,7 +19,7 @@ import {
 	useMemo,
 	useState,
 } from "@exportReacts";
-import { useStoreLanguage } from "@exportStores";
+import { useStoreLanguage as usStrLang } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 declare interface PickerTimeProps {
@@ -46,13 +46,13 @@ export const PickerTime = memo(
 		i,
 	}: PickerTimeProps) => {
 		// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		const { firstStr, secondStr, localLang, localTimeZone } = useCommonValue();
-		const { translate } = useStoreLanguage();
+		const { firstStr, secondStr, localLang, localTimeZone: lclTmZn } = usCmmnVal();
+		const { translate } = usStrLang();
 
 		// 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 		const [image, setImage] = useState<string>(``);
 		const [targetStr, setTargetStr] = useState<string>(``);
-		const [translateStr, setTranslateStr] = useState<string>(``);
+		const [translateStr, stTrnsStr] = useState<string>(``);
 
 		// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 		useEffect(() => {
@@ -63,25 +63,25 @@ export const PickerTime = memo(
 						(() => {
 							setImage(`exercise4`);
 							setTargetStr(`exercise`);
-							setTranslateStr(translate(`cardio`));
+							stTrnsStr(translate(`cardio`));
 						})();
 					extra === `sleep_record_bedTime` &&
 						(() => {
 							setImage(`sleep2`);
 							setTargetStr(`sleep`);
-							setTranslateStr(translate(`bedTime`));
+							stTrnsStr(translate(`bedTime`));
 						})();
 					extra === `sleep_record_wakeTime` &&
 						(() => {
 							setImage(`sleep3`);
 							setTargetStr(`sleep`);
-							setTranslateStr(translate(`wakeTime`));
+							stTrnsStr(translate(`wakeTime`));
 						})();
 					extra === `sleep_record_sleepTime` &&
 						(() => {
 							setImage(`sleep4`);
 							setTargetStr(`sleep`);
-							setTranslateStr(translate(`sleepTime`));
+							stTrnsStr(translate(`sleepTime`));
 						})();
 				})();
 
@@ -94,7 +94,7 @@ export const PickerTime = memo(
 						(() => {
 							setImage(`exercise4`);
 							setTargetStr(`exercise`);
-							setTranslateStr(
+							stTrnsStr(
 								DATE?.dateType === `day`
 									? translate(`goalCardio`)
 									: `${translate(`goalCardio`)} (${translate(`total`)})`,
@@ -107,7 +107,7 @@ export const PickerTime = memo(
 						(() => {
 							setImage(`exercise4`);
 							setTargetStr(`exercise`);
-							setTranslateStr(translate(`cardio`));
+							stTrnsStr(translate(`cardio`));
 						})();
 				})();
 
@@ -121,7 +121,7 @@ export const PickerTime = memo(
 								(() => {
 									setImage(`sleep2`);
 									setTargetStr(`sleep`);
-									setTranslateStr(
+									stTrnsStr(
 										DATE?.dateType === `day`
 											? translate(`goalBedTime`)
 											: `${translate(`goalBedTime`)} (${translate(`avg`)})`,
@@ -132,7 +132,7 @@ export const PickerTime = memo(
 								(() => {
 									setImage(`sleep3`);
 									setTargetStr(`sleep`);
-									setTranslateStr(
+									stTrnsStr(
 										DATE?.dateType === `day`
 											? translate(`goalWakeTime`)
 											: `${translate(`goalWakeTime`)} (${translate(`avg`)})`,
@@ -143,7 +143,7 @@ export const PickerTime = memo(
 								(() => {
 									setImage(`sleep4`);
 									setTargetStr(`sleep`);
-									setTranslateStr(
+									stTrnsStr(
 										DATE?.dateType === `day`
 											? translate(`goalSleepTime`)
 											: `${translate(`goalSleepTime`)} (${translate(`avg`)})`,
@@ -158,26 +158,26 @@ export const PickerTime = memo(
 								(() => {
 									setImage(`sleep2`);
 									setTargetStr(`sleep`);
-									setTranslateStr(translate(`bedTime`));
+									stTrnsStr(translate(`bedTime`));
 								})();
 							extra === `sleep_record_wakeTime` &&
 								(() => {
 									setImage(`sleep3`);
 									setTargetStr(`sleep`);
-									setTranslateStr(translate(`wakeTime`));
+									stTrnsStr(translate(`wakeTime`));
 								})();
 							extra === `sleep_record_sleepTime` &&
 								(() => {
 									setImage(`sleep4`);
 									setTargetStr(`sleep`);
-									setTranslateStr(translate(`sleepTime`));
+									stTrnsStr(translate(`sleepTime`));
 								})();
 						})();
 				})();
 		}, [firstStr, secondStr, extra, DATE, translate]);
 
 		// 4. handle ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		const handleTodayChange = useCallback(
+		const hndlTdyChg = useCallback(
 			(e: any, closePopup: any) => {
 				setOBJECT((prev: any) => ({
 					...prev,
@@ -198,7 +198,7 @@ export const PickerTime = memo(
 		);
 
 		// 4. handle ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		const handleGoalChange = useCallback(
+		const hndlGlChg = useCallback(
 			(e: any, closePopup: any) => {
 				setOBJECT((prev: any) => ({
 					...prev,
@@ -210,7 +210,7 @@ export const PickerTime = memo(
 		);
 
 		// 4. handle ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		const handleRecordChange = useCallback(
+		const hndlRecChg = useCallback(
 			(e: any, closePopup: any) => {
 				setOBJECT((prev: any) => ({
 					...prev,
@@ -244,17 +244,17 @@ export const PickerTime = memo(
 		);
 
 		// 4. memoized values ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-		const digitalClockProps: any = useMemo(
+		const dgtlClckPrps: any = useMemo(
 			() => ({
 				timeStep: 10,
 				ampm: false,
-				timezone: localTimeZone,
+				timezone: lclTmZn,
 				sx: {
 					width: `40vw`,
 					height: `40vh`,
 				},
 			}),
-			[localTimeZone],
+			[lclTmZn],
 		);
 
 		// 7. time ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -273,21 +273,21 @@ export const PickerTime = memo(
 							className={`w-max-40vw h-max-40vh`}
 						>
 							<Grid size={12} className={`d-center`}>
-								<LocalizationProvider
-									dateAdapter={AdapterMoment}
+								<LclzProv
+									dateAdapter={AdptMmnt}
 									adapterLocale={localLang}
 								>
 									<DigitalClock
-										{...digitalClockProps}
+										{...dgtlClckPrps}
 										value={moment(
 											OBJECT?.[`calendar_${targetStr}_section`]?.[i]?.[extra],
 											`HH:mm`,
 										)}
 										onChange={(e: any) => {
-											handleTodayChange(e, closePopup);
+											hndlTdyChg(e, closePopup);
 										}}
 									/>
-								</LocalizationProvider>
+								</LclzProv>
 							</Grid>
 						</Grid>
 					)}
@@ -326,18 +326,18 @@ export const PickerTime = memo(
 							className={`w-max-40vw h-max-40vh`}
 						>
 							<Grid size={12} className={`d-center`}>
-								<LocalizationProvider
-									dateAdapter={AdapterMoment}
+								<LclzProv
+									dateAdapter={AdptMmnt}
 									adapterLocale={localLang}
 								>
 									<DigitalClock
-										{...digitalClockProps}
+										{...dgtlClckPrps}
 										value={moment(OBJECT?.[extra], `HH:mm`)}
 										onChange={(e: any) => {
-											handleGoalChange(e, closePopup);
+											hndlGlChg(e, closePopup);
 										}}
 									/>
-								</LocalizationProvider>
+								</LclzProv>
 							</Grid>
 						</Grid>
 					)}
@@ -359,7 +359,7 @@ export const PickerTime = memo(
 				/>
 			);
 			// 3. record
-			const recordSection = () => (
+			const recSec = () => (
 				<PopUp
 					key={`${firstStr}-${extra}-record-${i}`}
 					type={`innerCenter`}
@@ -372,21 +372,21 @@ export const PickerTime = memo(
 							className={`w-max-40vw h-max-40vh`}
 						>
 							<Grid size={12} className={`d-center`}>
-								<LocalizationProvider
-									dateAdapter={AdapterMoment}
+								<LclzProv
+									dateAdapter={AdptMmnt}
 									adapterLocale={localLang}
 								>
 									<DigitalClock
-										{...digitalClockProps}
+										{...dgtlClckPrps}
 										value={moment(
 											OBJECT?.[`${firstStr}_section`]?.[i]?.[extra],
 											`HH:mm`,
 										)}
 										onChange={(e: any) => {
-											handleRecordChange(e, closePopup);
+											hndlRecChg(e, closePopup);
 										}}
 									/>
-								</LocalizationProvider>
+								</LclzProv>
 							</Grid>
 						</Grid>
 					)}
@@ -419,7 +419,7 @@ export const PickerTime = memo(
 					{firstStr !== `today` &&
 						firstStr !== `calendar` &&
 						secondStr !== `goal` &&
-						recordSection()}
+						recSec()}
 				</>
 			);
 		}, [
@@ -434,12 +434,12 @@ export const PickerTime = memo(
 			targetStr,
 			translateStr,
 			imgAdornment,
-			digitalClockProps,
+			dgtlClckPrps,
 			localLang,
 			translate,
-			handleTodayChange,
-			handleGoalChange,
-			handleRecordChange,
+			hndlTdyChg,
+			hndlGlChg,
+			hndlRecChg,
 		]);
 
 		// 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――

@@ -6,42 +6,42 @@
  */
 
 import {
-	type NavigateFunction,
+	type NavigateFunction as NvgtFn,
 	useLocation,
 	useMemo,
 	useNavigate,
 } from "@exportReacts";
 import type {
-	CommonValueType,
+	CommonValueType as CmmnValTyp,
 	EnvType,
-	LocalTitleType,
-	SessionTitleType,
+	LocalTitleType as LclTtlTyp,
+	SessionTitleType as SessTtlTyp,
 } from "@exportTypes";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const useCommonValue = (): CommonValueType => {
-	const navigate: NavigateFunction = useNavigate();
+export const usCmmnVal = (): CmmnValTyp => {
+	const navigate: NvgtFn = useNavigate();
 	const location: ReturnType<typeof useLocation> = useLocation();
 	const PATH: string = location?.pathname ?? ``;
 	const pathParts: string[] = PATH ? PATH.split(`/`) : [];
 	const env: EnvType = import.meta.env as unknown as EnvType;
 	const TITLE: string = env.VITE_APP_TITLE ?? ``;
 
-	const localTitle: LocalTitleType = useMemo(() => {
+	const localTitle: LclTtlTyp = useMemo(() => {
 		try {
-			return JSON.parse(localStorage.getItem(TITLE) ?? `{}`) as LocalTitleType;
+			return JSON.parse(localStorage.getItem(TITLE) ?? `{}`) as LclTtlTyp;
 		} catch {
-			return {} as LocalTitleType;
+			return {} as LclTtlTyp;
 		}
 	}, [TITLE, location.pathname]);
 
-	const sessionTitle: SessionTitleType = useMemo(() => {
+	const sessionTitle: SessTtlTyp = useMemo(() => {
 		try {
 			return JSON.parse(
 				sessionStorage.getItem(TITLE) ?? `{}`,
-			) as SessionTitleType;
+			) as SessTtlTyp;
 		} catch {
-			return {} as SessionTitleType;
+			return {} as SessTtlTyp;
 		}
 	}, [TITLE, location.pathname]);
 
@@ -58,7 +58,7 @@ export const useCommonValue = (): CommonValueType => {
 		[sessionTitle],
 	);
 
-	const nutritionDefault = useMemo(
+	const ntrtDef = useMemo(
 		() => ({
 			initAvgKcalIntake:
 				sessionTitle?.setting?.sync?.nutrition?.initAvgKcalIntake ?? ``,
@@ -84,7 +84,7 @@ export const useCommonValue = (): CommonValueType => {
 		[sessionTitle],
 	);
 
-	const propertyDefault = useMemo(
+	const prprDef = useMemo(
 		() => ({
 			initProperty: sessionTitle?.setting?.sync?.property?.initProperty ?? ``,
 			totalIncomeAll:
@@ -109,7 +109,7 @@ export const useCommonValue = (): CommonValueType => {
 	return {
 		// Router & Location
 		navigate: navigate,
-		location: location as unknown as CommonValueType[`location`],
+		location: location as unknown as CmmnValTyp[`location`],
 		location_id: location?.state?.id,
 		location_from: location?.state?.from,
 		location_dateType: location?.state?.dateType,
@@ -286,8 +286,8 @@ export const useCommonValue = (): CommonValueType => {
 		sessionCategory: sessionTitle?.setting?.sync?.category ?? {},
 		sessionScale: scaleDefault,
 		sessionFavorite: sessionTitle?.setting?.sync?.favorite ?? {},
-		sessionProperty: propertyDefault,
-		sessionNutrition: nutritionDefault,
+		sessionProperty: prprDef,
+		sessionNutrition: ntrtDef,
 		// Category Arrays
 		exerciseArray: sessionTitle?.setting?.sync?.category?.exercise ?? [],
 		foodArray: sessionTitle?.setting?.sync?.category?.food ?? [],

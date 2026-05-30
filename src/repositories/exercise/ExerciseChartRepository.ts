@@ -6,25 +6,25 @@
  */
 
 import { ExerciseGoal } from "@schemas/exercise/ExerciseGoal";
-import { ExerciseRecord } from "@schemas/exercise/ExerciseRecord";
+import { ExerciseRecord as ExerRec2 } from "@schemas/exercise/ExerciseRecord";
 
 // 1-1. chart (bar - goal) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const barGoal = async (
-	user_id_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
 	const finalResult: any = await ExerciseGoal.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				exercise_goal_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				exercise_goal_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 			},
 		},
@@ -50,21 +50,21 @@ export const barGoal = async (
 
 // 1-2. chart (bar - record) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const barRecord = async (
-	user_id_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
-	const finalResult: any = await ExerciseRecord.aggregate([
+	const finalResult: any = await ExerRec2.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				exercise_record_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				exercise_record_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 			},
 		},
@@ -90,21 +90,21 @@ export const barRecord = async (
 
 // 2-1. chart (pie - part) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const piePart = async (
-	user_id_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
-	const finalResult: any = await ExerciseRecord.aggregate([
+	const finalResult: any = await ExerRec2.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				exercise_record_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				exercise_record_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 			},
 		},
@@ -143,21 +143,21 @@ export const piePart = async (
 
 // 2-2. chart (pie - title) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const pieTitle = async (
-	user_id_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
-	const finalResult: any = await ExerciseRecord.aggregate([
+	const finalResult: any = await ExerRec2.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				exercise_record_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				exercise_record_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 			},
 		},
@@ -196,21 +196,21 @@ export const pieTitle = async (
 
 // 3-1. chart (line - scale) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const lineScale = async (
-	user_id_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
-	const finalResult: any = await ExerciseRecord.aggregate([
+	const finalResult: any = await ExerRec2.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				exercise_record_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				exercise_record_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 			},
 		},
@@ -234,21 +234,21 @@ export const lineScale = async (
 
 // 3-2. chart (line - volume) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const lineVolume = async (
-	user_id_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
-	const finalResult: any = await ExerciseRecord.aggregate([
+	const finalResult: any = await ExerRec2.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				exercise_record_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				exercise_record_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 			},
 		},
@@ -272,21 +272,21 @@ export const lineVolume = async (
 
 // 3-3. chart (line - cardio) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const lineCardio = async (
-	user_id_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
-	const finalResult: any = await ExerciseRecord.aggregate([
+	const finalResult: any = await ExerRec2.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				exercise_record_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				exercise_record_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 			},
 		},
@@ -310,21 +310,21 @@ export const lineCardio = async (
 
 // 4-1. chart (avg - volume) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const avgVolume = async (
-	user_id_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
-	const finalResult: any = await ExerciseRecord.aggregate([
+	const finalResult: any = await ExerRec2.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				exercise_record_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				exercise_record_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 			},
 		},
@@ -348,21 +348,21 @@ export const avgVolume = async (
 
 // 4-2. chart (avg - cardio) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const avgCardio = async (
-	user_id_param: string,
-	dateStart_param: string,
-	dateEnd_param: string,
+	usrIdPrm: string,
+	dtStrtPrm: string,
+	dtEndPrm: string,
 ) => {
-	const finalResult: any = await ExerciseRecord.aggregate([
+	const finalResult: any = await ExerRec2.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 				exercise_record_dateStart: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 				exercise_record_dateEnd: {
-					$gte: dateStart_param,
-					$lte: dateEnd_param,
+					$gte: dtStrtPrm,
+					$lte: dtEndPrm,
 				},
 			},
 		},

@@ -6,21 +6,21 @@
  */
 
 import { Img, Paper } from "@exportComponents";
-import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
-import { BottomNavigation, BottomNavigationAction } from "@exportMuis";
+import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal, useStorageLocal as usStrgLcl } from "@exportHooks";
+import { BottomNavigation as BttmNav, BottomNavigationAction as BttmNavActn } from "@exportMuis";
 import { memo, useEffect } from "@exportReacts";
 import { getLocal } from "@exportScripts";
-import { useStoreLanguage } from "@exportStores";
+import { useStoreLanguage as usStrLang } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const BottomNav = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { navigate, firstStr } = useCommonValue();
-	const { getDayFmt } = useCommonDate();
-	const { translate } = useStoreLanguage();
+	const { navigate, firstStr } = usCmmnVal();
+	const { getDayFmt } = usCmmnDt();
+	const { translate } = usStrLang();
 
 	// 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const [selectedTab, setSelectedTab] = useStorageLocal(`tabs`, `bottom`, ``, {
+	const [selectedTab, stSelTb] = usStrgLcl(`tabs`, `bottom`, ``, {
 		exercise: false,
 		food: false,
 		calendar: false,
@@ -30,7 +30,7 @@ export const BottomNav = memo(() => {
 
 	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	useEffect(() => {
-		setSelectedTab((prev: any) => {
+		stSelTb((prev: any) => {
 			const updatedTabs: any = Object.keys(prev).reduce<any>((acc, key) => {
 				acc[key] = key === firstStr;
 				return acc;
@@ -40,7 +40,7 @@ export const BottomNav = memo(() => {
 	}, [firstStr]);
 
 	// 4. handle ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const handleClickBottomNav = (value: string) => {
+	const hndClBtNv = (value: string) => {
 		// top selected 값 가져오기
 		const getItem: any = getLocal(`tabs`, `top`, ``);
 		const selectedTop: any = getItem[value];
@@ -56,17 +56,17 @@ export const BottomNav = memo(() => {
 	};
 
 	// 7. bottomNav ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const bottomNavNode = () => {
+	const bttmNvNd = () => {
 		// 7-1. tabsSection
 		const tabsSection = () => (
-			<BottomNavigation
+			<BttmNav
 				showLabels={true}
 				value={Object.keys(selectedTab).find(
 					(key) => selectedTab[key as keyof typeof selectedTab],
 				)}
 				className={`w-100p`}
 			>
-				<BottomNavigationAction
+				<BttmNavActn
 					label={translate(`exercise`)}
 					value={`exercise`}
 					icon={
@@ -79,10 +79,10 @@ export const BottomNav = memo(() => {
 						/>
 					}
 					onClick={() => {
-						handleClickBottomNav(`exercise`);
+						hndClBtNv(`exercise`);
 					}}
 				/>
-				<BottomNavigationAction
+				<BttmNavActn
 					label={translate(`food`)}
 					value={`food`}
 					icon={
@@ -95,10 +95,10 @@ export const BottomNav = memo(() => {
 						/>
 					}
 					onClick={() => {
-						handleClickBottomNav(`food`);
+						hndClBtNv(`food`);
 					}}
 				/>
-				<BottomNavigationAction
+				<BttmNavActn
 					label={translate(`calendar`)}
 					value={`calendar`}
 					icon={
@@ -111,10 +111,10 @@ export const BottomNav = memo(() => {
 						/>
 					}
 					onClick={() => {
-						handleClickBottomNav(`calendar`);
+						hndClBtNv(`calendar`);
 					}}
 				/>
-				<BottomNavigationAction
+				<BttmNavActn
 					label={translate(`money`)}
 					value={`money`}
 					icon={
@@ -127,10 +127,10 @@ export const BottomNav = memo(() => {
 						/>
 					}
 					onClick={() => {
-						handleClickBottomNav(`money`);
+						hndClBtNv(`money`);
 					}}
 				/>
-				<BottomNavigationAction
+				<BttmNavActn
 					label={translate(`sleep`)}
 					value={`sleep`}
 					icon={
@@ -143,10 +143,10 @@ export const BottomNav = memo(() => {
 						/>
 					}
 					onClick={() => {
-						handleClickBottomNav(`sleep`);
+						hndClBtNv(`sleep`);
 					}}
 				/>
-			</BottomNavigation>
+			</BttmNav>
 		);
 
 		// 7-2. return
@@ -160,5 +160,5 @@ export const BottomNav = memo(() => {
 	};
 
 	// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	return <>{bottomNavNode()}</>;
+	return <>{bttmNvNd()}</>;
 });

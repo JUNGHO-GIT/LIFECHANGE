@@ -8,11 +8,11 @@
 import { User } from "@schemas/user/User";
 
 // 1. list ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const list = async (user_id_param: string) => {
+export const list = async (usrIdPrm: string) => {
 	const finalResult: any = await User.aggregate([
 		{
 			$match: {
-				user_id: user_id_param,
+				user_id: usrIdPrm,
 			},
 		},
 		{
@@ -28,16 +28,16 @@ export const list = async (user_id_param: string) => {
 
 // 4. update ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const update = async (
-	user_id_param: string,
-	foodFavorite_param: any,
+	usrIdPrm: string,
+	fdFavPrm: any,
 ) => {
 	const finalResult: any = await User.findOneAndUpdate(
 		{
-			user_id: user_id_param,
+			user_id: usrIdPrm,
 		},
 		{
 			$set: {
-				user_favorite: foodFavorite_param,
+				user_favorite: fdFavPrm,
 			},
 		},
 		{

@@ -5,14 +5,14 @@
  * @since 2025-12-26
  */
 
-import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
+import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal, useStorageLocal as usStrgLcl } from "@exportHooks";
 import {
 	axios,
 	Bar,
-	CartesianGrid,
-	ComposedChart,
+	CartesianGrid as CrtsGrd,
+	ComposedChart as CmpsChrt,
 	Legend,
-	ResponsiveContainer,
+	ResponsiveContainer as RspnCntn,
 	Tooltip,
 	XAxis,
 	YAxis,
@@ -21,9 +21,9 @@ import { memo, useEffect, useState } from "@exportReacts";
 import { FoodAvgKcal, FoodAvgNut, type FoodAvgType } from "@exportSchemas";
 import { formatDate, formatY } from "@exportScripts";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
@@ -35,48 +35,48 @@ declare interface FoodChartAvgProps {
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, PATH, sessionId, chartColors, foodChartArray } =
-		useCommonValue();
-	const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
-	const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } =
-		useCommonDate();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
+	const { URL_OBJECT, PATH, sessionId, chartColors, foodChartArray: fdChrtArry } =
+		usCmmnVal();
+	const { getDayFmt, getWeekStartFmt: gtWkStrtFmt, getWeekEndFmt: gtWkEndFmt } = usCmmnDt();
+	const { getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt, getYearStartFmt: gtYrStrtFmt, getYearEndFmt: gtYrEndFmt } =
+		usCmmnDt();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
 
 	// 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const [TYPE, setTYPE] = useStorageLocal(`type`, `avg`, PATH, {
+	const [TYPE, setTYPE] = usStrgLcl(`type`, `avg`, PATH, {
 		section: `week`,
 		line: `kcal`,
 	});
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [TYPE_STATE, setTYPE_STATE] = useState(() => {
+	const [TYPE_STATE, stTypSt] = useState(() => {
 		return props?.TYPE !== undefined ? props.TYPE : TYPE;
 	});
 	const [DATE, _setDATE] = useState({
 		dateType: ``,
 		dateStart: getDayFmt(),
 		dateEnd: getDayFmt(),
-		weekStartFmt: getWeekStartFmt(),
-		weekEndFmt: getWeekEndFmt(),
-		monthStartFmt: getMonthStartFmt(),
-		monthEndFmt: getMonthEndFmt(),
-		yearStartFmt: getYearStartFmt(),
-		yearEndFmt: getYearEndFmt(),
+		weekStartFmt: gtWkStrtFmt(),
+		weekEndFmt: gtWkEndFmt(),
+		monthStartFmt: gtMnStFm(),
+		monthEndFmt: gtMnthEndFmt(),
+		yearStartFmt: gtYrStrtFmt(),
+		yearEndFmt: gtYrEndFmt(),
 	});
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState<[FoodAvgType]>([
+	const [OBJC_KCL_WK, stObjcKclWk] = useState<[FoodAvgType]>([
 		FoodAvgKcal,
 	]);
-	const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState<[FoodAvgType]>([
+	const [OBJC_NT_WK, stObjcNtWk] = useState<[FoodAvgType]>([
 		FoodAvgNut,
 	]);
-	const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState<[FoodAvgType]>([
+	const [OBJ_KCL_MNT, stObKcMn] = useState<[FoodAvgType]>([
 		FoodAvgKcal,
 	]);
-	const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState<[FoodAvgType]>([
+	const [OBJC_NT_MNTH, stObjcNtMnth] = useState<[FoodAvgType]>([
 		FoodAvgNut,
 	]);
 
@@ -97,22 +97,22 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
 						params: params,
 					}),
 				]);
-				setOBJECT_KCAL_WEEK(
+				stObjcKclWk(
 					resWeek.data.result.kcal?.length > 0
 						? resWeek.data.result.kcal
 						: [FoodAvgKcal],
 				);
-				setOBJECT_NUT_WEEK(
+				stObjcNtWk(
 					resWeek.data.result.nut?.length > 0
 						? resWeek.data.result.nut
 						: [FoodAvgNut],
 				);
-				setOBJECT_KCAL_MONTH(
+				stObKcMn(
 					resMonth.data.result.kcal?.length > 0
 						? resMonth.data.result.kcal
 						: [FoodAvgKcal],
 				);
-				setOBJECT_NUT_MONTH(
+				stObjcNtMnth(
 					resMonth.data.result.nut?.length > 0
 						? resMonth.data.result.nut
 						: [FoodAvgNut],
@@ -137,7 +137,7 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
 			const isSame: boolean =
 				JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
 			if (!isSame) {
-				setTYPE_STATE(props.TYPE);
+				stTypSt(props.TYPE);
 			}
 		}
 	}, [props?.TYPE]);
@@ -163,25 +163,25 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
 
 		TYPE_STATE.section === `week` && TYPE_STATE.line === `kcal`
 			? (() => {
-					object = OBJECT_KCAL_WEEK;
+					object = OBJC_KCL_WK;
 					endStr = `kcal`;
 					dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
 				})()
 			: TYPE_STATE.section === `week` && TYPE_STATE.line === `nut`
 				? (() => {
-						object = OBJECT_NUT_WEEK;
+						object = OBJC_NT_WK;
 						endStr = `g`;
 						dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
 					})()
 				: TYPE_STATE.section === `month` && TYPE_STATE.line === `kcal`
 					? (() => {
-							object = OBJECT_KCAL_MONTH;
+							object = OBJ_KCL_MNT;
 							endStr = `kcal`;
 							dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
 						})()
 					: TYPE_STATE.section === `month` && TYPE_STATE.line === `nut`
 						? (() => {
-								object = OBJECT_NUT_MONTH;
+								object = OBJC_NT_MNTH;
 								endStr = `g`;
 								dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
 							})()
@@ -189,12 +189,12 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
 
 		const { domain, ticks, formatterY } = formatY(
 			object,
-			foodChartArray,
+			fdChrtArry,
 			`food`,
 		);
 		return (
-			<ResponsiveContainer width={`100%`} height={500}>
-				<ComposedChart
+			<RspnCntn width={`100%`} height={500}>
+				<CmpsChrt
 					data={object as any[]}
 					margin={{ top: 60, right: 20, bottom: 10, left: 20 }}
 					barGap={8}
@@ -228,7 +228,7 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
 					>
 						{dateRange}
 					</text>
-					<CartesianGrid strokeDasharray={`3 3`} stroke={`#f5f5f5`} />
+					<CrtsGrd strokeDasharray={`3 3`} stroke={`#f5f5f5`} />
 					<XAxis
 						type={`category`}
 						dataKey={`name`}
@@ -337,8 +337,8 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
 							fontSize: `0.8rem`,
 						}}
 					/>
-				</ComposedChart>
-			</ResponsiveContainer>
+				</CmpsChrt>
+			</RspnCntn>
 		);
 	};
 

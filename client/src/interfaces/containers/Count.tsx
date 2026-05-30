@@ -7,9 +7,9 @@
 
 import { Div, Grid, Icons, Img } from "@exportComponents";
 import { Input } from "@exportContainers";
-import { useCommonValue } from "@exportHooks";
+import { useCommonValue as usCmmnVal } from "@exportHooks";
 import { memo, type React, useCallback, useMemo } from "@exportReacts";
-import { useStoreAlert, useStoreLanguage } from "@exportStores";
+import { useStoreAlert as usStrAlrt, useStoreLanguage as usStrLang } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 declare interface CountProps {
@@ -29,7 +29,7 @@ declare interface CountProps {
 	setLOCKED: React.Dispatch<React.SetStateAction<string>>;
 	limit: number;
 	disabled?: boolean;
-	onCountChange?: (_newSectionCnt: number) => void;
+	onCountChange?: (_nwSecCnt: number) => void;
 }
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
@@ -41,15 +41,15 @@ export const Count = memo(
 		setLOCKED,
 		limit,
 		disabled,
-		onCountChange,
+		onCountChange: onCntChg,
 	}: CountProps) => {
 		// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		const { PATH, localLang, isCalendarDetail } = useCommonValue();
-		const { translate } = useStoreLanguage();
-		const { setALERT } = useStoreAlert();
+		const { PATH, localLang, isCalendarDetail: isClndDtl } = usCmmnVal();
+		const { translate } = usStrLang();
+		const { setALERT } = usStrAlrt();
 
 		// 4. handle ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		const handleLockToggle = useCallback(() => {
+		const hndlLckTggl = useCallback(() => {
 			disabled ?? setLOCKED(LOCKED === `locked` ? `unlocked` : `locked`);
 		}, [disabled, LOCKED, setLOCKED]);
 
@@ -60,7 +60,7 @@ export const Count = memo(
 				!PATH.includes(`/food/find/list`) &&
 				setCOUNT((prev) =>
 					prev.newSectionCnt > prev.sectionCnt
-						? (onCountChange?.(prev.newSectionCnt - 1),
+						? (onCntChg?.(prev.newSectionCnt - 1),
 							{ ...prev, newSectionCnt: prev.newSectionCnt - 1 })
 						: (setALERT({
 								open: true,
@@ -77,7 +77,7 @@ export const Count = memo(
 			LOCKED,
 			PATH,
 			setCOUNT,
-			onCountChange,
+			onCntChg,
 			setALERT,
 			localLang,
 			limit,
@@ -90,7 +90,7 @@ export const Count = memo(
 				!PATH.includes(`/food/find/list`) &&
 				setCOUNT((prev) =>
 					prev.newSectionCnt < limit
-						? (onCountChange?.(prev.newSectionCnt + 1),
+						? (onCntChg?.(prev.newSectionCnt + 1),
 							{ ...prev, newSectionCnt: prev.newSectionCnt + 1 })
 						: (setALERT({
 								open: true,
@@ -107,7 +107,7 @@ export const Count = memo(
 			LOCKED,
 			PATH,
 			setCOUNT,
-			onCountChange,
+			onCntChg,
 			setALERT,
 			localLang,
 			limit,
@@ -125,7 +125,7 @@ export const Count = memo(
 		);
 
 		// 3. useMEMO ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		const countEndAdornment = useMemo(
+		const cntEndAdrn = useMemo(
 			() =>
 				!disabled || LOCKED === `unlocked` ? (
 					<Div className={`d-row-center`}>
@@ -162,7 +162,7 @@ export const Count = memo(
 					inputclass={`fs-0-8rem pointer`}
 					adornmentclass={`ml-n10px`}
 					disabled={disabled}
-					onClick={handleLockToggle}
+					onClick={hndlLckTggl}
 					startadornment={lockIcon}
 				/>
 			);
@@ -190,7 +190,7 @@ export const Count = memo(
 							src={`common2.webp`}
 						/>
 					}
-					endadornment={!isCalendarDetail ? countEndAdornment : null}
+					endadornment={!isClndDtl ? cntEndAdrn : null}
 				/>
 			);
 			// 7-3. return
@@ -208,10 +208,10 @@ export const Count = memo(
 			translate,
 			LOCKED,
 			disabled,
-			handleLockToggle,
+			hndlLckTggl,
 			lockIcon,
 			COUNT.newSectionCnt,
-			countEndAdornment,
+			cntEndAdrn,
 		]);
 
 		// 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――

@@ -23,13 +23,13 @@ export {
 
 // exercise ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export {
-	ExerciseAvgCardio,
+	ExerAvgCrd as ExerciseAvgCardio,
 	type ExerciseAvgType,
-	ExerciseAvgVolume,
-	ExerciseLineCardio,
-	ExerciseLineScale,
+	ExerAvgVol as ExerciseAvgVolume,
+	ExerLnCrd as ExerciseLineCardio,
+	ExerLnScl as ExerciseLineScale,
 	type ExerciseLineType,
-	ExerciseLineVolume,
+	ExerLnVol as ExerciseLineVolume,
 	ExercisePie,
 	type ExercisePieType,
 } from "@schemas/exercise/ExerciseChart";
@@ -38,7 +38,7 @@ export {
 	type ExerciseGoalType,
 } from "@schemas/exercise/ExerciseGoal";
 export {
-	ExerciseRecord,
+	ExerRec2 as ExerciseRecord,
 	type ExerciseRecordType,
 } from "@schemas/exercise/ExerciseRecord";
 

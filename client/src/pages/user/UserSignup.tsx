@@ -7,25 +7,25 @@
 
 import { Btn, Div, Grid, Hr, Img, Paper } from "@exportComponents";
 import { Input } from "@exportContainers";
-import { useCommonValue, useValidateUser } from "@exportHooks";
+import { useCommonValue as usCmmnVal, useValidateUser as usValUsr } from "@exportHooks";
 import { axios } from "@exportLibs";
 import { memo, type React, useEffect, useRef, useState } from "@exportReacts";
 import { User, type UserType } from "@exportSchemas";
-import { handleNumberInput, insertComma } from "@exportScripts";
+import { handleNumberInput as hndlNmbrInpt, insertComma } from "@exportScripts";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const UserSignup = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, URL_GOOGLE, navigate, localCurrency } = useCommonValue();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
-	const { ERRORS, REFS, validate } = useValidateUser();
+	const { URL_OBJECT, URL_GOOGLE, navigate, localCurrency: lclCrrn } = usCmmnVal();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
+	const { ERRORS, REFS, validate } = usValUsr();
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const [OBJECT, setOBJECT] = useState<UserType>(User);
@@ -39,7 +39,7 @@ export const UserSignup = memo(() => {
 	}, [OBJECT]);
 
 	// 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const flowSendEmail = async () => {
+	const flwSndEml = async () => {
 		setLOADING(true);
 		if (!(await validate(objectRef.current, `signup`, `send`))) {
 			setLOADING(false);
@@ -112,7 +112,7 @@ export const UserSignup = memo(() => {
 	};
 
 	// 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const flowVerifyEmail = async () => {
+	const flwVrfyEml = async () => {
 		setLOADING(true);
 		if (!(await validate(objectRef.current, `signup`, `verify`))) {
 			setLOADING(false);
@@ -245,7 +245,7 @@ export const UserSignup = memo(() => {
 	};
 
 	// 7. userSignup ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const userSignupNode = () => {
+	const usrSgnpNd = () => {
 		// 7-1. title
 		const titleSection = () => (
 			<Grid container={true} spacing={0}>
@@ -255,7 +255,7 @@ export const UserSignup = memo(() => {
 			</Grid>
 		);
 		// 7-2. signup
-		const signupSection = () => (
+		const sgnpSec = () => (
 			<Grid container={true} spacing={0}>
 				{[OBJECT]?.map((item, i) => (
 					<Grid
@@ -297,7 +297,7 @@ export const UserSignup = memo(() => {
 									className={`mt-n25px`}
 									disabled={item.user_id_verified}
 									onClick={() => {
-										void flowSendEmail();
+										void flwSndEml();
 									}}
 								>
 									{translate(`send`)}
@@ -330,7 +330,7 @@ export const UserSignup = memo(() => {
 									className={`mt-n25px`}
 									disabled={!item.user_id_sended || item.user_id_verified}
 									onClick={() => {
-										void flowVerifyEmail();
+										void flwVrfyEml();
 									}}
 								>
 									{translate(`verify`)}
@@ -405,18 +405,18 @@ export const UserSignup = memo(() => {
 									}
 									endadornment={translate(`cm`)}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											999,
 											2,
 										);
-										!processedValue === null &&
+										!procdVal === null &&
 											(() => {
 												return;
 											})();
 										setOBJECT((prev: any) => ({
 											...prev,
-											user_initScale: processedValue,
+											user_initScale: procdVal,
 										}));
 									}}
 								/>
@@ -444,17 +444,17 @@ export const UserSignup = memo(() => {
 									}
 									endadornment={translate(`kc`)}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											9999,
 										);
-										!processedValue === null &&
+										!procdVal === null &&
 											(() => {
 												return;
 											})();
 										setOBJECT((prev: any) => ({
 											...prev,
-											user_initAvgKcalIntake: processedValue,
+											user_initAvgKcalIntake: procdVal,
 										}));
 									}}
 								/>
@@ -480,19 +480,19 @@ export const UserSignup = memo(() => {
 											src={`money2.webp`}
 										/>
 									}
-									endadornment={localCurrency}
+									endadornment={lclCrrn}
 									onChange={(e: any) => {
-										const processedValue: string | null = handleNumberInput(
+										const procdVal: string | null = hndlNmbrInpt(
 											e.target.value,
 											9_999_999_999,
 										);
-										!processedValue === null &&
+										!procdVal === null &&
 											(() => {
 												return;
 											})();
 										setOBJECT((prev: any) => ({
 											...prev,
-											user_initProperty: processedValue,
+											user_initProperty: procdVal,
 										}));
 									}}
 								/>
@@ -503,7 +503,7 @@ export const UserSignup = memo(() => {
 			</Grid>
 		);
 		// 7-4. button
-		const buttonSection = () => (
+		const bttnSec = () => (
 			<Grid container={true} spacing={1}>
 				{/** row 1 * */}
 				<Grid container={true} spacing={1}>
@@ -592,9 +592,9 @@ export const UserSignup = memo(() => {
 			>
 				{titleSection()}
 				<Hr m={30} className={`bg-light`} />
-				{signupSection()}
+				{sgnpSec()}
 				<Hr m={30} className={`bg-light`} />
-				{buttonSection()}
+				{bttnSec()}
 				<Hr m={30} className={`bg-light`} />
 				{linkSection()}
 			</Paper>
@@ -602,5 +602,5 @@ export const UserSignup = memo(() => {
 	};
 
 	// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	return <>{userSignupNode()}</>;
+	return <>{usrSgnpNd()}</>;
 });

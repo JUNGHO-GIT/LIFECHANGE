@@ -7,58 +7,58 @@
 
 import { Br, Grid, Paper } from "@exportComponents";
 import { Select } from "@exportContainers";
-import { useCommonValue, useStorageLocal } from "@exportHooks";
+import { useCommonValue as usCmmnVal, useStorageLocal as usStrgLcl } from "@exportHooks";
 import { MenuItem } from "@exportMuis";
 import { memo, useEffect, useState } from "@exportReacts";
-import { useStoreLanguage } from "@exportStores";
+import { useStoreLanguage as usStrLang } from "@exportStores";
 import { FoodChartAvg } from "./FoodChartAvg";
-import { FoodChartLine } from "./FoodChartLine";
+import { FdChrtLn } from "./FoodChartLine";
 import { FoodChartPie } from "./FoodChartPie";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const FoodChart = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { PATH } = useCommonValue();
-	const { translate } = useStoreLanguage();
+	const { PATH } = usCmmnVal();
+	const { translate } = usStrLang();
 
 	// 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const [TYPE_PIE, setTYPE_PIE] = useStorageLocal(`type`, `pie`, PATH, {
+	const [TYPE_PIE, setTYPE_PIE] = usStrgLcl(`type`, `pie`, PATH, {
 		section: `week`,
 		line: `kcal`,
 	});
-	const [TYPE_LINE, setTYPE_LINE] = useStorageLocal(`type`, `line`, PATH, {
+	const [TYPE_LINE, setTYPE_LINE] = usStrgLcl(`type`, `line`, PATH, {
 		section: `week`,
 		line: `kcal`,
 	});
-	const [TYPE_AVG, setTYPE_AVG] = useStorageLocal(`type`, `avg`, PATH, {
+	const [TYPE_AVG, setTYPE_AVG] = usStrgLcl(`type`, `avg`, PATH, {
 		section: `week`,
 		line: `kcal`,
 	});
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 	const [curView, setCurView] = useState(`pie`);
-	const [curSection, setCurSection] = useState(TYPE_PIE.section ?? `week`);
-	const [curSetType, setCurSetType] = useState(() => setTYPE_PIE);
+	const [curSection, stCrSec] = useState(TYPE_PIE.section ?? `week`);
+	const [curSetType, stCrStTyp] = useState(() => setTYPE_PIE);
 	const [curValue, setCurValue] = useState(TYPE_PIE.line ?? `kcal`);
 
 	// 3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	useEffect(() => {
 		curView === `pie`
 			? (() => {
-					setCurSetType(() => setTYPE_PIE);
-					setCurSection(TYPE_PIE.section ?? `week`);
+					stCrStTyp(() => setTYPE_PIE);
+					stCrSec(TYPE_PIE.section ?? `week`);
 					setCurValue(TYPE_PIE.line ?? `kcal`);
 				})()
 			: curView === `line`
 				? (() => {
-						setCurSetType(() => setTYPE_LINE);
-						setCurSection(TYPE_LINE.section ?? `week`);
+						stCrStTyp(() => setTYPE_LINE);
+						stCrSec(TYPE_LINE.section ?? `week`);
 						setCurValue(TYPE_LINE.line ?? `kcal`);
 					})()
 				: curView === `avg` &&
 					(() => {
-						setCurSetType(() => setTYPE_AVG);
-						setCurSection(TYPE_AVG.section ?? `week`);
+						stCrStTyp(() => setTYPE_AVG);
+						stCrSec(TYPE_AVG.section ?? `week`);
 						setCurValue(TYPE_AVG.line ?? `kcal`);
 					})();
 	}, [curView, TYPE_PIE, TYPE_LINE, TYPE_AVG]);
@@ -71,7 +71,7 @@ export const FoodChart = memo(() => {
 					<Select
 						value={curSection}
 						onChange={(e: any) => {
-							setCurSection(e.target.value);
+							stCrSec(e.target.value);
 							curSetType((prev: any) => ({
 								...prev,
 								section: e.target.value,
@@ -134,7 +134,7 @@ export const FoodChart = memo(() => {
 							<FoodChartPie TYPE={TYPE_PIE} setTYPE={setTYPE_PIE} />
 						)}
 						{curView === `line` && (
-							<FoodChartLine TYPE={TYPE_LINE} setTYPE={setTYPE_LINE} />
+							<FdChrtLn TYPE={TYPE_LINE} setTYPE={setTYPE_LINE} />
 						)}
 						{curView === `avg` && (
 							<FoodChartAvg TYPE={TYPE_AVG} setTYPE={setTYPE_AVG} />

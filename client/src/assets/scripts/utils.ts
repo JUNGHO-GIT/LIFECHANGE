@@ -36,10 +36,10 @@ export const strToDecimal = (time: string): number => {
 		return 0;
 	}
 	const [hours, minutes] = time.split(`:`).map(Number);
-	const adjustedHours: number = hours + Math.floor(minutes / 60);
-	const adjustedMinutes: number = minutes % 60;
+	const adjsHrs: number = hours + Math.floor(minutes / 60);
+	const adjsMnts: number = minutes % 60;
 
-	return adjustedHours + adjustedMinutes / 60;
+	return adjsHrs + adjsMnts / 60;
 };
 
 // 5. decimal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -49,10 +49,10 @@ export const decimalToStr = (time: number) => {
 	}
 	const hours: number = Math.floor(time);
 	const minutes: number = Math.round((time - hours) * 60);
-	const adjustedHours: number = hours + Math.floor(minutes / 60);
-	const adjustedMinutes: number = minutes % 60;
+	const adjsHrs: number = hours + Math.floor(minutes / 60);
+	const adjsMnts: number = minutes % 60;
 
-	return `${String(adjustedHours).padStart(2, `0`)}:${String(adjustedMinutes).padStart(2, `0`)}`;
+	return `${String(adjsHrs).padStart(2, `0`)}:${String(adjsMnts).padStart(2, `0`)}`;
 };
 
 // 6. insertComma ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
@@ -137,26 +137,26 @@ export const makeForm = (
  *
  * @param val 사용자 입력값 (콤마 포함 가능)
  * @param max 허용 최대값 (Number 비교)
- * @param decimalPlaces 허용 소수 자릿수 (기본 0, 정수 전용)
+ * @param dcmlPlcs 허용 소수 자릿수 (기본 0, 정수 전용)
  * @returns 가공된 문자열 값 또는 null
  */
-export const handleNumberInput = (
+export const hndlNmbrInpt = (
 	val: string,
 	max: number,
-	decimalPlaces: number = 0,
+	dcmlPlcs: number = 0,
 ) => {
-	let processedValue: string = val === `` ? `0` : val.replaceAll(`,`, ``);
+	let procdVal: string = val === `` ? `0` : val.replaceAll(`,`, ``);
 	const regex: RegExp =
-		decimalPlaces === 0
+		dcmlPlcs === 0
 			? /^\d+$/
-			: new RegExp(`^\\d*\\.?\\d{0,${decimalPlaces}}$`);
-	if (Number(processedValue) > max || !regex.test(processedValue)) {
+			: new RegExp(`^\\d*\\.?\\d{0,${dcmlPlcs}}$`);
+	if (Number(procdVal) > max || !regex.test(procdVal)) {
 		return null;
 	}
-	if (/^0(?!\.)/.test(processedValue)) {
-		processedValue = processedValue.replaceAll(/^0+/g, ``);
+	if (/^0(?!\.)/.test(procdVal)) {
+		procdVal = procdVal.replaceAll(/^0+/g, ``);
 	}
-	return processedValue;
+	return procdVal;
 };
 
 // 9. formatY ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -197,7 +197,7 @@ export const formatY = (
 			});
 
 			// 범위를 사람이 읽기 좋은 값으로 맞춰주는 보조 함수
-			const computeNiceTick = (max: number, targetTicks: number) => {
+			const cmptNcTck = (max: number, targetTicks: number) => {
 				const rough: number = Math.max(
 					Math.ceil(max / Math.max(targetTicks, 1)),
 					1,
@@ -225,7 +225,7 @@ export const formatY = (
 						}
 					: type === `money`
 						? (() => {
-								const { niceTick, top } = computeNiceTick(maxValue, 6);
+								const { niceTick, top } = cmptNcTck(maxValue, 6);
 								return {
 									maxValue: maxValue,
 									tickInterval: niceTick,
@@ -234,7 +234,7 @@ export const formatY = (
 							})()
 						: type === `food`
 							? (() => {
-									const { niceTick, top } = computeNiceTick(maxValue, 6);
+									const { niceTick, top } = cmptNcTck(maxValue, 6);
 									return {
 										maxValue: maxValue,
 										tickInterval: Math.max(niceTick, 1),
@@ -243,7 +243,7 @@ export const formatY = (
 								})()
 							: type === `exercise`
 								? (() => {
-										const { niceTick, top } = computeNiceTick(maxValue, 6);
+										const { niceTick, top } = cmptNcTck(maxValue, 6);
 										return {
 											maxValue: maxValue,
 											tickInterval: Math.max(niceTick, 1),

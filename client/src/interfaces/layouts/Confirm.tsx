@@ -8,12 +8,12 @@
 import { Icons } from "@exportComponents";
 import { MuiAlert, Snackbar } from "@exportMuis";
 import { memo } from "@exportReacts";
-import { useStoreConfirm } from "@exportStores";
+import { useStoreConfirm as usStrCnfr } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const Confirm = memo(() => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { CONFIRM, setCONFIRM } = useStoreConfirm();
+	const { CONFIRM, setCONFIRM } = usStrCnfr();
 
 	// 7. confirm ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 	const confirmNode = () => (

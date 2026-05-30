@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-import { create, type StoreApi, type UseBoundStore } from "@exportLibs";
+import { create, type StoreApi, type UseBoundStore as UsBndStr } from "@exportLibs";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 declare interface LanguageState {
@@ -15,8 +15,8 @@ declare interface LanguageState {
 }
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-let __resourcesCache: Record<string, any> | null = null;
-export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> =
+let __ressCch: Record<string, any> | null = null;
+export const usStrLang: UsBndStr<StoreApi<LanguageState>> =
 	create<LanguageState>((set, get) => ({
 		lang: `en`,
 		setLang: (lang: string) => {
@@ -24,7 +24,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> =
 		},
 		translate: (key: string) => {
 			const { lang } = get();
-			__resourcesCache ??= {
+			__ressCch ??= {
 				// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 				// a
 				all: {
@@ -2109,7 +2109,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> =
 				},
 			};
 
-			const result: any = __resourcesCache[key];
+			const result: any = __ressCch[key];
 			if (!result) {
 				return key;
 			}

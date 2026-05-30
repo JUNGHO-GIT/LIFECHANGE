@@ -7,18 +7,18 @@
 
 import { Btn, Div, Grid, Icons, Img } from "@exportComponents";
 import { Input, PopUp, Select } from "@exportContainers";
-import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
+import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal, useStorageLocal as usStrgLcl } from "@exportHooks";
 import {
-	AdapterMoment,
+	AdapterMoment as AdptMmnt,
 	Badge,
 	DateCalendar,
-	LocalizationProvider,
+	LocalizationProvider as LclzProv,
 	MenuItem,
 	PickersDay,
 } from "@exportMuis";
 import { memo, type React, useEffect, useState } from "@exportReacts";
 import { setSession } from "@exportScripts";
-import { useStoreLanguage } from "@exportStores";
+import { useStoreLanguage as usStrLang } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 declare interface PickerDayProps {
@@ -46,35 +46,35 @@ declare interface PickerDayProps {
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { PATH, localLang, localTimeZone } = useCommonValue();
-	const { isGoalList, isGoalDetail } = useCommonValue();
-	const { isRecordList, isRecordDetail } = useCommonValue();
-	const { isCalendarDetail } = useCommonValue();
-	const { isList, isDetail } = useCommonValue();
-	const { getDayFmt, getDayNotFmt, getDayStartFmt, getDayEndFmt } =
-		useCommonDate();
-	const { getPrevDayStartFmt, getPrevDayEndFmt } = useCommonDate();
-	const { getNextDayStartFmt, getNextDayEndFmt } = useCommonDate();
-	const { getWeekStartFmt, getWeekEndFmt } = useCommonDate();
-	const { getPrevWeekStartFmt, getPrevWeekEndFmt } = useCommonDate();
-	const { getNextWeekStartFmt, getNextWeekEndFmt } = useCommonDate();
-	const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-	const { getPrevMonthStartFmt, getPrevMonthEndFmt } = useCommonDate();
-	const { getNextMonthStartFmt, getNextMonthEndFmt } = useCommonDate();
-	const { getYearStartFmt, getYearEndFmt } = useCommonDate();
-	const { getPrevYearStartFmt, getPrevYearEndFmt } = useCommonDate();
-	const { getNextYearStartFmt, getNextYearEndFmt } = useCommonDate();
-	const { translate } = useStoreLanguage();
+	const { PATH, localLang, localTimeZone: lclTmZn } = usCmmnVal();
+	const { isGoalList, isGoalDetail } = usCmmnVal();
+	const { isRecordList, isRecordDetail: isRecDtl } = usCmmnVal();
+	const { isCalendarDetail: isClndDtl } = usCmmnVal();
+	const { isList, isDetail } = usCmmnVal();
+	const { getDayFmt, getDayNotFmt, getDayStartFmt: gtDyStrtFmt, getDayEndFmt } =
+		usCmmnDt();
+	const { getPrevDayStartFmt: gtPrDyStFm, getPrevDayEndFmt: gtPrDyEnFm } = usCmmnDt();
+	const { getNextDayStartFmt: gtNxDyStFm, getNextDayEndFmt: gtNxDyEnFm } = usCmmnDt();
+	const { getWeekStartFmt: gtWkStrtFmt, getWeekEndFmt: gtWkEndFmt } = usCmmnDt();
+	const { getPrevWeekStartFmt: gtPrWkStFm, getPrevWeekEndFmt: gtPrWkEnFm } = usCmmnDt();
+	const { getNextWeekStartFmt: gtNxWkStFm, getNextWeekEndFmt: gtNxWkEnFm } = usCmmnDt();
+	const { getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt } = usCmmnDt();
+	const { getPrevMonthStartFmt: gtPrMnStFm, getPrevMonthEndFmt: gtPrMnEnFm } = usCmmnDt();
+	const { getNextMonthStartFmt: gtNxMnStFm, getNextMonthEndFmt: gtNxMnEnFm } = usCmmnDt();
+	const { getYearStartFmt: gtYrStrtFmt, getYearEndFmt: gtYrEndFmt } = usCmmnDt();
+	const { getPrevYearStartFmt: gtPrYrStFm, getPrevYearEndFmt: gtPrYrEnFm } = usCmmnDt();
+	const { getNextYearStartFmt: gtNxYrStFm, getNextYearEndFmt: gtNxYrEnFm } = usCmmnDt();
+	const { translate } = usStrLang();
 
 	// 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const [dateStrInSave, setDateStrInSave] = useState<string>(``);
-	const [dateStrInList, setDateStrInList] = useState<string>(``);
-	const [dateClassInSave, setDateClassInSave] = useState<string>(``);
-	const [dateClassInList, setDateClassInList] = useState<string>(``);
+	const [dtStrInSv, stDtStrInSv] = useState<string>(``);
+	const [dtStrInLst, stDtStrInLst] = useState<string>(``);
+	const [dtClssInSv, stDtClssInSv] = useState<string>(``);
+	const [dtClssInLst, stDtClInLs] = useState<string>(``);
 
 	// 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const [dateTypeInSave, setDateTypeInSave] = useState<string>(``);
-	const [dateTypeInList, setDateTypeInList] = useStorageLocal(
+	const [dtTypInSv, stDtTypInSv] = useState<string>(``);
+	const [dtTypInLst, stDtTypInLst] = usStrgLcl(
 		`type`,
 		`list`,
 		PATH,
@@ -97,11 +97,11 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 	// - 클래스 설정
 	useEffect(() => {
 		if (isList) {
-			setDateClassInSave(`h-min-0px h-5vh fs-0-8rem pointer`);
-			setDateClassInList(`h-min-0px h-5vh fs-0-8rem pointer`);
+			stDtClssInSv(`h-min-0px h-5vh fs-0-8rem pointer`);
+			stDtClInLs(`h-min-0px h-5vh fs-0-8rem pointer`);
 		} else {
-			setDateClassInSave(`h-min-40px fs-0-8rem pointer`);
-			setDateClassInList(`h-min-40px fs-0-8rem pointer`);
+			stDtClssInSv(`h-min-40px fs-0-8rem pointer`);
+			stDtClInLs(`h-min-40px fs-0-8rem pointer`);
 		}
 	}, []);
 
@@ -111,58 +111,58 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 	useEffect(() => {
 		// 1. Goal
 		if (isGoalList) {
-			if (dateTypeInList === `day`) {
+			if (dtTypInLst === `day`) {
 				setDATE({
 					dateType: `day`,
 					dateStart: DATE?.dateStart ?? getDayFmt(),
 					dateEnd: DATE?.dateEnd ?? getDayFmt(),
 				});
-			} else if (dateTypeInList === `week`) {
+			} else if (dtTypInLst === `week`) {
 				setDATE({
 					dateType: `week`,
-					dateStart: DATE?.dateStart ?? getWeekStartFmt(),
-					dateEnd: DATE?.dateEnd ?? getWeekEndFmt(),
+					dateStart: DATE?.dateStart ?? gtWkStrtFmt(),
+					dateEnd: DATE?.dateEnd ?? gtWkEndFmt(),
 				});
-			} else if (dateTypeInList === `month`) {
+			} else if (dtTypInLst === `month`) {
 				setDATE({
 					dateType: `month`,
-					dateStart: DATE?.dateStart ?? getMonthStartFmt(),
-					dateEnd: DATE?.dateEnd ?? getMonthEndFmt(),
+					dateStart: DATE?.dateStart ?? gtMnStFm(),
+					dateEnd: DATE?.dateEnd ?? gtMnthEndFmt(),
 				});
-			} else if (dateTypeInList === `year`) {
+			} else if (dtTypInLst === `year`) {
 				setDATE({
 					dateType: `year`,
-					dateStart: DATE?.dateStart ?? getYearStartFmt(),
-					dateEnd: DATE?.dateEnd ?? getYearEndFmt(),
+					dateStart: DATE?.dateStart ?? gtYrStrtFmt(),
+					dateEnd: DATE?.dateEnd ?? gtYrEndFmt(),
 				});
 			}
 		}
 
 		// 4. Record
 		else if (isRecordList) {
-			if (dateTypeInList === `day`) {
+			if (dtTypInLst === `day`) {
 				setDATE({
 					dateType: `day`,
 					dateStart: DATE?.dateStart ?? getDayFmt(),
 					dateEnd: DATE?.dateEnd ?? getDayFmt(),
 				});
-			} else if (dateTypeInList === `week`) {
+			} else if (dtTypInLst === `week`) {
 				setDATE({
 					dateType: `week`,
-					dateStart: DATE?.dateStart ?? getWeekStartFmt(),
-					dateEnd: DATE?.dateEnd ?? getWeekEndFmt(),
+					dateStart: DATE?.dateStart ?? gtWkStrtFmt(),
+					dateEnd: DATE?.dateEnd ?? gtWkEndFmt(),
 				});
-			} else if (dateTypeInList === `month`) {
+			} else if (dtTypInLst === `month`) {
 				setDATE({
 					dateType: `month`,
-					dateStart: DATE?.dateStart ?? getMonthStartFmt(),
-					dateEnd: DATE?.dateEnd ?? getMonthEndFmt(),
+					dateStart: DATE?.dateStart ?? gtMnStFm(),
+					dateEnd: DATE?.dateEnd ?? gtMnthEndFmt(),
 				});
-			} else if (dateTypeInList === `year`) {
+			} else if (dtTypInLst === `year`) {
 				setDATE({
 					dateType: `year`,
-					dateStart: DATE?.dateStart ?? getYearStartFmt(),
-					dateEnd: DATE?.dateEnd ?? getYearEndFmt(),
+					dateStart: DATE?.dateStart ?? gtYrStrtFmt(),
+					dateEnd: DATE?.dateEnd ?? gtYrEndFmt(),
 				});
 			}
 		}
@@ -177,30 +177,30 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 	useEffect(() => {
 		// 1. Goal
 		if (isGoalDetail) {
-			if (dateTypeInList === `week`) {
+			if (dtTypInLst === `week`) {
 				setDATE((prev) => ({
 					...prev,
 					dateType: `week`,
-					dateStart: getWeekStartFmt(prev.dateStart),
-					dateEnd: getWeekEndFmt(prev.dateStart),
+					dateStart: gtWkStrtFmt(prev.dateStart),
+					dateEnd: gtWkEndFmt(prev.dateStart),
 				}));
-			} else if (dateTypeInList === `month`) {
+			} else if (dtTypInLst === `month`) {
 				setDATE({
 					dateType: `month`,
-					dateStart: getMonthStartFmt(),
-					dateEnd: getMonthEndFmt(),
+					dateStart: gtMnStFm(),
+					dateEnd: gtMnthEndFmt(),
 				});
-			} else if (dateTypeInList === `year`) {
+			} else if (dtTypInLst === `year`) {
 				setDATE({
 					dateType: `year`,
-					dateStart: getYearStartFmt(),
-					dateEnd: getYearEndFmt(),
+					dateStart: gtYrStrtFmt(),
+					dateEnd: gtYrEndFmt(),
 				});
 			}
 		}
 
 		// 2. Record
-		else if (isRecordDetail) {
+		else if (isRecDtl) {
 			setDATE((prev) => ({
 				...prev,
 				dateType: `day`,
@@ -215,140 +215,140 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 	useEffect(() => {
 		// 1. Goal - List
 		if (isGoalList) {
-			if (dateTypeInList === `day`) {
+			if (dtTypInLst === `day`) {
 				setDATE((prev) => ({
 					...prev,
 					dateType: `day`,
 					dateStart: getDayFmt(prev.dateStart),
 					dateEnd: getDayFmt(prev.dateStart),
 				}));
-			} else if (dateTypeInList === `week`) {
+			} else if (dtTypInLst === `week`) {
 				setDATE((prev) => ({
 					...prev,
 					dateType: `week`,
-					dateStart: getWeekStartFmt(prev.dateStart),
-					dateEnd: getWeekEndFmt(prev.dateStart),
+					dateStart: gtWkStrtFmt(prev.dateStart),
+					dateEnd: gtWkEndFmt(prev.dateStart),
 				}));
-			} else if (dateTypeInList === `month`) {
+			} else if (dtTypInLst === `month`) {
 				setDATE((prev) => ({
 					...prev,
 					dateType: `month`,
-					dateStart: getMonthStartFmt(prev.dateStart),
-					dateEnd: getMonthEndFmt(prev.dateStart),
+					dateStart: gtMnStFm(prev.dateStart),
+					dateEnd: gtMnthEndFmt(prev.dateStart),
 				}));
-			} else if (dateTypeInList === `year`) {
+			} else if (dtTypInLst === `year`) {
 				setDATE((prev) => ({
 					...prev,
 					dateType: `year`,
-					dateStart: getYearStartFmt(prev.dateStart),
-					dateEnd: getYearEndFmt(prev.dateStart),
+					dateStart: gtYrStrtFmt(prev.dateStart),
+					dateEnd: gtYrEndFmt(prev.dateStart),
 				}));
 			}
 		}
 
 		// 4. Record - List
 		else if (isRecordList) {
-			if (dateTypeInList === `day`) {
+			if (dtTypInLst === `day`) {
 				setDATE((prev) => ({
 					...prev,
 					dateType: `day`,
 					dateStart: getDayFmt(prev.dateStart),
 					dateEnd: getDayFmt(prev.dateStart),
 				}));
-			} else if (dateTypeInList === `week`) {
+			} else if (dtTypInLst === `week`) {
 				setDATE((prev) => ({
 					...prev,
 					dateType: `week`,
-					dateStart: getWeekStartFmt(prev.dateStart),
-					dateEnd: getWeekEndFmt(prev.dateStart),
+					dateStart: gtWkStrtFmt(prev.dateStart),
+					dateEnd: gtWkEndFmt(prev.dateStart),
 				}));
-			} else if (dateTypeInList === `month`) {
+			} else if (dtTypInLst === `month`) {
 				setDATE((prev) => ({
 					...prev,
 					dateType: `month`,
-					dateStart: getMonthStartFmt(prev.dateStart),
-					dateEnd: getMonthEndFmt(prev.dateStart),
+					dateStart: gtMnStFm(prev.dateStart),
+					dateEnd: gtMnthEndFmt(prev.dateStart),
 				}));
-			} else if (dateTypeInList === `year`) {
+			} else if (dtTypInLst === `year`) {
 				setDATE((prev) => ({
 					...prev,
 					dateType: `year`,
-					dateStart: getYearStartFmt(prev.dateStart),
-					dateEnd: getYearEndFmt(prev.dateStart),
+					dateStart: gtYrStrtFmt(prev.dateStart),
+					dateEnd: gtYrEndFmt(prev.dateStart),
 				}));
 			}
 		}
-	}, [dateTypeInList]);
+	}, [dtTypInLst]);
 
 	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	// - 상세에서 타입 변경시 처리 (일, 주, 월, 년)
 	useEffect(() => {
 		// 1. Goal - Detail
 		if (isGoalDetail) {
-			if (dateTypeInSave === `day`) {
+			if (dtTypInSv === `day`) {
 				setDATE((prev) => ({
 					...prev,
 					dateType: `day`,
 					dateStart: getDayFmt(prev.dateStart),
 					dateEnd: getDayFmt(prev.dateStart),
 				}));
-			} else if (dateTypeInSave === `week`) {
+			} else if (dtTypInSv === `week`) {
 				setDATE((prev) => ({
 					...prev,
 					dateType: `week`,
-					dateStart: getWeekStartFmt(prev.dateStart),
-					dateEnd: getWeekEndFmt(prev.dateStart),
+					dateStart: gtWkStrtFmt(prev.dateStart),
+					dateEnd: gtWkEndFmt(prev.dateStart),
 				}));
-			} else if (dateTypeInSave === `month`) {
+			} else if (dtTypInSv === `month`) {
 				setDATE((prev) => ({
 					...prev,
 					dateType: `month`,
-					dateStart: getMonthStartFmt(prev.dateStart),
-					dateEnd: getMonthEndFmt(prev.dateStart),
+					dateStart: gtMnStFm(prev.dateStart),
+					dateEnd: gtMnthEndFmt(prev.dateStart),
 				}));
-			} else if (dateTypeInSave === `year`) {
+			} else if (dtTypInSv === `year`) {
 				setDATE((prev) => ({
 					...prev,
 					dateType: `year`,
-					dateStart: getYearStartFmt(prev.dateStart),
-					dateEnd: getYearEndFmt(prev.dateStart),
+					dateStart: gtYrStrtFmt(prev.dateStart),
+					dateEnd: gtYrEndFmt(prev.dateStart),
 				}));
 			}
 		}
 
 		// 2. Record - Detail
-		else if (isRecordDetail) {
-			if (dateTypeInSave === `day`) {
+		else if (isRecDtl) {
+			if (dtTypInSv === `day`) {
 				setDATE((prev) => ({
 					...prev,
 					dateType: `day`,
 					dateStart: getDayFmt(prev.dateStart),
 					dateEnd: getDayFmt(prev.dateStart),
 				}));
-			} else if (dateTypeInSave === `week`) {
+			} else if (dtTypInSv === `week`) {
 				setDATE((prev) => ({
 					...prev,
 					dateType: `week`,
-					dateStart: getWeekStartFmt(prev.dateStart),
-					dateEnd: getWeekEndFmt(prev.dateStart),
+					dateStart: gtWkStrtFmt(prev.dateStart),
+					dateEnd: gtWkEndFmt(prev.dateStart),
 				}));
-			} else if (dateTypeInSave === `month`) {
+			} else if (dtTypInSv === `month`) {
 				setDATE((prev) => ({
 					...prev,
 					dateType: `month`,
-					dateStart: getMonthStartFmt(prev.dateStart),
-					dateEnd: getMonthEndFmt(prev.dateStart),
+					dateStart: gtMnStFm(prev.dateStart),
+					dateEnd: gtMnthEndFmt(prev.dateStart),
 				}));
-			} else if (dateTypeInSave === `year`) {
+			} else if (dtTypInSv === `year`) {
 				setDATE((prev) => ({
 					...prev,
 					dateType: `year`,
-					dateStart: getYearStartFmt(prev.dateStart),
-					dateEnd: getYearEndFmt(prev.dateStart),
+					dateStart: gtYrStrtFmt(prev.dateStart),
+					dateEnd: gtYrEndFmt(prev.dateStart),
 				}));
 			}
 		}
-	}, [dateTypeInSave]);
+	}, [dtTypInSv]);
 
 	// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	// 2-3. useEffect
@@ -359,30 +359,30 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 		if (isList) {
 			// ex. 2026-01-15
 			if (DATE?.dateType === `day`) {
-				setDateStrInList(
-					handleDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
+				stDtStrInLst(
+					hndlDtFrmt(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
 				);
 			}
 			// ex. 01-15 - 01-21
 			else if (DATE?.dateType === `week`) {
-				setDateStrInList(
-					`${handleDateFormat(getWeekStartFmt(DATE?.dateStart), `mm-dd`)} - ${handleDateFormat(getWeekEndFmt(DATE?.dateStart), `mm-dd`)}`,
+				stDtStrInLst(
+					`${hndlDtFrmt(gtWkStrtFmt(DATE?.dateStart), `mm-dd`)} - ${hndlDtFrmt(gtWkEndFmt(DATE?.dateStart), `mm-dd`)}`,
 				);
 			}
 			// ex. 01-01 - 01-31
 			else if (DATE?.dateType === `month`) {
-				setDateStrInList(
-					`${handleDateFormat(getMonthStartFmt(DATE?.dateStart), `mm-dd`)} - ${handleDateFormat(getMonthEndFmt(DATE?.dateStart), `mm-dd`)}`,
+				stDtStrInLst(
+					`${hndlDtFrmt(gtMnStFm(DATE?.dateStart), `mm-dd`)} - ${hndlDtFrmt(gtMnthEndFmt(DATE?.dateStart), `mm-dd`)}`,
 				);
 			}
 			// ex. 2026
 			else if (DATE?.dateType === `year`) {
-				setDateStrInList(
-					handleDateFormat(getYearStartFmt(DATE?.dateStart), `yyyy`),
+				stDtStrInLst(
+					hndlDtFrmt(gtYrStrtFmt(DATE?.dateStart), `yyyy`),
 				);
 			} else {
-				setDateStrInList(
-					handleDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
+				stDtStrInLst(
+					hndlDtFrmt(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
 				);
 			}
 		}
@@ -391,37 +391,37 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 		else if (isDetail) {
 			// ex. 2026-01-15
 			if (DATE?.dateType === `day`) {
-				setDateStrInSave(
-					handleDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
+				stDtStrInSv(
+					hndlDtFrmt(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
 				);
 			}
 			// ex. 01-15 - 01-21
 			else if (DATE?.dateType === `week`) {
-				setDateStrInSave(
-					`${handleDateFormat(getWeekStartFmt(DATE?.dateStart), `mm-dd`)} - ${handleDateFormat(getWeekEndFmt(DATE?.dateStart), `mm-dd`)}`,
+				stDtStrInSv(
+					`${hndlDtFrmt(gtWkStrtFmt(DATE?.dateStart), `mm-dd`)} - ${hndlDtFrmt(gtWkEndFmt(DATE?.dateStart), `mm-dd`)}`,
 				);
 			}
 			// ex. 01-01 - 01-31
 			else if (DATE?.dateType === `month`) {
-				setDateStrInSave(
-					`${handleDateFormat(getMonthStartFmt(DATE?.dateStart), `mm-dd`)} - ${handleDateFormat(getMonthEndFmt(DATE?.dateStart), `mm-dd`)}`,
+				stDtStrInSv(
+					`${hndlDtFrmt(gtMnStFm(DATE?.dateStart), `mm-dd`)} - ${hndlDtFrmt(gtMnthEndFmt(DATE?.dateStart), `mm-dd`)}`,
 				);
 			}
 			// ex. 2026
 			else if (DATE?.dateType === `year`) {
-				setDateStrInSave(
-					handleDateFormat(getYearStartFmt(DATE?.dateStart), `yyyy`),
+				stDtStrInSv(
+					hndlDtFrmt(gtYrStrtFmt(DATE?.dateStart), `yyyy`),
 				);
 			} else {
-				setDateStrInSave(
-					handleDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
+				stDtStrInSv(
+					hndlDtFrmt(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
 				);
 			}
 		}
 	}, [isList, isDetail, DATE?.dateType, DATE?.dateStart, DATE?.dateEnd]);
 
 	// 4. handle ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const handleDateFormat = (str: string, format?: string): string => {
+	const hndlDtFrmt = (str: string, format?: string): string => {
 		// 1. yyyy
 		if (format === `yyyy`) {
 			if (str?.split(`-`).length >= 1) {
@@ -446,17 +446,17 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 	// 7. pickerNode  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 	const pickerNode = () => {
 		// 1. dateTypeInList ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-		const dateTypeInListSection = () => (
+		const dtTyInLsSe = () => (
 			<Select
 				label={translate(`dateType`)}
-				value={DATE?.dateType ?? dateTypeInList}
-				inputclass={`pointer ${dateClassInList}`}
+				value={DATE?.dateType ?? dtTypInLst}
+				inputclass={`pointer ${dtClssInLst}`}
 				onChange={(e: any) => {
-					setDateTypeInList(e.target.value);
+					stDtTypInLst(e.target.value);
 				}}
 			>
 				{[`day`, `week`, `month`, `year`]?.map((item: any) => (
-					<MenuItem key={item} value={item} selected={item === dateTypeInList}>
+					<MenuItem key={item} value={item} selected={item === dtTypInLst}>
 						<Div className={`fs-0-8rem`}>{translate(item as string)}</Div>
 					</MenuItem>
 				))}
@@ -464,21 +464,21 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 		);
 
 		// 2. dateTypeInSave ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-		const dateTypeInSaveSection = () => (
+		const dtTypInSvSec = () => (
 			<Select
 				label={translate(`dateType`)}
-				value={DATE?.dateType ?? dateTypeInSave}
-				inputclass={`pointer ${dateClassInSave}`}
+				value={DATE?.dateType ?? dtTypInSv}
+				inputclass={`pointer ${dtClssInSv}`}
 				disabled={!isGoalDetail}
 				onChange={(e: any) => {
 					if (e.target.value === `day`) {
-						setDateTypeInSave(`day`);
+						stDtTypInSv(`day`);
 					} else if (e.target.value === `week`) {
-						setDateTypeInSave(`week`);
+						stDtTypInSv(`week`);
 					} else if (e.target.value === `month`) {
-						setDateTypeInSave(`month`);
+						stDtTypInSv(`month`);
 					} else if (e.target.value === `year`) {
-						setDateTypeInSave(`year`);
+						stDtTypInSv(`year`);
 					}
 				}}
 			>
@@ -487,7 +487,7 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 							<MenuItem
 								key={item}
 								value={item}
-								selected={item === dateTypeInSave}
+								selected={item === dtTypInSv}
 							>
 								<Div className={`fs-0-8rem`}>{translate(item as string)}</Div>
 							</MenuItem>
@@ -496,7 +496,7 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 							<MenuItem
 								key={item}
 								value={item}
-								selected={item === dateTypeInSave}
+								selected={item === dtTypInSv}
 							>
 								<Div className={`fs-0-8rem`}>{translate(item as string)}</Div>
 							</MenuItem>
@@ -517,16 +517,16 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 								{translate(`viewDay`)}
 							</Div>
 							<Div className={`fs-0-8rem fw-500 dark`}>
-								{`[${handleDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`)}]`}
+								{`[${hndlDtFrmt(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`)}]`}
 							</Div>
 						</Grid>
 						<Grid size={12} className={`d-center`}>
-							<LocalizationProvider
-								dateAdapter={AdapterMoment}
+							<LclzProv
+								dateAdapter={AdptMmnt}
 								adapterLocale={localLang}
 							>
 								<DateCalendar
-									timezone={localTimeZone}
+									timezone={lclTmZn}
 									views={[`day`]}
 									readOnly={false}
 									value={getDayNotFmt(DATE?.dateStart ?? DATE?.dateEnd)}
@@ -539,13 +539,13 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 									}}
 									slots={{
 										day: (props) => {
-											const { outsideCurrentMonth, day, ...other } = props;
+											const { outsideCurrentMonth: otsdCurMnth, day, ...other } = props;
 
 											let isSelected: boolean = false;
 											let isBadged: boolean = false;
 											let color: string = ``;
 											let borderRadius: string = ``;
-											let backgroundColor: string = ``;
+											let bckgClr: string = ``;
 											let boxShadow: string = ``;
 											let zIndex: number = 0;
 											// badge 표시는 일 단위로 표시
@@ -568,7 +568,7 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 
 											if (isSelected) {
 												color = `#ffffff`;
-												backgroundColor = `#1976d2`;
+												bckgClr = `#1976d2`;
 												boxShadow = `0 0 0 0 #1976d2`;
 												borderRadius = `50%`;
 												zIndex = 10;
@@ -596,11 +596,11 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 														{...other}
 														day={day}
 														selected={isSelected}
-														outsideCurrentMonth={outsideCurrentMonth}
+														outsideCurrentMonth={otsdCurMnth}
 														style={{
 															color: color,
 															borderRadius: borderRadius,
-															backgroundColor: backgroundColor,
+															backgroundColor: bckgClr,
 															boxShadow: boxShadow,
 															zIndex: zIndex,
 														}}
@@ -623,8 +623,8 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 												onClick={() => {
 													setDATE((prev) => ({
 														...prev,
-														dateStart: getPrevMonthStartFmt(prev.dateStart),
-														dateEnd: getPrevMonthStartFmt(prev.dateStart),
+														dateStart: gtPrMnStFm(prev.dateStart),
+														dateEnd: gtPrMnStFm(prev.dateStart),
 													}));
 												}}
 											>
@@ -638,8 +638,8 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 												onClick={() => {
 													setDATE((prev) => ({
 														...prev,
-														dateStart: getNextMonthStartFmt(prev.dateStart),
-														dateEnd: getNextMonthStartFmt(prev.dateStart),
+														dateStart: gtNxMnStFm(prev.dateStart),
+														dateEnd: gtNxMnStFm(prev.dateStart),
 													}));
 												}}
 											>
@@ -648,15 +648,15 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 										),
 									}}
 								/>
-							</LocalizationProvider>
+							</LclzProv>
 						</Grid>
 					</Grid>
 				}
 				children={(popTrigger: any) => (
 					<Input
 						label={translate(`date`)}
-						value={isList ? dateStrInList : isDetail ? dateStrInSave : ``}
-						inputclass={`pointer ${dateClassInList}`}
+						value={isList ? dtStrInLst : isDetail ? dtStrInSv : ``}
+						inputclass={`pointer ${dtClssInLst}`}
 						readOnly={true}
 						startadornment={
 							<Img
@@ -678,8 +678,8 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 											e.stopPropagation();
 											setDATE((prev) => ({
 												...prev,
-												dateStart: getPrevDayStartFmt(prev.dateStart),
-												dateEnd: getPrevDayEndFmt(prev.dateStart),
+												dateStart: gtPrDyStFm(prev.dateStart),
+												dateEnd: gtPrDyEnFm(prev.dateStart),
 											}));
 											setSession(`section`, `food`, ``, []);
 										}}
@@ -694,8 +694,8 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 											e.stopPropagation();
 											setDATE((prev) => ({
 												...prev,
-												dateStart: getNextDayStartFmt(prev.dateStart),
-												dateEnd: getNextDayEndFmt(prev.dateStart),
+												dateStart: gtNxDyStFm(prev.dateStart),
+												dateEnd: gtNxDyEnFm(prev.dateStart),
 											}));
 											setSession(`section`, `food`, ``, []);
 										}}
@@ -724,16 +724,16 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 								{translate(`viewWeek`)}
 							</Div>
 							<Div className={`fs-0-8rem fw-500 dark`}>
-								{`[${handleDateFormat(getWeekStartFmt(DATE?.dateStart), `mm-dd`)} - ${handleDateFormat(getWeekEndFmt(DATE?.dateEnd), `mm-dd`)}]`}
+								{`[${hndlDtFrmt(gtWkStrtFmt(DATE?.dateStart), `mm-dd`)} - ${hndlDtFrmt(gtWkEndFmt(DATE?.dateEnd), `mm-dd`)}]`}
 							</Div>
 						</Grid>
 						<Grid size={12} className={`d-center`}>
-							<LocalizationProvider
-								dateAdapter={AdapterMoment}
+							<LclzProv
+								dateAdapter={AdptMmnt}
 								adapterLocale={localLang}
 							>
 								<DateCalendar
-									timezone={localTimeZone}
+									timezone={lclTmZn}
 									views={[`day`]}
 									readOnly={false}
 									value={getDayNotFmt(DATE?.dateStart ?? DATE?.dateEnd)}
@@ -746,7 +746,7 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 									}}
 									slots={{
 										day: (props) => {
-											const { outsideCurrentMonth, day, ...other } = props;
+											const { outsideCurrentMonth: otsdCurMnth, day, ...other } = props;
 
 											let isSelected: boolean = false;
 											let isBadged: boolean = false;
@@ -755,7 +755,7 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 
 											let color: string = ``;
 											let borderRadius: string = ``;
-											let backgroundColor: string = ``;
+											let bckgClr: string = ``;
 											let boxShadow: string = ``;
 											let zIndex: number = 0;
 
@@ -777,7 +777,7 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 												isSelected =
 													DATE?.dateStart <= getDayFmt(day) &&
 													DATE?.dateEnd >= getDayFmt(day);
-												isFirst = DATE?.dateStart === getDayStartFmt(day);
+												isFirst = DATE?.dateStart === gtDyStrtFmt(day);
 												isLast = DATE?.dateEnd === getDayEndFmt(day);
 											}
 
@@ -796,7 +796,7 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 													borderRadius = `0%`;
 												}
 												color = `#ffffff`;
-												backgroundColor = `#1976d2`;
+												bckgClr = `#1976d2`;
 												zIndex = 10;
 											}
 											return (
@@ -822,19 +822,19 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 														{...other}
 														day={day}
 														selected={isSelected}
-														outsideCurrentMonth={outsideCurrentMonth}
+														outsideCurrentMonth={otsdCurMnth}
 														style={{
 															color: color,
 															borderRadius: borderRadius,
-															backgroundColor: backgroundColor,
+															backgroundColor: bckgClr,
 															boxShadow: boxShadow,
 															zIndex: zIndex,
 														}}
 														onDaySelect={(day) => {
 															setDATE((prev) => ({
 																...prev,
-																dateStart: getWeekStartFmt(day),
-																dateEnd: getWeekEndFmt(day),
+																dateStart: gtWkStrtFmt(day),
+																dateEnd: gtWkEndFmt(day),
 															}));
 														}}
 													/>
@@ -848,8 +848,8 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 												onClick={() => {
 													setDATE((prev) => ({
 														...prev,
-														dateStart: getPrevWeekStartFmt(prev.dateStart),
-														dateEnd: getPrevWeekEndFmt(prev.dateStart),
+														dateStart: gtPrWkStFm(prev.dateStart),
+														dateEnd: gtPrWkEnFm(prev.dateStart),
 													}));
 												}}
 											>
@@ -863,8 +863,8 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 												onClick={() => {
 													setDATE((prev) => ({
 														...prev,
-														dateStart: getNextWeekStartFmt(prev.dateStart),
-														dateEnd: getNextWeekEndFmt(prev.dateStart),
+														dateStart: gtNxWkStFm(prev.dateStart),
+														dateEnd: gtNxWkEnFm(prev.dateStart),
 													}));
 												}}
 											>
@@ -873,15 +873,15 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 										),
 									}}
 								/>
-							</LocalizationProvider>
+							</LclzProv>
 						</Grid>
 					</Grid>
 				}
 				children={(popTrigger: any) => (
 					<Input
 						label={translate(`duration`)}
-						value={isList ? dateStrInList : isDetail ? dateStrInSave : ``}
-						inputclass={`pointer ${dateClassInList}`}
+						value={isList ? dtStrInLst : isDetail ? dtStrInSv : ``}
+						inputclass={`pointer ${dtClssInLst}`}
 						readOnly={true}
 						startadornment={
 							<Img
@@ -903,8 +903,8 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 											e.stopPropagation();
 											setDATE((prev) => ({
 												...prev,
-												dateStart: getPrevWeekStartFmt(prev.dateStart),
-												dateEnd: getPrevWeekEndFmt(prev.dateStart),
+												dateStart: gtPrWkStFm(prev.dateStart),
+												dateEnd: gtPrWkEnFm(prev.dateStart),
 											}));
 										}}
 									/>
@@ -918,8 +918,8 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 											e.stopPropagation();
 											setDATE((prev) => ({
 												...prev,
-												dateStart: getNextWeekStartFmt(prev.dateStart),
-												dateEnd: getNextWeekEndFmt(prev.dateStart),
+												dateStart: gtNxWkStFm(prev.dateStart),
+												dateEnd: gtNxWkEnFm(prev.dateStart),
 											}));
 										}}
 									/>
@@ -947,16 +947,16 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 								{translate(`viewMonth`)}
 							</Div>
 							<Div className={`fs-0-8rem fw-500 dark`}>
-								{`[${handleDateFormat(getMonthStartFmt(DATE?.dateStart), `mm-dd`)} - ${handleDateFormat(getMonthEndFmt(DATE?.dateEnd), `mm-dd`)}]`}
+								{`[${hndlDtFrmt(gtMnStFm(DATE?.dateStart), `mm-dd`)} - ${hndlDtFrmt(gtMnthEndFmt(DATE?.dateEnd), `mm-dd`)}]`}
 							</Div>
 						</Grid>
 						<Grid size={12} className={`d-center`}>
-							<LocalizationProvider
-								dateAdapter={AdapterMoment}
+							<LclzProv
+								dateAdapter={AdptMmnt}
 								adapterLocale={localLang}
 							>
 								<DateCalendar
-									timezone={localTimeZone}
+									timezone={lclTmZn}
 									views={[`day`]}
 									readOnly={false}
 									value={getDayNotFmt(DATE?.dateStart ?? DATE?.dateEnd)}
@@ -969,14 +969,14 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 									}}
 									slots={{
 										day: (props) => {
-											const { outsideCurrentMonth, day, ...other } = props;
+											const { outsideCurrentMonth: otsdCurMnth, day, ...other } = props;
 
 											let isSelected: boolean = false;
 											let isBadged: boolean = false;
 
 											let color: string = ``;
 											let borderRadius: string = ``;
-											let backgroundColor: string = ``;
+											let bckgClr: string = ``;
 											let boxShadow: string = ``;
 											let zIndex: number = 0;
 
@@ -1002,7 +1002,7 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 
 											if (isSelected) {
 												color = `#ffffff`;
-												backgroundColor = `#1976d2`;
+												bckgClr = `#1976d2`;
 												boxShadow = `0 0 0 0 #1976d2`;
 												borderRadius = `50%`;
 												zIndex = 10;
@@ -1031,19 +1031,19 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 														{...other}
 														day={day}
 														selected={isSelected}
-														outsideCurrentMonth={outsideCurrentMonth}
+														outsideCurrentMonth={otsdCurMnth}
 														style={{
 															color: color,
 															borderRadius: borderRadius,
-															backgroundColor: backgroundColor,
+															backgroundColor: bckgClr,
 															boxShadow: boxShadow,
 															zIndex: zIndex,
 														}}
 														onDaySelect={(day) => {
 															setDATE((prev) => ({
 																...prev,
-																dateStart: getMonthStartFmt(day),
-																dateEnd: getMonthEndFmt(day),
+																dateStart: gtMnStFm(day),
+																dateEnd: gtMnthEndFmt(day),
 															}));
 														}}
 													/>
@@ -1057,8 +1057,8 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 												onClick={() => {
 													setDATE((prev) => ({
 														...prev,
-														dateStart: getPrevMonthStartFmt(prev.dateStart),
-														dateEnd: getPrevMonthEndFmt(prev.dateStart),
+														dateStart: gtPrMnStFm(prev.dateStart),
+														dateEnd: gtPrMnEnFm(prev.dateStart),
 													}));
 												}}
 											>
@@ -1072,8 +1072,8 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 												onClick={() => {
 													setDATE((prev) => ({
 														...prev,
-														dateStart: getNextMonthStartFmt(prev.dateStart),
-														dateEnd: getNextMonthEndFmt(prev.dateStart),
+														dateStart: gtNxMnStFm(prev.dateStart),
+														dateEnd: gtNxMnEnFm(prev.dateStart),
 													}));
 												}}
 											>
@@ -1082,15 +1082,15 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 										),
 									}}
 								/>
-							</LocalizationProvider>
+							</LclzProv>
 						</Grid>
 					</Grid>
 				}
 				children={(popTrigger: any) => (
 					<Input
 						label={translate(`duration`)}
-						value={isList ? dateStrInList : isDetail ? dateStrInSave : ``}
-						inputclass={`pointer ${dateClassInList}`}
+						value={isList ? dtStrInLst : isDetail ? dtStrInSv : ``}
+						inputclass={`pointer ${dtClssInLst}`}
 						readOnly={true}
 						startadornment={
 							<Img
@@ -1112,8 +1112,8 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 											e.stopPropagation();
 											setDATE((prev) => ({
 												...prev,
-												dateStart: getPrevMonthStartFmt(prev.dateStart),
-												dateEnd: getPrevMonthEndFmt(prev.dateStart),
+												dateStart: gtPrMnStFm(prev.dateStart),
+												dateEnd: gtPrMnEnFm(prev.dateStart),
 											}));
 										}}
 									/>
@@ -1127,8 +1127,8 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 											e.stopPropagation();
 											setDATE((prev) => ({
 												...prev,
-												dateStart: getNextMonthStartFmt(prev.dateStart),
-												dateEnd: getNextMonthEndFmt(prev.dateStart),
+												dateStart: gtNxMnStFm(prev.dateStart),
+												dateEnd: gtNxMnEnFm(prev.dateStart),
 											}));
 										}}
 									/>
@@ -1156,16 +1156,16 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 								{translate(`viewYear`)}
 							</Div>
 							<Div className={`fs-0-8rem fw-500 dark`}>
-								{`[${handleDateFormat(getYearStartFmt(DATE?.dateStart), `yyyy`)}]`}
+								{`[${hndlDtFrmt(gtYrStrtFmt(DATE?.dateStart), `yyyy`)}]`}
 							</Div>
 						</Grid>
 						<Grid size={12} className={`d-center`}>
-							<LocalizationProvider
-								dateAdapter={AdapterMoment}
+							<LclzProv
+								dateAdapter={AdptMmnt}
 								adapterLocale={localLang}
 							>
 								<DateCalendar
-									timezone={localTimeZone}
+									timezone={lclTmZn}
 									views={[`day`]}
 									readOnly={false}
 									value={getDayNotFmt(DATE?.dateStart ?? DATE?.dateEnd)}
@@ -1178,14 +1178,14 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 									}}
 									slots={{
 										day: (props) => {
-											const { outsideCurrentMonth, day, ...other } = props;
+											const { outsideCurrentMonth: otsdCurMnth, day, ...other } = props;
 
 											let isSelected: boolean = false;
 											let isBadged: boolean = false;
 
 											let color: string = ``;
 											let borderRadius: string = ``;
-											let backgroundColor: string = ``;
+											let bckgClr: string = ``;
 											let boxShadow: string = ``;
 											let zIndex: number = 0;
 
@@ -1213,7 +1213,7 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 
 											if (isSelected) {
 												color = `#ffffff`;
-												backgroundColor = `#1976d2`;
+												bckgClr = `#1976d2`;
 												boxShadow = `0 0 0 0 #1976d2`;
 												borderRadius = `50%`;
 												zIndex = 10;
@@ -1242,19 +1242,19 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 														{...other}
 														day={day}
 														selected={isSelected}
-														outsideCurrentMonth={outsideCurrentMonth}
+														outsideCurrentMonth={otsdCurMnth}
 														style={{
 															color: color,
 															borderRadius: borderRadius,
-															backgroundColor: backgroundColor,
+															backgroundColor: bckgClr,
 															boxShadow: boxShadow,
 															zIndex: zIndex,
 														}}
 														onDaySelect={(day) => {
 															setDATE((prev) => ({
 																...prev,
-																dateStart: getYearStartFmt(day),
-																dateEnd: getYearEndFmt(day),
+																dateStart: gtYrStrtFmt(day),
+																dateEnd: gtYrEndFmt(day),
 															}));
 														}}
 													/>
@@ -1268,8 +1268,8 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 												onClick={() => {
 													setDATE((prev) => ({
 														...prev,
-														dateStart: getPrevYearStartFmt(prev.dateStart),
-														dateEnd: getPrevYearEndFmt(prev.dateStart),
+														dateStart: gtPrYrStFm(prev.dateStart),
+														dateEnd: gtPrYrEnFm(prev.dateStart),
 													}));
 												}}
 											>
@@ -1283,8 +1283,8 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 												onClick={() => {
 													setDATE((prev) => ({
 														...prev,
-														dateStart: getNextYearStartFmt(prev.dateStart),
-														dateEnd: getNextYearEndFmt(prev.dateStart),
+														dateStart: gtNxYrStFm(prev.dateStart),
+														dateEnd: gtNxYrEnFm(prev.dateStart),
 													}));
 												}}
 											>
@@ -1293,15 +1293,15 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 										),
 									}}
 								/>
-							</LocalizationProvider>
+							</LclzProv>
 						</Grid>
 					</Grid>
 				}
 				children={(popTrigger: any) => (
 					<Input
 						label={translate(`duration`)}
-						value={isList ? dateStrInList : isDetail ? dateStrInSave : ``}
-						inputclass={`pointer ${dateClassInList}`}
+						value={isList ? dtStrInLst : isDetail ? dtStrInSv : ``}
+						inputclass={`pointer ${dtClssInLst}`}
 						readOnly={true}
 						startadornment={
 							<Img
@@ -1323,8 +1323,8 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 											e.stopPropagation();
 											setDATE((prev) => ({
 												...prev,
-												dateStart: getPrevYearStartFmt(prev.dateStart),
-												dateEnd: getPrevYearEndFmt(prev.dateStart),
+												dateStart: gtPrYrStFm(prev.dateStart),
+												dateEnd: gtPrYrEnFm(prev.dateStart),
 											}));
 										}}
 									/>
@@ -1338,8 +1338,8 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 											e.stopPropagation();
 											setDATE((prev) => ({
 												...prev,
-												dateStart: getNextYearStartFmt(prev.dateStart),
-												dateEnd: getNextYearEndFmt(prev.dateStart),
+												dateStart: gtNxYrStFm(prev.dateStart),
+												dateEnd: gtNxYrEnFm(prev.dateStart),
 											}));
 										}}
 									/>
@@ -1360,33 +1360,33 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 			isGoalList ? (
 				<Grid container={true} spacing={1}>
 					<Grid size={3} className={`d-center`}>
-						{dateTypeInListSection()}
+						{dtTyInLsSe()}
 					</Grid>
 					<Grid size={9} className={`d-center`}>
-						{dateTypeInList === `day` && daySection()}
-						{dateTypeInList === `week` && weekSection()}
-						{dateTypeInList === `month` && monthSection()}
-						{dateTypeInList === `year` && yearSection()}
+						{dtTypInLst === `day` && daySection()}
+						{dtTypInLst === `week` && weekSection()}
+						{dtTypInLst === `month` && monthSection()}
+						{dtTypInLst === `year` && yearSection()}
 					</Grid>
 				</Grid>
 			) : // 1-2. 리스트 (Record)
 			isRecordList ? (
 				<Grid container={true} spacing={1}>
 					<Grid size={3} className={`d-center`}>
-						{dateTypeInListSection()}
+						{dtTyInLsSe()}
 					</Grid>
 					<Grid size={9} className={`d-center`}>
-						{dateTypeInList === `day` && daySection()}
-						{dateTypeInList === `week` && weekSection()}
-						{dateTypeInList === `month` && monthSection()}
-						{dateTypeInList === `year` && yearSection()}
+						{dtTypInLst === `day` && daySection()}
+						{dtTypInLst === `week` && weekSection()}
+						{dtTypInLst === `month` && monthSection()}
+						{dtTypInLst === `year` && yearSection()}
 					</Grid>
 				</Grid>
 			) : // 2-1. 세이브 (Calendar)
-			isCalendarDetail ? (
+			isClndDtl ? (
 				<Grid container={true} spacing={1}>
 					<Grid size={{ xs: 4, sm: 3 }} className={`d-center`}>
-						{dateTypeInSaveSection()}
+						{dtTypInSvSec()}
 					</Grid>
 					<Grid size={{ xs: 8, sm: 9 }} className={`d-center`}>
 						{DATE?.dateType === `day` && daySection()}
@@ -1399,7 +1399,7 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 			isGoalDetail ? (
 				<Grid container={true} spacing={1}>
 					<Grid size={{ xs: 4, sm: 3 }} className={`d-center`}>
-						{dateTypeInSaveSection()}
+						{dtTypInSvSec()}
 					</Grid>
 					<Grid size={{ xs: 8, sm: 9 }} className={`d-center`}>
 						{DATE?.dateType === `week` && weekSection()}
@@ -1408,10 +1408,10 @@ export const PickerDay = memo(({ DATE, setDATE, EXIST }: PickerDayProps) => {
 					</Grid>
 				</Grid>
 			) : // 2-3. 세이브 (Record)
-			isRecordDetail ? (
+			isRecDtl ? (
 				<Grid container={true} spacing={1}>
 					<Grid size={{ xs: 4, sm: 3 }} className={`d-center`}>
-						{dateTypeInSaveSection()}
+						{dtTypInSvSec()}
 					</Grid>
 					<Grid size={{ xs: 8, sm: 9 }} className={`d-center`}>
 						{DATE?.dateType === `day` && daySection()}

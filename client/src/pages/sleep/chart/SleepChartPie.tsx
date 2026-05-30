@@ -5,21 +5,21 @@
  * @since 2025-12-26
  */
 
-import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
+import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal, useStorageLocal as usStrgLcl } from "@exportHooks";
 import { axios } from "@exportLibs";
 import { memo, useEffect, useState } from "@exportReacts";
 import { SleepPie, type SleepPieType } from "@exportSchemas";
 import {
-	useStoreAlert,
-	useStoreLanguage,
-	useStoreLoading,
+	useStoreAlert as usStrAlrt,
+	useStoreLanguage as usStrLang,
+	useStoreLoading as usStrLoad,
 } from "@exportStores";
 import {
 	Cell,
 	Legend,
 	Pie,
 	PieChart,
-	ResponsiveContainer,
+	ResponsiveContainer as RspnCntn,
 	Tooltip,
 } from "recharts";
 
@@ -39,42 +39,42 @@ declare interface PieProps {
 }
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const SleepChartPie = memo((props: SleepChartPieProps) => {
+export const SlpChrtP = memo((props: SleepChartPieProps) => {
 	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, PATH, chartColors, sessionId } = useCommonValue();
-	const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
-	const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } =
-		useCommonDate();
-	const { translate } = useStoreLanguage();
-	const { setALERT } = useStoreAlert();
-	const { setLOADING } = useStoreLoading();
+	const { URL_OBJECT, PATH, chartColors, sessionId } = usCmmnVal();
+	const { getDayFmt, getWeekStartFmt: gtWkStrtFmt, getWeekEndFmt: gtWkEndFmt } = usCmmnDt();
+	const { getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt, getYearStartFmt: gtYrStrtFmt, getYearEndFmt: gtYrEndFmt } =
+		usCmmnDt();
+	const { translate } = usStrLang();
+	const { setALERT } = usStrAlrt();
+	const { setLOADING } = usStrLoad();
 
 	// 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const [TYPE, setTYPE] = useStorageLocal(`type`, `pie`, PATH, {
+	const [TYPE, setTYPE] = usStrgLcl(`type`, `pie`, PATH, {
 		section: `week`,
 		line: `bedTime`,
 	});
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [TYPE_STATE, setTYPE_STATE] = useState(() => {
+	const [TYPE_STATE, stTypSt] = useState(() => {
 		return props?.TYPE !== undefined ? props.TYPE : TYPE;
 	});
 	const [DATE, _setDATE] = useState({
 		dateType: ``,
 		dateStart: getDayFmt(),
 		dateEnd: getDayFmt(),
-		weekStartFmt: getWeekStartFmt(),
-		weekEndFmt: getWeekEndFmt(),
-		monthStartFmt: getMonthStartFmt(),
-		monthEndFmt: getMonthEndFmt(),
-		yearStartFmt: getYearStartFmt(),
-		yearEndFmt: getYearEndFmt(),
+		weekStartFmt: gtWkStrtFmt(),
+		weekEndFmt: gtWkEndFmt(),
+		monthStartFmt: gtMnStFm(),
+		monthEndFmt: gtMnthEndFmt(),
+		yearStartFmt: gtYrStrtFmt(),
+		yearEndFmt: gtYrEndFmt(),
 	});
 
 	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [OBJECT_WEEK, setOBJECT_WEEK] = useState<[SleepPieType]>([SleepPie]);
-	const [OBJECT_MONTH, setOBJECT_MONTH] = useState<[SleepPieType]>([SleepPie]);
-	const [OBJECT_YEAR, setOBJECT_YEAR] = useState<[SleepPieType]>([SleepPie]);
+	const [OBJECT_WEEK, stObjcWk] = useState<[SleepPieType]>([SleepPie]);
+	const [OBJECT_MONTH, stObjcMnth] = useState<[SleepPieType]>([SleepPie]);
+	const [OBJECT_YEAR, stObjcYr] = useState<[SleepPieType]>([SleepPie]);
 
 	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 	useEffect(() => {
@@ -98,17 +98,17 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
 				]);
 
 				// 서버에서 기본값을 포함한 응답을 받으므로 직접 설정
-				setOBJECT_WEEK(
+				stObjcWk(
 					resWeek.data.result && Array.isArray(resWeek.data.result)
 						? resWeek.data.result
 						: [SleepPie],
 				);
-				setOBJECT_MONTH(
+				stObjcMnth(
 					resMonth.data.result && Array.isArray(resMonth.data.result)
 						? resMonth.data.result
 						: [SleepPie],
 				);
-				setOBJECT_YEAR(
+				stObjcYr(
 					resYear.data.result && Array.isArray(resYear.data.result)
 						? resYear.data.result
 						: [SleepPie],
@@ -122,9 +122,9 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
 				});
 				console.error(error);
 				// 에러 발생 시에도 기본값 설정
-				setOBJECT_WEEK([SleepPie]);
-				setOBJECT_MONTH([SleepPie]);
-				setOBJECT_YEAR([SleepPie]);
+				stObjcWk([SleepPie]);
+				stObjcMnth([SleepPie]);
+				stObjcYr([SleepPie]);
 			} finally {
 				setLOADING(false);
 			}
@@ -137,7 +137,7 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
 			const isSame: boolean =
 				JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
 			if (!isSame) {
-				setTYPE_STATE(props.TYPE);
+				stTypSt(props.TYPE);
 			}
 		}
 	}, [props?.TYPE]);
@@ -239,7 +239,7 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
 		}
 
 		return (
-			<ResponsiveContainer width={`100%`} height={500}>
+			<RspnCntn width={`100%`} height={500}>
 				<PieChart margin={{ top: 60, right: 20, bottom: 10, left: 20 }}>
 					<defs>
 						<filter id={`textBackground`} x={0} y={0} width={1} height={1}>
@@ -320,7 +320,7 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
 						}}
 					/>
 				</PieChart>
-			</ResponsiveContainer>
+			</RspnCntn>
 		);
 	};
 

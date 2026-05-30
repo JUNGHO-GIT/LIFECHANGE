@@ -13,97 +13,97 @@ export const percent = async (object: any) => {
 		recordParam: string,
 		extra: string,
 	) => {
-		let scoreExercise: number = 0;
-		let percentExercise: number = 0;
+		let scrExer: number = 0;
+		let prcnExer: number = 0;
 		const goal: number = Number.parseFloat(goalParam);
 		const record: number = Number.parseFloat(recordParam);
 
 		if (extra === `count` ?? extra === `volume`) {
-			percentExercise = Number(((record - goal) / goal) * 100);
+			prcnExer = Number(((record - goal) / goal) * 100);
 
 			// 1. - 1%
-			if (percentExercise <= 1) {
-				scoreExercise = 1;
+			if (prcnExer <= 1) {
+				scrExer = 1;
 			}
 			// 2. 1% - 10%
-			else if (percentExercise > 1 && percentExercise <= 10) {
-				scoreExercise = 2;
+			else if (prcnExer > 1 && prcnExer <= 10) {
+				scrExer = 2;
 			}
 			// 3. 10% - 30%
-			else if (percentExercise > 10 && percentExercise <= 30) {
-				scoreExercise = 3;
+			else if (prcnExer > 10 && prcnExer <= 30) {
+				scrExer = 3;
 			}
 			// 4. 30% - 50%
-			else if (percentExercise > 30 && percentExercise <= 50) {
-				scoreExercise = 4;
+			else if (prcnExer > 30 && prcnExer <= 50) {
+				scrExer = 4;
 			}
 			// 5. 50% -
 			else {
-				scoreExercise = 5;
+				scrExer = 5;
 			}
 		} else if (extra === `scale`) {
-			percentExercise = Number(((record - goal) / goal) * 100);
+			prcnExer = Number(((record - goal) / goal) * 100);
 			// 1. - 1%
-			if (percentExercise <= 1) {
-				scoreExercise = 5;
+			if (prcnExer <= 1) {
+				scrExer = 5;
 			}
 			// 2. 1% - 10%
-			else if (percentExercise > 1 && percentExercise <= 10) {
-				scoreExercise = 4;
+			else if (prcnExer > 1 && prcnExer <= 10) {
+				scrExer = 4;
 			}
 			// 3. 10% - 30%
-			else if (percentExercise > 10 && percentExercise <= 30) {
-				scoreExercise = 3;
+			else if (prcnExer > 10 && prcnExer <= 30) {
+				scrExer = 3;
 			}
 			// 4. 30% - 50%
-			else if (percentExercise > 30 && percentExercise <= 50) {
-				scoreExercise = 2;
+			else if (prcnExer > 30 && prcnExer <= 50) {
+				scrExer = 2;
 			}
 			// 5. 50% -
 			else {
-				scoreExercise = 1;
+				scrExer = 1;
 			}
 		} else if (extra === `cardio`) {
 			const hoursGoal: number = Number.parseFloat(goalParam?.split(`:`)[0]);
 			const minutesGoal: number = Number.parseFloat(goalParam?.split(`:`)[1]);
 			const hoursRecord: number = Number.parseFloat(recordParam?.split(`:`)[0]);
-			const minutesRecord: number = Number.parseFloat(
+			const mntsRec: number = Number.parseFloat(
 				recordParam?.split(`:`)[1],
 			);
 			const hours: number = Math.abs(hoursGoal - hoursRecord);
-			const minutes: number = Math.abs(minutesGoal - minutesRecord);
+			const minutes: number = Math.abs(minutesGoal - mntsRec);
 			const diffVal: number = hours * 60 + minutes;
-			percentExercise = Number(((diffVal - goal) / goal) * 100);
+			prcnExer = Number(((diffVal - goal) / goal) * 100);
 			// 1. - 10분
 			if (0 <= diffVal && diffVal <= 10) {
-				scoreExercise = 1;
+				scrExer = 1;
 			}
 			// 2. 10분 - 20분
 			else if (10 < diffVal && diffVal <= 20) {
-				scoreExercise = 2;
+				scrExer = 2;
 			}
 			// 3. 20분 - 30분
 			else if (20 < diffVal && diffVal <= 30) {
-				scoreExercise = 3;
+				scrExer = 3;
 			}
 			// 4. 30분 - 50분
 			else if (30 < diffVal && diffVal <= 50) {
-				scoreExercise = 4;
+				scrExer = 4;
 			}
 			// 5. 50분 -
 			else {
-				scoreExercise = 5;
+				scrExer = 5;
 			}
 		}
 		return {
 			score:
-				String(Math.abs(scoreExercise).toFixed(2)) === `NaN`
+				String(Math.abs(scrExer).toFixed(2)) === `NaN`
 					? `0.00`
-					: String(Math.abs(scoreExercise).toFixed(2)),
+					: String(Math.abs(scrExer).toFixed(2)),
 			percent:
-				String(Math.abs(percentExercise).toFixed(2)) === `NaN`
+				String(Math.abs(prcnExer).toFixed(2)) === `NaN`
 					? `0.00`
-					: String(Math.abs(percentExercise).toFixed(2)),
+					: String(Math.abs(prcnExer).toFixed(2)),
 		};
 	};
 
@@ -305,13 +305,13 @@ export const percent = async (object: any) => {
 			const hoursGoal: number = Number.parseFloat(goal?.split(`:`)[0]);
 			const minutesGoal: number = Number.parseFloat(goal?.split(`:`)[1]);
 			const hoursRecord: number = Number.parseFloat(record?.split(`:`)[0]);
-			const minutesRecord: number = Number.parseFloat(record?.split(`:`)[1]);
+			const mntsRec: number = Number.parseFloat(record?.split(`:`)[1]);
 			const hours: number = Math.abs(hoursGoal - hoursRecord);
-			const minutes: number = Math.abs(minutesGoal - minutesRecord);
+			const minutes: number = Math.abs(minutesGoal - mntsRec);
 
 			const diffVal: number = hours * 60 + minutes;
-			const totalGoalMinutes: number = hoursGoal * 60 + minutesGoal;
-			percentSleep = Number((diffVal / totalGoalMinutes) * 100);
+			const ttlGlMnts: number = hoursGoal * 60 + minutesGoal;
+			percentSleep = Number((diffVal / ttlGlMnts) * 100);
 			// 1. - 10분
 			if (0 <= diffVal && diffVal <= 10) {
 				scoreSleep = 5;

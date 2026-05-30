@@ -21,7 +21,7 @@ declare interface ConfirmState {
 }
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const useStoreConfirm = create<ConfirmState>((set) => ({
+export const usStrCnfr = create<ConfirmState>((set) => ({
 	CONFIRM: {
 		open: false,
 		msg: ``,
