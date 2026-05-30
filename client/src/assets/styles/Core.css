@@ -1,0 +1,83 @@
+/**
+ * @file Core.css
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-25
+ */
+ 
+/** root ***********************************************************************************/
+#root {
+	background: #dedede !important;
+}
+.shadow-1 {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .03), 0 4px 8px -2px rgba(0, 0, 0, .06), 0 1px 3px 0 rgba(0, 0, 0, .04) !important;
+}
+.App {
+	width: 100%;
+	height: 100%;
+	margin: 0px 0px 0px 0px;
+	padding: 10px 10px 10px 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.layout-wrapper {
+	width: 100%;
+	height: 100%;
+	margin: 0px 0px 0px 0px;
+	padding: 10px 10px 10px 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	border: none;
+	border-radius: 0px;
+	box-shadow: none;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	z-index: 500;
+}
+
+.content-wrapper {
+	width: 100%;
+	height: 100%;
+	margin: 0px 0px 0px 0px;
+	padding: 20px 20px 20px 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	border: none;
+	border-radius: 0px;
+	box-shadow: none;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	z-index: 100;
+	animation: fadeIn 0.4s ease-in-out;
+}
+
+/** animations **********************************************************************************/
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes shakeKeyframes {
+	0%, 100% {
+		transform: translateX(0);
+	}
+	20%, 60% {
+		transform: translateX(-3px);
+	}
+	40%, 80% {
+		transform: translateX(3px);
+	}
+}
+.shake {
+	animation: shakeKeyframes 0.4s ease-in-out;
+}

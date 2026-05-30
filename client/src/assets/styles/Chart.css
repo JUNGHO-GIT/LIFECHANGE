@@ -1,0 +1,32 @@
+/**
+ * @file Chart.css
+ * @description foo
+ * @author Jungho
+ * @since 2025-12-25
+ */
+
+.recharts-wrapper {
+  margin : 0 auto;
+}
+.recharts-cartesian-axis-tick-value {
+  font-weight: 500 !important;
+  padding: 0px 0px 0px 0px !important;
+  font-size: 0.600rem !important;
+}
+.recharts-tooltip-label {
+  font-weight: 500 !important;
+  padding: 0px 0px 0px 0px !important;
+  font-size: 0.900rem !important;
+}
+.recharts-tooltip-item-list {
+  font-weight: 500 !important;
+  padding: 0px 0px 0px 0px !important;
+  font-size: 0.600rem !important;
+}
+.dash-pie-text {
+  font-size: 0.600rem !important;
+}
+svg.recharts-surface {
+  width: 10px;
+  height: 10px;
+}
