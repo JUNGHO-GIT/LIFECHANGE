@@ -5,33 +5,33 @@
  * @since 2025-12-25
  */
 
-import { Popover as MuiPopover, type PopoverProps } from "@exportMuis";
-import { memo, type React, useEffect, useRef } from "@exportReacts";
+import { React, memo, useEffect, useRef } from "@exportReacts";
+import { Popover as MuiPopover, PopoverProps } from "@exportMuis";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const Popover = memo((props: PopoverProps) => {
-	const paperRef: React.RefObject<HTMLDivElement | null> =
-		useRef<HTMLDivElement | null>(null);
 
-	useEffect(() => {
-		if (paperRef.current) {
-			paperRef.current.removeAttribute(`style`);
-		}
-	}, []);
+  const paperRef: React.RefObject<HTMLDivElement | null> = useRef<HTMLDivElement | null>(null);
 
-	const mrgdSltPrps = {
-		...props.slotProps,
-		paper: {
-			...props.slotProps?.paper,
-			ref: paperRef,
-			component: `div`,
-		},
-	};
+  useEffect(() => {
+    if (paperRef.current) {
+      paperRef.current.removeAttribute(`style`);
+    }
+  }, []);
 
-	return (
-		<MuiPopover
-			{...props}
-			slotProps={mrgdSltPrps as PopoverProps[`slotProps`]}
-		/>
-	);
+  const mergedSlotProps = {
+    ...props.slotProps,
+    paper: {
+      ...props.slotProps?.paper,
+      ref: paperRef,
+      component: `div`,
+    },
+  };
+
+  return (
+    <MuiPopover
+      {...props}
+      slotProps={mergedSlotProps as PopoverProps[`slotProps`]}
+    />
+  );
 });

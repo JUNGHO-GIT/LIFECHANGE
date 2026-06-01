@@ -5,475 +5,474 @@
  * @since 2025-12-26
  */
 
-import { Btn, Div, Grid, Hr, Img, Paper } from "@exportComponents";
-import { Input } from "@exportContainers";
-import { useCommonValue as usCmmnVal, useValidateUser as usValUsr } from "@exportHooks";
+import { React, useState, useEffect, useRef, memo } from "@exportReacts";
+import { useCommonValue, useValidateUser } from "@exportHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { axios } from "@exportLibs";
-import { memo, type React, useEffect, useRef, useState } from "@exportReacts";
-import { User, type UserType } from "@exportSchemas";
-import {
-	useStoreAlert as usStrAlrt,
-	useStoreLanguage as usStrLang,
-	useStoreLoading as usStrLoad,
-} from "@exportStores";
+import { User, UserType } from "@exportSchemas";
+import { Input } from "@exportContainers";
+import { Div, Btn, Img, Hr, Paper, Grid } from "@exportComponents";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const UserResetPw = memo(() => {
-	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, URL_GOOGLE, navigate } = usCmmnVal();
-	const { translate } = usStrLang();
-	const { setALERT } = usStrAlrt();
-	const { setLOADING } = usStrLoad();
-	const { ERRORS, REFS, validate } = usValUsr();
 
-	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [OBJECT, setOBJECT] = useState<UserType>(User);
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  const { URL_OBJECT, URL_GOOGLE, navigate } = useCommonValue();
+  const { translate } = useStoreLanguage();
+  const { setALERT } = useStoreAlert();
+  const { setLOADING } = useStoreLoading();
+  const { ERRORS, REFS, validate } = useValidateUser();
 
-	// 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const objectRef: React.RefObject<UserType> = useRef(OBJECT);
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const [ OBJECT, setOBJECT ] = useState<UserType>(User);
 
-	// 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	useEffect(() => {
-		OBJECT !== objectRef.current && (objectRef.current = OBJECT);
-	}, [OBJECT]);
+  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const objectRef: React.RefObject<UserType> = useRef(OBJECT);
 
-	// 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const flwSndEml = async () => {
-		setLOADING(true);
-		if (!(await validate(objectRef.current, `resetPw`, `send`))) {
-			setLOADING(false);
-			return;
-		}
-		axios
-			.post(`${URL_OBJECT}/email/send`, {
-				user_id: objectRef.current.user_id,
-				type: `resetPw`,
-			})
-			.then((res: any) => {
-				if (res.data.status === `success`) {
-					setLOADING(false);
-					setALERT({
-						open: true,
-						msg: translate(res.data.msg as string),
-						severity: `success`,
-					});
-					setOBJECT((prev) => ({
-						...prev,
-						user_id_sended: true,
-					}));
-				} else if (res.data.status === `notExist`) {
-					setLOADING(false);
-					setALERT({
-						open: true,
-						msg: translate(res.data.msg as string),
-						severity: `error`,
-					});
-					setOBJECT((prev) => ({
-						...prev,
-						user_id_sended: false,
-					}));
-				} else if (res.data.status === `isGoogle`) {
-					setLOADING(false);
-					setALERT({
-						open: true,
-						msg: translate(res.data.msg as string),
-						severity: `error`,
-					});
-					setOBJECT((prev) => ({
-						...prev,
-						user_id_sended: false,
-					}));
-				} else if (res.data.status === `fail`) {
-					setLOADING(false);
-					setALERT({
-						open: true,
-						msg: translate(res.data.msg as string),
-						severity: `error`,
-					});
-					setOBJECT((prev) => ({
-						...prev,
-						user_id_sended: false,
-					}));
-				}
-			})
-			.catch((error: any) => {
-				setLOADING(false);
-				setALERT({
-					open: true,
-					msg: translate(error.response.data.msg as string),
-					severity: `error`,
-				});
-				console.error(error);
-			})
-			.finally(() => {
-				setLOADING(false);
-			});
-	};
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  useEffect(() => {
+    OBJECT !== objectRef.current && (objectRef.current = OBJECT);
+  }, [OBJECT]);
 
-	// 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const flwVrfyEml = async () => {
-		setLOADING(true);
-		if (!(await validate(objectRef.current, `resetPw`, `verify`))) {
-			setLOADING(false);
-			return;
-		}
-		axios
-			.post(`${URL_OBJECT}/email/verify`, {
-				user_id: objectRef.current.user_id,
-				verify_code: objectRef.current.user_verify_code,
-			})
-			.then((res: any) => {
-				if (res.data.status === `success`) {
-					setLOADING(false);
-					setALERT({
-						open: true,
-						msg: translate(res.data.msg as string),
-						severity: `success`,
-					});
-					setOBJECT((prev) => ({
-						...prev,
-						user_id_verified: true,
-					}));
-				} else {
-					setALERT({
-						open: true,
-						msg: translate(res.data.msg as string),
-						severity: `error`,
-					});
-					setOBJECT((prev) => ({
-						...prev,
-						user_id_verified: false,
-					}));
-				}
-			})
-			.catch((error: any) => {
-				setLOADING(false);
-				setALERT({
-					open: true,
-					msg: translate(error.response.data.msg as string),
-					severity: `error`,
-				});
-				console.error(error);
-			})
-			.finally(() => {
-				setLOADING(false);
-			});
-	};
+  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const flowSendEmail = async () => {
+    setLOADING(true);
+    if (!await validate(objectRef.current, `resetPw`, `send`)) {
+      setLOADING(false);
+      return;
+    }
+    axios.post(`${URL_OBJECT}/email/send`, {
+      user_id: objectRef.current.user_id,
+      type: `resetPw`,
+    })
+    .then((res: any) => {
+      if (res.data.status === `success`) {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg as string),
+          severity: `success`,
+        });
+        setOBJECT((prev) => ({
+          ...prev,
+          user_id_sended: true,
+        }));
+      }
+      else if (res.data.status === `notExist`) {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg as string),
+          severity: `error`,
+        });
+        setOBJECT((prev) => ({
+          ...prev,
+          user_id_sended: false,
+        }));
+      }
+      else if (res.data.status === `isGoogle`) {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg as string),
+          severity: `error`,
+        });
+        setOBJECT((prev) => ({
+          ...prev,
+          user_id_sended: false,
+        }));
+      }
+      else if (res.data.status === `fail`) {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg as string),
+          severity: `error`,
+        });
+        setOBJECT((prev) => ({
+          ...prev,
+          user_id_sended: false,
+        }));
+      }
+    })
+    .catch((error: any) => {
+      setLOADING(false);
+      setALERT({
+        open: true,
+        msg: translate(error.response.data.msg as string),
+        severity: `error`,
+      });
+      console.error(error);
+    })
+    .finally(() => {
+      setLOADING(false);
+    });
+  };
 
-	// 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	async function flowSave() {
-		setLOADING(true);
-		if (!(await validate(objectRef.current, `resetPw`, `save`))) {
-			setLOADING(false);
-			return;
-		}
-		axios
-			.post(`${URL_OBJECT}/resetPw`, {
-				user_id: objectRef.current.user_id,
-				OBJECT: objectRef.current,
-			})
-			.then((res: any) => {
-				if (res.data.status === `success`) {
-					setLOADING(false);
-					setALERT({
-						open: true,
-						msg: translate(res.data.msg as string),
-						severity: `success`,
-					});
-					void navigate(`/user/login`);
-				} else {
-					setLOADING(false);
-					setALERT({
-						open: true,
-						msg: translate(res.data.msg as string),
-						severity: `error`,
-					});
-				}
-			})
-			.catch((error: any) => {
-				setLOADING(false);
-				setALERT({
-					open: true,
-					msg: translate(error.response.data.msg as string),
-					severity: `error`,
-				});
-				console.error(error);
-			})
-			.finally(() => {
-				setLOADING(false);
-			});
-	}
+  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const flowVerifyEmail = async () => {
+    setLOADING(true);
+    if (!await validate(objectRef.current, `resetPw`, `verify`)) {
+      setLOADING(false);
+      return;
+    }
+    axios.post(`${URL_OBJECT}/email/verify`, {
+      user_id: objectRef.current.user_id,
+      verify_code: objectRef.current.user_verify_code,
+    })
+    .then((res: any) => {
+      if (res.data.status === `success`) {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg as string),
+          severity: `success`,
+        });
+        setOBJECT((prev) => ({
+          ...prev,
+          user_id_verified: true,
+        }));
+      }
+      else {
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg as string),
+          severity: `error`,
+        });
+        setOBJECT((prev) => ({
+          ...prev,
+          user_id_verified: false,
+        }));
+      }
+    })
+    .catch((error: any) => {
+      setLOADING(false);
+      setALERT({
+        open: true,
+        msg: translate(error.response.data.msg as string),
+        severity: `error`,
+      });
+      console.error(error);
+    })
+    .finally(() => {
+      setLOADING(false);
+    });
+  };
 
-	// 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const flowGoogle = () => {
-		axios
-			.get(`${URL_GOOGLE}/login`)
-			.then((res: any) => {
-				if (res.data.status === `success`) {
-					window.location.href = res.data.url;
-				} else {
-					setLOADING(false);
-					setALERT({
-						open: true,
-						msg: translate(res.data.msg as string),
-						severity: `error`,
-					});
-				}
-			})
-			.catch((error: any) => {
-				setLOADING(false);
-				setALERT({
-					open: true,
-					msg: translate(error.response.data.msg as string),
-					severity: `error`,
-				});
-				console.error(error);
-			})
-			.finally(() => {
-				setLOADING(false);
-			});
-	};
+  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  async function flowSave() {
+    setLOADING(true);
+    if (!await validate(objectRef.current, `resetPw`, `save`)) {
+      setLOADING(false);
+      return;
+    }
+    axios.post(`${URL_OBJECT}/resetPw`, {
+      user_id: objectRef.current.user_id,
+      OBJECT: objectRef.current,
+    })
+    .then((res: any) => {
+      if (res.data.status === `success`) {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg as string),
+          severity: `success`,
+        });
+        void navigate(`/user/login`);
+      }
+      else {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg as string),
+          severity: `error`,
+        });
+      }
+    })
+    .catch((error: any) => {
+      setLOADING(false);
+      setALERT({
+        open: true,
+        msg: translate(error.response.data.msg as string),
+        severity: `error`,
+      });
+      console.error(error);
+    })
+    .finally(() => {
+      setLOADING(false);
+    });
+  }
 
-	// 7. userResetPw ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const usrRstPwNd = () => {
-		// 7-1. title
-		const titleSection = () => (
-			<Grid container={true} spacing={1}>
-				<Grid size={12}>
-					<Div className={`fs-1-8rem fw-500`}>{translate(`resetPw`)}</Div>
-				</Grid>
-			</Grid>
-		);
-		// 7-2. reset
-		const resetSection = () => (
-			<Grid container={true} spacing={0}>
-				{[OBJECT]?.map((item, i) => (
-					<Grid
-						container={true}
-						spacing={2}
-						className={`p-10px`}
-						key={`detail-${i}`}
-					>
-						{/** 이메일 * */}
-						<Grid container={true} spacing={1}>
-							<Grid size={10}>
-								<Input
-									label={translate(`id`)}
-									helperText={`* ${translate(`helperId`)}`}
-									value={item.user_id}
-									inputRef={REFS?.[i]?.user_id}
-									error={ERRORS?.[i]?.user_id}
-									disabled={item.user_id_verified}
-									placeholder={`abcd@naver.com`}
-									onChange={(e: any) => {
-										const value: string = e.target.value;
-										if (value?.length > 30) {
-											setOBJECT((prev) => ({
-												...prev,
-												user_id: prev.user_id,
-											}));
-										} else {
-											setOBJECT((prev) => ({
-												...prev,
-												user_id: value,
-											}));
-										}
-									}}
-								/>
-							</Grid>
-							<Grid size={2}>
-								<Btn
-									color={`primary`}
-									className={`mt-n25px`}
-									disabled={item.user_id_verified}
-									onClick={() => {
-										void flwSndEml();
-									}}
-								>
-									{translate(`send`)}
-								</Btn>
-							</Grid>
-						</Grid>
+  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const flowGoogle = () => {
+    axios.get(`${URL_GOOGLE}/login`)
+    .then((res: any) => {
+      if (res.data.status === `success`) {
+        window.location.href = res.data.url;
+      }
+      else {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg as string),
+          severity: `error`,
+        });
+      }
+    })
+    .catch((error: any) => {
+      setLOADING(false);
+      setALERT({
+        open: true,
+        msg: translate(error.response.data.msg as string),
+        severity: `error`,
+      });
+      console.error(error);
+    })
+    .finally(() => {
+      setLOADING(false);
+    });
+  };
 
-						{/** 이메일 인증 * */}
-						<Grid container={true} spacing={1}>
-							<Grid size={10}>
-								<Input
-									label={translate(`verify`)}
-									helperText={`* ${translate(`helperIdVerified`)}`}
-									value={item.user_verify_code}
-									inputRef={REFS?.[i]?.user_id_verified}
-									error={ERRORS?.[i]?.user_id_verified}
-									disabled={item.user_id_verified}
-									placeholder={`123456`}
-									onChange={(e: any) => {
-										setOBJECT((prev: any) => ({
-											...prev,
-											user_verify_code: e.target.value,
-										}));
-									}}
-								/>
-							</Grid>
-							<Grid size={2}>
-								<Btn
-									color={`primary`}
-									className={`mt-n25px`}
-									disabled={!item.user_id_sended || item.user_id_verified}
-									onClick={() => {
-										void flwVrfyEml();
-									}}
-								>
-									{translate(`verify`)}
-								</Btn>
-							</Grid>
-						</Grid>
+  // 7. userResetPw ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const userResetPwNode = () => {
+    // 7-1. title
+    const titleSection = () => (
+      <Grid container={true} spacing={1}>
+        <Grid size={12}>
+          <Div className={`fs-1-8rem fw-500`}>
+            {translate(`resetPw`)}
+          </Div>
+        </Grid>
+      </Grid>
+    );
+    // 7-2. reset
+    const resetSection = () => (
+      <Grid container={true} spacing={0}>
+        {[OBJECT]?.map((item, i) => (
+          <Grid container={true} spacing={2} className={`p-10px`} key={`detail-${i}`}>
+            {/** 이메일 * */}
+            <Grid container={true} spacing={1}>
+              <Grid size={10}>
+                <Input
+                  label={translate(`id`)}
+                  helperText={`* ${translate(`helperId`)}`}
+                  value={item.user_id}
+                  inputRef={REFS?.[i]?.user_id}
+                  error={ERRORS?.[i]?.user_id}
+                  disabled={item.user_id_verified}
+                  placeholder={`abcd@naver.com`}
+                  onChange={(e: any) => {
+                    const value: string = e.target.value;
+                    if (value?.length > 30) {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        user_id: prev.user_id,
+                      }));
+                    }
+                    else {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        user_id: value,
+                      }));
+                    }
+                  }}
+                />
+              </Grid>
+              <Grid size={2}>
+                <Btn
+                  color={`primary`}
+                  className={`mt-n25px`}
+                  disabled={item.user_id_verified}
+                  onClick={() => {
+                    void flowSendEmail();
+                  }}
+                >
+                  {translate(`send`)}
+                </Btn>
+              </Grid>
+            </Grid>
 
-						<Hr m={1} className={`bg-light`} />
+            {/** 이메일 인증 * */}
+            <Grid container={true} spacing={1}>
+              <Grid size={10}>
+                <Input
+                  label={translate(`verify`)}
+                  helperText={`* ${translate(`helperIdVerified`)}`}
+                  value={item.user_verify_code}
+                  inputRef={REFS?.[i]?.user_id_verified}
+                  error={ERRORS?.[i]?.user_id_verified}
+                  disabled={item.user_id_verified}
+                  placeholder={`123456`}
+                  onChange={(e: any) => {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      user_verify_code: e.target.value,
+                    }));
+                  }}
+                />
+              </Grid>
+              <Grid size={2}>
+                <Btn
+                  color={`primary`}
+                  className={`mt-n25px`}
+                  disabled={!item.user_id_sended || item.user_id_verified}
+                  onClick={() => {
+                    void flowVerifyEmail();
+                  }}
+                >
+                  {translate(`verify`)}
+                </Btn>
+              </Grid>
+            </Grid>
 
-						{/** 비밀번호 * */}
-						<Grid container={true} spacing={1}>
-							<Grid size={12}>
-								<Input
-									type={`password`}
-									label={translate(`pw`)}
-									helperText={`* ${translate(`helperPw`)}`}
-									value={item.user_pw}
-									inputRef={REFS?.[i]?.user_pw}
-									error={ERRORS?.[i]?.user_pw}
-									disabled={!item.user_id_verified}
-									onChange={(e: any) => {
-										setOBJECT((prev: any) => ({
-											...prev,
-											user_pw: e.target.value,
-										}));
-									}}
-								/>
-							</Grid>
-						</Grid>
+            <Hr m={1} className={`bg-light`} />
 
-						{/** 비밀번호 확인 * */}
-						<Grid container={true} spacing={1}>
-							<Grid size={12}>
-								<Input
-									type={`password`}
-									label={translate(`pwVerified`)}
-									helperText={`* ${translate(`helperPwVerified`)}`}
-									value={item.user_pw_verified}
-									inputRef={REFS?.[i]?.user_pw_verified}
-									error={ERRORS?.[i]?.user_pw_verified}
-									disabled={!item.user_id_verified}
-									onChange={(e: any) => {
-										setOBJECT((prev: any) => ({
-											...prev,
-											user_pw_verified: e.target.value,
-										}));
-									}}
-								/>
-							</Grid>
-						</Grid>
-					</Grid>
-				))}
-			</Grid>
-		);
-		// 7-4. button
-		const bttnSec = () => (
-			<Grid container={true} spacing={1}>
-				{/** row 1 * */}
-				<Grid container={true} spacing={1}>
-					<Grid size={12} className={`d-col-center`}>
-						<Btn
-							color={`primary`}
-							className={`w-100p fs-0-8rem`}
-							onClick={() => {
-								void flowSave();
-							}}
-						>
-							{translate(`resetPw`)}
-						</Btn>
-					</Grid>
-				</Grid>
+            {/** 비밀번호 * */}
+            <Grid container={true} spacing={1}>
+              <Grid size={12}>
+                <Input
+                  type={`password`}
+                  label={translate(`pw`)}
+                  helperText={`* ${translate(`helperPw`)}`}
+                  value={item.user_pw}
+                  inputRef={REFS?.[i]?.user_pw}
+                  error={ERRORS?.[i]?.user_pw}
+                  disabled={!item.user_id_verified}
+                  onChange={(e: any) => {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      user_pw: e.target.value,
+                    }));
+                  }}
+                />
+              </Grid>
+            </Grid>
 
-				{/** row 2 * */}
-				<Grid container={true} spacing={1}>
-					<Grid size={12} className={`d-col-center`}>
-						<Btn
-							color={`primary`}
-							className={`w-100p bg-white`}
-							onClick={() => {
-								flowGoogle();
-							}}
-						>
-							<Div className={`d-row-center`}>
-								<Img
-									max={14}
-									hover={true}
-									shadow={false}
-									radius={false}
-									src={`user1.webp`}
-								/>
-								<Div className={`fs-0-8rem black ml-10px`}>
-									{translate(`googleLogin`)}
-								</Div>
-							</Div>
-						</Btn>
-					</Grid>
-				</Grid>
-			</Grid>
-		);
-		// 7-5. link
-		const linkSection = () => (
-			<Grid container={true} spacing={1}>
-				{/** row 1 * */}
-				<Grid container={true} spacing={1}>
-					<Grid size={12} className={`d-row-center`}>
-						<Div className={`fs-0-8rem black mr-10px`}>
-							{translate(`alreadyId`)}
-						</Div>
-						<Div
-							className={`fs-0-8rem blue pointer`}
-							onClick={() => {
-								void navigate(`/user/login`);
-							}}
-						>
-							{translate(`login`)}
-						</Div>
-					</Grid>
-				</Grid>
+            {/** 비밀번호 확인 * */}
+            <Grid container={true} spacing={1}>
+              <Grid size={12}>
+                <Input
+                  type={`password`}
+                  label={translate(`pwVerified`)}
+                  helperText={`* ${translate(`helperPwVerified`)}`}
+                  value={item.user_pw_verified}
+                  inputRef={REFS?.[i]?.user_pw_verified}
+                  error={ERRORS?.[i]?.user_pw_verified}
+                  disabled={!item.user_id_verified}
+                  onChange={(e: any) => {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      user_pw_verified: e.target.value,
+                    }));
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+        ))}
+      </Grid>
+    );
+    // 7-4. button
+    const buttonSection = () => (
+      <Grid container={true} spacing={1}>
+        {/** row 1 * */}
+        <Grid container={true} spacing={1}>
+          <Grid size={12} className={`d-col-center`}>
+            <Btn
+              color={`primary`}
+              className={`w-100p fs-0-8rem`}
+              onClick={() => {
+                void flowSave();
+              }}
+            >
+              {translate(`resetPw`)}
+            </Btn>
+          </Grid>
+        </Grid>
 
-				{/** row 2 * */}
-				<Grid container={true} spacing={1}>
-					<Grid size={12} className={`d-row-center`}>
-						<Div className={`fs-0-8rem black mr-10px`}>
-							{translate(`notId`)}
-						</Div>
-						<Div
-							className={`fs-0-8rem blue pointer`}
-							onClick={() => {
-								void navigate(`/user/signup`);
-							}}
-						>
-							{translate(`signup`)}
-						</Div>
-					</Grid>
-				</Grid>
-			</Grid>
-		);
-		// 7-10. return
-		return (
-			<Paper
-				className={`content-wrapper d-center radius-2 border-1 shadow-1 h-min-100vh`}
-			>
-				{titleSection()}
-				<Hr m={30} className={`bg-light`} />
-				{resetSection()}
-				<Hr m={30} className={`bg-light`} />
-				{bttnSec()}
-				<Hr m={30} className={`bg-light`} />
-				{linkSection()}
-			</Paper>
-		);
-	};
+        {/** row 2 * */}
+        <Grid container={true} spacing={1}>
+          <Grid size={12} className={`d-col-center`}>
+            <Btn
+              color={`primary`}
+              className={`w-100p bg-white`}
+              onClick={() => {
+                flowGoogle();
+              }}
+            >
+              <Div className={`d-row-center`}>
+                <Img
+                  max={14}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
+                  src={`user1.webp`}
+                />
+                <Div className={`fs-0-8rem black ml-10px`}>
+                  {translate(`googleLogin`)}
+                </Div>
+              </Div>
+            </Btn>
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+    // 7-5. link
+    const linkSection = () => (
+      <Grid container={true} spacing={1}>
+        {/** row 1 * */}
+        <Grid container={true} spacing={1}>
+          <Grid size={12} className={`d-row-center`}>
+            <Div className={`fs-0-8rem black mr-10px`}>
+              {translate(`alreadyId`)}
+            </Div>
+            <Div
+              className={`fs-0-8rem blue pointer`}
+              onClick={() => {
+                void navigate(`/user/login`);
+              }}
+            >
+              {translate(`login`)}
+            </Div>
+          </Grid>
+        </Grid>
 
-	// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	return <>{usrRstPwNd()}</>;
+        {/** row 2 * */}
+        <Grid container={true} spacing={1}>
+          <Grid size={12} className={`d-row-center`}>
+            <Div className={`fs-0-8rem black mr-10px`}>
+              {translate(`notId`)}
+            </Div>
+            <Div
+              className={`fs-0-8rem blue pointer`}
+              onClick={() => {
+                void navigate(`/user/signup`);
+              }}
+            >
+              {translate(`signup`)}
+            </Div>
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+    // 7-10. return
+    return (
+      <Paper className={`content-wrapper d-center radius-2 border-1 shadow-1 h-min-100vh`}>
+        {titleSection()}
+        <Hr m={30} className={`bg-light`} />
+        {resetSection()}
+        <Hr m={30} className={`bg-light`} />
+        {buttonSection()}
+        <Hr m={30} className={`bg-light`} />
+        {linkSection()}
+      </Paper>
+    );
+  };
+
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  return (
+    <>
+      {userResetPwNode()}
+    </>
+  );
 });

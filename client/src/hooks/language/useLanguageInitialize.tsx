@@ -5,18 +5,19 @@
  * @since 2025-12-25
  */
 
-import { useCommonValue as usCmmnVal } from "@exportHooks";
+import { useCommonValue } from "@exportHooks";
 import { useEffect } from "@exportReacts";
-import { useStoreLanguage as usStrLang } from "@exportStores";
+import { useStoreLanguage } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const usLangIntl = () => {
-	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { localLang } = usCmmnVal();
-	const { setLang } = usStrLang();
+export const useLanguageInitialize = () => {
 
-	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	useEffect(() => {
-		localLang === `ko` ? setLang(`ko`) : setLang(`en`);
-	}, [localLang]);
+  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  const { localLang } = useCommonValue();
+  const { setLang } = useStoreLanguage();
+
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  useEffect(() => {
+    localLang === `ko` ? setLang(`ko`) : setLang(`en`);
+  }, [localLang]);
 };

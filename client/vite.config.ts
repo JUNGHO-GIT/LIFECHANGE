@@ -171,7 +171,7 @@ export default defineConfig(({
               return `vendor`;
             }
 
-            return undefined;
+            return;
           },
           assetFileNames: (assetInfo) => {
             const info: string[] = assetInfo.name ? assetInfo.name.split(`.`) : [];

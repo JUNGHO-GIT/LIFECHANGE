@@ -8,365 +8,356 @@
 import { Br, Div, Grid, Icons, Img } from "@exportComponents";
 import { MuiFileInput } from "@exportMuis";
 import { memo, useEffect, useRef, useState } from "@exportReacts";
-import { useStoreAlert as usStrAlrt } from "@exportStores";
+import { useStoreAlert } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const InputFile = memo(
-	({ handleExistingFilesChange: hndExFlCh, ...props }: any) => {
-		// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		const { setALERT } = usStrAlrt();
+export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => {
 
-		// 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-		const [fileExisting, stFlExst] = useState<any[]>([]);
-		const [fileList, setFileList] = useState<File[]>([]);
-		const [_fileCount, setFileCount] = useState<number>(0);
-		const [fileHeight, stFlHght] = useState<string>(`100px`);
-		const [fileLimit, setFileLimit] = useState<number>(1);
-		const [previewUrls, stPrvwUrls] = useState<string[]>([]);
+  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  const { setALERT } = useStoreAlert();
 
-		// 2-2. useRef ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		const fileInputRef: React.RefObject<HTMLInputElement | null> =
-			useRef<HTMLInputElement | null>(null);
-		const prvwUrlRf: React.RefObject<string[]> = useRef<string[]>([]);
-		const isPickingRef: React.RefObject<boolean> = useRef<boolean>(false);
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const [ fileExisting, setFileExisting ] = useState<any[]>([]);
+  const [ fileList, setFileList ] = useState<File[]>([]);
+  const [ _fileCount, setFileCount ] = useState<number>(0);
+  const [ fileHeight, setFileHeight ] = useState<string>(`100px`);
+  const [ fileLimit, setFileLimit ] = useState<number>(1);
+  const [ previewUrls, setPreviewUrls ] = useState<string[]>([]);
 
-		// 3. util ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-		const isSameFile = (a: File, b: File) =>
-			a.name === b.name &&
-			a.size === b.size &&
-			a.lastModified === b.lastModified;
+  // 2-2. useRef ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  const fileInputRef: React.RefObject<HTMLInputElement | null> = useRef<HTMLInputElement | null>(null);
+  const previewUrlRef: React.RefObject<string[]> = useRef<string[]>([]);
+  const isPickingRef: React.RefObject<boolean> = useRef<boolean>(false);
 
-		const arSmFlLst = (a: File[], b: File[]) => {
-			if ((a?.length ?? 0) !== (b?.length ?? 0)) {
-				return false;
-			}
-			for (const [i] of (a ?? []).entries()) {
-				if (!isSameFile(a[i], b[i])) {
-					return false;
-				}
-			}
-			return true;
-		};
+  // 3. util ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  const isSameFile = (a: File, b: File) => (
+    a.name === b.name &&
+		a.size === b.size &&
+		a.lastModified === b.lastModified
+  );
 
-		// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-		useEffect(() => {
-			stFlExst(props?.existing ?? []);
-		}, [props?.existing]);
+  const areSameFileList = (a: File[], b: File[]) => {
+    if ((a?.length ?? 0) !== (b?.length ?? 0)) {
+      return false;
+    }
+    for (const [i] of (a ?? []).entries()) {
+      if (!isSameFile(a[i], b[i])) {
+        return false;
+      }
+    }
+    return true;
+  };
 
-		// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-		useEffect(() => {
-			setFileLimit(props?.limit ?? 1);
-		}, [props?.limit]);
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  useEffect(() => {
+    setFileExisting(props?.existing ?? []);
+  }, [props?.existing]);
 
-		// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-		useEffect(() => {
-			const nextFiles: File[] = props?.value ?? [];
-			setFileList((prev: File[]) =>
-				arSmFlLst(prev ?? [], nextFiles ?? []) ? prev : nextFiles,
-			);
-		}, [props?.value]);
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  useEffect(() => {
+    setFileLimit(props?.limit ?? 1);
+  }, [props?.limit]);
 
-		// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-		useEffect(() => {
-			const newCount: number = fileList?.length ?? 0;
-			const exstCnt: number = fileExisting?.length ?? 0;
-			setFileCount(newCount + exstCnt);
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  useEffect(() => {
+    const nextFiles: File[] = props?.value ?? [];
+    setFileList((prev: File[]) => (
+			areSameFileList(prev ?? [], nextFiles ?? []) ? prev : nextFiles
+    ));
+  }, [props?.value]);
 
-			const hghtPrFl: number = 30;
-			const minHeight: number = 100;
-			stFlHght(`${Math.max(minHeight, newCount * hghtPrFl)}px`);
-		}, [fileList, fileExisting]);
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  useEffect(() => {
+    const newCount: number = fileList?.length ?? 0;
+    const existingCount: number = fileExisting?.length ?? 0;
+    setFileCount(newCount + existingCount);
 
-		// 2-3. useEffect (preview url 관리) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-		useEffect(() => {
-			// 기존 URL revoke
-			if (prvwUrlRf.current?.length > 0) {
-				prvwUrlRf.current.forEach((u: string) => {
-					URL.revokeObjectURL(u);
-				});
-				prvwUrlRf.current = [];
-			}
+    const heightPerFile: number = 30;
+    const minHeight: number = 100;
+    setFileHeight(`${Math.max(minHeight, newCount * heightPerFile)}px`);
+  }, [ fileList, fileExisting ]);
 
-			const urls: string[] = (fileList ?? []).map((file: File) =>
-				URL.createObjectURL(file as Blob),
-			);
+  // 2-3. useEffect (preview url 관리) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  useEffect(() => {
 
-			prvwUrlRf.current = urls;
-			stPrvwUrls(urls);
+    // 기존 URL revoke
+    if (previewUrlRef.current?.length > 0) {
+      previewUrlRef.current.forEach((u: string) => {
+        URL.revokeObjectURL(u);
+      });
+      previewUrlRef.current = [];
+    }
 
-			return () => {
-				if (prvwUrlRf.current?.length > 0) {
-					prvwUrlRf.current.forEach((u: string) => {
-						URL.revokeObjectURL(u);
-					});
-					prvwUrlRf.current = [];
-				}
-			};
-		}, [fileList]);
+    const urls: string[] = (fileList ?? []).map((file: File) => (
+      URL.createObjectURL(file as Blob)
+    ));
 
-		// 6. handle (파일 추가) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		const flwFlChg = (newFiles: File[] | null) => {
-			let hasError: boolean = false;
-			let errorMsg: string = ``;
+    previewUrlRef.current = urls;
+    setPreviewUrls(urls);
 
-			const incoming: File[] = newFiles ?? [];
-			const currentFiles: File[] = fileList ?? [];
-			const exstCnt: number = fileExisting?.length ?? 0;
-			const currentCount: number = currentFiles?.length ?? 0;
+    return () => {
+      if (previewUrlRef.current?.length > 0) {
+        previewUrlRef.current.forEach((u: string) => {
+          URL.revokeObjectURL(u);
+        });
+        previewUrlRef.current = [];
+      }
+    };
+  }, [fileList]);
 
-			// 파일이 이미지가 아닌 경우
-			!hasError &&
-			incoming.some((file: File) => !file.type.startsWith(`image/`))
-				? ((hasError = true), (errorMsg = `이미지 파일만 업로드 가능합니다.`))
-				: null;
+  // 6. handle (파일 추가) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  const flowFileChange = (newFiles: File[] | null) => {
 
-			// 파일이 3mb 이상인 경우
-			!hasError && incoming.some((file: File) => file.size > 3 * 1024 * 1024)
-				? ((hasError = true),
-					(errorMsg = `파일은 최대 3MB까지 업로드 가능합니다.`))
-				: null;
+    let hasError: boolean = false;
+    let errorMsg: string = ``;
 
-			// 중복 제거 (name/size/lastModified)
-			const nnDplcFls: File[] = !hasError
-				? incoming.filter(
-						(newFile: File) =>
-							!currentFiles.some((existingFile: File) =>
-								isSameFile(existingFile, newFile),
-							),
-					)
-				: [];
+    const incoming: File[] = newFiles ?? [];
+    const currentFiles: File[] = fileList ?? [];
+    const existingCount: number = fileExisting?.length ?? 0;
+    const currentCount: number = currentFiles?.length ?? 0;
 
-			// 파일 제한 체크 (현재 기준)
-			!hasError &&
-			exstCnt + currentCount + nnDplcFls.length > fileLimit
-				? ((hasError = true),
-					(errorMsg = `파일은 최대 ${fileLimit}개까지 업로드 가능합니다.`))
-				: null;
+		// 파일이 이미지가 아닌 경우
+		!hasError && incoming.some((file: File) => !file.type.startsWith(`image/`)) ? (
+			hasError = true,
+			errorMsg = `이미지 파일만 업로드 가능합니다.`
+		) : null;
 
-			hasError
-				? setALERT({
-						open: true,
-						severity: `error`,
-						msg: errorMsg,
-					})
-				: (() => {
-						const updatedFiles: File[] = [
-							...currentFiles,
-							...nnDplcFls,
-						];
-						setFileList(updatedFiles);
-						props.onChange(updatedFiles);
-					})();
-		};
+		// 파일이 3mb 이상인 경우
+		!hasError && incoming.some((file: File) => (file.size > 3 * 1024 * 1024)) ? (
+			hasError = true,
+			errorMsg = `파일은 최대 3MB까지 업로드 가능합니다.`
+		) : null;
 
-		// 5. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		// 파일 선택창 오픈은 CirclePlus 아이콘에서만 호출되도록 제한
-		const hndlFlAdd = (e: any) => {
-			e.preventDefault();
-			e.stopPropagation();
+		// 중복 제거 (name/size/lastModified)
+		const nonDuplicateFiles: File[] = !hasError ? incoming.filter((newFile: File) => (
+		  !currentFiles.some((existingFile: File) => isSameFile(existingFile, newFile))
+		)) : [];
 
-			!fileInputRef.current || isPickingRef.current
-				? null
-				: (() => {
-						isPickingRef.current = true;
+		// 파일 제한 체크 (현재 기준)
+		!hasError && (existingCount + currentCount + nonDuplicateFiles.length > fileLimit) ? (
+			hasError = true,
+			errorMsg = `파일은 최대 ${fileLimit}개까지 업로드 가능합니다.`
+		) : null;
 
-						const onFocus = () => {
-							isPickingRef.current = false;
-							window.removeEventListener(`focus`, onFocus);
-						};
-
-						window.addEventListener(`focus`, onFocus, { once: true });
-
-						fileInputRef.current.value = ``;
-						fileInputRef.current.click();
-					})();
-		};
-
-		// 6. handle (파일 삭제) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		const hndlFlDlt = (index: number, extra?: string) => {
-			if (extra === `single`) {
-				const updatedFiles: File[] = (fileList ?? []).filter(
-					(_file: File, i: number) => i !== index,
-				);
-				setFileList(updatedFiles);
-				props.onChange(updatedFiles);
-			} else if (extra === `all`) {
-				setFileList([]);
-				props.onChange([]);
-			}
-		};
-
-		// 6. handle (기존 파일 삭제) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		const hndExFlDl = (index: number) => {
-			const updtExstFl: any[] = fileExisting?.filter(
-				(_file: any, i: number) => i !== index,
-			);
-			stFlExst(updtExstFl);
-
-			if (hndExFlCh) {
-				hndExFlCh(updtExstFl);
-			}
-		};
-
-		// 7. node ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-		const endAdrnNd = (
-			<Grid container={true} spacing={0} className={`w-100p`}>
-				<Grid size={12} className={`d-row-right mr-n20px`}>
-					<Icons
-						key={`CirclePlus`}
-						name={`CirclePlus`}
-						className={`w-22px h-22px pointer-burgundy`}
-						onClick={(e: any) => {
-							hndlFlAdd(e);
-						}}
-					/>
-					<Icons
-						key={`Trash`}
-						name={`Trash`}
-						className={`w-22px h-22px pointer-burgundy`}
-						onClick={(e: any) => {
-							e.preventDefault();
-							e.stopPropagation();
-							hndlFlDlt(0, `all`);
-						}}
-					/>
-				</Grid>
-			</Grid>
+		hasError ? (
+			setALERT({
+			  open: true,
+			  severity: `error`,
+			  msg: errorMsg,
+			})
+		) : (
+			(() => {
+			  const updatedFiles: File[] = [ ...currentFiles, ...nonDuplicateFiles ];
+			  setFileList(updatedFiles);
+			  props.onChange(updatedFiles);
+			})()
 		);
+  };
 
-		// 7. node ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-		const adrnNd = (
-			<Grid container={true} spacing={0}>
-				<Grid size={12} className={`d-col-left`}>
-					{fileList && fileList?.length > 0
-						? fileList.map((file: File, index: number) => {
-								const src: string = previewUrls?.[index] ?? ``;
+  // 5. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 파일 선택창 오픈은 CirclePlus 아이콘에서만 호출되도록 제한
+  const handleFileAdd = (e: any) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-								return (
-									<Div className={`d-row-center`} key={index}>
-										<Img
-											key={src || index}
-											max={25}
-											hover={true}
-											shadow={true}
-											radius={false}
-											group={`new`}
-											src={src}
-											className={`ml-15px mr-10px`}
-										/>
-										<Div max={14} className={`black fs-0-9rem fw-500`}>
-											{file?.name}
-										</Div>
-										<Div
-											className={`black fs-0-9rem fw-500 pointer-burgundy ml-15px`}
-											onClick={(e: any) => {
-												e.preventDefault();
-												e.stopPropagation();
-												hndlFlDlt(index, `single`);
-											}}
-										>
-											{file?.name ? `x` : ``}
-										</Div>
-									</Div>
-								);
-							})
-						: null}
-				</Grid>
-			</Grid>
-		);
+		!fileInputRef.current || isPickingRef.current ? null : (() => {
+		  isPickingRef.current = true;
 
-		// 7. node ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-		const existingNode = () => (
-			<Grid container={true} spacing={0}>
-				<Grid size={12} className={`d-col-left`}>
-					{fileExisting.map((file: any, index: number) => (
-						<Div className={`d-row-center`} key={index}>
-							<Img
-								max={25}
-								hover={true}
-								shadow={true}
-								radius={false}
-								group={props?.group}
-								src={file}
-								className={`ml-15px mr-10px`}
-							/>
-							<Div max={14} className={`black fs-0-9rem fw-500`}>
-								{file}
-							</Div>
-							<Div
-								className={`black fs-0-9rem fw-500 pointer-burgundy ml-5px`}
-								onClick={(e: any) => {
-									e.preventDefault();
-									e.stopPropagation();
-									hndExFlDl(index);
-								}}
-							>
-								{`x`}
-							</Div>
-						</Div>
-					))}
-				</Grid>
-			</Grid>
-		);
+		  const onFocus = () => {
+		    isPickingRef.current = false;
+		    window.removeEventListener(`focus`, onFocus);
+		  };
 
-		// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-		return (
-			<>
-				{/** 실제 파일 선택은 이 hidden input 하나로만 처리 */}
-				<input
-					ref={fileInputRef}
-					type={`file`}
-					multiple={true}
-					accept={`image/*`}
-					style={{ display: `none` }}
-					onClick={(e: any) => {
-						e.stopPropagation();
-					}}
-					onChange={(e: any) => {
-						const files: File[] = e?.target?.files ? [...e.target.files] : [];
-						flwFlChg(files);
-						isPickingRef.current = false;
-						e.target.value = ``;
-					}}
-				/>
-				<MuiFileInput
-					{...props}
-					label={props?.label ?? ``}
-					value={[]}
-					select={false}
-					variant={`outlined`}
-					size={props?.size ?? `small`}
-					className={props?.className ?? ``}
-					inputRef={props?.inputRef ?? null}
-					error={props?.error ?? false}
-					fullWidth={props?.fullWidth ?? true}
-					multiline={props?.multiline ?? true}
-					multiple={props?.multiple ?? true}
-					onClick={(e: any) => {
-						e.preventDefault();
-						e.stopPropagation();
-					}}
-					onMouseDown={(e: any) => {
-						e.preventDefault();
-						e.stopPropagation();
-					}}
-					InputProps={{
-						...props?.InputProps,
-						readOnly: true,
-						style: {
-							height: fileHeight,
-						},
-						className: props?.inputclass?.includes(`fs-`)
-							? `text-left ${props?.inputclass ?? ``}`
-							: `fs-0-9rem text-left ${props?.inputclass ?? ``}`,
-						startAdornment: adrnNd,
-						endAdornment: endAdrnNd,
-					}}
-				/>
-				<Br m={20} />
-				{/** 기존 이미지 표시하기 * */}
-				{fileExisting?.length > 0 && existingNode()}
-			</>
-		);
-	},
-);
+		  window.addEventListener(`focus`, onFocus, { once: true });
+
+		  fileInputRef.current.value = ``;
+		  fileInputRef.current.click();
+		})();
+  };
+
+  // 6. handle (파일 삭제) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  const handleFileDelete = (index: number, extra?: string) => {
+    if (extra === `single`) {
+      const updatedFiles: File[] = (fileList ?? []).filter((_file: File, i: number) => i !== index);
+      setFileList(updatedFiles);
+      props.onChange(updatedFiles);
+    }
+    else if (extra === `all`) {
+      setFileList([]);
+      props.onChange([]);
+    }
+  };
+
+  // 6. handle (기존 파일 삭제) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  const handleExistingFileDelete = (index: number) => {
+    const updatedExistingFile: any[] = fileExisting?.filter((_file: any, i: number) => i !== index);
+    setFileExisting(updatedExistingFile);
+
+    if (handleExistingFilesChange) {
+      handleExistingFilesChange(updatedExistingFile);
+    }
+  };
+
+  // 7. node ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const endAdornmentNode = (
+    <Grid container={true} spacing={0} className={`w-100p`}>
+      <Grid size={12} className={`d-row-right mr-n20px`}>
+        <Icons
+          key={`CirclePlus`}
+          name={`CirclePlus`}
+          className={`w-22px h-22px pointer-burgundy`}
+          onClick={(e: any) => {
+            handleFileAdd(e);
+          }}
+        />
+        <Icons
+          key={`Trash`}
+          name={`Trash`}
+          className={`w-22px h-22px pointer-burgundy`}
+          onClick={(e: any) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleFileDelete(0, `all`);
+          }}
+        />
+      </Grid>
+    </Grid>
+  );
+
+  // 7. node ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const adornmentNode = (
+    <Grid container={true} spacing={0}>
+      <Grid size={12} className={`d-col-left`}>
+        {fileList && fileList?.length > 0 ? fileList.map((file: File, index: number) => {
+          const src: string = previewUrls?.[index] ?? ``;
+
+          return (
+            <Div className={`d-row-center`} key={index}>
+              <Img
+                key={src || index}
+                max={25}
+                hover={true}
+                shadow={true}
+                radius={false}
+                group={`new`}
+                src={src}
+                className={`ml-15px mr-10px`}
+              />
+              <Div max={14} className={`black fs-0-9rem fw-500`}>
+                {file?.name}
+              </Div>
+              <Div
+                className={`black fs-0-9rem fw-500 pointer-burgundy ml-15px`}
+                onClick={(e: any) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleFileDelete(index, `single`);
+                }}
+              >
+                {file?.name ? `x` : ``}
+              </Div>
+            </Div>
+          );
+        }) : null}
+      </Grid>
+    </Grid>
+  );
+
+  // 7. node ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const existingNode = () => (
+    <Grid container={true} spacing={0}>
+      <Grid size={12} className={`d-col-left`}>
+        {fileExisting.map((file: any, index: number) => (
+          <Div className={`d-row-center`} key={index}>
+            <Img
+              max={25}
+              hover={true}
+              shadow={true}
+              radius={false}
+              group={props?.group}
+              src={file}
+              className={`ml-15px mr-10px`}
+            />
+            <Div max={14} className={`black fs-0-9rem fw-500`}>
+              {file}
+            </Div>
+            <Div
+              className={`black fs-0-9rem fw-500 pointer-burgundy ml-5px`}
+              onClick={(e: any) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleExistingFileDelete(index);
+              }}
+            >
+              {`x`}
+            </Div>
+          </Div>
+        ))}
+      </Grid>
+    </Grid>
+  );
+
+  // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  return (
+    <>
+      {/** 실제 파일 선택은 이 hidden input 하나로만 처리 */}
+      <input
+        ref={fileInputRef}
+        type={`file`}
+        multiple={true}
+        accept={`image/*`}
+        style={{ display: `none` }}
+        onClick={(e: any) => {
+          e.stopPropagation();
+        }}
+        onChange={(e: any) => {
+          const files: File[] = e?.target?.files ? [...e.target.files] : [];
+          flowFileChange(files);
+          isPickingRef.current = false;
+          e.target.value = ``;
+        }}
+      />
+      <MuiFileInput
+        {...props}
+        label={props?.label ?? ``}
+        value={[]}
+        select={false}
+        variant={`outlined`}
+        size={props?.size ?? `small`}
+        className={props?.className ?? ``}
+        inputRef={props?.inputRef ?? null}
+        error={props?.error ?? false}
+        fullWidth={props?.fullWidth ?? true}
+        multiline={props?.multiline ?? true}
+        multiple={props?.multiple ?? true}
+        onClick={(e: any) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+        onMouseDown={(e: any) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+        InputProps={{
+          ...props?.InputProps,
+          readOnly: true,
+          style: {
+            height: fileHeight,
+          },
+          className: (
+						props?.inputclass?.includes(`fs-`) ? (
+							`text-left ${props?.inputclass ?? ``}`
+						) : (
+							`fs-0-9rem text-left ${props?.inputclass ?? ``}`
+						)
+          ),
+          startAdornment: adornmentNode,
+          endAdornment: endAdornmentNode,
+        }}
+      />
+      <Br m={20} />
+      {/** 기존 이미지 표시하기 * */}
+      {fileExisting?.length > 0 && existingNode()}
+    </>
+  );
+});

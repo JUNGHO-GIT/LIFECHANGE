@@ -12,386 +12,445 @@ import * as repository from "@repositories/user/UserRepository";
 import { sendEmail } from "@assets/scripts/email";
 loadEnv();
 
-// 1-1. sendEmailCode ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const sndEmlCd = async (
-	usrIdPrm: string,
-	type_param: string,
+// 1-1. sendEmailCode ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+export const sendEmailCode = async (
+  user_id_param: string,
+  type_param: string,
 ) => {
-	// result 변수 선언
-	let findResult: any = null;
-	let finalResult: any = null;
-	let sendResult: any = null;
-	let statusResult: string = ``;
 
-	// 임의의 코드 생성
-	const code: string = Math.floor(100_000 + Math.random() * 900_000).toString();
+  // result 변수 선언
+  let findResult: any = null;
+  let finalResult: any = null;
+  let sendResult: any = null;
+  let statusResult: string = ``;
 
-	// 중복 체크
-	findResult = await repository.emailFindId(usrIdPrm);
+  // 임의의 코드 생성
+  const code: string = Math.floor(100_000 + Math.random() * 900_000).toString();
 
-	if (type_param === `signup` && findResult) {
-		finalResult = null;
-		statusResult = `duplicate`;
-	} else if (
-		(type_param === `resetPw` || type_param === `delete`) &&
-		!findResult
-	) {
-		finalResult = null;
-		statusResult = `notExist`;
-	} else if (
-		(type_param === `resetPw` || type_param === `delete`) &&
-		findResult.user_google === `Y`
-	) {
-		finalResult = null;
-		statusResult = `isGoogle`;
-	} else {
-		sendResult = await sendEmail(usrIdPrm, code);
-		await repository.emailSendEmail(usrIdPrm, code);
+  // 중복 체크
+  findResult = await repository.emailFindId(
+    user_id_param,
+  );
 
-		if (!sendResult) {
-			finalResult = null;
-			statusResult = `fail`;
-		} else {
-			finalResult = {
-				code: code,
-				result: sendResult,
-			};
-			statusResult = `success`;
-		}
-	}
+  if (type_param === `signup` && findResult) {
+    finalResult = null;
+    statusResult = `duplicate`;
+  }
+  else if ((type_param === `resetPw` || type_param === `delete`) && !findResult) {
+    finalResult = null;
+    statusResult = `notExist`;
+  }
+  else if ((type_param === `resetPw` || type_param === `delete`) && findResult.user_google === `Y`) {
+    finalResult = null;
+    statusResult = `isGoogle`;
+  }
+  else {
+    sendResult = await sendEmail(
+      user_id_param, code,
+    );
+    await repository.emailSendEmail(
+      user_id_param, code,
+    );
 
-	return {
-		status: statusResult,
-		result: finalResult,
-	};
+    if (!sendResult) {
+      finalResult = null;
+      statusResult = `fail`;
+    }
+    else {
+      finalResult = {
+        code: code,
+        result: sendResult,
+      };
+      statusResult = `success`;
+    }
+  }
+
+  return {
+    status: statusResult,
+    result: finalResult,
+  };
 };
 
-// 1-2. verifyEmail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 1-2. verifyEmail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const verifyEmail = async (
-	usrIdPrm: string,
-	code_param: string,
+  user_id_param: string,
+  code_param: string,
 ) => {
-	// result 변수 선언
-	let findResult: any = null;
-	let finalResult: any = null;
-	let statusResult: string = ``;
 
-	findResult = await repository.emailVerifyEmail(usrIdPrm);
+  // result 변수 선언
+  let findResult: any = null;
+  let finalResult: any = null;
+  let statusResult: string = ``;
 
-	if (!findResult) {
-		finalResult = null;
-		statusResult = `fail`;
-	} else {
-		if (findResult.verify_code === code_param) {
-			finalResult = findResult;
-			statusResult = `success`;
-		} else {
-			finalResult = null;
-			statusResult = `fail`;
-		}
-	}
+  findResult = await repository.emailVerifyEmail(
+    user_id_param,
+  );
 
-	return {
-		status: statusResult,
-		result: finalResult,
-	};
+  if (!findResult) {
+    finalResult = null;
+    statusResult = `fail`;
+  }
+  else {
+    if (findResult.verify_code === code_param) {
+      finalResult = findResult;
+      statusResult = `success`;
+    }
+    else {
+      finalResult = null;
+      statusResult = `fail`;
+    }
+  }
+
+  return {
+    status: statusResult,
+    result: finalResult,
+  };
 };
 
-// 2-1. userSignup ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-export const userSignup = async (usrIdPrm: string, OBJECT_param: any) => {
-	// result 변수 선언
-	let findResult: any = null;
-	let signupResult: any = null;
-	let finalResult: any = null;
-	let statusResult: string = ``;
+// 2-1. userSignup ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+export const userSignup = async (
+  user_id_param: string,
+  OBJECT_param: any,
+) => {
 
-	findResult = await repository.userCheckId(usrIdPrm);
+  // result 변수 선언
+  let findResult: any = null;
+  let signupResult: any = null;
+  let finalResult: any = null;
+  let statusResult: string = ``;
 
-	if (findResult) {
-		finalResult = null;
-		statusResult = `alreadyExist`;
-	} else {
-		const saltRounds: number = 10;
-		const token: string = crypto.randomBytes(20).toString(`hex`);
-		const combinedPw: string = `${OBJECT_param.user_pw}_${token}`;
-		const hshdPssw: string = await bcrypt.hash(combinedPw, saltRounds);
+  findResult = await repository.userCheckId(
+    user_id_param,
+  );
 
-		OBJECT_param.user_token = token;
-		OBJECT_param.user_pw = hshdPssw;
+  if (findResult) {
+    finalResult = null;
+    statusResult = `alreadyExist`;
+  }
+  else {
+    const saltRounds: number = 10;
+    const token: string = crypto.randomBytes(20).toString(`hex`);
+    const combinedPw: string = `${OBJECT_param.user_pw}_${token}`;
+    const hashedPassword: string = await bcrypt.hash(combinedPw, saltRounds);
 
-		signupResult = await repository.userSignup(usrIdPrm, OBJECT_param);
-	}
+    OBJECT_param.user_token = token;
+    OBJECT_param.user_pw = hashedPassword;
 
-	if (!signupResult) {
-		finalResult = null;
-		statusResult = `fail`;
-	} else {
-		finalResult = signupResult;
-		statusResult = `success`;
-	}
+    signupResult = await repository.userSignup(
+      user_id_param, OBJECT_param,
+    );
+  }
 
-	return {
-		status: statusResult,
-		result: finalResult,
-	};
+  if (!signupResult) {
+    finalResult = null;
+    statusResult = `fail`;
+  }
+  else {
+    finalResult = signupResult;
+    statusResult = `success`;
+  }
+
+  return {
+    status: statusResult,
+    result: finalResult,
+  };
 };
 
-// 2-2. userResetPw ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-export const userResetPw = async (usrIdPrm: string, OBJECT_param: any) => {
-	// result 변수 선언
-	let findResult: any = null;
-	let resetResult: any = null;
-	let finalResult: any = null;
-	let statusResult: string = ``;
-	const saltRounds: number = 10;
-	let token: string = crypto.randomBytes(20).toString(`hex`);
-	let combinedPw: string = ``;
+// 2-2. userResetPw ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+export const userResetPw = async (
+  user_id_param: string,
+  OBJECT_param: any,
+) => {
 
-	findResult = await repository.userCheckId(usrIdPrm);
+  // result 변수 선언
+  let findResult: any = null;
+  let resetResult: any = null;
+  let finalResult: any = null;
+  let statusResult: string = ``;
+  const saltRounds: number = 10;
+  let token: string = crypto.randomBytes(20).toString(`hex`);
+  let combinedPw: string = ``;
 
-	// ID가 존재하지 않으면 바로 종료
-	if (!findResult) {
-		finalResult = null;
-		statusResult = `notExist`;
-	} else {
-		// google 사용자인 경우
-		if (findResult.user_google === `Y`) {
-			finalResult = null;
-			statusResult = `isGoogle`;
-		} else {
-			combinedPw = `${OBJECT_param.user_pw}_${token}`;
+  findResult = await repository.userCheckId(
+    user_id_param,
+  );
 
-			// 해쉬 비밀번호
-			const hshdPssw: string = await bcrypt.hash(combinedPw, saltRounds);
-			OBJECT_param.user_token = token;
-			OBJECT_param.user_pw = hshdPssw;
+  // ID가 존재하지 않으면 바로 종료
+  if (!findResult) {
+    finalResult = null;
+    statusResult = `notExist`;
+  }
+  else {
+    // google 사용자인 경우
+    if (findResult.user_google === `Y`) {
+      finalResult = null;
+      statusResult = `isGoogle`;
+    }
+    else {
+      combinedPw = `${OBJECT_param.user_pw}_${token}`;
 
-			resetResult = await repository.userResetPw(usrIdPrm, OBJECT_param);
-		}
-	}
+      // 해쉬 비밀번호
+      const hashedPassword: string = await bcrypt.hash(combinedPw, saltRounds);
+      OBJECT_param.user_token = token;
+      OBJECT_param.user_pw = hashedPassword;
 
-	if (!resetResult) {
-		finalResult = null;
-		statusResult = `fail`;
-	} else {
-		finalResult = resetResult;
-		statusResult = `success`;
-	}
+      resetResult = await repository.userResetPw(
+        user_id_param, OBJECT_param,
+      );
+    }
+  }
 
-	return {
-		status: statusResult,
-		result: finalResult,
-	};
+  if (!resetResult) {
+    finalResult = null;
+    statusResult = `fail`;
+  }
+  else {
+    finalResult = resetResult;
+    statusResult = `success`;
+  }
+
+  return {
+    status: statusResult,
+    result: finalResult,
+  };
 };
 
-// 2-3. userLogin ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 2-3. userLogin ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const userLogin = async (
-	usrIdPrm: string,
-	usrPwPrm: string,
-	isAtLgnPrm: boolean,
+  user_id_param: string,
+  user_pw_param: string,
+  isAutoLogin_param: boolean,
 ) => {
-	// result 변수 선언
-	let findResult: any = null;
-	let finalResult: any = `fail`;
-	let adminResult: any = `user`;
-	let combinedPw: string = ``;
-	let statusResult: string = ``;
 
-	// ID 체크
-	findResult = await repository.userCheckId(usrIdPrm);
+  // result 변수 선언
+  let findResult: any = null;
+  let finalResult: any = `fail`;
+  let adminResult: any = `user`;
+  let combinedPw: string = ``;
+  let statusResult: string = ``;
 
-	// 1. id가 존재하지 않는 경우
-	if (!findResult) {
-		finalResult = null;
-		statusResult = `fail`;
-	}
-	// 2. id가 존재하는 경우
-	else {
-		// google 사용자인 경우
-		if (findResult.user_google === `Y`) {
-			// auto login이 아닌 경우
-			if (!isAtLgnPrm) {
-				finalResult = null;
-				statusResult = `isGoogle`;
-			}
-			combinedPw = `${usrIdPrm}_${findResult.user_token}`;
-		}
-		// 일반 사용자인 경우
-		else {
-			combinedPw = `${usrPwPrm}_${findResult.user_token}`;
-		}
+  // ID 체크
+  findResult = await repository.userCheckId(
+    user_id_param,
+  );
 
-		// 비밀번호 비교
-		const isPsswMtch: boolean = await bcrypt.compare(
-			combinedPw,
-			findResult.user_pw,
-		);
-		if (!isPsswMtch) {
-			finalResult = null;
-			statusResult = `pwDoesNotMatch`;
-		} else {
-			finalResult = findResult;
-			statusResult = `success`;
-		}
+  // 1. id가 존재하지 않는 경우
+  if (!findResult) {
+    finalResult = null;
+    statusResult = `fail`;
+  }
+  // 2. id가 존재하는 경우
+  else {
+    // google 사용자인 경우
+    if (findResult.user_google === `Y`) {
+      // auto login이 아닌 경우
+      if (!isAutoLogin_param) {
+        finalResult = null;
+        statusResult = `isGoogle`;
+      }
+      combinedPw = `${user_id_param}_${findResult.user_token}`;
+    }
+    // 일반 사용자인 경우
+    else {
+      combinedPw = `${user_pw_param}_${findResult.user_token}`;
+    }
 
-		// 관리자 확인
-		adminResult = usrIdPrm === process.env.ADMIN_ID ? `admin` : `user`;
-	}
+    // 비밀번호 비교
+    const isPasswordMatch: boolean = await bcrypt.compare(combinedPw, findResult.user_pw);
+    if (!isPasswordMatch) {
+      finalResult = null;
+      statusResult = `pwDoesNotMatch`;
+    }
+    else {
+      finalResult = findResult;
+      statusResult = `success`;
+    }
 
-	return {
-		status: statusResult,
-		admin: adminResult,
-		result: finalResult,
-	};
+    // 관리자 확인
+    adminResult = user_id_param === process.env.ADMIN_ID ? `admin` : `user`;
+  }
+
+  return {
+    status: statusResult,
+    admin: adminResult,
+    result: finalResult,
+  };
 };
 
-// 2-4. userDetail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-export const userDetail = async (usrIdPrm: string) => {
-	// result 변수 선언
-	let findResult: any = null;
-	let finalResult: any = null;
-	let statusResult: string = ``;
+// 2-4. userDetail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+export const userDetail = async (
+  user_id_param: string,
+) => {
 
-	findResult = await repository.userDetail(usrIdPrm);
+  // result 변수 선언
+  let findResult: any = null;
+  let finalResult: any = null;
+  let statusResult: string = ``;
 
-	if (!findResult) {
-		finalResult = null;
-		statusResult = `fail`;
-	} else {
-		finalResult = findResult;
-		statusResult = `success`;
-	}
+  findResult = await repository.userDetail(
+    user_id_param,
+  );
 
-	return {
-		status: statusResult,
-		result: finalResult,
-	};
+  if (!findResult) {
+    finalResult = null;
+    statusResult = `fail`;
+  }
+  else {
+    finalResult = findResult;
+    statusResult = `success`;
+  }
+
+  return {
+    status: statusResult,
+    result: finalResult,
+  };
 };
 
-// 2-5. userUpdate ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-export const userUpdate = async (usrIdPrm: string, OBJECT_param: any) => {
-	// result 변수 선언
-	let findResult: any = null;
-	let finalResult: any = null;
-	let statusResult: string = ``;
+// 2-5. userUpdate ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+export const userUpdate = async (
+  user_id_param: string,
+  OBJECT_param: any,
+) => {
 
-	findResult = await repository.userUpdate(usrIdPrm, OBJECT_param);
+  // result 변수 선언
+  let findResult: any = null;
+  let finalResult: any = null;
+  let statusResult: string = ``;
 
-	if (!findResult) {
-		finalResult = null;
-		statusResult = `fail`;
-	} else {
-		finalResult = findResult;
-		statusResult = `success`;
-	}
+  findResult = await repository.userUpdate(
+    user_id_param, OBJECT_param,
+  );
 
-	return {
-		status: statusResult,
-		result: finalResult,
-	};
+  if (!findResult) {
+    finalResult = null;
+    statusResult = `fail`;
+  }
+  else {
+    finalResult = findResult;
+    statusResult = `success`;
+  }
+
+  return {
+    status: statusResult,
+    result: finalResult,
+  };
 };
 
-// 2-6. userDelete ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 2-6. userDelete ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const userDelete = async (
-	usrIdPrm: string,
-	usrPwPrm: string,
+  user_id_param: string,
+  user_pw_param: string,
 ) => {
-	// result 변수 선언
-	let findResult: any = null;
-	let deleteResult: any = null;
-	let combinedPw: string = ``;
-	let finalResult: any = null;
-	let statusResult: string = ``;
 
-	findResult = await repository.userCheckId(usrIdPrm);
+  // result 변수 선언
+  let findResult: any = null;
+  let deleteResult: any = null;
+  let combinedPw: string = ``;
+  let finalResult: any = null;
+  let statusResult: string = ``;
 
-	// ID가 존재하지 않는 경우
-	if (!findResult) {
-		finalResult = null;
-		statusResult = `fail`;
-	}
-	// ID가 존재하는 경우
-	else {
-		// google 사용자인 경우
-		if (findResult.user_google === `Y`) {
-			combinedPw = `${usrIdPrm}_${findResult.user_token}`;
-		}
-		// 일반 사용자인 경우
-		else {
-			combinedPw = `${usrPwPrm}_${findResult.user_token}`;
-		}
+  findResult = await repository.userCheckId(
+    user_id_param,
+  );
 
-		// 비밀번호 비교
-		const isPsswMtch: boolean = await bcrypt.compare(
-			combinedPw,
-			findResult.user_pw,
-		);
-		if (!isPsswMtch) {
-			finalResult = null;
-			statusResult = `pwDoesNotMatch`;
-		} else {
-			deleteResult = await repository.userDelete(usrIdPrm);
-			if (!deleteResult) {
-				finalResult = null;
-				statusResult = `fail`;
-			} else {
-				finalResult = deleteResult;
-				statusResult = `success`;
-			}
-		}
-	}
+  // ID가 존재하지 않는 경우
+  if (!findResult) {
+    finalResult = null;
+    statusResult = `fail`;
+  }
+  // ID가 존재하는 경우
+  else {
+    // google 사용자인 경우
+    if (findResult.user_google === `Y`) {
+      combinedPw = `${user_id_param}_${findResult.user_token}`;
+    }
+    // 일반 사용자인 경우
+    else {
+      combinedPw = `${user_pw_param}_${findResult.user_token}`;
+    }
 
-	return {
-		status: statusResult,
-		result: finalResult,
-	};
+    // 비밀번호 비교
+    const isPasswordMatch: boolean = await bcrypt.compare(combinedPw, findResult.user_pw);
+    if (!isPasswordMatch) {
+      finalResult = null;
+      statusResult = `pwDoesNotMatch`;
+    }
+    else {
+      deleteResult = await repository.userDelete(
+        user_id_param,
+      );
+      if (!deleteResult) {
+        finalResult = null;
+        statusResult = `fail`;
+      }
+      else {
+        finalResult = deleteResult;
+        statusResult = `success`;
+      }
+    }
+  }
+
+  return {
+    status: statusResult,
+    result: finalResult,
+  };
 };
 
-// 3-2. categoryDetail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-export const catDtl = async (usrIdPrm: string) => {
-	// result 변수 선언
-	let findResult: any = null;
-	let finalResult: any = null;
-	let statusResult: string = ``;
+// 3-2. categoryDetail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+export const categoryDetail = async (
+  user_id_param: string,
+) => {
 
-	findResult = await repository.categoryDetail(usrIdPrm);
+  // result 변수 선언
+  let findResult: any = null;
+  let finalResult: any = null;
+  let statusResult: string = ``;
 
-	if (!findResult) {
-		finalResult = null;
-		statusResult = `fail`;
-	} else {
-		finalResult = findResult;
-		statusResult = `success`;
-	}
+  findResult = await repository.categoryDetail(
+    user_id_param,
+  );
 
-	return {
-		status: statusResult,
-		result: finalResult,
-	};
+  if (!findResult) {
+    finalResult = null;
+    statusResult = `fail`;
+  }
+  else {
+    finalResult = findResult;
+    statusResult = `success`;
+  }
+
+  return {
+    status: statusResult,
+    result: finalResult,
+  };
 };
 
-// 3-2. categoryUpdate ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-export const catUpdt = async (
-	usrIdPrm: string,
-	OBJECT_param: any,
+// 3-2. categoryUpdate ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+export const categoryUpdate = async (
+  user_id_param: string,
+  OBJECT_param: any,
 ) => {
-	// result 변수 선언
-	let findResult: any = null;
-	let finalResult: any = null;
-	let statusResult: string = ``;
 
-	findResult = await repository.categoryUpdate(usrIdPrm, OBJECT_param);
+  // result 변수 선언
+  let findResult: any = null;
+  let finalResult: any = null;
+  let statusResult: string = ``;
 
-	if (!findResult) {
-		finalResult = null;
-		statusResult = `fail`;
-	} else {
-		finalResult = findResult;
-		statusResult = `success`;
-	}
+  findResult = await repository.categoryUpdate(
+    user_id_param, OBJECT_param,
+  );
 
-	return {
-		status: statusResult,
-		result: finalResult,
-	};
+  if (!findResult) {
+    finalResult = null;
+    statusResult = `fail`;
+  }
+  else {
+    finalResult = findResult;
+    statusResult = `success`;
+  }
+
+  return {
+    status: statusResult,
+    result: finalResult,
+  };
 };

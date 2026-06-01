@@ -5,505 +5,467 @@
  * @since 2025-12-26
  */
 
-import { Div, Grid, Hr, Icons, Img, Paper } from "@exportComponents";
-import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal, useStorageLocal as usStrgLcl } from "@exportHooks";
-import { Dialog, Empty, Footer } from "@exportLayouts";
+import { useState, useEffect, memo } from "@exportReacts";
+import { useCommonValue, useCommonDate } from "@exportHooks";
+import { useStorageLocal } from "@exportHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
+import { FoodFind, FoodFindType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import {
-	Accordion,
-	AccordionDetails as AccrDtls,
-	AccordionSummary as AccrSmmr,
-	Checkbox,
-} from "@exportMuis";
-import { memo, useEffect, useState } from "@exportReacts";
-import { FoodFind, type FoodFindType } from "@exportSchemas";
-import { getSession, insertComma, setSession, sync } from "@exportScripts";
-import {
-	useStoreAlert as usStrAlrt,
-	useStoreLanguage as usStrLang,
-	useStoreLoading as usStrLoad,
-} from "@exportStores";
+import { sync, insertComma, setSession, getSession } from "@exportScripts";
+import { Footer, Empty, Dialog } from "@exportLayouts";
+import { Div, Hr, Img, Icons, Paper, Grid } from "@exportComponents";
+import { Checkbox, Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const FdFavLst = memo(() => {
-	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, PATH, sessionId } = usCmmnVal();
-	const { location_dateType: locDtTyp, location_dateStart: locDtStrt, location_dateEnd: locDtEnd } =
-		usCmmnVal();
-	const { sessionFoodSection: sessFdSec } = usCmmnVal();
-	const { getDayFmt } = usCmmnDt();
-	const { translate } = usStrLang();
-	const { setALERT } = usStrAlrt();
-	const { setLOADING } = usStrLoad();
+export const FoodFavoriteList = memo(() => {
 
-	// 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const [PAGING, setPAGING] = usStrgLcl(`paging`, PATH, ``, {
-		sort: `asc`,
-		query: `favorite`,
-		page: 0,
-	});
-	const [isExpanded, stIsExpn] = usStrgLcl(`isExpanded`, PATH, ``, [
-		{
-			expanded: true,
-		},
-	]);
+  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  const { URL_OBJECT, PATH, sessionId } = useCommonValue();
+  const { location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
+  const { sessionFoodSection } = useCommonValue();
+  const { getDayFmt } = useCommonDate();
+  const { translate } = useStoreLanguage();
+  const { setALERT } = useStoreAlert();
+  const { setLOADING } = useStoreLoading();
 
-	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [OBJECT, setOBJECT] = useState<[FoodFindType]>([FoodFind]);
-	const [chckQrs, stChckQrs] = useState<
-		Record<string, boolean[]>
-	>({});
-	const [SEND, setSEND] = useState({
-		id: ``,
-		dateType: `day`,
-		dateStart: `0000-00-00`,
-		dateEnd: `0000-00-00`,
-	});
-	const [COUNT, setCOUNT] = useState({
-		totalCnt: 0,
-		sectionCnt: 0,
-		newSectionCnt: 0,
-	});
-	const [DATE, setDATE] = useState({
-		dateType: locDtTyp ?? `day`,
-		dateStart: locDtStrt ?? getDayFmt(),
-		dateEnd: locDtEnd ?? getDayFmt(),
-	});
+  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  const [ PAGING, setPAGING ] = useStorageLocal(
+    `paging`, PATH, ``, {
+      sort: `asc`,
+      query: `favorite`,
+      page: 0,
+    }
+  );
+  const [ isExpanded, setIsExpanded ] = useStorageLocal(
+    `isExpanded`, PATH, ``, [
+      {
+        expanded: true,
+      },
+    ]
+  );
 
-	// 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	// - 페이지 번호 변경 시 flowFind 호출
-	useEffect(() => {
-		if (PAGING?.query === ``) {
-			return;
-		}
-		void flowFind();
-	}, [PAGING.page]);
+  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  const [ OBJECT, setOBJECT ] = useState<[FoodFindType]>([FoodFind]);
+  const [ checkedQueries, setCheckedQueries ] = useState<Record<string, boolean[]>>({});
+  const [ SEND, setSEND ] = useState({
+    id: ``,
+    dateType: `day`,
+    dateStart: `0000-00-00`,
+    dateEnd: `0000-00-00`,
+  });
+  const [ COUNT, setCOUNT ] = useState({
+    totalCnt: 0,
+    sectionCnt: 0,
+    newSectionCnt: 0,
+  });
+  const [ DATE, setDATE ] = useState({
+    dateType: location_dateType ?? `day`,
+    dateStart: location_dateStart ?? getDayFmt(),
+    dateEnd: location_dateEnd ?? getDayFmt(),
+  });
 
-	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	// - 페이지 로드시 체크박스 상태 초기화
-	useEffect(() => {
-		let sectionArray: typeof sessFdSec = [];
-		const section: typeof sessFdSec = sessFdSec;
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // - 페이지 번호 변경 시 flowFind 호출
+  useEffect(() => {
+    if (PAGING?.query === ``) {
+      return;
+    }
+    void flowFind();
+  }, [PAGING.page]);
 
-		// sectionArray 초기화
-		if (section) {
-			sectionArray = section;
-		}
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // - 페이지 로드시 체크박스 상태 초기화
+  useEffect(() => {
+    let sectionArray: typeof sessionFoodSection = [];
+    let section: typeof sessionFoodSection = sessionFoodSection;
 
-		const queryKey: string = `${PAGING.query}_${PAGING.page}`;
-		const newChecked: boolean[] = OBJECT.map((item: any) =>
-			sectionArray.some(
-				(sectionItem: any) =>
-					sectionItem.food_record_key === item.food_record_key,
-			),
-		);
-		stChckQrs({
-			...chckQrs,
-			[queryKey]: newChecked,
-		});
-	}, [OBJECT]);
+    // sectionArray 초기화
+    if (section) {
+      sectionArray = section;
+    }
 
-	// 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	async function flowFind() {
-		setLOADING(true);
-		axios
-			.get(`${URL_OBJECT}/favorite/list`, {
-				params: {
-					user_id: sessionId,
-				},
-			})
-			.then((res: any) => {
-				setLOADING(false);
-				setOBJECT(res.data.result?.length > 0 ? res.data.result : []);
-				setCOUNT((prev) => ({
-					...prev,
-					totalCnt: res.data.totalCnt ?? 0,
-				}));
-				// 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
-				stIsExpn(() => {
-					if (res.data.result?.length !== isExpanded.length) {
-						return new Array(res.data.result?.length).fill({ expanded: true });
-					}
-					return isExpanded;
-				});
-			})
-			.catch((error: any) => {
-				setLOADING(false);
-				setALERT({
-					open: true,
-					msg: translate(error.response.data.msg as string),
-					severity: `error`,
-				});
-				console.error(error);
-			})
-			.finally(() => {
-				setLOADING(false);
-			});
-	}
+    const queryKey: string = `${PAGING.query}_${PAGING.page}`;
+    const newChecked: boolean[] = OBJECT.map((item: any) => (
+      sectionArray.some((sectionItem: any) => (
+        sectionItem.food_record_key === item.food_record_key
+      ))
+    ));
+    setCheckedQueries({
+      ...checkedQueries,
+      [queryKey]: newChecked,
+    });
+  }, [OBJECT]);
 
-	// 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const flwUpdtFav = (foodFavorite: any) => {
-		axios
-			.put(`${URL_OBJECT}/favorite/update`, {
-				user_id: sessionId,
-				foodFavorite: foodFavorite,
-			})
-			.then((res: any) => {
-				if (res.data.status === `success`) {
-					setLOADING(false);
-					setOBJECT(res.data.result?.length > 0 ? res.data.result : []);
-					void flowFind();
-					void sync(`favorite`);
-				} else {
-					setLOADING(false);
-					setALERT({
-						open: true,
-						msg: translate(res.data.msg as string),
-						severity: `error`,
-					});
-				}
-			})
-			.catch((error: any) => {
-				setLOADING(false);
-				setALERT({
-					open: true,
-					msg: translate(error.response.data.msg as string),
-					severity: `error`,
-				});
-				console.error(error);
-			});
-	};
+  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  async function flowFind() {
+    setLOADING(true);
+    axios.get(`${URL_OBJECT}/favorite/list`, {
+      params: {
+        user_id: sessionId,
+      },
+    })
+    .then((res: any) => {
+      setLOADING(false);
+      setOBJECT(res.data.result?.length > 0 ? res.data.result : []);
+      setCOUNT((prev) => ({
+        ...prev,
+        totalCnt: res.data.totalCnt ?? 0,
+      }));
+      // 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
+      setIsExpanded(() => {
+        if (res.data.result?.length !== isExpanded.length) {
+          return new Array(res.data.result?.length).fill({ expanded: true });
+        }
+        return isExpanded;
+      });
+    })
+    .catch((error: any) => {
+      setLOADING(false);
+      setALERT({
+        open: true,
+        msg: translate(error.response.data.msg as string),
+        severity: `error`,
+      });
+      console.error(error);
+    })
+    .finally(() => {
+      setLOADING(false);
+    });
+  }
 
-	// 4. handle ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	// - 체크박스 변경 시
-	const hndlChckChg = (index: number) => {
-		const queryKey: string = `${PAGING.query}_${PAGING.page}`;
-		const updtChck: boolean[] = [...(chckQrs[queryKey] ?? [])];
-		updtChck[index] = !updtChck[index];
+  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const flowUpdateFavorite = (foodFavorite: any) => {
+    axios.put(`${URL_OBJECT}/favorite/update`, {
+      user_id: sessionId,
+      foodFavorite: foodFavorite,
+    })
+    .then((res: any) => {
+      if (res.data.status === `success`) {
+        setLOADING(false);
+        setOBJECT(res.data.result?.length > 0 ? res.data.result : []);
+        void flowFind();
+        void sync(`favorite`);
+      }
+      else {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg as string),
+          severity: `error`,
+        });
+      }
+    })
+    .catch((error: any) => {
+      setLOADING(false);
+      setALERT({
+        open: true,
+        msg: translate(error.response.data.msg as string),
+        severity: `error`,
+      });
+      console.error(error);
+    });
+  };
 
-		stChckQrs((prev) => ({
-			...prev,
-			[queryKey]: updtChck,
-		}));
+  // 4. handle ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // - 체크박스 변경 시
+  const handleCheckboxChange = (index: number) => {
+    const queryKey: string = `${PAGING.query}_${PAGING.page}`;
+    const updatedChecked: boolean[] = [...(checkedQueries[queryKey] ?? [])];
+    updatedChecked[index] = !updatedChecked[index];
 
-		// 스토리지 데이터 가져오기 (최신 값을 직접 가져옴)
-		const curSec: any = getSession(`section`, `food`, ``) ?? [];
-		let sectionArray: any[] =
-			curSec?.length > 0 ? [...curSec] : [];
+    setCheckedQueries((prev) => ({
+      ...prev,
+      [queryKey]: updatedChecked,
+    }));
 
-		const item: FoodFindType = OBJECT[index];
-		const newItem = {
-			food_record_perNumber: item.food_record_perNumber,
-			food_record_part: item.food_record_part,
-			food_record_key: item.food_record_key,
-			food_record_query: item.food_record_query,
-			food_record_name: item.food_record_name,
-			food_record_brand: item.food_record_brand,
-			food_record_gram: item.food_record_gram,
-			food_record_serv: item.food_record_serv,
-			food_record_count: item.food_record_count,
-			food_record_kcal: item.food_record_kcal,
-			food_record_carb: item.food_record_carb,
-			food_record_protein: item.food_record_protein,
-			food_record_fat: item.food_record_fat,
-		};
+    // 스토리지 데이터 가져오기 (최신 값을 직접 가져옴)
+    const currentSection: any = getSession(`section`, `food`, ``) ?? [];
+    let sectionArray: any[] = currentSection?.length > 0 ? [...currentSection] : [];
 
-		if (updtChck[index]) {
-			if (
-				!sectionArray.some(
-					(i: any) => i.food_record_key === item.food_record_key,
-				)
-			) {
-				sectionArray.push(newItem);
-			}
-		} else {
-			sectionArray = sectionArray?.filter(
-				(i: any) => i.food_record_key !== item.food_record_key,
-			);
-		}
+    const item: FoodFindType = OBJECT[index];
+    const newItem = {
+      food_record_perNumber: item.food_record_perNumber,
+      food_record_part: item.food_record_part,
+      food_record_key: item.food_record_key,
+      food_record_query: item.food_record_query,
+      food_record_name: item.food_record_name,
+      food_record_brand: item.food_record_brand,
+      food_record_gram: item.food_record_gram,
+      food_record_serv: item.food_record_serv,
+      food_record_count: item.food_record_count,
+      food_record_kcal: item.food_record_kcal,
+      food_record_carb: item.food_record_carb,
+      food_record_protein: item.food_record_protein,
+      food_record_fat: item.food_record_fat,
+    };
 
-		// 스토리지 데이터 설정
-		setSession(`section`, `food`, ``, sectionArray);
-	};
+    if (updatedChecked[index]) {
+      if (!sectionArray.some((i: any) => i.food_record_key === item.food_record_key)) {
+        sectionArray.push(newItem);
+      }
+    }
+    else {
+      sectionArray = sectionArray?.filter((i: any) => (
+        i.food_record_key !== item.food_record_key
+      ));
+    }
 
-	// 7. favorite ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const favoriteNode = () => {
-		const listSection = () => (
-			<Grid container={true} spacing={0}>
-				{OBJECT?.map((item, i) => (
-					<Grid
-						container={true}
-						spacing={0}
-						className={`radius-2 border-1 shadow-1 mb-10px`}
-						key={`list-${i}`}
-					>
-						<Grid size={12} className={`p-2px`}>
-							<Accordion
-								className={`border-0 shadow-0 radius-2`}
-								expanded={isExpanded?.[i]?.expanded}
-							>
-								<AccrSmmr
-									expandIcon={
-										<Icons
-											key={`ChevronDown`}
-											name={`ChevronDown`}
-											className={`w-16px h-16px`}
-											onClick={(e: any) => {
-												e.preventDefault();
-												e.stopPropagation();
-												stIsExpn(
-													isExpanded.map((el: any, index: number) =>
-														i === index
-															? {
-																	expanded: !el.expanded,
-																}
-															: el,
-													),
-												);
-											}}
-										/>
-									}
-								>
-									<Grid container={true} spacing={1}>
-										<Grid size={2} className={`d-row-center`}>
-											<Checkbox
-												key={`check-${i}`}
-												color={`primary`}
-												size={`small`}
-												checked={
-													!!(
-														chckQrs[`${PAGING.query}_${PAGING.page}`] &&
-														chckQrs[`${PAGING.query}_${PAGING.page}`]?.[
-															i
-														]
-													)
-												}
-												onChange={(e: any) => {
-													e.stopPropagation();
-													hndlChckChg(i);
-												}}
-											/>
-										</Grid>
-										<Grid size={6} className={`d-row-left`}>
-											<Div
-												className={`fs-0-8rem fw-600 ${item.food_record_name_color}`}
-											>
-												{item.food_record_name}
-											</Div>
-											<Div className={`mt-n3px ml-5px`}>
-												<Icons
-													key={`Star`}
-													name={`Star`}
-													className={`w-20px h-20px`}
-													color={`darkslategrey`}
-													fill={`gold`}
-													onClick={(e: any) => {
-														e.stopPropagation();
-														flwUpdtFav(item);
-													}}
-												/>
-											</Div>
-										</Grid>
-										<Grid size={4} className={`d-row-right`}>
-											<Div
-												className={`fs-0-8rem fw-600 ${item.food_record_count_color}`}
-											>
-												<Div className={`fs-0-8rem fw-500 dark mr-10px`}>
-													{item.food_record_brand}
-												</Div>
-											</Div>
-										</Grid>
-									</Grid>
-								</AccrSmmr>
-								<AccrDtls>
-									<Grid container={true} spacing={1}>
-										{/** row 1 * */}
-										<Grid container={true} spacing={1}>
-											<Grid size={2} className={`d-row-center`}>
-												<Img
-													max={14}
-													hover={true}
-													shadow={false}
-													radius={false}
-													src={`food2.webp`}
-												/>
-											</Grid>
-											<Grid size={3} className={`d-row-left`}>
-												<Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
-													{translate(`kcal`)}
-												</Div>
-											</Grid>
-											<Grid size={7}>
-												<Grid container={true} spacing={1}>
-													<Grid size={10} className={`d-row-right`}>
-														<Div
-															className={`fs-0-8rem fw-600 ${item.food_record_kcal_color}`}
-														>
-															{insertComma(item.food_record_kcal ?? `0`)}
-														</Div>
-													</Grid>
-													<Grid size={2} className={`d-row-center`}>
-														<Div className={`fs-0-6rem`}>{translate(`kc`)}</Div>
-													</Grid>
-												</Grid>
-											</Grid>
-										</Grid>
+    // 스토리지 데이터 설정
+    setSession(`section`, `food`, ``, sectionArray);
+  };
 
-										<Hr m={1} className={`bg-light`} />
+  // 7. favorite ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const favoriteNode = () => {
+    const listSection = () => (
+      <Grid container={true} spacing={0}>
+        {OBJECT?.map((item, i) => (
+          <Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px`} key={`list-${i}`}>
+            <Grid size={12} className={`p-2px`}>
+              <Accordion className={`border-0 shadow-0 radius-2`} expanded={isExpanded?.[i]?.expanded}>
+                <AccordionSummary
+                  expandIcon={(
+                    <Icons
+                      key={`ChevronDown`}
+                      name={`ChevronDown`}
+                      className={`w-16px h-16px`}
+                      onClick={(e: any) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setIsExpanded(isExpanded.map((el: any, index: number) => (
+													i === index ? {
+													  expanded: !el.expanded,
+													} : el
+                        )));
+                      }}
+                    />
+                  )}
+                >
+                  <Grid container={true} spacing={1}>
+                    <Grid size={2} className={`d-row-center`}>
+                      <Checkbox
+                        key={`check-${i}`}
+                        color={`primary`}
+                        size={`small`}
+                        checked={
+                          !!(
+                            checkedQueries[`${PAGING.query}_${PAGING.page}`] &&
+														checkedQueries[`${PAGING.query}_${PAGING.page}`]?.[i]
+                          )
+                        }
+                        onChange={(e: any) => {
+                          e.stopPropagation();
+                          handleCheckboxChange(i);
+                        }}
+                      />
+                    </Grid>
+                    <Grid size={6} className={`d-row-left`}>
+                      <Div className={`fs-0-8rem fw-600 ${item.food_record_name_color}`}>
+                        {item.food_record_name}
+                      </Div>
+                      <Div className={`mt-n3px ml-5px`}>
+                        <Icons
+                          key={`Star`}
+                          name={`Star`}
+                          className={`w-20px h-20px`}
+                          color={`darkslategrey`}
+                          fill={`gold`}
+                          onClick={(e: any) => {
+                            e.stopPropagation();
+                            flowUpdateFavorite(item);
+                          }}
+                        />
+                      </Div>
+                    </Grid>
+                    <Grid size={4} className={`d-row-right`}>
+                      <Div className={`fs-0-8rem fw-600 ${item.food_record_count_color}`}>
+                        <Div className={`fs-0-8rem fw-500 dark mr-10px`}>
+                          {item.food_record_brand}
+                        </Div>
+                      </Div>
+                    </Grid>
+                  </Grid>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Grid container={true} spacing={1}>
+                    {/** row 1 * */}
+                    <Grid container={true} spacing={1}>
+                      <Grid size={2} className={`d-row-center`}>
+                        <Img
+                          max={14}
+                          hover={true}
+                          shadow={false}
+                          radius={false}
+                          src={`food2.webp`}
+                        />
+                      </Grid>
+                      <Grid size={3} className={`d-row-left`}>
+                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                          {translate(`kcal`)}
+                        </Div>
+                      </Grid>
+                      <Grid size={7}>
+                        <Grid container={true} spacing={1}>
+                          <Grid size={10} className={`d-row-right`}>
+                            <Div className={`fs-0-8rem fw-600 ${item.food_record_kcal_color}`}>
+                              {insertComma(item.food_record_kcal ?? `0`)}
+                            </Div>
+                          </Grid>
+                          <Grid size={2} className={`d-row-center`}>
+                            <Div className={`fs-0-6rem`}>
+                              {translate(`kc`)}
+                            </Div>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </Grid>
 
-										{/** row 2 * */}
-										<Grid container={true} spacing={1}>
-											<Grid size={2} className={`d-center`}>
-												<Img
-													max={14}
-													hover={true}
-													shadow={false}
-													radius={false}
-													src={`food3.webp`}
-												/>
-											</Grid>
-											<Grid size={3} className={`d-row-left`}>
-												<Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
-													{translate(`carb`)}
-												</Div>
-											</Grid>
-											<Grid size={7}>
-												<Grid container={true} spacing={1}>
-													<Grid size={10} className={`d-row-right`}>
-														<Div
-															className={`fs-0-8rem fw-600 ${item.food_record_carb_color}`}
-														>
-															{insertComma(item.food_record_carb ?? `0`)}
-														</Div>
-													</Grid>
-													<Grid size={2} className={`d-row-center`}>
-														<Div className={`fs-0-6rem`}>{translate(`g`)}</Div>
-													</Grid>
-												</Grid>
-											</Grid>
-										</Grid>
+                    <Hr m={1} className={`bg-light`} />
 
-										<Hr m={1} className={`bg-light`} />
+                    {/** row 2 * */}
+                    <Grid container={true} spacing={1}>
+                      <Grid size={2} className={`d-center`}>
+                        <Img
+                          max={14}
+                          hover={true}
+                          shadow={false}
+                          radius={false}
+                          src={`food3.webp`}
+                        />
+                      </Grid>
+                      <Grid size={3} className={`d-row-left`}>
+                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                          {translate(`carb`)}
+                        </Div>
+                      </Grid>
+                      <Grid size={7}>
+                        <Grid container={true} spacing={1}>
+                          <Grid size={10} className={`d-row-right`}>
+                            <Div className={`fs-0-8rem fw-600 ${item.food_record_carb_color}`}>
+                              {insertComma(item.food_record_carb ?? `0`)}
+                            </Div>
+                          </Grid>
+                          <Grid size={2} className={`d-row-center`}>
+                            <Div className={`fs-0-6rem`}>
+                              {translate(`g`)}
+                            </Div>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </Grid>
 
-										{/** row 3 * */}
-										<Grid container={true} spacing={1}>
-											<Grid size={2} className={`d-center`}>
-												<Img
-													max={14}
-													hover={true}
-													shadow={false}
-													radius={false}
-													src={`food4.webp`}
-												/>
-											</Grid>
-											<Grid size={3} className={`d-row-left`}>
-												<Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
-													{translate(`protein`)}
-												</Div>
-											</Grid>
-											<Grid size={7}>
-												<Grid container={true} spacing={1}>
-													<Grid size={10} className={`d-row-right`}>
-														<Div
-															className={`fs-0-8rem fw-600 ${item.food_record_protein_color}`}
-														>
-															{insertComma(item.food_record_carb ?? `0`)}
-														</Div>
-													</Grid>
-													<Grid size={2} className={`d-row-center`}>
-														<Div className={`fs-0-6rem`}>{translate(`g`)}</Div>
-													</Grid>
-												</Grid>
-											</Grid>
-										</Grid>
+                    <Hr m={1} className={`bg-light`} />
 
-										<Hr m={1} className={`bg-light`} />
+                    {/** row 3 * */}
+                    <Grid container={true} spacing={1}>
+                      <Grid size={2} className={`d-center`}>
+                        <Img
+                          max={14}
+                          hover={true}
+                          shadow={false}
+                          radius={false}
+                          src={`food4.webp`}
+                        />
+                      </Grid>
+                      <Grid size={3} className={`d-row-left`}>
+                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                          {translate(`protein`)}
+                        </Div>
+                      </Grid>
+                      <Grid size={7}>
+                        <Grid container={true} spacing={1}>
+                          <Grid size={10} className={`d-row-right`}>
+                            <Div className={`fs-0-8rem fw-600 ${item.food_record_protein_color}`}>
+                              {insertComma(item.food_record_carb ?? `0`)}
+                            </Div>
+                          </Grid>
+                          <Grid size={2} className={`d-row-center`}>
+                            <Div className={`fs-0-6rem`}>
+                              {translate(`g`)}
+                            </Div>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </Grid>
 
-										{/** row 3 * */}
-										<Grid container={true} spacing={1}>
-											<Grid size={2} className={`d-center`}>
-												<Img
-													max={14}
-													hover={true}
-													shadow={false}
-													radius={false}
-													src={`food5.webp`}
-												/>
-											</Grid>
-											<Grid size={3} className={`d-row-left`}>
-												<Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
-													{translate(`fat`)}
-												</Div>
-											</Grid>
-											<Grid size={7}>
-												<Grid container={true} spacing={1}>
-													<Grid size={10} className={`d-row-right`}>
-														<Div
-															className={`fs-0-8rem fw-600 ${item.food_record_fat_color}`}
-														>
-															{insertComma(item.food_record_fat ?? `0`)}
-														</Div>
-													</Grid>
-													<Grid size={2} className={`d-row-center`}>
-														<Div className={`fs-0-6rem`}>{translate(`g`)}</Div>
-													</Grid>
-												</Grid>
-											</Grid>
-										</Grid>
-									</Grid>
-								</AccrDtls>
-							</Accordion>
-						</Grid>
-					</Grid>
-				))}
-			</Grid>
-		);
-		// 7-10. return
-		return (
-			<Paper
-				className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}
-			>
-				{COUNT.totalCnt === 0 ? (
-					<Empty DATE={DATE} extra={`food`} />
-				) : (
-					listSection()
-				)}
-			</Paper>
-		);
-	};
+                    <Hr m={1} className={`bg-light`} />
 
-	// 8. dialog ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const dialogNode = () => (
-		<Dialog COUNT={COUNT} setCOUNT={setCOUNT} setIsExpanded={stIsExpn} />
-	);
+                    {/** row 3 * */}
+                    <Grid container={true} spacing={1}>
+                      <Grid size={2} className={`d-center`}>
+                        <Img
+                          max={14}
+                          hover={true}
+                          shadow={false}
+                          radius={false}
+                          src={`food5.webp`}
+                        />
+                      </Grid>
+                      <Grid size={3} className={`d-row-left`}>
+                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                          {translate(`fat`)}
+                        </Div>
+                      </Grid>
+                      <Grid size={7}>
+                        <Grid container={true} spacing={1}>
+                          <Grid size={10} className={`d-row-right`}>
+                            <Div className={`fs-0-8rem fw-600 ${item.food_record_fat_color}`}>
+                              {insertComma(item.food_record_fat ?? `0`)}
+                            </Div>
+                          </Grid>
+                          <Grid size={2} className={`d-row-center`}>
+                            <Div className={`fs-0-6rem`}>
+                              {translate(`g`)}
+                            </Div>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </AccordionDetails>
+              </Accordion>
+            </Grid>
+          </Grid>
+        ))}
+      </Grid>
+    );
+    // 7-10. return
+    return (
+      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
+        {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={`food`} /> : listSection()}
+      </Paper>
+    );
+  };
 
-	// 9. footer ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const footerNode = () => (
-		<Footer
-			state={{
-				DATE,
-				SEND,
-				PAGING,
-				COUNT,
-			}}
-			setState={{
-				setDATE,
-				setSEND,
-				setPAGING,
-				setCOUNT,
-			}}
-			flow={{
-				flowFind,
-			}}
-		/>
-	);
+  // 8. dialog ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  const dialogNode = () => (
+    <Dialog
+      COUNT={COUNT}
+      setCOUNT={setCOUNT}
+      setIsExpanded={setIsExpanded}
+    />
+  );
 
-	// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	return (
-		<>
-			{favoriteNode()}
-			{dialogNode()}
-			{footerNode()}
-		</>
-	);
+  // 9. footer ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  const footerNode = () => (
+    <Footer
+      state={{
+        DATE, SEND, PAGING, COUNT,
+      }}
+      setState={{
+        setDATE, setSEND, setPAGING, setCOUNT,
+      }}
+      flow={{
+        flowFind,
+      }}
+    />
+  );
+
+  // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  return (
+    <>
+      {favoriteNode()}
+      {dialogNode()}
+      {footerNode()}
+    </>
+  );
 });

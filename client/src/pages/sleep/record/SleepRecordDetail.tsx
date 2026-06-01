@@ -5,504 +5,478 @@
  * @since 2025-12-26
  */
 
-import { Bg, Br, Grid, Paper } from "@exportComponents";
-import { Count, Delete, PickerDay, PickerTime } from "@exportContainers";
-import {
-	useCommonDate as usCmmnDt,
-	useCommonValue as usCmmnVal,
-	useTime,
-	useValidateSleep as usValSlp,
-} from "@exportHooks";
-import { Dialog, Footer } from "@exportLayouts";
+import { React, useState, useEffect, useRef, useCallback, memo } from "@exportReacts";
+import { useCommonValue, useCommonDate, useTime, useValidateSleep } from "@exportHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
+import { SleepRecord, SleepRecordType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import {
-	memo,
-	type React,
-	useCallback,
-	useEffect,
-	useRef,
-	useState,
-} from "@exportReacts";
-import { SleepRecord, type SleepRecordType as SlpRecTyp } from "@exportSchemas";
 import { sync } from "@exportScripts";
-import {
-	useStoreAlert as usStrAlrt,
-	useStoreLanguage as usStrLang,
-	useStoreLoading as usStrLoad,
-} from "@exportStores";
+import { Footer, Dialog } from "@exportLayouts";
+import { PickerDay, PickerTime, Count, Delete } from "@exportContainers";
+import { Bg, Paper, Grid, Br } from "@exportComponents";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const SlpRecDtl = memo(() => {
-	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, PATH, sessionId, navigate } = usCmmnVal();
-	const { toList } = usCmmnVal();
-	const { location_dateStart: locDtStrt, location_dateEnd: locDtEnd } = usCmmnVal();
-	const { getDayFmt, getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt } = usCmmnDt();
-	const { translate } = usStrLang();
-	const { setALERT } = usStrAlrt();
-	const { setLOADING } = usStrLoad();
-	const { ERRORS, REFS, validate } = usValSlp();
+export const SleepRecordDetail = memo(() => {
 
-	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [LOCKED, setLOCKED] = useState<string>(`unlocked`);
-	const [OBJECT, setOBJECT] = useState<SlpRecTyp>(SleepRecord);
-	const [EXIST, setEXIST] = useState({
-		day: [``],
-		week: [``],
-		month: [``],
-		year: [``],
-		select: [``],
-	});
-	const [FLOW, setFLOW] = useState({
-		theme: `sleep`,
-		exist: false,
-		itsMe: false,
-		itsNew: false,
-	});
-	const [SEND, setSEND] = useState({
-		id: ``,
-		dateType: ``,
-		dateStart: `0000-00-00`,
-		dateEnd: `0000-00-00`,
-	});
-	const [COUNT, setCOUNT] = useState({
-		totalCnt: 0,
-		sectionCnt: 0,
-		newSectionCnt: 0,
-	});
-	const [DATE, setDATE] = useState({
-		dateType: `day`,
-		dateStart: locDtStrt ?? getDayFmt(),
-		dateEnd: locDtEnd ?? getDayFmt(),
-	});
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  const { URL_OBJECT, PATH, sessionId, navigate } = useCommonValue();
+  const { toList } = useCommonValue();
+  const { location_dateStart, location_dateEnd } = useCommonValue();
+  const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
+  const { translate } = useStoreLanguage();
+  const { setALERT } = useStoreAlert();
+  const { setLOADING } = useStoreLoading();
+  const { ERRORS, REFS, validate } = useValidateSleep();
 
-	// 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const objectRef: React.RefObject<SlpRecTyp> = useRef(OBJECT);
-	const countRef: React.RefObject<{
-		totalCnt: number;
-		sectionCnt: number;
-		newSectionCnt: number;
-	}> = useRef(COUNT);
-	const dateRef: React.RefObject<{
-		dateType: string;
-		dateStart: string;
-		dateEnd: string;
-	}> = useRef(DATE);
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const [ LOCKED, setLOCKED ] = useState<string>(`unlocked`);
+  const [ OBJECT, setOBJECT ] = useState<SleepRecordType>(SleepRecord);
+  const [ EXIST, setEXIST ] = useState({
+    day: [``],
+    week: [``],
+    month: [``],
+    year: [``],
+    select: [``],
+  });
+  const [ FLOW, setFLOW ] = useState({
+    theme: `sleep`,
+    exist: false,
+    itsMe: false,
+    itsNew: false,
+  });
+  const [ SEND, setSEND ] = useState({
+    id: ``,
+    dateType: ``,
+    dateStart: `0000-00-00`,
+    dateEnd: `0000-00-00`,
+  });
+  const [ COUNT, setCOUNT ] = useState({
+    totalCnt: 0,
+    sectionCnt: 0,
+    newSectionCnt: 0,
+  });
+  const [ DATE, setDATE ] = useState({
+    dateType: `day`,
+    dateStart: location_dateStart ?? getDayFmt(),
+    dateEnd: location_dateEnd ?? getDayFmt(),
+  });
 
-	// 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	useEffect(() => {
-		COUNT !== countRef.current && (countRef.current = COUNT);
-		OBJECT !== objectRef.current && (objectRef.current = OBJECT);
-		DATE !== dateRef.current && (dateRef.current = DATE);
-	}, [COUNT, OBJECT, DATE]);
+  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const objectRef: React.RefObject<
+    SleepRecordType
+  > = useRef(OBJECT);
+  const countRef: React.RefObject<{
+    totalCnt: number;
+    sectionCnt: number;
+    newSectionCnt: number;
+  }> = useRef(COUNT);
+  const dateRef: React.RefObject<{
+    dateType: string;
+    dateStart: string;
+    dateEnd: string;
+  }> = useRef(DATE);
 
-	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	useTime(OBJECT, setOBJECT, PATH, `record`);
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  useEffect(() => {
+    COUNT !== countRef.current && (countRef.current = COUNT);
+    OBJECT !== objectRef.current && (objectRef.current = OBJECT);
+    DATE !== dateRef.current && (dateRef.current = DATE);
+  }, [ COUNT, OBJECT, DATE ]);
 
-	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	useEffect(() => {
-		if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length <= 0) {
-			return;
-		}
-		const dateRange: string = `${DATE?.dateStart.trim()} - ${DATE?.dateEnd.trim()}`;
-		const objectRange: string = `${OBJECT.sleep_record_dateStart.trim()} - ${OBJECT.sleep_record_dateEnd.trim()}`;
-		const isExist: boolean =
-			EXIST?.[DATE?.dateType as keyof typeof EXIST]?.includes(dateRange);
-		const itsMe: boolean = dateRange === objectRange;
-		const itsNew: boolean =
-			OBJECT.sleep_record_dateStart === `0000-00-00` &&
-			OBJECT.sleep_record_dateEnd === `0000-00-00`;
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  useTime(OBJECT, setOBJECT, PATH, `record`);
 
-		setFLOW((prev) => ({
-			...prev,
-			exist: isExist,
-			itsMe: itsMe,
-			itsNew: itsNew,
-		}));
-	}, [EXIST, DATE?.dateEnd, OBJECT.sleep_record_dateEnd]);
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  useEffect(() => {
+    if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length <= 0) {
+      return;
+    }
+    const dateRange: string = (
+      `${DATE?.dateStart.trim()} - ${DATE?.dateEnd.trim()}`
+    );
+    const objectRange: string = (
+      `${OBJECT.sleep_record_dateStart.trim()} - ${OBJECT.sleep_record_dateEnd.trim()}`
+    );
+    const isExist: boolean = (
+      EXIST?.[DATE?.dateType as keyof typeof EXIST]?.includes(dateRange)
+    );
+    const itsMe: boolean = (
+      dateRange === objectRange
+    );
+    const itsNew: boolean = (
+      OBJECT.sleep_record_dateStart === `0000-00-00` &&
+			OBJECT.sleep_record_dateEnd === `0000-00-00`
+    );
 
-	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	useEffect(() => {
-		axios
-			.get(`${URL_OBJECT}/record/exist`, {
-				params: {
-					user_id: sessionId,
-					DATE: {
-						dateType: ``,
-						dateStart: gtMnStFm(DATE?.dateStart),
-						dateEnd: gtMnthEndFmt(DATE?.dateEnd),
-					},
-				},
-			})
-			.then((res: any) => {
-				setEXIST(
-					!res.data.result || res.data.result?.length === 0
-						? [``]
-						: res.data.result,
-				);
-			})
-			.catch((error: any) => {
-				setALERT({
-					open: true,
-					msg: translate(error.response.data.msg as string),
-					severity: `error`,
-				});
-			});
-	}, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
+    setFLOW((prev) => ({
+      ...prev,
+      exist: isExist,
+      itsMe: itsMe,
+      itsNew: itsNew,
+    }));
+  }, [ EXIST, DATE?.dateEnd, OBJECT.sleep_record_dateEnd ]);
 
-	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	useEffect(() => {
-		setLOADING(true);
-		if (LOCKED === `locked`) {
-			setLOADING(false);
-			return;
-		}
-		axios
-			.get(`${URL_OBJECT}/record/detail`, {
-				params: {
-					user_id: sessionId,
-					DATE: DATE,
-				},
-			})
-			.then((res: any) => {
-				setLOADING(false);
-				setOBJECT(res.data.result ?? SleepRecord);
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  useEffect(() => {
+    axios.get(`${URL_OBJECT}/record/exist`, {
+      params: {
+        user_id: sessionId,
+        DATE: {
+          dateType: ``,
+          dateStart: getMonthStartFmt(DATE?.dateStart),
+          dateEnd: getMonthEndFmt(DATE?.dateEnd),
+        },
+      },
+    })
+    .then((res: any) => {
+      setEXIST(
+        !res.data.result || res.data.result?.length === 0 ? [``] : res.data.result
+      );
+    })
+    .catch((error: any) => {
+      setALERT({
+        open: true,
+        msg: translate(error.response.data.msg as string),
+        severity: `error`,
+      });
+    });
+  }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-				// sectionCnt가 0이면 section 초기화
-				if (res.data.sectionCnt <= 0) {
-					setOBJECT((prev) => ({
-						...prev,
-						sleep_section: [],
-					}));
-				}
-				// sectionCnt가 0이 아니면 section 내부 part 값에 따라 재정렬
-				else {
-					setOBJECT((prev) => ({
-						...prev,
-						sleep_section: prev.sleep_section?.sort(
-							(a: any, b: any) => a.sleep_record_part - b.sleep_record_part,
-						),
-					}));
-				}
-				// count 설정
-				setCOUNT((prev) => ({
-					...prev,
-					totalCnt: res.data.totalCnt ?? 0,
-					sectionCnt: res.data.sectionCnt ?? 0,
-					newSectionCnt: res.data.sectionCnt ?? 0,
-				}));
-			})
-			.catch((error: any) => {
-				setLOADING(false);
-				setALERT({
-					open: true,
-					msg: translate(error.response.data.msg as string),
-					severity: `error`,
-				});
-			})
-			.finally(() => {
-				setLOADING(false);
-			});
-	}, [URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd]);
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  useEffect(() => {
+    setLOADING(true);
+    if (LOCKED === `locked`) {
+      setLOADING(false);
+      return;
+    }
+    axios.get(`${URL_OBJECT}/record/detail`, {
+      params: {
+        user_id: sessionId,
+        DATE: DATE,
+      },
+    })
+    .then((res: any) => {
+      setLOADING(false);
+      setOBJECT(res.data.result ?? SleepRecord);
 
-	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	useEffect(() => {
-		const defSec: any = {
-			sleep_record_bedTime: `00:00`,
-			sleep_record_wakeTime: `00:00`,
-			sleep_record_sleepTime: `00:00`,
-		};
-		const updtSec: any[] = Array.from({ length: COUNT?.newSectionCnt })
-			.fill(null)
-			.map((_item: any, idx: number) => {
-				return idx < OBJECT?.sleep_section?.length
-					? OBJECT?.sleep_section[idx]
-					: defSec;
-			});
-		setOBJECT((prev: any) => ({
-			...prev,
-			sleep_section: updtSec,
-		}));
-	}, [COUNT?.newSectionCnt]);
+      // sectionCnt가 0이면 section 초기화
+      if (res.data.sectionCnt <= 0) {
+        setOBJECT((prev) => ({
+          ...prev,
+          sleep_section: [],
+        }));
+      }
+      // sectionCnt가 0이 아니면 section 내부 part 값에 따라 재정렬
+      else {
+        setOBJECT((prev) => ({
+          ...prev,
+          sleep_section: prev.sleep_section?.sort((a: any, b: any) => (
+            a.sleep_record_part - b.sleep_record_part
+          )),
+        }));
+      }
+      // count 설정
+      setCOUNT((prev) => ({
+        ...prev,
+        totalCnt: res.data.totalCnt ?? 0,
+        sectionCnt: res.data.sectionCnt ?? 0,
+        newSectionCnt: res.data.sectionCnt ?? 0,
+      }));
+    })
+    .catch((error: any) => {
+      setLOADING(false);
+      setALERT({
+        open: true,
+        msg: translate(error.response.data.msg as string),
+        severity: `error`,
+      });
+    })
+    .finally(() => {
+      setLOADING(false);
+    });
+  }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-	// 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const flowSave = async (type: string) => {
-		setLOADING(true);
-		if (!(await validate(objectRef.current, countRef.current, `record`))) {
-			setLOADING(false);
-			return;
-		}
-		axios({
-			method: type === `create` ? `post` : `put`,
-			url:
-				type === `create`
-					? `${URL_OBJECT}/record/create`
-					: `${URL_OBJECT}/record/update`,
-			data: {
-				user_id: sessionId,
-				OBJECT: objectRef.current,
-				DATE: dateRef.current,
-				type: type,
-			},
-		})
-			.then((res: any) => {
-				res.data.status === `success`
-					? (() => {
-							setLOADING(false);
-							setALERT({
-								open: true,
-								msg: translate(res.data.msg as string),
-								severity: `success`,
-							});
-							void navigate(toList, {
-								state: {
-									dateType: ``,
-									dateStart: dateRef.current.dateStart,
-									dateEnd: dateRef.current.dateEnd,
-								},
-							});
-							void sync();
-						})()
-					: (() => {
-							setLOADING(false);
-							setALERT({
-								open: true,
-								msg: translate(res.data.msg as string),
-								severity: `error`,
-							});
-						})();
-			})
-			.catch((error: any) => {
-				setLOADING(false);
-				setALERT({
-					open: true,
-					msg: translate(error.response.data.msg as string),
-					severity: `error`,
-				});
-				console.error(error);
-			})
-			.finally(() => {
-				setLOADING(false);
-			});
-	};
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  useEffect(() => {
+    const defaultSection: any = {
+      sleep_record_bedTime: `00:00`,
+      sleep_record_wakeTime: `00:00`,
+      sleep_record_sleepTime: `00:00`,
+    };
+    const updatedSection: any[] = Array.from({ length: COUNT?.newSectionCnt }).fill(null).map((_item: any, idx: number) => {
+      return idx < OBJECT?.sleep_section?.length ? OBJECT?.sleep_section[idx] : defaultSection;
+    });
+    setOBJECT((prev: any) => ({
+      ...prev,
+      sleep_section: updatedSection,
+    }));
 
-	// 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const flowDelete = async () => {
-		setLOADING(true);
-		if (!(await validate(objectRef.current, countRef.current, `delete`))) {
-			setLOADING(false);
-			return;
-		}
-		axios
-			.delete(`${URL_OBJECT}/record/delete`, {
-				data: {
-					user_id: sessionId,
-					DATE: dateRef.current,
-				},
-			})
-			.then((res: any) => {
-				res.data.status === `success`
-					? (() => {
-							setLOADING(false);
-							setALERT({
-								open: true,
-								msg: translate(res.data.msg as string),
-								severity: `success`,
-							});
-							void navigate(toList, {
-								state: {
-									dateType: ``,
-									dateStart: dateRef.current.dateStart,
-									dateEnd: dateRef.current.dateEnd,
-								},
-							});
-							void sync();
-						})()
-					: (() => {
-							setLOADING(false);
-							setALERT({
-								open: true,
-								msg: translate(res.data.msg as string),
-								severity: `error`,
-							});
-						})();
-			})
-			.catch((error: any) => {
-				setLOADING(false);
-				setALERT({
-					open: true,
-					msg: translate(error.response.data.msg as string),
-					severity: `error`,
-				});
-				console.error(error);
-			})
-			.finally(() => {
-				setLOADING(false);
-			});
-	};
+  }, [COUNT?.newSectionCnt]);
 
-	// 4-3. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const handleDelete = useCallback((index: number) => {
-		setOBJECT((prev) => ({
-			...prev,
-			sleep_section: prev.sleep_section?.filter(
-				(_item: any, idx: number) => idx !== index,
-			),
-		}));
-		setCOUNT((prev) => ({
-			...prev,
-			newSectionCnt: prev.newSectionCnt - 1,
-		}));
-	}, []);
+  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const flowSave = async (type: string) => {
+    setLOADING(true);
+    if (!await validate(objectRef.current, countRef.current, `record`)) {
+      setLOADING(false);
+      return;
+    }
+    axios({
+      method: type === `create` ? `post` : `put`,
+      url: type === `create` ? `${URL_OBJECT}/record/create` : `${URL_OBJECT}/record/update`,
+      data: {
+        user_id: sessionId,
+        OBJECT: objectRef.current,
+        DATE: dateRef.current,
+        type: type,
+      },
+    })
+    .then((res: any) => {
+			res.data.status === `success` ? (() => {
+			  setLOADING(false);
+			  setALERT({
+			    open: true,
+			    msg: translate(res.data.msg as string),
+			    severity: `success`,
+			  });
+			  void navigate(toList, {
+			    state: {
+			      dateType: ``,
+			      dateStart: dateRef.current.dateStart,
+			      dateEnd: dateRef.current.dateEnd,
+			    },
+			  });
+			  void sync();
+			})() : (() => {
+			  setLOADING(false);
+			  setALERT({
+			    open: true,
+			    msg: translate(res.data.msg as string),
+			    severity: `error`,
+			  });
+			})();
+    })
+    .catch((error: any) => {
+      setLOADING(false);
+      setALERT({
+        open: true,
+        msg: translate(error.response.data.msg as string),
+        severity: `error`,
+      });
+      console.error(error);
+    })
+    .finally(() => {
+      setLOADING(false);
+    });
+  };
 
-	// 7. save ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const detailNode = () => {
-		// 7-1. date + count
-		const dtCntSec = () => (
-			<Grid
-				container={true}
-				spacing={2}
-				className={`radius-2 border-1 shadow-1 p-20px`}
-			>
-				<Grid size={12}>
-					<PickerDay DATE={DATE} setDATE={setDATE} EXIST={EXIST} />
-				</Grid>
-				<Grid size={12}>
-					<Count
-						COUNT={COUNT}
-						setCOUNT={setCOUNT}
-						LOCKED={LOCKED}
-						setLOCKED={setLOCKED}
-						limit={10}
-					/>
-				</Grid>
-			</Grid>
-		);
-		// 7-3. detail
-		const dtlSec = () => (
-			<>
-				{OBJECT.sleep_section?.map((item, i) => (
-					<Grid
-						container={true}
-						spacing={2}
-						key={`detail-${i}`}
-						className={`${LOCKED === `locked` ? `locked` : ``} radius-2 border-1 shadow-1 p-20px`}
-					>
-						{/** row 1 * */}
-						<Grid container={true} spacing={1}>
-							<Grid size={6} className={`d-row-left`}>
-								<Bg badgeContent={i + 1} bgcolor={`#1976d2`} />
-							</Grid>
-							<Grid size={6} className={`d-row-right`}>
-								<Delete index={i} handleDelete={handleDelete} LOCKED={LOCKED} />
-							</Grid>
-						</Grid>
+  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const flowDelete = async () => {
+    setLOADING(true);
+    if (!await validate(objectRef.current, countRef.current, `delete`)) {
+      setLOADING(false);
+      return;
+    }
+    axios.delete(`${URL_OBJECT}/record/delete`, {
+      data: {
+        user_id: sessionId,
+        DATE: dateRef.current,
+      },
+    })
+    .then((res: any) => {
+			res.data.status === `success` ? (() => {
+			  setLOADING(false);
+			  setALERT({
+			    open: true,
+			    msg: translate(res.data.msg as string),
+			    severity: `success`,
+			  });
+			  void navigate(toList, {
+			    state: {
+			      dateType: ``,
+			      dateStart: dateRef.current.dateStart,
+			      dateEnd: dateRef.current.dateEnd,
+			    },
+			  });
+			  void sync();
+			})() : (() => {
+			  setLOADING(false);
+			  setALERT({
+			    open: true,
+			    msg: translate(res.data.msg as string),
+			    severity: `error`,
+			  });
+			})();
+    })
+    .catch((error: any) => {
+      setLOADING(false);
+      setALERT({
+        open: true,
+        msg: translate(error.response.data.msg as string),
+        severity: `error`,
+      });
+      console.error(error);
+    })
+    .finally(() => {
+      setLOADING(false);
+    });
+  };
 
-						{/** row 2 * */}
-						<Grid container={true} spacing={1}>
-							<Grid size={12}>
-								<PickerTime
-									OBJECT={OBJECT}
-									setOBJECT={setOBJECT}
-									REFS={REFS}
-									ERRORS={ERRORS}
-									DATE={DATE}
-									LOCKED={LOCKED}
-									extra={`sleep_record_bedTime`}
-									i={i}
-								/>
-							</Grid>
-						</Grid>
+  // 4-3. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const handleDelete = useCallback((index: number) => {
+    setOBJECT((prev) => ({
+      ...prev,
+      sleep_section: prev.sleep_section?.filter((_item: any, idx: number) => (idx !== index)),
+    }));
+    setCOUNT((prev) => ({
+      ...prev,
+      newSectionCnt: prev.newSectionCnt - 1,
+    }));
+  }, []);
 
-						{/** row 3 * */}
-						<Grid container={true} spacing={1}>
-							<Grid size={12}>
-								<PickerTime
-									OBJECT={OBJECT}
-									setOBJECT={setOBJECT}
-									REFS={REFS}
-									ERRORS={ERRORS}
-									DATE={DATE}
-									LOCKED={LOCKED}
-									extra={`sleep_record_wakeTime`}
-									i={i}
-								/>
-							</Grid>
-						</Grid>
+  // 7. save ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  const detailNode = () => {
+    // 7-1. date + count
+    const dateCountSection = () => (
+      <Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1 p-20px`}>
+        <Grid size={12}>
+          <PickerDay
+            DATE={DATE}
+            setDATE={setDATE}
+            EXIST={EXIST}
+          />
+        </Grid>
+        <Grid size={12}>
+          <Count
+            COUNT={COUNT}
+            setCOUNT={setCOUNT}
+            LOCKED={LOCKED}
+            setLOCKED={setLOCKED}
+            limit={10}
+          />
+        </Grid>
+      </Grid>
+    );
+    // 7-3. detail
+    const detailSection = () => (
+      <>
+        {OBJECT.sleep_section?.map((item, i) => (
+          <Grid
+            container={true}
+            spacing={2}
+            key={`detail-${i}`}
+            className={`${LOCKED === `locked` ? `locked` : ``} radius-2 border-1 shadow-1 p-20px`}
+          >
+            {/** row 1 * */}
+            <Grid container={true} spacing={1}>
+              <Grid size={6} className={`d-row-left`}>
+                <Bg
+                  badgeContent={i + 1}
+                  bgcolor={`#1976d2`}
+                />
+              </Grid>
+              <Grid size={6} className={`d-row-right`}>
+                <Delete
+                  index={i}
+                  handleDelete={handleDelete}
+                  LOCKED={LOCKED}
+                />
+              </Grid>
+            </Grid>
 
-						{/** row 4 * */}
-						<Grid container={true} spacing={1}>
-							<Grid size={12}>
-								<PickerTime
-									OBJECT={OBJECT}
-									setOBJECT={setOBJECT}
-									REFS={REFS}
-									ERRORS={ERRORS}
-									DATE={DATE}
-									LOCKED={LOCKED}
-									extra={`sleep_record_sleepTime`}
-									i={i}
-								/>
-							</Grid>
-						</Grid>
-					</Grid>
-				))}
-			</>
-		);
-		// 7-10. return
-		return (
-			<Paper
-				className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}
-			>
-				{dtCntSec()}
-				<Br m={20} />
-				{COUNT?.newSectionCnt > 0 && dtlSec()}
-			</Paper>
-		);
-	};
+            {/** row 2 * */}
+            <Grid container={true} spacing={1}>
+              <Grid size={12}>
+                <PickerTime
+                  OBJECT={OBJECT}
+                  setOBJECT={setOBJECT}
+                  REFS={REFS}
+                  ERRORS={ERRORS}
+                  DATE={DATE}
+                  LOCKED={LOCKED}
+                  extra={`sleep_record_bedTime`}
+                  i={i}
+                />
+              </Grid>
+            </Grid>
 
-	// 8. dialog ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const dialogNode = () => (
-		<Dialog
-			COUNT={COUNT}
-			setCOUNT={setCOUNT}
-			OBJECT={OBJECT}
-			setOBJECT={setOBJECT}
-			LOCKED={LOCKED}
-			setLOCKED={setLOCKED}
-		/>
-	);
+            {/** row 3 * */}
+            <Grid container={true} spacing={1}>
+              <Grid size={12}>
+                <PickerTime
+                  OBJECT={OBJECT}
+                  setOBJECT={setOBJECT}
+                  REFS={REFS}
+                  ERRORS={ERRORS}
+                  DATE={DATE}
+                  LOCKED={LOCKED}
+                  extra={`sleep_record_wakeTime`}
+                  i={i}
+                />
+              </Grid>
+            </Grid>
 
-	// 9. footer ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const footerNode = () => (
-		<Footer
-			state={{
-				DATE,
-				SEND,
-				COUNT,
-				EXIST,
-				FLOW,
-			}}
-			setState={{
-				setDATE,
-				setSEND,
-				setCOUNT,
-				setEXIST,
-				setFLOW,
-			}}
-			flow={{
-				flowSave,
-				flowDelete,
-			}}
-		/>
-	);
+            {/** row 4 * */}
+            <Grid container={true} spacing={1}>
+              <Grid size={12}>
+                <PickerTime
+                  OBJECT={OBJECT}
+                  setOBJECT={setOBJECT}
+                  REFS={REFS}
+                  ERRORS={ERRORS}
+                  DATE={DATE}
+                  LOCKED={LOCKED}
+                  extra={`sleep_record_sleepTime`}
+                  i={i}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+        ))}
+      </>
+    );
+    // 7-10. return
+    return (
+      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
+        {dateCountSection()}
+        <Br m={20} />
+        {COUNT?.newSectionCnt > 0 && detailSection()}
+      </Paper>
+    );
+  };
 
-	// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	return (
-		<>
-			{detailNode()}
-			{dialogNode()}
-			{footerNode()}
-		</>
-	);
+  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  const dialogNode = () => (
+    <Dialog
+      COUNT={COUNT}
+      setCOUNT={setCOUNT}
+      OBJECT={OBJECT}
+      setOBJECT={setOBJECT}
+      LOCKED={LOCKED}
+      setLOCKED={setLOCKED}
+    />
+  );
+
+  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  const footerNode = () => (
+    <Footer
+      state={{
+        DATE, SEND, COUNT, EXIST, FLOW,
+      }}
+      setState={{
+        setDATE, setSEND, setCOUNT, setEXIST, setFLOW,
+      }}
+      flow={{
+        flowSave, flowDelete,
+      }}
+    />
+  );
+
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  return (
+    <>
+      {detailNode()}
+      {dialogNode()}
+      {footerNode()}
+    </>
+  );
 });
