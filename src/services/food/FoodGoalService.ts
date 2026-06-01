@@ -7,9 +7,9 @@
 
 import * as repository from "@repositories/food/FoodGoalRepository";
 
-// 0. exist ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 0. exist ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const exist = async (
-  usrIdPrm: string,
+  user_id_param: string,
   DATE_param: any,
 ) => {
 
@@ -24,7 +24,7 @@ export const exist = async (
   const dateEnd: string = DATE_param?.dateEnd;
 
   findResult = await repository.exist(
-    usrIdPrm, dateType, dateStart, dateEnd,
+    user_id_param, dateType, dateStart, dateEnd,
   );
 
   if (!findResult || findResult?.length <= 0) {
@@ -56,9 +56,9 @@ export const exist = async (
   };
 };
 
-// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 1. list ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const list = async (
-  usrIdPrm: string,
+  user_id_param: string,
   DATE_param: any,
   PAGING_param: any,
 ) => {
@@ -66,11 +66,11 @@ export const list = async (
   // result 변수 선언
   let findResult: any = null;
   let finalResult: any = [];
-  let ttlCntRes: number = 0;
+  let totalCntResult: number = 0;
   let statusResult: string = ``;
 
   // date 변수 선언
-  const dtTypOrdr: string[] = [ `day`, `week`, `month`, `year` ];
+  const dateTypeOrder: string[] = [ `day`, `week`, `month`, `year` ];
   const dateType: string = DATE_param?.dateType;
   const dateStart: string = DATE_param?.dateStart;
   const dateEnd: string = DATE_param?.dateEnd;
@@ -80,7 +80,7 @@ export const list = async (
   const page: number = PAGING_param?.page ?? 1;
 
   findResult = await repository.listGoal(
-    usrIdPrm, dateType, dateStart, dateEnd, sort, page,
+    user_id_param, dateType, dateStart, dateEnd, sort, page,
   );
 
   findResult?.sort((a: any, b: any) => {
@@ -89,7 +89,7 @@ export const list = async (
     const dateStartA: Date = new Date(a.food_goal_dateStart);
     const dateStartB: Date = new Date(b.food_goal_dateStart);
     const sortOrder: number = sort;
-    const dateTypeDiff: number = dtTypOrdr.indexOf(dateTypeA) - dtTypOrdr.indexOf(dateTypeB);
+    const dateTypeDiff: number = dateTypeOrder.indexOf(dateTypeA) - dateTypeOrder.indexOf(dateTypeB);
     const dateDiff: number = dateStartA.getTime() - dateStartB.getTime();
 
     if (dateTypeDiff !== 0) {
@@ -108,16 +108,16 @@ export const list = async (
       const dateEnd: string = goal?.food_goal_dateEnd;
 
       const listRecord: any[] = await repository.listRecord(
-        usrIdPrm, dateType, dateStart, dateEnd,
+        user_id_param, dateType, dateStart, dateEnd,
       );
 
-      const fdTtlKcl: number = listRecord.reduce((acc: any, curr: any) => (
+      const foodTotalKcal: number = listRecord.reduce((acc: any, curr: any) => (
         acc + (Number.parseFloat(curr?.food_record_total_kcal ?? `0`))
       ), 0);
-      const fdTtlCrb: number = listRecord.reduce((acc: any, curr: any) => (
+      const foodTotalCarb: number = listRecord.reduce((acc: any, curr: any) => (
         acc + (Number.parseFloat(curr?.food_record_total_carb ?? `0`))
       ), 0);
-      const fdTtlPrtn: number = listRecord.reduce((acc: any, curr: any) => (
+      const foodTotalProtein: number = listRecord.reduce((acc: any, curr: any) => (
         acc + (Number.parseFloat(curr?.food_record_total_protein ?? `0`))
       ), 0);
       const foodTotalFat: number = listRecord.reduce((acc: any, curr: any) => (
@@ -126,26 +126,26 @@ export const list = async (
 
       return {
         ...goal,
-        food_record_total_kcal: String(fdTtlKcl.toFixed(0)),
-        food_record_total_carb: String(fdTtlCrb.toFixed(0)),
-        food_record_total_protein: String(fdTtlPrtn.toFixed(0)),
+        food_record_total_kcal: String(foodTotalKcal.toFixed(0)),
+        food_record_total_carb: String(foodTotalCarb.toFixed(0)),
+        food_record_total_protein: String(foodTotalProtein.toFixed(0)),
         food_record_total_fat: String(foodTotalFat.toFixed(0)),
       };
     }));
     statusResult = `success`;
-    ttlCntRes = finalResult.length;
+    totalCntResult = finalResult.length;
   }
 
   return {
     status: statusResult,
-    totalCnt: ttlCntRes,
+    totalCnt: totalCntResult,
     result: finalResult,
   };
 };
 
 // 2. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const detail = async (
-  usrIdPrm: string,
+  user_id_param: string,
   DATE_param: any,
 ) => {
 
@@ -153,7 +153,7 @@ export const detail = async (
   let findResult: any = null;
   let finalResult: any = null;
   let statusResult: string = ``;
-  let secCntRes: number = 0;
+  let sectionCntResult: number = 0;
 
   // date 변수 선언
   const dateType: string = DATE_param?.dateType;
@@ -161,7 +161,7 @@ export const detail = async (
   const dateEnd: string = DATE_param?.dateEnd;
 
   findResult = await repository.detail(
-    usrIdPrm, dateType, dateStart, dateEnd,
+    user_id_param, dateType, dateStart, dateEnd,
   );
 
   // record = section?.length
@@ -169,24 +169,24 @@ export const detail = async (
   if (!findResult) {
     finalResult = null;
     statusResult = `fail`;
-    secCntRes = 0;
+    sectionCntResult = 0;
   }
   else {
     finalResult = findResult;
     statusResult = `success`;
-    secCntRes = 1;
+    sectionCntResult = 1;
   }
 
   return {
     status: statusResult,
-    sectionCnt: secCntRes,
+    sectionCnt: sectionCntResult,
     result: finalResult,
   };
 };
 
 // 3. create ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const create = async (
-  usrIdPrm: string,
+  user_id_param: string,
   OBJECT_param: any,
   DATE_param: any,
 ) => {
@@ -199,25 +199,25 @@ export const create = async (
   let statusResult: string = ``;
 
   // date 변수 선언
-  const exstDtTyp: string = OBJECT_param.food_goal_dateType;
-  const exstDtStrt: string = OBJECT_param.food_goal_dateStart;
-  const exstDtEnd: string = OBJECT_param.food_goal_dateEnd;
+  const existingDateType: string = OBJECT_param.food_goal_dateType;
+  const existingDateStart: string = OBJECT_param.food_goal_dateStart;
+  const existingDateEnd: string = OBJECT_param.food_goal_dateEnd;
   const dateType: string = DATE_param?.dateType;
   const dateStart: string = DATE_param?.dateStart;
   const dateEnd: string = DATE_param?.dateEnd;
 
   findResult = await repository.detail(
-    usrIdPrm, exstDtTyp, exstDtStrt, exstDtEnd,
+    user_id_param, existingDateType, existingDateStart, existingDateEnd,
   );
 
   if (!findResult) {
     createResult = await repository.create(
-      usrIdPrm, OBJECT_param, dateType, dateStart, dateEnd,
+      user_id_param, OBJECT_param, dateType, dateStart, dateEnd,
     );
   }
   else {
     deleteResult = await repository.deletes(
-      usrIdPrm, exstDtTyp, exstDtStrt, exstDtEnd,
+      user_id_param, existingDateType, existingDateStart, existingDateEnd,
     );
     if (!deleteResult) {
       finalResult = null;
@@ -225,7 +225,7 @@ export const create = async (
     }
     else {
       createResult = await repository.create(
-        usrIdPrm, OBJECT_param, dateType, dateStart, dateEnd,
+        user_id_param, OBJECT_param, dateType, dateStart, dateEnd,
       );
     }
   }
@@ -247,7 +247,7 @@ export const create = async (
 
 // 4. update ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const update = async (
-  usrIdPrm: string,
+  user_id_param: string,
   OBJECT_param: any,
   DATE_param: any,
   type_param: string,
@@ -261,15 +261,15 @@ export const update = async (
   let statusResult: string = ``;
 
   // date 변수 선언
-  const exstDtTyp: string = OBJECT_param.food_goal_dateType;
-  const exstDtStrt: string = OBJECT_param.food_goal_dateStart;
-  const exstDtEnd: string = OBJECT_param.food_goal_dateEnd;
+  const existingDateType: string = OBJECT_param.food_goal_dateType;
+  const existingDateStart: string = OBJECT_param.food_goal_dateStart;
+  const existingDateEnd: string = OBJECT_param.food_goal_dateEnd;
   const dateType: string = DATE_param?.dateType;
   const dateStart: string = DATE_param?.dateStart;
   const dateEnd: string = DATE_param?.dateEnd;
 
   findResult = await repository.detail(
-    usrIdPrm, exstDtTyp, exstDtStrt, exstDtEnd,
+    user_id_param, existingDateType, existingDateStart, existingDateEnd,
   );
 
   if (!findResult) {
@@ -280,7 +280,7 @@ export const update = async (
     // update (기존항목 유지 + 타겟항목으로 수정)
     if (type_param === `update`) {
       updateResult = await repository.update.update(
-        usrIdPrm, OBJECT_param, dateType, dateStart, dateEnd,
+        user_id_param, OBJECT_param, dateType, dateStart, dateEnd,
       );
       if (!updateResult) {
         finalResult = null;
@@ -294,7 +294,7 @@ export const update = async (
     // replace (기존항목 제거 + 타겟항목을 교체)
     else if (type_param === `replace`) {
       deleteResult = await repository.deletes(
-        usrIdPrm, exstDtTyp, exstDtStrt, exstDtEnd,
+        user_id_param, existingDateType, existingDateStart, existingDateEnd,
       );
       if (!deleteResult) {
         finalResult = null;
@@ -302,7 +302,7 @@ export const update = async (
       }
       else {
         updateResult = await repository.update.replace(
-          usrIdPrm, OBJECT_param, dateType, dateStart, dateEnd,
+          user_id_param, OBJECT_param, dateType, dateStart, dateEnd,
         );
       }
       if (!updateResult) {
@@ -333,7 +333,7 @@ export const update = async (
 
 // 5. delete ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const deletes = async (
-  usrIdPrm: string,
+  user_id_param: string,
   DATE_param: any,
 ) => {
 
@@ -348,7 +348,7 @@ export const deletes = async (
   const dateEnd: string = DATE_param?.dateEnd;
 
   deleteResult = await repository.deletes(
-    usrIdPrm, dateType, dateStart, dateEnd,
+    user_id_param, dateType, dateStart, dateEnd,
   );
 
   if (!deleteResult) {

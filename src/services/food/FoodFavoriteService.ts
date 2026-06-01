@@ -7,21 +7,21 @@
 
 import * as repository from "@repositories/food/FoodFavoriteRepository";
 
-// 1. list ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const list = async (
-  usrIdPrm: string,
+  user_id_param: string,
 ) => {
 
   // result 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
-  let ttlCntRes: any = null;
+  let totalCntResult: any = null;
   let statusResult: string = ``;
 
   findResult = await repository.list(
-    usrIdPrm,
+    user_id_param,
   );
-  ttlCntRes = findResult?.length;
+  totalCntResult = findResult?.length;
 
   if (!findResult) {
     finalResult = [];
@@ -41,15 +41,15 @@ export const list = async (
 
   return {
     status: statusResult,
-    totalCnt: ttlCntRes,
+    totalCnt: totalCntResult,
     result: finalResult,
   };
 };
 
-// 4. update ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 4. update ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const update = async (
-  usrIdPrm: string,
-  fdFavPrm: any,
+  user_id_param: string,
+  foodFavorite_param: any,
 ) => {
 
   // result 변수 선언
@@ -58,25 +58,25 @@ export const update = async (
   let finalResult: any = null;
   let statusResult: string = ``;
 
-  const foodKey: string = fdFavPrm.food_record_key;
+  const foodKey: string = foodFavorite_param.food_record_key;
 
   findResult = await repository.list(
-    usrIdPrm,
+    user_id_param,
   );
 
-  const exstFav = findResult.some((item: any) => (
+  const existFavorite = findResult.some((item: any) => (
     item.food_record_key === foodKey
   ));
 
-  fdFavPrm = exstFav ? findResult?.filter((item: any) => (
+  foodFavorite_param = existFavorite ? findResult?.filter((item: any) => (
     item.food_record_key !== foodKey
   )) : [
     ...findResult,
-    fdFavPrm,
+    foodFavorite_param,
   ];
 
   updateResult = await repository.update(
-    usrIdPrm, fdFavPrm,
+    user_id_param, foodFavorite_param,
   );
 
   if (!updateResult) {

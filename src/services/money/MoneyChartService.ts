@@ -5,603 +5,622 @@
  * @since 2025-12-26
  */
 
-import * as repository from "@repositories/money/MoneyChartRepository";
 import moment from "moment-timezone";
+import * as repository from "@repositories/money/MoneyChartRepository";
 
 // 1-1. chart (bar - today) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-export const bar = async (usrIdPrm: string, DATE_param: any) => {
-	// result 변수 선언
-	let fndResGl: any[] = [];
-	let fndResRec: any[] = [];
-	let finalResult: any = [];
-	let statusResult: string = ``;
+export const bar = async (
+  user_id_param: string,
+  DATE_param: any,
+) => {
 
-	// date 변수 정의
-	const dateStart: string = DATE_param?.dateStart;
-	const dateEnd: string = DATE_param?.dateEnd;
+  // result 변수 선언
+  let findResultGoal: any[] = [];
+  let findResultRecord: any[] = [];
+  let finalResult: any = [];
+  let statusResult: string = ``;
 
-	try {
-		// promise 사용하여 병렬 처리
-		[fndResGl, fndResRec] = await Promise.all([
-			repository.barGoal(usrIdPrm, dateStart, dateEnd),
-			repository.barRecord(usrIdPrm, dateStart, dateEnd),
-		]);
+  // date 변수 정의
+  const dateStart: string = DATE_param?.dateStart;
+  const dateEnd: string = DATE_param?.dateEnd;
 
-		// findResult 배열을 순회하며 결과 저장
-		finalResult = fndResGl.flatMap((_item: any) => [
-			{
-				name: String(`income`),
-				date: String(dateStart),
-				goal: String(fndResGl?.[0]?.money_goal_income ?? `0`),
-				record: String(fndResRec?.[0]?.money_record_total_income ?? `0`),
-			},
-			{
-				name: String(`expense`),
-				date: String(dateStart),
-				goal: String(fndResGl?.[0]?.money_goal_expense ?? `0`),
-				record: String(
-					fndResRec?.[0]?.money_record_total_expense ?? `0`,
-				),
-			},
-		]);
+  try {
+    // promise 사용하여 병렬 처리
+    [ findResultGoal, findResultRecord ] = await Promise.all([
+      repository.barGoal(
+        user_id_param, dateStart, dateEnd,
+      ),
+      repository.barRecord(
+        user_id_param, dateStart, dateEnd,
+      ),
+    ]);
 
-		statusResult = `success`;
-	} catch {
-		finalResult = [];
-		statusResult = `fail`;
-	}
+    // findResult 배열을 순회하며 결과 저장
+    finalResult = findResultGoal.flatMap((_item: any) => [
+      {
+        name: String(`income`),
+        date: String(dateStart),
+        goal: String(findResultGoal?.[0]?.money_goal_income ?? `0`),
+        record: String(findResultRecord?.[0]?.money_record_total_income ?? `0`),
+      },
+      {
+        name: String(`expense`),
+        date: String(dateStart),
+        goal: String(findResultGoal?.[0]?.money_goal_expense ?? `0`),
+        record: String(findResultRecord?.[0]?.money_record_total_expense ?? `0`),
+      },
+    ]);
 
-	return {
-		status: statusResult,
-		result: finalResult,
-	};
+    statusResult = `success`;
+  }
+  catch {
+    finalResult = [];
+    statusResult = `fail`;
+  }
+
+  return {
+    status: statusResult,
+    result: finalResult,
+  };
 };
 
 // 2-2. chart (pie - week) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 // pie 차트는 무조건 int 리턴
-export const pieWeek = async (usrIdPrm: string, DATE_param: any) => {
-	// result 변수 선언
-	let fndResInCm: any[] = [];
-	let fndResExpn: any[] = [];
-	let fnlResInCm: any[] = [];
-	let fnlResExpn: any[] = [];
-	let finalResult: any = [];
-	let statusResult: string = ``;
+export const pieWeek = async (
+  user_id_param: string,
+  DATE_param: any,
+) => {
 
-	// date 변수 정의
-	const dateStart: string = DATE_param.weekStartFmt;
-	const dateEnd: string = DATE_param.weekEndFmt;
+  // result 변수 선언
+  let findResultInCome: any[] = [];
+  let findResultExpense: any[] = [];
+  let finalResultInCome: any[] = [];
+  let finalResultExpense: any[] = [];
+  let finalResult: any = [];
+  let statusResult: string = ``;
 
-	try {
-		// promise 사용하여 병렬 처리
-		[fndResInCm, fndResExpn] = await Promise.all([
-			repository.pieIncome(usrIdPrm, dateStart, dateEnd),
-			repository.pieExpense(usrIdPrm, dateStart, dateEnd),
-		]);
+  // date 변수 정의
+  const dateStart: string = DATE_param.weekStartFmt;
+  const dateEnd: string = DATE_param.weekEndFmt;
 
-		// findResultInCome 배열을 순회하며 결과 저장
-		fnlResInCm = fndResInCm?.map((item: any) => ({
-			name: String(item._id),
-			value: Number(item.value) ?? 0,
-		}));
+  try {
+    // promise 사용하여 병렬 처리
+    [ findResultInCome, findResultExpense ] = await Promise.all([
+      repository.pieIncome(
+        user_id_param, dateStart, dateEnd,
+      ),
+      repository.pieExpense(
+        user_id_param, dateStart, dateEnd,
+      ),
+    ]);
 
-		// findResultExpense 배열을 순회하며 결과 저장
-		fnlResExpn = fndResExpn?.map((item: any) => ({
-			name: String(item._id),
-			value: Number(item.value) ?? 0,
-		}));
+    // findResultInCome 배열을 순회하며 결과 저장
+    finalResultInCome = findResultInCome?.map((item: any) => ({
+      name: String(item._id),
+      value: Number(item.value) ?? 0,
+    }));
 
-		// 데이터가 없을 때 기본값 설정
-		if (!fnlResInCm || fnlResInCm.length === 0) {
-			fnlResInCm = [{ name: `Empty`, value: 100 }];
-		}
-		if (!fnlResExpn || fnlResExpn.length === 0) {
-			fnlResExpn = [{ name: `Empty`, value: 100 }];
-		}
+    // findResultExpense 배열을 순회하며 결과 저장
+    finalResultExpense = findResultExpense?.map((item: any) => ({
+      name: String(item._id),
+      value: Number(item.value) ?? 0,
+    }));
 
-		finalResult = {
-			income: fnlResInCm,
-			expense: fnlResExpn,
-		};
-		statusResult = `success`;
-	} catch {
-		finalResult = {
-			income: [{ name: `Empty`, value: 100 }],
-			expense: [{ name: `Empty`, value: 100 }],
-		};
-		statusResult = `success`;
-	}
+    // 데이터가 없을 때 기본값 설정
+    if (!finalResultInCome || finalResultInCome.length === 0) {
+      finalResultInCome = [{ name: `Empty`, value: 100 }];
+    }
+    if (!finalResultExpense || finalResultExpense.length === 0) {
+      finalResultExpense = [{ name: `Empty`, value: 100 }];
+    }
 
-	return {
-		status: statusResult,
-		result: finalResult,
-	};
+    finalResult = {
+      income: finalResultInCome,
+      expense: finalResultExpense,
+    };
+    statusResult = `success`;
+  }
+  catch {
+    finalResult = {
+      income: [{ name: `Empty`, value: 100 }],
+      expense: [{ name: `Empty`, value: 100 }],
+    };
+    statusResult = `success`;
+  }
+
+  return {
+    status: statusResult,
+    result: finalResult,
+  };
 };
 
 // 2-3. chart (pie - month) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 // pie 차트는 무조건 int 리턴
-export const pieMonth = async (usrIdPrm: string, DATE_param: any) => {
-	// result 변수 선언
-	let fndResInCm: any[] = [];
-	let fndResExpn: any[] = [];
-	let fnlResInCm: any[] = [];
-	let fnlResExpn: any[] = [];
-	let finalResult: any = [];
-	let statusResult: string = ``;
+export const pieMonth = async (
+  user_id_param: string,
+  DATE_param: any,
+) => {
 
-	// date 변수 정의
-	const dateStart: string = DATE_param.monthStartFmt;
-	const dateEnd: string = DATE_param.monthEndFmt;
+  // result 변수 선언
+  let findResultInCome: any[] = [];
+  let findResultExpense: any[] = [];
+  let finalResultInCome: any[] = [];
+  let finalResultExpense: any[] = [];
+  let finalResult: any = [];
+  let statusResult: string = ``;
 
-	try {
-		// promise 사용하여 병렬 처리
-		[fndResInCm, fndResExpn] = await Promise.all([
-			repository.pieIncome(usrIdPrm, dateStart, dateEnd),
-			repository.pieExpense(usrIdPrm, dateStart, dateEnd),
-		]);
+  // date 변수 정의
+  const dateStart: string = DATE_param.monthStartFmt;
+  const dateEnd: string = DATE_param.monthEndFmt;
 
-		// findResultInCome 배열을 순회하며 결과 저장
-		fnlResInCm = fnlResInCm?.map((item: any) => ({
-			name: String(item._id),
-			value: Number(item.value) ?? 0,
-		}));
+  try {
+    // promise 사용하여 병렬 처리
+    [ findResultInCome, findResultExpense ] = await Promise.all([
+      repository.pieIncome(
+        user_id_param, dateStart, dateEnd,
+      ),
+      repository.pieExpense(
+        user_id_param, dateStart, dateEnd,
+      ),
+    ]);
 
-		// findResultExpense 배열을 순회하며 결과 저장
-		fnlResExpn = fndResExpn?.map((item: any) => ({
-			name: String(item._id),
-			value: Number(item.value) ?? 0,
-		}));
+    // findResultInCome 배열을 순회하며 결과 저장
+    finalResultInCome = finalResultInCome?.map((item: any) => ({
+      name: String(item._id),
+      value: Number(item.value) ?? 0,
+    }));
 
-		// 데이터가 없을 때 기본값 설정
-		if (!fnlResInCm || fnlResInCm.length === 0) {
-			fnlResInCm = [{ name: `Empty`, value: 100 }];
-		}
-		if (!fnlResExpn || fnlResExpn.length === 0) {
-			fnlResExpn = [{ name: `Empty`, value: 100 }];
-		}
+    // findResultExpense 배열을 순회하며 결과 저장
+    finalResultExpense = findResultExpense?.map((item: any) => ({
+      name: String(item._id),
+      value: Number(item.value) ?? 0,
+    }));
 
-		finalResult = {
-			income: fnlResInCm,
-			expense: fnlResExpn,
-		};
-		statusResult = `success`;
-	} catch {
-		finalResult = {
-			income: [{ name: `Empty`, value: 100 }],
-			expense: [{ name: `Empty`, value: 100 }],
-		};
-		statusResult = `success`;
-	}
+    // 데이터가 없을 때 기본값 설정
+    if (!finalResultInCome || finalResultInCome.length === 0) {
+      finalResultInCome = [{ name: `Empty`, value: 100 }];
+    }
+    if (!finalResultExpense || finalResultExpense.length === 0) {
+      finalResultExpense = [{ name: `Empty`, value: 100 }];
+    }
 
-	return {
-		status: statusResult,
-		result: finalResult,
-	};
+    finalResult = {
+      income: finalResultInCome,
+      expense: finalResultExpense,
+    };
+    statusResult = `success`;
+  }
+  catch {
+    finalResult = {
+      income: [{ name: `Empty`, value: 100 }],
+      expense: [{ name: `Empty`, value: 100 }],
+    };
+    statusResult = `success`;
+  }
+
+  return {
+    status: statusResult,
+    result: finalResult,
+  };
 };
 
 // 2-4. chart (pie - year) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 // pie 차트는 무조건 int 리턴
-export const pieYear = async (usrIdPrm: string, DATE_param: any) => {
-	// result 변수 선언
-	let fndResInCm: any[] = [];
-	let fndResExpn: any[] = [];
-	let fnlResInCm: any[] = [];
-	let fnlResExpn: any[] = [];
-	let finalResult: any = [];
-	let statusResult: string = ``;
+export const pieYear = async (
+  user_id_param: string,
+  DATE_param: any,
+) => {
 
-	// date 변수 정의
-	const dateStart: string = DATE_param.yearStartFmt;
-	const dateEnd: string = DATE_param.yearEndFmt;
+  // result 변수 선언
+  let findResultInCome: any[] = [];
+  let findResultExpense: any[] = [];
+  let finalResultInCome: any[] = [];
+  let finalResultExpense: any[] = [];
+  let finalResult: any = [];
+  let statusResult: string = ``;
 
-	try {
-		// promise 사용하여 병렬 처리
-		[fndResInCm, fndResExpn] = await Promise.all([
-			repository.pieIncome(usrIdPrm, dateStart, dateEnd),
-			repository.pieExpense(usrIdPrm, dateStart, dateEnd),
-		]);
+  // date 변수 정의
+  const dateStart: string = DATE_param.yearStartFmt;
+  const dateEnd: string = DATE_param.yearEndFmt;
 
-		// findResultInCome 배열을 순회하며 결과 저장
-		fnlResInCm = fndResInCm?.map((item: any) => ({
-			name: String(item._id),
-			value: Number(item.value) ?? 0,
-		}));
+  try {
+    // promise 사용하여 병렬 처리
+    [ findResultInCome, findResultExpense ] = await Promise.all([
+      repository.pieIncome(
+        user_id_param, dateStart, dateEnd,
+      ),
+      repository.pieExpense(
+        user_id_param, dateStart, dateEnd,
+      ),
+    ]);
 
-		// findResultExpense 배열을 순회하며 결과 저장
-		fnlResExpn = fndResExpn?.map((item: any) => ({
-			name: String(item._id),
-			value: Number(item.value) ?? 0,
-		}));
+    // findResultInCome 배열을 순회하며 결과 저장
+    finalResultInCome = findResultInCome?.map((item: any) => ({
+      name: String(item._id),
+      value: Number(item.value) ?? 0,
+    }));
 
-		// 데이터가 없을 때 기본값 설정
-		if (!fnlResInCm || fnlResInCm.length === 0) {
-			fnlResInCm = [{ name: `Empty`, value: 100 }];
-		}
-		if (!fnlResExpn || fnlResExpn.length === 0) {
-			fnlResExpn = [{ name: `Empty`, value: 100 }];
-		}
+    // findResultExpense 배열을 순회하며 결과 저장
+    finalResultExpense = findResultExpense?.map((item: any) => ({
+      name: String(item._id),
+      value: Number(item.value) ?? 0,
+    }));
 
-		finalResult = {
-			income: fnlResInCm,
-			expense: fnlResExpn,
-		};
-		statusResult = `success`;
-	} catch {
-		finalResult = {
-			income: [{ name: `Empty`, value: 100 }],
-			expense: [{ name: `Empty`, value: 100 }],
-		};
-		statusResult = `success`;
-	}
+    // 데이터가 없을 때 기본값 설정
+    if (!finalResultInCome || finalResultInCome.length === 0) {
+      finalResultInCome = [{ name: `Empty`, value: 100 }];
+    }
+    if (!finalResultExpense || finalResultExpense.length === 0) {
+      finalResultExpense = [{ name: `Empty`, value: 100 }];
+    }
 
-	return {
-		status: statusResult,
-		result: finalResult,
-	};
+    finalResult = {
+      income: finalResultInCome,
+      expense: finalResultExpense,
+    };
+    statusResult = `success`;
+  }
+  catch {
+    finalResult = {
+      income: [{ name: `Empty`, value: 100 }],
+      expense: [{ name: `Empty`, value: 100 }],
+    };
+    statusResult = `success`;
+  }
+
+  return {
+    status: statusResult,
+    result: finalResult,
+  };
 };
 // 3-1. chart (line - week) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-export const lineWeek = async (usrIdPrm: string, DATE_param: any) => {
-	// result 변수 선언
-	let findResult: any[] = [];
-	let finalResult: any[] = [];
-	let statusResult: string = ``;
+export const lineWeek = async (
+  user_id_param: string,
+  DATE_param: any,
+) => {
 
-	// date 변수 정의 (현재 월의 전체 범위)
-	const mnthStrtFmt: string = moment(DATE_param.weekStartFmt)
-		.startOf(`month`)
-		.format(`YYYY-MM-DD`);
-	const monthEndFmt: string = moment(DATE_param.weekStartFmt)
-		.endOf(`month`)
-		.format(`YYYY-MM-DD`);
-	const dateStart: string = mnthStrtFmt;
-	const dateEnd: string = monthEndFmt;
+  // result 변수 선언
+  let findResult: any[] = [];
+  let finalResult: any[] = [];
+  let statusResult: string = ``;
 
-	// ex. 1주, 2주, 3주, 4주, 5주
-	const name: string[] = [`1주`, `2주`, `3주`, `4주`, `5주`];
+  // date 변수 정의 (현재 월의 전체 범위)
+  const monthStartFmt: string = moment(DATE_param.weekStartFmt).startOf(`month`).format(`YYYY-MM-DD`);
+  const monthEndFmt: string = moment(DATE_param.weekStartFmt).endOf(`month`).format(`YYYY-MM-DD`);
+  const dateStart: string = monthStartFmt;
+  const dateEnd: string = monthEndFmt;
 
-	// 해당 월의 1일이 포함된 주의 시작일 (월요일 기준)
-	const frstWkStrt: moment.Moment =
-		moment(mnthStrtFmt).startOf(`isoWeek`);
+  // ex. 1주, 2주, 3주, 4주, 5주
+  const name: string[] = [ `1주`, `2주`, `3주`, `4주`, `5주` ];
 
-	// 주차별 날짜 범위 계산 (해당 월의 날짜가 포함된 주만)
-	const weekRanges: any[] = [];
-	const curWkStrt: moment.Moment = moment(frstWkStrt);
-	let weekIndex: number = 0;
+  // 해당 월의 1일이 포함된 주의 시작일 (월요일 기준)
+  const firstWeekStart: moment.Moment = moment(monthStartFmt).startOf(`isoWeek`);
 
-	while (weekIndex < 6) {
-		const weekEnd: moment.Moment = moment(curWkStrt).add(6, `days`);
-		const weekEndDate: string = weekEnd.format(`YYYY-MM-DD`);
-		const wkStrtDt: string = curWkStrt.format(`YYYY-MM-DD`);
+  // 주차별 날짜 범위 계산 (해당 월의 날짜가 포함된 주만)
+  const weekRanges: any[] = [];
+  let currentWeekStart: moment.Moment = moment(firstWeekStart);
+  let weekIndex: number = 0;
 
-		// 해당 주에 현재 월의 날짜가 하나라도 포함되어 있는지 확인
-		const hasMonthDate: boolean =
-			wkStrtDt <= monthEndFmt && weekEndDate >= mnthStrtFmt;
+  while (weekIndex < 6) {
+    const weekEnd: moment.Moment = moment(currentWeekStart).add(6, `days`);
+    const weekEndDate: string = weekEnd.format(`YYYY-MM-DD`);
+    const weekStartDate: string = currentWeekStart.format(`YYYY-MM-DD`);
 
-		hasMonthDate &&
-			weekRanges.push({
-				start: wkStrtDt,
-				end: weekEndDate,
-				label: curWkStrt.format(`MM-DD`),
-			});
+    // 해당 주에 현재 월의 날짜가 하나라도 포함되어 있는지 확인
+    const hasMonthDate: boolean = (weekStartDate <= monthEndFmt && weekEndDate >= monthStartFmt);
 
-		curWkStrt.add(7, `days`);
-		weekIndex++;
+    hasMonthDate && weekRanges.push({
+      start: weekStartDate,
+      end: weekEndDate,
+      label: currentWeekStart.format(`MM-DD`),
+    });
 
-		// 주의 시작일이 다음 달로 넘어가면 중단
-		curWkStrt.isAfter(moment(monthEndFmt).add(7, `days`)) &&
-			(weekIndex = 6);
-	}
+    currentWeekStart.add(7, `days`);
+    weekIndex++;
 
-	try {
-		// promise 사용하여 병렬 처리
-		[findResult] = await Promise.all([
-			repository.lineAll(usrIdPrm, dateStart, dateEnd),
-		]);
+    // 주의 시작일이 다음 달로 넘어가면 중단
+    (currentWeekStart.isAfter(moment(monthEndFmt).add(7, `days`))) && (weekIndex = 6);
+  }
 
-		// 주차별 총합 계산
-		weekRanges.forEach((range: any, index: number) => {
-			let wkIncmSm: number = 0;
-			let wkExpnSm: number = 0;
+  try {
+    // promise 사용하여 병렬 처리
+    [findResult] = await Promise.all([
+      repository.lineAll(
+        user_id_param, dateStart, dateEnd,
+      ),
+    ]);
 
-			findResult.forEach((item: any) => {
-				const itemDate: string = item.money_record_dateStart;
-				itemDate >= range.start &&
-					itemDate <= range.end &&
-					((wkIncmSm += Number(item.money_record_total_income ?? 0)),
-					(wkExpnSm += Number(item.money_record_total_expense ?? 0)));
-			});
+    // 주차별 총합 계산
+    weekRanges.forEach((range: any, index: number) => {
+      let weekIncomeSum: number = 0;
+      let weekExpenseSum: number = 0;
 
-			finalResult.push({
-				name: String(name[index]),
-				date: String(`${range.start} - ${range.end}`),
-				income: String(wkIncmSm),
-				expense: String(wkExpnSm),
-			});
-		});
+      findResult.forEach((item: any) => {
+        const itemDate: string = item.money_record_dateStart;
+        (itemDate >= range.start && itemDate <= range.end) && (
+          weekIncomeSum += Number(item.money_record_total_income ?? 0),
+          weekExpenseSum += Number(item.money_record_total_expense ?? 0)
+        );
+      });
 
-		statusResult = `success`;
-	} catch {
-		finalResult = [];
-		statusResult = `fail`;
-	}
+      finalResult.push({
+        name: String(name[index]),
+        date: String(`${range.start} - ${range.end}`),
+        income: String(weekIncomeSum),
+        expense: String(weekExpenseSum),
+      });
+    });
 
-	return {
-		status: statusResult,
-		result: finalResult,
-	};
+    statusResult = `success`;
+  }
+  catch {
+    finalResult = [];
+    statusResult = `fail`;
+  }
+
+  return {
+    status: statusResult,
+    result: finalResult,
+  };
 };
 
-// 3-2. chart (line - month) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-export const lineMonth = async (usrIdPrm: string, DATE_param: any) => {
-	// result 변수 선언
-	let findResult: any[] = [];
-	let finalResult: any[] = [];
-	let statusResult: string = ``;
+// 3-2. chart (line - month) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+export const lineMonth = async (
+  user_id_param: string,
+  DATE_param: any,
+) => {
 
-	// date 변수 정의 (현재 연도 전체 범위)
-	const yearStartFmt: string = moment(DATE_param.monthStartFmt)
-		.startOf(`year`)
-		.format(`YYYY-MM-DD`);
-	const yearEndFmt: string = moment(DATE_param.monthStartFmt)
-		.endOf(`year`)
-		.format(`YYYY-MM-DD`);
-	const dateStart: string = yearStartFmt;
-	const dateEnd: string = yearEndFmt;
+  // result 변수 선언
+  let findResult: any[] = [];
+  let finalResult: any[] = [];
+  let statusResult: string = ``;
 
-	// ex. 1월, 2월, ..., 12월
-	const name: string[] = Array.from({ length: 12 }, (_, i) => `${i + 1}월`);
+  // date 변수 정의 (현재 연도 전체 범위)
+  const yearStartFmt: string = moment(DATE_param.monthStartFmt).startOf(`year`).format(`YYYY-MM-DD`);
+  const yearEndFmt: string = moment(DATE_param.monthStartFmt).endOf(`year`).format(`YYYY-MM-DD`);
+  const dateStart: string = yearStartFmt;
+  const dateEnd: string = yearEndFmt;
 
-	// 월별 날짜 범위 계산
-	const monthRanges: { start: string; end: string; label: string }[] =
-		Array.from({ length: 12 }, (_v, i: number) => {
-			const monthStart: moment.Moment = moment(yearStartFmt)
-				.add(i, `months`)
-				.startOf(`month`);
-			const monthEnd: moment.Moment = moment(monthStart).endOf(`month`);
-			return {
-				start: monthStart.format(`YYYY-MM-DD`),
-				end: monthEnd.format(`YYYY-MM-DD`),
-				label: monthStart.format(`MM`),
-			};
-		});
+  // ex. 1월, 2월, ..., 12월
+  const name: string[] = Array.from({ length: 12 }, (_, i) => `${i + 1}월`);
 
-	try {
-		// promise 사용하여 병렬 처리
-		[findResult] = await Promise.all([
-			repository.lineAll(usrIdPrm, dateStart, dateEnd),
-		]);
+  // 월별 날짜 범위 계산
+  const monthRanges: { start: string; end: string; label: string }[] = Array.from({ length: 12 }, (_v, i: number) => {
+    const monthStart: moment.Moment = moment(yearStartFmt).add(i, `months`).startOf(`month`);
+    const monthEnd: moment.Moment = moment(monthStart).endOf(`month`);
+    return {
+      start: monthStart.format(`YYYY-MM-DD`),
+      end: monthEnd.format(`YYYY-MM-DD`),
+      label: monthStart.format(`MM`),
+    };
+  });
 
-		// 월별 총합 계산
-		monthRanges.forEach((range: any, index: number) => {
-			let mnthIncmSm: number = 0;
-			let mnthExpnSm: number = 0;
+  try {
+    // promise 사용하여 병렬 처리
+    [findResult] = await Promise.all([
+      repository.lineAll(
+        user_id_param, dateStart, dateEnd,
+      ),
+    ]);
 
-			findResult.forEach((item: any) => {
-				const itemDate: string = item.money_record_dateStart;
-				itemDate >= range.start &&
-					itemDate <= range.end &&
-					((mnthIncmSm += Number(item.money_record_total_income ?? 0)),
-					(mnthExpnSm += Number(item.money_record_total_expense ?? 0)));
-			});
+    // 월별 총합 계산
+    monthRanges.forEach((range: any, index: number) => {
+      let monthIncomeSum: number = 0;
+      let monthExpenseSum: number = 0;
 
-			finalResult.push({
-				name: String(name[index]),
-				date: String(`${range.start} - ${range.end}`),
-				income: String(mnthIncmSm),
-				expense: String(mnthExpnSm),
-			});
-		});
+      findResult.forEach((item: any) => {
+        const itemDate: string = item.money_record_dateStart;
+        (itemDate >= range.start && itemDate <= range.end) && (
+          monthIncomeSum += Number(item.money_record_total_income ?? 0),
+          monthExpenseSum += Number(item.money_record_total_expense ?? 0)
+        );
+      });
 
-		statusResult = `success`;
-	} catch {
-		finalResult = [];
-		statusResult = `fail`;
-	}
+      finalResult.push({
+        name: String(name[index]),
+        date: String(`${range.start} - ${range.end}`),
+        income: String(monthIncomeSum),
+        expense: String(monthExpenseSum),
+      });
+    });
 
-	return {
-		status: statusResult,
-		result: finalResult,
-	};
+    statusResult = `success`;
+  }
+  catch {
+    finalResult = [];
+    statusResult = `fail`;
+  }
+
+  return {
+    status: statusResult,
+    result: finalResult,
+  };
 };
 
 // 4-1. chart (avg - week) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const avgWeek = async (usrIdPrm: string, DATE_param: any) => {
-	// result 변수 선언
-	let findResult: any[] = [];
-	let finalResult: any[] = [];
-	let statusResult: string = ``;
+export const avgWeek = async (
+  user_id_param: string,
+  DATE_param: any,
+) => {
 
-	// sum, count 변수 선언
-	const sumIncome: number[] = Array.from({ length: 5 }).fill(0);
-	const sumExpense: number[] = Array.from({ length: 5 }).fill(0);
-	const countRecords: number[] = Array.from({ length: 5 }).fill(0);
+  // result 변수 선언
+  let findResult: any[] = [];
+  let finalResult: any[] = [];
+  let statusResult: string = ``;
 
-	// date 변수 정의
-	const mnthStrtFmt: string = DATE_param.monthStartFmt;
+  // sum, count 변수 선언
+  let sumIncome: number[] = Array.from({ length: 5 }).fill(0);
+  let sumExpense: number[] = Array.from({ length: 5 }).fill(0);
+  let countRecords: number[] = Array.from({ length: 5 }).fill(0);
 
-	// weekStartDate 정의
-	const wkStrtDt: moment.Moment[] = Array.from(
-		{ length: 5 },
-		(_v, i: number) => moment(mnthStrtFmt).startOf(`month`).add(i, `weeks`),
-	);
+  // date 변수 정의
+  const monthStartFmt: string = DATE_param.monthStartFmt;
 
-	// ex. 00주차
-	const name: string[] = Array.from({ length: 5 }, (_, i) => `week${i + 1}`);
+  // weekStartDate 정의
+  const weekStartDate: moment.Moment[] = Array.from({ length: 5 }, (_v, i: number) => (
+    moment(monthStartFmt).startOf(`month`).add(i, `weeks`)
+  ));
 
-	// ex. 00-00 - 00-00
-	const date: string[] = Array.from({ length: 5 }, (_, i) => {
-		const startOfWeek: string = wkStrtDt[i]
-			.clone()
-			.startOf(`isoWeek`)
-			.format(`MM-DD`);
-		const endOfWeek: string = wkStrtDt[i]
-			.clone()
-			.endOf(`isoWeek`)
-			.format(`MM-DD`);
-		return `${startOfWeek} - ${endOfWeek}`;
-	});
+  // ex. 00주차
+  const name: string[] = Array.from({ length: 5 }, (_, i) => (
+    `week${i + 1}`
+  ));
 
-	try {
-		// promise 사용하여 병렬 처리
-		const prllRes: { findResult: any[]; index: number }[] =
-			await Promise.all(
-				wkStrtDt.map(async (startDate: moment.Moment, i: number) => {
-					const dateStart: string = startDate
-						.clone()
-						.startOf(`isoWeek`)
-						.format(`YYYY-MM-DD`);
-					const dateEnd: string = startDate
-						.clone()
-						.endOf(`isoWeek`)
-						.format(`YYYY-MM-DD`);
+  // ex. 00-00 - 00-00
+  const date: string[] = Array.from({ length: 5 }, (_, i) => {
+    const startOfWeek: string = weekStartDate[i].clone().startOf(`isoWeek`).format(`MM-DD`);
+    const endOfWeek: string = weekStartDate[i].clone().endOf(`isoWeek`).format(`MM-DD`);
+    return `${startOfWeek} - ${endOfWeek}`;
+  });
 
-					[findResult] = await Promise.all([
-						repository.avgAll(usrIdPrm, dateStart, dateEnd),
-					]);
+  try {
+    // promise 사용하여 병렬 처리
+    const parallelResult: { findResult: any[]; index: number }[] = await Promise.all(
+      weekStartDate.map(async (startDate: moment.Moment, i: number) => {
+        const dateStart: string = startDate.clone().startOf(`isoWeek`).format(`YYYY-MM-DD`);
+        const dateEnd: string = startDate.clone().endOf(`isoWeek`).format(`YYYY-MM-DD`);
 
-					return {
-						findResult,
-						index: i,
-					};
-				}),
-			);
+        [findResult] = await Promise.all([
+          repository.avgAll(
+            user_id_param, dateStart, dateEnd,
+          ),
+        ]);
 
-		// sum, count 설정
-		prllRes.forEach(
-			({ findResult, index }: { findResult: any[]; index: number }) => {
-				findResult.forEach((item: any) => {
-					sumIncome[index] += Number(item.money_record_total_income ?? `0`);
-					sumExpense[index] += Number(item.money_record_total_expense ?? `0`);
-					countRecords[index]++;
-				});
-			},
-		);
+        return {
+          findResult,
+          index: i,
+        };
+      }),
+    );
 
-		// name 배열을 순회하며 결과 저장
-		name.forEach((data: any, index: number) => {
-			finalResult.push({
-				name: String(data),
-				date: String(date[index]),
-				income:
-					countRecords[index] > 0
-						? String((sumIncome[index] / countRecords[index]).toFixed(0))
-						: `0`,
-				expense:
-					countRecords[index] > 0
-						? String((sumExpense[index] / countRecords[index]).toFixed(0))
-						: `0`,
-			});
-		});
+    // sum, count 설정
+    parallelResult.forEach(({ findResult, index }: { findResult: any[]; index: number }) => {
+      findResult.forEach((item: any) => {
+        sumIncome[index] += Number(item.money_record_total_income ?? `0`);
+        sumExpense[index] += Number(item.money_record_total_expense ?? `0`);
+        countRecords[index]++;
+      });
+    });
 
-		statusResult = `success`;
-	} catch {
-		finalResult = [];
-		statusResult = `fail`;
-	}
+    // name 배열을 순회하며 결과 저장
+    name.forEach((data: any, index: number) => {
+      finalResult.push({
+        name: String(data),
+        date: String(date[index]),
+        income:
+          countRecords[index] > 0
+          ? String((sumIncome[index] / countRecords[index]).toFixed(0))
+          : `0`,
+        expense:
+          countRecords[index] > 0
+          ? String((sumExpense[index] / countRecords[index]).toFixed(0))
+          : `0`,
+      });
+    });
 
-	return {
-		status: statusResult,
-		result: finalResult,
-	};
+    statusResult = `success`;
+  }
+  catch {
+    finalResult = [];
+    statusResult = `fail`;
+  }
+
+  return {
+    status: statusResult,
+    result: finalResult,
+  };
 };
 
 // 4-2. chart (avg - month) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-export const avgMonth = async (usrIdPrm: string, DATE_param: any) => {
-	// result 변수 선언
-	let findResult: any[] = [];
-	let finalResult: any[] = [];
-	let statusResult: string = ``;
+export const avgMonth = async (
+  user_id_param: string,
+  DATE_param: any,
+) => {
 
-	// sum, count 변수 선언
-	const sumIncome: number[] = Array.from({ length: 12 }).fill(0);
-	const sumExpense: number[] = Array.from({ length: 12 }).fill(0);
-	const countRecords: number[] = Array.from({ length: 12 }).fill(0);
+  // result 변수 선언
+  let findResult: any[] = [];
+  let finalResult: any[] = [];
+  let statusResult: string = ``;
 
-	// date 변수 정의
-	const yearStartFmt: string = DATE_param.yearStartFmt;
+  // sum, count 변수 선언
+  let sumIncome: number[] = Array.from({ length: 12 }).fill(0);
+  let sumExpense: number[] = Array.from({ length: 12 }).fill(0);
+  let countRecords: number[] = Array.from({ length: 12 }).fill(0);
 
-	// monthStartDate 정의
-	const mnthStrtDt: moment.Moment[] = Array.from(
-		{ length: 12 },
-		(_v, i: number) => moment(yearStartFmt).startOf(`year`).add(i, `months`),
-	);
+  // date 변수 정의
+  const yearStartFmt: string = DATE_param.yearStartFmt;
 
-	// ex. 00 월
-	const name: string[] = Array.from({ length: 12 }, (_, i) => `month${i + 1}`);
+  // monthStartDate 정의
+  const monthStartDate: moment.Moment[] = Array.from({ length: 12 }, (_v, i: number) => (
+    moment(yearStartFmt).startOf(`year`).add(i, `months`)
+  ));
 
-	// ex. 00-00 - 00-00
-	const date: string[] = Array.from({ length: 12 }, (_, i) => {
-		const startOfMonth: string = moment(yearStartFmt)
-			.add(i, `months`)
-			.startOf(`month`)
-			.format(`MM-DD`);
-		const endOfMonth: string = moment(yearStartFmt)
-			.add(i, `months`)
-			.endOf(`month`)
-			.format(`MM-DD`);
-		return `${startOfMonth} - ${endOfMonth}`;
-	});
+  // ex. 00 월
+  const name: string[] = Array.from({ length: 12 }, (_, i) => (
+    `month${i + 1}`
+  ));
 
-	try {
-		// promise 사용하여 병렬 처리
-		const prllRes: { findResult: any[]; index: number }[] =
-			await Promise.all(
-				mnthStrtDt.map(async (startDate: moment.Moment, i: number) => {
-					const dateStart: string = startDate
-						.clone()
-						.startOf(`month`)
-						.format(`YYYY-MM-DD`);
-					const dateEnd: string = startDate
-						.clone()
-						.endOf(`month`)
-						.format(`YYYY-MM-DD`);
+  // ex. 00-00 - 00-00
+  const date: string[] = Array.from({ length: 12 }, (_, i) => {
+    const startOfMonth: string = moment(yearStartFmt).add(i, `months`).startOf(`month`).format(`MM-DD`);
+    const endOfMonth: string = moment(yearStartFmt).add(i, `months`).endOf(`month`).format(`MM-DD`);
+    return `${startOfMonth} - ${endOfMonth}`;
+  });
 
-					[findResult] = await Promise.all([
-						repository.avgAll(usrIdPrm, dateStart, dateEnd),
-					]);
+  try {
+    // promise 사용하여 병렬 처리
+    const parallelResult: { findResult: any[]; index: number }[] = await Promise.all(
+      monthStartDate.map(async (startDate: moment.Moment, i: number) => {
+        const dateStart: string = startDate.clone().startOf(`month`).format(`YYYY-MM-DD`);
+        const dateEnd: string = startDate.clone().endOf(`month`).format(`YYYY-MM-DD`);
 
-					return {
-						findResult,
-						index: i,
-					};
-				}),
-			);
+        [findResult] = await Promise.all([
+          repository.avgAll(
+            user_id_param, dateStart, dateEnd,
+          ),
+        ]);
 
-		// sum, count 설정
-		prllRes.forEach(
-			({ findResult, index }: { findResult: any[]; index: number }) => {
-				findResult.forEach((item: any) => {
-					sumIncome[index] += Number(item.money_record_total_income ?? `0`);
-					sumExpense[index] += Number(item.money_record_total_expense ?? `0`);
-					countRecords[index]++;
-				});
-			},
-		);
+        return {
+          findResult,
+          index: i,
+        };
+      },
+      ));
 
-		// name 배열을 순회하며 결과 저장
-		name.forEach((data: any, index: number) => {
-			finalResult.push({
-				name: String(data),
-				date: String(date[index]),
-				income:
-					countRecords[index] > 0
-						? String((sumIncome[index] / countRecords[index]).toFixed(0))
-						: `0`,
-				expense:
-					countRecords[index] > 0
-						? String((sumExpense[index] / countRecords[index]).toFixed(0))
-						: `0`,
-			});
-		});
+    // sum, count 설정
+    parallelResult.forEach(({ findResult, index }: { findResult: any[]; index: number }) => {
+      findResult.forEach((item: any) => {
+        sumIncome[index] += Number(item.money_record_total_income ?? `0`);
+        sumExpense[index] += Number(item.money_record_total_expense ?? `0`);
+        countRecords[index]++;
+      });
+    });
 
-		statusResult = `success`;
-	} catch {
-		finalResult = [];
-		statusResult = `fail`;
-	}
+    // name 배열을 순회하며 결과 저장
+    name.forEach((data: any, index: number) => {
+      finalResult.push({
+        name: String(data),
+        date: String(date[index]),
+        income:
+          countRecords[index] > 0
+          ? String((sumIncome[index] / countRecords[index]).toFixed(0))
+          : `0`,
+        expense:
+          countRecords[index] > 0
+          ? String((sumExpense[index] / countRecords[index]).toFixed(0))
+          : `0`,
+      });
+    });
 
-	return {
-		status: statusResult,
-		result: finalResult,
-	};
+    statusResult = `success`;
+  }
+  catch {
+    finalResult = [];
+    statusResult = `fail`;
+  }
+
+  return {
+    status: statusResult,
+    result: finalResult,
+  };
 };

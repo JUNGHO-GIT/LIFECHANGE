@@ -5,25 +5,31 @@
  * @since 2025-12-26
  */
 
-import { Div } from "@exportComponents";
 import { memo } from "@exportReacts";
-import { useStoreLoading as usStrLoad } from "@exportStores";
+import { Div } from "@exportComponents";
+import { useStoreLoading } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const Loader = memo(() => {
-	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { LOADING } = usStrLoad();
 
-	// 7.loader ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const loaderNode = () =>
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  const { LOADING } = useStoreLoading();
+
+  // 7.loader ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  const loaderNode = () => (
 		LOADING ? (
 			<Div className={`loader-wrapper`}>
-				<Div className={`loader`} />
+			  <Div className={`loader`} />
 			</Div>
 		) : (
 			<Div />
-		);
+		)
+  );
 
-	// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	return <>{loaderNode()}</>;
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  return (
+    <>
+      {loaderNode()}
+    </>
+  );
 });

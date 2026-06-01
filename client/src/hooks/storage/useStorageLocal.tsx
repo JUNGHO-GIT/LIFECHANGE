@@ -5,55 +5,55 @@
  * @since 2025-12-25
  */
 
-import { useEffect, useRef, useState } from "@exportReacts";
+import { useEffect, useState, useRef } from "@exportReacts";
 import { getLocal, setLocal } from "@exportScripts";
-import type { Dispatch, SetStateAction as StStActn } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const usStrgLcl = <T,>(
-	key1: string,
-	key2: string,
-	key3: string,
-	initialVal: T,
-): [T, Dispatch<StStActn<T>>] => {
-	// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const keySig: string = `${key1}::${key2}::${key3}`;
-	const prvKySgRf: React.RefObject<string> = useRef<string>(keySig);
-	const skpWrtOncRf: React.RefObject<boolean> = useRef<boolean>(false);
+export const useStorageLocal = <T,> (
+  key1: string,
+  key2: string,
+  key3: string,
+  initialVal: T,
+): [T, Dispatch<SetStateAction<T>>] => {
 
-	// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const [storedVal, setStoredVal] = useState<T>(() => {
-		const exstVal: T | undefined = getLocal(key1, key2, key3) as
-			| T
-			| undefined;
-		return exstVal ?? initialVal;
-	});
+  // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  const keySig: string = `${key1}::${key2}::${key3}`;
+  const prevKeySigRef: React.RefObject<string> = useRef<string>(keySig);
+  const skipWriteOnceRef: React.RefObject<boolean> = useRef<boolean>(false);
 
-	// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	// key 변경 시: 해당 key로 다시 읽어서 재수화 (old state를 new key로 덮어쓰는 것을 방지)
-	useEffect(() => {
-		const prevKeySig: string = prvKySgRf.current;
-		if (prevKeySig !== keySig) {
-			prvKySgRf.current = keySig;
-			skpWrtOncRf.current = true;
+  // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  const [ storedVal, setStoredVal ] = useState<T>(() => {
+    const existingValue: T | undefined = getLocal(key1, key2, key3) as T | undefined;
+    return existingValue ?? initialVal;
+  });
 
-			const exstVal: T | undefined = getLocal(key1, key2, key3) as
-				| T
-				| undefined;
-			setStoredVal(exstVal ?? initialVal);
-		}
-	}, [keySig, key1, key2, key3]);
+  // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // key 변경 시: 해당 key로 다시 읽어서 재수화 (old state를 new key로 덮어쓰는 것을 방지)
+  useEffect(() => {
+    const prevKeySig: string = prevKeySigRef.current;
+    if (prevKeySig !== keySig) {
+      prevKeySigRef.current = keySig;
+      skipWriteOnceRef.current = true;
 
-	// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	useEffect(() => {
-		if (skpWrtOncRf.current) {
-			skpWrtOncRf.current = false;
-			return;
-		}
+      const existingValue: T | undefined = getLocal(key1, key2, key3) as T | undefined;
+      setStoredVal(existingValue ?? initialVal);
+    }
+  }, [ keySig, key1, key2, key3 ]);
 
-		setLocal(key1, key2, key3, storedVal);
-	}, [key1, key2, key3, storedVal]);
+  // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  useEffect(() => {
+    if (skipWriteOnceRef.current) {
+      skipWriteOnceRef.current = false;
+      return;
+    }
 
-	// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	return [storedVal, setStoredVal];
+    setLocal(key1, key2, key3, storedVal);
+  }, [ key1, key2, key3, storedVal ]);
+
+  // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  return [
+    storedVal,
+    setStoredVal,
+  ];
 };

@@ -21,7 +21,7 @@ const schema = new mongoose.Schema({
 });
 const Counter = mongoose.model(`Counter`, schema, `Counter`);
 
-// 2. incrementSeq ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2. incrementSeq ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const incrementSeq = async (sequenceName: string, modelName: string) => {
 
   // 시퀀스 번호 동기화 검증 로직

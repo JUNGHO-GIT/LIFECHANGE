@@ -6,150 +6,148 @@
  */
 
 import { Div, Grid, Icons } from "@exportComponents";
-import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal } from "@exportHooks";
-import { Accordion, AccordionSummary as AccrSmmr } from "@exportMuis";
+import { useCommonDate, useCommonValue } from "@exportHooks";
+import { Accordion, AccordionSummary } from "@exportMuis";
 import { memo } from "@exportReacts";
-import { useStoreLanguage as usStrLang } from "@exportStores";
+import { useStoreLanguage } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 declare interface EmptyProps {
-	DATE: any;
-	extra: string;
+  DATE: any;
+  extra: string;
 }
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const Empty = memo(({ DATE, extra }: EmptyProps) => {
-	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { navigate, isFind, isGoal, isRecord, toDetail } = usCmmnVal();
-	const { getDayStartFmt: gtDyStrtFmt, getDayEndFmt, getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt } =
-		usCmmnDt();
-	const { translate } = usStrLang();
+export const Empty = memo((
+  { DATE, extra }: EmptyProps,
+) => {
 
-	// 7. emptyNode ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const emptyNode = () => {
-		// 2. isFindSection
-		const isFndSec = () => (
-			<Grid
-				container={true}
-				spacing={0}
-				className={`radius-2 border-1 shadow-1 mb-10px`}
-			>
-				<Grid size={12} className={`p-2px`}>
-					<Accordion className={`border-0 shadow-0 radius-2`} expanded={false}>
-						<AccrSmmr>
-							<Grid container={true} spacing={1}>
-								<Grid size={4} className={`d-row-left`}>
-									<Div className={`fs-0-9rem fw-600 dark`}>
-										{translate(`search`)}
-									</Div>
-								</Grid>
-								<Grid size={8} className={`d-row-left`}>
-									<Div className={`fs-0-9rem fw-500`}>
-										{translate(`notFound`)}
-									</Div>
-								</Grid>
-							</Grid>
-						</AccrSmmr>
-					</Accordion>
-				</Grid>
-			</Grid>
-		);
-		// 3. isGoalSection
-		const isGlSec = () => (
-			<Grid
-				container={true}
-				spacing={0}
-				className={`radius-2 border-1 shadow-1 mb-10px`}
-			>
-				<Grid size={12} className={`p-2px`}>
-					<Accordion className={`border-0 shadow-0 radius-2`} expanded={false}>
-						<AccrSmmr
-							onClick={() => {
-								void navigate(toDetail, {
-									state: {
-										from: `list`,
-										dateType: DATE?.dateType ?? `month`,
-										dateStart: DATE?.dateStart ?? gtMnStFm(),
-										dateEnd: DATE?.dateEnd ?? gtMnthEndFmt(),
-									},
-								});
-							}}
-						>
-							<Grid container={true} spacing={1}>
-								<Grid size={2} className={`d-row-left`}>
-									<Icons
-										key={`Search`}
-										name={`Search`}
-										className={`w-16px h-16px`}
-									/>
-								</Grid>
-								<Grid size={4} className={`d-row-left`}>
-									<Div className={`fs-0-9rem fw-600 dark`}>
-										{translate(extra)}
-									</Div>
-								</Grid>
-								<Grid size={6} className={`d-row-center`}>
-									<Div className={`fs-0-9rem fw-500`}>{translate(`empty`)}</Div>
-								</Grid>
-							</Grid>
-						</AccrSmmr>
-					</Accordion>
-				</Grid>
-			</Grid>
-		);
-		// 4. isRecordSection
-		const isRecSec = () => (
-			<Grid
-				container={true}
-				spacing={0}
-				className={`radius-2 border-1 shadow-1 mb-10px`}
-			>
-				<Grid size={12} className={`p-2px`}>
-					<Accordion className={`border-0 shadow-0 radius-2`} expanded={false}>
-						<AccrSmmr
-							onClick={() => {
-								void navigate(toDetail, {
-									state: {
-										from: `list`,
-										dateType: DATE?.dateType ?? `day`,
-										dateStart: DATE?.dateStart ?? gtDyStrtFmt(),
-										dateEnd: DATE?.dateEnd ?? getDayEndFmt(),
-									},
-								});
-							}}
-						>
-							<Grid container={true} spacing={1}>
-								<Grid size={2} className={`d-row-left`}>
-									<Icons
-										key={`Search`}
-										name={`Search`}
-										className={`w-16px h-16px`}
-									/>
-								</Grid>
-								<Grid size={4} className={`d-row-left`}>
-									<Div className={`fs-0-9rem fw-600 dark`}>
-										{translate(extra)}
-									</Div>
-								</Grid>
-								<Grid size={6} className={`d-row-center`}>
-									<Div className={`fs-0-9rem fw-500`}>{translate(`empty`)}</Div>
-								</Grid>
-							</Grid>
-						</AccrSmmr>
-					</Accordion>
-				</Grid>
-			</Grid>
-		);
-		// 3. return
-		return (
-			<>
-				{isFind ? isFndSec() : null}
-				{!isFind && isGoal ? isGlSec() : null}
-				{!isFind && !isGoal && isRecord ? isRecSec() : null}
-			</>
-		);
-	};
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  const { navigate, isFind, isGoal, isRecord, toDetail } = useCommonValue();
+  const { getDayStartFmt, getDayEndFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
+  const { translate } = useStoreLanguage();
 
-	// 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	return <>{emptyNode()}</>;
+  // 7. emptyNode ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  const emptyNode = () => {
+    // 2. isFindSection
+    const isFindSection = () => (
+      <Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px`}>
+        <Grid size={12} className={`p-2px`}>
+          <Accordion className={`border-0 shadow-0 radius-2`} expanded={false}>
+            <AccordionSummary>
+              <Grid container={true} spacing={1}>
+                <Grid size={4} className={`d-row-left`}>
+                  <Div className={`fs-0-9rem fw-600 dark`}>
+                    {translate(`search`)}
+                  </Div>
+                </Grid>
+                <Grid size={8} className={`d-row-left`}>
+                  <Div className={`fs-0-9rem fw-500`}>
+                    {translate(`notFound`)}
+                  </Div>
+                </Grid>
+              </Grid>
+            </AccordionSummary>
+          </Accordion>
+        </Grid>
+      </Grid>
+    );
+    // 3. isGoalSection
+    const isGoalSection = () => (
+      <Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px`}>
+        <Grid size={12} className={`p-2px`}>
+          <Accordion className={`border-0 shadow-0 radius-2`} expanded={false}>
+            <AccordionSummary
+              onClick={() => {
+                void navigate(toDetail, {
+                  state: {
+                    from: `list`,
+                    dateType: DATE?.dateType ?? `month`,
+                    dateStart: DATE?.dateStart ?? getMonthStartFmt(),
+                    dateEnd: DATE?.dateEnd ?? getMonthEndFmt(),
+                  },
+                });
+              }}
+            >
+              <Grid container={true} spacing={1}>
+                <Grid size={2} className={`d-row-left`}>
+                  <Icons
+                    key={`Search`}
+                    name={`Search`}
+                    className={`w-16px h-16px`}
+                  />
+                </Grid>
+                <Grid size={4} className={`d-row-left`}>
+                  <Div className={`fs-0-9rem fw-600 dark`}>
+                    {translate(extra)}
+                  </Div>
+                </Grid>
+                <Grid size={6} className={`d-row-center`}>
+                  <Div className={`fs-0-9rem fw-500`}>
+                    {translate(`empty`)}
+                  </Div>
+                </Grid>
+              </Grid>
+            </AccordionSummary>
+          </Accordion>
+        </Grid>
+      </Grid>
+    );
+    // 4. isRecordSection
+    const isRecordSection = () => (
+      <Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px`}>
+        <Grid size={12} className={`p-2px`}>
+          <Accordion className={`border-0 shadow-0 radius-2`} expanded={false}>
+            <AccordionSummary
+              onClick={() => {
+                void navigate(toDetail, {
+                  state: {
+                    from: `list`,
+                    dateType: DATE?.dateType ?? `day`,
+                    dateStart: DATE?.dateStart ?? getDayStartFmt(),
+                    dateEnd: DATE?.dateEnd ?? getDayEndFmt(),
+                  },
+                });
+              }}
+            >
+              <Grid container={true} spacing={1}>
+                <Grid size={2} className={`d-row-left`}>
+                  <Icons
+                    key={`Search`}
+                    name={`Search`}
+                    className={`w-16px h-16px`}
+                  />
+                </Grid>
+                <Grid size={4} className={`d-row-left`}>
+                  <Div className={`fs-0-9rem fw-600 dark`}>
+                    {translate(extra)}
+                  </Div>
+                </Grid>
+                <Grid size={6} className={`d-row-center`}>
+                  <Div className={`fs-0-9rem fw-500`}>
+                    {translate(`empty`)}
+                  </Div>
+                </Grid>
+              </Grid>
+            </AccordionSummary>
+          </Accordion>
+        </Grid>
+      </Grid>
+    );
+    // 3. return
+    return (
+      <>
+        {(isFind) ? isFindSection() : null}
+        {(!isFind && isGoal) ? isGoalSection() : null}
+        {(!isFind && !isGoal && isRecord) ? isRecordSection() : null}
+      </>
+    );
+  };
+
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  return (
+    <>
+      {emptyNode()}
+    </>
+  );
 });

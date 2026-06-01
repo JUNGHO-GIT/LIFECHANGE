@@ -7,18 +7,21 @@
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export {
-	getLocal,
-	getSession,
-	setLocal,
-	setSession,
-} from "@assets/scripts/storage";
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export { sync } from "@assets/scripts/sync";
+  sync,
+} from "@assets/scripts/sync";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export {
-	formatDate,
-	formatY,
-	hndlNmbrInpt as handleNumberInput,
-	insertComma,
+  getLocal,
+  setLocal,
+  getSession,
+  setSession,
+} from "@assets/scripts/storage";
+
+// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+export {
+  insertComma,
+  formatY,
+  handleNumberInput,
+  formatDate,
 } from "@assets/scripts/utils";

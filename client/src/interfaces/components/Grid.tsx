@@ -5,26 +5,26 @@
  * @since 2025-12-25
  */
 
-import { type GridProps, Grid as MuiGrid } from "@exportMuis";
-import { memo, type React, useEffect, useRef } from "@exportReacts";
+import { React, memo, useEffect, useRef } from "@exportReacts";
+import { GridProps, Grid as MuiGrid } from "@exportMuis";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const Grid = memo((props: GridProps) => {
-	const cardRef: React.RefObject<HTMLDivElement | null> =
-		useRef<HTMLDivElement | null>(null);
 
-	useEffect(() => {
-		if (cardRef.current) {
-			cardRef.current.removeAttribute(`style`);
-		}
-	}, []);
+  const cardRef: React.RefObject<HTMLDivElement | null> = useRef<HTMLDivElement | null>(null);
 
-	return (
-		<MuiGrid
-			{...props}
-			ref={cardRef}
-			component={`div`}
-			className={props?.className ?? ``}
-		/>
-	);
+  useEffect(() => {
+    if (cardRef.current) {
+      cardRef.current.removeAttribute(`style`);
+    }
+  }, []);
+
+  return (
+    <MuiGrid
+      {...props}
+      ref={cardRef}
+      component={`div`}
+      className={props?.className ?? ``}
+    />
+  );
 });

@@ -5,189 +5,192 @@
  * @since 2025-12-26
  */
 
-// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 1. list ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const list = async (object: any) => {
-	// 0. calcOverTenMillion ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const clcOvrTnMlln = (param: string) => {
-		let finalResult: string = ``;
 
-		if (
-			!param ||
-			param === `0` ||
-			param === `00:00` ||
-			String(param).includes(`:`)
-		) {
-			finalResult = param;
-		}
-		// 12300000 -> 1.23M / 10000000 -> 10M
-		else if (Number(param) >= 10_000_000) {
-			finalResult = `${Number.parseFloat((Number(param) / 1_000_000).toFixed(2)).toString()}M`;
-		} else {
-			finalResult = Number.parseFloat(Number(param).toFixed(2)).toString();
-		}
+  // 0. calcOverTenMillion ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  const calcOverTenMillion = (param: string) => {
 
-		return finalResult;
-	};
+    let finalResult: string = ``;
 
-	// 0. calcNonValueColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const clcNnValClr = (param: string) => {
-		let finalResult: string = ``;
+    if (!param || param === `0` || param === `00:00` || String(param).includes(`:`)) {
+      finalResult = param;
+    }
+    // 12300000 -> 1.23M / 10000000 -> 10M
+    else if (Number(param) >= 10_000_000) {
+      finalResult = `${(Number.parseFloat((Number(param) / 1_000_000).toFixed(2)).toString())}M`;
+    }
+    else {
+      finalResult = Number.parseFloat(Number(param).toFixed(2)).toString();
+    }
 
-		if (!param) {
-			finalResult = param;
-		} else if (param === `0` || param === `00:00`) {
-			finalResult = `grey`;
-		} else {
-			finalResult = `light-black`;
-		}
+    return finalResult;
+  };
 
-		return finalResult;
-	};
+  // 0. calcNonValueColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  const calcNonValueColor = (param: string) => {
 
-	// 1. compareValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const compareValue = (
-		goalParam: string,
-		recordParam: string,
-		extra: string,
-	) => {
-		const goal: number = Number.parseFloat(goalParam);
-		const record: number = Number.parseFloat(recordParam);
-		let finalResult: string = ``;
+    let finalResult: string = ``;
 
-		if (extra === `income`) {
-			finalResult =
-				goal > record
-					? `-${Number.parseFloat(Math.abs(goal - record).toFixed(2)).toString()}`
-					: `+${Number.parseFloat(Math.abs(record - goal).toFixed(2)).toString()}`;
-		}
-		if (extra === `expense`) {
-			finalResult =
-				goal > record
-					? `-${Number.parseFloat(Math.abs(record - goal).toFixed(2)).toString()}`
-					: `+${Number.parseFloat(Math.abs(record - goal).toFixed(2)).toString()}`;
-		}
+    if (!param) {
+      finalResult = param;
+    }
+    else if (param === `0` || param === `00:00`) {
+      finalResult = `grey`;
+    }
+    else {
+      finalResult = `light-black`;
+    }
 
-		return finalResult;
-	};
+    return finalResult;
+  };
 
-	// 4. calcDiffColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const clcDffClr = (
-		goalParam: string,
-		recordParam: string,
-		extra: string,
-	) => {
-		const goal: number = Number.parseFloat(goalParam);
-		const record: number = Number.parseFloat(recordParam);
-		let percent: number = 0;
-		let finalResult: string = ``;
+  // 1. compareValue ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const compareValue = (goalParam: string, recordParam: string, extra: string) => {
 
-		// 1. income
-		if (extra === `income`) {
-			percent = (Math.abs(goal - record) / goal) * 100;
-			if (goal > record) {
-				if (percent > 0 && percent <= 1) {
-					finalResult += ` firstScore`;
-				} else if (percent > 1 && percent <= 10) {
-					finalResult += ` secondScore`;
-				} else if (percent > 10 && percent <= 30) {
-					finalResult += ` thirdScore`;
-				} else if (percent > 30 && percent <= 50) {
-					finalResult += ` fourthScore`;
-				} else {
-					finalResult += ` fifthScore`;
-				}
-			} else {
-				if (percent > 0 && percent <= 1) {
-					finalResult += ` fifthScore`;
-				} else if (percent > 1 && percent <= 10) {
-					finalResult += ` fourthScore`;
-				} else if (percent > 10 && percent <= 30) {
-					finalResult += ` thirdScore`;
-				} else if (percent > 30 && percent <= 50) {
-					finalResult += ` secondScore`;
-				} else {
-					finalResult += ` firstScore`;
-				}
-			}
-		}
-		// 2. expense
-		if (extra === `expense`) {
-			percent = (Math.abs(goal - record) / goal) * 100;
-			if (goal > record) {
-				if (percent > 0 && percent <= 1) {
-					finalResult += ` fifthScore`;
-				} else if (percent > 1 && percent <= 10) {
-					finalResult += ` fourthScore`;
-				} else if (percent > 10 && percent <= 30) {
-					finalResult += ` thirdScore`;
-				} else if (percent > 30 && percent <= 50) {
-					finalResult += ` secondScore`;
-				} else {
-					finalResult += ` firstScore`;
-				}
-			} else {
-				if (percent > 0 && percent <= 1) {
-					finalResult += ` firstScore`;
-				} else if (percent > 1 && percent <= 10) {
-					finalResult += ` secondScore`;
-				} else if (percent > 10 && percent <= 30) {
-					finalResult += ` thirdScore`;
-				} else if (percent > 30 && percent <= 50) {
-					finalResult += ` fourthScore`;
-				} else {
-					finalResult += ` fifthScore`;
-				}
-			}
-		}
+    let goal: number = Number.parseFloat(goalParam);
+    let record: number = Number.parseFloat(recordParam);
+    let finalResult: string = ``;
 
-		return finalResult;
-	};
+    if (extra === `income`) {
+      finalResult = goal > record ? `-${(Number.parseFloat(Math.abs(goal - record).toFixed(2)).toString())}` : `+${(Number.parseFloat(Math.abs(record - goal).toFixed(2)).toString())}`;
+    }
+    if (extra === `expense`) {
+      finalResult = goal > record ? `-${(Number.parseFloat(Math.abs(record - goal).toFixed(2)).toString())}` : `+${(Number.parseFloat(Math.abs(record - goal).toFixed(2)).toString())}`;
+    }
 
-	// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	object?.result?.forEach((item: any) => {
-		item.money_record_total_income = clcOvrTnMlln(
-			item?.money_record_total_income,
-		);
-		item.money_record_total_expense = clcOvrTnMlln(
-			item?.money_record_total_expense,
-		);
-		item.money_goal_income = clcOvrTnMlln(item?.money_goal_income);
-		item.money_goal_expense = clcOvrTnMlln(item?.money_goal_expense);
+    return finalResult;
+  };
 
-		item.money_record_total_income_color = clcNnValClr(
-			item?.money_record_total_income,
-		);
-		item.money_record_total_expense_color = clcNnValClr(
-			item?.money_record_total_expense,
-		);
-		item.money_goal_income_color = clcNnValClr(item?.money_goal_income);
-		item.money_goal_expense_color = clcNnValClr(item?.money_goal_expense);
+  // 4. calcDiffColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  const calcDiffColor = (goalParam: string, recordParam: string, extra: string) => {
 
-		item.money_record_diff_income = clcOvrTnMlln(
-			compareValue(
-				item?.money_goal_income,
-				item?.money_record_total_income,
-				`income`,
-			),
-		);
-		item.money_record_diff_expense = clcOvrTnMlln(
-			compareValue(
-				item?.money_goal_expense,
-				item?.money_record_total_expense,
-				`expense`,
-			),
-		);
-		item.money_record_diff_income_color = clcDffClr(
-			item?.money_goal_income,
-			item?.money_record_total_income,
-			`income`,
-		);
-		item.money_record_diff_expense_color = clcDffClr(
-			item?.money_goal_expense,
-			item?.money_record_total_expense,
-			`expense`,
-		);
-	});
+    let goal: number = Number.parseFloat(goalParam);
+    let record: number = Number.parseFloat(recordParam);
+    let percent: number = 0;
+    let finalResult: string = ``;
 
-	return object;
+    // 1. income
+    if (extra === `income`) {
+      percent = (Math.abs(goal - record) / goal) * 100;
+      if (goal > record) {
+        if (percent > 0 && percent <= 1) {
+          finalResult += ` firstScore`;
+        }
+        else if (percent > 1 && percent <= 10) {
+          finalResult += ` secondScore`;
+        }
+        else if (percent > 10 && percent <= 30) {
+          finalResult += ` thirdScore`;
+        }
+        else if (percent > 30 && percent <= 50) {
+          finalResult += ` fourthScore`;
+        }
+        else {
+          finalResult += ` fifthScore`;
+        }
+      }
+      else {
+        if (percent > 0 && percent <= 1) {
+          finalResult += ` fifthScore`;
+        }
+        else if (percent > 1 && percent <= 10) {
+          finalResult += ` fourthScore`;
+        }
+        else if (percent > 10 && percent <= 30) {
+          finalResult += ` thirdScore`;
+        }
+        else if (percent > 30 && percent <= 50) {
+          finalResult += ` secondScore`;
+        }
+        else {
+          finalResult += ` firstScore`;
+        }
+      }
+    }
+    // 2. expense
+    if (extra === `expense`) {
+      percent = (Math.abs(goal - record) / goal) * 100;
+      if (goal > record) {
+        if (percent > 0 && percent <= 1) {
+          finalResult += ` fifthScore`;
+        }
+        else if (percent > 1 && percent <= 10) {
+          finalResult += ` fourthScore`;
+        }
+        else if (percent > 10 && percent <= 30) {
+          finalResult += ` thirdScore`;
+        }
+        else if (percent > 30 && percent <= 50) {
+          finalResult += ` secondScore`;
+        }
+        else {
+          finalResult += ` firstScore`;
+        }
+      }
+      else {
+        if (percent > 0 && percent <= 1) {
+          finalResult += ` firstScore`;
+        }
+        else if (percent > 1 && percent <= 10) {
+          finalResult += ` secondScore`;
+        }
+        else if (percent > 10 && percent <= 30) {
+          finalResult += ` thirdScore`;
+        }
+        else if (percent > 30 && percent <= 50) {
+          finalResult += ` fourthScore`;
+        }
+        else {
+          finalResult += ` fifthScore`;
+        }
+      }
+    }
+
+    return finalResult;
+  };
+
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  object?.result?.forEach((item: any) => {
+    item.money_record_total_income = calcOverTenMillion(
+      item?.money_record_total_income
+    );
+    item.money_record_total_expense = calcOverTenMillion(
+      item?.money_record_total_expense
+    );
+    item.money_goal_income = calcOverTenMillion(
+      item?.money_goal_income
+    );
+    item.money_goal_expense = calcOverTenMillion(
+      item?.money_goal_expense
+    );
+
+    item.money_record_total_income_color = calcNonValueColor(
+      item?.money_record_total_income
+    );
+    item.money_record_total_expense_color = calcNonValueColor(
+      item?.money_record_total_expense
+    );
+    item.money_goal_income_color = calcNonValueColor(
+      item?.money_goal_income
+    );
+    item.money_goal_expense_color = calcNonValueColor(
+      item?.money_goal_expense
+    );
+
+    item.money_record_diff_income = calcOverTenMillion(compareValue(
+      item?.money_goal_income, item?.money_record_total_income, `income`
+    ));
+    item.money_record_diff_expense = calcOverTenMillion(compareValue(
+      item?.money_goal_expense, item?.money_record_total_expense, `expense`
+    ));
+    item.money_record_diff_income_color = calcDiffColor(
+      item?.money_goal_income, item?.money_record_total_income, `income`
+    );
+    item.money_record_diff_expense_color = calcDiffColor(
+      item?.money_goal_expense, item?.money_record_total_expense, `expense`
+    );
+  });
+
+  return object;
 };

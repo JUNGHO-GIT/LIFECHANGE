@@ -5,16 +5,17 @@
  * @since 2025-12-25
  */
 
-import { useCommonValue as usCmmnVal } from "@exportHooks";
+import { useCommonValue } from "@exportHooks";
 import { useEffect } from "@exportReacts";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const useScrollTop = () => {
-	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { PATH } = usCmmnVal();
 
-	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	useEffect(() => {
-		window.scrollTo(0, 0);
-	}, [PATH]);
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  const { PATH } = useCommonValue();
+
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [PATH]);
 };

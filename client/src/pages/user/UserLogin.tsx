@@ -5,453 +5,450 @@
  * @since 2025-12-26
  */
 
-import { Btn, Div, Grid, Hr, Img, Paper } from "@exportComponents";
-import { Input } from "@exportContainers";
-import { useCommonValue as usCmmnVal, useValidateUser as usValUsr } from "@exportHooks";
+import { React, useState, useEffect, useRef, memo } from "@exportReacts";
+import { useCommonValue, useValidateUser } from "@exportHooks";
+import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { axios } from "@exportLibs";
+import { sync, getLocal, setLocal, setSession } from "@exportScripts";
+import { User, UserType } from "@exportSchemas";
+import { Input } from "@exportContainers";
+import { Div, Btn, Img, Hr, Paper, Grid } from "@exportComponents";
 import { Checkbox } from "@exportMuis";
-import { memo, type React, useEffect, useRef, useState } from "@exportReacts";
-import { User, type UserType } from "@exportSchemas";
-import { getLocal, setLocal, setSession, sync } from "@exportScripts";
-import {
-	useStoreAlert as usStrAlrt,
-	useStoreLanguage as usStrLang,
-	useStoreLoading as usStrLoad,
-} from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const UserLogin = memo(() => {
-	// 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, URL_GOOGLE, ADMIN_ID, ADMIN_PW, navigate } =
-		usCmmnVal();
-	const { translate } = usStrLang();
-	const { setALERT } = usStrAlrt();
-	const { setLOADING } = usStrLoad();
-	const { ERRORS, REFS, validate } = usValUsr();
 
-	// 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const [OBJECT, setOBJECT] = useState<UserType>(User);
-	const [loginTrigger, stLgnTrgg] = useState<boolean>(false);
-	const [chckSvId, stChckSvId] = useState<boolean>(false);
-	const [chckAtLgn, stChckAtLgn] = useState<boolean>(false);
-	const [_clickCount, stClckCnt] = useState<number>(0);
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  const { URL_OBJECT, URL_GOOGLE, ADMIN_ID, ADMIN_PW, navigate } = useCommonValue();
+  const { translate } = useStoreLanguage();
+  const { setALERT } = useStoreAlert();
+  const { setLOADING } = useStoreLoading();
+  const { ERRORS, REFS, validate } = useValidateUser();
 
-	// 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const objectRef: React.RefObject<UserType> = useRef(OBJECT);
+  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  const [ OBJECT, setOBJECT ] = useState<UserType>(User);
+  const [ loginTrigger, setLoginTrigger ] = useState<boolean>(false);
+  const [ checkedSaveId, setCheckedSaveId ] = useState<boolean>(false);
+  const [ checkedAutoLogin, setCheckedAutoLogin ] = useState<boolean>(false);
+  const [ _clickCount, setClickCount ] = useState<number>(0);
 
-	// 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	useEffect(() => {
-		OBJECT !== objectRef.current && (objectRef.current = OBJECT);
-	}, [OBJECT]);
+  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const objectRef: React.RefObject<UserType> = useRef(OBJECT);
 
-	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	// 트리거가 활성화된 경우
-	useEffect(() => {
-		if (loginTrigger) {
-			(async () => {
-				try {
-					await flowSave();
-				} finally {
-					stLgnTrgg(false);
-				}
-			})();
-		}
-	}, [loginTrigger]);
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  useEffect(() => {
+    OBJECT !== objectRef.current && (objectRef.current = OBJECT);
+  }, [OBJECT]);
 
-	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	// 초기 로드 시 자동로그인 설정 가져오기
-	useEffect(() => {
-		const { autoLogin, autoLoginId, autoLoginPw } =
-			getLocal(`setting`, `id`, ``) || {};
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 트리거가 활성화된 경우
+  useEffect(() => {
+    if (loginTrigger) {
+      (async () => {
+        try {
+          await flowSave();
+        }
+        finally {
+          setLoginTrigger(false);
+        }
+      })();
+    }
+  }, [loginTrigger]);
 
-		// 자동로그인 o
-		if (autoLogin === `true`) {
-			stChckAtLgn(true);
-			setOBJECT((prev) => ({
-				...prev,
-				user_id: autoLoginId,
-				user_pw: autoLoginPw,
-			}));
-			stLgnTrgg(true);
-		}
-		// 자동로그인 x
-		else if (autoLogin === `false`) {
-			stChckAtLgn(false);
-			setOBJECT((prev) => ({
-				...prev,
-				user_id: ``,
-				user_pw: ``,
-			}));
-			stLgnTrgg(false);
-		}
-	}, []);
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 초기 로드 시 자동로그인 설정 가져오기
+  useEffect(() => {
+    const { autoLogin, autoLoginId, autoLoginPw } = getLocal(`setting`, `id`, ``) || {};
 
-	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	// 초기 로드 시 아이디 저장 설정 가져오기
-	useEffect(() => {
-		const { isSaved, isSavedId } = getLocal(`setting`, `id`, ``) || {};
-		// 아이디 저장 o
-		if (isSaved === `true`) {
-			stChckSvId(true);
-			setOBJECT((prev) => ({
-				...prev,
-				user_id: isSavedId,
-			}));
-		}
-		// 아이디 저장 x
-		else if (isSaved === `false`) {
-			stChckSvId(false);
-			setOBJECT((prev) => ({
-				...prev,
-				user_id: ``,
-			}));
-		}
-	}, []);
+    // 자동로그인 o
+    if (autoLogin === `true`) {
+      setCheckedAutoLogin(true);
+      setOBJECT((prev) => ({
+        ...prev,
+        user_id: autoLoginId,
+        user_pw: autoLoginPw,
+      }));
+      setLoginTrigger(true);
+    }
+    // 자동로그인 x
+    else if (autoLogin === `false`) {
+      setCheckedAutoLogin(false);
+      setOBJECT((prev) => ({
+        ...prev,
+        user_id: ``,
+        user_pw: ``,
+      }));
+      setLoginTrigger(false);
+    }
+  }, []);
 
-	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	// 자동로그인 활성화된 경우
-	useEffect(() => {
-		if (chckAtLgn) {
-			setLocal(`setting`, `id`, ``, {
-				autoLogin: `true`,
-				autoLoginId: OBJECT.user_id,
-				autoLoginPw: OBJECT.user_pw,
-			});
-		} else {
-			setLocal(`setting`, `id`, ``, {
-				autoLogin: `false`,
-				autoLoginId: ``,
-				autoLoginPw: ``,
-			});
-		}
-	}, [chckAtLgn, OBJECT.user_id]);
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 초기 로드 시 아이디 저장 설정 가져오기
+  useEffect(() => {
+    const { isSaved, isSavedId } = getLocal(`setting`, `id`, ``) || {};
+    // 아이디 저장 o
+    if (isSaved === `true`) {
+      setCheckedSaveId(true);
+      setOBJECT((prev) => ({
+        ...prev,
+        user_id: isSavedId,
+      }));
+    }
+    // 아이디 저장 x
+    else if (isSaved === `false`) {
+      setCheckedSaveId(false);
+      setOBJECT((prev) => ({
+        ...prev,
+        user_id: ``,
+      }));
+    }
+  }, []);
 
-	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	// 아이디 저장 활성화된 경우
-	useEffect(() => {
-		if (chckSvId) {
-			setLocal(`setting`, `id`, ``, {
-				isSaved: `true`,
-				isSavedId: OBJECT.user_id,
-			});
-		} else {
-			setLocal(`setting`, `id`, ``, {
-				isSaved: `false`,
-				isSavedId: ``,
-			});
-		}
-	}, [chckSvId, OBJECT.user_id]);
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 자동로그인 활성화된 경우
+  useEffect(() => {
+    if (checkedAutoLogin) {
+      setLocal(`setting`, `id`, ``, {
+        autoLogin: `true`,
+        autoLoginId: OBJECT.user_id,
+        autoLoginPw: OBJECT.user_pw,
+      });
+    }
+    else {
+      setLocal(`setting`, `id`, ``, {
+        autoLogin: `false`,
+        autoLoginId: ``,
+        autoLoginPw: ``,
+      });
+    }
+  }, [ checkedAutoLogin, OBJECT.user_id ]);
 
-	// 3. flow ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	async function flowSave() {
-		setLOADING(true);
-		if (!(await validate(objectRef.current, `login`, ``))) {
-			setLOADING(false);
-			return;
-		}
-		axios
-			.post(`${URL_OBJECT}/login`, {
-				user_id: objectRef.current.user_id,
-				user_pw: objectRef.current.user_pw,
-				isAutoLogin: chckAtLgn,
-			})
-			.then((res: any) => {
-				if (res.data.status === `success`) {
-					setLOADING(false);
-					setSession(`setting`, `id`, ``, {
-						sessionId: res.data.result.user_id,
-						admin: res.data.admin === `admin` ? `true` : `false`,
-					});
-					void navigate(`/calendar/list`);
-					void sync();
-				} else if (res.data.status === `isGoogleUser`) {
-					setLOADING(false);
-					setALERT({
-						open: true,
-						msg: translate(res.data.msg as string),
-						severity: `error`,
-					});
-					setSession(`setting`, `id`, ``, {
-						sessionId: res.data.result.user_id,
-						admin: res.data.admin === `admin` ? `true` : `false`,
-					});
-				} else {
-					setLOADING(false);
-					setALERT({
-						open: true,
-						msg: translate(res.data.msg as string),
-						severity: `error`,
-					});
-					setSession(`setting`, `id`, ``, {
-						sessionId: ``,
-						admin: `false`,
-					});
-				}
-			})
-			.catch((error: any) => {
-				setLOADING(false);
-				setALERT({
-					open: true,
-					msg: translate(error.response.data.msg as string),
-					severity: `error`,
-				});
-				console.error(error);
-			})
-			.finally(() => {
-				setLOADING(false);
-			});
-	}
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 아이디 저장 활성화된 경우
+  useEffect(() => {
+    if (checkedSaveId) {
+      setLocal(`setting`, `id`, ``, {
+        isSaved: `true`,
+        isSavedId: OBJECT.user_id,
+      });
+    }
+    else {
+      setLocal(`setting`, `id`, ``, {
+        isSaved: `false`,
+        isSavedId: ``,
+      });
+    }
+  }, [ checkedSaveId, OBJECT.user_id ]);
 
-	// 3. flow ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const flowGoogle = () => {
-		axios
-			.get(`${URL_GOOGLE}/login`)
-			.then((res: any) => {
-				if (res.data.status === `success`) {
-					setLOADING(false);
-					window.location.href = res.data.url;
-				} else {
-					setLOADING(false);
-					setALERT({
-						open: true,
-						msg: translate(res.data.msg as string),
-						severity: `error`,
-					});
-				}
-			})
-			.catch((error: any) => {
-				setLOADING(false);
-				setALERT({
-					open: true,
-					msg: translate(error.response.data.msg as string),
-					severity: `error`,
-				});
-				console.error(error);
-			});
-	};
+  // 3. flow ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  async function flowSave() {
+    setLOADING(true);
+    if (!await validate(objectRef.current, `login`, ``)) {
+      setLOADING(false);
+      return;
+    }
+    axios.post(`${URL_OBJECT}/login`, {
+      user_id: objectRef.current.user_id,
+      user_pw: objectRef.current.user_pw,
+      isAutoLogin: checkedAutoLogin,
+    })
+    .then((res: any) => {
+      if (res.data.status === `success`) {
+        setLOADING(false);
+        setSession(`setting`, `id`, ``, {
+          sessionId: res.data.result.user_id,
+          admin: res.data.admin === `admin` ? `true` : `false`,
+        });
+        void navigate(`/calendar/list`);
+        void sync();
+      }
+      else if (res.data.status === `isGoogleUser`) {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg as string),
+          severity: `error`,
+        });
+        setSession(`setting`, `id`, ``, {
+          sessionId: res.data.result.user_id,
+          admin: res.data.admin === `admin` ? `true` : `false`,
+        });
+      }
+      else {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg as string),
+          severity: `error`,
+        });
+        setSession(`setting`, `id`, ``, {
+          sessionId: ``,
+          admin: `false`,
+        });
+      }
+    })
+    .catch((error: any) => {
+      setLOADING(false);
+      setALERT({
+        open: true,
+        msg: translate(error.response.data.msg as string),
+        severity: `error`,
+      });
+      console.error(error);
+    })
+    .finally(() => {
+      setLOADING(false);
+    });
+  }
 
-	// 7. userLogin ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const usrLgnNd = () => {
-		// 7-1. title
-		const titleSection = () => (
-			<Grid container={true} spacing={1}>
-				<Grid size={12}>
-					<Div
-						className={`fs-1-8rem fw-500`}
-						onClick={() => {
-							stClckCnt((prevCount) => {
-								const newCount: number = prevCount + 1;
-								if (newCount === 5) {
-									setOBJECT((prev) => ({
-										...prev,
-										user_id: ADMIN_ID,
-										user_pw: ADMIN_PW,
-									}));
-									stChckSvId(true);
-									stChckAtLgn(true);
-									stLgnTrgg(true);
-									stClckCnt(0);
-								}
-								return newCount;
-							});
-						}}
-					>
-						{translate(`login`)}
-					</Div>
-				</Grid>
-			</Grid>
-		);
-		// 7-2. login
-		const loginSection = () => (
-			<Grid container={true} spacing={0}>
-				{[OBJECT]?.map((item, i) => (
-					<Grid
-						container={true}
-						spacing={2}
-						className={`p-10px`}
-						key={`detail-${i}`}
-					>
-						{/* row 1 */}
-						<Grid container={true} spacing={0}>
-							<Grid size={12}>
-								<Input
-									label={translate(`id`)}
-									value={item.user_id}
-									inputRef={REFS?.[i]?.user_id}
-									error={ERRORS?.[i]?.user_id}
-									placeholder={`abcd@naver.com`}
-									onChange={(e: any) => {
-										const value: string = e.target.value;
-										if (value?.length > 30) {
-											setOBJECT((prev) => ({
-												...prev,
-												user_id: prev.user_id,
-											}));
-										} else {
-											setOBJECT((prev) => ({
-												...prev,
-												user_id: value,
-											}));
-										}
-									}}
-								/>
-							</Grid>
-						</Grid>
+  // 3. flow ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const flowGoogle = () => {
+    axios.get(`${URL_GOOGLE}/login`)
+    .then((res: any) => {
+      if (res.data.status === `success`) {
+        setLOADING(false);
+        window.location.href = res.data.url;
+      }
+      else {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg as string),
+          severity: `error`,
+        });
+      }
+    })
+    .catch((error: any) => {
+      setLOADING(false);
+      setALERT({
+        open: true,
+        msg: translate(error.response.data.msg as string),
+        severity: `error`,
+      });
+      console.error(error);
+    });
+  };
 
-						{/** row 2 * */}
-						<Grid container={true} spacing={0}>
-							<Grid size={12}>
-								<Input
-									type={`password`}
-									label={translate(`pw`)}
-									value={item.user_pw}
-									inputRef={REFS?.[i]?.user_pw}
-									error={ERRORS?.[i]?.user_pw}
-									onChange={(e: any) => {
-										setOBJECT((prev: any) => ({
-											...prev,
-											user_pw: e.target.value,
-										}));
-									}}
-								/>
-							</Grid>
-						</Grid>
-					</Grid>
-				))}
-			</Grid>
-		);
-		// 7-3. check
-		const checkSection = () => (
-			<Grid container={true} spacing={0}>
-				<Grid size={6} className={`d-row-right`}>
-					<Div className={`d-center fs-0-8rem`}>
-						{translate(`autoLogin`)}
-						<Checkbox
-							color={`primary`}
-							size={`small`}
-							checked={chckAtLgn}
-							onChange={(e: any) => {
-								stChckAtLgn(e.target.checked);
-							}}
-						/>
-					</Div>
-				</Grid>
-				<Grid size={6} className={`d-row-left`}>
-					<Div className={`fs-0-8rem`}>
-						{translate(`saveId`)}
-						<Checkbox
-							color={`primary`}
-							size={`small`}
-							checked={chckSvId}
-							onChange={(e: any) => {
-								stChckSvId(e.target.checked);
-							}}
-						/>
-					</Div>
-				</Grid>
-			</Grid>
-		);
-		// 7-4. button
-		const bttnSec = () => (
-			<Grid container={true} spacing={1}>
-				{/** row 1 * */}
-				<Grid container={true} spacing={1}>
-					<Grid size={12} className={`d-col-center`}>
-						<Btn
-							color={`primary`}
-							className={`w-100p fs-0-8rem`}
-							onClick={() => {
-								void flowSave();
-							}}
-						>
-							{translate(`login`)}
-						</Btn>
-					</Grid>
-				</Grid>
+  // 7. userLogin ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  const userLoginNode = () => {
+    // 7-1. title
+    const titleSection = () => (
+      <Grid container={true} spacing={1}>
+        <Grid size={12}>
+          <Div
+            className={`fs-1-8rem fw-500`}
+            onClick={() => {
+              setClickCount((prevCount) => {
+                const newCount: number = prevCount + 1;
+                if (newCount === 5) {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    user_id: ADMIN_ID,
+                    user_pw: ADMIN_PW,
+                  }));
+                  setCheckedSaveId(true);
+                  setCheckedAutoLogin(true);
+                  setLoginTrigger(true);
+                  setClickCount(0);
+                }
+                return newCount;
+              });
+            }}
+          >
+            {translate(`login`)}
+          </Div>
+        </Grid>
+      </Grid>
+    );
+    // 7-2. login
+    const loginSection = () => (
+      <Grid container={true} spacing={0}>
+        {[OBJECT]?.map((item, i) => (
+          <Grid container={true} spacing={2} className={`p-10px`} key={`detail-${i}`}>
+            {/* row 1 */}
+            <Grid container={true} spacing={0}>
+              <Grid size={12}>
+                <Input
+                  label={translate(`id`)}
+                  value={item.user_id}
+                  inputRef={REFS?.[i]?.user_id}
+                  error={ERRORS?.[i]?.user_id}
+                  placeholder={`abcd@naver.com`}
+                  onChange={(e: any) => {
+                    const value: string = e.target.value;
+                    if (value?.length > 30) {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        user_id: prev.user_id,
+                      }));
+                    }
+                    else {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        user_id: value,
+                      }));
+                    }
+                  }}
+                />
+              </Grid>
+            </Grid>
 
-				{/** row 2 * */}
-				<Grid container={true} spacing={1}>
-					<Grid size={12} className={`d-col-center`}>
-						<Btn
-							color={`primary`}
-							className={`w-100p bg-white`}
-							onClick={() => {
-								flowGoogle();
-							}}
-						>
-							<Div className={`d-row-center`}>
-								<Img
-									max={14}
-									hover={true}
-									shadow={false}
-									radius={false}
-									src={`user1.webp`}
-								/>
-								<Div className={`fs-0-8rem black ml-10px`}>
-									{translate(`googleLogin`)}
-								</Div>
-							</Div>
-						</Btn>
-					</Grid>
-				</Grid>
-			</Grid>
-		);
-		// 7-5. link
-		const linkSection = () => (
-			<Grid container={true} spacing={1}>
-				{/** row 1 * */}
-				<Grid container={true} spacing={1}>
-					<Grid size={12} className={`d-row-center`}>
-						<Div className={`fs-0-8rem black mr-10px`}>
-							{translate(`notId`)}
-						</Div>
-						<Div
-							className={`fs-0-8rem blue pointer`}
-							onClick={() => {
-								void navigate(`/user/signup`);
-							}}
-						>
-							{translate(`signup`)}
-						</Div>
-					</Grid>
-				</Grid>
+            {/** row 2 * */}
+            <Grid container={true} spacing={0}>
+              <Grid size={12}>
+                <Input
+                  type={`password`}
+                  label={translate(`pw`)}
+                  value={item.user_pw}
+                  inputRef={REFS?.[i]?.user_pw}
+                  error={ERRORS?.[i]?.user_pw}
+                  onChange={(e: any) => {
+                    setOBJECT((prev: any) => ({
+                      ...prev,
+                      user_pw: e.target.value,
+                    }));
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+        ))}
+      </Grid>
+    );
+    // 7-3. check
+    const checkSection = () => (
+      <Grid container={true} spacing={0}>
+        <Grid size={6} className={`d-row-right`}>
+          <Div className={`d-center fs-0-8rem`}>
+            {translate(`autoLogin`)}
+            <Checkbox
+              color={`primary`}
+              size={`small`}
+              checked={checkedAutoLogin}
+              onChange={(e: any) => {
+                setCheckedAutoLogin(e.target.checked);
+              }}
+            />
+          </Div>
+        </Grid>
+        <Grid size={6} className={`d-row-left`}>
+          <Div className={`fs-0-8rem`}>
+            {translate(`saveId`)}
+            <Checkbox
+              color={`primary`}
+              size={`small`}
+              checked={checkedSaveId}
+              onChange={(e: any) => {
+                setCheckedSaveId(e.target.checked);
+              }}
+            />
+          </Div>
+        </Grid>
+      </Grid>
+    );
+    // 7-4. button
+    const buttonSection = () => (
+      <Grid container={true} spacing={1}>
+        {/** row 1 * */}
+        <Grid container={true} spacing={1}>
+          <Grid size={12} className={`d-col-center`}>
+            <Btn
+              color={`primary`}
+              className={`w-100p fs-0-8rem`}
+              onClick={() => {
+                void flowSave();
+              }}
+            >
+              {translate(`login`)}
+            </Btn>
+          </Grid>
+        </Grid>
 
-				{/** row 2 * */}
-				<Grid container={true} spacing={1}>
-					<Grid size={12} className={`d-row-center`}>
-						<Div className={`fs-0-8rem black mr-10px`}>
-							{translate(`forgotPw`)}
-						</Div>
-						<Div
-							className={`fs-0-8rem blue pointer`}
-							onClick={() => {
-								void navigate(`/user/resetPw`);
-							}}
-						>
-							{translate(`resetPw`)}
-						</Div>
-					</Grid>
-				</Grid>
-			</Grid>
-		);
-		// 7-10. return
-		return (
-			<Paper
-				className={`content-wrapper d-center radius-2 border-1 shadow-1 h-min-100vh`}
-			>
-				{titleSection()}
-				<Hr m={30} className={`bg-light`} />
-				{loginSection()}
-				<Hr m={30} className={`bg-light`} />
-				{checkSection()}
-				<Hr m={30} className={`bg-light`} />
-				{bttnSec()}
-				<Hr m={30} className={`bg-light`} />
-				{linkSection()}
-			</Paper>
-		);
-	};
+        {/** row 2 * */}
+        <Grid container={true} spacing={1}>
+          <Grid size={12} className={`d-col-center`}>
+            <Btn
+              color={`primary`}
+              className={`w-100p bg-white`}
+              onClick={() => {
+                flowGoogle();
+              }}
+            >
+              <Div className={`d-row-center`}>
+                <Img
+                  max={14}
+                  hover={true}
+                  shadow={false}
+                  radius={false}
+                  src={`user1.webp`}
+                />
+                <Div className={`fs-0-8rem black ml-10px`}>
+                  {translate(`googleLogin`)}
+                </Div>
+              </Div>
+            </Btn>
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+    // 7-5. link
+    const linkSection = () => (
+      <Grid container={true} spacing={1}>
+        {/** row 1 * */}
+        <Grid container={true} spacing={1}>
+          <Grid size={12} className={`d-row-center`}>
+            <Div className={`fs-0-8rem black mr-10px`}>
+              {translate(`notId`)}
+            </Div>
+            <Div
+              className={`fs-0-8rem blue pointer`}
+              onClick={() => {
+                void navigate(`/user/signup`);
+              }}
+            >
+              {translate(`signup`)}
+            </Div>
+          </Grid>
+        </Grid>
 
-	// 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	return <>{usrLgnNd()}</>;
+        {/** row 2 * */}
+        <Grid container={true} spacing={1}>
+          <Grid size={12} className={`d-row-center`}>
+            <Div className={`fs-0-8rem black mr-10px`}>
+              {translate(`forgotPw`)}
+            </Div>
+            <Div
+              className={`fs-0-8rem blue pointer`}
+              onClick={() => {
+                void navigate(`/user/resetPw`);
+              }}
+            >
+              {translate(`resetPw`)}
+            </Div>
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+    // 7-10. return
+    return (
+      <Paper className={`content-wrapper d-center radius-2 border-1 shadow-1 h-min-100vh`}>
+        {titleSection()}
+        <Hr m={30} className={`bg-light`} />
+        {loginSection()}
+        <Hr m={30} className={`bg-light`} />
+        {checkSection()}
+        <Hr m={30} className={`bg-light`} />
+        {buttonSection()}
+        <Hr m={30} className={`bg-light`} />
+        {linkSection()}
+      </Paper>
+    );
+  };
+
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  return (
+    <>
+      {userLoginNode()}
+    </>
+  );
 });

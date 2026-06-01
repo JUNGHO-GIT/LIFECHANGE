@@ -5,369 +5,322 @@
  * @since 2025-12-26
  */
 
-import { useCommonDate as usCmmnDt, useCommonValue as usCmmnVal, useStorageLocal as usStrgLcl } from "@exportHooks";
-import {
-	axios,
-	CartesianGrid as CrtsGrd,
-	Legend,
-	Line,
-	LineChart,
-	ResponsiveContainer as RspnCntn,
-	Tooltip,
-	XAxis,
-	YAxis,
-} from "@exportLibs";
-import { memo, useEffect, useState } from "@exportReacts";
-import {
-	ExerciseLineCardio as ExerLnCrd,
-	ExerciseLineScale as ExerLnScl,
-	type ExerciseLineType as ExerLnTyp,
-	ExerciseLineVolume as ExerLnVol,
-} from "@exportSchemas";
-import { formatDate, formatY } from "@exportScripts";
-import {
-	useStoreAlert as usStrAlrt,
-	useStoreLanguage as usStrLang,
-	useStoreLoading as usStrLoad,
-} from "@exportStores";
+import { useState, useEffect, memo } from "@exportReacts";
+import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
+import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
+import { ExerciseLineVolume, ExerciseLineCardio, ExerciseLineScale, ExerciseLineType } from "@exportSchemas";
+import { axios } from "@exportLibs";
+import { formatY, formatDate } from "@exportScripts";
+import { Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@exportLibs";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 declare interface ExerciseChartLineProps {
-	TYPE?: any;
-	setTYPE?: any;
+  TYPE?: any;
+  setTYPE?: any;
 }
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const ExerChrtLn = memo((props: ExerciseChartLineProps) => {
-	// 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const { URL_OBJECT, PATH, sessionId, chartColors } = usCmmnVal();
-	const { localUnit, exerciseChartArray: exerChrtArry } = usCmmnVal();
-	const { getDayFmt, getWeekStartFmt: gtWkStrtFmt, getWeekEndFmt: gtWkEndFmt } = usCmmnDt();
-	const { getMonthStartFmt: gtMnStFm, getMonthEndFmt: gtMnthEndFmt, getYearStartFmt: gtYrStrtFmt, getYearEndFmt: gtYrEndFmt } =
-		usCmmnDt();
-	const { translate } = usStrLang();
-	const { setALERT } = usStrAlrt();
-	const { setLOADING } = usStrLoad();
+export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
 
-	// 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	const [TYPE, setTYPE] = usStrgLcl(`type`, `line`, PATH, {
-		section: `week`,
-		line: `volume`,
-	});
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  const { URL_OBJECT, PATH, sessionId, chartColors } = useCommonValue();
+  const { localUnit, exerciseChartArray } = useCommonValue();
+  const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
+  const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
+  const { translate } = useStoreLanguage();
+  const { setALERT } = useStoreAlert();
+  const { setLOADING } = useStoreLoading();
 
-	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [TYPE_STATE, stTypSt] = useState(() => {
-		return props?.TYPE !== undefined ? props.TYPE : TYPE;
-	});
-	const [DATE, _setDATE] = useState({
-		dateType: ``,
-		dateStart: getDayFmt(),
-		dateEnd: getDayFmt(),
-		weekStartFmt: gtWkStrtFmt(),
-		weekEndFmt: gtWkEndFmt(),
-		monthStartFmt: gtMnStFm(),
-		monthEndFmt: gtMnthEndFmt(),
-		yearStartFmt: gtYrStrtFmt(),
-		yearEndFmt: gtYrEndFmt(),
-	});
+  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const [ TYPE, setTYPE ] = useStorageLocal(
+    `type`, `line`, PATH, {
+      section: `week`,
+      line: `volume`,
+    }
+  );
 
-	// 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	const [OBJC_SCL_WK, stObjcSclWk] = useState<
-		[ExerLnTyp]
-	>([ExerLnScl]);
-	const [OBJC_VOL_WK, stObjcVolWk] = useState<
-		[ExerLnTyp]
-	>([ExerLnVol]);
-	const [OBJC_CRD_WK, stObjcCrdWk] = useState<
-		[ExerLnTyp]
-	>([ExerLnCrd]);
-	const [OBJ_SCL_MNT, stObScMn] = useState<
-		[ExerLnTyp]
-	>([ExerLnScl]);
-	const [OBJ_VOL_MNT, stObVoMn] = useState<
-		[ExerLnTyp]
-	>([ExerLnVol]);
-	const [OBJ_CRD_MNT, stObCrMn] = useState<
-		[ExerLnTyp]
-	>([ExerLnCrd]);
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const [ TYPE_STATE, setTYPE_STATE ] = useState(() => {
+    return props?.TYPE !== undefined ? props.TYPE : TYPE;
+  });
+  const [ DATE, _setDATE ] = useState({
+    dateType: ``,
+    dateStart: getDayFmt(),
+    dateEnd: getDayFmt(),
+    weekStartFmt: getWeekStartFmt(),
+    weekEndFmt: getWeekEndFmt(),
+    monthStartFmt: getMonthStartFmt(),
+    monthEndFmt: getMonthEndFmt(),
+    yearStartFmt: getYearStartFmt(),
+    yearEndFmt: getYearEndFmt(),
+  });
 
-	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	useEffect(() => {
-		(async () => {
-			setLOADING(true);
-			try {
-				const params = {
-					user_id: sessionId,
-					DATE: DATE,
-				};
-				const [resWeek, resMonth] = await Promise.all([
-					axios.get(`${URL_OBJECT}/chart/line/week`, {
-						params: params,
-					}),
-					axios.get(`${URL_OBJECT}/chart/line/month`, {
-						params: params,
-					}),
-				]);
-				stObjcSclWk(
-					resWeek.data.result.scale?.length > 0
-						? resWeek.data.result.scale
-						: [ExerLnScl],
-				);
-				stObjcVolWk(
-					resWeek.data.result.volume?.length > 0
-						? resWeek.data.result.volume
-						: [ExerLnVol],
-				);
-				stObjcCrdWk(
-					resWeek.data.result.cardio?.length > 0
-						? resWeek.data.result.cardio
-						: [ExerLnCrd],
-				);
-				stObScMn(
-					resMonth.data.result.scale?.length > 0
-						? resMonth.data.result.scale
-						: [ExerLnScl],
-				);
-				stObVoMn(
-					resMonth.data.result.volume?.length > 0
-						? resMonth.data.result.volume
-						: [ExerLnVol],
-				);
-				stObCrMn(
-					resMonth.data.result.cardio?.length > 0
-						? resMonth.data.result.cardio
-						: [ExerLnCrd],
-				);
-			} catch (error: any) {
-				setLOADING(false);
-				setALERT({
-					open: true,
-					msg: translate(error.response.data.msg as string),
-					severity: `error`,
-				});
-				console.error(error);
-			} finally {
-				setLOADING(false);
-			}
-		})();
-	}, [URL_OBJECT, DATE, sessionId]);
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const [ OBJECT_SCALE_WEEK, setOBJECT_SCALE_WEEK ] = useState<[ExerciseLineType]>([ExerciseLineScale]);
+  const [ OBJECT_VOLUME_WEEK, setOBJECT_VOLUME_WEEK ] = useState<[ExerciseLineType]>([ExerciseLineVolume]);
+  const [ OBJECT_CARDIO_WEEK, setOBJECT_CARDIO_WEEK ] = useState<[ExerciseLineType]>([ExerciseLineCardio]);
+  const [ OBJECT_SCALE_MONTH, setOBJECT_SCALE_MONTH ] = useState<[ExerciseLineType]>([ExerciseLineScale]);
+  const [ OBJECT_VOLUME_MONTH, setOBJECT_VOLUME_MONTH ] = useState<[ExerciseLineType]>([ExerciseLineVolume]);
+  const [ OBJECT_CARDIO_MONTH, setOBJECT_CARDIO_MONTH ] = useState<[ExerciseLineType]>([ExerciseLineCardio]);
 
-	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	useEffect(() => {
-		if (props?.TYPE !== undefined) {
-			const isSame: boolean =
-				JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
-			if (!isSame) {
-				stTypSt(props.TYPE);
-			}
-		}
-	}, [props?.TYPE]);
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  useEffect(() => {
+    (async () => {
+      setLOADING(true);
+      try {
+        const params = {
+          user_id: sessionId,
+          DATE: DATE,
+        };
+        const [ resWeek, resMonth ] = await Promise.all([
+          axios.get(`${URL_OBJECT}/chart/line/week`, {
+            params: params,
+          }),
+          axios.get(`${URL_OBJECT}/chart/line/month`, {
+            params: params,
+          }),
+        ]);
+        setOBJECT_SCALE_WEEK(
+					resWeek.data.result.scale?.length > 0 ? resWeek.data.result.scale : [ExerciseLineScale]
+        );
+        setOBJECT_VOLUME_WEEK(
+					resWeek.data.result.volume?.length > 0 ? resWeek.data.result.volume : [ExerciseLineVolume]
+        );
+        setOBJECT_CARDIO_WEEK(
+					resWeek.data.result.cardio?.length > 0 ? resWeek.data.result.cardio : [ExerciseLineCardio]
+        );
+        setOBJECT_SCALE_MONTH(
+					resMonth.data.result.scale?.length > 0 ? resMonth.data.result.scale : [ExerciseLineScale]
+        );
+        setOBJECT_VOLUME_MONTH(
+					resMonth.data.result.volume?.length > 0 ? resMonth.data.result.volume : [ExerciseLineVolume]
+        );
+        setOBJECT_CARDIO_MONTH(
+					resMonth.data.result.cardio?.length > 0 ? resMonth.data.result.cardio : [ExerciseLineCardio]
+        );
+      }
+      catch (error: any) {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(error.response.data.msg as string),
+          severity: `error`,
+        });
+        console.error(error);
+      }
+      finally {
+        setLOADING(false);
+      }
+    })();
+  }, [ URL_OBJECT, DATE, sessionId ]);
 
-	// 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-	useEffect(() => {
-		if (props?.setTYPE) {
-			const isSame: boolean =
-				JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
-			if (!isSame) {
-				props.setTYPE(TYPE_STATE);
-			}
-		} else {
-			setTYPE(TYPE_STATE);
-		}
-	}, [TYPE_STATE]);
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  useEffect(() => {
+    if (props?.TYPE !== undefined) {
+      const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
+      if (!isSame) {
+        setTYPE_STATE(props.TYPE);
+      }
+    }
+  }, [props?.TYPE]);
 
-	// 5-1. chart ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-	const chartNode = () => {
-		let object: any = null;
-		let endStr: string = ``;
-		let dateRange: string = ``;
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  useEffect(() => {
+    if (props?.setTYPE) {
+      const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
+      if (!isSame) {
+        props.setTYPE(TYPE_STATE);
+      }
+    }
+    else {
+      setTYPE(TYPE_STATE);
+    }
+  }, [TYPE_STATE]);
 
-		TYPE_STATE.section === `week` && TYPE_STATE.line === `scale`
-			? (() => {
-					object = OBJC_SCL_WK;
-					endStr = localUnit;
-					dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
-				})()
-			: TYPE_STATE.section === `week` && TYPE_STATE.line === `volume`
-				? (() => {
-						object = OBJC_VOL_WK;
-						endStr = `vol`;
-						dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
-					})()
-				: TYPE_STATE.section === `week` && TYPE_STATE.line === `cardio`
-					? (() => {
-							object = OBJC_CRD_WK;
-							endStr = `hr`;
-							dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
-						})()
-					: TYPE_STATE.section === `month` && TYPE_STATE.line === `scale`
-						? (() => {
-								object = OBJ_SCL_MNT;
-								endStr = localUnit;
-								dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
-							})()
-						: TYPE_STATE.section === `month` && TYPE_STATE.line === `volume`
-							? (() => {
-									object = OBJ_VOL_MNT;
-									endStr = `vol`;
-									dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
-								})()
-							: TYPE_STATE.section === `month` &&
-								TYPE_STATE.line === `cardio` &&
-								(() => {
-									object = OBJ_CRD_MNT;
-									endStr = `hr`;
-									dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
-								});
+  // 5-1. chart ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const chartNode = () => {
 
-		const { domain, ticks, formatterY } = formatY(
-			object,
-			exerChrtArry,
-			`exercise`,
-		);
+    let object: any = null;
+    let endStr: string = ``;
+    let dateRange: string = ``;
+
+		(TYPE_STATE.section === `week` && TYPE_STATE.line === `scale`) ? (() => {
+		  object = OBJECT_SCALE_WEEK;
+		  endStr = localUnit;
+		  dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+		})()
+		: (TYPE_STATE.section === `week` && TYPE_STATE.line === `volume`) ? (() => {
+		  object = OBJECT_VOLUME_WEEK;
+		  endStr = `vol`;
+		  dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+		})()
+		: (TYPE_STATE.section === `week` && TYPE_STATE.line === `cardio`) ? (() => {
+		  object = OBJECT_CARDIO_WEEK;
+		  endStr = `hr`;
+		  dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+		})()
+		: (TYPE_STATE.section === `month` && TYPE_STATE.line === `scale`) ? (() => {
+		  object = OBJECT_SCALE_MONTH;
+		  endStr = localUnit;
+		  dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
+		})()
+		: (TYPE_STATE.section === `month` && TYPE_STATE.line === `volume`) ? (() => {
+		  object = OBJECT_VOLUME_MONTH;
+		  endStr = `vol`;
+		  dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
+		})()
+		: (TYPE_STATE.section === `month` && TYPE_STATE.line === `cardio`) && (() => {
+		  object = OBJECT_CARDIO_MONTH;
+		  endStr = `hr`;
+		  dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
+		});
+
+		const { domain, ticks, formatterY } = formatY(object, exerciseChartArray, `exercise`);
 		return (
-			<RspnCntn width={`100%`} height={500}>
-				<LineChart
-					data={object as any[]}
-					margin={{ top: 60, right: 20, bottom: 10, left: 20 }}
-					barGap={20}
-					barCategoryGap={`20%`}
-				>
-					<defs>
-						<filter id={`textBackground`} x={0} y={0} width={1} height={1}>
-							<feFlood floodColor={`#f9f9f9`} />
-							<feComposite in={`SourceGraphic`} />
-						</filter>
-					</defs>
-					<rect
-						x={`50%`}
-						y={15}
-						width={120}
-						height={20}
-						rx={4}
-						transform={`translate(-60, 0)`}
-						fill={`transparent`}
-					/>
-					<text
-						x={`50%`}
-						y={25}
-						textAnchor={`middle`}
-						dominantBaseline={`middle`}
-						style={{
-							fontSize: `1.0rem`,
-							fill: `#666`,
-							fontWeight: 600,
-						}}
-					>
-						{dateRange}
-					</text>
-					<CrtsGrd strokeDasharray={`3 3`} stroke={`#f5f5f5`} />
-					<XAxis
-						type={`category`}
-						dataKey={`name`}
-						tickLine={false}
-						axisLine={false}
-						tick={{ fill: `#666`, fontSize: 14 }}
-					/>
-					<YAxis
-						width={30}
-						type={`number`}
-						domain={domain}
-						tickLine={false}
-						axisLine={false}
-						ticks={ticks}
-						tick={{ fill: `#666`, fontSize: 14 }}
-						tickFormatter={formatterY}
-					/>
-					{TYPE_STATE.line === `scale` && (
-						<Line
-							dataKey={`scale`}
-							type={`monotone`}
-							stroke={chartColors[5]}
-							strokeWidth={2}
-							activeDot={{ r: 4 }}
-							dot={false}
-							isAnimationActive={true}
-							animationBegin={0}
-							animationDuration={400}
-							animationEasing={`linear`}
-						/>
-					)}
-					{TYPE_STATE.line === `volume` && (
-						<Line
-							dataKey={`volume`}
-							type={`monotone`}
-							stroke={chartColors[1]}
-							strokeWidth={2}
-							activeDot={{ r: 4 }}
-							dot={false}
-							isAnimationActive={true}
-							animationBegin={0}
-							animationDuration={400}
-							animationEasing={`linear`}
-						/>
-					)}
-					{TYPE_STATE.line === `cardio` && (
-						<Line
-							dataKey={`cardio`}
-							type={`monotone`}
-							stroke={chartColors[3]}
-							strokeWidth={2}
-							activeDot={{ r: 4 }}
-							dot={false}
-							isAnimationActive={true}
-							animationBegin={0}
-							animationDuration={400}
-							animationEasing={`linear`}
-						/>
-					)}
-					<Tooltip
-						labelFormatter={(_label: any, payload: any) => {
-							const name: string =
-								payload?.length > 0 ? payload[0]?.payload.name : ``;
-							const date: string =
-								payload?.length > 0 ? payload[0]?.payload.date : ``;
-							return `${translate(name)} (${formatDate(date)})`;
-						}}
-						formatter={(value: any, name: any) => {
-							const customName: string = translate(name as string);
-							return [
-								`${Number(value).toLocaleString()} ${endStr}`,
-								customName,
-							];
-						}}
-						cursor={{
-							fill: `rgba(0, 0, 0, 0.1)`,
-						}}
-						contentStyle={{
-							borderRadius: `10px`,
-							boxShadow: `0 2px 4px 0 rgba(0, 0, 0, 0.1)`,
-							padding: `10px`,
-							border: `none`,
-							background: `#fff`,
-							color: `#666`,
-						}}
-					/>
-					<Legend
-						iconType={`circle`}
-						verticalAlign={`bottom`}
-						align={`center`}
-						formatter={(value) => {
-							return translate(value as string);
-						}}
-						wrapperStyle={{
-							width: `95%`,
-							display: `flex`,
-							justifyContent: `center`,
-							alignItems: `center`,
-							fontSize: `0.8rem`,
-						}}
-					/>
-				</LineChart>
-			</RspnCntn>
+		  <ResponsiveContainer width={`100%`} height={500}>
+		    <LineChart
+		      data={object as any[]}
+		      margin={{ top: 60, right: 20, bottom: 10, left: 20 }}
+		      barGap={20}
+		      barCategoryGap={`20%`}
+		    >
+		      <defs>
+		        <filter id={`textBackground`} x={0} y={0} width={1} height={1}>
+		          <feFlood floodColor={`#f9f9f9`} />
+		          <feComposite in={`SourceGraphic`} />
+		        </filter>
+		      </defs>
+		      <rect
+		        x={`50%`}
+		        y={15}
+		        width={120}
+		        height={20}
+		        rx={4}
+		        transform={`translate(-60, 0)`}
+		        fill={`transparent`}
+		      />
+		      <text
+		        x={`50%`}
+		        y={25}
+		        textAnchor={`middle`}
+		        dominantBaseline={`middle`}
+		        style={{
+		          fontSize: `1.0rem`,
+		          fill: `#666`,
+		          fontWeight: 600,
+		        }}
+		      >
+		        {dateRange}
+		      </text>
+		      <CartesianGrid
+		        strokeDasharray={`3 3`}
+		        stroke={`#f5f5f5`}
+		      />
+		      <XAxis
+		        type={`category`}
+		        dataKey={`name`}
+		        tickLine={false}
+		        axisLine={false}
+		        tick={{ fill: `#666`, fontSize: 14 }}
+		      />
+		      <YAxis
+		        width={30}
+		        type={`number`}
+		        domain={domain}
+		        tickLine={false}
+		        axisLine={false}
+		        ticks={ticks}
+		        tick={{ fill: `#666`, fontSize: 14 }}
+		        tickFormatter={formatterY}
+		      />
+		      {TYPE_STATE.line === (`scale`) && (
+		        <Line
+		          dataKey={`scale`}
+		          type={`monotone`}
+		          stroke={chartColors[5]}
+		          strokeWidth={2}
+		          activeDot={{ r: 4 }}
+		          dot={false}
+		          isAnimationActive={true}
+		          animationBegin={0}
+		          animationDuration={400}
+		          animationEasing={`linear`}
+		        />
+		      )}
+		      {TYPE_STATE.line === (`volume`) && (
+		        <Line
+		          dataKey={`volume`}
+		          type={`monotone`}
+		          stroke={chartColors[1]}
+		          strokeWidth={2}
+		          activeDot={{ r: 4 }}
+		          dot={false}
+		          isAnimationActive={true}
+		          animationBegin={0}
+		          animationDuration={400}
+		          animationEasing={`linear`}
+		        />
+		      )}
+		      {TYPE_STATE.line === (`cardio`) && (
+		        <Line
+		          dataKey={`cardio`}
+		          type={`monotone`}
+		          stroke={chartColors[3]}
+		          strokeWidth={2}
+		          activeDot={{ r: 4 }}
+		          dot={false}
+		          isAnimationActive={true}
+		          animationBegin={0}
+		          animationDuration={400}
+		          animationEasing={`linear`}
+		        />
+		      )}
+		      <Tooltip
+		        labelFormatter={(_label: any, payload: any) => {
+		          const name: string = payload?.length > 0 ? payload[0]?.payload.name : ``;
+		          const date: string = payload?.length > 0 ? payload[0]?.payload.date : ``;
+		          return `${translate(name)} (${formatDate(date)})`;
+		        }}
+		        formatter={(value: any, name: any) => {
+		          const customName: string = translate(name as string);
+		          return [ `${Number(value).toLocaleString()} ${endStr}`, customName ];
+		        }}
+		        cursor={{
+		          fill: `rgba(0, 0, 0, 0.1)`,
+		        }}
+		        contentStyle={{
+		          borderRadius: `10px`,
+		          boxShadow: `0 2px 4px 0 rgba(0, 0, 0, 0.1)`,
+		          padding: `10px`,
+		          border: `none`,
+		          background: `#fff`,
+		          color: `#666`,
+		        }}
+		      />
+		      <Legend
+		        iconType={`circle`}
+		        verticalAlign={`bottom`}
+		        align={`center`}
+		        formatter={(value) => {
+		          return translate(value as string);
+		        }}
+		        wrapperStyle={{
+		          width: `95%`,
+		          display: `flex`,
+		          justifyContent: `center`,
+		          alignItems: `center`,
+		          fontSize: `0.8rem`,
+		        }}
+		      />
+		    </LineChart>
+		  </ResponsiveContainer>
 		);
-	};
+  };
 
-	// 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-	return <>{chartNode()}</>;
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  return (
+    <>
+      {chartNode()}
+    </>
+  );
 });
