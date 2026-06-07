@@ -5,8 +5,9 @@
  * @since 2025-12-26
  */
 
-import mongoose from "mongoose";
+import { incrementSeq } from "@schemas/Counter";
 import { MoneyRecord } from "@schemas/money/MoneyRecord";
+import mongoose from "mongoose";
 
 // 0. exist ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const exist = async (
@@ -15,7 +16,6 @@ export const exist = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-
   const finalResult: any = await MoneyRecord.aggregate([
     {
       $match: {
@@ -26,7 +26,7 @@ export const exist = async (
         money_record_dateEnd: {
           $gte: dateStart_param,
         },
-        ...dateType_param ? { money_record_dateType: dateType_param } : {},
+        ...(dateType_param ? { money_record_dateType: dateType_param } : {}),
       },
     },
     {
@@ -58,7 +58,6 @@ export const list = async (
   part_param?: string,
   title_param?: string,
 ) => {
-
   // part, title 필터 조건 구성
   const matchSection: any = {};
   if (part_param && part_param !== `all`) {
@@ -80,7 +79,7 @@ export const list = async (
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        ...dateType_param ? { money_record_dateType: dateType_param } : {},
+        ...(dateType_param ? { money_record_dateType: dateType_param } : {}),
         ...matchSection,
       },
     },
@@ -98,8 +97,12 @@ export const list = async (
             as: `section`,
             cond: {
               $and: [
-                part_param && part_param !== `all` ? { $eq: [ `$$section.money_record_part`, part_param ] } : true,
-                title_param && title_param !== `all` ? { $eq: [ `$$section.money_record_title`, title_param ] } : true,
+                part_param && part_param !== `all`
+                  ? { $eq: [`$$section.money_record_part`, part_param] }
+                  : true,
+                title_param && title_param !== `all`
+                  ? { $eq: [`$$section.money_record_title`, title_param] }
+                  : true,
               ],
             },
           },
@@ -115,8 +118,18 @@ export const list = async (
               initialValue: 0,
               in: {
                 $cond: [
-                  { $and: [{ $eq: [ `$$this.money_record_part`, `income` ] }, { $eq: [ `$$this.money_record_include`, `Y` ] }] },
-                  { $add: [ `$$value`, { $toDouble: `$$this.money_record_amount` }] },
+                  {
+                    $and: [
+                      { $eq: [`$$this.money_record_part`, `income`] },
+                      { $eq: [`$$this.money_record_include`, `Y`] },
+                    ],
+                  },
+                  {
+                    $add: [
+                      `$$value`,
+                      { $toDouble: `$$this.money_record_amount` },
+                    ],
+                  },
                   `$$value`,
                 ],
               },
@@ -130,8 +143,18 @@ export const list = async (
               initialValue: 0,
               in: {
                 $cond: [
-                  { $and: [{ $eq: [ `$$this.money_record_part`, `expense` ] }, { $eq: [ `$$this.money_record_include`, `Y` ] }] },
-                  { $add: [ `$$value`, { $toDouble: `$$this.money_record_amount` }] },
+                  {
+                    $and: [
+                      { $eq: [`$$this.money_record_part`, `expense`] },
+                      { $eq: [`$$this.money_record_include`, `Y`] },
+                    ],
+                  },
+                  {
+                    $add: [
+                      `$$value`,
+                      { $toDouble: `$$this.money_record_amount` },
+                    ],
+                  },
                   `$$value`,
                 ],
               },
@@ -145,9 +168,6 @@ export const list = async (
         money_record_dateStart: sort_param,
       },
     },
-    {
-      $skip: (Number(page_param) - 1),
-    },
   ]);
 
   return finalResult;
@@ -160,16 +180,12 @@ export const detail = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-
-  const finalResult: any = await MoneyRecord.findOne(
-    {
-      user_id: user_id_param,
-      money_record_dateStart: dateStart_param,
-      money_record_dateEnd: dateEnd_param,
-      ...dateType_param ? { money_record_dateType: dateType_param } : {},
-    },
-  )
-  .lean();
+  const finalResult: any = await MoneyRecord.findOne({
+    user_id: user_id_param,
+    money_record_dateStart: dateStart_param,
+    money_record_dateEnd: dateEnd_param,
+    ...(dateType_param ? { money_record_dateType: dateType_param } : {}),
+  }).lean();
 
   return finalResult;
 };
@@ -182,28 +198,24 @@ export const create = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-
-  const finalResult: any = await MoneyRecord.create(
-    {
-      _id: new mongoose.Types.ObjectId(),
-      user_id: user_id_param,
-      money_record_dateType: dateType_param,
-      money_record_dateStart: dateStart_param,
-      money_record_dateEnd: dateEnd_param,
-      money_record_total_income: OBJECT_param.money_record_total_income,
-      money_record_total_expense: OBJECT_param.money_record_total_expense,
-      money_section: OBJECT_param.money_section,
-      money_record_regDt: new Date(),
-      money_record_updateDt: ``,
-    },
-  );
+  const finalResult: any = await MoneyRecord.create({
+    _id: new mongoose.Types.ObjectId(),
+    user_id: user_id_param,
+    money_record_dateType: dateType_param,
+    money_record_dateStart: dateStart_param,
+    money_record_dateEnd: dateEnd_param,
+    money_record_total_income: OBJECT_param.money_record_total_income,
+    money_record_total_expense: OBJECT_param.money_record_total_expense,
+    money_section: OBJECT_param.money_section,
+    money_record_regDt: new Date(),
+    money_record_updateDt: ``,
+  });
 
   return finalResult;
 };
 
 // 4. update ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const update = {
-
   // 1. update (기존항목 유지 + 타겟항목으로 수정)
   update: async (
     user_id_param: string,
@@ -212,13 +224,28 @@ export const update = {
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
+    // upsert 신규 삽입 시 pre('save') 가 우회되어 number 가 0 으로 남는 문제 방지 (insert 일 때만 채번)
+    const existDoc: any = await MoneyRecord.findOne({
+      user_id: user_id_param,
+      money_record_dateStart: dateStart_param,
+      money_record_dateEnd: dateEnd_param,
+      ...(dateType_param ? { money_record_dateType: dateType_param } : {}),
+    }).lean();
+    const setOnInsert: any = existDoc
+      ? {}
+      : {
+          money_record_number: await incrementSeq(
+            `money_record_number`,
+            `MoneyRecord`,
+          ),
+        };
 
     const finalResult: any = await MoneyRecord.findOneAndUpdate(
       {
         user_id: user_id_param,
         money_record_dateStart: dateStart_param,
         money_record_dateEnd: dateEnd_param,
-        ...dateType_param ? { money_record_dateType: dateType_param } : {},
+        ...(dateType_param ? { money_record_dateType: dateType_param } : {}),
       },
       {
         $set: {
@@ -227,13 +254,13 @@ export const update = {
           money_section: OBJECT_param.money_section,
           money_record_updateDt: new Date(),
         },
+        $setOnInsert: setOnInsert,
       },
       {
         upsert: true,
-        new: true,
+        returnDocument: `after`,
       },
-    )
-    .lean();
+    ).lean();
 
     return finalResult;
   },
@@ -246,32 +273,40 @@ export const update = {
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
+    const findResult: any = await MoneyRecord.findOne({
+      user_id: user_id_param,
+      money_record_dateStart: dateStart_param,
+      money_record_dateEnd: dateEnd_param,
+      ...(dateType_param ? { money_record_dateType: dateType_param } : {}),
+    }).lean();
 
-    const findResult: any = await MoneyRecord.findOne(
-      {
-        user_id: user_id_param,
-        money_record_dateStart: dateStart_param,
-        money_record_dateEnd: dateEnd_param,
-        ...dateType_param ? { money_record_dateType: dateType_param } : {},
-      },
-    )
-    .lean();
-
+    // 대상 날짜에 기존 레코드가 없을 때 null 역참조 방지
+    const base: any = findResult ?? {};
     const newIncome: string = String(
-      Number.parseFloat(findResult.money_record_total_income as string) +
-      Number.parseFloat(OBJECT_param.money_record_total_income as string),
+      Number.parseFloat((base.money_record_total_income as string) ?? `0`) +
+        Number.parseFloat(OBJECT_param.money_record_total_income as string),
     );
     const newExpense: string = String(
-      Number.parseFloat(findResult.money_record_total_expense as string) +
-      Number.parseFloat(OBJECT_param.money_record_total_expense as string),
+      Number.parseFloat((base.money_record_total_expense as string) ?? `0`) +
+        Number.parseFloat(OBJECT_param.money_record_total_expense as string),
     );
+
+    // upsert 신규 삽입 시 number 0 잔존 방지 (기존 레코드 없을 때만 채번)
+    const setOnInsert: any = findResult
+      ? {}
+      : {
+          money_record_number: await incrementSeq(
+            `money_record_number`,
+            `MoneyRecord`,
+          ),
+        };
 
     const finalResult: any = await MoneyRecord.updateOne(
       {
         user_id: user_id_param,
         money_record_dateStart: dateStart_param,
         money_record_dateEnd: dateEnd_param,
-        ...dateType_param ? { money_record_dateType: dateType_param } : {},
+        ...(dateType_param ? { money_record_dateType: dateType_param } : {}),
       },
       {
         $set: {
@@ -282,12 +317,12 @@ export const update = {
         $push: {
           money_section: OBJECT_param.money_section,
         },
+        $setOnInsert: setOnInsert,
       },
       {
         upsert: true,
       },
-    )
-    .lean();
+    ).lean();
 
     return finalResult;
   },
@@ -300,13 +335,28 @@ export const update = {
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
+    // upsert 신규 삽입 시 number 0 잔존 방지 (insert 일 때만 채번)
+    const existDoc: any = await MoneyRecord.findOne({
+      user_id: user_id_param,
+      money_record_dateStart: dateStart_param,
+      money_record_dateEnd: dateEnd_param,
+      ...(dateType_param ? { money_record_dateType: dateType_param } : {}),
+    }).lean();
+    const setOnInsert: any = existDoc
+      ? {}
+      : {
+          money_record_number: await incrementSeq(
+            `money_record_number`,
+            `MoneyRecord`,
+          ),
+        };
 
     const finalResult: any = await MoneyRecord.findOneAndUpdate(
       {
         user_id: user_id_param,
         money_record_dateStart: dateStart_param,
         money_record_dateEnd: dateEnd_param,
-        ...dateType_param ? { money_record_dateType: dateType_param } : {},
+        ...(dateType_param ? { money_record_dateType: dateType_param } : {}),
       },
       {
         $set: {
@@ -315,13 +365,13 @@ export const update = {
           money_section: OBJECT_param.money_section,
           money_record_updateDt: new Date(),
         },
+        $setOnInsert: setOnInsert,
       },
       {
         upsert: true,
-        new: true,
+        returnDocument: `after`,
       },
-    )
-    .lean();
+    ).lean();
 
     return finalResult;
   },
@@ -334,16 +384,12 @@ export const deletes = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-
-  const finalResult: any = await MoneyRecord.findOneAndDelete(
-    {
-      user_id: user_id_param,
-      money_record_dateStart: dateStart_param,
-      money_record_dateEnd: dateEnd_param,
-      ...dateType_param ? { money_record_dateType: dateType_param } : {},
-    },
-  )
-  .lean();
+  const finalResult: any = await MoneyRecord.findOneAndDelete({
+    user_id: user_id_param,
+    money_record_dateStart: dateStart_param,
+    money_record_dateEnd: dateEnd_param,
+    ...(dateType_param ? { money_record_dateType: dateType_param } : {}),
+  }).lean();
 
   return finalResult;
 };

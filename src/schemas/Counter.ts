@@ -23,46 +23,32 @@ const Counter = mongoose.model(`Counter`, schema, `Counter`);
 
 // 2. incrementSeq ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const incrementSeq = async (sequenceName: string, modelName: string) => {
-
-  // 시퀀스 번호 동기화 검증 로직
+  // 기존 컬렉션 최댓값 조회 (*_number unique 인덱스로 IXSCAN, lean 으로 가볍게)
   const Model = mongoose.model(modelName);
-  const latestDoc = await Model.findOne()?.sort({ [sequenceName]: -1 }).exec();
+  const latestDoc: any = await Model.findOne()
+    .sort({ [sequenceName]: -1 })
+    .lean()
+    .exec();
   const latestSeq = latestDoc ? latestDoc[sequenceName] : 0;
 
-  // Counter 컬렉션 업데이트
+  // Counter 갱신을 파이프라인 업데이트 1회로 원자 채번 (seq=max(seq,latestSeq)+1)
   const updateDt = await Counter.findOneAndUpdate(
     {
       _id: sequenceName,
     },
-    {
-      $inc: {
-        seq: 1,
+    [
+      {
+        $set: {
+          seq: { $add: [{ $max: [{ $ifNull: ["$seq", 0] }, latestSeq] }, 1] },
+        },
       },
-    },
+    ],
     {
-      new: true,
+      returnDocument: `after`,
       upsert: true,
+      updatePipeline: true,
     },
-  )
-  .exec();
-
-  // 시퀀스 번호가 최신 상태인지 검증하고 필요한 경우 재설정
-  if (updateDt.seq <= latestSeq) {
-    await Counter.findOneAndUpdate(
-      {
-        _id: sequenceName,
-      },
-      {
-        seq: latestSeq + 1,
-      },
-      {
-        new: true,
-      },
-    )
-    .exec();
-
-    return latestSeq + 1;
-  }
+  ).exec();
 
   return updateDt.seq;
 };

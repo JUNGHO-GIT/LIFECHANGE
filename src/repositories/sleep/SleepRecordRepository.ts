@@ -5,8 +5,9 @@
  * @since 2025-12-26
  */
 
-import mongoose from "mongoose";
+import { incrementSeq } from "@schemas/Counter";
 import { SleepRecord } from "@schemas/sleep/SleepRecord";
+import mongoose from "mongoose";
 
 // 0. exist ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const exist = async (
@@ -15,7 +16,6 @@ export const exist = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-
   const finalResult: any = await SleepRecord.aggregate([
     {
       $match: {
@@ -26,7 +26,7 @@ export const exist = async (
         sleep_record_dateEnd: {
           $gte: dateStart_param,
         },
-        ...dateType_param ? { sleep_record_dateType: dateType_param } : {},
+        ...(dateType_param ? { sleep_record_dateType: dateType_param } : {}),
       },
     },
     {
@@ -56,7 +56,6 @@ export const list = async (
   sort_param: 1 | -1,
   page_param: number,
 ) => {
-
   const finalResult: any = await SleepRecord.aggregate([
     {
       $match: {
@@ -69,7 +68,7 @@ export const list = async (
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        ...dateType_param ? { sleep_record_dateType: dateType_param } : {},
+        ...(dateType_param ? { sleep_record_dateType: dateType_param } : {}),
       },
     },
     {
@@ -101,16 +100,12 @@ export const detail = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-
-  const finalResult: any = await SleepRecord.findOne(
-    {
-      user_id: user_id_param,
-      sleep_record_dateStart: dateStart_param,
-      sleep_record_dateEnd: dateEnd_param,
-      ...dateType_param ? { sleep_record_dateType: dateType_param } : {},
-    },
-  )
-  .lean();
+  const finalResult: any = await SleepRecord.findOne({
+    user_id: user_id_param,
+    sleep_record_dateStart: dateStart_param,
+    sleep_record_dateEnd: dateEnd_param,
+    ...(dateType_param ? { sleep_record_dateType: dateType_param } : {}),
+  }).lean();
 
   return finalResult;
 };
@@ -123,26 +118,22 @@ export const create = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-
-  const finalResult: any = await SleepRecord.create(
-    {
-      _id: new mongoose.Types.ObjectId(),
-      user_id: user_id_param,
-      sleep_record_dateType: dateType_param,
-      sleep_record_dateStart: dateStart_param,
-      sleep_record_dateEnd: dateEnd_param,
-      sleep_section: OBJECT_param.sleep_section,
-      sleep_record_regDt: new Date(),
-      sleep_record_updateDt: ``,
-    },
-  );
+  const finalResult: any = await SleepRecord.create({
+    _id: new mongoose.Types.ObjectId(),
+    user_id: user_id_param,
+    sleep_record_dateType: dateType_param,
+    sleep_record_dateStart: dateStart_param,
+    sleep_record_dateEnd: dateEnd_param,
+    sleep_section: OBJECT_param.sleep_section,
+    sleep_record_regDt: new Date(),
+    sleep_record_updateDt: ``,
+  });
 
   return finalResult;
 };
 
 // 4. update ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const update = {
-
   // 1. update (기존항목 유지 + 타겟항목으로 수정)
   update: async (
     user_id_param: string,
@@ -151,26 +142,41 @@ export const update = {
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
+    // upsert 신규 삽입 시 pre('save') 미동작 → insert 일 때만 채번
+    const existDoc: any = await SleepRecord.findOne({
+      user_id: user_id_param,
+      sleep_record_dateStart: dateStart_param,
+      sleep_record_dateEnd: dateEnd_param,
+      ...(dateType_param ? { sleep_record_dateType: dateType_param } : {}),
+    }).lean();
+    const setOnInsert: any = existDoc
+      ? {}
+      : {
+          sleep_record_number: await incrementSeq(
+            `sleep_record_number`,
+            `SleepRecord`,
+          ),
+        };
 
     const finalResult: any = await SleepRecord.findOneAndUpdate(
       {
         user_id: user_id_param,
         sleep_record_dateStart: dateStart_param,
         sleep_record_dateEnd: dateEnd_param,
-        ...dateType_param ? { sleep_record_dateType: dateType_param } : {},
+        ...(dateType_param ? { sleep_record_dateType: dateType_param } : {}),
       },
       {
         $set: {
           sleep_section: OBJECT_param.sleep_section,
           sleep_record_updateDt: new Date(),
         },
+        $setOnInsert: setOnInsert,
       },
       {
         upsert: true,
-        new: true,
+        returnDocument: `after`,
       },
-    )
-    .lean();
+    ).lean();
 
     return finalResult;
   },
@@ -183,26 +189,41 @@ export const update = {
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
+    // upsert 신규 삽입 시 pre('save') 미동작 → insert 일 때만 채번
+    const existDoc: any = await SleepRecord.findOne({
+      user_id: user_id_param,
+      sleep_record_dateStart: dateStart_param,
+      sleep_record_dateEnd: dateEnd_param,
+      ...(dateType_param ? { sleep_record_dateType: dateType_param } : {}),
+    }).lean();
+    const setOnInsert: any = existDoc
+      ? {}
+      : {
+          sleep_record_number: await incrementSeq(
+            `sleep_record_number`,
+            `SleepRecord`,
+          ),
+        };
 
     const finalResult: any = await SleepRecord.findOneAndUpdate(
       {
         user_id: user_id_param,
         sleep_record_dateStart: dateStart_param,
         sleep_record_dateEnd: dateEnd_param,
-        ...dateType_param ? { sleep_record_dateType: dateType_param } : {},
+        ...(dateType_param ? { sleep_record_dateType: dateType_param } : {}),
       },
       {
         $set: {
           sleep_section: OBJECT_param.sleep_section,
           sleep_record_updateDt: new Date(),
         },
+        $setOnInsert: setOnInsert,
       },
       {
         upsert: true,
-        new: true,
+        returnDocument: `after`,
       },
-    )
-    .lean();
+    ).lean();
 
     return finalResult;
   },
@@ -215,26 +236,41 @@ export const update = {
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
+    // upsert 신규 삽입 시 pre('save') 미동작 → insert 일 때만 채번
+    const existDoc: any = await SleepRecord.findOne({
+      user_id: user_id_param,
+      sleep_record_dateStart: dateStart_param,
+      sleep_record_dateEnd: dateEnd_param,
+      ...(dateType_param ? { sleep_record_dateType: dateType_param } : {}),
+    }).lean();
+    const setOnInsert: any = existDoc
+      ? {}
+      : {
+          sleep_record_number: await incrementSeq(
+            `sleep_record_number`,
+            `SleepRecord`,
+          ),
+        };
 
     const finalResult: any = await SleepRecord.findOneAndUpdate(
       {
         user_id: user_id_param,
         sleep_record_dateStart: dateStart_param,
         sleep_record_dateEnd: dateEnd_param,
-        ...dateType_param ? { sleep_record_dateType: dateType_param } : {},
+        ...(dateType_param ? { sleep_record_dateType: dateType_param } : {}),
       },
       {
         $set: {
           sleep_section: OBJECT_param.sleep_section,
           sleep_record_updateDt: new Date(),
         },
+        $setOnInsert: setOnInsert,
       },
       {
         upsert: true,
-        new: true,
+        returnDocument: `after`,
       },
-    )
-    .lean();
+    ).lean();
 
     return finalResult;
   },
@@ -247,16 +283,12 @@ export const deletes = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-
-  const finalResult: any = await SleepRecord.findOneAndDelete(
-    {
-      user_id: user_id_param,
-      sleep_record_dateStart: dateStart_param,
-      sleep_record_dateEnd: dateEnd_param,
-      ...dateType_param ? { sleep_record_dateType: dateType_param } : {},
-    },
-  )
-  .lean();
+  const finalResult: any = await SleepRecord.findOneAndDelete({
+    user_id: user_id_param,
+    sleep_record_dateStart: dateStart_param,
+    sleep_record_dateEnd: dateEnd_param,
+    ...(dateType_param ? { sleep_record_dateType: dateType_param } : {}),
+  }).lean();
 
   return finalResult;
 };

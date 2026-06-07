@@ -5,10 +5,9 @@
  * @since 2025-12-26
  */
 
-import express from "express";
-import { type Router, Request, Response } from "express";
-import * as service from "@services/sleep/SleepRecordService";
 import * as middleware from "@middlewares/sleep/SleepRecordMiddleware";
+import * as service from "@services/sleep/SleepRecordService";
+import express, { Request, Response, type Router } from "express";
 export const router: Router = express.Router();
 
 // 0. exist ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -24,27 +23,25 @@ router.get(`/exist`, async (req: Request, res: Response) => {
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else if (finalResult.status === `fail`) {
+    } else if (finalResult.status === `fail`) {
       res.json({
         msg: `searchFailed`,
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else {
+    } else {
       res.json({
         msg: `searchError`,
         status: finalResult.status,
         result: finalResult.result,
       });
     }
-  }
-  catch (error: any) {
+  } catch (error: unknown) {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      error: error,
+      msg: error instanceof Error ? error.message : String(error),
+      error: error instanceof Error ? error.message : String(error),
     });
   }
 });
@@ -65,16 +62,14 @@ router.get(`/list`, async (req: Request, res: Response) => {
         totalCnt: finalResult.totalCnt,
         result: finalResult.result,
       });
-    }
-    else if (finalResult.status === `fail`) {
+    } else if (finalResult.status === `fail`) {
       res.json({
         msg: `searchFailed`,
         status: finalResult.status,
         totalCnt: finalResult.totalCnt,
         result: finalResult.result,
       });
-    }
-    else {
+    } else {
       res.json({
         msg: `searchError`,
         status: finalResult.status,
@@ -82,13 +77,12 @@ router.get(`/list`, async (req: Request, res: Response) => {
         result: finalResult.result,
       });
     }
-  }
-  catch (error: unknown) {
+  } catch (error: unknown) {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error as string,
-      error: error as string,
+      msg: error instanceof Error ? error.message : String(error),
+      error: error instanceof Error ? error.message : String(error),
     });
   }
 });
@@ -107,16 +101,14 @@ router.get(`/detail`, async (req: Request, res: Response) => {
         sectionCnt: finalResult.sectionCnt,
         result: finalResult.result,
       });
-    }
-    else if (finalResult.status === `fail`) {
+    } else if (finalResult.status === `fail`) {
       res.json({
         msg: `searchFailed`,
         status: finalResult.status,
         sectionCnt: finalResult.sectionCnt,
         result: finalResult.result,
       });
-    }
-    else {
+    } else {
       res.json({
         msg: `searchError`,
         status: finalResult.status,
@@ -124,13 +116,12 @@ router.get(`/detail`, async (req: Request, res: Response) => {
         result: finalResult.result,
       });
     }
-  }
-  catch (error: unknown) {
+  } catch (error: unknown) {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error as string,
-      error: error as string,
+      msg: error instanceof Error ? error.message : String(error),
+      error: error instanceof Error ? error.message : String(error),
     });
   }
 });
@@ -149,28 +140,25 @@ router.post(`/create`, async (req: Request, res: Response) => {
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else if (finalResult.status === `fail`) {
+    } else if (finalResult.status === `fail`) {
       res.json({
         msg: `createFailed`,
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else {
+    } else {
       res.json({
         msg: `createError`,
         status: finalResult.status,
         result: finalResult.result,
       });
     }
-  }
-  catch (error: unknown) {
+  } catch (error: unknown) {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error as string,
-      error: error as string,
+      msg: error instanceof Error ? error.message : String(error),
+      error: error instanceof Error ? error.message : String(error),
     });
   }
 });
@@ -190,28 +178,25 @@ router.put(`/update`, async (req: Request, res: Response) => {
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else if (finalResult.status === `fail`) {
+    } else if (finalResult.status === `fail`) {
       res.json({
         msg: `updateFailed`,
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else {
+    } else {
       res.json({
         msg: `updateError`,
         status: finalResult.status,
         result: finalResult.result,
       });
     }
-  }
-  catch (error: unknown) {
+  } catch (error: unknown) {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error as string,
-      error: error as string,
+      msg: error instanceof Error ? error.message : String(error),
+      error: error instanceof Error ? error.message : String(error),
     });
   }
 });
@@ -229,28 +214,25 @@ router.delete(`/delete`, async (req: Request, res: Response) => {
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else if (finalResult.status === `fail`) {
+    } else if (finalResult.status === `fail`) {
       res.json({
         msg: `deleteFailed`,
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else {
+    } else {
       res.json({
         msg: `deleteError`,
         status: finalResult.status,
         result: finalResult.result,
       });
     }
-  }
-  catch (error: unknown) {
+  } catch (error: unknown) {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error as string,
-      error: error as string,
+      msg: error instanceof Error ? error.message : String(error),
+      error: error instanceof Error ? error.message : String(error),
     });
   }
 });

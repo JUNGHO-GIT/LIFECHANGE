@@ -5,9 +5,8 @@
  * @since 2025-12-26
  */
 
-import express from "express";
-import { type Router, Request, Response } from "express";
 import * as service from "@services/food/FoodChartService";
+import express, { Request, Response, type Router } from "express";
 export const router: Router = express.Router();
 
 // 1-1. chart (bar - today) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -23,28 +22,25 @@ router.get(`/bar`, async (req: Request, res: Response) => {
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else if (finalResult.status === `fail`) {
+    } else if (finalResult.status === `fail`) {
       res.json({
         msg: `searchFailed`,
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else {
+    } else {
       res.json({
         msg: `searchError`,
         status: finalResult.status,
         result: finalResult.result,
       });
     }
-  }
-  catch (error: unknown) {
+  } catch (error: unknown) {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error as string,
-      error: error as string,
+      msg: error instanceof Error ? error.message : String(error),
+      error: error instanceof Error ? error.message : String(error),
     });
   }
 });
@@ -62,28 +58,25 @@ router.get(`/pie/week`, async (req: Request, res: Response) => {
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else if (finalResult.status === `fail`) {
+    } else if (finalResult.status === `fail`) {
       res.json({
         msg: `searchFailed`,
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else {
+    } else {
       res.json({
         msg: `searchError`,
         status: finalResult.status,
         result: finalResult.result,
       });
     }
-  }
-  catch (error: unknown) {
+  } catch (error: unknown) {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error as string,
-      error: error as string,
+      msg: error instanceof Error ? error.message : String(error),
+      error: error instanceof Error ? error.message : String(error),
     });
   }
 });
@@ -101,28 +94,25 @@ router.get(`/pie/month`, async (req: Request, res: Response) => {
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else if (finalResult.status === `fail`) {
+    } else if (finalResult.status === `fail`) {
       res.json({
         msg: `searchFailed`,
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else {
+    } else {
       res.json({
         msg: `searchError`,
         status: finalResult.status,
         result: finalResult.result,
       });
     }
-  }
-  catch (error: unknown) {
+  } catch (error: unknown) {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error as string,
-      error: error as string,
+      msg: error instanceof Error ? error.message : String(error),
+      error: error instanceof Error ? error.message : String(error),
     });
   }
 });
@@ -140,28 +130,25 @@ router.get(`/pie/year`, async (req: Request, res: Response) => {
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else if (finalResult.status === `fail`) {
+    } else if (finalResult.status === `fail`) {
       res.json({
         msg: `searchFailed`,
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else {
+    } else {
       res.json({
         msg: `searchError`,
         status: finalResult.status,
         result: finalResult.result,
       });
     }
-  }
-  catch (error: unknown) {
+  } catch (error: unknown) {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error as string,
-      error: error as string,
+      msg: error instanceof Error ? error.message : String(error),
+      error: error instanceof Error ? error.message : String(error),
     });
   }
 });
@@ -179,28 +166,25 @@ router.get(`/line/week`, async (req: Request, res: Response) => {
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else if (finalResult.status === `fail`) {
+    } else if (finalResult.status === `fail`) {
       res.json({
         msg: `searchFailed`,
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else {
+    } else {
       res.json({
         msg: `searchError`,
         status: finalResult.status,
         result: finalResult.result,
       });
     }
-  }
-  catch (error: unknown) {
+  } catch (error: unknown) {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error as string,
-      error: error as string,
+      msg: error instanceof Error ? error.message : String(error),
+      error: error instanceof Error ? error.message : String(error),
     });
   }
 });
@@ -218,28 +202,25 @@ router.get(`/line/month`, async (req: Request, res: Response) => {
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else if (finalResult.status === `fail`) {
+    } else if (finalResult.status === `fail`) {
       res.json({
         msg: `searchFailed`,
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else {
+    } else {
       res.json({
         msg: `searchError`,
         status: finalResult.status,
         result: finalResult.result,
       });
     }
-  }
-  catch (error: unknown) {
+  } catch (error: unknown) {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error as string,
-      error: error as string,
+      msg: error instanceof Error ? error.message : String(error),
+      error: error instanceof Error ? error.message : String(error),
     });
   }
 });
@@ -257,28 +238,25 @@ router.get(`/avg/week`, async (req: Request, res: Response) => {
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else if (finalResult.status === `fail`) {
+    } else if (finalResult.status === `fail`) {
       res.json({
         msg: `searchFailed`,
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else {
+    } else {
       res.json({
         msg: `searchError`,
         status: finalResult.status,
         result: finalResult.result,
       });
     }
-  }
-  catch (error: unknown) {
+  } catch (error: unknown) {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error as string,
-      error: error as string,
+      msg: error instanceof Error ? error.message : String(error),
+      error: error instanceof Error ? error.message : String(error),
     });
   }
 });
@@ -296,28 +274,25 @@ router.get(`/avg/month`, async (req: Request, res: Response) => {
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else if (finalResult.status === `fail`) {
+    } else if (finalResult.status === `fail`) {
       res.json({
         msg: `searchFailed`,
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else {
+    } else {
       res.json({
         msg: `searchError`,
         status: finalResult.status,
         result: finalResult.result,
       });
     }
-  }
-  catch (error: unknown) {
+  } catch (error: unknown) {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error as string,
-      error: error as string,
+      msg: error instanceof Error ? error.message : String(error),
+      error: error instanceof Error ? error.message : String(error),
     });
   }
 });

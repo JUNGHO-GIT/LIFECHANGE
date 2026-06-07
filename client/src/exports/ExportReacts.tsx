@@ -6,35 +6,31 @@
  */
 
 // react ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export type {
-  JSX,
-} from "react";
+export type { JSX } from "react";
 export {
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
   createRef,
-  memo,
-  useMemo,
-  useId,
-} from "react";
-export {
   default as React,
+  lazy,
+  memo,
+  Suspense,
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
 } from "react";
 
 // react-dom ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export {
-  createRoot,
-} from "react-dom/client";
+export { createRoot } from "react-dom/client";
 
 // react-router ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export {
-  useNavigate,
-  useLocation,
   BrowserRouter,
-  Routes,
-  Route,
   type Location,
   type NavigateFunction,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
 } from "react-router";

@@ -1,11 +1,11 @@
 {
   "name": "lifechange-server",
-  "version": "2.1.6",
+  "version": "2.1.8",
   "type": "module",
   "main": "index.ts",
   "license": "Apache-2.0",
   "engines": {
-    "node": "16.x"
+    "node": ">=20"
   },
   "overrides": {
     "webidl-conversions": "7.0.0",
@@ -15,14 +15,16 @@
     "git": "bun run ~/.bootstrap/bootstrap-sync.ts --git",
     "swc": "bun run ~/.bootstrap/bootstrap-sync.ts --swc",
     "sync": "bun run ~/.bootstrap/bootstrap-sync.ts --sync",
-    "tools": "bun run ~/.bootstrap/bootstrap-sync.ts --tools"
+    "tools": "bun run ~/.bootstrap/bootstrap-sync.ts --tools",
+    "dev": "bun run index.ts",
+    "start": "bun run index.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test src"
   },
   "dependencies": {
-    "ajv": "8.20.0",
-    "ajv-keywords": "5.1.0",
     "axios": "1.16.1",
     "bcryptjs": "3.0.3",
-    "body-parser": "2.2.2",
+    "compression": "^1.8.1",
     "cors": "2.8.6",
     "date-fns": "4.4.0",
     "dotenv": "17.4.2",
@@ -30,35 +32,26 @@
     "express-session": "1.19.0",
     "google-auth-library": "10.6.2",
     "jsonwebtoken": "9.0.3",
-    "module-alias": "2.3.4",
     "moment-timezone": "0.6.2",
-    "mongodb": "7.2.0",
     "mongoose": "9.6.3",
     "node-fetch": "3.3.2",
     "nodemailer": "8.0.10",
-    "oauth-signature": "1.5.0",
-    "passport": "0.7.0",
-    "passport-google-oauth20": "2.0.0",
-    "qs": "6.15.2",
-    "request-promise": "4.2.6"
+    "qs": "6.15.2"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.16",
     "@swc/cli": "0.8.1",
     "@swc/core": "1.15.40",
     "@swc/helpers": "0.5.23",
+    "@types/compression": "^1.8.1",
     "@types/cors": "2.8.19",
     "@types/express": "5.0.6",
     "@types/express-serve-static-core": "5.1.1",
     "@types/express-session": "1.19.0",
     "@types/jsdom": "28.0.3",
-    "@types/mocha": "10.0.10",
     "@types/node": "25.9.1",
     "@types/nodemailer": "8.0.0",
-    "@types/passport": "1.0.17",
-    "@types/passport-google-oauth20": "2.0.17",
     "@types/qs": "6.15.1",
-    "@types/react-router-dom": "5.3.3",
     "esbuild": "0.28.0",
     "globals": "17.6.0",
     "jsdom": "29.1.1",

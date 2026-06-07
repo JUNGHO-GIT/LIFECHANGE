@@ -6,31 +6,15 @@
     "outDir": "./out",
     "paths": {
       "@assets/*": ["./src/assets/*"],
-      "@type/*": ["./src/assets/type/domain/*"],
       "@middlewares/*": ["./src/middlewares/*"],
       "@repositories/*": ["./src/repositories/*"],
       "@routers/*": ["./src/routers/*"],
       "@schemas/*": ["./src/schemas/*"],
-      "@services/*": ["./src/services/*"],
-      "@exportLibs": ["./src/exports/ExportLibs"],
-      "@exportAssets": ["./src/exports/ExportAssets"],
-      "@exportRepositories": ["./src/exports/ExportRepositories"],
-      "@exportRouters": ["./src/exports/ExportRouters"],
-      "@exportSchemas": ["./src/exports/ExportSchemas"],
-      "@exportServices": ["./src/exports/ExportServices"]
+      "@services/*": ["./src/services/*"]
     },
-    "typeRoots": [
-      "./src/assets/type/dist",
-      "node_modules/@types"
-    ],
-    "types": [
-      "node"
-    ],
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "typeRoots": ["node_modules/@types"],
+    "types": ["node"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "tsBuildInfoFile": "./tsconfig.tsbuildinfo",
     "allowJs": true,
     "checkJs": true,
@@ -134,14 +118,7 @@
     "**/*.jsx",
     "./src/**/*",
     "./src/**/*.ts",
-    "./src/**/*.tsx",
-    "eslint.config.js",
-    "eslint.config.cjs",
-    "eslint.config.mjs",
-    "eslint.config.ts"
+    "./src/**/*.tsx"
   ],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts"
-  ]
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }
