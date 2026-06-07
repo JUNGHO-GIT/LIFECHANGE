@@ -184,11 +184,6 @@ export const pieNut = async (
         food_record_total_fat: `$total_fat`,
       },
     },
-    {
-      $sort: {
-        food_record_dateStart: 1,
-      },
-    },
   ]);
 
   return finalResult;

@@ -5,18 +5,15 @@
  * @since 2025-12-26
  */
 
-import express from "express";
-import { type Router, Request, Response } from "express";
-import * as service from "@services/food/FoodFavoriteService";
 import * as middleware from "@middlewares/food/FoodFavoriteMiddleware";
+import * as service from "@services/food/FoodFavoriteService";
+import express, { Request, Response, type Router } from "express";
 export const router: Router = express.Router();
 
 // 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 router.get(`/list`, async (req: Request, res: Response) => {
   try {
-    let finalResult = await service.list(
-      req.query.user_id as string,
-    );
+    let finalResult = await service.list(req.query.user_id as string);
     finalResult = await middleware.list(finalResult);
     if (finalResult.status === `success`) {
       res.json({
@@ -25,16 +22,14 @@ router.get(`/list`, async (req: Request, res: Response) => {
         totalCnt: finalResult.totalCnt,
         result: finalResult.result,
       });
-    }
-    else if (finalResult.status === `fail`) {
+    } else if (finalResult.status === `fail`) {
       res.json({
         msg: `searchFailed`,
         status: finalResult.status,
         totalCnt: finalResult.totalCnt,
         result: finalResult.result,
       });
-    }
-    else {
+    } else {
       res.json({
         msg: `searchError`,
         status: finalResult.status,
@@ -42,13 +37,12 @@ router.get(`/list`, async (req: Request, res: Response) => {
         result: finalResult.result,
       });
     }
-  }
-  catch (error: unknown) {
+  } catch (error: unknown) {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error as string,
-      error: error as string,
+      msg: error instanceof Error ? error.message : String(error),
+      error: error instanceof Error ? error.message : String(error),
     });
   }
 });
@@ -66,28 +60,25 @@ router.put(`/update`, async (req: Request, res: Response) => {
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else if (finalResult.status === `fail`) {
+    } else if (finalResult.status === `fail`) {
       res.json({
         msg: `updateFailed`,
         status: finalResult.status,
         result: finalResult.result,
       });
-    }
-    else {
+    } else {
       res.json({
         msg: `updateError`,
         status: finalResult.status,
         result: finalResult.result,
       });
     }
-  }
-  catch (error: unknown) {
+  } catch (error: unknown) {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error as string,
-      error: error as string,
+      msg: error instanceof Error ? error.message : String(error),
+      error: error instanceof Error ? error.message : String(error),
     });
   }
 });

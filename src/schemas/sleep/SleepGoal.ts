@@ -5,8 +5,8 @@
  * @since 2025-12-26
  */
 
-import mongoose from "mongoose";
 import { incrementSeq } from "@schemas/Counter";
+import mongoose from "mongoose";
 
 // 0. types ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface SleepGoalType extends mongoose.Document {
@@ -86,11 +86,17 @@ const schema = new mongoose.Schema(
 );
 
 // 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-schema.pre<SleepGoalType>(`save`, async function() {
+schema.pre<SleepGoalType>(`save`, async function () {
   if (this.isNew) {
-    this.sleep_goal_number = await incrementSeq(`sleep_goal_number`, `SleepGoal`);
+    this.sleep_goal_number = await incrementSeq(
+      `sleep_goal_number`,
+      `SleepGoal`,
+    );
   }
 });
+
+// 4. index ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+schema.index({ user_id: 1, sleep_goal_dateStart: 1, sleep_goal_dateEnd: 1 });
 
 // 5. model ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const SleepGoal = mongoose.model<SleepGoalType>(`SleepGoal`, schema);

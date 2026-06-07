@@ -5,17 +5,22 @@
  * @since 2025-12-26
  */
 
-import bcrypt from 'bcryptjs';
-import crypto from 'node:crypto';
+import crypto from "node:crypto";
 import { loadEnv } from "@assets/scripts/env";
+import bcrypt from "bcryptjs";
+
 loadEnv();
 
 // 1-1. number ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const randomNumber = (data: number) => Math.floor(Math.random() * data);
 // 1-2. time ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const randomTime = () => {
-  const hour: string = Math.floor(Math.random() * 23).toString().padStart(2, `0`);
-  const minute: string = Math.floor(Math.random() * 60).toString().padStart(2, `0`);
+  const hour: string = Math.floor(Math.random() * 23)
+    .toString()
+    .padStart(2, `0`);
+  const minute: string = Math.floor(Math.random() * 60)
+    .toString()
+    .padStart(2, `0`);
 
   return `${hour}:${minute}`;
 };
@@ -23,14 +28,23 @@ export const randomTime = () => {
 export const calcDate = (startTime: string, endTime: string) => {
   const start: Date = new Date(`1970/01/01 ${startTime}`);
   const end: Date = new Date(`1970/01/01 ${endTime}`);
-  const duration: Date = new Date(Number(end) - Number(start) + 24 * 60 * 60 * 1000);
+  // 차이가 음수(자정 넘김)일 때만 24h 보정. 같은 날 범위는 보정하지 않는다.
+  // 차이(ms)는 타임존 독립적이므로 UTC 접근자로 시:분을 읽어 로컬 오프셋 영향을 제거한다.
+  const dayMs: number = 24 * 60 * 60 * 1000;
+  const diff: number = Number(end) - Number(start);
+  const duration: Date = new Date(diff < 0 ? diff + dayMs : diff);
 
-  return `${duration.getHours().toString().padStart(2, `0`)}:${duration.getMinutes().toString().padStart(2, `0`)}`;
+  return `${duration.getUTCHours().toString().padStart(2, `0`)}:${duration.getUTCMinutes().toString().padStart(2, `0`)}`;
 };
 
 // 1-2. format ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const timeToDecimal = (data: string) => {
-  if (typeof data !== `string` || !data || data === null || data === undefined) {
+  if (
+    typeof data !== `string` ||
+    !data ||
+    data === null ||
+    data === undefined
+  ) {
     return 0;
   }
   const time: string[] = data.split(`:`);
@@ -39,19 +53,26 @@ export const timeToDecimal = (data: string) => {
   }
   // 10분 단위로 반올림
   const hours: number = Number.parseFloat(time[0]);
-  const minutes: number = Math.round(Number.parseFloat(time[1]) / 10) * 10 / 60;
+  const minutes: number =
+    (Math.round(Number.parseFloat(time[1]) / 10) * 10) / 60;
 
   return hours + minutes;
 };
 
 export const decimalToTime = (data: number) => {
-  if (typeof data !== `number` || !data || Number.isNaN(data) || data === null || data === undefined) {
+  if (
+    typeof data !== `number` ||
+    !data ||
+    Number.isNaN(data) ||
+    data === null ||
+    data === undefined
+  ) {
     return `00:00`;
   }
   // 10분 단위로 반올림
   const floatHours: number = Number.parseFloat(data.toString());
   const hours: number = Math.floor(floatHours);
-  const minutes: number = Math.round((floatHours - hours) * 60 / 10) * 10;
+  const minutes: number = Math.round(((floatHours - hours) * 60) / 10) * 10;
 
   return `${hours.toString().padStart(2, `0`)}:${minutes.toString().padStart(2, `0`)}`;
 };
@@ -61,7 +82,7 @@ export const strToDecimal = (data: string) => {
   if (!data || data === null || data === undefined) {
     return 0;
   }
-  const [ hours, minutes ] = data.split(`:`).map(Number);
+  const [hours, minutes] = data.split(`:`).map(Number);
   const adjustedHours: number = hours + Math.floor(minutes / 60);
   const adjustedMinutes: number = minutes % 60;
 

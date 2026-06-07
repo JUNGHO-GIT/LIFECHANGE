@@ -1,0 +1,76 @@
+/**
+ * @file ErrorBoundary.tsx
+ * @description foo
+ * @author Jungho
+ * @since 2026-06-06
+ */
+
+import { Box, Button } from "@exportMuis";
+import { Component, type ErrorInfo, type ReactNode } from "react";
+
+// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+declare interface ErrorBoundaryProps {
+  children: ReactNode;
+}
+
+declare interface ErrorBoundaryState {
+  hasError: boolean;
+}
+
+// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+export class ErrorBoundary extends Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
+  // 1. state ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  // 2. derive ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  static getDerivedStateFromError(): ErrorBoundaryState {
+    return { hasError: true };
+  }
+
+  // 3. catch ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  override componentDidCatch(error: Error, info: ErrorInfo): void {
+    console.error(`[ErrorBoundary]`, error, info?.componentStack);
+  }
+
+  // 7. fallback ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  fallbackNode(): ReactNode {
+    return (
+      <Box
+        className={`d-center fs-0-9rem fw-500`}
+        style={{
+          flexDirection: `column`,
+          width: `100vw`,
+          height: `100vh`,
+          gap: `16px`,
+        }}
+      >
+        <Box className={`fs-1-2rem fw-700 dark`}>{`오류가 발생했습니다`}</Box>
+        <Box className={`fs-0-9rem fw-500`}>{`잠시 후 다시 시도해 주세요`}</Box>
+        <Button
+          size={`small`}
+          color={`primary`}
+          variant={`contained`}
+          onClick={() => {
+            window.location.reload();
+          }}
+        >
+          {`새로고침`}
+        </Button>
+      </Box>
+    );
+  }
+
+  // 10. render ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  override render(): ReactNode {
+    if (this.state.hasError) {
+      return this.fallbackNode();
+    }
+    return this.props.children;
+  }
+}

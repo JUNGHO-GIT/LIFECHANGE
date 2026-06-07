@@ -13,56 +13,215 @@ import "@assets/styles/Mui.css";
 import "@assets/styles/Components.css";
 
 import {
-  BrowserRouter, Routes, Route, createRoot, useEffect, memo,
-} from "@exportReacts";
-
-import {
-  CssBaseline, ThemeProvider, createTheme,
-} from "@exportMuis";
-
-import {
-  useRoot, useScrollTop, useFoodSection, useLanguageSetting, useLanguageInitialize, useCommonValue,
+  useCommonValue,
+  useFoodSection,
+  useLanguageInitialize,
+  useLanguageSetting,
+  useRoot,
+  useScrollTop,
 } from "@exportHooks";
-
 import {
-  useStoreLoading,
-} from "@exportStores";
-
-import {
-  Header, TopNav, BottomNav, Alert, Confirm, Loader,
+  Alert,
+  BottomNav,
+  Confirm,
+  ErrorBoundary,
+  Header,
+  Loader,
+  TopNav,
 } from "@exportLayouts";
-
+import { CssBaseline, createTheme, ThemeProvider } from "@exportMuis";
 import {
-  AdminDashboard, AuthError, AuthGoogle, AuthPrivacy,
-} from "@exportPages";
+  BrowserRouter,
+  createRoot,
+  lazy,
+  memo,
+  Route,
+  Routes,
+  Suspense,
+  useEffect,
+} from "@exportReacts";
+import { registerInterceptor } from "@exportScripts";
+import { useStoreLoading } from "@exportStores";
 
-import {
-  CalendarList, CalendarDetail,
-} from "@exportPages";
+// 라우트 단위 코드 스플리팅 ― 배럴 일괄 import 대신 페이지별 dynamic import 로 청크 분리 ――――――――――――――――――――――――
+// admin ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+const AdminDashboard = lazy(() =>
+  import("@pages/admin/AdminDashboard").then((m) => ({
+    default: m.AdminDashboard,
+  })),
+);
+const AdminAppInfo = lazy(() =>
+  import("@pages/admin/AdminAppInfo").then((m) => ({
+    default: m.AdminAppInfo,
+  })),
+);
 
-import {
-  ExerciseChart, ExerciseGoalList, ExerciseGoalDetail, ExerciseRecordList, ExerciseRecordDetail,
-} from "@exportPages";
+// auth ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+const AuthError = lazy(() =>
+  import("@pages/auth/AuthError").then((m) => ({ default: m.AuthError })),
+);
+const AuthGoogle = lazy(() =>
+  import("@pages/auth/AuthGoogle").then((m) => ({ default: m.AuthGoogle })),
+);
+const AuthPrivacy = lazy(() =>
+  import("@pages/auth/AuthPrivacy").then((m) => ({ default: m.AuthPrivacy })),
+);
 
-import {
-  FoodChart, FoodGoalList, FoodGoalDetail, FoodFindList, FoodFavoriteList, FoodRecordList, FoodRecordDetail,
-} from "@exportPages";
+// calendar ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+const CalendarList = lazy(() =>
+  import("@pages/calendar/CalendarList").then((m) => ({
+    default: m.CalendarList,
+  })),
+);
+const CalendarDetail = lazy(() =>
+  import("@pages/calendar/CalendarDetail").then((m) => ({
+    default: m.CalendarDetail,
+  })),
+);
 
-import {
-  MoneyChart, MoneyGoalList, MoneyGoalDetail, MoneyRecordList, MoneyRecordDetail,
-} from "@exportPages";
+// exercise ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+const ExerciseChart = lazy(() =>
+  import("@pages/exercise/chart/ExerciseChart").then((m) => ({
+    default: m.ExerciseChart,
+  })),
+);
+const ExerciseGoalList = lazy(() =>
+  import("@pages/exercise/goal/ExerciseGoalList").then((m) => ({
+    default: m.ExerciseGoalList,
+  })),
+);
+const ExerciseGoalDetail = lazy(() =>
+  import("@pages/exercise/goal/ExerciseGoalDetail").then((m) => ({
+    default: m.ExerciseGoalDetail,
+  })),
+);
+const ExerciseRecordList = lazy(() =>
+  import("@pages/exercise/record/ExerciseRecordList").then((m) => ({
+    default: m.ExerciseRecordList,
+  })),
+);
+const ExerciseRecordDetail = lazy(() =>
+  import("@pages/exercise/record/ExerciseRecordDetail").then((m) => ({
+    default: m.ExerciseRecordDetail,
+  })),
+);
 
-import {
-  SleepChart, SleepGoalList, SleepGoalDetail, SleepRecordList, SleepRecordDetail,
-} from "@exportPages";
+// food ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+const FoodChart = lazy(() =>
+  import("@pages/food/chart/FoodChart").then((m) => ({ default: m.FoodChart })),
+);
+const FoodGoalList = lazy(() =>
+  import("@pages/food/goal/FoodGoalList").then((m) => ({
+    default: m.FoodGoalList,
+  })),
+);
+const FoodGoalDetail = lazy(() =>
+  import("@pages/food/goal/FoodGoalDetail").then((m) => ({
+    default: m.FoodGoalDetail,
+  })),
+);
+const FoodFindList = lazy(() =>
+  import("@pages/food/find/FoodFindList").then((m) => ({
+    default: m.FoodFindList,
+  })),
+);
+const FoodFavoriteList = lazy(() =>
+  import("@pages/food/find/FoodFavoriteList").then((m) => ({
+    default: m.FoodFavoriteList,
+  })),
+);
+const FoodRecordList = lazy(() =>
+  import("@pages/food/record/FoodRecordList").then((m) => ({
+    default: m.FoodRecordList,
+  })),
+);
+const FoodRecordDetail = lazy(() =>
+  import("@pages/food/record/FoodRecordDetail").then((m) => ({
+    default: m.FoodRecordDetail,
+  })),
+);
 
-import {
-  AdminAppInfo, UserAppSetting, UserSignup, UserLogin, UserResetPw, UserDetail, UserDelete, UserCategory,
-} from "@exportPages";
+// money ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+const MoneyChart = lazy(() =>
+  import("@pages/money/chart/MoneyChart").then((m) => ({
+    default: m.MoneyChart,
+  })),
+);
+const MoneyGoalList = lazy(() =>
+  import("@pages/money/goal/MoneyGoalList").then((m) => ({
+    default: m.MoneyGoalList,
+  })),
+);
+const MoneyGoalDetail = lazy(() =>
+  import("@pages/money/goal/MoneyGoalDetail").then((m) => ({
+    default: m.MoneyGoalDetail,
+  })),
+);
+const MoneyRecordList = lazy(() =>
+  import("@pages/money/record/MoneyRecordList").then((m) => ({
+    default: m.MoneyRecordList,
+  })),
+);
+const MoneyRecordDetail = lazy(() =>
+  import("@pages/money/record/MoneyRecordDetail").then((m) => ({
+    default: m.MoneyRecordDetail,
+  })),
+);
+
+// sleep ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+const SleepChart = lazy(() =>
+  import("@pages/sleep/chart/SleepChart").then((m) => ({
+    default: m.SleepChart,
+  })),
+);
+const SleepGoalList = lazy(() =>
+  import("@pages/sleep/goal/SleepGoalList").then((m) => ({
+    default: m.SleepGoalList,
+  })),
+);
+const SleepGoalDetail = lazy(() =>
+  import("@pages/sleep/goal/SleepGoalDetail").then((m) => ({
+    default: m.SleepGoalDetail,
+  })),
+);
+const SleepRecordList = lazy(() =>
+  import("@pages/sleep/record/SleepRecordList").then((m) => ({
+    default: m.SleepRecordList,
+  })),
+);
+const SleepRecordDetail = lazy(() =>
+  import("@pages/sleep/record/SleepRecordDetail").then((m) => ({
+    default: m.SleepRecordDetail,
+  })),
+);
+
+// user ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+const UserAppSetting = lazy(() =>
+  import("@pages/user/UserAppSetting").then((m) => ({
+    default: m.UserAppSetting,
+  })),
+);
+const UserSignup = lazy(() =>
+  import("@pages/user/UserSignup").then((m) => ({ default: m.UserSignup })),
+);
+const UserLogin = lazy(() =>
+  import("@pages/user/UserLogin").then((m) => ({ default: m.UserLogin })),
+);
+const UserResetPw = lazy(() =>
+  import("@pages/user/UserResetPw").then((m) => ({ default: m.UserResetPw })),
+);
+const UserDetail = lazy(() =>
+  import("@pages/user/UserDetail").then((m) => ({ default: m.UserDetail })),
+);
+const UserDelete = lazy(() =>
+  import("@pages/user/UserDelete").then((m) => ({ default: m.UserDelete })),
+);
+const UserCategory = lazy(() =>
+  import("@pages/user/UserCategory").then((m) => ({ default: m.UserCategory })),
+);
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 const App = memo(() => {
-
   const { PATH } = useCommonValue();
   const { setLOADING } = useStoreLoading();
 
@@ -79,24 +238,20 @@ const App = memo(() => {
   useLanguageInitialize();
   useLanguageSetting();
 
-  const noneHeader: boolean = (
+  const noneHeader: boolean =
     !PATH.includes(`/user/login`) &&
     !PATH.includes(`/user/signup`) &&
     !PATH.includes(`/user/resetPw`) &&
     !PATH.includes(`/auth/error`) &&
-    !PATH.includes(`/auth/privacy`)
-  );
-  const noneTop: boolean = (
+    !PATH.includes(`/auth/privacy`);
+  const noneTop: boolean =
     !PATH.includes(`/user`) &&
     !PATH.includes(`/auth/error`) &&
-    !PATH.includes(`/auth/privacy`)
-
-  );
-  const noneBottom: boolean = (
+    !PATH.includes(`/auth/privacy`);
+  const noneBottom: boolean =
     !PATH.includes(`/user`) &&
     !PATH.includes(`/auth/error`) &&
-    !PATH.includes(`/auth/privacy`)
-  );
+    !PATH.includes(`/auth/privacy`);
 
   return (
     <div className={`App`}>
@@ -105,54 +260,80 @@ const App = memo(() => {
       <Loader />
       <Alert />
       <Confirm />
-      <Routes>
-        {/** home * */}
-        <Route path={`/`} element={<div />} />
-        {/** admin * */}
-        <Route path={`/admin/dashboard/*`} element={<AdminDashboard />} />
-        {/** auth * */}
-        <Route path={`/auth/error/*`} element={<AuthError />} />
-        <Route path={`/auth/google/*`} element={<AuthGoogle />} />
-        <Route path={`/auth/privacy/*`} element={<AuthPrivacy />} />
-        {/** calendar * */}
-        <Route path={`/calendar/list/*`} element={<CalendarList />} />
-        <Route path={`/calendar/detail/*`} element={<CalendarDetail />} />
-        {/** exercise * */}
-        <Route path={`/exercise/chart/list/*`} element={<ExerciseChart />} />
-        <Route path={`/exercise/goal/list/*`} element={<ExerciseGoalList />} />
-        <Route path={`/exercise/goal/detail/*`} element={<ExerciseGoalDetail />} />
-        <Route path={`/exercise/record/list/*`} element={<ExerciseRecordList />} />
-        <Route path={`/exercise/record/detail/*`} element={<ExerciseRecordDetail />} />
-        {/** food * */}
-        <Route path={`/food/chart/list/*`} element={<FoodChart />} />
-        <Route path={`/food/goal/list/*`} element={<FoodGoalList />} />
-        <Route path={`/food/goal/detail/*`} element={<FoodGoalDetail />} />
-        <Route path={`/food/record/list/*`} element={<FoodRecordList />} />
-        <Route path={`/food/record/detail/*`} element={<FoodRecordDetail />} />
-        <Route path={`/food/favorite/list/*`} element={<FoodFavoriteList />} />
-        <Route path={`/food/find/list/*`} element={<FoodFindList />} />
-        {/** money * */}
-        <Route path={`/money/chart/list/*`} element={<MoneyChart />} />
-        <Route path={`/money/goal/list/*`} element={<MoneyGoalList />} />
-        <Route path={`/money/goal/detail/*`} element={<MoneyGoalDetail />} />
-        <Route path={`/money/record/list/*`} element={<MoneyRecordList />} />
-        <Route path={`/money/record/detail/*`} element={<MoneyRecordDetail />} />
-        {/** sleep * */}
-        <Route path={`/sleep/chart/list/*`} element={<SleepChart />} />
-        <Route path={`/sleep/goal/list/*`} element={<SleepGoalList />} />
-        <Route path={`/sleep/goal/detail/*`} element={<SleepGoalDetail />} />
-        <Route path={`/sleep/record/list/*`} element={<SleepRecordList />} />
-        <Route path={`/sleep/record/detail/*`} element={<SleepRecordDetail />} />
-        {/** user * */}
-        <Route path={`/user/appInfo/*`} element={<AdminAppInfo />} />
-        <Route path={`/user/appSetting/*`} element={<UserAppSetting />} />
-        <Route path={`/user/signup/*`} element={<UserSignup />} />
-        <Route path={`/user/login/*`} element={<UserLogin />} />
-        <Route path={`/user/resetPw/*`} element={<UserResetPw />} />
-        <Route path={`/user/detail/*`} element={<UserDetail />} />
-        <Route path={`/user/delete/*`} element={<UserDelete />} />
-        <Route path={`/user/category/*`} element={<UserCategory />} />
-      </Routes>
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          {/** home * */}
+          <Route path={`/`} element={<div />} />
+          {/** admin * */}
+          <Route path={`/admin/dashboard/*`} element={<AdminDashboard />} />
+          {/** auth * */}
+          <Route path={`/auth/error/*`} element={<AuthError />} />
+          <Route path={`/auth/google/*`} element={<AuthGoogle />} />
+          <Route path={`/auth/privacy/*`} element={<AuthPrivacy />} />
+          {/** calendar * */}
+          <Route path={`/calendar/list/*`} element={<CalendarList />} />
+          <Route path={`/calendar/detail/*`} element={<CalendarDetail />} />
+          {/** exercise * */}
+          <Route path={`/exercise/chart/list/*`} element={<ExerciseChart />} />
+          <Route
+            path={`/exercise/goal/list/*`}
+            element={<ExerciseGoalList />}
+          />
+          <Route
+            path={`/exercise/goal/detail/*`}
+            element={<ExerciseGoalDetail />}
+          />
+          <Route
+            path={`/exercise/record/list/*`}
+            element={<ExerciseRecordList />}
+          />
+          <Route
+            path={`/exercise/record/detail/*`}
+            element={<ExerciseRecordDetail />}
+          />
+          {/** food * */}
+          <Route path={`/food/chart/list/*`} element={<FoodChart />} />
+          <Route path={`/food/goal/list/*`} element={<FoodGoalList />} />
+          <Route path={`/food/goal/detail/*`} element={<FoodGoalDetail />} />
+          <Route path={`/food/record/list/*`} element={<FoodRecordList />} />
+          <Route
+            path={`/food/record/detail/*`}
+            element={<FoodRecordDetail />}
+          />
+          <Route
+            path={`/food/favorite/list/*`}
+            element={<FoodFavoriteList />}
+          />
+          <Route path={`/food/find/list/*`} element={<FoodFindList />} />
+          {/** money * */}
+          <Route path={`/money/chart/list/*`} element={<MoneyChart />} />
+          <Route path={`/money/goal/list/*`} element={<MoneyGoalList />} />
+          <Route path={`/money/goal/detail/*`} element={<MoneyGoalDetail />} />
+          <Route path={`/money/record/list/*`} element={<MoneyRecordList />} />
+          <Route
+            path={`/money/record/detail/*`}
+            element={<MoneyRecordDetail />}
+          />
+          {/** sleep * */}
+          <Route path={`/sleep/chart/list/*`} element={<SleepChart />} />
+          <Route path={`/sleep/goal/list/*`} element={<SleepGoalList />} />
+          <Route path={`/sleep/goal/detail/*`} element={<SleepGoalDetail />} />
+          <Route path={`/sleep/record/list/*`} element={<SleepRecordList />} />
+          <Route
+            path={`/sleep/record/detail/*`}
+            element={<SleepRecordDetail />}
+          />
+          {/** user * */}
+          <Route path={`/user/appInfo/*`} element={<AdminAppInfo />} />
+          <Route path={`/user/appSetting/*`} element={<UserAppSetting />} />
+          <Route path={`/user/signup/*`} element={<UserSignup />} />
+          <Route path={`/user/login/*`} element={<UserLogin />} />
+          <Route path={`/user/resetPw/*`} element={<UserResetPw />} />
+          <Route path={`/user/detail/*`} element={<UserDetail />} />
+          <Route path={`/user/delete/*`} element={<UserDelete />} />
+          <Route path={`/user/category/*`} element={<UserCategory />} />
+        </Routes>
+      </Suspense>
       {noneBottom ? <BottomNav /> : null}
     </div>
   );
@@ -161,15 +342,19 @@ const App = memo(() => {
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 const fontFamily: string = `'Pretendard Variable', Pretendard, FontAwesome, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif`;
 
+// 네트워크 오류 시 error.response 미정의 크래시 방지용 전역 인터셉터를 진입점에서 1회 등록 ―――――――――――――――――――――――-
+registerInterceptor();
+
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 createRoot(document.querySelector(`#root`) as HTMLElement).render(
   <BrowserRouter basename={`/lifechange`}>
-    <ThemeProvider theme={
-      createTheme({ typography: { fontFamily: fontFamily } })
-    }
+    <ThemeProvider
+      theme={createTheme({ typography: { fontFamily: fontFamily } })}
     >
       <CssBaseline />
-      <App />
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
     </ThemeProvider>
   </BrowserRouter>,
 );

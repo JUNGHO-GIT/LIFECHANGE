@@ -5,9 +5,10 @@
  * @since 2025-12-26
  */
 
-import mongoose from "mongoose";
+import { incrementSeq } from "@schemas/Counter";
 import { FoodGoal } from "@schemas/food/FoodGoal";
 import { FoodRecord } from "@schemas/food/FoodRecord";
+import mongoose from "mongoose";
 
 // 0. exist ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const exist = async (
@@ -16,7 +17,6 @@ export const exist = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-
   const finalResult: any = await FoodGoal.aggregate([
     {
       $match: {
@@ -27,7 +27,7 @@ export const exist = async (
         food_goal_dateEnd: {
           $gte: dateStart_param,
         },
-        ...dateType_param ? { food_goal_dateType: dateType_param } : {},
+        ...(dateType_param ? { food_goal_dateType: dateType_param } : {}),
       },
     },
     {
@@ -67,7 +67,7 @@ export const listGoal = async (
         food_goal_dateEnd: {
           $gte: dateStart_param,
         },
-        ...dateType_param ? { food_goal_dateType: dateType_param } : {},
+        ...(dateType_param ? { food_goal_dateType: dateType_param } : {}),
       },
     },
     {
@@ -87,16 +87,13 @@ export const listGoal = async (
         food_goal_dateStart: sort_param,
       },
     },
-    {
-      $skip: Number(page_param - 1),
-    },
   ]);
 
   return finalResult;
 };
 
 // 1-2. list (record) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-export const listRecord: any[] = async (
+export const listRecord = async (
   user_id_param: string,
   dateType_param: string,
   dateStart_param: string,
@@ -114,7 +111,7 @@ export const listRecord: any[] = async (
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        ...dateType_param ? { food_record_dateType: dateType_param } : {},
+        ...(dateType_param ? { food_record_dateType: dateType_param } : {}),
       },
     },
     {
@@ -146,16 +143,12 @@ export const detail = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-
-  const finalResult: any = await FoodGoal.findOne(
-    {
-      user_id: user_id_param,
-      food_goal_dateStart: dateStart_param,
-      food_goal_dateEnd: dateEnd_param,
-      ...dateType_param ? { food_goal_dateType: dateType_param } : {},
-    },
-  )
-  .lean();
+  const finalResult: any = await FoodGoal.findOne({
+    user_id: user_id_param,
+    food_goal_dateStart: dateStart_param,
+    food_goal_dateEnd: dateEnd_param,
+    ...(dateType_param ? { food_goal_dateType: dateType_param } : {}),
+  }).lean();
 
   return finalResult;
 };
@@ -168,29 +161,25 @@ export const create = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-
-  const finalResult: any = await FoodGoal.create(
-    {
-      _id: new mongoose.Types.ObjectId(),
-      user_id: user_id_param,
-      food_goal_dateType: dateType_param,
-      food_goal_dateStart: dateStart_param,
-      food_goal_dateEnd: dateEnd_param,
-      food_goal_kcal: OBJECT_param.food_goal_kcal,
-      food_goal_carb: OBJECT_param.food_goal_carb,
-      food_goal_protein: OBJECT_param.food_goal_protein,
-      food_goal_fat: OBJECT_param.food_goal_fat,
-      food_goal_regDt: new Date(),
-      food_goal_updateDt: ``,
-    },
-  );
+  const finalResult: any = await FoodGoal.create({
+    _id: new mongoose.Types.ObjectId(),
+    user_id: user_id_param,
+    food_goal_dateType: dateType_param,
+    food_goal_dateStart: dateStart_param,
+    food_goal_dateEnd: dateEnd_param,
+    food_goal_kcal: OBJECT_param.food_goal_kcal,
+    food_goal_carb: OBJECT_param.food_goal_carb,
+    food_goal_protein: OBJECT_param.food_goal_protein,
+    food_goal_fat: OBJECT_param.food_goal_fat,
+    food_goal_regDt: new Date(),
+    food_goal_updateDt: ``,
+  });
 
   return finalResult;
 };
 
 // 4. update ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const update = {
-
   // 1. update (기존항목 유지 + 타겟항목으로 수정)
   update: async (
     user_id_param: string,
@@ -199,13 +188,25 @@ export const update = {
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
+    // upsert 신규 생성 시 pre(save) 채번 우회 방지: insert 일 때만 채번
+    const existDoc: any = await FoodGoal.findOne({
+      user_id: user_id_param,
+      food_goal_dateStart: dateStart_param,
+      food_goal_dateEnd: dateEnd_param,
+      ...(dateType_param ? { food_goal_dateType: dateType_param } : {}),
+    }).lean();
+    const setOnInsert: any = existDoc
+      ? {}
+      : {
+          food_goal_number: await incrementSeq(`food_goal_number`, `FoodGoal`),
+        };
 
     const finalResult: any = await FoodGoal.findOneAndUpdate(
       {
         user_id: user_id_param,
         food_goal_dateStart: dateStart_param,
         food_goal_dateEnd: dateEnd_param,
-        ...dateType_param ? { food_goal_dateType: dateType_param } : {},
+        ...(dateType_param ? { food_goal_dateType: dateType_param } : {}),
       },
       {
         $set: {
@@ -215,13 +216,13 @@ export const update = {
           food_goal_fat: OBJECT_param.food_goal_fat,
           food_goal_updateDt: new Date(),
         },
+        $setOnInsert: setOnInsert,
       },
       {
         upsert: true,
-        new: true,
+        returnDocument: `after`,
       },
-    )
-    .lean();
+    ).lean();
 
     return finalResult;
   },
@@ -236,13 +237,25 @@ export const update = {
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
+    // upsert 신규 생성 시 pre(save) 채번 우회 방지: insert 일 때만 채번
+    const existDoc: any = await FoodGoal.findOne({
+      user_id: user_id_param,
+      food_goal_dateStart: dateStart_param,
+      food_goal_dateEnd: dateEnd_param,
+      ...(dateType_param ? { food_goal_dateType: dateType_param } : {}),
+    }).lean();
+    const setOnInsert: any = existDoc
+      ? {}
+      : {
+          food_goal_number: await incrementSeq(`food_goal_number`, `FoodGoal`),
+        };
 
     const finalResult: any = await FoodGoal.findOneAndUpdate(
       {
         user_id: user_id_param,
         food_goal_dateStart: dateStart_param,
         food_goal_dateEnd: dateEnd_param,
-        ...dateType_param ? { food_goal_dateType: dateType_param } : {},
+        ...(dateType_param ? { food_goal_dateType: dateType_param } : {}),
       },
       {
         $set: {
@@ -252,13 +265,13 @@ export const update = {
           food_goal_fat: OBJECT_param.food_goal_fat,
           food_goal_updateDt: new Date(),
         },
+        $setOnInsert: setOnInsert,
       },
       {
         upsert: true,
-        new: true,
+        returnDocument: `after`,
       },
-    )
-    .lean();
+    ).lean();
 
     return finalResult;
   },
@@ -271,15 +284,12 @@ export const deletes = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-  const finalResult: any = await FoodGoal.findOneAndDelete(
-    {
-      user_id: user_id_param,
-      food_goal_dateStart: dateStart_param,
-      food_goal_dateEnd: dateEnd_param,
-      ...dateType_param ? { food_goal_dateType: dateType_param } : {},
-    },
-  )
-  .lean();
+  const finalResult: any = await FoodGoal.findOneAndDelete({
+    user_id: user_id_param,
+    food_goal_dateStart: dateStart_param,
+    food_goal_dateEnd: dateEnd_param,
+    ...(dateType_param ? { food_goal_dateType: dateType_param } : {}),
+  }).lean();
 
   return finalResult;
 };

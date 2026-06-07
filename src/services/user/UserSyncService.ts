@@ -5,28 +5,22 @@
  * @since 2025-12-26
  */
 
+import { decimalToTime, timeToDecimal } from "@assets/scripts/utils";
 import * as repository from "@repositories/user/UserSyncRepository";
-import { timeToDecimal, decimalToTime } from "@assets/scripts/utils";
 
 // 0. category (카테고리 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const category = async (
-  user_id_param: string,
-) => {
-
+export const category = async (user_id_param: string) => {
   // result 변수 선언
   let findCategory: any = null;
   let finalResult: any = null;
   let statusResult: string = ``;
 
-  findCategory = await repository.listCategory(
-    user_id_param,
-  );
+  findCategory = await repository.listCategory(user_id_param);
 
   if (!findCategory) {
     finalResult = null;
     statusResult = `fail`;
-  }
-  else {
+  } else {
     finalResult = findCategory;
     statusResult = `success`;
   }
@@ -38,11 +32,7 @@ export const category = async (
 };
 
 // 1. percent (퍼센트 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-export const percent = async (
-  user_id_param: string,
-  DATE_param: any,
-) => {
-
+export const percent = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let findExerciseGoal: any = null;
   let findExercise: any = null;
@@ -63,95 +53,120 @@ export const percent = async (
 
   // 1-1. exerciseGoal
   findExerciseGoal = await repository.percent.listExerciseGoal(
-    user_id_param, dateStart, dateEnd,
+    user_id_param,
+    dateStart,
+    dateEnd,
   );
 
   // 1-2. exercise
   findExercise = await repository.percent.listExercise(
-    user_id_param, dateStart, dateEnd,
+    user_id_param,
+    dateStart,
+    dateEnd,
   );
 
-  findExercise = findExercise?.length > 0 && findExercise?.reduce((acc: any, curr: any) => {
-    const exerciseTotalCount = (
-      Number.parseFloat(acc?.exercise_record_total_count) + Number.parseFloat(curr?.exercise_record_total_count)
-    );
-    const exerciseTotalVolume = (
-      Number.parseFloat(acc?.exercise_record_total_volume) + Number.parseFloat(curr?.exercise_record_total_volume)
-    );
-    const exerciseTotalCardio = (
-      timeToDecimal(acc?.exercise_record_total_cardio) + timeToDecimal(curr?.exercise_record_total_cardio)
-    );
-    const exerciseTotalScale = (
-      curr?.exercise_record_total_scale !== `0` ? curr?.exercise_record_total_scale : acc?.exercise_record_total_scale
-    );
-    return {
-      exercise_record_total_count: String(exerciseTotalCount),
-      exercise_record_total_volume: String(exerciseTotalVolume),
-      exercise_record_total_cardio: String(decimalToTime(exerciseTotalCardio)),
-      exercise_record_total_scale: String(exerciseTotalScale),
-    };
-  });
+  findExercise =
+    findExercise?.length > 0 &&
+    findExercise?.reduce((acc: any, curr: any) => {
+      const exerciseTotalCount =
+        Number.parseFloat(acc?.exercise_record_total_count) +
+        Number.parseFloat(curr?.exercise_record_total_count);
+      const exerciseTotalVolume =
+        Number.parseFloat(acc?.exercise_record_total_volume) +
+        Number.parseFloat(curr?.exercise_record_total_volume);
+      const exerciseTotalCardio =
+        timeToDecimal(acc?.exercise_record_total_cardio) +
+        timeToDecimal(curr?.exercise_record_total_cardio);
+      const exerciseTotalScale =
+        curr?.exercise_record_total_scale !== `0`
+          ? curr?.exercise_record_total_scale
+          : acc?.exercise_record_total_scale;
+      return {
+        exercise_record_total_count: String(exerciseTotalCount),
+        exercise_record_total_volume: String(exerciseTotalVolume),
+        exercise_record_total_cardio: String(
+          decimalToTime(exerciseTotalCardio),
+        ),
+        exercise_record_total_scale: String(exerciseTotalScale),
+      };
+    });
 
   // 2-1. foodGoal
   findFoodGoal = await repository.percent.listFoodGoal(
-    user_id_param, dateStart, dateEnd,
+    user_id_param,
+    dateStart,
+    dateEnd,
   );
 
   // 2-2. food
   findFood = await repository.percent.listFood(
-    user_id_param, dateStart, dateEnd,
+    user_id_param,
+    dateStart,
+    dateEnd,
   );
-  findFood = findFood?.length > 0 && findFood?.reduce((acc: any, curr: any) => {
-    const foodTotalKcal = (
-      Number.parseFloat(acc?.food_record_total_kcal) + Number.parseFloat(curr?.food_record_total_kcal)
-    );
-    const foodTotalCarb = (
-      Number.parseFloat(acc?.food_record_total_carb) + Number.parseFloat(curr?.food_record_total_carb)
-    );
-    const foodTotalProtein = (
-      Number.parseFloat(acc?.food_record_total_protein) + Number.parseFloat(curr?.food_record_total_protein)
-    );
-    const foodTotalFat = (
-      Number.parseFloat(acc?.food_record_total_fat) + Number.parseFloat(curr?.food_record_total_fat)
-    );
-    return {
-      food_record_total_kcal: String(foodTotalKcal),
-      food_record_total_carb: String(foodTotalCarb),
-      food_record_total_protein: String(foodTotalProtein),
-      food_record_total_fat: String(foodTotalFat),
-    };
-  });
+  findFood =
+    findFood?.length > 0 &&
+    findFood?.reduce((acc: any, curr: any) => {
+      const foodTotalKcal =
+        Number.parseFloat(acc?.food_record_total_kcal) +
+        Number.parseFloat(curr?.food_record_total_kcal);
+      const foodTotalCarb =
+        Number.parseFloat(acc?.food_record_total_carb) +
+        Number.parseFloat(curr?.food_record_total_carb);
+      const foodTotalProtein =
+        Number.parseFloat(acc?.food_record_total_protein) +
+        Number.parseFloat(curr?.food_record_total_protein);
+      const foodTotalFat =
+        Number.parseFloat(acc?.food_record_total_fat) +
+        Number.parseFloat(curr?.food_record_total_fat);
+      return {
+        food_record_total_kcal: String(foodTotalKcal),
+        food_record_total_carb: String(foodTotalCarb),
+        food_record_total_protein: String(foodTotalProtein),
+        food_record_total_fat: String(foodTotalFat),
+      };
+    });
 
   // 3-1. moneyGoal
   findMoneyGoal = await repository.percent.listMoneyGoal(
-    user_id_param, dateStart, dateEnd,
+    user_id_param,
+    dateStart,
+    dateEnd,
   );
 
   // 3-2. money
   findMoney = await repository.percent.listMoney(
-    user_id_param, dateStart, dateEnd,
+    user_id_param,
+    dateStart,
+    dateEnd,
   );
-  findMoney = findMoney?.length > 0 && findMoney?.reduce((acc: any, curr: any) => {
-    const moneyTotalIncome = (
-      Number.parseFloat(acc?.money_record_total_income) + Number.parseFloat(curr?.money_record_total_income)
-    );
-    const moneyTotalExpense = (
-      Number.parseFloat(acc?.money_record_total_expense) + Number.parseFloat(curr?.money_record_total_expense)
-    );
-    return {
-      money_record_total_income: String(moneyTotalIncome),
-      money_record_total_expense: String(moneyTotalExpense),
-    };
-  });
+  findMoney =
+    findMoney?.length > 0 &&
+    findMoney?.reduce((acc: any, curr: any) => {
+      const moneyTotalIncome =
+        Number.parseFloat(acc?.money_record_total_income) +
+        Number.parseFloat(curr?.money_record_total_income);
+      const moneyTotalExpense =
+        Number.parseFloat(acc?.money_record_total_expense) +
+        Number.parseFloat(curr?.money_record_total_expense);
+      return {
+        money_record_total_income: String(moneyTotalIncome),
+        money_record_total_expense: String(moneyTotalExpense),
+      };
+    });
 
   // 4-1. sleepGoal
   findSleepGoal = await repository.percent.listSleepGoal(
-    user_id_param, dateStart, dateEnd,
+    user_id_param,
+    dateStart,
+    dateEnd,
   );
 
   // 4-2. sleep
   findSleep = await repository.percent.listSleep(
-    user_id_param, dateStart, dateEnd,
+    user_id_param,
+    dateStart,
+    dateEnd,
   );
 
   // aggregate across all sections (support multi-section records)
@@ -163,9 +178,21 @@ export const percent = async (
   let totalSleepCount: number = 0;
 
   (findSleep ?? []).forEach((doc: any) => {
-    const bedArr = Array.isArray(doc?.sleep_record_bedTime) ? doc.sleep_record_bedTime : (doc?.sleep_record_bedTime ? [doc.sleep_record_bedTime] : []);
-    const wakeArr = Array.isArray(doc?.sleep_record_wakeTime) ? doc.sleep_record_wakeTime : (doc?.sleep_record_wakeTime ? [doc.sleep_record_wakeTime] : []);
-    const sleepArr = Array.isArray(doc?.sleep_record_sleepTime) ? doc.sleep_record_sleepTime : (doc?.sleep_record_sleepTime ? [doc.sleep_record_sleepTime] : []);
+    const bedArr = Array.isArray(doc?.sleep_record_bedTime)
+      ? doc.sleep_record_bedTime
+      : doc?.sleep_record_bedTime
+        ? [doc.sleep_record_bedTime]
+        : [];
+    const wakeArr = Array.isArray(doc?.sleep_record_wakeTime)
+      ? doc.sleep_record_wakeTime
+      : doc?.sleep_record_wakeTime
+        ? [doc.sleep_record_wakeTime]
+        : [];
+    const sleepArr = Array.isArray(doc?.sleep_record_sleepTime)
+      ? doc.sleep_record_sleepTime
+      : doc?.sleep_record_sleepTime
+        ? [doc.sleep_record_sleepTime]
+        : [];
 
     bedArr.forEach((val: any) => {
       totalBedDecimal += timeToDecimal(val ?? `00:00`);
@@ -190,17 +217,22 @@ export const percent = async (
     money: findMoney,
     sleepGoal: findSleepGoal[0],
     sleep: {
-      sleep_record_bedTime: decimalToTime(totalBedDecimal / (totalBedCount || 1)),
-      sleep_record_wakeTime: decimalToTime(totalWakeDecimal / (totalWakeCount || 1)),
-      sleep_record_sleepTime: decimalToTime(totalSleepDecimal / (totalSleepCount || 1)),
+      sleep_record_bedTime: decimalToTime(
+        totalBedDecimal / (totalBedCount || 1),
+      ),
+      sleep_record_wakeTime: decimalToTime(
+        totalWakeDecimal / (totalWakeCount || 1),
+      ),
+      sleep_record_sleepTime: decimalToTime(
+        totalSleepDecimal / (totalSleepCount || 1),
+      ),
     },
   };
 
   if (!findResult) {
     finalResult = null;
     statusResult = `fail`;
-  }
-  else {
+  } else {
     finalResult = findResult;
     statusResult = `success`;
   }
@@ -212,11 +244,7 @@ export const percent = async (
 };
 
 // 2. scale (체중 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-export const scale = async (
-  user_id_param: string,
-  DATE_param: any,
-) => {
-
+export const scale = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let findRegDt: any = null;
   let findInitScale: any = null;
@@ -230,42 +258,37 @@ export const scale = async (
   let statusResult: string = ``;
 
   // 가입날짜 - 현재날짜
-  findRegDt = await repository.scale.findRegDt(
-    user_id_param,
-  );
+  findRegDt = await repository.scale.findRegDt(user_id_param);
 
   // 2024-08-04T15:30:20.805Z -> 2024-08-04
   const regDt: string = findRegDt?.user_regDt?.toISOString().slice(0, 10);
   const todayDt: string = DATE_param?.dateEnd;
 
   // 최초 체중 조회
-  findInitScale = await repository.scale.findInitScale(
+  findInitScale = await repository.scale.findInitScale(user_id_param);
+  // 최소/최대 체중 조회 (L-30: 단일 aggregate로 통합)
+  const findMinMax: any = await repository.scale.findMinMaxScale(
     user_id_param,
+    regDt,
+    todayDt,
   );
-  // 최소 체중 조회
-  minScale = await repository.scale.findMinScale(
-    user_id_param, regDt, todayDt,
-  );
-  // 최대 체중 조회
-  maxScale = await repository.scale.findMaxScale(
-    user_id_param, regDt, todayDt,
-  );
+  minScale = findMinMax;
+  maxScale = findMinMax;
   // 현재 체중 조회
-  curScale = await repository.scale.findCurScale(
-    user_id_param, regDt, todayDt,
-  );
+  curScale = await repository.scale.findCurScale(user_id_param, regDt, todayDt);
 
   // 형식 포맷
   initScale = String(Number.parseFloat(findInitScale?.user_initScale ?? `0`));
   minScale = String(Number.parseFloat(minScale?.minScale ?? `0`));
   maxScale = String(Number.parseFloat(maxScale?.maxScale ?? `0`));
-  curScale = String(Number.parseFloat(curScale?.exercise_record_total_scale ?? `0`));
+  curScale = String(
+    Number.parseFloat(curScale?.exercise_record_total_scale ?? `0`),
+  );
 
   if (!findInitScale && !minScale && !maxScale && !curScale) {
     finalResult = null;
     statusResult = `fail`;
-  }
-  else {
+  } else {
     finalResult = {
       initScale: initScale,
       minScale: minScale,
@@ -279,7 +302,11 @@ export const scale = async (
 
   // 체중 업데이트
   await repository.scale.updateScale(
-    user_id_param, initScale, minScale, maxScale, curScale,
+    user_id_param,
+    initScale,
+    minScale,
+    maxScale,
+    curScale,
   );
 
   return {
@@ -289,11 +316,7 @@ export const scale = async (
 };
 
 // 3-1. nutrition (영양소 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-export const nutrition = async (
-  user_id_param: string,
-  DATE_param: any,
-) => {
-
+export const nutrition = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let findRegDt: any = null;
   let findTotalCnt: any = null;
@@ -315,9 +338,7 @@ export const nutrition = async (
   let statusResult: string = ``;
 
   // 가입날짜 - 현재날짜
-  findRegDt = await repository.nutrition.findRegDt(
-    user_id_param,
-  );
+  findRegDt = await repository.nutrition.findRegDt(user_id_param);
 
   // 2024-08-04T15:30:20.805Z -> 2024-08-04
   const regDt: string = findRegDt?.user_regDt?.toISOString().slice(0, 10);
@@ -325,41 +346,60 @@ export const nutrition = async (
 
   // 데이터 총 개수 조회
   findTotalCnt = await repository.nutrition.findTotalCnt(
-    user_id_param, regDt, todayDt,
+    user_id_param,
+    regDt,
+    todayDt,
   );
   // 최초 칼로리 목표 조회
-  findInitNutrition = await repository.nutrition.findInitNutrition(
-    user_id_param,
-  );
+  findInitNutrition =
+    await repository.nutrition.findInitNutrition(user_id_param);
   // 전체 영양 정보 조회
   findAllInformation = await repository.nutrition.findAllInformation(
-    user_id_param, regDt, todayDt,
+    user_id_param,
+    regDt,
+    todayDt,
   );
 
   // 형식 포맷
   initAvgKcalIntake = String(
-    Number.parseFloat(findInitNutrition?.user_initAvgKcalIntake ?? `0`).toFixed(0),
+    Number.parseFloat(findInitNutrition?.user_initAvgKcalIntake ?? `0`).toFixed(
+      0,
+    ),
   );
   totalKcalIntake = String(
-    Number.parseFloat(findAllInformation?.food_record_total_kcal ?? `0`).toFixed(0),
+    Number.parseFloat(
+      findAllInformation?.food_record_total_kcal ?? `0`,
+    ).toFixed(0),
   );
   totalCarbIntake = String(
-    Number.parseFloat(findAllInformation?.food_record_total_carb ?? `0`).toFixed(0),
+    Number.parseFloat(
+      findAllInformation?.food_record_total_carb ?? `0`,
+    ).toFixed(0),
   );
   totalProteinIntake = String(
-    Number.parseFloat(findAllInformation?.food_record_total_protein ?? `0`).toFixed(0),
+    Number.parseFloat(
+      findAllInformation?.food_record_total_protein ?? `0`,
+    ).toFixed(0),
   );
   totalFatIntake = String(
-    Number.parseFloat(findAllInformation?.food_record_total_fat ?? `0`).toFixed(0),
+    Number.parseFloat(findAllInformation?.food_record_total_fat ?? `0`).toFixed(
+      0,
+    ),
   );
   curAvgKcalIntake = String(
-    (Number.parseFloat(totalKcalIntake ?? `0`) / (findTotalCnt ?? 1)).toFixed(0),
+    (Number.parseFloat(totalKcalIntake ?? `0`) / (findTotalCnt ?? 1)).toFixed(
+      0,
+    ),
   );
   curAvgCarbIntake = String(
-    (Number.parseFloat(totalCarbIntake ?? `0`) / (findTotalCnt ?? 1)).toFixed(0),
+    (Number.parseFloat(totalCarbIntake ?? `0`) / (findTotalCnt ?? 1)).toFixed(
+      0,
+    ),
   );
   curAvgProteinIntake = String(
-    (Number.parseFloat(totalProteinIntake ?? `0`) / (findTotalCnt ?? 1)).toFixed(0),
+    (
+      Number.parseFloat(totalProteinIntake ?? `0`) / (findTotalCnt ?? 1)
+    ).toFixed(0),
   );
   curAvgFatIntake = String(
     (Number.parseFloat(totalFatIntake ?? `0`) / (findTotalCnt ?? 1)).toFixed(0),
@@ -368,8 +408,7 @@ export const nutrition = async (
   if (!findInitNutrition && !findAllInformation) {
     finalResult = null;
     statusResult = `fail`;
-  }
-  else {
+  } else {
     finalResult = {
       initAvgKcalIntake: initAvgKcalIntake,
       totalKcalIntake: totalKcalIntake,
@@ -388,7 +427,16 @@ export const nutrition = async (
 
   // 영양소 업데이트
   await repository.nutrition.updateNutrition(
-    user_id_param, initAvgKcalIntake, totalKcalIntake, totalCarbIntake, totalProteinIntake, totalFatIntake, curAvgKcalIntake, curAvgCarbIntake, curAvgProteinIntake, curAvgFatIntake,
+    user_id_param,
+    initAvgKcalIntake,
+    totalKcalIntake,
+    totalCarbIntake,
+    totalProteinIntake,
+    totalFatIntake,
+    curAvgKcalIntake,
+    curAvgCarbIntake,
+    curAvgProteinIntake,
+    curAvgFatIntake,
   );
 
   return {
@@ -398,11 +446,7 @@ export const nutrition = async (
 };
 
 // 3-2. favorite (저장 음식 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-export const favorite = async (
-  user_id_param: string,
-  DATE_param: any,
-) => {
-
+export const favorite = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let findRegDt: any = null;
   let findFavorite: any = null;
@@ -411,24 +455,19 @@ export const favorite = async (
   let statusResult: string = ``;
 
   // 가입날짜 - 현재날짜
-  findRegDt = await repository.favorite.findRegDt(
-    user_id_param,
-  );
+  findRegDt = await repository.favorite.findRegDt(user_id_param);
 
   // 2024-08-04T15:30:20.805Z -> 2024-08-04
   const regDt: string = findRegDt?.user_regDt?.toISOString().slice(0, 10);
   const todayDt: string = DATE_param?.dateEnd;
 
   // 저장 음식 조회
-  findFavorite = await repository.favorite.findFavorite(
-    user_id_param,
-  );
+  findFavorite = await repository.favorite.findFavorite(user_id_param);
 
   if (!findFavorite) {
     finalResult = null;
     statusResult = `fail`;
-  }
-  else {
+  } else {
     finalResult = {
       foodFavorite: findFavorite,
       dateStart: regDt,
@@ -444,11 +483,7 @@ export const favorite = async (
 };
 
 // 4. property (자산 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const property = async (
-  user_id_param: string,
-  DATE_param: any,
-) => {
-
+export const property = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let findRegDt: any = null;
   let findInitProperty: any = null;
@@ -466,22 +501,20 @@ export const property = async (
   let statusResult: string = ``;
 
   // 가입날짜 - 현재날짜
-  findRegDt = await repository.property.findRegDt(
-    user_id_param,
-  );
+  findRegDt = await repository.property.findRegDt(user_id_param);
 
   // 2024-08-04T15:30:20.805Z -> 2024-08-04
   const regDt: string = findRegDt?.user_regDt?.toISOString().slice(0, 10);
   const todayDt: string = DATE_param?.dateEnd;
 
   // 최초 자산 조회
-  findInitProperty = await repository.property.findInitProperty(
-    user_id_param,
-  );
+  findInitProperty = await repository.property.findInitProperty(user_id_param);
 
   // 전체 자산 정보 조회
   findAllInformation = await repository.property.findAllInformation(
-    user_id_param, regDt, todayDt,
+    user_id_param,
+    regDt,
+    todayDt,
   );
 
   // 형식 포맷
@@ -489,33 +522,40 @@ export const property = async (
     Number.parseFloat(findInitProperty?.user_initProperty ?? `0`),
   );
   totalIncomeAll = String(
-    Number.parseFloat(findAllInformation?.allResult?.money_record_total_income ?? `0`),
+    Number.parseFloat(
+      findAllInformation?.allResult?.money_record_total_income ?? `0`,
+    ),
   );
   totalExpenseAll = String(
-    Number.parseFloat(findAllInformation?.allResult?.money_record_total_expense ?? `0`),
+    Number.parseFloat(
+      findAllInformation?.allResult?.money_record_total_expense ?? `0`,
+    ),
   );
   totalIncomeExclusion = String(
-    Number.parseFloat(findAllInformation?.exclusionResult?.money_record_total_income ?? `0`),
+    Number.parseFloat(
+      findAllInformation?.exclusionResult?.money_record_total_income ?? `0`,
+    ),
   );
   totalExpenseExclusion = String(
-    Number.parseFloat(findAllInformation?.exclusionResult?.money_record_total_expense ?? `0`),
+    Number.parseFloat(
+      findAllInformation?.exclusionResult?.money_record_total_expense ?? `0`,
+    ),
   );
   curPropertyAll = String(
     Number.parseFloat(findInitProperty?.user_initProperty ?? `0`) +
-    Number.parseFloat(totalIncomeAll) -
-    Number.parseFloat(totalExpenseAll),
+      Number.parseFloat(totalIncomeAll) -
+      Number.parseFloat(totalExpenseAll),
   );
   curPropertyExclusion = String(
     Number.parseFloat(findInitProperty?.user_initProperty ?? `0`) +
-    Number.parseFloat(totalIncomeExclusion) -
-    Number.parseFloat(totalExpenseExclusion),
+      Number.parseFloat(totalIncomeExclusion) -
+      Number.parseFloat(totalExpenseExclusion),
   );
 
   if (!findInitProperty && !findAllInformation) {
     finalResult = null;
     statusResult = `fail`;
-  }
-  else {
+  } else {
     statusResult = `success`;
     finalResult = {
       initProperty: initProperty,
@@ -532,7 +572,14 @@ export const property = async (
 
   // 자산 업데이트
   await repository.property.updateProperty(
-    user_id_param, initProperty, totalIncomeAll, totalIncomeExclusion, totalExpenseAll, totalExpenseExclusion, curPropertyAll, curPropertyExclusion,
+    user_id_param,
+    initProperty,
+    totalIncomeAll,
+    totalIncomeExclusion,
+    totalExpenseAll,
+    totalExpenseExclusion,
+    curPropertyAll,
+    curPropertyExclusion,
   );
 
   return {

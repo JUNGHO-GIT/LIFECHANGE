@@ -5,9 +5,10 @@
  * @since 2025-12-26
  */
 
-import mongoose from "mongoose";
-import { User } from "@schemas/user/User";
+import { incrementSeq } from "@schemas/Counter";
 import { FoodRecord } from "@schemas/food/FoodRecord";
+import { User } from "@schemas/user/User";
+import mongoose from "mongoose";
 
 // 0. exist ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const exist = async (
@@ -16,7 +17,6 @@ export const exist = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-
   const finalResult: any = await FoodRecord.aggregate([
     {
       $match: {
@@ -27,7 +27,7 @@ export const exist = async (
         food_record_dateEnd: {
           $gte: dateStart_param,
         },
-        ...dateType_param ? { food_record_dateType: dateType_param } : {},
+        ...(dateType_param ? { food_record_dateType: dateType_param } : {}),
       },
     },
     {
@@ -58,7 +58,6 @@ export const list = async (
   page_param: number,
   part_param?: string,
 ) => {
-
   // part 필터 조건 구성
   const matchSection: any = {};
   if (part_param && part_param !== `all`) {
@@ -77,7 +76,7 @@ export const list = async (
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        ...dateType_param ? { food_record_dateType: dateType_param } : {},
+        ...(dateType_param ? { food_record_dateType: dateType_param } : {}),
         ...matchSection,
       },
     },
@@ -97,7 +96,9 @@ export const list = async (
             as: `section`,
             cond: {
               $and: [
-                part_param && part_param !== `all` ? { $eq: [ `$$section.food_record_part`, part_param ] } : true,
+                part_param && part_param !== `all`
+                  ? { $eq: [`$$section.food_record_part`, part_param] }
+                  : true,
               ],
             },
           },
@@ -111,36 +112,44 @@ export const list = async (
             $reduce: {
               input: `$food_section`,
               initialValue: 0,
-              in: { $add: [`$$value`, { $toDouble: `$$this.food_record_kcal` }] }
-            }
-          }
+              in: {
+                $add: [`$$value`, { $toDouble: `$$this.food_record_kcal` }],
+              },
+            },
+          },
         },
         food_record_total_carb: {
           $toString: {
             $reduce: {
               input: `$food_section`,
               initialValue: 0,
-              in: { $add: [`$$value`, { $toDouble: `$$this.food_record_carb` }] }
-            }
-          }
+              in: {
+                $add: [`$$value`, { $toDouble: `$$this.food_record_carb` }],
+              },
+            },
+          },
         },
         food_record_total_protein: {
           $toString: {
             $reduce: {
               input: `$food_section`,
               initialValue: 0,
-              in: { $add: [`$$value`, { $toDouble: `$$this.food_record_protein` }] }
-            }
-          }
+              in: {
+                $add: [`$$value`, { $toDouble: `$$this.food_record_protein` }],
+              },
+            },
+          },
         },
         food_record_total_fat: {
           $toString: {
             $reduce: {
               input: `$food_section`,
               initialValue: 0,
-              in: { $add: [`$$value`, { $toDouble: `$$this.food_record_fat` }] }
-            }
-          }
+              in: {
+                $add: [`$$value`, { $toDouble: `$$this.food_record_fat` }],
+              },
+            },
+          },
         },
       },
     },
@@ -149,19 +158,13 @@ export const list = async (
         food_record_dateStart: sort_param,
       },
     },
-    {
-      $skip: (Number(page_param) - 1),
-    },
   ]);
 
   return finalResult;
 };
 
 // 1-2. favorite ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-export const favorite = async (
-  user_id_param: string,
-) => {
-
+export const favorite = async (user_id_param: string) => {
   const finalResult: any = await User.findOne(
     {
       user_id: user_id_param,
@@ -170,8 +173,7 @@ export const favorite = async (
       _id: 0,
       user_favorite: 1,
     },
-  )
-  .lean();
+  ).lean();
 
   return finalResult?.user_favorite;
 };
@@ -183,16 +185,12 @@ export const detail = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-
-  const finalResult: any = await FoodRecord.findOne(
-    {
-      user_id: user_id_param,
-      food_record_dateStart: dateStart_param,
-      food_record_dateEnd: dateEnd_param,
-      ...dateType_param ? { food_record_dateType: dateType_param } : {},
-    },
-  )
-  .lean();
+  const finalResult: any = await FoodRecord.findOne({
+    user_id: user_id_param,
+    food_record_dateStart: dateStart_param,
+    food_record_dateEnd: dateEnd_param,
+    ...(dateType_param ? { food_record_dateType: dateType_param } : {}),
+  }).lean();
 
   return finalResult;
 };
@@ -205,30 +203,26 @@ export const create = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-
-  const finalResult: any = await FoodRecord.create(
-    {
-      _id: new mongoose.Types.ObjectId(),
-      user_id: user_id_param,
-      food_record_dateType: dateType_param,
-      food_record_dateStart: dateStart_param,
-      food_record_dateEnd: dateEnd_param,
-      food_record_total_kcal: OBJECT_param.food_record_total_kcal,
-      food_record_total_carb: OBJECT_param.food_record_total_carb,
-      food_record_total_protein: OBJECT_param.food_record_total_protein,
-      food_record_total_fat: OBJECT_param.food_record_total_fat,
-      food_section: OBJECT_param.food_section,
-      food_record_regDt: new Date(),
-      food_record_updateDt: ``,
-    },
-  );
+  const finalResult: any = await FoodRecord.create({
+    _id: new mongoose.Types.ObjectId(),
+    user_id: user_id_param,
+    food_record_dateType: dateType_param,
+    food_record_dateStart: dateStart_param,
+    food_record_dateEnd: dateEnd_param,
+    food_record_total_kcal: OBJECT_param.food_record_total_kcal,
+    food_record_total_carb: OBJECT_param.food_record_total_carb,
+    food_record_total_protein: OBJECT_param.food_record_total_protein,
+    food_record_total_fat: OBJECT_param.food_record_total_fat,
+    food_section: OBJECT_param.food_section,
+    food_record_regDt: new Date(),
+    food_record_updateDt: ``,
+  });
 
   return finalResult;
 };
 
 // 4. update ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const update = {
-
   // 1. update (기존항목 유지 + 타겟항목으로 수정)
   update: async (
     user_id_param: string,
@@ -237,13 +231,28 @@ export const update = {
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
+    // upsert 신규 생성 시 pre(save) 채번 우회 방지: insert 일 때만 채번
+    const existDoc: any = await FoodRecord.findOne({
+      user_id: user_id_param,
+      food_record_dateStart: dateStart_param,
+      food_record_dateEnd: dateEnd_param,
+      ...(dateType_param ? { food_record_dateType: dateType_param } : {}),
+    }).lean();
+    const setOnInsert: any = existDoc
+      ? {}
+      : {
+          food_record_number: await incrementSeq(
+            `food_record_number`,
+            `FoodRecord`,
+          ),
+        };
 
     const finalResult: any = await FoodRecord.findOneAndUpdate(
       {
         user_id: user_id_param,
         food_record_dateStart: dateStart_param,
         food_record_dateEnd: dateEnd_param,
-        ...dateType_param ? { food_record_dateType: dateType_param } : {},
+        ...(dateType_param ? { food_record_dateType: dateType_param } : {}),
       },
       {
         $set: {
@@ -254,13 +263,13 @@ export const update = {
           food_section: OBJECT_param.food_section,
           food_record_updateDt: new Date(),
         },
+        $setOnInsert: setOnInsert,
       },
       {
         upsert: true,
-        new: true,
+        returnDocument: `after`,
       },
-    )
-    .lean();
+    ).lean();
 
     return finalResult;
   },
@@ -273,40 +282,49 @@ export const update = {
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
+    const findResult: any = await FoodRecord.findOne({
+      user_id: user_id_param,
+      food_record_dateStart: dateStart_param,
+      food_record_dateEnd: dateEnd_param,
+      ...(dateType_param ? { food_record_dateType: dateType_param } : {}),
+    }).lean();
 
-    const findResult: any = await FoodRecord.findOne(
-      {
-        user_id: user_id_param,
-        food_record_dateStart: dateStart_param,
-        food_record_dateEnd: dateEnd_param,
-        ...dateType_param ? { food_record_dateType: dateType_param } : {},
-      },
-    )
-    .lean();
+    // 대상 날짜에 기존 레코드가 없을 때 null 역참조 방지
+    const base: any = findResult ?? {};
 
     const newKcal: string = String(
-      Number.parseFloat(findResult.food_record_total_kcal as string) +
-      Number.parseFloat(OBJECT_param.food_record_total_kcal as string),
+      Number.parseFloat(base.food_record_total_kcal ?? `0`) +
+        Number.parseFloat(OBJECT_param.food_record_total_kcal as string),
     );
     const newCarb: string = String(
-      Number.parseFloat(findResult.food_record_total_carb as string) +
-      Number.parseFloat(OBJECT_param.food_record_total_carb as string),
+      Number.parseFloat(base.food_record_total_carb ?? `0`) +
+        Number.parseFloat(OBJECT_param.food_record_total_carb as string),
     );
     const newProtein: string = String(
-      Number.parseFloat(findResult.food_record_total_protein as string) +
-      Number.parseFloat(OBJECT_param.food_record_total_protein as string),
+      Number.parseFloat(base.food_record_total_protein ?? `0`) +
+        Number.parseFloat(OBJECT_param.food_record_total_protein as string),
     );
     const newFat: string = String(
-      Number.parseFloat(findResult.food_record_total_fat as string) +
-      Number.parseFloat(OBJECT_param.food_record_total_fat as string),
+      Number.parseFloat(base.food_record_total_fat ?? `0`) +
+        Number.parseFloat(OBJECT_param.food_record_total_fat as string),
     );
+
+    // upsert 신규 생성 시 pre(save) 채번 우회 방지: 기존 레코드 없을 때만 채번
+    const setOnInsert: any = findResult
+      ? {}
+      : {
+          food_record_number: await incrementSeq(
+            `food_record_number`,
+            `FoodRecord`,
+          ),
+        };
 
     const finalResult: any = await FoodRecord.updateOne(
       {
         user_id: user_id_param,
         food_record_dateStart: dateStart_param,
         food_record_dateEnd: dateEnd_param,
-        ...dateType_param ? { food_record_dateType: dateType_param } : {},
+        ...(dateType_param ? { food_record_dateType: dateType_param } : {}),
       },
       {
         $set: {
@@ -319,12 +337,12 @@ export const update = {
         $push: {
           food_section: OBJECT_param.food_section,
         },
+        $setOnInsert: setOnInsert,
       },
       {
         upsert: true,
       },
-    )
-    .lean();
+    ).lean();
 
     return finalResult;
   },
@@ -337,13 +355,28 @@ export const update = {
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
+    // upsert 신규 생성 시 pre(save) 채번 우회 방지: insert 일 때만 채번
+    const existDoc: any = await FoodRecord.findOne({
+      user_id: user_id_param,
+      food_record_dateStart: dateStart_param,
+      food_record_dateEnd: dateEnd_param,
+      ...(dateType_param ? { food_record_dateType: dateType_param } : {}),
+    }).lean();
+    const setOnInsert: any = existDoc
+      ? {}
+      : {
+          food_record_number: await incrementSeq(
+            `food_record_number`,
+            `FoodRecord`,
+          ),
+        };
 
     const finalResult: any = await FoodRecord.findOneAndUpdate(
       {
         user_id: user_id_param,
         food_record_dateStart: dateStart_param,
         food_record_dateEnd: dateEnd_param,
-        ...dateType_param ? { food_record_dateType: dateType_param } : {},
+        ...(dateType_param ? { food_record_dateType: dateType_param } : {}),
       },
       {
         $set: {
@@ -354,23 +387,19 @@ export const update = {
           food_section: OBJECT_param.food_section,
           food_record_updateDt: new Date(),
         },
+        $setOnInsert: setOnInsert,
       },
       {
         upsert: true,
-        new: true,
+        returnDocument: `after`,
       },
-    )
-    .lean();
+    ).lean();
 
     return finalResult;
   },
 
   // 4. update
-  favorite: async (
-    user_id_param: string,
-    foodFavorite_param: any,
-  ) => {
-
+  favorite: async (user_id_param: string, foodFavorite_param: any) => {
     const finalResult: any = await User.findOneAndUpdate(
       {
         user_id: user_id_param,
@@ -382,10 +411,9 @@ export const update = {
       },
       {
         upsert: true,
-        new: true,
+        returnDocument: `after`,
       },
-    )
-    .lean();
+    ).lean();
 
     return finalResult.user_favorite;
   },
@@ -398,16 +426,12 @@ export const deletes = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-
-  const finalResult: any = await FoodRecord.findOneAndDelete(
-    {
-      user_id: user_id_param,
-      food_record_dateStart: dateStart_param,
-      food_record_dateEnd: dateEnd_param,
-      ...dateType_param ? { food_record_dateType: dateType_param } : {},
-    },
-  )
-  .lean();
+  const finalResult: any = await FoodRecord.findOneAndDelete({
+    user_id: user_id_param,
+    food_record_dateStart: dateStart_param,
+    food_record_dateEnd: dateEnd_param,
+    ...(dateType_param ? { food_record_dateType: dateType_param } : {}),
+  }).lean();
 
   return finalResult;
 };

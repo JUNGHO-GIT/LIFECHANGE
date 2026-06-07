@@ -5,21 +5,18 @@
  * @since 2025-12-26
  */
 
-import { User } from "@schemas/user/User";
-import { ExerciseRecord } from "@schemas/exercise/ExerciseRecord";
 import { ExerciseGoal } from "@schemas/exercise/ExerciseGoal";
-import { FoodRecord } from "@schemas/food/FoodRecord";
+import { ExerciseRecord } from "@schemas/exercise/ExerciseRecord";
 import { FoodGoal } from "@schemas/food/FoodGoal";
-import { MoneyRecord } from "@schemas/money/MoneyRecord";
+import { FoodRecord } from "@schemas/food/FoodRecord";
 import { MoneyGoal } from "@schemas/money/MoneyGoal";
-import { SleepRecord } from "@schemas/sleep/SleepRecord";
+import { MoneyRecord } from "@schemas/money/MoneyRecord";
 import { SleepGoal } from "@schemas/sleep/SleepGoal";
+import { SleepRecord } from "@schemas/sleep/SleepRecord";
+import { User } from "@schemas/user/User";
 
 // 0. category (카테고리 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const listCategory = async (
-  user_id_param: string,
-) => {
-
+export const listCategory = async (user_id_param: string) => {
   const finalResult: any = await User.aggregate([
     {
       $match: {
@@ -42,7 +39,6 @@ export const listCategory = async (
 
 // 1. percent (퍼센트 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const percent = {
-
   // 1-1. exercise (goal)
   listExerciseGoal: async (
     user_id_param: string,
@@ -108,10 +104,10 @@ export const percent = {
               if: {
                 $and: [
                   {
-                    $lte: [ `$exercise_record_total_volume`, 1 ],
+                    $lte: [`$exercise_record_total_volume`, 1],
                   },
                   {
-                    $eq: [ `$exercise_record_total_cardio`, `00:00` ],
+                    $eq: [`$exercise_record_total_cardio`, `00:00`],
                   },
                 ],
               },
@@ -328,11 +324,8 @@ export const percent = {
 
 // 2. scale (체중 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const scale = {
-
   // 2-1. 등록일 조회
-  findRegDt: async (
-    user_id_param: string,
-  ) => {
+  findRegDt: async (user_id_param: string) => {
     const finalResult: any = await User.aggregate([
       {
         $match: {
@@ -351,9 +344,7 @@ export const scale = {
   },
 
   // 2-2. 최초 체중 조회
-  findInitScale: async (
-    user_id_param: string,
-  ) => {
+  findInitScale: async (user_id_param: string) => {
     const finalResult: any = await User.aggregate([
       {
         $match: {
@@ -372,8 +363,9 @@ export const scale = {
     return finalResult[0];
   },
 
-  // 2-3. 최소 체중 조회
-  findMinScale: async (
+  // 2-3. 최소/최대 체중 조회
+  // L-30: 동일 데이터를 minScale/maxScale로 2회 스캔하던 것을 단일 $group($min/$max 동시)으로 통합
+  findMinMaxScale: async (
     user_id_param: string,
     dateStart_param: string,
     dateEnd_param: string,
@@ -405,49 +397,6 @@ export const scale = {
           minScale: {
             $min: `$exercise_record_total_scale`,
           },
-        },
-      },
-      {
-        $project: {
-          _id: 0,
-          minScale: 1,
-        },
-      },
-    ]);
-
-    return finalResult[0];
-  },
-
-  // 2-4. 최대 체중 조회
-  findMaxScale: async (
-    user_id_param: string,
-    dateStart_param: string,
-    dateEnd_param: string,
-  ) => {
-    const finalResult: any = await ExerciseRecord.aggregate([
-      {
-        $match: {
-          user_id: user_id_param,
-          exercise_record_dateStart: {
-            $gte: dateStart_param,
-            $lte: dateEnd_param,
-          },
-          exercise_record_dateEnd: {
-            $gte: dateStart_param,
-            $lte: dateEnd_param,
-          },
-        },
-      },
-      {
-        $addFields: {
-          exercise_record_total_scale: {
-            $toDouble: `$exercise_record_total_scale`,
-          },
-        },
-      },
-      {
-        $group: {
-          _id: null,
           maxScale: {
             $max: `$exercise_record_total_scale`,
           },
@@ -456,6 +405,7 @@ export const scale = {
       {
         $project: {
           _id: 0,
+          minScale: 1,
           maxScale: 1,
         },
       },
@@ -523,7 +473,7 @@ export const scale = {
       },
       {
         upsert: true,
-        new: true,
+        returnDocument: `after`,
       },
     );
 
@@ -533,11 +483,8 @@ export const scale = {
 
 // 3-1. nutrition ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 export const nutrition = {
-
   // 3-1. 등록일 조회
-  findRegDt: async (
-    user_id_param: string,
-  ) => {
+  findRegDt: async (user_id_param: string) => {
     const finalResult: any = await User.aggregate([
       {
         $match: {
@@ -562,30 +509,26 @@ export const nutrition = {
     dateEnd_param: string,
   ) => {
     // 데이터중 값이 있는 것만 카운트
-    const finalResult: any = await FoodRecord.countDocuments(
-      {
-        user_id: user_id_param,
-        food_record_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        food_record_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        "food_section.food_record_kcal": {
-          $ne: ``,
-        },
+    const finalResult: any = await FoodRecord.countDocuments({
+      user_id: user_id_param,
+      food_record_dateStart: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
-    );
+      food_record_dateEnd: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
+      },
+      "food_section.food_record_kcal": {
+        $ne: ``,
+      },
+    });
 
     return finalResult;
   },
 
   // 3-3. 최초 영양정보 조회
-  findInitNutrition: async (
-    user_id_param: string,
-  ) => {
+  findInitNutrition: async (user_id_param: string) => {
     const finalResult: any = await User.aggregate([
       {
         $match: {
@@ -699,7 +642,7 @@ export const nutrition = {
       },
       {
         upsert: true,
-        new: true,
+        returnDocument: `after`,
       },
     );
 
@@ -709,11 +652,8 @@ export const nutrition = {
 
 // 3-2. favorite (즐겨찾기 조회) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const favorite = {
-
   // 3-1. 등록일 조회
-  findRegDt: async (
-    user_id_param: string,
-  ) => {
+  findRegDt: async (user_id_param: string) => {
     const finalResult: any = await User.aggregate([
       {
         $match: {
@@ -732,35 +672,29 @@ export const favorite = {
   },
 
   // 3-2. 즐겨찾기 조회
-  findFavorite: async (
-    user_id_param: string,
-  ) => {
-
-    const finalResult: any = await User.aggregate([
+  // L-32: 전체 도큐먼트 로드 후 _id만 제외하던 aggregate를 user_favorite 포함 프로젝션 findOne().lean()으로 전환
+  // (포함+하위 제외 혼용은 Mongo 31249 충돌 — 하위 _id는 JS에서 제거해 기존 응답 형태 유지)
+  findFavorite: async (user_id_param: string) => {
+    const finalResult: any = await User.findOne(
       {
-        $match: {
-          user_id: user_id_param,
-        },
+        user_id: user_id_param,
       },
       {
-        $project: {
-          _id: 0,
-          "user_favorite._id": 0,
-        },
+        _id: 0,
+        user_favorite: 1,
       },
-    ]);
+    ).lean();
 
-    return finalResult[0].user_favorite;
+    return finalResult?.user_favorite?.map(
+      ({ _id: _drop, ...rest }: any) => rest,
+    );
   },
 };
 
 // 4. property (자산 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const property = {
-
   // 4-1. 등록일 조회
-  findRegDt: async (
-    user_id_param: string,
-  ) => {
+  findRegDt: async (user_id_param: string) => {
     const finalResult: any = await User.aggregate([
       {
         $match: {
@@ -779,9 +713,7 @@ export const property = {
   },
 
   // 4-2. 최초 자산 조회
-  findInitProperty: async (
-    user_id_param: string,
-  ) => {
+  findInitProperty: async (user_id_param: string) => {
     const finalResult: any = await User.aggregate([
       {
         $match: {
@@ -806,7 +738,9 @@ export const property = {
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
-    const allResult: any = await MoneyRecord.aggregate([
+    // M-21: 동일 컬렉션 2회 풀-aggregate를 $facet 단일 파이프라인으로 통합
+    // 공통 $match/$unwind를 한 번만 수행하고, exclusion(include='Y')은 all(include!=null)의 부분집합이므로 facet 내에서 분기한다
+    const facetResult: any = await MoneyRecord.aggregate([
       {
         $match: {
           user_id: user_id_param,
@@ -824,7 +758,7 @@ export const property = {
         $unwind: `$money_section`,
       },
       {
-        // money_record_include 상관없이 모두 필터링
+        // money_record_include 상관없이 모두 필터링 (exclusion 분기의 상위 집합)
         $match: {
           "money_section.money_record_include": {
             $ne: null,
@@ -832,117 +766,115 @@ export const property = {
         },
       },
       {
-        $group: {
-          _id: null,
-          // money_record_part이 "income"인 경우의 수입 합산
-          money_record_total_income: {
-            $sum: {
-              $cond: [
-                {
-                  $eq: [ `$money_section.money_record_part`, `income` ],
+        $facet: {
+          // all: include != null 전체 합산
+          allResult: [
+            {
+              $group: {
+                _id: null,
+                // money_record_part이 "income"인 경우의 수입 합산
+                money_record_total_income: {
+                  $sum: {
+                    $cond: [
+                      {
+                        $eq: [`$money_section.money_record_part`, `income`],
+                      },
+                      {
+                        $toDouble: `$money_section.money_record_amount`,
+                      },
+                      0,
+                    ],
+                  },
                 },
-                {
-                  $toDouble: `$money_section.money_record_amount`,
+                // money_record_part이 "expense"인 경우의 지출 합산
+                money_record_total_expense: {
+                  $sum: {
+                    $cond: [
+                      {
+                        $eq: [`$money_section.money_record_part`, `expense`],
+                      },
+                      {
+                        $toDouble: `$money_section.money_record_amount`,
+                      },
+                      0,
+                    ],
+                  },
                 },
-                0,
-              ],
+              },
             },
-          },
-          // money_record_part이 "expense"인 경우의 지출 합산
-          money_record_total_expense: {
-            $sum: {
-              $cond: [
-                {
-                  $eq: [ `$money_section.money_record_part`, `expense` ],
-                },
-                {
-                  $toDouble: `$money_section.money_record_amount`,
-                },
-                0,
-              ],
+            {
+              $project: {
+                _id: 0,
+                money_record_total_income: 1,
+                money_record_total_expense: 1,
+              },
             },
-          },
-        },
-      },
-      {
-        $project: {
-          _id: 0,
-          money_record_total_income: 1,
-          money_record_total_expense: 1,
+          ],
+          // exclusion: include == 'Y'만 합산
+          exclusionResult: [
+            {
+              // money_record_include가 "Y"인 경우만 필터링
+              $match: {
+                "money_section.money_record_include": {
+                  $eq: `Y`,
+                },
+              },
+            },
+            {
+              $group: {
+                _id: null,
+                // money_record_part이 "income"인 경우의 수입 합산
+                money_record_total_income: {
+                  $sum: {
+                    $cond: [
+                      {
+                        $eq: [`$money_section.money_record_part`, `income`],
+                      },
+                      {
+                        $toDouble: `$money_section.money_record_amount`,
+                      },
+                      0,
+                    ],
+                  },
+                },
+                // money_record_part이 "expense"인 경우의 지출 합산
+                money_record_total_expense: {
+                  $sum: {
+                    $cond: [
+                      {
+                        $eq: [`$money_section.money_record_part`, `expense`],
+                      },
+                      {
+                        $toDouble: `$money_section.money_record_amount`,
+                      },
+                      0,
+                    ],
+                  },
+                },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                money_record_total_income: 1,
+                money_record_total_expense: 1,
+              },
+            },
+          ],
         },
       },
     ]);
 
-    const exclusionResult: any = await MoneyRecord.aggregate([
-      {
-        $match: {
-          user_id: user_id_param,
-          money_record_dateStart: {
-            $gte: dateStart_param,
-            $lte: dateEnd_param,
-          },
-          money_record_dateEnd: {
-            $gte: dateStart_param,
-            $lte: dateEnd_param,
-          },
-        },
-      },
-      {
-        $unwind: `$money_section`,
-      },
-      {
-        // money_record_include가 "Y"인 경우만 필터링
-        $match: {
-          "money_section.money_record_include": {
-            $eq: `Y`,
-          },
-        },
-      },
-      {
-        $group: {
-          _id: null,
-          // money_record_part이 "income"인 경우의 수입 합산
-          money_record_total_income: {
-            $sum: {
-              $cond: [
-                {
-                  $eq: [ `$money_section.money_record_part`, `income` ],
-                },
-                {
-                  $toDouble: `$money_section.money_record_amount`,
-                },
-                0,
-              ],
-            },
-          },
-          // money_record_part이 "expense"인 경우의 지출 합산
-          money_record_total_expense: {
-            $sum: {
-              $cond: [
-                {
-                  $eq: [ `$money_section.money_record_part`, `expense` ],
-                },
-                {
-                  $toDouble: `$money_section.money_record_amount`,
-                },
-                0,
-              ],
-            },
-          },
-        },
-      },
-      {
-        $project: {
-          _id: 0,
-          money_record_total_income: 1,
-          money_record_total_expense: 1,
-        },
-      },
-    ]);
+    // facet 결과는 항상 1개 도큐먼트({ allResult: [...], exclusionResult: [...] })를 반환한다.
+    // 기존 반환 형태({ allResult: 객체|undefined, exclusionResult: 객체|undefined })를 그대로 보존한다.
+    const facetDoc: any = facetResult[0] ?? {
+      allResult: [],
+      exclusionResult: [],
+    };
 
     return {
-      allResult: allResult[0],
-      exclusionResult: exclusionResult[0],
+      allResult: facetDoc.allResult[0],
+      exclusionResult: facetDoc.exclusionResult[0],
     };
   },
 
@@ -975,7 +907,7 @@ export const property = {
       },
       {
         upsert: true,
-        new: true,
+        returnDocument: `after`,
       },
     );
 

@@ -5,9 +5,10 @@
  * @since 2025-12-26
  */
 
-import mongoose from "mongoose";
+import { incrementSeq } from "@schemas/Counter";
 import { MoneyGoal } from "@schemas/money/MoneyGoal";
 import { MoneyRecord } from "@schemas/money/MoneyRecord";
+import mongoose from "mongoose";
 
 // 0. exist ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const exist = async (
@@ -16,7 +17,6 @@ export const exist = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-
   const finalResult: any = await MoneyGoal.aggregate([
     {
       $match: {
@@ -27,7 +27,7 @@ export const exist = async (
         money_goal_dateEnd: {
           $gte: dateStart_param,
         },
-        ...dateType_param ? { money_goal_dateType: dateType_param } : {},
+        ...(dateType_param ? { money_goal_dateType: dateType_param } : {}),
       },
     },
     {
@@ -57,7 +57,6 @@ export const listGoal = async (
   sort_param: 1 | -1,
   page_param: number,
 ) => {
-
   const finalResult: any = await MoneyGoal.aggregate([
     {
       $match: {
@@ -68,7 +67,7 @@ export const listGoal = async (
         money_goal_dateEnd: {
           $gte: dateStart_param,
         },
-        ...dateType_param ? { money_goal_dateType: dateType_param } : {},
+        ...(dateType_param ? { money_goal_dateType: dateType_param } : {}),
       },
     },
     {
@@ -86,22 +85,18 @@ export const listGoal = async (
         money_goal_dateStart: sort_param,
       },
     },
-    {
-      $skip: Number(page_param - 1),
-    },
   ]);
 
   return finalResult;
 };
 
 // 1-2. list (record) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-export const listRecord: any[] = async (
+export const listRecord = async (
   user_id_param: string,
   dateType_param: string,
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-
   const finalResult: any = await MoneyRecord.aggregate([
     {
       $match: {
@@ -114,7 +109,7 @@ export const listRecord: any[] = async (
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        ...dateType_param ? { money_record_dateType: dateType_param } : {},
+        ...(dateType_param ? { money_record_dateType: dateType_param } : {}),
       },
     },
     {
@@ -144,16 +139,12 @@ export const detail = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-
-  const finalResult: any = await MoneyGoal.findOne(
-    {
-      user_id: user_id_param,
-      money_goal_dateStart: dateStart_param,
-      money_goal_dateEnd: dateEnd_param,
-      ...dateType_param ? { money_goal_dateType: dateType_param } : {},
-    },
-  )
-  .lean();
+  const finalResult: any = await MoneyGoal.findOne({
+    user_id: user_id_param,
+    money_goal_dateStart: dateStart_param,
+    money_goal_dateEnd: dateEnd_param,
+    ...(dateType_param ? { money_goal_dateType: dateType_param } : {}),
+  }).lean();
 
   return finalResult;
 };
@@ -166,27 +157,23 @@ export const create = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-
-  const finalResult: any = await MoneyGoal.create(
-    {
-      _id: new mongoose.Types.ObjectId(),
-      user_id: user_id_param,
-      money_goal_dateType: dateType_param,
-      money_goal_dateStart: dateStart_param,
-      money_goal_dateEnd: dateEnd_param,
-      money_goal_income: OBJECT_param.money_goal_income,
-      money_goal_expense: OBJECT_param.money_goal_expense,
-      money_goal_regDt: new Date(),
-      money_goal_updateDt: ``,
-    },
-  );
+  const finalResult: any = await MoneyGoal.create({
+    _id: new mongoose.Types.ObjectId(),
+    user_id: user_id_param,
+    money_goal_dateType: dateType_param,
+    money_goal_dateStart: dateStart_param,
+    money_goal_dateEnd: dateEnd_param,
+    money_goal_income: OBJECT_param.money_goal_income,
+    money_goal_expense: OBJECT_param.money_goal_expense,
+    money_goal_regDt: new Date(),
+    money_goal_updateDt: ``,
+  });
 
   return finalResult;
 };
 
 // 4. update ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const update = {
-
   // 1. update (기존항목 유지 + 타겟항목으로 수정)
   update: async (
     user_id_param: string,
@@ -195,13 +182,28 @@ export const update = {
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
+    // upsert 신규 삽입 시 pre('save') 가 우회되어 number 가 0 으로 남는 문제 방지 (insert 일 때만 채번)
+    const existDoc: any = await MoneyGoal.findOne({
+      user_id: user_id_param,
+      money_goal_dateStart: dateStart_param,
+      money_goal_dateEnd: dateEnd_param,
+      ...(dateType_param ? { money_goal_dateType: dateType_param } : {}),
+    }).lean();
+    const setOnInsert: any = existDoc
+      ? {}
+      : {
+          money_goal_number: await incrementSeq(
+            `money_goal_number`,
+            `MoneyGoal`,
+          ),
+        };
 
     const finalResult: any = await MoneyGoal.findOneAndUpdate(
       {
         user_id: user_id_param,
         money_goal_dateStart: dateStart_param,
         money_goal_dateEnd: dateEnd_param,
-        ...dateType_param ? { money_goal_dateType: dateType_param } : {},
+        ...(dateType_param ? { money_goal_dateType: dateType_param } : {}),
       },
       {
         $set: {
@@ -209,13 +211,13 @@ export const update = {
           money_goal_expense: OBJECT_param.money_goal_expense,
           money_goal_updateDt: new Date(),
         },
+        $setOnInsert: setOnInsert,
       },
       {
         upsert: true,
-        new: true,
+        returnDocument: `after`,
       },
-    )
-    .lean();
+    ).lean();
 
     return finalResult;
   },
@@ -230,13 +232,28 @@ export const update = {
     dateStart_param: string,
     dateEnd_param: string,
   ) => {
+    // upsert 신규 삽입 시 number 0 잔존 방지 (insert 일 때만 채번)
+    const existDoc: any = await MoneyGoal.findOne({
+      user_id: user_id_param,
+      money_goal_dateStart: dateStart_param,
+      money_goal_dateEnd: dateEnd_param,
+      ...(dateType_param ? { money_goal_dateType: dateType_param } : {}),
+    }).lean();
+    const setOnInsert: any = existDoc
+      ? {}
+      : {
+          money_goal_number: await incrementSeq(
+            `money_goal_number`,
+            `MoneyGoal`,
+          ),
+        };
 
     const finalResult: any = await MoneyGoal.findOneAndUpdate(
       {
         user_id: user_id_param,
         money_goal_dateStart: dateStart_param,
         money_goal_dateEnd: dateEnd_param,
-        ...dateType_param ? { money_goal_dateType: dateType_param } : {},
+        ...(dateType_param ? { money_goal_dateType: dateType_param } : {}),
       },
       {
         $set: {
@@ -244,13 +261,13 @@ export const update = {
           money_goal_expense: OBJECT_param.money_goal_expense,
           money_goal_updateDt: new Date(),
         },
+        $setOnInsert: setOnInsert,
       },
       {
         upsert: true,
-        new: true,
+        returnDocument: `after`,
       },
-    )
-    .lean();
+    ).lean();
 
     return finalResult;
   },
@@ -263,16 +280,12 @@ export const deletes = async (
   dateStart_param: string,
   dateEnd_param: string,
 ) => {
-
-  const finalResult: any = await MoneyGoal.findOneAndDelete(
-    {
-      user_id: user_id_param,
-      money_goal_dateStart: dateStart_param,
-      money_goal_dateEnd: dateEnd_param,
-      ...dateType_param ? { money_goal_dateType: dateType_param } : {},
-    },
-  )
-  .lean();
+  const finalResult: any = await MoneyGoal.findOneAndDelete({
+    user_id: user_id_param,
+    money_goal_dateStart: dateStart_param,
+    money_goal_dateEnd: dateEnd_param,
+    ...(dateType_param ? { money_goal_dateType: dateType_param } : {}),
+  }).lean();
 
   return finalResult;
 };

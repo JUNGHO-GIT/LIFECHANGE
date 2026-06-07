@@ -58,6 +58,7 @@
 **/secrets/
 **/.secret/
 **/.secrets/
+**/.docs/
 
 # 6. IDE / editor
 **/.vscode/
@@ -82,6 +83,7 @@
 **/.playwright/
 **/.cypress/
 **/storybook-static/
+**/test-results/
 
 # Files ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 
@@ -160,6 +162,7 @@
 **/*.pid.*
 **/*.seed
 **/*.sw?
+**/*.cpuprofile*
 
 # 6. Lock files (common)
 **/package-lock.json

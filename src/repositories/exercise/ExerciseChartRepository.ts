@@ -34,7 +34,7 @@ export const barGoal = async (
         exercise_goal_dateStart: 1,
         exercise_goal_dateEnd: 1,
         exercise_goal_scale: {
-          $ifNull: [ `$exercise_goal_scale`, 0 ],
+          $ifNull: [`$exercise_goal_scale`, 0],
         },
       },
     },
@@ -74,7 +74,7 @@ export const barRecord = async (
         exercise_record_dateStart: 1,
         exercise_record_dateEnd: 1,
         exercise_record_total_scale: {
-          $ifNull: [ `$exercise_record_total_scale`, 0 ],
+          $ifNull: [`$exercise_record_total_scale`, 0],
         },
       },
     },
@@ -130,7 +130,7 @@ export const piePart = async (
     },
     {
       $sort: {
-        count: -1,
+        value: -1,
       },
     },
     {
@@ -183,7 +183,7 @@ export const pieTitle = async (
     },
     {
       $sort: {
-        count: -1,
+        value: -1,
       },
     },
     {
