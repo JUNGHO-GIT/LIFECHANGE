@@ -52,7 +52,7 @@
     "@types/node": "25.9.1",
     "@types/nodemailer": "8.0.0",
     "@types/qs": "6.15.1",
-    "esbuild": "0.28.0",
+    "esbuild": "0.28.1",
     "globals": "17.6.0",
     "jsdom": "29.1.1",
     "ts-morph": "28.0.0",
