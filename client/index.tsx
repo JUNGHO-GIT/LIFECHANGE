@@ -342,15 +342,32 @@ const App = memo(() => {
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 const fontFamily: string = `'Pretendard Variable', Pretendard, FontAwesome, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif`;
 
+// 테마 팔레트 ― 코드베이스 반복 색을 토큰화(기존 시각 톤 유지, MUI 라이트 기본값에 정합) ――――――――――――――――――――――――-
+// primary(#1976d2): PickerDay·Mui.css·goal/category 등 전역 파랑(MUI 기본 primary.main 과 동일)
+// secondary(#006ab3): Calendar·Components.css 헤더/활성 상태의 진한 브랜드 파랑
+// error(#f44336): Mui.css·Count 등 검증/삭제 강조 빨강
+// background(#f7f7f7/#ffffff): Input·Select 입력 배경 / 카드·페이퍼 흰색
+const appTheme = createTheme({
+  typography: { fontFamily: fontFamily },
+  palette: {
+    mode: `light`,
+    primary: { main: `#1976d2` },
+    secondary: { main: `#006ab3` },
+    error: { main: `#f44336` },
+    background: {
+      default: `#f7f7f7`,
+      paper: `#ffffff`,
+    },
+  },
+});
+
 // 네트워크 오류 시 error.response 미정의 크래시 방지용 전역 인터셉터를 진입점에서 1회 등록 ―――――――――――――――――――――――-
 registerInterceptor();
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 createRoot(document.querySelector(`#root`) as HTMLElement).render(
   <BrowserRouter basename={`/lifechange`}>
-    <ThemeProvider
-      theme={createTheme({ typography: { fontFamily: fontFamily } })}
-    >
+    <ThemeProvider theme={appTheme}>
       <CssBaseline />
       <ErrorBoundary>
         <App />

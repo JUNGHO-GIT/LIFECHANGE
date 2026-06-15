@@ -19,9 +19,10 @@ import { Bg, Paper, Grid, Br } from "@exportComponents";
 export const SleepRecordDetail = memo(() => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-  const { URL_OBJECT, PATH, sessionId, navigate } = useCommonValue();
-  const { toList } = useCommonValue();
-  const { location_dateStart, location_dateEnd } = useCommonValue();
+  const {
+    URL_OBJECT, PATH, sessionId, navigate, toList,
+    location_dateStart, location_dateEnd,
+  } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();

@@ -9,7 +9,15 @@ import { axios, moment } from "@exportLibs";
 import { getLocal, getSession, setSession } from "@exportScripts";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-export const sync = async (extra?: string) => {
+export const sync = async (
+  extra?: string,
+  dateOverride?: {
+    dateStart?: string;
+    dateEnd?: string;
+    monthStart?: string;
+    monthEnd?: string;
+  },
+) => {
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
   const URL: string = import.meta.env.VITE_APP_SERVER_URL ?? ``;
   const SUBFIX: string = import.meta.env.VITE_APP_USER ?? ``;
@@ -35,9 +43,13 @@ export const sync = async (extra?: string) => {
       .endOf(`month`)
       .format(`YYYY-MM-DD`),
   };
+  // 임의 기간 조회: dateOverride 병합 후 isCustom 플래그 주입 (서버 영속 update 스킵 신호) ――――――――――――――――――――
+  const dateMerged: any = dateOverride
+    ? { ...DATE, ...dateOverride, isCustom: true }
+    : DATE;
   const params = {
     user_id: sessionId as string,
-    DATE: DATE,
+    DATE: dateMerged,
   };
 
   // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -52,6 +64,8 @@ export const sync = async (extra?: string) => {
       setSession(`setting`, `sync`, ``, {
         [extra]: resExtra.value.data.result,
       });
+      // 단건 호출 시 갱신된 도메인 데이터를 호출자에 반환 (재조회 후 표시 갱신용) ―――――――――――――――――――――――――――
+      return resExtra.value.data.result;
     } else {
       console.error(`[sync] failed: ${extra}`, resExtra.reason);
     }

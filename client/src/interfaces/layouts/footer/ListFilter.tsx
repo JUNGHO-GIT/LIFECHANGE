@@ -24,11 +24,13 @@ export const ListFilter = memo((
 ) => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-  const { sessionCategory } = useCommonValue();
-  const { isExerciseGoalList, isExerciseRecordList } = useCommonValue();
-  const { isFoodGoalList, isFoodRecordList } = useCommonValue();
-  const { isMoneyGoalList, isMoneyRecordList } = useCommonValue();
-  const { isSleepGoalList, isSleepRecordList } = useCommonValue();
+  const {
+    sessionCategory,
+    isExerciseGoalList, isExerciseRecordList,
+    isFoodGoalList, isFoodRecordList,
+    isMoneyGoalList, isMoneyRecordList,
+    isSleepGoalList, isSleepRecordList,
+  } = useCommonValue();
   const { translate } = useStoreLanguage();
 
   // 2. array ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――

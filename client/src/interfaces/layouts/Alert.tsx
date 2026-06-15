@@ -29,7 +29,7 @@ export const Alert = memo(() => {
   const alertNode = () => (
     <Snackbar
       open={ALERT.open}
-      autoHideDuration={1000}
+      autoHideDuration={ALERT.severity === `error` ? 4000 : 2000}
       anchorOrigin={{
         vertical: `top`,
         horizontal: `center`,

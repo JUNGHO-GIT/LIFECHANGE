@@ -194,14 +194,22 @@ export const Img = memo((
   }, [ GCLOUD_URL, group, src, handleImageError ]);
 
   // 7. skeletonNode ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  const skeletonNode = useMemo(() => (
-    <Skeleton
-      variant={`rounded`}
-      animation={`wave`}
-      component={`div`}
-      className={`w-max-10px h-max-10px`}
-    />
-  ), []);
+  const skeletonNode = useMemo(() => {
+    const sizeClass: string = [
+      `w-100p`,
+      `h-100p`,
+      min && `w-min-${min}px h-min-${min}px`,
+      max && `w-max-${max}px h-max-${max}px`,
+    ].filter(Boolean).join(` `) || `w-max-10px h-max-10px`;
+    return (
+      <Skeleton
+        variant={`rounded`}
+        animation={`wave`}
+        component={`div`}
+        className={sizeClass}
+      />
+    );
+  }, [min, max]);
 
   // 8. imageNode ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
   const imageNode = useMemo(() => (

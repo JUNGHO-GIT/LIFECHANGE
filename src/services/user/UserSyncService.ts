@@ -261,7 +261,11 @@ export const scale = async (user_id_param: string, DATE_param: any) => {
   findRegDt = await repository.scale.findRegDt(user_id_param);
 
   // 2024-08-04T15:30:20.805Z -> 2024-08-04
-  const regDt: string = findRegDt?.user_regDt?.toISOString().slice(0, 10);
+  // dateStart: isCustom 임의기간 조회 시 DATE.dateStart, 기본 동기는 가입일(regDt)
+  const regDt: string =
+    (DATE_param?.isCustom === true && DATE_param?.dateStart)
+      ? DATE_param.dateStart
+      : findRegDt?.user_regDt?.toISOString().slice(0, 10);
   const todayDt: string = DATE_param?.dateEnd;
 
   // 최초 체중 조회
@@ -300,14 +304,16 @@ export const scale = async (user_id_param: string, DATE_param: any) => {
     statusResult = `success`;
   }
 
-  // 체중 업데이트
-  await repository.scale.updateScale(
-    user_id_param,
-    initScale,
-    minScale,
-    maxScale,
-    curScale,
-  );
+  // 체중 업데이트 (임의기간 조회 시 영속 저장 스킵 - 현재값 오염 방지)
+  if (DATE_param?.isCustom !== true) {
+    await repository.scale.updateScale(
+      user_id_param,
+      initScale,
+      minScale,
+      maxScale,
+      curScale,
+    );
+  }
 
   return {
     status: statusResult,
@@ -341,7 +347,11 @@ export const nutrition = async (user_id_param: string, DATE_param: any) => {
   findRegDt = await repository.nutrition.findRegDt(user_id_param);
 
   // 2024-08-04T15:30:20.805Z -> 2024-08-04
-  const regDt: string = findRegDt?.user_regDt?.toISOString().slice(0, 10);
+  // dateStart: isCustom 임의기간 조회 시 DATE.dateStart, 기본 동기는 가입일(regDt)
+  const regDt: string =
+    (DATE_param?.isCustom === true && DATE_param?.dateStart)
+      ? DATE_param.dateStart
+      : findRegDt?.user_regDt?.toISOString().slice(0, 10);
   const todayDt: string = DATE_param?.dateEnd;
 
   // 데이터 총 개수 조회
@@ -425,19 +435,21 @@ export const nutrition = async (user_id_param: string, DATE_param: any) => {
     statusResult = `success`;
   }
 
-  // 영양소 업데이트
-  await repository.nutrition.updateNutrition(
-    user_id_param,
-    initAvgKcalIntake,
-    totalKcalIntake,
-    totalCarbIntake,
-    totalProteinIntake,
-    totalFatIntake,
-    curAvgKcalIntake,
-    curAvgCarbIntake,
-    curAvgProteinIntake,
-    curAvgFatIntake,
-  );
+  // 영양소 업데이트 (임의기간 조회 시 영속 저장 스킵 - 현재값 오염 방지)
+  if (DATE_param?.isCustom !== true) {
+    await repository.nutrition.updateNutrition(
+      user_id_param,
+      initAvgKcalIntake,
+      totalKcalIntake,
+      totalCarbIntake,
+      totalProteinIntake,
+      totalFatIntake,
+      curAvgKcalIntake,
+      curAvgCarbIntake,
+      curAvgProteinIntake,
+      curAvgFatIntake,
+    );
+  }
 
   return {
     status: statusResult,
@@ -496,6 +508,9 @@ export const property = async (user_id_param: string, DATE_param: any) => {
   let totalExpenseExclusion: any = null;
   let curPropertyAll: any = null;
   let curPropertyExclusion: any = null;
+  let scheduledIncome: any = null;
+  let scheduledExpense: any = null;
+  let curPropertyExpected: any = null;
 
   let finalResult: any = null;
   let statusResult: string = ``;
@@ -504,7 +519,11 @@ export const property = async (user_id_param: string, DATE_param: any) => {
   findRegDt = await repository.property.findRegDt(user_id_param);
 
   // 2024-08-04T15:30:20.805Z -> 2024-08-04
-  const regDt: string = findRegDt?.user_regDt?.toISOString().slice(0, 10);
+  // dateStart: isCustom 임의기간 조회 시 DATE.dateStart, 기본 동기는 가입일(regDt)
+  const regDt: string =
+    (DATE_param?.isCustom === true && DATE_param?.dateStart)
+      ? DATE_param.dateStart
+      : findRegDt?.user_regDt?.toISOString().slice(0, 10);
   const todayDt: string = DATE_param?.dateEnd;
 
   // 최초 자산 조회
@@ -551,6 +570,23 @@ export const property = async (user_id_param: string, DATE_param: any) => {
       Number.parseFloat(totalIncomeExclusion) -
       Number.parseFloat(totalExpenseExclusion),
   );
+  // 미래예정 수입/지출 합 (실적 집계에서 제외된 항목, 예상잔액에만 반영)
+  scheduledIncome = String(
+    Number.parseFloat(
+      findAllInformation?.scheduledResult?.money_record_total_income ?? `0`,
+    ),
+  );
+  scheduledExpense = String(
+    Number.parseFloat(
+      findAllInformation?.scheduledResult?.money_record_total_expense ?? `0`,
+    ),
+  );
+  // 예상잔액 = exclusion 기준 현재자산 - 미래예정지출합 + 미래예정수입합
+  curPropertyExpected = String(
+    Number.parseFloat(curPropertyExclusion) -
+      Number.parseFloat(scheduledExpense) +
+      Number.parseFloat(scheduledIncome),
+  );
 
   if (!findInitProperty && !findAllInformation) {
     finalResult = null;
@@ -565,22 +601,25 @@ export const property = async (user_id_param: string, DATE_param: any) => {
       totalExpenseExclusion: totalExpenseExclusion,
       curPropertyAll: curPropertyAll,
       curPropertyExclusion: curPropertyExclusion,
+      curPropertyExpected: curPropertyExpected,
       dateStart: regDt,
       dateEnd: todayDt,
     };
   }
 
-  // 자산 업데이트
-  await repository.property.updateProperty(
-    user_id_param,
-    initProperty,
-    totalIncomeAll,
-    totalIncomeExclusion,
-    totalExpenseAll,
-    totalExpenseExclusion,
-    curPropertyAll,
-    curPropertyExclusion,
-  );
+  // 자산 업데이트 (임의기간 조회 시 영속 저장 스킵 - 현재값 오염 방지)
+  if (DATE_param?.isCustom !== true) {
+    await repository.property.updateProperty(
+      user_id_param,
+      initProperty,
+      totalIncomeAll,
+      totalIncomeExclusion,
+      totalExpenseAll,
+      totalExpenseExclusion,
+      curPropertyAll,
+      curPropertyExclusion,
+    );
+  }
 
   return {
     status: statusResult,

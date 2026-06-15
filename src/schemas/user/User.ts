@@ -290,6 +290,11 @@ const schema = new mongoose.Schema({
   },
 });
 
+// 2. index ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+schema.index({
+  user_id: 1,
+});
+
 // 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
 schema.pre<UserType>(`save`, async function() {
   if (this.isNew) {

@@ -19,8 +19,10 @@ import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
 export const ExerciseGoalList = memo(() => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-  const { URL_OBJECT, PATH, sessionId, toDetail, localUnit } = useCommonValue();
-  const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
+  const {
+    URL_OBJECT, PATH, sessionId, toDetail, localUnit,
+    navigate, location_dateType, location_dateStart, location_dateEnd,
+  } = useCommonValue();
   const { getDayFmt, getDayNotFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();

@@ -21,9 +21,11 @@ import { MenuItem } from "@exportMuis";
 export const ExerciseRecordDetail = memo(() => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-  const { URL_OBJECT, PATH, navigate, toList } = useCommonValue();
-  const { sessionId, localUnit, bgColors, exerciseArray } = useCommonValue();
-  const { location_dateStart, location_dateEnd } = useCommonValue();
+  const {
+    URL_OBJECT, PATH, navigate, toList,
+    sessionId, localUnit, bgColors, exerciseArray,
+    location_dateStart, location_dateEnd,
+  } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { ERRORS, REFS, validate } = useValidateExercise();
   const { translate } = useStoreLanguage();

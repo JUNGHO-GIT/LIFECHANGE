@@ -36,6 +36,8 @@ import { router as UserSyncRouter } from "@routers/user/UserSyncRouter";
 import compression from "compression";
 import cors from "cors";
 import express, { type Express, type Request, type Response } from "express";
+import rateLimit from "express-rate-limit";
+import helmet from "helmet";
 import mongoose from "mongoose";
 import qs from "qs";
 
@@ -197,9 +199,57 @@ app.set(`query parser`, (str: string) => qs.parse(str));
 const bodyLimit: string = process.env.HTTP_BODY_LIMIT ?? `1mb`;
 app.use(express.json({ limit: bodyLimit }));
 app.use(express.urlencoded({ extended: true, limit: bodyLimit }));
+// helmet 보안 헤더 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// CSP/COEP 를 켜면 vite/MUI/이미지 cross-origin 로딩이 깨지므로 보수적으로 비활성화한다.
+// cors 앞에 배치해 모든 응답(프리플라이트 포함)에 보안 헤더를 우선 적용한다.
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+    crossOriginEmbedderPolicy: false,
+  }),
+);
+// CORS origin 정책 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// credentials:true 와 origin:`*` 는 스펙 모순(자격 동반 와일드카드)이라 origin 을 화이트리스트로 좁힌다.
+// dev: localhost:3000 + vite host:true 가 노출하는 LAN origin(사설 IP:3000) 허용 — e2e 통과 보장.
+// prod: CLIENT_URL env 에서 scheme+host(+port)만 추출. 미설정 시 빈 목록이라도 안전하게 동작.
+const corsOrigin = (
+  reqOrigin: string | undefined,
+  callback: (err: Error | null, allow?: boolean) => void,
+) => {
+  // origin 없는 요청(서버 간 호출, curl, same-origin 등)은 그대로 허용
+  if (!reqOrigin) {
+    callback(null, true);
+    return;
+  }
+
+  // CLIENT_URL 에서 origin(프로토콜+호스트+포트)만 추출
+  const allowList: string[] = [];
+  const clientUrl: string = String(process.env.CLIENT_URL ?? ``).trim();
+  if (clientUrl !== ``) {
+    try {
+      allowList.push(new URL(clientUrl).origin);
+    }
+    catch {
+      // CLIENT_URL 형식 오류 시 무시(안전 기본값)
+    }
+  }
+
+  // dev 에서는 localhost:3000 및 vite host:true 의 LAN origin(사설 IP:3000) 허용
+  if (isDev) {
+    allowList.push(`http://localhost:3000`, `http://127.0.0.1:3000`);
+    const lanDevOrigin: RegExp =
+      /^http:\/\/(?:10\.\d{1,3}\.\d{1,3}\.\d{1,3}|192\.168\.\d{1,3}\.\d{1,3}|172\.(?:1[6-9]|2\d|3[01])\.\d{1,3}\.\d{1,3}):3000$/;
+    if (lanDevOrigin.test(reqOrigin)) {
+      callback(null, true);
+      return;
+    }
+  }
+
+  callback(null, allowList.includes(reqOrigin));
+};
 app.use(
   cors({
-    origin: `*`,
+    origin: corsOrigin,
     methods: [`GET`, `POST`, `DELETE`, `PUT`],
     credentials: true,
     allowedHeaders: [`Content-Type`, `Authorization`],
@@ -210,6 +260,54 @@ app.use(
   }),
 );
 app.use(compression());
+
+// NoSQL 주입 방어(sanitize) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// qs.parse 가 DATE[$gt] 같은 중첩 키를 객체로 풀어 Mongo 연산자 주입 여지가 생긴다.
+// req.query/body/params 를 재귀 순회하며 `$` 시작 키와 `.` 포함 키만 삭제한다.
+// DATE[dateStart] 등 정상 중첩 키와 일반 문자열/숫자 값은 그대로 보존한다.
+const sanitizeMongoKeys = (value: unknown, depth: number): void => {
+  // 순환/과대 중첩 방어용 깊이 상한
+  if (depth > 20 || value === null || typeof value !== `object`) {
+    return;
+  }
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      sanitizeMongoKeys(item, depth + 1);
+    }
+    return;
+  }
+  const target = value as Record<string, unknown>;
+  for (const key of Object.keys(target)) {
+    if (key.startsWith(`$`) || key.includes(`.`)) {
+      delete target[key];
+      continue;
+    }
+    sanitizeMongoKeys(target[key], depth + 1);
+  }
+};
+app.use((req: Request, _res: Response, next: Function) => {
+  // req.query 는 express 5 에서 getter-only 라 in-place 로만 정리한다.
+  sanitizeMongoKeys(req.query, 0);
+  sanitizeMongoKeys(req.body, 0);
+  sanitizeMongoKeys(req.params, 0);
+  next();
+});
+
+// rate-limit 설정 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 로그인/이메일발송 등 민감 엔드포인트(/user, /auth/google)에만 적용.
+// 개발/e2e 연속요청을 막지 않도록 windowMs/max 를 넉넉히 두고, DEVELOPMENT 에서는 매우 관대하게.
+const limitWindowMs: number = Number(
+  process.env.RATE_LIMIT_WINDOW_MS ?? 15 * 60 * 1000,
+);
+const limitMax: number = isDev
+  ? Number(process.env.RATE_LIMIT_MAX_DEV ?? 100_000)
+  : Number(process.env.RATE_LIMIT_MAX ?? 1000);
+const sensitiveLimiter = rateLimit({
+  windowMs: limitWindowMs,
+  max: limitMax,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 // 헬스체크/레디니스 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 // 인증 없는 경량 엔드포인트. health 는 liveness(200 고정), ready 는 readiness(DB 연결 상태).
@@ -249,13 +347,13 @@ app.use(`${preFix}/sleep/chart`, SleepChartRouter);
 app.use(`${preFix}/sleep/goal`, SleepGoalRouter);
 app.use(`${preFix}/sleep/record`, SleepRecordRouter);
 
-// user
-app.use(`${preFix}/user/sync`, UserSyncRouter);
-app.use(`${preFix}/user`, UserRouter);
+// user (민감 엔드포인트 — rate-limit 적용)
+app.use(`${preFix}/user/sync`, sensitiveLimiter, UserSyncRouter);
+app.use(`${preFix}/user`, sensitiveLimiter, UserRouter);
 
 // admin
 app.use(`${preFix}/admin`, AdminRouter);
-app.use(`${preFix}/auth/google`, GoogleRouter);
+app.use(`${preFix}/auth/google`, sensitiveLimiter, GoogleRouter);
 
 // 0. 에러처리 미들웨어 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 app.use((err: Error, req: Request, res: Response, _next: Function) => {

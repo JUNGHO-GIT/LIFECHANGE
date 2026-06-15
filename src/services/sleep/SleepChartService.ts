@@ -532,10 +532,10 @@ export const avgWeek = async (user_id_param: string, DATE_param: any) => {
   let statusResult: string = ``;
 
   // sum, count 변수 선언
-  let sumBedTime: number[] = Array.from({ length: 5 }).fill(0);
-  let sumWakeTime: number[] = Array.from({ length: 5 }).fill(0);
-  let sumSleepTime: number[] = Array.from({ length: 5 }).fill(0);
-  let countRecords: number[] = Array.from({ length: 5 }).fill(0);
+  let sumBedTime: number[] = new Array<number>(5).fill(0);
+  let sumWakeTime: number[] = new Array<number>(5).fill(0);
+  let sumSleepTime: number[] = new Array<number>(5).fill(0);
+  let countRecords: number[] = new Array<number>(5).fill(0);
 
   // date 변수 정의
   const monthStartFmt: string = DATE_param.monthStartFmt;
@@ -646,10 +646,10 @@ export const avgMonth = async (user_id_param: string, DATE_param: any) => {
   let statusResult: string = ``;
 
   // sum, count 변수 선언
-  let sumBedTime: number[] = Array.from({ length: 12 }).fill(0);
-  let sumWakeTime: number[] = Array.from({ length: 12 }).fill(0);
-  let sumSleepTime: number[] = Array.from({ length: 12 }).fill(0);
-  let countRecords: number[] = Array.from({ length: 12 }).fill(0);
+  let sumBedTime: number[] = new Array<number>(12).fill(0);
+  let sumWakeTime: number[] = new Array<number>(12).fill(0);
+  let sumSleepTime: number[] = new Array<number>(12).fill(0);
+  let countRecords: number[] = new Array<number>(12).fill(0);
 
   // date 변수 정의
   const yearStartFmt: string = DATE_param.yearStartFmt;

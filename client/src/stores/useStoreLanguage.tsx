@@ -1117,6 +1117,18 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         ko: `체중`,
         en: `BodyWeight`,
       },
+      scheduledExpense: {
+        ko: `지출예정`,
+        en: `Scheduled Expense`,
+      },
+      scheduledDate: {
+        ko: `예정일`,
+        en: `Scheduled Date`,
+      },
+      scheduledDone: {
+        ko: `실지출 전환`,
+        en: `Mark as Spent`,
+      },
       sumIncome: {
         ko: `총 수입`,
         en: `Total Income`,
@@ -2007,6 +2019,10 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         ko: `금액을 입력해주세요`,
         en: `Please enter Amount`,
       },
+      errorMoneyScheduledDate: {
+        ko: `예정일을 입력해주세요`,
+        en: `Please enter Scheduled Date`,
+      },
       errorSleepGoalBedTime: {
         ko: `취침시간 목표를 입력해주세요`,
         en: `Please enter Goal Bed Time`,
@@ -2106,6 +2122,21 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
       errorUserGoalScale: {
         ko: `목표 체중을 입력해주세요`,
         en: `Please enter Goal BodyWeight`,
+      },
+
+      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // errorBoundary
+      errorBoundaryTitle: {
+        ko: `오류가 발생했습니다`,
+        en: `An error has occurred`,
+      },
+      errorBoundaryDesc: {
+        ko: `잠시 후 다시 시도해 주세요`,
+        en: `Please try again in a moment`,
+      },
+      refresh: {
+        ko: `새로고침`,
+        en: `Refresh`,
       },
     };
 

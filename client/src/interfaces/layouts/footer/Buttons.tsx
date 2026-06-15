@@ -26,8 +26,6 @@ export const Buttons = memo((
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
   const {
     toFind, toFavorite, navigate,
-  } = useCommonValue();
-  const {
     isFoodRecordDetail, isUserCategory, isUserDetail, isDetail, isSleep, isCalendarDetail,
   } = useCommonValue();
   const { translate } = useStoreLanguage();

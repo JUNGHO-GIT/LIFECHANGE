@@ -7,6 +7,14 @@
 
 import { React, createRef, useCallback, useRef, useState } from "@exportReacts";
 import { useStoreAlert, useStoreLanguage } from "@exportStores";
+import { UserType } from "@exportSchemas";
+
+// 구조 타입 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+type FieldRefs = Record<string, React.RefObject<unknown>>;
+type FieldErrors = Record<string, boolean>;
+type UserValidate = (
+  OBJECT: UserType, extra: string, email: string
+) => Promise<boolean>;
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const useValidateUser = () => {
@@ -15,9 +23,9 @@ export const useValidateUser = () => {
   const { setALERT } = useStoreAlert();
 
   // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-  const REFS: React.RefObject<unknown[]> = useRef<unknown[]>([]);
-  const validate: React.RefObject<Function> = useRef<Function>(() => {});
-  const [ ERRORS, setERRORS ] = useState<unknown[]>([]);
+  const REFS: React.RefObject<FieldRefs[]> = useRef<FieldRefs[]>([]);
+  const validate: React.RefObject<UserValidate> = useRef<UserValidate>(async () => false);
+  const [ ERRORS, setERRORS ] = useState<FieldErrors[]>([]);
 
   // alert 표시 및 focus ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const alert = useCallback((field: string, msg: string, idx: number) => {
@@ -27,10 +35,10 @@ export const useValidateUser = () => {
       severity: `error`,
     });
     field && setTimeout(() => {
-      REFS?.current?.[idx]?.[field]?.current?.focus();
+      (REFS?.current?.[idx]?.[field]?.current as { focus?: () => void } | undefined)?.focus?.();
     }, 0);
     field && setERRORS((prev) => {
-      const updatedErrors: unknown[] = [...prev];
+      const updatedErrors: FieldErrors[] = [...prev];
       updatedErrors[idx] = {
         ...updatedErrors[idx],
         [field]: true,
@@ -52,7 +60,7 @@ export const useValidateUser = () => {
   };
 
   // 7. validate ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  validate.current = async (OBJECT: unknown, extra: string, email: string): Promise<boolean> => {
+  validate.current = async (OBJECT, extra, email) => {
     // 7-1. login
     if (extra === `login`) {
       const target: string[] = [

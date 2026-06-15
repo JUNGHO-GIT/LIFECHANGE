@@ -158,6 +158,7 @@ export default defineConfig(({ command, mode }) => {
       },
     },
     css: {
+      postcss: {},
       modules: {
         localsConvention: `camelCase`,
       },

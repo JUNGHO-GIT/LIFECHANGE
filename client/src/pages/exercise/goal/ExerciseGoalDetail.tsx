@@ -21,9 +21,8 @@ export const ExerciseGoalDetail = memo(() => {
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
   const {
     URL_OBJECT, PATH, sessionId, toList, navigate, localUnit,
+    location_dateType, location_dateStart, location_dateEnd,
   } = useCommonValue();
-  const { location_dateType } = useCommonValue();
-  const { location_dateStart, location_dateEnd } = useCommonValue();
   const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();

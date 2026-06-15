@@ -17,8 +17,9 @@ import { Icons, Div, Br, Paper, Grid } from "@exportComponents";
 export const CalendarList = memo(() => {
 
   // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-  const { URL_OBJECT, PATH } = useCommonValue();
-  const { sessionId, navigate, localLang } = useCommonValue();
+  const {
+    URL_OBJECT, PATH, sessionId, navigate, localLang,
+  } = useCommonValue();
   const { getMoment, getDayFmt, getDayStartFmt, getDayEndFmt, getDayNotFmt } = useCommonDate();
   const { getPrevMonthStartFmt, getPrevMonthEndFmt } = useCommonDate();
   const { getNextMonthStartFmt, getNextMonthEndFmt } = useCommonDate();

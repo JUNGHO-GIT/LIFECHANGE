@@ -22,10 +22,12 @@ import { MoneyCategoryItem, ExerciseCategoryItem, FoodCategoryItem } from "@expo
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const CalendarDetail = memo(() => {
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-  const { URL_OBJECT, navigate, toCalendarList, sessionId, localCurrency } = useCommonValue();
-  const { bgColors, localUnit } = useCommonValue();
-  const { exerciseArray, foodArray, moneyArray } = useCommonValue();
-  const { location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
+  const {
+    URL_OBJECT, navigate, toCalendarList, sessionId, localCurrency,
+    bgColors, localUnit,
+    exerciseArray, foodArray, moneyArray,
+    location_dateType, location_dateStart, location_dateEnd,
+  } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();

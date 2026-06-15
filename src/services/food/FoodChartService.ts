@@ -69,7 +69,10 @@ export const bar = async (user_id_param: string, DATE_param: any) => {
     };
     statusResult = `success`;
   } catch {
-    finalResult = [];
+    finalResult = {
+      kcal: [],
+      nut: [],
+    };
     statusResult = `fail`;
   }
 
@@ -398,7 +401,10 @@ export const lineWeek = async (user_id_param: string, DATE_param: any) => {
     };
     statusResult = `success`;
   } catch {
-    finalResult = [];
+    finalResult = {
+      kcal: [],
+      nut: [],
+    };
     statusResult = `fail`;
   }
 
@@ -495,7 +501,10 @@ export const lineMonth = async (user_id_param: string, DATE_param: any) => {
     };
     statusResult = `success`;
   } catch {
-    finalResult = [];
+    finalResult = {
+      kcal: [],
+      nut: [],
+    };
     statusResult = `fail`;
   }
 
@@ -516,12 +525,12 @@ export const avgWeek = async (user_id_param: string, DATE_param: any) => {
   let statusResult: string = ``;
 
   // sum, count 변수 선언
-  let sumKcal: number[] = Array.from({ length: 5 }).fill(0);
-  let sumCarb: number[] = Array.from({ length: 5 }).fill(0);
-  let sumProtein: number[] = Array.from({ length: 5 }).fill(0);
-  let sumFat: number[] = Array.from({ length: 5 }).fill(0);
-  let countRecordsKcal: number[] = Array.from({ length: 5 }).fill(0);
-  let countRecordsNut: number[] = Array.from({ length: 5 }).fill(0);
+  let sumKcal: number[] = new Array<number>(5).fill(0);
+  let sumCarb: number[] = new Array<number>(5).fill(0);
+  let sumProtein: number[] = new Array<number>(5).fill(0);
+  let sumFat: number[] = new Array<number>(5).fill(0);
+  let countRecordsKcal: number[] = new Array<number>(5).fill(0);
+  let countRecordsNut: number[] = new Array<number>(5).fill(0);
 
   // date 변수 정의
   const monthStartFmt: string = DATE_param.monthStartFmt;
@@ -636,7 +645,10 @@ export const avgWeek = async (user_id_param: string, DATE_param: any) => {
     };
     statusResult = `success`;
   } catch {
-    finalResult = [];
+    finalResult = {
+      kcal: [],
+      nut: [],
+    };
     statusResult = `fail`;
   }
 
@@ -657,12 +669,12 @@ export const avgMonth = async (user_id_param: string, DATE_param: any) => {
   let statusResult: string = ``;
 
   // sum, count 변수 선언
-  let sumKcal: number[] = Array.from({ length: 12 }).fill(0);
-  let sumCarb: number[] = Array.from({ length: 12 }).fill(0);
-  let sumProtein: number[] = Array.from({ length: 12 }).fill(0);
-  let sumFat: number[] = Array.from({ length: 12 }).fill(0);
-  let countRecordsKcal: number[] = Array.from({ length: 12 }).fill(0);
-  let countRecordsNut: number[] = Array.from({ length: 12 }).fill(0);
+  let sumKcal: number[] = new Array<number>(12).fill(0);
+  let sumCarb: number[] = new Array<number>(12).fill(0);
+  let sumProtein: number[] = new Array<number>(12).fill(0);
+  let sumFat: number[] = new Array<number>(12).fill(0);
+  let countRecordsKcal: number[] = new Array<number>(12).fill(0);
+  let countRecordsNut: number[] = new Array<number>(12).fill(0);
 
   // date 변수 정의
   const yearStartFmt: string = DATE_param.yearStartFmt;
@@ -777,7 +789,10 @@ export const avgMonth = async (user_id_param: string, DATE_param: any) => {
     };
     statusResult = `success`;
   } catch {
-    finalResult = [];
+    finalResult = {
+      kcal: [],
+      nut: [],
+    };
     statusResult = `fail`;
   }
 

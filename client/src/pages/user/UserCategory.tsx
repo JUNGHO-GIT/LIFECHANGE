@@ -21,8 +21,10 @@ import { TableHead, TableBody, TableRow, TableCell } from "@exportMuis";
 export const UserCategory = memo(() => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-  const { URL_OBJECT, PATH, sessionId } = useCommonValue();
-  const { location_dateStart, location_dateEnd, location_dateType } = useCommonValue();
+  const {
+    URL_OBJECT, PATH, sessionId,
+    location_dateStart, location_dateEnd, location_dateType,
+  } = useCommonValue();
   const { getDayFmt } = useCommonDate();
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();

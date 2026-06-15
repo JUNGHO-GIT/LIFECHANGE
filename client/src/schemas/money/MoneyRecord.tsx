@@ -22,6 +22,9 @@ export interface MoneyRecordType {
     money_record_amount: string;
     money_record_content: string;
     money_record_include: string;
+    money_record_scheduled: string;
+    money_record_scheduled_date: string;
+    money_record_scheduled_done: string;
   }[];
   money_record_regDt: string;
   money_record_updateDt: string;
@@ -45,6 +48,9 @@ export const MoneyRecord: MoneyRecordType = {
       money_record_amount: `0`,
       money_record_content: ``,
       money_record_include: `Y`,
+      money_record_scheduled: `N`,
+      money_record_scheduled_date: ``,
+      money_record_scheduled_done: `N`,
     },
   ],
   money_record_regDt: ``,

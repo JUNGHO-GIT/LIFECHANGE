@@ -306,9 +306,53 @@ export const Icons = memo((props: any) => {
 
   const IconComponent: JSX.Element | null = icons[props.name] || null;
 
+  const ariaLabels: Record<string, string> = {
+    X: `close`,
+    Minus: `decrease`,
+    Plus: `add`,
+    ChevronDown: `expand`,
+    ChevronUp: `collapse`,
+    ChevronRight: `next`,
+    ChevronLeft: `previous`,
+    CaretLeft: `previous`,
+    CaretRight: `next`,
+    CaretUp: `collapse`,
+    Exclamation: `warning`,
+    ArrowLeft: `back`,
+    ArrowRight: `forward`,
+    Settings: `settings`,
+    Search: `search`,
+    Check: `check`,
+    Pencil: `edit`,
+    Trash: `delete`,
+    CheckBox: `checkbox checked`,
+    CheckCircle: `check`,
+    CheckSquare: `checkbox checked`,
+    UnCheckSquare: `checkbox unchecked`,
+    Hamburger: `menu`,
+    Phone: `phone`,
+    Mail: `mail`,
+    Copyright: `copyright`,
+    Location: `location`,
+    Info: `information`,
+    List: `list`,
+    Calendar: `calendar`,
+    View: `view`,
+    Person: `person`,
+    Won: `won`,
+    Dot: `dot`,
+    Lock: `lock`,
+    UnLock: `unlock`,
+    Undo: `undo`,
+    Star: `star`,
+    CirclePlus: `add`,
+  };
+  const iconAriaLabel: string = ariaLabels[props.name] ?? String(props.name);
+
   // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-->
   return (
     <IconButton
+      aria-label={iconAriaLabel}
       {...props}
       component={`div`}
       className={``}

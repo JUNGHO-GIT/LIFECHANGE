@@ -20,9 +20,11 @@ import { Checkbox, Accordion, AccordionSummary, AccordionDetails } from "@export
 export const FoodFindList = memo(() => {
 
   // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-  const { URL_OBJECT, PATH, localIsoCode } = useCommonValue();
-  const { location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
-  const { sessionFoodSection } = useCommonValue();
+  const {
+    URL_OBJECT, PATH, localIsoCode,
+    location_dateType, location_dateStart, location_dateEnd,
+    sessionFoodSection,
+  } = useCommonValue();
   const { getDayFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();

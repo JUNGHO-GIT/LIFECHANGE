@@ -1,6 +1,6 @@
 {
   "name": "lifechange-server",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "type": "module",
   "main": "index.ts",
   "license": "Apache-2.0",
@@ -29,8 +29,10 @@
     "date-fns": "4.4.0",
     "dotenv": "17.4.2",
     "express": "5.2.1",
+    "express-rate-limit": "^8.5.2",
     "express-session": "1.19.0",
     "google-auth-library": "10.6.2",
+    "helmet": "^8.2.0",
     "jsonwebtoken": "9.0.3",
     "moment-timezone": "0.6.2",
     "mongoose": "9.6.3",

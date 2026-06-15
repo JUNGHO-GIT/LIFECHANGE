@@ -122,6 +122,21 @@ export const list = async (
                     $and: [
                       { $eq: [`$$this.money_record_part`, `income`] },
                       { $eq: [`$$this.money_record_include`, `Y`] },
+                      {
+                        $not: [
+                          {
+                            $and: [
+                              { $eq: [`$$this.money_record_scheduled`, `Y`] },
+                              {
+                                $eq: [
+                                  `$$this.money_record_scheduled_done`,
+                                  `N`,
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
                     ],
                   },
                   {
@@ -147,6 +162,21 @@ export const list = async (
                     $and: [
                       { $eq: [`$$this.money_record_part`, `expense`] },
                       { $eq: [`$$this.money_record_include`, `Y`] },
+                      {
+                        $not: [
+                          {
+                            $and: [
+                              { $eq: [`$$this.money_record_scheduled`, `Y`] },
+                              {
+                                $eq: [
+                                  `$$this.money_record_scheduled_done`,
+                                  `N`,
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
                     ],
                   },
                   {

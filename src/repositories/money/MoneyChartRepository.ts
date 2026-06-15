@@ -112,6 +112,12 @@ export const pieIncome = async (
     {
       $match: {
         "money_section.money_record_part": `income`,
+        $nor: [
+          {
+            "money_section.money_record_scheduled": `Y`,
+            "money_section.money_record_scheduled_done": `N`,
+          },
+        ],
       },
     },
     {
@@ -163,6 +169,12 @@ export const pieExpense = async (
     {
       $match: {
         "money_section.money_record_part": `expense`,
+        $nor: [
+          {
+            "money_section.money_record_scheduled": `Y`,
+            "money_section.money_record_scheduled_done": `N`,
+          },
+        ],
       },
     },
     {

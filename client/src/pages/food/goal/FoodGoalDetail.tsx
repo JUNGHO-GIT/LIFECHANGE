@@ -19,9 +19,10 @@ import { Img, Bg, Paper, Grid, Br } from "@exportComponents";
 export const FoodGoalDetail = memo(() => {
 
   // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-  const { URL_OBJECT, navigate, sessionId, toList } = useCommonValue();
-  const { location_dateType } = useCommonValue();
-  const { location_dateStart, location_dateEnd } = useCommonValue();
+  const {
+    URL_OBJECT, navigate, sessionId, toList,
+    location_dateType, location_dateStart, location_dateEnd,
+  } = useCommonValue();
   const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();

@@ -40,11 +40,13 @@ export const PickerDay = memo((
 ) => {
 
   // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-  const { PATH, localLang, localTimeZone } = useCommonValue();
-  const { isGoalList, isGoalDetail } = useCommonValue();
-  const { isRecordList, isRecordDetail } = useCommonValue();
-  const { isCalendarDetail } = useCommonValue();
-  const { isList, isDetail } = useCommonValue();
+  const {
+    PATH, localLang, localTimeZone,
+    isGoalList, isGoalDetail,
+    isRecordList, isRecordDetail,
+    isCalendarDetail,
+    isList, isDetail,
+  } = useCommonValue();
   const { getDayFmt, getDayNotFmt, getDayStartFmt, getDayEndFmt } = useCommonDate();
   const { getPrevDayStartFmt, getPrevDayEndFmt } = useCommonDate();
   const { getNextDayStartFmt, getNextDayEndFmt } = useCommonDate();

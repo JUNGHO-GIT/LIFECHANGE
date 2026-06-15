@@ -20,8 +20,10 @@ import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
 export const MoneyRecordList = memo(() => {
 
   // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-  const { URL_OBJECT, PATH, sessionId, localCurrency, toDetail } = useCommonValue();
-  const { navigate, location_dateType, location_dateStart, location_dateEnd } = useCommonValue();
+  const {
+    URL_OBJECT, PATH, sessionId, localCurrency, toDetail,
+    navigate, location_dateType, location_dateStart, location_dateEnd,
+  } = useCommonValue();
   const { getDayNotFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
@@ -327,6 +329,13 @@ export const MoneyRecordList = memo(() => {
                       <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
                         {translate(getDayNotFmt(item.money_record_dateStart).format(`ddd`))}
                       </Div>
+                      {item.money_section?.some((sec) => (
+                        sec.money_record_scheduled === `Y` && sec.money_record_scheduled_done === `N`
+                      )) && (
+                        <Div className={`fs-0-7rem fw-600 red ml-10px`}>
+                          {translate(`scheduledExpense`)}
+                        </Div>
+                      )}
                     </Grid>
                   </Grid>
                 </AccordionSummary>

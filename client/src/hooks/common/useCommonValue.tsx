@@ -18,6 +18,49 @@ import type {
   SessionTitleType,
 } from "@exportTypes";
 
+// 정적 리터럴: 호출/렌더마다 동일하므로 모듈 스코프 1회 생성 후 참조 안정화 ――――――――――――――――――――――――――――――-
+const EXERCISE_CHART_ARRAY: string[] = [`volume`, `cardio`];
+const FOOD_CHART_ARRAY: string[] = [`kcal`, `carb`, `protein`, `fat`];
+const MONEY_CHART_ARRAY: string[] = [`income`, `expense`];
+const SLEEP_CHART_ARRAY: string[] = [`bedTime`, `wakeTime`, `sleepTime`];
+const BAR_CHART_ARRAY: string[] = [`goal`, `record`];
+const TODAY_COLORS: string[] = [
+  `red`,
+  `orange`,
+  `yellow`,
+  `green`,
+  `blue`,
+  `navy`,
+  `purple`,
+  `black`,
+  `gray`,
+];
+const BG_COLORS: string[] = [
+  `#1976d2`,
+  `#4CAF50`,
+  `#FFC107`,
+  `#FF5722`,
+  `#673AB7`,
+  `#3F51B5`,
+  `#2196F3`,
+  `#009688`,
+  `#CDDC39`,
+  `#FFEB3B`,
+  `#9E9E9E`,
+];
+const CHART_COLORS: string[] = [
+  `#0088FE`,
+  `#00C49F`,
+  `#FFBB28`,
+  `#FF5733`,
+  `#6F42C1`,
+  `#0EA5E9`,
+  `#22C55E`,
+  `#D97706`,
+  `#EF4444`,
+  `#9333EA`,
+];
+
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const useCommonValue = (): CommonValueType => {
   const navigate: NavigateFunction = useNavigate();
@@ -300,47 +343,14 @@ export const useCommonValue = (): CommonValueType => {
       sessionSetting: sessionTitle?.setting ?? {},
       sessionFoodSection: sessionTitle?.section?.food ?? [],
       // Chart Configuration Arrays
-      exerciseChartArray: [`volume`, `cardio`],
-      foodChartArray: [`kcal`, `carb`, `protein`, `fat`],
-      moneyChartArray: [`income`, `expense`],
-      sleepChartArray: [`bedTime`, `wakeTime`, `sleepTime`],
-      barChartArray: [`goal`, `record`],
-      todayColors: [
-        `red`,
-        `orange`,
-        `yellow`,
-        `green`,
-        `blue`,
-        `navy`,
-        `purple`,
-        `black`,
-        `gray`,
-      ],
-      bgColors: [
-        `#1976d2`,
-        `#4CAF50`,
-        `#FFC107`,
-        `#FF5722`,
-        `#673AB7`,
-        `#3F51B5`,
-        `#2196F3`,
-        `#009688`,
-        `#CDDC39`,
-        `#FFEB3B`,
-        `#9E9E9E`,
-      ],
-      chartColors: [
-        `#0088FE`,
-        `#00C49F`,
-        `#FFBB28`,
-        `#FF5733`,
-        `#6F42C1`,
-        `#0EA5E9`,
-        `#22C55E`,
-        `#D97706`,
-        `#EF4444`,
-        `#9333EA`,
-      ],
+      exerciseChartArray: EXERCISE_CHART_ARRAY,
+      foodChartArray: FOOD_CHART_ARRAY,
+      moneyChartArray: MONEY_CHART_ARRAY,
+      sleepChartArray: SLEEP_CHART_ARRAY,
+      barChartArray: BAR_CHART_ARRAY,
+      todayColors: TODAY_COLORS,
+      bgColors: BG_COLORS,
+      chartColors: CHART_COLORS,
     }),
     [
       navigate,

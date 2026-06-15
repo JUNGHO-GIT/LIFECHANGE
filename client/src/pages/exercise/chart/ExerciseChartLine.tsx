@@ -23,8 +23,10 @@ declare interface ExerciseChartLineProps {
 export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-  const { URL_OBJECT, PATH, sessionId, chartColors } = useCommonValue();
-  const { localUnit, exerciseChartArray } = useCommonValue();
+  const {
+    URL_OBJECT, PATH, sessionId, chartColors,
+    localUnit, exerciseChartArray,
+  } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();

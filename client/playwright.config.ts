@@ -17,6 +17,7 @@ export default defineConfig({
   reporter: [[`list`]],
   use: {
     baseURL: `http://localhost:3000`,
+    channel: `chrome`,
     locale: `ko-KR`,
     trace: `retain-on-failure`,
     screenshot: `only-on-failure`,

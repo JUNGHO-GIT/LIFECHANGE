@@ -767,8 +767,25 @@ export const property = {
       },
       {
         $facet: {
-          // all: include != null 전체 합산
+          // all: include != null 전체 합산 (실적만: 미래예정 항목 제외)
           allResult: [
+            {
+              // 실적 = scheduled!=="Y" OR (scheduled==="Y" AND scheduled_done==="Y")
+              $match: {
+                $or: [
+                  {
+                    "money_section.money_record_scheduled": {
+                      $ne: `Y`,
+                    },
+                  },
+                  {
+                    "money_section.money_record_scheduled_done": {
+                      $eq: `Y`,
+                    },
+                  },
+                ],
+              },
+            },
             {
               $group: {
                 _id: null,
@@ -810,13 +827,79 @@ export const property = {
               },
             },
           ],
-          // exclusion: include == 'Y'만 합산
+          // exclusion: include == 'Y'만 합산 (실적만: 미래예정 항목 제외)
           exclusionResult: [
             {
-              // money_record_include가 "Y"인 경우만 필터링
+              // money_record_include가 "Y" + 실적(미래예정 제외)만 필터링
               $match: {
                 "money_section.money_record_include": {
                   $eq: `Y`,
+                },
+                $or: [
+                  {
+                    "money_section.money_record_scheduled": {
+                      $ne: `Y`,
+                    },
+                  },
+                  {
+                    "money_section.money_record_scheduled_done": {
+                      $eq: `Y`,
+                    },
+                  },
+                ],
+              },
+            },
+            {
+              $group: {
+                _id: null,
+                // money_record_part이 "income"인 경우의 수입 합산
+                money_record_total_income: {
+                  $sum: {
+                    $cond: [
+                      {
+                        $eq: [`$money_section.money_record_part`, `income`],
+                      },
+                      {
+                        $toDouble: `$money_section.money_record_amount`,
+                      },
+                      0,
+                    ],
+                  },
+                },
+                // money_record_part이 "expense"인 경우의 지출 합산
+                money_record_total_expense: {
+                  $sum: {
+                    $cond: [
+                      {
+                        $eq: [`$money_section.money_record_part`, `expense`],
+                      },
+                      {
+                        $toDouble: `$money_section.money_record_amount`,
+                      },
+                      0,
+                    ],
+                  },
+                },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                money_record_total_income: 1,
+                money_record_total_expense: 1,
+              },
+            },
+          ],
+          // scheduled: 미래예정(scheduled==='Y' AND scheduled_done==='N')만 합산
+          scheduledResult: [
+            {
+              // 미래예정 = scheduled==="Y" AND scheduled_done==="N"
+              $match: {
+                "money_section.money_record_scheduled": {
+                  $eq: `Y`,
+                },
+                "money_section.money_record_scheduled_done": {
+                  $eq: `N`,
                 },
               },
             },
@@ -870,11 +953,13 @@ export const property = {
     const facetDoc: any = facetResult[0] ?? {
       allResult: [],
       exclusionResult: [],
+      scheduledResult: [],
     };
 
     return {
       allResult: facetDoc.allResult[0],
       exclusionResult: facetDoc.exclusionResult[0],
+      scheduledResult: facetDoc.scheduledResult[0],
     };
   },
 

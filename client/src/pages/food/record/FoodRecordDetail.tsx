@@ -20,9 +20,11 @@ import { MenuItem } from "@exportMuis";
 export const FoodRecordDetail = memo(() => {
 
   // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-  const { URL_OBJECT, navigate, toList, sessionId } = useCommonValue();
-  const { foodArray, bgColors, sessionFoodSection } = useCommonValue();
-  const { location_dateStart, location_dateEnd } = useCommonValue();
+  const {
+    URL_OBJECT, navigate, toList, sessionId,
+    foodArray, bgColors, sessionFoodSection,
+    location_dateStart, location_dateEnd,
+  } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { ERRORS, REFS, validate } = useValidateFood();
   const { translate } = useStoreLanguage();

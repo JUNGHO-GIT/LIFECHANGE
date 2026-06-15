@@ -8,6 +8,25 @@
 import { React, createRef, useCallback, useRef, useState } from "@exportReacts";
 import { useStoreAlert, useStoreConfirm, useStoreLanguage } from "@exportStores";
 
+// 구조 타입 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+type FieldRefs = Record<string, React.RefObject<unknown>>;
+type FieldErrors = Record<string, boolean>;
+type FoodSection = Record<string, string>;
+type FoodObject = {
+  _id?: string;
+  food_goal_kcal?: string;
+  food_goal_carb?: string;
+  food_goal_protein?: string;
+  food_goal_fat?: string;
+  food_section?: FoodSection[];
+};
+type FoodCount = {
+  newSectionCnt: number;
+};
+type FoodValidate = (
+  OBJECT: FoodObject, COUNT: FoodCount, extra: string
+) => Promise<boolean>;
+
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const useValidateFood = () => {
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
@@ -16,9 +35,9 @@ export const useValidateFood = () => {
   const { setCONFIRM } = useStoreConfirm();
 
   // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  const REFS: React.RefObject<unknown[]> = useRef<unknown[]>([]);
-  const validate: React.RefObject<Function> = useRef<Function>(() => {});
-  const [ ERRORS, setERRORS ] = useState<unknown[]>([]);
+  const REFS: React.RefObject<FieldRefs[]> = useRef<FieldRefs[]>([]);
+  const validate: React.RefObject<FoodValidate> = useRef<FoodValidate>(async () => false);
+  const [ ERRORS, setERRORS ] = useState<FieldErrors[]>([]);
 
   // alert 표시 및 focus ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const alert = useCallback((field: string, msg: string, idx: number) => {
@@ -28,10 +47,10 @@ export const useValidateFood = () => {
       severity: `error`,
     });
     field && setTimeout(() => {
-      REFS?.current?.[idx]?.[field]?.current?.focus();
+      (REFS?.current?.[idx]?.[field]?.current as { focus?: () => void } | undefined)?.focus?.();
     }, 0);
     field && setERRORS((prev) => {
-      const updatedErrors: unknown[] = [...prev];
+      const updatedErrors: FieldErrors[] = [...prev];
       updatedErrors[idx] = {
         ...updatedErrors[idx],
         [field]: true,
@@ -41,7 +60,7 @@ export const useValidateFood = () => {
   }, [ setALERT, translate ]);
 
   // 7. validate ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-  validate.current = async (OBJECT: unknown, COUNT: unknown, extra: string): Promise<boolean> => {
+  validate.current = async (OBJECT, COUNT, extra) => {
     // 7-1. goal
     if (extra === `goal`) {
       const target: string[] = [
@@ -107,34 +126,41 @@ export const useValidateFood = () => {
         )),
       );
 
-      const section = OBJECT.food_section;
+      const section = OBJECT.food_section ?? [];
       if (COUNT.newSectionCnt <= 0) {
         alert(``, `errorCount`, 0);
         return false;
       }
-      section.forEach((_item, i) => {
+      for (let i = 0; i < section.length; i++) {
         if (!section[i].food_record_part || section[i].food_record_part === ``) {
           alert(`food_record_part`, `errorFoodPart`, i);
+          return false;
         }
         if (!section[i].food_record_name || section[i].food_record_name === ``) {
           alert(`food_record_name`, `errorFoodName`, i);
+          return false;
         }
         if (!section[i].food_record_count || section[i].food_record_count === `0`) {
           alert(`food_record_count`, `errorFoodCount`, i);
+          return false;
         }
         if (!section[i].food_record_kcal) {
           alert(`food_record_kcal`, `errorFoodKcal`, i);
+          return false;
         }
         if (!section[i].food_record_carb) {
           alert(`food_record_carb`, `errorFoodCarb`, i);
+          return false;
         }
         if (!section[i].food_record_protein) {
           alert(`food_record_protein`, `errorFoodProtein`, i);
+          return false;
         }
         if (!section[i].food_record_fat) {
           alert(`food_record_fat`, `errorFoodFat`, i);
+          return false;
         }
-      });
+      }
       return true;
     }
 

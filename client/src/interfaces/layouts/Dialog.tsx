@@ -30,9 +30,11 @@ export const Dialog = memo((
 ) => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-  const { PATH, navigate, toDetail, localIsoCode } = useCommonValue();
-  const { isGoalList, isFindList, isFavoriteList } = useCommonValue();
-  const { isList, isDetail, isCalendar } = useCommonValue();
+  const {
+    PATH, navigate, toDetail, localIsoCode,
+    isGoalList, isFindList, isFavoriteList,
+    isList, isDetail, isCalendar,
+  } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
 

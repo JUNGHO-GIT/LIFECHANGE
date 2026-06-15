@@ -412,9 +412,9 @@ export const avgWeek = async (user_id_param: string, DATE_param: any) => {
   let statusResult: string = ``;
 
   // sum, count 변수 선언
-  let sumIncome: number[] = Array.from({ length: 5 }).fill(0);
-  let sumExpense: number[] = Array.from({ length: 5 }).fill(0);
-  let countRecords: number[] = Array.from({ length: 5 }).fill(0);
+  let sumIncome: number[] = new Array<number>(5).fill(0);
+  let sumExpense: number[] = new Array<number>(5).fill(0);
+  let countRecords: number[] = new Array<number>(5).fill(0);
 
   // date 변수 정의
   const monthStartFmt: string = DATE_param.monthStartFmt;
@@ -441,41 +441,39 @@ export const avgWeek = async (user_id_param: string, DATE_param: any) => {
     return `${startOfWeek} - ${endOfWeek}`;
   });
 
+  // 주차별 조회 범위 (isoWeek 경계) 사전 계산 — 단일 범위 조회 후 JS 분할용
+  const weekRanges: { start: string; end: string }[] = weekStartDate.map(
+    (startDate: moment.Moment) => ({
+      start: startDate.clone().startOf(`isoWeek`).format(`YYYY-MM-DD`),
+      end: startDate.clone().endOf(`isoWeek`).format(`YYYY-MM-DD`),
+    }),
+  );
+
+  // 전체 조회 범위 (첫 주 시작 ~ 마지막 주 끝)
+  const dateStart: string = weekRanges[0].start;
+  const dateEnd: string = weekRanges[weekRanges.length - 1].end;
+
   try {
-    // promise 사용하여 병렬 처리
-    const parallelResult: { findResult: any[]; index: number }[] =
-      await Promise.all(
-        weekStartDate.map(async (startDate: moment.Moment, i: number) => {
-          const dateStart: string = startDate
-            .clone()
-            .startOf(`isoWeek`)
-            .format(`YYYY-MM-DD`);
-          const dateEnd: string = startDate
-            .clone()
-            .endOf(`isoWeek`)
-            .format(`YYYY-MM-DD`);
+    // 단일 범위 1회 조회 (기존 5쿼리 → 1쿼리)
+    [findResult] = await Promise.all([
+      repository.avgAll(user_id_param, dateStart, dateEnd),
+    ]);
 
-          [findResult] = await Promise.all([
-            repository.avgAll(user_id_param, dateStart, dateEnd),
-          ]);
-
-          return {
-            findResult,
-            index: i,
-          };
-        }),
-      );
-
-    // sum, count 설정
-    parallelResult.forEach(
-      ({ findResult, index }: { findResult: any[]; index: number }) => {
-        findResult.forEach((item: any) => {
-          sumIncome[index] += Number(item.money_record_total_income ?? `0`);
-          sumExpense[index] += Number(item.money_record_total_expense ?? `0`);
-          countRecords[index]++;
-        });
-      },
-    );
+    // sum, count 설정 — JS 에서 주차 구간 분할
+    // (기존 avgAll 쿼리와 동일: dateStart·dateEnd 모두 해당 주 범위 [start,end] 포함)
+    weekRanges.forEach((range: { start: string; end: string }, index: number) => {
+      findResult.forEach((item: any) => {
+        const itemStart: string = item.money_record_dateStart;
+        const itemEnd: string = item.money_record_dateEnd;
+        itemStart >= range.start &&
+          itemStart <= range.end &&
+          itemEnd >= range.start &&
+          itemEnd <= range.end &&
+          ((sumIncome[index] += Number(item.money_record_total_income ?? `0`)),
+          (sumExpense[index] += Number(item.money_record_total_expense ?? `0`)),
+          countRecords[index]++);
+      });
+    });
 
     // name 배열을 순회하며 결과 저장
     name.forEach((data: any, index: number) => {
@@ -513,9 +511,9 @@ export const avgMonth = async (user_id_param: string, DATE_param: any) => {
   let statusResult: string = ``;
 
   // sum, count 변수 선언
-  let sumIncome: number[] = Array.from({ length: 12 }).fill(0);
-  let sumExpense: number[] = Array.from({ length: 12 }).fill(0);
-  let countRecords: number[] = Array.from({ length: 12 }).fill(0);
+  let sumIncome: number[] = new Array<number>(12).fill(0);
+  let sumExpense: number[] = new Array<number>(12).fill(0);
+  let countRecords: number[] = new Array<number>(12).fill(0);
 
   // date 변수 정의
   const yearStartFmt: string = DATE_param.yearStartFmt;
@@ -542,41 +540,39 @@ export const avgMonth = async (user_id_param: string, DATE_param: any) => {
     return `${startOfMonth} - ${endOfMonth}`;
   });
 
+  // 월별 조회 범위 (month 경계) 사전 계산 — 단일 범위 조회 후 JS 분할용
+  const monthRanges: { start: string; end: string }[] = monthStartDate.map(
+    (startDate: moment.Moment) => ({
+      start: startDate.clone().startOf(`month`).format(`YYYY-MM-DD`),
+      end: startDate.clone().endOf(`month`).format(`YYYY-MM-DD`),
+    }),
+  );
+
+  // 전체 조회 범위 (1월 시작 ~ 12월 끝)
+  const dateStart: string = monthRanges[0].start;
+  const dateEnd: string = monthRanges[monthRanges.length - 1].end;
+
   try {
-    // promise 사용하여 병렬 처리
-    const parallelResult: { findResult: any[]; index: number }[] =
-      await Promise.all(
-        monthStartDate.map(async (startDate: moment.Moment, i: number) => {
-          const dateStart: string = startDate
-            .clone()
-            .startOf(`month`)
-            .format(`YYYY-MM-DD`);
-          const dateEnd: string = startDate
-            .clone()
-            .endOf(`month`)
-            .format(`YYYY-MM-DD`);
+    // 단일 범위 1회 조회 (기존 12쿼리 → 1쿼리)
+    [findResult] = await Promise.all([
+      repository.avgAll(user_id_param, dateStart, dateEnd),
+    ]);
 
-          [findResult] = await Promise.all([
-            repository.avgAll(user_id_param, dateStart, dateEnd),
-          ]);
-
-          return {
-            findResult,
-            index: i,
-          };
-        }),
-      );
-
-    // sum, count 설정
-    parallelResult.forEach(
-      ({ findResult, index }: { findResult: any[]; index: number }) => {
-        findResult.forEach((item: any) => {
-          sumIncome[index] += Number(item.money_record_total_income ?? `0`);
-          sumExpense[index] += Number(item.money_record_total_expense ?? `0`);
-          countRecords[index]++;
-        });
-      },
-    );
+    // sum, count 설정 — JS 에서 월 구간 분할
+    // (기존 avgAll 쿼리와 동일: dateStart·dateEnd 모두 해당 월 범위 [start,end] 포함)
+    monthRanges.forEach((range: { start: string; end: string }, index: number) => {
+      findResult.forEach((item: any) => {
+        const itemStart: string = item.money_record_dateStart;
+        const itemEnd: string = item.money_record_dateEnd;
+        itemStart >= range.start &&
+          itemStart <= range.end &&
+          itemEnd >= range.start &&
+          itemEnd <= range.end &&
+          ((sumIncome[index] += Number(item.money_record_total_income ?? `0`)),
+          (sumExpense[index] += Number(item.money_record_total_expense ?? `0`)),
+          countRecords[index]++);
+      });
+    });
 
     // name 배열을 순회하며 결과 저장
     name.forEach((data: any, index: number) => {

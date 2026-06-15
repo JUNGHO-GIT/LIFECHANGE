@@ -8,6 +8,25 @@
 import { React, createRef, useCallback, useRef, useState } from "@exportReacts";
 import { useStoreAlert, useStoreConfirm, useStoreLanguage } from "@exportStores";
 
+// 구조 타입 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+type FieldRefs = Record<string, React.RefObject<unknown>>;
+type FieldErrors = Record<string, boolean>;
+type ExerciseSection = Record<string, string>;
+type ExerciseObject = {
+  _id?: string;
+  exercise_goal_count?: string;
+  exercise_goal_volume?: string;
+  exercise_goal_cardio?: string;
+  exercise_goal_scale?: string;
+  exercise_section?: ExerciseSection[];
+};
+type ExerciseCount = {
+  newSectionCnt: number;
+};
+type ExerciseValidate = (
+  OBJECT: ExerciseObject, COUNT: ExerciseCount, extra: string
+) => Promise<boolean>;
+
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const useValidateExercise = () => {
 
@@ -17,9 +36,9 @@ export const useValidateExercise = () => {
   const { setCONFIRM } = useStoreConfirm();
 
   // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  const REFS: React.RefObject<unknown[]> = useRef<unknown[]>([]);
-  const validate: React.RefObject<Function> = useRef<Function>(() => {});
-  const [ ERRORS, setERRORS ] = useState<unknown[]>([]);
+  const REFS: React.RefObject<FieldRefs[]> = useRef<FieldRefs[]>([]);
+  const validate: React.RefObject<ExerciseValidate> = useRef<ExerciseValidate>(async () => false);
+  const [ ERRORS, setERRORS ] = useState<FieldErrors[]>([]);
 
   // alert 표시 및 focus ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const alert = useCallback((field: string, msg: string, idx: number) => {
@@ -29,10 +48,10 @@ export const useValidateExercise = () => {
       severity: `error`,
     });
     field && setTimeout(() => {
-      REFS?.current?.[idx]?.[field]?.current?.focus();
+      (REFS?.current?.[idx]?.[field]?.current as { focus?: () => void } | undefined)?.focus?.();
     }, 0);
     field && setERRORS((prev) => {
-      const updatedErrors: unknown[] = [...prev];
+      const updatedErrors: FieldErrors[] = [...prev];
       updatedErrors[idx] = {
         ...updatedErrors[idx],
         [field]: true,
@@ -42,7 +61,7 @@ export const useValidateExercise = () => {
   }, [ setALERT, translate ]);
 
   // 7. validate ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-  validate.current = async (OBJECT: unknown, COUNT: unknown, extra: string): Promise<boolean> => {
+  validate.current = async (OBJECT, COUNT, extra) => {
     // 7-1. goal
     if (extra === `goal`) {
       const target: string[] = [
@@ -104,28 +123,33 @@ export const useValidateExercise = () => {
         )),
       );
 
-      const section = OBJECT.exercise_section;
+      const section = OBJECT.exercise_section ?? [];
       if (COUNT.newSectionCnt <= 0) {
         alert(``, `errorCount`, 0);
         return false;
       }
-      section.forEach((_item, i) => {
+      for (let i = 0; i < section.length; i++) {
         if (!section[i].exercise_record_part || section[i].exercise_record_part === `all`) {
           alert(`exercise_record_part`, `errorExercisePart`, i);
+          return false;
         }
         if (!section[i].exercise_record_title || section[i].exercise_record_title === `all`) {
           alert(`exercise_record_title`, `errorExerciseTitle`, i);
+          return false;
         }
         if (!section[i].exercise_record_set || section[i].exercise_record_set === `0`) {
           alert(`exercise_record_set`, `errorExerciseSet`, i);
+          return false;
         }
         if (!section[i].exercise_record_rep || section[i].exercise_record_rep === `0`) {
           alert(`exercise_record_rep`, `errorExerciseRep`, i);
+          return false;
         }
         if (!section[i].exercise_record_weight || section[i].exercise_record_weight === `0`) {
           alert(`exercise_record_weight`, `errorExerciseKg`, i);
+          return false;
         }
-      });
+      }
       return true;
     }
 

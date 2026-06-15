@@ -15,6 +15,9 @@ declare interface MoneyRecordSection {
   money_record_include: string;
   money_record_amount: string;
   money_record_content: string;
+  money_record_scheduled: string;
+  money_record_scheduled_date: string;
+  money_record_scheduled_done: string;
 }
 declare interface MoneyRecordType extends mongoose.Document {
   user_id: string;
@@ -92,6 +95,21 @@ const schema = new mongoose.Schema(
         money_record_content: {
           type: String,
           default: ``,
+          required: false,
+        },
+        money_record_scheduled: {
+          type: String,
+          default: `N`,
+          required: false,
+        },
+        money_record_scheduled_date: {
+          type: String,
+          default: ``,
+          required: false,
+        },
+        money_record_scheduled_done: {
+          type: String,
+          default: `N`,
           required: false,
         },
       },

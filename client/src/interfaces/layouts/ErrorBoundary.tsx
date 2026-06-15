@@ -6,6 +6,7 @@
  */
 
 import { Box, Button } from "@exportMuis";
+import { useStoreLanguage } from "@exportStores";
 import { Component, type ErrorInfo, type ReactNode } from "react";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
@@ -40,6 +41,7 @@ export class ErrorBoundary extends Component<
 
   // 7. fallback ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
   fallbackNode(): ReactNode {
+    const { translate } = useStoreLanguage.getState();
     return (
       <Box
         className={`d-center fs-0-9rem fw-500`}
@@ -50,8 +52,8 @@ export class ErrorBoundary extends Component<
           gap: `16px`,
         }}
       >
-        <Box className={`fs-1-2rem fw-700 dark`}>{`오류가 발생했습니다`}</Box>
-        <Box className={`fs-0-9rem fw-500`}>{`잠시 후 다시 시도해 주세요`}</Box>
+        <Box className={`fs-1-2rem fw-700 dark`}>{translate(`errorBoundaryTitle`)}</Box>
+        <Box className={`fs-0-9rem fw-500`}>{translate(`errorBoundaryDesc`)}</Box>
         <Button
           size={`small`}
           color={`primary`}
@@ -60,7 +62,7 @@ export class ErrorBoundary extends Component<
             window.location.reload();
           }}
         >
-          {`새로고침`}
+          {translate(`refresh`)}
         </Button>
       </Box>
     );
