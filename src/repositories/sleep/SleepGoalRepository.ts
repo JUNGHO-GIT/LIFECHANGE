@@ -48,7 +48,7 @@ export const exist = async (
   return finalResult;
 };
 
-// 1. list (goal) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 1. list (goal) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const listGoal = async (
   user_id_param: string,
   dateType_param: string,

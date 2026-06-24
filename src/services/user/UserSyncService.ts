@@ -457,7 +457,7 @@ export const nutrition = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 3-2. favorite (저장 음식 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 3-2. favorite (저장 음식 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const favorite = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let findRegDt: any = null;

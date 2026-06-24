@@ -29,7 +29,7 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
   const previewUrlRef: React.RefObject<string[]> = useRef<string[]>([]);
   const isPickingRef: React.RefObject<boolean> = useRef<boolean>(false);
 
-  // 3. util ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 3. util ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const isSameFile = (a: File, b: File) => (
     a.name === b.name &&
 		a.size === b.size &&
@@ -48,17 +48,17 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
     return true;
   };
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     setFileExisting(props?.existing ?? []);
   }, [props?.existing]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     setFileLimit(props?.limit ?? 1);
   }, [props?.limit]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     const nextFiles: File[] = props?.value ?? [];
     setFileList((prev: File[]) => (
@@ -66,7 +66,7 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
     ));
   }, [props?.value]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     const newCount: number = fileList?.length ?? 0;
     const existingCount: number = fileExisting?.length ?? 0;
@@ -77,7 +77,7 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
     setFileHeight(`${Math.max(minHeight, newCount * heightPerFile)}px`);
   }, [ fileList, fileExisting ]);
 
-  // 2-3. useEffect (preview url 관리) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect (preview url 관리) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
 
     // 기존 URL revoke

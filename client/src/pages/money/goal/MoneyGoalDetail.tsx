@@ -63,7 +63,7 @@ export const MoneyGoalDetail = memo(() => {
     dateEnd: location_dateEnd ?? getMonthEndFmt(),
   });
 
-  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const objectRef: React.RefObject<
     MoneyGoalType
   > = useRef(OBJECT);
@@ -85,7 +85,7 @@ export const MoneyGoalDetail = memo(() => {
     DATE !== dateRef.current && (dateRef.current = DATE);
   }, [ COUNT, OBJECT, DATE ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
 
@@ -115,7 +115,7 @@ export const MoneyGoalDetail = memo(() => {
     }
   }, [ EXIST, DATE?.dateEnd, OBJECT.money_goal_dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     axios.get(`${URL_OBJECT}/goal/exist`, {
       params: {
@@ -139,7 +139,7 @@ export const MoneyGoalDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     setLOADING(true);
     if (LOCKED === `locked`) {
@@ -285,7 +285,7 @@ export const MoneyGoalDetail = memo(() => {
     });
   };
 
-  // 4-3. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 4-3. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const handleDelete = useCallback((_index: number) => {
     setOBJECT((prev) => ({
       ...prev,

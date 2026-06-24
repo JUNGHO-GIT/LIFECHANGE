@@ -18,7 +18,7 @@ import { Img, Bg, Paper, Grid, Br } from "@exportComponents";
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const ExerciseGoalDetail = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const {
     URL_OBJECT, PATH, sessionId, toList, navigate, localUnit,
     location_dateType, location_dateStart, location_dateEnd,
@@ -77,7 +77,7 @@ export const ExerciseGoalDetail = memo(() => {
     dateEnd: string;
   }> = useRef(DATE);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     COUNT !== countRef.current && (countRef.current = COUNT);
     OBJECT !== objectRef.current && (objectRef.current = OBJECT);
@@ -302,7 +302,7 @@ export const ExerciseGoalDetail = memo(() => {
     }));
   }, []);
 
-  // 7. detail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 7. detail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
@@ -493,7 +493,7 @@ export const ExerciseGoalDetail = memo(() => {
     );
   };
 
-  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -505,7 +505,7 @@ export const ExerciseGoalDetail = memo(() => {
     />
   );
 
-  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const footerNode = () => (
     <Footer
       state={{
@@ -520,7 +520,7 @@ export const ExerciseGoalDetail = memo(() => {
     />
   );
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {detailNode()}

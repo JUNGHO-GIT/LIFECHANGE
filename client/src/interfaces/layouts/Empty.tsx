@@ -22,12 +22,12 @@ export const Empty = memo((
   { DATE, extra }: EmptyProps,
 ) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { navigate, isFind, isGoal, isRecord, toDetail } = useCommonValue();
   const { getDayStartFmt, getDayEndFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
 
-  // 7. emptyNode ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 7. emptyNode ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const emptyNode = () => {
     // 2. isFindSection
     const isFindSection = () => (

@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-import { React, useState, useEffect, useRef, useCallback, memo } from "@exportReacts";
+import { React, useState, useEffect, useRef, useCallback, useDeferredValue, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useValidateMoney } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { MoneyRecord, MoneyRecordType } from "@exportSchemas";
@@ -63,7 +63,11 @@ export const MoneyRecordDetail = memo(() => {
     dateEnd: location_dateEnd ?? getDayFmt(),
   });
 
-  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 섹션 항목 렌더를 비긴급으로 분리: 진입 시 화면 틀이 먼저 그려지고 상세 항목은 다음 프레임에 채워짐
+  const deferredObject = useDeferredValue(OBJECT);
+
+  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const objectRef: React.RefObject<
     MoneyRecordType
   > = useRef(OBJECT);
@@ -85,7 +89,7 @@ export const MoneyRecordDetail = memo(() => {
     DATE !== dateRef.current && (dateRef.current = DATE);
   }, [ COUNT, OBJECT, DATE ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
 
@@ -115,7 +119,7 @@ export const MoneyRecordDetail = memo(() => {
     }
   }, [ EXIST, DATE?.dateEnd, OBJECT.money_record_dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     axios.get(`${URL_OBJECT}/record/exist`, {
       params: {
@@ -139,7 +143,7 @@ export const MoneyRecordDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     setLOADING(true);
     if (LOCKED === `locked`) {
@@ -189,7 +193,7 @@ export const MoneyRecordDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     const totals = OBJECT?.money_section.reduce((acc: any, cur: any) => {
       // 미래예정(scheduled === "Y" && scheduled_done === "N")은 실적이 아니므로 합산에서 제외
@@ -218,7 +222,7 @@ export const MoneyRecordDetail = memo(() => {
     }));
   }, [OBJECT?.money_section]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     const defaultSection: any = {
       money_record_part: moneyArray[1]?.money_record_part ?? ``,
@@ -352,7 +356,7 @@ export const MoneyRecordDetail = memo(() => {
     });
   };
 
-  // 4-3. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 4-3. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const handleDelete = useCallback((index: number) => {
     setOBJECT((prev) => ({
       ...prev,
@@ -442,7 +446,7 @@ export const MoneyRecordDetail = memo(() => {
     // 7-3. detail
     const detailSection = () => (
       <>
-        {OBJECT.money_section?.map((item, i) => {
+        {deferredObject.money_section?.map((item, i) => {
           // money_record_title을 위한 현재 part의 데이터를 찾기
           const currentPartData: any = moneyArray.find((f: any) => f.money_record_part === item?.money_record_part);
           const partIndex: number = moneyArray.findIndex((f: any) => f.money_record_part === item?.money_record_part);

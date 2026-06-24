@@ -23,7 +23,7 @@ export const Buttons = memo((
   { state, flow }: ButtonsProps,
 ) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const {
     toFind, toFavorite, navigate,
     isFoodRecordDetail, isUserCategory, isUserDetail, isDetail, isSleep, isCalendarDetail,
@@ -86,7 +86,7 @@ export const Buttons = memo((
     </Btn>
   ), [ flow, translate ]);
 
-  // 9. btn - save ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 9. btn - save ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const saveBtn = useMemo(() => (
     <PopUp
       key={`innerCenter`}
@@ -156,7 +156,7 @@ export const Buttons = memo((
     />
   ), [ isSleep, handleSave, state.FLOW, translate ]);
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
 		(isUserCategory || isUserDetail) ? (
 			<Grid container={true} spacing={1}>

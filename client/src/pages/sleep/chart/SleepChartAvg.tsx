@@ -30,7 +30,7 @@ export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ TYPE, setTYPE ] = useStorageLocal(
     `type`, `avg`, PATH, {
       section: `week`,
@@ -58,7 +58,7 @@ export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
   const [ OBJECT_WEEK, setOBJECT_WEEK ] = useState<[SleepAvgType]>([SleepAvg]);
   const [ OBJECT_MONTH, setOBJECT_MONTH ] = useState<[SleepAvgType]>([SleepAvg]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     (async () => {
       setLOADING(true);
@@ -97,7 +97,7 @@ export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
     })();
   }, [ URL_OBJECT, DATE, sessionId ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (props?.TYPE !== undefined) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -107,7 +107,7 @@ export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
     }
   }, [props?.TYPE]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (props?.setTYPE) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);

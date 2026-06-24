@@ -38,7 +38,7 @@ export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ TYPE, setTYPE ] = useStorageLocal(
     `type`, `pie`, PATH, {
       section: `week`,
@@ -70,7 +70,7 @@ export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
   const [ OBJECT_INCOME_YEAR, setOBJECT_INCOME_YEAR ] = useState<[MoneyPieType]>([MoneyPie]);
   const [ OBJECT_EXPENSE_YEAR, setOBJECT_EXPENSE_YEAR ] = useState<[MoneyPieType]>([MoneyPie]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     (async () => {
       setLOADING(true);
@@ -145,7 +145,7 @@ export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
     })();
   }, [ URL_OBJECT, DATE, sessionId ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (props?.TYPE !== undefined) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -155,7 +155,7 @@ export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
     }
   }, [props?.TYPE]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (props?.setTYPE) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -168,7 +168,7 @@ export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
     }
   }, [TYPE_STATE]);
 
-  // 4-1. render ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 4-1. render ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const renderPie = (
     {
       cx, cy, midAngle, innerRadius, outerRadius, value, index,

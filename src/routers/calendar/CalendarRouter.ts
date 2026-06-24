@@ -134,7 +134,7 @@ router.get(`/detail`, async (req: Request, res: Response) => {
   }
 });
 
-// 3. create ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 3. create ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 router.post(`/create`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.update(
@@ -175,7 +175,7 @@ router.post(`/create`, async (req: Request, res: Response) => {
   }
 });
 
-// 4. update ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 4. update ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 router.put(`/update`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.update(
@@ -216,7 +216,7 @@ router.put(`/update`, async (req: Request, res: Response) => {
   }
 });
 
-// 5. delete ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 5. delete ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 router.delete(`/delete`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.deletes(

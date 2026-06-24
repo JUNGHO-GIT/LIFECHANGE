@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-import { React, useState, useEffect, useRef, useCallback, memo } from "@exportReacts";
+import { React, useState, useEffect, useRef, useCallback, useDeferredValue, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useValidateCalendar } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { Calendar, CalendarType } from "@exportSchemas";
@@ -67,7 +67,10 @@ export const CalendarDetail = memo(() => {
     dateEnd: location_dateEnd ?? getDayFmt(),
   });
 
-  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 섹션 항목 렌더를 비긴급으로 분리: 진입 시 화면 틀이 먼저 그려지고 상세 항목은 다음 프레임에 채워짐
+  const deferredObject = useDeferredValue(OBJECT);
+  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const objectRef: React.RefObject<
     CalendarType
   > = useRef(OBJECT);
@@ -89,7 +92,7 @@ export const CalendarDetail = memo(() => {
     DATE !== dateRef.current && (dateRef.current = DATE);
   }, [ COUNT, OBJECT, DATE ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
       const dateRange: string = (
@@ -117,7 +120,7 @@ export const CalendarDetail = memo(() => {
     }
   }, [ EXIST, DATE?.dateEnd, OBJECT.calendar_exercise_dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     axios.get(`${URL_OBJECT}/exist`, {
       params: {
@@ -141,7 +144,7 @@ export const CalendarDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     setLOADING(true);
     if (LOCKED === `locked`) {
@@ -462,7 +465,7 @@ export const CalendarDetail = memo(() => {
         </Grid>
 
         {/** items * */}
-        {OBJECT?.calendar_exercise_section?.map((item, i) => (
+        {deferredObject?.calendar_exercise_section?.map((item, i) => (
           <Grid
             container={true}
             spacing={2}
@@ -713,7 +716,7 @@ export const CalendarDetail = memo(() => {
         </Grid>
 
         {/** items * */}
-        {OBJECT?.calendar_food_section?.map((item, i) => (
+        {deferredObject?.calendar_food_section?.map((item, i) => (
           <Grid
             container={true}
             spacing={2}
@@ -1065,7 +1068,7 @@ export const CalendarDetail = memo(() => {
         </Grid>
 
         {/** items * */}
-        {OBJECT?.calendar_money_section?.map((item, i) => (
+        {deferredObject?.calendar_money_section?.map((item, i) => (
           <Grid
             container={true}
             spacing={2}
@@ -1266,7 +1269,7 @@ export const CalendarDetail = memo(() => {
         </Grid>
 
         {/** items * */}
-        {OBJECT?.calendar_sleep_section?.map((_item, i) => (
+        {deferredObject?.calendar_sleep_section?.map((_item, i) => (
           <Grid
             container={true}
             spacing={2}

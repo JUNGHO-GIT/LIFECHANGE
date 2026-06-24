@@ -101,7 +101,7 @@ export const decimalToStr = (data: number) => {
   return `${String(adjustedHours).padStart(2, `0`)}:${String(adjustedMinutes).padStart(2, `0`)}`;
 };
 
-// 4-1. token ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 4-1. token ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const token: string = crypto.randomBytes(20).toString(`hex`);
 
 // 4-2. adminCheck ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
@@ -114,7 +114,7 @@ export const isAdmin = (user_id: string) => {
   return false;
 };
 
-// 4-3. combinePw ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 4-3. combinePw ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const combinePw = async (inputPw: string, tokenParam: string) => {
   return `${inputPw}_${tokenParam}`;
 };
@@ -124,7 +124,7 @@ export const hashPw = async (combinedPw: string) => {
   return bcrypt.hash(combinedPw, 10);
 };
 
-// 4-5. comparePw ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 4-5. comparePw ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const comparePw = async (inputPw: string, storedPw: string) => {
   return bcrypt.compare(inputPw, storedPw);
 };

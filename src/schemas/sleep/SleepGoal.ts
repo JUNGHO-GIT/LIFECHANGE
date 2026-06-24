@@ -85,7 +85,7 @@ const schema = new mongoose.Schema(
   },
 );
 
-// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 schema.pre<SleepGoalType>(`save`, async function () {
   if (this.isNew) {
     this.sleep_goal_number = await incrementSeq(

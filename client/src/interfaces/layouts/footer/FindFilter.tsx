@@ -24,7 +24,7 @@ export const FindFilter = memo((
   { state, setState, flow }: FindFilterProps,
 ) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const {
     navigate, toDetail, isFind, isFavorite,
   } = useCommonValue();
@@ -130,7 +130,7 @@ export const FindFilter = memo((
     </Div>
   ), [ translate, handleSearch, handleNavigateToDetail ]);
 
-  // 7. pagination ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 7. pagination ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const paginationSection = useMemo(() => (
     <TablePagination
       rowsPerPageOptions={[10]}
@@ -161,7 +161,7 @@ export const FindFilter = memo((
     />
   ), [ state?.COUNT.totalCnt, state?.PAGING.page, isFavorite, setState ]);
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <Grid container={true} spacing={0}>
       <Grid size={7} className={`d-row-center`}>

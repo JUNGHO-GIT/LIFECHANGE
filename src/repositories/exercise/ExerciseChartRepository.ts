@@ -232,7 +232,7 @@ export const lineScale = async (
   return finalResult;
 };
 
-// 3-2. chart (line - volume) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 3-2. chart (line - volume) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const lineVolume = async (
   user_id_param: string,
   dateStart_param: string,
@@ -270,7 +270,7 @@ export const lineVolume = async (
   return finalResult;
 };
 
-// 3-3. chart (line - cardio) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 3-3. chart (line - cardio) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const lineCardio = async (
   user_id_param: string,
   dateStart_param: string,

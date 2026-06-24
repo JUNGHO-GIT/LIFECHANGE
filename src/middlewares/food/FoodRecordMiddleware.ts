@@ -27,7 +27,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 0. calcNonValueColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 0. calcNonValueColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const calcNonValueColor = (param: string) => {
 
     let finalResult: string = ``;
@@ -45,7 +45,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   object?.result?.forEach((item: any) => {
     item.food_record_total_kcal = calcOverTenMillion(
       item?.food_record_total_kcal

@@ -12,7 +12,7 @@ import { Popover } from "@exportComponents";
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const PopUp = memo((props: any) => {
 
-  // 1. Popup State ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 1. Popup State ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const id: string = useId();
   const popupState: PopupState = usePopupState({
     variant: `popover`,

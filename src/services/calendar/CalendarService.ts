@@ -173,7 +173,7 @@ export const detail = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 4. update ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 4. update ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const update = async (
   user_id_param: string,
   OBJECT_param: any,
@@ -368,7 +368,7 @@ export const update = async (
   };
 };
 
-// 5. delete ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 5. delete ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const deletes = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let exerciseResult: any = null;

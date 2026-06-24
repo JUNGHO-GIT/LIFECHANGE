@@ -22,7 +22,7 @@ declare interface ExerciseChartLineProps {
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const {
     URL_OBJECT, PATH, sessionId, chartColors,
     localUnit, exerciseChartArray,
@@ -319,7 +319,7 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
 		);
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {chartNode()}

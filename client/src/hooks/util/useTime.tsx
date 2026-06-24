@@ -16,7 +16,7 @@ export const useTime = (
   type: string,
 ) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { getDayFmt } = useCommonDate();
   const match: RegExpMatchArray | null = PATH.match(/\/([^/]+)\//);
   const strLow: string | null = match ? match[1] : null;

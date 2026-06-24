@@ -7,10 +7,13 @@
 
 import {
   NavigateFunction,
+  startTransition,
+  useCallback,
   useLocation,
   useMemo,
   useNavigate,
 } from "@exportReacts";
+import { getLocalRoot, getSessionRoot } from "@exportScripts";
 import type {
   CommonValueType,
   EnvType,
@@ -63,29 +66,29 @@ const CHART_COLORS: string[] = [
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const useCommonValue = (): CommonValueType => {
-  const navigate: NavigateFunction = useNavigate();
+  const rawNavigate: NavigateFunction = useNavigate();
+  // 화면 전환을 비긴급(transition)으로 처리: 무거운 레이아웃 리렌더가 클릭 응답을 막지 않도록 ――――――――――――――――-
+  const navigate = useCallback(
+    ((to: any, options?: any): void => {
+      startTransition(() => {
+        rawNavigate(to, options);
+      });
+    }) as NavigateFunction,
+    [ rawNavigate ],
+  );
   const location: ReturnType<typeof useLocation> = useLocation();
   const PATH: string = location?.pathname ?? ``;
   const pathParts: string[] = PATH ? PATH.split(`/`) : [];
   const env: EnvType = import.meta.env as unknown as EnvType;
   const TITLE: string = env.VITE_APP_TITLE ?? ``;
 
+  // 캐시된 root 사용: 페이지 전환 시 컴포넌트마다 전체 객체를 재파싱하지 않도록(set 시점에만 갱신) ――――――――――
   const localTitle: LocalTitleType = useMemo(() => {
-    try {
-      return JSON.parse(localStorage.getItem(TITLE) ?? `{}`) as LocalTitleType;
-    } catch {
-      return {} as LocalTitleType;
-    }
+    return getLocalRoot() as LocalTitleType;
   }, [TITLE, location.pathname]);
 
   const sessionTitle: SessionTitleType = useMemo(() => {
-    try {
-      return JSON.parse(
-        sessionStorage.getItem(TITLE) ?? `{}`,
-      ) as SessionTitleType;
-    } catch {
-      return {} as SessionTitleType;
-    }
+    return getSessionRoot() as SessionTitleType;
   }, [TITLE, location.pathname]);
 
   // 세션 파생값 기본 객체 생성 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-

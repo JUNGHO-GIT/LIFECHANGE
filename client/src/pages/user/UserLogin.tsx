@@ -35,7 +35,7 @@ export const UserLogin = memo(() => {
   // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const objectRef: React.RefObject<UserType> = useRef(OBJECT);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     OBJECT !== objectRef.current && (objectRef.current = OBJECT);
   }, [OBJECT]);
@@ -229,7 +229,7 @@ export const UserLogin = memo(() => {
     });
   };
 
-  // 7. userLogin ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 7. userLogin ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const userLoginNode = () => {
     // 7-1. title
     const titleSection = () => (

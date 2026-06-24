@@ -58,7 +58,7 @@ export const useValidateMoney = () => {
     });
   }, [ setALERT, translate ]);
 
-  // 7. validate ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 7. validate ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   validate.current = async (OBJECT, COUNT, extra) => {
     // 7-1. goal
     if (extra === `goal`) {

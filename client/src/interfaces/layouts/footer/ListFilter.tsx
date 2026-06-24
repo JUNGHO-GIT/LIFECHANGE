@@ -23,7 +23,7 @@ export const ListFilter = memo((
   { state, setState }: ListFilterProps,
 ) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const {
     sessionCategory,
     isExerciseGoalList, isExerciseRecordList,
@@ -99,7 +99,7 @@ export const ListFilter = memo((
     dataArray,
   ]);
 
-  // 4. titleArray ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 4. titleArray ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const titleArray = useMemo(() => {
     let partKey: string = ``;
     let titleKey: string = ``;
@@ -136,7 +136,7 @@ export const ListFilter = memo((
     state?.PAGING?.part,
   ]);
 
-  // 7. filter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 7. filter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const listFilterNode = useMemo(() => {
 
     // 7-1. sort ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -230,7 +230,7 @@ export const ListFilter = memo((
       </Select>
     );
 
-    // 7-9. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+    // 7-9. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
     return (
       <Div className={`d-row w-100p h-100p over-x-auto`} style={{ alignItems: `baseline` }}>
         <Div className={`d-center my-1vh mx-5px`} style={{ flexShrink: 0 }}>

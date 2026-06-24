@@ -10,7 +10,9 @@ export { registerInterceptor } from "@assets/scripts/interceptor";
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export {
   getLocal,
+  getLocalRoot,
   getSession,
+  getSessionRoot,
   setLocal,
   setSession,
 } from "@assets/scripts/storage";

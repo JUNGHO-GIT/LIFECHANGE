@@ -32,7 +32,7 @@ export const PickerTime = memo((
   }: PickerTimeProps,
 ) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { firstStr, secondStr, localLang, localTimeZone } = useCommonValue();
   const { translate } = useStoreLanguage();
 
@@ -145,7 +145,7 @@ export const PickerTime = memo((
     })();
   }, [ firstStr, secondStr, extra, DATE, translate ]);
 
-  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const handleTodayChange = useCallback((e: any, closePopup: any) => {
     setOBJECT((prev: any) => ({
       ...prev,
@@ -159,7 +159,7 @@ export const PickerTime = memo((
     closePopup();
   }, [ setOBJECT, targetStr, i, extra ]);
 
-  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const handleGoalChange = useCallback((e: any, closePopup: any) => {
     setOBJECT((prev: any) => ({
       ...prev,
@@ -168,7 +168,7 @@ export const PickerTime = memo((
     closePopup();
   }, [ setOBJECT, extra ]);
 
-  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const handleRecordChange = useCallback((e: any, closePopup: any) => {
     setOBJECT((prev: any) => ({
       ...prev,

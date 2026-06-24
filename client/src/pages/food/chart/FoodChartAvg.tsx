@@ -30,7 +30,7 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ TYPE, setTYPE ] = useStorageLocal(
     `type`, `avg`, PATH, {
       section: `week`,
@@ -60,7 +60,7 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
   const [ OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH ] = useState<[FoodAvgType]>([FoodAvgKcal]);
   const [ OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH ] = useState<[FoodAvgType]>([FoodAvgNut]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     (async () => {
       setLOADING(true);
@@ -105,7 +105,7 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
     })();
   }, [ URL_OBJECT, DATE, sessionId ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (props?.TYPE !== undefined) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -115,7 +115,7 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
     }
   }, [props?.TYPE]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (props?.setTYPE) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);

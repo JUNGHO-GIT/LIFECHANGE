@@ -141,7 +141,7 @@ schema.index({
   exercise_record_dateEnd: 1,
 });
 
-// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 schema.pre<ExerciseRecordType>(`save`, async function () {
   if (this.isNew) {
     this.exercise_record_number = await incrementSeq(

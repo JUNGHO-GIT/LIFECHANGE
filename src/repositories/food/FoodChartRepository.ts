@@ -305,7 +305,7 @@ export const avgKcal = async (
   return finalResult;
 };
 
-// 4-2. chart (avg - nut) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 4-2. chart (avg - nut) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const avgNut = async (
   user_id_param: string,
   dateStart_param: string,

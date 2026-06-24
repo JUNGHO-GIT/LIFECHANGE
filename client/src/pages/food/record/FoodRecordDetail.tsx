@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-import { React, useState, useEffect, useRef, useCallback, memo } from "@exportReacts";
+import { React, useState, useEffect, useRef, useCallback, useDeferredValue, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useValidateFood } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { FoodRecord, FoodRecordType } from "@exportSchemas";
@@ -65,7 +65,11 @@ export const FoodRecordDetail = memo(() => {
     dateEnd: location_dateEnd ?? getDayFmt(),
   });
 
-  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 항목 렌더를 비긴급으로 분리: 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
+  const deferredObject = useDeferredValue(OBJECT);
+
+  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const objectRef: React.RefObject<
     FoodRecordType
   > = useRef(OBJECT);
@@ -87,7 +91,7 @@ export const FoodRecordDetail = memo(() => {
     DATE !== dateRef.current && (dateRef.current = DATE);
   }, [ COUNT, OBJECT, DATE ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
 
@@ -117,7 +121,7 @@ export const FoodRecordDetail = memo(() => {
     }
   }, [ EXIST, DATE?.dateEnd, OBJECT.food_record_dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     axios.get(`${URL_OBJECT}/record/exist`, {
       params: {
@@ -141,7 +145,7 @@ export const FoodRecordDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     axios.get(`${URL_OBJECT}/favorite/list`, {
       params: {
@@ -162,7 +166,7 @@ export const FoodRecordDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     setLOADING(true);
     if (LOCKED === `locked`) {
@@ -226,7 +230,7 @@ export const FoodRecordDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     const totals = OBJECT?.food_section.reduce((acc: any, cur: any) => {
       return {
@@ -251,7 +255,7 @@ export const FoodRecordDetail = memo(() => {
     }));
   }, [OBJECT?.food_section]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     const defaultSection = {
       food_record_part: foodArray[1]?.food_record_part ?? ``,
@@ -431,7 +435,7 @@ export const FoodRecordDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, setLOADING, setALERT, translate ]);
 
-  // 4-3. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 4-3. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const handleDelete = useCallback((index: number) => {
 
     let sectionArray: typeof sessionFoodSection = [];
@@ -607,7 +611,7 @@ export const FoodRecordDetail = memo(() => {
     // 7-3. detail
     const detailSection = () => (
       <>
-        {OBJECT.food_section?.map((item, i) => (
+        {deferredObject.food_section?.map((item, i) => (
           <Grid
             container={true}
             spacing={2}

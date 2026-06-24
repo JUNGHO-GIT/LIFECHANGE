@@ -18,7 +18,7 @@ import { MenuItem } from "@exportMuis";
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const ExerciseChart = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { PATH } = useCommonValue();
   const { translate } = useStoreLanguage();
 
@@ -42,7 +42,7 @@ export const ExerciseChart = memo(() => {
     }
   );
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ curView, setCurView ] = useState(`pie`);
   const [ curSection, setCurSection ] = useState(TYPE_PIE.section ?? `week`);
   const [ curSetType, setCurSetType ] = useState(() => setTYPE_PIE);
@@ -67,7 +67,7 @@ export const ExerciseChart = memo(() => {
 		})();
   }, [ curView, TYPE_PIE, TYPE_LINE, TYPE_AVG ]);
 
-  // 7. chart ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 7. chart ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const chartNode = () => {
     const headSection = () => (
       <Grid container={true} spacing={2} className={`d-row-between`}>
@@ -136,7 +136,7 @@ export const ExerciseChart = memo(() => {
     );
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {chartNode()}

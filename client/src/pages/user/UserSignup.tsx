@@ -17,7 +17,7 @@ import { Div, Btn, Img, Hr, Paper, Grid } from "@exportComponents";
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const UserSignup = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { URL_OBJECT, URL_GOOGLE, navigate, localCurrency } = useCommonValue();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
@@ -30,7 +30,7 @@ export const UserSignup = memo(() => {
   // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const objectRef: React.RefObject<UserType> = useRef(OBJECT);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     OBJECT !== objectRef.current && (objectRef.current = OBJECT);
   }, [OBJECT]);
@@ -590,7 +590,7 @@ export const UserSignup = memo(() => {
     );
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {userSignupNode()}

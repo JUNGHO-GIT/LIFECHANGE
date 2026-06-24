@@ -82,11 +82,11 @@ const schema = new mongoose.Schema(
   },
 );
 
-// 2. index ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 2. index ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 schema.index({ user_id: 1, money_goal_dateStart: 1, money_goal_dateEnd: 1 });
 schema.index({ user_id: 1, money_goal_dateType: 1, money_goal_dateStart: 1 });
 
-// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 schema.pre<MoneyGoalType>(`save`, async function () {
   if (this.isNew) {
     this.money_goal_number = await incrementSeq(

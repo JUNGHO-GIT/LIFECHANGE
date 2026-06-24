@@ -24,7 +24,7 @@ export interface ExerciseAvgType {
   cardio?: string;
 }
 
-// Schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// Schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const ExercisePie: ExercisePieType = {
   name: `Empty`,
   value: 100,

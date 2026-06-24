@@ -20,7 +20,7 @@ import { TableHead, TableBody, TableRow, TableCell } from "@exportMuis";
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const UserCategory = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const {
     URL_OBJECT, PATH, sessionId,
     location_dateStart, location_dateEnd, location_dateType,
@@ -59,7 +59,7 @@ export const UserCategory = memo(() => {
   // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const objectRef: React.RefObject<CategoryType> = useRef(OBJECT);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     OBJECT !== objectRef.current && (objectRef.current = OBJECT);
   }, [OBJECT]);
@@ -141,7 +141,7 @@ export const UserCategory = memo(() => {
     });
   }
 
-  // 4-1. handle――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 4-1. handle――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const handleAdd = (type: string) => {
     if (type === `part`) {
       setOBJECT((prev) => {
@@ -199,7 +199,7 @@ export const UserCategory = memo(() => {
     }
   };
 
-  // 4-2. handle――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 4-2. handle――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const handleRename = (type: string, index: number) => {
     setIsEditable(`${dataType}_${type}_${index}`);
     if (type === `record_part`) {
@@ -588,7 +588,7 @@ export const UserCategory = memo(() => {
     );
   };
 
-  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const footerNode = () => (
     <Footer
       state={{
@@ -603,7 +603,7 @@ export const UserCategory = memo(() => {
     />
   );
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {userCategoryNode()}

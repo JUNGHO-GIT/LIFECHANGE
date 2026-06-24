@@ -98,7 +98,7 @@ schema.index({
   exercise_goal_dateEnd: 1,
 });
 
-// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 schema.pre<ExerciseGoalType>(`save`, async function () {
   if (this.isNew) {
     this.exercise_goal_number = await incrementSeq(

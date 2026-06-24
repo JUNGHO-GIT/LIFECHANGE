@@ -16,7 +16,7 @@ import { TableContainer, Table, TableBody, TableRow, TableCell } from "@exportMu
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const UserAppSetting = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { navigate, isAdmin, localLang } = useCommonValue();
   const { translate } = useStoreLanguage();
   const { setCONFIRM } = useStoreConfirm();
@@ -292,7 +292,7 @@ export const UserAppSetting = memo(() => {
     );
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {userAppSettingNode()}

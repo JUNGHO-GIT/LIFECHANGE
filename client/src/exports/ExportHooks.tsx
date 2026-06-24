@@ -25,7 +25,7 @@ export { useValidateCalendar } from "@hooks/validate/useValidateCalendar";
 export { useStorageSession } from "@hooks/storage/useStorageSession";
 export { useStorageLocal } from "@hooks/storage/useStorageLocal";
 
-// util ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// util ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export { useRoot } from "@hooks/util/useRoot";
 export { useScrollTop } from "@hooks/util/useScrollTop";
 export { useFoodSection } from "@hooks/util/useFoodSection";

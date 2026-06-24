@@ -217,7 +217,7 @@ router.put(`/update`, async (req: Request, res: Response) => {
   }
 });
 
-// 5. delete ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 5. delete ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 router.delete(`/delete`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.deletes(

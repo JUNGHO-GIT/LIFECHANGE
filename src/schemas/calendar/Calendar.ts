@@ -298,14 +298,14 @@ const schema = new mongoose.Schema(
   },
 );
 
-// 2. index ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 2. index ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 schema.index({
   user_id: 1,
   calendar_exercise_dateStart: 1,
   calendar_exercise_dateEnd: 1,
 });
 
-// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 schema.pre<CalendarType>(`save`, async function () {
   if (this.isNew) {
     this.calendar_number = await incrementSeq(`calendar_number`, `Calendar`);

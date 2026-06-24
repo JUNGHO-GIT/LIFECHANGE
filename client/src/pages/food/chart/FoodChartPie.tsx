@@ -38,7 +38,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ TYPE, setTYPE ] = useStorageLocal(
     `type`, `pie`, PATH, {
       section: `week`,
@@ -70,7 +70,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
   const [ OBJECT_KCAL_YEAR, setOBJECT_KCAL_YEAR ] = useState<[FoodPieType]>([FoodPie]);
   const [ OBJECT_NUT_YEAR, setOBJECT_NUT_YEAR ] = useState<[FoodPieType]>([FoodPie]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     (async () => {
       setLOADING(true);
@@ -145,7 +145,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
     })();
   }, [ URL_OBJECT, DATE, sessionId ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (props?.TYPE !== undefined) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -155,7 +155,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
     }
   }, [props?.TYPE]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (props?.setTYPE) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -168,7 +168,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
     }
   }, [TYPE_STATE]);
 
-  // 4-1. render ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 4-1. render ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const renderPie = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index,
   }: PieProps) => {

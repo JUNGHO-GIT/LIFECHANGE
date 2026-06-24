@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-import { useState, useEffect, memo } from "@exportReacts";
+import { useState, useEffect, useDeferredValue, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { Calendar, CalendarType } from "@exportSchemas";
@@ -60,7 +60,11 @@ export const CalendarList = memo(() => {
     dateEnd: `0000-00-00`,
   });
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 달력 타일의 날짜별 항목 계산·렌더를 비긴급으로 분리: 달력 틀이 먼저 그려지고 표식은 다음 프레임에 채워짐
+  const deferredObject = useDeferredValue(OBJECT);
+
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     setLOADING(true);
     axios.get(`${URL_OBJECT}/list`, {
@@ -91,7 +95,7 @@ export const CalendarList = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 7. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 7. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const listNode = () => {
 
     // 7-1. dateInRange
@@ -269,16 +273,16 @@ export const CalendarList = memo(() => {
           return className;
         }}
         tileContent={({ date }) => {
-          const exerciseForDates: CalendarType[] = OBJECT?.filter((item: any) => (
+          const exerciseForDates: CalendarType[] = deferredObject?.filter((item: any) => (
             dateInRange(date, item.calendar_exercise_dateStart, item.calendar_exercise_dateEnd)
           ));
-          const foodForDates: CalendarType[] = OBJECT?.filter((item: any) => (
+          const foodForDates: CalendarType[] = deferredObject?.filter((item: any) => (
             dateInRange(date, item.calendar_food_dateStart, item.calendar_food_dateEnd)
           ));
-          const moneyForDates: CalendarType[] = OBJECT?.filter((item: any) => (
+          const moneyForDates: CalendarType[] = deferredObject?.filter((item: any) => (
             dateInRange(date, item.calendar_money_dateStart, item.calendar_money_dateEnd)
           ));
-          const sleepForDates: CalendarType[] = OBJECT?.filter((item: any) => (
+          const sleepForDates: CalendarType[] = deferredObject?.filter((item: any) => (
             dateInRange(date, item.calendar_sleep_dateStart, item.calendar_sleep_dateEnd)
           ));
           return (

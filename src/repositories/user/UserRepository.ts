@@ -30,7 +30,7 @@ export const emailFindId = async (user_id_param: string) => {
   return finalResult;
 };
 
-// 1-2. email - sendEmail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 1-2. email - sendEmail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const emailSendEmail = async (
   user_id_param: string,
   code_param: string,
@@ -163,7 +163,7 @@ export const userLogin = async (
   return finalResult;
 };
 
-// 2-5. user - detail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 2-5. user - detail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const userDetail = async (user_id_param: string) => {
   const finalResult: any = await User.findOne({
     user_id: user_id_param,
@@ -172,7 +172,7 @@ export const userDetail = async (user_id_param: string) => {
   return finalResult;
 };
 
-// 2-6. user - update ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 2-6. user - update ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const userUpdate = async (user_id_param: string, OBJECT_param: any) => {
   const finalResult: any = await User.findOneAndUpdate(
     {
@@ -235,7 +235,7 @@ export const userDelete = async (user_id_param: string) => {
   return finalResult;
 };
 
-// 3-2. category - detail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 3-2. category - detail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const categoryDetail = async (user_id_param: string) => {
   const finalResult: any = await User.aggregate([
     {
@@ -257,7 +257,7 @@ export const categoryDetail = async (user_id_param: string) => {
   return finalResult[0];
 };
 
-// 3-4. category - update ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 3-4. category - update ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const categoryUpdate = async (
   user_id_param: string,
   OBJECT_param: any,

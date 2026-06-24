@@ -349,7 +349,7 @@ export const Icons = memo((props: any) => {
   };
   const iconAriaLabel: string = ariaLabels[props.name] ?? String(props.name);
 
-  // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-->
+  // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――>
   return (
     <IconButton
       aria-label={iconAriaLabel}

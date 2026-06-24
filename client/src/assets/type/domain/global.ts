@@ -323,7 +323,7 @@ export interface SessionTitleType {
   [key: string]: unknown;
 }
 
-// 공용 Title 타입 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 공용 Title 타입 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export type AppTitleType = LocalTitleType & SessionTitleType;
 
 // useCommonValue 반환 타입 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――

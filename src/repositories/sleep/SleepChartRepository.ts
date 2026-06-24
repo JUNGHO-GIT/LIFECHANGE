@@ -86,7 +86,7 @@ export const barRecord = async (
   return finalResult;
 };
 
-// 2-1. chart (pie - all) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 2-1. chart (pie - all) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const pieAll = async (
   user_id_param: string,
   dateStart_param: string,
@@ -162,7 +162,7 @@ export const lineAll = async (
   return finalResult;
 };
 
-// 4-1. chart (avg - all) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 4-1. chart (avg - all) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const avgAll = async (
   user_id_param: string,
   dateStart_param: string,

@@ -73,7 +73,7 @@ export const Img = memo((
   }: ImgProps,
 ) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { GCLOUD_URL } = useCommonValue();
 
   // 2-1. useRef ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -103,7 +103,7 @@ export const Img = memo((
     hover, shadow, radius, border, min, max, props.className,
   ]);
 
-  // 4. callbacks ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 4. callbacks ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const handleImageError = useCallback(() => {
     const current: string = currentImgSrcRef.current;
     const cached: ImageCacheEntry | undefined = imageCache.get(current);
@@ -211,7 +211,7 @@ export const Img = memo((
     );
   }, [min, max]);
 
-  // 8. imageNode ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 8. imageNode ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const imageNode = useMemo(() => (
     <img
       {...restProps}
@@ -238,7 +238,7 @@ export const Img = memo((
     restProps, fileName, imgSrc, loading, imageClass, handleImageError, userOnLoad, userOnError,
   ]);
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {isLoading ? skeletonNode : imageNode}

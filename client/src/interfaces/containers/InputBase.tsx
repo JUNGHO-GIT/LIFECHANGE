@@ -64,7 +64,7 @@ export const InputBase = memo((props: any) => {
     }, debounceMs);
   }, [ props?.onChange, props?.debounceMs ]);
 
-  // 5. memo ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 5. memo ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const sxMemo = useMemo(() => ({
     ...props?.sx,
     "& .MuiSelect-icon": {
@@ -104,7 +104,7 @@ export const InputBase = memo((props: any) => {
     },
   }), [ props?.sx, props?.disabled, props?.readOnly, props?.onClick ]);
 
-  // 5. memo ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 5. memo ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const slotPropsMemo = useMemo(() => ({
     ...props?.slotProps,
     input: {

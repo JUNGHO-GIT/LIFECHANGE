@@ -16,7 +16,7 @@ export const useLanguageInitialize = () => {
   const { localLang } = useCommonValue();
   const { setLang } = useStoreLanguage();
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     localLang === `ko` ? setLang(`ko`) : setLang(`en`);
   }, [localLang]);

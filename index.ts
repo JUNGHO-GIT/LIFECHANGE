@@ -80,7 +80,7 @@ const preFix: string = process.env.HTTP_PREFIX ?? ``;
   }
 })();
 
-// 서버 포트 설정 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 서버 포트 설정 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 const httpPort: number = Number(process.env.HTTP_PORT);
 const httpsPort: number = Number(process.env.HTTPS_PORT);
 const MAX_PORT_RETRY: number = 10;

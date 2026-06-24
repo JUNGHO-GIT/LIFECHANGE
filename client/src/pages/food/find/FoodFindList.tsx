@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-import { useState, useEffect, memo } from "@exportReacts";
+import { useState, useEffect, useDeferredValue, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate } from "@exportHooks";
 import { useStorageLocal, useStorageSession } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
@@ -39,7 +39,7 @@ export const FoodFindList = memo(() => {
     }
   );
 
-  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ isExpanded, setIsExpanded ] = useStorageLocal(
     `isExpanded`, PATH, ``, [
       {
@@ -68,6 +68,10 @@ export const FoodFindList = memo(() => {
     dateEnd: location_dateEnd ?? getDayFmt(),
   });
 
+  // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 항목 렌더를 비긴급으로 분리: 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
+  const deferredObject = useDeferredValue(OBJECT);
+
   // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   // - 페이지 번호 변경 시 flowFind 호출
   useEffect(() => {
@@ -77,7 +81,7 @@ export const FoodFindList = memo(() => {
     void flowFind();
   }, [PAGING.page]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   // - 선택된 항목 키를 세션 스토리지에서 동기화
   useEffect(() => {
     const sectionArray: any[] = sessionFoodSection ?? [];
@@ -169,7 +173,7 @@ export const FoodFindList = memo(() => {
   const findNode = () => {
     const listSection = () => (
       <Grid container={true} spacing={0}>
-        {OBJECT?.map((item, i) => (
+        {deferredObject?.map((item, i) => (
           <Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px`} key={`list-${i}`}>
             <Grid size={12} className={`p-2px`}>
               <Accordion className={`border-0 shadow-0 radius-2`} expanded={isExpanded?.[i]?.expanded}>

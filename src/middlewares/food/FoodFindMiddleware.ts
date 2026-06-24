@@ -8,7 +8,7 @@
 // 1. list ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const list = async (object: any) => {
 
-  // 0. calcNonValueColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 0. calcNonValueColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const calcNonValueColor = (param: string) => {
 
     let finalResult: string = ``;
@@ -26,7 +26,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   object?.result?.forEach((item: any) => {
     item.food_record_name_color = calcNonValueColor(
       item?.food_record_name

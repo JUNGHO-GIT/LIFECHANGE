@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-import { useState, useEffect, memo } from "@exportReacts";
+import { useState, useEffect, useDeferredValue, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { FoodRecord, FoodRecordType } from "@exportSchemas";
@@ -28,7 +28,7 @@ export const FoodRecordList = memo(() => {
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ DATE, setDATE ] = useStorageLocal(
     `date`, PATH, ``, {
       dateType: location_dateType ?? ``,
@@ -72,7 +72,11 @@ export const FoodRecordList = memo(() => {
     newSectionCnt: 0,
   });
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 항목 렌더를 비긴급으로 분리: 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
+  const deferredObject = useDeferredValue(OBJECT);
+
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     axios.get(`${URL_OBJECT}/record/exist`, {
       params: {
@@ -96,7 +100,7 @@ export const FoodRecordList = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     setLOADING(true);
     axios.get(`${URL_OBJECT}/record/list`, {
@@ -142,7 +146,7 @@ export const FoodRecordList = memo(() => {
     URL_OBJECT, sessionId, PAGING?.sort, PAGING.page, PAGING?.part, DATE?.dateStart, DATE?.dateEnd,
   ]);
 
-  // 7. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 7. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const listNode = () => {
     // 7-0. summary
     /* const summarySection = () => (
@@ -182,7 +186,7 @@ export const FoodRecordList = memo(() => {
     // 7-1. list
     const listSection = () => (
       <Grid container={true} spacing={0}>
-        {OBJECT?.map((item, i) => (
+        {deferredObject?.map((item, i) => (
           <Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px`} key={`list-${i}`}>
             <Grid size={12} className={`p-2px`}>
               <Accordion className={`border-0 shadow-0 radius-2`} expanded={isExpanded?.[i]?.expanded}>

@@ -10,17 +10,15 @@ import { Input, PopUp } from "@exportContainers";
 import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
 import { Checkbox, Menu, MenuItem, Tab, Tabs } from "@exportMuis";
 import { memo, useEffect, useMemo, useState } from "@exportReacts";
-import { getSession, insertComma, sync } from "@exportScripts";
+import { insertComma } from "@exportScripts";
 import { useStoreLanguage } from "@exportStores";
 
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const TopNav = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
-  const {
-    firstStr, secondStr, localCurrency, localUnit, navigate,
-    sessionPercent, sessionScale, sessionNutrition, sessionProperty,
-  } = useCommonValue();
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const { firstStr, secondStr, localCurrency, localUnit, navigate } = useCommonValue();
+  const { sessionPercent, sessionScale, sessionNutrition, sessionProperty } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
 
@@ -42,68 +40,16 @@ export const TopNav = memo(() => {
   const [ includingExclusions, setIncludingExclusions ] = useState<boolean>(false);
   const [ nutritionType, setNutritionType ] = useState(`avg`);
 
-  // 2-2. useState (임의기간 조회 - 로컬 override 표시갱신용) ――――――――――――――――――――――――――――――――――――――――――――――
-  // sessionXxx 는 location.pathname 의존 useMemo 라 sync 후 자동 갱신되지 않으므로 로컬 state 로 덮어씀
-  const [ percentData, setPercentData ] = useState<any>(null);
-  const [ scaleData, setScaleData ] = useState<any>(null);
-  const [ nutritionData, setNutritionData ] = useState<any>(null);
-  const [ propertyData, setPropertyData ] = useState<any>(null);
-
-  // 기간 선택 state (초기값: 세션 기간 → 없으면 월 시작/종료) ―――――――――――――――――――――――――――――――――――――――――――
-  const [ percentRange, setPercentRange ] = useState({
-    dateStart: getMonthStartFmt(),
-    dateEnd: getMonthEndFmt(),
-  });
-  const [ scaleRange, setScaleRange ] = useState({
-    dateStart: sessionScale?.dateStart || getMonthStartFmt(),
-    dateEnd: sessionScale?.dateEnd || getMonthEndFmt(),
-  });
-  const [ nutritionRange, setNutritionRange ] = useState({
-    dateStart: sessionNutrition?.dateStart || getMonthStartFmt(),
-    dateEnd: sessionNutrition?.dateEnd || getMonthEndFmt(),
-  });
-  const [ propertyRange, setPropertyRange ] = useState({
-    dateStart: sessionProperty?.dateStart || getMonthStartFmt(),
-    dateEnd: sessionProperty?.dateEnd || getMonthEndFmt(),
-  });
-
-  // 기간 확정 → 해당 도메인 재조회 → 응답을 로컬 override state 에 반영 ―――――――――――――――――――――――――――――――――――
-  const handleSearchDomain = async (
-    domain: string,
-    range: { dateStart: string; dateEnd: string },
-  ) => {
-    const result = await sync(domain, {
-      dateStart: range.dateStart,
-      dateEnd: range.dateEnd,
-      monthStart: range.dateStart,
-      monthEnd: range.dateEnd,
-    });
-    // sync 단건 호출은 갱신 데이터를 반환. 미반환 구조면 세션 재조회로 보강 ――――――――――――――――――――――――――――――――――
-    const nextData = result ?? getSession(`setting`, `sync`, domain);
-    if (domain === `percent`) {
-      setPercentData(nextData);
-    }
-    else if (domain === `scale`) {
-      setScaleData(nextData);
-    }
-    else if (domain === `nutrition`) {
-      setNutritionData(nextData);
-    }
-    else if (domain === `property`) {
-      setPropertyData(nextData);
-    }
-  };
-
   // 2-2. variable ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  const scale = scaleData ?? (sessionScale || {
+  const scale = sessionScale || {
     initScale: `0`,
     minScale: `0`,
     maxScale: `0`,
     curScale: `0`,
     dateStart: ``,
     dateEnd: ``,
-  });
-  const nutrition = nutritionData ?? (sessionNutrition || {
+  };
+  const nutrition = sessionNutrition || {
     initAvgKcalIntake: `0`,
     totalKcalIntake: `0`,
     totalCarbIntake: `0`,
@@ -115,8 +61,8 @@ export const TopNav = memo(() => {
     curAvgFatIntake: `0`,
     dateStart: ``,
     dateEnd: ``,
-  });
-  const property = propertyData ?? (sessionProperty || {
+  };
+  const property = sessionProperty || {
     initProperty: `0`,
     totalIncomeAll: `0`,
     totalIncomeExclusion: `0`,
@@ -126,19 +72,18 @@ export const TopNav = memo(() => {
     curPropertyExclusion: `0`,
     dateStart: ``,
     dateEnd: ``,
-  });
+  };
 
   // 2-3. useMemo ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const smileScore = useMemo(() => {
-    const percent = percentData ?? sessionPercent;
     return {
-      total: percent?.total?.average?.score ?? `0`,
-      exercise: percent?.exercise?.average?.score ?? `0`,
-      food: percent?.food?.average?.score ?? `0`,
-      money: percent?.money?.average?.score ?? `0`,
-      sleep: percent?.sleep?.average?.score ?? `0`,
+      total: sessionPercent?.total?.average?.score ?? `0`,
+      exercise: sessionPercent?.exercise?.average?.score ?? `0`,
+      food: sessionPercent?.food?.average?.score ?? `0`,
+      money: sessionPercent?.money?.average?.score ?? `0`,
+      sleep: sessionPercent?.sleep?.average?.score ?? `0`,
     };
-  }, [ sessionPercent, percentData ]);
+  }, [sessionPercent]);
 
   const smileImage = useMemo(() => {
     const getImage = (score: string) => {
@@ -247,7 +192,7 @@ export const TopNav = memo(() => {
     entry && setSelectedTab((prev) => ({ ...prev, [entry.key]: entry.value }));
   }, [ firstStr, secondStr ]);
 
-  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const handleClickTobNav = (value: string) => {
 
     // 1. today - goal
@@ -322,38 +267,7 @@ export const TopNav = memo(() => {
                 </Div>
                 <Br m={10} />
                 <Div className={`fs-0-8rem fw-500 dark`}>
-                  {`[${percentRange.dateStart} - ${percentRange.dateEnd}]`}
-                </Div>
-              </Grid>
-            </Grid>
-            <Br m={10} />
-            <Grid container={true} spacing={0} columns={20}>
-              <Grid size={9} className={`d-center`}>
-                <Input
-                  type={`date`}
-                  value={percentRange.dateStart}
-                  onChange={(e: any) => {
-                    setPercentRange((prev) => ({ ...prev, dateStart: e.target.value }));
-                  }}
-                />
-              </Grid>
-              <Grid size={9} className={`d-center`}>
-                <Input
-                  type={`date`}
-                  value={percentRange.dateEnd}
-                  onChange={(e: any) => {
-                    setPercentRange((prev) => ({ ...prev, dateEnd: e.target.value }));
-                  }}
-                />
-              </Grid>
-              <Grid size={2} className={`d-center`}>
-                <Div
-                  className={`fs-0-7rem fw-600 dark hover pointer`}
-                  onClick={() => {
-                    void handleSearchDomain(`percent`, percentRange);
-                  }}
-                >
-                  {translate(`search`)}
+                  {`[${getMonthStartFmt()} - ${getMonthEndFmt()}]`}
                 </Div>
               </Grid>
             </Grid>
@@ -518,37 +432,6 @@ export const TopNav = memo(() => {
                 </Div>
               </Grid>
             </Grid>
-            <Br m={10} />
-            <Grid container={true} spacing={0} columns={20}>
-              <Grid size={9} className={`d-center`}>
-                <Input
-                  type={`date`}
-                  value={scaleRange.dateStart}
-                  onChange={(e: any) => {
-                    setScaleRange((prev) => ({ ...prev, dateStart: e.target.value }));
-                  }}
-                />
-              </Grid>
-              <Grid size={9} className={`d-center`}>
-                <Input
-                  type={`date`}
-                  value={scaleRange.dateEnd}
-                  onChange={(e: any) => {
-                    setScaleRange((prev) => ({ ...prev, dateEnd: e.target.value }));
-                  }}
-                />
-              </Grid>
-              <Grid size={2} className={`d-center`}>
-                <Div
-                  className={`fs-0-7rem fw-600 dark hover pointer`}
-                  onClick={() => {
-                    void handleSearchDomain(`scale`, scaleRange);
-                  }}
-                >
-                  {translate(`search`)}
-                </Div>
-              </Grid>
-            </Grid>
             <Hr m={30} />
             <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={`d-row-center`}>
@@ -685,37 +568,6 @@ export const TopNav = memo(() => {
                 <Div className={`fs-0-8rem fw-500 dark`}>
                   {`[${nutrition?.dateStart} - ${nutrition?.dateEnd}]`}
                 </Div>
-                <Br m={10} />
-                <Grid container={true} spacing={0} columns={20} className={`w-100p`}>
-                  <Grid size={9} className={`d-center`}>
-                    <Input
-                      type={`date`}
-                      value={nutritionRange.dateStart}
-                      onChange={(e: any) => {
-                        setNutritionRange((prev) => ({ ...prev, dateStart: e.target.value }));
-                      }}
-                    />
-                  </Grid>
-                  <Grid size={9} className={`d-center`}>
-                    <Input
-                      type={`date`}
-                      value={nutritionRange.dateEnd}
-                      onChange={(e: any) => {
-                        setNutritionRange((prev) => ({ ...prev, dateEnd: e.target.value }));
-                      }}
-                    />
-                  </Grid>
-                  <Grid size={2} className={`d-center`}>
-                    <Div
-                      className={`fs-0-7rem fw-600 dark hover pointer`}
-                      onClick={() => {
-                        void handleSearchDomain(`nutrition`, nutritionRange);
-                      }}
-                    >
-                      {translate(`search`)}
-                    </Div>
-                  </Grid>
-                </Grid>
                 <Br m={10} />
                 <Div className={`d-row-center`}>
                   <Div className={`fs-0-7rem fw-500 dark`}>
@@ -941,37 +793,6 @@ export const TopNav = memo(() => {
                 <Div className={`fs-0-8rem fw-500 dark`}>
                   {`[${property?.dateStart} - ${property?.dateEnd}]`}
                 </Div>
-                <Br m={10} />
-                <Grid container={true} spacing={0} columns={20} className={`w-100p`}>
-                  <Grid size={9} className={`d-center`}>
-                    <Input
-                      type={`date`}
-                      value={propertyRange.dateStart}
-                      onChange={(e: any) => {
-                        setPropertyRange((prev) => ({ ...prev, dateStart: e.target.value }));
-                      }}
-                    />
-                  </Grid>
-                  <Grid size={9} className={`d-center`}>
-                    <Input
-                      type={`date`}
-                      value={propertyRange.dateEnd}
-                      onChange={(e: any) => {
-                        setPropertyRange((prev) => ({ ...prev, dateEnd: e.target.value }));
-                      }}
-                    />
-                  </Grid>
-                  <Grid size={2} className={`d-center`}>
-                    <Div
-                      className={`fs-0-7rem fw-600 dark hover pointer`}
-                      onClick={() => {
-                        void handleSearchDomain(`property`, propertyRange);
-                      }}
-                    >
-                      {translate(`search`)}
-                    </Div>
-                  </Grid>
-                </Grid>
                 <Br m={10} />
                 <Div className={`d-row-center`}>
                   <Div className={`fs-0-7rem fw-500 dark`}>
@@ -1216,7 +1037,7 @@ export const TopNav = memo(() => {
     );
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {topNavNode()}

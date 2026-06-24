@@ -22,7 +22,7 @@ export const FoodChart = memo(() => {
   const { PATH } = useCommonValue();
   const { translate } = useStoreLanguage();
 
-  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ TYPE_PIE, setTYPE_PIE ] = useStorageLocal(
     `type`, `pie`, PATH, {
       section: `week`,
@@ -67,7 +67,7 @@ export const FoodChart = memo(() => {
 		})();
   }, [ curView, TYPE_PIE, TYPE_LINE, TYPE_AVG ]);
 
-  // 7. chart ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 7. chart ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const chartNode = () => {
     const headSection = () => (
       <Grid container={true} spacing={2} className={`d-row-between`}>

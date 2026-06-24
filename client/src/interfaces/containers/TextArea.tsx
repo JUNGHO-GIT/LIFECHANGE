@@ -53,7 +53,7 @@ export const TextArea = memo((props: any) => {
     }, debounceMs);
   }, [ props?.onChange, props?.debounceMs ]);
 
-  // 5. memo ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 5. memo ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const slotPropsMemo = useMemo(() => ({
     ...props?.slotProps,
     input: {

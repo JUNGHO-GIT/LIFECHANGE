@@ -29,7 +29,7 @@ export const Dialog = memo((
   }: DialogProps,
 ) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const {
     PATH, navigate, toDetail, localIsoCode,
     isGoalList, isFindList, isFavoriteList,
@@ -72,7 +72,7 @@ export const Dialog = memo((
         >
           <SpeedDialAction
             key={translate(`save`)}
-            tooltipTitle={translate(`save`)}
+            tooltiptitle={translate(`save`)}
             className={open ? `` : `d-none`}
             icon={(
               <Icons
@@ -93,7 +93,7 @@ export const Dialog = memo((
           />
           <SpeedDialAction
             key={translate(`openAll`)}
-            tooltipTitle={translate(`openAll`)}
+            tooltiptitle={translate(`openAll`)}
             className={open ? `` : `d-none`}
             icon={(
               <Icons
@@ -113,7 +113,7 @@ export const Dialog = memo((
           />
           <SpeedDialAction
             key={translate(`closeAll`)}
-            tooltipTitle={translate(`closeAll`)}
+            tooltiptitle={translate(`closeAll`)}
             className={open ? `` : `d-none`}
             icon={(
               <Icons
@@ -163,7 +163,7 @@ export const Dialog = memo((
         >
           <SpeedDialAction
             key={translate(`save`)}
-            tooltipTitle={translate(`save`)}
+            tooltiptitle={translate(`save`)}
             className={open ? `` : `d-none`}
             icon={(
               <Icons
@@ -184,7 +184,7 @@ export const Dialog = memo((
           />
           <SpeedDialAction
             key={translate(`openAll`)}
-            tooltipTitle={translate(`openAll`)}
+            tooltiptitle={translate(`openAll`)}
             className={open ? `` : `d-none`}
             icon={(
               <Icons
@@ -204,7 +204,7 @@ export const Dialog = memo((
           />
           <SpeedDialAction
             key={translate(`closeAll`)}
-            tooltipTitle={translate(`closeAll`)}
+            tooltiptitle={translate(`closeAll`)}
             className={open ? `` : `d-none`}
             icon={(
               <Icons
@@ -254,7 +254,7 @@ export const Dialog = memo((
           {PATH.includes(`/favorite/list`) ? (
 						<SpeedDialAction
 						  key={translate(`search`)}
-						  tooltipTitle={translate(`search`)}
+						  tooltiptitle={translate(`search`)}
 						  className={open ? `` : `d-none`}
 						  icon={(
 						    <Icons
@@ -270,7 +270,7 @@ export const Dialog = memo((
 					) : (
 						<SpeedDialAction
 						  key={translate(`favorite`)}
-						  tooltipTitle={translate(`favorite`)}
+						  tooltiptitle={translate(`favorite`)}
 						  className={open ? `` : `d-none`}
 						  icon={(
 						    <Icons
@@ -287,7 +287,7 @@ export const Dialog = memo((
 					)}
           <SpeedDialAction
             key={translate(`save`)}
-            tooltipTitle={translate(`save`)}
+            tooltiptitle={translate(`save`)}
             className={open ? `` : `d-none`}
             icon={(
               <Icons
@@ -308,7 +308,7 @@ export const Dialog = memo((
           />
           <SpeedDialAction
             key={translate(`openAll`)}
-            tooltipTitle={translate(`openAll`)}
+            tooltiptitle={translate(`openAll`)}
             className={open ? `` : `d-none`}
             icon={(
               <Icons
@@ -328,7 +328,7 @@ export const Dialog = memo((
           />
           <SpeedDialAction
             key={translate(`closeAll`)}
-            tooltipTitle={translate(`closeAll`)}
+            tooltiptitle={translate(`closeAll`)}
             className={open ? `` : `d-none`}
             icon={(
               <Icons
@@ -348,7 +348,7 @@ export const Dialog = memo((
           />
           <SpeedDialAction
             key={translate(`locale`)}
-            tooltipTitle={translate(`locale`)}
+            tooltiptitle={translate(`locale`)}
             className={open ? `` : `d-none`}
             icon={(
               <Div className={`fw-800 fs-0-8rem`}>
@@ -388,7 +388,7 @@ export const Dialog = memo((
         >
           <SpeedDialAction
             key={translate(`itemLock`)}
-            tooltipTitle={translate(`itemLock`)}
+            tooltiptitle={translate(`itemLock`)}
             className={open ? `` : `d-none`}
             icon={
 							LOCKED === `locked` ? (
@@ -418,7 +418,7 @@ export const Dialog = memo((
           />
           <SpeedDialAction
             key={translate(`closeAll`)}
-            tooltipTitle={translate(`closeAll`)}
+            tooltiptitle={translate(`closeAll`)}
             className={open ? `` : `d-none`}
             icon={(
               <Icons
@@ -480,7 +480,7 @@ export const Dialog = memo((
         >
           <SpeedDialAction
             key={translate(`itemLock`)}
-            tooltipTitle={translate(`itemLock`)}
+            tooltiptitle={translate(`itemLock`)}
             className={open ? `` : `d-none`}
             icon={
 							LOCKED === `locked` ? (
@@ -510,7 +510,7 @@ export const Dialog = memo((
           />
           <SpeedDialAction
             key={translate(`closeAll`)}
-            tooltipTitle={translate(`closeAll`)}
+            tooltiptitle={translate(`closeAll`)}
             className={open ? `` : `d-none`}
             icon={(
               <Icons
@@ -566,7 +566,7 @@ export const Dialog = memo((
     );
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {dialogNode()}

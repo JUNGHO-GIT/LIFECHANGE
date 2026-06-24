@@ -27,7 +27,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 0. calcNonValueColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 0. calcNonValueColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const calcNonValueColor = (param: string) => {
 
     let finalResult: string = ``;
@@ -62,7 +62,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 4. calcDiffColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 4. calcDiffColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const calcDiffColor = (goalParam: string, recordParam: string, extra: string) => {
 
     let goal: number = Number.parseFloat(goalParam);
@@ -150,7 +150,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   object?.result?.forEach((item: any) => {
     item.money_record_total_income = calcOverTenMillion(
       item?.money_record_total_income

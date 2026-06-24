@@ -18,7 +18,7 @@ export const sync = async (
     monthEnd?: string;
   },
 ) => {
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const URL: string = import.meta.env.VITE_APP_SERVER_URL ?? ``;
   const SUBFIX: string = import.meta.env.VITE_APP_USER ?? ``;
   const URL_OBJECT: string = URL + SUBFIX;

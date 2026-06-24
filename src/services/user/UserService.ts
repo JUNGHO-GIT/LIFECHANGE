@@ -12,7 +12,7 @@ import * as repository from "@repositories/user/UserRepository";
 import { sendEmail } from "@assets/scripts/email";
 loadEnv();
 
-// 1-1. sendEmailCode ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 1-1. sendEmailCode ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const sendEmailCode = async (
   user_id_param: string,
   type_param: string,
@@ -215,7 +215,7 @@ export const userResetPw = async (
   };
 };
 
-// 2-3. userLogin ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 2-3. userLogin ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const userLogin = async (
   user_id_param: string,
   user_pw_param: string,

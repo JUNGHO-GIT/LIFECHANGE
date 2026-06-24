@@ -92,7 +92,7 @@ const schema = new mongoose.Schema(
   },
 );
 
-// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 schema.pre<SleepRecordType>(`save`, async function () {
   if (this.isNew) {
     this.sleep_record_number = await incrementSeq(

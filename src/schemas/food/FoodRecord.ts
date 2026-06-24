@@ -161,7 +161,7 @@ const schema = new mongoose.Schema(
 // 2. index ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 schema.index({ user_id: 1, food_record_dateStart: 1, food_record_dateEnd: 1 });
 
-// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 schema.pre<FoodRecordType>(`save`, async function () {
   if (this.isNew) {
     this.food_record_number = await incrementSeq(

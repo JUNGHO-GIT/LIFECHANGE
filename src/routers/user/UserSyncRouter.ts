@@ -128,7 +128,7 @@ router.get(`/scale`, async (req: Request, res: Response) => {
   }
 });
 
-// 3-1. nutrition (영양정보 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 3-1. nutrition (영양정보 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 router.get(`/nutrition`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.nutrition(

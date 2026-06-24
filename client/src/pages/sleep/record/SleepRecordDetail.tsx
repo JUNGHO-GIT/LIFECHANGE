@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-import { React, useState, useEffect, useRef, useCallback, memo } from "@exportReacts";
+import { React, useState, useEffect, useRef, useCallback, useDeferredValue, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useTime, useValidateSleep } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { SleepRecord, SleepRecordType } from "@exportSchemas";
@@ -18,7 +18,7 @@ import { Bg, Paper, Grid, Br } from "@exportComponents";
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const SleepRecordDetail = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const {
     URL_OBJECT, PATH, sessionId, navigate, toList,
     location_dateStart, location_dateEnd,
@@ -62,6 +62,10 @@ export const SleepRecordDetail = memo(() => {
     dateEnd: location_dateEnd ?? getDayFmt(),
   });
 
+  // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 항목 렌더를 비긴급으로 분리: 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
+  const deferredObject = useDeferredValue(OBJECT);
+
   // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const objectRef: React.RefObject<
     SleepRecordType
@@ -77,7 +81,7 @@ export const SleepRecordDetail = memo(() => {
     dateEnd: string;
   }> = useRef(DATE);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     COUNT !== countRef.current && (countRef.current = COUNT);
     OBJECT !== objectRef.current && (objectRef.current = OBJECT);
@@ -334,7 +338,7 @@ export const SleepRecordDetail = memo(() => {
     }));
   }, []);
 
-  // 7. save ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 7. save ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
@@ -360,7 +364,7 @@ export const SleepRecordDetail = memo(() => {
     // 7-3. detail
     const detailSection = () => (
       <>
-        {OBJECT.sleep_section?.map((item, i) => (
+        {deferredObject.sleep_section?.map((item, i) => (
           <Grid
             container={true}
             spacing={2}
@@ -445,7 +449,7 @@ export const SleepRecordDetail = memo(() => {
     );
   };
 
-  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -457,7 +461,7 @@ export const SleepRecordDetail = memo(() => {
     />
   );
 
-  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const footerNode = () => (
     <Footer
       state={{
@@ -472,7 +476,7 @@ export const SleepRecordDetail = memo(() => {
     />
   );
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {detailNode()}

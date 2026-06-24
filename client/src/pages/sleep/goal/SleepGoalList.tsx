@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-import { useState, useEffect, memo } from "@exportReacts";
+import { useState, useEffect, useDeferredValue, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { SleepGoal, SleepGoalType } from "@exportSchemas";
@@ -17,7 +17,7 @@ import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
 // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
 export const SleepGoalList = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const {
     URL_OBJECT, PATH, sessionId, toDetail,
     navigate, location_dateType, location_dateStart, location_dateEnd,
@@ -69,6 +69,10 @@ export const SleepGoalList = memo(() => {
     sectionCnt: 0,
     newSectionCnt: 0,
   });
+
+  // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 항목 렌더를 비긴급으로 분리: 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
+  const deferredObject = useDeferredValue(OBJECT);
 
   // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
   useEffect(() => {
@@ -146,7 +150,7 @@ export const SleepGoalList = memo(() => {
     // 7-1. list
     const listSection = () => (
       <Grid container={true} spacing={0}>
-        {OBJECT?.map((item, i) => (
+        {deferredObject?.map((item, i) => (
           <Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px p-2px`} key={`list-${i}`}>
             <Accordion className={`border-0 shadow-0 radius-2`} expanded={isExpanded?.[i]?.expanded}>
               <AccordionSummary
@@ -434,7 +438,7 @@ export const SleepGoalList = memo(() => {
     );
   };
 
-  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -443,7 +447,7 @@ export const SleepGoalList = memo(() => {
     />
   );
 
-  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const footerNode = () => (
     <Footer
       state={{
@@ -455,7 +459,7 @@ export const SleepGoalList = memo(() => {
     />
   );
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {listNode()}

@@ -32,7 +32,7 @@ export const Delete = memo((
     handleDelete(index, section);
   }, [ disabled, handleDelete, index, section ]);
 
-  // 2. deleteNode ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 2. deleteNode ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const deleteNode = useMemo(() => (
     <Div className={`mt-n10px mr-n10px`}>
       <Icons

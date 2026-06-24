@@ -10,7 +10,7 @@ import { type Router, Request, Response } from "express";
 import * as service from "@services/user/UserService";
 export const router: Router = express.Router();
 
-// 1-1. sendEmail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 1-1. sendEmail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 router.post(`/email/send`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.sendEmailCode(
@@ -208,7 +208,7 @@ router.post(`/resetPw`, async (req: Request, res: Response) => {
   }
 });
 
-// 2-3. userLogin ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 2-3. userLogin ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 router.post(`/login`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.userLogin(

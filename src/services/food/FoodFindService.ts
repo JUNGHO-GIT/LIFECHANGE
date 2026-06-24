@@ -282,7 +282,7 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
     return secondResult;
   };
 
-  // 영양정보 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 영양정보 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const getServ = (item: any) => {
     // L-70: 진입부에서 1회 계산한 settings 재사용 (요청마다 N회 재호출 제거)
     const { servUnit, servArray, servRegex, nutritionRegex } = settings;

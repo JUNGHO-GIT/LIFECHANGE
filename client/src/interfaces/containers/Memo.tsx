@@ -52,7 +52,7 @@ export const Memo = memo((
     OBJECT?.[targetSection]?.[i]?.[extra] ?? ``
   ), [ OBJECT, targetSection, i, extra ]);
 
-  // 4. memoNode ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+  // 4. memoNode ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const memoNode = useMemo(() => (
     <PopUp
       type={`innerCenter`}

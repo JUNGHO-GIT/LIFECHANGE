@@ -134,7 +134,7 @@ const schema = new mongoose.Schema(
   },
 );
 
-// 2. index ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 2. index ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 schema.index({
   user_id: 1,
   money_record_dateStart: 1,
@@ -146,7 +146,7 @@ schema.index({
   money_record_dateStart: 1,
 });
 
-// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――--
+// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 schema.pre<MoneyRecordType>(`save`, async function () {
   if (this.isNew) {
     this.money_record_number = await incrementSeq(
