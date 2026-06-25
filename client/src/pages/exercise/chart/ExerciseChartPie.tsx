@@ -12,7 +12,7 @@ import { ExercisePie, ExercisePieType } from "@exportSchemas";
 import { axios } from "@exportLibs";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "@exportLibs";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface ExerciseChartPieProps {
   TYPE?: any;
   setTYPE?: any;
@@ -27,7 +27,7 @@ declare interface PieProps {
   index?: number;
 }
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -70,7 +70,7 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
   const [ OBJECT_PART_YEAR, setOBJECT_PART_YEAR ] = useState<[ExercisePieType]>([ExercisePie]);
   const [ OBJECT_TITLE_YEAR, setOBJECT_TITLE_YEAR ] = useState<[ExercisePieType]>([ExercisePie]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     (async () => {
       setLOADING(true);
@@ -145,7 +145,7 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
     })();
   }, [ URL_OBJECT, DATE, sessionId ]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (props?.TYPE !== undefined) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -155,7 +155,7 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
     }
   }, [props?.TYPE]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (props?.setTYPE) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -279,7 +279,7 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
     }
 
     return (
-      <ResponsiveContainer width={`100%`} height={500}>
+      <ResponsiveContainer width={`100%`} height={380}>
         <PieChart margin={{ top: 60, right: 20, bottom: 10, left: 20 }}>
           <defs>
             <filter id={`textBackground`} x={0} y={0} width={1} height={1}>

@@ -13,16 +13,16 @@ import { axios } from "@exportLibs";
 import { formatY, formatDate } from "@exportScripts";
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@exportLibs";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface SleepChartLineProps {
   TYPE?: any;
   setTYPE?: any;
 }
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const SleepChartLine = memo((props: SleepChartLineProps) => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { URL_OBJECT, PATH, sessionId, chartColors, sleepChartArray } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
@@ -38,7 +38,7 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
     }
   );
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ TYPE_STATE, setTYPE_STATE ] = useState(() => {
     return props?.TYPE !== undefined ? props.TYPE : TYPE;
   });
@@ -54,7 +54,7 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
     yearEndFmt: getYearEndFmt(),
   });
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ OBJECT_WEEK, setOBJECT_WEEK ] = useState<[SleepLineType]>([SleepLine]);
   const [ OBJECT_MONTH, setOBJECT_MONTH ] = useState<[SleepLineType]>([SleepLine]);
 
@@ -138,7 +138,7 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
 
 		const { domain, ticks, formatterY } = formatY(object, sleepChartArray, `sleep`, `line`);
 		return (
-		  <ResponsiveContainer width={`100%`} height={500}>
+		  <ResponsiveContainer width={`100%`} height={380}>
 		    <LineChart
 		      data={object as any[]}
 		      margin={{ top: 60, right: 20, bottom: 10, left: 20 }}
@@ -278,7 +278,7 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
 		);
   };
 
-  // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {chartNode()}

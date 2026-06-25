@@ -25,7 +25,7 @@ export interface SleepAvgType {
   sleepTime?: string;
 }
 
-// Schema ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// Schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const SleepPie: SleepPieType = {
   name: `Empty`,
   value: 100,

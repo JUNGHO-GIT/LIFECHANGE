@@ -17,7 +17,7 @@ import { Div, Icons, Paper, Grid } from "@exportComponents";
 import { TableContainer, Table, TableFooter } from "@exportMuis";
 import { TableHead, TableBody, TableRow, TableCell } from "@exportMuis";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const UserCategory = memo(() => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -64,7 +64,7 @@ export const UserCategory = memo(() => {
     OBJECT !== objectRef.current && (objectRef.current = OBJECT);
   }, [OBJECT]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     setLOADING(true);
     axios.get(`${URL_OBJECT}/category/detail`, {

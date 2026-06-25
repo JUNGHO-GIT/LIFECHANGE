@@ -6,6 +6,7 @@
  */
 
 import * as repository from "@repositories/food/FoodRecordRepository";
+import * as goalRepository from "@repositories/food/FoodGoalRepository";
 
 // 0. exist ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const exist = async (
@@ -56,7 +57,7 @@ export const exist = async (
   };
 };
 
-// 1. list ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const list = async (
   user_id_param: string,
   DATE_param: any,
@@ -107,9 +108,26 @@ export const list = async (
       }
       return sortOrder === 1 ? dateDiff : -dateDiff;
     });
-    finalResult = findResult;
+
+    const findGoal: any[] = await goalRepository.listGoal(
+      user_id_param, dateType, dateStart, dateEnd, 1, page,
+    );
+    finalResult = findResult.map((record: any) => {
+      const goal: any = findGoal?.find((item: any) => (
+        record?.food_record_dateStart >= item?.food_goal_dateStart &&
+        record?.food_record_dateEnd <= item?.food_goal_dateEnd
+      ));
+
+      return {
+        ...record,
+        food_goal_kcal: goal?.food_goal_kcal ?? `0`,
+        food_goal_carb: goal?.food_goal_carb ?? `0`,
+        food_goal_protein: goal?.food_goal_protein ?? `0`,
+        food_goal_fat: goal?.food_goal_fat ?? `0`,
+      };
+    });
     statusResult = `success`;
-    totalCntResult = findResult.length;
+    totalCntResult = finalResult.length;
   }
 
   return {

@@ -12,7 +12,7 @@ import { SleepPie, SleepPieType } from "@exportSchemas";
 import { axios } from "@exportLibs";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface SleepChartPieProps {
   TYPE?: any;
   setTYPE?: any;
@@ -27,10 +27,10 @@ declare interface PieProps {
   index?: number;
 }
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const SleepChartPie = memo((props: SleepChartPieProps) => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { URL_OBJECT, PATH, chartColors, sessionId } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
@@ -46,7 +46,7 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
     }
   );
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ TYPE_STATE, setTYPE_STATE ] = useState(() => {
     return props?.TYPE !== undefined ? props.TYPE : TYPE;
   });
@@ -62,7 +62,7 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
     yearEndFmt: getYearEndFmt(),
   });
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ OBJECT_WEEK, setOBJECT_WEEK ] = useState<[SleepPieType]>([SleepPie]);
   const [ OBJECT_MONTH, setOBJECT_MONTH ] = useState<[SleepPieType]>([SleepPie]);
   const [ OBJECT_YEAR, setOBJECT_YEAR ] = useState<[SleepPieType]>([SleepPie]);
@@ -231,7 +231,7 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
     }
 
     return (
-      <ResponsiveContainer width={`100%`} height={500}>
+      <ResponsiveContainer width={`100%`} height={380}>
         <PieChart margin={{ top: 60, right: 20, bottom: 10, left: 20 }}>
           <defs>
             <filter id={`textBackground`} x={0} y={0} width={1} height={1}>
@@ -310,7 +310,7 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
     );
   };
 
-  // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {chartNode()}

@@ -15,7 +15,7 @@ import { SleepGoal } from "@schemas/sleep/SleepGoal";
 import { SleepRecord } from "@schemas/sleep/SleepRecord";
 import { User } from "@schemas/user/User";
 
-// 0. category (카테고리 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 0. category (카테고리 조회) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const listCategory = async (user_id_param: string) => {
   const finalResult: any = await User.aggregate([
     {
@@ -691,7 +691,7 @@ export const favorite = {
   },
 };
 
-// 4. property (자산 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 4. property (자산 조회) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const property = {
   // 4-1. 등록일 조회
   findRegDt: async (user_id_param: string) => {

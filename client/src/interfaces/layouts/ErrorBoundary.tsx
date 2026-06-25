@@ -9,7 +9,7 @@ import { Box, Button } from "@exportMuis";
 import { useStoreLanguage } from "@exportStores";
 import { Component, type ErrorInfo, type ReactNode } from "react";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface ErrorBoundaryProps {
   children: ReactNode;
 }
@@ -18,7 +18,7 @@ declare interface ErrorBoundaryState {
   hasError: boolean;
 }
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export class ErrorBoundary extends Component<
   ErrorBoundaryProps,
   ErrorBoundaryState
@@ -68,7 +68,7 @@ export class ErrorBoundary extends Component<
     );
   }
 
-  // 10. render ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 10. render ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   override render(): ReactNode {
     if (this.state.hasError) {
       return this.fallbackNode();

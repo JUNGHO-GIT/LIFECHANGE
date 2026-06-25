@@ -6,13 +6,15 @@
  */
 
 import { memo, useEffect } from "@exportReacts";
-import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
+import { useCommonDate } from "@hooks/common/useCommonDate";
+import { useCommonValue } from "@hooks/common/useCommonValue";
+import { useStorageLocal } from "@hooks/storage/useStorageLocal";
 import { getLocal } from "@exportScripts";
 import { useStoreLanguage } from "@exportStores";
 import { Img, Paper } from "@exportComponents";
 import { BottomNavigation, BottomNavigationAction } from "@exportMuis";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const BottomNav = memo(() => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -31,7 +33,7 @@ export const BottomNav = memo(() => {
     },
   );
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     setSelectedTab((prev: any) => {
       const updatedTabs: any = Object.keys(prev).reduce<any>((acc, key) => {

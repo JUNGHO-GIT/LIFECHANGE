@@ -5,13 +5,13 @@
  * @since 2025-12-26
  */
 
-import { React, memo, useState } from "@exportReacts";
+import { React, memo, startTransition, useState } from "@exportReacts";
 import { Div, Icons } from "@exportComponents";
 import { useCommonDate, useCommonValue } from "@exportHooks";
 import { Backdrop, SpeedDial, SpeedDialAction, SpeedDialIcon } from "@exportMuis";
 import { useStoreLanguage } from "@exportStores";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface DialogProps {
   COUNT?: any;
   setCOUNT?: any;
@@ -22,11 +22,9 @@ declare interface DialogProps {
   setIsExpanded?: any;
 }
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const Dialog = memo((
-  {
-    COUNT, setCOUNT, OBJECT, setOBJECT, LOCKED, setLOCKED, setIsExpanded,
-  }: DialogProps,
+  { COUNT, setCOUNT, OBJECT, setOBJECT, LOCKED, setLOCKED, setIsExpanded }: DialogProps
 ) => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -38,10 +36,29 @@ export const Dialog = memo((
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ open, setOpen ] = useState(false);
 
-  // 7. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const handleSetAllExpanded = (expanded: boolean) => {
+    const totalCnt: number = Number(COUNT?.totalCnt ?? 0);
+    if (!setIsExpanded || totalCnt <= 0) {
+      return;
+    }
+    startTransition(() => {
+      setIsExpanded(() => (
+        Array.from({ length: totalCnt }).map(() => ({
+          expanded: expanded,
+        }))
+      ));
+    });
+
+    requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+    });
+  };
+
+  // 7. dialog ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const dialogNode = () => {
     // 1. goal
     const listGoalSection = () => (
@@ -103,12 +120,7 @@ export const Dialog = memo((
               />
             )}
             onClick={() => {
-              setIsExpanded(() => (
-                Array.from({ length: COUNT?.totalCnt as number }).map((_: any) => ({
-                  expanded: true,
-                }))
-              ));
-              window.scrollTo(0, 0);
+              handleSetAllExpanded(true);
             }}
           />
           <SpeedDialAction
@@ -123,12 +135,7 @@ export const Dialog = memo((
               />
             )}
             onClick={() => {
-              setIsExpanded(() => (
-                Array.from({ length: COUNT?.totalCnt as number }).map((_: any) => ({
-                  expanded: false,
-                }))
-              ));
-              window.scrollTo(0, 0);
+              handleSetAllExpanded(false);
             }}
           />
         </SpeedDial>
@@ -194,12 +201,7 @@ export const Dialog = memo((
               />
             )}
             onClick={() => {
-              setIsExpanded(() => (
-                Array.from({ length: COUNT?.totalCnt as number }).map((_: any) => ({
-                  expanded: true,
-                }))
-              ));
-              window.scrollTo(0, 0);
+              handleSetAllExpanded(true);
             }}
           />
           <SpeedDialAction
@@ -214,12 +216,7 @@ export const Dialog = memo((
               />
             )}
             onClick={() => {
-              setIsExpanded(() => (
-                Array.from({ length: COUNT?.totalCnt as number }).map((_: any) => ({
-                  expanded: false,
-                }))
-              ));
-              window.scrollTo(0, 0);
+              handleSetAllExpanded(false);
             }}
           />
         </SpeedDial>
@@ -318,12 +315,7 @@ export const Dialog = memo((
               />
             )}
             onClick={() => {
-              setIsExpanded(() => (
-                Array.from({ length: COUNT?.totalCnt as number }).map((_: any) => ({
-                  expanded: true,
-                }))
-              ));
-              window.scrollTo(0, 0);
+              handleSetAllExpanded(true);
             }}
           />
           <SpeedDialAction
@@ -338,12 +330,7 @@ export const Dialog = memo((
               />
             )}
             onClick={() => {
-              setIsExpanded(() => (
-                Array.from({ length: COUNT?.totalCnt as number }).map((_: any) => ({
-                  expanded: false,
-                }))
-              ));
-              window.scrollTo(0, 0);
+              handleSetAllExpanded(false);
             }}
           />
           <SpeedDialAction

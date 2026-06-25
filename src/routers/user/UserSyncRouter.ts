@@ -11,7 +11,7 @@ import * as service from "@services/user/UserSyncService";
 import * as middleware from "@middlewares/user/UserSyncMiddleware";
 export const router: Router = express.Router();
 
-// 0. category (카테고리 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 0. category (카테고리 조회) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 router.get(`/category`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.category(
@@ -206,7 +206,7 @@ router.get(`/favorite`, async (req: Request, res: Response) => {
   }
 });
 
-// 4. property (자산 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 4. property (자산 조회) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 router.get(`/property`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.property(

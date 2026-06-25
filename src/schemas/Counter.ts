@@ -21,7 +21,7 @@ const schema = new mongoose.Schema({
 });
 const Counter = mongoose.model(`Counter`, schema, `Counter`);
 
-// 2. incrementSeq ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 2. incrementSeq ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const incrementSeq = async (sequenceName: string, modelName: string) => {
   // 기존 컬렉션 최댓값 조회 (*_number unique 인덱스로 IXSCAN, lean 으로 가볍게)
   const Model = mongoose.model(modelName);

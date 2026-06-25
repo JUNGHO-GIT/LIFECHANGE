@@ -17,7 +17,7 @@ import { PickerDay, PickerTime, Count, Delete, Select, Input } from "@exportCont
 import { Img, Bg, Paper, Grid, Br } from "@exportComponents";
 import { MenuItem } from "@exportMuis";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const ExerciseRecordDetail = memo(() => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -66,7 +66,8 @@ export const ExerciseRecordDetail = memo(() => {
   });
 
   // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  // 항목 렌더를 비긴급으로 분리: 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
+  // - 항목 렌더를 비긴급으로 분리
+  // - 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
   const deferredObject = useDeferredValue(OBJECT);
 
   // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -91,10 +92,10 @@ export const ExerciseRecordDetail = memo(() => {
     DATE !== dateRef.current && (dateRef.current = DATE);
   }, [ COUNT, OBJECT, DATE ]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useTime(OBJECT, setOBJECT, PATH, `record`);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
 
@@ -124,7 +125,7 @@ export const ExerciseRecordDetail = memo(() => {
     }
   }, [ EXIST, DATE?.dateEnd, OBJECT.exercise_record_dateEnd ]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     axios.get(`${URL_OBJECT}/record/exist`, {
       params: {
@@ -148,7 +149,7 @@ export const ExerciseRecordDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     setLOADING(true);
     if (LOCKED === `locked`) {
@@ -198,7 +199,7 @@ export const ExerciseRecordDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     const totals = OBJECT?.exercise_section?.reduce((acc: any, cur: any) => {
       return {
@@ -227,7 +228,7 @@ export const ExerciseRecordDetail = memo(() => {
 
   }, [OBJECT?.exercise_section]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     const defaultSection = {
       exercise_record_part: exerciseArray[1]?.exercise_record_part ?? ``,
@@ -414,7 +415,7 @@ export const ExerciseRecordDetail = memo(() => {
               value={insertComma(OBJECT?.exercise_record_total_volume ?? `0`)}
               startadornment={(
                 <Img
-                  max={14}
+                  max={10}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -438,7 +439,7 @@ export const ExerciseRecordDetail = memo(() => {
               value={OBJECT?.exercise_record_total_cardio}
               startadornment={(
                 <Img
-                  max={14}
+                  max={10}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -460,7 +461,7 @@ export const ExerciseRecordDetail = memo(() => {
               value={insertComma(OBJECT?.exercise_record_total_scale ?? `0`)}
               startadornment={(
                 <Img
-                  max={14}
+                  max={10}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -596,7 +597,7 @@ export const ExerciseRecordDetail = memo(() => {
                   error={ERRORS?.[i]?.exercise_record_set}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -632,7 +633,7 @@ export const ExerciseRecordDetail = memo(() => {
                   error={ERRORS?.[i]?.exercise_record_rep}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -672,7 +673,7 @@ export const ExerciseRecordDetail = memo(() => {
                   error={ERRORS?.[i]?.exercise_record_weight}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}

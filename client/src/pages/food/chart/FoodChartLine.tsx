@@ -13,16 +13,16 @@ import { axios } from "@exportLibs";
 import { formatY, formatDate } from "@exportScripts";
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@exportLibs";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface FoodChartLineProps {
   TYPE?: any;
   setTYPE?: any;
 }
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const FoodChartLine = memo((props: FoodChartLineProps) => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { URL_OBJECT, PATH, sessionId, chartColors, foodChartArray } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
@@ -38,7 +38,7 @@ export const FoodChartLine = memo((props: FoodChartLineProps) => {
     }
   );
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ TYPE_STATE, setTYPE_STATE ] = useState(() => {
     return props?.TYPE !== undefined ? props.TYPE : TYPE;
   });
@@ -54,7 +54,7 @@ export const FoodChartLine = memo((props: FoodChartLineProps) => {
     yearEndFmt: getYearEndFmt(),
   });
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK ] = useState<[FoodLineType]>([FoodLineKcal]);
   const [ OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK ] = useState<[FoodLineType]>([FoodLineNut]);
   const [ OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH ] = useState<[FoodLineType]>([FoodLineKcal]);
@@ -158,7 +158,7 @@ export const FoodChartLine = memo((props: FoodChartLineProps) => {
 
 		const { domain, ticks, formatterY } = formatY(object, foodChartArray, `food`);
 		return (
-		  <ResponsiveContainer width={`100%`} height={500}>
+		  <ResponsiveContainer width={`100%`} height={380}>
 		    <LineChart
 		      data={object as any[]}
 		      margin={{ top: 60, right: 20, bottom: 10, left: 20 }}
@@ -310,7 +310,7 @@ export const FoodChartLine = memo((props: FoodChartLineProps) => {
 		);
   };
 
-  // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {chartNode()}

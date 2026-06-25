@@ -8,7 +8,7 @@
 import { React, createRef, useCallback, useRef, useState } from "@exportReacts";
 import { useStoreAlert, useStoreConfirm, useStoreLanguage } from "@exportStores";
 
-// 구조 타입 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 구조 타입 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 type FieldRefs = Record<string, React.RefObject<unknown>>;
 type FieldErrors = Record<string, boolean>;
 type MoneySection = Record<string, string>;
@@ -25,10 +25,10 @@ type MoneyValidate = (
   OBJECT: MoneyObject, COUNT: MoneyCount, extra: string
 ) => Promise<boolean>;
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const useValidateMoney = () => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
   const { setCONFIRM } = useStoreConfirm();

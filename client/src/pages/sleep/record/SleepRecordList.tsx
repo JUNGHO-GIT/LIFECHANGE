@@ -10,11 +10,12 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { SleepRecord, SleepRecordType } from "@exportSchemas";
 import { axios } from "@exportLibs";
+import { formatDate } from "@exportScripts";
 import { Footer, Empty, Dialog } from "@exportLayouts";
 import { Div, Hr, Img, Icons, Paper, Grid } from "@exportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const SleepRecordList = memo(() => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -71,10 +72,11 @@ export const SleepRecordList = memo(() => {
   });
 
   // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  // 항목 렌더를 비긴급으로 분리: 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
+  // - 항목 렌더를 비긴급으로 분리
+  // - 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
   const deferredObject = useDeferredValue(OBJECT);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     axios.get(`${URL_OBJECT}/record/exist`, {
       params: {
@@ -100,7 +102,7 @@ export const SleepRecordList = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. fetch list ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. fetch list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     setLOADING(true);
     axios.get(`${URL_OBJECT}/record/list`, {
@@ -164,10 +166,8 @@ export const SleepRecordList = memo(() => {
                       onClick={(e: any) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        setIsExpanded(isExpanded.map((el: any, index: number) => (
-													i === index ? {
-													  expanded: !el.expanded,
-													} : el
+                        setIsExpanded(isExpanded.map((item: any, index: number) => (
+                          index === i ? { expanded: !item.expanded } : item
                         )));
                       }}
                     />
@@ -193,11 +193,19 @@ export const SleepRecordList = memo(() => {
                     </Grid>
                     <Grid size={10} className={`d-row-left`}>
                       <Div className={`fs-0-9rem fw-600 black mr-5px`}>
-                        {item.sleep_record_dateStart?.slice(5, 10)}
+                        {formatDate(item.sleep_record_dateStart)}
                       </Div>
                       <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
                         {translate(getDayNotFmt(item.sleep_record_dateStart).format(`ddd`))}
                       </Div>
+                      <Img
+                        max={14}
+                        hover={false}
+                        shadow={false}
+                        radius={false}
+                        src={`${item.sleep_record_score_smile ?? `smile3`}.webp`}
+                        className={`ml-5px`}
+                      />
                     </Grid>
                   </Grid>
                 </AccordionSummary>
@@ -206,7 +214,7 @@ export const SleepRecordList = memo(() => {
                   <Grid container={true} spacing={1}>
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-row-center`}>
-                        <Img max={14} hover={true} shadow={false} radius={false} src={`sleep2.webp`} />
+                        <Img max={10} hover={true} shadow={false} radius={false} src={`sleep2.webp`} />
                       </Grid>
                       <Grid size={3} className={`d-row-left`}>
                         <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>{translate(`bedTime`)}</Div>
@@ -229,7 +237,7 @@ export const SleepRecordList = memo(() => {
 
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-center`}>
-                        <Img max={14} hover={true} shadow={false} radius={false} src={`sleep3.webp`} />
+                        <Img max={10} hover={true} shadow={false} radius={false} src={`sleep3.webp`} />
                       </Grid>
                       <Grid size={3} className={`d-row-left`}>
                         <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>{translate(`wakeTime`)}</Div>
@@ -252,7 +260,7 @@ export const SleepRecordList = memo(() => {
 
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-center`}>
-                        <Img max={14} hover={true} shadow={false} radius={false} src={`sleep4.webp`} />
+                        <Img max={10} hover={true} shadow={false} radius={false} src={`sleep4.webp`} />
                       </Grid>
                       <Grid size={3} className={`d-row-left`}>
                         <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>{translate(`sleepTime`)}</Div>

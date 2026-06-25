@@ -13,16 +13,16 @@ import { axios } from "@exportLibs";
 import { formatY, formatDate } from "@exportScripts";
 import { ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@exportLibs";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface FoodChartAvgProps {
   TYPE?: any;
   setTYPE?: any;
 }
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { URL_OBJECT, PATH, sessionId, chartColors, foodChartArray } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
@@ -38,7 +38,7 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
     }
   );
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ TYPE_STATE, setTYPE_STATE ] = useState(() => {
     return props?.TYPE !== undefined ? props.TYPE : TYPE;
   });
@@ -54,7 +54,7 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
     yearEndFmt: getYearEndFmt(),
   });
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK ] = useState<[FoodAvgType]>([FoodAvgKcal]);
   const [ OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK ] = useState<[FoodAvgType]>([FoodAvgNut]);
   const [ OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH ] = useState<[FoodAvgType]>([FoodAvgKcal]);
@@ -159,7 +159,7 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
 
 		const { domain, ticks, formatterY } = formatY(object, foodChartArray, `food`);
 		return (
-		  <ResponsiveContainer width={`100%`} height={500}>
+		  <ResponsiveContainer width={`100%`} height={380}>
 		    <ComposedChart
 		      data={object as any[]}
 		      margin={{ top: 60, right: 20, bottom: 10, left: 20 }}
@@ -306,7 +306,7 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
 		);
   };
 
-  // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {chartNode()}

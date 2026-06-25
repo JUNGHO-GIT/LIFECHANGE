@@ -21,7 +21,7 @@ import { User } from "@schemas/user/User";
 import { Verify } from "@schemas/Verify";
 import mongoose from "mongoose";
 
-// 1-1. email - findId ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1-1. email - findId ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const emailFindId = async (user_id_param: string) => {
   const finalResult: any = await User.findOne({
     user_id: user_id_param,
@@ -63,7 +63,7 @@ export const emailVerifyEmail = async (user_id_param: string) => {
   return finalResult;
 };
 
-// 2-1. user - checkId ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 2-1. user - checkId ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const userCheckId = async (user_id_param: string) => {
   const finalResult: any = await User.findOne({
     user_id: user_id_param,
@@ -72,7 +72,7 @@ export const userCheckId = async (user_id_param: string) => {
   return finalResult;
 };
 
-// 2-2. user - signup ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 2-2. user - signup ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const userSignup = async (user_id_param: string, OBJECT_param: any) => {
   const finalResult: any = await User.create({
     _id: new mongoose.Types.ObjectId(),
@@ -129,7 +129,7 @@ export const userSignup = async (user_id_param: string, OBJECT_param: any) => {
   return finalResult;
 };
 
-// 2-3. user - resetPw ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 2-3. user - resetPw ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const userResetPw = async (user_id_param: string, OBJECT_param: any) => {
   const finalResult: any = await User.findOneAndUpdate(
     {
@@ -195,7 +195,7 @@ export const userUpdate = async (user_id_param: string, OBJECT_param: any) => {
   return finalResult;
 };
 
-// 2-7. user - delete ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 2-7. user - delete ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const userDelete = async (user_id_param: string) => {
   // 도메인 데이터 8건은 병렬 삭제, User 삭제는 마지막에 유지
   const domainResults = await Promise.all([

@@ -9,20 +9,20 @@ import { React, createRef, useCallback, useRef, useState } from "@exportReacts";
 import { useStoreAlert, useStoreLanguage } from "@exportStores";
 import { UserType } from "@exportSchemas";
 
-// 구조 타입 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 구조 타입 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 type FieldRefs = Record<string, React.RefObject<unknown>>;
 type FieldErrors = Record<string, boolean>;
 type UserValidate = (
   OBJECT: UserType, extra: string, email: string
 ) => Promise<boolean>;
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const useValidateUser = () => {
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const REFS: React.RefObject<FieldRefs[]> = useRef<FieldRefs[]>([]);
   const validate: React.RefObject<UserValidate> = useRef<UserValidate>(async () => false);
   const [ ERRORS, setERRORS ] = useState<FieldErrors[]>([]);

@@ -10,12 +10,12 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { ExerciseRecord, ExerciseRecordType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { insertComma } from "@exportScripts";
+import { formatDate, insertComma } from "@exportScripts";
 import { Footer, Empty, Dialog } from "@exportLayouts";
 import { Div, Hr, Icons, Img, Paper, Grid } from "@exportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const ExerciseRecordList = memo(() => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -74,10 +74,11 @@ export const ExerciseRecordList = memo(() => {
   });
 
   // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  // 항목 렌더를 비긴급으로 분리: 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
+  // - 항목 렌더를 비긴급으로 분리
+  // - 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
   const deferredObject = useDeferredValue(OBJECT);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     axios.get(`${URL_OBJECT}/record/exist`, {
       params: {
@@ -103,7 +104,7 @@ export const ExerciseRecordList = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     setLOADING(true);
     axios.get(`${URL_OBJECT}/record/list`, {
@@ -167,10 +168,8 @@ export const ExerciseRecordList = memo(() => {
                       onClick={(e: any) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        setIsExpanded(isExpanded.map((el: any, index: number) => (
-													i === index ? {
-													  expanded: !el.expanded,
-													} : el
+                        setIsExpanded(isExpanded.map((item: any, index: number) => (
+                          index === i ? { expanded: !item.expanded } : item
                         )));
                       }}
                     />
@@ -196,11 +195,19 @@ export const ExerciseRecordList = memo(() => {
                     </Grid>
                     <Grid size={10} className={`d-row-left`}>
                       <Div className={`fs-0-9rem fw-600 black mr-5px`}>
-                        {item.exercise_record_dateStart?.slice(5, 10)}
+                        {formatDate(item.exercise_record_dateStart)}
                       </Div>
                       <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
                         {translate(getDayNotFmt(item.exercise_record_dateStart).format(`ddd`))}
                       </Div>
+                      <Img
+                        max={14}
+                        hover={false}
+                        shadow={false}
+                        radius={false}
+                        src={`${item.exercise_record_score_smile ?? `smile3`}.webp`}
+                        className={`ml-5px`}
+                      />
                     </Grid>
                   </Grid>
                 </AccordionSummary>
@@ -210,7 +217,7 @@ export const ExerciseRecordList = memo(() => {
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-row-center`}>
                         <Img
-                          max={14}
+                          max={10}
                           hover={true}
                           shadow={false}
                           radius={false}
@@ -244,7 +251,7 @@ export const ExerciseRecordList = memo(() => {
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-center`}>
                         <Img
-                          max={14}
+                          max={10}
                           hover={true}
                           shadow={false}
                           radius={false}
@@ -278,7 +285,7 @@ export const ExerciseRecordList = memo(() => {
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-center`}>
                         <Img
-                          max={14}
+                          max={10}
                           hover={true}
                           shadow={false}
                           radius={false}

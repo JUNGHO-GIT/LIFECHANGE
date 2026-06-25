@@ -11,7 +11,7 @@ import react from "@vitejs/plugin-react-swc";
 import { defineConfig, loadEnv, type UserConfig } from "vite";
 import vtCmpr from "vite-plugin-compression";
 
-// 1. config ---------------------------------------------------------------------------------------
+// 1. config ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export default defineConfig(({ command, mode }) => {
   // 1-1. init
   const dirName: string = import.meta.dirname;
@@ -23,22 +23,12 @@ export default defineConfig(({ command, mode }) => {
 
   // 1-2. env load
   const rawEnv: Record<string, string> = loadEnv(envMode, rootDir, ``);
-  const env: Record<string, string> = Object.fromEntries(
-    Object.entries(rawEnv).filter(([k]) => k.startsWith(`VITE_`)),
-  ) as Record<string, string>;
+  const env: Record<string, string> = Object.fromEntries(Object.entries(rawEnv).filter(([k]) => k.startsWith(`VITE_`))) as Record<string, string>;
 
   // 1-3. env file merge
   const noop: () => void = () => {};
-  const noopSet: (
-    target: Record<string, string>,
-    key: string,
-    value: string,
-  ) => void = () => {};
-  const setEnv: (
-    target: Record<string, string>,
-    key: string,
-    value: string,
-  ) => void = (target, key, value) => {
+  const noopSet: (target: Record<string, string>, key: string, value: string) => void = () => {};
+  const setEnv: (target: Record<string, string>, key: string, value: string) => void = (target, key, value) => {
     target[key] = value;
   };
 
@@ -50,18 +40,13 @@ export default defineConfig(({ command, mode }) => {
         .map((line) => line.trim())
         .filter((line) => Boolean(line) && !line.startsWith(`#`))
         .forEach((line) => {
-          const cleaned: string = line.startsWith(`export `)
-            ? line.slice(7).trim()
-            : line;
+          const cleaned: string = line.startsWith(`export `) ? line.slice(7).trim() : line;
           const idx: number = cleaned.indexOf(`=`);
           const hasEq: boolean = idx > 0;
 
           const key: string = hasEq ? cleaned.slice(0, idx).trim() : ``;
           const rawVal: string = hasEq ? cleaned.slice(idx + 1).trim() : ``;
-          const val: string =
-            rawVal.startsWith(`"`) && rawVal.endsWith(`"`)
-              ? rawVal.slice(1, -1)
-              : rawVal;
+          const val: string = rawVal.startsWith(`"`) && rawVal.endsWith(`"`) ? rawVal.slice(1, -1) : rawVal;
 
           const shouldSet: boolean = hasEq && key.startsWith(`VITE_`);
           (shouldSet ? setEnv : noopSet)(env, key, val);
@@ -76,44 +61,36 @@ export default defineConfig(({ command, mode }) => {
   // 1-4. debug
   const debugEnv: () => void = () => {
     console.log(`[Vite Config] mode: ${mode}, envMode: ${envMode}`);
-    console.log(
-      `[Vite Config] VITE_APP_SERVER_URL: ${env.VITE_APP_SERVER_URL}`,
-    );
+    console.log(`[Vite Config] VITE_APP_SERVER_URL: ${env.VITE_APP_SERVER_URL}`);
   };
   (isDev ? debugEnv : noop)();
 
-  // 2. derived values -------------------------------------------------------------------------------
+  // 2. derived values ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
   const baseUrl: string = env.VITE_APP_PUBLIC_URL || `/lifechange`;
   const publicUrl: string = env.VITE_APP_PUBLIC_URL || `/lifechange`;
 
-  // 3. plugins --------------------------------------------------------------------------------------
+  // 3. plugins ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const plugins: NonNullable<UserConfig[`plugins`]> = [
     react({
       devTarget: `esnext`,
       jsxImportSource: `@emotion/react`,
     }),
-    ...(isProd && isBuild
-      ? [
-          vtCmpr({
-            verbose: false,
-            disable: false,
-            threshold: 10_240,
-            algorithm: `brotliCompress`,
-            ext: `.br`,
-            deleteOriginFile: false,
-          }),
-        ]
-      : []),
+    ...(isProd && isBuild ? [
+        vtCmpr({
+          verbose: false,
+          disable: false,
+          threshold: 10_240,
+          algorithm: `brotliCompress`,
+          ext: `.br`,
+          deleteOriginFile: false,
+        }),
+      ] : []),
   ];
 
-  // 4. define ---------------------------------------------------------------------------------------
-  const defineEnv: Record<string, string> = Object.fromEntries(
-    Object.entries(env).map(
-      ([k, v]) => [`import.meta.env.${k}`, JSON.stringify(v)] as const,
-    ),
-  ) as Record<string, string>;
+  // 4. define ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const defineEnv: Record<string, string> = Object.fromEntries(Object.entries(env).map(([k, v]) => [`import.meta.env.${k}`, JSON.stringify(v)] as const)) as Record<string, string>;
 
-  // 5. final config ---------------------------------------------------------------------------------
+  // 5. final config ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const config: UserConfig = {
     base: baseUrl,
     plugins: plugins,
@@ -142,14 +119,8 @@ export default defineConfig(({ command, mode }) => {
         "@exportHooks": path.resolve(dirName, `./src/exports/ExportHooks`),
         "@exportStores": path.resolve(dirName, `./src/exports/ExportStores`),
         "@exportLayouts": path.resolve(dirName, `./src/exports/ExportLayouts`),
-        "@exportComponents": path.resolve(
-          dirName,
-          `./src/exports/ExportComponents`,
-        ),
-        "@exportContainers": path.resolve(
-          dirName,
-          `./src/exports/ExportContainers`,
-        ),
+        "@exportComponents": path.resolve(dirName, `./src/exports/ExportComponents`),
+        "@exportContainers": path.resolve(dirName, `./src/exports/ExportContainers`),
         "@exportPages": path.resolve(dirName, `./src/exports/ExportPages`),
         "@exportSchemas": path.resolve(dirName, `./src/exports/ExportSchemas`),
         "@exportScripts": path.resolve(dirName, `./src/exports/ExportScripts`),
@@ -175,41 +146,22 @@ export default defineConfig(({ command, mode }) => {
       rollupOptions: {
         output: {
           manualChunks: (id: string): string | undefined => {
-            if (
-              id.includes(`node_modules/react`) ||
-              id.includes(`node_modules/react-dom`) ||
-              id.includes(`node_modules/react-router`)
-            ) {
-              return `react`;
+            if (id.includes(`node_modules/react`) || id.includes(`node_modules/react-dom`) || id.includes(`node_modules/react-router`)) {
+            	return `react`;
             }
-
-            if (
-              id.includes(`node_modules/@mui`) ||
-              id.includes(`node_modules/@emotion`)
-            ) {
-              return `mui`;
+            if (id.includes(`node_modules/@mui`) || id.includes(`node_modules/@emotion`)) {
+            	return `mui`;
             }
-
-            if (
-              id.includes(`node_modules/axios`) ||
-              id.includes(`node_modules/zustand`) ||
-              id.includes(`node_modules/moment`) ||
-              id.includes(`node_modules/date-fns`)
-            ) {
-              return `vendor`;
+            if (id.includes(`node_modules/axios`) || id.includes(`node_modules/zustand`) || id.includes(`node_modules/moment`) || id.includes(`node_modules/date-fns`)) {
+            	return `vendor`;
             }
-
             return;
           },
           assetFileNames: (assetInfo) => {
-            const info: string[] = assetInfo.name
-              ? assetInfo.name.split(`.`)
-              : [];
+            const info: string[] = assetInfo.name ? assetInfo.name.split(`.`) : [];
             const extType: string | undefined = info.at(-1);
 
-            return extType === `css`
-              ? `assets/css/[name].[hash][extname]`
-              : `assets/[name].[hash][extname]`;
+            return extType === `css` ? `assets/css/[name].[hash][extname]` : `assets/[name].[hash][extname]`;
           },
           chunkFileNames: `assets/js/[name].[hash].js`,
           entryFileNames: `assets/js/[name].[hash].js`,
@@ -217,12 +169,11 @@ export default defineConfig(({ command, mode }) => {
       },
       assetsInlineLimit: 4096,
     },
-    esbuild: isProd
-      ? {
-          drop: [`console`, `debugger`],
-          legalComments: `none`,
-        }
-      : {},
+    esbuild:
+      isProd ? {
+        drop: [`console`, `debugger`],
+        legalComments: `none`,
+      } : {},
     server: {
       port: 3000,
       open: true,

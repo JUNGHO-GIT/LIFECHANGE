@@ -6,6 +6,7 @@
  */
 
 import * as repository from "@repositories/exercise/ExerciseRecordRepository";
+import * as goalRepository from "@repositories/exercise/ExerciseGoalRepository";
 
 // 0. exist ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const exist = async (user_id_param: string, DATE_param: any) => {
@@ -57,7 +58,7 @@ export const exist = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 1. list ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const list = async (
   user_id_param: string,
   DATE_param: any,
@@ -123,9 +124,30 @@ export const list = async (
       }
       return sortOrder === 1 ? dateDiff : -dateDiff;
     });
-    finalResult = findResult;
+    const findGoal: any[] = await goalRepository.listGoal(
+      user_id_param,
+      dateType,
+      dateStart,
+      dateEnd,
+      1,
+      page,
+    );
+    finalResult = findResult.map((record: any) => {
+      const goal: any = findGoal?.find((item: any) => (
+        record?.exercise_record_dateStart >= item?.exercise_goal_dateStart &&
+        record?.exercise_record_dateEnd <= item?.exercise_goal_dateEnd
+      ));
+
+      return {
+        ...record,
+        exercise_goal_count: goal?.exercise_goal_count ?? `0`,
+        exercise_goal_volume: goal?.exercise_goal_volume ?? `0`,
+        exercise_goal_cardio: goal?.exercise_goal_cardio ?? `00:00`,
+        exercise_goal_scale: goal?.exercise_goal_scale ?? `0`,
+      };
+    });
     statusResult = `success`;
-    totalCntResult = findResult.length;
+    totalCntResult = finalResult.length;
   }
 
   return {

@@ -13,7 +13,7 @@ import {
   useMemo,
   useNavigate,
 } from "@exportReacts";
-import { getLocalRoot, getSessionRoot } from "@exportScripts";
+import { getLocalRoot, getSessionRoot } from "@assets/scripts/storage";
 import type {
   CommonValueType,
   EnvType,
@@ -21,7 +21,7 @@ import type {
   SessionTitleType,
 } from "@exportTypes";
 
-// 정적 리터럴: 호출/렌더마다 동일하므로 모듈 스코프 1회 생성 후 참조 안정화 ――――――――――――――――――――――――――――――-
+// 정적 리터럴: 호출/렌더마다 동일하므로 모듈 스코프 1회 생성 후 참조 안정화 ―――――――――――――――――――――――――――――――
 const EXERCISE_CHART_ARRAY: string[] = [`volume`, `cardio`];
 const FOOD_CHART_ARRAY: string[] = [`kcal`, `carb`, `protein`, `fat`];
 const MONEY_CHART_ARRAY: string[] = [`income`, `expense`];
@@ -64,10 +64,10 @@ const CHART_COLORS: string[] = [
   `#9333EA`,
 ];
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const useCommonValue = (): CommonValueType => {
   const rawNavigate: NavigateFunction = useNavigate();
-  // 화면 전환을 비긴급(transition)으로 처리: 무거운 레이아웃 리렌더가 클릭 응답을 막지 않도록 ――――――――――――――――-
+  // 화면 전환을 비긴급(transition)으로 처리: 무거운 레이아웃 리렌더가 클릭 응답을 막지 않도록 ―――――――――――――――――
   const navigate = useCallback(
     ((to: any, options?: any): void => {
       startTransition(() => {
@@ -91,7 +91,7 @@ export const useCommonValue = (): CommonValueType => {
     return getSessionRoot() as SessionTitleType;
   }, [TITLE, location.pathname]);
 
-  // 세션 파생값 기본 객체 생성 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 세션 파생값 기본 객체 생성 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const scaleDefault = useMemo(
     () => ({
       initScale: sessionTitle?.setting?.sync?.scale?.initScale ?? ``,
@@ -151,7 +151,7 @@ export const useCommonValue = (): CommonValueType => {
     [sessionTitle],
   );
 
-  // 매 렌더 재계산 완화: 파생값 전체를 의존성 기준으로 메모이즈 ―――――――――――――――――――――――――――――――――――――――――――-
+  // 매 렌더 재계산 완화: 파생값 전체를 의존성 기준으로 메모이즈 ――――――――――――――――――――――――――――――――――――――――――――
   return useMemo(
     (): CommonValueType => ({
       // Router & Location

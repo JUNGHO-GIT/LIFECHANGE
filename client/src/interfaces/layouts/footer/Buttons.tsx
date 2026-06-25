@@ -12,13 +12,13 @@ import { useCommonValue } from "@exportHooks";
 import { setSession } from "@exportScripts";
 import { useStoreLanguage } from "@exportStores";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface ButtonsProps {
   state: any;
   flow: any;
 }
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const Buttons = memo((
   { state, flow }: ButtonsProps,
 ) => {
@@ -30,7 +30,7 @@ export const Buttons = memo((
   } = useCommonValue();
   const { translate } = useStoreLanguage();
 
-  // 2. useMemo ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2. useMemo ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const navigationState = useMemo(() => ({
     dateType: state?.DATE?.dateType,
     dateStart: state?.DATE?.dateStart,

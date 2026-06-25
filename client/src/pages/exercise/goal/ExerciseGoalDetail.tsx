@@ -15,7 +15,7 @@ import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, PickerTime, Count, Delete, Input } from "@exportContainers";
 import { Img, Bg, Paper, Grid, Br } from "@exportComponents";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const ExerciseGoalDetail = memo(() => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -84,10 +84,10 @@ export const ExerciseGoalDetail = memo(() => {
     DATE !== dateRef.current && (dateRef.current = DATE);
   }, [ COUNT, OBJECT, DATE ]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useTime(OBJECT, setOBJECT, PATH, `record`);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
 
@@ -117,7 +117,7 @@ export const ExerciseGoalDetail = memo(() => {
     }
   }, [ EXIST, DATE?.dateEnd, OBJECT.exercise_goal_dateEnd ]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     axios.get(`${URL_OBJECT}/goal/exist`, {
       params: {
@@ -141,7 +141,7 @@ export const ExerciseGoalDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     setLOADING(true);
     if (LOCKED === `locked`) {
@@ -369,7 +369,7 @@ export const ExerciseGoalDetail = memo(() => {
                   }
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -408,7 +408,7 @@ export const ExerciseGoalDetail = memo(() => {
                   }
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -458,7 +458,7 @@ export const ExerciseGoalDetail = memo(() => {
                   error={ERRORS?.[i]?.exercise_goal_scale}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}

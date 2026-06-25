@@ -1,0 +1,181 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5] [cursor=pointer]:
+        - img [ref=e149]
+        - img [ref=e150]
+      - button [ref=e151] [cursor=pointer]:
+        - img [ref=e9]
+    - generic [ref=e14]:
+      - generic [ref=e15]:
+        - img [ref=e152] [cursor=pointer]
+        - img [ref=e153] [cursor=pointer]
+        - img [ref=e154] [cursor=pointer]
+        - img [ref=e155] [cursor=pointer]
+      - tablist [ref=e27]:
+        - tab [selected] [ref=e156] [cursor=pointer]: 일정
+    - generic [ref=e48]:
+      - generic [ref=e49]:
+        - button [ref=e157] [cursor=pointer]:
+          - img [ref=e52]
+        - generic [ref=e57] [cursor=pointer]: 2026-07
+        - button [ref=e158] [cursor=pointer]:
+          - img [ref=e60]
+      - generic [ref=e69]:
+        - generic [ref=e70]:
+          - generic [ref=e71]: 일
+          - generic [ref=e72]: 월
+          - generic [ref=e73]: 화
+          - generic [ref=e74]: 수
+          - generic [ref=e75]: 목
+          - generic [ref=e76]: 금
+          - generic [ref=e77]: 토
+        - generic [ref=e78]:
+          - button [ref=e215]:
+            - generic [ref=e216]: "28"
+          - button [ref=e217]:
+            - generic [ref=e218]: "29"
+          - button [ref=e219]:
+            - generic [ref=e220]: "30"
+          - button [ref=e221]:
+            - generic [ref=e222]: "1"
+          - button [ref=e223]:
+            - generic [ref=e224]: "2"
+          - button [ref=e225]:
+            - generic [ref=e226]: "3"
+          - button [ref=e227]:
+            - generic [ref=e228]: "4"
+          - button [ref=e380]:
+            - generic [ref=e381]: "5"
+          - button [ref=e382]:
+            - generic [ref=e383]: "6"
+          - button [ref=e384]:
+            - generic [ref=e385]: "7"
+          - button [ref=e386]:
+            - generic [ref=e387]: "8"
+          - button [ref=e388]:
+            - generic [ref=e389]: "9"
+          - button [ref=e390]:
+            - generic [ref=e391]: "10"
+          - button [ref=e392]:
+            - generic [ref=e393]: "11"
+          - button [ref=e394]:
+            - generic [ref=e395]: "12"
+          - button [ref=e396]:
+            - generic [ref=e397]: "13"
+          - button [ref=e398]:
+            - generic [ref=e399]: "14"
+          - button [ref=e400]:
+            - generic [ref=e401]: "15"
+          - button [ref=e402]:
+            - generic [ref=e403]: "16"
+          - button [ref=e404]:
+            - generic [ref=e405]: "17"
+          - button [ref=e406]:
+            - generic [ref=e407]: "18"
+          - button [ref=e408]:
+            - generic [ref=e409]: "19"
+          - button [ref=e410]:
+            - generic [ref=e411]: "20"
+          - button [ref=e412]:
+            - generic [ref=e413]: "21"
+          - button [ref=e414]:
+            - generic [ref=e415]: "22"
+          - button [ref=e416]:
+            - generic [ref=e417]: "23"
+          - button [ref=e418]:
+            - generic [ref=e419]: "24"
+          - button [ref=e420]:
+            - generic [ref=e421]: "25"
+          - button [ref=e422]:
+            - generic [ref=e423]: "26"
+          - button [ref=e424]:
+            - generic [ref=e425]: "27"
+          - button [ref=e426]:
+            - generic [ref=e427]: "28"
+          - button [ref=e428]:
+            - generic [ref=e429]: "29"
+          - button [ref=e430]:
+            - generic [ref=e431]: "30"
+          - button [ref=e432]:
+            - generic [ref=e433]: "31"
+          - button [ref=e434]:
+            - generic [ref=e435]: "1"
+    - generic [ref=e30]:
+      - button [ref=e229] [cursor=pointer]:
+        - img [ref=e230]
+        - generic [ref=e33]: 운동
+      - button [ref=e231] [cursor=pointer]:
+        - img [ref=e232]
+        - generic [ref=e36]: 식단
+      - button [ref=e233] [cursor=pointer]:
+        - img [ref=e234]
+        - generic [ref=e39]: 일정
+      - button [ref=e235] [cursor=pointer]:
+        - img [ref=e236]
+        - generic [ref=e42]: 자산
+      - button [ref=e237] [cursor=pointer]:
+        - img [ref=e238]
+        - generic [ref=e45]: 수면
+  - generic [ref=e241]:
+    - generic [ref=e242]:
+      - generic [ref=e243]: 월별
+      - generic [ref=e244]: "[07-01 - 07-31]"
+    - generic [ref=e246]:
+      - generic [ref=e247]:
+        - generic [ref=e249] [cursor=pointer]: 2026/07
+        - generic [ref=e250]:
+          - button "Previous month" [ref=e436] [cursor=pointer]:
+            - img [ref=e437]
+          - button "Next month" [ref=e439] [cursor=pointer]:
+            - img [ref=e440]
+      - grid "2026/07" [ref=e442]:
+        - row "Sunday Monday Tuesday Wednesday Thursday Friday Saturday" [ref=e260]:
+          - columnheader "Sunday" [ref=e261]: S
+          - columnheader "Monday" [ref=e262]: M
+          - columnheader "Tuesday" [ref=e263]: T
+          - columnheader "Wednesday" [ref=e264]: W
+          - columnheader "Thursday" [ref=e265]: T
+          - columnheader "Friday" [ref=e266]: F
+          - columnheader "Saturday" [ref=e267]: S
+        - rowgroup [ref=e269]:
+          - row "28 29 30 1 2 3 4" [ref=e358]:
+            - gridcell "28" [ref=e444] [cursor=pointer]
+            - gridcell "29" [ref=e447] [cursor=pointer]
+            - gridcell "30" [ref=e450] [cursor=pointer]
+            - gridcell "1" [selected] [ref=e453] [cursor=pointer]
+            - gridcell "2" [ref=e456] [cursor=pointer]
+            - gridcell "3" [ref=e459] [cursor=pointer]
+            - gridcell "4" [ref=e462] [cursor=pointer]
+          - row "5 6 7 8 9 10 11" [ref=e464]:
+            - gridcell "5" [ref=e466] [cursor=pointer]
+            - gridcell "6" [ref=e469] [cursor=pointer]
+            - gridcell "7" [ref=e472] [cursor=pointer]
+            - gridcell "8" [ref=e475] [cursor=pointer]
+            - gridcell "9" [ref=e478] [cursor=pointer]
+            - gridcell "10" [ref=e481] [cursor=pointer]
+            - gridcell "11" [ref=e484] [cursor=pointer]
+          - row "12 13 14 15 16 17 18" [ref=e486]:
+            - gridcell "12" [ref=e488] [cursor=pointer]
+            - gridcell "13" [ref=e491] [cursor=pointer]
+            - gridcell "14" [ref=e494] [cursor=pointer]
+            - gridcell "15" [ref=e497] [cursor=pointer]
+            - gridcell "16" [ref=e500] [cursor=pointer]
+            - gridcell "17" [ref=e503] [cursor=pointer]
+            - gridcell "18" [ref=e506] [cursor=pointer]
+          - row "19 20 21 22 23 24 25" [ref=e508]:
+            - gridcell "19" [ref=e510] [cursor=pointer]
+            - gridcell "20" [ref=e513] [cursor=pointer]
+            - gridcell "21" [ref=e516] [cursor=pointer]
+            - gridcell "22" [ref=e519] [cursor=pointer]
+            - gridcell "23" [ref=e522] [cursor=pointer]
+            - gridcell "24" [ref=e525] [cursor=pointer]
+            - gridcell "25" [ref=e528] [cursor=pointer]
+          - row "26 27 28 29 30 31 1" [ref=e530]:
+            - gridcell "26" [ref=e532] [cursor=pointer]
+            - gridcell "27" [ref=e535] [cursor=pointer]
+            - gridcell "28" [ref=e538] [cursor=pointer]
+            - gridcell "29" [ref=e541] [cursor=pointer]
+            - gridcell "30" [ref=e544] [cursor=pointer]
+            - gridcell "31" [ref=e547] [cursor=pointer]
+            - gridcell "1" [ref=e550] [cursor=pointer]

@@ -21,7 +21,7 @@ const isPlainObject = (v: any): boolean => {
   return !!v && typeof v === `object` && !Array.isArray(v);
 };
 
-// 0-1. root cache ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 0-1. root cache ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 // 동일 raw 문자열이면 재파싱 생략. 페이지 전환마다 useCommonValue 등 다수 컴포넌트가 전체 객체를
 // 각각 JSON.parse 하던 비용을 제거한다(set 시점에만 캐시 갱신, 멀티탭 변경 시 raw 불일치로 재파싱).
 let localRaw: string | null = null;
@@ -65,7 +65,7 @@ const writeSessionRoot = (next: any): void => {
   sessionStorage.setItem(TITLE, str);
 };
 
-// 1. getLocal ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1. getLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const getLocal = (key1: string, key2: string, key3: string) => {
   const localTitle: any = getLocalRoot();
 
@@ -85,7 +85,7 @@ export const getLocal = (key1: string, key2: string, key3: string) => {
   }
 };
 
-// 2. setLocal ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 2. setLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const setLocal = (key1: string, key2: string, key3: string, value: any) => {
   const localTitle: any = getLocalRoot();
 

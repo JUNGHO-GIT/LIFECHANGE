@@ -16,10 +16,10 @@ import { PickerDay, Count, Delete, Input, Select } from "@exportContainers";
 import { Img, Bg, Icons, Div, Paper, Grid, Br } from "@exportComponents";
 import { MenuItem } from "@exportMuis";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const FoodRecordDetail = memo(() => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const {
     URL_OBJECT, navigate, toList, sessionId,
     foodArray, bgColors, sessionFoodSection,
@@ -31,7 +31,7 @@ export const FoodRecordDetail = memo(() => {
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ LOCKED, setLOCKED ] = useState<string>(`unlocked`);
   const [ OBJECT, setOBJECT ] = useState<FoodRecordType>(FoodRecord);
   const [ FAVORITE, setFAVORITE ] = useState([]);
@@ -66,7 +66,8 @@ export const FoodRecordDetail = memo(() => {
   });
 
   // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  // 항목 렌더를 비긴급으로 분리: 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
+  // - 항목 렌더를 비긴급으로 분리
+  // - 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
   const deferredObject = useDeferredValue(OBJECT);
 
   // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -454,7 +455,7 @@ export const FoodRecordDetail = memo(() => {
     }));
   }, [sessionFoodSection]);
 
-  // 4-5. handle (favorite 추가) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 4-5. handle (favorite 추가) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const handleFoodFavorite = useCallback((index: number) => {
 
     const food_record_name: string = OBJECT?.food_section[index]?.food_record_name;
@@ -493,7 +494,7 @@ export const FoodRecordDetail = memo(() => {
     };
   }, [OBJECT]);
 
-  // 7. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 7. detail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
@@ -529,7 +530,7 @@ export const FoodRecordDetail = memo(() => {
               value={insertComma(OBJECT?.food_record_total_kcal ?? `0`)}
               startadornment={(
                 <Img
-                  max={14}
+                  max={10}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -549,7 +550,7 @@ export const FoodRecordDetail = memo(() => {
               value={insertComma(OBJECT?.food_record_total_carb ?? `0`)}
               startadornment={(
                 <Img
-                  max={14}
+                  max={10}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -573,7 +574,7 @@ export const FoodRecordDetail = memo(() => {
               value={insertComma(OBJECT?.food_record_total_protein ?? `0`)}
               startadornment={(
                 <Img
-                  max={14}
+                  max={10}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -593,7 +594,7 @@ export const FoodRecordDetail = memo(() => {
               value={insertComma(OBJECT?.food_record_total_fat ?? `0`)}
               startadornment={(
                 <Img
-                  max={14}
+                  max={10}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -825,7 +826,7 @@ export const FoodRecordDetail = memo(() => {
                   error={ERRORS?.[i]?.food_record_kcal}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -862,7 +863,7 @@ export const FoodRecordDetail = memo(() => {
                   error={ERRORS?.[i]?.food_record_carb}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -903,7 +904,7 @@ export const FoodRecordDetail = memo(() => {
                   error={ERRORS?.[i]?.food_record_protein}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -940,7 +941,7 @@ export const FoodRecordDetail = memo(() => {
                   error={ERRORS?.[i]?.food_record_fat}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -985,7 +986,7 @@ export const FoodRecordDetail = memo(() => {
     );
   };
 
-  // 8. dialog ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -997,7 +998,7 @@ export const FoodRecordDetail = memo(() => {
     />
   );
 
-  // 9. footer ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const footerNode = () => (
     <Footer
       state={{
@@ -1012,7 +1013,7 @@ export const FoodRecordDetail = memo(() => {
     />
   );
 
-  // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {detailNode()}

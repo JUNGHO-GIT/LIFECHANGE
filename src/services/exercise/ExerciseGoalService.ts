@@ -58,7 +58,7 @@ export const exist = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 1. list ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const list = async (
   user_id_param: string,
   DATE_param: any,

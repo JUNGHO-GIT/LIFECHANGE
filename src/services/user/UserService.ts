@@ -107,7 +107,7 @@ export const verifyEmail = async (
   };
 };
 
-// 2-1. userSignup ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 2-1. userSignup ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const userSignup = async (
   user_id_param: string,
   OBJECT_param: any,
@@ -277,7 +277,7 @@ export const userLogin = async (
   };
 };
 
-// 2-4. userDetail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 2-4. userDetail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const userDetail = async (
   user_id_param: string,
 ) => {
@@ -306,7 +306,7 @@ export const userDetail = async (
   };
 };
 
-// 2-5. userUpdate ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 2-5. userUpdate ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const userUpdate = async (
   user_id_param: string,
   OBJECT_param: any,
@@ -396,7 +396,7 @@ export const userDelete = async (
   };
 };
 
-// 3-2. categoryDetail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 3-2. categoryDetail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const categoryDetail = async (
   user_id_param: string,
 ) => {
@@ -425,7 +425,7 @@ export const categoryDetail = async (
   };
 };
 
-// 3-2. categoryUpdate ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 3-2. categoryUpdate ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const categoryUpdate = async (
   user_id_param: string,
   OBJECT_param: any,

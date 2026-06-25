@@ -7,18 +7,19 @@
 
 import { Br, Div, Grid, Hr, Img, Paper } from "@exportComponents";
 import { Input, PopUp } from "@exportContainers";
-import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
+import { useCommonDate } from "@hooks/common/useCommonDate";
+import { useCommonValue } from "@hooks/common/useCommonValue";
+import { useStorageLocal } from "@hooks/storage/useStorageLocal";
 import { Checkbox, Menu, MenuItem, Tab, Tabs } from "@exportMuis";
 import { memo, useEffect, useMemo, useState } from "@exportReacts";
-import { insertComma } from "@exportScripts";
+import { formatDate, insertComma } from "@exportScripts";
 import { useStoreLanguage } from "@exportStores";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const TopNav = memo(() => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  const { firstStr, secondStr, localCurrency, localUnit, navigate } = useCommonValue();
-  const { sessionPercent, sessionScale, sessionNutrition, sessionProperty } = useCommonValue();
+  const { firstStr, secondStr, localCurrency, localUnit, navigate, sessionPercent, sessionScale, sessionNutrition, sessionProperty } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
 
@@ -150,7 +151,7 @@ export const TopNav = memo(() => {
     admin: [`dashboard`],
   });
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   // - 페이지 변경시 초기화
   useEffect(() => {
     const mapping: Record<string, Record<string, { key: string; value: string }>> = {
@@ -249,7 +250,7 @@ export const TopNav = memo(() => {
 		}));
   };
 
-  // 7. topNav ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 7. topNav ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const topNavNode = () => {
 
     // 7-1. smile ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -267,7 +268,7 @@ export const TopNav = memo(() => {
                 </Div>
                 <Br m={10} />
                 <Div className={`fs-0-8rem fw-500 dark`}>
-                  {`[${getMonthStartFmt()} - ${getMonthEndFmt()}]`}
+                  {`[${formatDate(getMonthStartFmt())} - ${formatDate(getMonthEndFmt())}]`}
                 </Div>
               </Grid>
             </Grid>
@@ -428,7 +429,7 @@ export const TopNav = memo(() => {
                 </Div>
                 <Br m={10} />
                 <Div className={`fs-0-8rem fw-500 dark`}>
-                  {`[${scale?.dateStart} - ${scale?.dateEnd}]`}
+                  {`[${formatDate(scale?.dateStart)} - ${formatDate(scale?.dateEnd)}]`}
                 </Div>
               </Grid>
             </Grid>
@@ -436,7 +437,7 @@ export const TopNav = memo(() => {
             <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={`d-row-center`}>
                 <Img
-                  max={14}
+                  max={10}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -464,7 +465,7 @@ export const TopNav = memo(() => {
             <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={`d-row-center`}>
                 <Img
-                  max={14}
+                  max={10}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -497,7 +498,7 @@ export const TopNav = memo(() => {
                   value={insertComma(scale.minScale ?? `0`)}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -519,7 +520,7 @@ export const TopNav = memo(() => {
                   value={insertComma(scale.maxScale ?? `0`)}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -566,7 +567,7 @@ export const TopNav = memo(() => {
                 </Div>
                 <Br m={10} />
                 <Div className={`fs-0-8rem fw-500 dark`}>
-                  {`[${nutrition?.dateStart} - ${nutrition?.dateEnd}]`}
+                  {`[${formatDate(nutrition?.dateStart)} - ${formatDate(nutrition?.dateEnd)}]`}
                 </Div>
                 <Br m={10} />
                 <Div className={`d-row-center`}>
@@ -597,7 +598,7 @@ export const TopNav = memo(() => {
             <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={`d-row-center`}>
                 <Img
-                  max={14}
+                  max={10}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -624,7 +625,7 @@ export const TopNav = memo(() => {
             <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={`d-row-center`}>
                 <Img
-                  max={14}
+                  max={10}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -676,7 +677,7 @@ export const TopNav = memo(() => {
                   }
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -710,7 +711,7 @@ export const TopNav = memo(() => {
                   }
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -744,7 +745,7 @@ export const TopNav = memo(() => {
                   }
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -776,7 +777,7 @@ export const TopNav = memo(() => {
       />
     );
 
-    // 7-4. property ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+    // 7-4. property ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
     const propertySection = () => (
       <PopUp
         type={`innerCenter`}
@@ -791,7 +792,7 @@ export const TopNav = memo(() => {
                 </Div>
                 <Br m={10} />
                 <Div className={`fs-0-8rem fw-500 dark`}>
-                  {`[${property?.dateStart} - ${property?.dateEnd}]`}
+                  {`[${formatDate(property?.dateStart)} - ${formatDate(property?.dateEnd)}]`}
                 </Div>
                 <Br m={10} />
                 <Div className={`d-row-center`}>
@@ -812,7 +813,7 @@ export const TopNav = memo(() => {
             <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={`d-row-center`}>
                 <Img
-                  max={14}
+                  max={10}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -839,7 +840,7 @@ export const TopNav = memo(() => {
             <Grid container={true} spacing={0} columns={20}>
               <Grid size={3} className={`d-row-center`}>
                 <Img
-                  max={14}
+                  max={10}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -881,7 +882,7 @@ export const TopNav = memo(() => {
                   }
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -909,7 +910,7 @@ export const TopNav = memo(() => {
                   }
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -941,7 +942,7 @@ export const TopNav = memo(() => {
       />
     );
 
-    // 7-5. tabs ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+    // 7-5. tabs ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
     const tabsSection = () => {
       const currentTabValue: any = (
 				firstStr ? (

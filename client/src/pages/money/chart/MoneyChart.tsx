@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-import { memo, useState, useEffect } from "@exportReacts";
+import { memo } from "@exportReacts";
 import { useCommonValue, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage } from "@exportStores";
 import { MoneyChartPie } from "./MoneyChartPie";
@@ -15,10 +15,10 @@ import { Select } from "@exportContainers";
 import { Paper, Grid, Br } from "@exportComponents";
 import { MenuItem } from "@exportMuis";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const MoneyChart = memo(() => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { PATH } = useCommonValue();
   const { translate } = useStoreLanguage();
 
@@ -42,100 +42,155 @@ export const MoneyChart = memo(() => {
     }
   );
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  const [ curView, setCurView ] = useState(`pie`);
-  const [ curSection, setCurSection ] = useState(TYPE_PIE.section ?? `week`);
-  const [ curSetType, setCurSetType ] = useState(() => setTYPE_PIE);
-  const [ curValue, setCurValue ] = useState(TYPE_PIE.line ?? `income`);
-
-  // 3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-  useEffect(() => {
-		curView === `pie` ? (() => {
-		  setCurSetType(() => setTYPE_PIE);
-		  setCurSection(TYPE_PIE.section ?? `week`);
-		  setCurValue(TYPE_PIE.line ?? `income`);
-		})()
-		: curView === `line` ? (() => {
-		  setCurSetType(() => setTYPE_LINE);
-		  setCurSection(TYPE_LINE.section ?? `week`);
-		  setCurValue(TYPE_LINE.line ?? `income`);
-		})()
-		: curView === `avg` && (() => {
-		  setCurSetType(() => setTYPE_AVG);
-		  setCurSection(TYPE_AVG.section ?? `week`);
-		  setCurValue(TYPE_AVG.line ?? `income`);
-		})();
-  }, [ curView, TYPE_PIE, TYPE_LINE, TYPE_AVG ]);
-
   // 7. chart ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const chartNode = () => {
-    const headSection = () => (
-      <Grid container={true} spacing={2} className={`d-row-between`}>
-        <Grid size={4} className={`d-row-center`}>
-          <Select
-            value={curSection}
-            onChange={(e: any) => {
-              setCurSection(e.target.value);
-              curSetType((prev: any) => ({
-                ...prev,
-                section: e.target.value,
-              }));
-            }}
-          >
-            <MenuItem value={`week`}>{translate(`week`)}</MenuItem>
-            <MenuItem value={`month`}>{translate(`month`)}</MenuItem>
-            {curView === `pie` && <MenuItem value={`year`}>{translate(`year`)}</MenuItem>}
-          </Select>
+
+    // 7-1. pie
+    const pieSection = () => (
+      <Grid container={true} spacing={0} className={`w-100p border-1 radius-2 shadow-1`}>
+        <Grid size={12} className={`d-col-center p-10px border-bottom-1 radius-top-2 shadow-bottom-2`}>
+          <Grid container={true} spacing={1} className={`d-row-between`}>
+            <Grid size={4} className={`d-row-center`}>
+              <Select
+                value={TYPE_PIE.section ?? `week`}
+                onChange={(e: any) => {
+                  setTYPE_PIE((prev: any) => ({
+                    ...prev,
+                    section: e.target.value,
+                  }));
+                }}
+              >
+                <MenuItem value={`week`}>{translate(`week`)}</MenuItem>
+                <MenuItem value={`month`}>{translate(`month`)}</MenuItem>
+                <MenuItem value={`year`}>{translate(`year`)}</MenuItem>
+              </Select>
+            </Grid>
+            <Grid size={4} className={`d-row-center fs-1-1rem fw-bolder`}>
+              {translate(`chartPie`)}
+            </Grid>
+            <Grid size={4} className={`d-row-center`}>
+              <Select
+                value={TYPE_PIE.line}
+                onChange={(e: any) => {
+                  setTYPE_PIE((prev: any) => ({
+                    ...prev,
+                    line: e.target.value,
+                  }));
+                }}
+              >
+                <MenuItem value={`income`}>{translate(`income`)}</MenuItem>
+                <MenuItem value={`expense`}>{translate(`expense`)}</MenuItem>
+              </Select>
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid size={4} className={`d-row-center`}>
-          <Select
-            value={curView}
-            onChange={(e: any) => {
-              setCurView(e.target.value);
-            }}
-          >
-            <MenuItem value={`pie`}>{translate(`chartPie`)}</MenuItem>
-            <MenuItem value={`line`}>{translate(`chartLine`)}</MenuItem>
-            <MenuItem value={`avg`}>{translate(`chartAvg`)}</MenuItem>
-          </Select>
-        </Grid>
-        <Grid size={4} className={`d-row-center`}>
-          <Select
-            value={curValue}
-            onChange={(e: any) => {
-              setCurValue(e.target.value);
-              curSetType((prev: any) => ({
-                ...prev,
-                line: e.target.value,
-              }));
-            }}
-          >
-            <MenuItem value={`income`}>{translate(`income`)}</MenuItem>
-            <MenuItem value={`expense`}>{translate(`expense`)}</MenuItem>
-          </Select>
+        <Grid size={12} className={`d-col-center p-5px h-max-60vh`}>
+          <MoneyChartPie TYPE={TYPE_PIE} setTYPE={setTYPE_PIE} />
         </Grid>
       </Grid>
     );
+
+    // 7-2. line
+    const lineSection = () => (
+      <Grid container={true} spacing={0} className={`w-100p border-1 radius-2 shadow-1`}>
+        <Grid size={12} className={`d-col-center p-10px border-bottom-1 radius-top-2 shadow-bottom-2`}>
+          <Grid container={true} spacing={1} className={`d-row-between`}>
+            <Grid size={4} className={`d-row-center`}>
+              <Select
+                value={TYPE_LINE.section ?? `week`}
+                onChange={(e: any) => {
+                  setTYPE_LINE((prev: any) => ({
+                    ...prev,
+                    section: e.target.value,
+                  }));
+                }}
+              >
+                <MenuItem value={`week`}>{translate(`week`)}</MenuItem>
+                <MenuItem value={`month`}>{translate(`month`)}</MenuItem>
+              </Select>
+            </Grid>
+            <Grid size={4} className={`d-row-center fs-1-1rem fw-bolder`}>
+              {translate(`chartLine`)}
+            </Grid>
+            <Grid size={4} className={`d-row-center`}>
+              <Select
+                value={TYPE_LINE.line}
+                onChange={(e: any) => {
+                  setTYPE_LINE((prev: any) => ({
+                    ...prev,
+                    line: e.target.value,
+                  }));
+                }}
+              >
+                <MenuItem value={`income`}>{translate(`income`)}</MenuItem>
+                <MenuItem value={`expense`}>{translate(`expense`)}</MenuItem>
+              </Select>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid size={12} className={`d-col-center p-5px h-max-60vh`}>
+          <MoneyChartLine TYPE={TYPE_LINE} setTYPE={setTYPE_LINE} />
+        </Grid>
+      </Grid>
+    );
+
+    // 7-3. avg
+    const avgSection = () => (
+      <Grid container={true} spacing={0} className={`w-100p border-1 radius-2 shadow-1`}>
+        <Grid size={12} className={`d-col-center p-10px border-bottom-1 radius-top-2 shadow-bottom-2`}>
+          <Grid container={true} spacing={1} className={`d-row-between`}>
+            <Grid size={4} className={`d-row-center`}>
+              <Select
+                value={TYPE_AVG.section ?? `week`}
+                onChange={(e: any) => {
+                  setTYPE_AVG((prev: any) => ({
+                    ...prev,
+                    section: e.target.value,
+                  }));
+                }}
+              >
+                <MenuItem value={`week`}>{translate(`week`)}</MenuItem>
+                <MenuItem value={`month`}>{translate(`month`)}</MenuItem>
+              </Select>
+            </Grid>
+            <Grid size={4} className={`d-row-center fs-1-1rem fw-bolder`}>
+              {translate(`chartAvg`)}
+            </Grid>
+            <Grid size={4} className={`d-row-center`}>
+              <Select
+                value={TYPE_AVG.line}
+                onChange={(e: any) => {
+                  setTYPE_AVG((prev: any) => ({
+                    ...prev,
+                    line: e.target.value,
+                  }));
+                }}
+              >
+                <MenuItem value={`income`}>{translate(`income`)}</MenuItem>
+                <MenuItem value={`expense`}>{translate(`expense`)}</MenuItem>
+              </Select>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid size={12} className={`d-col-center p-5px h-max-60vh`}>
+          <MoneyChartAvg TYPE={TYPE_AVG} setTYPE={setTYPE_AVG} />
+        </Grid>
+      </Grid>
+    );
+
+    // 9. return
     return (
-      <Paper className={`content-wrapper d-col-between radius-2 border-1 shadow-1 h-min-75vh`}>
-        <Grid container={true} spacing={0} className={`border-0 radius-0`}>
-          <Grid size={12} className={`d-col-center p-0px`}>
-            {headSection()}
-          </Grid>
-        </Grid>
-        <Br m={10} />
-        <Grid container={true} spacing={0} className={`border-1 radius-2 h-min-63vh`}>
-          <Grid size={12} className={`d-col-center p-5px`}>
-            {curView === `pie` && <MoneyChartPie TYPE={TYPE_PIE} setTYPE={setTYPE_PIE} />}
-            {curView === `line` && <MoneyChartLine TYPE={TYPE_LINE} setTYPE={setTYPE_LINE} />}
-            {curView === `avg` && <MoneyChartAvg TYPE={TYPE_AVG} setTYPE={setTYPE_AVG} />}
-          </Grid>
-        </Grid>
+      <Paper className={`w-100p radius-2 border-1 shadow-1 p-20px`}>
+        {pieSection()}
+        <Br m={30} />
+        {lineSection()}
+        <Br m={30} />
+        {avgSection()}
       </Paper>
     );
   };
 
-  // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {chartNode()}

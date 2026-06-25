@@ -12,7 +12,7 @@ import { FoodPie, FoodPieType } from "@exportSchemas";
 import { axios } from "@exportLibs";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "@exportLibs";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface FoodChartPieProps {
   TYPE?: any;
   setTYPE?: any;
@@ -27,10 +27,10 @@ declare interface PieProps {
   index?: number;
 }
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const FoodChartPie = memo((props: FoodChartPieProps) => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { URL_OBJECT, PATH, chartColors, sessionId } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
@@ -46,7 +46,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
     }
   );
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ TYPE_STATE, setTYPE_STATE ] = useState(() => {
     return props?.TYPE !== undefined ? props.TYPE : TYPE;
   });
@@ -62,7 +62,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
     yearEndFmt: getYearEndFmt(),
   });
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK ] = useState<[FoodPieType]>([FoodPie]);
   const [ OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK ] = useState<[FoodPieType]>([FoodPie]);
   const [ OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH ] = useState<[FoodPieType]>([FoodPie]);
@@ -282,7 +282,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
     }
 
     return (
-      <ResponsiveContainer width={`100%`} height={500}>
+      <ResponsiveContainer width={`100%`} height={380}>
         <PieChart margin={{ top: 60, right: 20, bottom: 10, left: 20 }}>
           <defs>
             <filter id={`textBackground`} x={0} y={0} width={1} height={1}>
@@ -361,7 +361,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
     );
   };
 
-  // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {chartNode()}

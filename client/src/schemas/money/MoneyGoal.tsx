@@ -39,7 +39,7 @@ export interface MoneyGoalType {
   money_record_diff_expense_color: string;
 }
 
-// Schema ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// Schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const MoneyGoal: MoneyGoalType = {
   _id: ``,
 

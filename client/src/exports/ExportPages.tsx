@@ -5,7 +5,7 @@
  * @since 2025-12-25
  */
 
-// admin ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// admin ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export { AdminDashboard } from "@pages/admin/AdminDashboard";
 export { AdminAppInfo } from "@pages/admin/AdminAppInfo";
 
@@ -14,11 +14,11 @@ export { AuthError } from "@pages/auth/AuthError";
 export { AuthGoogle } from "@pages/auth/AuthGoogle";
 export { AuthPrivacy } from "@pages/auth/AuthPrivacy";
 
-// calendar ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// calendar ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export { CalendarList } from "@pages/calendar/CalendarList";
 export { CalendarDetail } from "@pages/calendar/CalendarDetail";
 
-// exercise ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// exercise ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export { ExerciseChart } from "@pages/exercise/chart/ExerciseChart";
 export { ExerciseGoalList } from "@pages/exercise/goal/ExerciseGoalList";
 export { ExerciseGoalDetail } from "@pages/exercise/goal/ExerciseGoalDetail";

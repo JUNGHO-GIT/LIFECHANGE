@@ -12,7 +12,7 @@ import { TextArea } from "@exportMuis";
 import { memo, useCallback, useMemo } from "@exportReacts";
 import { useStoreLanguage } from "@exportStores";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface MemoProps {
   OBJECT: any;
   setOBJECT: any;
@@ -22,19 +22,19 @@ declare interface MemoProps {
   section?: string;
 }
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const Memo = memo((
   {
     OBJECT, setOBJECT, LOCKED, extra, i, section,
   }: MemoProps,
 ) => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { firstStr } = useCommonValue();
   const { translate } = useStoreLanguage();
   const targetSection: string = section ?? `${firstStr}_section`;
 
-  // 2. callbacks ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2. callbacks ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const handleTextChange = useCallback((e: any) => {
     setOBJECT((prev: any) => ({
       ...prev,
@@ -83,7 +83,7 @@ export const Memo = memo((
           locked={LOCKED}
           startadornment={(
             <Img
-              max={14}
+              max={10}
               hover={true}
               shadow={false}
               radius={false}

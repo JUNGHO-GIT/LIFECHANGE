@@ -10,10 +10,10 @@ import { MuiFileInput } from "@exportMuis";
 import { memo, useEffect, useRef, useState } from "@exportReacts";
 import { useStoreAlert } from "@exportStores";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { setALERT } = useStoreAlert();
 
   // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -24,7 +24,7 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
   const [ fileLimit, setFileLimit ] = useState<number>(1);
   const [ previewUrls, setPreviewUrls ] = useState<string[]>([]);
 
-  // 2-2. useRef ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const fileInputRef: React.RefObject<HTMLInputElement | null> = useRef<HTMLInputElement | null>(null);
   const previewUrlRef: React.RefObject<string[]> = useRef<string[]>([]);
   const isPickingRef: React.RefObject<boolean> = useRef<boolean>(false);
@@ -105,7 +105,7 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
     };
   }, [fileList]);
 
-  // 6. handle (파일 추가) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 6. handle (파일 추가) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const flowFileChange = (newFiles: File[] | null) => {
 
     let hasError: boolean = false;
@@ -154,7 +154,7 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
 		);
   };
 
-  // 5. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 5. handle ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   // 파일 선택창 오픈은 CirclePlus 아이콘에서만 호출되도록 제한
   const handleFileAdd = (e: any) => {
     e.preventDefault();
@@ -175,7 +175,7 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
 		})();
   };
 
-  // 6. handle (파일 삭제) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 6. handle (파일 삭제) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const handleFileDelete = (index: number, extra?: string) => {
     if (extra === `single`) {
       const updatedFiles: File[] = (fileList ?? []).filter((_file: File, i: number) => i !== index);
@@ -188,7 +188,7 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
     }
   };
 
-  // 6. handle (기존 파일 삭제) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 6. handle (기존 파일 삭제) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const handleExistingFileDelete = (index: number) => {
     const updatedExistingFile: any[] = fileExisting?.filter((_file: any, i: number) => i !== index);
     setFileExisting(updatedExistingFile);
@@ -243,7 +243,7 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
                 src={src}
                 className={`ml-15px mr-10px`}
               />
-              <Div max={14} className={`black fs-0-9rem fw-500`}>
+              <Div max={10} className={`black fs-0-9rem fw-500`}>
                 {file?.name}
               </Div>
               <Div
@@ -278,7 +278,7 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
               src={file}
               className={`ml-15px mr-10px`}
             />
-            <Div max={14} className={`black fs-0-9rem fw-500`}>
+            <Div max={10} className={`black fs-0-9rem fw-500`}>
               {file}
             </Div>
             <Div
@@ -297,7 +297,7 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
     </Grid>
   );
 
-  // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {/** 실제 파일 선택은 이 hidden input 하나로만 처리 */}

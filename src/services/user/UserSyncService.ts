@@ -8,7 +8,7 @@
 import { decimalToTime, timeToDecimal } from "@assets/scripts/utils";
 import * as repository from "@repositories/user/UserSyncRepository";
 
-// 0. category (카테고리 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 0. category (카테고리 조회) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const category = async (user_id_param: string) => {
   // result 변수 선언
   let findCategory: any = null;
@@ -494,7 +494,7 @@ export const favorite = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 4. property (자산 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 4. property (자산 조회) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const property = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let findRegDt: any = null;

@@ -12,14 +12,19 @@ export interface FoodRecordType {
   food_record_dateType: string;
   food_record_dateStart: string;
   food_record_dateEnd: string;
+  food_record_score_smile: string;
   food_record_total_kcal: string;
   food_record_total_kcal_color: string;
+  food_goal_kcal: string;
   food_record_total_carb: string;
   food_record_total_carb_color: string;
+  food_goal_carb: string;
   food_record_total_protein: string;
   food_record_total_protein_color: string;
+  food_goal_protein: string;
   food_record_total_fat: string;
   food_record_total_fat_color: string;
+  food_goal_fat: string;
   food_section: {
     food_record_part: string;
     food_record_name: string;
@@ -36,21 +41,26 @@ export interface FoodRecordType {
   food_record_updateDt: string;
 }
 
-// Schema ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// Schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const FoodRecord: FoodRecordType = {
   _id: ``,
   food_record_number: 0,
   food_record_dateType: ``,
   food_record_dateStart: `0000-00-00`,
   food_record_dateEnd: `0000-00-00`,
+  food_record_score_smile: `smile3`,
   food_record_total_kcal: `0`,
   food_record_total_kcal_color: ``,
+  food_goal_kcal: `0`,
   food_record_total_carb: `0`,
   food_record_total_carb_color: ``,
+  food_goal_carb: `0`,
   food_record_total_protein: `0`,
   food_record_total_protein_color: ``,
+  food_goal_protein: `0`,
   food_record_total_fat: `0`,
   food_record_total_fat_color: ``,
+  food_goal_fat: `0`,
   food_section: [
     {
       food_record_part: ``,

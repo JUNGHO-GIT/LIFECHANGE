@@ -10,10 +10,10 @@ import { MuiAlert, Snackbar } from "@exportMuis";
 import { memo } from "@exportReacts";
 import { useStoreConfirm } from "@exportStores";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const Confirm = memo(() => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { CONFIRM, setCONFIRM } = useStoreConfirm();
 
   // 7. confirm ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -36,7 +36,7 @@ export const Confirm = memo(() => {
       <MuiAlert
         severity={`success`}
         variant={`standard`}
-        className={`w-95vw h-8vh d-center border-1 radius-2 shadow-4 fs-0-8rem fw-700 snackbar z-10000`}
+        className={`w-95vw h-8vh d-center border-1 radius-2 shadow-2 fs-0-8rem fw-700 snackbar z-10000`}
         action={(
           <>
             <Icons
@@ -69,7 +69,7 @@ export const Confirm = memo(() => {
     </Snackbar>
   );
 
-  // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {confirmNode()}

@@ -7,10 +7,10 @@
 
 import { differenceInMinutes } from "date-fns";
 
-// 1. list ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const list = async (object: any) => {
 
-  // 0. calcOverTenMillion ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 0. calcOverTenMillion ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const calcOverTenMillion = (param: string) => {
 
     let finalResult: string = ``;
@@ -134,15 +134,15 @@ export const list = async (object: any) => {
     else if (extra === `sleepTime`) {
       const hoursGoal = Number.parseFloat(goalParam?.split(`:`)[0]);
       const hoursRecord = Number.parseFloat(recordParam?.split(`:`)[0]);
-      const hours = Math.abs(hoursGoal - hoursRecord);
       const minutesGoal = Number.parseFloat(goalParam?.split(`:`)[1]);
       const minutesRecord = Number.parseFloat(recordParam?.split(`:`)[1]);
-      const minutes = Math.abs(minutesGoal - minutesRecord);
+      const goalMinutes = (hoursGoal * 60) + minutesGoal;
+      const recordMinutes = (hoursRecord * 60) + minutesRecord;
 
-      diffVal = (hours * 60) + minutes;
+      diffVal = goalMinutes - recordMinutes;
 
       // 1. - 10분
-      if (0 <= diffVal && diffVal <= 10) {
+      if (diffVal <= 10) {
         finalResult += ` firstScore`;
       }
       // 2. 10분 - 20분

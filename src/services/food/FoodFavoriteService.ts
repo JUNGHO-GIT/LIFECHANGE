@@ -40,7 +40,7 @@ export const list = async (user_id_param: string) => {
   };
 };
 
-// 4. update ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 4. update ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const update = async (
   user_id_param: string,
   foodFavorite_param: any,

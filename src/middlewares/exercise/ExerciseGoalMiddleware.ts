@@ -7,10 +7,10 @@
 
 import { differenceInMinutes } from "date-fns";
 
-// 1. list ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const list = async (object: any) => {
 
-  // 0. calcOverTenMillion ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 0. calcOverTenMillion ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const calcOverTenMillion = (param: string) => {
 
     let finalResult: string = ``;
@@ -94,53 +94,63 @@ export const list = async (object: any) => {
 
     // 1. count
     if (extra === `count`) {
-      percent = Math.abs(((goal - record) / goal) * 100);
-
-      // 1. - 1%
-      if (percent > 0 && percent <= 1) {
+      if (record >= goal) {
         finalResult += ` firstScore`;
       }
-      // 2. 1% - 10%
-      else if (percent > 1 && percent <= 10) {
-        finalResult += ` secondScore`;
-      }
-      // 3. 10% - 30%
-      else if (percent > 10 && percent <= 30) {
-        finalResult += ` thirdScore`;
-      }
-      // 4. 30% - 50%
-      else if (percent > 30 && percent <= 50) {
-        finalResult += ` fourthScore`;
-      }
-      // 5. 50% -
       else {
-        finalResult += ` fifthScore`;
+        percent = ((goal - record) / goal) * 100;
+
+        // 1. - 1%
+        if (percent > 0 && percent <= 1) {
+          finalResult += ` firstScore`;
+        }
+        // 2. 1% - 10%
+        else if (percent > 1 && percent <= 10) {
+          finalResult += ` secondScore`;
+        }
+        // 3. 10% - 30%
+        else if (percent > 10 && percent <= 30) {
+          finalResult += ` thirdScore`;
+        }
+        // 4. 30% - 50%
+        else if (percent > 30 && percent <= 50) {
+          finalResult += ` fourthScore`;
+        }
+        // 5. 50% -
+        else {
+          finalResult += ` fifthScore`;
+        }
       }
     }
 
     // 2. volume
     else if (extra === `volume`) {
-      percent = Math.abs(((goal - record) / goal) * 100);
-
-      // 1. - 1%
-      if (percent > 0 && percent <= 1) {
+      if (record >= goal) {
         finalResult += ` firstScore`;
       }
-      // 2. 1% - 10%
-      else if (percent > 1 && percent <= 10) {
-        finalResult += ` secondScore`;
-      }
-      // 3. 10% - 30%
-      else if (percent > 10 && percent <= 30) {
-        finalResult += ` thirdScore`;
-      }
-      // 4. 30% - 50%
-      else if (percent > 30 && percent <= 50) {
-        finalResult += ` fourthScore`;
-      }
-      // 5. 50% -
       else {
-        finalResult += ` fifthScore`;
+        percent = ((goal - record) / goal) * 100;
+
+        // 1. - 1%
+        if (percent > 0 && percent <= 1) {
+          finalResult += ` firstScore`;
+        }
+        // 2. 1% - 10%
+        else if (percent > 1 && percent <= 10) {
+          finalResult += ` secondScore`;
+        }
+        // 3. 10% - 30%
+        else if (percent > 10 && percent <= 30) {
+          finalResult += ` thirdScore`;
+        }
+        // 4. 30% - 50%
+        else if (percent > 30 && percent <= 50) {
+          finalResult += ` fourthScore`;
+        }
+        // 5. 50% -
+        else {
+          finalResult += ` fifthScore`;
+        }
       }
     }
 
@@ -152,7 +162,14 @@ export const list = async (object: any) => {
       const minutesGoal: number = Number.parseFloat(goalParam?.split(`:`)[1]);
       const minutesRecord: number = Number.parseFloat(recordParam?.split(`:`)[1]);
       const minutes: number = Math.abs(minutesGoal - minutesRecord);
-      const diffVal: number = (hours * 60) + minutes;
+      let diffVal: number = (hours * 60) + minutes;
+
+      if (
+        hoursRecord > hoursGoal ||
+        (hoursRecord === hoursGoal && minutesRecord >= minutesGoal)
+      ) {
+        diffVal = 0;
+      }
 
       // 1. - 10분
       if (0 <= diffVal && diffVal <= 10) {
@@ -178,27 +195,32 @@ export const list = async (object: any) => {
 
     // 4. scale
     else if (extra === `scale`) {
-      percent = Math.abs(((goal - record) / goal) * 100);
-
-      // 1. - 1%
-      if (percent > 0 && percent <= 1) {
+      if (record <= goal) {
         finalResult += ` firstScore`;
       }
-      // 2. 1% - 10%
-      else if (percent > 1 && percent <= 10) {
-        finalResult += ` secondScore`;
-      }
-      // 3. 10% - 30%
-      else if (percent > 10 && percent <= 30) {
-        finalResult += ` thirdScore`;
-      }
-      // 4. 30% - 50%
-      else if (percent > 30 && percent <= 50) {
-        finalResult += ` fourthScore`;
-      }
-      // 5. 50% -
       else {
-        finalResult += ` fifthScore`;
+        percent = ((record - goal) / goal) * 100;
+
+        // 1. - 1%
+        if (percent > 0 && percent <= 1) {
+          finalResult += ` firstScore`;
+        }
+        // 2. 1% - 10%
+        else if (percent > 1 && percent <= 10) {
+          finalResult += ` secondScore`;
+        }
+        // 3. 10% - 30%
+        else if (percent > 10 && percent <= 30) {
+          finalResult += ` thirdScore`;
+        }
+        // 4. 30% - 50%
+        else if (percent > 30 && percent <= 50) {
+          finalResult += ` fourthScore`;
+        }
+        // 5. 50% -
+        else {
+          finalResult += ` fifthScore`;
+        }
       }
     }
 

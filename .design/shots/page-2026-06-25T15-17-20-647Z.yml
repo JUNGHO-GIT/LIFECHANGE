@@ -1,0 +1,329 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5] [cursor=pointer]:
+        - img [ref=e149]
+        - img [ref=e150]
+      - button [ref=e151] [cursor=pointer]:
+        - img [ref=e9]
+    - generic [ref=e14]:
+      - generic [ref=e15]:
+        - img [ref=e152] [cursor=pointer]
+        - img [ref=e153] [cursor=pointer]
+        - img [ref=e154] [cursor=pointer]
+        - img [ref=e155] [cursor=pointer]
+      - tablist [ref=e27]:
+        - tab [selected] [ref=e156] [cursor=pointer]: 일정
+    - generic [ref=e48]:
+      - generic [ref=e49]:
+        - button [ref=e157] [cursor=pointer]:
+          - img [ref=e52]
+        - generic [ref=e57] [cursor=pointer]: 2026-07
+        - button [ref=e158] [cursor=pointer]:
+          - img [ref=e60]
+      - generic [ref=e69]:
+        - generic [ref=e70]:
+          - generic [ref=e71]: 일
+          - generic [ref=e72]: 월
+          - generic [ref=e73]: 화
+          - generic [ref=e74]: 수
+          - generic [ref=e75]: 목
+          - generic [ref=e76]: 금
+          - generic [ref=e77]: 토
+        - generic [ref=e78]:
+          - button [ref=e159]:
+            - generic [ref=e160]: "28"
+          - button [ref=e161]:
+            - generic [ref=e162]: "29"
+          - button [ref=e163]:
+            - generic [ref=e164]: "30"
+          - button [ref=e165]:
+            - generic [ref=e166]: "1"
+          - button [ref=e167]:
+            - generic [ref=e168]: "2"
+          - button [ref=e169]:
+            - generic [ref=e170]: "3"
+          - button [ref=e171]:
+            - generic [ref=e172]: "4"
+          - button [ref=e173]:
+            - generic [ref=e174]: "5"
+          - button [ref=e175]:
+            - generic [ref=e176]: "6"
+          - button [ref=e177]:
+            - generic [ref=e178]: "7"
+          - button [ref=e179]:
+            - generic [ref=e180]: "8"
+          - button [ref=e181]:
+            - generic [ref=e182]: "9"
+          - button [ref=e183]:
+            - generic [ref=e184]: "10"
+          - button [ref=e185]:
+            - generic [ref=e186]: "11"
+          - button [ref=e187]:
+            - generic [ref=e188]: "12"
+          - button [ref=e189]:
+            - generic [ref=e190]: "13"
+          - button [ref=e191]:
+            - generic [ref=e192]: "14"
+          - button [ref=e193]:
+            - generic [ref=e194]: "15"
+          - button [ref=e195]:
+            - generic [ref=e196]: "16"
+          - button [ref=e197]:
+            - generic [ref=e198]: "17"
+          - button [ref=e199]:
+            - generic [ref=e200]: "18"
+          - button [ref=e201]:
+            - generic [ref=e202]: "19"
+          - button [ref=e203]:
+            - generic [ref=e204]: "20"
+          - button [ref=e205]:
+            - generic [ref=e206]: "21"
+          - button [ref=e207]:
+            - generic [ref=e208]: "22"
+          - button [ref=e209]:
+            - generic [ref=e210]: "23"
+          - button [ref=e211]:
+            - generic [ref=e212]: "24"
+          - button [ref=e213]:
+            - generic [ref=e214]: "25"
+          - button [ref=e215]:
+            - generic [ref=e216]: "26"
+          - button [ref=e217]:
+            - generic [ref=e218]: "27"
+          - button [ref=e219]:
+            - generic [ref=e220]: "28"
+          - button [ref=e221]:
+            - generic [ref=e222]: "29"
+          - button [ref=e223]:
+            - generic [ref=e224]: "30"
+          - button [ref=e225]:
+            - generic [ref=e226]: "31"
+          - button [ref=e227]:
+            - generic [ref=e228]: "1"
+    - generic [ref=e30]:
+      - button [ref=e229] [cursor=pointer]:
+        - img [ref=e230]
+        - generic [ref=e33]: 운동
+      - button [ref=e231] [cursor=pointer]:
+        - img [ref=e232]
+        - generic [ref=e36]: 식단
+      - button [ref=e233] [cursor=pointer]:
+        - img [ref=e234]
+        - generic [ref=e39]: 일정
+      - button [ref=e235] [cursor=pointer]:
+        - img [ref=e236]
+        - generic [ref=e42]: 자산
+      - button [ref=e237] [cursor=pointer]:
+        - img [ref=e238]
+        - generic [ref=e45]: 수면
+  - generic [ref=e241]:
+    - generic [ref=e242]:
+      - generic [ref=e243]: 월별
+      - generic [ref=e244]: "[07-01 - 07-31]"
+    - generic [ref=e246]:
+      - generic [ref=e248] [cursor=pointer]:
+        - generic [ref=e249]: 2026/07
+        - button "year view is open, switch to calendar view" [ref=e383]:
+          - img [ref=e251]
+      - radiogroup "2026/07" [ref=e384]:
+        - radio "1900" [ref=e385] [cursor=pointer]
+        - radio "1901" [ref=e386] [cursor=pointer]
+        - radio "1902" [ref=e387] [cursor=pointer]
+        - radio "1903" [ref=e388] [cursor=pointer]
+        - radio "1904" [ref=e389] [cursor=pointer]
+        - radio "1905" [ref=e390] [cursor=pointer]
+        - radio "1906" [ref=e391] [cursor=pointer]
+        - radio "1907" [ref=e392] [cursor=pointer]
+        - radio "1908" [ref=e393] [cursor=pointer]
+        - radio "1909" [ref=e394] [cursor=pointer]
+        - radio "1910" [ref=e395] [cursor=pointer]
+        - radio "1911" [ref=e396] [cursor=pointer]
+        - radio "1912" [ref=e397] [cursor=pointer]
+        - radio "1913" [ref=e398] [cursor=pointer]
+        - radio "1914" [ref=e399] [cursor=pointer]
+        - radio "1915" [ref=e400] [cursor=pointer]
+        - radio "1916" [ref=e401] [cursor=pointer]
+        - radio "1917" [ref=e402] [cursor=pointer]
+        - radio "1918" [ref=e403] [cursor=pointer]
+        - radio "1919" [ref=e404] [cursor=pointer]
+        - radio "1920" [ref=e405] [cursor=pointer]
+        - radio "1921" [ref=e406] [cursor=pointer]
+        - radio "1922" [ref=e407] [cursor=pointer]
+        - radio "1923" [ref=e408] [cursor=pointer]
+        - radio "1924" [ref=e409] [cursor=pointer]
+        - radio "1925" [ref=e410] [cursor=pointer]
+        - radio "1926" [ref=e411] [cursor=pointer]
+        - radio "1927" [ref=e412] [cursor=pointer]
+        - radio "1928" [ref=e413] [cursor=pointer]
+        - radio "1929" [ref=e414] [cursor=pointer]
+        - radio "1930" [ref=e415] [cursor=pointer]
+        - radio "1931" [ref=e416] [cursor=pointer]
+        - radio "1932" [ref=e417] [cursor=pointer]
+        - radio "1933" [ref=e418] [cursor=pointer]
+        - radio "1934" [ref=e419] [cursor=pointer]
+        - radio "1935" [ref=e420] [cursor=pointer]
+        - radio "1936" [ref=e421] [cursor=pointer]
+        - radio "1937" [ref=e422] [cursor=pointer]
+        - radio "1938" [ref=e423] [cursor=pointer]
+        - radio "1939" [ref=e424] [cursor=pointer]
+        - radio "1940" [ref=e425] [cursor=pointer]
+        - radio "1941" [ref=e426] [cursor=pointer]
+        - radio "1942" [ref=e427] [cursor=pointer]
+        - radio "1943" [ref=e428] [cursor=pointer]
+        - radio "1944" [ref=e429] [cursor=pointer]
+        - radio "1945" [ref=e430] [cursor=pointer]
+        - radio "1946" [ref=e431] [cursor=pointer]
+        - radio "1947" [ref=e432] [cursor=pointer]
+        - radio "1948" [ref=e433] [cursor=pointer]
+        - radio "1949" [ref=e434] [cursor=pointer]
+        - radio "1950" [ref=e435] [cursor=pointer]
+        - radio "1951" [ref=e436] [cursor=pointer]
+        - radio "1952" [ref=e437] [cursor=pointer]
+        - radio "1953" [ref=e438] [cursor=pointer]
+        - radio "1954" [ref=e439] [cursor=pointer]
+        - radio "1955" [ref=e440] [cursor=pointer]
+        - radio "1956" [ref=e441] [cursor=pointer]
+        - radio "1957" [ref=e442] [cursor=pointer]
+        - radio "1958" [ref=e443] [cursor=pointer]
+        - radio "1959" [ref=e444] [cursor=pointer]
+        - radio "1960" [ref=e445] [cursor=pointer]
+        - radio "1961" [ref=e446] [cursor=pointer]
+        - radio "1962" [ref=e447] [cursor=pointer]
+        - radio "1963" [ref=e448] [cursor=pointer]
+        - radio "1964" [ref=e449] [cursor=pointer]
+        - radio "1965" [ref=e450] [cursor=pointer]
+        - radio "1966" [ref=e451] [cursor=pointer]
+        - radio "1967" [ref=e452] [cursor=pointer]
+        - radio "1968" [ref=e453] [cursor=pointer]
+        - radio "1969" [ref=e454] [cursor=pointer]
+        - radio "1970" [ref=e455] [cursor=pointer]
+        - radio "1971" [ref=e456] [cursor=pointer]
+        - radio "1972" [ref=e457] [cursor=pointer]
+        - radio "1973" [ref=e458] [cursor=pointer]
+        - radio "1974" [ref=e459] [cursor=pointer]
+        - radio "1975" [ref=e460] [cursor=pointer]
+        - radio "1976" [ref=e461] [cursor=pointer]
+        - radio "1977" [ref=e462] [cursor=pointer]
+        - radio "1978" [ref=e463] [cursor=pointer]
+        - radio "1979" [ref=e464] [cursor=pointer]
+        - radio "1980" [ref=e465] [cursor=pointer]
+        - radio "1981" [ref=e466] [cursor=pointer]
+        - radio "1982" [ref=e467] [cursor=pointer]
+        - radio "1983" [ref=e468] [cursor=pointer]
+        - radio "1984" [ref=e469] [cursor=pointer]
+        - radio "1985" [ref=e470] [cursor=pointer]
+        - radio "1986" [ref=e471] [cursor=pointer]
+        - radio "1987" [ref=e472] [cursor=pointer]
+        - radio "1988" [ref=e473] [cursor=pointer]
+        - radio "1989" [ref=e474] [cursor=pointer]
+        - radio "1990" [ref=e475] [cursor=pointer]
+        - radio "1991" [ref=e476] [cursor=pointer]
+        - radio "1992" [ref=e477] [cursor=pointer]
+        - radio "1993" [ref=e478] [cursor=pointer]
+        - radio "1994" [ref=e479] [cursor=pointer]
+        - radio "1995" [ref=e480] [cursor=pointer]
+        - radio "1996" [ref=e481] [cursor=pointer]
+        - radio "1997" [ref=e482] [cursor=pointer]
+        - radio "1998" [ref=e483] [cursor=pointer]
+        - radio "1999" [ref=e484] [cursor=pointer]
+        - radio "2000" [ref=e485] [cursor=pointer]
+        - radio "2001" [ref=e486] [cursor=pointer]
+        - radio "2002" [ref=e487] [cursor=pointer]
+        - radio "2003" [ref=e488] [cursor=pointer]
+        - radio "2004" [ref=e489] [cursor=pointer]
+        - radio "2005" [ref=e490] [cursor=pointer]
+        - radio "2006" [ref=e491] [cursor=pointer]
+        - radio "2007" [ref=e492] [cursor=pointer]
+        - radio "2008" [ref=e493] [cursor=pointer]
+        - radio "2009" [ref=e494] [cursor=pointer]
+        - radio "2010" [ref=e495] [cursor=pointer]
+        - radio "2011" [ref=e496] [cursor=pointer]
+        - radio "2012" [ref=e497] [cursor=pointer]
+        - radio "2013" [ref=e498] [cursor=pointer]
+        - radio "2014" [ref=e499] [cursor=pointer]
+        - radio "2015" [ref=e500] [cursor=pointer]
+        - radio "2016" [ref=e501] [cursor=pointer]
+        - radio "2017" [ref=e502] [cursor=pointer]
+        - radio "2018" [ref=e503] [cursor=pointer]
+        - radio "2019" [ref=e504] [cursor=pointer]
+        - radio "2020" [ref=e505] [cursor=pointer]
+        - radio "2021" [ref=e506] [cursor=pointer]
+        - radio "2022" [ref=e507] [cursor=pointer]
+        - radio "2023" [ref=e508] [cursor=pointer]
+        - radio "2024" [ref=e509] [cursor=pointer]
+        - radio "2025" [ref=e510] [cursor=pointer]
+        - radio "2026" [checked] [active] [ref=e511] [cursor=pointer]
+        - radio "2027" [ref=e512] [cursor=pointer]
+        - radio "2028" [ref=e513] [cursor=pointer]
+        - radio "2029" [ref=e514] [cursor=pointer]
+        - radio "2030" [ref=e515] [cursor=pointer]
+        - radio "2031" [ref=e516] [cursor=pointer]
+        - radio "2032" [ref=e517] [cursor=pointer]
+        - radio "2033" [ref=e518] [cursor=pointer]
+        - radio "2034" [ref=e519] [cursor=pointer]
+        - radio "2035" [ref=e520] [cursor=pointer]
+        - radio "2036" [ref=e521] [cursor=pointer]
+        - radio "2037" [ref=e522] [cursor=pointer]
+        - radio "2038" [ref=e523] [cursor=pointer]
+        - radio "2039" [ref=e524] [cursor=pointer]
+        - radio "2040" [ref=e525] [cursor=pointer]
+        - radio "2041" [ref=e526] [cursor=pointer]
+        - radio "2042" [ref=e527] [cursor=pointer]
+        - radio "2043" [ref=e528] [cursor=pointer]
+        - radio "2044" [ref=e529] [cursor=pointer]
+        - radio "2045" [ref=e530] [cursor=pointer]
+        - radio "2046" [ref=e531] [cursor=pointer]
+        - radio "2047" [ref=e532] [cursor=pointer]
+        - radio "2048" [ref=e533] [cursor=pointer]
+        - radio "2049" [ref=e534] [cursor=pointer]
+        - radio "2050" [ref=e535] [cursor=pointer]
+        - radio "2051" [ref=e536] [cursor=pointer]
+        - radio "2052" [ref=e537] [cursor=pointer]
+        - radio "2053" [ref=e538] [cursor=pointer]
+        - radio "2054" [ref=e539] [cursor=pointer]
+        - radio "2055" [ref=e540] [cursor=pointer]
+        - radio "2056" [ref=e541] [cursor=pointer]
+        - radio "2057" [ref=e542] [cursor=pointer]
+        - radio "2058" [ref=e543] [cursor=pointer]
+        - radio "2059" [ref=e544] [cursor=pointer]
+        - radio "2060" [ref=e545] [cursor=pointer]
+        - radio "2061" [ref=e546] [cursor=pointer]
+        - radio "2062" [ref=e547] [cursor=pointer]
+        - radio "2063" [ref=e548] [cursor=pointer]
+        - radio "2064" [ref=e549] [cursor=pointer]
+        - radio "2065" [ref=e550] [cursor=pointer]
+        - radio "2066" [ref=e551] [cursor=pointer]
+        - radio "2067" [ref=e552] [cursor=pointer]
+        - radio "2068" [ref=e553] [cursor=pointer]
+        - radio "2069" [ref=e554] [cursor=pointer]
+        - radio "2070" [ref=e555] [cursor=pointer]
+        - radio "2071" [ref=e556] [cursor=pointer]
+        - radio "2072" [ref=e557] [cursor=pointer]
+        - radio "2073" [ref=e558] [cursor=pointer]
+        - radio "2074" [ref=e559] [cursor=pointer]
+        - radio "2075" [ref=e560] [cursor=pointer]
+        - radio "2076" [ref=e561] [cursor=pointer]
+        - radio "2077" [ref=e562] [cursor=pointer]
+        - radio "2078" [ref=e563] [cursor=pointer]
+        - radio "2079" [ref=e564] [cursor=pointer]
+        - radio "2080" [ref=e565] [cursor=pointer]
+        - radio "2081" [ref=e566] [cursor=pointer]
+        - radio "2082" [ref=e567] [cursor=pointer]
+        - radio "2083" [ref=e568] [cursor=pointer]
+        - radio "2084" [ref=e569] [cursor=pointer]
+        - radio "2085" [ref=e570] [cursor=pointer]
+        - radio "2086" [ref=e571] [cursor=pointer]
+        - radio "2087" [ref=e572] [cursor=pointer]
+        - radio "2088" [ref=e573] [cursor=pointer]
+        - radio "2089" [ref=e574] [cursor=pointer]
+        - radio "2090" [ref=e575] [cursor=pointer]
+        - radio "2091" [ref=e576] [cursor=pointer]
+        - radio "2092" [ref=e577] [cursor=pointer]
+        - radio "2093" [ref=e578] [cursor=pointer]
+        - radio "2094" [ref=e579] [cursor=pointer]
+        - radio "2095" [ref=e580] [cursor=pointer]
+        - radio "2096" [ref=e581] [cursor=pointer]
+        - radio "2097" [ref=e582] [cursor=pointer]
+        - radio "2098" [ref=e583] [cursor=pointer]
+        - radio "2099" [ref=e584] [cursor=pointer]

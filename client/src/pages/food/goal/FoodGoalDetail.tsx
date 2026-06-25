@@ -15,10 +15,10 @@ import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, Count, Delete, Input } from "@exportContainers";
 import { Img, Bg, Paper, Grid, Br } from "@exportComponents";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const FoodGoalDetail = memo(() => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const {
     URL_OBJECT, navigate, sessionId, toList,
     location_dateType, location_dateStart, location_dateEnd,
@@ -29,7 +29,7 @@ export const FoodGoalDetail = memo(() => {
   const { setLOADING } = useStoreLoading();
   const { ERRORS, REFS, validate } = useValidateFood();
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ LOCKED, setLOCKED ] = useState<string>(`unlocked`);
   const [ OBJECT, setOBJECT ] = useState<FoodGoalType>(FoodGoal);
   const [ EXIST, setEXIST ] = useState({
@@ -299,7 +299,7 @@ export const FoodGoalDetail = memo(() => {
     }));
   }, []);
 
-  // 7. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 7. detail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
@@ -366,7 +366,7 @@ export const FoodGoalDetail = memo(() => {
                   }
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -407,7 +407,7 @@ export const FoodGoalDetail = memo(() => {
                   }
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -448,7 +448,7 @@ export const FoodGoalDetail = memo(() => {
                   }
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -489,7 +489,7 @@ export const FoodGoalDetail = memo(() => {
                   }
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -526,7 +526,7 @@ export const FoodGoalDetail = memo(() => {
     );
   };
 
-  // 8. dialog ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -538,7 +538,7 @@ export const FoodGoalDetail = memo(() => {
     />
   );
 
-  // 9. footer ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const footerNode = () => (
     <Footer
       state={{
@@ -553,7 +553,7 @@ export const FoodGoalDetail = memo(() => {
     />
   );
 
-  // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {detailNode()}

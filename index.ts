@@ -33,21 +33,20 @@ import { router as SleepRecordRouter } from "@routers/sleep/SleepRecordRouter";
 import { router as UserRouter } from "@routers/user/UserRouter";
 // user
 import { router as UserSyncRouter } from "@routers/user/UserSyncRouter";
-import compression from "compression";
-import cors from "cors";
 import express, { type Express, type Request, type Response } from "express";
 import rateLimit from "express-rate-limit";
-import helmet from "helmet";
+import compression from "compression";
 import mongoose from "mongoose";
+import helmet from "helmet";
+import cors from "cors";
 import qs from "qs";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 loadEnv();
 const app: Express = express();
 const preFix: string = process.env.HTTP_PREFIX ?? ``;
 
-// 필수 환경변수 검증 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-// loadEnv() 직후 index.ts 가 실제 소비하는 키 존재/형식을 한 번에 검사하고, 누락 시 fail-fast.
+// 필수 환경변수 검증 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 (function validateEnv() {
   const requiredKeys: string[] = [
     `HTTP_PORT`,
@@ -62,9 +61,7 @@ const preFix: string = process.env.HTTP_PREFIX ?? ``;
     return value === ``;
   });
 
-  // ENV_MODE 에 따라 사용하는 DB 이름 키(PRODUCTION=DB_NAME, 그 외=DB_TEST)도 검증
-  const dbNameKey: string =
-    process.env.ENV_MODE === `PRODUCTION` ? `DB_NAME` : `DB_TEST`;
+  const dbNameKey: string = process.env.ENV_MODE === `PRODUCTION` ? `DB_NAME` : `DB_TEST`;
   if (String(process.env[dbNameKey] ?? ``).trim() === ``) {
     missingKeys.push(dbNameKey);
   }
@@ -119,17 +116,11 @@ const host: string | undefined = process.env.DB_HOST;
 const port: string | undefined = process.env.DB_PORT;
 const authSource: string | undefined = process.env.DB_AUTH_SOURCE;
 const mode: string | undefined = process.env.ENV_MODE;
-const db: string =
-  mode === `PRODUCTION`
-    ? (process.env.DB_NAME ?? ``)
-    : (process.env.DB_TEST ?? ``);
-const athSrcQry: string = authSource
-  ? `?authSource=${encodeURIComponent(authSource)}`
-  : ``;
+const db: string = mode === `PRODUCTION` ? (process.env.DB_NAME ?? ``) : (process.env.DB_TEST ?? ``);
+const athSrcQry: string = authSource ? `?authSource=${encodeURIComponent(authSource)}` : ``;
 const isDev: boolean = mode === `DEVELOPMENT`;
 
-mongoose
-  .connect(
+mongoose.connect(
     `mongodb://${encodeURIComponent(id ?? ``)}:${encodeURIComponent(pw ?? ``)}@${host}:${port}/${db}${athSrcQry}`,
     {
       maxPoolSize: Number(process.env.DB_MAX_POOL_SIZE ?? 50),
@@ -164,24 +155,22 @@ if (isDev) {
 
   const fmtColl = (coll: string) => `${color.coll}${coll}${color.reset}`;
   const fmtMethod = (m: string) => `${color.method}${m}${color.reset}`;
-  const fmtJson = (obj: any) =>
-    JSON.stringify(obj, null, 2)
-      .replaceAll(/"(\$[^"]+)":/g, `"${color.field}$1${color.reset}":`)
-      .replaceAll(/"([^"$]+)":/g, `"${color.field}$1${color.reset}":`)
-      .replaceAll(/: "([^"]*)"/g, `: "${color.string}$1${color.reset}"`)
-      .replaceAll(/: (\d+)/g, `: ${color.number}$1${color.reset}`)
-      .replaceAll(/: (true|false|null)/g, `: ${color.boolean}$1${color.reset}`);
+  const fmtJson = (obj: any) => JSON.stringify(obj, null, 2)
+  .replaceAll(/"(\$[^"]+)":/g, `"${color.field}$1${color.reset}":`)
+  .replaceAll(/"([^"$]+)":/g, `"${color.field}$1${color.reset}":`)
+  .replaceAll(/: "([^"]*)"/g, `: "${color.string}$1${color.reset}"`)
+  .replaceAll(/: (\d+)/g, `: ${color.number}$1${color.reset}`)
+  .replaceAll(/: (true|false|null)/g, `: ${color.boolean}$1${color.reset}`);
 
   mongoose.set(`debug`, (coll, method, query, doc, options) => {
     const log = (...parts: string[]) => {
       console.log(...parts, `\n`);
     };
     const args: string[] = [query, doc, options]
-      .filter((x) => x !== undefined)
-      .map((element) => fmtJson(element));
+    .filter((x) => x !== undefined)
+    .map((element) => fmtJson(element));
 
-    // 모든 메서드 그룹이 동일 포맷이므로 단일 분기로 처리
-    console.log(`\n――――――――――――――――――――――――――――――――――――――――――――-`);
+    console.log(`\n―――――――――――――――――――――――――――――――――――――――――――――`);
     log(
       `db.getCollection('${fmtColl(coll)}').${fmtMethod(method)}(`,
       args.join(`, `),
@@ -191,27 +180,20 @@ if (isDev) {
 }
 
 // qs 파서 적용 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-// express 5 기본 query parser 는 'simple'(node querystring)로 중첩 객체를 못 푼다.
-// 클라이언트가 DATE/PAGING 등을 중첩 객체(DATE[dateStart]=...)로 전송하므로 qs.parse 가 필수다.
 app.set(`query parser`, (str: string) => qs.parse(str));
 
 // 미들웨어 설정 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 const bodyLimit: string = process.env.HTTP_BODY_LIMIT ?? `1mb`;
 app.use(express.json({ limit: bodyLimit }));
 app.use(express.urlencoded({ extended: true, limit: bodyLimit }));
-// helmet 보안 헤더 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-// CSP/COEP 를 켜면 vite/MUI/이미지 cross-origin 로딩이 깨지므로 보수적으로 비활성화한다.
-// cors 앞에 배치해 모든 응답(프리플라이트 포함)에 보안 헤더를 우선 적용한다.
+// helmet 보안 헤더 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 app.use(
   helmet({
     contentSecurityPolicy: false,
     crossOriginEmbedderPolicy: false,
   }),
 );
-// CORS origin 정책 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-// credentials:true 와 origin:`*` 는 스펙 모순(자격 동반 와일드카드)이라 origin 을 화이트리스트로 좁힌다.
-// dev: localhost:3000 + vite host:true 가 노출하는 LAN origin(사설 IP:3000) 허용 — e2e 통과 보장.
-// prod: CLIENT_URL env 에서 scheme+host(+port)만 추출. 미설정 시 빈 목록이라도 안전하게 동작.
+// CORS origin 정책 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 const corsOrigin = (
   reqOrigin: string | undefined,
   callback: (err: Error | null, allow?: boolean) => void,
@@ -262,9 +244,6 @@ app.use(
 app.use(compression());
 
 // NoSQL 주입 방어(sanitize) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-// qs.parse 가 DATE[$gt] 같은 중첩 키를 객체로 풀어 Mongo 연산자 주입 여지가 생긴다.
-// req.query/body/params 를 재귀 순회하며 `$` 시작 키와 `.` 포함 키만 삭제한다.
-// DATE[dateStart] 등 정상 중첩 키와 일반 문자열/숫자 값은 그대로 보존한다.
 const sanitizeMongoKeys = (value: unknown, depth: number): void => {
   // 순환/과대 중첩 방어용 깊이 상한
   if (depth > 20 || value === null || typeof value !== `object`) {
@@ -285,8 +264,8 @@ const sanitizeMongoKeys = (value: unknown, depth: number): void => {
     sanitizeMongoKeys(target[key], depth + 1);
   }
 };
+// req.query 는 express 5 에서 getter-only 라 in-place 로만 정리
 app.use((req: Request, _res: Response, next: Function) => {
-  // req.query 는 express 5 에서 getter-only 라 in-place 로만 정리한다.
   sanitizeMongoKeys(req.query, 0);
   sanitizeMongoKeys(req.body, 0);
   sanitizeMongoKeys(req.params, 0);
@@ -294,8 +273,6 @@ app.use((req: Request, _res: Response, next: Function) => {
 });
 
 // rate-limit 설정 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-// 로그인/이메일발송 등 민감 엔드포인트(/user, /auth/google)에만 적용.
-// 개발/e2e 연속요청을 막지 않도록 windowMs/max 를 넉넉히 두고, DEVELOPMENT 에서는 매우 관대하게.
 const limitWindowMs: number = Number(
   process.env.RATE_LIMIT_WINDOW_MS ?? 15 * 60 * 1000,
 );
@@ -309,8 +286,7 @@ const sensitiveLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// 헬스체크/레디니스 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
-// 인증 없는 경량 엔드포인트. health 는 liveness(200 고정), ready 는 readiness(DB 연결 상태).
+// 헬스체크/레디니스 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 app.get(`${preFix}/health`, (_req: Request, res: Response) => {
   res.status(200).json({ status: `ok` });
 });
@@ -321,7 +297,7 @@ app.get(`${preFix}/ready`, (_req: Request, res: Response) => {
     .json({ status: isReady ? `ready` : `not-ready` });
 });
 
-// 라우터 설정 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 라우터 설정 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 // calendar
 app.use(`${preFix}/calendar`, CalendarRouter);
 
@@ -365,7 +341,6 @@ app.use((err: Error, req: Request, res: Response, _next: Function) => {
 });
 
 // 1. graceful shutdown ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-// SIGTERM/SIGINT 수신 시 in-flight 요청 drain → httpServer.close → mongoose.disconnect 후 종료.
 let shuttingDown: boolean = false;
 const gracefulShutdown = async (signal: string) => {
   if (shuttingDown) {
@@ -401,7 +376,6 @@ process.on(`SIGINT`, () => {
 });
 
 // 2. 전역 예외 핸들러 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-// unhandledRejection 은 로깅 후 유지, uncaughtException 은 로깅 후 안전 종료(프로세스 매니저 재시작 유도).
 process.on(`unhandledRejection`, (reason: unknown) => {
   console.error(`unhandledRejection: ${reason}`);
 });

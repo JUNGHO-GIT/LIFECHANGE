@@ -9,7 +9,7 @@
 
 import { describe, expect, mock, test } from "bun:test";
 
-// 1. mock 정의 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1. mock 정의 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 // detail 은 섹션 존재 여부를 도메인별로 제어할 수 있게 가변 row 를 반환
 let detailRows: any[] = [];
 const detailMock = mock(async () => detailRows);

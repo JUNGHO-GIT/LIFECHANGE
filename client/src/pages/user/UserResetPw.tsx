@@ -13,7 +13,7 @@ import { User, UserType } from "@exportSchemas";
 import { Input } from "@exportContainers";
 import { Div, Btn, Img, Hr, Paper, Grid } from "@exportComponents";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const UserResetPw = memo(() => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -402,7 +402,7 @@ export const UserResetPw = memo(() => {
             >
               <Div className={`d-row-center`}>
                 <Img
-                  max={14}
+                  max={10}
                   hover={true}
                   shadow={false}
                   radius={false}

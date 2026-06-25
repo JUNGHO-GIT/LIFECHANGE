@@ -8,7 +8,7 @@
 import { React, memo, useEffect, useRef } from "@exportReacts";
 import { Popover as MuiPopover, PopoverProps } from "@exportMuis";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const Popover = memo((props: PopoverProps) => {
 
   const paperRef: React.RefObject<HTMLDivElement | null> = useRef<HTMLDivElement | null>(null);

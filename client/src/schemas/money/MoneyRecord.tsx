@@ -12,10 +12,13 @@ export interface MoneyRecordType {
   money_record_dateType: string;
   money_record_dateStart: string;
   money_record_dateEnd: string;
+  money_record_score_smile: string;
   money_record_total_income: string;
   money_record_total_income_color: string;
   money_record_total_expense: string;
   money_record_total_expense_color: string;
+  money_goal_income: string;
+  money_goal_expense: string;
   money_section: {
     money_record_part: string;
     money_record_title: string;
@@ -30,17 +33,20 @@ export interface MoneyRecordType {
   money_record_updateDt: string;
 }
 
-// Schema ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// Schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const MoneyRecord: MoneyRecordType = {
   _id: ``,
   money_record_number: 0,
   money_record_dateType: ``,
   money_record_dateStart: `0000-00-00`,
   money_record_dateEnd: `0000-00-00`,
+  money_record_score_smile: `smile3`,
   money_record_total_income: `0`,
   money_record_total_income_color: ``,
   money_record_total_expense: `0`,
   money_record_total_expense_color: ``,
+  money_goal_income: `0`,
+  money_goal_expense: `0`,
   money_section: [
     {
       money_record_part: ``,

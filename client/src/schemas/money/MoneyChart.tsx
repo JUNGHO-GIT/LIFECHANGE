@@ -23,7 +23,7 @@ export interface MoneyAvgType {
   expense?: string;
 }
 
-// Schema ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// Schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const MoneyPie: MoneyPieType = {
   name: `Empty`,
   value: 100,

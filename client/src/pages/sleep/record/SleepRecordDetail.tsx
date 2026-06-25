@@ -15,7 +15,7 @@ import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, PickerTime, Count, Delete } from "@exportContainers";
 import { Bg, Paper, Grid, Br } from "@exportComponents";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const SleepRecordDetail = memo(() => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -63,7 +63,8 @@ export const SleepRecordDetail = memo(() => {
   });
 
   // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  // 항목 렌더를 비긴급으로 분리: 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
+  // - 항목 렌더를 비긴급으로 분리
+  // - 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
   const deferredObject = useDeferredValue(OBJECT);
 
   // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -88,10 +89,10 @@ export const SleepRecordDetail = memo(() => {
     DATE !== dateRef.current && (dateRef.current = DATE);
   }, [ COUNT, OBJECT, DATE ]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useTime(OBJECT, setOBJECT, PATH, `record`);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length <= 0) {
       return;
@@ -121,7 +122,7 @@ export const SleepRecordDetail = memo(() => {
     }));
   }, [ EXIST, DATE?.dateEnd, OBJECT.sleep_record_dateEnd ]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     axios.get(`${URL_OBJECT}/record/exist`, {
       params: {
@@ -147,7 +148,7 @@ export const SleepRecordDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     setLOADING(true);
     if (LOCKED === `locked`) {
@@ -201,7 +202,7 @@ export const SleepRecordDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     const defaultSection: any = {
       sleep_record_bedTime: `00:00`,

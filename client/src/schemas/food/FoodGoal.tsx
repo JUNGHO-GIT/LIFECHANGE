@@ -51,7 +51,7 @@ export interface FoodGoalType {
   food_record_diff_fat_color: string;
 }
 
-// Schema ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// Schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const FoodGoal: FoodGoalType = {
   _id: ``,
 

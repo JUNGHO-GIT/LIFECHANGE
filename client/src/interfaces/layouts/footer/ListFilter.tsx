@@ -12,13 +12,13 @@ import { PickerDay, Select } from "@exportContainers";
 import { useCommonValue } from "@exportHooks";
 import { MenuItem } from "@exportMuis";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface ListFilterProps {
   state: any;
   setState: any;
 }
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const ListFilter = memo((
   { state, setState }: ListFilterProps,
 ) => {
@@ -280,7 +280,7 @@ export const ListFilter = memo((
     isMoneyRecordList,
   ]);
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {listFilterNode}

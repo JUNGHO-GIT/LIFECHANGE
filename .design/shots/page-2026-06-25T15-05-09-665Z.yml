@@ -1,0 +1,19 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - button "settings" [ref=e5] [cursor=pointer]:
+      - img [ref=e6]
+    - tablist [ref=e16]:
+      - tab "일정" [selected] [ref=e17] [cursor=pointer]
+    - generic [ref=e19]:
+      - button "운동" [ref=e20] [cursor=pointer]:
+        - generic [ref=e22]: 운동
+      - button "식단" [ref=e23] [cursor=pointer]:
+        - generic [ref=e25]: 식단
+      - button "일정" [ref=e26] [cursor=pointer]:
+        - generic [ref=e28]: 일정
+      - button "자산" [ref=e29] [cursor=pointer]:
+        - generic [ref=e31]: 자산
+      - button "수면" [ref=e32] [cursor=pointer]:
+        - generic [ref=e34]: 수면
+  - status "lifechange loading" [ref=e35]:
+    - img "LIFECHANGE" [ref=e36]

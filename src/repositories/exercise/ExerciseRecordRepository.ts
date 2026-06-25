@@ -48,7 +48,7 @@ export const exist = async (
   return finalResult;
 };
 
-// 1. list ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const list = async (
   user_id_param: string,
   dateType_param: string,
@@ -160,6 +160,25 @@ export const list = async (
     },
     {
       $addFields: {
+        exercise_record_total_count: {
+          $cond: {
+            if: {
+              $and: [
+                {
+                  $lte: [
+                    { $toDouble: `$exercise_record_total_volume` },
+                    1,
+                  ],
+                },
+                {
+                  $eq: [`$exercise_record_total_cardio_minutes`, 0],
+                },
+              ],
+            },
+            then: ``,
+            else: `1`,
+          },
+        },
         exercise_record_total_cardio: {
           $concat: [
             {

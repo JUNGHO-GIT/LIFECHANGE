@@ -128,7 +128,7 @@ export const exist = async (
   return finalResult;
 };
 
-// 1. list ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const list = async (
   user_id_param: string,
   dateType_param: string,

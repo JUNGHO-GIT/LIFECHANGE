@@ -5,10 +5,10 @@
  * @since 2025-12-26
  */
 
-// 1. list ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const list = async (object: any) => {
 
-  // 0. calcOverTenMillion ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 0. calcOverTenMillion ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const calcOverTenMillion = (param: string) => {
 
     let finalResult: string = ``;
@@ -65,29 +65,64 @@ export const list = async (object: any) => {
     let percent: number = 0;
     let finalResult: string = ``;
 
-    // 1. kcal, carb, protein, fat
-    if (extra === `kcal` || extra === `carb` || extra === `protein` || extra === `fat`) {
-      percent = Math.abs(((goal - record) / goal) * 100);
-
-      // 1. - 1%
-      if (percent > 0 && percent <= 1) {
+    // 1. protein
+    if (extra === `protein`) {
+      if (record >= goal) {
         finalResult += ` firstScore`;
       }
-      // 2. 1% - 10%
-      else if (percent > 1 && percent <= 10) {
-        finalResult += ` secondScore`;
-      }
-      // 3. 10% - 30%
-      else if (percent > 10 && percent <= 30) {
-        finalResult += ` thirdScore`;
-      }
-      // 4. 30% - 50%
-      else if (percent > 30 && percent <= 50) {
-        finalResult += ` fourthScore`;
-      }
-      // 5. 50% -
       else {
-        finalResult += ` fifthScore`;
+        percent = ((goal - record) / goal) * 100;
+
+        // 1. - 1%
+        if (percent > 0 && percent <= 1) {
+          finalResult += ` firstScore`;
+        }
+        // 2. 1% - 10%
+        else if (percent > 1 && percent <= 10) {
+          finalResult += ` secondScore`;
+        }
+        // 3. 10% - 30%
+        else if (percent > 10 && percent <= 30) {
+          finalResult += ` thirdScore`;
+        }
+        // 4. 30% - 50%
+        else if (percent > 30 && percent <= 50) {
+          finalResult += ` fourthScore`;
+        }
+        // 5. 50% -
+        else {
+          finalResult += ` fifthScore`;
+        }
+      }
+    }
+    // 2. kcal, carb, fat
+    else if (extra === `kcal` || extra === `carb` || extra === `fat`) {
+      if (record <= goal) {
+        finalResult += ` firstScore`;
+      }
+      else {
+        percent = ((record - goal) / goal) * 100;
+
+        // 1. - 1%
+        if (percent > 0 && percent <= 1) {
+          finalResult += ` firstScore`;
+        }
+        // 2. 1% - 10%
+        else if (percent > 1 && percent <= 10) {
+          finalResult += ` secondScore`;
+        }
+        // 3. 10% - 30%
+        else if (percent > 10 && percent <= 30) {
+          finalResult += ` thirdScore`;
+        }
+        // 4. 30% - 50%
+        else if (percent > 30 && percent <= 50) {
+          finalResult += ` fourthScore`;
+        }
+        // 5. 50% -
+        else {
+          finalResult += ` fifthScore`;
+        }
       }
     }
 

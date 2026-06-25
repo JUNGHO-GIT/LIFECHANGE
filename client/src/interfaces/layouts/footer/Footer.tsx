@@ -12,14 +12,14 @@ import { Buttons } from "./Buttons";
 import { FindFilter } from "./FindFilter";
 import { ListFilter } from "./ListFilter";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface FooterProps {
   state: any;
   setState: any;
   flow?: any;
 }
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const Footer = memo((
   { state, setState, flow }: FooterProps,
 ) => {
@@ -31,7 +31,7 @@ export const Footer = memo((
   const [ typeName, setTypeName ] = useState<string>(``);
   const [ styleClass, setStyleClass ] = useState<string>(``);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     const commonStr: string = `layout-wrapper p-sticky h-8vh radius-2 border-1 shadow-1 p-5px`;
     const isUser: boolean = PATH.includes(`/user/category`) || PATH.includes(`/user/detail`);

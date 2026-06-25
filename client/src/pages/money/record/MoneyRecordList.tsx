@@ -11,7 +11,7 @@ import { useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { MoneyRecord, MoneyRecordType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { insertComma } from "@exportScripts";
+import { formatDate, insertComma } from "@exportScripts";
 import { Footer, Empty, Dialog } from "@exportLayouts";
 import { Div, Hr, Img, Icons, Paper, Grid } from "@exportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
@@ -19,7 +19,7 @@ import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
 // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const MoneyRecordList = memo(() => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const {
     URL_OBJECT, PATH, sessionId, localCurrency, toDetail,
     navigate, location_dateType, location_dateStart, location_dateEnd,
@@ -53,7 +53,7 @@ export const MoneyRecordList = memo(() => {
     ]
   );
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ OBJECT, setOBJECT ] = useState<[MoneyRecordType]>([MoneyRecord]);
   const [ EXIST, setEXIST ] = useState({
     day: [``],
@@ -188,7 +188,7 @@ export const MoneyRecordList = memo(() => {
             <Grid container={true} spacing={1} className={`mt-5px`}>
               <Grid size={2} className={`d-row-center`}>
                 <Img
-                  max={14}
+                  max={10}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -221,7 +221,7 @@ export const MoneyRecordList = memo(() => {
             <Grid container={true} spacing={1}>
               <Grid size={2} className={`d-row-center`}>
                 <Img
-                  max={14}
+                  max={10}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -299,10 +299,8 @@ export const MoneyRecordList = memo(() => {
                       onClick={(e: any) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        setIsExpanded(isExpanded.map((el: any, index: number) => (
-													i === index ? {
-													  expanded: !el.expanded,
-													} : el
+                        setIsExpanded(isExpanded.map((item: any, index: number) => (
+                          index === i ? { expanded: !item.expanded } : item
                         )));
                       }}
                     />
@@ -328,11 +326,19 @@ export const MoneyRecordList = memo(() => {
                     </Grid>
                     <Grid size={10} className={`d-row-left`}>
                       <Div className={`fs-0-9rem fw-600 black mr-5px`}>
-                        {item.money_record_dateStart?.slice(5, 10)}
+                        {formatDate(item.money_record_dateStart)}
                       </Div>
                       <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
                         {translate(getDayNotFmt(item.money_record_dateStart).format(`ddd`))}
                       </Div>
+                      <Img
+                        max={14}
+                        hover={false}
+                        shadow={false}
+                        radius={false}
+                        src={`${item.money_record_score_smile ?? `smile3`}.webp`}
+                        className={`ml-5px`}
+                      />
                       {item.money_section?.some((sec) => (
                         sec.money_record_scheduled === `Y` && sec.money_record_scheduled_done === `N`
                       )) && (
@@ -349,7 +355,7 @@ export const MoneyRecordList = memo(() => {
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-row-center`}>
                         <Img
-                          max={14}
+                          max={10}
                           hover={true}
                           shadow={false}
                           radius={false}
@@ -383,7 +389,7 @@ export const MoneyRecordList = memo(() => {
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-center`}>
                         <Img
-                          max={14}
+                          max={10}
                           hover={true}
                           shadow={false}
                           radius={false}
@@ -426,7 +432,7 @@ export const MoneyRecordList = memo(() => {
     );
   };
 
-  // 8. dialog ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -435,7 +441,7 @@ export const MoneyRecordList = memo(() => {
     />
   );
 
-  // 9. footer ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const footerNode = () => (
     <Footer
       state={{
@@ -447,7 +453,7 @@ export const MoneyRecordList = memo(() => {
     />
   );
 
-  // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {listNode()}

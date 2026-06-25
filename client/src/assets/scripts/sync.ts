@@ -8,7 +8,7 @@
 import { axios, moment } from "@exportLibs";
 import { getLocal, getSession, setSession } from "@exportScripts";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const sync = async (
   extra?: string,
   dateOverride?: {
@@ -25,7 +25,7 @@ export const sync = async (
   const sessionId: any = getSession(`setting`, `id`, `sessionId`);
   const localTimeZone: any = getLocal(`setting`, `locale`, `timeZone`);
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const DATE = {
     dateType: `day`,
     dateStart: moment()
@@ -100,7 +100,7 @@ export const sync = async (
         params: params,
       }),
     ]);
-    // 성공한 도메인만 부분 반영, 실패 도메인은 기록 후 기존 세션값 유지 ――――――――――――――――――――――――――――――――――――――-
+    // 성공한 도메인만 부분 반영, 실패 도메인은 기록 후 기존 세션값 유지 ―――――――――――――――――――――――――――――――――――――――
     const settledEntries: [string, PromiseSettledResult<any>][] = [
       [`category`, resCategory],
       [`percent`, resPercent],

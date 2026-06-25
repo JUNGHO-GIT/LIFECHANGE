@@ -1,0 +1,139 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5] [cursor=pointer]:
+        - img [ref=e149]
+        - img [ref=e150]
+      - button [ref=e151] [cursor=pointer]:
+        - img [ref=e9]
+    - generic [ref=e14]:
+      - generic [ref=e15]:
+        - img [ref=e152] [cursor=pointer]
+        - img [ref=e153] [cursor=pointer]
+        - img [ref=e154] [cursor=pointer]
+        - img [ref=e155] [cursor=pointer]
+      - tablist [ref=e27]:
+        - tab [selected] [ref=e156] [cursor=pointer]: 일정
+    - generic [ref=e48]:
+      - generic [ref=e49]:
+        - button [ref=e157] [cursor=pointer]:
+          - img [ref=e52]
+        - generic [ref=e57] [cursor=pointer]: 2026-06
+        - button [ref=e158] [cursor=pointer]:
+          - img [ref=e60]
+      - generic [ref=e69]:
+        - generic [ref=e70]:
+          - generic [ref=e71]: 일
+          - generic [ref=e72]: 월
+          - generic [ref=e73]: 화
+          - generic [ref=e74]: 수
+          - generic [ref=e75]: 목
+          - generic [ref=e76]: 금
+          - generic [ref=e77]: 토
+        - generic [ref=e78]:
+          - button [ref=e159]:
+            - generic [ref=e160]: "31"
+          - button [ref=e161]:
+            - generic [ref=e162]: "1"
+          - button [ref=e163]:
+            - generic [ref=e164]: "2"
+          - button [ref=e165]:
+            - generic [ref=e166]: "3"
+          - button [ref=e167]:
+            - generic [ref=e168]: "4"
+          - button [ref=e169]:
+            - generic [ref=e170]: "5"
+          - button [ref=e171]:
+            - generic [ref=e172]: "6"
+          - button [ref=e173]:
+            - generic [ref=e174]: "7"
+          - button [ref=e175]:
+            - generic [ref=e176]: "8"
+          - button [ref=e177]:
+            - generic [ref=e178]: "9"
+          - button [ref=e179]:
+            - generic [ref=e180]: "10"
+          - button [ref=e181]:
+            - generic [ref=e182]: "11"
+          - button [ref=e183]:
+            - generic [ref=e184]: "12"
+          - button [ref=e185]:
+            - generic [ref=e186]: "13"
+          - button [ref=e187]:
+            - generic [ref=e188]: "14"
+          - button [ref=e189]:
+            - generic [ref=e190]: "15"
+          - button [ref=e191]:
+            - generic [ref=e192]: "16"
+          - button [ref=e193]:
+            - generic [ref=e194]: "17"
+          - button [ref=e195]:
+            - generic [ref=e196]: "18"
+          - button [ref=e197]:
+            - generic [ref=e198]: "19"
+          - button [ref=e199]:
+            - generic [ref=e200]: "20"
+          - button [ref=e201]:
+            - generic [ref=e202]: "21"
+          - button [ref=e203]:
+            - generic [ref=e204]: "22"
+          - button [ref=e205]:
+            - generic [ref=e206]: "23"
+          - button [ref=e207]:
+            - generic [ref=e208]: "24"
+          - button [ref=e209]:
+            - generic [ref=e210]: "25"
+          - button [ref=e211]:
+            - generic [ref=e212]: "26"
+          - button [ref=e213]:
+            - generic [ref=e214]: "27"
+          - button [ref=e215]:
+            - generic [ref=e216]: "28"
+          - button [ref=e217]:
+            - generic [ref=e218]: "29"
+          - button [ref=e219]:
+            - generic [ref=e220]: "30"
+          - button [ref=e221]:
+            - generic [ref=e222]: "1"
+          - button [ref=e223]:
+            - generic [ref=e224]: "2"
+          - button [ref=e225]:
+            - generic [ref=e226]: "3"
+          - button [ref=e227]:
+            - generic [ref=e228]: "4"
+    - generic [ref=e30]:
+      - button [ref=e229] [cursor=pointer]:
+        - img [ref=e230]
+        - generic [ref=e33]: 운동
+      - button [ref=e231] [cursor=pointer]:
+        - img [ref=e232]
+        - generic [ref=e36]: 식단
+      - button [ref=e233] [cursor=pointer]:
+        - img [ref=e234]
+        - generic [ref=e39]: 일정
+      - button [ref=e235] [cursor=pointer]:
+        - img [ref=e236]
+        - generic [ref=e42]: 자산
+      - button [ref=e237] [cursor=pointer]:
+        - img [ref=e238]
+        - generic [ref=e45]: 수면
+  - generic [ref=e241]:
+    - generic [ref=e243]: 2026-06
+    - generic [ref=e245]:
+      - generic [ref=e247] [cursor=pointer]:
+        - generic [ref=e248]: June 2026
+        - button "calendar view is open, switch to year view" [ref=e249]:
+          - img [ref=e250]
+      - radiogroup "June 2026" [ref=e253]:
+        - radio "January" [ref=e254] [cursor=pointer]: Jan
+        - radio "February" [ref=e255] [cursor=pointer]: Feb
+        - radio "March" [ref=e256] [cursor=pointer]: Mar
+        - radio "April" [ref=e257] [cursor=pointer]: Apr
+        - radio "May" [ref=e258] [cursor=pointer]
+        - radio "June" [checked] [ref=e259] [cursor=pointer]: Jun
+        - radio "July" [ref=e260] [cursor=pointer]: Jul
+        - radio "August" [ref=e261] [cursor=pointer]: Aug
+        - radio "September" [ref=e262] [cursor=pointer]: Sep
+        - radio "October" [ref=e263] [cursor=pointer]: Oct
+        - radio "November" [ref=e264] [cursor=pointer]: Nov
+        - radio "December" [ref=e265] [cursor=pointer]: Dec

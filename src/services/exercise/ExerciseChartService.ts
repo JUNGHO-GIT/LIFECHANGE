@@ -47,7 +47,7 @@ export const bar = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 1-2. chart (bar - week) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1-2. chart (bar - week) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const barWeek = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let findResultGoal: any[] = [];
@@ -192,7 +192,7 @@ export const barMonth = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 2-1. chart (pie - week) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 2-1. chart (pie - week) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 // pie 차트는 무조건 int 리턴
 export const pieWeek = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
@@ -314,7 +314,7 @@ export const pieMonth = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 2-4. chart (pie - year) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 2-4. chart (pie - year) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 // pie 차트는 무조건 int 리턴
 export const pieYear = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
@@ -622,7 +622,7 @@ export const lineMonth = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 4-1. chart (avg - week) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 4-1. chart (avg - week) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const avgWeek = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let findResultVolume: any[] = [];
@@ -748,7 +748,7 @@ export const avgWeek = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 4-2. chart (avg - month) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 4-2. chart (avg - month) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const avgMonth = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let findResultVolume: any[] = [];

@@ -5,10 +5,10 @@
  * @since 2025-12-25
  */
 
-import { useCommonDate } from "@exportHooks";
-import { useEffect } from "@exportReacts";
+import { useCommonDate } from "@hooks/common/useCommonDate";
+import { useEffect, useMemo } from "@exportReacts";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const useTime = (
   OBJECT: Record<string, unknown>,
   setOBJECT: any,
@@ -20,8 +20,20 @@ export const useTime = (
   const { getDayFmt } = useCommonDate();
   const match: RegExpMatchArray | null = PATH.match(/\/([^/]+)\//);
   const strLow: string | null = match ? match[1] : null;
+  const sleepSectionKey: string = useMemo(() => {
+    if (type !== `record` || strLow !== `sleep`) {
+      return ``;
+    }
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+    return (Array.isArray(OBJECT[`sleep_section`]) ? OBJECT[`sleep_section`] : []).map((s: unknown) => {
+      const sectionObj = s && typeof s === `object` ? s as Record<string, unknown> : {};
+      const bed = typeof sectionObj[`sleep_record_bedTime`] === `string` ? sectionObj[`sleep_record_bedTime`] : ``;
+      const wake = typeof sectionObj[`sleep_record_wakeTime`] === `string` ? sectionObj[`sleep_record_wakeTime`] : ``;
+      return `${bed}-${wake}`;
+    }).join(`|`);
+  }, [OBJECT, strLow, type]);
+
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     const isGoalExercise: boolean = type === `goal` && strLow === `exercise`;
     const isGoalSleep: boolean = type === `goal` && strLow === `sleep`;
@@ -173,13 +185,6 @@ export const useTime = (
 		type === `goal` && strLow === `exercise` ? (typeof OBJECT[`exercise_goal_dateEnd`] === `string` ? OBJECT[`exercise_goal_dateEnd`] : ``) : ``,
 		type === `goal` && strLow === `sleep` ? (typeof OBJECT[`sleep_goal_bedTime`] === `string` ? OBJECT[`sleep_goal_bedTime`] : ``) : ``,
 		type === `goal` && strLow === `sleep` ? (typeof OBJECT[`sleep_goal_wakeTime`] === `string` ? OBJECT[`sleep_goal_wakeTime`] : ``) : ``,
-		type === `record` && strLow === `sleep` ? (
-			(Array.isArray(OBJECT[`sleep_section`]) ? OBJECT[`sleep_section`] : []).map((s: unknown) => {
-			  const sectionObj = s && typeof s === `object` ? s as Record<string, unknown> : {};
-			  const bed = typeof sectionObj[`sleep_record_bedTime`] === `string` ? sectionObj[`sleep_record_bedTime`] : ``;
-			  const wake = typeof sectionObj[`sleep_record_wakeTime`] === `string` ? sectionObj[`sleep_record_wakeTime`] : ``;
-			  return `${bed}-${wake}`;
-			}).join(`|`)
-		) : ``,
+		sleepSectionKey,
   ]);
 };

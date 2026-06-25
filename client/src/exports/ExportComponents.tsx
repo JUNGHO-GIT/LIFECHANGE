@@ -5,7 +5,7 @@
  * @since 2025-12-25
  */
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export { Div } from "@interfaces/components/Div";
 export { Img } from "@interfaces/components/Img";
 export { Br } from "@interfaces/components/Br";

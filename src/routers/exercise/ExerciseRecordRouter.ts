@@ -46,7 +46,7 @@ router.get(`/exist`, async (req: Request, res: Response) => {
   }
 });
 
-// 1. list ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 router.get(`/list`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.list(

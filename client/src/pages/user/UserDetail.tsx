@@ -16,7 +16,7 @@ import { Input } from "@exportContainers";
 import { Hr, Img, Div, Paper, Grid } from "@exportComponents";
 import { Checkbox, Avatar } from "@exportMuis";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const UserDetail = memo(() => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -44,7 +44,7 @@ export const UserDetail = memo(() => {
     OBJECT !== objectRef.current && (objectRef.current = OBJECT);
   }, [OBJECT]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     setLOADING(true);
     axios.get(`${URL_OBJECT}/detail`, {
@@ -118,7 +118,7 @@ export const UserDetail = memo(() => {
     });
   }
 
-  // 6. userDetail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 6. userDetail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const userDetailNode = () => {
     // 7-1. image
     const imageSection = () => (
@@ -171,7 +171,7 @@ export const UserDetail = memo(() => {
                   error={ERRORS?.[i]?.user_initScale}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -204,7 +204,7 @@ export const UserDetail = memo(() => {
                   value={insertComma(item.user_curScale ?? `0`)}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -230,7 +230,7 @@ export const UserDetail = memo(() => {
                   error={ERRORS?.[i]?.user_initAvgKcalIntake}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -263,7 +263,7 @@ export const UserDetail = memo(() => {
                   value={insertComma(item.user_curAvgKcalIntake ?? `0`)}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -289,7 +289,7 @@ export const UserDetail = memo(() => {
                   error={ERRORS?.[i]?.user_initProperty}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -328,7 +328,7 @@ export const UserDetail = memo(() => {
                   }
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}

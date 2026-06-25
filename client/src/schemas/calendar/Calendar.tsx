@@ -99,7 +99,7 @@ export interface CalendarType {
   calendar_updateDt: string;
 }
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const Calendar: CalendarType = {
   user_id: ``,
   calendar_number: 0,

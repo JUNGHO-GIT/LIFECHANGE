@@ -13,13 +13,13 @@ import { axios } from "@exportLibs";
 import { formatY, formatDate } from "@exportScripts";
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@exportLibs";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface ExerciseChartLineProps {
   TYPE?: any;
   setTYPE?: any;
 }
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -65,7 +65,7 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
   const [ OBJECT_VOLUME_MONTH, setOBJECT_VOLUME_MONTH ] = useState<[ExerciseLineType]>([ExerciseLineVolume]);
   const [ OBJECT_CARDIO_MONTH, setOBJECT_CARDIO_MONTH ] = useState<[ExerciseLineType]>([ExerciseLineCardio]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     (async () => {
       setLOADING(true);
@@ -116,7 +116,7 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
     })();
   }, [ URL_OBJECT, DATE, sessionId ]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (props?.TYPE !== undefined) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -126,7 +126,7 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
     }
   }, [props?.TYPE]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (props?.setTYPE) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -179,7 +179,7 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
 
 		const { domain, ticks, formatterY } = formatY(object, exerciseChartArray, `exercise`);
 		return (
-		  <ResponsiveContainer width={`100%`} height={500}>
+		  <ResponsiveContainer width={`100%`} height={380}>
 		    <LineChart
 		      data={object as any[]}
 		      margin={{ top: 60, right: 20, bottom: 10, left: 20 }}

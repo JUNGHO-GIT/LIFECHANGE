@@ -15,17 +15,17 @@ import { Input } from "@exportContainers";
 import { Div, Btn, Img, Hr, Paper, Grid } from "@exportComponents";
 import { Checkbox } from "@exportMuis";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const UserLogin = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { URL_OBJECT, URL_GOOGLE, ADMIN_ID, ADMIN_PW, navigate } = useCommonValue();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
   const { ERRORS, REFS, validate } = useValidateUser();
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ OBJECT, setOBJECT ] = useState<UserType>(User);
   const [ loginTrigger, setLoginTrigger ] = useState<boolean>(false);
   const [ checkedSaveId, setCheckedSaveId ] = useState<boolean>(false);
@@ -40,7 +40,7 @@ export const UserLogin = memo(() => {
     OBJECT !== objectRef.current && (objectRef.current = OBJECT);
   }, [OBJECT]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   // 트리거가 활성화된 경우
   useEffect(() => {
     if (loginTrigger) {
@@ -55,7 +55,7 @@ export const UserLogin = memo(() => {
     }
   }, [loginTrigger]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   // 초기 로드 시 자동로그인 설정 가져오기
   useEffect(() => {
     const { autoLogin, autoLoginId, autoLoginPw } = getLocal(`setting`, `id`, ``) || {};
@@ -82,7 +82,7 @@ export const UserLogin = memo(() => {
     }
   }, []);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   // 초기 로드 시 아이디 저장 설정 가져오기
   useEffect(() => {
     const { isSaved, isSavedId } = getLocal(`setting`, `id`, ``) || {};
@@ -104,7 +104,7 @@ export const UserLogin = memo(() => {
     }
   }, []);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   // 자동로그인 활성화된 경우
   useEffect(() => {
     if (checkedAutoLogin) {
@@ -123,7 +123,7 @@ export const UserLogin = memo(() => {
     }
   }, [ checkedAutoLogin, OBJECT.user_id ]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   // 아이디 저장 활성화된 경우
   useEffect(() => {
     if (checkedSaveId) {
@@ -376,7 +376,7 @@ export const UserLogin = memo(() => {
             >
               <Div className={`d-row-center`}>
                 <Img
-                  max={14}
+                  max={10}
                   hover={true}
                   shadow={false}
                   radius={false}

@@ -7,7 +7,7 @@
 
 import type { Location, NavigateFunction } from "@exportReacts";
 
-// 공통 리터럴 · 유틸 타입 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 공통 리터럴 · 유틸 타입 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export type FirstPathType =
 	| `today`
 	| `calendar`
@@ -55,7 +55,7 @@ export type SleepChartMetricType =
 	| `sleepTime`
 	| (string & {});
 
-// 라우팅 상태 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 라우팅 상태 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export interface LocationStateType {
   id?: string | number;
   from?: string;
@@ -65,7 +65,7 @@ export interface LocationStateType {
   category?: string;
 }
 
-// 환경변수 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 환경변수 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export interface EnvType {
   VITE_APP_TITLE?: string;
   VITE_APP_SERVER_URL?: string;

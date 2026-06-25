@@ -13,7 +13,7 @@ import { PopUp } from "@exportContainers";
 import { Icons, Img, Div, Br, Paper, Grid } from "@exportComponents";
 import { TableContainer, Table, TableBody, TableRow, TableCell } from "@exportMuis";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const UserAppSetting = memo(() => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -24,7 +24,7 @@ export const UserAppSetting = memo(() => {
   // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ lang, setLang ] = useState<string | undefined>(localLang);
 
-  // 4-1. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 4-1. handle ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const handleLogout = () => {
     setLocal(`setting`, `id`, ``, {
       autoLogin: `false`,
@@ -35,14 +35,14 @@ export const UserAppSetting = memo(() => {
     void navigate(`/user/login`);
   };
 
-  // 4-2. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 4-2. handle ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const handleChangeLanguage = (langStr: string) => {
     setLang(langStr);
     setLocal(`setting`, `locale`, `lang`, langStr);
     window.location.reload();
   };
 
-  // 4-3. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 4-3. handle ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const handleClearStorage = async () => {
     const confirmResult: Promise<unknown> = new Promise((resolve) => {
       setCONFIRM({

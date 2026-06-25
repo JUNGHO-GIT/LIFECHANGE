@@ -26,7 +26,7 @@ export const list = async (user_id_param: string) => {
   return finalResult[0]?.user_favorite;
 };
 
-// 4. update ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 4. update ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const update = async (
   user_id_param: string,
   foodFavorite_param: any,

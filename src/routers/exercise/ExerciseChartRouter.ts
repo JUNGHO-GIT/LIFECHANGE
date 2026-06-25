@@ -45,7 +45,7 @@ router.get(`/bar`, async (req: Request, res: Response) => {
   }
 });
 
-// 1-2. chart (bar - week) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1-2. chart (bar - week) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 router.get(`/bar/week`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.barWeek(
@@ -117,7 +117,7 @@ router.get(`/bar/month`, async (req: Request, res: Response) => {
   }
 });
 
-// 2-1. chart (pie - week) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 2-1. chart (pie - week) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 router.get(`/pie/week`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.pieWeek(
@@ -189,7 +189,7 @@ router.get(`/pie/month`, async (req: Request, res: Response) => {
   }
 });
 
-// 2-4. chart (pie - year) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 2-4. chart (pie - year) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 router.get(`/pie/year`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.pieYear(
@@ -297,7 +297,7 @@ router.get(`/line/month`, async (req: Request, res: Response) => {
   }
 });
 
-// 0-3. chart (avg - week) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 0-3. chart (avg - week) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 router.get(`/avg/week`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.avgWeek(

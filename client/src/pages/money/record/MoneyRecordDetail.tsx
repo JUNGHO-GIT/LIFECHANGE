@@ -16,10 +16,10 @@ import { PickerDay, Memo, Count, Delete, Select, Input } from "@exportContainers
 import { Img, Bg, Div, Paper, Grid, Br } from "@exportComponents";
 import { Checkbox, MenuItem } from "@exportMuis";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const MoneyRecordDetail = memo(() => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const {
     URL_OBJECT, navigate, sessionId, localCurrency, moneyArray,
     toList, bgColors, location_dateStart, location_dateEnd,
@@ -30,7 +30,7 @@ export const MoneyRecordDetail = memo(() => {
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ LOCKED, setLOCKED ] = useState<string>(`unlocked`);
   const [ OBJECT, setOBJECT ] = useState<MoneyRecordType>(MoneyRecord);
   const [ EXIST, setEXIST ] = useState({
@@ -368,7 +368,7 @@ export const MoneyRecordDetail = memo(() => {
     }));
   }, []);
 
-  // 7. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 7. detail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
@@ -404,7 +404,7 @@ export const MoneyRecordDetail = memo(() => {
               value={insertComma(OBJECT?.money_record_total_income ?? `0`)}
               startadornment={(
                 <Img
-                  max={14}
+                  max={10}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -428,7 +428,7 @@ export const MoneyRecordDetail = memo(() => {
               value={insertComma(OBJECT?.money_record_total_expense ?? `0`)}
               startadornment={(
                 <Img
-                  max={14}
+                  max={10}
                   hover={true}
                   shadow={false}
                   radius={false}
@@ -554,7 +554,7 @@ export const MoneyRecordDetail = memo(() => {
                     error={ERRORS?.[i]?.money_record_amount}
                     startadornment={(
                       <Img
-                        max={14}
+                        max={10}
                         hover={true}
                         shadow={false}
                         radius={false}
@@ -712,7 +712,7 @@ export const MoneyRecordDetail = memo(() => {
     );
   };
 
-  // 8. dialog ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -722,7 +722,7 @@ export const MoneyRecordDetail = memo(() => {
     />
   );
 
-  // 9. footer ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const footerNode = () => (
     <Footer
       state={{
@@ -737,7 +737,7 @@ export const MoneyRecordDetail = memo(() => {
     />
   );
 
-  // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {detailNode()}

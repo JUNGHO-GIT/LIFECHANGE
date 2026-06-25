@@ -10,7 +10,7 @@
 
 import { describe, expect, mock, test } from "bun:test";
 
-// 1. mock 정의 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1. mock 정의 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 // pieIncome / pieExpense 반환을 테스트별로 제어
 let incomeRows: any[] = [];
 let expenseRows: any[] = [];
@@ -24,7 +24,7 @@ const MoneyChartService = await import(`@services/money/MoneyChartService`);
 
 const DATE = { monthStartFmt: `2026-01-01`, monthEndFmt: `2026-01-31` };
 
-// 2. MoneyChartService.pieMonth ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 2. MoneyChartService.pieMonth ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 describe(`MoneyChartService.pieMonth income 반영`, () => {
   // 2-1. income repository 결과가 result.income 에 그대로 매핑되어야 함 (회귀 핵심)
   test(`income 데이터가 result.income 에 반영된다`, async () => {

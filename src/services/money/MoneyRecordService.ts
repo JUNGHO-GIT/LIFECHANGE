@@ -6,6 +6,7 @@
  */
 
 import * as repository from "@repositories/money/MoneyRecordRepository";
+import * as goalRepository from "@repositories/money/MoneyGoalRepository";
 
 // 0. exist ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const exist = async (
@@ -56,7 +57,7 @@ export const exist = async (
   };
 };
 
-// 1. list ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const list = async (
   user_id_param: string,
   DATE_param: any,
@@ -108,9 +109,23 @@ export const list = async (
       }
       return sortOrder === 1 ? dateDiff : -dateDiff;
     });
-    finalResult = findResult;
+    const findGoal: any[] = await goalRepository.listGoal(
+      user_id_param, dateType, dateStart, dateEnd, 1, page,
+    );
+    finalResult = findResult.map((record: any) => {
+      const goal: any = findGoal?.find((item: any) => (
+        record?.money_record_dateStart >= item?.money_goal_dateStart &&
+        record?.money_record_dateEnd <= item?.money_goal_dateEnd
+      ));
+
+      return {
+        ...record,
+        money_goal_income: goal?.money_goal_income ?? `0`,
+        money_goal_expense: goal?.money_goal_expense ?? `0`,
+      };
+    });
     statusResult = `success`;
-    totalCntResult = findResult.length;
+    totalCntResult = finalResult.length;
   }
 
   return {

@@ -5,12 +5,12 @@
  * @since 2026-06-06
  */
 
-import { axios } from "@exportLibs";
+import axios from "axios";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 let registered: boolean = false;
 
-// 네트워크 오류 등으로 response 가 없는 axios error 를 안전한 형태로 보강한다 ――――――――――――――――――――――――――――――――-
+// 네트워크 오류 등으로 response 가 없는 axios error 를 안전한 형태로 보강한다 ―――――――――――――――――――――――――――――――――
 // 88곳의 catch 가 error.response.data.msg 에 접근해도 크래시하지 않도록 전역 1회만 등록한다.
 export const registerInterceptor = (): void => {
   if (registered) {

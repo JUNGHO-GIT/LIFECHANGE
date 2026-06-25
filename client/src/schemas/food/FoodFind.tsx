@@ -31,7 +31,7 @@ export interface FoodFindType {
   food_record_fat_color: string;
 }
 
-// Schema ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// Schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const FoodFind: FoodFindType = {
   food_record_query: ``,
   food_record_perNumber: 1,

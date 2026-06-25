@@ -47,7 +47,7 @@ router.get(`/list`, async (req: Request, res: Response) => {
   }
 });
 
-// 4. update ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 4. update ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 router.put(`/update`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.update(

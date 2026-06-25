@@ -5,7 +5,7 @@
  * @since 2025-12-14
  */
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 const g = globalThis as typeof globalThis & {
   fetch?: typeof globalThis.fetch;
   Blob?: typeof globalThis.Blob;
@@ -16,7 +16,7 @@ const g = globalThis as typeof globalThis & {
   Response?: typeof globalThis.Response;
 };
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 // 네이티브 fetch 가 있으면 node-fetch 를 아예 로드하지 않는다. 없을 때만 동적 import 로 폴리필.
 if (typeof g.fetch !== `function`) {
   const nf = await import(`node-fetch`);

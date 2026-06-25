@@ -5,10 +5,10 @@
  * @since 2025-12-26
  */
 
-// 1. list ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const list = async (object: any) => {
 
-  // 0. calcOverTenMillion ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 0. calcOverTenMillion ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const calcOverTenMillion = (param: string) => {
 
     let finalResult: string = ``;
@@ -72,63 +72,37 @@ export const list = async (object: any) => {
 
     // 1. income
     if (extra === `income`) {
-      percent = (Math.abs(goal - record) / goal) * 100;
-      if (goal > record) {
-        if (percent > 0 && percent <= 1) {
-          finalResult += ` firstScore`;
-        }
-        else if (percent > 1 && percent <= 10) {
-          finalResult += ` secondScore`;
-        }
-        else if (percent > 10 && percent <= 30) {
-          finalResult += ` thirdScore`;
-        }
-        else if (percent > 30 && percent <= 50) {
-          finalResult += ` fourthScore`;
-        }
-        else {
-          finalResult += ` fifthScore`;
-        }
+      if (record >= goal) {
+        finalResult += ` firstScore`;
       }
       else {
+        percent = ((goal - record) / goal) * 100;
+
         if (percent > 0 && percent <= 1) {
-          finalResult += ` fifthScore`;
+          finalResult += ` firstScore`;
         }
         else if (percent > 1 && percent <= 10) {
-          finalResult += ` fourthScore`;
+          finalResult += ` secondScore`;
         }
         else if (percent > 10 && percent <= 30) {
           finalResult += ` thirdScore`;
         }
         else if (percent > 30 && percent <= 50) {
-          finalResult += ` secondScore`;
+          finalResult += ` fourthScore`;
         }
         else {
-          finalResult += ` firstScore`;
+          finalResult += ` fifthScore`;
         }
       }
     }
     // 2. expense
     if (extra === `expense`) {
-      percent = (Math.abs(goal - record) / goal) * 100;
-      if (goal > record) {
-        if (percent > 0 && percent <= 1) {
-          finalResult += ` fifthScore`;
-        }
-        else if (percent > 1 && percent <= 10) {
-          finalResult += ` fourthScore`;
-        }
-        else if (percent > 10 && percent <= 30) {
-          finalResult += ` thirdScore`;
-        }
-        else if (percent > 30 && percent <= 50) {
-          finalResult += ` secondScore`;
-        }
-        else {
-          finalResult += ` firstScore`;
-        }
+      if (record <= goal) {
+        finalResult += ` firstScore`;
       }
       else {
+        percent = ((record - goal) / goal) * 100;
+
         if (percent > 0 && percent <= 1) {
           finalResult += ` firstScore`;
         }

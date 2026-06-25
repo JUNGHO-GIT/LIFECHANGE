@@ -9,7 +9,7 @@ import { React, memo, useCallback, useEffect, useMemo, useRef, useState } from "
 import { useCommonValue } from "@exportHooks";
 import { Skeleton } from "@exportMuis";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface ImgProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   group?: string;
   src?: any;
@@ -66,7 +66,7 @@ const preloadImage = (src: string): Promise<void> => {
   return promise;
 };
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const Img = memo((
   {
     group, src, hover, shadow, radius, border, min, max, loading, ...props
@@ -80,7 +80,7 @@ export const Img = memo((
   const currentImgSrcRef = useRef<string>(``);
   const isEmptyHandledRef = useRef<boolean>(false);
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ fileName, setFileName ] = useState<string>(``);
   const [ imgSrc, setImgSrc ] = useState<string>(``);
   const [ isLoading, setIsLoading ] = useState<boolean>(true);

@@ -19,9 +19,9 @@ import { Img, Bg, Paper, Grid, Div, Br } from "@exportComponents";
 import { Checkbox, MenuItem } from "@exportMuis";
 import { MoneyCategoryItem, ExerciseCategoryItem, FoodCategoryItem } from "@exportTypes";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const CalendarDetail = memo(() => {
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const {
     URL_OBJECT, navigate, toCalendarList, sessionId, localCurrency,
     bgColors, localUnit,
@@ -228,7 +228,7 @@ export const CalendarDetail = memo(() => {
     }));
   }, [OBJECT?.calendar_exercise_section]);
 
-  // 2-3. useEffect (food total 계산) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect (food total 계산) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     const totals: any = OBJECT?.calendar_food_section?.reduce((acc: any, cur: any) => ({
       totalCalorie: Number(acc.totalCalorie) + Number(cur.food_record_kcal),
@@ -401,7 +401,7 @@ export const CalendarDetail = memo(() => {
     });
   };
 
-  // 4-3. handle ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 4-3. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const handleDelete = useCallback((index: number, section?: string) => {
     section && (() => {
       setOBJECT((prev: CalendarType) => ({
@@ -417,7 +417,7 @@ export const CalendarDetail = memo(() => {
     })();
   }, []);
 
-  // 7. detail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 7. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
@@ -450,7 +450,7 @@ export const CalendarDetail = memo(() => {
           <Grid size={12} className={`d-row`}>
             <Div className={`d-row-left`}>
               <Img
-                max={14}
+                max={10}
                 hover={true}
                 shadow={false}
                 radius={false}
@@ -575,7 +575,7 @@ export const CalendarDetail = memo(() => {
                   error={ERRORS?.[i]?.exercise_record_set}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -610,7 +610,7 @@ export const CalendarDetail = memo(() => {
                   error={ERRORS?.[i]?.exercise_record_rep}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -649,7 +649,7 @@ export const CalendarDetail = memo(() => {
                   error={ERRORS?.[i]?.exercise_record_weight}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -701,7 +701,7 @@ export const CalendarDetail = memo(() => {
           <Grid size={12} className={`d-row`}>
             <Div className={`d-row-left`}>
               <Img
-                max={14}
+                max={10}
                 hover={true}
                 shadow={false}
                 radius={false}
@@ -904,7 +904,7 @@ export const CalendarDetail = memo(() => {
                   error={ERRORS?.[i]?.food_record_kcal}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -939,7 +939,7 @@ export const CalendarDetail = memo(() => {
                   error={ERRORS?.[i]?.food_record_carb}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -978,7 +978,7 @@ export const CalendarDetail = memo(() => {
                   error={ERRORS?.[i]?.food_record_protein}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -1013,7 +1013,7 @@ export const CalendarDetail = memo(() => {
                   error={ERRORS?.[i]?.food_record_fat}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -1053,7 +1053,7 @@ export const CalendarDetail = memo(() => {
           <Grid size={12} className={`d-row`}>
             <Div className={`d-row-left`}>
               <Img
-                max={14}
+                max={10}
                 hover={true}
                 shadow={false}
                 radius={false}
@@ -1178,7 +1178,7 @@ export const CalendarDetail = memo(() => {
                   error={ERRORS?.[i]?.money_record_amount}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -1254,7 +1254,7 @@ export const CalendarDetail = memo(() => {
           <Grid size={12} className={`d-row`}>
             <Div className={`d-row-left`}>
               <Img
-                max={14}
+                max={10}
                 hover={true}
                 shadow={false}
                 radius={false}
@@ -1363,7 +1363,7 @@ export const CalendarDetail = memo(() => {
     );
   };
 
-  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 8. dialog ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -1375,7 +1375,7 @@ export const CalendarDetail = memo(() => {
     />
   );
 
-  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 9. footer ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const footerNode = () => (
     <Footer
       state={{

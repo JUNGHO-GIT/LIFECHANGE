@@ -10,15 +10,15 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { MoneyGoal, MoneyGoalType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { insertComma } from "@exportScripts";
+import { formatDate, insertComma } from "@exportScripts";
 import { Footer, Empty, Dialog } from "@exportLayouts";
 import { Div, Img, Hr, Icons, Paper, Grid } from "@exportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const MoneyGoalList = memo(() => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const {
     URL_OBJECT, PATH, sessionId, localCurrency, toDetail,
     navigate, location_dateType, location_dateStart, location_dateEnd,
@@ -50,7 +50,7 @@ export const MoneyGoalList = memo(() => {
     ]
   );
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ OBJECT, setOBJECT ] = useState<[MoneyGoalType]>([MoneyGoal]);
   const [ EXIST, setEXIST ] = useState({
     day: [``],
@@ -72,7 +72,8 @@ export const MoneyGoalList = memo(() => {
   });
 
   // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  // 항목 렌더를 비긴급으로 분리: 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
+  // - 항목 렌더를 비긴급으로 분리
+  // - 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
   const deferredObject = useDeferredValue(OBJECT);
 
   // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -163,10 +164,8 @@ export const MoneyGoalList = memo(() => {
                       onClick={(e: any) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        setIsExpanded(isExpanded.map((el: any, index: number) => (
-													i === index ? {
-													  expanded: !el.expanded,
-													} : el
+                        setIsExpanded(isExpanded.map((item: any, index: number) => (
+                          index === i ? { expanded: !item.expanded } : item
                         )));
                       }}
                     />
@@ -192,7 +191,7 @@ export const MoneyGoalList = memo(() => {
                     </Grid>
                     <Grid size={10} className={`d-row-left`}>
                       <Div className={`fs-0-8rem fw-600 black`}>
-                        {item.money_goal_dateStart?.slice(5, 10)}
+                        {formatDate(item.money_goal_dateStart)}
                       </Div>
                       <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
                         {translate(getDayNotFmt(item.money_goal_dateStart).format(`ddd`))}
@@ -201,7 +200,7 @@ export const MoneyGoalList = memo(() => {
                         {`-`}
                       </Div>
                       <Div className={`fs-0-8rem fw-600 black`}>
-                        {item.money_goal_dateEnd?.slice(5, 10)}
+                        {formatDate(item.money_goal_dateEnd)}
                       </Div>
                       <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
                         {translate(getDayNotFmt(item.money_goal_dateEnd).format(`ddd`))}
@@ -215,7 +214,7 @@ export const MoneyGoalList = memo(() => {
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-row-center`}>
                         <Img
-                          max={14}
+                          max={10}
                           hover={true}
                           shadow={false}
                           radius={false}
@@ -287,7 +286,7 @@ export const MoneyGoalList = memo(() => {
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-row-center`}>
                         <Img
-                          max={14}
+                          max={10}
                           hover={true}
                           shadow={false}
                           radius={false}
@@ -368,7 +367,7 @@ export const MoneyGoalList = memo(() => {
     );
   };
 
-  // 8. dialog ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -377,7 +376,7 @@ export const MoneyGoalList = memo(() => {
     />
   );
 
-  // 9. footer ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const footerNode = () => (
     <Footer
       state={{
@@ -389,7 +388,7 @@ export const MoneyGoalList = memo(() => {
     />
   );
 
-  // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {listNode()}

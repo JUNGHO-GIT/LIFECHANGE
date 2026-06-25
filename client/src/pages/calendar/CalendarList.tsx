@@ -5,18 +5,28 @@
  * @since 2025-12-26
  */
 
-import { useState, useEffect, useDeferredValue, memo } from "@exportReacts";
+import { useState, useEffect, useDeferredValue, useMemo, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { Calendar, CalendarType } from "@exportSchemas";
 import { axios, ReactCalendar } from "@exportLibs";
 import { Footer } from "@exportLayouts";
+import { PickerDay } from "@exportContainers";
 import { Icons, Div, Br, Paper, Grid } from "@exportComponents";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+declare interface CalendarDayItems {
+  exercise: CalendarType[];
+  food: CalendarType[];
+  money: CalendarType[];
+  sleep: CalendarType[];
+  sectionCount: number;
+}
+
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const CalendarList = memo(() => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const {
     URL_OBJECT, PATH, sessionId, navigate, localLang,
   } = useCommonValue();
@@ -43,7 +53,7 @@ export const CalendarList = memo(() => {
     },
   );
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ OBJECT, setOBJECT ] = useState([Calendar]);
   const [ EXIST, setEXIST ] = useState({
     day: [``],
@@ -61,8 +71,54 @@ export const CalendarList = memo(() => {
   });
 
   // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  // 달력 타일의 날짜별 항목 계산·렌더를 비긴급으로 분리: 달력 틀이 먼저 그려지고 표식은 다음 프레임에 채워짐
+  // - 달력 타일의 날짜별 항목 계산·렌더를 비긴급으로 분리
+  // - 달력 틀이 먼저 그려지고 표식은 다음 프레임에 채워짐
   const deferredObject = useDeferredValue(OBJECT);
+
+  // 2-3. useMemo ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const calendarDayMap = useMemo(() => {
+    const result: Record<string, CalendarDayItems> = {};
+    const ensureDay = (dateKey: string) => {
+      result[dateKey] ??= {
+        exercise: [],
+        food: [],
+        money: [],
+        sleep: [],
+        sectionCount: 0,
+      };
+      return result[dateKey];
+    };
+    const addRange = (
+      item: CalendarType,
+      dateStart: string,
+      dateEnd: string,
+      category: keyof Omit<CalendarDayItems, `sectionCount`>,
+      sectionCount: number,
+    ) => {
+      const isValid: boolean = Boolean(dateStart) && Boolean(dateEnd) && dateStart !== `0000-00-00` && dateEnd !== `0000-00-00`;
+      if (!isValid) {
+        return;
+      }
+
+      const current = getMoment(getDayStartFmt(dateStart));
+      const last = getMoment(getDayEndFmt(dateEnd));
+      while (current.isSameOrBefore(last, `day`)) {
+        const day = ensureDay(getDayFmt(current.toDate()));
+        day[category].push(item);
+        day.sectionCount += sectionCount;
+        current.add(1, `day`);
+      }
+    };
+
+    deferredObject?.forEach((item: CalendarType) => {
+      addRange(item, item.calendar_exercise_dateStart, item.calendar_exercise_dateEnd, `exercise`, item.calendar_exercise_section?.length ?? 0);
+      addRange(item, item.calendar_food_dateStart, item.calendar_food_dateEnd, `food`, item.calendar_food_section?.length ?? 0);
+      addRange(item, item.calendar_money_dateStart, item.calendar_money_dateEnd, `money`, item.calendar_money_section?.length ?? 0);
+      addRange(item, item.calendar_sleep_dateStart, item.calendar_sleep_dateEnd, `sleep`, item.calendar_sleep_section?.length ?? 0);
+    });
+
+    return result;
+  }, [ deferredObject, getMoment, getDayFmt, getDayStartFmt, getDayEndFmt ]);
 
   // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
@@ -98,18 +154,6 @@ export const CalendarList = memo(() => {
   // 7. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const listNode = () => {
 
-    // 7-1. dateInRange
-    const dateInRange = (date: any, dateStart: any, dateEnd: any) => {
-      const isValid = (d: any) => !!d && d !== `0000-00-00`;
-      if (!isValid(dateStart) || !isValid(dateEnd)) {
-        return false;
-      }
-      const dayFmt: string = getDayFmt(date as string | Date);
-      const dayStart: string = getDayStartFmt(dateStart as string | Date);
-      const dayEnd: string = getDayEndFmt(dateEnd as string | Date);
-      return dayFmt >= dayStart && dayFmt <= dayEnd;
-    };
-
     // 7-2. title
     const titleSection = () => (
       <Grid container={true} spacing={1}>
@@ -130,18 +174,11 @@ export const CalendarList = memo(() => {
           />
         </Grid>
         <Grid size={6} className={`d-row-center`}>
-          <Div
-            className={`fs-1-4rem fw-500`}
-            onClick={() => {
-              setDATE((prev) => ({
-                ...prev,
-                dateStart: getMonthStartFmt(),
-                dateEnd: getMonthEndFmt(),
-              }));
-            }}
-          >
-            {getDayNotFmt(DATE?.dateStart).format(`YYYY-MM`)}
-          </Div>
+          <PickerDay
+            DATE={DATE}
+            setDATE={setDATE}
+            EXIST={EXIST}
+          />
         </Grid>
         <Grid size={3} className={`d-row-right`}>
           <Icons
@@ -180,7 +217,7 @@ export const CalendarList = memo(() => {
         formatYear={(_locale, date) => getDayNotFmt(date).format(`YYYY`)}
         formatLongDate={(_locale, date) => getDayNotFmt(date).format(`YYYY-MM-DD`)}
         formatMonthYear={(_locale, date) => getDayNotFmt(date).format(`YYYY-MM`)}
-        className={`border-1 shadow-2 radius-2 over-hidden`}
+        className={`border-1 shadow-1 radius-1 over-hidden`}
         onActiveStartDateChange={({ activeStartDate }) => {
           setDATE((prev) => ({
             ...prev,
@@ -212,44 +249,8 @@ export const CalendarList = memo(() => {
 
           // 섹션이 3개 이상인 경우 스크롤
           let className: string = `calendar-tile`;
-
-          const itemMatchesDate = (item: any) => (
-            dateInRange(date, item.calendar_exercise_dateStart, item.calendar_exercise_dateEnd)
-            || dateInRange(date, item.calendar_food_dateStart, item.calendar_food_dateEnd)
-            || dateInRange(date, item.calendar_money_dateStart, item.calendar_money_dateEnd)
-            || dateInRange(date, item.calendar_sleep_dateStart, item.calendar_sleep_dateEnd)
-          );
-          const calendarForDates: any[] = OBJECT?.filter((element) => {
-            return itemMatchesDate(element);
-          });
-
-          if (calendarForDates?.length > 0) {
-            const sectionsCountFor = (item: any) => (
-              Number((dateInRange(
-                date, item.calendar_exercise_dateStart, item.calendar_exercise_dateEnd) ? (
-                  item.calendar_exercise_section?.length ?? 0
-                ) : 0
-              )) +
-              Number((dateInRange(
-                date, item.calendar_food_dateStart, item.calendar_food_dateEnd) ? (
-                  item.calendar_food_section?.length ?? 0
-                ) : 0
-              )) +
-              Number((dateInRange(
-                date, item.calendar_money_dateStart, item.calendar_money_dateEnd) ? (
-                  item.calendar_money_section?.length ?? 0
-                ) : 0
-              )) +
-              Number((dateInRange(
-                date, item.calendar_sleep_dateStart, item.calendar_sleep_dateEnd) ? (
-                  item.calendar_sleep_section?.length ?? 0
-                ) : 0
-              ))
-            );
-
-            const hasManySections: boolean = calendarForDates.some((item: any) => sectionsCountFor(item) > 2);
-            hasManySections && (className += ` over-y-auto`);
-          }
+          const dayItems = calendarDayMap[getDayFmt(date)];
+          dayItems?.sectionCount > 2 && (className += ` over-y-auto`);
 
           // 토요일 색상 변경
           if (isSat) {
@@ -273,18 +274,11 @@ export const CalendarList = memo(() => {
           return className;
         }}
         tileContent={({ date }) => {
-          const exerciseForDates: CalendarType[] = deferredObject?.filter((item: any) => (
-            dateInRange(date, item.calendar_exercise_dateStart, item.calendar_exercise_dateEnd)
-          ));
-          const foodForDates: CalendarType[] = deferredObject?.filter((item: any) => (
-            dateInRange(date, item.calendar_food_dateStart, item.calendar_food_dateEnd)
-          ));
-          const moneyForDates: CalendarType[] = deferredObject?.filter((item: any) => (
-            dateInRange(date, item.calendar_money_dateStart, item.calendar_money_dateEnd)
-          ));
-          const sleepForDates: CalendarType[] = deferredObject?.filter((item: any) => (
-            dateInRange(date, item.calendar_sleep_dateStart, item.calendar_sleep_dateEnd)
-          ));
+          const dayItems = calendarDayMap[getDayFmt(date)];
+          const exerciseForDates: CalendarType[] = dayItems?.exercise ?? [];
+          const foodForDates: CalendarType[] = dayItems?.food ?? [];
+          const moneyForDates: CalendarType[] = dayItems?.money ?? [];
+          const sleepForDates: CalendarType[] = dayItems?.sleep ?? [];
           return (
             <>
               {exerciseForDates?.length > 0 && exerciseForDates.map((item: any) => (
@@ -341,13 +335,13 @@ export const CalendarList = memo(() => {
     return (
       <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
         {titleSection()}
-        <Br m={10} />
+        <Br m={20} />
         {reactCalendarSection()}
       </Paper>
     );
   };
 
-  // 9. footer ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const footerNode = () => (
     <Footer
       state={{
@@ -359,7 +353,7 @@ export const CalendarList = memo(() => {
     />
   );
 
-  // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {listNode()}

@@ -7,6 +7,7 @@
 
 import { decimalToTime, timeToDecimal } from "@assets/scripts/utils";
 import * as repository from "@repositories/sleep/SleepRecordRepository";
+import * as goalRepository from "@repositories/sleep/SleepGoalRepository";
 
 // 0. exist ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const exist = async (user_id_param: string, DATE_param: any) => {
@@ -58,7 +59,7 @@ export const exist = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 1. list ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const list = async (
   user_id_param: string,
   DATE_param: any,
@@ -167,9 +168,29 @@ export const list = async (
       return sort === 1 ? dateDiff : -dateDiff;
     });
 
-    finalResult = groupedArray;
+    const findGoal: any[] = await goalRepository.listGoal(
+      user_id_param,
+      dateType,
+      dateStart,
+      dateEnd,
+      1,
+      page,
+    );
+    finalResult = groupedArray.map((record: any) => {
+      const goal: any = findGoal?.find((item: any) => (
+        record?.sleep_record_dateStart >= item?.sleep_goal_dateStart &&
+        record?.sleep_record_dateEnd <= item?.sleep_goal_dateEnd
+      ));
+
+      return {
+        ...record,
+        sleep_goal_bedTime: goal?.sleep_goal_bedTime ?? `00:00`,
+        sleep_goal_wakeTime: goal?.sleep_goal_wakeTime ?? `00:00`,
+        sleep_goal_sleepTime: goal?.sleep_goal_sleepTime ?? `00:00`,
+      };
+    });
     // set total count to number of unique dates
-    totalCntResult = groupedArray.length;
+    totalCntResult = finalResult.length;
     statusResult = `success`;
   }
 

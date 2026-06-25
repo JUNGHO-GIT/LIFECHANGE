@@ -16,10 +16,10 @@ import { Footer, Empty, Dialog } from "@exportLayouts";
 import { Div, Hr, Img, Icons, Paper, Grid } from "@exportComponents";
 import { Checkbox, Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const FoodFindList = memo(() => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const {
     URL_OBJECT, PATH, localIsoCode,
     location_dateType, location_dateStart, location_dateEnd,
@@ -48,7 +48,7 @@ export const FoodFindList = memo(() => {
     ]
   );
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ OBJECT, setOBJECT ] = useState<[FoodFindType]>([FoodFind]);
   const [ selectedKeys, setSelectedKeys ] = useState<Set<string>>(new Set());
   const [ SEND, setSEND ] = useState({
@@ -69,7 +69,8 @@ export const FoodFindList = memo(() => {
   });
 
   // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  // 항목 렌더를 비긴급으로 분리: 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
+  // - 항목 렌더를 비긴급으로 분리
+  // - 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
   const deferredObject = useDeferredValue(OBJECT);
 
   // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -186,10 +187,8 @@ export const FoodFindList = memo(() => {
                       onClick={(e: any) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        setIsExpanded(isExpanded.map((el: any, index: number) => (
-													i === index ? {
-													  expanded: !el.expanded,
-													} : el
+                        setIsExpanded(isExpanded.map((item: any, index: number) => (
+                          index === i ? { expanded: !item.expanded } : item
                         )));
                       }}
                     />
@@ -228,7 +227,7 @@ export const FoodFindList = memo(() => {
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-row-center`}>
                         <Img
-                          max={14}
+                          max={10}
                           hover={true}
                           shadow={false}
                           radius={false}
@@ -262,7 +261,7 @@ export const FoodFindList = memo(() => {
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-center`}>
                         <Img
-                          max={14}
+                          max={10}
                           hover={true}
                           shadow={false}
                           radius={false}
@@ -296,7 +295,7 @@ export const FoodFindList = memo(() => {
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-center`}>
                         <Img
-                          max={14}
+                          max={10}
                           hover={true}
                           shadow={false}
                           radius={false}
@@ -330,7 +329,7 @@ export const FoodFindList = memo(() => {
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-center`}>
                         <Img
-                          max={14}
+                          max={10}
                           hover={true}
                           shadow={false}
                           radius={false}
@@ -373,7 +372,7 @@ export const FoodFindList = memo(() => {
     );
   };
 
-  // 8. dialog ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -382,7 +381,7 @@ export const FoodFindList = memo(() => {
     />
   );
 
-  // 9. footer ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const footerNode = () => (
     <Footer
       state={{
@@ -397,7 +396,7 @@ export const FoodFindList = memo(() => {
     />
   );
 
-  // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {findNode()}

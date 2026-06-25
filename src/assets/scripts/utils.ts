@@ -11,7 +11,7 @@ import bcrypt from "bcryptjs";
 
 loadEnv();
 
-// 1-1. number ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1-1. number ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const randomNumber = (data: number) => Math.floor(Math.random() * data);
 // 1-2. time ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const randomTime = () => {
@@ -37,7 +37,7 @@ export const calcDate = (startTime: string, endTime: string) => {
   return `${duration.getUTCHours().toString().padStart(2, `0`)}:${duration.getUTCMinutes().toString().padStart(2, `0`)}`;
 };
 
-// 1-2. format ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1-2. format ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const timeToDecimal = (data: string) => {
   if (
     typeof data !== `string` ||
@@ -104,7 +104,7 @@ export const decimalToStr = (data: number) => {
 // 4-1. token ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const token: string = crypto.randomBytes(20).toString(`hex`);
 
-// 4-2. adminCheck ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 4-2. adminCheck ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const isAdmin = (user_id: string) => {
   const adminId: string | undefined = process.env.ADMIN_ID;
 
@@ -119,7 +119,7 @@ export const combinePw = async (inputPw: string, tokenParam: string) => {
   return `${inputPw}_${tokenParam}`;
 };
 
-// 4-4. hashPw ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 4-4. hashPw ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const hashPw = async (combinedPw: string) => {
   return bcrypt.hash(combinedPw, 10);
 };

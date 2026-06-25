@@ -6,17 +6,18 @@
  */
 
 import { Div, Icons, Img, Paper } from "@exportComponents";
-import { useCommonDate, useCommonValue } from "@exportHooks";
+import { useCommonDate } from "@hooks/common/useCommonDate";
+import { useCommonValue } from "@hooks/common/useCommonValue";
 import { memo } from "@exportReacts";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const Header = memo(() => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { navigate, firstStr } = useCommonValue();
   const { getDayFmt } = useCommonDate();
 
-  // 7. header ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 7. header ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const headerNode = () => {
     const iconSection = () => (
       <Div

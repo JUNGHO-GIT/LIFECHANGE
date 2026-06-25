@@ -67,7 +67,7 @@ export type {
   PopupState,
 } from 'material-ui-popup-state/hooks';
 
-// mui - file ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// mui - file ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export {
   MuiFileInput,
 } from 'mui-file-input';

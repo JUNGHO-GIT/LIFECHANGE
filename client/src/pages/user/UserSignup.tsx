@@ -14,7 +14,7 @@ import { User, UserType } from "@exportSchemas";
 import { Input } from "@exportContainers";
 import { Div, Btn, Img, Hr, Paper, Grid } from "@exportComponents";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const UserSignup = memo(() => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -244,7 +244,7 @@ export const UserSignup = memo(() => {
     });
   };
 
-  // 7. userSignup ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 7. userSignup ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const userSignupNode = () => {
     // 7-1. title
     const titleSection = () => (
@@ -394,7 +394,7 @@ export const UserSignup = memo(() => {
                   helperText={`* ${translate(`helperScale`)}`}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -430,7 +430,7 @@ export const UserSignup = memo(() => {
                   helperText={`* ${translate(`helperAvgKcalIntake`)}`}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -466,7 +466,7 @@ export const UserSignup = memo(() => {
                   helperText={`* ${translate(`helperProperty`)}`}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -523,7 +523,7 @@ export const UserSignup = memo(() => {
             >
               <Div className={`d-row-center`}>
                 <Img
-                  max={14}
+                  max={10}
                   hover={true}
                   shadow={false}
                   radius={false}

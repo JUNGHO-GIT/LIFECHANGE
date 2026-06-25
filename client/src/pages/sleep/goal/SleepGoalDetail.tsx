@@ -15,7 +15,7 @@ import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, PickerTime, Count, Delete } from "@exportContainers";
 import { Bg, Paper, Grid, Br } from "@exportComponents";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const SleepGoalDetail = memo(() => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -84,10 +84,10 @@ export const SleepGoalDetail = memo(() => {
     DATE !== dateRef.current && (dateRef.current = DATE);
   }, [ COUNT, OBJECT, DATE ]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useTime(OBJECT, setOBJECT, PATH, `goal`);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
 
@@ -117,7 +117,7 @@ export const SleepGoalDetail = memo(() => {
     }
   }, [ EXIST, DATE?.dateEnd, OBJECT.sleep_goal_dateEnd ]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     axios.get(`${URL_OBJECT}/goal/exist`, {
       params: {
@@ -143,7 +143,7 @@ export const SleepGoalDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     setLOADING(true);
     if (LOCKED === `locked`) {

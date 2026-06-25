@@ -9,7 +9,7 @@ import { useEffect, useState, useRef } from "@exportReacts";
 import { getLocal, setLocal } from "@exportScripts";
 import { Dispatch, SetStateAction } from "react";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const useStorageLocal = <T,> (
   key1: string,
   key2: string,

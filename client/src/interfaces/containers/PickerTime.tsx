@@ -13,7 +13,7 @@ import { moment } from "@exportLibs";
 import { AdapterMoment, DigitalClock, LocalizationProvider } from "@exportMuis";
 import { useStoreLanguage } from "@exportStores";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface PickerTimeProps {
   OBJECT: any;
   setOBJECT: React.Dispatch<React.SetStateAction<any>>;
@@ -25,7 +25,7 @@ declare interface PickerTimeProps {
   i: number;
 }
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const PickerTime = memo((
   {
     OBJECT, setOBJECT, REFS, ERRORS, DATE, LOCKED, extra, i,
@@ -36,7 +36,7 @@ export const PickerTime = memo((
   const { firstStr, secondStr, localLang, localTimeZone } = useCommonValue();
   const { translate } = useStoreLanguage();
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ image, setImage ] = useState<string>(``);
   const [ targetStr, setTargetStr ] = useState<string>(``);
   const [ translateStr, setTranslateStr ] = useState<string>(``);
@@ -185,7 +185,7 @@ export const PickerTime = memo((
   // 4. memoized values ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const imgAdornment: JSX.Element = useMemo(() => (
     <Img
-      max={14}
+      max={10}
       hover={true}
       shadow={false}
       radius={false}

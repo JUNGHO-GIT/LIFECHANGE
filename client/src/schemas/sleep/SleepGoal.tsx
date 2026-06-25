@@ -45,7 +45,7 @@ export interface SleepGoalType {
   sleep_record_diff_sleepTime_color: string;
 }
 
-// Schema ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// Schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const SleepGoal: SleepGoalType = {
   _id: ``,
 

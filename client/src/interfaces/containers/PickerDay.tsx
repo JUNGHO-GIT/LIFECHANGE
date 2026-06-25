@@ -13,7 +13,7 @@ import { AdapterMoment, Badge, DateCalendar, LocalizationProvider, MenuItem, Pic
 import { setSession } from "@exportScripts";
 import { useStoreLanguage } from "@exportStores";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface PickerDayProps {
   DATE: {
     dateType: string;
@@ -34,12 +34,12 @@ declare interface PickerDayProps {
   };
 }
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const PickerDay = memo((
   { DATE, setDATE, EXIST }: PickerDayProps,
 ) => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const {
     PATH, localLang, localTimeZone,
     isGoalList, isGoalDetail,
@@ -47,6 +47,7 @@ export const PickerDay = memo((
     isCalendarDetail,
     isList, isDetail,
   } = useCommonValue();
+  const isCalendarList: boolean = PATH.includes(`/calendar/list`);
   const { getDayFmt, getDayNotFmt, getDayStartFmt, getDayEndFmt } = useCommonDate();
   const { getPrevDayStartFmt, getPrevDayEndFmt } = useCommonDate();
   const { getNextDayStartFmt, getNextDayEndFmt } = useCommonDate();
@@ -74,17 +75,6 @@ export const PickerDay = memo((
       `month`
     ),
   );
-
-  // 2-2. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  /* useEffect(() => {
-    console.log(`
-      DATE: ${JSON.stringify(DATE, null, 2)}
-      dateStrInSave: ${dateStrInSave}
-      dateStrInList: ${dateStrInList}
-      dateTypeInSave: ${dateTypeInSave}
-      dateTypeInList: ${dateTypeInList}
-    `);
-  }, [ dateStrInSave, dateStrInList, dateTypeInSave, dateTypeInList ]); */
 
   // 2-2. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   // - 화면 로딩시 초기값 설정 1
@@ -379,13 +369,13 @@ export const PickerDay = memo((
           handleDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
         );
       }
-      // ex. 01-15 - 01-21
+      // ex. 01/15 - 01/21
       else if (DATE?.dateType === `week`) {
         setDateStrInList(
           `${handleDateFormat(getWeekStartFmt(DATE?.dateStart), `mm-dd`)} - ${handleDateFormat(getWeekEndFmt(DATE?.dateStart), `mm-dd`)}`,
         );
       }
-      // ex. 01-01 - 01-31
+      // ex. 01/01 - 01/31
       else if (DATE?.dateType === `month`) {
         setDateStrInList(
           `${handleDateFormat(getMonthStartFmt(DATE?.dateStart), `mm-dd`)} - ${handleDateFormat(getMonthEndFmt(DATE?.dateStart), `mm-dd`)}`,
@@ -412,13 +402,13 @@ export const PickerDay = memo((
           handleDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
         );
       }
-      // ex. 01-15 - 01-21
+      // ex. 01/15 - 01/21
       else if (DATE?.dateType === `week`) {
         setDateStrInSave(
           `${handleDateFormat(getWeekStartFmt(DATE?.dateStart), `mm-dd`)} - ${handleDateFormat(getWeekEndFmt(DATE?.dateStart), `mm-dd`)}`,
         );
       }
-      // ex. 01-01 - 01-31
+      // ex. 01/01 - 01/31
       else if (DATE?.dateType === `month`) {
         setDateStrInSave(
           `${handleDateFormat(getMonthStartFmt(DATE?.dateStart), `mm-dd`)} - ${handleDateFormat(getMonthEndFmt(DATE?.dateStart), `mm-dd`)}`,
@@ -438,7 +428,7 @@ export const PickerDay = memo((
     }
   }, [ isList, isDetail, DATE?.dateType, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 4. handle ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const handleDateFormat = (str: string, format?: string): string => {
     // 1. yyyy
     if (format === `yyyy`) {
@@ -447,21 +437,21 @@ export const PickerDay = memo((
       }
       return ``;
     }
-    // 2. mm-dd
+    // 2. mm/dd
     else if (format === `mm-dd`) {
       if (str?.split(`-`).length === 3) {
-        return `${str.split(`-`)[1]}-${str.split(`-`)[2]}`;
+        return `${str.split(`-`)[1]}/${str.split(`-`)[2]}`;
       }
       return ``;
     }
     // 3. yyyy-mm-dd
     else if (format === `yyyy-mm-dd`) {
-      return str;
+      return str.replaceAll(`-`, `/`);
     }
     return str;
   };
 
-  // 7. pickerNode  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 7. pickerNode  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const pickerNode = () => {
 
     // 1. dateTypeInList ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -740,7 +730,7 @@ export const PickerDay = memo((
       />
     );
 
-    // 4. week ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+    // 4. week ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
     const weekSection = () => (
       <PopUp
         type={`innerCenter`}
@@ -979,11 +969,28 @@ export const PickerDay = memo((
               <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLang}>
                 <DateCalendar
                   timezone={localTimeZone}
-                  views={[`day`]}
+                  views={[`year`, `day`]}
+                  openTo={`day`}
                   readOnly={false}
                   value={getDayNotFmt(DATE?.dateStart ?? DATE?.dateEnd)}
                   className={`border-1 radius-2`}
                   showDaysOutsideCurrentMonth={true}
+                  sx={{
+                    maxWidth: `100%`,
+                    [`& .MuiYearCalendar-root`]: {
+                      width: `100%`,
+                    },
+                  }}
+                  onChange={(value: any) => {
+                    if (!value) {
+                      return;
+                    }
+                    setDATE((prev) => ({
+                      ...prev,
+                      dateStart: getMonthStartFmt(value),
+                      dateEnd: getMonthEndFmt(value),
+                    }));
+                  }}
                   slotProps={{
                     calendarHeader: {
                       format: `YYYY/MM`,
@@ -1105,6 +1112,16 @@ export const PickerDay = memo((
           </Grid>
         )}
         children={(popTrigger: any) => (
+          isCalendarList ? (
+            <Div
+              className={`fs-1-4rem fw-500 pointer`}
+              onClick={(e: any) => {
+                popTrigger.openPopup(e.currentTarget);
+              }}
+            >
+              {getDayNotFmt(DATE?.dateStart).format(`YYYY-MM`)}
+            </Div>
+          ) : (
           <Input
             label={translate(`duration`)}
             value={isList ? dateStrInList : isDetail ? dateStrInSave : ``}
@@ -1157,11 +1174,12 @@ export const PickerDay = memo((
               popTrigger.openPopup(e.currentTarget);
             }}
           />
+          )
         )}
       />
     );
 
-    // 6. year ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+    // 6. year ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
     const yearSection = () => (
       <PopUp
         type={`innerCenter`}
@@ -1364,7 +1382,7 @@ export const PickerDay = memo((
       />
     );
 
-    // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+    // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
     return (
 
 			// 1-1. 리스트 (Goal)
@@ -1395,6 +1413,13 @@ export const PickerDay = memo((
             {dateTypeInList === `year` && yearSection()}
           </Grid>
         </Grid>
+      )
+
+      // 1-3. 리스트 (Calendar)
+      : isCalendarList ? (
+        <>
+          {monthSection()}
+        </>
       )
 
       // 2-1. 세이브 (Calendar)
@@ -1441,7 +1466,7 @@ export const PickerDay = memo((
     );
   };
 
-  // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {pickerNode()}

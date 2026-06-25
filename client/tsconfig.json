@@ -37,7 +37,6 @@
       "DOM.Iterable",
       "ESNext"
     ],
-    "tsBuildInfoFile": "./tsconfig.tsbuildinfo",
     "allowJs": true,
     "checkJs": true,
     "composite": true,

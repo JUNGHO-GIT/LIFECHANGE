@@ -12,7 +12,7 @@ import { MoneyPie, MoneyPieType } from "@exportSchemas";
 import { axios } from "@exportLibs";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "@exportLibs";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface MoneyChartPieProps {
   TYPE?: any;
   setTYPE?: any;
@@ -27,10 +27,10 @@ declare interface PieProps {
   index?: number;
 }
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { URL_OBJECT, PATH, chartColors, sessionId } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
@@ -46,7 +46,7 @@ export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
     }
   );
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ TYPE_STATE, setTYPE_STATE ] = useState(() => {
     return props?.TYPE !== undefined ? props.TYPE : TYPE;
   });
@@ -62,7 +62,7 @@ export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
     yearEndFmt: getYearEndFmt(),
   });
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ OBJECT_INCOME_WEEK, setOBJECT_INCOME_WEEK ] = useState<[MoneyPieType]>([MoneyPie]);
   const [ OBJECT_EXPENSE_WEEK, setOBJECT_EXPENSE_WEEK ] = useState<[MoneyPieType]>([MoneyPie]);
   const [ OBJECT_INCOME_MONTH, setOBJECT_INCOME_MONTH ] = useState<[MoneyPieType]>([MoneyPie]);
@@ -270,7 +270,7 @@ export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
 		}
 
 		return (
-		  <ResponsiveContainer width={`100%`} height={500}>
+		  <ResponsiveContainer width={`100%`} height={380}>
 		    <PieChart margin={{ top: 60, right: 20, bottom: 10, left: 20 }}>
 		      <defs>
 		        <filter id={`textBackground`} x={0} y={0} width={1} height={1}>
@@ -349,7 +349,7 @@ export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
 		);
   };
 
-  // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {chartNode()}

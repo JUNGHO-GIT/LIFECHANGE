@@ -16,10 +16,10 @@ import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, Count, Delete, Input } from "@exportContainers";
 import { Img, Bg, Paper, Grid, Br } from "@exportComponents";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const MoneyGoalDetail = memo(() => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const {
     URL_OBJECT, navigate, sessionId, toList, localCurrency,
     location_dateType, location_dateStart, location_dateEnd,
@@ -30,7 +30,7 @@ export const MoneyGoalDetail = memo(() => {
   const { setLOADING } = useStoreLoading();
   const { ERRORS, REFS, validate } = useValidateMoney();
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ LOCKED, setLOCKED ] = useState<string>(`unlocked`);
   const [ OBJECT, setOBJECT ] = useState<MoneyGoalType>(MoneyGoal);
   const [ EXIST, setEXIST ] = useState({
@@ -298,7 +298,7 @@ export const MoneyGoalDetail = memo(() => {
     }));
   }, []);
 
-  // 7. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 7. detail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
@@ -363,7 +363,7 @@ export const MoneyGoalDetail = memo(() => {
 									)}
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -404,7 +404,7 @@ export const MoneyGoalDetail = memo(() => {
                   }
                   startadornment={(
                     <Img
-                      max={14}
+                      max={10}
                       hover={true}
                       shadow={false}
                       radius={false}
@@ -441,7 +441,7 @@ export const MoneyGoalDetail = memo(() => {
     );
   };
 
-  // 8. dialog ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -453,7 +453,7 @@ export const MoneyGoalDetail = memo(() => {
     />
   );
 
-  // 9. footer ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const footerNode = () => (
     <Footer
       state={{
@@ -468,7 +468,7 @@ export const MoneyGoalDetail = memo(() => {
     />
   );
 
-  // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {detailNode()}

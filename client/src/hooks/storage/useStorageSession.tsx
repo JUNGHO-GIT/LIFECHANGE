@@ -9,7 +9,7 @@ import { useEffect, useState, useRef } from "@exportReacts";
 import { getSession, setSession } from "@exportScripts";
 import { Dispatch, SetStateAction } from "react";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const useStorageSession = <T,> (
   key1: string,
   key2: string,

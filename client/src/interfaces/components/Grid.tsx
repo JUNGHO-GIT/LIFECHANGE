@@ -8,7 +8,7 @@
 import { React, memo, useEffect, useRef } from "@exportReacts";
 import { GridProps, Grid as MuiGrid } from "@exportMuis";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const Grid = memo((props: GridProps) => {
 
   const cardRef: React.RefObject<HTMLDivElement | null> = useRef<HTMLDivElement | null>(null);

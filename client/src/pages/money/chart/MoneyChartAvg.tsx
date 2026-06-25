@@ -13,16 +13,16 @@ import { axios } from "@exportLibs";
 import { formatY, formatDate } from "@exportScripts";
 import { ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@exportLibs";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface MoneyChartAvgProps {
   TYPE?: any;
   setTYPE?: any;
 }
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const MoneyChartAvg = memo((props: MoneyChartAvgProps) => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { URL_OBJECT, PATH, sessionId, chartColors, moneyChartArray } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
@@ -38,7 +38,7 @@ export const MoneyChartAvg = memo((props: MoneyChartAvgProps) => {
     }
   );
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ TYPE_STATE, setTYPE_STATE ] = useState(() => {
     return props?.TYPE !== undefined ? props.TYPE : TYPE;
   });
@@ -54,7 +54,7 @@ export const MoneyChartAvg = memo((props: MoneyChartAvgProps) => {
     yearEndFmt: getYearEndFmt(),
   });
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ OBJECT_WEEK, setOBJECT_WEEK ] = useState<[MoneyAvgType]>([MoneyAvg]);
   const [ OBJECT_MONTH, setOBJECT_MONTH ] = useState<[MoneyAvgType]>([MoneyAvg]);
 
@@ -141,7 +141,7 @@ export const MoneyChartAvg = memo((props: MoneyChartAvgProps) => {
 
 		const { domain, ticks, formatterY } = formatY(object, moneyChartArray, `money`);
 		return (
-		  <ResponsiveContainer width={`100%`} height={500}>
+		  <ResponsiveContainer width={`100%`} height={380}>
 		    <ComposedChart
 		      data={object as any[]}
 		      margin={{ top: 60, right: 20, bottom: 10, left: 20 }}
@@ -266,7 +266,7 @@ export const MoneyChartAvg = memo((props: MoneyChartAvgProps) => {
 		);
   };
 
-  // 10. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   return (
     <>
       {chartNode()}

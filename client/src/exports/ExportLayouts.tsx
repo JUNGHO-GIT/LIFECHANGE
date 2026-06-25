@@ -10,7 +10,7 @@ export { BottomNav } from "@interfaces/layouts/BottomNav";
 export { Confirm } from "@interfaces/layouts/Confirm";
 export { Dialog } from "@interfaces/layouts/Dialog";
 export { Empty } from "@interfaces/layouts/Empty";
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export { ErrorBoundary } from "@interfaces/layouts/ErrorBoundary";
 export { Footer } from "@interfaces/layouts/footer/Footer";
 export { Header } from "@interfaces/layouts/Header";

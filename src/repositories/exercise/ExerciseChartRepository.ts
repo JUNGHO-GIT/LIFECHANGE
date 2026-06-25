@@ -8,7 +8,7 @@
 import { ExerciseGoal } from "@schemas/exercise/ExerciseGoal";
 import { ExerciseRecord } from "@schemas/exercise/ExerciseRecord";
 
-// 1-1. chart (bar - goal) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1-1. chart (bar - goal) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const barGoal = async (
   user_id_param: string,
   dateStart_param: string,
@@ -48,7 +48,7 @@ export const barGoal = async (
   return finalResult;
 };
 
-// 1-2. chart (bar - record) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1-2. chart (bar - record) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const barRecord = async (
   user_id_param: string,
   dateStart_param: string,
@@ -88,7 +88,7 @@ export const barRecord = async (
   return finalResult;
 };
 
-// 2-1. chart (pie - part) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 2-1. chart (pie - part) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const piePart = async (
   user_id_param: string,
   dateStart_param: string,

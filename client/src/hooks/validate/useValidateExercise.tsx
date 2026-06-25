@@ -8,7 +8,7 @@
 import { React, createRef, useCallback, useRef, useState } from "@exportReacts";
 import { useStoreAlert, useStoreConfirm, useStoreLanguage } from "@exportStores";
 
-// 구조 타입 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 구조 타입 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 type FieldRefs = Record<string, React.RefObject<unknown>>;
 type FieldErrors = Record<string, boolean>;
 type ExerciseSection = Record<string, string>;
@@ -27,10 +27,10 @@ type ExerciseValidate = (
   OBJECT: ExerciseObject, COUNT: ExerciseCount, extra: string
 ) => Promise<boolean>;
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const useValidateExercise = () => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
   const { setCONFIRM } = useStoreConfirm();

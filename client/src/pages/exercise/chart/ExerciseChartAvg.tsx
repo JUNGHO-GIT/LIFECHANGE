@@ -13,13 +13,13 @@ import { axios } from "@exportLibs";
 import { formatY, formatDate } from "@exportScripts";
 import { ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@exportLibs";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface ExerciseChartAvgProps {
   TYPE?: any;
   setTYPE?: any;
 }
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const ExerciseChartAvg = memo((props: ExerciseChartAvgProps) => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -60,7 +60,7 @@ export const ExerciseChartAvg = memo((props: ExerciseChartAvgProps) => {
   const [ OBJECT_VOLUME_MONTH, setOBJECT_VOLUME_MONTH ] = useState<[ExerciseAvgType]>([ExerciseAvgVolume]);
   const [ OBJECT_CARDIO_MONTH, setOBJECT_CARDIO_MONTH ] = useState<[ExerciseAvgType]>([ExerciseAvgCardio]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     (async () => {
       setLOADING(true);
@@ -105,7 +105,7 @@ export const ExerciseChartAvg = memo((props: ExerciseChartAvgProps) => {
     })();
   }, [ URL_OBJECT, DATE, sessionId ]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (props?.TYPE !== undefined) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -115,7 +115,7 @@ export const ExerciseChartAvg = memo((props: ExerciseChartAvgProps) => {
     }
   }, [props?.TYPE]);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (props?.setTYPE) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -158,7 +158,7 @@ export const ExerciseChartAvg = memo((props: ExerciseChartAvgProps) => {
 
 		const { domain, ticks, formatterY } = formatY(object, exerciseChartArray, `exercise`);
 		return (
-		  <ResponsiveContainer width={`100%`} height={500}>
+		  <ResponsiveContainer width={`100%`} height={380}>
 		    <ComposedChart
 		      data={object as any[]}
 		      margin={{ top: 60, right: 20, bottom: 10, left: 20 }}

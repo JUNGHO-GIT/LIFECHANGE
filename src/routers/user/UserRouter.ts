@@ -109,7 +109,7 @@ router.post(`/email/verify`, async (req: Request, res: Response) => {
   }
 });
 
-// 2-1. userSignup ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 2-1. userSignup ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 router.post(`/signup`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.userSignup(
@@ -266,7 +266,7 @@ router.post(`/login`, async (req: Request, res: Response) => {
   }
 });
 
-// 2-4. userDetail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 2-4. userDetail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 router.get(`/detail`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.userDetail(
@@ -304,7 +304,7 @@ router.get(`/detail`, async (req: Request, res: Response) => {
   }
 });
 
-// 2-5. userUpdate ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 2-5. userUpdate ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 router.put(`/update`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.userUpdate(
@@ -396,7 +396,7 @@ router.delete(`/delete`, async (req: Request, res: Response) => {
   }
 });
 
-// 3-2. categoryDetail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 3-2. categoryDetail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 router.get(`/category/detail`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.categoryDetail(
@@ -434,7 +434,7 @@ router.get(`/category/detail`, async (req: Request, res: Response) => {
   }
 });
 
-// 3-2. categoryUpdate ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 3-2. categoryUpdate ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 router.post(`/category/update`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.categoryUpdate(

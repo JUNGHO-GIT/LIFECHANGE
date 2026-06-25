@@ -5,16 +5,16 @@
  * @since 2025-12-26
  */
 
-import { create, StoreApi, UseBoundStore } from "@exportLibs";
+import { create, type StoreApi, type UseBoundStore } from "zustand";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 declare interface LanguageState {
   lang: string;
   setLang: (lang: string) => void;
   translate: (key: string) => string;
 }
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 let __resourcesCache: Record<string, any> | null = null;
 export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<LanguageState>((set, get) => ({
   lang: `en`,

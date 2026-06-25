@@ -5,16 +5,16 @@
  * @since 2025-12-25
  */
 
-import { useCommonValue } from "@exportHooks";
+import { useCommonValue } from "@hooks/common/useCommonValue";
 import { useEffect } from "@exportReacts";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const useRoot = () => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { PATH, navigate, sessionId } = useCommonValue();
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     if (
       !PATH.includes(`user/login`) && !PATH.includes(`user/signup`) &&

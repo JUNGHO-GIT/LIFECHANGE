@@ -8,7 +8,7 @@
 import { React, useCallback, useRef, useState } from "@exportReacts";
 import { useStoreAlert, useStoreConfirm, useStoreLanguage } from "@exportStores";
 
-// 구조 타입 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 구조 타입 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 type FieldRefs = Record<string, React.RefObject<unknown>>;
 type FieldErrors = Record<string, boolean>;
 type CalendarSection = Record<string, string>;
@@ -25,15 +25,15 @@ type CalendarValidate = (
   OBJECT: CalendarObject, COUNT: CalendarCount, extra: string
 ) => Promise<boolean>;
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const useValidateCalendar = () => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
   const { setCONFIRM } = useStoreConfirm();
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const REFS: React.RefObject<FieldRefs[]> = useRef<FieldRefs[]>([]);
   const validate: React.RefObject<CalendarValidate> = useRef<CalendarValidate>(async () => false);
   const [ ERRORS, setERRORS ] = useState<FieldErrors[]>([]);

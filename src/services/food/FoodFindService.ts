@@ -231,7 +231,7 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
   // L-70: list 진입부 1회 호출로 통합, URL/정규식 등 전 구간 재사용
   const settings = getLangSettingsByIsoCode(isoCode);
 
-  // 전체 갯수 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 전체 갯수 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const getTotalCnt = (document: any) => {
     const count: any =
       document.querySelector(`.searchResultSummary`)?.textContent;
@@ -247,7 +247,7 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
     return totalCnt;
   };
 
-  // 음식 이름 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 음식 이름 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const getFoodName = (item: any) => {
     if (!item) {
       return ``;
@@ -340,7 +340,7 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
     };
   };
 
-  // 음식 검색 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 음식 검색 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const getFoodList = async (
     URL: string,
     URL_DEFAULT: string,

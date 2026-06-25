@@ -5,10 +5,10 @@
  * @since 2025-12-26
  */
 
-// 1. list ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const list = async (object: any) => {
 
-  // 0. calcOverTenMillion ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 0. calcOverTenMillion ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const calcOverTenMillion = (param: string) => {
 
     let finalResult: string = ``;
@@ -45,8 +45,124 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
+  // 1. calcDiffTimeColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const calcDiffTimeColor = (goalParam: string, recordParam: string, extra: string) => {
+
+    const goalHours: number = Number.parseFloat(goalParam?.split(`:`)[0] ?? `0`);
+    const goalMinutes: number = Number.parseFloat(goalParam?.split(`:`)[1] ?? `0`);
+    const recordHours: number = Number.parseFloat(recordParam?.split(`:`)[0] ?? `0`);
+    const recordMinutes: number = Number.parseFloat(recordParam?.split(`:`)[1] ?? `0`);
+    const goal: number = (goalHours * 60) + goalMinutes;
+    const record: number = (recordHours * 60) + recordMinutes;
+    let diffVal: number = Math.abs(goal - record);
+    let finalResult: string = ``;
+
+    if (!goal || !record) {
+      return calcNonValueColor(recordParam);
+    }
+
+    if (extra === `sleepTime`) {
+      diffVal = goal - record;
+    }
+
+    if (diffVal <= 10) {
+      finalResult += ` firstScore`;
+    }
+    else if (diffVal <= 20) {
+      finalResult += ` secondScore`;
+    }
+    else if (diffVal <= 40) {
+      finalResult += ` thirdScore`;
+    }
+    else if (diffVal <= 60) {
+      finalResult += ` fourthScore`;
+    }
+    else {
+      finalResult += ` fifthScore`;
+    }
+
+    return finalResult;
+  };
+
+  // 2. calcScoreSmileImage ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const calcScoreSmileImage = (colors: string[]) => {
+
+    const scoreMap: Record<string, number> = {
+      firstScore: 5,
+      secondScore: 4,
+      thirdScore: 3,
+      fourthScore: 2,
+      fifthScore: 1,
+    };
+    const scores: number[] = colors.reduce((acc: number[], color: string) => {
+      const scoreKey: string | undefined = Object.keys(scoreMap).find((key: string) => (
+        color?.includes(key)
+      ));
+
+      if (scoreKey) {
+        acc.push(scoreMap[scoreKey]);
+      }
+
+      return acc;
+    }, []);
+
+    if (scores.length <= 0) {
+      return `smile3`;
+    }
+
+    const avgScore: number = scores.reduce((acc: number, score: number) => acc + score, 0) / scores.length;
+
+    if (avgScore >= 0 && avgScore <= 1) {
+      return `smile1`;
+    }
+    else if (avgScore > 1 && avgScore <= 2) {
+      return `smile2`;
+    }
+    else if (avgScore > 2 && avgScore <= 3) {
+      return `smile3`;
+    }
+    else if (avgScore > 3 && avgScore <= 4) {
+      return `smile4`;
+    }
+    else if (avgScore > 4 && avgScore <= 5) {
+      return `smile5`;
+    }
+    else {
+      return `smile3`;
+    }
+  };
+
   // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   object?.result?.forEach((item: any) => {
+    const sleepRecordBedTime: string = item?.sleep_record_bedTime;
+    const sleepRecordWakeTime: string = item?.sleep_record_wakeTime;
+    const sleepRecordSleepTime: string = item?.sleep_record_sleepTime;
+
+    item.sleep_record_bedTime = calcOverTenMillion(
+      item?.sleep_record_bedTime
+    );
+    item.sleep_record_wakeTime = calcOverTenMillion(
+      item?.sleep_record_wakeTime
+    );
+    item.sleep_record_sleepTime = calcOverTenMillion(
+      item?.sleep_record_sleepTime
+    );
+
+    item.sleep_record_bedTime_color = calcDiffTimeColor(
+      item?.sleep_goal_bedTime, sleepRecordBedTime, `bedTime`
+    );
+    item.sleep_record_wakeTime_color = calcDiffTimeColor(
+      item?.sleep_goal_wakeTime, sleepRecordWakeTime, `wakeTime`
+    );
+    item.sleep_record_sleepTime_color = calcDiffTimeColor(
+      item?.sleep_goal_sleepTime, sleepRecordSleepTime, `sleepTime`
+    );
+    item.sleep_record_score_smile = calcScoreSmileImage([
+      item.sleep_record_bedTime_color,
+      item.sleep_record_wakeTime_color,
+      item.sleep_record_sleepTime_color,
+    ]);
+
     item.sleep_section?.forEach((section: any) => {
       section.sleep_record_bedTime = calcOverTenMillion(
         section?.sleep_record_bedTime

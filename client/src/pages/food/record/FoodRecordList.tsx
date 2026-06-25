@@ -5,20 +5,20 @@
  * @since 2025-12-26
  */
 
-import { useState, useEffect, useDeferredValue, memo } from "@exportReacts";
+import { useState, useEffect, useDeferredValue, useMemo, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { FoodRecord, FoodRecordType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { insertComma } from "@exportScripts";
+import { formatDate, insertComma } from "@exportScripts";
 import { Footer, Empty, Dialog } from "@exportLayouts";
 import { Div, Hr, Img, Icons, Paper, Grid } from "@exportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const FoodRecordList = memo(() => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const {
     URL_OBJECT, PATH, sessionId, toDetail,
     navigate, location_dateType, location_dateStart, location_dateEnd,
@@ -51,7 +51,7 @@ export const FoodRecordList = memo(() => {
     ],
   );
 
-  // 2-2. useState ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const [ OBJECT, setOBJECT ] = useState<[FoodRecordType]>([FoodRecord]);
   const [ EXIST, setEXIST ] = useState({
     day: [``],
@@ -73,8 +73,31 @@ export const FoodRecordList = memo(() => {
   });
 
   // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  // 항목 렌더를 비긴급으로 분리: 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
+  // - 항목 렌더를 비긴급으로 분리
+  // - 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
   const deferredObject = useDeferredValue(OBJECT);
+
+  // 3. summary ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const SUMMARY = useMemo(() => {
+    const validRecords = OBJECT.filter((item) => item._id);
+    const toNum = (value: string | number) => Number(String(value ?? `0`).replaceAll(`,`, ``));
+    const totalKcal = validRecords.reduce((sum, item) => (
+      sum + toNum(item.food_record_total_kcal)
+    ), 0);
+    const totalGoalKcal = validRecords.reduce((sum, item) => (
+      sum + toNum(item.food_goal_kcal)
+    ), 0);
+    const avgKcal = validRecords.length > 0 ? Math.round(totalKcal / validRecords.length) : 0;
+    const avgGoalKcal = validRecords.length > 0 ? Math.round(totalGoalKcal / validRecords.length) : 0;
+    const diffKcal = avgKcal - avgGoalKcal;
+
+    return {
+      avgKcal,
+      diffKcal,
+      diffKcalText: diffKcal > 0 ? `+${insertComma(diffKcal)}` : insertComma(diffKcal),
+      recordCnt: COUNT.totalCnt,
+    };
+  }, [ OBJECT, COUNT.totalCnt ]);
 
   // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
@@ -126,7 +149,7 @@ export const FoodRecordList = memo(() => {
       // 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
       setIsExpanded(() => {
         if (res.data.result?.length !== isExpanded.length) {
-          return Array.from({ length: res.data.result?.length }).fill({ expanded: true });
+          return Array.from({ length: res.data.result?.length }, () => ({ expanded: true }));
         }
         return isExpanded;
       });
@@ -149,40 +172,63 @@ export const FoodRecordList = memo(() => {
   // 7. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const listNode = () => {
     // 7-0. summary
-    /* const summarySection = () => (
-      <Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px p-2px`} key={`summary`}>
-        <Grid container={true} spacing={1}>
-          <Grid size={2} className={`d-row-center`}>
-            <Img
-              max={14}
-              hover={true}
-              shadow={false}
-              radius={false}
-              src={`food2.webp`}
-            />
-          </Grid>
-          <Grid size={3} className={`d-row-left`}>
-            <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
-              {translate(`kcal`)}
+    const summarySection = () => (
+      <Grid container={true} spacing={1} className={`w-100p mb-10px`}>
+        <Grid size={12} className={`d-row-between radius-2 border-1 shadow-1 p-15px bg-white`}>
+          <Div>
+            <Div className={`fs-0-75rem fw-500 dark mb-5px`}>
+              {translate(`date`)}
             </Div>
-          </Grid>
-          <Grid size={7}>
-            <Grid container={true} spacing={1}>
-              <Grid size={10} className={`d-row-right`}>
-                <Div className={`fs-0-8rem fw-600`}>
-                  {`123`}
-                </Div>
-              </Grid>
-              <Grid size={2} className={`d-row-center`}>
-                <Div className={`fs-0-6rem`}>
-                  {translate(`kc`)}
-                </Div>
-              </Grid>
-            </Grid>
-          </Grid>
+            <Div className={`fs-1rem fw-700 black`}>
+              {formatDate(DATE?.dateStart)}
+              {` - `}
+              {formatDate(DATE?.dateEnd)}
+            </Div>
+          </Div>
+          <Img
+            max={34}
+            hover={false}
+            shadow={false}
+            radius={false}
+            src={`food2.webp`}
+          />
+        </Grid>
+        <Grid size={4} className={`d-col-center radius-2 border-1 shadow-1 p-10px bg-white`}>
+          <Div className={`fs-0-7rem fw-500 dark mb-5px`}>
+            {translate(`record`)}
+          </Div>
+          <Div className={`fs-0-95rem fw-700 black`}>
+            {insertComma(SUMMARY.recordCnt)}
+          </Div>
+          <Div className={`fs-0-6rem dark`}>
+            {translate(`date`)}
+          </Div>
+        </Grid>
+        <Grid size={4} className={`d-col-center radius-2 border-1 shadow-1 p-10px bg-white`}>
+          <Div className={`fs-0-7rem fw-500 dark mb-5px`}>
+            {translate(`avg`)}
+          </Div>
+          <Div className={`fs-0-95rem fw-700 black`}>
+            {insertComma(SUMMARY.avgKcal)}
+          </Div>
+          <Div className={`fs-0-6rem dark`}>
+            {translate(`kc`)}
+          </Div>
+        </Grid>
+        <Grid size={4} className={`d-col-center radius-2 border-1 shadow-1 p-10px bg-white`}>
+          <Div className={`fs-0-7rem fw-500 dark mb-5px`}>
+            {translate(`diff`)}
+          </Div>
+          <Div className={`fs-0-95rem fw-700 black`}>
+            {SUMMARY.diffKcalText}
+          </Div>
+          <Div className={`fs-0-6rem dark`}>
+            {translate(`kc`)}
+          </Div>
         </Grid>
       </Grid>
-    ); */
+    );
+
     // 7-1. list
     const listSection = () => (
       <Grid container={true} spacing={0}>
@@ -199,10 +245,8 @@ export const FoodRecordList = memo(() => {
                       onClick={(e: any) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        setIsExpanded(isExpanded.map((el: any, index: number) => (
-                          i === index ? {
-                            expanded: !el.expanded,
-                          } : el
+                        setIsExpanded(isExpanded.map((item: any, index: number) => (
+                          index === i ? { expanded: !item.expanded } : item
                         )));
                       }}
                     />
@@ -228,11 +272,19 @@ export const FoodRecordList = memo(() => {
                     </Grid>
                     <Grid size={10} className={`d-row-left`}>
                       <Div className={`fs-0-9rem fw-600 black mr-5px`}>
-                        {item.food_record_dateStart?.slice(5, 10)}
+                        {formatDate(item.food_record_dateStart)}
                       </Div>
                       <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
                         {translate(getDayNotFmt(item.food_record_dateStart).format(`ddd`))}
                       </Div>
+                      <Img
+                        max={14}
+                        hover={false}
+                        shadow={false}
+                        radius={false}
+                        src={`${item.food_record_score_smile ?? `smile3`}.webp`}
+                        className={`ml-10px`}
+                      />
                     </Grid>
                   </Grid>
                 </AccordionSummary>
@@ -242,7 +294,7 @@ export const FoodRecordList = memo(() => {
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-row-center`}>
                         <Img
-                          max={14}
+                          max={10}
                           hover={true}
                           shadow={false}
                           radius={false}
@@ -276,7 +328,7 @@ export const FoodRecordList = memo(() => {
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-center`}>
                         <Img
-                          max={14}
+                          max={10}
                           hover={true}
                           shadow={false}
                           radius={false}
@@ -310,7 +362,7 @@ export const FoodRecordList = memo(() => {
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-center`}>
                         <Img
-                          max={14}
+                          max={10}
                           hover={true}
                           shadow={false}
                           radius={false}
@@ -344,7 +396,7 @@ export const FoodRecordList = memo(() => {
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-center`}>
                         <Img
-                          max={14}
+                          max={10}
                           hover={true}
                           shadow={false}
                           radius={false}
@@ -382,14 +434,13 @@ export const FoodRecordList = memo(() => {
     // 7-10. return
     return (
       <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
-        {/* {summarySection()} */}
-        <Hr m={20} className={`bg-light`} />
+        {summarySection()}
         {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={`food`} /> : listSection()}
       </Paper>
     );
   };
 
-  // 8. dialog ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -398,7 +449,7 @@ export const FoodRecordList = memo(() => {
     />
   );
 
-  // 9. footer ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const footerNode = () => (
     <Footer
       state={{

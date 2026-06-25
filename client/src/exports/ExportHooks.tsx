@@ -5,7 +5,7 @@
  * @since 2025-12-25
  */
 
-// common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export { useCommonValue } from "@hooks/common/useCommonValue";
 export { useCommonDate } from "@hooks/common/useCommonDate";
 

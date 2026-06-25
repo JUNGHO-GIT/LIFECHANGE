@@ -10,13 +10,13 @@ import { MuiAlert, Snackbar } from "@exportMuis";
 import { memo, useEffect } from "@exportReacts";
 import { useStoreAlert } from "@exportStores";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 export const Alert = memo(() => {
 
   // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   const { ALERT, setALERT } = useStoreAlert();
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
   useEffect(() => {
     ALERT.open && (
       setALERT({
@@ -46,7 +46,7 @@ export const Alert = memo(() => {
       <MuiAlert
         severity={ALERT.severity === `error` ? `error` : `info`}
         variant={`standard`}
-        className={`w-95vw h-8vh d-center border-1 radius-2 shadow-4 fs-0-8rem fw-700 snackbar z-10000`}
+        className={`w-95vw h-8vh d-center border-1 radius-2 shadow-2 fs-0-8rem fw-700 snackbar z-10000`}
         action={(
           <Icons
             key={`Check`}
